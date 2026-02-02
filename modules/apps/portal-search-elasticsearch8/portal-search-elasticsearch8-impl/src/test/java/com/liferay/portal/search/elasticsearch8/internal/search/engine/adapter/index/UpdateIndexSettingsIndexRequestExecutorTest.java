@@ -5,14 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.PutIndicesSettingsRequest;
+
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
-
-import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequest;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -60,14 +60,15 @@ public class UpdateIndexSettingsIndexRequestExecutorTest {
 				new UpdateIndexSettingsIndexRequestExecutor(
 					_elasticsearchFixture);
 
-		UpdateSettingsRequest updateSettingsRequest =
-			updateIndexSettingsIndexRequestExecutor.createUpdateSettingsRequest(
-				updateIndexSettingsIndexRequest);
+		PutIndicesSettingsRequest putIndicesSettingsRequest =
+			updateIndexSettingsIndexRequestExecutor.
+				createPutIndicesSettingsRequest(
+					updateIndexSettingsIndexRequest);
 
-		String[] indices = updateSettingsRequest.indices();
+		List<String> indices = putIndicesSettingsRequest.index();
 
-		Assert.assertEquals(Arrays.toString(indices), 1, indices.length);
-		Assert.assertEquals(_INDEX_NAME, indices[0]);
+		Assert.assertEquals(String.join(", ", indices), 1, indices.size());
+		Assert.assertEquals(_INDEX_NAME, indices.get(0));
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

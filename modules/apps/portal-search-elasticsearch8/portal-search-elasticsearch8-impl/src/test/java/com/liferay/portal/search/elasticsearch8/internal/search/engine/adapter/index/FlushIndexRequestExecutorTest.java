@@ -5,11 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.FlushRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.FlushIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.action.admin.indices.flush.FlushRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -54,7 +55,8 @@ public class FlushIndexRequestExecutorTest {
 			flushIndexRequestExecutor.createFlushRequest(flushIndexRequest);
 
 		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, flushRequest.indices());
+			new String[] {_INDEX_NAME},
+			ArrayUtil.toStringArray(flushRequest.index()));
 		Assert.assertTrue(flushRequest.force());
 		Assert.assertTrue(flushRequest.waitIfOngoing());
 	}

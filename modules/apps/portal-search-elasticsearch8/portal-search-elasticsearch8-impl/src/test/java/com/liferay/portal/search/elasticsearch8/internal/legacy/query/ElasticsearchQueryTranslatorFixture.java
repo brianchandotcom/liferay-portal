@@ -5,12 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.legacy.query;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterTranslatorFixture;
-
-import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
@@ -25,9 +25,9 @@ public class ElasticsearchQueryTranslatorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchQueryTranslator, "_filterTranslatorSnapshot",
-			new Snapshot<FilterTranslator<QueryBuilder>>(null, null) {
+			new Snapshot<FilterTranslator<QueryVariant>>(null, null) {
 
-				public FilterTranslator<QueryBuilder> get() {
+				public FilterTranslator<QueryVariant> get() {
 					return elasticsearchFilterTranslatorFixture.
 						getElasticsearchFilterTranslator();
 				}

@@ -5,20 +5,28 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ExpandWildcard;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.transport.endpoints.BooleanResponse;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch8.internal.connection.helper.LiferayIndexCreationHelper;
 import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 
-import java.io.IOException;
+import jakarta.json.spi.JsonProvider;
 
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.support.IndicesOptions;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.common.settings.Settings;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
 
 import org.mockito.Mockito;
 
@@ -28,30 +36,49 @@ import org.mockito.Mockito;
 public class IndexCreator {
 
 	public Index createIndex(IndexName indexName) {
-		IndicesClient indicesClient = _getIndicesClient();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			_getElasticsearchIndicesClient();
 
 		String name = indexName.getName();
 
-		deleteIndex(indicesClient, name);
+		deleteIndex(elasticsearchIndicesClient, name);
 
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(name);
+		CreateIndexRequest.Builder builder = new CreateIndexRequest.Builder();
+
+		builder.index(name);
 
 		IndexCreationHelper indexCreationHelper = _getIndexCreationHelper();
 
-		indexCreationHelper.contribute(createIndexRequest);
+		indexCreationHelper.contribute(builder);
 
-		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
-			Settings.builder());
+		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl();
 
 		settingsHelperImpl.put("index.number_of_replicas", "0");
 		settingsHelperImpl.put("index.number_of_shards", "1");
 
 		indexCreationHelper.contributeIndexSettings(settingsHelperImpl);
 
-		createIndexRequest.settings(settingsHelperImpl.getBuilder());
+		JsonpMapper jsonpMapper = _elasticsearchClientResolver.getJsonpMapper(
+			null);
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		String settings = String.valueOf(
+			settingsHelperImpl.getSettingsJSONObject());
+
+		try (InputStream inputStream = new ByteArrayInputStream(
+				settings.getBytes(StandardCharsets.UTF_8))) {
+
+			builder.settings(
+				IndexSettings._DESERIALIZER.deserialize(
+					jsonProvider.createParser(inputStream), jsonpMapper));
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 
 		try {
-			indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+			elasticsearchIndicesClient.create(builder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -63,16 +90,27 @@ public class IndexCreator {
 	}
 
 	public void deleteIndex(IndexName indexName) {
-		deleteIndex(_getIndicesClient(), indexName.getName());
+		deleteIndex(_getElasticsearchIndicesClient(), indexName.getName());
 	}
 
-	protected void deleteIndex(IndicesClient indicesClient, String name) {
-		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(name);
-
-		deleteIndexRequest.indicesOptions(IndicesOptions.lenientExpandOpen());
+	protected void deleteIndex(
+		ElasticsearchIndicesClient elasticsearchIndicesClient, String name) {
 
 		try {
-			indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+			BooleanResponse booleanResponse = elasticsearchIndicesClient.exists(
+				ExistsRequest.of(existRequest -> existRequest.index(name)));
+
+			if (booleanResponse.value()) {
+				elasticsearchIndicesClient.delete(
+					DeleteIndexRequest.of(
+						deleteIndexRequest -> deleteIndexRequest.allowNoIndices(
+							true
+						).expandWildcards(
+							ExpandWildcard.Open
+						).index(
+							name
+						)));
+			}
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -103,6 +141,13 @@ public class IndexCreator {
 		_searchEngineInformation = searchEngineInformation;
 	}
 
+	private final ElasticsearchIndicesClient _getElasticsearchIndicesClient() {
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient();
+
+		return elasticsearchClient.indices();
+	}
+
 	private IndexCreationHelper _getIndexCreationHelper() {
 		if (!_liferayMappingsAddedToIndex) {
 			if (_indexCreationHelper != null) {
@@ -123,10 +168,13 @@ public class IndexCreator {
 		return new IndexCreationHelper() {
 
 			@Override
-			public void contribute(CreateIndexRequest createIndexRequest) {
-				_indexCreationHelper.contribute(createIndexRequest);
+			public void contribute(
+				CreateIndexRequest.Builder createIndexRequestBuilder) {
 
-				liferayIndexCreationHelper.contribute(createIndexRequest);
+				_indexCreationHelper.contribute(createIndexRequestBuilder);
+
+				liferayIndexCreationHelper.contribute(
+					createIndexRequestBuilder);
 			}
 
 			@Override
@@ -148,13 +196,6 @@ public class IndexCreator {
 			}
 
 		};
-	}
-
-	private final IndicesClient _getIndicesClient() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient();
-
-		return restHighLevelClient.indices();
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

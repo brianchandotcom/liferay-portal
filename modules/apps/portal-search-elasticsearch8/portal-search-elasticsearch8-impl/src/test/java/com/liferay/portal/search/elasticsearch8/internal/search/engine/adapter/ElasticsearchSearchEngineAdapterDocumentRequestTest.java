@@ -5,18 +5,36 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Refresh;
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.index.constants.IndexMappingsConstants;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.IndexUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentItemResponse;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -42,18 +60,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -89,9 +95,9 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	public void setUp() throws Exception {
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
-		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
+		_elasticsearchClient = _elasticsearchFixture.getElasticsearchClient();
 
-		_indicesClient = _restHighLevelClient.indices();
+		_elasticsearchIndicesClient = _elasticsearchClient.indices();
 
 		_documentFixture.setUp();
 
@@ -106,7 +112,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	@Test
-	public void testExecuteBulkDocumentRequest() {
+	public void testExecuteBulkDocumentRequest() throws JSONException {
 		Document document1 = new DocumentImpl();
 
 		document1.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
@@ -204,19 +210,24 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		GetResponse getResponse1 = _getDocument("1");
 
-		Assert.assertFalse(getResponse1.isExists());
+		Assert.assertFalse(getResponse1.found());
 
 		GetResponse getResponse2 = _getDocument("2");
 
-		Assert.assertTrue(getResponse2.isExists());
+		Assert.assertTrue(getResponse2.found());
 
-		Map<String, Object> map2 = getResponse2.getSource();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(getResponse2.source()));
 
-		Assert.assertEquals(Boolean.TRUE.toString(), map2.get(_FIELD_NAME));
+		Map<String, JsonData> map2 = ConversionUtil.toJsonDataMap(
+			jsonObject.toMap());
+
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(map2.get(_FIELD_NAME)));
 	}
 
 	@Test
-	public void testExecuteBulkDocumentRequestNoUid() {
+	public void testExecuteBulkDocumentRequestNoUid() throws JSONException {
 		Document document1 = new DocumentImpl();
 
 		document1.addKeyword(_FIELD_NAME, Boolean.TRUE.toString());
@@ -320,25 +331,37 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		GetResponse getResponse1 = _getDocument(
 			bulkDocumentItemResponse1.getId());
 
-		Assert.assertFalse(getResponse1.isExists());
+		Assert.assertFalse(getResponse1.found());
 
 		GetResponse getResponse2 = _getDocument(
 			bulkDocumentItemResponse2.getId());
 
-		Assert.assertTrue(getResponse2.isExists());
+		Assert.assertTrue(getResponse2.found());
 
-		Map<String, Object> map2 = getResponse2.getSource();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(getResponse2.source()));
 
-		Assert.assertEquals(Boolean.TRUE.toString(), map2.get(_FIELD_NAME));
+		Map<String, JsonData> map2 = ConversionUtil.toJsonDataMap(
+			jsonObject.toMap());
+
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(map2.get(_FIELD_NAME)));
 	}
 
 	@Test
 	public void testExecuteDeleteByQueryDocumentRequest() {
-		String documentSource1 = "{\"" + _FIELD_NAME + "\":\"true\"}";
-		String documentSource2 = "{\"" + _FIELD_NAME + "\":\"false\"}";
-
-		_indexDocument(documentSource1, "1");
-		_indexDocument(documentSource2, "2");
+		_indexDocument(
+			"1",
+			JsonData.of(
+				HashMapBuilder.<String, Object>put(
+					_FIELD_NAME, Boolean.TRUE
+				).build()));
+		_indexDocument(
+			"2",
+			JsonData.of(
+				HashMapBuilder.<String, Object>put(
+					_FIELD_NAME, Boolean.FALSE
+				).build()));
 
 		BooleanQuery query = new BooleanQueryImpl();
 
@@ -355,14 +378,18 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	@Test
 	public void testExecuteDeleteDocumentRequest() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
 		String id = "1";
 
-		_indexDocument(documentSource, id);
+		_indexDocument(
+			id,
+			JsonData.of(
+				HashMapBuilder.<String, Object>put(
+					_FIELD_NAME, Boolean.TRUE
+				).build()));
 
 		GetResponse getResponse1 = _getDocument(id);
 
-		Assert.assertTrue(getResponse1.isExists());
+		Assert.assertTrue(getResponse1.found());
 
 		DeleteDocumentRequest deleteDocumentRequest = new DeleteDocumentRequest(
 			_INDEX_NAME, id);
@@ -373,12 +400,11 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		DeleteDocumentResponse deleteDocumentResponse =
 			_searchEngineAdapter.execute(deleteDocumentRequest);
 
-		Assert.assertEquals(
-			RestStatus.OK.getStatus(), deleteDocumentResponse.getStatus());
+		Assert.assertEquals(200, deleteDocumentResponse.getStatus());
 
 		GetResponse getResponse2 = _getDocument(id);
 
-		Assert.assertFalse(getResponse2.isExists());
+		Assert.assertFalse(getResponse2.found());
 	}
 
 	@Test
@@ -386,14 +412,15 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			null, new DocumentImpl());
 
-		Assert.assertEquals(
-			RestStatus.CREATED.getStatus(), indexDocumentResponse.getStatus());
+		Assert.assertEquals(201, indexDocumentResponse.getStatus());
 
 		Assert.assertNotNull(indexDocumentResponse.getUid());
 	}
 
 	@Test
-	public void testExecuteIndexDocumentRequestNoUidWithUpdate() {
+	public void testExecuteIndexDocumentRequestNoUidWithUpdate()
+		throws Exception {
+
 		Document document = new DocumentImpl();
 
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
@@ -403,11 +430,11 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		_updateDocumentWithAdapter(indexDocumentResponse.getUid(), document);
 
-		GetResponse getResponse = _getDocument(indexDocumentResponse.getUid());
+		Map<String, JsonData> fields = _getFields(
+			indexDocumentResponse.getUid());
 
-		Map<String, Object> map = getResponse.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(fields.get(_FIELD_NAME)));
 	}
 
 	@Test
@@ -419,8 +446,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			null, document);
 
-		Assert.assertEquals(
-			RestStatus.CREATED.getStatus(), indexDocumentResponse.getStatus());
+		Assert.assertEquals(201, indexDocumentResponse.getStatus());
 
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
@@ -430,17 +456,19 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			"1", new DocumentImpl());
 
-		Assert.assertEquals(
-			RestStatus.CREATED.getStatus(), indexDocumentResponse.getStatus());
+		Assert.assertEquals(201, indexDocumentResponse.getStatus());
 
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 
 	@Test
 	public void testExecuteUpdateByQueryDocumentRequest() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
-
-		_indexDocument(documentSource, "1");
+		_indexDocument(
+			"1",
+			JsonData.of(
+				HashMapBuilder.<String, Object>put(
+					_FIELD_NAME, Boolean.TRUE
+				).build()));
 
 		BooleanQuery query = new BooleanQueryImpl();
 
@@ -457,17 +485,19 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	@Test
-	public void testExecuteUpdateDocumentRequest() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
+	public void testExecuteUpdateDocumentRequest() throws Exception {
+		Map<String, Object> documentFields = HashMapBuilder.<String, Object>put(
+			_FIELD_NAME, Boolean.TRUE
+		).build();
+
 		String id = "1";
 
-		_indexDocument(documentSource, id);
+		_indexDocument(id, JsonData.of(documentFields));
 
-		GetResponse getResponse1 = _getDocument(id);
+		Map<String, JsonData> fields1 = _getFields(id);
 
-		Map<String, Object> map1 = getResponse1.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map1.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(fields1.get(_FIELD_NAME)));
 
 		Document document = new DocumentImpl();
 
@@ -477,28 +507,31 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(id, document);
 
+		Assert.assertEquals(200, updateDocumentResponse.getStatus());
+
+		Map<String, JsonData> fields2 = _getFields(id);
+
 		Assert.assertEquals(
-			RestStatus.OK.getStatus(), updateDocumentResponse.getStatus());
-
-		GetResponse getResponse2 = _getDocument(id);
-
-		Map<String, Object> map2 = getResponse2.getSource();
-
-		Assert.assertEquals(Boolean.FALSE.toString(), map2.get(_FIELD_NAME));
+			Boolean.FALSE.toString(), String.valueOf(fields2.get(_FIELD_NAME)));
 	}
 
 	@Test
-	public void testExecuteUpdateDocumentRequestNoDocumentUid() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
+	public void testExecuteUpdateDocumentRequestNoDocumentUid()
+		throws Exception {
+
 		String id = "1";
 
-		_indexDocument(documentSource, id);
+		_indexDocument(
+			id,
+			JsonData.of(
+				HashMapBuilder.<String, Object>put(
+					_FIELD_NAME, Boolean.TRUE
+				).build()));
 
-		GetResponse getResponse1 = _getDocument(id);
+		Map<String, JsonData> map1 = _getFields(id);
 
-		Map<String, Object> map1 = getResponse1.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map1.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(map1.get(_FIELD_NAME)));
 
 		Document document = new DocumentImpl();
 
@@ -507,28 +540,28 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(id, document);
 
+		Assert.assertEquals(200, updateDocumentResponse.getStatus());
+
+		Map<String, JsonData> fields2 = _getFields(id);
+
 		Assert.assertEquals(
-			RestStatus.OK.getStatus(), updateDocumentResponse.getStatus());
-
-		GetResponse getResponse2 = _getDocument(id);
-
-		Map<String, Object> map2 = getResponse2.getSource();
-
-		Assert.assertEquals(Boolean.FALSE.toString(), map2.get(_FIELD_NAME));
+			Boolean.FALSE.toString(), String.valueOf(fields2.get(_FIELD_NAME)));
 	}
 
 	@Test
-	public void testExecuteUpdateDocumentRequestNoRequestId() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
+	public void testExecuteUpdateDocumentRequestNoRequestId() throws Exception {
+		Map<String, Object> documentFields = HashMapBuilder.<String, Object>put(
+			_FIELD_NAME, Boolean.TRUE
+		).build();
+
 		String id = "1";
 
-		_indexDocument(documentSource, id);
+		_indexDocument(id, JsonData.of(documentFields));
 
-		GetResponse getResponse1 = _getDocument(id);
+		Map<String, JsonData> fields1 = _getFields(id);
 
-		Map<String, Object> map1 = getResponse1.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map1.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(fields1.get(_FIELD_NAME)));
 
 		Document document = new DocumentImpl();
 
@@ -538,28 +571,28 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(null, document);
 
+		Assert.assertEquals(200, updateDocumentResponse.getStatus());
+
+		Map<String, JsonData> fields2 = _getFields(id);
+
 		Assert.assertEquals(
-			RestStatus.OK.getStatus(), updateDocumentResponse.getStatus());
-
-		GetResponse getResponse2 = _getDocument(id);
-
-		Map<String, Object> map2 = getResponse2.getSource();
-
-		Assert.assertEquals(Boolean.FALSE.toString(), map2.get(_FIELD_NAME));
+			Boolean.FALSE.toString(), String.valueOf(fields2.get(_FIELD_NAME)));
 	}
 
 	@Test
-	public void testExecuteUpdateDocumentRequestScript() {
-		String documentSource = "{\"" + _FIELD_NAME + "\":\"true\"}";
+	public void testExecuteUpdateDocumentRequestScript() throws Exception {
+		Map<String, Object> documentFields = HashMapBuilder.<String, Object>put(
+			_FIELD_NAME, Boolean.TRUE
+		).build();
+
 		String id = "1";
 
-		_indexDocument(documentSource, id);
+		_indexDocument(id, JsonData.of(documentFields));
 
-		GetResponse getResponse1 = _getDocument(id);
+		Map<String, JsonData> fields1 = _getFields(id);
 
-		Map<String, Object> map1 = getResponse1.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map1.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(fields1.get(_FIELD_NAME)));
 
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(
@@ -569,18 +602,18 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 						"ctx._source.", _FIELD_NAME, "=\"false\" ")),
 				false);
 
+		Assert.assertEquals(200, updateDocumentResponse.getStatus());
+
+		Map<String, JsonData> fields2 = _getFields(id);
+
 		Assert.assertEquals(
-			RestStatus.OK.getStatus(), updateDocumentResponse.getStatus());
-
-		GetResponse getResponse2 = _getDocument(id);
-
-		Map<String, Object> map2 = getResponse2.getSource();
-
-		Assert.assertEquals(Boolean.FALSE.toString(), map2.get(_FIELD_NAME));
+			Boolean.FALSE.toString(), String.valueOf(fields2.get(_FIELD_NAME)));
 	}
 
 	@Test
-	public void testExecuteUpdateDocumentRequestScriptedUpsert() {
+	public void testExecuteUpdateDocumentRequestScriptedUpsert()
+		throws Exception {
+
 		String id = "1";
 
 		_updateDocumentWithAdapter(
@@ -590,11 +623,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 					"ctx._source.", _FIELD_NAME, "=\"true\" ")),
 			true);
 
-		GetResponse getResponse = _getDocument(id);
+		Map<String, JsonData> fields = _getFields(id);
 
-		Map<String, Object> map = getResponse.getSource();
-
-		Assert.assertEquals(Boolean.TRUE.toString(), map.get(_FIELD_NAME));
+		Assert.assertEquals(
+			Boolean.TRUE.toString(), String.valueOf(fields.get(_FIELD_NAME)));
 	}
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(
@@ -626,13 +658,22 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	private void _createIndex() {
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			_INDEX_NAME);
+		CreateIndexRequest.Builder builder = new CreateIndexRequest.Builder();
 
-		createIndexRequest.mapping(_MAPPING_SOURCE, XContentType.JSON);
+		builder.index(_INDEX_NAME);
+
+		builder.mappings(
+			TypeMapping.of(
+				typeMapping -> typeMapping.properties(
+					IndexUtil.getPropertiesMap(
+						JSONUtil.put(
+							"properties",
+							JSONUtil.put(
+								"matchDocument",
+								JSONUtil.put("type", "boolean")))))));
 
 		try {
-			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+			_elasticsearchIndicesClient.create(builder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -640,11 +681,11 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	private void _deleteIndex() {
-		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
-			_INDEX_NAME);
-
 		try {
-			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+			_elasticsearchIndicesClient.delete(
+				DeleteIndexRequest.of(
+					deleteIndexRequest -> deleteIndexRequest.index(
+						_INDEX_NAME)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -652,29 +693,48 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	}
 
 	private GetResponse _getDocument(String id) {
-		GetRequest getRequest = new GetRequest();
-
-		getRequest.id(id);
-		getRequest.index(_INDEX_NAME);
-
 		try {
-			return _restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+			return _elasticsearchClient.get(
+				GetRequest.of(
+					getRequest -> getRequest.id(
+						id
+					).index(
+						_INDEX_NAME
+					)),
+				JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	private void _indexDocument(String documentSource, String id) {
-		IndexRequest indexRequest = new IndexRequest(_INDEX_NAME);
+	private Map<String, JsonData> _getFields(String id) throws Exception {
+		GetResponse<JsonData> getResponse = _elasticsearchClient.get(
+			GetRequest.of(
+				getRequest -> getRequest.id(
+					id
+				).index(
+					_INDEX_NAME
+				)),
+			JsonData.class);
 
-		indexRequest.id(id);
-		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-		indexRequest.source(documentSource, XContentType.JSON);
-		indexRequest.type(IndexMappingsConstants.LIFERAY_DOCUMENT_TYPE);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(getResponse.source()));
+
+		return ConversionUtil.toJsonDataMap(jsonObject.toMap());
+	}
+
+	private void _indexDocument(String id, JsonData jsonData) {
+		IndexRequest.Builder<JsonData> indexRequestBuilder =
+			new IndexRequest.Builder<>();
+
+		indexRequestBuilder.document(jsonData);
+		indexRequestBuilder.id(id);
+		indexRequestBuilder.index(_INDEX_NAME);
+		indexRequestBuilder.refresh(Refresh.True);
 
 		try {
-			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+			_elasticsearchClient.index(indexRequestBuilder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -722,15 +782,12 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 	private static final String _INDEX_NAME = "test_request_index";
 
-	private static final String _MAPPING_SOURCE =
-		"{\"properties\":{\"matchDocument\":{\"type\":\"boolean\"}}}";
-
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static final Scripts _scripts = new ScriptsImpl();
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private IndicesClient _indicesClient;
-	private RestHighLevelClient _restHighLevelClient;
+	private ElasticsearchClient _elasticsearchClient;
+	private ElasticsearchIndicesClient _elasticsearchIndicesClient;
 	private SearchEngineAdapter _searchEngineAdapter;
 
 }

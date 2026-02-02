@@ -5,13 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.document;
 
-import com.liferay.petra.string.StringBundler;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.connection.helper.IndexCreationHelper;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.ElasticsearchIndexingFixture;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
+import com.liferay.portal.search.elasticsearch8.internal.util.IndexUtil;
 import com.liferay.portal.search.test.util.DocumentsAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -19,13 +25,6 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.PutMappingRequest;
-import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -103,7 +102,8 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 		}
 
 		@Override
-		public void contribute(CreateIndexRequest createIndexRequest) {
+		public void contribute(
+			CreateIndexRequest.Builder createIndexRequestBuilder) {
 		}
 
 		@Override
@@ -113,24 +113,41 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 
 		@Override
 		public void whenIndexCreated(String indexName) {
-			PutMappingRequest putMappingRequest = new PutMappingRequest(
-				indexName);
+			PutMappingRequest.Builder putMappingRequestBuilder =
+				new PutMappingRequest.Builder();
 
-			String source = StringBundler.concat(
-				"{ \"properties\": { \"", _CUSTOM_FIELD, "\" : { \"fields\": ",
-				"{ \"geopoint\" : { \"store\": true, \"type\": \"keyword\" } ",
-				"}, \"store\": true, \"type\": \"geo_point\" } } }");
+			putMappingRequestBuilder.index(indexName);
 
-			putMappingRequest.source(source, XContentType.JSON);
+			putMappingRequestBuilder.properties(
+				IndexUtil.getPropertiesMap(
+					JSONUtil.put(
+						"properties",
+						JSONUtil.put(
+							_CUSTOM_FIELD,
+							JSONUtil.put(
+								"fields",
+								JSONUtil.put(
+									"geopoint",
+									JSONUtil.put(
+										"store", true
+									).put(
+										"type", "keyword"
+									))
+							).put(
+								"store", "true"
+							).put(
+								"type", "geo_point"
+							)))));
 
-			RestHighLevelClient restHighLevelClient =
-				_elasticsearchClientResolver.getRestHighLevelClient();
+			ElasticsearchClient elasticsearchClient =
+				_elasticsearchClientResolver.getElasticsearchClient();
 
-			IndicesClient indicesClient = restHighLevelClient.indices();
+			ElasticsearchIndicesClient elasticsearchIndicesClient =
+				elasticsearchClient.indices();
 
 			try {
-				indicesClient.putMapping(
-					putMappingRequest, RequestOptions.DEFAULT);
+				elasticsearchIndicesClient.putMapping(
+					putMappingRequestBuilder.build());
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);

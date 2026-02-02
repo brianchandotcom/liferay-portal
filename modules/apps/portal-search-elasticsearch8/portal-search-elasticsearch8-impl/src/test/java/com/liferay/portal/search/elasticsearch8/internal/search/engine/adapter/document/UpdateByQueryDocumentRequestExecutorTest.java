@@ -5,18 +5,21 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.core.UpdateByQueryRequest;
+
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -95,14 +98,14 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 				updateByQueryDocumentRequest);
 
 		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, updateByQueryRequest.indices());
+			new String[] {_INDEX_NAME},
+			ArrayUtil.toStringArray(updateByQueryRequest.index()));
 
 		Assert.assertEquals(
 			updateByQueryDocumentRequest.isRefresh(),
-			updateByQueryRequest.isRefresh());
+			GetterUtil.getBoolean(updateByQueryRequest.refresh()));
 
-		String queryString = String.valueOf(
-			updateByQueryRequest.getSearchRequest());
+		String queryString = JsonpUtil.toString(updateByQueryRequest);
 
 		Assert.assertTrue(queryString.contains(_FIELD_NAME));
 		Assert.assertTrue(queryString.contains("\"value\":\"true\""));

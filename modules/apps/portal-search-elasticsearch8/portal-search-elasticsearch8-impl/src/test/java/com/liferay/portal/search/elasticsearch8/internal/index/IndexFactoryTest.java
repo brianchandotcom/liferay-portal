@@ -5,6 +5,19 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.mapping.DynamicTemplate;
+import co.elastic.clients.elasticsearch._types.mapping.Property;
+import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
+import co.elastic.clients.elasticsearch.indices.GetMappingRequest;
+import co.elastic.clients.elasticsearch.indices.GetMappingResponse;
+import co.elastic.clients.elasticsearch.indices.IndexSettings;
+import co.elastic.clients.elasticsearch.indices.IndexState;
+import co.elastic.clients.elasticsearch.indices.get_mapping.IndexMappingRecord;
+import co.elastic.clients.util.NamedValue;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -15,7 +28,7 @@ import com.liferay.portal.search.elasticsearch8.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch8.internal.document.SingleFieldFixture;
-import com.liferay.portal.search.elasticsearch8.internal.query.QueryBuilderFactories;
+import com.liferay.portal.search.elasticsearch8.internal.query.QueryFactories;
 import com.liferay.portal.search.elasticsearch8.internal.util.ResourceUtil;
 import com.liferay.portal.search.spi.index.configuration.contributor.CompanyIndexConfigurationContributor;
 import com.liferay.portal.search.spi.index.configuration.contributor.helper.MappingsHelper;
@@ -24,22 +37,10 @@ import com.liferay.portal.search.spi.index.listener.CompanyIndexListener;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsRequest;
-import org.elasticsearch.action.admin.indices.mapping.get.GetMappingsResponse;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetIndexResponse;
-import org.elasticsearch.cluster.metadata.MappingMetadata;
-import org.elasticsearch.common.collect.ImmutableOpenMap;
-import org.elasticsearch.common.settings.Settings;
 
 import org.hamcrest.CoreMatchers;
 
@@ -110,10 +111,10 @@ public class IndexFactoryTest {
 		);
 
 		_singleFieldFixture = new SingleFieldFixture(
-			_elasticsearchFixture.getRestHighLevelClient(),
+			_elasticsearchFixture.getElasticsearchClient(),
 			new IndexName(_indexFactoryFixture.getIndexName()));
 
-		_singleFieldFixture.setQueryBuilderFactory(QueryBuilderFactories.MATCH);
+		_singleFieldFixture.setQueryFactory(QueryFactories.MATCH);
 	}
 
 	@After
@@ -673,12 +674,12 @@ public class IndexFactoryTest {
 	protected void assertAnalyzer(String analyzer, String field)
 		throws Exception {
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchFixture.getElasticsearchClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, _indexFactoryFixture.getIndexName(),
-			restHighLevelClient.indices());
+			analyzer, elasticsearchClient.indices(), field,
+			_indexFactoryFixture.getIndexName());
 	}
 
 	protected void assertNoAnalyzer(String field) throws Exception {
@@ -690,31 +691,34 @@ public class IndexFactoryTest {
 	}
 
 	protected void assertType(String field, String type) throws Exception {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchFixture.getElasticsearchClient();
 
 		FieldMappingAssert.assertType(
-			type, field, _indexFactoryFixture.getIndexName(),
-			restHighLevelClient.indices());
+			type, elasticsearchClient.indices(), field,
+			_indexFactoryFixture.getIndexName());
 	}
 
 	protected void deleteIndex() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchFixture.getElasticsearchClient();
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
-		_indexFactory.deleteIndex(RandomTestUtil.randomLong(), indicesClient);
+		_indexFactory.deleteIndex(
+			RandomTestUtil.randomLong(), elasticsearchIndicesClient);
 	}
 
 	protected void initializeIndex() throws Exception {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchFixture.getElasticsearchClient();
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		_indexFactory.initializeIndex(
-			RandomTestUtil.randomLong(), indicesClient);
+			RandomTestUtil.randomLong(), elasticsearchIndicesClient);
 	}
 
 	protected static class TestCompanyIndexConfigurationContributor
@@ -733,41 +737,38 @@ public class IndexFactoryTest {
 	}
 
 	private void _assertAdditionalTypeMappings() throws Exception {
-		GetMappingsRequest getMappingsRequest = new GetMappingsRequest();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchFixture.getElasticsearchClient();
 
-		getMappingsRequest.indices(_indexFactoryFixture.getIndexName());
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
-		GetMappingsResponse getMappingsResponse = _getGetMappingsResponse(
-			getMappingsRequest);
+		GetMappingResponse getMappingResponse =
+			elasticsearchIndicesClient.getMapping(
+				GetMappingRequest.of(
+					getMappingRequest -> getMappingRequest.index(
+						_indexFactoryFixture.getIndexName())));
 
-		ImmutableOpenMap<String, ImmutableOpenMap<String, MappingMetadata>>
-			mappingsResponseMappings = getMappingsResponse.getMappings();
+		Map<String, IndexMappingRecord> result = getMappingResponse.result();
 
-		ImmutableOpenMap<String, MappingMetadata> mappings =
-			mappingsResponseMappings.get(_indexFactoryFixture.getIndexName());
+		IndexMappingRecord indexMappingRecord = result.get(
+			_indexFactoryFixture.getIndexName());
 
-		MappingMetadata mappingMetadata = mappings.get("_doc");
+		TypeMapping typeMapping = indexMappingRecord.mappings();
 
-		Map<String, Object> sourceMap = mappingMetadata.getSourceAsMap();
+		List<NamedValue<DynamicTemplate>> dynamicTemplatesList =
+			typeMapping.dynamicTemplates();
 
-		ArrayList<Object> dynamicTemplates = (ArrayList<Object>)sourceMap.get(
-			"dynamic_templates");
+		NamedValue<DynamicTemplate> dynamicTemplateNamedValue =
+			dynamicTemplatesList.get(0);
 
-		Map<String, Object> dynamicTemplate =
-			(Map<String, Object>)dynamicTemplates.get(0);
+		DynamicTemplate dynamicTemplate = dynamicTemplateNamedValue.value();
 
-		Map<String, Object> dynamicTemplateProperties =
-			(Map<String, Object>)dynamicTemplate.get(
-				"template_additional_mapping");
+		Assert.assertEquals("*_additional_mapping", dynamicTemplate.match());
 
-		Assert.assertEquals(
-			"*_additional_mapping", dynamicTemplateProperties.get("match"));
+		Property property = dynamicTemplate.mapping();
 
-		Map<String, Object> dynamicTemplateMappingProperties =
-			(Map<String, Object>)dynamicTemplateProperties.get("mapping");
-
-		Assert.assertEquals(
-			"keyword", dynamicTemplateMappingProperties.get("type"));
+		Assert.assertTrue(property.isKeyword());
 
 		assertType("additionalKeyword", "keyword");
 		assertType("additionalText", "text");
@@ -789,14 +790,15 @@ public class IndexFactoryTest {
 	private void _assertIndexSettings(
 		int numberOfReplicas, int numberOfShards) {
 
-		Settings settings = _getIndexSettings();
+		IndexSettings indexSettings1 = _getIndexSettings();
+
+		IndexSettings indexSettings2 = indexSettings1.index();
 
 		Assert.assertEquals(
 			String.valueOf(numberOfReplicas),
-			settings.get("index.number_of_replicas"));
+			indexSettings2.numberOfReplicas());
 		Assert.assertEquals(
-			String.valueOf(numberOfShards),
-			settings.get("index.number_of_shards"));
+			String.valueOf(numberOfShards), indexSettings2.numberOfShards());
 	}
 
 	private void _assertMappings(String... fieldNames) {
@@ -805,15 +807,15 @@ public class IndexFactoryTest {
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
 			indexName);
 
-		Map<String, MappingMetadata> mappings = getIndexResponse.getMappings();
+		IndexState indexState = getIndexResponse.get(indexName);
 
-		MappingMetadata mappingMetadata = mappings.get(indexName);
+		TypeMapping typeMapping = indexState.mappings();
 
-		Map<String, Object> map = _getPropertiesMap(mappingMetadata);
+		Map<String, Property> properties = typeMapping.properties();
 
-		Set<String> set = map.keySet();
+		Set<String> keySet = properties.keySet();
 
-		Assert.assertThat(set, CoreMatchers.hasItems(fieldNames));
+		Assert.assertThat(keySet, CoreMatchers.hasItems(fieldNames));
 	}
 
 	private String _getAdditionalTypeMappings() {
@@ -826,32 +828,15 @@ public class IndexFactoryTest {
 		}
 	}
 
-	private GetMappingsResponse _getGetMappingsResponse(
-		GetMappingsRequest getMappingsRequest) {
-
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchFixture.getRestHighLevelClient();
-
-		IndicesClient indicesClient = restHighLevelClient.indices();
-
-		try {
-			return indicesClient.getMapping(
-				getMappingsRequest, RequestOptions.DEFAULT);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-	}
-
-	private Settings _getIndexSettings() {
+	private IndexSettings _getIndexSettings() {
 		String name = _indexFactoryFixture.getIndexName();
 
 		GetIndexResponse getIndexResponse = _elasticsearchFixture.getIndex(
 			name);
 
-		Map<String, Settings> map = getIndexResponse.getSettings();
+		IndexState indexState = getIndexResponse.get(name);
 
-		return map.get(name);
+		return indexState.settings();
 	}
 
 	private String _getLegacyAdditionalTypeMappings() {
@@ -883,14 +868,6 @@ public class IndexFactoryTest {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	private Map<String, Object> _getPropertiesMap(
-		MappingMetadata mappingMetadata) {
-
-		Map<String, Object> map = mappingMetadata.getSourceAsMap();
-
-		return (Map<String, Object>)map.get("properties");
 	}
 
 	private void _indexOneDocument(String field) {

@@ -5,16 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection.helper;
 
-import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
 
-import org.elasticsearch.client.indices.CreateIndexRequest;
+import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
 
 /**
  * @author André de Oliveira
  */
 public interface IndexCreationHelper {
 
-	public void contribute(CreateIndexRequest createIndexRequest);
+	public void contribute(CreateIndexRequest.Builder builder);
 
 	public void contributeIndexSettings(SettingsHelperImpl settingsHelperImpl);
 

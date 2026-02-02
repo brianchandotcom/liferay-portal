@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.URLUtil;
@@ -18,7 +20,6 @@ import org.apache.http.HttpHost;
 
 import org.elasticsearch.client.Node;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.hamcrest.CoreMatchers;
 
@@ -77,10 +78,13 @@ public class ElasticsearchConnectionHttpTest {
 	}
 
 	protected int getHttpPort() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionFixture.getRestHighLevelClient();
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnectionFixture.getElasticsearchConnection();
 
-		RestClient restClient = restHighLevelClient.getLowLevelClient();
+		RestClientTransport restClientTransport =
+			elasticsearchConnection.getRestClientTransport();
+
+		RestClient restClient = restClientTransport.restClient();
 
 		List<Node> nodes = restClient.getNodes();
 

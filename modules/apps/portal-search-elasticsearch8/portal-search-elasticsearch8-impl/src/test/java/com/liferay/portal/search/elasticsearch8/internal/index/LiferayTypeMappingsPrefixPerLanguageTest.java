@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.index;
 
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch8.internal.document.SingleFieldFixture;
-import com.liferay.portal.search.elasticsearch8.internal.query.QueryBuilderFactories;
+import com.liferay.portal.search.elasticsearch8.internal.query.QueryFactories;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -35,10 +35,9 @@ public class LiferayTypeMappingsPrefixPerLanguageTest {
 		_liferayIndexFixture.setUp();
 
 		_singleFieldFixture = new SingleFieldFixture(
-			_liferayIndexFixture.getRestHighLevelClient(), indexName);
+			_liferayIndexFixture.getElasticsearchClient(), indexName);
 
-		_singleFieldFixture.setQueryBuilderFactory(
-			QueryBuilderFactories.MATCH_PHRASE_PREFIX);
+		_singleFieldFixture.setQueryFactory(QueryFactories.MATCH_PHRASE_PREFIX);
 	}
 
 	@After

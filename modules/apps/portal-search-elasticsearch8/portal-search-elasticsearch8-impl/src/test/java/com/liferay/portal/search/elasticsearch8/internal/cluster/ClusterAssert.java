@@ -24,7 +24,7 @@ public class ClusterAssert {
 			String.valueOf(healthExpectations),
 			String.valueOf(
 				new HealthExpectations(
-					ClusterHealthResponseUtil.getClusterHealthResponse(
+					ClusterHealthResponseUtil.getHealthResponse(
 						elasticsearchClientResolver, healthExpectations))));
 	}
 

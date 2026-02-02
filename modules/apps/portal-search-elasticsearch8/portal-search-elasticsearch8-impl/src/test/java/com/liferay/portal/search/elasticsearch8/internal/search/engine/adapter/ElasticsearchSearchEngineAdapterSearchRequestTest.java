@@ -5,9 +5,22 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Refresh;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -25,6 +38,7 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
+import com.liferay.portal.search.elasticsearch8.internal.util.IndexUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeResponse;
@@ -44,18 +58,6 @@ import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.support.WriteRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.PutMappingRequest;
-import org.elasticsearch.xcontent.XContentType;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -109,9 +111,9 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 
 		_searchEngineAdapter = createSearchEngineAdapter(_elasticsearchFixture);
 
-		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
+		_elasticsearchClient = _elasticsearchFixture.getElasticsearchClient();
 
-		_indicesClient = _restHighLevelClient.indices();
+		_elasticsearchIndicesClient = _elasticsearchClient.indices();
 
 		_createIndex();
 
@@ -401,11 +403,11 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	}
 
 	private void _createIndex() {
-		CreateIndexRequest createIndexRequest = new CreateIndexRequest(
-			_INDEX_NAME);
-
 		try {
-			_indicesClient.create(createIndexRequest, RequestOptions.DEFAULT);
+			_elasticsearchIndicesClient.create(
+				CreateIndexRequest.of(
+					createIndexRequest -> createIndexRequest.index(
+						_INDEX_NAME)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -427,25 +429,27 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	}
 
 	private void _deleteIndex() {
-		DeleteIndexRequest deleteIndexRequest = new DeleteIndexRequest(
-			_INDEX_NAME);
-
 		try {
-			_indicesClient.delete(deleteIndexRequest, RequestOptions.DEFAULT);
+			_elasticsearchIndicesClient.delete(
+				DeleteIndexRequest.of(
+					deleteIndexRequest -> deleteIndexRequest.index(
+						_INDEX_NAME)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
 	}
 
-	private GetResponse _getDocument(String id) {
-		GetRequest getRequest = new GetRequest();
-
-		getRequest.id(id);
-		getRequest.index(_INDEX_NAME);
-
+	private GetResponse<JsonData> _getDocument(String id) {
 		try {
-			return _restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+			return _elasticsearchClient.get(
+				GetRequest.of(
+					getRequest -> getRequest.id(
+						id
+					).index(
+						_INDEX_NAME
+					)),
+				JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -466,17 +470,18 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 	}
 
 	private void _indexDocument(Document document) {
-		IndexRequest indexRequest = new IndexRequest(_INDEX_NAME);
+		IndexRequest.Builder<JsonData> indexRequestBuilder =
+			new IndexRequest.Builder<>();
 
-		indexRequest.id(document.getUID());
-		indexRequest.setRefreshPolicy(WriteRequest.RefreshPolicy.IMMEDIATE);
-
-		indexRequest.source(
-			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(document),
-			XContentType.JSON);
+		indexRequestBuilder.document(
+			ElasticsearchDocumentFactoryUtil.getElasticsearchDocument(
+				document));
+		indexRequestBuilder.id(document.getUID());
+		indexRequestBuilder.index(_INDEX_NAME);
+		indexRequestBuilder.refresh(Refresh.True);
 
 		try {
-			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+			_elasticsearchClient.index(indexRequestBuilder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -499,18 +504,22 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		GetResponse getResponse = _getDocument(_getUID(value));
 
 		Assert.assertTrue(
-			"Expected document added: " + value, getResponse.isExists());
+			"Expected document added: " + value, getResponse.found());
 	}
 
-	private void _putMapping(String mappingSource) {
-		PutMappingRequest putMappingRequest = new PutMappingRequest(
-			_INDEX_NAME);
+	private void _putMapping(String mappingSource) throws Exception {
+		JSONObject mappingsJSONObject = JSONFactoryUtil.createJSONObject(
+			mappingSource);
 
-		putMappingRequest.source(mappingSource, XContentType.JSON);
+		PutMappingRequest.Builder builder = new PutMappingRequest.Builder();
+
+		builder.dynamicTemplates(
+			IndexUtil.getDynamicTemplatesMap(mappingsJSONObject));
+		builder.index(_INDEX_NAME);
+		builder.properties(IndexUtil.getPropertiesMap(mappingsJSONObject));
 
 		try {
-			_indicesClient.putMapping(
-				putMappingRequest, RequestOptions.DEFAULT);
+			_elasticsearchIndicesClient.putMapping(builder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -541,8 +550,8 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
-	private IndicesClient _indicesClient;
-	private RestHighLevelClient _restHighLevelClient;
+	private ElasticsearchClient _elasticsearchClient;
+	private ElasticsearchIndicesClient _elasticsearchIndicesClient;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestExecutorFixture _searchRequestExecutorFixture;
 

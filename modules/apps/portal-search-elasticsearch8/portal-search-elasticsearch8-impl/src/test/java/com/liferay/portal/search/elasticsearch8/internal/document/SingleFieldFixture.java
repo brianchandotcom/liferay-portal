@@ -5,17 +5,17 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch8.internal.query.QueryBuilderFactory;
+import com.liferay.portal.search.elasticsearch8.internal.query.QueryFactory;
 import com.liferay.portal.search.elasticsearch8.internal.query.SearchAssert;
 
 import java.io.IOException;
-
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.Requests;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author André de Oliveira
@@ -23,30 +23,36 @@ import org.elasticsearch.index.query.QueryBuilder;
 public class SingleFieldFixture {
 
 	public SingleFieldFixture(
-		RestHighLevelClient restHighLevelClient, IndexName indexName) {
+		ElasticsearchClient elasticsearchClient, IndexName indexName) {
 
-		_restHighLevelClient = restHighLevelClient;
+		_elasticsearchClient = elasticsearchClient;
 
 		_index = indexName.getName();
 	}
 
 	public void assertNoHits(String text) throws Exception {
 		SearchAssert.assertNoHits(
-			_restHighLevelClient, _field, _createQueryBuilder(text));
+			_elasticsearchClient, _field, _createQuery(text));
 	}
 
 	public void assertSearch(String text, String... expected) throws Exception {
 		SearchAssert.assertSearch(
-			_restHighLevelClient, _field, _createQueryBuilder(text), expected);
+			_elasticsearchClient, _field, _createQuery(text), expected);
 	}
 
 	public void indexDocument(Object value) {
-		IndexRequest indexRequest = Requests.indexRequest(_index);
+		IndexRequest.Builder<JsonData> indexRequestBuilder =
+			new IndexRequest.Builder<>();
 
-		indexRequest.source(_field, value);
+		indexRequestBuilder.document(
+			JsonData.of(
+				HashMapBuilder.put(
+					_field, value
+				).build()));
+		indexRequestBuilder.index(_index);
 
 		try {
-			_restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+			_elasticsearchClient.index(indexRequestBuilder.build());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -57,19 +63,17 @@ public class SingleFieldFixture {
 		_field = field;
 	}
 
-	public void setQueryBuilderFactory(
-		QueryBuilderFactory queryBuilderFactory) {
-
-		_queryBuilderFactory = queryBuilderFactory;
+	public void setQueryFactory(QueryFactory queryFactory) {
+		_queryFactory = queryFactory;
 	}
 
-	private QueryBuilder _createQueryBuilder(String text) {
-		return _queryBuilderFactory.create(_field, text);
+	private Query _createQuery(String text) {
+		return _queryFactory.create(_field, text);
 	}
 
+	private final ElasticsearchClient _elasticsearchClient;
 	private String _field;
 	private final String _index;
-	private QueryBuilderFactory _queryBuilderFactory;
-	private final RestHighLevelClient _restHighLevelClient;
+	private QueryFactory _queryFactory;
 
 }

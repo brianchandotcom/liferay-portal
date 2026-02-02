@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.pipeline.ElasticsearchPipelineAggregationTranslatorFixture;
-
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 
 /**
  * @author Michael C. Han
@@ -21,7 +21,7 @@ public class ElasticsearchAggregationTranslatorFixture {
 			pipelineAggregationTranslatorFixture =
 				new ElasticsearchPipelineAggregationTranslatorFixture();
 
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
+		PipelineAggregationTranslator<Aggregation>
 			pipelineAggregationTranslator =
 				pipelineAggregationTranslatorFixture.
 					getElasticsearchPipelineAggregationTranslator();

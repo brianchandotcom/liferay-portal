@@ -37,16 +37,17 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, boolean enabled,
-			String issuer, String jwksUri, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpointString, String userinfoEndpoint)
+			long userId, String issuer, boolean localWellKnownEnabled,
+			String authorizationEndpoint, String jwksUri,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpointString,
+			String userinfoEndpoint)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
-			userId, authorizationEndpoint, enabled, issuer, jwksUri,
-			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-			tokenEndpointString, userinfoEndpoint);
+			userId, issuer, localWellKnownEnabled, authorizationEndpoint,
+			jwksUri, supportedGrantTypes, supportedScopes,
+			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
@@ -375,17 +376,18 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			boolean enabled, String issuer, String jwksUri,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpointString,
-			String userinfoEndpoint)
+			long oAuthClientASLocalMetadataId, String issuer,
+			boolean localWellKnownEnabled, String authorizationEndpoint,
+			String jwksUri, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException {
 
 		return getService().updateOAuthClientASLocalMetadata(
-			oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
-			issuer, jwksUri, supportedGrantTypes, supportedScopes,
-			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
+			oAuthClientASLocalMetadataId, issuer, localWellKnownEnabled,
+			authorizationEndpoint, jwksUri, supportedGrantTypes,
+			supportedScopes, supportedSubjectTypes, tokenEndpointString,
+			userinfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(

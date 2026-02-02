@@ -53,10 +53,11 @@ public interface OAuthClientASLocalMetadataLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client as local metadata local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientASLocalMetadataLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String authorizationEndpoint, boolean enabled,
-			String issuer, String jwksUri, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpointString, String userinfoEndpoint)
+			long userId, String issuer, boolean localWellKnownEnabled,
+			String authorizationEndpoint, String jwksUri,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpointString,
+			String userinfoEndpoint)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
@@ -307,11 +308,11 @@ public interface OAuthClientASLocalMetadataLocalService
 		long userId, int start, int end);
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			boolean enabled, String issuer, String jwksUri,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpointString,
-			String userinfoEndpoint)
+			long oAuthClientASLocalMetadataId, String issuer,
+			boolean localWellKnownEnabled, String authorizationEndpoint,
+			String jwksUri, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpointString, String userinfoEndpoint)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(

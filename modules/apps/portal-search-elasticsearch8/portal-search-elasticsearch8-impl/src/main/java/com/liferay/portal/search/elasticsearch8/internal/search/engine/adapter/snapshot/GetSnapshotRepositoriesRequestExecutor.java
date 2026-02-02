@@ -6,6 +6,8 @@
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
 import co.elastic.clients.elasticsearch.snapshot.ElasticsearchSnapshotClient;
 import co.elastic.clients.elasticsearch.snapshot.GetRepositoryRequest;
 import co.elastic.clients.elasticsearch.snapshot.GetRepositoryResponse;
@@ -25,9 +27,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetai
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
-
-import org.elasticsearch.ElasticsearchStatusException;
-import org.elasticsearch.repositories.RepositoryMissingException;
+import org.apache.hc.core5.http.HttpStatus;
 
 /**
  * @author Michael C. Han
@@ -46,37 +46,28 @@ public class GetSnapshotRepositoriesRequestExecutor {
 		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
 			new GetSnapshotRepositoriesResponse();
 
-		try {
-			GetRepositoryResponse getRepositoryResponse =
-				_getGetRepositoryResponse(
-					_createGetRepositoryRequest(getSnapshotRepositoriesRequest),
-					getSnapshotRepositoriesRequest);
+		GetRepositoryResponse getRepositoryResponse = _getGetRepositoryResponse(
+			createGetRepositoryRequest(getSnapshotRepositoriesRequest),
+			getSnapshotRepositoriesRequest);
 
-			MapUtil.isNotEmptyForEach(
-				getRepositoryResponse.result(),
-				(name, repository) -> {
-					Repository.Kind kind = repository._kind();
-					SharedFileSystemRepository sharedFileSystemRepository =
-						repository.fs();
+		MapUtil.isNotEmptyForEach(
+			getRepositoryResponse.result(),
+			(name, repository) -> {
+				Repository.Kind kind = repository._kind();
+				SharedFileSystemRepository sharedFileSystemRepository =
+					repository.fs();
 
-					getSnapshotRepositoriesResponse.
-						addSnapshotRepositoryMetadata(
-							new SnapshotRepositoryDetails(
-								name, kind.jsonValue(),
-								JsonpUtil.toString(
-									sharedFileSystemRepository.settings())));
-				});
-		}
-		catch (RepositoryMissingException repositoryMissingException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(repositoryMissingException);
-			}
-		}
+				getSnapshotRepositoriesResponse.addSnapshotRepositoryMetadata(
+					new SnapshotRepositoryDetails(
+						name, kind.jsonValue(),
+						JsonpUtil.toString(
+							sharedFileSystemRepository.settings())));
+			});
 
 		return getSnapshotRepositoriesResponse;
 	}
 
-	private GetRepositoryRequest _createGetRepositoryRequest(
+	protected GetRepositoryRequest createGetRepositoryRequest(
 		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest) {
 
 		return GetRepositoryRequest.of(
@@ -101,16 +92,26 @@ public class GetSnapshotRepositoriesRequestExecutor {
 			return elasticsearchSnapshotClient.getRepository(
 				getRepositoryRequest);
 		}
-		catch (ElasticsearchStatusException elasticsearchStatusException) {
-			String message = elasticsearchStatusException.getMessage();
+		catch (ElasticsearchException elasticsearchException) {
+			if (_log.isDebugEnabled() &&
+				(elasticsearchException.status() == HttpStatus.SC_NOT_FOUND)) {
 
-			if (message.contains("type=repository_missing_exception")) {
-				throw new RepositoryMissingException(
-					StringUtils.substringBetween(
-						message, "reason=[", "] missing"));
+				ErrorCause errorCause = elasticsearchException.error();
+
+				String type = errorCause.type();
+
+				if (type.equals("repository_missing_exception")) {
+					String repository = StringUtils.substringBetween(
+						elasticsearchException.getMessage(), "reason=[",
+						"] missing");
+
+					_log.debug("Missing repository " + repository);
+
+					return null;
+				}
 			}
 
-			throw elasticsearchStatusException;
+			throw elasticsearchException;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

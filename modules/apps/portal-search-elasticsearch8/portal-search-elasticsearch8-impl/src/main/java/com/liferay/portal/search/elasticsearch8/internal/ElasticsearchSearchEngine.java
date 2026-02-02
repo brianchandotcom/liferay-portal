@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
 import co.elastic.clients.elasticsearch.cluster.GetClusterSettingsResponse;
 import co.elastic.clients.elasticsearch.cluster.PutClusterSettingsRequest;
@@ -76,9 +77,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
-import org.elasticsearch.ElasticsearchStatusException;
-import org.elasticsearch.common.Strings;
-import org.elasticsearch.rest.RestStatus;
+import org.apache.http.HttpStatus;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -298,29 +297,28 @@ public class ElasticsearchSearchEngine
 						putClusterSettingsRequest.persistent(
 							"action.auto_create_index", jsonData)));
 		}
-		catch (ElasticsearchStatusException elasticsearchStatusException) {
+		catch (ElasticsearchException elasticsearchException) {
 			if (Objects.equals(
-					elasticsearchStatusException.status(),
-					RestStatus.FORBIDDEN) ||
+					elasticsearchException.status(), HttpStatus.SC_FORBIDDEN) ||
 				Objects.equals(
-					elasticsearchStatusException.status(),
-					RestStatus.UNAUTHORIZED)) {
+					elasticsearchException.status(),
+					HttpStatus.SC_UNAUTHORIZED)) {
 
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("Unable to update cluster auto create index ");
 				sb.append("setting due to lack of permissions. This can lead ");
 				sb.append("to incorrectly created index mappings: ");
-				sb.append(elasticsearchStatusException.getMessage());
+				sb.append(elasticsearchException.getMessage());
 
 				_log.error(sb.toString());
 
 				if (_log.isDebugEnabled()) {
-					_log.debug(elasticsearchStatusException);
+					_log.debug(elasticsearchException);
 				}
 			}
 			else {
-				_log.error(elasticsearchStatusException);
+				_log.error(elasticsearchException);
 			}
 		}
 		catch (IOException ioException) {
@@ -614,7 +612,7 @@ public class ElasticsearchSearchEngine
 		}
 
 		for (char c : backupName.toCharArray()) {
-			if (Strings.INVALID_FILENAME_CHARS.contains(c)) {
+			if (_invalidFileNameChars.contains(c)) {
 				throw new SearchException(
 					"Backup name must not contain invalid file name " +
 						"characters");
@@ -656,6 +654,8 @@ public class ElasticsearchSearchEngine
 		_crossClusterReplicationHelperSnapshot = new Snapshot(
 			ElasticsearchSearchEngine.class,
 			CrossClusterReplicationHelper.class, null, true);
+	private static final Set<Character> _invalidFileNameChars = Set.of(
+		'\\', '/', '*', '?', '"', '<', '>', '|', ' ', ',');
 
 	@Reference
 	private CompanyIndexHelper _companyIndexHelper;

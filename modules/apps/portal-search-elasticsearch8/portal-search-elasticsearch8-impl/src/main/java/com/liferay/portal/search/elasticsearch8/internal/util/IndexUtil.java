@@ -86,6 +86,57 @@ public class IndexUtil {
 		return dynamicTemplates;
 	}
 
+	public static List<NamedValue<DynamicTemplate>> getDynamicTemplatesMap(
+		JSONObject mappingsJSONObject) {
+
+		JSONArray dynamicTemplatesJSONArray = mappingsJSONObject.getJSONArray(
+			"dynamic_templates");
+
+		if (dynamicTemplatesJSONArray == null) {
+			return null;
+		}
+
+		JsonpMapper jsonpMapper = JsonpUtil.getJsonpMapper();
+
+		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+
+		List<NamedValue<DynamicTemplate>> dynamicTemplates = new ArrayList<>();
+
+		for (int i = 0; i < dynamicTemplatesJSONArray.length(); i++) {
+			JSONObject dynamicTemplateJSONObject =
+				dynamicTemplatesJSONArray.getJSONObject(i);
+
+			for (String dynamicTemplateName :
+					dynamicTemplateJSONObject.keySet()) {
+
+				JSONObject templateJSONObject =
+					dynamicTemplateJSONObject.getJSONObject(
+						dynamicTemplateName);
+
+				_convertElasticearchDynamicTemplate(templateJSONObject);
+
+				String dynamicTemplateString = templateJSONObject.toString();
+
+				try (InputStream inputStream = new ByteArrayInputStream(
+						dynamicTemplateString.getBytes(
+							StandardCharsets.UTF_8))) {
+
+					dynamicTemplates.add(
+						new NamedValue<DynamicTemplate>(
+							dynamicTemplateName,
+							DynamicTemplate._DESERIALIZER.deserialize(
+								jsonProvider.createParser(inputStream),
+								jsonpMapper)));
+				}
+				catch (IOException ioException) {
+					throw new RuntimeException(ioException);
+				}
+			}
+		}
+
+		return dynamicTemplates;
+	}
+
 	public static Map<String, Property> getPropertiesMap(
 		JSONObject mappingsJSONObject) {
 
@@ -184,6 +235,26 @@ public class IndexUtil {
 			else {
 				jsonObject.put(key, mergeJSONObject.get(key));
 			}
+		}
+	}
+
+	private static void _convertElasticearchDynamicTemplate(
+		JSONObject templateJSONObject) {
+
+		JSONObject mappingJSONObject = templateJSONObject.getJSONObject(
+			"mapping");
+
+		if (mappingJSONObject.has("dims")) {
+			int dims = mappingJSONObject.getInt("dims");
+
+			mappingJSONObject.remove("dims");
+			mappingJSONObject.put("dimension", dims);
+		}
+
+		String type = mappingJSONObject.getString("type");
+
+		if (StringUtil.equals(type, "dense_vector")) {
+			mappingJSONObject.put("type", "knn_vector");
 		}
 	}
 

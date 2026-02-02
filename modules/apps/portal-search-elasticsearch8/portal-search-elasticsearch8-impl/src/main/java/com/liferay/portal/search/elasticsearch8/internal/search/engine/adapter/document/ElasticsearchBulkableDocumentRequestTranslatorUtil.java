@@ -19,8 +19,6 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
 import java.util.Collections;
 
-import org.elasticsearch.action.get.GetRequest;
-
 /**
  * @author Michael C. Han
  */
@@ -37,7 +35,7 @@ public class ElasticsearchBulkableDocumentRequestTranslatorUtil {
 		return builder.build();
 	}
 
-	public static GetRequest translate(GetDocumentRequest getDocumentRequest) {
+	public static Object translate(GetDocumentRequest getDocumentRequest) {
 		throw new UnsupportedOperationException();
 	}
 

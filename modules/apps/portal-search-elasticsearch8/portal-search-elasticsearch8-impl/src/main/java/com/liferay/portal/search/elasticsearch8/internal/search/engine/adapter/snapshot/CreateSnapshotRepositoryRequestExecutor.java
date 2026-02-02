@@ -35,14 +35,14 @@ public class CreateSnapshotRepositoryRequestExecutor {
 
 		CreateRepositoryResponse createRepositoryResponse =
 			_getCreateRepositoryResponse(
-				_createCreateRepositoryRequest(createSnapshotRepositoryRequest),
+				createCreateRepositoryRequest(createSnapshotRepositoryRequest),
 				createSnapshotRepositoryRequest);
 
 		return new CreateSnapshotRepositoryResponse(
 			createRepositoryResponse.acknowledged());
 	}
 
-	private CreateRepositoryRequest _createCreateRepositoryRequest(
+	protected CreateRepositoryRequest createCreateRepositoryRequest(
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
 		String type = createSnapshotRepositoryRequest.getType();

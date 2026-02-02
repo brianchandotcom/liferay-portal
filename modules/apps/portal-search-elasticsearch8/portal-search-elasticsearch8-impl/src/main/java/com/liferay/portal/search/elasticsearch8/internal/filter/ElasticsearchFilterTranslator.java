@@ -343,7 +343,7 @@ public class ElasticsearchFilterTranslator
 
 	@Activate
 	protected void activate() {
-		_queryTranslator = new ElasticsearchQueryTranslator(_indexNameBuilder);
+		_queryTranslator = new ElasticsearchQueryTranslator(indexNameBuilder);
 	}
 
 	protected QueryVariant translate(
@@ -355,11 +355,10 @@ public class ElasticsearchFilterTranslator
 		return filter.accept(filterVisitor);
 	}
 
-	private final GeoTranslator _geoTranslator = new GeoTranslator();
-
 	@Reference
-	private IndexNameBuilder _indexNameBuilder;
+	protected IndexNameBuilder indexNameBuilder;
 
+	private final GeoTranslator _geoTranslator = new GeoTranslator();
 	private QueryTranslator<QueryVariant> _queryTranslator;
 
 }

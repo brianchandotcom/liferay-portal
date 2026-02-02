@@ -40,7 +40,7 @@ public class StatsIndexRequestExecutor {
 		try {
 			IndicesStatsResponse indicesStatsResponse =
 				_getIndicesStatsResponse(
-					_createIndicesStatsRequest(statsIndexRequest),
+					createIndicesStatsRequest(statsIndexRequest),
 					statsIndexRequest);
 
 			Map<String, Long> indexSizes = new HashMap<>();
@@ -75,7 +75,7 @@ public class StatsIndexRequestExecutor {
 		}
 	}
 
-	private IndicesStatsRequest _createIndicesStatsRequest(
+	protected IndicesStatsRequest createIndicesStatsRequest(
 		StatsIndexRequest statsIndexRequest) {
 
 		IndicesStatsRequest.Builder builder = new IndicesStatsRequest.Builder();

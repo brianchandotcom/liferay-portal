@@ -142,7 +142,9 @@ public class SearchSearchResponseAssemblerImpl
 			elasticsearchAggregationResultsTranslator.translate(aggregates);
 
 		for (AggregationResult aggregationResult : aggregationResults) {
-			searchSearchResponse.addAggregationResult(aggregationResult);
+			if (aggregationResult != null) {
+				searchSearchResponse.addAggregationResult(aggregationResult);
+			}
 		}
 	}
 

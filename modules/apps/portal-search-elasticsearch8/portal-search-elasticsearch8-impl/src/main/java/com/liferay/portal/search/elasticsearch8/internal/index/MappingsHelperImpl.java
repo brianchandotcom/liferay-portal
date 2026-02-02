@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
-import co.elastic.clients.elasticsearch._types.mapping.SourceField;
 import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
 import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
@@ -50,12 +49,14 @@ public class MappingsHelperImpl implements MappingsHelper {
 
 	public MappingsHelperImpl(
 		ElasticsearchIndicesClient elasticsearchIndicesClient, String indexName,
-		JSONFactory jsonFactory, String overrideMappings,
+		JSONFactory jsonFactory, JsonpMapper jsonpMapper,
+		String overrideMappings,
 		SearchEngineInformation searchEngineInformation) {
 
 		_elasticsearchIndicesClient = elasticsearchIndicesClient;
 		_indexName = indexName;
 		_jsonFactory = jsonFactory;
+		_jsonpMapper = jsonpMapper;
 		_overrideMappings = overrideMappings;
 		_searchEngineInformation = searchEngineInformation;
 	}
@@ -76,7 +77,7 @@ public class MappingsHelperImpl implements MappingsHelper {
 	}
 
 	public void setDefaultOrOverrideMappings(
-		CreateIndexRequest.Builder builder, JsonpMapper jsonpMapper) {
+		CreateIndexRequest.Builder builder) {
 
 		String mappings = String.valueOf(
 			_getDefaultOrOverrideMappingsJSONObject());
@@ -84,11 +85,11 @@ public class MappingsHelperImpl implements MappingsHelper {
 		try (InputStream inputStream = new ByteArrayInputStream(
 				mappings.getBytes(StandardCharsets.UTF_8))) {
 
-			JsonProvider jsonProvider = jsonpMapper.jsonProvider();
+			JsonProvider jsonProvider = _jsonpMapper.jsonProvider();
 
 			builder.mappings(
 				TypeMapping._DESERIALIZER.deserialize(
-					jsonProvider.createParser(inputStream), jsonpMapper));
+					jsonProvider.createParser(inputStream), _jsonpMapper));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -246,11 +247,13 @@ public class MappingsHelperImpl implements MappingsHelper {
 		try (InputStream inputStream = new ByteArrayInputStream(
 				mappings.getBytes(StandardCharsets.UTF_8))) {
 
+			JsonProvider jsonProvider = _jsonpMapper.jsonProvider();
+
 			PutMappingRequest.Builder builder = new PutMappingRequest.Builder(
 			).index(
 				_indexName
-			).source(
-				SourceField.of(sourceField -> sourceField.withJson(inputStream))
+			).withJson(
+				jsonProvider.createParser(inputStream), _jsonpMapper
 			);
 
 			PutMappingResponse putMappingResponse =
@@ -289,6 +292,7 @@ public class MappingsHelperImpl implements MappingsHelper {
 	private final ElasticsearchIndicesClient _elasticsearchIndicesClient;
 	private final String _indexName;
 	private final JSONFactory _jsonFactory;
+	private final JsonpMapper _jsonpMapper;
 	private final String _overrideMappings;
 	private final SearchEngineInformation _searchEngineInformation;
 

@@ -79,11 +79,11 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			elasticsearchIndicesClient, indexName, _jsonFactory,
+			_elasticsearchConnectionManager.getJsonpMapper(null),
 			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
 			_searchEngineInformation);
 
-		mappingsHelperImpl.setDefaultOrOverrideMappings(
-			builder, _elasticsearchConnectionManager.getJsonpMapper(null));
+		mappingsHelperImpl.setDefaultOrOverrideMappings(builder);
 
 		try {
 			CreateIndexResponse createIndexResponse =
@@ -163,6 +163,7 @@ public class CompanyIndexHelper {
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
 			elasticsearchIndicesClient, indexName, _jsonFactory,
+			_elasticsearchConnectionManager.getJsonpMapper(null),
 			_elasticsearchConfigurationWrapper.overrideTypeMappings(),
 			_searchEngineInformation);
 
@@ -438,6 +439,7 @@ public class CompanyIndexHelper {
 					companyId,
 					new MappingsHelperImpl(
 						elasticsearchIndicesClient, indexName, _jsonFactory,
+						_elasticsearchConnectionManager.getJsonpMapper(null),
 						_elasticsearchConfigurationWrapper.
 							overrideTypeMappings(),
 						_searchEngineInformation));

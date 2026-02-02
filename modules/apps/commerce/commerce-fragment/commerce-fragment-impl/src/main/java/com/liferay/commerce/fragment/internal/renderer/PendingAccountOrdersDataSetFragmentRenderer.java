@@ -9,7 +9,6 @@ import com.liferay.commerce.fragment.internal.constants.CommerceFragmentCollecti
 import com.liferay.commerce.fragment.internal.display.context.PendingAccountOrdersDataSetDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,12 +32,6 @@ public class PendingAccountOrdersDataSetFragmentRenderer
 	@Override
 	public String getIcon() {
 		return "catalog";
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled(
-			portal.getCompanyId(httpServletRequest), "LPD-58472");
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -51,12 +50,6 @@ public class CreateOrderButtonFragmentRenderer
 	@Override
 	public String getIcon() {
 		return "button";
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled(
-			portal.getCompanyId(httpServletRequest), "LPD-58472");
 	}
 
 	@Override

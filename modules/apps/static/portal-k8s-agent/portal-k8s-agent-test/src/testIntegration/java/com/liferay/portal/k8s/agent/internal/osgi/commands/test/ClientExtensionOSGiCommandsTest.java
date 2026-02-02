@@ -341,18 +341,18 @@ public class ClientExtensionOSGiCommandsTest {
 		method.invoke(_osgiCommands, (Object)filters);
 	}
 
+	private void _reload(Configuration configuration) {
+		ReflectionTestUtil.invoke(
+			_osgiCommands, "_reload", new Class<?>[] {Configuration.class},
+			configuration);
+	}
+
 	private void _reload(String pid) throws Exception {
 		Class<?> clazz = _osgiCommands.getClass();
 
 		Method method = clazz.getMethod("reload", String.class);
 
 		method.invoke(_osgiCommands, pid);
-	}
-
-	private void _reload(Configuration configuration) {
-		ReflectionTestUtil.invoke(
-			_osgiCommands, "_reload",
-			new Class<?>[] {Configuration.class}, configuration);
 	}
 
 	private void _show(String pid) throws Exception {

@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.definitions.portlet.action;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectWebKeys;
@@ -59,6 +60,7 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITIONS_FIELD_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
+				_depotEntryLocalService,
 				_portal.getHttpServletRequest(renderRequest),
 				_listTypeDefinitionService,
 				_objectDefinitionModelResourcePermission,
@@ -77,6 +79,9 @@ public class ViewModelBuilderMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

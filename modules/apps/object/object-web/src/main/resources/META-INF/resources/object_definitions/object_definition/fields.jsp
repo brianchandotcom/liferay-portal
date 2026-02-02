@@ -44,6 +44,8 @@ renderResponse.setTitle(objectDefinition.getLabel(locale, true));
 			).put(
 				"formName", "fm"
 			).put(
+				"hasDepotEntry", objectDefinitionsFieldsDisplayContext.hasDepotEntry()
+			).put(
 				"id", ObjectDefinitionsFDSNames.OBJECT_FIELDS
 			).put(
 				"items", objectDefinitionsFieldsDisplayContext.getFDSActionDropdownItems()

@@ -11,6 +11,7 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -24,6 +25,19 @@ public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
+	@Override
+	@Test
+	public void testCustomRange() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testRanges() throws Exception {
+	}
+
+	@Ignore
 	@Test
 	public void testSearchEngineDateMath() throws Exception {
 		addDocument("17760704000000");

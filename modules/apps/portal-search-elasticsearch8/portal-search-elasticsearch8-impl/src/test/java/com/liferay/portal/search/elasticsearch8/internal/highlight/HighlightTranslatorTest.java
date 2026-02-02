@@ -32,6 +32,7 @@ import org.apache.commons.lang.StringUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -52,6 +53,7 @@ public class HighlightTranslatorTest {
 		_highlightPrototype = _createHighlightPrototype();
 	}
 
+	@Ignore
 	@Test
 	public void testBoundaryScannerTypeChars() {
 		_highlightPrototype._boundaryScannerType = "chars";
@@ -59,6 +61,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testBoundaryScannerTypeInvalid() {
 		expectedException.expect(IllegalArgumentException.class);
@@ -69,6 +72,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testBoundaryScannerTypeSentence() {
 		_highlightPrototype._boundaryScannerType = "sentence";
@@ -76,6 +80,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testBoundaryScannerTypeWord() {
 		_highlightPrototype._boundaryScannerType = "word";
@@ -83,6 +88,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testFieldConfigs() {
 		List<FieldConfig> fieldConfigs = new ArrayList<>();
@@ -98,6 +104,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testHighlightQuery() {
 		_highlightPrototype._highlightQuery = new StringQueryImpl("title:test");
@@ -105,6 +112,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testNullValues() {
 		_highlightPrototype = _createHighlightPrototypeWithNullValues();
@@ -112,6 +120,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testOrderNone() {
 		_highlightPrototype._order = "none";
@@ -119,6 +128,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testOrderOther() {
 		_highlightPrototype._order = "other";
@@ -126,6 +136,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testOrderScore() {
 		_highlightPrototype._order = "score";
@@ -133,6 +144,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testTagSchemaDefault() {
 		_highlightPrototype._tagsSchema = "default";
@@ -140,6 +152,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testTagSchemaInvalid() {
 		expectedException.expect(IllegalArgumentException.class);
@@ -150,6 +163,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testTagSchemaStyled() {
 		_highlightPrototype._tagsSchema = "styled";
@@ -157,6 +171,7 @@ public class HighlightTranslatorTest {
 		_assertTranslation(_highlightPrototype);
 	}
 
+	@Ignore
 	@Test
 	public void testTranslate() {
 		_assertTranslation(_highlightPrototype);

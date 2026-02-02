@@ -130,7 +130,8 @@ public class ClientExtensionConfigBundleTracker {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
 					StringBundler.concat(
-						"(.cx.config.key=", virtualInstancePid, ")"));
+						"(.client.extension.config.key=", virtualInstancePid,
+						")"));
 
 			if (ArrayUtil.isNotEmpty(configurations)) {
 				configuration = configurations[0];
@@ -140,7 +141,7 @@ public class ClientExtensionConfigBundleTracker {
 
 				if (Objects.equals(
 						configurationProperties.get(
-							".cx.config.bundle.last.modified"),
+							".client.extension.config.bundle.last.modified"),
 						bundle.getLastModified())) {
 
 					if (_log.isInfoEnabled()) {
@@ -167,10 +168,12 @@ public class ClientExtensionConfigBundleTracker {
 					Configuration.ConfigurationAttribute.READ_ONLY);
 			}
 
-			properties.put(".cx.config.bundle.id", bundle.getBundleId());
 			properties.put(
-				".cx.config.bundle.last.modified", bundle.getLastModified());
-			properties.put(".cx.config.key", virtualInstancePid);
+				".client.extension.config.bundle.id", bundle.getBundleId());
+			properties.put(
+				".client.extension.config.bundle.last.modified",
+				bundle.getLastModified());
+			properties.put(".client.extension.config.key", virtualInstancePid);
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Processed configuration " + properties);

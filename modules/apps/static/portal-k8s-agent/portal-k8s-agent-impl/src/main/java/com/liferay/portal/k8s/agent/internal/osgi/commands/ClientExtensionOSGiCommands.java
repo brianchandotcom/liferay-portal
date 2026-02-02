@@ -135,7 +135,8 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 	private Configuration[] _getConfigurations(String... filterStrings)
 		throws Exception {
 
-		String filterString = "(|(.cx.config.key=*)(.k8s.config.key=*))";
+		String filterString =
+			"(|(.client.extension.config.key=*)(.k8s.config.key=*))";
 
 		if (filterStrings.length == 0) {
 			return _configurationAdmin.listConfigurations(filterString);
@@ -160,7 +161,7 @@ public class ClientExtensionOSGiCommands implements OSGiCommands {
 					filterString = "(.k8s.config.key=*)";
 				}
 				else if (value.equals("bundle")) {
-					filterString = "(.cx.config.key=*)";
+					filterString = "(.client.extension.config.key=*)";
 				}
 
 				continue;

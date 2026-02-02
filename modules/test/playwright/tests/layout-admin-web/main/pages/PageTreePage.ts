@@ -5,6 +5,8 @@
 
 import {Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+
 export class PageTreePage {
 	readonly page: Page;
 
@@ -13,17 +15,13 @@ export class PageTreePage {
 	}
 
 	async open() {
-		const pageTree = this.page
-			.getByLabel('Product Menu')
-			.locator('.treeview');
-
-		if (!(await pageTree.isVisible())) {
-			await this.page
-				.getByRole('button', {exact: true, name: 'Page Tree'})
-				.click();
-
-			await pageTree.waitFor();
-		}
+		await clickAndExpectToBeVisible({
+			target: this.page.getByLabel('Product Menu').locator('.treeview'),
+			trigger: this.page.getByRole('button', {
+				exact: true,
+				name: 'Page Tree',
+			}),
+		});
 	}
 
 	async close() {

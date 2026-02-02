@@ -296,6 +296,10 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 
 		commerceOrderJSONObject.put("orderItems", commerceOrderItemsJSONArray);
 
+		if (commerceOrder.getShippingAddressId() == 0) {
+			return commerceOrderJSONObject;
+		}
+
 		DTOConverter<?, ?> commerceShippingAddressDTOConverter =
 			_dtoConverterRegistry.getDTOConverter(
 				"Liferay.Headless.Commerce.Admin.Order", "ShippingAddress",
@@ -370,8 +374,7 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 
 				commerceShippingOptions.add(
 					new CommerceShippingOption(
-						amount,
-						shippingOptionJSONObject.getString("shippingMethodKey"),
+						amount, getKey(),
 						shippingOptionJSONObject.getString("key"),
 						shippingOptionJSONObject.getString("name"),
 						shippingOptionJSONObject.getDouble("priority")));

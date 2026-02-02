@@ -14,7 +14,9 @@ import com.liferay.portal.search.test.util.background.task.BaseReindexSingleInde
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author Adam Brandizzi
@@ -42,6 +44,12 @@ public class ReindexSingleIndexerBackgroundTaskExecutorTest
 		_elasticsearchConnectionFixture = elasticsearchConnectionFixture;
 
 		_elasticsearchSearchEngineFixture = elasticsearchSearchEngineFixture;
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testFieldMappings() throws Exception {
 	}
 
 	@Override

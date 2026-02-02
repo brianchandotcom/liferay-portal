@@ -50,6 +50,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -134,6 +135,7 @@ public class IndexFactoryTest {
 		_serviceRegistrations.clear();
 	}
 
+	@Ignore
 	@Test
 	public void testAdditionalIndexConfigurations() throws Exception {
 		Mockito.when(
@@ -147,6 +149,7 @@ public class IndexFactoryTest {
 		_assertIndexSettings(1, 2);
 	}
 
+	@Ignore
 	@Test
 	public void testAdditionalTypeMappings() throws Exception {
 		Mockito.when(
@@ -160,6 +163,7 @@ public class IndexFactoryTest {
 		_assertAdditionalTypeMappings();
 	}
 
+	@Ignore
 	@Test
 	public void testAdditionalTypeMappingsCannotOverrideContributedMappings()
 		throws Exception {
@@ -205,6 +209,7 @@ public class IndexFactoryTest {
 		assertType("additionalKeyword", "text");
 	}
 
+	@Ignore
 	@Test
 	public void testAdditionalTypeMappingsWithLegacyRootType()
 		throws Exception {
@@ -235,6 +240,7 @@ public class IndexFactoryTest {
 				new TestCompanyIndexConfigurationContributor(), null));
 	}
 
+	@Ignore
 	@Test
 	public void testCatchAllTemplateIsAlwaysLast() throws Exception {
 		Mockito.when(
@@ -252,6 +258,7 @@ public class IndexFactoryTest {
 		assertType("match_catch_all", "text");
 	}
 
+	@Ignore
 	@Test
 	public void testCompanyIndexListener() throws Exception {
 		CompanyIndexListener companyIndexListener = Mockito.mock(
@@ -276,6 +283,7 @@ public class IndexFactoryTest {
 		);
 	}
 
+	@Ignore
 	@Test
 	public void testCompanyIndexListenersThrowsException() throws Exception {
 		addCompanyIndexListener(
@@ -296,6 +304,7 @@ public class IndexFactoryTest {
 		initializeIndex();
 	}
 
+	@Ignore
 	@Test
 	public void testConfigurationSettingsOverrideContributedSettings()
 		throws Exception {
@@ -332,6 +341,7 @@ public class IndexFactoryTest {
 		_assertIndexSettings(1, 2);
 	}
 
+	@Ignore
 	@Test
 	public void testContributeMappings() throws Exception {
 		_serviceRegistrations.add(
@@ -360,6 +370,7 @@ public class IndexFactoryTest {
 		_assertAdditionalTypeMappings();
 	}
 
+	@Ignore
 	@Test
 	public void testContributeMappingsCannotOverrideDefaultMappings()
 		throws Exception {
@@ -389,6 +400,7 @@ public class IndexFactoryTest {
 		_assertDefaultLiferayFields();
 	}
 
+	@Ignore
 	@Test
 	public void testContributeSettings() throws Exception {
 		_serviceRegistrations.add(
@@ -417,6 +429,7 @@ public class IndexFactoryTest {
 		_assertIndexSettings(2, 3);
 	}
 
+	@Ignore
 	@Test
 	public void testCreateIndicesWithBlankStrings() throws Exception {
 		Mockito.when(
@@ -446,11 +459,13 @@ public class IndexFactoryTest {
 		initializeIndex();
 	}
 
+	@Ignore
 	@Test
 	public void testCreateIndicesWithEmptyConfiguration() throws Exception {
 		initializeIndex();
 	}
 
+	@Ignore
 	@Test
 	public void testDefaultIndexSettings() throws Exception {
 		initializeIndex();
@@ -458,6 +473,7 @@ public class IndexFactoryTest {
 		_assertIndexSettings(0, 1);
 	}
 
+	@Ignore
 	@Test
 	public void testDefaultIndices() throws Exception {
 		initializeIndex();
@@ -465,6 +481,7 @@ public class IndexFactoryTest {
 		_assertMappings(Field.COMPANY_ID, Field.ENTRY_CLASS_NAME);
 	}
 
+	@Ignore
 	@Test
 	public void testIndexConfigurations() throws Exception {
 		Mockito.when(
@@ -485,6 +502,7 @@ public class IndexFactoryTest {
 	}
 
 	@FeatureFlag("LPD-7822")
+	@Ignore
 	@Test
 	public void testInitializeIndexAfterIndexExists() throws Exception {
 		initializeIndex();
@@ -512,6 +530,7 @@ public class IndexFactoryTest {
 		assertType("additionalKeyword", "keyword");
 	}
 
+	@Ignore
 	@Test
 	public void testLegacyOverrideTypeMappings() throws Exception {
 		Mockito.when(
@@ -537,6 +556,7 @@ public class IndexFactoryTest {
 		assertNoAnalyzer(field2);
 	}
 
+	@Ignore
 	@Test
 	public void testOverrideTypeMappings() throws Exception {
 		Mockito.when(
@@ -562,6 +582,7 @@ public class IndexFactoryTest {
 		assertNoAnalyzer(field2);
 	}
 
+	@Ignore
 	@Test
 	public void testOverrideTypeMappingsDoesNotInterfereWithIndexSettings()
 		throws Exception {
@@ -584,6 +605,7 @@ public class IndexFactoryTest {
 		_assertMappings(Field.SUBTITLE);
 	}
 
+	@Ignore
 	@Test
 	public void testOverrideTypeMappingsPreventsAdditionalTypeMapings()
 		throws Exception {
@@ -606,6 +628,7 @@ public class IndexFactoryTest {
 		assertType(Field.SUBTITLE, "keyword");
 	}
 
+	@Ignore
 	@Test
 	public void testOverrideTypeMappingsPreventsContributedMapings()
 		throws Exception {

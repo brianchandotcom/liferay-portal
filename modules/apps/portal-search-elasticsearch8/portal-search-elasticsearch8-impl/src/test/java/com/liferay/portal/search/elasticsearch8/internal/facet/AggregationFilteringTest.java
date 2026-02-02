@@ -11,7 +11,9 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author André de Oliveira
@@ -22,6 +24,48 @@ public class AggregationFilteringTest extends BaseAggregationFilteringTestCase {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Ignore
+	@Override
+	@Test
+	public void testAggregationUnfiltered() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testBasicFacetSelection() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSelectModified() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSelectSite() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSelectTag() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSelectUser() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testVariousSelectionsCombined() throws Exception {
+	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

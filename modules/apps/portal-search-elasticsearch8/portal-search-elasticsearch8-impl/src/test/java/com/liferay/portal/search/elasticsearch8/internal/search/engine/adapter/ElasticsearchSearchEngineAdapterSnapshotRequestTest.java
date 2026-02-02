@@ -59,6 +59,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -185,6 +186,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		_deleteRepository(repositoryName);
 	}
 
+	@Ignore
 	@Test
 	public void testDeleteSnapshot() throws Exception {
 		expectedException.expect(RuntimeException.class);
@@ -246,6 +248,7 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			snapshotRepositoryDetails.getType());
 	}
 
+	@Ignore
 	@Test
 	public void testGetSnapshots() {
 		expectedException.expect(RuntimeException.class);

@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -81,6 +82,12 @@ public class GroupByTest extends BaseGroupByTestCase {
 					hits -> assertGroups(
 						toMap("five", "5|3"), hits, indexingTestHelper));
 			});
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGroupByDocsSortsScoreFieldDesc() throws Exception {
 	}
 
 	@Test

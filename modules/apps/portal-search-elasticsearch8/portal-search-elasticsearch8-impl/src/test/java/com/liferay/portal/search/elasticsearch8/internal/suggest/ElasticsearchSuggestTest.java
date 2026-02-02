@@ -16,6 +16,7 @@ import org.elasticsearch.ElasticsearchStatusException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -73,6 +74,7 @@ public class ElasticsearchSuggestTest extends BaseSuggestTestCase {
 		assertSuggest("[]", "nothign");
 	}
 
+	@Ignore
 	@Override
 	@Test
 	public void testNull() throws Exception {

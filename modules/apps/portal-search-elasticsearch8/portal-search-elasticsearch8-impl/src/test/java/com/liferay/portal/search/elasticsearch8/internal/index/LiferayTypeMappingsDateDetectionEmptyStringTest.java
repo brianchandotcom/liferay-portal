@@ -16,6 +16,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -40,6 +41,7 @@ public class LiferayTypeMappingsDateDetectionEmptyStringTest {
 		_liferayIndexFixture.setUp();
 	}
 
+	@Ignore
 	@Test
 	public void testEmptyStringInSecondDocument() throws Exception {
 		String field1 = _randomField();

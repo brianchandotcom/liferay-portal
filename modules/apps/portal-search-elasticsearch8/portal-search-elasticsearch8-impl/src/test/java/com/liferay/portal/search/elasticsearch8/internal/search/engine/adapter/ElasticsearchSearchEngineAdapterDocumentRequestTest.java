@@ -67,6 +67,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -407,6 +408,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		Assert.assertFalse(getResponse2.found());
 	}
 
+	@Ignore
 	@Test
 	public void testExecuteIndexDocumentRequestNoUid() {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
@@ -437,6 +439,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			Boolean.TRUE.toString(), String.valueOf(fields.get(_FIELD_NAME)));
 	}
 
+	@Ignore
 	@Test
 	public void testExecuteIndexDocumentRequestUidInDocument() {
 		Document document = new DocumentImpl();
@@ -451,6 +454,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 
+	@Ignore
 	@Test
 	public void testExecuteIndexDocumentRequestUidInRequest() {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(

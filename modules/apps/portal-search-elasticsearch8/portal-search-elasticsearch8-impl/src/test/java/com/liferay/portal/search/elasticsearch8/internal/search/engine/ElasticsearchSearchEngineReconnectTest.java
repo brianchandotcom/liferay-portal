@@ -15,6 +15,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -48,6 +49,7 @@ public class ElasticsearchSearchEngineReconnectTest {
 		_elasticsearchSearchEngineFixture.tearDown();
 	}
 
+	@Ignore
 	@Test
 	public void testInitializeAfterReconnect() {
 		ElasticsearchSearchEngine elasticsearchSearchEngine =

@@ -2234,19 +2234,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		userAccount = testGetUserAccountsPage_addUserAccount(userAccount);
 
-		for (String filter : function.apply(value)) {
+		for (String filterString : function.apply(value)) {
 			_testGetUserAccountsPage(
 				StringBundler.concat(
-					"(customFields/", expandoColumn.getName(), " eq ", filter,
-					")"),
+					"(customFields/", expandoColumn.getName(), " eq ",
+					filterString, ")"),
 				userAccount);
 		}
 
-		for (String filter : function.apply(supplier.get())) {
+		for (String filterString : function.apply(supplier.get())) {
 			_testGetUserAccountsPage(
 				StringBundler.concat(
-					"(customFields/", expandoColumn.getName(), " eq ", filter,
-					")"));
+					"(customFields/", expandoColumn.getName(), " eq ",
+					filterString, ")"));
 		}
 	}
 
@@ -2276,8 +2276,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			List<Object> values)
 		throws Exception {
 
-		String domain = StringUtil.randomString() + ".com";
-
+		String domainName = StringUtil.randomString() + ".com";
 		ExpandoColumn expandoColumn = _addExpandoColumn(
 			expandoColumnType, expandoTable);
 
@@ -2302,17 +2301,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 							});
 
 						userAccount.setEmailAddress(
-							RandomTestUtil.randomString() + '@' + domain);
+							RandomTestUtil.randomString() + '@' + domainName);
 					})));
 
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			domain, null, Pagination.of(1, 10),
+			domainName, null, Pagination.of(1, 10),
 			"customFields/" + expandoColumn.getName() + ":asc");
 
 		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
 
 		page = userAccountResource.getUserAccountsPage(
-			domain, null, Pagination.of(1, 10),
+			domainName, null, Pagination.of(1, 10),
 			"customFields/" + expandoColumn.getName() + ":desc");
 
 		Collections.reverse(userAccounts);
@@ -2321,8 +2320,8 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _testGetUserAccountsPageWithSortFullName() throws Exception {
+		String domainName = StringUtil.randomString() + ".com";
 		List<UserAccount> userAccounts = new ArrayList<>();
-		String domain = StringUtil.randomString() + ".com";
 
 		userAccounts.add(
 			userAccountResource.postUserAccount(
@@ -2330,7 +2329,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_randomUserAccount(
 					userAccount -> {
 						userAccount.setGivenName("aaa");
-						userAccount.setEmailAddress("aaa@" + domain);
+						userAccount.setEmailAddress("aaa@" + domainName);
 					})));
 		userAccounts.add(
 			userAccountResource.postUserAccount(
@@ -2338,18 +2337,18 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 				_randomUserAccount(
 					userAccount -> {
 						userAccount.setGivenName("bbb");
-						userAccount.setEmailAddress("bbb@" + domain);
+						userAccount.setEmailAddress("bbb@" + domainName);
 					})));
 
 		Page<UserAccount> page = userAccountResource.getUserAccountsPage(
-			domain, null, Pagination.of(1, 10), "name:asc");
+			domainName, null, Pagination.of(1, 10), "name:asc");
 
 		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
 
 		Collections.reverse(userAccounts);
 
 		page = userAccountResource.getUserAccountsPage(
-			domain, null, Pagination.of(1, 10), "name:desc");
+			domainName, null, Pagination.of(1, 10), "name:desc");
 
 		assertEquals(userAccounts, (List<UserAccount>)page.getItems());
 	}

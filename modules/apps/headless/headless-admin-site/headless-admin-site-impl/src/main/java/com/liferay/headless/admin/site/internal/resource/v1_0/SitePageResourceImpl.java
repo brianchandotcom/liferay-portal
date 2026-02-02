@@ -1151,7 +1151,9 @@ public class SitePageResourceImpl
 			publishedPageSpecification = publishedContentPageSpecification;
 		}
 		else if ((Objects.equals(
-					sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||
+					sitePage.getType(), SitePage.Type.LINK_TO_PAGE_PAGE) ||
+				  Objects.equals(
+					  sitePage.getType(), SitePage.Type.LINK_TO_URL_PAGE) ||
 				  Objects.equals(
 					  sitePage.getType(), SitePage.Type.PAGE_SET_PAGE) ||
 				  Objects.equals(

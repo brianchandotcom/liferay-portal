@@ -58,6 +58,10 @@ public class FragmentMappingUtil {
 				JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
+		if (jsonObject == null) {
+			return null;
+		}
+
 		if (!jsonObject.has("collectionFieldId") &&
 			!jsonObject.has("mappedField")) {
 

@@ -310,7 +310,7 @@ public class FragmentEditableElementTestUtil {
 			new MappedFragmentImageValue();
 
 		mappedFragmentImageValue.setFragmentMappedValue(
-			() -> _getFragmentMappedValue(
+			() -> getFragmentMappedValue(
 				className, externalReferenceCode, fieldKey,
 				scopeExternalReferenceCode));
 		mappedFragmentImageValue.setType(() -> FragmentImageValue.Type.MAPPED);
@@ -475,7 +475,7 @@ public class FragmentEditableElementTestUtil {
 		return fragmentMappedValue;
 	}
 
-	private static FragmentMappedValue _getFragmentMappedValue(
+	public static FragmentMappedValue getFragmentMappedValue(
 		String className, String externalReferenceCode, String fieldKey,
 		String scopeExternalReferenceCode) {
 
@@ -597,7 +597,7 @@ public class FragmentEditableElementTestUtil {
 		return null;
 	}
 
-	private static TextFragmentInlineValue _getTextFragmentInlineValue() {
+	public static TextFragmentInlineValue getTextFragmentInlineValue() {
 		return new TextFragmentInlineValue() {
 			{
 				setFragmentInlineValue(() -> _getFragmentInlineValue());
@@ -629,7 +629,7 @@ public class FragmentEditableElementTestUtil {
 		TextFragmentValue.Type textFragmentValueType) {
 
 		if (textFragmentValueType == TextFragmentValue.Type.INLINE) {
-			return _getTextFragmentInlineValue();
+			return getTextFragmentInlineValue();
 		}
 
 		if (textFragmentValueType == TextFragmentValue.Type.MAPPED) {

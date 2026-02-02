@@ -20,6 +20,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
+import com.liferay.exportimport.kernel.exception.MissingPortletDataHandlerException;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
@@ -359,6 +360,151 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			group, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+	}
+
+	@Test
+	@TestInfo("LPD-77963")
+	public void testExportImportCompanyObjectEntriesWithMissingPortlet()
+		throws Exception {
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		List<ObjectField> objectFields = Collections.singletonList(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+				RandomTestUtil.randomString(), "textField", false));
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntryLocalService.addObjectEntry(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, TestPropsValues.getUserId(),
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntryLocalService.addObjectEntry(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, TestPropsValues.getUserId(),
+			objectDefinition2.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		File larFile = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeObjectDefinitions(
+		).withObjectEntries(
+			objectDefinition1
+		).withObjectEntries(
+			objectDefinition2
+		).executeExport();
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+
+		ObjectDefinition targetObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		targetObjectDefinition.setExternalReferenceCode(
+			objectDefinition1.getExternalReferenceCode());
+
+		targetObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				targetObjectDefinition);
+
+		_objectDefinitionLocalService.deployObjectDefinition(
+			targetObjectDefinition);
+
+		ExportImportConfiguration exportImportConfiguration =
+			new ExportImportExecutor(
+			).withExpectError(
+			).withGroupId(
+				group.getGroupId()
+			).withLARFile(
+				larFile
+			).withObjectEntries(
+				objectDefinition1
+			).withObjectEntries(
+				objectDefinition2
+			).executeImport();
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntriesCount(
+				targetObjectDefinition.getObjectDefinitionId()));
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+
+		Assert.assertEquals(
+			"The data handler for the \"" +
+				objectDefinition2.getPluralLabel(LocaleUtil.US) +
+					"\" portlet is missing from the system.",
+			exportImportReportEntries.get(
+				0
+			).getErrorMessage());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			targetObjectDefinition);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeObjectDefinitions(
+		).withLARFile(
+			larFile
+		).withObjectEntries(
+			objectDefinition1
+		).withObjectEntries(
+			objectDefinition2
+		).executeImport();
+
+		objectDefinition1 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinition1.getExternalReferenceCode(),
+					TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectDefinition1.getObjectDefinitionId()));
+
+		objectDefinition2 =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					objectDefinition2.getExternalReferenceCode(),
+					TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntriesCount(
+				objectDefinition2.getObjectDefinitionId()));
 	}
 
 	@Test
@@ -1093,6 +1239,85 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportSiteObjectEntriesToSameSite() throws Exception {
 		_testExportImportObjectEntriesToSameGroup(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
+	}
+
+	@Test
+	@TestInfo("LPD-77963")
+	public void testExportImportSiteObjectEntriesWithMissingPortlet()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		List<ObjectField> objectFields = Collections.singletonList(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+				RandomTestUtil.randomString(), "textField", false));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields,
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectEntryLocalService.addObjectEntry(
+			group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
+			HashMapBuilder.<String, Serializable>put(
+				"textField", RandomTestUtil.randomString()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		File larFile = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectEntries(
+			objectDefinition
+		).executeExport();
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		Assert.assertThrows(
+			MissingPortletDataHandlerException.class,
+			() -> new ExportImportExecutor(
+			).withGroupId(
+				group.getGroupId()
+			).withLARFile(
+				larFile
+			).withObjectEntries(
+				objectDefinition
+			).executeImport());
+
+		ObjectDefinition targetObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields,
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		targetObjectDefinition.setExternalReferenceCode(
+			objectDefinition.getExternalReferenceCode());
+
+		targetObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				targetObjectDefinition);
+
+		_objectDefinitionLocalService.deployObjectDefinition(
+			targetObjectDefinition);
+
+		new ExportImportExecutor(
+		).withExpectError(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntriesCount(
+				targetObjectDefinition.getObjectDefinitionId()));
 	}
 
 	@Test

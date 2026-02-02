@@ -118,29 +118,6 @@ public class ViewTasksSectionDisplayContextTest
 			getCreationMenu(_assetEntry));
 
 		Assert.assertEquals("createTask", getValue(dropdownItem, "action"));
-		Assert.assertTrue(
-			Validator.isNull(getValue(dropdownItem, "addProjectURL")));
-		Assert.assertTrue(
-			Validator.isNull(getValue(dropdownItem, "addTaskURL")));
-		Assert.assertEquals("New Task", dropdownItem.get("label"));
-		Assert.assertEquals(
-			String.valueOf(objectDefinition.getObjectDefinitionId()),
-			getValue(dropdownItem, "objectDefinitionId"));
-		Assert.assertEquals(
-			StringBundler.concat(
-				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-				GroupConstants.CMS_FRIENDLY_URL,
-				"/add_task?objectDefinitionId=",
-				objectDefinition.getObjectDefinitionId(), "&plid=",
-				themeDisplay.getPlid(), "&projectGroupId=",
-				_assetEntry.getGroupId(), "&projectId=",
-				_assetEntry.getClassPK(), "&redirect=",
-				themeDisplay.getURLCurrent()),
-			getValue(dropdownItem, "redirect"));
-		Assert.assertEquals("Task", getValue(dropdownItem, "title"));
-
-		dropdownItem = _getDropdownItem(getCreationMenu(null));
-
 		Assert.assertEquals(
 			StringBundler.concat(
 				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
@@ -161,6 +138,25 @@ public class ViewTasksSectionDisplayContextTest
 				"&redirect=", themeDisplay.getURLCurrent(),
 				"&action=createGlobalTask"),
 			getValue(dropdownItem, "addTaskURL"));
+		Assert.assertEquals("New Task", dropdownItem.get("label"));
+		Assert.assertEquals(
+			String.valueOf(objectDefinition.getObjectDefinitionId()),
+			getValue(dropdownItem, "objectDefinitionId"));
+		Assert.assertEquals(
+			StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/add_task?objectDefinitionId=",
+				objectDefinition.getObjectDefinitionId(), "&plid=",
+				themeDisplay.getPlid(), "&projectGroupId=",
+				_assetEntry.getGroupId(), "&projectId=",
+				_assetEntry.getClassPK(), "&redirect=",
+				themeDisplay.getURLCurrent()),
+			getValue(dropdownItem, "redirect"));
+		Assert.assertEquals("Task", getValue(dropdownItem, "title"));
+
+		dropdownItem = _getDropdownItem(getCreationMenu(null));
+
 		Assert.assertEquals("New", dropdownItem.get("label"));
 		Assert.assertTrue(Validator.isNull(getValue(dropdownItem, "redirect")));
 	}

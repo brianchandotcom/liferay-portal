@@ -588,7 +588,7 @@ public class FragmentConfigurationFieldValueTestUtil {
 
 		return new SitePageURLValue() {
 			{
-				setSitePage(() -> itemExternalReference);
+				setSitePageItemExternalReference(() -> itemExternalReference);
 				setUrlType(() -> UrlType.SITE_PAGE);
 			}
 		};

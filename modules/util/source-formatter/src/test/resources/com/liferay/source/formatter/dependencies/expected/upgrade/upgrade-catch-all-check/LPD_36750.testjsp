@@ -6,7 +6,6 @@
 --%>
 
 <%
-
 address.getListType(null);
 address.setListType(null);
 address.getListTypeId(null);

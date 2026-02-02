@@ -32,22 +32,23 @@ components:
         ActionInteraction:
             # @review
             description:
-                The result of an action interaction.
+                The interaction of a success action.
+            discriminator:
+                mapping:
+                    DisplayPage: "#/components/schemas/DisplayPageActionInteraction"
+                    None: "#/components/schemas/NoneActionInteraction"
+                    Notification: "#/components/schemas/NotificationActionInteraction"
+                    Page: "#/components/schemas/PageActionInteraction"
+                    URL: "#/components/schemas/URLActionInteraction"
+                propertyName: type
             properties:
                 type:
                     # @review
                     description:
-                        The type of result.
+                        The type of interaction.
                     enum: [DisplayPage, None, Notification, Page, URL]
                     type:
                         string
-                value:
-                    oneOf:
-                        -   $ref: "#/components/schemas/DisplayPageActionInteraction"
-                        -   $ref: "#/components/schemas/NoneActionInteraction"
-                        -   $ref: "#/components/schemas/NotificationActionInteraction"
-                        -   $ref: "#/components/schemas/PageActionInteraction"
-                        -   $ref: "#/components/schemas/URLActionInteraction"
             type: object
         AnalyticsConfiguration:
             description:
@@ -610,21 +611,23 @@ components:
                 A fragment image value of type direct.
             type: object
         DisplayPageActionInteraction:
+            allOf:
+                -   $ref: "#/components/schemas/ActionInteraction"
+                -   properties:
+                        mapping:
+                            # @review
+                            description:
+                                The mapping of the display page action result.
+                            properties:
+                                fieldKey:
+                                    # @review
+                                    description:
+                                        The mapping's field key.
+                                    type: string
+                            type: object
             # @review
             description:
                 The definition of an action interaction of type display page.
-            properties:
-                mapping:
-                    # @review
-                    description:
-                        The mapping of the display page action result.
-                    properties:
-                        fieldKey:
-                            # @review
-                            description:
-                                The mapping's field key.
-                            type: string
-                    type: object
             type: object
         DisplayPageFormContainerSubmissionResult:
             # @review
@@ -2644,31 +2647,35 @@ components:
                         $ref: "#/components/schemas/WidgetPageWidgetInstance"
                     type: array
         NoneActionInteraction:
+            allOf:
+                -   $ref: "#/components/schemas/ActionInteraction"
+                -   properties:
+                        reload:
+                            # @review
+                            description:
+                                Whether to reload the page after the action is executed.
+                            type: boolean
             # @review
             description:
                 The definition of an action interaction of type none.
-            properties:
-                reload:
-                    # @review
-                    description:
-                        Whether to reload the page after the action is executed.
-                    type: boolean
             type: object
         NotificationActionInteraction:
+            allOf:
+                -   $ref: "#/components/schemas/ActionInteraction"
+                -   properties:
+                        reload:
+                            # @review
+                            description:
+                                Whether to reload the page after the action is executed.
+                            type: boolean
+                        text:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized text to display when an action is executed.
             # @review
             description:
                 The definition of an action interaction of type notification.
-            properties:
-                reload:
-                    # @review
-                    description:
-                        Whether to reload the page after the action is executed.
-                    type: boolean
-                text:
-                    $ref: "#/components/schemas/FragmentInlineValue"
-                    # @review
-                    description:
-                        The localized text to display when an action is executed.
             type: object
         OpenGraphSettings:
             # @review
@@ -2703,15 +2710,17 @@ components:
                     type: object
             type: object
         PageActionInteraction:
+            allOf:
+                -   $ref: "#/components/schemas/ActionInteraction"
+                -   properties:
+                        itemReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+                            # @review
+                            description:
+                                The reference to a page.
             # @review
             description:
                 The definition of an action interaction of type page.
-            properties:
-                itemReference:
-                    $ref: "#/components/schemas/ItemExternalReference"
-                    # @review
-                    description:
-                        The reference to a page.
             type: object
         PageElement:
             # @review
@@ -3961,15 +3970,17 @@ components:
                     type: string
             type: object
         URLActionInteraction:
+            allOf:
+                -   $ref: "#/components/schemas/ActionInteraction"
+                -   properties:
+                        url:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized action interaction of type URL.
             # @review
             description:
                 The definition of an action interaction of type URL.
-            properties:
-                url:
-                    $ref: "#/components/schemas/FragmentInlineValue"
-                    # @review
-                    description:
-                        The localized action interaction of type URL.
             type: object
         URLFormContainerSubmissionResult:
             # @review

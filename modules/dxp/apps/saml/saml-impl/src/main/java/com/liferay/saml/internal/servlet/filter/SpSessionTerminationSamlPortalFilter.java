@@ -77,7 +77,6 @@ public class SpSessionTerminationSamlPortalFilter extends BaseSamlPortalFilter {
 
 				_singleLogoutProfile.terminateSpSession(
 					httpServletRequest, httpServletResponse);
-
 				_singleLogoutProfile.terminateSsoSession(
 					httpServletRequest, httpServletResponse);
 

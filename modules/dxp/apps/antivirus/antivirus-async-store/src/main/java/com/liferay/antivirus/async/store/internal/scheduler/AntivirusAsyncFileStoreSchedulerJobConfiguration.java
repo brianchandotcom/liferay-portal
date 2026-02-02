@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
@@ -82,58 +81,15 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 			java.io.File file =
 				(java.io.File)_storeServiceReference.getProperty("rootDir");
 
-			return () -> scan((String)file.getAbsolutePath());
+			return () -> _scan((String)file.getAbsolutePath());
 		}
 
-		return this::scanDLFileEntries;
+		return this::_scanDLFileEntries;
 	}
 
 	@Override
 	public TriggerConfiguration getTriggerConfiguration() {
 		return _triggerConfiguration;
-	}
-
-	public void scan(String rootDirAbsolutePathString) {
-		try {
-			_scan(rootDirAbsolutePathString);
-		}
-		catch (IOException ioException) {
-			ReflectionUtil.throwException(ioException);
-		}
-	}
-
-	public void scanDLFileEntries() {
-		try {
-			ActionableDynamicQuery actionableDynamicQuery =
-				_dlFileEntryLocalService.getActionableDynamicQuery();
-
-			actionableDynamicQuery.setCompanyId(
-				CompanyThreadLocal.getCompanyId());
-
-			actionableDynamicQuery.setPerformActionMethod(
-				(DLFileEntry dlFileEntry) -> {
-					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-					_scheduleAntivirusScan(
-						dlFileEntry.getModelClassName(),
-						dlFileEntry.getFileEntryId(),
-						dlFileEntry.getCompanyId(), dlFileEntry.getExtension(),
-						dlFileEntry.getName(),
-						AntivirusAsyncUtil.getJobName(
-							dlFileEntry.getCompanyId(),
-							dlFileEntry.getRepositoryId(),
-							dlFileEntry.getFileName(),
-							dlFileVersion.getStoreFileName()),
-						dlFileEntry.getRepositoryId(), dlFileEntry.getSize(),
-						dlFileEntry.getFileName(), dlFileEntry.getUserId(),
-						dlFileVersion.getStoreFileName());
-				});
-
-			actionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			ReflectionUtil.throwException(portalException);
-		}
 	}
 
 	@Activate
@@ -187,6 +143,40 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 				}
 
 			});
+	}
+
+	private void _scanDLFileEntries() {
+		try {
+			ActionableDynamicQuery actionableDynamicQuery =
+				_dlFileEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setCompanyId(
+				CompanyThreadLocal.getCompanyId());
+
+			actionableDynamicQuery.setPerformActionMethod(
+				(DLFileEntry dlFileEntry) -> {
+					DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+					_scheduleAntivirusScan(
+						dlFileEntry.getModelClassName(),
+						dlFileEntry.getFileEntryId(),
+						dlFileEntry.getCompanyId(), dlFileEntry.getExtension(),
+						dlFileEntry.getName(),
+						AntivirusAsyncUtil.getJobName(
+							dlFileEntry.getCompanyId(),
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFileName(),
+							dlFileVersion.getStoreFileName()),
+						dlFileEntry.getRepositoryId(), dlFileEntry.getSize(),
+						dlFileEntry.getFileName(), dlFileEntry.getUserId(),
+						dlFileVersion.getStoreFileName());
+				});
+
+			actionableDynamicQuery.performActions();
+		}
+		catch (PortalException portalException) {
+			ReflectionUtil.throwException(portalException);
+		}
 	}
 
 	private void _scheduleAntivirusScan(Path rootPath, Path filePath) {
@@ -286,7 +276,7 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 		}
 
 		_scheduleAntivirusScan(
-			StringPool.BLANK, 0, companyId, fileExtension, fileName,
+			null, 0, companyId, fileExtension, fileName,
 			AntivirusAsyncUtil.getJobName(
 				companyId, repositoryId, fileName, versionLabel),
 			repositoryId, size, null, 0L, versionLabel);
@@ -299,14 +289,8 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 
 		Message message = new Message();
 
-		if (Validator.isNotNull(className)) {
-			message.put("className", className);
-		}
-
-		if (classPK > 0) {
-			message.put("classPK", classPK);
-		}
-
+		message.put("className", className);
+		message.put("classPK", classPK);
 		message.put("companyId", companyId);
 		message.put("fileExtension", fileExtension);
 		message.put("fileName", fileName);

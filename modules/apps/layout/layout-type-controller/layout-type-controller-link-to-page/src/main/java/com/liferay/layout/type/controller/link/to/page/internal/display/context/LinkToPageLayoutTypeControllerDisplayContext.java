@@ -79,6 +79,25 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 		return itemSelectorURL.toString();
 	}
 
+	public String getLinkToLayoutExternalReferenceCode() {
+		if (_linkToLayoutExternalReferenceCode != null) {
+			return _linkToLayoutExternalReferenceCode;
+		}
+
+		Layout layout = _getLayout();
+
+		if (layout == null) {
+			_linkToLayoutExternalReferenceCode = StringPool.BLANK;
+
+			return _linkToLayoutExternalReferenceCode;
+		}
+
+		_linkToLayoutExternalReferenceCode = layout.getTypeSettingsProperty(
+			"linkToLayoutExternalReferenceCode", StringPool.BLANK);
+
+		return _linkToLayoutExternalReferenceCode;
+	}
+
 	public String getLinkToLayoutName() throws Exception {
 		if (_selectedLayout != null) {
 			ThemeDisplay themeDisplay =
@@ -88,14 +107,7 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 			return _selectedLayout.getBreadcrumb(themeDisplay.getLocale());
 		}
 
-		Layout layout = _getLayout();
-
-		if (layout == null) {
-			return StringPool.BLANK;
-		}
-
-		return layout.getTypeSettingsProperty(
-			"linkToLayoutExternalReferenceCode", StringPool.BLANK);
+		return getLinkToLayoutExternalReferenceCode();
 	}
 
 	public String getLinkToLayoutUuid() {
@@ -144,6 +156,7 @@ public class LinkToPageLayoutTypeControllerDisplayContext {
 	private Layout _layout;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
+	private String _linkToLayoutExternalReferenceCode;
 	private Layout _selectedLayout;
 
 }

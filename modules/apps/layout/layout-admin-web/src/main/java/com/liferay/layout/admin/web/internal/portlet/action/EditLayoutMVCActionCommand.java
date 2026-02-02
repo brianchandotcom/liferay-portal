@@ -173,7 +173,6 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				formTypeSettingsUnicodeProperties.put(
 					"linkToLayoutExternalReferenceCode",
 					linkToLayout.getExternalReferenceCode());
-
 				formTypeSettingsUnicodeProperties.put(
 					"linkToLayoutId",
 					String.valueOf(linkToLayout.getLayoutId()));

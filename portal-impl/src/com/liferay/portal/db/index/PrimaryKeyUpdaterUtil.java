@@ -6,6 +6,7 @@
 package com.liferay.portal.db.index;
 
 import com.liferay.petra.concurrent.DCLSingleton;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -40,8 +41,6 @@ public class PrimaryKeyUpdaterUtil {
 	public static void updateAllPrimaryKeys() {
 		try (LoggingTimer loggingTimer = new LoggingTimer(
 				"Updating database primary keys")) {
-
-			_throwableCollector = new ThrowableCollector();
 
 			_addUpdatePrimaryKeysFutures(
 				DBResourceUtil.getPortalTablesPrimaryKeyColumnNames());
@@ -78,7 +77,9 @@ public class PrimaryKeyUpdaterUtil {
 
 			_awaitFuturesTermination();
 
-			_throwableCollector.rethrow();
+			ThrowableCollector throwableCollector = _throwableCollector.get();
+
+			throwableCollector.rethrow();
 		}
 	}
 
@@ -91,17 +92,20 @@ public class PrimaryKeyUpdaterUtil {
 
 		ExecutorService executorService = _getExecutorService();
 
+		List<Future<?>> futures = _futures.get();
+		ThrowableCollector throwableCollector = _throwableCollector.get();
+
 		for (Map.Entry<String, String[]> entry :
 				tablesPrimaryKeysColumnNames.entrySet()) {
 
-			_futures.add(
+			futures.add(
 				executorService.submit(
 					() -> {
 						try {
 							_updatePrimaryKey(entry.getKey(), entry.getValue());
 						}
 						catch (Exception exception) {
-							_throwableCollector.collect(exception);
+							throwableCollector.collect(exception);
 
 							throw new RuntimeException(exception);
 						}
@@ -110,7 +114,9 @@ public class PrimaryKeyUpdaterUtil {
 	}
 
 	private static void _awaitFuturesTermination() {
-		for (Future<?> future : _futures) {
+		List<Future<?>> futures = _futures.get();
+
+		for (Future<?> future : futures) {
 			try {
 				future.get();
 			}
@@ -119,7 +125,7 @@ public class PrimaryKeyUpdaterUtil {
 			}
 		}
 
-		_futures.clear();
+		futures.clear();
 	}
 
 	private static ExecutorService _getExecutorService() {
@@ -165,8 +171,13 @@ public class PrimaryKeyUpdaterUtil {
 
 	private static final DCLSingleton<ExecutorService>
 		_executorServiceDCLSingleton = new DCLSingleton<>();
-	private static final List<Future<?>> _futures =
-		new CopyOnWriteArrayList<>();
-	private static ThrowableCollector _throwableCollector;
+	private static final ThreadLocal<List<Future<?>>> _futures =
+		new CentralizedThreadLocal<>(
+			PrimaryKeyUpdaterUtil.class + "._futures",
+			() -> new CopyOnWriteArrayList<>());
+	private static final ThreadLocal<ThrowableCollector> _throwableCollector =
+		new CentralizedThreadLocal<>(
+			PrimaryKeyUpdaterUtil.class + "._throwableCollector",
+			() -> new ThrowableCollector());
 
 }

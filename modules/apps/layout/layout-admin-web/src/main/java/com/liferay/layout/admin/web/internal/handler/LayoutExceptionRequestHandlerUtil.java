@@ -97,6 +97,9 @@ public class LayoutExceptionRequestHandlerUtil {
 		if (exceptionType == LayoutTypeException.FIRST_LAYOUT) {
 			errorMessage = "the-first-page-cannot-be-of-type-x";
 		}
+		else if (exceptionType == LayoutTypeException.TYPE_NOT_ALLOWED) {
+			errorMessage = "an-empty-page-cannot-be-converted-to-x";
+		}
 
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(layoutType);
@@ -190,7 +193,9 @@ public class LayoutExceptionRequestHandlerUtil {
 				(layoutTypeException.getType() ==
 					LayoutTypeException.FIRST_LAYOUT_PERMISSION) ||
 				(layoutTypeException.getType() ==
-					LayoutTypeException.NOT_INSTANCEABLE)) {
+					LayoutTypeException.NOT_INSTANCEABLE) ||
+				(layoutTypeException.getType() ==
+					LayoutTypeException.TYPE_NOT_ALLOWED)) {
 
 				errorMessage = _handleLayoutTypeException(
 					actionRequest, layoutTypeException.getType(),

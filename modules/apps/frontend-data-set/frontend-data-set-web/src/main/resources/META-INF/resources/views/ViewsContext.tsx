@@ -5,8 +5,6 @@
 
 import {createContext} from 'react';
 
-import {IFilter} from '../management_bar/controls/filters/Filter';
-
 export interface IViewsContext {
 	activeSnapshotERC: null | string;
 	activeView: any;

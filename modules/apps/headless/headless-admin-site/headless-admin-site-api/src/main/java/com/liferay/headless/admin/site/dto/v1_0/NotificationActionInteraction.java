@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,51 +36,54 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of an action execution of type page.",
-	value = "SitePageActionExecutionResult"
+	description = "The definition of an action interaction of type notification.",
+	value = "NotificationActionInteraction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SitePageActionExecutionResult")
-public class SitePageActionExecutionResult implements Serializable {
+@XmlRootElement(name = "NotificationActionInteraction")
+public class NotificationActionInteraction
+	extends ActionInteraction implements Serializable {
 
-	public static SitePageActionExecutionResult toDTO(String json) {
+	public static NotificationActionInteraction toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			SitePageActionExecutionResult.class, json);
+			NotificationActionInteraction.class, json);
 	}
 
-	public static SitePageActionExecutionResult unsafeToDTO(String json) {
+	public static NotificationActionInteraction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			SitePageActionExecutionResult.class, json);
+			NotificationActionInteraction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The reference to a page."
+		description = "The localized text to display when an action is executed."
 	)
 	@Valid
-	public ItemExternalReference getItemReference() {
-		if (_itemReferenceSupplier != null) {
-			itemReference = _itemReferenceSupplier.get();
+	public FragmentInlineValue getFragmentInlineValue() {
+		if (_fragmentInlineValueSupplier != null) {
+			fragmentInlineValue = _fragmentInlineValueSupplier.get();
 
-			_itemReferenceSupplier = null;
+			_fragmentInlineValueSupplier = null;
 		}
 
-		return itemReference;
+		return fragmentInlineValue;
 	}
 
-	public void setItemReference(ItemExternalReference itemReference) {
-		this.itemReference = itemReference;
+	public void setFragmentInlineValue(
+		FragmentInlineValue fragmentInlineValue) {
 
-		_itemReferenceSupplier = null;
+		this.fragmentInlineValue = fragmentInlineValue;
+
+		_fragmentInlineValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<ItemExternalReference, Exception>
-			itemReferenceUnsafeSupplier) {
+	public void setFragmentInlineValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			fragmentInlineValueUnsafeSupplier) {
 
-		_itemReferenceSupplier = () -> {
+		_fragmentInlineValueSupplier = () -> {
 			try {
-				return itemReferenceUnsafeSupplier.get();
+				return fragmentInlineValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -91,12 +94,59 @@ public class SitePageActionExecutionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The reference to a page.")
+	@GraphQLField(
+		description = "The localized text to display when an action is executed."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference itemReference;
+	protected FragmentInlineValue fragmentInlineValue;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _itemReferenceSupplier;
+	private Supplier<FragmentInlineValue> _fragmentInlineValueSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "Whether to reload the page after the action is executed."
+	)
+	public Boolean getReload() {
+		if (_reloadSupplier != null) {
+			reload = _reloadSupplier.get();
+
+			_reloadSupplier = null;
+		}
+
+		return reload;
+	}
+
+	public void setReload(Boolean reload) {
+		this.reload = reload;
+
+		_reloadSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setReload(
+		UnsafeSupplier<Boolean, Exception> reloadUnsafeSupplier) {
+
+		_reloadSupplier = () -> {
+			try {
+				return reloadUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "Whether to reload the page after the action is executed."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean reload;
+
+	@JsonIgnore
+	private Supplier<Boolean> _reloadSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,15 +154,15 @@ public class SitePageActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SitePageActionExecutionResult)) {
+		if (!(object instanceof NotificationActionInteraction)) {
 			return false;
 		}
 
-		SitePageActionExecutionResult sitePageActionExecutionResult =
-			(SitePageActionExecutionResult)object;
+		NotificationActionInteraction notificationActionInteraction =
+			(NotificationActionInteraction)object;
 
 		return Objects.equals(
-			toString(), sitePageActionExecutionResult.toString());
+			toString(), notificationActionInteraction.toString());
 	}
 
 	@Override
@@ -127,16 +177,42 @@ public class SitePageActionExecutionResult implements Serializable {
 
 		sb.append("{");
 
-		ItemExternalReference itemReference = getItemReference();
+		FragmentInlineValue fragmentInlineValue = getFragmentInlineValue();
 
-		if (itemReference != null) {
+		if (fragmentInlineValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"fragmentInlineValue\": ");
 
-			sb.append(String.valueOf(itemReference));
+			sb.append(String.valueOf(fragmentInlineValue));
+		}
+
+		Boolean reload = getReload();
+
+		if (reload != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"reload\": ");
+
+			sb.append(reload);
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -146,7 +222,7 @@ public class SitePageActionExecutionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SitePageActionExecutionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NotificationActionInteraction",
 		name = "x-class-name"
 	)
 	public String xClassName;

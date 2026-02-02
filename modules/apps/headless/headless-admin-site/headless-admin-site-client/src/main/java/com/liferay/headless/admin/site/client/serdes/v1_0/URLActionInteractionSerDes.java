@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.URLActionExecutionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLActionInteraction;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,26 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class URLActionExecutionResultSerDes {
+public class URLActionInteractionSerDes {
 
-	public static URLActionExecutionResult toDTO(String json) {
-		URLActionExecutionResultJSONParser urlActionExecutionResultJSONParser =
-			new URLActionExecutionResultJSONParser();
+	public static URLActionInteraction toDTO(String json) {
+		URLActionInteractionJSONParser urlActionInteractionJSONParser =
+			new URLActionInteractionJSONParser();
 
-		return urlActionExecutionResultJSONParser.parseToDTO(json);
+		return urlActionInteractionJSONParser.parseToDTO(json);
 	}
 
-	public static URLActionExecutionResult[] toDTOs(String json) {
-		URLActionExecutionResultJSONParser urlActionExecutionResultJSONParser =
-			new URLActionExecutionResultJSONParser();
+	public static URLActionInteraction[] toDTOs(String json) {
+		URLActionInteractionJSONParser urlActionInteractionJSONParser =
+			new URLActionInteractionJSONParser();
 
-		return urlActionExecutionResultJSONParser.parseToDTOs(json);
+		return urlActionInteractionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		URLActionExecutionResult urlActionExecutionResult) {
-
-		if (urlActionExecutionResult == null) {
+	public static String toJSON(URLActionInteraction urlActionInteraction) {
+		if (urlActionInteraction == null) {
 			return "null";
 		}
 
@@ -48,14 +46,27 @@ public class URLActionExecutionResultSerDes {
 
 		sb.append("{");
 
-		if (urlActionExecutionResult.getUrl() != null) {
+		if (urlActionInteraction.getFragmentInlineValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"url\": ");
+			sb.append("\"fragmentInlineValue\": ");
 
-			sb.append(String.valueOf(urlActionExecutionResult.getUrl()));
+			sb.append(
+				String.valueOf(urlActionInteraction.getFragmentInlineValue()));
+		}
+
+		if (urlActionInteraction.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(urlActionInteraction.getType());
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -64,47 +75,59 @@ public class URLActionExecutionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		URLActionExecutionResultJSONParser urlActionExecutionResultJSONParser =
-			new URLActionExecutionResultJSONParser();
+		URLActionInteractionJSONParser urlActionInteractionJSONParser =
+			new URLActionInteractionJSONParser();
 
-		return urlActionExecutionResultJSONParser.parseToMap(json);
+		return urlActionInteractionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		URLActionExecutionResult urlActionExecutionResult) {
+		URLActionInteraction urlActionInteraction) {
 
-		if (urlActionExecutionResult == null) {
+		if (urlActionInteraction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (urlActionExecutionResult.getUrl() == null) {
-			map.put("url", null);
+		if (urlActionInteraction.getFragmentInlineValue() == null) {
+			map.put("fragmentInlineValue", null);
 		}
 		else {
-			map.put("url", String.valueOf(urlActionExecutionResult.getUrl()));
+			map.put(
+				"fragmentInlineValue",
+				String.valueOf(urlActionInteraction.getFragmentInlineValue()));
+		}
+
+		if (urlActionInteraction.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(urlActionInteraction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class URLActionExecutionResultJSONParser
-		extends BaseJSONParser<URLActionExecutionResult> {
+	public static class URLActionInteractionJSONParser
+		extends BaseJSONParser<URLActionInteraction> {
 
 		@Override
-		protected URLActionExecutionResult createDTO() {
-			return new URLActionExecutionResult();
+		protected URLActionInteraction createDTO() {
+			return new URLActionInteraction();
 		}
 
 		@Override
-		protected URLActionExecutionResult[] createDTOArray(int size) {
-			return new URLActionExecutionResult[size];
+		protected URLActionInteraction[] createDTOArray(int size) {
+			return new URLActionInteraction[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "url")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentInlineValue")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -113,13 +136,20 @@ public class URLActionExecutionResultSerDes {
 
 		@Override
 		protected void setField(
-			URLActionExecutionResult urlActionExecutionResult,
+			URLActionInteraction urlActionInteraction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "url")) {
+			if (Objects.equals(jsonParserFieldName, "fragmentInlineValue")) {
 				if (jsonParserFieldValue != null) {
-					urlActionExecutionResult.setUrl(
+					urlActionInteraction.setFragmentInlineValue(
 						FragmentInlineValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					urlActionInteraction.setType(
+						URLActionInteraction.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

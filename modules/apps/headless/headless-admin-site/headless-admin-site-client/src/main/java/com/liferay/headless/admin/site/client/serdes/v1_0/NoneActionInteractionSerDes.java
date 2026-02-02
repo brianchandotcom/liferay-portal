@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.NoneActionExecutionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.NoneActionInteraction;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class NoneActionExecutionResultSerDes {
+public class NoneActionInteractionSerDes {
 
-	public static NoneActionExecutionResult toDTO(String json) {
-		NoneActionExecutionResultJSONParser
-			noneActionExecutionResultJSONParser =
-				new NoneActionExecutionResultJSONParser();
+	public static NoneActionInteraction toDTO(String json) {
+		NoneActionInteractionJSONParser noneActionInteractionJSONParser =
+			new NoneActionInteractionJSONParser();
 
-		return noneActionExecutionResultJSONParser.parseToDTO(json);
+		return noneActionInteractionJSONParser.parseToDTO(json);
 	}
 
-	public static NoneActionExecutionResult[] toDTOs(String json) {
-		NoneActionExecutionResultJSONParser
-			noneActionExecutionResultJSONParser =
-				new NoneActionExecutionResultJSONParser();
+	public static NoneActionInteraction[] toDTOs(String json) {
+		NoneActionInteractionJSONParser noneActionInteractionJSONParser =
+			new NoneActionInteractionJSONParser();
 
-		return noneActionExecutionResultJSONParser.parseToDTOs(json);
+		return noneActionInteractionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		NoneActionExecutionResult noneActionExecutionResult) {
-
-		if (noneActionExecutionResult == null) {
+	public static String toJSON(NoneActionInteraction noneActionInteraction) {
+		if (noneActionInteraction == null) {
 			return "null";
 		}
 
@@ -50,14 +46,26 @@ public class NoneActionExecutionResultSerDes {
 
 		sb.append("{");
 
-		if (noneActionExecutionResult.getReload() != null) {
+		if (noneActionInteraction.getReload() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"reload\": ");
 
-			sb.append(noneActionExecutionResult.getReload());
+			sb.append(noneActionInteraction.getReload());
+		}
+
+		if (noneActionInteraction.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(noneActionInteraction.getType());
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -66,50 +74,58 @@ public class NoneActionExecutionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		NoneActionExecutionResultJSONParser
-			noneActionExecutionResultJSONParser =
-				new NoneActionExecutionResultJSONParser();
+		NoneActionInteractionJSONParser noneActionInteractionJSONParser =
+			new NoneActionInteractionJSONParser();
 
-		return noneActionExecutionResultJSONParser.parseToMap(json);
+		return noneActionInteractionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		NoneActionExecutionResult noneActionExecutionResult) {
+		NoneActionInteraction noneActionInteraction) {
 
-		if (noneActionExecutionResult == null) {
+		if (noneActionInteraction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (noneActionExecutionResult.getReload() == null) {
+		if (noneActionInteraction.getReload() == null) {
 			map.put("reload", null);
 		}
 		else {
 			map.put(
-				"reload",
-				String.valueOf(noneActionExecutionResult.getReload()));
+				"reload", String.valueOf(noneActionInteraction.getReload()));
+		}
+
+		if (noneActionInteraction.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(noneActionInteraction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class NoneActionExecutionResultJSONParser
-		extends BaseJSONParser<NoneActionExecutionResult> {
+	public static class NoneActionInteractionJSONParser
+		extends BaseJSONParser<NoneActionInteraction> {
 
 		@Override
-		protected NoneActionExecutionResult createDTO() {
-			return new NoneActionExecutionResult();
+		protected NoneActionInteraction createDTO() {
+			return new NoneActionInteraction();
 		}
 
 		@Override
-		protected NoneActionExecutionResult[] createDTOArray(int size) {
-			return new NoneActionExecutionResult[size];
+		protected NoneActionInteraction[] createDTOArray(int size) {
+			return new NoneActionInteraction[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(jsonParserFieldName, "reload")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -118,13 +134,20 @@ public class NoneActionExecutionResultSerDes {
 
 		@Override
 		protected void setField(
-			NoneActionExecutionResult noneActionExecutionResult,
+			NoneActionInteraction noneActionInteraction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "reload")) {
 				if (jsonParserFieldValue != null) {
-					noneActionExecutionResult.setReload(
+					noneActionInteraction.setReload(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					noneActionInteraction.setType(
+						NoneActionInteraction.Type.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

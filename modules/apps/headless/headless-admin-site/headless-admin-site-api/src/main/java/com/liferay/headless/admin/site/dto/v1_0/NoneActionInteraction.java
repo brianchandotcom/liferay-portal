@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.Valid;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -36,49 +34,49 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of an action execution result of type URL.",
-	value = "URLActionExecutionResult"
+	description = "The definition of an action interaction of type none.",
+	value = "NoneActionInteraction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "URLActionExecutionResult")
-public class URLActionExecutionResult implements Serializable {
+@XmlRootElement(name = "NoneActionInteraction")
+public class NoneActionInteraction
+	extends ActionInteraction implements Serializable {
 
-	public static URLActionExecutionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(URLActionExecutionResult.class, json);
+	public static NoneActionInteraction toDTO(String json) {
+		return ObjectMapperUtil.readValue(NoneActionInteraction.class, json);
 	}
 
-	public static URLActionExecutionResult unsafeToDTO(String json) {
+	public static NoneActionInteraction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			URLActionExecutionResult.class, json);
+			NoneActionInteraction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized action execution result of type URL."
+		description = "Whether to reload the page after the action is executed."
 	)
-	@Valid
-	public FragmentInlineValue getUrl() {
-		if (_urlSupplier != null) {
-			url = _urlSupplier.get();
+	public Boolean getReload() {
+		if (_reloadSupplier != null) {
+			reload = _reloadSupplier.get();
 
-			_urlSupplier = null;
+			_reloadSupplier = null;
 		}
 
-		return url;
+		return reload;
 	}
 
-	public void setUrl(FragmentInlineValue url) {
-		this.url = url;
+	public void setReload(Boolean reload) {
+		this.reload = reload;
 
-		_urlSupplier = null;
+		_reloadSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setUrl(
-		UnsafeSupplier<FragmentInlineValue, Exception> urlUnsafeSupplier) {
+	public void setReload(
+		UnsafeSupplier<Boolean, Exception> reloadUnsafeSupplier) {
 
-		_urlSupplier = () -> {
+		_reloadSupplier = () -> {
 			try {
-				return urlUnsafeSupplier.get();
+				return reloadUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -90,13 +88,13 @@ public class URLActionExecutionResult implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The localized action execution result of type URL."
+		description = "Whether to reload the page after the action is executed."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentInlineValue url;
+	protected Boolean reload;
 
 	@JsonIgnore
-	private Supplier<FragmentInlineValue> _urlSupplier;
+	private Supplier<Boolean> _reloadSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,14 +102,14 @@ public class URLActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof URLActionExecutionResult)) {
+		if (!(object instanceof NoneActionInteraction)) {
 			return false;
 		}
 
-		URLActionExecutionResult urlActionExecutionResult =
-			(URLActionExecutionResult)object;
+		NoneActionInteraction noneActionInteraction =
+			(NoneActionInteraction)object;
 
-		return Objects.equals(toString(), urlActionExecutionResult.toString());
+		return Objects.equals(toString(), noneActionInteraction.toString());
 	}
 
 	@Override
@@ -126,16 +124,30 @@ public class URLActionExecutionResult implements Serializable {
 
 		sb.append("{");
 
-		FragmentInlineValue url = getUrl();
+		Boolean reload = getReload();
 
-		if (url != null) {
+		if (reload != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"url\": ");
+			sb.append("\"reload\": ");
 
-			sb.append(String.valueOf(url));
+			sb.append(reload);
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -145,7 +157,7 @@ public class URLActionExecutionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.URLActionExecutionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NoneActionInteraction",
 		name = "x-class-name"
 	)
 	public String xClassName;

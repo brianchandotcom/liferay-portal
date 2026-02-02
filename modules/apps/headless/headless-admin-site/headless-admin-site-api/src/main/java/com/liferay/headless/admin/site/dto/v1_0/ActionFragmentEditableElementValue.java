@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -56,32 +55,35 @@ public class ActionFragmentEditableElementValue
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's action. Must be mapped to an external value."
+		description = "The action interaction in case the action fails."
 	)
 	@Valid
-	public Object getAction() {
-		if (_actionSupplier != null) {
-			action = _actionSupplier.get();
+	public ActionInteraction getErrorActionInteraction() {
+		if (_errorActionInteractionSupplier != null) {
+			errorActionInteraction = _errorActionInteractionSupplier.get();
 
-			_actionSupplier = null;
+			_errorActionInteractionSupplier = null;
 		}
 
-		return action;
+		return errorActionInteraction;
 	}
 
-	public void setAction(Object action) {
-		this.action = action;
+	public void setErrorActionInteraction(
+		ActionInteraction errorActionInteraction) {
 
-		_actionSupplier = null;
+		this.errorActionInteraction = errorActionInteraction;
+
+		_errorActionInteractionSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setAction(
-		UnsafeSupplier<Object, Exception> actionUnsafeSupplier) {
+	public void setErrorActionInteraction(
+		UnsafeSupplier<ActionInteraction, Exception>
+			errorActionInteractionUnsafeSupplier) {
 
-		_actionSupplier = () -> {
+		_errorActionInteractionSupplier = () -> {
 			try {
-				return actionUnsafeSupplier.get();
+				return errorActionInteractionUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -93,42 +95,44 @@ public class ActionFragmentEditableElementValue
 	}
 
 	@GraphQLField(
-		description = "The fragment editable element's action. Must be mapped to an external value."
+		description = "The action interaction in case the action fails."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object action;
+	protected ActionInteraction errorActionInteraction;
 
 	@JsonIgnore
-	private Supplier<Object> _actionSupplier;
+	private Supplier<ActionInteraction> _errorActionInteractionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The action execution result in case the action fails."
+		description = "The fragment editable element's action mapped value."
 	)
 	@Valid
-	public ActionExecutionResult getOnError() {
-		if (_onErrorSupplier != null) {
-			onError = _onErrorSupplier.get();
+	public FragmentMappedValue getFragmentMappedValue() {
+		if (_fragmentMappedValueSupplier != null) {
+			fragmentMappedValue = _fragmentMappedValueSupplier.get();
 
-			_onErrorSupplier = null;
+			_fragmentMappedValueSupplier = null;
 		}
 
-		return onError;
+		return fragmentMappedValue;
 	}
 
-	public void setOnError(ActionExecutionResult onError) {
-		this.onError = onError;
+	public void setFragmentMappedValue(
+		FragmentMappedValue fragmentMappedValue) {
 
-		_onErrorSupplier = null;
+		this.fragmentMappedValue = fragmentMappedValue;
+
+		_fragmentMappedValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setOnError(
-		UnsafeSupplier<ActionExecutionResult, Exception>
-			onErrorUnsafeSupplier) {
+	public void setFragmentMappedValue(
+		UnsafeSupplier<FragmentMappedValue, Exception>
+			fragmentMappedValueUnsafeSupplier) {
 
-		_onErrorSupplier = () -> {
+		_fragmentMappedValueSupplier = () -> {
 			try {
-				return onErrorUnsafeSupplier.get();
+				return fragmentMappedValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -140,42 +144,44 @@ public class ActionFragmentEditableElementValue
 	}
 
 	@GraphQLField(
-		description = "The action execution result in case the action fails."
+		description = "The fragment editable element's action mapped value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ActionExecutionResult onError;
+	protected FragmentMappedValue fragmentMappedValue;
 
 	@JsonIgnore
-	private Supplier<ActionExecutionResult> _onErrorSupplier;
+	private Supplier<FragmentMappedValue> _fragmentMappedValueSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The action execution result in case the action succeeds."
+		description = "The action interaction in case the action succeeds."
 	)
 	@Valid
-	public ActionExecutionResult getOnSuccess() {
-		if (_onSuccessSupplier != null) {
-			onSuccess = _onSuccessSupplier.get();
+	public ActionInteraction getSuccessActionInteraction() {
+		if (_successActionInteractionSupplier != null) {
+			successActionInteraction = _successActionInteractionSupplier.get();
 
-			_onSuccessSupplier = null;
+			_successActionInteractionSupplier = null;
 		}
 
-		return onSuccess;
+		return successActionInteraction;
 	}
 
-	public void setOnSuccess(ActionExecutionResult onSuccess) {
-		this.onSuccess = onSuccess;
+	public void setSuccessActionInteraction(
+		ActionInteraction successActionInteraction) {
 
-		_onSuccessSupplier = null;
+		this.successActionInteraction = successActionInteraction;
+
+		_successActionInteractionSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setOnSuccess(
-		UnsafeSupplier<ActionExecutionResult, Exception>
-			onSuccessUnsafeSupplier) {
+	public void setSuccessActionInteraction(
+		UnsafeSupplier<ActionInteraction, Exception>
+			successActionInteractionUnsafeSupplier) {
 
-		_onSuccessSupplier = () -> {
+		_successActionInteractionSupplier = () -> {
 			try {
-				return onSuccessUnsafeSupplier.get();
+				return successActionInteractionUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -187,39 +193,42 @@ public class ActionFragmentEditableElementValue
 	}
 
 	@GraphQLField(
-		description = "The action execution result in case the action succeeds."
+		description = "The action interaction in case the action succeeds."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ActionExecutionResult onSuccess;
+	protected ActionInteraction successActionInteraction;
 
 	@JsonIgnore
-	private Supplier<ActionExecutionResult> _onSuccessSupplier;
+	private Supplier<ActionInteraction> _successActionInteractionSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment editable element's text."
+		description = "The fragment editable element's text value."
 	)
 	@Valid
-	public Object getText() {
-		if (_textSupplier != null) {
-			text = _textSupplier.get();
+	public TextFragmentValue getTextFragmentValue() {
+		if (_textFragmentValueSupplier != null) {
+			textFragmentValue = _textFragmentValueSupplier.get();
 
-			_textSupplier = null;
+			_textFragmentValueSupplier = null;
 		}
 
-		return text;
+		return textFragmentValue;
 	}
 
-	public void setText(Object text) {
-		this.text = text;
+	public void setTextFragmentValue(TextFragmentValue textFragmentValue) {
+		this.textFragmentValue = textFragmentValue;
 
-		_textSupplier = null;
+		_textFragmentValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setText(UnsafeSupplier<Object, Exception> textUnsafeSupplier) {
-		_textSupplier = () -> {
+	public void setTextFragmentValue(
+		UnsafeSupplier<TextFragmentValue, Exception>
+			textFragmentValueUnsafeSupplier) {
+
+		_textFragmentValueSupplier = () -> {
 			try {
-				return textUnsafeSupplier.get();
+				return textFragmentValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -230,12 +239,12 @@ public class ActionFragmentEditableElementValue
 		};
 	}
 
-	@GraphQLField(description = "The fragment editable element's text.")
+	@GraphQLField(description = "The fragment editable element's text value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object text;
+	protected TextFragmentValue textFragmentValue;
 
 	@JsonIgnore
-	private Supplier<Object> _textSupplier;
+	private Supplier<TextFragmentValue> _textFragmentValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -266,72 +275,53 @@ public class ActionFragmentEditableElementValue
 
 		sb.append("{");
 
-		Object action = getAction();
+		ActionInteraction errorActionInteraction = getErrorActionInteraction();
 
-		if (action != null) {
+		if (errorActionInteraction != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"action\": ");
+			sb.append("\"errorActionInteraction\": ");
 
-			if (action instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)action));
-			}
-			else if (action instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)action));
-				sb.append("\"");
-			}
-			else {
-				sb.append(action);
-			}
+			sb.append(String.valueOf(errorActionInteraction));
 		}
 
-		ActionExecutionResult onError = getOnError();
+		FragmentMappedValue fragmentMappedValue = getFragmentMappedValue();
 
-		if (onError != null) {
+		if (fragmentMappedValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"onError\": ");
+			sb.append("\"fragmentMappedValue\": ");
 
-			sb.append(String.valueOf(onError));
+			sb.append(String.valueOf(fragmentMappedValue));
 		}
 
-		ActionExecutionResult onSuccess = getOnSuccess();
+		ActionInteraction successActionInteraction =
+			getSuccessActionInteraction();
 
-		if (onSuccess != null) {
+		if (successActionInteraction != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"onSuccess\": ");
+			sb.append("\"successActionInteraction\": ");
 
-			sb.append(String.valueOf(onSuccess));
+			sb.append(String.valueOf(successActionInteraction));
 		}
 
-		Object text = getText();
+		TextFragmentValue textFragmentValue = getTextFragmentValue();
 
-		if (text != null) {
+		if (textFragmentValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"text\": ");
+			sb.append("\"textFragmentValue\": ");
 
-			if (text instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)text));
-			}
-			else if (text instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)text));
-				sb.append("\"");
-			}
-			else {
-				sb.append(text);
-			}
+			sb.append(String.valueOf(textFragmentValue));
 		}
 
 		Type type = getType();

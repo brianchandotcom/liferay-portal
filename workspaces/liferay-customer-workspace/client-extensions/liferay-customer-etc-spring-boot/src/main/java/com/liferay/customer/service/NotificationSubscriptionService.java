@@ -43,7 +43,7 @@ public class NotificationSubscriptionService extends BaseNotificationService {
 			uriComponentsBuilder.build(
 			).toUri());
 
-		if (Validator.isNotNull(response)) {
+		if (Validator.isNull(response)) {
 			return new JSONArray();
 		}
 

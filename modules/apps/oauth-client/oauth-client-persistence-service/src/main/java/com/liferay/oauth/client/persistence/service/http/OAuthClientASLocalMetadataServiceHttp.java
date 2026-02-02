@@ -45,7 +45,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				addOAuthClientASLocalMetadata(
 					HttpPrincipal httpPrincipal, String authorizationEndpoint,
-					boolean enabled, String issuerString, String jwksUri,
+					boolean enabled, String issuer, String jwksUri,
 					String[] supportedGrantTypes, String[] supportedScopes,
 					String[] supportedSubjectTypes, String tokenEndpointString,
 					String userinfoEndpoint)
@@ -58,9 +58,9 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_addOAuthClientASLocalMetadataParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, authorizationEndpoint, enabled, issuerString,
-				jwksUri, supportedGrantTypes, supportedScopes,
-				supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
+				methodKey, authorizationEndpoint, enabled, issuer, jwksUri,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpointString, userinfoEndpoint);
 
 			Object returnObj = null;
 

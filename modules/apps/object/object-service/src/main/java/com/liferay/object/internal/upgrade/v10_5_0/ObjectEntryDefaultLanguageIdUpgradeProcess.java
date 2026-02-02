@@ -6,6 +6,7 @@
 package com.liferay.object.internal.upgrade.v10_5_0;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -32,15 +33,19 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select companyId, objectDefinitionId, scope from " +
 					"ObjectDefinition");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"update ObjectEntry set defaultLanguageId = ? where " +
-					"objectDefinitionId = ?");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update ObjectEntry set defaultLanguageId = ? where " +
+						"objectDefinitionId = ?");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"select distinct groupId from ObjectEntry where " +
 					"objectDefinitionId = ?");
-			PreparedStatement preparedStatement4 = connection.prepareStatement(
-				"update ObjectEntry set defaultLanguageId = ? where groupId " +
-					"= ?");
+			PreparedStatement preparedStatement4 =
+				AutoBatchPreparedStatementUtil.autoBatch(
+					connection,
+					"update ObjectEntry set defaultLanguageId = ? where " +
+						"groupId = ?");
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {

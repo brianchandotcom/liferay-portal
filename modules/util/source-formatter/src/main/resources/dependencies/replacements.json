@@ -93,6 +93,19 @@
 	},
 	{
 		"classNames": [
+			"FDSActionProvider"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-7879",
+		"methodsToFormat": [
+			{
+				"from": "@Override\n\tpublic List<DropdownItem> getDropdownItems(\n\t\t\tHttpServletRequest httpServletRequest, long groupId, Object model)",
+				"to": "@Override\n\tpublic List<DropdownItem> getDropdownItems(\n\t\t\tlong groupId, HttpServletRequest httpServletRequest, Object model)"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"AssetDisplayPageFriendlyURLProvider"
 		],
 		"from": "getFriendlyURL(String paramName, long paramName, Locale paramName, ThemeDisplay paramName)",

@@ -110,12 +110,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToContentLayoutWithMasterLayoutPlid()
 		throws Exception {
 
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
+		Layout emptyLayout = _addEmptyLayout();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -143,12 +138,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToContentLayoutWithPageTemplateEntryId()
 		throws Exception {
 
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
+		Layout emptyLayout = _addEmptyLayout();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -207,12 +197,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToPortletLayoutWithoutPermissions()
 		throws Exception {
 
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
+		Layout emptyLayout = _addEmptyLayout();
 
 		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
 
@@ -236,12 +221,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToPortletLayoutWithPageTemplateEntryId()
 		throws Exception {
 
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
+		Layout emptyLayout = _addEmptyLayout();
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -275,6 +255,15 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getExternalReferenceCode(),
 			layout.getPortletLayoutPageTemplateEntryERC());
+	}
+
+	private Layout _addEmptyLayout() throws Exception {
+		return _layoutLocalService.addLayout(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
+			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
+			_serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -346,12 +335,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	}
 
 	private void _testCannotConvertEmptyLayout(String type) throws Exception {
-		Layout emptyLayout = _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
+		Layout emptyLayout = _addEmptyLayout();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();

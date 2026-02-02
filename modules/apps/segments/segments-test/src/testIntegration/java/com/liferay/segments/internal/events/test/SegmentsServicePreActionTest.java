@@ -18,14 +18,15 @@ import com.liferay.portal.kernel.events.LifecycleEvent;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -45,8 +47,13 @@ import com.liferay.segments.configuration.SegmentsCompanyConfiguration;
 import com.liferay.segments.configuration.SegmentsConfiguration;
 import com.liferay.segments.configuration.provider.SegmentsConfigurationProvider;
 import com.liferay.segments.constants.SegmentsWebKeys;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
+import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -82,7 +89,7 @@ public class SegmentsServicePreActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -215,6 +222,127 @@ public class SegmentsServicePreActionTest {
 
 				Assert.assertArrayEquals(
 					new long[] {segmentsExperience.getSegmentsExperienceId()},
+					(long[])mockHttpServletRequest.getAttribute(
+						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
+			}
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-73850")
+	public void testProcessLifecycleEventSegmentsExperienceIdsOrder()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					SegmentsConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"segmentationEnabled", true
+					).build())) {
+
+			try (CompanyConfigurationTemporarySwapper
+					companyConfigurationTemporarySwapper =
+						new CompanyConfigurationTemporarySwapper(
+							TestPropsValues.getCompanyId(),
+							SegmentsCompanyConfiguration.class.getName(),
+							HashMapDictionaryBuilder.<String, Object>put(
+								"segmentationEnabled", true
+							).build())) {
+
+				_segmentsConfigurationProvider.
+					clearSegmentsCompanyConfigurations();
+
+				LifecycleAction lifecycleAction = _getLifecycleAction();
+
+				MockHttpServletRequest mockHttpServletRequest =
+					new MockHttpServletRequest();
+
+				ServiceContext serviceContext =
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId());
+
+				Map<Locale, String> nameMap = Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString());
+
+				Layout layout = _layoutLocalService.addLayout(
+					null, TestPropsValues.getUserId(), _group.getGroupId(),
+					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
+					nameMap, nameMap, Collections.emptyMap(),
+					Collections.emptyMap(), Collections.emptyMap(),
+					LayoutConstants.TYPE_CONTENT,
+					UnicodePropertiesBuilder.put(
+						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
+					).buildString(),
+					false, false, Collections.emptyMap(), null, serviceContext);
+
+				mockHttpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+
+				User user = _userLocalService.getUser(
+					TestPropsValues.getUserId());
+
+				SegmentsExperience segmentsExperience0 =
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperience(layout.getPlid());
+
+				segmentsExperience0.setPriority(1);
+
+				segmentsExperience0 =
+					_segmentsExperienceLocalService.updateSegmentsExperience(
+						segmentsExperience0);
+
+				SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
+					user, _group.getGroupId());
+
+				SegmentsExperience segmentsExperience1 =
+					_segmentsExperienceLocalService.addSegmentsExperience(
+						null, TestPropsValues.getUserId(), _group.getGroupId(),
+						segmentsEntry1.getExternalReferenceCode(),
+						ScopeUtil.getItemScopeExternalReferenceCode(
+							segmentsEntry1.getGroupId(), _group.getGroupId()),
+						layout.getPlid(),
+						RandomTestUtil.randomLocaleStringMap(), true,
+						new UnicodeProperties(true), serviceContext);
+
+				segmentsExperience1.setPriority(2);
+
+				segmentsExperience1 =
+					_segmentsExperienceLocalService.updateSegmentsExperience(
+						segmentsExperience1);
+
+				Group globalGroup = _groupLocalService.getCompanyGroup(
+					TestPropsValues.getCompanyId());
+
+				SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
+					user, globalGroup.getGroupId());
+
+				SegmentsExperience segmentsExperience2 =
+					_segmentsExperienceLocalService.addSegmentsExperience(
+						null, TestPropsValues.getUserId(), _group.getGroupId(),
+						segmentsEntry2.getExternalReferenceCode(),
+						ScopeUtil.getItemScopeExternalReferenceCode(
+							segmentsEntry2.getGroupId(), _group.getGroupId()),
+						layout.getPlid(),
+						RandomTestUtil.randomLocaleStringMap(), true,
+						new UnicodeProperties(true), serviceContext);
+
+				segmentsExperience2.setPriority(3);
+
+				segmentsExperience2 =
+					_segmentsExperienceLocalService.updateSegmentsExperience(
+						segmentsExperience2);
+
+				LifecycleEvent lifecycleEvent = new LifecycleEvent(
+					mockHttpServletRequest, new MockHttpServletResponse());
+
+				lifecycleAction.processLifecycleEvent(lifecycleEvent);
+
+				Assert.assertArrayEquals(
+					new long[] {
+						segmentsExperience2.getSegmentsExperienceId(),
+						segmentsExperience1.getSegmentsExperienceId(),
+						segmentsExperience0.getSegmentsExperienceId()
+					},
 					(long[])mockHttpServletRequest.getAttribute(
 						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));
 			}
@@ -455,6 +583,19 @@ public class SegmentsServicePreActionTest {
 		}
 	}
 
+	private SegmentsEntry _addMatchingSegmentsEntry(User user, long groupId)
+		throws Exception {
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria, String.format("(firstName eq '%s')", user.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		return SegmentsTestUtil.addSegmentsEntry(
+			groupId, CriteriaSerializer.serialize(criteria));
+	}
+
 	private LifecycleAction _getLifecycleAction() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			SegmentsServicePreActionTest.class);
@@ -496,7 +637,6 @@ public class SegmentsServicePreActionTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
@@ -513,5 +653,14 @@ public class SegmentsServicePreActionTest {
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=user",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

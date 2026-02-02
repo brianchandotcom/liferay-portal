@@ -9,10 +9,11 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -22,6 +23,9 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.segments.criteria.Criteria;
+import com.liferay.segments.criteria.CriteriaSerializer;
+import com.liferay.segments.criteria.contributor.SegmentsCriteriaContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.processor.SegmentsExperienceRequestProcessor;
@@ -53,7 +57,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 	}
 
 	@Test
@@ -121,48 +125,107 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-73850")
 	public void testGetSegmentsExperienceIdsWithSegmentEntryIds()
 		throws Exception {
 
-		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
-			_group.getGroupId());
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		User user = _userLocalService.getUser(TestPropsValues.getUserId());
+
+		SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
+			user, _group.getGroupId());
+
+		SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
+			user, globalGroup.getGroupId());
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperience segmentsExperience =
+		SegmentsExperience segmentsExperience0 =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				layout.getPlid());
+
+		segmentsExperience0.setPriority(1);
+
+		segmentsExperience0 =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				segmentsExperience0);
+
+		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				segmentsEntry.getExternalReferenceCode(),
+				segmentsEntry1.getExternalReferenceCode(),
 				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry.getGroupId(), _group.getGroupId()),
+					segmentsEntry1.getGroupId(), _group.getGroupId()),
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		long[] segmentsExperienceIds =
+		segmentsExperience1.setPriority(2);
+
+		segmentsExperience1 =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				segmentsExperience1);
+
+		SegmentsExperience segmentsExperience2 =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				segmentsEntry2.getExternalReferenceCode(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					segmentsEntry2.getGroupId(), _group.getGroupId()),
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		SegmentsExperience segmentsExperience3 =
+			_segmentsExperienceLocalService.appendSegmentsExperience(
+				TestPropsValues.getUserId(), _group.getGroupId(), null, null,
+				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
+				new UnicodeProperties(true),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		segmentsExperience3.setPriority(4);
+
+		segmentsExperience3 =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				segmentsExperience3);
+
+		Assert.assertArrayEquals(
+			new long[] {
+				segmentsExperience3.getSegmentsExperienceId(),
+				segmentsExperience2.getSegmentsExperienceId(),
+				segmentsExperience1.getSegmentsExperienceId(),
+				segmentsExperience0.getSegmentsExperienceId()
+			},
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),
 				_group.getGroupId(), layout.getPlid(),
 				new long[] {
 					SegmentsEntryConstants.ID_DEFAULT,
-					segmentsEntry.getSegmentsEntryId()
+					segmentsEntry1.getSegmentsEntryId(),
+					segmentsEntry2.getSegmentsEntryId()
 				},
-				new long[0]);
-
-		Assert.assertEquals(
-			Arrays.toString(segmentsExperienceIds), 2,
-			segmentsExperienceIds.length);
-		Assert.assertTrue(
-			ArrayUtil.contains(
-				segmentsExperienceIds,
-				segmentsExperience.getSegmentsExperienceId()));
+				new long[0]));
 	}
 
-	@DeleteAfterTestRun
+	private SegmentsEntry _addMatchingSegmentsEntry(User user, long groupId)
+		throws Exception {
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria, String.format("(firstName eq '%s')", user.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		return SegmentsTestUtil.addSegmentsEntry(
+			groupId, CriteriaSerializer.serialize(criteria));
+	}
+
 	private Group _group;
 
 	@Inject
-	private LayoutLocalService _layoutLocalService;
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
@@ -172,5 +235,14 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	)
 	private SegmentsExperienceRequestProcessor
 		_segmentsExperienceRequestProcessor;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject(
+		filter = "segments.criteria.contributor.key=user",
+		type = SegmentsCriteriaContributor.class
+	)
+	private SegmentsCriteriaContributor _userSegmentsCriteriaContributor;
 
 }

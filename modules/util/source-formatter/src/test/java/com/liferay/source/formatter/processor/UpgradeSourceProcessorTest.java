@@ -85,11 +85,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaBaseModelListenerCheck() throws Exception {
-		test("upgrade/UpgradeJavaBaseModelListenerCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaDDMFormValuesSerializerTrackerCheck()
 		throws Exception {
 

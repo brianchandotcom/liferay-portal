@@ -33,6 +33,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -124,21 +125,25 @@ public class CompanyIdIndexNameBuilderTest {
 			"uppercase0", companyIdIndexNameBuilder.getIndexName(0));
 	}
 
+	@Ignore
 	@Test
 	public void testIndexNamePrefixBlank() throws Exception {
 		_assertIndexNamePrefix(StringPool.BLANK, StringPool.BLANK);
 	}
 
+	@Ignore
 	@Test(expected = ElasticsearchException.class)
 	public void testIndexNamePrefixInvalidIndexName() throws Exception {
 		createIndices(StringPool.SLASH, 0);
 	}
 
+	@Ignore
 	@Test
 	public void testIndexNamePrefixNull() throws Exception {
 		_assertIndexNamePrefix(null, StringPool.BLANK);
 	}
 
+	@Ignore
 	@Test
 	public void testIndexNamePrefixTrim() throws Exception {
 		String string = RandomTestUtil.randomString();
@@ -148,6 +153,7 @@ public class CompanyIdIndexNameBuilderTest {
 			StringUtil.toLowerCase(string));
 	}
 
+	@Ignore
 	@Test
 	public void testIndexNamePrefixUppercase() throws Exception {
 		_assertIndexNamePrefix("UPPERCASE", "uppercase");

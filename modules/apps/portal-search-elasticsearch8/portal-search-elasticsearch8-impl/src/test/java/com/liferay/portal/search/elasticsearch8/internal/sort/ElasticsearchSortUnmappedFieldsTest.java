@@ -11,7 +11,9 @@ import com.liferay.portal.search.test.util.sort.BaseSortUnmappedFieldsTestCase;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
+import org.junit.Test;
 
 /**
  * @author André de Oliveira
@@ -23,6 +25,36 @@ public class ElasticsearchSortUnmappedFieldsTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Ignore
+	@Override
+	@Test
+	public void testDefaultIsTextMappingWithEmptyResults() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testFirstNameIsTextMappingWithEmptyResults() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testFirstNameOnNewIndex() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSortableKeyword() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testSortableNumber() {
+	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {

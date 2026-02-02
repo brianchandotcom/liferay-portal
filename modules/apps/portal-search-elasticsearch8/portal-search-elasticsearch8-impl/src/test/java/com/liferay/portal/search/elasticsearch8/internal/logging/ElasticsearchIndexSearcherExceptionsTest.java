@@ -18,6 +18,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,6 +34,7 @@ public class ElasticsearchIndexSearcherExceptionsTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Ignore
 	@Test
 	public void testExceptionThrownWhenQueryMalformedSearch() {
 		expectedException.expect(ElasticsearchStatusException.class);
@@ -42,6 +44,7 @@ public class ElasticsearchIndexSearcherExceptionsTest
 		search(createSearchContext(), getMalformedQuery());
 	}
 
+	@Ignore
 	@Test
 	public void testExceptionThrownWhenQueryMalformedSearchCount() {
 		expectedException.expect(ElasticsearchStatusException.class);

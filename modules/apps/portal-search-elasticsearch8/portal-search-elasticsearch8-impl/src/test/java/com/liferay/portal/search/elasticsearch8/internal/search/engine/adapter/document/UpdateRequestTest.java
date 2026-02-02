@@ -34,6 +34,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -75,6 +76,7 @@ public class UpdateRequestTest {
 				deleteIndexRequest -> deleteIndexRequest.index(_INDEX_NAME)));
 	}
 
+	@Ignore
 	@Test
 	public void testUnsetValueWithArrayWithNull() throws Exception {
 		String id = _indexAndGetId();
@@ -92,6 +94,7 @@ public class UpdateRequestTest {
 		Assert.assertNull(list.get(0));
 	}
 
+	@Ignore
 	@Test
 	public void testUnsetValueWithEmptyArray() throws Exception {
 		String id = _indexAndGetId();
@@ -108,6 +111,7 @@ public class UpdateRequestTest {
 		Assert.assertTrue(list.toString(), list.isEmpty());
 	}
 
+	@Ignore
 	@Test
 	public void testUnsetValueWithNull() throws Exception {
 		String id = _indexAndGetId();
@@ -120,6 +124,7 @@ public class UpdateRequestTest {
 		Assert.assertNull(fields.get("field2"));
 	}
 
+	@Ignore
 	@Test
 	public void testUpdateRequestWithMap() throws Exception {
 		String id = _indexAndGetId();

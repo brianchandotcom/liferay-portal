@@ -68,7 +68,7 @@ public class ViewDashboardDisplayContext {
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
 		).put(
-			"isFreeTier", true
+			"isFreeTier", _FREE_TIER
 		).put(
 			"learnResources", _getLearnResourcesJSONObject()
 		).build();
@@ -91,6 +91,8 @@ public class ViewDashboardDisplayContext {
 						"url", "#"
 					))));
 	}
+
+	private static final boolean _FREE_TIER = false; // TEMP - BACKEND INTEGRATION IN LPD-77107
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewDashboardDisplayContext.class);

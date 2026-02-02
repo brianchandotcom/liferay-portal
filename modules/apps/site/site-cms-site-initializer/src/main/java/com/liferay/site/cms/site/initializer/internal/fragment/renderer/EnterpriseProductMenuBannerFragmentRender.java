@@ -7,10 +7,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +36,21 @@ public class EnterpriseProductMenuBannerFragmentRender
 	}
 
 	@Override
+	public void render(
+			FragmentRendererContext fragmentRendererContext,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws IOException {
+
+		if (!_FREE_TIER) {
+			return;
+		}
+
+		super.render(
+			fragmentRendererContext, httpServletRequest, httpServletResponse);
+	}
+
+	@Override
 	protected String getLabelKey() {
 		return "enterprise-product-menu-banner-label";
 	}
@@ -48,9 +66,9 @@ public class EnterpriseProductMenuBannerFragmentRender
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return HashMapBuilder.<String, Object>put(
-			"isFreeTier", true
-		).build();
+		return Collections.emptyMap();
 	}
+
+	private static final boolean _FREE_TIER = false;  // TEMP - BACKEND INTEGRATION IN LPD-77107
 
 }

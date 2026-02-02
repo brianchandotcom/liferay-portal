@@ -46,6 +46,8 @@ public class SitePageTypeUtil {
 		_externalToInternalValuesMap = HashMapBuilder.put(
 			SitePage.Type.CONTENT_PAGE, LayoutConstants.TYPE_CONTENT
 		).put(
+			SitePage.Type.LINK_TO_PAGE_PAGE, LayoutConstants.TYPE_LINK_TO_LAYOUT
+		).put(
 			SitePage.Type.LINK_TO_URL_PAGE, LayoutConstants.TYPE_URL
 		).put(
 			SitePage.Type.PAGE_SET_PAGE, LayoutConstants.TYPE_NODE

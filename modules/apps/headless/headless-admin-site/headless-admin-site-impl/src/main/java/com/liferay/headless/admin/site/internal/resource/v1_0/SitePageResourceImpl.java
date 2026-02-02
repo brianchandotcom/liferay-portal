@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -496,7 +497,7 @@ public class SitePageResourceImpl
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =
-			_getTypeSettingsUnicodeProperties(sitePage);
+			_getTypeSettingsUnicodeProperties(groupId, sitePage);
 
 		Layout layout = null;
 
@@ -715,7 +716,7 @@ public class SitePageResourceImpl
 	}
 
 	private UnicodeProperties _getTypeSettingsUnicodeProperties(
-		SitePage sitePage) {
+		long groupId, SitePage sitePage) {
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
@@ -838,6 +839,37 @@ public class SitePageResourceImpl
 			return unicodePropertiesWrapper.build();
 		}
 
+		if (sitePage.getType() == SitePage.Type.LINK_TO_PAGE_PAGE) {
+			LinkToPagePageSettings linkToPagePageSettings =
+				(LinkToPagePageSettings)pageSettings;
+
+			String linkToPageExternalReferenceCode =
+				linkToPagePageSettings.getLinkToPageExternalReferenceCode();
+
+			if (Validator.isNull(linkToPageExternalReferenceCode)) {
+				return unicodePropertiesWrapper.build();
+			}
+
+			unicodePropertiesWrapper.setProperty(
+				"linkToLayoutExternalReferenceCode",
+				linkToPageExternalReferenceCode);
+
+			Layout linkToLayout =
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					linkToPageExternalReferenceCode, groupId);
+
+			String linkToLayoutId = null;
+
+			if (linkToLayout != null) {
+				linkToLayoutId = String.valueOf(linkToLayout.getLayoutId());
+			}
+
+			unicodePropertiesWrapper.setProperty(
+				"linkToLayoutId", linkToLayoutId);
+
+			return unicodePropertiesWrapper.build();
+		}
+
 		if (sitePage.getType() == SitePage.Type.LINK_TO_URL_PAGE) {
 			LinkToURLPageSettings linkToURLPageSettings =
 				(LinkToURLPageSettings)pageSettings;
@@ -953,7 +985,8 @@ public class SitePageResourceImpl
 				_cetManager, _fragmentEntryProcessorRegistry,
 				_infoItemServiceRegistry, layout, nameMap, titleMap,
 				descriptionMap, keywordsMap, robotsMap, friendlyURLMap,
-				_getTypeSettingsUnicodeProperties(sitePage),
+				_getTypeSettingsUnicodeProperties(
+					layout.getGroupId(), sitePage),
 				sitePage.getPageSpecifications(), serviceContext);
 		}
 		else if (Objects.equals(
@@ -965,13 +998,17 @@ public class SitePageResourceImpl
 				layout, nameMap, friendlyURLMap,
 				PageSpecificationUtil.getPageSpecification(
 					sitePage.getPageSpecifications()),
-				_getTypeSettingsUnicodeProperties(sitePage), serviceContext);
+				_getTypeSettingsUnicodeProperties(
+					layout.getGroupId(), sitePage),
+				serviceContext);
 		}
 		else {
 			layout = LayoutUtil.updatePortletLayout(
 				_cetManager, layout, nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, friendlyURLMap,
-				_getTypeSettingsUnicodeProperties(sitePage), serviceContext,
+				_getTypeSettingsUnicodeProperties(
+					layout.getGroupId(), sitePage),
+				serviceContext,
 				PageSpecificationUtil.getWidgetPageSpecification(
 					sitePage.getPageSpecifications()));
 		}
@@ -1177,6 +1214,9 @@ public class SitePageResourceImpl
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

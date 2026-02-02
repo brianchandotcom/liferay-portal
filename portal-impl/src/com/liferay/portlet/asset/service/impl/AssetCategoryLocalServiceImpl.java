@@ -6,6 +6,7 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
+import com.liferay.asset.kernel.exception.AssetCategoryParentCategoryIdException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
@@ -476,7 +477,7 @@ public class AssetCategoryLocalServiceImpl
 					AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
 				(vocabularyId != assetCategory.getVocabularyId())) {
 
-				throw new PortalException(
+				throw new DuplicateCategoryException(
 					"Category exists in a different vocabulary");
 			}
 
@@ -495,7 +496,7 @@ public class AssetCategoryLocalServiceImpl
 						AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
 					(parentVocabularyId != assetVocabulary.getVocabularyId())) {
 
-					throw new PortalException(
+					throw new AssetCategoryParentCategoryIdException(
 						"Parent category exists in a different vocabulary");
 				}
 

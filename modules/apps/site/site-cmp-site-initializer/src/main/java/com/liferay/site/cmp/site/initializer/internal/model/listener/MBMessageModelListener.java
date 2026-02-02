@@ -38,9 +38,12 @@ public class MBMessageModelListener extends BaseModelListener<MBMessage> {
 					mbMessage.getCompanyId(), mbMessage.getClassName());
 
 			if ((objectDefinition == null) ||
-				!Objects.equals(
+				(!Objects.equals(
 					objectDefinition.getExternalReferenceCode(),
-					"L_CMP_PROJECT")) {
+					"L_CMP_PROJECT") &&
+				 !Objects.equals(
+					 objectDefinition.getExternalReferenceCode(),
+					 "L_CMP_TASK"))) {
 
 				return;
 			}
@@ -57,7 +60,7 @@ public class MBMessageModelListener extends BaseModelListener<MBMessage> {
 			message.put("objectEntry", objectEntry);
 
 			_messageBus.sendMessage(
-				DestinationNames.CMP_PROJECT_COMMENT_ADDED, message);
+				DestinationNames.CMP_COMMENT_ADDED, message);
 		}
 		catch (Exception exception) {
 			throw new ModelListenerException(exception);

@@ -15,6 +15,7 @@ interface WizardStepProps {
 	description: string;
 	onSubmit?: FormikConfig<FormikValues>['onSubmit'];
 	title: string;
+	validate?: FormikConfig<FormikValues>['validate'];
 }
 
 export function WizardStep({children}: WizardStepProps) {
@@ -40,7 +41,7 @@ export function Wizard({
 	const totalSteps = steps.length;
 
 	const step = steps[stepNumber] as React.ReactElement<WizardStepProps>;
-	const {actionButton, description, onSubmit, title} = step.props;
+	const {actionButton, description, onSubmit, title, validate} = step.props;
 
 	const next = () => {
 		setStepNumber((stepNumber) => Math.min(stepNumber + 1, totalSteps - 1));
@@ -63,7 +64,11 @@ export function Wizard({
 	};
 
 	return (
-		<Formik initialValues={formState} onSubmit={handleSubmit}>
+		<Formik
+			initialValues={formState}
+			onSubmit={handleSubmit}
+			validate={validate}
+		>
 			{(formik) => (
 				<Form noValidate>
 					<ClayMultiStepNav

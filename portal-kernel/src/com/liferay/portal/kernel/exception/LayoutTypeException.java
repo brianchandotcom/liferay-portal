@@ -26,6 +26,11 @@ public class LayoutTypeException extends PortalException {
 		_type = type;
 	}
 
+	public LayoutTypeException(String layoutType, int type) {
+		_layoutType = layoutType;
+		_type = type;
+	}
+
 	public String getLayoutType() {
 		return _layoutType;
 	}

@@ -416,8 +416,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_testPutSiteSitePage(serviceContext, SitePage.Type.PAGE_SET_PAGE);
 		_testPutSiteSitePage(serviceContext, SitePage.Type.WIDGET_PAGE);
 
-		_testPutSiteSitePageWithEmptyLayoutToContentLayout(serviceContext);
-		_testPutSiteSitePageWithEmptyLayoutToPortletLayout(serviceContext);
+		_testPutSiteSitePageWithEmptyLayout(serviceContext);
 
 		_testPutSiteSitePageWithExportedSitePage();
 		_testPutSiteSitePageWithExportedSitePageWithLayoutIdFriendlyURL();
@@ -2673,6 +2672,39 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPutSiteSitePageWithEmptyLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
+			testGroup.getGroupId());
+
+		SitePage contentSitePage = _getSitePageWithPageElements(pageElements);
+
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_CONTENT, serviceContext, contentSitePage,
+			(layout, putSitePage) -> _assertPageElements(
+				pageElements, putSitePage));
+
+		SitePage portletSitePage = _getRandomSitePage(
+			SitePage.Type.WIDGET_PAGE);
+
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)widgetSitePage.getPageSettings();
+
+		widgetSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, widgetPageSettings.getLayoutTemplateId(),
+				widgetSitePage.getExternalReferenceCode()));
+
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_PORTLET, serviceContext, widgetSitePage,
+			(layout, putSitePage) ->
+				PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+					widgetSitePage.getPageSpecifications(),
+					putSitePage.getPageSpecifications()));
+	}
+
+	private void _testPutSiteSitePageWithEmptyLayout(
 			String expectedType, ServiceContext serviceContext,
 			SitePage sitePage,
 			UnsafeBiConsumer<Layout, SitePage, Exception> unsafeBiConsumer)
@@ -2712,43 +2744,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(expectedType, layout.getType());
 
 		unsafeBiConsumer.accept(layout, putSitePage);
-	}
-
-	private void _testPutSiteSitePageWithEmptyLayoutToContentLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
-			testGroup.getGroupId());
-
-		SitePage sitePage = _getSitePageWithPageElements(pageElements);
-
-		_testPutSiteSitePageWithEmptyLayout(
-			LayoutConstants.TYPE_CONTENT, serviceContext, sitePage,
-			(layout, putSitePage) -> _assertPageElements(
-				pageElements, putSitePage));
-	}
-
-	private void _testPutSiteSitePageWithEmptyLayoutToPortletLayout(
-			ServiceContext serviceContext)
-		throws Exception {
-
-		SitePage sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
-
-		WidgetPageSettings widgetPageSettings =
-			(WidgetPageSettings)sitePage.getPageSettings();
-
-		sitePage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, widgetPageSettings.getLayoutTemplateId(),
-				sitePage.getExternalReferenceCode()));
-
-		_testPutSiteSitePageWithEmptyLayout(
-			LayoutConstants.TYPE_PORTLET, serviceContext, sitePage,
-			(layout, putSitePage) ->
-				PageSpecificationsTestUtil.assertWidgetPageSpecifications(
-					sitePage.getPageSpecifications(),
-					putSitePage.getPageSpecifications()));
 	}
 
 	private void _testPutSiteSitePageWithExportedSitePage() throws Exception {

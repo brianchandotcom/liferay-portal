@@ -9,17 +9,26 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.util.FieldsToDDMFormValuesConverter;
 import com.liferay.journal.internal.constants.DDMDestinationNames;
-import com.liferay.journal.internal.dynamic.data.mapping.helper.JournalDDMStructureHelper;
+import com.liferay.journal.internal.dynamic.data.mapping.util.JournalArticleDDMStructureThreadLocal;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.util.JournalConverter;
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.util.MapUtil;
+
+import java.util.Objects;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -63,15 +72,62 @@ public class DDMStructureJournalArticlesUpdateMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		JournalDDMStructureHelper journalDDMStructureHelper =
-			new JournalDDMStructureHelper(
-				_ddmFieldLocalService, _fieldsToDDMFormValuesConverter,
-				_indexerRegistry, _journalArticleLocalService,
-				_journalConverter);
+		DDMStructure ddmStructure = (DDMStructure)message.get("ddmStructure");
+		DDMStructure originalDDMStructure = (DDMStructure)message.get(
+			"originalDDMStructure");
 
-		journalDDMStructureHelper.updateDDMStructureJournalArticles(
-			(DDMStructure)message.get("originalDDMStructure"),
-			(DDMStructure)message.get("ddmStructure"));
+		ActionableDynamicQuery actionableDynamicQuery =
+			_journalArticleLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property ddmStructureIdProperty = PropertyFactoryUtil.forName(
+					"DDMStructureId");
+
+				dynamicQuery.add(
+					ddmStructureIdProperty.eq(
+						originalDDMStructure.getStructureId()));
+			});
+		actionableDynamicQuery.setCompanyId(
+			originalDDMStructure.getCompanyId());
+		actionableDynamicQuery.setParallel(true);
+
+		ActionableDynamicQuery.PerformActionMethod<JournalArticle>
+			performActionMethod = null;
+
+		if (Objects.equals(
+				ddmStructure.getDefinition(),
+				originalDDMStructure.getDefinition())) {
+
+			Indexer<JournalArticle> indexer =
+				_indexerRegistry.nullSafeGetIndexer(JournalArticle.class);
+
+			performActionMethod = indexer::reindex;
+		}
+		else {
+			performActionMethod = journalArticle -> {
+				try (SafeCloseable ctCollectionIdSafeCloseable =
+						CTCollectionThreadLocal.
+							setCTCollectionIdWithSafeCloseable(
+								ddmStructure.getCtCollectionId());
+					SafeCloseable journalArticleDDMStructureSafeCloseable =
+						JournalArticleDDMStructureThreadLocal.
+							setJournalArticleDDMStructureWithSafeCloseable(
+								originalDDMStructure)) {
+
+					_ddmFieldLocalService.updateDDMFormValues(
+						ddmStructure.getStructureId(), journalArticle.getId(),
+						_fieldsToDDMFormValuesConverter.convert(
+							ddmStructure,
+							_journalConverter.getDDMFields(
+								ddmStructure, journalArticle.getContent())));
+				}
+			};
+		}
+
+		actionableDynamicQuery.setPerformActionMethod(performActionMethod);
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Reference

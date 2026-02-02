@@ -17,7 +17,6 @@ UpgradeJavaBaseFragmentCollectionContributorExtendedClassesCheck | [Upgrade](upg
 UpgradeJavaBaseModelListenerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class. |
 UpgradeJavaDDMFormValuesSerializerTrackerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages. |
 UpgradeJavaDisplayPageInfoItemCapabilityCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replace all references of DisplayPageInfoItemCapability to InfoItemCapability |
-UpgradeJavaFDSActionProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Reorder parameters in the getDropdownItems method of the FDSDataProvider interface. |
 UpgradeJavaFDSDataProviderCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Upgrade implementations of ClayDataSetDataProvider and CommerceDataSetDataProvider to FDSDataSetDataProvider |
 UpgradeJavaFacetedSearcherCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Replaces the references of the `Indexer indexer = FacetedSearcher.getInstance();` declaration and `indexer.search` method call. |
 UpgradeJavaFinderImplCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | Add Component annotation to `*FinderImpl.java` file. |

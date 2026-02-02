@@ -109,11 +109,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaFDSActionProviderCheck() throws Exception {
-		test("upgrade/UpgradeJavaFDSActionProviderCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaFDSDataProviderCheck() throws Exception {
 		test("upgrade/UpgradeJavaCommerceDataSetDataProviderCheck.testjava");
 		test("upgrade/UpgradeJavaClayDataSetDataProviderCheck.testjava");

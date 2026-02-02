@@ -405,6 +405,19 @@ public class FragmentEditableElementTestUtil {
 		};
 	}
 
+	public static TextFragmentMappedValue getTextFragmentMappedValue(
+		FragmentMappedValue fragmentMappedValue) {
+
+		TextFragmentMappedValue textFragmentMappedValue =
+			new TextFragmentMappedValue();
+
+		textFragmentMappedValue.setFragmentMappedValue(
+			() -> fragmentMappedValue);
+		textFragmentMappedValue.setType(() -> TextFragmentValue.Type.MAPPED);
+
+		return textFragmentMappedValue;
+	}
+
 	public static URLActionInteraction getURLActionInteraction() {
 		URLActionInteraction urlActionInteraction = new URLActionInteraction();
 

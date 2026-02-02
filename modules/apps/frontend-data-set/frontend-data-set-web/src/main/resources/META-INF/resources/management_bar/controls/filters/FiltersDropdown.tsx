@@ -10,7 +10,6 @@ import React, {useContext, useMemo, useState} from 'react';
 
 import FrontendDataSetContext from '../../../FrontendDataSetContext';
 import {IClientExtensionFilterState} from '../../../utils/types';
-
 import ViewsContext, {
 	IViewsContext,
 	TViewsContextDispatch,
@@ -20,10 +19,8 @@ import Filter, {IFilter} from './Filter';
 const FiltersDropdown = () => {
 	const {globalFDSState} = useContext(FrontendDataSetContext);
 
-	const [{groupedFilters}]: [
-		IViewsContext,
-		TViewsContextDispatch,
-	] = useContext(ViewsContext);
+	const [{groupedFilters}]: [IViewsContext, TViewsContextDispatch] =
+		useContext(ViewsContext);
 
 	const [active, setActive] = useState(false);
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
@@ -127,8 +124,7 @@ const FiltersDropdown = () => {
 
 					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
-							{Liferay.FeatureFlags['LPD-68829'] &&
-							groupedFilters
+							{Liferay.FeatureFlags['LPD-68829'] && groupedFilters
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

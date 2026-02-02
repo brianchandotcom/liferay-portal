@@ -293,23 +293,22 @@ public class LayoutLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Layout emptyLayout = _layoutLocalService.getOrAddEmptyLayout(
+			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), _serviceContext);
 
 			try {
-				emptyLayout = _layoutLocalService.updateLayout(
-					_group.getGroupId(), emptyLayout.isPrivateLayout(),
-					emptyLayout.getLayoutId(), emptyLayout.getParentLayoutId(),
-					emptyLayout.getNameMap(), emptyLayout.getTitleMap(),
-					emptyLayout.getDescriptionMap(),
-					emptyLayout.getKeywordsMap(), emptyLayout.getRobotsMap(),
-					emptyLayout.getType(), false,
-					emptyLayout.getFriendlyURLMap(), emptyLayout.isIconImage(),
-					null, emptyLayout.getStyleBookEntryERC(),
-					emptyLayout.getFaviconFileEntryERC(),
-					emptyLayout.getFaviconFileEntryScopeERC(),
-					emptyLayout.getMasterLayoutPageTemplateEntryERC(),
+				layout = _layoutLocalService.updateLayout(
+					_group.getGroupId(), layout.isPrivateLayout(),
+					layout.getLayoutId(), layout.getParentLayoutId(),
+					layout.getNameMap(), layout.getTitleMap(),
+					layout.getDescriptionMap(), layout.getKeywordsMap(),
+					layout.getRobotsMap(), layout.getType(), false,
+					layout.getFriendlyURLMap(), layout.isIconImage(), null,
+					layout.getStyleBookEntryERC(),
+					layout.getFaviconFileEntryERC(),
+					layout.getFaviconFileEntryScopeERC(),
+					layout.getMasterLayoutPageTemplateEntryERC(),
 					_serviceContext);
 
 				Assert.fail();
@@ -327,8 +326,8 @@ public class LayoutLocalServiceTest {
 				"layout.instanceable.allowed", Boolean.TRUE);
 
 			try {
-				_layoutLocalService.convertEmptyLayout(
-					TestPropsValues.getUserId(), emptyLayout.getPlid(),
+				layout = _layoutLocalService.convertEmptyLayout(
+					TestPropsValues.getUserId(), layout.getPlid(),
 					HashMapBuilder.put(
 						LocaleUtil.getSiteDefault(),
 						RandomTestUtil.randomString()
@@ -338,9 +337,6 @@ public class LayoutLocalServiceTest {
 			finally {
 				_serviceContext.removeAttribute("layout.instanceable.allowed");
 			}
-
-			Layout layout = _layoutLocalService.getLayout(
-				emptyLayout.getPlid());
 
 			Assert.assertFalse(layout.isPublished());
 			Assert.assertTrue(layout.isTypeContent());
@@ -353,19 +349,16 @@ public class LayoutLocalServiceTest {
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-			Layout emptyLayout = _layoutLocalService.getOrAddEmptyLayout(
+			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), _serviceContext);
 
-			_layoutLocalService.convertEmptyLayout(
-				TestPropsValues.getUserId(), emptyLayout.getPlid(),
+			layout = _layoutLocalService.convertEmptyLayout(
+				TestPropsValues.getUserId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
 				).build(),
 				LayoutConstants.TYPE_PORTLET, 0, 0, null, _serviceContext);
-
-			Layout layout = _layoutLocalService.getLayout(
-				emptyLayout.getPlid());
 
 			Assert.assertTrue(layout.isTypePortlet());
 		}

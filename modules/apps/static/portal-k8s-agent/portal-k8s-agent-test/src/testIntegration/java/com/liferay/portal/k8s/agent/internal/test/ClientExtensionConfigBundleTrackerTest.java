@@ -126,7 +126,8 @@ public class ClientExtensionConfigBundleTrackerTest {
 		throws Exception {
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat("(.cx.config.bundle.id=", bundleId, ")"));
+			StringBundler.concat(
+				"(.client.extension.config.bundle.id=", bundleId, ")"));
 
 		if (expectedCount == 0) {
 			Assert.assertNull(configurations);
@@ -160,7 +161,8 @@ public class ClientExtensionConfigBundleTrackerTest {
 			Configuration[] configurations =
 				_configurationAdmin.listConfigurations(
 					StringBundler.concat(
-						"(.cx.config.key=", virtualInstanceId, ")"));
+						"(.client.extension.config.key=", virtualInstanceId,
+						")"));
 
 			Assert.assertNotNull(configurations);
 			Assert.assertEquals(

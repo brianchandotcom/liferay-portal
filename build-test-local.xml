@@ -612,7 +612,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 				<equals arg1="${app.server.bundles.size}" arg2="0" />
 			</not>
 			<then>
-				<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+				<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
 
 				<prepare-additional-bundles />
 			</then>

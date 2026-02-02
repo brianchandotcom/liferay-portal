@@ -30,7 +30,7 @@ public class TomcatCluster {
 		_clusterOwnerClass = clusterOwnerClass;
 
 		_elasticSearchNetworkHostAddresses = SystemBundleUtil.callService(
-			"com.liferay.portal.search.elasticsearch7.internal.connection." +
+			"com.liferay.portal.search.elasticsearch8.internal.connection." +
 				"ElasticsearchConnectionManager",
 			elasticsearchConnectionManager -> {
 				Object elasticsearchConnection = ReflectionTestUtil.invoke(

@@ -990,7 +990,7 @@
 		},
 		{
 			"genericTypeCount": 1,
-			"name": "com.liferay.portal.search.elasticsearch7.internal.facet.FacetProcessor"
+			"name": "com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor"
 		},
 		{
 			"genericTypeCount": 1,

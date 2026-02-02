@@ -3344,7 +3344,7 @@ tenantId=&quot;${ms.exchange.tenant.id}&quot;</echo>
 
 	<macrodef name="prepare-portal-elasticsearch-osgi-configuration">
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">additionalConfigurations="http.host:\ _local_,_site_"${line.separator}logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"${line.separator}sidecarHttpPort="AUTO"${line.separator}sidecarJVMOptions=["-Xms256m","-Xmx512m"]</echo>
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config">additionalConfigurations="http.host:\ _local_,_site_"${line.separator}logExceptionsOnly=B"false"${line.separator}sidecarShutdownTimeout=L"20000"${line.separator}sidecarHttpPort="AUTO"${line.separator}sidecarJVMOptions=["-Xms256m","-Xmx512m"]</echo>
 		</sequential>
 	</macrodef>
 
@@ -7266,7 +7266,7 @@ log.sanitizer.enabled=false</echo>
 						<elseif>
 							<contains string="${test.batch.name}" substring="remote-elasticsearch" />
 							<then>
-								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+								<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
 							</then>
 						</elseif>
 					</if>
@@ -7294,7 +7294,7 @@ log.sanitizer.enabled=false</echo>
 								<istrue value="${remote.elasticsearch.enabled}" />
 							</or>
 							<then>
-								<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+								<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
 							</then>
 						</elseif>
 					</if>
@@ -7306,7 +7306,7 @@ log.sanitizer.enabled=false</echo>
 			<if>
 				<equals arg1="${delete.sidecar.bundle}" arg2="true" />
 				<then>
-					<delete dir="${liferay.home}/elasticsearch7" failonerror="false" />
+					<delete dir="${liferay.home}/elasticsearch8" failonerror="false" />
 				</then>
 			</if>
 		</sequential>
@@ -8871,7 +8871,7 @@ ${docker.start.error}</fail>
 								<var name="elasticsearch.bundle.count" value="${elasticsearch.total.bundles}" />
 
 								<antelope:repeat count="${elasticsearch.total.bundles}">
-									<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch">
+									<ant antfile="build-test-elasticsearch8.xml" target="stop-elasticsearch">
 										<property name="elasticsearch.bundle.number" value="${elasticsearch.bundle.count}" />
 									</ant>
 
@@ -8885,14 +8885,14 @@ ${docker.start.error}</fail>
 								</antelope:repeat>
 							</then>
 							<else>
-								<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+								<ant antfile="build-test-elasticsearch8.xml" target="stop-elasticsearch" />
 							</else>
 						</if>
 
 						<if>
 							<socket port="5601" server="localhost" />
 							<then>
-								<ant antfile="build-test-elasticsearch7.xml" target="stop-kibana" />
+								<ant antfile="build-test-elasticsearch8.xml" target="stop-kibana" />
 							</then>
 						</if>
 					</then>
@@ -12484,12 +12484,12 @@ ${update.properties}</echo>
 	</Loggers>
 </Configuration>]]></echo>
 
-		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.search.elasticsearch7.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
+		<echo file="${liferay.home}/osgi/log4j/com.liferay.portal.search.elasticsearch8.impl-log4j-ext.xml"><![CDATA[<?xml version="1.0"?>
 <Configuration strict="true">
 	<Loggers>
-		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.ElasticsearchSearchEngine" />
-		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch7.internal.index.IndexFactory" />
-		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch7.internal.sidecar.SidecarManager" />
+		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch8.internal.ElasticsearchSearchEngine" />
+		<Logger level="INFO" name="com.liferay.portal.search.elasticsearch8.internal.index.IndexFactory" />
+		<Logger level="ERROR" name="com.liferay.portal.search.elasticsearch8.internal.sidecar.SidecarManager" />
 	</Loggers>
 </Configuration>]]></echo>
 
@@ -15049,7 +15049,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<if>
 			<equals arg1="${app.server.type}" arg2="weblogic" />
 			<then>
-				<ant antfile="build-test-elasticsearch7.xml" target="get-sidecar-binaries" />
+				<ant antfile="build-test-elasticsearch8.xml" target="get-sidecar-binaries" />
 			</then>
 		</if>
 
@@ -15066,7 +15066,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			tofile="${test.release.bundle.parent.dir}/bundles-original/data"
 		/>
 
-		<delete dir="${test.release.bundle.parent.dir}/bundles-original/data/elasticsearch7" />
+		<delete dir="${test.release.bundle.parent.dir}/bundles-original/data/elasticsearch8" />
 
 		<delete dir="${test.release.bundle.parent.dir}/bundles" />
 
@@ -15117,7 +15117,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					tofile="${test.release.bundle.parent.dir}/bundles/data"
 				/>
 
-				<delete dir="${test.release.bundle.parent.dir}/bundles/data/elasticsearch7" />
+				<delete dir="${test.release.bundle.parent.dir}/bundles/data/elasticsearch8" />
 
 				<delete dir="${test.release.bundle.parent.dir}/bundles-original" />
 			</then>
@@ -15318,7 +15318,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 				<contains string="${portal.version}" substring="u" />
 			</not>
 			<then>
-				<delete dir="${liferay.home}/data/elasticsearch7" />
+				<delete dir="${liferay.home}/data/elasticsearch8" />
 			</then>
 		</if>
 
@@ -16976,7 +16976,7 @@ sendBlacklist=[]
 		<if>
 			<isset property="browser.docker.image" />
 			<then>
-				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}additionalConfigurations="http.host:\ _local_,_site_"</echo>
+				<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config">${line.separator}additionalConfigurations="http.host:\ _local_,_site_"</echo>
 			</then>
 		</if>
 

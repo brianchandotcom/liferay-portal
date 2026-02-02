@@ -232,7 +232,7 @@ public class SearchResponseResourceTest
 	}
 
 	private static final String _CLASS_NAME_ELASTICSEARCH_INDEX_SEARCHER =
-		"com.liferay.portal.search.elasticsearch7.internal." +
+		"com.liferay.portal.search.elasticsearch8.internal." +
 			"ElasticsearchIndexSearcher";
 
 	private static final String _CLASS_NAME_EXCEPTION_MAPPER =
@@ -240,7 +240,7 @@ public class SearchResponseResourceTest
 			"ExceptionMapper";
 
 	private static final String _CONFIGURATION_PID_ELASTICSEARCH =
-		"com.liferay.portal.search.elasticsearch7.configuration." +
+		"com.liferay.portal.search.elasticsearch8.configuration." +
 			"ElasticsearchConfiguration";
 
 	private static final Pagination _PAGINATION = Pagination.of(1, 1);

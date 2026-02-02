@@ -28,7 +28,7 @@ definition {
 	macro getClientVersion() {
 		var projectDir = PropsUtil.get("project.dir");
 
-		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/build.gradle");
+		var fileContent = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch8/portal-search-elasticsearch8-impl/build.gradle");
 
 		var clientVersion = RegexUtil.replace(${fileContent}, "elasticsearchClientVersion = \"(\d+\.\d+\.\d+)", 1);
 
@@ -72,7 +72,7 @@ definition {
 	macro getSidecarVersion() {
 		var projectDir = PropsUtil.get("project.dir");
 
-		var sidecarVersion = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch7/portal-search-elasticsearch7-impl/src/main/resources/META-INF/sidecar/sidecar.version");
+		var sidecarVersion = FileUtil.read("${projectDir}/modules/apps/portal-search-elasticsearch8/portal-search-elasticsearch8-impl/src/main/resources/META-INF/sidecar/sidecar.version");
 
 		echo("Elasticsearch client version: ${sidecarVersion}");
 
@@ -91,7 +91,7 @@ definition {
 			return "true";
 		}
 		else {
-			var elasticsearchConfigPath = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
+			var elasticsearchConfigPath = "${liferayHome}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config";
 
 			var elasticsearchConfigExists = FileUtil.exists(${elasticsearchConfigPath});
 

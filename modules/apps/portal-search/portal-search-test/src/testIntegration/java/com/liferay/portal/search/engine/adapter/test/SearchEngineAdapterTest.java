@@ -164,7 +164,7 @@ public class SearchEngineAdapterTest {
 
 			String message = runtimeException.getMessage();
 
-			if (isSearchEngine("Elasticsearch7")) {
+			if (isSearchEngine("Elasticsearch", 8)) {
 				Assert.assertTrue(
 					message,
 					message.contains("reason=no such index [" + index + "]"));
@@ -227,19 +227,21 @@ public class SearchEngineAdapterTest {
 	}
 
 	protected boolean isSearchEngine(String engine) {
+		return isSearchEngine(engine, null);
+	}
+
+	protected boolean isSearchEngine(String engine, Integer majorVersion) {
+		if (majorVersion != null) {
+			String version = _searchEngineInformation.getClientVersionString();
+
+			if (!version.startsWith(String.valueOf(majorVersion))) {
+				return false;
+			}
+		}
+
 		SearchEngine searchEngine = _searchEngineHelper.getSearchEngine();
 
 		String vendor = searchEngine.getVendor();
-
-		if (engine.equals("Elasticsearch7")) {
-			String version = _searchEngineInformation.getClientVersionString();
-
-			if (vendor.equals("Elasticsearch") && version.startsWith("7")) {
-				return true;
-			}
-
-			return false;
-		}
 
 		return vendor.equals(engine);
 	}

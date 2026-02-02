@@ -614,17 +614,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/ActionInteraction"
                 -   properties:
-                        mapping:
+                        mappingFieldKey:
                             # @review
                             description:
-                                The mapping of the display page action result.
-                            properties:
-                                fieldKey:
-                                    # @review
-                                    description:
-                                        The mapping's field key.
-                                    type: string
-                            type: object
+                                The mapping's field key of the display page action interaction.
+                            type: string
             # @review
             description:
                 The definition of an action interaction of type display page.

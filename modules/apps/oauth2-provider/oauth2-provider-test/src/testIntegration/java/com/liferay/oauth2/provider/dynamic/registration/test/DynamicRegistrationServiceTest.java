@@ -58,6 +58,40 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@FeatureFlag("LPD-63416")
 	@Test
+	public void testDelete() throws Exception {
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.fetchOAuth2Application(
+				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
+
+		WebTarget registerWebTarget = getRegisterWebTarget(
+			oAuth2Application.getClientId());
+
+		Invocation.Builder invocationBuilder = authorize(
+			registerWebTarget.request(),
+			_getToken(
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					TestPropsValues.getCompanyId(),
+					"oauthDynamicRegisterTestApplication")));
+
+		Response response = invocationBuilder.delete();
+
+		Assert.assertEquals(403, response.getStatus());
+
+		invocationBuilder = authorize(
+			registerWebTarget.request(),
+			_getToken(_getDynamicRegistratorOAuth2Application()));
+
+		response = invocationBuilder.delete();
+
+		Assert.assertEquals(204, response.getStatus());
+
+		response = invocationBuilder.delete();
+
+		Assert.assertEquals(401, response.getStatus());
+	}
+
+	@FeatureFlag("LPD-63416")
+	@Test
 	public void testPost() throws Exception {
 		WebTarget registerWebTarget = getRegisterWebTarget();
 
@@ -144,40 +178,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(
 			clientName, responseJSONObject.getString("client_name"));
-	}
-
-	@FeatureFlag("LPD-63416")
-	@Test
-	public void testDelete() throws Exception {
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
-
-		WebTarget registerWebTarget = getRegisterWebTarget(
-			oAuth2Application.getClientId());
-
-		Invocation.Builder invocationBuilder = authorize(
-			registerWebTarget.request(),
-			_getToken(
-				_oAuth2ApplicationLocalService.fetchOAuth2Application(
-					TestPropsValues.getCompanyId(),
-					"oauthDynamicRegisterTestApplication")));
-
-		Response response = invocationBuilder.delete();
-
-		Assert.assertEquals(403, response.getStatus());
-
-		invocationBuilder = authorize(
-			registerWebTarget.request(),
-			_getToken(_getDynamicRegistratorOAuth2Application()));
-
-		response = invocationBuilder.delete();
-
-		Assert.assertEquals(204, response.getStatus());
-
-		response = invocationBuilder.delete();
-
-		Assert.assertEquals(401, response.getStatus());
 	}
 
 	@FeatureFlag("LPD-63416")

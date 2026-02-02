@@ -22,13 +22,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Leite
  */
 @Component(service = {})
-public class CMPProjectCommentAddedMessagingConfigurator {
+public class CMPCommentAddedMessagingConfigurator {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		DestinationConfiguration destinationConfiguration =
 			DestinationConfiguration.createSynchronousDestinationConfiguration(
-				DestinationNames.CMP_PROJECT_COMMENT_ADDED);
+				DestinationNames.CMP_COMMENT_ADDED);
 
 		Destination destination = _destinationFactory.createDestination(
 			destinationConfiguration);

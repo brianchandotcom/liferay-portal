@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Leite
  */
 @Component(
-	property = "destination.name=" + DestinationNames.CMP_PROJECT_COMMENT_ADDED,
+	property = "destination.name=" + DestinationNames.CMP_COMMENT_ADDED,
 	service = MessageListener.class
 )
-public class CMPProjectCommentAddedMessageListener extends BaseMessageListener {
+public class CMPCommentAddedMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
@@ -46,10 +46,10 @@ public class CMPProjectCommentAddedMessageListener extends BaseMessageListener {
 
 		_objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), objectEntry.getCompanyId(),
-			DestinationNames.CMP_PROJECT_COMMENT_ADDED,
+			DestinationNames.CMP_COMMENT_ADDED,
 			() -> ObjectEntryPayloadUtil.getPayloadJSONObject(
 				_dtoConverterRegistry, _jsonFactory,
-				DestinationNames.CMP_PROJECT_COMMENT_ADDED, objectDefinition,
+				DestinationNames.CMP_COMMENT_ADDED, objectDefinition,
 				objectEntry, null, null, user),
 			objectEntry.getUserId());
 	}

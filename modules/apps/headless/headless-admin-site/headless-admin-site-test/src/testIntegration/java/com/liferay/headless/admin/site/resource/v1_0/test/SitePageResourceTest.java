@@ -90,6 +90,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -2671,14 +2672,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return putSitePage;
 	}
 
-	private void _testPutSiteSitePageWithEmptyLayoutToContentLayout(
-			ServiceContext serviceContext)
+	private void _testPutSiteSitePageWithEmptyLayout(
+			String expectedType, ServiceContext serviceContext,
+			SitePage sitePage,
+			UnsafeBiConsumer<Layout, SitePage, Exception> unsafeBiConsumer)
 		throws Exception {
-
-		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
-			testGroup.getGroupId());
-
-		SitePage sitePage = _getSitePageWithPageElements(pageElements);
 
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
@@ -2711,13 +2709,24 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
 
-		Assert.assertEquals(LayoutConstants.TYPE_CONTENT, layout.getType());
+		Assert.assertEquals(expectedType, layout.getType());
 
-		_assertPageElements(
-			pageElements,
-			sitePageResource.getSiteSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode()));
+		unsafeBiConsumer.accept(layout, putSitePage);
+	}
+
+	private void _testPutSiteSitePageWithEmptyLayoutToContentLayout(
+			ServiceContext serviceContext)
+		throws Exception {
+
+		PageElement[] pageElements = PageElementsTestUtil.getPageElements(
+			testGroup.getGroupId());
+
+		SitePage sitePage = _getSitePageWithPageElements(pageElements);
+
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_CONTENT, serviceContext, sitePage,
+			(layout, putSitePage) -> _assertPageElements(
+				pageElements, putSitePage));
 	}
 
 	private void _testPutSiteSitePageWithEmptyLayoutToPortletLayout(
@@ -2734,45 +2743,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				null, widgetPageSettings.getLayoutTemplateId(),
 				sitePage.getExternalReferenceCode()));
 
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		Layout layout;
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			layout = _layoutLocalService.getOrAddEmptyLayout(
-				sitePage.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
-				serviceContext);
-		}
-
-		Assert.assertEquals(WorkflowConstants.STATUS_EMPTY, layout.getStatus());
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
-
-		assertEquals(sitePage, putSitePage);
-		assertValid(putSitePage);
-
-		layout = _layoutLocalService.getLayoutByExternalReferenceCode(
-			sitePage.getExternalReferenceCode(), testGroup.getGroupId());
-
-		_assertSitePage(layout, putSitePage);
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, layout.getStatus());
-
-		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
-
-		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
-			sitePage.getPageSpecifications(),
-			sitePageResource.getSiteSitePage(
-				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode()
-			).getPageSpecifications());
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_PORTLET, serviceContext, sitePage,
+			(layout, putSitePage) ->
+				PageSpecificationsTestUtil.assertWidgetPageSpecifications(
+					sitePage.getPageSpecifications(),
+					putSitePage.getPageSpecifications()));
 	}
 
 	private void _testPutSiteSitePageWithExportedSitePage() throws Exception {

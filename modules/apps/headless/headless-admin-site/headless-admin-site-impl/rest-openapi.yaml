@@ -40,13 +40,11 @@ components:
                             # @review
                             description:
                                 The action execution result in case the action succeeds.
-                        text:
+                        textFragmentValue:
+                            $ref: "#/components/schemas/TextFragmentValue"
                             # @review
                             description:
-                                The fragment editable element's text.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentInlineValue"
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
+                                The fragment editable element's text value.
             # @review
             description:
                 A fragment editable element value of type action.

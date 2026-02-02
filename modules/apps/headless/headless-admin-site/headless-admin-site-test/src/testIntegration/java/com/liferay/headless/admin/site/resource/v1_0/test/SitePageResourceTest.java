@@ -2685,8 +2685,35 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			(layout, putSitePage) -> _assertPageElements(
 				pageElements, putSitePage));
 
-		SitePage portletSitePage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
+		SitePage linkToURLSitePage = _getRandomSitePage(
+			SitePage.Type.LINK_TO_URL_PAGE);
+
+		linkToURLSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getLinkToURLPageSpecifications(
+				linkToURLSitePage.getExternalReferenceCode()));
+
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_URL, serviceContext, linkToURLSitePage,
+			(layout, putSitePage) ->
+				PageSpecificationsTestUtil.assertPageSpecifications(
+					putSitePage.getPageSpecifications(),
+					linkToURLSitePage.getPageSpecifications()));
+
+		SitePage pageSetSitePage = _getRandomSitePage(
+			SitePage.Type.PAGE_SET_PAGE);
+
+		pageSetSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getPageSetPageSpecifications(
+				pageSetSitePage.getExternalReferenceCode()));
+
+		_testPutSiteSitePageWithEmptyLayout(
+			LayoutConstants.TYPE_NODE, serviceContext, pageSetSitePage,
+			(layout, putSitePage) ->
+				PageSpecificationsTestUtil.assertPageSpecifications(
+					putSitePage.getPageSpecifications(),
+					pageSetSitePage.getPageSpecifications()));
+
+		SitePage widgetSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)widgetSitePage.getPageSettings();

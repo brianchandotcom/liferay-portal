@@ -10,7 +10,15 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 
 export interface IInlineNotificationComponent {
-	context: Pick<IFrontendDataSetContext, 'loadData' | 'selectedItems'>;
+	context: Pick<
+		IFrontendDataSetContext,
+		| 'forceSortsUpdate'
+		| 'loadData'
+		| 'onClearResultsBar'
+		| 'selectedItems'
+		| 'sorts'
+		| 'updateAdditionalAPIURLParameters'
+	>;
 }
 
 export function InlineNotification({
@@ -20,9 +28,20 @@ export function InlineNotification({
 }) {
 	const FDSContext = useContext(FrontendDataSetContext);
 
-	const InlineNotificationContext = (({loadData, selectedItems}) => ({
+	const InlineNotificationContext = (({
+		forceSortsUpdate,
 		loadData,
+		onClearResultsBar,
 		selectedItems,
+		sorts,
+		updateAdditionalAPIURLParameters,
+	}) => ({
+		forceSortsUpdate,
+		loadData,
+		onClearResultsBar,
+		selectedItems,
+		sorts,
+		updateAdditionalAPIURLParameters,
 	}))(FDSContext);
 
 	return <InlineNotificationContent context={InlineNotificationContext} />;

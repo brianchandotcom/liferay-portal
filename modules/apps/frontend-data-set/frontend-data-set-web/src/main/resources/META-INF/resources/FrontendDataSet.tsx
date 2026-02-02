@@ -127,7 +127,7 @@ const getAtom = ({
 const FrontendDataSetContent = ({
 	actionParameterName,
 	activeViewSettings,
-	additionalAPIURLParameters,
+	additionalAPIURLParameters: initialAdditionalAPIURLParameters,
 	apiURL,
 	appURL,
 	atom,
@@ -393,6 +393,8 @@ const FrontendDataSetContent = ({
 
 	const memoizedAtom = useMemo(() => getAtom({atom, id}), [atom, id]);
 
+	const [additionalAPIURLParameters, setAdditionalAPIURLParameters] =
+		useState(initialAdditionalAPIURLParameters);
 	const [globalFDSState, setGlobalFDSState] =
 		useLiferayState<IFDSState>(memoizedAtom);
 
@@ -1941,6 +1943,14 @@ const FrontendDataSetContent = ({
 			});
 	}
 
+	function forceSortsUpdate(sorts: TSort[]) {
+		viewsDispatch(updateActiveSorts(sorts));
+	}
+
+	function updateAdditionalAPIURLParameters(parameters: string) {
+		setAdditionalAPIURLParameters(parameters);
+	}
+
 	const selectable = !!selectionType;
 
 	const {className} = useFDSDrop({
@@ -1959,6 +1969,7 @@ const FrontendDataSetContent = ({
 				customDataRenderers,
 				customRenderers,
 				executeAsyncItemAction,
+				forceSortsUpdate,
 				formId,
 				formName,
 				globalFDSState: unfrozenGlobalFDSState,
@@ -2053,6 +2064,7 @@ const FrontendDataSetContent = ({
 				toggleItemInlineEdit,
 				uniformActionsDisplay,
 				updateActiveSorts,
+				updateAdditionalAPIURLParameters,
 				updateDataSetItems,
 				updateFilters,
 				updateItem,

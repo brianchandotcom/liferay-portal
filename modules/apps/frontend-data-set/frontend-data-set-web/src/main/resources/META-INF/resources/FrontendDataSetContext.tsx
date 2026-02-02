@@ -13,6 +13,7 @@ import {
 	IInlineEditingSettings,
 	IItemsActions,
 	TRenderer,
+	TSort,
 } from './utils/types';
 
 export interface IFrontendDataSetContext {
@@ -42,6 +43,7 @@ export interface IFrontendDataSetContext {
 		successMessage?: string;
 		url: string;
 	}) => Promise<void>;
+	forceSortsUpdate: (sorts: TSort[]) => void;
 	formId?: string;
 	formName?: string;
 	globalFDSState: IFDSState;
@@ -86,11 +88,12 @@ export interface IFrontendDataSetContext {
 	showBulkActionsManagementBarActions: boolean;
 	showInfoPanel: boolean;
 	sidePanelId?: string;
-	sorts?: Array<TRenderer>;
+	sorts?: Array<TSort>;
 	style?: string;
 	toggleItemInlineEdit: Function;
 	uniformActionsDisplay?: boolean;
 	updateActiveSorts: IConfigInURLUpdaterThunk<EConfigInURLKeys.ACTIVE_SORTS>;
+	updateAdditionalAPIURLParameters: (parameters: string) => void;
 	updateDataSetItems: ({
 		items,
 		lastPage,
@@ -109,6 +112,7 @@ const FrontendDataSetContext = React.createContext({
 	applyItemInlineUpdates: () => {},
 	createInlineItem: () => {},
 	executeAsyncItemAction: () => {},
+	forceSortsUpdate: () => {},
 	hideManagementBarInEmptyState: false,
 	highlightItems: () => {},
 	id: '',
@@ -126,6 +130,7 @@ const FrontendDataSetContext = React.createContext({
 	selectedItems: [],
 	selectedItemsValue: [],
 	toggleItemInlineEdit: () => {},
+	updateAdditionalAPIURLParameters: () => {},
 	updateDataSetItems: () => {},
 	updateItem: () => {},
 } as unknown as IFrontendDataSetContext);

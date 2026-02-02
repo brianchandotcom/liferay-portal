@@ -437,8 +437,7 @@ public class FormContainerLayoutStructureItemImporter
 			"layout",
 			() -> LayoutUtil.getMappedLayoutJSONObject(
 				layoutStructureItemImporterContext.getCompanyId(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(),
+				itemExternalReference,
 				layoutStructureItemImporterContext.getGroupId())
 		).put(
 			"type", "page"

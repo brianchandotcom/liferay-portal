@@ -11,6 +11,7 @@ import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -46,6 +47,10 @@ test(
 			.or(page.getByRole('cell', {name: '🍏'}));
 		const redCells = page.getByRole('cell', {name: 'Red'});
 		const yellowCells = page.getByRole('cell', {name: 'Yellow'});
+
+		const creatorFilterSummaryButton = page
+			.getByRole('button')
+			.filter({hasText: /^Creator:/});
 
 		const filtersFragment = {
 			activeToggle: page.getByTestId('activeFiltersFDSSampleToggle'),
@@ -113,9 +118,7 @@ test(
 
 		await test.step('Check searching the available filters in filter dropdown', async () => {
 			await test.step('Open filter dropdown', async () => {
-				await fdsSamplePage.managementToolbar.container
-					.getByRole('button', {name: 'Filter'})
-					.click();
+				await fdsSamplePage.managementToolbar.filterButton.click();
 			});
 
 			await test.step('Check filters show up grouped together', async () => {
@@ -131,11 +134,7 @@ test(
 			});
 
 			await test.step('Enter a search term "status"', async () => {
-				await page
-					.locator('.dropdown-menu')
-					.getByLabel('Search')
-					.first()
-					.fill('status');
+				await fdsSamplePage.filterMenuSearchInput.fill('status');
 			});
 
 			await test.step('Check only the "status" filter appears', async () => {
@@ -180,11 +179,7 @@ test(
 			});
 
 			await test.step('Enter a search term "creator"', async () => {
-				await page
-					.locator('.dropdown-menu')
-					.getByLabel('Search')
-					.first()
-					.fill('creator');
+				await fdsSamplePage.filterMenuSearchInput.fill('creator');
 			});
 
 			await test.step('Check only the "creator" filter appears', async () => {
@@ -218,25 +213,15 @@ test(
 					.getByRole('button', {name: 'Filter'})
 					.click();
 
-				await page
-					.locator('.dropdown-menu')
+				await fdsSamplePage.filterMenu
 					.getByRole('menuitem', {name: 'Color'})
 					.click();
 
-				await page
-					.locator('.dropdown-menu')
+				await fdsSamplePage.filterMenu
 					.getByRole('checkbox', {name: 'Red'})
 					.check();
 
-				await page
-					.locator('.dropdown-menu')
-					.getByRole('button', {name: 'Show Results'})
-					.or(
-						page
-							.locator('.dropdown-menu')
-							.getByRole('button', {name: 'Add Filter'})
-					)
-					.click();
+				await fdsSamplePage.filterShowResultsOrAddButton.click();
 
 				await page
 					.getByText('This is a description for sample 10.')
@@ -261,7 +246,9 @@ test(
 			await test.step('Exclude "Blue", "Green" and "Yellow" colors', async () => {
 				await fdsSamplePage.managementToolbar.filterButton.click();
 
-				await page.getByRole('menuitem', {name: 'Color'}).click();
+				await fdsSamplePage.filterMenu
+					.getByRole('menuitem', {name: 'Color'})
+					.click();
 
 				await fdsSamplePage.filterDropdownMenu
 					.getByLabel('Exclude')
@@ -404,7 +391,9 @@ test(
 
 				await activeFiltersButton.click();
 
-				await page.getByRole('menuitem', {name: 'Color'}).click();
+				await fdsSamplePage.filterMenu
+					.getByRole('menuitem', {name: 'Color'})
+					.click();
 
 				await expect(
 					page.getByRole('checkbox', {name: 'Green'})
@@ -461,77 +450,49 @@ test(
 				await waitForFDS({page});
 			});
 
-			await test.step('Select creator filter from dropdown', async () => {
+			await test.step('Select creator filter from dropdown and verify autocomplete input appears', async () => {
 				await fdsSamplePage.managementToolbar.filterButton.click();
 
-				await page
-					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Creator'})
-					.click();
-			});
-
-			await test.step('Verify autocomplete input appears', async () => {
-				await expect(
-					page.locator('.data-set-filter').getByRole('textbox', { name: 'Search' }).first()
-				).toBeVisible();
+				await clickAndExpectToBeVisible({
+					target: fdsSamplePage.creatorFilterSearchInput,
+					trigger: fdsSamplePage.filterMenu.getByRole('menuitem', {
+						name: 'Creator',
+					}),
+				});
 			});
 
 			await test.step('Search for and select a creator', async () => {
-				const searchInput = page
-					.locator('.data-set-filter')
-					.getByRole('textbox', { name: 'Search' })
-					.first();
+				await fdsSamplePage.creatorFilterSearchInput.fill('test');
 
-				await searchInput.fill('test');
-
-				await page.waitForTimeout(500);
-
-				const firstCreatorCheckbox = page
-					.locator('.dropdown-menu')
+				const firstCreatorCheckbox = fdsSamplePage.filterMenu
 					.getByRole('checkbox')
 					.first();
 
-				if (await firstCreatorCheckbox.isVisible({timeout: 2000}).catch(() => false)) {
-					const creatorLabel = await firstCreatorCheckbox
-						.locator('..')
-						.textContent()
-						.catch(() => '');
+				await expect(firstCreatorCheckbox).toBeVisible();
 
-					await firstCreatorCheckbox.check();
+				const creatorLabel = await firstCreatorCheckbox
+					.locator('..')
+					.textContent();
 
-					await page
-						.locator('.dropdown-menu')
-						.getByRole('button', {name: 'Show Results'})
-						.or(
-							page
-								.locator('.dropdown-menu')
-								.getByRole('button', {name: 'Add Filter'})
-						)
-						.click();
+				await firstCreatorCheckbox.check();
 
-					await page
-						.getByText('This is a description for sample')
-						.first()
-						.waitFor();
+				await fdsSamplePage.filterShowResultsOrAddButton.click();
 
+				await expect(
+					page.getByText('This is a description for sample').first()
+				).toBeVisible();
 
-					if (creatorLabel) {
-						await expect(
-							page.getByRole('button', {
-								name: new RegExp(`Creator:.*${creatorLabel.trim()}`),
-							})
-						).toBeVisible();
-					}
-				}
+				await expect(
+					page.getByRole('button', {
+						name: new RegExp(
+							`Creator:.*${creatorLabel?.trim() ?? ''}`
+						),
+					})
+				).toBeVisible();
 			});
 
 			await test.step('Verify creator names appear in table cells', async () => {
-				const authorCells = page
-					.locator('table tbody tr td')
-					.filter({hasText: /./})
-					.first();
-
-				await expect(authorCells).toBeVisible();
+				await expect(page.getByRole('cell').first()).toBeVisible();
 			});
 		});
 
@@ -545,79 +506,49 @@ test(
 			await test.step('Apply creator filter', async () => {
 				await fdsSamplePage.managementToolbar.filterButton.click();
 
-				await page
-					.locator('.dropdown-menu')
+				await fdsSamplePage.filterMenu
 					.getByRole('menuitem', {name: 'Creator'})
 					.click();
 
-				const searchInput = page
-					.locator('.dropdown-menu')
-					.getByRole('textbox', { name: 'Search' })
+				await fdsSamplePage.creatorFilterSearchInput.fill('test');
+
+				const firstCreatorCheckbox = fdsSamplePage.filterMenu
+					.getByRole('checkbox')
 					.first();
 
-				await searchInput.fill('test');
+				await expect(firstCreatorCheckbox).toBeVisible();
 
-				await page.waitForTimeout(500);
+				await firstCreatorCheckbox.check();
 
-				const creatorCheckboxes = page
-					.locator('.dropdown-menu')
-					.getByRole('checkbox');
+				await fdsSamplePage.filterShowResultsOrAddButton.click();
 
-				const checkboxCount = await creatorCheckboxes.count();
-
-				if (checkboxCount > 0) {
-					await creatorCheckboxes.first().check();
-
-					if (checkboxCount > 1) {
-						await creatorCheckboxes.nth(1).check();
-					}
-
-					await page
-						.locator('.dropdown-menu')
-						.getByRole('button', {name: 'Show Results'})
-						.or(
-							page
-								.locator('.dropdown-menu')
-								.getByRole('button', {name: 'Add Filter'})
-						)
-						.click();
-
-					await page
-						.getByText('This is a description for sample')
-						.first()
-						.waitFor();
-				}
+				await expect(
+					page.getByText('This is a description for sample').first()
+				).toBeVisible();
 			});
 
 			await test.step('Open creator filter summary box and verify it shows creator names', async () => {
-				const creatorFilterButton = page
-					.getByRole('button')
-					.filter({hasText: /^Creator:/});
+				await expect(creatorFilterSummaryButton).toBeVisible();
 
-				if (await creatorFilterButton.isVisible({timeout: 2000}).catch(() => false)) {
-					await creatorFilterButton.click();
+				await creatorFilterSummaryButton.click();
 
-					await expect(
-						page.getByRole('checkbox').first()
-					).toBeVisible();
-				}
+				await expect(page.getByRole('checkbox').first()).toBeVisible();
 			});
 
-			await test.step('Test removing creator filter using remove button', async () => {
-				const removeButton = page.getByRole('button', {name: 'Remove Filter'});
+			await test.step('Remove creator filter using the remove button', async () => {
+				const removeButton = page
+					.getByRole('group')
+					.getByLabel('Remove Filter');
 
-				if (await removeButton.isVisible({timeout: 2000}).catch(() => false)) {
-					await removeButton.click();
+				await expect(removeButton).toBeVisible({timeout: 10000});
 
-					await page
-						.getByText('This is a description for sample')
-						.first()
-						.waitFor();
+				await removeButton.click();
 
-					await expect(
-						page.getByRole('button').filter({hasText: /^Creator:/})
-					).not.toBeVisible();
-				}
+				await expect(
+					page.getByText('This is a description for sample').first()
+				).toBeVisible();
+
+				await expect(creatorFilterSummaryButton).not.toBeVisible();
 			});
 		});
 	}

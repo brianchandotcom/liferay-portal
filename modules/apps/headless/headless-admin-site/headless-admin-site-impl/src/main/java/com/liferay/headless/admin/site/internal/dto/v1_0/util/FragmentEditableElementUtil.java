@@ -45,6 +45,7 @@ import com.liferay.headless.admin.site.dto.v1_0.URLActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,15 +137,17 @@ public class FragmentEditableElementUtil {
 	}
 
 	private static JSONObject _getActionInteractionJSONObject(
-		ActionInteraction actionInteraction, long companyId,
-		long scopeGroupId) {
+			ActionInteraction actionInteraction, long companyId,
+			long scopeGroupId,
+			UnsafeFunction<ActionInteraction.Type, String, Exception>
+				unsafeFunction)
+		throws Exception {
 
 		if (actionInteraction == null) {
 			return null;
 		}
 
-		String internalType = ActionInteractionTypeUtil.toInternalType(
-			actionInteraction.getType());
+		String internalType = unsafeFunction.apply(actionInteraction.getType());
 
 		if (Objects.equals(
 				internalType,
@@ -956,11 +959,21 @@ public class FragmentEditableElementUtil {
 			).put(
 				"onError",
 				() -> _getActionInteractionJSONObject(
-					errorActionInteraction, companyId, scopeGroupId)
+					errorActionInteraction, companyId, scopeGroupId,
+					type -> {
+						if (Objects.equals(
+								ActionInteraction.Type.DISPLAY_PAGE, type)) {
+
+							throw new UnsupportedOperationException();
+						}
+
+						return ActionInteractionTypeUtil.toInternalType(type);
+					})
 			).put(
 				"onSuccess",
 				() -> _getActionInteractionJSONObject(
-					successActionInteraction, companyId, scopeGroupId)
+					successActionInteraction, companyId, scopeGroupId,
+					type -> ActionInteractionTypeUtil.toInternalType(type))
 			));
 	}
 

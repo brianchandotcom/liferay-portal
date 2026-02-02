@@ -27,6 +27,7 @@ export default gql`
 		value
 		trend {
 			percentage
+			trendClassification
 		}
 	}
 `;

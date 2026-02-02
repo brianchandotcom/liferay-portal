@@ -26,7 +26,7 @@ describe('StateSelector', () => {
 			/>
 		);
 
-		expect(getByText('Not Started')).toBeInTheDocument();
+		expect(getByText('not-started')).toBeInTheDocument();
 	});
 
 	it('calls onChange when selection changes', () => {
@@ -38,7 +38,7 @@ describe('StateSelector', () => {
 			/>
 		);
 
-		const trigger = getByText('Not Started');
+		const trigger = getByText('not-started');
 
 		fireEvent.click(trigger);
 

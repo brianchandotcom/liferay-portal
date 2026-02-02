@@ -5,12 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.snapshot.GetRepositoryRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.action.admin.cluster.repositories.get.GetRepositoriesRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -50,13 +51,13 @@ public class GetSnapshotRepositoriesRequestExecutorImplTest {
 				new GetSnapshotRepositoriesRequestExecutor(
 					_elasticsearchFixture);
 
-		GetRepositoriesRequest getRepositoriesRequest =
-			getSnapshotRepositoriesRequestExecutor.createGetRepositoriesRequest(
+		GetRepositoryRequest getRepositoriesRequest =
+			getSnapshotRepositoriesRequestExecutor.createGetRepositoryRequest(
 				getSnapshotRepositoriesRequest);
 
 		Assert.assertArrayEquals(
 			getSnapshotRepositoriesRequest.getRepositoryNames(),
-			getRepositoriesRequest.repositories());
+			ArrayUtil.toStringArray(getRepositoriesRequest.name()));
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

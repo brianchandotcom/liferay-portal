@@ -5,16 +5,18 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.HealthStatus;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.elasticsearch.indices.GetIndexRequest;
+import co.elastic.clients.elasticsearch.indices.GetIndexResponse;
+import co.elastic.clients.json.JsonpMapper;
+
+import com.liferay.portal.kernel.util.ListUtil;
+
 import java.io.IOException;
 
 import java.util.Map;
-
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.client.indices.GetIndexResponse;
-import org.elasticsearch.cluster.health.ClusterHealthStatus;
 
 /**
  * @author André de Oliveira
@@ -58,6 +60,23 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 		this();
 	}
 
+	@Override
+	public ElasticsearchClient getElasticsearchClient() {
+		return _elasticsearchConnectionFixture.getElasticsearchClient();
+	}
+
+	@Override
+	public ElasticsearchClient getElasticsearchClient(String connectionId) {
+		return getElasticsearchClient();
+	}
+
+	@Override
+	public ElasticsearchClient getElasticsearchClient(
+		String connectionId, boolean preferLocalCluster) {
+
+		return getElasticsearchClient();
+	}
+
 	public Map<String, Object> getElasticsearchConfigurationProperties() {
 		return _elasticsearchConnectionFixture.
 			getElasticsearchConfigurationProperties();
@@ -68,14 +87,16 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 	}
 
 	public GetIndexResponse getIndex(String... indices) {
-		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
-		IndicesClient indicesClient = restHighLevelClient.indices();
-
-		GetIndexRequest getIndexRequest = new GetIndexRequest(indices);
+		ElasticsearchIndicesClient elasticsearchIndicesClient =
+			elasticsearchClient.indices();
 
 		try {
-			return indicesClient.get(getIndexRequest, RequestOptions.DEFAULT);
+			return elasticsearchIndicesClient.get(
+				GetIndexRequest.of(
+					getIndexRequest -> getIndexRequest.index(
+						ListUtil.fromArray(indices))));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -83,20 +104,11 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 	}
 
 	@Override
-	public RestHighLevelClient getRestHighLevelClient() {
-		return _elasticsearchConnectionFixture.getRestHighLevelClient();
-	}
+	public JsonpMapper getJsonpMapper(String connectionId) {
+		ElasticsearchConnection elasticsearchConnection =
+			getElasticsearchConnection();
 
-	@Override
-	public RestHighLevelClient getRestHighLevelClient(String connectionId) {
-		return getRestHighLevelClient();
-	}
-
-	@Override
-	public RestHighLevelClient getRestHighLevelClient(
-		String connectionId, boolean preferLocalCluster) {
-
-		return getRestHighLevelClient();
+		return elasticsearchConnection.getJsonpMapper();
 	}
 
 	public void setUp() throws Exception {
@@ -116,15 +128,15 @@ public class ElasticsearchFixture implements ElasticsearchClientResolver {
 	}
 
 	public void waitForElasticsearchToStart() {
-		ClusterHealthResponseUtil.getClusterHealthResponse(
+		ClusterHealthResponseUtil.getHealthResponse(
 			this,
 			new HealthExpectations() {
 				{
 					setActivePrimaryShards(0);
 					setActiveShards(0);
+					setHealthStatus(HealthStatus.Green);
 					setNumberOfDataNodes(1);
 					setNumberOfNodes(1);
-					setStatus(ClusterHealthStatus.GREEN);
 					setUnassignedShards(0);
 				}
 			});

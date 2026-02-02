@@ -5,13 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.ExistsRequest;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.IndicesExistsIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
-
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -49,15 +49,15 @@ public class IndicesExistsIndexRequestExecutorTest {
 		IndicesExistsIndexRequestExecutor indicesExistsIndexRequestExecutor =
 			new IndicesExistsIndexRequestExecutor(_elasticsearchFixture);
 
-		GetIndexRequest getIndexRequest =
-			indicesExistsIndexRequestExecutor.createGetIndexRequest(
+		ExistsRequest existsRequest =
+			indicesExistsIndexRequestExecutor.createExistsRequest(
 				indicesExistsIndexRequest);
 
-		String[] indices = getIndexRequest.indices();
+		List<String> indices = existsRequest.index();
 
-		Assert.assertEquals(Arrays.toString(indices), 2, indices.length);
-		Assert.assertEquals(_INDEX_NAME_1, indices[0]);
-		Assert.assertEquals(_INDEX_NAME_2, indices[1]);
+		Assert.assertEquals(String.join(", ", indices), 2, indices.size());
+		Assert.assertEquals(_INDEX_NAME_1, indices.get(0));
+		Assert.assertEquals(_INDEX_NAME_2, indices.get(1));
 	}
 
 	private static final String _INDEX_NAME_1 = "test_request_index1";

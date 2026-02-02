@@ -5,25 +5,28 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.elasticsearch.core.IndexResponse;
+import co.elastic.clients.elasticsearch.core.UpdateRequest;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
+import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
 import java.util.List;
 import java.util.Map;
-
-import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
-import org.elasticsearch.action.get.GetRequest;
-import org.elasticsearch.action.get.GetResponse;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.client.IndicesClient;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -48,9 +51,9 @@ public class UpdateRequestTest {
 
 		_elasticsearchFixture.setUp();
 
-		_restHighLevelClient = _elasticsearchFixture.getRestHighLevelClient();
+		_elasticsearchClient = _elasticsearchFixture.getElasticsearchClient();
 
-		_indicesClient = _restHighLevelClient.indices();
+		_elasticsearchIndicesClient = _elasticsearchClient.indices();
 	}
 
 	@AfterClass
@@ -60,23 +63,25 @@ public class UpdateRequestTest {
 
 	@Before
 	public void setUp() throws IOException {
-		_indicesClient.create(
-			new CreateIndexRequest(_INDEX_NAME), RequestOptions.DEFAULT);
+		_elasticsearchIndicesClient.create(
+			CreateIndexRequest.of(
+				createIndexRequest -> createIndexRequest.index(_INDEX_NAME)));
 	}
 
 	@After
 	public void tearDown() throws IOException {
-		_indicesClient.delete(
-			new DeleteIndexRequest(_INDEX_NAME), RequestOptions.DEFAULT);
+		_elasticsearchIndicesClient.delete(
+			DeleteIndexRequest.of(
+				deleteIndexRequest -> deleteIndexRequest.index(_INDEX_NAME)));
 	}
 
 	@Test
-	public void testUnsetValueWithArrayWithNull() throws IOException {
+	public void testUnsetValueWithArrayWithNull() throws Exception {
 		String id = _indexAndGetId();
 
 		_updateField(id, "field2", new Object[] {null});
 
-		Map<String, Object> fields = _getFields(id);
+		Map<String, JsonData> fields = _getFields(id);
 
 		Assert.assertEquals("an example", fields.get("field1"));
 
@@ -88,12 +93,12 @@ public class UpdateRequestTest {
 	}
 
 	@Test
-	public void testUnsetValueWithEmptyArray() throws IOException {
+	public void testUnsetValueWithEmptyArray() throws Exception {
 		String id = _indexAndGetId();
 
 		_updateField(id, "field2", new Object[0]);
 
-		Map<String, Object> fields = _getFields(id);
+		Map<String, JsonData> fields = _getFields(id);
 
 		Assert.assertEquals("an example", fields.get("field1"));
 
@@ -104,71 +109,86 @@ public class UpdateRequestTest {
 	}
 
 	@Test
-	public void testUnsetValueWithNull() throws IOException {
+	public void testUnsetValueWithNull() throws Exception {
 		String id = _indexAndGetId();
 
 		_updateField(id, "field2", null);
 
-		Map<String, Object> fields = _getFields(id);
+		Map<String, JsonData> fields = _getFields(id);
 
 		Assert.assertEquals("an example", fields.get("field1"));
 		Assert.assertNull(fields.get("field2"));
 	}
 
 	@Test
-	public void testUpdateRequestWithMap() throws IOException {
+	public void testUpdateRequestWithMap() throws Exception {
 		String id = _indexAndGetId();
 
 		_updateField(id, "field2", "UPDATED FIELD");
 
-		Map<String, Object> fields = _getFields(id);
+		Map<String, JsonData> fields = _getFields(id);
 
 		Assert.assertEquals("an example", fields.get("field1"));
 		Assert.assertEquals("UPDATED FIELD", fields.get("field2"));
 	}
 
-	private Map<String, Object> _getFields(String id) throws IOException {
-		GetRequest getRequest = new GetRequest(_INDEX_NAME, id);
+	private Map<String, JsonData> _getFields(String id) throws Exception {
+		GetResponse<JsonData> getResponse = _elasticsearchClient.get(
+			GetRequest.of(
+				getRequest -> getRequest.id(
+					id
+				).index(
+					_INDEX_NAME
+				)),
+			JsonData.class);
 
-		GetResponse getResponse = _restHighLevelClient.get(
-			getRequest, RequestOptions.DEFAULT);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+			String.valueOf(getResponse.source()));
 
-		return getResponse.getSource();
+		return ConversionUtil.toJsonDataMap(jsonObject.toMap());
 	}
 
-	private String _indexAndGetId() throws IOException {
-		IndexRequest indexRequest = new IndexRequest(_INDEX_NAME);
+	private String _indexAndGetId() throws Exception {
+		IndexRequest.Builder<JsonData> indexRequestBuilder =
+			new IndexRequest.Builder<>();
 
-		indexRequest.source(
-			HashMapBuilder.put(
-				"field1", "an example"
-			).put(
-				"field2", "some test"
-			).build());
+		indexRequestBuilder.document(
+			JsonData.of(
+				HashMapBuilder.put(
+					"field1", "an example"
+				).put(
+					"field2", "some test"
+				).build()));
+		indexRequestBuilder.index(_INDEX_NAME);
 
-		IndexResponse indexResponse = _restHighLevelClient.index(
-			indexRequest, RequestOptions.DEFAULT);
+		IndexResponse indexResponse = _elasticsearchClient.index(
+			indexRequestBuilder.build());
 
-		return indexResponse.getId();
+		return indexResponse.id();
 	}
 
 	private void _updateField(String id, String fieldName, Object fieldValue)
-		throws IOException {
+		throws Exception {
 
-		UpdateRequest updateRequest = new UpdateRequest(_INDEX_NAME, id);
+		UpdateRequest.Builder<JsonData, JsonData> updateRequestBuilder =
+			new UpdateRequest.Builder<>();
 
-		updateRequest.doc(
-			HashMapBuilder.put(
-				fieldName, fieldValue
-			).build());
+		updateRequestBuilder.doc(
+			JsonData.of(
+				HashMapBuilder.put(
+					fieldName, fieldValue
+				).build()));
+		updateRequestBuilder.id(id);
+		updateRequestBuilder.index(_INDEX_NAME);
 
-		_restHighLevelClient.update(updateRequest, RequestOptions.DEFAULT);
+		_elasticsearchClient.update(
+			updateRequestBuilder.build(), JsonData.class);
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";
 
+	private static ElasticsearchClient _elasticsearchClient;
 	private static ElasticsearchFixture _elasticsearchFixture;
-	private static IndicesClient _indicesClient;
-	private static RestHighLevelClient _restHighLevelClient;
+	private static ElasticsearchIndicesClient _elasticsearchIndicesClient;
 
 }

@@ -5,11 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.RefreshRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.RefreshIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.action.admin.indices.refresh.RefreshRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -52,7 +53,8 @@ public class RefreshIndexRequestExecutorTest {
 				refreshIndexRequest);
 
 		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, refreshRequest.indices());
+			new String[] {_INDEX_NAME},
+			ArrayUtil.toStringArray(refreshRequest.index()));
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

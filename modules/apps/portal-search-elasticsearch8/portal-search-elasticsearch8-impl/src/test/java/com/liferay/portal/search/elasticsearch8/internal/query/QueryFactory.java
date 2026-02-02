@@ -5,13 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.query;
 
-import org.elasticsearch.index.query.QueryBuilder;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 
 /**
  * @author André de Oliveira
  */
-public interface QueryBuilderFactory {
+public interface QueryFactory {
 
-	public QueryBuilder create(String name, String text);
+	public Query create(String name, String text);
 
 }

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.indexing;
 
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -37,8 +39,6 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.util.LocalizationImpl;
 
 import java.util.Map;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
 
 import org.mockito.Mockito;
 
@@ -144,7 +144,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	}
 
 	protected void setFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+		FacetProcessor<SearchRequest.Builder> facetProcessor) {
 
 		_facetProcessor = facetProcessor;
 	}
@@ -158,7 +158,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 	private ElasticsearchEngineAdapterFixture
 		_createElasticsearchEngineAdapterFixture(
 			ElasticsearchClientResolver elasticsearchClientResolver,
-			FacetProcessor<SearchRequestBuilder> facetProcessor) {
+			FacetProcessor<SearchRequest.Builder> facetProcessor) {
 
 		return new ElasticsearchEngineAdapterFixture() {
 			{
@@ -320,7 +320,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private final long _companyId;
 	private ElasticsearchFixture _elasticsearchFixture;
-	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
+	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;

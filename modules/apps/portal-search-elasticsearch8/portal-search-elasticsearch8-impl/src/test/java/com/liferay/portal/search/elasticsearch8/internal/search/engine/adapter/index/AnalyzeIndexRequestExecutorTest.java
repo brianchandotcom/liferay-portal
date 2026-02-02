@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.AnalyzeRequest;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.client.indices.AnalyzeRequest;
 
 import org.junit.After;
 import org.junit.Assert;

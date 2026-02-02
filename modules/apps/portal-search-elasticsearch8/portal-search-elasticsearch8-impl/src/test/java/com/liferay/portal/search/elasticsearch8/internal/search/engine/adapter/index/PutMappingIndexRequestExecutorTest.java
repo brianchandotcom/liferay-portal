@@ -5,13 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch._types.mapping.Property;
+import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
+
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.elasticsearch.client.indices.PutMappingRequest;
-import org.elasticsearch.common.bytes.BytesReference;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -55,11 +58,12 @@ public class PutMappingIndexRequestExecutorTest {
 				putMappingIndexRequest);
 
 		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, putMappingRequest.indices());
+			new String[] {_INDEX_NAME},
+			ArrayUtil.toStringArray(putMappingRequest.index()));
 
-		BytesReference bytesReference = putMappingRequest.source();
+		Map<String, Property> properties = putMappingRequest.properties();
 
-		Assert.assertEquals(_FIELD_NAME, bytesReference.utf8ToString());
+		Assert.assertNotNull(properties.get(_FIELD_NAME));
 	}
 
 	private static final String _FIELD_NAME = "testField";

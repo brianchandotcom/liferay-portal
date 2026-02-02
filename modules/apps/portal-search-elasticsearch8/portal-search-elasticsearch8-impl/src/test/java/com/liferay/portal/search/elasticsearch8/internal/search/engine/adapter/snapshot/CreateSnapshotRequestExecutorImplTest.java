@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
@@ -49,14 +50,15 @@ public class CreateSnapshotRequestExecutorImplTest {
 		CreateSnapshotRequestExecutor createSnapshotRequestExecutor =
 			new CreateSnapshotRequestExecutor(_elasticsearchFixture);
 
-		org.elasticsearch.action.admin.cluster.snapshots.create.
-			CreateSnapshotRequest elasticsearchCreateSnapshotRequest =
+		co.elastic.clients.elasticsearch.snapshot.CreateSnapshotRequest
+			elasticsearchCreateSnapshotRequest =
 				createSnapshotRequestExecutor.createCreateSnapshotRequest(
 					createSnapshotRequest);
 
 		Assert.assertArrayEquals(
 			createSnapshotRequest.getIndexNames(),
-			elasticsearchCreateSnapshotRequest.indices());
+			ArrayUtil.toStringArray(
+				elasticsearchCreateSnapshotRequest.indices()));
 		Assert.assertEquals(
 			createSnapshotRequest.getRepositoryName(),
 			elasticsearchCreateSnapshotRequest.repository());

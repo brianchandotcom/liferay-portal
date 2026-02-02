@@ -5,11 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.GetMappingRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.GetMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.client.indices.GetMappingsRequest;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -47,12 +48,13 @@ public class GetMappingIndexRequestExecutorTest {
 		GetMappingIndexRequestExecutor getMappingIndexRequestExecutor =
 			new GetMappingIndexRequestExecutor(_elasticsearchFixture);
 
-		GetMappingsRequest getMappingsRequest =
-			getMappingIndexRequestExecutor.createGetMappingsRequest(
+		GetMappingRequest getMappingRequest =
+			getMappingIndexRequestExecutor.createGetMappingRequest(
 				getMappingIndexRequest);
 
 		Assert.assertArrayEquals(
-			new String[] {_INDEX_NAME}, getMappingsRequest.indices());
+			new String[] {_INDEX_NAME},
+			ArrayUtil.toStringArray(getMappingRequest.index()));
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

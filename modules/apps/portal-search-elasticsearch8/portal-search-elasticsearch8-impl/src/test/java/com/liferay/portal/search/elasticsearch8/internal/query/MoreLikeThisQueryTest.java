@@ -43,7 +43,7 @@ public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 	}
 
 	@Test
-	public void testMoreLikeThisWithoutFieldsElasticsearch7() throws Throwable {
+	public void testMoreLikeThisWithoutFieldsElasticsearch8() throws Throwable {
 		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
 
 		searchSearchRequest.setQuery(

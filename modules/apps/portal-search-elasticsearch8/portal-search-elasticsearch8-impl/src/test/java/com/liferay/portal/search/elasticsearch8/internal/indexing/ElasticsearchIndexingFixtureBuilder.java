@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.indexing;
 
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor;
-
-import org.elasticsearch.action.search.SearchRequestBuilder;
 
 /**
  * @author André de Oliveira
@@ -38,7 +38,7 @@ public class ElasticsearchIndexingFixtureBuilder {
 	}
 
 	public ElasticsearchIndexingFixtureBuilder facetProcessor(
-		FacetProcessor<SearchRequestBuilder> facetProcessor) {
+		FacetProcessor<SearchRequest.Builder> facetProcessor) {
 
 		_facetProcessor = facetProcessor;
 
@@ -62,7 +62,7 @@ public class ElasticsearchIndexingFixtureBuilder {
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;
-	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
+	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private boolean _liferayMappingsAddedToIndex;
 
 }

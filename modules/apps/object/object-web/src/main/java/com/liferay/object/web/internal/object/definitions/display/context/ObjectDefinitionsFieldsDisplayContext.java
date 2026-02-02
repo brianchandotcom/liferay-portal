@@ -5,6 +5,8 @@
 
 package com.liferay.object.web.internal.object.definitions.display.context;
 
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.list.type.service.ListTypeDefinitionService;
@@ -48,6 +50,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 	extends BaseObjectDefinitionsDisplayContext {
 
 	public ObjectDefinitionsFieldsDisplayContext(
+		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
 		ListTypeDefinitionService listTypeDefinitionService,
 		ModelResourcePermission<ObjectDefinition>
@@ -59,6 +62,7 @@ public class ObjectDefinitionsFieldsDisplayContext
 			httpServletRequest, objectDefinitionModelResourcePermission,
 			objectFolderLocalService);
 
+		_depotEntryLocalService = depotEntryLocalService;
 		_listTypeDefinitionService = listTypeDefinitionService;
 		_objectFieldBusinessTypeRegistry = objectFieldBusinessTypeRegistry;
 	}
@@ -178,11 +182,30 @@ public class ObjectDefinitionsFieldsDisplayContext
 			_listTypeDefinitionService, objectField);
 	}
 
+	public boolean hasDepotEntry() {
+		HttpServletRequest httpServletRequest =
+			objectRequestHelper.getRequest();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int depotEntriesCount = _depotEntryLocalService.getDepotEntriesCount(
+			themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE);
+
+		if (depotEntriesCount > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected String getAPIURI() {
 		return "/object-fields";
 	}
 
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ListTypeDefinitionService _listTypeDefinitionService;
 	private final ObjectFieldBusinessTypeRegistry
 		_objectFieldBusinessTypeRegistry;

@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.definitions.frontend.taglib.servlet.taglib;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.list.type.service.ListTypeDefinitionService;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -59,12 +60,16 @@ public class FieldsObjectDefinitionsScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			new ObjectDefinitionsFieldsDisplayContext(
-				httpServletRequest, _listTypeDefinitionService,
+				_depotEntryLocalService, httpServletRequest,
+				_listTypeDefinitionService,
 				_objectDefinitionModelResourcePermission,
 				_objectFieldBusinessTypeRegistry, _objectFolderLocalService));
 
 		super.render(httpServletRequest, httpServletResponse);
 	}
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private ListTypeDefinitionService _listTypeDefinitionService;

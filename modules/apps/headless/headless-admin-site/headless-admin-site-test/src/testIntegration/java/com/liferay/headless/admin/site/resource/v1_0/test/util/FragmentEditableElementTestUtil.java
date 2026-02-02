@@ -5,8 +5,11 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValueFragmentLink;
@@ -31,10 +34,14 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
+import com.liferay.headless.admin.site.client.dto.v1_0.NoneActionInteraction;
+import com.liferay.headless.admin.site.client.dto.v1_0.NotificationActionInteraction;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -52,6 +59,37 @@ import java.util.TreeSet;
  * @author Rubén Pulido
  */
 public class FragmentEditableElementTestUtil {
+
+	public static FragmentEditableElement getActionFragmentEditableElement(
+		ActionInteraction errorActionInteraction,
+		FragmentMappedValue fragmentMappedValue, String id,
+		ActionInteraction successActionInteraction,
+		TextFragmentValue textFragmentValue) {
+
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
+		ActionFragmentEditableElementValue actionFragmentEditableElementValue =
+			new ActionFragmentEditableElementValue();
+
+		actionFragmentEditableElementValue.setErrorActionInteraction(
+			() -> errorActionInteraction);
+		actionFragmentEditableElementValue.setFragmentMappedValue(
+			() -> fragmentMappedValue);
+		actionFragmentEditableElementValue.setSuccessActionInteraction(
+			() -> successActionInteraction);
+		actionFragmentEditableElementValue.setTextFragmentValue(
+			() -> textFragmentValue);
+		actionFragmentEditableElementValue.setType(
+			() -> FragmentEditableElementValue.Type.ACTION);
+
+		fragmentEditableElement.setFragmentEditableElementValue(
+			actionFragmentEditableElementValue);
+
+		fragmentEditableElement.setId(() -> id);
+
+		return fragmentEditableElement;
+	}
 
 	public static FragmentEditableElement
 		getBackgroundImageFragmentEditableElement(
@@ -108,6 +146,20 @@ public class FragmentEditableElementTestUtil {
 			).build());
 
 		return directFragmentImageValue;
+	}
+
+	public static DisplayPageActionInteraction
+		getDisplayPageActionInteraction() {
+
+		DisplayPageActionInteraction displayPageActionInteraction =
+			new DisplayPageActionInteraction();
+
+		displayPageActionInteraction.setMappingFieldKey(
+			RandomTestUtil::randomString);
+		displayPageActionInteraction.setType(
+			() -> ActionInteraction.Type.DISPLAY_PAGE);
+
+		return displayPageActionInteraction;
 	}
 
 	public static FragmentImage getFragmentImage(
@@ -266,6 +318,44 @@ public class FragmentEditableElementTestUtil {
 		return mappedFragmentImageValue;
 	}
 
+	public static NoneActionInteraction getNoneActionInteraction() {
+		NoneActionInteraction noneActionInteraction =
+			new NoneActionInteraction();
+
+		noneActionInteraction.setReload(RandomTestUtil::randomBoolean);
+		noneActionInteraction.setType(() -> ActionInteraction.Type.NONE);
+
+		return noneActionInteraction;
+	}
+
+	public static NotificationActionInteraction
+		getNotificationActionInteraction() {
+
+		NotificationActionInteraction notificationActionInteraction =
+			new NotificationActionInteraction();
+
+		notificationActionInteraction.setFragmentInlineValue(
+			() -> _getFragmentInlineValue());
+		notificationActionInteraction.setReload(RandomTestUtil::randomBoolean);
+		notificationActionInteraction.setType(
+			() -> ActionInteraction.Type.NOTIFICATION);
+
+		return notificationActionInteraction;
+	}
+
+	public static PageActionInteraction getPageActionInteraction(
+		ItemExternalReference itemExternalReference) {
+
+		PageActionInteraction pageActionInteraction =
+			new PageActionInteraction();
+
+		pageActionInteraction.setItemExternalReference(
+			() -> itemExternalReference);
+		pageActionInteraction.setType(() -> ActionInteraction.Type.PAGE);
+
+		return pageActionInteraction;
+	}
+
 	public static FragmentEditableElement getTextFragmentEditableElement(
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		FragmentLink fragmentLink,
@@ -294,6 +384,16 @@ public class FragmentEditableElementTestUtil {
 		fragmentEditableElement.setId(() -> "element-text");
 
 		return fragmentEditableElement;
+	}
+
+	public static URLActionInteraction getURLActionInteraction() {
+		URLActionInteraction urlActionInteraction = new URLActionInteraction();
+
+		urlActionInteraction.setFragmentInlineValue(
+			() -> _getFragmentInlineValue());
+		urlActionInteraction.setType(() -> ActionInteraction.Type.URL);
+
+		return urlActionInteraction;
 	}
 
 	private static FragmentEditableElementValueFragmentLink

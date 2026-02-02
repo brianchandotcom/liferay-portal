@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToPagePageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSetPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
@@ -54,6 +55,11 @@ public class PageSpecificationSerDes {
 			if (typeString.equals("ContentPageSpecification")) {
 				return ContentPageSpecificationSerDes.toJSON(
 					(ContentPageSpecification)pageSpecification);
+			}
+
+			if (typeString.equals("LinkToPagePageSpecification")) {
+				return LinkToPagePageSpecificationSerDes.toJSON(
+					(LinkToPagePageSpecification)pageSpecification);
 			}
 
 			if (typeString.equals("LinkToURLPageSpecification")) {
@@ -173,6 +179,10 @@ public class PageSpecificationSerDes {
 
 				if (typeString.equals("ContentPageSpecification")) {
 					return ContentPageSpecification.toDTO(json);
+				}
+
+				if (typeString.equals("LinkToPagePageSpecification")) {
+					return LinkToPagePageSpecification.toDTO(json);
 				}
 
 				if (typeString.equals("LinkToURLPageSpecification")) {

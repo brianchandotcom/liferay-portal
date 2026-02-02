@@ -50,6 +50,10 @@ import java.util.function.Supplier;
 			name = "ContentPageSettings", value = ContentPageSettings.class
 		),
 		@JsonSubTypes.Type(
+			name = "LinkToPagePageSettings",
+			value = LinkToPagePageSettings.class
+		),
+		@JsonSubTypes.Type(
 			name = "LinkToURLPageSettings", value = LinkToURLPageSettings.class
 		),
 		@JsonSubTypes.Type(
@@ -359,6 +363,7 @@ public abstract class PageSettings implements Serializable {
 	public static enum Type {
 
 		CONTENT_PAGE_SETTINGS("ContentPageSettings"),
+		LINK_TO_PAGE_PAGE_SETTINGS("LinkToPagePageSettings"),
 		LINK_TO_URL_PAGE_SETTINGS("LinkToURLPageSettings"),
 		PAGE_SET_PAGE_SETTINGS("PageSetPageSettings"),
 		WIDGET_PAGE_SETTINGS("WidgetPageSettings");

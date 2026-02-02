@@ -343,6 +343,7 @@ public class KaleoWorkflowModelConverterImpl
 		defaultWorkflowLog.setCurrentWorkflowNode(
 			_getWorkflowNode(kaleoLog.getKaleoClassPK()));
 		defaultWorkflowLog.setType(KaleoLogUtil.convert(kaleoLog.getType()));
+		defaultWorkflowLog.setWorkflowContext(kaleoLog.getWorkflowContext());
 		defaultWorkflowLog.setWorkflowLogId(kaleoLog.getKaleoLogId());
 		defaultWorkflowLog.setWorkflowTaskId(
 			kaleoLog.getKaleoTaskInstanceTokenId());

@@ -865,19 +865,11 @@ public class FragmentConfigurationFieldValuesUtil {
 
 		SitePageURLValue sitePageURLValue = (SitePageURLValue)urlValue;
 
-		ItemExternalReference itemExternalReference =
-			sitePageURLValue.getSitePage();
-
-		if (itemExternalReference == null) {
-			return null;
-		}
-
 		return JSONUtil.put(
 			"layout",
 			LayoutUtil.getMappedLayoutJSONObject(
 				layoutStructureItemImporterContext.getCompanyId(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(),
+				sitePageURLValue.getSitePage(),
 				layoutStructureItemImporterContext.getGroupId()));
 	}
 

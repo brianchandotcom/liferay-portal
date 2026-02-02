@@ -45,6 +45,20 @@ public class LayoutUtil {
 	}
 
 	public static JSONObject getMappedLayoutJSONObject(
+			long companyId, ItemExternalReference itemExternalReference,
+			long scopeGroupId)
+		throws PortalException {
+
+		if (itemExternalReference == null) {
+			return null;
+		}
+
+		return getMappedLayoutJSONObject(
+			companyId, itemExternalReference.getExternalReferenceCode(),
+			itemExternalReference.getScope(), scopeGroupId);
+	}
+
+	public static JSONObject getMappedLayoutJSONObject(
 			long companyId, String externalReferenceCode, Scope scope,
 			long scopeGroupId)
 		throws PortalException {

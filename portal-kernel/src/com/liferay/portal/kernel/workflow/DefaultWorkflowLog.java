@@ -94,6 +94,11 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	}
 
 	@Override
+	public String getWorkflowContext() {
+		return _workflowContext;
+	}
+
+	@Override
 	public long getWorkflowLogId() {
 		return _workflowLogId;
 	}
@@ -143,6 +148,10 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 		_userId = userId;
 	}
 
+	public void setWorkflowContext(String workflowContext) {
+		_workflowContext = workflowContext;
+	}
+
 	public void setWorkflowLogId(long workflowLogId) {
 		_workflowLogId = workflowLogId;
 	}
@@ -161,6 +170,7 @@ public class DefaultWorkflowLog implements Serializable, WorkflowLog {
 	private long _roleId;
 	private int _type;
 	private long _userId;
+	private String _workflowContext;
 	private long _workflowLogId;
 	private long _workflowTaskId;
 

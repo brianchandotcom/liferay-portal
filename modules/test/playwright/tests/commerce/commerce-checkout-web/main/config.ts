@@ -5,7 +5,7 @@
 
 export const config = {
 	name: 'commerce-checkout-web.main',
-	testDir: 'tests/commerce/commerce-checkout-web',
+	testDir: 'tests/commerce/commerce-checkout-web/main',
 	use: {
 		testIdAttribute: 'data-qa-id',
 	},

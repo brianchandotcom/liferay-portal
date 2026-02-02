@@ -4,17 +4,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
                 -   properties:
-                        fragmentMappedValue:
-                            # @review
-                            description:
-                                The fragment editable element's action. Must be mapped to an external value.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentMappedValue"
                         errorActionInteraction:
                             $ref: "#/components/schemas/ActionInteraction"
                             # @review
                             description:
                                 The action interaction in case the action fails.
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+                            # @review
+                            description:
+                                The fragment editable element's action mapped value.
                         successActionInteraction:
                             $ref: "#/components/schemas/ActionInteraction"
                             # @review
@@ -2657,16 +2656,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/ActionInteraction"
                 -   properties:
-                        reload:
-                            # @review
-                            description:
-                                Whether to reload the page after the action is executed.
-                            type: boolean
                         fragmentInlineValue:
                             $ref: "#/components/schemas/FragmentInlineValue"
                             # @review
                             description:
                                 The localized text to display when an action is executed.
+                        reload:
+                            # @review
+                            description:
+                                Whether to reload the page after the action is executed.
+                            type: boolean
             # @review
             description:
                 The definition of an action interaction of type notification.

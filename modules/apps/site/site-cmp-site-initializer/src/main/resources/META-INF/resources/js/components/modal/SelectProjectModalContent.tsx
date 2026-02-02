@@ -26,16 +26,13 @@ export default function SelectProjectModalContent({
 	addProjectURL,
 	addTaskURL,
 	closeModal,
-	projectObjectDefinitionId,
 }: {
 	addProjectURL: string;
 	addTaskURL: string;
 	closeModal: () => void;
-	projectObjectDefinitionId: string;
 }) {
-	const [selectedProject, setSelectedProject] = useState<Project | null>(
-		null
-	);
+	const [errorMessage, setErrorMessage] = useState<string>('');
+	const [selectedProject, setSelectedProject] = useState<Project | null>();
 
 	const {
 		resource,
@@ -50,7 +47,7 @@ export default function SelectProjectModalContent({
 			method: 'GET',
 		},
 		fetchPolicy: FetchPolicy.CacheFirst,
-		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/search/v1.0/search?emptySearch=true&filter=objectDefinitionId eq ${projectObjectDefinitionId}&nestedFields=embedded`,
+		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/search/v1.0/search?emptySearch=true&filter=objectDefinitionExternalReferenceCode eq 'L_CMP_PROJECT'&nestedFields=embedded`,
 	});
 
 	const projects: Project[] = resource?.items?.length
@@ -65,16 +62,10 @@ export default function SelectProjectModalContent({
 				},
 			];
 
-	const handleCreateProject = () => {
-		const url = new URL(addProjectURL);
-
-		url.searchParams.set('redirect', window.location.href);
-
-		navigate(url);
-	};
-
 	const handleSave = () => {
 		if (!selectedProject) {
+			setErrorMessage(Liferay.Language.get('this-field-is-required'));
+
 			return;
 		}
 
@@ -85,19 +76,22 @@ export default function SelectProjectModalContent({
 			String(selectedProject.embedded.scopeId)
 		);
 		url.searchParams.set('projectId', String(selectedProject.embedded.id));
-		url.searchParams.set('redirect', window.location.href);
 
 		navigate(url);
 	};
 
 	return (
-		<>
+		<div className="lfr-cmp__select-project-modal">
 			<ClayModal.Header>
 				{Liferay.Language.get('new-task')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
-				<FieldBase label={Liferay.Language.get('project')} required>
+				<FieldBase
+					errorMessage={errorMessage}
+					label={Liferay.Language.get('project')}
+					required
+				>
 					<Picker<Project>
 						aria-label={Liferay.Language.get('project')}
 						items={projects}
@@ -113,12 +107,12 @@ export default function SelectProjectModalContent({
 						}}
 						onSelectionChange={(key) => {
 							const project = projects.find(
-								(item) => item.embedded.id === Number(key)
+								({embedded: {id}}) =>
+									id === Number(key) && id !== -1
 							);
 
-							// Only store real projects, not the create action
-
-							if (project && project.embedded.id !== -1) {
+							if (project) {
+								setErrorMessage('');
 								setSelectedProject(project);
 							}
 						}}
@@ -127,7 +121,7 @@ export default function SelectProjectModalContent({
 						{({embedded: {id, title}}) => (
 							<Option key={id} textValue={title}>
 								{id === -1 ? (
-									<div className="lfr-cmp__no-projects-created-container">
+									<div className="lfr-cmp__select-project-modal-new-project">
 										<Text
 											as="p"
 											color="secondary"
@@ -142,9 +136,11 @@ export default function SelectProjectModalContent({
 										</Text>
 
 										<ClayButton
-											className="new-project-btn"
+											className="lfr-cmp__select-project-modal-new-project-btn"
 											displayType="secondary"
-											onClick={handleCreateProject}
+											onClick={() =>
+												navigate(new URL(addProjectURL))
+											}
 										>
 											<span>
 												{Liferay.Language.get(
@@ -181,6 +177,6 @@ export default function SelectProjectModalContent({
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</div>
 	);
 }

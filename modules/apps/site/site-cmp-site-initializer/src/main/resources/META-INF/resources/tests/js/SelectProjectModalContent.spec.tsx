@@ -6,12 +6,11 @@
 import '@testing-library/jest-dom';
 import {useResource} from '@clayui/data-provider';
 import {fireEvent, render, screen} from '@testing-library/react';
-import {navigate} from 'frontend-js-web';
 import React from 'react';
 
-import SelectProjectModalContent, {
-	Project,
-} from '../../js/components/modal/SelectProjectModalContent';
+import SelectProjectModalContent from '../../js/components/modal/SelectProjectModalContent';
+import {mockCloseModal} from '../../tests/js/__mocks__/frontend-js-components-web';
+import {mockNavigate} from '../../tests/js/__mocks__/frontend-js-web';
 
 jest.mock('@clayui/data-provider', () => {
 	return {
@@ -21,25 +20,15 @@ jest.mock('@clayui/data-provider', () => {
 	};
 });
 
-const mockCloseModal = jest.fn();
-const mockNavigate = navigate as jest.Mock;
 const mockUseResource = useResource as jest.Mock;
 
 const defaultProps = {
 	addProjectURL: 'http://localhost/add-project',
 	addTaskURL: 'http://localhost/add-task',
 	closeModal: mockCloseModal,
-	projectObjectDefinitionId: 'project-id',
 };
 
 describe('SelectProjectModalContent', () => {
-	beforeAll(() => {
-		delete (window as any).location;
-		(window as any).location = {
-			href: 'http://localhost/redirect-url',
-		};
-	});
-
 	beforeEach(() => {
 		jest.clearAllMocks();
 
@@ -61,145 +50,13 @@ describe('SelectProjectModalContent', () => {
 							title: 'project-2',
 						},
 					},
-				] as Project[],
+				],
 			},
 		});
 	});
 
 	afterAll(() => {
 		jest.restoreAllMocks();
-	});
-
-	describe('rendering', () => {
-		it('renders the modal with all elements', () => {
-			render(<SelectProjectModalContent {...defaultProps} />);
-
-			expect(screen.getByText('new-task')).toBeInTheDocument();
-
-			expect(screen.getByText('project')).toBeInTheDocument();
-
-			expect(screen.getByText('select-a-project')).toBeInTheDocument();
-
-			expect(screen.getByText('cancel')).toBeInTheDocument();
-
-			expect(screen.getByText('save')).toBeInTheDocument();
-		});
-
-		it('fetches projects with correct API parameters', () => {
-			render(<SelectProjectModalContent {...defaultProps} />);
-
-			expect(mockUseResource).toHaveBeenCalledWith(
-				expect.objectContaining({
-					link: expect.stringContaining(
-						'/o/search/v1.0/search?emptySearch=true'
-					),
-				})
-			);
-
-			const callArgs = mockUseResource.mock.calls[0][0];
-
-			expect(callArgs.link).toContain(
-				`filter=objectDefinitionId eq ${defaultProps.projectObjectDefinitionId}`
-			);
-
-			expect(callArgs.link).toContain('nestedFields=embedded');
-		});
-	});
-
-	describe('when projects exist', () => {
-		let picker: HTMLElement;
-
-		beforeEach(() => {
-			render(<SelectProjectModalContent {...defaultProps} />);
-			picker = screen.getByLabelText('project');
-		});
-
-		it('shows project options in the dropdown', () => {
-			fireEvent.click(picker);
-
-			expect(screen.getByText('project-1')).toBeInTheDocument();
-
-			expect(screen.getByText('project-2')).toBeInTheDocument();
-		});
-
-		it('selects a project from the dropdown', () => {
-			fireEvent.click(picker);
-
-			fireEvent.click(screen.getByText('project-1'));
-
-			expect(picker).toHaveTextContent('project-1');
-		});
-
-		it('navigates to add task URL with correct parameters when save is clicked', () => {
-			fireEvent.click(picker);
-
-			fireEvent.click(screen.getByText('project-1'));
-
-			fireEvent.click(screen.getByText('save'));
-
-			expect(mockNavigate).toHaveBeenCalledTimes(1);
-
-			const navigateArg = mockNavigate.mock.calls[0][0];
-
-			expect(navigateArg).toBeInstanceOf(URL);
-
-			expect(navigateArg.pathname).toBe('/add-task');
-
-			expect(navigateArg.searchParams.get('projectGroupId')).toBe('123');
-
-			expect(navigateArg.searchParams.get('projectId')).toBe('123');
-
-			expect(navigateArg.searchParams.get('redirect')).toBe(
-				'http://localhost/redirect-url'
-			);
-		});
-	});
-
-	describe('when no projects exist', () => {
-		beforeEach(() => {
-			mockUseResource.mockReturnValue({
-				loadMore: jest.fn(),
-				resource: {
-					items: [],
-				},
-			});
-		});
-
-		it('shows "new-project" option in the dropdown', () => {
-			render(<SelectProjectModalContent {...defaultProps} />);
-
-			const picker = screen.getByLabelText('project');
-
-			fireEvent.click(picker);
-
-			expect(screen.getByText('no-projects-created')).toBeInTheDocument();
-
-			expect(screen.getByText('new-project')).toBeInTheDocument();
-		});
-
-		it('navigates to add project URL when new-project button is clicked', () => {
-			render(<SelectProjectModalContent {...defaultProps} />);
-
-			const picker = screen.getByLabelText('project');
-
-			fireEvent.click(picker);
-
-			const newProjectBtn = screen.getByText('new-project');
-
-			fireEvent.click(newProjectBtn);
-
-			expect(mockNavigate).toHaveBeenCalledTimes(1);
-
-			const navigateArg = mockNavigate.mock.calls[0][0];
-
-			expect(navigateArg).toBeInstanceOf(URL);
-
-			expect(navigateArg.pathname).toBe('/add-project');
-
-			expect(navigateArg.searchParams.get('redirect')).toBe(
-				'http://localhost/redirect-url'
-			);
-		});
 	});
 
 	describe('modal controls', () => {
@@ -217,6 +74,86 @@ describe('SelectProjectModalContent', () => {
 			fireEvent.click(screen.getByText('save'));
 
 			expect(mockNavigate).not.toHaveBeenCalled();
+			expect(
+				screen.getByText('this-field-is-required')
+			).toBeInTheDocument();
+		});
+	});
+
+	describe('rendering', () => {
+		it('fetches projects with correct API parameters', () => {
+			render(<SelectProjectModalContent {...defaultProps} />);
+
+			expect(screen.getByText('cancel')).toBeInTheDocument();
+			expect(screen.getByText('new-task')).toBeInTheDocument();
+			expect(screen.getByText('project')).toBeInTheDocument();
+			expect(screen.getByText('save')).toBeInTheDocument();
+			expect(screen.getByText('select-a-project')).toBeInTheDocument();
+
+			expect(mockUseResource).toHaveBeenCalledWith(
+				expect.objectContaining({
+					link: expect.stringContaining(
+						"/o/search/v1.0/search?emptySearch=true&filter=objectDefinitionExternalReferenceCode eq 'L_CMP_PROJECT'&nestedFields=embedded"
+					),
+				})
+			);
+		});
+	});
+
+	describe('when no projects exist', () => {
+		beforeEach(() => {
+			mockUseResource.mockReturnValue({
+				loadMore: jest.fn(),
+				resource: {
+					items: [],
+				},
+			});
+		});
+
+		it('navigates to add project URL when new-project button is clicked', () => {
+			render(<SelectProjectModalContent {...defaultProps} />);
+
+			fireEvent.click(screen.getByLabelText('project'));
+
+			expect(screen.getByText('new-project')).toBeInTheDocument();
+			expect(screen.getByText('no-projects-created')).toBeInTheDocument();
+
+			fireEvent.click(screen.getByText('new-project'));
+
+			expect(mockNavigate).toHaveBeenCalledTimes(1);
+
+			const navigateArgs = mockNavigate.mock.calls[0][0];
+
+			expect(navigateArgs).toBeInstanceOf(URL);
+			expect(navigateArgs.pathname).toBe('/add-project');
+		});
+	});
+
+	describe('when projects exist', () => {
+		it('navigates to add task URL with correct parameters when save is clicked', () => {
+			render(<SelectProjectModalContent {...defaultProps} />);
+
+			fireEvent.click(screen.getByLabelText('project'));
+
+			expect(screen.getByText('project-1')).toBeInTheDocument();
+			expect(screen.getByText('project-2')).toBeInTheDocument();
+
+			fireEvent.click(screen.getByText('project-1'));
+
+			expect(screen.getByLabelText('project')).toHaveTextContent(
+				'project-1'
+			);
+
+			fireEvent.click(screen.getByText('save'));
+
+			expect(mockNavigate).toHaveBeenCalledTimes(1);
+
+			const navigateArgs = mockNavigate.mock.calls[0][0];
+
+			expect(navigateArgs).toBeInstanceOf(URL);
+			expect(navigateArgs.pathname).toBe('/add-task');
+			expect(navigateArgs.searchParams.get('projectGroupId')).toBe('123');
+			expect(navigateArgs.searchParams.get('projectId')).toBe('123');
 		});
 	});
 });

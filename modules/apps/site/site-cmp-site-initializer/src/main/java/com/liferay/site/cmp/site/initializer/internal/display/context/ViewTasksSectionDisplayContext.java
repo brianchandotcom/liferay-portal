@@ -64,30 +64,22 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", CMPActionConstants.CREATE_TASK);
-
-				if (_assetEntry == null) {
-					dropdownItem.putData(
-						"addProjectURL",
-						StringBundler.concat(
-							ActionUtil.getAddProjectURL(
-								_projectObjectDefinition, themeDisplay),
-							"&action=",
-							CMPActionConstants.CREATE_PROJECT_GLOBAL_TASK));
-					dropdownItem.putData(
-						"addTaskURL",
-						StringBundler.concat(
-							ActionUtil.getAddTaskURL(
-								0, objectDefinition, 0, themeDisplay),
-							"&action=", CMPActionConstants.CREATE_GLOBAL_TASK));
-				}
-
+				dropdownItem.putData(
+					"addProjectURL",
+					StringBundler.concat(
+						ActionUtil.getAddProjectURL(
+							_projectObjectDefinition, themeDisplay),
+						"&action=",
+						CMPActionConstants.CREATE_PROJECT_GLOBAL_TASK));
+				dropdownItem.putData(
+					"addTaskURL",
+					StringBundler.concat(
+						ActionUtil.getAddTaskURL(
+							0, objectDefinition, 0, themeDisplay),
+						"&action=", CMPActionConstants.CREATE_GLOBAL_TASK));
 				dropdownItem.putData(
 					"objectDefinitionId",
 					String.valueOf(objectDefinition.getObjectDefinitionId()));
-				dropdownItem.putData(
-					"projectObjectDefinitionId",
-					String.valueOf(
-						_projectObjectDefinition.getObjectDefinitionId()));
 
 				if (_assetEntry != null) {
 					dropdownItem.putData(

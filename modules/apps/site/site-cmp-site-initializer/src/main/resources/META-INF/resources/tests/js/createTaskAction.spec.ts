@@ -1,31 +1,17 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-components-web';
-import {navigate} from 'frontend-js-web';
-
 import SelectProjectModalContent from '../../js/components/modal/SelectProjectModalContent';
-import createTaskAction, {
-	Data,
-} from '../../js/components/props_transformer/actions/createTaskAction';
+import createTaskAction from '../../js/components/props_transformer/actions/createTaskAction';
+import {
+	mockCloseModal,
+	mockOpenModal,
+} from '../../tests/js/__mocks__/frontend-js-components-web';
+import {mockNavigate} from '../../tests/js/__mocks__/frontend-js-web';
 
-jest.mock('@clayui/data-provider', () => {
-	return {
-		__esModule: true,
-		...((jest.requireActual('@clayui/data-provider') ?? {}) as any),
-		useResource: jest.fn(),
-	};
-});
-
-jest.mock('frontend-js-web', () => ({
-	navigate: jest.fn(),
-}));
-
-jest.mock('frontend-js-components-web', () => ({
-	openModal: jest.fn(),
-}));
+const mockSelectProjectModalContent = SelectProjectModalContent as jest.Mock;
 
 jest.mock('../../js/components/modal/SelectProjectModalContent', () =>
 	jest.fn()
@@ -36,38 +22,17 @@ describe('createTaskAction', () => {
 		jest.clearAllMocks();
 	});
 
-	describe('redirect path', () => {
-		it('navigates to redirect URL', () => {
-			const data: Data = {
-				projectObjectDefinitionId: 'project-id',
-				redirect: 'http://localhost/redirect-url',
-			};
-
-			createTaskAction(data);
-
-			expect(navigate).toHaveBeenCalledWith('/redirect-url');
-			expect(openModal).not.toHaveBeenCalled();
-		});
-	});
-
 	describe('modal path', () => {
-		it('opens modal when addProjectURL and addTaskURL are provided', () => {
-			const mockSelectProjectModalContent =
-				SelectProjectModalContent as jest.Mock;
-
-			const data: Data = {
+		it('opens modal when redirect is not provided', () => {
+			createTaskAction({
 				addProjectURL: '/add-project',
 				addTaskURL: '/add-task',
-				projectObjectDefinitionId: 'project-id',
-			};
+			});
 
-			createTaskAction(data);
+			expect(mockNavigate).not.toHaveBeenCalled();
+			expect(mockOpenModal).toHaveBeenCalledTimes(1);
 
-			expect(openModal).toHaveBeenCalledTimes(1);
-			expect(navigate).not.toHaveBeenCalled();
-
-			const openModalConfig = (openModal as jest.Mock).mock.calls[0][0];
-			const mockCloseModal = jest.fn();
+			const openModalConfig = mockOpenModal.mock.calls[0][0];
 
 			openModalConfig.contentComponent({closeModal: mockCloseModal});
 
@@ -75,25 +40,20 @@ describe('createTaskAction', () => {
 				addProjectURL: '/add-project',
 				addTaskURL: '/add-task',
 				closeModal: mockCloseModal,
-				projectObjectDefinitionId: 'project-id',
 			});
 		});
 	});
 
-	describe('error handling when redirect is missing and', () => {
-		it.each([
-			['addProjectURL is missing', {addTaskURL: '/add-task'}],
-			['addTaskURL is missing', {addProjectURL: '/add-project'}],
-			['both URLs are missing', {}],
-		])('throws error when %s', (_, urls) => {
-			const data: Data = {
-				...urls,
-				projectObjectDefinitionId: 'project-id',
-			};
+	describe('redirect path', () => {
+		it('navigates to redirect URL', () => {
+			createTaskAction({
+				addProjectURL: '/add-project',
+				addTaskURL: '/add-task',
+				redirect: 'http://localhost/redirect-url',
+			});
 
-			expect(() => createTaskAction(data)).toThrow();
-			expect(navigate).not.toHaveBeenCalled();
-			expect(openModal).not.toHaveBeenCalled();
+			expect(mockNavigate).toHaveBeenCalledWith('/redirect-url');
+			expect(mockOpenModal).not.toHaveBeenCalled();
 		});
 	});
 });

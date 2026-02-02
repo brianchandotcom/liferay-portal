@@ -36,7 +36,10 @@ public class ObjectActionModelListener extends BaseModelListener<ObjectAction> {
 
 			if (!StringUtil.equals(
 					objectDefinition.getExternalReferenceCode(),
-					"L_CMP_PROJECT")) {
+					"L_CMP_PROJECT") &&
+				!StringUtil.equals(
+					objectDefinition.getExternalReferenceCode(),
+					"L_CMP_TASK")) {
 
 				return;
 			}

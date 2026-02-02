@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
@@ -479,6 +481,134 @@ public class EmptyModelManagerImplTest {
 			).addEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId, User.class.getName()
+			);
+		}
+	}
+
+	@Test
+	public void testSolveEmptyModeInDifferentExportImportProcess()
+		throws Exception {
+
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class)) {
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				true
+			);
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::getExportImportConfigurationId
+			).thenReturn(
+				RandomTestUtil.randomLong()
+			);
+
+			_testSolveEmptyModel(RandomTestUtil.randomLong(), false);
+		}
+	}
+
+	@Test
+	public void testSolveEmptyModeInSameExportImportProcess() throws Exception {
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class)) {
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				true
+			);
+
+			long exportExportConfigurationId = RandomTestUtil.randomLong();
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::getExportImportConfigurationId
+			).thenReturn(
+				exportExportConfigurationId
+			);
+
+			_testSolveEmptyModel(exportExportConfigurationId, true);
+		}
+	}
+
+	@Test
+	public void testSolveEmptyModelOutsideAnExportImportProcess()
+		throws Exception {
+
+		_testSolveEmptyModel(RandomTestUtil.randomLong(), false);
+	}
+
+	private void _testSolveEmptyModel(
+			long entryExportImportConfigurationId, boolean expectDelete)
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		long classNameId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_classNameLocalService.getClassNameId(User.class.getName())
+		).thenReturn(
+			classNameId
+		);
+
+		ExportImportReportEntry mockEntry = Mockito.mock(
+			ExportImportReportEntry.class);
+
+		Mockito.when(
+			mockEntry.getExportImportConfigurationId()
+		).thenReturn(
+			entryExportImportConfigurationId
+		);
+
+		Mockito.when(
+			_exportImportReportEntryLocalService.
+				getEmptyExportImportReportEntryByG_C_C_C(
+					0L, companyId, externalReferenceCode, classNameId)
+		).thenReturn(
+			mockEntry
+		);
+
+		Assert.assertSame(
+			WorkflowConstants.STATUS_APPROVED,
+			_emptyModelManager.solveEmptyModel(
+				WorkflowConstants.STATUS_EMPTY, 0L, companyId,
+				externalReferenceCode, User.class.getName(),
+				() -> WorkflowConstants.STATUS_APPROVED));
+
+		Mockito.verify(
+			_classNameLocalService
+		).getClassNameId(
+			User.class.getName()
+		);
+
+		Mockito.verify(
+			_exportImportReportEntryLocalService
+		).getEmptyExportImportReportEntryByG_C_C_C(
+			0L, companyId, externalReferenceCode, classNameId
+		);
+
+		if (expectDelete) {
+			Mockito.verify(
+				_exportImportReportEntryLocalService
+			).deleteExportImportReportEntry(
+				mockEntry
+			);
+		}
+		else {
+			Mockito.verify(
+				mockEntry
+			).setStatus(
+				1
+			);
+
+			Mockito.verify(
+				_exportImportReportEntryLocalService
+			).updateExportImportReportEntry(
+				mockEntry
 			);
 		}
 	}

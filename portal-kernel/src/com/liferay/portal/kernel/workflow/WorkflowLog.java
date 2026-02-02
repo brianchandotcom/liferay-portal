@@ -54,6 +54,8 @@ public interface WorkflowLog extends WorkflowModel {
 
 	public long getUserId();
 
+	public String getWorkflowContext();
+
 	public long getWorkflowLogId();
 
 	public long getWorkflowTaskId();

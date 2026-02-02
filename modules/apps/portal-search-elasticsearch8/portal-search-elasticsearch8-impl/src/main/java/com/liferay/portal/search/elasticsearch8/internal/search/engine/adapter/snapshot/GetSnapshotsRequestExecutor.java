@@ -37,8 +37,7 @@ public class GetSnapshotsRequestExecutor {
 		GetSnapshotsResponse getSnapshotsResponse = new GetSnapshotsResponse();
 
 		GetSnapshotResponse getSnapshotResponse = _getGetSnapshotResponse(
-			_createGetSnapshotRequest(getSnapshotsRequest),
-			getSnapshotsRequest);
+			createGetSnapshotRequest(getSnapshotsRequest), getSnapshotsRequest);
 
 		List<SnapshotInfo> snapshotInfos = getSnapshotResponse.snapshots();
 
@@ -49,7 +48,7 @@ public class GetSnapshotsRequestExecutor {
 		return getSnapshotsResponse;
 	}
 
-	private GetSnapshotRequest _createGetSnapshotRequest(
+	protected GetSnapshotRequest createGetSnapshotRequest(
 		GetSnapshotsRequest getSnapshotsRequest) {
 
 		return GetSnapshotRequest.of(

@@ -37,7 +37,7 @@ public class HealthClusterRequestExecutor {
 		HealthClusterRequest healthClusterRequest) {
 
 		HealthResponse healthResponse = _getHealthResponse(
-			healthClusterRequest, _createHealthRequest(healthClusterRequest));
+			healthClusterRequest, createHealthRequest(healthClusterRequest));
 
 		return new HealthClusterResponse(
 			ClusterHealthStatusTranslatorUtil.translate(
@@ -45,7 +45,7 @@ public class HealthClusterRequestExecutor {
 			JsonpUtil.toString(healthResponse));
 	}
 
-	private HealthRequest _createHealthRequest(
+	protected HealthRequest createHealthRequest(
 		HealthClusterRequest healthClusterRequest) {
 
 		HealthRequest.Builder builder = new HealthRequest.Builder();

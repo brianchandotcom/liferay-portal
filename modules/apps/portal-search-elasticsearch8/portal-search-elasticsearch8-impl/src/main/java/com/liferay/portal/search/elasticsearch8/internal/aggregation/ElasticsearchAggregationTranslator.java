@@ -227,7 +227,7 @@ public class ElasticsearchAggregationTranslator
 				AggregationBuilders.dateHistogram();
 
 		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
-			dateHistogramAggregationBuilder.interval(
+			dateHistogramAggregationBuilder.fixedInterval(
 				Time.of(
 					time -> time.time(
 						dateHistogramAggregation.getDateHistogramInterval())));

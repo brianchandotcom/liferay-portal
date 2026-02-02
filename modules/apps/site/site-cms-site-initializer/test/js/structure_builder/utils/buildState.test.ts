@@ -116,7 +116,7 @@ describe('buildState', () => {
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],
-				deletedRelationshipERCs: [],
+				deletedRelationships: [],
 				modifiedNames: new Set(),
 			},
 			invalids: new Map(),
@@ -173,7 +173,7 @@ describe('buildState', () => {
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],
-				deletedRelationshipERCs: [],
+				deletedRelationships: [],
 				modifiedNames: new Set(),
 			},
 			invalids: new Map(),
@@ -241,7 +241,7 @@ describe('buildState', () => {
 			history: {
 				deletedChildren: [],
 				deletedGroupERCs: [],
-				deletedRelationshipERCs: [],
+				deletedRelationships: [],
 				modifiedNames: new Set(),
 			},
 			invalids: new Map(),

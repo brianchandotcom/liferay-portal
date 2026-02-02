@@ -156,7 +156,7 @@ describe('StructureBuilderToolbar', () => {
 			history: {
 				deletedChildren: [{} as Field],
 				deletedGroupERCs: [],
-				deletedRelationshipERCs: [],
+				deletedRelationships: [],
 				modifiedNames: new Set(),
 			},
 			structure: {status: 'published'},
@@ -234,7 +234,7 @@ describe('StructureBuilderToolbar', () => {
 			history: {
 				deletedChildren: [{} as Field],
 				deletedGroupERCs: [],
-				deletedRelationshipERCs: [],
+				deletedRelationships: [],
 				modifiedNames: new Set(),
 			},
 			structure: {status: 'published'},

@@ -1,0 +1,1 @@
+../.workspace-rules/guided-client-extension.md

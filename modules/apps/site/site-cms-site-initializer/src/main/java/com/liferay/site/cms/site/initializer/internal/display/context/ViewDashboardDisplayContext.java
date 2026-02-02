@@ -7,6 +7,8 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -65,7 +67,29 @@ public class ViewDashboardDisplayContext {
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
+		).put(
+			"isFreeTier", true
+		).put(
+			"learnResources", _getLearnResourcesJSONObject()
 		).build();
+	}
+
+	// Mocked value for learnResources,
+	// We should use LearnMessageUtil.getReactDataJSONObject
+	// when learn link is available
+
+	private JSONObject _getLearnResourcesJSONObject() {
+		return JSONUtil.put(
+			"site-cms-site-initializer",
+			JSONUtil.put(
+				"dashboard",
+				JSONUtil.put(
+					"en_US",
+					JSONUtil.put(
+						"message", "Learn more about Dashboard capabilities."
+					).put(
+						"url", "#"
+					))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -19,84 +19,114 @@ import {SpacesDropdown} from './components/SpacesDropdown';
 
 import '../../../css/dashboard/Dashboard.scss';
 
+import {ILearnResourceContext} from 'frontend-js-components-web';
+
+import EnterpriseOnlyPlaceholder from '../../common/components/EnterpriseOnlyPlaceholder';
+
 interface IViewDashboard {
 	constants: {
 		[key: string]: string;
 	};
+	isFreeTier: boolean;
+	learnResources: ILearnResourceContext;
 }
 
-const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
+const ViewDashboard: React.FC<IViewDashboard> = ({
+	constants,
+	isFreeTier,
+	learnResources,
+}) => {
 	return (
 		<>
 			<Breadcrumb
 				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
 				hideSpace
+				showEnterpriseBadge={isFreeTier}
 			/>
+
 			<ClayTooltipProvider>
 				<ViewDashboardContextProvider value={{constants}}>
 					<ClayLayout.Container className="px-4" fluid>
-						<ClayLayout.Row className="mb-4">
-							<ClayLayout.Col size={12}>
-								<div className="d-flex">
-									<SpacesDropdown className="mr-3" />
+						{isFreeTier ? (
+							<EnterpriseOnlyPlaceholder
+								learnResources={learnResources}
+							/>
+						) : (
+							<>
+								<ClayLayout.Row className="mb-4">
+									<ClayLayout.Col size={12}>
+										<div className="d-flex">
+											<SpacesDropdown className="mr-3" />
 
-									<LanguagesDropdown />
-								</div>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+											<LanguagesDropdown />
+										</div>
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-2">
-							<ClayLayout.Col size={12}>
-								<SectionHeader
-									icon="plus-squares"
-									title={Liferay.Language.get('what-is-new')}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+								<ClayLayout.Row className="mb-2">
+									<ClayLayout.Col size={12}>
+										<SectionHeader
+											icon="plus-squares"
+											title={Liferay.Language.get(
+												'what-is-new'
+											)}
+										/>
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-4">
-							<ClayLayout.Col className="mb-3" lg={12} xl={6}>
-								<ContentCard />
-							</ClayLayout.Col>
+								<ClayLayout.Row className="mb-4">
+									<ClayLayout.Col
+										className="mb-3"
+										lg={12}
+										xl={6}
+									>
+										<ContentCard />
+									</ClayLayout.Col>
 
-							<ClayLayout.Col className="mb-3" lg={12} xl={6}>
-								<FilesCard />
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+									<ClayLayout.Col
+										className="mb-3"
+										lg={12}
+										xl={6}
+									>
+										<FilesCard />
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-2">
-							<ClayLayout.Col size={12}>
-								<SectionHeader
-									icon="diagram"
-									title={Liferay.Language.get(
-										'assets-distributions'
-									)}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+								<ClayLayout.Row className="mb-2">
+									<ClayLayout.Col size={12}>
+										<SectionHeader
+											icon="diagram"
+											title={Liferay.Language.get(
+												'assets-distributions'
+											)}
+										/>
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-4">
-							<ClayLayout.Col size={12}>
-								<InventoryAnalysisCard />
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+								<ClayLayout.Row className="mb-4">
+									<ClayLayout.Col size={12}>
+										<InventoryAnalysisCard />
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-2">
-							<ClayLayout.Col size={12}>
-								<SectionHeader
-									icon="order-form-pencil"
-									title={Liferay.Language.get(
-										'health-and-usage'
-									)}
-								/>
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+								<ClayLayout.Row className="mb-2">
+									<ClayLayout.Col size={12}>
+										<SectionHeader
+											icon="order-form-pencil"
+											title={Liferay.Language.get(
+												'health-and-usage'
+											)}
+										/>
+									</ClayLayout.Col>
+								</ClayLayout.Row>
 
-						<ClayLayout.Row className="mb-4">
-							<ClayLayout.Col size={12}>
-								<ExpiredAssetsCard />
-							</ClayLayout.Col>
-						</ClayLayout.Row>
+								<ClayLayout.Row className="mb-4">
+									<ClayLayout.Col size={12}>
+										<ExpiredAssetsCard />
+									</ClayLayout.Col>
+								</ClayLayout.Row>
+							</>
+						)}
 					</ClayLayout.Container>
 				</ViewDashboardContextProvider>
 			</ClayTooltipProvider>

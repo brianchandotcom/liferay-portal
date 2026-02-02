@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,19 +18,15 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 
-import org.elasticsearch.ElasticsearchException;
-
 /**
  * @author Bryan Engler
  */
 public class DebugStringsUtil {
 
 	public static String getPrettyPrintedJSONString(
-		SearchRequest.Builder builder) {
+		SearchRequest searchRequest) {
 
 		try {
-			SearchRequest searchRequest = builder.build();
-
 			ObjectMapper objectMapper = new ObjectMapper();
 
 			objectMapper.enable(SerializationFeature.INDENT_OUTPUT);

@@ -24,9 +24,7 @@ import java.util.concurrent.Future;
 
 import javax.net.ssl.SSLContext;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHeaders;
 import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
@@ -41,7 +39,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
-import org.apache.http.message.BasicHeader;
 import org.apache.http.nio.protocol.HttpAsyncRequestProducer;
 import org.apache.http.nio.protocol.HttpAsyncResponseConsumer;
 import org.apache.http.protocol.HttpContext;
@@ -63,15 +60,6 @@ public class RestClientTransportFactory {
 	public RestClientTransport newRestClientTransport() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
 			_getHttpHosts()
-		).setDefaultHeaders(
-			new Header[] {
-				new BasicHeader(
-					HttpHeaders.ACCEPT,
-					"application/vnd.elasticsearch+json;compatible-with=7"),
-				new BasicHeader(
-					HttpHeaders.CONTENT_TYPE,
-					"application/vnd.elasticsearch+json;compatible-with=7")
-			}
 		).setHttpClientConfigCallback(
 			this::_customizeHttpClient
 		).setRequestConfigCallback(

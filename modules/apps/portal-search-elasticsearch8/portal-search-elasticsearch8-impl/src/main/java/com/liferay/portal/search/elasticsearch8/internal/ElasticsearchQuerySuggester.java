@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal;
 
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch._types.ErrorCause;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -271,6 +274,19 @@ public class ElasticsearchQuerySuggester implements QuerySuggester {
 				if (throwable != null) {
 					message = throwable.getMessage();
 				}
+			}
+
+			if (!message.contains("no mapping found for field") &&
+				(runtimeException instanceof ElasticsearchException)) {
+
+				ElasticsearchException elasticsearchException =
+					(ElasticsearchException)runtimeException;
+
+				ErrorCause errorCause = elasticsearchException.error();
+
+				ErrorCause causedBy = errorCause.causedBy();
+
+				message = causedBy.reason();
 			}
 
 			if (message.contains("no mapping found for field")) {

@@ -37,7 +37,7 @@ public class RestoreSnapshotRequestExecutor {
 		RestoreSnapshotRequest restoreSnapshotRequest) {
 
 		RestoreResponse restoreResponse = _getRestoreResponse(
-			_createRestoreRequest(restoreSnapshotRequest),
+			createRestoreRequest(restoreSnapshotRequest),
 			restoreSnapshotRequest);
 
 		SnapshotRestore snapshotRestore = restoreResponse.snapshot();
@@ -51,7 +51,7 @@ public class RestoreSnapshotRequestExecutor {
 			ConversionUtil.toInt(shardStatistics.failed()));
 	}
 
-	private RestoreRequest _createRestoreRequest(
+	protected RestoreRequest createRestoreRequest(
 		RestoreSnapshotRequest restoreSnapshotRequest) {
 
 		RestoreRequest.Builder builder = new RestoreRequest.Builder();

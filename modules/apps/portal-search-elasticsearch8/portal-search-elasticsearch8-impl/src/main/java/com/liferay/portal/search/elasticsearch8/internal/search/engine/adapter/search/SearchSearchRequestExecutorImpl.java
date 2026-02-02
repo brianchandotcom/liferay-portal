@@ -54,8 +54,10 @@ public class SearchSearchRequestExecutorImpl
 					DebugStringsUtil.getStackTraceString()));
 		}
 
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
 		String searchRequestString = DebugStringsUtil.getSearchRequestString(
-			searchRequestBuilder);
+			searchRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -71,7 +73,7 @@ public class SearchSearchRequestExecutorImpl
 		}
 		else {
 			searchResponse = _getSearchResponse(
-				searchRequestBuilder.build(), searchSearchRequest);
+				searchRequest, searchSearchRequest);
 		}
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
@@ -132,7 +134,7 @@ public class SearchSearchRequestExecutorImpl
 				searchSearchRequest.isPreferLocalCluster());
 
 		try {
-			return elasticsearchClient.search(searchRequest);
+			return elasticsearchClient.search(searchRequest, JsonData.class);
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);

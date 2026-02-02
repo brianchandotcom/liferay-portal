@@ -4,8 +4,8 @@ import com.liferay.gradle.util.StringUtil
 task cleanSidecar
 task deploySidecar(type: Copy)
 
-String elasticsearchClientVersion = "7.17.28"
-String luceneVersion = "8.11.3"
+String elasticsearchClientVersion = "8.19.10"
+
 String sidecarElasticsearchServerVersion = file('src/main/resources/META-INF/sidecar/sidecar.version').text
 
 String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${sidecarElasticsearchServerVersion}-linux-x86_64.tar.gz"
@@ -28,36 +28,29 @@ cleanSidecar {
 }
 
 dependencies {
-	compileInclude group: "co.elastic.clients", name: "elasticsearch-java", version: "8.19.8"
-	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.10.0"
+	compileInclude group: "co.elastic.clients", name: "elasticsearch-java", version: elasticsearchClientVersion
 	compileInclude group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.18.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.18.2"
 	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.18.2"
 	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
 	compileInclude group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-2"
-	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.legacy.geo", version: elasticsearchClientVersion
 	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileInclude group: "io.opentelemetry", name: "opentelemetry-api", version: "1.57.0"
+	compileInclude group: "io.opentelemetry", name: "opentelemetry-common", version: "1.57.0"
+	compileInclude group: "io.opentelemetry", name: "opentelemetry-context", version: "1.57.0"
 	compileInclude group: "jakarta.json", name: "jakarta.json-api", version: "2.1.3"
+	compileInclude group: "jakarta.json.bind", name: "jakarta.json.bind-api", version: "2.0.0"
+	compileInclude group: "org.apache.httpcomponents.client5", name: "httpclient5", version: "5.4.4"
+	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5", version: "5.3.2"
+	compileInclude group: "org.apache.httpcomponents.core5", name: "httpcore5-h2", version: "5.3.4"
 	compileInclude group: "org.apache.logging.log4j", name: "log4j-api", version: "2.17.1"
-	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-join", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-queries", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-queryparser", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: luceneVersion
-	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: luceneVersion
+	compileInclude group: "org.eclipse", name: "yasson", version: "2.0.4"
+	compileInclude group: "org.eclipse.parsson", name: "parsson", version: "1.1.7"
 	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch", name: "elasticsearch-geo", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch", name: "elasticsearch-lz4", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch", name: "elasticsearch-x-content", version: elasticsearchClientVersion
 	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-client", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-high-level-client", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch.plugin", name: "lang-mustache-client", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch.plugin", name: "parent-join-client", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch.plugin", name: "percolator-client", version: elasticsearchClientVersion
-	compileInclude group: "org.elasticsearch.plugin", name: "rank-eval-client", version: elasticsearchClientVersion
 	compileInclude group: "org.locationtech.jts", name: "jts-core", version: "1.20.0"
 	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.8"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
@@ -85,12 +78,14 @@ dependencies {
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.ow2.asm", name: "asm", version: "9.7"
+	compileOnly group: "org.reactivestreams", name: "reactive-streams", version: "1.0.4"
 	compileOnly project(":apps:configuration-admin:configuration-admin-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search-elasticsearch8:portal-search-elasticsearch8-api")
 	compileOnly project(":apps:portal-search:portal-search-api")
 	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
 	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:static:osgi:osgi-util")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
 	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 	compileOnly project(":apps:static:portal:portal-upgrade-api")
@@ -104,7 +99,9 @@ dependencies {
 	compileOnly project(":core:petra:petra-process")
 	compileOnly project(":core:petra:petra-reflect")
 	compileOnly project(":core:petra:petra-string")
+	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.2"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testImplementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")

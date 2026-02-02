@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -18,8 +20,6 @@ import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
 import java.util.HashMap;
-
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
@@ -45,30 +45,30 @@ public class IndexFactoryFixture {
 			ElasticsearchConnectionManager.class);
 
 		Mockito.when(
-			_elasticsearchConnectionManager.getRestHighLevelClient()
+			_elasticsearchConnectionManager.getElasticsearchClient()
 		).thenReturn(
-			elasticsearchClientResolver.getRestHighLevelClient()
+			elasticsearchClientResolver.getElasticsearchClient()
 		);
 	}
 
 	public void createIndices() {
 		IndexFactory indexFactory = getIndexFactory();
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient();
 
 		indexFactory.initializeIndex(
-			RandomTestUtil.randomLong(), restHighLevelClient.indices());
+			RandomTestUtil.randomLong(), elasticsearchClient.indices());
 	}
 
 	public void deleteIndices() {
 		IndexFactory indexFactory = getIndexFactory();
 
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient();
 
 		indexFactory.deleteIndex(
-			RandomTestUtil.randomLong(), restHighLevelClient.indices());
+			RandomTestUtil.randomLong(), elasticsearchClient.indices());
 	}
 
 	public CompanyIndexHelper getCompanyIndexHelper() {

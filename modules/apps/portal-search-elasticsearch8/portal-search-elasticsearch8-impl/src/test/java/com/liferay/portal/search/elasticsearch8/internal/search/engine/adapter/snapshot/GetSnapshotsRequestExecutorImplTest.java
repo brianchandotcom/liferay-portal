@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.snapshot.GetSnapshotRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotsRequest;
@@ -50,23 +53,23 @@ public class GetSnapshotsRequestExecutorImplTest {
 		GetSnapshotsRequestExecutor getSnapshotsRequestExecutor =
 			new GetSnapshotsRequestExecutor(_elasticsearchFixture);
 
-		org.elasticsearch.action.admin.cluster.snapshots.get.GetSnapshotsRequest
-			elasticsearchGetSnapshotsRequest =
-				getSnapshotsRequestExecutor.createGetSnapshotsRequest(
-					getSnapshotsRequest);
+		GetSnapshotRequest elasticsearchGetSnapshotRequest =
+			getSnapshotsRequestExecutor.createGetSnapshotRequest(
+				getSnapshotsRequest);
 
 		Assert.assertEquals(
-			getSnapshotsRequest.isIgnoreUnavailable(),
-			elasticsearchGetSnapshotsRequest.ignoreUnavailable());
-		Assert.assertEquals(
 			getSnapshotsRequest.getRepositoryName(),
-			elasticsearchGetSnapshotsRequest.repository());
+			elasticsearchGetSnapshotRequest.repository());
 		Assert.assertArrayEquals(
 			getSnapshotsRequest.getSnapshotNames(),
-			elasticsearchGetSnapshotsRequest.snapshots());
+			ArrayUtil.toStringArray(
+				elasticsearchGetSnapshotRequest.snapshot()));
+		Assert.assertEquals(
+			getSnapshotsRequest.isIgnoreUnavailable(),
+			elasticsearchGetSnapshotRequest.ignoreUnavailable());
 		Assert.assertEquals(
 			getSnapshotsRequest.isVerbose(),
-			elasticsearchGetSnapshotsRequest.verbose());
+			elasticsearchGetSnapshotRequest.verbose());
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

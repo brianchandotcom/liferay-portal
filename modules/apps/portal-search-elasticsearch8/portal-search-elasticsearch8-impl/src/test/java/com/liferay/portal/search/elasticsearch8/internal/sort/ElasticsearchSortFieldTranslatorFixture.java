@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.sort;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.query.QueryTranslator;
-
-import org.elasticsearch.index.query.QueryBuilder;
 
 /**
  * @author Michael C. Han
@@ -16,7 +16,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 public class ElasticsearchSortFieldTranslatorFixture {
 
 	public ElasticsearchSortFieldTranslatorFixture(
-		QueryTranslator<QueryBuilder> queryTranslator) {
+		QueryTranslator<QueryVariant> queryTranslator) {
 
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchSortFieldTranslator, "_queryTranslator",

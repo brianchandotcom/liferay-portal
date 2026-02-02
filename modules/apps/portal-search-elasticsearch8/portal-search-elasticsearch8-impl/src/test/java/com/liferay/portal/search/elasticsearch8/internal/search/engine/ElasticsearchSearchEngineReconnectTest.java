@@ -12,9 +12,6 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.SnapshotClient;
-
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -43,21 +40,12 @@ public class ElasticsearchSearchEngineReconnectTest {
 
 		elasticsearchSearchEngineFixture.setUp();
 
-		_elasticsearchConnectionFixture = elasticsearchConnectionFixture;
-
 		_elasticsearchSearchEngineFixture = elasticsearchSearchEngineFixture;
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_elasticsearchSearchEngineFixture.tearDown();
-	}
-
-	public SnapshotClient getSnapshotClient() {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnectionFixture.getRestHighLevelClient();
-
-		return restHighLevelClient.snapshot();
 	}
 
 	@Test
@@ -87,8 +75,6 @@ public class ElasticsearchSearchEngineReconnectTest {
 		elasticsearchConnection.connect();
 	}
 
-	private static ElasticsearchConnectionFixture
-		_elasticsearchConnectionFixture;
 	private static ElasticsearchSearchEngineFixture
 		_elasticsearchSearchEngineFixture;
 

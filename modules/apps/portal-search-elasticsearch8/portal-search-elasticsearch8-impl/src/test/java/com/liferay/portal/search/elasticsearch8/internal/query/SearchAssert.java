@@ -5,8 +5,21 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.query;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.query_dsl.FieldAndFormat;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
+
+import jakarta.json.JsonArray;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
 
 import java.io.IOException;
 
@@ -15,18 +28,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
-
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.document.DocumentField;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.junit.Assert;
 
@@ -36,37 +40,40 @@ import org.junit.Assert;
 public class SearchAssert {
 
 	public static void assertNoHits(
-			RestHighLevelClient restHighLevelClient, String field,
-			QueryBuilder queryBuilder)
+			ElasticsearchClient elasticsearchClient, String field, Query query)
 		throws Exception {
 
-		assertSearch(restHighLevelClient, field, queryBuilder, new String[0]);
+		assertSearch(elasticsearchClient, field, query, new String[0]);
 	}
 
 	public static void assertSearch(
-			RestHighLevelClient restHighLevelClient,
-			SearchSourceBuilder searchSourceBuilder,
-			SearchRequest searchRequest, String field, String... expectedValues)
+			ElasticsearchClient elasticsearchClient,
+			SearchRequest.Builder searchRequestBuilder, String field,
+			String... expectedValues)
 		throws Exception {
 
-		assertSearch(
-			() -> search(
-				restHighLevelClient, searchSourceBuilder, searchRequest),
-			field, expectedValues);
-	}
+		searchRequestBuilder.fields(
+			FieldAndFormat.of(
+				fieldAndFormat -> fieldAndFormat.field(StringPool.STAR)));
 
-	public static void assertSearch(
-			RestHighLevelClient restHighLevelClient, String field,
-			QueryBuilder queryBuilder, String... expectedValues)
-		throws Exception {
+		SearchRequest searchRequest = searchRequestBuilder.build();
 
 		assertSearch(
-			() -> search(restHighLevelClient, queryBuilder), field,
+			() -> search(elasticsearchClient, searchRequest), field,
 			expectedValues);
 	}
 
+	public static void assertSearch(
+			ElasticsearchClient elasticsearchClient, String field, Query query,
+			String... expectedValues)
+		throws Exception {
+
+		assertSearch(
+			() -> search(elasticsearchClient, query), field, expectedValues);
+	}
+
 	protected static void assertSearch(
-			Supplier<SearchHits> supplier, String field,
+			Supplier<HitsMetadata<JsonData>> supplier, String field,
 			String... expectedValues)
 		throws Exception {
 
@@ -78,43 +85,41 @@ public class SearchAssert {
 	}
 
 	protected static List<String> getValues(
-		SearchHits searchHits, String field) {
+		HitsMetadata<JsonData> hitsMetadata, String field) {
 
 		List<String> values = new ArrayList<>();
 
-		for (SearchHit searchHit : searchHits.getHits()) {
-			DocumentField documentField = searchHit.field(field);
+		for (Hit<JsonData> hit : hitsMetadata.hits()) {
+			Map<String, JsonData> fields = hit.fields();
 
-			values.add(documentField.getValue());
+			values.add(_toStringValue(fields.get(field)));
 		}
 
 		return values;
 	}
 
-	protected static SearchHits search(
-		RestHighLevelClient restHighLevelClient, QueryBuilder queryBuilder) {
+	protected static HitsMetadata<JsonData> search(
+		ElasticsearchClient elasticsearchClient, Query query) {
 
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		SearchRequest.Builder searchRequestBuilder =
+			new SearchRequest.Builder();
 
-		searchSourceBuilder.query(queryBuilder);
+		searchRequestBuilder.fields(
+			FieldAndFormat.of(
+				fieldAndFormat -> fieldAndFormat.field(StringPool.STAR)));
+		searchRequestBuilder.query(query);
 
-		return search(
-			restHighLevelClient, searchSourceBuilder, new SearchRequest());
+		return search(elasticsearchClient, searchRequestBuilder.build());
 	}
 
-	protected static SearchHits search(
-		RestHighLevelClient restHighLevelClient,
-		SearchSourceBuilder searchSourceBuilder, SearchRequest searchRequest) {
-
-		searchSourceBuilder.fetchField(StringPool.STAR);
-
-		searchRequest.source(searchSourceBuilder);
+	protected static HitsMetadata<JsonData> search(
+		ElasticsearchClient elasticsearchClient, SearchRequest searchRequest) {
 
 		try {
-			SearchResponse searchResponse = restHighLevelClient.search(
-				searchRequest, RequestOptions.DEFAULT);
+			SearchResponse<JsonData> searchResponse =
+				elasticsearchClient.search(searchRequest, JsonData.class);
 
-			return searchResponse.getHits();
+			return searchResponse.hits();
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -127,6 +132,25 @@ public class SearchAssert {
 		Collections.sort(list);
 
 		return list.toString();
+	}
+
+	private static String _toStringValue(JsonData jsonData) {
+		JsonValue jsonValue = jsonData.toJson();
+
+		JsonValue.ValueType valueType = jsonValue.getValueType();
+
+		if (valueType == JsonValue.ValueType.STRING) {
+			JsonString jsonString = (JsonString)jsonValue;
+
+			return jsonString.getString();
+		}
+		else if (valueType == JsonValue.ValueType.ARRAY) {
+			JsonArray jsonArray = jsonValue.asJsonArray();
+
+			return jsonArray.getString(0);
+		}
+
+		return jsonValue.toString();
 	}
 
 }

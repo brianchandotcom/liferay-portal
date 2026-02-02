@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -14,7 +16,6 @@ import org.apache.http.HttpHost;
 
 import org.elasticsearch.client.Node;
 import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -88,10 +89,10 @@ public class ElasticsearchConnectionTest {
 	}
 
 	private void _assertNetworkHostAddress(String hostString, int port) {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchConnection.getRestHighLevelClient();
+		RestClientTransport restClientTransport =
+			_elasticsearchConnection.getRestClientTransport();
 
-		RestClient restClient = restHighLevelClient.getLowLevelClient();
+		RestClient restClient = restClientTransport.restClient();
 
 		List<Node> nodes = restClient.getNodes();
 

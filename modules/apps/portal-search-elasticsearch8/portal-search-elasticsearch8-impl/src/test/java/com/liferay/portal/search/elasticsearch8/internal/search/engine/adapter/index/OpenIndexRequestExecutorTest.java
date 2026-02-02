@@ -5,13 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.WaitForActiveShards;
+import co.elastic.clients.elasticsearch.indices.OpenRequest;
+
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.search.engine.adapter.index.OpenIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.action.support.ActiveShardCount;
-import org.elasticsearch.core.TimeValue;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -57,31 +59,30 @@ public class OpenIndexRequestExecutorTest {
 		OpenIndexRequestExecutor openIndexRequestExecutor =
 			new OpenIndexRequestExecutor(_elasticsearchFixture);
 
-		org.elasticsearch.action.admin.indices.open.OpenIndexRequest
-			elastichsearchOpenIndexRequest =
-				openIndexRequestExecutor.createOpenIndexRequest(
-					openIndexRequest);
+		OpenRequest openRequest = openIndexRequestExecutor.createOpenRequest(
+			openIndexRequest);
 
 		Assert.assertArrayEquals(
 			openIndexRequest.getIndexNames(),
-			elastichsearchOpenIndexRequest.indices());
+			ArrayUtil.toStringArray(openRequest.index()));
+
+		Time masterTimeout = openRequest.masterTimeout();
 
 		Assert.assertEquals(
-			IndicesOptionsTranslatorUtil.translate(
-				openIndexRequest.getIndicesOptions()),
-			elastichsearchOpenIndexRequest.indicesOptions());
+			openIndexRequest.getTimeout() + "ms", masterTimeout.time());
+
+		Time timeout = openRequest.timeout();
 
 		Assert.assertEquals(
-			TimeValue.timeValueMillis(openIndexRequest.getTimeout()),
-			elastichsearchOpenIndexRequest.masterNodeTimeout());
+			openIndexRequest.getTimeout() + "ms", timeout.time());
+
+		WaitForActiveShards waitForActiveShards =
+			openRequest.waitForActiveShards();
+
+		Integer count = waitForActiveShards.count();
 
 		Assert.assertEquals(
-			TimeValue.timeValueMillis(openIndexRequest.getTimeout()),
-			elastichsearchOpenIndexRequest.timeout());
-
-		Assert.assertEquals(
-			ActiveShardCount.from(openIndexRequest.getWaitForActiveShards()),
-			elastichsearchOpenIndexRequest.waitForActiveShards());
+			openIndexRequest.getWaitForActiveShards(), count.intValue());
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

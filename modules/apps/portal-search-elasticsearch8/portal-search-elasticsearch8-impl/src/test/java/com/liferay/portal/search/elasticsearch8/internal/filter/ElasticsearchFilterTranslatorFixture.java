@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.filter;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+
 import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.index.IndexNameBuilder;
-
-import org.elasticsearch.index.query.QueryBuilder;
 
 import org.mockito.Mockito;
 
@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 public class ElasticsearchFilterTranslatorFixture {
 
 	public ElasticsearchFilterTranslatorFixture(
-		QueryTranslator<QueryBuilder> queryTranslator) {
+		QueryTranslator<QueryVariant> queryTranslator) {
 
 		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator() {
 			{

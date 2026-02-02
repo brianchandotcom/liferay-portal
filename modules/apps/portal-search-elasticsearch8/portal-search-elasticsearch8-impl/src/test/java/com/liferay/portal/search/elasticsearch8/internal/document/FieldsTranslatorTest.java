@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.document;
 
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
@@ -23,7 +25,7 @@ import org.junit.Test;
 /**
  * @author André de Oliveira
  */
-public class DocumentFieldsTranslatorTest {
+public class FieldsTranslatorTest {
 
 	@ClassRule
 	@Rule
@@ -32,8 +34,7 @@ public class DocumentFieldsTranslatorTest {
 
 	@Test
 	public void testDocumentSourceMapWithMultiValueField() {
-		DocumentFieldsTranslator documentFieldsTranslator =
-			new DocumentFieldsTranslator(null);
+		FieldsTranslator fieldsTranslator = new FieldsTranslator(null);
 
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 
@@ -42,8 +43,9 @@ public class DocumentFieldsTranslatorTest {
 		List<String> list1 = Arrays.asList(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
-		documentFieldsTranslator.translate(
-			documentBuilder, Collections.singletonMap(fieldName, list1));
+		fieldsTranslator.translateFields(
+			documentBuilder,
+			Collections.singletonMap(fieldName, JsonData.of(list1)));
 
 		Document document = documentBuilder.build();
 

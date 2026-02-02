@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection.helper;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
+
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.index.MappingsHelperImpl;
@@ -12,9 +15,6 @@ import com.liferay.portal.search.elasticsearch8.internal.index.constants.IndexSe
 import com.liferay.portal.search.elasticsearch8.internal.settings.SettingsHelperImpl;
 import com.liferay.portal.search.elasticsearch8.internal.util.ResourceUtil;
 import com.liferay.portal.search.engine.SearchEngineInformation;
-
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
 
 /**
  * @author André de Oliveira
@@ -30,15 +30,16 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 	}
 
 	@Override
-	public void contribute(CreateIndexRequest createIndexRequest) {
-		RestHighLevelClient restHighLevelClient =
-			_elasticsearchClientResolver.getRestHighLevelClient();
+	public void contribute(CreateIndexRequest.Builder builder) {
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient();
 
 		MappingsHelperImpl mappingsHelperImpl = new MappingsHelperImpl(
-			null, restHighLevelClient.indices(), new JSONFactoryImpl(), null,
+			elasticsearchClient.indices(), null, new JSONFactoryImpl(),
+			_elasticsearchClientResolver.getJsonpMapper(null), null,
 			_searchEngineInformation);
 
-		mappingsHelperImpl.setDefaultOrOverrideMappings(createIndexRequest);
+		mappingsHelperImpl.setDefaultOrOverrideMappings(builder);
 	}
 
 	@Override

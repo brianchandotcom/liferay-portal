@@ -5,6 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.index;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.IndexRequest;
+import co.elastic.clients.json.JsonData;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
@@ -13,11 +17,6 @@ import com.liferay.portal.search.engine.SearchEngineInformation;
 import java.io.IOException;
 
 import java.util.Map;
-
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.Requests;
-import org.elasticsearch.client.RestHighLevelClient;
 
 import org.mockito.Mockito;
 
@@ -43,33 +42,35 @@ public class LiferayIndexFixture {
 	}
 
 	public void assertAnalyzer(String field, String analyzer) throws Exception {
-		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, field, _indexName.getName(),
-			restHighLevelClient.indices());
+			analyzer, elasticsearchClient.indices(), field,
+			_indexName.getName());
 	}
 
 	public void assertType(String field, String type) throws Exception {
-		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
 		FieldMappingAssert.assertType(
-			type, field, _indexName.getName(), restHighLevelClient.indices());
+			type, elasticsearchClient.indices(), field, _indexName.getName());
 	}
 
-	public RestHighLevelClient getRestHighLevelClient() {
-		return _elasticsearchFixture.getRestHighLevelClient();
+	public ElasticsearchClient getElasticsearchClient() {
+		return _elasticsearchFixture.getElasticsearchClient();
 	}
 
 	public void index(Map<String, Object> map) {
-		IndexRequest indexRequest = getIndexRequest();
-
-		indexRequest.source(map);
-
-		RestHighLevelClient restHighLevelClient = getRestHighLevelClient();
+		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
 		try {
-			restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
+			elasticsearchClient.index(
+				IndexRequest.of(
+					indexRequest -> indexRequest.document(
+						JsonData.of(map)
+					).index(
+						_indexName.getName()
+					)));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -86,10 +87,6 @@ public class LiferayIndexFixture {
 		_indexCreator.deleteIndex(_indexName);
 
 		_elasticsearchFixture.tearDown();
-	}
-
-	protected IndexRequest getIndexRequest() {
-		return Requests.indexRequest(_indexName.getName());
 	}
 
 	private SearchEngineInformation _createSearchEngineInformation() {

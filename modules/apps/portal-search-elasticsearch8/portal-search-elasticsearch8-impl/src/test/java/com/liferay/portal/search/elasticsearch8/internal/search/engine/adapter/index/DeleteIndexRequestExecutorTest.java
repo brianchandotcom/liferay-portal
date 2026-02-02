@@ -10,7 +10,7 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.IndicesOptions;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -57,37 +57,28 @@ public class DeleteIndexRequestExecutorTest {
 		DeleteIndexRequestExecutor deleteIndexRequestExecutor =
 			new DeleteIndexRequestExecutor(_elasticsearchFixture);
 
-		org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest
+		co.elastic.clients.elasticsearch.indices.DeleteIndexRequest
 			elasticsearchDeleteIndexRequest =
 				deleteIndexRequestExecutor.createDeleteIndexRequest(
 					deleteIndexRequest);
 
-		String[] indices = elasticsearchDeleteIndexRequest.indices();
+		List<String> indices = elasticsearchDeleteIndexRequest.index();
 
-		Assert.assertEquals(Arrays.toString(indices), 2, indices.length);
-		Assert.assertEquals(_INDEX_NAME_1, indices[0]);
-		Assert.assertEquals(_INDEX_NAME_2, indices[1]);
-
-		org.elasticsearch.action.support.IndicesOptions
-			elasticsearchIndicesOptions =
-				elasticsearchDeleteIndexRequest.indicesOptions();
+		Assert.assertEquals(String.join(", ", indices), 2, indices.size());
+		Assert.assertEquals(_INDEX_NAME_1, indices.get(0));
+		Assert.assertEquals(_INDEX_NAME_2, indices.get(1));
 
 		Assert.assertEquals(
 			indicesOptions.isAllowNoIndices(),
-			elasticsearchIndicesOptions.allowNoIndices());
-		Assert.assertEquals(
-			indicesOptions.isExpandToClosedIndices(),
-			elasticsearchIndicesOptions.expandWildcardsClosed());
-		Assert.assertEquals(
-			indicesOptions.isIgnoreUnavailable(),
-			elasticsearchIndicesOptions.ignoreUnavailable());
+			elasticsearchDeleteIndexRequest.allowNoIndices());
+
 		Assert.assertEquals(
 			indicesOptions.isExpandToOpenIndices(),
-			elasticsearchIndicesOptions.expandWildcardsOpen());
-		Assert.assertTrue(
-			elasticsearchIndicesOptions.allowAliasesToMultipleIndices());
-		Assert.assertFalse(elasticsearchIndicesOptions.forbidClosedIndices());
-		Assert.assertFalse(elasticsearchIndicesOptions.ignoreAliases());
+			elasticsearchDeleteIndexRequest.expandWildcards());
+
+		Assert.assertEquals(
+			indicesOptions.isIgnoreUnavailable(),
+			elasticsearchDeleteIndexRequest.ignoreUnavailable());
 	}
 
 	private static final String _INDEX_NAME_1 = "test_request_index1";

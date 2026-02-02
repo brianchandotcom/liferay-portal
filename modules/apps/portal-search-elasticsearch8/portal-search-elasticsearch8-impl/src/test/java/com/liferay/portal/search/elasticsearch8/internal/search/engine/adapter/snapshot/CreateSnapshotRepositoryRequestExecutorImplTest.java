@@ -5,14 +5,15 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot;
 
+import co.elastic.clients.elasticsearch.snapshot.CreateRepositoryRequest;
+import co.elastic.clients.elasticsearch.snapshot.Repository;
+import co.elastic.clients.elasticsearch.snapshot.SharedFileSystemRepository;
+import co.elastic.clients.elasticsearch.snapshot.SharedFileSystemRepositorySettings;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.AnalyzeIndexRequestExecutorTest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositoryRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.action.admin.cluster.repositories.put.PutRepositoryRequest;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.repositories.fs.FsRepository;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -48,7 +49,7 @@ public class CreateSnapshotRepositoryRequestExecutorImplTest {
 			new CreateSnapshotRepositoryRequest("name", "location");
 
 		createSnapshotRepositoryRequest.setCompress(true);
-		createSnapshotRepositoryRequest.setType("type");
+		createSnapshotRepositoryRequest.setType("fs");
 		createSnapshotRepositoryRequest.setVerify(true);
 
 		CreateSnapshotRepositoryRequestExecutor
@@ -56,28 +57,31 @@ public class CreateSnapshotRepositoryRequestExecutorImplTest {
 				new CreateSnapshotRepositoryRequestExecutor(
 					_elasticsearchFixture);
 
-		PutRepositoryRequest putRepositoryRequest =
-			createSnapshotRepositoryRequestExecutor.createPutRepositoryRequest(
-				createSnapshotRepositoryRequest);
+		CreateRepositoryRequest createRepositoryRequest =
+			createSnapshotRepositoryRequestExecutor.
+				createCreateRepositoryRequest(createSnapshotRepositoryRequest);
 
-		Settings settings = putRepositoryRequest.settings();
+		Repository repository = createRepositoryRequest.repository();
+
+		SharedFileSystemRepository sharedFileSystemRepository = repository.fs();
+
+		SharedFileSystemRepositorySettings sharedFileSystemRepositorySettings =
+			sharedFileSystemRepository.settings();
 
 		Assert.assertEquals(
-			String.valueOf(createSnapshotRepositoryRequest.isCompress()),
-			settings.get(FsRepository.COMPRESS_SETTING.getKey()));
+			createSnapshotRepositoryRequest.isCompress(),
+			sharedFileSystemRepositorySettings.compress());
 		Assert.assertEquals(
 			String.valueOf(createSnapshotRepositoryRequest.getLocation()),
-			settings.get(FsRepository.LOCATION_SETTING.getKey()));
+			sharedFileSystemRepositorySettings.location());
 
 		Assert.assertEquals(
 			createSnapshotRepositoryRequest.getName(),
-			putRepositoryRequest.name());
-		Assert.assertEquals(
-			createSnapshotRepositoryRequest.getType(),
-			putRepositoryRequest.type());
+			createRepositoryRequest.name());
+		Assert.assertEquals("fs", createSnapshotRepositoryRequest.getType());
 		Assert.assertEquals(
 			createSnapshotRepositoryRequest.isVerify(),
-			putRepositoryRequest.verify());
+			createRepositoryRequest.verify());
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

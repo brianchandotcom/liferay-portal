@@ -5,13 +5,13 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
+import co.elastic.clients.elasticsearch.indices.GetIndexRequest;
+
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.GetIndexIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
-import java.util.Arrays;
-
-import org.elasticsearch.action.admin.indices.get.GetIndexRequest;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -53,10 +53,10 @@ public class GetIndexIndexRequestExecutorTest {
 			getIndexIndexRequestExecutor.createGetIndexRequest(
 				getIndexIndexRequest);
 
-		String[] indices = getIndexRequest.indices();
+		List<String> indices = getIndexRequest.index();
 
-		Assert.assertEquals(Arrays.toString(indices), 1, indices.length);
-		Assert.assertEquals(_INDEX_NAME, indices[0]);
+		Assert.assertEquals(String.join(", ", indices), 1, indices.size());
+		Assert.assertEquals(_INDEX_NAME, indices.get(0));
 	}
 
 	private static final String _INDEX_NAME = "test_request_index";

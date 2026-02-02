@@ -7,9 +7,9 @@ function cluster_set_up {
 
 	local slave_home="${LIFERAY_HOME}-${1}"
 
-	cp "${CURRENT_DIR_NAME}/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config" "${slave_home}/osgi/configs"
+	cp "${CURRENT_DIR_NAME}/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config" "${slave_home}/osgi/configs"
 
-	sed -i "s/%LIFERAY_DOCKER_NETWORK_NAME%/${LIFERAY_DOCKER_NETWORK_NAME}/g" "${slave_home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config"
+	sed -i "s/%LIFERAY_DOCKER_NETWORK_NAME%/${LIFERAY_DOCKER_NETWORK_NAME}/g" "${slave_home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config"
 
 	rm -fr "${slave_home}/data"
 

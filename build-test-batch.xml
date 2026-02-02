@@ -1212,7 +1212,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<if>
 						<contains string="${test.batch.name}" substring="remote-elasticsearch" />
 						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+							<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
 						</then>
 					</if>
 
@@ -1250,7 +1250,7 @@ mariadb.executable=${mariadb.executable}]]></echo>
 					<if>
 						<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 						<then>
-							<ant antfile="build-test-elasticsearch7.xml" target="start-elasticsearch" />
+							<ant antfile="build-test-elasticsearch8.xml" target="start-elasticsearch" />
 						</then>
 					</if>
 
@@ -4847,7 +4847,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 			<if>
 				<contains string="${suite.search.engine}" substring="remote-elasticsearch" />
 				<then>
-					<ant antfile="build-test-elasticsearch7.xml" target="stop-elasticsearch" />
+					<ant antfile="build-test-elasticsearch8.xml" target="stop-elasticsearch" />
 				</then>
 			</if>
 

@@ -116,7 +116,7 @@
 	<macrodef name="configure-elasticsearch-ltr-properties">
 		<sequential>
 			<echo append="true" file="${elasticsearch.dir}/config/elasticsearch.yml">${line.separator}xpack.ml.enabled: false
-path.repo: ${liferay.home}/data/elasticsearch7/repo</echo>
+path.repo: ${liferay.home}/data/elasticsearch8/repo</echo>
 		</sequential>
 	</macrodef>
 
@@ -288,7 +288,7 @@ elasticsearch.username: "kibana_system"</echo>
 	<macrodef name="configure-portal-ccr-osgi-properties">
 		<sequential>
 			<replaceregexp
-				file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config"
+				file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config"
 				match="(?&lt;=logExceptionsOnly=B?&quot;)false"
 				replace="true"
 			/>
@@ -299,7 +299,7 @@ elasticsearch.username: "kibana_system"</echo>
 
 	<macrodef name="configure-portal-remote-elasticsearch-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}minimumRequiredNodeVersion="${elasticsearch.version}"
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config">${line.separator}minimumRequiredNodeVersion="${elasticsearch.version}"
 productionModeEnabled="true"</echo>
 		</sequential>
 	</macrodef>
@@ -308,7 +308,7 @@ productionModeEnabled="true"</echo>
 		<attribute name="connection.name" />
 
 		<sequential>
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~@{connection.name}.config">active=&quot;true&quot;
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration~@{connection.name}.config">active=&quot;true&quot;
 connectionId=&quot;@{connection.name}&quot;
 networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 		</sequential>
@@ -316,7 +316,7 @@ networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 
 	<macrodef name="configure-portal-x-pack-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="xpack"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="xpack"</echo>
 
 			<propertyregex
 				defaultValue="${elastic.xpack.elastic.user.password}"
@@ -331,7 +331,7 @@ networkHostAddresses=[&quot;http://localhost:9202&quot;]</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~xpack.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration~xpack.config">active="true"
 authenticationEnabled="true"
 connectionId="xpack"
 httpSSLEnabled="true"
@@ -346,7 +346,7 @@ username="elastic"</echo>
 
 	<macrodef name="configure-portal-x-pack-pki-osgi-properties">
 		<sequential>
-			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="pki"</echo>
+			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config">${line.separator}remoteClusterConnectionId="pki"</echo>
 
 			<propertyregex
 				defaultValue="${elastic.xpack.elastic.user.password}"
@@ -361,7 +361,7 @@ username="elastic"</echo>
 kibanaURL="https://localhost:5601"
 proxyServletLogEnable="true"</echo>
 
-			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration~pki.config">active="true"
+			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration~pki.config">active="true"
 authenticationEnabled="false"
 connectionId="pki"
 httpSSLEnabled="true"
@@ -791,10 +791,10 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 
 			<if>
 				<not>
-					<available file="${liferay.home}/data/elasticsearch7/repo" type="dir" />
+					<available file="${liferay.home}/data/elasticsearch8/repo" type="dir" />
 				</not>
 				<then>
-					<mkdir dir="${liferay.home}/data/elasticsearch7/repo" />
+					<mkdir dir="${liferay.home}/data/elasticsearch8/repo" />
 				</then>
 			</if>
 
@@ -804,7 +804,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 				type="both"
 			>
 				<fileset
-					dir="${liferay.home}/data/elasticsearch7/repo"
+					dir="${liferay.home}/data/elasticsearch8/repo"
 				/>
 			</chmod>
 
@@ -920,7 +920,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<unzip
-				dest="${liferay.home}/data/elasticsearch7/repo"
+				dest="${liferay.home}/data/elasticsearch8/repo"
 				src="${liferay.home}/${boston-dataset-index.zip.name}"
 			/>
 		</sequential>
@@ -1145,7 +1145,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			</if>
 
 			<unzip
-				dest="${liferay.home}/data/elasticsearch7/repo"
+				dest="${liferay.home}/data/elasticsearch8/repo"
 				src="${liferay.home}/${ltr-linear-regression-model.zip.name}"
 			/>
 		</sequential>
@@ -1292,7 +1292,7 @@ ${line.separator}CATALINA_OPTS="${CATALINA_OPTS} -Djavax.net.ssl.trustStore=${el
 			<![CDATA[
 				{
 					"settings": {
-						"location": "${liferay.home}/data/elasticsearch7/repo"
+						"location": "${liferay.home}/data/elasticsearch8/repo"
 					},
 					"type": "fs"
 				}

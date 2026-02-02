@@ -2,7 +2,7 @@
 definition {
 
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7";
+	property portal.suite.search.engine = "elasticsearch8";
 	property portal.upstream = "true";
 	property test.run.environment = "EE";
 	property testray.main.component.name = "Search Infrastructure > Elasticsearch Connector";
@@ -34,7 +34,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
+		AntCommands.runCommand("build-test-elasticsearch8.xml", "add-ltr-linear-regression-model -Dbackup.index=.ltrstore -Delasticsearch.port=9200");
 
 		ServerAdministration.openServerAdmin();
 

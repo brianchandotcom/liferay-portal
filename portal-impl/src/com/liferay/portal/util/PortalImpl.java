@@ -2554,11 +2554,12 @@ public class PortalImpl implements Portal {
 		Map<String, String> variables = _getVariables(
 			LayoutLocalServiceUtil.getBrowsableLayout(layout), mainPath);
 
-		variables.putAll(layout.getTypeSettingsProperties());
-
 		LayoutTypeController layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				layout.getType());
+
+		variables.putAll(
+			layoutTypeController.getTypeSettingsProperties(layout));
 
 		return LayoutTypeImpl.getURL(layoutTypeController.getURL(), variables);
 	}

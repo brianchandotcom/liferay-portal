@@ -3694,7 +3694,7 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/URLValue"
                 -   properties:
-                        sitePage:
+                        sitePageItemExternalReference:
                             $ref: "#/components/schemas/ItemExternalReference"
             type: object
         SitePagesNavigationMenuValue:

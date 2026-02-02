@@ -30,6 +30,8 @@ import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.exception.MasterLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -294,6 +296,32 @@ public class LayoutLocalServiceTest {
 			Layout emptyLayout = _layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 				_group.getGroupId(), _serviceContext);
+
+			try {
+				emptyLayout = _layoutLocalService.updateLayout(
+					_group.getGroupId(), emptyLayout.isPrivateLayout(),
+					emptyLayout.getLayoutId(), emptyLayout.getParentLayoutId(),
+					emptyLayout.getNameMap(), emptyLayout.getTitleMap(),
+					emptyLayout.getDescriptionMap(),
+					emptyLayout.getKeywordsMap(), emptyLayout.getRobotsMap(),
+					emptyLayout.getType(), false,
+					emptyLayout.getFriendlyURLMap(), emptyLayout.isIconImage(),
+					null, emptyLayout.getStyleBookEntryERC(),
+					emptyLayout.getFaviconFileEntryERC(),
+					emptyLayout.getFaviconFileEntryScopeERC(),
+					emptyLayout.getMasterLayoutPageTemplateEntryERC(),
+					_serviceContext);
+
+				Assert.fail();
+			}
+			catch (LayoutTypeException layoutTypeException) {
+				Assert.assertEquals(
+					LayoutTypeException.EMPTY, layoutTypeException.getType());
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(layoutTypeException);
+				}
+			}
 
 			_serviceContext.setAttribute(
 				"layout.instanceable.allowed", Boolean.TRUE);
@@ -1223,6 +1251,9 @@ public class LayoutLocalServiceTest {
 		Assert.assertEquals(expectedParentLayoutId, layout.getParentLayoutId());
 		Assert.assertEquals(expectedPriority, layout.getPriority());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutLocalServiceTest.class);
 
 	@Inject
 	private CounterLocalService _counterLocalService;

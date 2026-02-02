@@ -28,7 +28,7 @@ export default function EnterpriseProductMenuBanner() {
 
 						<ClayLink
 							className="btn btn-primary btn-sm w-100"
-							href="#"
+							href="#" // TODO: Waiting for link
 						>
 							{Liferay.Language.get('get-enterprise-details')}
 						</ClayLink>

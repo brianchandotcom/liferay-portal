@@ -50,67 +50,61 @@ public class ActionFragmentEditableElementValueSerDes {
 
 		sb.append("{");
 
-		if (actionFragmentEditableElementValue.getAction() != null) {
+		if (actionFragmentEditableElementValue.getErrorActionInteraction() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"action\": ");
-
-			if (actionFragmentEditableElementValue.getAction() instanceof
-					String) {
-
-				sb.append("\"");
-				sb.append(
-					(String)actionFragmentEditableElementValue.getAction());
-				sb.append("\"");
-			}
-			else {
-				sb.append(actionFragmentEditableElementValue.getAction());
-			}
-		}
-
-		if (actionFragmentEditableElementValue.getOnError() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"onError\": ");
+			sb.append("\"errorActionInteraction\": ");
 
 			sb.append(
 				String.valueOf(
-					actionFragmentEditableElementValue.getOnError()));
+					actionFragmentEditableElementValue.
+						getErrorActionInteraction()));
 		}
 
-		if (actionFragmentEditableElementValue.getOnSuccess() != null) {
+		if (actionFragmentEditableElementValue.getFragmentMappedValue() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"onSuccess\": ");
+			sb.append("\"fragmentMappedValue\": ");
 
 			sb.append(
 				String.valueOf(
-					actionFragmentEditableElementValue.getOnSuccess()));
+					actionFragmentEditableElementValue.
+						getFragmentMappedValue()));
 		}
 
-		if (actionFragmentEditableElementValue.getText() != null) {
+		if (actionFragmentEditableElementValue.getSuccessActionInteraction() !=
+				null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"text\": ");
+			sb.append("\"successActionInteraction\": ");
 
-			if (actionFragmentEditableElementValue.getText() instanceof
-					String) {
+			sb.append(
+				String.valueOf(
+					actionFragmentEditableElementValue.
+						getSuccessActionInteraction()));
+		}
 
-				sb.append("\"");
-				sb.append((String)actionFragmentEditableElementValue.getText());
-				sb.append("\"");
+		if (actionFragmentEditableElementValue.getTextFragmentValue() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
 			}
-			else {
-				sb.append(actionFragmentEditableElementValue.getText());
-			}
+
+			sb.append("\"textFragmentValue\": ");
+
+			sb.append(
+				String.valueOf(
+					actionFragmentEditableElementValue.getTextFragmentValue()));
 		}
 
 		if (actionFragmentEditableElementValue.getType() != null) {
@@ -147,42 +141,53 @@ public class ActionFragmentEditableElementValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (actionFragmentEditableElementValue.getAction() == null) {
-			map.put("action", null);
-		}
-		else {
-			map.put(
-				"action",
-				String.valueOf(actionFragmentEditableElementValue.getAction()));
-		}
+		if (actionFragmentEditableElementValue.getErrorActionInteraction() ==
+				null) {
 
-		if (actionFragmentEditableElementValue.getOnError() == null) {
-			map.put("onError", null);
+			map.put("errorActionInteraction", null);
 		}
 		else {
 			map.put(
-				"onError",
+				"errorActionInteraction",
 				String.valueOf(
-					actionFragmentEditableElementValue.getOnError()));
+					actionFragmentEditableElementValue.
+						getErrorActionInteraction()));
 		}
 
-		if (actionFragmentEditableElementValue.getOnSuccess() == null) {
-			map.put("onSuccess", null);
+		if (actionFragmentEditableElementValue.getFragmentMappedValue() ==
+				null) {
+
+			map.put("fragmentMappedValue", null);
 		}
 		else {
 			map.put(
-				"onSuccess",
+				"fragmentMappedValue",
 				String.valueOf(
-					actionFragmentEditableElementValue.getOnSuccess()));
+					actionFragmentEditableElementValue.
+						getFragmentMappedValue()));
 		}
 
-		if (actionFragmentEditableElementValue.getText() == null) {
-			map.put("text", null);
+		if (actionFragmentEditableElementValue.getSuccessActionInteraction() ==
+				null) {
+
+			map.put("successActionInteraction", null);
 		}
 		else {
 			map.put(
-				"text",
-				String.valueOf(actionFragmentEditableElementValue.getText()));
+				"successActionInteraction",
+				String.valueOf(
+					actionFragmentEditableElementValue.
+						getSuccessActionInteraction()));
+		}
+
+		if (actionFragmentEditableElementValue.getTextFragmentValue() == null) {
+			map.put("textFragmentValue", null);
+		}
+		else {
+			map.put(
+				"textFragmentValue",
+				String.valueOf(
+					actionFragmentEditableElementValue.getTextFragmentValue()));
 		}
 
 		if (actionFragmentEditableElementValue.getType() == null) {
@@ -214,16 +219,20 @@ public class ActionFragmentEditableElementValueSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "action")) {
+			if (Objects.equals(jsonParserFieldName, "errorActionInteraction")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "onError")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "fragmentMappedValue")) {
+
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "onSuccess")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "successActionInteraction")) {
+
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
+			else if (Objects.equals(jsonParserFieldName, "textFragmentValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -239,30 +248,38 @@ public class ActionFragmentEditableElementValueSerDes {
 				actionFragmentEditableElementValue,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "action")) {
+			if (Objects.equals(jsonParserFieldName, "errorActionInteraction")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentEditableElementValue.setAction(
-						(Object)jsonParserFieldValue);
+					actionFragmentEditableElementValue.
+						setErrorActionInteraction(
+							ActionInteractionSerDes.toDTO(
+								(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "onError")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "fragmentMappedValue")) {
+
 				if (jsonParserFieldValue != null) {
-					actionFragmentEditableElementValue.setOnError(
-						ActionExecutionResultSerDes.toDTO(
+					actionFragmentEditableElementValue.setFragmentMappedValue(
+						FragmentMappedValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "onSuccess")) {
+			else if (Objects.equals(
+						jsonParserFieldName, "successActionInteraction")) {
+
 				if (jsonParserFieldValue != null) {
-					actionFragmentEditableElementValue.setOnSuccess(
-						ActionExecutionResultSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					actionFragmentEditableElementValue.
+						setSuccessActionInteraction(
+							ActionInteractionSerDes.toDTO(
+								(String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
+			else if (Objects.equals(jsonParserFieldName, "textFragmentValue")) {
 				if (jsonParserFieldValue != null) {
-					actionFragmentEditableElementValue.setText(
-						(Object)jsonParserFieldValue);
+					actionFragmentEditableElementValue.setTextFragmentValue(
+						TextFragmentValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

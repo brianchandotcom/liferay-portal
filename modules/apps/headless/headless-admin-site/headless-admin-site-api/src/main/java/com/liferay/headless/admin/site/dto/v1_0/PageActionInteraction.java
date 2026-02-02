@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -34,49 +36,53 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of an action execution result of type none.",
-	value = "NoneActionExecutionResult"
+	description = "The definition of an action interaction of type page.",
+	value = "PageActionInteraction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "NoneActionExecutionResult")
-public class NoneActionExecutionResult implements Serializable {
+@XmlRootElement(name = "PageActionInteraction")
+public class PageActionInteraction
+	extends ActionInteraction implements Serializable {
 
-	public static NoneActionExecutionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			NoneActionExecutionResult.class, json);
+	public static PageActionInteraction toDTO(String json) {
+		return ObjectMapperUtil.readValue(PageActionInteraction.class, json);
 	}
 
-	public static NoneActionExecutionResult unsafeToDTO(String json) {
+	public static PageActionInteraction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			NoneActionExecutionResult.class, json);
+			PageActionInteraction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Whether to reload the page after the action is executed."
+		description = "The item external reference to a page."
 	)
-	public Boolean getReload() {
-		if (_reloadSupplier != null) {
-			reload = _reloadSupplier.get();
+	@Valid
+	public ItemExternalReference getItemExternalReference() {
+		if (_itemExternalReferenceSupplier != null) {
+			itemExternalReference = _itemExternalReferenceSupplier.get();
 
-			_reloadSupplier = null;
+			_itemExternalReferenceSupplier = null;
 		}
 
-		return reload;
+		return itemExternalReference;
 	}
 
-	public void setReload(Boolean reload) {
-		this.reload = reload;
+	public void setItemExternalReference(
+		ItemExternalReference itemExternalReference) {
 
-		_reloadSupplier = null;
+		this.itemExternalReference = itemExternalReference;
+
+		_itemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setReload(
-		UnsafeSupplier<Boolean, Exception> reloadUnsafeSupplier) {
+	public void setItemExternalReference(
+		UnsafeSupplier<ItemExternalReference, Exception>
+			itemExternalReferenceUnsafeSupplier) {
 
-		_reloadSupplier = () -> {
+		_itemExternalReferenceSupplier = () -> {
 			try {
-				return reloadUnsafeSupplier.get();
+				return itemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -87,14 +93,12 @@ public class NoneActionExecutionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "Whether to reload the page after the action is executed."
-	)
+	@GraphQLField(description = "The item external reference to a page.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean reload;
+	protected ItemExternalReference itemExternalReference;
 
 	@JsonIgnore
-	private Supplier<Boolean> _reloadSupplier;
+	private Supplier<ItemExternalReference> _itemExternalReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -102,14 +106,14 @@ public class NoneActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NoneActionExecutionResult)) {
+		if (!(object instanceof PageActionInteraction)) {
 			return false;
 		}
 
-		NoneActionExecutionResult noneActionExecutionResult =
-			(NoneActionExecutionResult)object;
+		PageActionInteraction pageActionInteraction =
+			(PageActionInteraction)object;
 
-		return Objects.equals(toString(), noneActionExecutionResult.toString());
+		return Objects.equals(toString(), pageActionInteraction.toString());
 	}
 
 	@Override
@@ -124,16 +128,31 @@ public class NoneActionExecutionResult implements Serializable {
 
 		sb.append("{");
 
-		Boolean reload = getReload();
+		ItemExternalReference itemExternalReference =
+			getItemExternalReference();
 
-		if (reload != null) {
+		if (itemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"reload\": ");
+			sb.append("\"itemExternalReference\": ");
 
-			sb.append(reload);
+			sb.append(String.valueOf(itemExternalReference));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -143,7 +162,7 @@ public class NoneActionExecutionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NoneActionExecutionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageActionInteraction",
 		name = "x-class-name"
 	)
 	public String xClassName;

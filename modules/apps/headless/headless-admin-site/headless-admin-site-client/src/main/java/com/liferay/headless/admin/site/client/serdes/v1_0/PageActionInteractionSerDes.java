@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.SitePageActionExecutionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageActionInteraction;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class SitePageActionExecutionResultSerDes {
+public class PageActionInteractionSerDes {
 
-	public static SitePageActionExecutionResult toDTO(String json) {
-		SitePageActionExecutionResultJSONParser
-			sitePageActionExecutionResultJSONParser =
-				new SitePageActionExecutionResultJSONParser();
+	public static PageActionInteraction toDTO(String json) {
+		PageActionInteractionJSONParser pageActionInteractionJSONParser =
+			new PageActionInteractionJSONParser();
 
-		return sitePageActionExecutionResultJSONParser.parseToDTO(json);
+		return pageActionInteractionJSONParser.parseToDTO(json);
 	}
 
-	public static SitePageActionExecutionResult[] toDTOs(String json) {
-		SitePageActionExecutionResultJSONParser
-			sitePageActionExecutionResultJSONParser =
-				new SitePageActionExecutionResultJSONParser();
+	public static PageActionInteraction[] toDTOs(String json) {
+		PageActionInteractionJSONParser pageActionInteractionJSONParser =
+			new PageActionInteractionJSONParser();
 
-		return sitePageActionExecutionResultJSONParser.parseToDTOs(json);
+		return pageActionInteractionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(
-		SitePageActionExecutionResult sitePageActionExecutionResult) {
-
-		if (sitePageActionExecutionResult == null) {
+	public static String toJSON(PageActionInteraction pageActionInteraction) {
+		if (pageActionInteraction == null) {
 			return "null";
 		}
 
@@ -50,16 +46,28 @@ public class SitePageActionExecutionResultSerDes {
 
 		sb.append("{");
 
-		if (sitePageActionExecutionResult.getItemReference() != null) {
+		if (pageActionInteraction.getItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"itemExternalReference\": ");
 
 			sb.append(
 				String.valueOf(
-					sitePageActionExecutionResult.getItemReference()));
+					pageActionInteraction.getItemExternalReference()));
+		}
+
+		if (pageActionInteraction.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(pageActionInteraction.getType());
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -68,51 +76,60 @@ public class SitePageActionExecutionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		SitePageActionExecutionResultJSONParser
-			sitePageActionExecutionResultJSONParser =
-				new SitePageActionExecutionResultJSONParser();
+		PageActionInteractionJSONParser pageActionInteractionJSONParser =
+			new PageActionInteractionJSONParser();
 
-		return sitePageActionExecutionResultJSONParser.parseToMap(json);
+		return pageActionInteractionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		SitePageActionExecutionResult sitePageActionExecutionResult) {
+		PageActionInteraction pageActionInteraction) {
 
-		if (sitePageActionExecutionResult == null) {
+		if (pageActionInteraction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sitePageActionExecutionResult.getItemReference() == null) {
-			map.put("itemReference", null);
+		if (pageActionInteraction.getItemExternalReference() == null) {
+			map.put("itemExternalReference", null);
 		}
 		else {
 			map.put(
-				"itemReference",
+				"itemExternalReference",
 				String.valueOf(
-					sitePageActionExecutionResult.getItemReference()));
+					pageActionInteraction.getItemExternalReference()));
+		}
+
+		if (pageActionInteraction.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(pageActionInteraction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class SitePageActionExecutionResultJSONParser
-		extends BaseJSONParser<SitePageActionExecutionResult> {
+	public static class PageActionInteractionJSONParser
+		extends BaseJSONParser<PageActionInteraction> {
 
 		@Override
-		protected SitePageActionExecutionResult createDTO() {
-			return new SitePageActionExecutionResult();
+		protected PageActionInteraction createDTO() {
+			return new PageActionInteraction();
 		}
 
 		@Override
-		protected SitePageActionExecutionResult[] createDTOArray(int size) {
-			return new SitePageActionExecutionResult[size];
+		protected PageActionInteraction[] createDTOArray(int size) {
+			return new PageActionInteraction[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "itemReference")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -121,13 +138,20 @@ public class SitePageActionExecutionResultSerDes {
 
 		@Override
 		protected void setField(
-			SitePageActionExecutionResult sitePageActionExecutionResult,
+			PageActionInteraction pageActionInteraction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "itemReference")) {
+			if (Objects.equals(jsonParserFieldName, "itemExternalReference")) {
 				if (jsonParserFieldValue != null) {
-					sitePageActionExecutionResult.setItemReference(
+					pageActionInteraction.setItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					pageActionInteraction.setType(
+						PageActionInteraction.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

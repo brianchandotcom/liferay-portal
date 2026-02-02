@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.NoneActionExecutionResultSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.NoneActionInteractionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class NoneActionExecutionResult implements Cloneable, Serializable {
+public class NoneActionInteraction
+	extends ActionInteraction implements Cloneable, Serializable {
 
-	public static NoneActionExecutionResult toDTO(String json) {
-		return NoneActionExecutionResultSerDes.toDTO(json);
+	public static NoneActionInteraction toDTO(String json) {
+		return NoneActionInteractionSerDes.toDTO(json);
 	}
 
 	public Boolean getReload() {
@@ -47,8 +48,8 @@ public class NoneActionExecutionResult implements Cloneable, Serializable {
 	protected Boolean reload;
 
 	@Override
-	public NoneActionExecutionResult clone() throws CloneNotSupportedException {
-		return (NoneActionExecutionResult)super.clone();
+	public NoneActionInteraction clone() throws CloneNotSupportedException {
+		return (NoneActionInteraction)super.clone();
 	}
 
 	@Override
@@ -57,14 +58,14 @@ public class NoneActionExecutionResult implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NoneActionExecutionResult)) {
+		if (!(object instanceof NoneActionInteraction)) {
 			return false;
 		}
 
-		NoneActionExecutionResult noneActionExecutionResult =
-			(NoneActionExecutionResult)object;
+		NoneActionInteraction noneActionInteraction =
+			(NoneActionInteraction)object;
 
-		return Objects.equals(toString(), noneActionExecutionResult.toString());
+		return Objects.equals(toString(), noneActionInteraction.toString());
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class NoneActionExecutionResult implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return NoneActionExecutionResultSerDes.toJSON(this);
+		return NoneActionInteractionSerDes.toJSON(this);
 	}
 
 }

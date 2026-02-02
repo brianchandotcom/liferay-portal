@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -36,50 +36,53 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of an action execution of type display page.",
-	value = "DisplayPageActionExecutionResult"
+	description = "The definition of an action interaction of type URL.",
+	value = "URLActionInteraction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "DisplayPageActionExecutionResult")
-public class DisplayPageActionExecutionResult implements Serializable {
+@XmlRootElement(name = "URLActionInteraction")
+public class URLActionInteraction
+	extends ActionInteraction implements Serializable {
 
-	public static DisplayPageActionExecutionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			DisplayPageActionExecutionResult.class, json);
+	public static URLActionInteraction toDTO(String json) {
+		return ObjectMapperUtil.readValue(URLActionInteraction.class, json);
 	}
 
-	public static DisplayPageActionExecutionResult unsafeToDTO(String json) {
+	public static URLActionInteraction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			DisplayPageActionExecutionResult.class, json);
+			URLActionInteraction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The mapping of the display page action result."
+		description = "The localized URL value."
 	)
 	@Valid
-	public Mapping getMapping() {
-		if (_mappingSupplier != null) {
-			mapping = _mappingSupplier.get();
+	public FragmentInlineValue getFragmentInlineValue() {
+		if (_fragmentInlineValueSupplier != null) {
+			fragmentInlineValue = _fragmentInlineValueSupplier.get();
 
-			_mappingSupplier = null;
+			_fragmentInlineValueSupplier = null;
 		}
 
-		return mapping;
+		return fragmentInlineValue;
 	}
 
-	public void setMapping(Mapping mapping) {
-		this.mapping = mapping;
+	public void setFragmentInlineValue(
+		FragmentInlineValue fragmentInlineValue) {
 
-		_mappingSupplier = null;
+		this.fragmentInlineValue = fragmentInlineValue;
+
+		_fragmentInlineValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setMapping(
-		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
+	public void setFragmentInlineValue(
+		UnsafeSupplier<FragmentInlineValue, Exception>
+			fragmentInlineValueUnsafeSupplier) {
 
-		_mappingSupplier = () -> {
+		_fragmentInlineValueSupplier = () -> {
 			try {
-				return mappingUnsafeSupplier.get();
+				return fragmentInlineValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -90,14 +93,12 @@ public class DisplayPageActionExecutionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The mapping of the display page action result."
-	)
+	@GraphQLField(description = "The localized URL value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Mapping mapping;
+	protected FragmentInlineValue fragmentInlineValue;
 
 	@JsonIgnore
-	private Supplier<Mapping> _mappingSupplier;
+	private Supplier<FragmentInlineValue> _fragmentInlineValueSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -105,15 +106,14 @@ public class DisplayPageActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof DisplayPageActionExecutionResult)) {
+		if (!(object instanceof URLActionInteraction)) {
 			return false;
 		}
 
-		DisplayPageActionExecutionResult displayPageActionExecutionResult =
-			(DisplayPageActionExecutionResult)object;
+		URLActionInteraction urlActionInteraction =
+			(URLActionInteraction)object;
 
-		return Objects.equals(
-			toString(), displayPageActionExecutionResult.toString());
+		return Objects.equals(toString(), urlActionInteraction.toString());
 	}
 
 	@Override
@@ -128,16 +128,30 @@ public class DisplayPageActionExecutionResult implements Serializable {
 
 		sb.append("{");
 
-		Mapping mapping = getMapping();
+		FragmentInlineValue fragmentInlineValue = getFragmentInlineValue();
 
-		if (mapping != null) {
+		if (fragmentInlineValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"mapping\": ");
+			sb.append("\"fragmentInlineValue\": ");
 
-			sb.append(String.valueOf(mapping));
+			sb.append(String.valueOf(fragmentInlineValue));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -147,7 +161,7 @@ public class DisplayPageActionExecutionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DisplayPageActionExecutionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.URLActionInteraction",
 		name = "x-class-name"
 	)
 	public String xClassName;

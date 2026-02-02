@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.NotificationActionExecutionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class NotificationActionExecutionResultSerDes {
+public class DisplayPageActionInteractionSerDes {
 
-	public static NotificationActionExecutionResult toDTO(String json) {
-		NotificationActionExecutionResultJSONParser
-			notificationActionExecutionResultJSONParser =
-				new NotificationActionExecutionResultJSONParser();
+	public static DisplayPageActionInteraction toDTO(String json) {
+		DisplayPageActionInteractionJSONParser
+			displayPageActionInteractionJSONParser =
+				new DisplayPageActionInteractionJSONParser();
 
-		return notificationActionExecutionResultJSONParser.parseToDTO(json);
+		return displayPageActionInteractionJSONParser.parseToDTO(json);
 	}
 
-	public static NotificationActionExecutionResult[] toDTOs(String json) {
-		NotificationActionExecutionResultJSONParser
-			notificationActionExecutionResultJSONParser =
-				new NotificationActionExecutionResultJSONParser();
+	public static DisplayPageActionInteraction[] toDTOs(String json) {
+		DisplayPageActionInteractionJSONParser
+			displayPageActionInteractionJSONParser =
+				new DisplayPageActionInteractionJSONParser();
 
-		return notificationActionExecutionResultJSONParser.parseToDTOs(json);
+		return displayPageActionInteractionJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		NotificationActionExecutionResult notificationActionExecutionResult) {
+		DisplayPageActionInteraction displayPageActionInteraction) {
 
-		if (notificationActionExecutionResult == null) {
+		if (displayPageActionInteraction == null) {
 			return "null";
 		}
 
@@ -50,25 +50,31 @@ public class NotificationActionExecutionResultSerDes {
 
 		sb.append("{");
 
-		if (notificationActionExecutionResult.getReload() != null) {
+		if (displayPageActionInteraction.getMappingFieldKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"reload\": ");
+			sb.append("\"mappingFieldKey\": ");
 
-			sb.append(notificationActionExecutionResult.getReload());
-		}
-
-		if (notificationActionExecutionResult.getText() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"text\": ");
+			sb.append("\"");
 
 			sb.append(
-				String.valueOf(notificationActionExecutionResult.getText()));
+				_escape(displayPageActionInteraction.getMappingFieldKey()));
+
+			sb.append("\"");
+		}
+
+		if (displayPageActionInteraction.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(displayPageActionInteraction.getType());
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -77,62 +83,62 @@ public class NotificationActionExecutionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		NotificationActionExecutionResultJSONParser
-			notificationActionExecutionResultJSONParser =
-				new NotificationActionExecutionResultJSONParser();
+		DisplayPageActionInteractionJSONParser
+			displayPageActionInteractionJSONParser =
+				new DisplayPageActionInteractionJSONParser();
 
-		return notificationActionExecutionResultJSONParser.parseToMap(json);
+		return displayPageActionInteractionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		NotificationActionExecutionResult notificationActionExecutionResult) {
+		DisplayPageActionInteraction displayPageActionInteraction) {
 
-		if (notificationActionExecutionResult == null) {
+		if (displayPageActionInteraction == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (notificationActionExecutionResult.getReload() == null) {
-			map.put("reload", null);
+		if (displayPageActionInteraction.getMappingFieldKey() == null) {
+			map.put("mappingFieldKey", null);
 		}
 		else {
 			map.put(
-				"reload",
-				String.valueOf(notificationActionExecutionResult.getReload()));
+				"mappingFieldKey",
+				String.valueOf(
+					displayPageActionInteraction.getMappingFieldKey()));
 		}
 
-		if (notificationActionExecutionResult.getText() == null) {
-			map.put("text", null);
+		if (displayPageActionInteraction.getType() == null) {
+			map.put("type", null);
 		}
 		else {
 			map.put(
-				"text",
-				String.valueOf(notificationActionExecutionResult.getText()));
+				"type", String.valueOf(displayPageActionInteraction.getType()));
 		}
 
 		return map;
 	}
 
-	public static class NotificationActionExecutionResultJSONParser
-		extends BaseJSONParser<NotificationActionExecutionResult> {
+	public static class DisplayPageActionInteractionJSONParser
+		extends BaseJSONParser<DisplayPageActionInteraction> {
 
 		@Override
-		protected NotificationActionExecutionResult createDTO() {
-			return new NotificationActionExecutionResult();
+		protected DisplayPageActionInteraction createDTO() {
+			return new DisplayPageActionInteraction();
 		}
 
 		@Override
-		protected NotificationActionExecutionResult[] createDTOArray(int size) {
-			return new NotificationActionExecutionResult[size];
+		protected DisplayPageActionInteraction[] createDTOArray(int size) {
+			return new DisplayPageActionInteraction[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "reload")) {
+			if (Objects.equals(jsonParserFieldName, "mappingFieldKey")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -141,19 +147,19 @@ public class NotificationActionExecutionResultSerDes {
 
 		@Override
 		protected void setField(
-			NotificationActionExecutionResult notificationActionExecutionResult,
+			DisplayPageActionInteraction displayPageActionInteraction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "reload")) {
+			if (Objects.equals(jsonParserFieldName, "mappingFieldKey")) {
 				if (jsonParserFieldValue != null) {
-					notificationActionExecutionResult.setReload(
-						(Boolean)jsonParserFieldValue);
+					displayPageActionInteraction.setMappingFieldKey(
+						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "text")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					notificationActionExecutionResult.setText(
-						FragmentInlineValueSerDes.toDTO(
+					displayPageActionInteraction.setType(
+						DisplayPageActionInteraction.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

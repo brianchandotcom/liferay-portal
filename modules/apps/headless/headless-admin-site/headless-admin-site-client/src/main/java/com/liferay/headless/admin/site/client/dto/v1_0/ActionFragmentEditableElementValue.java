@@ -26,89 +26,100 @@ public class ActionFragmentEditableElementValue
 		return ActionFragmentEditableElementValueSerDes.toDTO(json);
 	}
 
-	public Object getAction() {
-		return action;
+	public ActionInteraction getErrorActionInteraction() {
+		return errorActionInteraction;
 	}
 
-	public void setAction(Object action) {
-		this.action = action;
+	public void setErrorActionInteraction(
+		ActionInteraction errorActionInteraction) {
+
+		this.errorActionInteraction = errorActionInteraction;
 	}
 
-	public void setAction(
-		UnsafeSupplier<Object, Exception> actionUnsafeSupplier) {
+	public void setErrorActionInteraction(
+		UnsafeSupplier<ActionInteraction, Exception>
+			errorActionInteractionUnsafeSupplier) {
 
 		try {
-			action = actionUnsafeSupplier.get();
+			errorActionInteraction = errorActionInteractionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object action;
+	protected ActionInteraction errorActionInteraction;
 
-	public ActionExecutionResult getOnError() {
-		return onError;
+	public FragmentMappedValue getFragmentMappedValue() {
+		return fragmentMappedValue;
 	}
 
-	public void setOnError(ActionExecutionResult onError) {
-		this.onError = onError;
+	public void setFragmentMappedValue(
+		FragmentMappedValue fragmentMappedValue) {
+
+		this.fragmentMappedValue = fragmentMappedValue;
 	}
 
-	public void setOnError(
-		UnsafeSupplier<ActionExecutionResult, Exception>
-			onErrorUnsafeSupplier) {
+	public void setFragmentMappedValue(
+		UnsafeSupplier<FragmentMappedValue, Exception>
+			fragmentMappedValueUnsafeSupplier) {
 
 		try {
-			onError = onErrorUnsafeSupplier.get();
+			fragmentMappedValue = fragmentMappedValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ActionExecutionResult onError;
+	protected FragmentMappedValue fragmentMappedValue;
 
-	public ActionExecutionResult getOnSuccess() {
-		return onSuccess;
+	public ActionInteraction getSuccessActionInteraction() {
+		return successActionInteraction;
 	}
 
-	public void setOnSuccess(ActionExecutionResult onSuccess) {
-		this.onSuccess = onSuccess;
+	public void setSuccessActionInteraction(
+		ActionInteraction successActionInteraction) {
+
+		this.successActionInteraction = successActionInteraction;
 	}
 
-	public void setOnSuccess(
-		UnsafeSupplier<ActionExecutionResult, Exception>
-			onSuccessUnsafeSupplier) {
+	public void setSuccessActionInteraction(
+		UnsafeSupplier<ActionInteraction, Exception>
+			successActionInteractionUnsafeSupplier) {
 
 		try {
-			onSuccess = onSuccessUnsafeSupplier.get();
+			successActionInteraction =
+				successActionInteractionUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ActionExecutionResult onSuccess;
+	protected ActionInteraction successActionInteraction;
 
-	public Object getText() {
-		return text;
+	public TextFragmentValue getTextFragmentValue() {
+		return textFragmentValue;
 	}
 
-	public void setText(Object text) {
-		this.text = text;
+	public void setTextFragmentValue(TextFragmentValue textFragmentValue) {
+		this.textFragmentValue = textFragmentValue;
 	}
 
-	public void setText(UnsafeSupplier<Object, Exception> textUnsafeSupplier) {
+	public void setTextFragmentValue(
+		UnsafeSupplier<TextFragmentValue, Exception>
+			textFragmentValueUnsafeSupplier) {
+
 		try {
-			text = textUnsafeSupplier.get();
+			textFragmentValue = textFragmentValueUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Object text;
+	protected TextFragmentValue textFragmentValue;
 
 	@Override
 	public ActionFragmentEditableElementValue clone()

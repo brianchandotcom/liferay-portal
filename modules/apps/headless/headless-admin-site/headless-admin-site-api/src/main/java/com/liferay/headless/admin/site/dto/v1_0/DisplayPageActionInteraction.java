@@ -1,28 +1,22 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
-
-import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -40,59 +34,50 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The result of an action execution.",
-	value = "ActionExecutionResult"
+	description = "The definition of an action interaction of type display page.",
+	value = "DisplayPageActionInteraction"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ActionExecutionResult")
-public class ActionExecutionResult implements Serializable {
+@XmlRootElement(name = "DisplayPageActionInteraction")
+public class DisplayPageActionInteraction
+	extends ActionInteraction implements Serializable {
 
-	public static ActionExecutionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(ActionExecutionResult.class, json);
+	public static DisplayPageActionInteraction toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			DisplayPageActionInteraction.class, json);
 	}
 
-	public static ActionExecutionResult unsafeToDTO(String json) {
+	public static DisplayPageActionInteraction unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ActionExecutionResult.class, json);
+			DisplayPageActionInteraction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The type of result."
+		description = "The mapping's field key of the display page action interaction."
 	)
-	@JsonGetter("type")
-	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public String getMappingFieldKey() {
+		if (_mappingFieldKeySupplier != null) {
+			mappingFieldKey = _mappingFieldKeySupplier.get();
 
-			_typeSupplier = null;
+			_mappingFieldKeySupplier = null;
 		}
 
-		return type;
+		return mappingFieldKey;
+	}
+
+	public void setMappingFieldKey(String mappingFieldKey) {
+		this.mappingFieldKey = mappingFieldKey;
+
+		_mappingFieldKeySupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setMappingFieldKey(
+		UnsafeSupplier<String, Exception> mappingFieldKeyUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_mappingFieldKeySupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return mappingFieldKeyUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -103,54 +88,14 @@ public class ActionExecutionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The type of result.")
+	@GraphQLField(
+		description = "The mapping's field key of the display page action interaction."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String mappingFieldKey;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Object getValue() {
-		if (_valueSupplier != null) {
-			value = _valueSupplier.get();
-
-			_valueSupplier = null;
-		}
-
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-
-		_valueSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		_valueSupplier = () -> {
-			try {
-				return valueUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
-
-	@JsonIgnore
-	private Supplier<Object> _valueSupplier;
+	private Supplier<String> _mappingFieldKeySupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -158,14 +103,15 @@ public class ActionExecutionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ActionExecutionResult)) {
+		if (!(object instanceof DisplayPageActionInteraction)) {
 			return false;
 		}
 
-		ActionExecutionResult actionExecutionResult =
-			(ActionExecutionResult)object;
+		DisplayPageActionInteraction displayPageActionInteraction =
+			(DisplayPageActionInteraction)object;
 
-		return Objects.equals(toString(), actionExecutionResult.toString());
+		return Objects.equals(
+			toString(), displayPageActionInteraction.toString());
 	}
 
 	@Override
@@ -179,6 +125,22 @@ public class ActionExecutionResult implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String mappingFieldKey = getMappingFieldKey();
+
+		if (mappingFieldKey != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mappingFieldKey\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(mappingFieldKey));
+
+			sb.append("\"");
+		}
 
 		Type type = getType();
 
@@ -194,28 +156,6 @@ public class ActionExecutionResult implements Serializable {
 			sb.append("\"");
 		}
 
-		Object value = getValue();
-
-		if (value != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"value\": ");
-
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)value));
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -223,49 +163,10 @@ public class ActionExecutionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ActionExecutionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.DisplayPageActionInteraction",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		DISPLAY_PAGE("DisplayPage"), NONE("None"), NOTIFICATION("Notification"),
-		PAGE("Page"), URL("URL");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

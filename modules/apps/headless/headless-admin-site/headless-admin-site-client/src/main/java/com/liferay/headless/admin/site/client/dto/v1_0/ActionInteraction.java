@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ActionExecutionResultSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ActionInteractionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ActionExecutionResult implements Cloneable, Serializable {
+public abstract class ActionInteraction implements Cloneable, Serializable {
 
-	public static ActionExecutionResult toDTO(String json) {
-		return ActionExecutionResultSerDes.toDTO(json);
+	public static ActionInteraction toDTO(String json) {
+		return ActionInteractionSerDes.toDTO(json);
 	}
 
 	public Type getType() {
@@ -52,30 +52,9 @@ public class ActionExecutionResult implements Cloneable, Serializable {
 
 	protected Type type;
 
-	public Object getValue() {
-		return value;
-	}
-
-	public void setValue(Object value) {
-		this.value = value;
-	}
-
-	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
-
-		try {
-			value = valueUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Object value;
-
 	@Override
-	public ActionExecutionResult clone() throws CloneNotSupportedException {
-		return (ActionExecutionResult)super.clone();
+	public ActionInteraction clone() throws CloneNotSupportedException {
+		return (ActionInteraction)super.clone();
 	}
 
 	@Override
@@ -84,14 +63,13 @@ public class ActionExecutionResult implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ActionExecutionResult)) {
+		if (!(object instanceof ActionInteraction)) {
 			return false;
 		}
 
-		ActionExecutionResult actionExecutionResult =
-			(ActionExecutionResult)object;
+		ActionInteraction actionInteraction = (ActionInteraction)object;
 
-		return Objects.equals(toString(), actionExecutionResult.toString());
+		return Objects.equals(toString(), actionInteraction.toString());
 	}
 
 	@Override
@@ -102,7 +80,7 @@ public class ActionExecutionResult implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ActionExecutionResultSerDes.toJSON(this);
+		return ActionInteractionSerDes.toJSON(this);
 	}
 
 	public static enum Type {

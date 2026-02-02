@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -34,7 +35,6 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +72,22 @@ public class ViewStructuresDisplayContext {
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
-		return Collections.emptyList();
+		return List.of(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"document"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "assign-workflow")
+			).setModalSize(
+				"lg"
+			).setTarget(
+				"modal"
+			).build(
+				"assign-default-workflow"
+			));
 	}
 
 	public CreationMenu getCreationMenu() {

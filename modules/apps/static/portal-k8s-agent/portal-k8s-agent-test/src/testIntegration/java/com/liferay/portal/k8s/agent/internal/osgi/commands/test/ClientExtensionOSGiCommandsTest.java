@@ -237,9 +237,7 @@ public class ClientExtensionOSGiCommandsTest {
 			"\\s*\\| Liferay Sample CX 1\\s*\\| customElement \\s*\\| ",
 			"default\\s*\\|");
 
-		Assert.assertTrue(
-			"Row does not match pattern: \n" + dataRow,
-			dataRow.matches(expectedDataPattern));
+		Assert.assertTrue(dataRow.matches(expectedDataPattern));
 	}
 
 	@Test

@@ -624,6 +624,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
+	 * Returns primary key of the matching default layout for the group.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @return the primary key of the default layout for the group; {@link
+	 *         LayoutConstants#DEFAULT_PLID}) otherwise
+	 */
+	@Override
+	public long getDefaultPlid(long groupId, boolean privateLayout) {
+		return layoutLocalService.getDefaultPlid(groupId, privateLayout);
+	}
+
+	/**
 	 * Returns the primary key of the default layout for the group.
 	 *
 	 * @param  groupId the primary key of the group
@@ -725,19 +738,6 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		}
 
 		return LayoutConstants.DEFAULT_PLID;
-	}
-
-	/**
-	 * Returns primary key of the matching default layout for the group.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @return the primary key of the default layout for the group; {@link
-	 *         LayoutConstants#DEFAULT_PLID}) otherwise
-	 */
-	@Override
-	public long getDefaultPlid(long groupId, boolean privateLayout) {
-		return layoutLocalService.getDefaultPlid(groupId, privateLayout);
 	}
 
 	@Override

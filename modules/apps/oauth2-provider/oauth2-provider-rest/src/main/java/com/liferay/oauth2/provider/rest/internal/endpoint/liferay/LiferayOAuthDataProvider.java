@@ -720,8 +720,8 @@ public class LiferayOAuthDataProvider
 		if (!_isAllowedToDelete(oAuth2Application)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Operation not allowed for client: " +
-						client.getClientId());
+					"Unable to delete client with OAuth 2 client ID  " +
+						client.getClientId() + "operation is not allowed");
 			}
 
 			throw ExceptionUtils.toForbiddenException(null, null);
@@ -1106,7 +1106,7 @@ public class LiferayOAuthDataProvider
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Error deleting OAuth 2 application", portalException);
+					"Unable to delete OAuth 2 application", portalException);
 			}
 
 			throw ExceptionUtils.toInternalServerErrorException(

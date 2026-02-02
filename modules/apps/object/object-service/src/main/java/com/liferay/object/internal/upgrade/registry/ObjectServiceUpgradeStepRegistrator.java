@@ -683,6 +683,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.25.1", "10.26.0",
 			UpgradeProcessFactory.dropColumns(
 				"ObjectDefinition", "enableLocalization"));
+
+		registry.register(
+			"10.26.0", "11.0.0",
+			new com.liferay.object.internal.upgrade.v11_0_0.
+				ObjectFieldSettingUpgradeProcess());
 	}
 
 	@Reference

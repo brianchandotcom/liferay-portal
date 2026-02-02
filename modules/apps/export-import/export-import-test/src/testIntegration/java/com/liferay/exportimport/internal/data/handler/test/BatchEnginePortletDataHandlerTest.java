@@ -290,7 +290,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -314,7 +314,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition
 			).executeImport();
 		}
@@ -694,7 +694,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile1 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -704,7 +704,7 @@ public class BatchEnginePortletDataHandlerTest {
 		).withDeletions(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -715,7 +715,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile1
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -727,7 +727,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile2
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -740,7 +740,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile2
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -851,6 +851,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile1 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
+		).withIncludeObjectDefinitions(
 		).executeExport();
 
 		_objectFieldLocalService.deleteObjectField(objectFields[0]);
@@ -859,6 +860,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile2 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
+		).withIncludeObjectDefinitions(
 		).executeExport();
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
@@ -866,6 +868,7 @@ public class BatchEnginePortletDataHandlerTest {
 		new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
+		).withIncludeObjectDefinitions(
 		).withLARFile(
 			larFile1
 		).executeImport();
@@ -876,6 +879,7 @@ public class BatchEnginePortletDataHandlerTest {
 		new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
+		).withIncludeObjectDefinitions(
 		).withLARFile(
 			larFile2
 		).executeImport();
@@ -937,7 +941,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group1.getGroupId()
 		).withLayoutId(
 			layout.getLayoutId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -983,7 +987,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group2.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition
 			).executeImport();
 
@@ -1060,7 +1064,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			group1.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -1071,7 +1075,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group2.getGroupId()
 		).withLARFile(
 			larFile
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -1310,7 +1314,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group1.getGroupId()
 		).withLayoutId(
 			layout.getLayoutId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -1323,7 +1327,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group2.getGroupId()
 		).withLARFile(
 			larFile
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -1370,7 +1374,7 @@ public class BatchEnginePortletDataHandlerTest {
 		).withDeletions(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition1
 		).executeExport();
 
@@ -1394,7 +1398,7 @@ public class BatchEnginePortletDataHandlerTest {
 		).withDeletions(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition2
 		).withPrivateLayouts(
 		).executeExport();
@@ -1419,9 +1423,9 @@ public class BatchEnginePortletDataHandlerTest {
 		).withDeletions(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition1
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition2
 		).executeExport();
 
@@ -1700,7 +1704,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile1 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -1710,7 +1714,7 @@ public class BatchEnginePortletDataHandlerTest {
 		).withDeletions(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -1721,7 +1725,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile1
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -1733,7 +1737,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile2
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -1746,7 +1750,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile2
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -1812,7 +1816,8 @@ public class BatchEnginePortletDataHandlerTest {
 		).withGroupId(
 			group.getGroupId()
 		).withIncludeListTypeDefinitions(
-		).withObjectDefinition(
+		).withIncludeObjectDefinitions(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -1829,9 +1834,10 @@ public class BatchEnginePortletDataHandlerTest {
 		).withGroupId(
 			group.getGroupId()
 		).withIncludeListTypeDefinitions(
+		).withIncludeObjectDefinitions(
 		).withLARFile(
 			larFile
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -2484,7 +2490,7 @@ public class BatchEnginePortletDataHandlerTest {
 	private Map<String, String[]> _getExportImportParameterMap(
 		boolean deletions, boolean includeDocumentLibrary,
 		boolean includeLayoutSetLayoutsPortlet,
-		boolean includeListTypeDefinitions,
+		boolean includeListTypeDefinitions, boolean includeObjectDefinitions,
 		List<ObjectDefinition> objectDefinitions) {
 
 		Map<String, String[]> parameterMap = HashMapBuilder.put(
@@ -2528,7 +2534,13 @@ public class BatchEnginePortletDataHandlerTest {
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA + "_" +
 				ObjectPortletKeys.OBJECT_DEFINITIONS,
-			new String[] {Boolean.TRUE.toString()}
+			() -> {
+				if (includeObjectDefinitions) {
+					return new String[] {Boolean.TRUE.toString()};
+				}
+
+				return null;
+			}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT,
 			new String[] {Boolean.TRUE.toString()}
@@ -2788,7 +2800,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -2799,7 +2811,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -2850,7 +2862,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile1 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -2868,7 +2880,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile2 = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -2880,7 +2892,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile1
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -2891,7 +2903,7 @@ public class BatchEnginePortletDataHandlerTest {
 			group.getGroupId()
 		).withLARFile(
 			larFile2
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeImport();
 
@@ -2914,7 +2926,7 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -2929,7 +2941,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition
 			).executeImport();
 
@@ -2987,9 +2999,9 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = new ExportImportExecutor(
 		).withGroupId(
 			group.getGroupId()
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition1
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition2
 		).executeExport();
 
@@ -3061,7 +3073,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition2
 			).executeImport();
 
@@ -3077,7 +3089,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition1
 			).executeImport();
 
@@ -3091,7 +3103,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition1
 			).executeImport();
 
@@ -3132,7 +3144,7 @@ public class BatchEnginePortletDataHandlerTest {
 				group.getGroupId()
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition2
 			).executeImport();
 
@@ -3186,7 +3198,7 @@ public class BatchEnginePortletDataHandlerTest {
 			sourceGroup.getGroupId()
 		).withIncludeDocumentLibrary(
 			exportFileEntries
-		).withObjectDefinition(
+		).withObjectEntries(
 			objectDefinition
 		).executeExport();
 
@@ -3205,7 +3217,7 @@ public class BatchEnginePortletDataHandlerTest {
 				importFileEntries
 			).withLARFile(
 				larFile
-			).withObjectDefinition(
+			).withObjectEntries(
 				objectDefinition
 			).executeImport();
 
@@ -3728,6 +3740,7 @@ public class BatchEnginePortletDataHandlerTest {
 									_deletions, _includeDocumentLibrary,
 									_includeLayoutSetLayouts,
 									_includeListTypeDefinitions,
+									_includeObjectDefinitions,
 									_objectDefinitions))));
 		}
 
@@ -3747,6 +3760,7 @@ public class BatchEnginePortletDataHandlerTest {
 										_deletions, _includeDocumentLibrary,
 										_includeLayoutSetLayouts,
 										_includeListTypeDefinitions,
+										_includeObjectDefinitions,
 										_objectDefinitions)));
 
 				if (_deletions) {
@@ -3799,6 +3813,12 @@ public class BatchEnginePortletDataHandlerTest {
 			return this;
 		}
 
+		public ExportImportExecutor withIncludeObjectDefinitions() {
+			_includeObjectDefinitions = true;
+
+			return this;
+		}
+
 		public ExportImportExecutor withLARFile(File larFile) {
 			_larFile = larFile;
 
@@ -3811,7 +3831,7 @@ public class BatchEnginePortletDataHandlerTest {
 			return this;
 		}
 
-		public ExportImportExecutor withObjectDefinition(
+		public ExportImportExecutor withObjectEntries(
 			ObjectDefinition objectDefinition) {
 
 			_objectDefinitions.add(objectDefinition);
@@ -3831,6 +3851,7 @@ public class BatchEnginePortletDataHandlerTest {
 		private boolean _includeDocumentLibrary;
 		private boolean _includeLayoutSetLayouts;
 		private boolean _includeListTypeDefinitions;
+		private boolean _includeObjectDefinitions;
 		private File _larFile;
 		private List<Long> _layoutIds = new ArrayList<>();
 		private List<ObjectDefinition> _objectDefinitions = new ArrayList<>();

@@ -8,6 +8,7 @@ import {Form, Formik, FormikConfig, FormikHelpers, FormikValues} from 'formik';
 import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
+import {FormikDebug} from './forms/FormikDebug';
 
 interface WizardStepProps {
 	actionButton?: React.ReactElement;
@@ -25,11 +26,13 @@ export function WizardStep({children}: WizardStepProps) {
 export function Wizard({
 	backURL,
 	children,
+	debug = process.env.NODE_ENV === 'development',
 }: {
 	backURL: string;
 	children:
 		| React.ReactElement<WizardStepProps>
 		| React.ReactElement<WizardStepProps>[];
+	debug?: boolean;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);
 	const [formState, setFormState] = useState({});
@@ -124,6 +127,8 @@ export function Wizard({
 								: undefined
 						}
 					/>
+
+					{debug && <FormikDebug />}
 				</Form>
 			)}
 		</Formik>

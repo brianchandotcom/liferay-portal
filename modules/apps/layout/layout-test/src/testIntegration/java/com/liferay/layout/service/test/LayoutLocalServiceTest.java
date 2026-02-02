@@ -321,9 +321,7 @@ public class LayoutLocalServiceTest {
 		try {
 			layout = _layoutLocalService.convertEmptyLayout(
 				TestPropsValues.getUserId(), layout.getPlid(),
-				HashMapBuilder.put(
-					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
-				).build(),
+				RandomTestUtil.randomLocaleStringMap(),
 				LayoutConstants.TYPE_CONTENT, 0, 0, null, _serviceContext);
 		}
 		finally {
@@ -341,9 +339,7 @@ public class LayoutLocalServiceTest {
 
 		layout = _layoutLocalService.convertEmptyLayout(
 			TestPropsValues.getUserId(), layout.getPlid(),
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
-			).build(),
+			RandomTestUtil.randomLocaleStringMap(),
 			LayoutConstants.TYPE_PORTLET, 0, 0, null, _serviceContext);
 
 		Assert.assertTrue(layout.isTypePortlet());

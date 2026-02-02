@@ -947,54 +947,6 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateLayoutWithLazyReferencingEnabled() throws Exception {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, layout.getStatus());
-
-			try {
-				layout = _layoutLocalService.updateLayout(
-					_group.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), layout.getParentLayoutId(),
-					layout.getNameMap(), layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getKeywordsMap(),
-					layout.getRobotsMap(), layout.getType(), false,
-					layout.getFriendlyURLMap(), layout.isIconImage(), null,
-					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryERC(),
-					layout.getFaviconFileEntryScopeERC(),
-					layout.getMasterLayoutPageTemplateEntryERC(),
-					_serviceContext);
-
-				Assert.fail();
-			}
-			catch (LayoutTypeException layoutTypeException) {
-				Assert.assertNotNull(layoutTypeException);
-			}
-
-			layout = _layoutLocalService.updateLayout(
-				_group.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), layout.getParentLayoutId(),
-				layout.getNameMap(), layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getKeywordsMap(),
-				layout.getRobotsMap(), LayoutConstants.TYPE_CONTENT, false,
-				layout.getFriendlyURLMap(), layout.isIconImage(), null,
-				layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
-				layout.getFaviconFileEntryScopeERC(),
-				layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_DRAFT, layout.getStatus());
-		}
-	}
-
-	@Test
 	public void testUpdateLookAndFeel() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 

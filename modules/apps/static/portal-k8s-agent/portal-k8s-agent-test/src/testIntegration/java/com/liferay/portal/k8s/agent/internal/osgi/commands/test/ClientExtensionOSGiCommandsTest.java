@@ -80,7 +80,7 @@ public class ClientExtensionOSGiCommandsTest {
 				CETConfiguration.class.getName(),
 				"liferay-sample-cx-1/liferay.com",
 				HashMapDictionaryBuilder.<String, Object>put(
-					".cx.config.key",
+					".client.extension.config.key",
 					CETConfiguration.class.getName() +
 						"~liferay-sample-cx-1/liferay.com"
 				).put(

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -22,7 +24,10 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.configuration.SearchPermissionCheckerConfiguration;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -95,6 +100,34 @@ public class SearchPermissionCheckerImplTest {
 				0, null, userId, null, null, new SearchContext()));
 	}
 
+	@Test
+	public void testPermissionFilterWithTermsLimitAndFilterSearchDisabled()
+		throws Exception {
+
+		long userId = RandomTestUtil.randomLong();
+
+		_whenIndexerIsFilterSearch(false);
+		_whenIndexerIsPermissionAware(true);
+		_whenPermissionCheckerGetUser(_user);
+		_whenPermissionCheckerGetUserBag(_userBag);
+		_whenUserGetUserId(userId);
+
+		List<Group> groups = new ArrayList<>();
+
+		for (int i = 0; i < 251; i++) {
+			groups.add(Mockito.mock(Group.class));
+		}
+
+		_whenUserBagGetGroups(groups);
+
+		BooleanFilter booleanFilter =
+			_searchPermissionChecker.getPermissionBooleanFilter(
+				0, new long[] {RandomTestUtil.randomLong()}, userId,
+				RandomTestUtil.randomString(), null, new SearchContext());
+
+		Assert.assertNotNull(booleanFilter);
+	}
+
 	private void _assertGetResourcePermissions(
 			long[] groupIds, int wantedNumberOfInvocations)
 		throws Exception {
@@ -154,6 +187,14 @@ public class SearchPermissionCheckerImplTest {
 		return _searchPermissionCheckerImpl;
 	}
 
+	private boolean _whenIndexerIsFilterSearch(boolean filterSearch) {
+		return Mockito.doReturn(
+			filterSearch
+		).when(
+			_indexer
+		).isFilterSearch();
+	}
+
 	private boolean _whenIndexerIsPermissionAware(boolean permissionAware) {
 		return Mockito.doReturn(
 			permissionAware
@@ -188,6 +229,16 @@ public class SearchPermissionCheckerImplTest {
 		).getRoles(
 			Mockito.any()
 		);
+	}
+
+	private void _whenUserBagGetGroups(Collection<Group> groups)
+		throws Exception {
+
+		Mockito.doReturn(
+			groups
+		).when(
+			_userBag
+		).getGroups();
 	}
 
 	private long _whenUserGetUserId(long userId) {

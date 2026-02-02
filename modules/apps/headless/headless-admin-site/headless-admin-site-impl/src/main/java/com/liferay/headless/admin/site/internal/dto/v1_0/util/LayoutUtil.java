@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -12,6 +13,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.scope.Scope;
 
 /**
@@ -76,6 +78,54 @@ public class LayoutUtil {
 		).put(
 			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
 		);
+	}
+
+	public static ItemExternalReference toLayoutItemExternalReference(
+		long companyId, JSONObject layoutJSONObject, long scopeGroupId) {
+
+		if (JSONUtil.isEmpty(layoutJSONObject)) {
+			return null;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			layoutJSONObject.getLong("groupId"),
+			layoutJSONObject.getBoolean("privateLayout"),
+			layoutJSONObject.getLong("layoutId"));
+
+		String externalReferenceCode;
+
+		if (layout != null) {
+			externalReferenceCode = layout.getExternalReferenceCode();
+		}
+		else {
+			externalReferenceCode = layoutJSONObject.getString(
+				"externalReferenceCode");
+		}
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference();
+
+		itemExternalReference.setClassName(Layout.class::getName);
+		itemExternalReference.setExternalReferenceCode(
+			() -> externalReferenceCode);
+		itemExternalReference.setScope(
+			() -> {
+				if (layout != null) {
+					return ItemScopeUtil.getItemScope(
+						layout.getGroupId(), scopeGroupId);
+				}
+
+				return ItemScopeUtil.getItemScope(
+					companyId,
+					layoutJSONObject.getString("scopeExternalReferenceCode"),
+					scopeGroupId);
+			});
+
+		return itemExternalReference;
 	}
 
 }

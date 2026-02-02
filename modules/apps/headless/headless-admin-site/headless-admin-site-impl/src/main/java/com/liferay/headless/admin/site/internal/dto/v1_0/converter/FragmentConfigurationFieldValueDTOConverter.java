@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.headless.admin.site.dto.v1_0.CategoryFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.CheckboxFragmentConfigurationFieldValue;
@@ -41,6 +40,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.ContextualMenuType
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentConfigurationFieldValueTypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.InfoItemUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -969,36 +969,11 @@ public class FragmentConfigurationFieldValueDTOConverter
 			return null;
 		}
 
-		Layout layout = _layoutReferenceResolver.resolve(
-			companyId, layoutJSONObject, scopeGroupId);
-
-		if (layout != null) {
-			SitePageURLValue sitePageURLValue = new SitePageURLValue();
-
-			sitePageURLValue.setSitePage(
-				() -> _getItemExternalReference(
-					Layout.class.getName(), layout.getExternalReferenceCode(),
-					ItemScopeUtil.getItemScope(
-						layout.getGroupId(), scopeGroupId)));
-			sitePageURLValue.setUrlType(() -> URLValue.UrlType.SITE_PAGE);
-
-			return sitePageURLValue;
-		}
-
-		if (!layoutJSONObject.has("externalReferenceCode")) {
-			return null;
-		}
-
 		SitePageURLValue sitePageURLValue = new SitePageURLValue();
 
 		sitePageURLValue.setSitePage(
-			() -> _getItemExternalReference(
-				Layout.class.getName(),
-				layoutJSONObject.getString("externalReferenceCode"),
-				ItemScopeUtil.getItemScope(
-					companyId,
-					layoutJSONObject.getString("scopeExternalReferenceCode"),
-					scopeGroupId)));
+			() -> LayoutUtil.toLayoutItemExternalReference(
+				companyId, layoutJSONObject, scopeGroupId));
 		sitePageURLValue.setUrlType(() -> URLValue.UrlType.SITE_PAGE);
 
 		return sitePageURLValue;
@@ -1055,9 +1030,6 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutReferenceResolver _layoutReferenceResolver;
 
 	@Reference
 	private SiteNavigationMenuItemLocalService

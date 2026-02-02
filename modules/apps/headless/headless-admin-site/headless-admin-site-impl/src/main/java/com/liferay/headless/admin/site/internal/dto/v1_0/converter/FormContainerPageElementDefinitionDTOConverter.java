@@ -24,6 +24,7 @@ import com.liferay.headless.admin.site.dto.v1_0.URLFormContainerSubmissionResult
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ContainerLayoutUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -31,8 +32,6 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -198,54 +197,6 @@ public class FormContainerPageElementDefinitionDTOConverter
 		return fragmentInlineValue;
 	}
 
-	private ItemExternalReference _toLayoutItemExternalReference(
-		long companyId, JSONObject layoutJSONObject, long scopeGroupId) {
-
-		if (JSONUtil.isEmpty(layoutJSONObject)) {
-			return null;
-		}
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutJSONObject.getLong("groupId"),
-			layoutJSONObject.getBoolean("privateLayout"),
-			layoutJSONObject.getLong("layoutId"));
-
-		String externalReferenceCode;
-
-		if (layout != null) {
-			externalReferenceCode = layout.getExternalReferenceCode();
-		}
-		else {
-			externalReferenceCode = layoutJSONObject.getString(
-				"externalReferenceCode");
-		}
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return null;
-		}
-
-		ItemExternalReference itemExternalReference =
-			new ItemExternalReference();
-
-		itemExternalReference.setClassName(Layout.class::getName);
-		itemExternalReference.setExternalReferenceCode(
-			() -> externalReferenceCode);
-		itemExternalReference.setScope(
-			() -> {
-				if (layout != null) {
-					return ItemScopeUtil.getItemScope(
-						layout.getGroupId(), scopeGroupId);
-				}
-
-				return ItemScopeUtil.getItemScope(
-					companyId,
-					layoutJSONObject.getString("scopeExternalReferenceCode"),
-					scopeGroupId);
-			});
-
-		return itemExternalReference;
-	}
-
 	private ItemExternalReference
 		_toLayoutPageTemplateEntryItemExternalReference(
 			long companyId, String displayPage, JSONObject jsonObject,
@@ -406,7 +357,7 @@ public class FormContainerPageElementDefinitionDTOConverter
 					new SitePageFormContainerSubmissionResult();
 
 			sitePageFormContainerSubmissionResult.setItemExternalReference(
-				() -> _toLayoutItemExternalReference(
+				() -> LayoutUtil.toLayoutItemExternalReference(
 					companyId, jsonObject.getJSONObject("layout"),
 					scopeGroupId));
 			sitePageFormContainerSubmissionResult.setSuccessNotificationMessage(
@@ -452,9 +403,6 @@ public class FormContainerPageElementDefinitionDTOConverter
 
 		return successNotificationMessage;
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

@@ -4,7 +4,11 @@ import React, {lazy, Suspense} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {ChannelContext} from 'shared/context/channel';
 import {connect} from 'react-redux';
-import {DEVELOPER_MODE, ENABLE_ACCOUNTS} from 'shared/util/constants';
+import {
+	DEVELOPER_MODE,
+	ENABLE_ACCOUNTS,
+	ENABLE_CDP
+} from 'shared/util/constants';
 import {DownloadReportProvider} from 'shared/components/download-report/DownloadReportContext';
 import {Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
@@ -78,6 +82,12 @@ const IndividualProfileRoutes = lazy(() =>
 const IndividualsDashboard = lazy(() =>
 	import(
 		/* webpackChunkName: "IndividualsDashboard" */ '../../individual/dashboard/pages'
+	)
+);
+
+const IndividualsDashboardCDP = lazy(() =>
+	import(
+		/* webpackChunkName: "IndividualsDashboardCDP" */ '../../individual/dashboard/pages/IndividualsDashboardCDP'
 	)
 );
 
@@ -159,7 +169,7 @@ const ROUTES = [
 		path: Routes.CONTACTS_INDIVIDUAL
 	},
 	{
-		data: IndividualsDashboard,
+		data: ENABLE_CDP ? IndividualsDashboardCDP : IndividualsDashboard,
 		destructured: false,
 		exact: false,
 		path: Routes.CONTACTS_INDIVIDUALS

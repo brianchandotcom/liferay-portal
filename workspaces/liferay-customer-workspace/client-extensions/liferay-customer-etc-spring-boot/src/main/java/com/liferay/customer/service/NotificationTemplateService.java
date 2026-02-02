@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationTemplateService extends BaseService {
 
-	public JSONObject getAndProcessTemplate(
+	public JSONObject getAndProcessTemplateJSONObject(
 			String externalReferenceCode, JSONObject placeholdersJSONObject)
 		throws Exception {
 

@@ -54,7 +54,7 @@ public abstract class BaseNotificationService extends BaseService {
 						FIELD_NOTIFICATION_TARGET);
 
 			JSONObject processedTemplateJSONObject =
-				notificationTemplateService.getAndProcessTemplate(
+				notificationTemplateService.getAndProcessTemplateJSONObject(
 					templateName, templatePayloadJSONObject);
 
 			String body = processedTemplateJSONObject.getString("body");

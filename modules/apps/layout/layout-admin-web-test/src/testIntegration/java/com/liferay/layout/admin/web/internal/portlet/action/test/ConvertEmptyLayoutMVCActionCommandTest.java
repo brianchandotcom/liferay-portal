@@ -14,7 +14,9 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -62,6 +64,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Brooke Dalton
@@ -349,10 +353,40 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
 			_serviceContext);
 
-		_mvcActionCommand.processAction(
-			_getMockLiferayPortletActionRequest(
-				emptyLayout, type, TestPropsValues.getUser()),
-			new MockLiferayPortletActionResponse());
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		try {
+			_mvcActionCommand.processAction(
+				_getMockLiferayPortletActionRequest(
+					emptyLayout, type, TestPropsValues.getUser()),
+				mockLiferayPortletActionResponse);
+
+			Assert.fail();
+		}
+		catch (PortletException portletException) {
+			LayoutTypeException layoutTypeException =
+				(LayoutTypeException)portletException.getCause();
+
+			Assert.assertEquals(
+				LayoutTypeException.TYPE_NOT_ALLOWED,
+				layoutTypeException.getType());
+
+			MockHttpServletResponse mockHttpServletResponse =
+				(MockHttpServletResponse)
+					mockLiferayPortletActionResponse.getHttpServletResponse();
+
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				mockHttpServletResponse.getContentAsString());
+
+			Assert.assertEquals(
+				_language.format(
+					LocaleUtil.getDefault(),
+					"an-empty-page-cannot-be-converted-to-x",
+					_language.get(
+						LocaleUtil.getDefault(), "layout.types." + type)),
+				jsonObject.getString("errorMessage"));
+		}
 
 		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
 

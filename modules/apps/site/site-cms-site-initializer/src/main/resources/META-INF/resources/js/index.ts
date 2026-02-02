@@ -4,6 +4,7 @@
  */
 
 export {default as Breadcrumb} from './common/components/Breadcrumb';
+export {default as EnterpriseProductMenuBanner} from './common/components/EnterpriseProductMenuBanner';
 export {default as SpaceSticker} from './common/components/SpaceSticker';
 export {default as Toolbar} from './common/components/Toolbar';
 export {IAssetObjectEntry} from './common/types/AssetType';

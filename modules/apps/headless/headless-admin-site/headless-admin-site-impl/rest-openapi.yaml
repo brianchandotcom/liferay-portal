@@ -1,25 +1,5 @@
 components:
     schemas:
-        ActionInteraction:
-            # @review
-            description:
-                The result of an action interaction.
-            properties:
-                type:
-                    # @review
-                    description:
-                        The type of result.
-                    enum: [DisplayPage, None, Notification, Page, URL]
-                    type:
-                        string
-                value:
-                    oneOf:
-                        -   $ref: "#/components/schemas/DisplayPageActionInteraction"
-                        -   $ref: "#/components/schemas/NoneActionInteraction"
-                        -   $ref: "#/components/schemas/NotificationActionInteraction"
-                        -   $ref: "#/components/schemas/PageActionInteraction"
-                        -   $ref: "#/components/schemas/URLActionInteraction"
-            type: object
         ActionFragmentEditableElementValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentEditableElementValue"
@@ -48,6 +28,26 @@ components:
             # @review
             description:
                 A fragment editable element value of type action.
+            type: object
+        ActionInteraction:
+            # @review
+            description:
+                The result of an action interaction.
+            properties:
+                type:
+                    # @review
+                    description:
+                        The type of result.
+                    enum: [DisplayPage, None, Notification, Page, URL]
+                    type:
+                        string
+                value:
+                    oneOf:
+                        -   $ref: "#/components/schemas/DisplayPageActionInteraction"
+                        -   $ref: "#/components/schemas/NoneActionInteraction"
+                        -   $ref: "#/components/schemas/NotificationActionInteraction"
+                        -   $ref: "#/components/schemas/PageActionInteraction"
+                        -   $ref: "#/components/schemas/URLActionInteraction"
             type: object
         AnalyticsConfiguration:
             description:
@@ -2702,6 +2702,17 @@ components:
                         The localized Open Graph's titles.
                     type: object
             type: object
+        PageActionInteraction:
+            # @review
+            description:
+                The definition of an action interaction of type page.
+            properties:
+                itemReference:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                    # @review
+                    description:
+                        The reference to a page.
+            type: object
         PageElement:
             # @review
             description:
@@ -3645,17 +3656,6 @@ components:
                         -   Owner
                     type: string
                     writeOnly: true
-            type: object
-        PageActionInteraction:
-            # @review
-            description:
-                The definition of an action interaction of type page.
-            properties:
-                itemReference:
-                    $ref: "#/components/schemas/ItemExternalReference"
-                    # @review
-                    description:
-                        The reference to a page.
             type: object
         SitePageFormContainerSubmissionResult:
             # @review

@@ -16,6 +16,7 @@ export const PORTLET_URLS = {
 	bookmarks:
 		'/~/control_panel/manage?p_p_id=com_liferay_bookmarks_web_portlet_BookmarksAdminPortlet',
 	categoriesAdmin: '/~/control_panel/manage/-/categories_admin/vocabularies',
+	cmpTasks: 'web/cms/tasks',
 	cms: 'web/cms/home',
 	cmsAll: 'web/cms/all',
 	cmsAllSpaces: 'web/cms/all-spaces',

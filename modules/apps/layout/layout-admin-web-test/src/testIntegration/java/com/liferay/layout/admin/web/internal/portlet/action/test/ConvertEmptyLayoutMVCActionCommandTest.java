@@ -120,9 +120,8 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_CONTENT,
-				TestPropsValues.getUser(),
-				masterLayoutPageTemplateEntry.getPlid()),
+				emptyLayout, 0, masterLayoutPageTemplateEntry.getPlid(),
+				LayoutConstants.TYPE_CONTENT, TestPropsValues.getUser()),
 			new MockLiferayPortletActionResponse());
 
 		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
@@ -167,14 +166,13 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_CONTENT,
-				TestPropsValues.getUser(), 0,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+				emptyLayout,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), 0,
+				LayoutConstants.TYPE_CONTENT, TestPropsValues.getUser()),
 			new MockLiferayPortletActionResponse());
 
 		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
 
-		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 		Assert.assertEquals(
 			_portal.getClassNameId(LayoutPageTemplateEntry.class),
 			layout.getClassNameId());
@@ -184,6 +182,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			masterLayoutPageTemplateEntry.getExternalReferenceCode(),
 			layout.getMasterLayoutPageTemplateEntryERC());
+		Assert.assertEquals(WorkflowConstants.STATUS_DRAFT, layout.getStatus());
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.getFragmentEntryLinksByPlid(
@@ -208,7 +207,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 				PortletException.class,
 				() -> _mvcActionCommand.processAction(
 					_getMockLiferayPortletActionRequest(
-						emptyLayout, LayoutConstants.TYPE_PORTLET, user),
+						emptyLayout, 0, 0, LayoutConstants.TYPE_PORTLET, user),
 					new MockLiferayPortletActionResponse()));
 
 			Assert.assertTrue(
@@ -238,9 +237,9 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 
 		_mvcActionCommand.processAction(
 			_getMockLiferayPortletActionRequest(
-				emptyLayout, LayoutConstants.TYPE_PORTLET,
-				TestPropsValues.getUser(), 0,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()),
+				emptyLayout,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), 0,
+				LayoutConstants.TYPE_PORTLET, TestPropsValues.getUser()),
 			new MockLiferayPortletActionResponse());
 
 		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
@@ -267,44 +266,30 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			Layout layout, String type, User user)
-		throws Exception {
-
-		return _getMockLiferayPortletActionRequest(layout, type, user, 0, 0);
-	}
-
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			Layout layout, String type, User user, long masterLayoutPlid)
-		throws Exception {
-
-		return _getMockLiferayPortletActionRequest(
-			layout, type, user, masterLayoutPlid, 0);
-	}
-
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			Layout layout, String type, User user, long masterLayoutPlid,
-			long layoutPageTemplateEntryId)
+			Layout layout, long layoutPageTemplateEntryId,
+			long masterLayoutPlid, String type, User user)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.addParameter(
-			"selPlid", String.valueOf(layout.getPlid()));
-		mockLiferayPortletActionRequest.addParameter("type", type);
-		mockLiferayPortletActionRequest.addParameter(
 			"name", layout.getExternalReferenceCode());
-
-		if (masterLayoutPlid > 0) {
-			mockLiferayPortletActionRequest.addParameter(
-				"masterLayoutPlid", String.valueOf(masterLayoutPlid));
-		}
 
 		if (layoutPageTemplateEntryId > 0) {
 			mockLiferayPortletActionRequest.addParameter(
 				"layoutPageTemplateEntryId",
 				String.valueOf(layoutPageTemplateEntryId));
 		}
+
+		if (masterLayoutPlid > 0) {
+			mockLiferayPortletActionRequest.addParameter(
+				"masterLayoutPlid", String.valueOf(masterLayoutPlid));
+		}
+
+		mockLiferayPortletActionRequest.addParameter(
+			"selPlid", String.valueOf(layout.getPlid()));
+		mockLiferayPortletActionRequest.addParameter("type", type);
 
 		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_CONFIG,
@@ -343,7 +328,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		try {
 			_mvcActionCommand.processAction(
 				_getMockLiferayPortletActionRequest(
-					emptyLayout, type, TestPropsValues.getUser()),
+					emptyLayout, 0, 0, type, TestPropsValues.getUser()),
 				mockLiferayPortletActionResponse);
 
 			Assert.fail();

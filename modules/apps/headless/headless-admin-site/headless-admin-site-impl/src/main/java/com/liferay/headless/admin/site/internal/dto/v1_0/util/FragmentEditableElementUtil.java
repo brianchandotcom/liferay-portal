@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.headless.admin.site.dto.v1_0.ActionFragmentEditableElementValue;
@@ -134,6 +135,93 @@ public class FragmentEditableElementUtil {
 			scopeGroupId);
 	}
 
+	private static JSONObject _getActionInteractionJSONObject(
+		ActionInteraction actionInteraction, long companyId,
+		long scopeGroupId) {
+
+		if (actionInteraction == null) {
+			return null;
+		}
+
+		String internalType = ActionInteractionTypeUtil.toInternalType(
+			actionInteraction.getType());
+
+		if (Objects.equals(
+				internalType,
+				ActionEditableElementConstants.INTERACTION_DISPLAY_PAGE)) {
+
+			DisplayPageActionInteraction displayPageActionInteraction =
+				(DisplayPageActionInteraction)actionInteraction;
+
+			return JSONUtil.put(
+				"displayPageUniqueFieldId",
+				displayPageActionInteraction::getMappingFieldKey
+			).put(
+				"interaction", internalType
+			);
+		}
+
+		if (Objects.equals(
+				internalType,
+				ActionEditableElementConstants.INTERACTION_NONE)) {
+
+			NoneActionInteraction noneActionInteraction =
+				(NoneActionInteraction)actionInteraction;
+
+			return JSONUtil.put(
+				"interaction", internalType
+			).put(
+				"reload", noneActionInteraction::getReload
+			);
+		}
+
+		if (Objects.equals(
+				internalType,
+				ActionEditableElementConstants.INTERACTION_NOTIFICATION)) {
+
+			NotificationActionInteraction notificationActionInteraction =
+				(NotificationActionInteraction)actionInteraction;
+
+			return JSONUtil.put(
+				"interaction", internalType
+			).put(
+				"reload", notificationActionInteraction::getReload
+			).put(
+				"text",
+				() -> _getFragmentInlineValueJSONObject(
+					notificationActionInteraction.getFragmentInlineValue())
+			);
+		}
+
+		if (Objects.equals(
+				internalType,
+				ActionEditableElementConstants.INTERACTION_PAGE)) {
+
+			PageActionInteraction pageActionInteraction =
+				(PageActionInteraction)actionInteraction;
+
+			return JSONUtil.put(
+				"interaction", internalType
+			).put(
+				"page",
+				() -> LayoutUtil.getMappedLayoutJSONObject(
+					companyId, pageActionInteraction.getItemExternalReference(),
+					scopeGroupId)
+			);
+		}
+
+		URLActionInteraction urlActionInteraction =
+			(URLActionInteraction)actionInteraction;
+
+		return JSONUtil.put(
+			"interaction", internalType
+		).put(
+			"url",
+			_getFragmentInlineValueJSONObject(
+				urlActionInteraction.getFragmentInlineValue())
+		);
+	}
+
 	private static JSONObject
 		_getBackgroundImageFragmentEntryProcessorJSONObject(
 			FragmentEditableElement[] fragmentEditableElements,
@@ -209,6 +297,24 @@ public class FragmentEditableElementUtil {
 				fragmentEditableElement.getFragmentEditableElementValue();
 
 			if (fragmentEditableElementValue == null) {
+				continue;
+			}
+
+			if (Objects.equals(
+					fragmentEditableElementValue.getType(),
+					FragmentEditableElementValue.Type.ACTION)) {
+
+				jsonObject.put(
+					fragmentEditableElement.getId(),
+					() -> _getJSONObject(
+						() -> _getFragmentLinkActionJSONObject(
+							(ActionFragmentEditableElementValue)
+								fragmentEditableElementValue,
+							layoutStructureItemImporterContext.getCompanyId(),
+							layoutStructureItemImporterContext.
+								getInfoItemServiceRegistry(),
+							layoutStructureItemImporterContext.getGroupId())));
+
 				continue;
 			}
 
@@ -409,6 +515,35 @@ public class FragmentEditableElementUtil {
 		}
 
 		return jsonObject;
+	}
+
+	private static JSONObject _getFragmentLinkActionJSONObject(
+			ActionFragmentEditableElementValue
+				actionFragmentEditableElementValue,
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			long scopeGroupId)
+		throws Exception {
+
+		if ((actionFragmentEditableElementValue.getFragmentMappedValue() ==
+				null) &&
+			(actionFragmentEditableElementValue.getTextFragmentValue() ==
+				null)) {
+
+			return null;
+		}
+
+		return JSONUtil.merge(
+			_toConfigJSONObject(
+				companyId,
+				actionFragmentEditableElementValue.getErrorActionInteraction(),
+				actionFragmentEditableElementValue.getFragmentMappedValue(),
+				infoItemServiceRegistry,
+				actionFragmentEditableElementValue.
+					getSuccessActionInteraction(),
+				scopeGroupId),
+			_getTextFragmentValueJSONObject(
+				companyId, infoItemServiceRegistry, scopeGroupId,
+				actionFragmentEditableElementValue.getTextFragmentValue()));
 	}
 
 	private static JSONObject _getFragmentLinkTextJSONObject(
@@ -803,6 +938,30 @@ public class FragmentEditableElementUtil {
 			FragmentEditableElementValue.Type.BACKGROUND_IMAGE);
 
 		return backgroundImageFragmentEditableElementValue;
+	}
+
+	private static JSONObject _toConfigJSONObject(
+		long companyId, ActionInteraction errorActionInteraction,
+		FragmentMappedValue fragmentMappedValue,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		ActionInteraction successActionInteraction, long scopeGroupId) {
+
+		return JSONUtil.put(
+			"config",
+			JSONUtil.put(
+				"mappedAction",
+				() -> _getFragmentMappedValueJSONObject(
+					companyId, fragmentMappedValue, infoItemServiceRegistry,
+					scopeGroupId)
+			).put(
+				"onError",
+				() -> _getActionInteractionJSONObject(
+					errorActionInteraction, companyId, scopeGroupId)
+			).put(
+				"onSuccess",
+				() -> _getActionInteractionJSONObject(
+					successActionInteraction, companyId, scopeGroupId)
+			));
 	}
 
 	private static JSONObject _toConfigJSONObject(

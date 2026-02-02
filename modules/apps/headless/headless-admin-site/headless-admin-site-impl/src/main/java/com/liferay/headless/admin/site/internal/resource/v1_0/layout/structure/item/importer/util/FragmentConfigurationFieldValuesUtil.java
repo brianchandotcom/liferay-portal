@@ -869,7 +869,7 @@ public class FragmentConfigurationFieldValuesUtil {
 			"layout",
 			LayoutUtil.getMappedLayoutJSONObject(
 				layoutStructureItemImporterContext.getCompanyId(),
-				sitePageURLValue.getSitePage(),
+				sitePageURLValue.getSitePageItemExternalReference(),
 				layoutStructureItemImporterContext.getGroupId()));
 	}
 

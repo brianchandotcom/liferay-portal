@@ -971,7 +971,7 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 		SitePageURLValue sitePageURLValue = new SitePageURLValue();
 
-		sitePageURLValue.setSitePage(
+		sitePageURLValue.setSitePageItemExternalReference(
 			() -> LayoutUtil.toLayoutItemExternalReference(
 				companyId, layoutJSONObject, scopeGroupId));
 		sitePageURLValue.setUrlType(() -> URLValue.UrlType.SITE_PAGE);

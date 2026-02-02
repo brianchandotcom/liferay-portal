@@ -91,6 +91,11 @@ export interface IBulkActionTaskStarterDTO<
 }
 
 export interface IBulkActionTaskType {
+	AssignToBulkAction: {
+		clazz: string;
+		externalReferenceCode: string;
+		name: string;
+	};
 	DefaultPermissionBulkAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;

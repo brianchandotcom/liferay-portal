@@ -5,6 +5,7 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
+import com.liferay.bulk.rest.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
@@ -395,7 +396,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private BulkSelectionAction<Object> _getBulkSelectionAction(
 		BulkAction.Type type) {
 
-		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
+		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
+			return _assignToObjectBulkSelectionAction;
+		}
+		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
 			return _defaultPermissionObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
@@ -442,7 +446,20 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				"bulkActionTaskId", bulkActionTask.getId());
 
-		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
+		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
+			AssignToBulkAction assignToBulkAction =
+				(AssignToBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"externalReferenceCode",
+				assignToBulkAction::getExternalReferenceCode
+			).put(
+				"name", assignToBulkAction::getName
+			).put(
+				"type", assignToBulkAction::getClazz
+			).build();
+		}
+		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
 			DefaultPermissionBulkAction defaultPermissionBulkAction =
 				(DefaultPermissionBulkAction)bulkAction;
 
@@ -831,6 +848,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new BulkActionEntityModel();
+
+	@Reference(target = "(bulk.selection.action.key=assign.to.object)")
+	private BulkSelectionAction<Object> _assignToObjectBulkSelectionAction;
 
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;

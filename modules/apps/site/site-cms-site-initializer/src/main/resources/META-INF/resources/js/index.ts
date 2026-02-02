@@ -30,14 +30,19 @@ export {
 	displayNameInUseErrorToast,
 } from './common/utils/toastUtil';
 
+export {
+	IBulkActionFDSData,
+	IBulkActionTaskStarterDTO,
+} from './common/types/BulkActionTask';
+
 export {default as ContentEditorSidePanel} from './content_editor/components/ContentEditorSidePanel';
 
 // Content Editor
 
 export {default as ContentEditorToolbar} from './content_editor/components/ContentEditorToolbar';
 export {default as Spaces} from './content_editor/components/Spaces';
-export {default as CommentsPanel} from './content_editor/components/panels/CommentsPanel';
 
+export {default as CommentsPanel} from './content_editor/components/panels/CommentsPanel';
 export {default as BulkActionTaskAssets} from './main_view/bulk_action_task/BulkActionTaskAssets';
 export {default as BulkActionTaskDuration} from './main_view/bulk_action_task/BulkActionTaskDuration';
 export {default as BulkActionTaskStatus} from './main_view/bulk_action_task/BulkActionTaskStatus';
@@ -47,10 +52,11 @@ export {default as EditCategoryPage} from './main_view/categorization/categories
 export {default as ViewTags} from './main_view/categorization/tags/ViewTags';
 export {default as EditVocabulary} from './main_view/categorization/vocabularies/EditVocabulary';
 export {default as ViewDashboard} from './main_view/dashboard/ViewDashboard';
-export {default as EditFolder} from './main_view/folders/EditFolder';
 
+export {default as EditFolder} from './main_view/folders/EditFolder';
 export {default as QuickActions} from './main_view/home/QuickActions';
 export {default as SearchBar} from './main_view/home/SearchBar';
+
 export {default as ViewWorkflowTasks} from './main_view/home/ViewWorkflowTasks';
 
 // Main

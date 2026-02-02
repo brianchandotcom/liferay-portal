@@ -231,8 +231,8 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 				).build()),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, null, "assign-to",
-				LanguageUtil.get(httpServletRequest, "assign-to-..."), null,
-				"get", null,
+				LanguageUtil.get(httpServletRequest, "assign-to-..."), "get",
+				"update", null,
 				HashMapBuilder.<String, Object>put(
 					"entryClassName", objectDefinition.getClassName()
 				).build()),

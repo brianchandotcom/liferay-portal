@@ -61,7 +61,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -1602,34 +1601,16 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
+		Layout linkedLayout = _getLinkedLayout(
+			portletDataContext.getScopeGroupId(), layout);
 
-		long linkToLayoutId = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.getProperty(
-				"linkToLayoutId", StringPool.BLANK));
+		if (linkedLayout != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, linkedLayout,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 
-		if (linkToLayoutId > 0) {
-			try {
-				Layout linkedToLayout = _layoutLocalService.getLayout(
-					portletDataContext.getScopeGroupId(),
-					layout.isPrivateLayout(), linkToLayoutId);
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, layout, linkedToLayout,
-					PortletDataContext.REFERENCE_TYPE_STRONG);
-
-				layoutElement.addAttribute(
-					"linked-to-layout-uuid", linkedToLayout.getUuid());
-			}
-			catch (NoSuchLayoutException noSuchLayoutException) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchLayoutException);
-				}
-			}
+			layoutElement.addAttribute(
+				"linked-to-layout-uuid", linkedLayout.getUuid());
 		}
 	}
 
@@ -1869,6 +1850,48 @@ public class LayoutStagedModelDataHandler
 			_layoutFriendlyURLEntryHelper.getClassNameId(
 				layoutFriendlyURL.isPrivateLayout()),
 			layoutFriendlyURL.getPlid());
+	}
+
+	private Layout _getLinkedLayout(long groupId, Layout layout) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		String linkToLayoutExternalReferenceCode =
+			typeSettingsUnicodeProperties.getProperty(
+				"linkToLayoutExternalReferenceCode");
+
+		if (Validator.isNotNull(linkToLayoutExternalReferenceCode)) {
+			try {
+				return _layoutLocalService.getLayoutByExternalReferenceCode(
+					linkToLayoutExternalReferenceCode, groupId);
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		long linkToLayoutId = GetterUtil.getLong(
+			typeSettingsUnicodeProperties.getProperty(
+				"linkToLayoutId", StringPool.BLANK));
+
+		if (linkToLayoutId > 0) {
+			try {
+				return _layoutLocalService.getLayout(
+					groupId, layout.isPrivateLayout(), linkToLayoutId);
+			}
+			catch (PortalException portalException) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		return null;
 	}
 
 	private Map<String, Object[]> _getPortletIds(

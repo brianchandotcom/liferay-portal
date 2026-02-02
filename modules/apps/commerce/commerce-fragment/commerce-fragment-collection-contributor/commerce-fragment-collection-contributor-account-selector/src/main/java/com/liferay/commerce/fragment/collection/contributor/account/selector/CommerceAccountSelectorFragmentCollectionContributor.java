@@ -7,8 +7,6 @@ package com.liferay.commerce.fragment.collection.contributor.account.selector;
 
 import com.liferay.fragment.contributor.BaseFragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import jakarta.servlet.ServletContext;
 
@@ -33,12 +31,6 @@ public class CommerceAccountSelectorFragmentCollectionContributor
 	@Override
 	public ServletContext getServletContext() {
 		return _servletContext;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return FeatureFlagManagerUtil.isEnabled(
-			CompanyThreadLocal.getCompanyId(), "LPD-58472");
 	}
 
 	@Reference(

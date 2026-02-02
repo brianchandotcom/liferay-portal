@@ -10,7 +10,6 @@ import com.liferay.commerce.fragment.internal.constants.CommerceFragmentCollecti
 import com.liferay.commerce.fragment.internal.util.CommerceFragmentUtil;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -39,12 +38,6 @@ public class CreateAccountButtonFragmentRenderer
 	@Override
 	public String getIcon() {
 		return "button";
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		return FeatureFlagManagerUtil.isEnabled(
-			portal.getCompanyId(httpServletRequest), "LPD-58472");
 	}
 
 	@Override

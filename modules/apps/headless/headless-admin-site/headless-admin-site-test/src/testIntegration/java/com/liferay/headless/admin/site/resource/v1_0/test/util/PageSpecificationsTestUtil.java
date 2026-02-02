@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.LinkToPagePageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedApplicationsWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.NestedWidgetSection;
@@ -433,6 +434,17 @@ public class PageSpecificationsTestUtil {
 		throws Exception {
 
 		return new ExpandoTableAutocloseable();
+	}
+
+	public static PageSpecification[] getLinkToPagePageSpecifications(
+			String externalReferenceCode)
+		throws Exception {
+
+		return new PageSpecification[] {
+			_getPageSpecification(
+				externalReferenceCode, LinkToPagePageSpecification::new,
+				PageSpecification.Type.LINK_TO_PAGE_PAGE_SPECIFICATION)
+		};
 	}
 
 	public static PageSpecification[] getLinkToURLPageSpecifications(

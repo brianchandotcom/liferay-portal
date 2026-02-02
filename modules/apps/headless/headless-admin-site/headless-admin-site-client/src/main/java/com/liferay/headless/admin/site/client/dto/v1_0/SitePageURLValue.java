@@ -26,27 +26,30 @@ public class SitePageURLValue
 		return SitePageURLValueSerDes.toDTO(json);
 	}
 
-	public ItemExternalReference getSitePage() {
-		return sitePage;
+	public ItemExternalReference getSitePageItemExternalReference() {
+		return sitePageItemExternalReference;
 	}
 
-	public void setSitePage(ItemExternalReference sitePage) {
-		this.sitePage = sitePage;
+	public void setSitePageItemExternalReference(
+		ItemExternalReference sitePageItemExternalReference) {
+
+		this.sitePageItemExternalReference = sitePageItemExternalReference;
 	}
 
-	public void setSitePage(
+	public void setSitePageItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			sitePageUnsafeSupplier) {
+			sitePageItemExternalReferenceUnsafeSupplier) {
 
 		try {
-			sitePage = sitePageUnsafeSupplier.get();
+			sitePageItemExternalReference =
+				sitePageItemExternalReferenceUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ItemExternalReference sitePage;
+	protected ItemExternalReference sitePageItemExternalReference;
 
 	@Override
 	public SitePageURLValue clone() throws CloneNotSupportedException {

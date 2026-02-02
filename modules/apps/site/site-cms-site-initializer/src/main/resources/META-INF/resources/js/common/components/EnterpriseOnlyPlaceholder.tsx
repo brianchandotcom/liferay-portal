@@ -10,7 +10,6 @@ import {
 	LearnMessage,
 	LearnResourcesContext,
 } from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {getImage} from '../utils/getImage';
@@ -61,14 +60,8 @@ export default function EnterpriseOnlyPlaceholder({
 
 			<div className="c-empty-state-footer">
 				<ClayLink
-					aria-label={sub(
-						Liferay.Language.get('x-opens-new-window'),
-						Liferay.Language.get('get-enterprise-details')
-					)}
-					className="ml-1 text-decoration-underline"
+					className="btn btn-primary"
 					href="#" // TODO: Waiting for link
-					rel="noopener noreferrer"
-					target="_blank"
 				>
 					{Liferay.Language.get('get-enterprise-details')}
 				</ClayLink>

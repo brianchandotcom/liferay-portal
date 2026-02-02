@@ -581,6 +581,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _addFragmentEntry(
 			configuration, groupId,
 			StringBundler.concat(
+				"<button data-lfr-editable-id=\"element-action1\" ",
+				"data-lfr-editable-type=\"action\">",
+				RandomTestUtil.randomString(), "</button>",
+				"<button data-lfr-editable-id=\"element-action2\" ",
+				"data-lfr-editable-type=\"action\">",
+				RandomTestUtil.randomString(), "</button>",
 				"<div data-lfr-background-image-id=\"element-background-",
 				"image1\">", RandomTestUtil.randomString(), "</div>",
 				"<div data-lfr-background-image-id=\"element-background-",

@@ -115,6 +115,13 @@ public interface KaleoLogLocalService
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
+	public KaleoLog addNodeUsageMetadataKaleoLog(
+			KaleoInstanceToken kaleoInstanceToken,
+			Map<String, Serializable> workflowContext,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
 	public KaleoLog addTaskAssignmentKaleoLog(
 			List<KaleoTaskAssignmentInstance>
 				previousKaleoTaskAssignmentInstances,

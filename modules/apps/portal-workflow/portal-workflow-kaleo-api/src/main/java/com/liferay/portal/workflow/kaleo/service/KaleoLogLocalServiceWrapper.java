@@ -122,6 +122,18 @@ public class KaleoLogLocalServiceWrapper
 	}
 
 	@Override
+	public KaleoLog addNodeUsageMetadataKaleoLog(
+			com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken
+				kaleoInstanceToken,
+			java.util.Map<String, java.io.Serializable> workflowContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoLogLocalService.addNodeUsageMetadataKaleoLog(
+			kaleoInstanceToken, workflowContext, serviceContext);
+	}
+
+	@Override
 	public KaleoLog addTaskAssignmentKaleoLog(
 			java.util.List
 				<com.liferay.portal.workflow.kaleo.model.

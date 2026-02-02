@@ -178,6 +178,12 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					"linkToLayoutId",
 					String.valueOf(linkToLayout.getLayoutId()));
 			}
+			else {
+				formTypeSettingsUnicodeProperties.put(
+					"linkToLayoutExternalReferenceCode",
+					ParamUtil.getString(
+						actionRequest, "linkToLayoutExternalReferenceCode"));
+			}
 
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();

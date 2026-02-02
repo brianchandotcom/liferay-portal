@@ -12,6 +12,7 @@
 
 <div class="form-group">
 	<aui:input label="link-to-page" name="linkToLayoutName" type="resource" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutName() %>" />
+	<aui:input name="linkToLayoutExternalReferenceCode" type="hidden" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutExternalReferenceCode() %>" />
 	<aui:input name="linkToLayoutUuid" type="hidden" value="<%= linkToPageLayoutTypeControllerDisplayContext.getLinkToLayoutUuid() %>" />
 
 	<clay:button

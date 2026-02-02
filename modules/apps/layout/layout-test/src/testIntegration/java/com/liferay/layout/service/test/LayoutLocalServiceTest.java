@@ -290,78 +290,63 @@ public class LayoutLocalServiceTest {
 	@Test
 	@TestInfo({"LPD-64609", "LPD-72013"})
 	public void testConvertEmptyLayoutToContentLayout() throws Exception {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+		Layout layout = _addEmptyLayout();
 
-			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
+		try {
+			layout = _layoutLocalService.updateLayout(
+				_group.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), layout.getParentLayoutId(),
+				layout.getNameMap(), layout.getTitleMap(),
+				layout.getDescriptionMap(), layout.getKeywordsMap(),
+				layout.getRobotsMap(), layout.getType(), false,
+				layout.getFriendlyURLMap(), layout.isIconImage(), null,
+				layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
+				layout.getFaviconFileEntryScopeERC(),
+				layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
 
-			try {
-				layout = _layoutLocalService.updateLayout(
-					_group.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(), layout.getParentLayoutId(),
-					layout.getNameMap(), layout.getTitleMap(),
-					layout.getDescriptionMap(), layout.getKeywordsMap(),
-					layout.getRobotsMap(), layout.getType(), false,
-					layout.getFriendlyURLMap(), layout.isIconImage(), null,
-					layout.getStyleBookEntryERC(),
-					layout.getFaviconFileEntryERC(),
-					layout.getFaviconFileEntryScopeERC(),
-					layout.getMasterLayoutPageTemplateEntryERC(),
-					_serviceContext);
-
-				Assert.fail();
-			}
-			catch (LayoutTypeException layoutTypeException) {
-				Assert.assertEquals(
-					LayoutTypeException.EMPTY, layoutTypeException.getType());
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(layoutTypeException);
-				}
-			}
-
-			_serviceContext.setAttribute(
-				"layout.instanceable.allowed", Boolean.TRUE);
-
-			try {
-				layout = _layoutLocalService.convertEmptyLayout(
-					TestPropsValues.getUserId(), layout.getPlid(),
-					HashMapBuilder.put(
-						LocaleUtil.getSiteDefault(),
-						RandomTestUtil.randomString()
-					).build(),
-					LayoutConstants.TYPE_CONTENT, 0, 0, null, _serviceContext);
-			}
-			finally {
-				_serviceContext.removeAttribute("layout.instanceable.allowed");
-			}
-
-			Assert.assertFalse(layout.isPublished());
-			Assert.assertTrue(layout.isTypeContent());
+			Assert.fail();
 		}
-	}
+		catch (LayoutTypeException layoutTypeException) {
+			Assert.assertEquals(
+				LayoutTypeException.EMPTY, layoutTypeException.getType());
 
-	@Test
-	@TestInfo({"LPD-64609", "LPD-72013"})
-	public void testConvertEmptyLayoutToPortletLayout() throws Exception {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(layoutTypeException);
+			}
+		}
 
-			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
+		_serviceContext.setAttribute(
+			"layout.instanceable.allowed", Boolean.TRUE);
 
+		try {
 			layout = _layoutLocalService.convertEmptyLayout(
 				TestPropsValues.getUserId(), layout.getPlid(),
 				HashMapBuilder.put(
 					LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
 				).build(),
-				LayoutConstants.TYPE_PORTLET, 0, 0, null, _serviceContext);
-
-			Assert.assertTrue(layout.isTypePortlet());
+				LayoutConstants.TYPE_CONTENT, 0, 0, null, _serviceContext);
 		}
+		finally {
+			_serviceContext.removeAttribute("layout.instanceable.allowed");
+		}
+
+		Assert.assertFalse(layout.isPublished());
+		Assert.assertTrue(layout.isTypeContent());
+	}
+
+	@Test
+	@TestInfo({"LPD-64609", "LPD-72013"})
+	public void testConvertEmptyLayoutToPortletLayout() throws Exception {
+		Layout layout = _addEmptyLayout();
+
+		layout = _layoutLocalService.convertEmptyLayout(
+			TestPropsValues.getUserId(), layout.getPlid(),
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), RandomTestUtil.randomString()
+			).build(),
+			LayoutConstants.TYPE_PORTLET, 0, 0, null, _serviceContext);
+
+		Assert.assertTrue(layout.isTypePortlet());
 	}
 
 	@Test
@@ -1114,6 +1099,16 @@ public class LayoutLocalServiceTest {
 			"Updating layout prototype should not add property \"" +
 				Sites.LAYOUT_UPDATEABLE + "\"",
 			typeSettingsUnicodeProperties.containsKey(Sites.LAYOUT_UPDATEABLE));
+	}
+
+	private Layout _addEmptyLayout() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			return _layoutLocalService.getOrAddEmptyLayout(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(), _serviceContext);
+		}
 	}
 
 	private void _assertExternalReferenceCodes(

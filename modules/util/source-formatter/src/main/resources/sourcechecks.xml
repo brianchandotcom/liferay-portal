@@ -1937,10 +1937,6 @@
 			<category name="Upgrade" />
 			<description name="Adds FragmentCollectionKey to Component annotation in classes that extend `BaseFragmentCollectionContributor`" />
 		</check>
-		<check name="UpgradeJavaBaseModelListenerCheck">
-			<category name="Upgrade" />
-			<description name="Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class." />
-		</check>
 		<check name="UpgradeJavaDDMFormValuesSerializerTrackerCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages." />

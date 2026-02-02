@@ -295,12 +295,14 @@ public class CPDefinitionInfoItemFieldValuesProviderTest {
 			_cpDefinitionInfoItemFieldValuesProvider,
 			"_templateInfoItemFieldSetProvider",
 			_templateInfoItemFieldSetProvider);
+
 		ReflectionTestUtil.setFieldValue(
 			LanguageUtil.class, "_language", _language);
 	}
 
 	private void _setUpServiceContext() {
 		ServiceContext serviceContext = Mockito.mock(ServiceContext.class);
+
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(

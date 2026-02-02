@@ -11,7 +11,7 @@ export interface IViewsContext {
 	activeSnapshotERC: null | string;
 	activeView: any;
 	defaultSnapshot?: any;
-	groupedFDSFilters: Array<any>;
+	groupedFilters: Array<any>;
 	modifiedFields: any;
 	paginationDelta: any;
 	snapshotUpdated: boolean;
@@ -40,7 +40,7 @@ const ViewsContext = createContext<[IViewsContext, any]>([
 	{
 		activeSnapshotERC: null,
 		activeView: null,
-		groupedFDSFilters: [],
+		groupedFilters: [],
 		modifiedFields: {},
 		paginationDelta: null,
 		snapshotUpdated: false,

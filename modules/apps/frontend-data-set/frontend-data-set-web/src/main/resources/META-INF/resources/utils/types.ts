@@ -310,7 +310,7 @@ export interface IFrontendDataSetProps {
 	filters?: Array<any>;
 	formId?: string;
 	formName?: string;
-	groupedFDSFilters?: Array<any>;
+	groupedFilters?: Array<any>;
 	header?: IHeader;
 	hideManagementBarInEmptyState?: boolean;
 	id: string;

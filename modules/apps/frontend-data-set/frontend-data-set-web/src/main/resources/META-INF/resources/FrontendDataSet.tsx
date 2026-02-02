@@ -144,7 +144,7 @@ const FrontendDataSetContent = ({
 	filters: initialFilters,
 	formId,
 	formName,
-	groupedFDSFilters,
+	groupedFilters,
 	header,
 	hideManagementBarInEmptyState = false,
 	id,
@@ -703,7 +703,7 @@ const FrontendDataSetContent = ({
 		return {
 			activeView,
 			defaultSnapshot,
-			groupedFDSFilters,
+			groupedFilters,
 			modifiedFields: {},
 			pageNumber,
 			paginationDelta,

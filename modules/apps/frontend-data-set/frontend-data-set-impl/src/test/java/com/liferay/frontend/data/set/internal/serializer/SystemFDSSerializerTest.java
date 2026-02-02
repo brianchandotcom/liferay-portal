@@ -796,7 +796,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
-	public void testSerializeGroupedFDSFilters() throws Exception {
+	public void testSerializeGroupedFilters() throws Exception {
 
 		// Different grouped filters
 
@@ -815,7 +815,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		};
 
-		String serializedGroupedFDSFilters = JSONUtil.putAll(
+		String serializedGroupedFilters = JSONUtil.putAll(
 			JSONUtil.put(
 				"filters", JSONUtil.putAll(IDS[0], IDS[1])
 			).put(
@@ -848,8 +848,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(FDS_NAMES[1]));
 
 		JSONAssert.assertEquals(
-			serializedGroupedFDSFilters,
-			systemFDSSerializer.serializeGroupedFDSFilters(
+			serializedGroupedFilters,
+			systemFDSSerializer.serializeGroupedFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -862,7 +862,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"label", TITLES[2]
 				)
 			).toString(),
-			systemFDSSerializer.serializeGroupedFDSFilters(
+			systemFDSSerializer.serializeGroupedFilters(
 				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -875,7 +875,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertEquals(
 			"[]",
-			systemFDSSerializer.serializeGroupedFDSFilters(
+			systemFDSSerializer.serializeGroupedFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
@@ -891,14 +891,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(FDS_NAMES[1]));
 
 		JSONAssert.assertEquals(
-			serializedGroupedFDSFilters,
-			systemFDSSerializer.serializeGroupedFDSFilters(
+			serializedGroupedFilters,
+			systemFDSSerializer.serializeGroupedFilters(
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
-			serializedGroupedFDSFilters,
-			systemFDSSerializer.serializeGroupedFDSFilters(
+			serializedGroupedFilters,
+			systemFDSSerializer.serializeGroupedFilters(
 				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);

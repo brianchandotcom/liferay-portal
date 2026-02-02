@@ -46,14 +46,16 @@ public class SitePageURLValueSerDes {
 
 		sb.append("{");
 
-		if (sitePageURLValue.getSitePage() != null) {
+		if (sitePageURLValue.getSitePageItemExternalReference() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sitePage\": ");
+			sb.append("\"sitePageItemExternalReference\": ");
 
-			sb.append(String.valueOf(sitePageURLValue.getSitePage()));
+			sb.append(
+				String.valueOf(
+					sitePageURLValue.getSitePageItemExternalReference()));
 		}
 
 		if (sitePageURLValue.getUrlType() != null) {
@@ -87,11 +89,14 @@ public class SitePageURLValueSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (sitePageURLValue.getSitePage() == null) {
-			map.put("sitePage", null);
+		if (sitePageURLValue.getSitePageItemExternalReference() == null) {
+			map.put("sitePageItemExternalReference", null);
 		}
 		else {
-			map.put("sitePage", String.valueOf(sitePageURLValue.getSitePage()));
+			map.put(
+				"sitePageItemExternalReference",
+				String.valueOf(
+					sitePageURLValue.getSitePageItemExternalReference()));
 		}
 
 		if (sitePageURLValue.getUrlType() == null) {
@@ -119,7 +124,9 @@ public class SitePageURLValueSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "sitePage")) {
+			if (Objects.equals(
+					jsonParserFieldName, "sitePageItemExternalReference")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "urlType")) {
@@ -134,9 +141,11 @@ public class SitePageURLValueSerDes {
 			SitePageURLValue sitePageURLValue, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "sitePage")) {
+			if (Objects.equals(
+					jsonParserFieldName, "sitePageItemExternalReference")) {
+
 				if (jsonParserFieldValue != null) {
-					sitePageURLValue.setSitePage(
+					sitePageURLValue.setSitePageItemExternalReference(
 						ItemExternalReferenceSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}

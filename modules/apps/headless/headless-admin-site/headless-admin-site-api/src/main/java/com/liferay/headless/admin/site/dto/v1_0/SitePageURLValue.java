@@ -50,30 +50,33 @@ public class SitePageURLValue extends URLValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public ItemExternalReference getSitePage() {
-		if (_sitePageSupplier != null) {
-			sitePage = _sitePageSupplier.get();
+	public ItemExternalReference getSitePageItemExternalReference() {
+		if (_sitePageItemExternalReferenceSupplier != null) {
+			sitePageItemExternalReference =
+				_sitePageItemExternalReferenceSupplier.get();
 
-			_sitePageSupplier = null;
+			_sitePageItemExternalReferenceSupplier = null;
 		}
 
-		return sitePage;
+		return sitePageItemExternalReference;
 	}
 
-	public void setSitePage(ItemExternalReference sitePage) {
-		this.sitePage = sitePage;
+	public void setSitePageItemExternalReference(
+		ItemExternalReference sitePageItemExternalReference) {
 
-		_sitePageSupplier = null;
+		this.sitePageItemExternalReference = sitePageItemExternalReference;
+
+		_sitePageItemExternalReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSitePage(
+	public void setSitePageItemExternalReference(
 		UnsafeSupplier<ItemExternalReference, Exception>
-			sitePageUnsafeSupplier) {
+			sitePageItemExternalReferenceUnsafeSupplier) {
 
-		_sitePageSupplier = () -> {
+		_sitePageItemExternalReferenceSupplier = () -> {
 			try {
-				return sitePageUnsafeSupplier.get();
+				return sitePageItemExternalReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -86,10 +89,11 @@ public class SitePageURLValue extends URLValue implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference sitePage;
+	protected ItemExternalReference sitePageItemExternalReference;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _sitePageSupplier;
+	private Supplier<ItemExternalReference>
+		_sitePageItemExternalReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -118,16 +122,17 @@ public class SitePageURLValue extends URLValue implements Serializable {
 
 		sb.append("{");
 
-		ItemExternalReference sitePage = getSitePage();
+		ItemExternalReference sitePageItemExternalReference =
+			getSitePageItemExternalReference();
 
-		if (sitePage != null) {
+		if (sitePageItemExternalReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"sitePage\": ");
+			sb.append("\"sitePageItemExternalReference\": ");
 
-			sb.append(String.valueOf(sitePage));
+			sb.append(String.valueOf(sitePageItemExternalReference));
 		}
 
 		UrlType urlType = getUrlType();

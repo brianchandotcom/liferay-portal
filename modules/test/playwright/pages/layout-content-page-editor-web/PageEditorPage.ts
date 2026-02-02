@@ -472,6 +472,70 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
+	async changeWidgetPermission(
+		widgetId: string,
+		permission: string,
+		value: boolean
+	) {
+		const permissionsIFrame = this.page.frameLocator(
+			'iframe[title="Permissions"]'
+		);
+
+		const checkbox = permissionsIFrame.locator(permission);
+
+		const openPermissionsModal = async () => {
+			await this.selectFragment(widgetId);
+
+			await this.clickFragmentOption(widgetId, 'Permissions');
+
+			await checkbox.waitFor({timeout: 3000});
+		};
+
+		const closePermissionsModal = async () => {
+			await clickAndExpectToBeHidden({
+				target: this.page
+					.locator('.modal-header')
+					.getByLabel('Close', {exact: true}),
+				timeout: 2000,
+				trigger: this.page
+					.locator('.modal-header')
+					.getByLabel('Close', {exact: true}),
+			});
+		};
+
+		await expect(async () => {
+
+			// Open permissions modal and change permission
+
+			await openPermissionsModal();
+
+			await checkbox.setChecked(value, {timeout: 2000});
+
+			await permissionsIFrame
+				.getByRole('button', {name: 'Save'})
+				.click({timeout: 1000});
+
+			await waitForAlert(permissionsIFrame, 'successfully', {
+				timeout: 2000,
+			});
+
+			await closePermissionsModal();
+
+			// Open the modal to double check
+
+			await openPermissionsModal();
+
+			if (value === true) {
+				await expect(checkbox).toBeChecked({timeout: 1500});
+			}
+			else {
+				await expect(checkbox).not.toBeChecked({timeout: 1500});
+			}
+
+			await closePermissionsModal();
+		}).toPass();
+	}
+
 	async chooseCollectionDisplayCollection(
 		type: string,
 		title: string,
@@ -510,15 +574,15 @@ export class PageEditorPage {
 	) {
 		await this.selectFragment(fragmentId, isDesktop);
 
-		await this.page
-			.locator('.page-editor__topper__item')
-			.getByRole('button', {name: 'Options'})
-			.click();
-
-		await this.page
-			.locator('.dropdown-menu.show')
-			.getByText(name, {exact: true})
-			.click();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page
+				.locator('.dropdown-menu.show')
+				.getByText(name, {exact: true}),
+			trigger: this.page
+				.locator('.page-editor__topper__item')
+				.getByRole('button', {name: 'Options'}),
+		});
 	}
 
 	async clickPageAction(action: string) {

@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSetPageSettings;
@@ -724,6 +725,12 @@ public class SitePageResourceImpl
 
 		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) &&
 			!(pageSettings instanceof ContentPageSettings)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if ((sitePage.getType() == SitePage.Type.LINK_TO_PAGE_PAGE) &&
+			!(pageSettings instanceof LinkToPagePageSettings)) {
 
 			throw new UnsupportedOperationException();
 		}

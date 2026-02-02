@@ -30,10 +30,14 @@ export class FDSSamplePage {
 		itemActionButtons: Locator;
 		items: Locator;
 	};
+	readonly creatorFilterSearchInput: Locator;
 	readonly emptyStateContainer: Locator;
 	readonly fdsWrapper: Locator;
 	readonly fileDropModal: Locator;
 	readonly filterDropdownMenu: Locator;
+	readonly filterMenu: Locator;
+	readonly filterMenuSearchInput: Locator;
+	readonly filterShowResultsOrAddButton: Locator;
 	readonly infoPanel: Locator;
 	readonly itemActionButton: Locator;
 	readonly itemActionsButtons: Locator;
@@ -111,12 +115,23 @@ export class FDSSamplePage {
 			itemActionButtons: cardItems.getByLabel('More actions'),
 			items: cardItems,
 		};
+		this.creatorFilterSearchInput = page
+			.locator('.data-set-filter')
+			.getByRole('textbox', {name: 'Search'})
+			.first();
 		this.emptyStateContainer = page.locator('.fds .c-empty-state');
 		this.fdsWrapper = page.locator('div.data-set-wrapper').first();
 		this.fileDropModal = page.getByRole('dialog', {
 			name: 'Custom dummy file uploader',
 		});
 		this.filterDropdownMenu = page.locator('.data-set-filter');
+		this.filterMenu = page.locator('.dropdown-menu');
+		this.filterMenuSearchInput = this.filterMenu
+			.getByLabel('Search')
+			.first();
+		this.filterShowResultsOrAddButton = this.filterMenu
+			.getByRole('button', {name: 'Show Results'})
+			.or(this.filterMenu.getByRole('button', {name: 'Add Filter'}));
 		this.infoPanel = page.locator('.fds-info-panel');
 
 		this.itemActionsButtons = page.locator(

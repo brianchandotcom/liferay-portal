@@ -58,16 +58,15 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 	@FeatureFlag("LPD-63416")
 	@Test
-	public void test() throws Exception {
-		OAuth2Application oAuth2Application =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				TestPropsValues.getCompanyId(),
-				"oauthDynamicRegisterTestApplication");
-
-		WebTarget webTarget = getRegisterWebTarget();
+	public void testPost() throws Exception {
+		WebTarget registerWebTarget = getRegisterWebTarget();
 
 		Invocation.Builder invocationBuilder = authorize(
-			webTarget.request(), _getToken(oAuth2Application));
+			registerWebTarget.request(),
+			_getToken(
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					TestPropsValues.getCompanyId(),
+					"oauthDynamicRegisterTestApplication")));
 
 		Response response = invocationBuilder.method(
 			"post",
@@ -77,10 +76,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 				).toString()));
 
 		Assert.assertEquals(401, response.getStatus());
-
-		oAuth2Application = _getDynamicRegistratorOAuth2Application();
-
-		Assert.assertNotNull(oAuth2Application);
 
 		String clientName = RandomTestUtil.randomString();
 
@@ -106,8 +101,11 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(401, response.getStatus());
 
+		OAuth2Application oAuth2Application =
+			_getDynamicRegistratorOAuth2Application();
+
 		invocationBuilder = authorize(
-			webTarget.request(), _getToken(oAuth2Application));
+			registerWebTarget.request(), _getToken(oAuth2Application));
 
 		response = invocationBuilder.method(
 			"post", Entity.json(jsonObject.toString()));
@@ -131,14 +129,12 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 		Assert.assertEquals(400, response.getStatus());
 
-		String errorString = parseError(response);
+		Assert.assertEquals("invalid_client_metadata", parseError(response));
 
-		Assert.assertEquals("invalid_client_metadata", errorString);
-
-		webTarget = getRegisterWebTarget(clientId);
+		registerWebTarget = getRegisterWebTarget(clientId);
 
 		invocationBuilder = authorize(
-			webTarget.request(), _getToken(oAuth2Application));
+			registerWebTarget.request(), _getToken(oAuth2Application));
 
 		response = invocationBuilder.get();
 
@@ -153,31 +149,27 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 	@FeatureFlag("LPD-63416")
 	@Test
 	public void testDelete() throws Exception {
-		OAuth2Application oAuth2Application1 =
-			_oAuth2ApplicationLocalService.fetchOAuth2Application(
-				TestPropsValues.getCompanyId(),
-				"oauthDynamicRegisterTestApplication");
-
-		OAuth2Application oAuth2Application2 =
+		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.fetchOAuth2Application(
 				TestPropsValues.getCompanyId(), "oauthDeleteMeApplication");
 
 		WebTarget registerWebTarget = getRegisterWebTarget(
-			oAuth2Application2.getClientId());
+			oAuth2Application.getClientId());
 
 		Invocation.Builder invocationBuilder = authorize(
-			registerWebTarget.request(), _getToken(oAuth2Application1));
+			registerWebTarget.request(),
+			_getToken(
+				_oAuth2ApplicationLocalService.fetchOAuth2Application(
+					TestPropsValues.getCompanyId(),
+					"oauthDynamicRegisterTestApplication")));
 
 		Response response = invocationBuilder.delete();
 
 		Assert.assertEquals(403, response.getStatus());
 
-		oAuth2Application1 = _getDynamicRegistratorOAuth2Application();
-
-		Assert.assertNotNull(oAuth2Application1);
-
 		invocationBuilder = authorize(
-			registerWebTarget.request(), _getToken(oAuth2Application1));
+			registerWebTarget.request(),
+			_getToken(_getDynamicRegistratorOAuth2Application()));
 
 		response = invocationBuilder.delete();
 
@@ -267,9 +259,7 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 		List<OAuth2Application> oAuth2Applications =
 			_oAuth2ApplicationLocalService.dynamicQuery(dynamicQuery);
 
-		if (oAuth2Applications.isEmpty()) {
-			return null;
-		}
+		Assert.assertFalse(oAuth2Applications.isEmpty());
 
 		return oAuth2Applications.get(0);
 	}
@@ -309,7 +299,6 @@ public class DynamicRegistrationServiceTest extends BaseClientTestCase {
 
 			createOAuth2Application(
 				companyId, user, "oauthDynamicRegisterTestApplication");
-
 			createOAuth2Application(
 				companyId, user, "oauthDeleteMeApplication");
 		}

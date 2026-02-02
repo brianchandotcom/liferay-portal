@@ -839,20 +839,15 @@ public class LiferayOAuthDataProvider
 				OAuthConstants.INVALID_CLIENT, Response.Status.CONFLICT);
 		}
 
-		String clientId;
-		String clientSecret;
-		String externalReferenceCode;
+		String clientId = client.getClientId();
+		String clientSecret = client.getClientSecret();
+		String externalReferenceCode = properties.get("software_id");
 
 		if (oAuth2Application != null) {
 			clientId = oAuth2Application.getClientId();
 			clientSecret = oAuth2Application.getClientSecret();
 			externalReferenceCode =
 				oAuth2Application.getExternalReferenceCode();
-		}
-		else {
-			clientId = client.getClientId();
-			clientSecret = client.getClientSecret();
-			externalReferenceCode = properties.get("software_id");
 		}
 
 		try {
@@ -882,18 +877,19 @@ public class LiferayOAuthDataProvider
 					client.getRedirectUris(), false,
 					client.getRegisteredScopes(), false, new ServiceContext());
 
-			String tokenKey = properties.get("registration_access_token");
+			String registrationAccessToken = properties.get(
+				"registration_access_token");
 
-			if (!Validator.isBlank(tokenKey)) {
+			if (!Validator.isBlank(registrationAccessToken)) {
 				OAuth2Authorization oAuth2Authorization =
 					_oAuth2AuthorizationLocalService.
-						fetchOAuth2AuthorizationByAccessTokenContent(tokenKey);
+						fetchOAuth2AuthorizationByAccessTokenContent(
+							registrationAccessToken);
 
 				if (oAuth2Authorization == null) {
 					String remoteAddr = properties.get(
 						OAuth2ProviderRESTEndpointConstants.
 							PROPERTY_KEY_CLIENT_REMOTE_ADDR);
-
 					String remoteHost = properties.get(
 						OAuth2ProviderRESTEndpointConstants.
 							PROPERTY_KEY_CLIENT_REMOTE_HOST);
@@ -903,7 +899,7 @@ public class LiferayOAuthDataProvider
 						user.getScreenName(),
 						oAuth2Application.getOAuth2ApplicationId(),
 						oAuth2Application.getOAuth2ApplicationScopeAliasesId(),
-						tokenKey, DateUtil.newDate(),
+						registrationAccessToken, DateUtil.newDate(),
 						DateUtil.newDate(
 							System.currentTimeMillis() + Time.YEAR),
 						remoteHost, remoteAddr, null, null, null);

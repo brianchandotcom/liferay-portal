@@ -191,6 +191,20 @@
 								},
 								"id": "339a84e4-b200-a686-2e8e-724ca1458355",
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.EnterpriseProductMenuBannerFragmentRender"
+									},
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"id": "f1a1afd2-6e3b-2e6b-f8d2-51324858bd72",
+								"type": "Fragment"
 							}
 						],
 						"type": "FragmentDropZone"

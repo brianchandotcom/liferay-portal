@@ -338,7 +338,7 @@ public class UpgradeRecorder {
 	}
 
 	private static final String[] _FILTERED_CLASS_NAMES = {
-		"com.liferay.portal.search.elasticsearch7.internal.sidecar." +
+		"com.liferay.portal.search.elasticsearch8.internal.sidecar." +
 			"SidecarManager"
 	};
 

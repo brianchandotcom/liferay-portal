@@ -62,7 +62,7 @@ public class SearchResponseGetResponseStringTest {
 	@Test
 	public void testGetResponseStringContainsException() {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.search.elasticsearch7.internal." +
+				"com.liferay.portal.search.elasticsearch8.internal." +
 					"ElasticsearchIndexSearcher",
 				LoggerTestUtil.ERROR)) {
 
@@ -115,7 +115,7 @@ public class SearchResponseGetResponseStringTest {
 
 	protected void setUpElasticsearchConfiguration() throws Exception {
 		_configuration = configurationAdmin.getConfiguration(
-			"com.liferay.portal.search.elasticsearch7.configuration." +
+			"com.liferay.portal.search.elasticsearch8.configuration." +
 				"ElasticsearchConfiguration",
 			StringPool.QUESTION);
 

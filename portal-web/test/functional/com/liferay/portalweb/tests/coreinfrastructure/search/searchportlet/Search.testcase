@@ -3,7 +3,7 @@ definition {
 
 	property browser.chrome.version = "139.0";
 	property portal.release = "false";
-	property portal.suite.search.engine = "elasticsearch7,opensearch2";
+	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Web Search";
 
@@ -22,7 +22,7 @@ definition {
 	}
 
 	test AddElasticsearchMonitoringOnContentPageViaUI {
-		property portal.suite.search.engine = "elasticsearch7";
+		property portal.suite.search.engine = "elasticsearch8";
 
 		task ("Add a content page and navigate to the edit screen of said page") {
 			JSONLayout.addPublicLayout(
@@ -41,7 +41,7 @@ definition {
 	}
 
 	test AddElasticsearchMonitoringOnWidgetPageViaUI {
-		property portal.suite.search.engine = "elasticsearch7";
+		property portal.suite.search.engine = "elasticsearch8";
 
 		task ("Add a widget page and navigate to said page") {
 			JSONLayout.addPublicLayout(

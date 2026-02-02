@@ -3,7 +3,7 @@ definition {
 
 	property browser.chrome.version = "139.0";
 	property portal.release = "true";
-	property portal.suite.search.engine = "elasticsearch7,opensearch2";
+	property portal.suite.search.engine = "elasticsearch8,opensearch2";
 	property portal.upstream = "true";
 	property testray.main.component.name = "Search Infrastructure > Elasticsearch Connector";
 
@@ -272,7 +272,7 @@ definition {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 
-		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration");
+		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration");
 
 		FormFields.editTextMultiline(
 			fieldName = "additionalIndexConfigurations",
@@ -466,7 +466,7 @@ definition {
 	@priority = 5
 	test OSGiConfigSmokeTest {
 		property embedded.elasticsearch.only = "true";
-		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config";
+		property osgi.module.configuration.file.names = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration.config";
 		property osgi.module.configurations = "clusterName=\"LiferayElasticsearchCluster1\"";
 		property portal.acceptance = "true";
 		property search.environment.suite.exclude = "true";
@@ -494,7 +494,7 @@ definition {
 		}
 
 		task ("Deploy remote Elasticsearch server and connect it to Portal") {
-			AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch");
+			AntCommands.runCommand("build-test-elasticsearch8.xml", "start-elasticsearch");
 		}
 
 		task ("Confirm Portal is connected to the remote Elasticsearch server before moving on") {
@@ -804,7 +804,7 @@ definition {
 
 		Navigator.openSpecificURL(url = "http://${portalHostname}:9201");
 
-		AntCommands.runCommand("build-test-elasticsearch7.xml", "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9201");
+		AntCommands.runCommand("build-test-elasticsearch8.xml", "add-boston-dataset-index -Dbackup.index=boston311 -Delasticsearch.port=9201");
 
 		Navigator.openURL();
 
@@ -869,9 +869,9 @@ definition {
 
 		ServerAdministration.addCategoryLogLevels(
 			categoryLevel = "INFO",
-			categoryName = "com.liferay.portal.search.elasticsearch7.internal.connection");
+			categoryName = "com.liferay.portal.search.elasticsearch8.internal.connection");
 
-		AntCommands.runCommand("build-test-elasticsearch7.xml", "start-elasticsearch");
+		AntCommands.runCommand("build-test-elasticsearch8.xml", "start-elasticsearch");
 
 		WaitForConsoleTextPresent(value1 = "Stopping sidecar Elasticsearch");
 
@@ -922,7 +922,7 @@ definition {
 			searchAssetTitle = "WC WebContent Title",
 			searchAssetType = "Web Content Article");
 
-		AntCommands.runCommand("build-test-elasticsearch7.xml", "stop-elasticsearch");
+		AntCommands.runCommand("build-test-elasticsearch8.xml", "stop-elasticsearch");
 	}
 
 	@description = "This is a use case for LPS-57894."
@@ -953,7 +953,7 @@ definition {
 
 		SystemSettings.gotoConfiguration(
 			configurationCategory = "Search",
-			configurationName = "Elasticsearch 7",
+			configurationName = "Elasticsearch 8",
 			configurationScope = "System Scope");
 
 		FormFields.editTextMultiline(

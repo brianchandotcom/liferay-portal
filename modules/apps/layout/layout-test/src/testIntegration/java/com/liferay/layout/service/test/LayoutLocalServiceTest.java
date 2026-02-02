@@ -897,7 +897,7 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test(expected = LayoutJavaScriptException.class)
-	public void testUpdateLayoutWithJavaScriptIvalidValue1() throws Exception {
+	public void testUpdateLayoutWithJavaScriptInvalidValue1() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_layoutLocalService.updateTypeSettings(
@@ -908,7 +908,7 @@ public class LayoutLocalServiceTest {
 	}
 
 	@Test(expected = LayoutJavaScriptException.class)
-	public void testUpdateLayoutWithJavaScriptIvalidValue2() throws Exception {
+	public void testUpdateLayoutWithJavaScriptInvalidValue2() throws Exception {
 		Layout layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		_layoutLocalService.updateTypeSettings(

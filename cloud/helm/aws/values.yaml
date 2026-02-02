@@ -40,11 +40,13 @@ liferay-default:
                           - -c
                           - |
                                 function download_module {
+                                    local product_version="{{ .image.tag }}"
+
                                     local http_code=$(\
                                         curl \
-                                            "https://releases.liferay.com/opensearch2/dxp/${product_version}/${filename_prefix}.${1}.jar" \
+                                            "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar" \
                                             --location \
-                                            --output-dir "${deploy_dir}" \
+                                            --output-dir /temp/liferay/deploy \
                                             --remote-name \
                                             --retry 5 \
                                             --retry-all-errors \
@@ -62,14 +64,10 @@ liferay-default:
                                 function main {
                                     set -e
 
-                                    local deploy_dir="/temp/liferay/deploy"
-                                    local filename_prefix="com.liferay.portal.search.opensearch2"
-                                    local product_version="{{ .image.tag }}"
+                                    mkdir --parents /temp/liferay/deploy
 
-                                    rm --force --verbose "/temp/osgi/modules/${filename_prefix}"*
+                                    rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
 
-                                    mkdir --parents "${deploy_dir}"
-                    
                                     download_module "api"
                                     download_module "impl"
                                 }

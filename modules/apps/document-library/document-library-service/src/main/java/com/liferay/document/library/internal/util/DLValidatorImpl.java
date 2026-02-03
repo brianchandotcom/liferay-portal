@@ -290,11 +290,22 @@ public final class DLValidatorImpl implements DLValidator {
 		long maxSize = getMaxAllowableSize(groupId, mimeType, 0);
 
 		if ((maxSize > 0) && (size > maxSize)) {
+			if (maxSize == _getGlobalMaxAllowableSize(
+					_getCompanyId(groupId), groupId)) {
+
+				throw new FileSizeException(
+					StringBundler.concat(
+						size, " exceeds the global maximum permitted size of ",
+						maxSize, " for file ", fileName),
+					maxSize);
+			}
+
 			throw new FileSizeException(
 				StringBundler.concat(
-					size, " exceeds the maximum permitted size of ", maxSize,
-					" for file ", fileName),
-				maxSize);
+					size, " exceeds the mime type '", mimeType,
+					"' maximum permitted size of ", maxSize, " for file ",
+					fileName),
+				maxSize, mimeType);
 		}
 	}
 

@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Carvalho
  */
 @Component(service = FragmentRenderer.class)
-public class EnterpriseProductMenuBannerFragmentRender
+public class EnterpriseProductMenuBannerFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override

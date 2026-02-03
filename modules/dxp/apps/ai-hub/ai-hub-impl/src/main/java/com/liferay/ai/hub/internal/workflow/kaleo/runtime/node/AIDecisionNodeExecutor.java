@@ -147,6 +147,8 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 						"executionContext", executionContext,
 						"permissionChecker",
 						PermissionThreadLocal.getPermissionChecker()))
+			).memoryId(
+				GetterUtil.getString(workflowContext.get("memoryId"))
 			).onCompleteResponse(
 				response -> vertexAiGeminiStreamingChatModel.close()
 			).onError(

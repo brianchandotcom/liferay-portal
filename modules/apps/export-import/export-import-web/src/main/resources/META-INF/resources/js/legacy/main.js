@@ -905,6 +905,7 @@ AUI.add(
 							.attr('checked')
 					) {
 						if (
+							inputs.size() > 0 ||
 							!instance
 								.byId('PORTLET_DATA_' + portletId)
 								.ancestor('[data-portlet-type="batch"]')

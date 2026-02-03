@@ -92,7 +92,7 @@ interface ITreeViewProps<T extends Record<string, any>>
 	 * another item.
 	 */
 	onItemHover?: (
-		item: T,
+		items: T | Set<React.Key>,
 		parentItem: T,
 		index: MoveItemIndex,
 		position: Position
@@ -101,7 +101,11 @@ interface ITreeViewProps<T extends Record<string, any>>
 	/**
 	 * Callback is called when an item is about to be moved elsewhere in the tree.
 	 */
-	onItemMove?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
+	onItemMove?: (
+		items: T | Set<React.Key>,
+		parentItem: T,
+		index: MoveItemIndex
+	) => boolean;
 
 	/**
 	 * When a tree is very large, loading items (nodes) asynchronously is preferred to

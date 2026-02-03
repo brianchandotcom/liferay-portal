@@ -41,12 +41,16 @@ export interface ITreeViewContext<T extends Record<string, any>>
 	expanderIcons?: Icons;
 	nestedKey?: string;
 	onItemHover?: (
-		item: T,
+		items: T | Set<Key>,
 		parentItem: T,
 		index: MoveItemIndex,
 		position: Position
 	) => boolean;
-	onItemMove?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
+	onItemMove?: (
+		items: T | Set<Key>,
+		parentItem: T,
+		index: MoveItemIndex
+	) => boolean;
 	onLoadMore?: OnLoadMore<T>;
 	onRenameItem?: (item: T) => Promise<any>;
 	onSelect?: (item: T) => void;

@@ -40,6 +40,7 @@ function isMovingIntoItself(from: Array<number>, path: Array<number>) {
 export function ItemContextProvider({children, value}: Props) {
 	const {
 		dragAndDrop,
+		dragAndDropMode,
 		expandedKeys,
 		items,
 		layout,
@@ -189,7 +190,9 @@ export function ItemContextProvider({children, value}: Props) {
 				const tree = createImmutableTree(items as any, nestedKey!);
 
 				const isMoved = onItemMove(
-					removeItemInternalProps(dragItem.item),
+					dragAndDropMode === 'multiple'
+						? currentDragKeys
+						: removeItemInternalProps(dragItem.item),
 					tree.nodeByPath(indexes).parent!,
 					{
 						next: indexes[indexes.length - 1]!,
@@ -269,9 +272,11 @@ export function ItemContextProvider({children, value}: Props) {
 				const indexes = getNewItemPath(item.indexes, currentPosition);
 
 				const isHovered = onItemHover(
-					removeItemInternalProps(
-						(dragItem as unknown as Value)['item']
-					),
+					dragAndDropMode === 'multiple'
+						? currentDragKeys
+						: removeItemInternalProps(
+								(dragItem as unknown as Value)['item']
+							),
 					tree.nodeByPath(indexes).parent!,
 					{
 						next: indexes[indexes.length - 1]!,

@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaTerm;
@@ -46,9 +45,11 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			}
 
 			_checkDataAccessGetConnectionCall(fileName, childJavaTerm);
+			_checkMissingReusableConnectionInDBRunSQLCall(
+				fileName, childJavaTerm, javaClass);
 		}
 
-		return _fixReusableConnectionInDBRunSQLCall(fileName, javaClass);
+		return javaTerm.getContent();
 	}
 
 	@Override
@@ -82,10 +83,10 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			javaTerm.getLineNumber(index));
 	}
 
-	private String _fixReusableConnectionInDBRunSQLCall(
-		String fileName, JavaClass javaClass) {
+	private void _checkMissingReusableConnectionInDBRunSQLCall(
+		String fileName, JavaTerm javaTerm, JavaClass javaClass) {
 
-		String content = javaClass.getContent();
+		String content = javaTerm.getContent();
 
 		Matcher matcher = _runSQLPattern.matcher(content);
 
@@ -93,7 +94,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			String variableName = matcher.group(1);
 
 			String variableTypeName = getVariableTypeName(
-				content, null, content, fileName, variableName);
+				content, javaTerm, javaClass.getContent(), fileName,
+				variableName);
 
 			if ((variableTypeName == null) || !variableTypeName.equals("DB")) {
 				continue;
@@ -110,15 +112,21 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			if (parameter.matches("\\w+")) {
 				variableTypeName = getVariableTypeName(
-					content, null, content, fileName, parameter, true, false);
+					content, javaTerm, javaClass.getContent(), fileName,
+					parameter, true, false);
 
 				if ((variableTypeName != null) &&
 					(variableTypeName.equals("String") ||
 					 variableTypeName.equals("String[]"))) {
 
-					return StringUtil.insert(
-						content, "connection, ", matcher.end());
+					addMessage(
+						fileName,
+						"Missing parameter \"connection\" when calling \"" +
+							variableName + ".runSQL\"",
+						javaTerm.getLineNumber(matcher.start()));
 				}
+
+				return;
 			}
 
 			if (!parameter.matches("(?i)(\\w+\\.)?\\w+SQL\\(.*\\)") &&
@@ -129,10 +137,12 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			return StringUtil.insert(content, "connection, ", matcher.end());
+			addMessage(
+				fileName,
+				"Missing parameter \"connection\" when calling \"" +
+					variableName + ".runSQL\"",
+				javaTerm.getLineNumber(matcher.start()));
 		}
-
-		return content;
 	}
 
 	private static final Pattern _runSQLPattern = Pattern.compile(

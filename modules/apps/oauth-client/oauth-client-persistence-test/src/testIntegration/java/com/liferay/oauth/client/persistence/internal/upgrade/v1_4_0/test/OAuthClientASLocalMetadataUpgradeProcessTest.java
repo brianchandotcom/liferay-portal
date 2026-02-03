@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  * @author Alvaro Saugar
  */
 @RunWith(Arquillian.class)
-public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
+public class OAuthClientASLocalMetadataUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -109,7 +109,7 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.oauth.client.persistence.internal.upgrade.v1_4_0." +
-			"OAuthAuthorizationServerInfoMapperJSONUpgradeProcess";
+			"OAuthClientASLocalMetadataUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.oauth.client.persistence.internal.upgrade.registry.OAuthClientPersistenceServiceUpgradeStepRegistrator))"

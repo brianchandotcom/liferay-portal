@@ -21,8 +21,7 @@ import java.sql.Statement;
 /**
  * @author Alvaro Saugar
  */
-public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
-	extends UpgradeProcess {
+public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
@@ -90,6 +89,6 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuthAuthorizationServerInfoMapperJSONUpgradeProcess.class);
+		OAuthClientASLocalMetadataUpgradeProcess.class);
 
 }

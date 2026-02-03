@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.category.order:Integer=20",
 	service = ScreenNavigationCategory.class
 )
-public class CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
+public class CommerceShippingFixedOptionSettingsScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
 	@Override

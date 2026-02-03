@@ -46,8 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "screen.navigation.entry.order:Integer=10",
 	service = ScreenNavigationEntry.class
 )
-public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
-	extends CommerceShippingMethodFixedOptionSettingsScreenNavigationCategory
+public class CommerceShippingFixedOptionSettingsScreenNavigationEntry
+	extends CommerceShippingFixedOptionSettingsScreenNavigationCategory
 	implements ScreenNavigationEntry<CommerceShippingFixedOption> {
 
 	@Override
@@ -122,7 +122,7 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry.class);
+		CommerceShippingFixedOptionSettingsScreenNavigationEntry.class);
 
 	@Reference
 	private CommerceChannelLocalService _commerceChannelLocalService;

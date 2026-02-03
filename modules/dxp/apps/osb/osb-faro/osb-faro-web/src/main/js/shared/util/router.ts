@@ -258,7 +258,6 @@ export const Routes = buildRoutes({
 					SETTINGS: {
 						path: '/settings',
 						routes: {
-							SETTINGS_ADD_DATA_SOURCE: '/data-source/add',
 							SETTINGS_APIS: {
 								path: '/apis',
 								routes: {

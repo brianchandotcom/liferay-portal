@@ -141,9 +141,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					executionContext, "userMessage", kaleoNodeSettingValues)
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
-			).build(),
-			GetterUtil.getString(
-				workflowContext.get("assistantKey"), "default"));
+			).build());
 	}
 
 	@Override

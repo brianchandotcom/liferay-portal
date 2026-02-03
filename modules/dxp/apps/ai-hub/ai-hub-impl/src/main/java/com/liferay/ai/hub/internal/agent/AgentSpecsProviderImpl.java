@@ -64,6 +64,8 @@ public class AgentSpecsProviderImpl implements AgentSpecsProvider {
 				).put(
 					"accessToken", _agentContext.getAccessToken()
 				).put(
+					"memoryId", _agentContext.getSseEventSinkKey()
+				).put(
 					"userToken", _agentContext.getUserToken()
 				).build();
 

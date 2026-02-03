@@ -78,8 +78,8 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 		addMessage(
 			fileName,
-			"Use existing connection field instead of calling DataAccess." +
-				"getConnection",
+			"Use existing connection field instead of calling \"DataAccess." +
+				"getConnection\"",
 			javaTerm.getLineNumber(index));
 	}
 

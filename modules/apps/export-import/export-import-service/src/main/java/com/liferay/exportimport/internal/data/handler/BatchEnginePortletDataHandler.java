@@ -132,18 +132,26 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					exportImportDescriptor.getModelClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
+			List<String> applicableExternalReferenceCodes = ListUtil.filter(
+				ListUtil.fromCollection(newPrimaryKeysMap.keySet()),
+				exportImportDescriptor::isApplicableExternalReferenceCode);
+
 			portletDataContext.addZipEntry(
 				_normalize(
 					registration.getDeletionsFileName(),
 					portletDataContext.getScopeGroupId()),
 				JSONUtil.toJSONArray(
-					ListUtil.filter(
-						ListUtil.fromCollection(newPrimaryKeysMap.keySet()),
-						exportImportDescriptor::
-							isApplicableExternalReferenceCode),
+					applicableExternalReferenceCodes,
 					externalReferenceCode -> JSONUtil.put(
 						"externalReferenceCode", externalReferenceCode)
 				).toString());
+
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			manifestSummary.addModelDeletionCount(
+				exportImportDescriptor.getKey(),
+				applicableExternalReferenceCodes.size());
 		}
 	}
 

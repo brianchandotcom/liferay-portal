@@ -1,45 +1,28 @@
-.empty-drop-zone-root {
-	background: $white;
-	border-width: 2px;
+.empty-drop-zone-target {
+	background-color: $secondaryHover;
+	border: 2px dashed $mainLighten52;
+	border-radius: 4px;
+	color: $secondary;
+	height: 136px;
 
-	.criteria-message, .groups-message {
-		color: $secondary;
-		font-size: $fontSizeSmall;
-		font-weight: $fontWeightSemiBold;
-
-		.icon-root {
-			margin-right: 12px;
-		}
+	&.dnd-hover {
+		background-color: $primaryLighten45;
+		border: 2px solid $primaryLighten23;
+		color: $primary;
 	}
 
-	.criteria-message {
-		margin-bottom: 20px;
+	&.enabled-sequencial-segment {
+		align-items: center;
+		display: flex;
+		justify-content: center;
 	}
 
-	.empty-drop-zone-target {
-		height: 50vh;
-
-		.empty-drop-zone-indicator {
-			visibility: hidden;
-			width: 100%;
-		}
-
-		&.dnd-hover {
-			background: $primaryLighten45;
-
-			.empty-drop-zone-indicator {
-				visibility: visible;
-			}
-		}
+	.empty-drop-zone-message {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		height: 136px;
+		justify-content: center;
 	}
-}
-
-.empty-drop-zone-dashed {
-	border-color: $mainLighten65 !important;
-	border-style: dashed;
-}
-
-.empty-drop-zone-target-solid {
-	border-style: solid;
-	border-width: 2px;
 }

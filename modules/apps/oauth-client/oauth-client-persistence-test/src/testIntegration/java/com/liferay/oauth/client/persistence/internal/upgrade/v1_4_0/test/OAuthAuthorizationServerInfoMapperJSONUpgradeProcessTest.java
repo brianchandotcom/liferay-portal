@@ -76,24 +76,22 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcessTest {
 
 		_runUpgrade();
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata1AfterUpgrade =
+		oAuthClientASLocalMetadata1 =
 			_oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(
 					oAuthClientASLocalMetadata1.
 						getOAuthClientASLocalMetadataId());
 
 		Assert.assertTrue(
-			Validator.isNull(
-				oAuthClientASLocalMetadata1AfterUpgrade.getIssuer()));
+			Validator.isNull(oAuthClientASLocalMetadata1.getIssuer()));
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata2AfterUpgrade =
+		oAuthClientASLocalMetadata2 =
 			_oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(
 					oAuthClientASLocalMetadata2.
 						getOAuthClientASLocalMetadataId());
 
-		Assert.assertEquals(
-			issuer, oAuthClientASLocalMetadata2AfterUpgrade.getIssuer());
+		Assert.assertEquals(issuer, oAuthClientASLocalMetadata2.getIssuer());
 	}
 
 	private void _runUpgrade() throws Exception {

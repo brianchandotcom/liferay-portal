@@ -13,16 +13,19 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
-import jakarta.portlet.ActionRequest;
+import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,14 +53,20 @@ public class ViewHomeWorkflowTasksDisplayContext {
 	}
 
 	public Map<String, Object> getReactData() throws Exception {
+		LiferayPortletURL myWorkflowTasksURLPortletURL =
+			PortletURLFactoryUtil.create(
+				_httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
+				LayoutLocalServiceUtil.getFriendlyURLLayout(
+					_themeDisplay.getScopeGroupId(), false,
+					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL),
+				PortletRequest.RENDER_PHASE);
+
 		return HashMapBuilder.<String, Object>put(
 			"id", CMSSiteInitializerFDSNames.HOME_MY_WORKFLOW_TASKS_SECTION
 		).put(
 			"myRolesWorkflowTasksURL",
 			PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					_httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
-					ActionRequest.RENDER_PHASE)
+				myWorkflowTasksURLPortletURL
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).setTabs1(
@@ -66,9 +75,7 @@ public class ViewHomeWorkflowTasksDisplayContext {
 		).put(
 			"myWorkflowTasksURL",
 			PortletURLBuilder.create(
-				PortalUtil.getControlPanelPortletURL(
-					_httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
-					ActionRequest.RENDER_PHASE)
+				myWorkflowTasksURLPortletURL
 			).setRedirect(
 				_themeDisplay.getURLCurrent()
 			).buildString()

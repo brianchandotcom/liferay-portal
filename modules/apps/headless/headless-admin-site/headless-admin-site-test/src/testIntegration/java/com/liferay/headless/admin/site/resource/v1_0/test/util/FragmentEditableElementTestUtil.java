@@ -84,7 +84,7 @@ public class FragmentEditableElementTestUtil {
 			() -> FragmentEditableElementValue.Type.ACTION);
 
 		fragmentEditableElement.setFragmentEditableElementValue(
-			actionFragmentEditableElementValue);
+			() -> actionFragmentEditableElementValue);
 
 		fragmentEditableElement.setId(() -> id);
 

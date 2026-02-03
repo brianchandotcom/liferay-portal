@@ -6,15 +6,17 @@
 package com.liferay.object.internal.bulk.selection;
 
 import com.liferay.bulk.selection.BulkSelectionAction;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -24,10 +26,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Danny Situ
  */
 @Component(
-	property = "bulk.selection.action.key=update.task.state",
+	property = "bulk.selection.action.key=status.object",
 	service = BulkSelectionAction.class
 )
-public class UpdateTaskStateObjectBulkSelectionAction
+public class StatusObjectBulkSelectionAction
 	extends BaseObjectBulkSelectionAction {
 
 	@Override
@@ -39,20 +41,30 @@ public class UpdateTaskStateObjectBulkSelectionAction
 			return;
 		}
 
-		String state = (String)inputMap.get("state");
+		String status = (String)inputMap.get("status");
 
-		if (Validator.isBlank(state)) {
+		if (Validator.isBlank(status)) {
 			return;
 		}
 
 		ObjectEntry objectEntry = (ObjectEntry)object;
 
+		Map<String, Serializable> properties = new HashMap<>();
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		if (StringUtil.equals(objectDefinition.getName(), "CMPTask")) {
+			properties.put("state", status);
+		}
+		else {
+			properties.put("status", status);
+		}
+
 		_objectEntryService.partialUpdateObjectEntry(
 			objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(),
-			HashMapBuilder.<String, Serializable>put(
-				"state", state
-			).build(),
+			objectEntry.getObjectEntryFolderId(), properties,
 			new ServiceContext());
 	}
 

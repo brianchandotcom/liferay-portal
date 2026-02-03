@@ -451,6 +451,8 @@ public class PageSpecificationResourceImpl
 		if (draftLayout == null) {
 			if (!layout.isTypePortlet() &&
 				!Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_EMBEDDED) &&
+				!Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT) &&
 				!Objects.equals(layout.getType(), LayoutConstants.TYPE_NODE) &&
 				!Objects.equals(layout.getType(), LayoutConstants.TYPE_URL)) {

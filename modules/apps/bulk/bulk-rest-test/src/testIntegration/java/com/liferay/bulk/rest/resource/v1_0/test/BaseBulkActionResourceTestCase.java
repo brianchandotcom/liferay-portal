@@ -1385,7 +1385,8 @@ public abstract class BaseBulkActionResourceTestCase {
 			() -> {
 				StatusBulkAction bulkAction = new StatusBulkAction();
 
-				bulkAction.setStatus(RandomTestUtil.randomInt());
+				bulkAction.setStatus(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				bulkAction.setType(BulkAction.Type.create("StatusBulkAction"));
 

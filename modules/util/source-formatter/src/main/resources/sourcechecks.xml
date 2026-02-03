@@ -2017,10 +2017,6 @@
 			<category name="Upgrade" />
 			<description name="Upgrade class that implements SortFieldNameTranslator." />
 		</check>
-		<check name="UpgradeJavaStorageTypeAwareCheck">
-			<category name="Upgrade" />
-			<description name="Run code to delete StorageTypeAware interface." />
-		</check>
 		<check name="UpgradeJSPFieldSetGroupCheck">
 			<category name="Upgrade" />
 			<description name="Run code to remove 'fieldset-group' tag." />

@@ -573,7 +573,6 @@ UpgradeJavaScreenContributorClassCheck | [Upgrade](upgrade_checks.md#upgrade-che
 UpgradeJavaServiceImplCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Add Component annotation to `*ServiceImpl.java` file. |
 UpgradeJavaServiceReferenceAnnotationCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Run code migration to replace '@ServiceReference' by '@Reference'. |
 UpgradeJavaSortFieldNameTranslatorCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Upgrade class that implements SortFieldNameTranslator. |
-UpgradeJavaStorageTypeAwareCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Run code to delete StorageTypeAware interface. |
 UpgradePortletFTLCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Include the CSS classes 'cadmin' and include for impression of 'right cadmin' in 'portlet.ftl' file. |
 [UpgradeProcessCheck](check/upgrade_process_check.md#upgradeprocesscheck) | [Performance](performance_checks.md#performance-checks) | .java | Performs several checks on `*UpgradeProcess` classes. |
 UpgradeRejectedExecutionHandlerCheck | [Upgrade](upgrade_checks.md#upgrade-checks) | .bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss, or .vm | Replace Liferay's RejectedExecutionHandler with Java's RejectedExecutionHandler. |

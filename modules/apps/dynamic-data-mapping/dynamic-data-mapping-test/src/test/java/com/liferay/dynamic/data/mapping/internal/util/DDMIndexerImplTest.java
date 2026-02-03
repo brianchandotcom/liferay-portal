@@ -706,15 +706,17 @@ public class DDMIndexerImplTest {
 		Document document = _createDocument();
 
 		String indexType = "keyword";
+		String optionLabel = RandomTestUtil.randomString();
+		String optionValue = RandomTestUtil.randomString();
 
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			_FIELD_NAME, "string", indexType, true,
 			DDMFormFieldTypeConstants.SELECT,
 			new Locale[] {LocaleUtil.BRAZIL, LocaleUtil.US}, LocaleUtil.US,
 			HashMapBuilder.put(
-				"refNo", "No"
+				optionValue, optionLabel
 			).put(
-				"refYes", "Yes"
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).build());
 
 		_ddmIndexer.addAttributes(
@@ -724,46 +726,64 @@ public class DDMIndexerImplTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"[\"refNo\"]",
-						"[\"refNo" +
-							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL) + "\"]",
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						StringBundler.concat(
+							"[\"", optionValue,
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL), "\"]"),
 						LocaleUtil.US)),
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"[\"refNo\"]",
-						"[\"refNo" +
-							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL) + "\"]",
+						StringBundler.concat("[\"", optionValue, "\"]"),
+						StringBundler.concat(
+							"[\"", optionValue,
+							LocaleUtil.toLanguageId(LocaleUtil.BRAZIL), "\"]"),
 						LocaleUtil.US))));
 
-		String indexTypeSuffix = StringUtil.upperCaseFirstLetter(indexType);
+		String prefix =
+			"ddmFieldArray.ddmFieldValue" +
+				StringUtil.upperCaseFirstLetter(indexType);
 
 		FieldValuesAssert.assertFieldValues(
 			HashMapBuilder.put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
-					"_en_US_String",
-				"[[\"No\"], [\"No\"]]"
+				prefix + "_en_US",
+				StringBundler.concat(
+					"[[\"", optionValue, "\"], [\"", optionValue, "\"]]")
 			).put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
-					"_en_US_String_sortable",
-				"[[\"no\"], [\"no\"]]"
+				prefix + "_en_US_String",
+				StringBundler.concat(
+					"[[\"", optionLabel, "\"], [\"", optionLabel, "\"]]")
 			).put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
-					"_pt_BR_String",
-				"[[\"Nopt_BR\"], [\"Nopt_BR\"]]"
+				prefix + "_en_US_String_sortable",
+				StringBundler.concat(
+					"[[\"", StringUtil.toLowerCase(optionLabel), "\"], [\"",
+					StringUtil.toLowerCase(optionLabel), "\"]]")
 			).put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix +
-					"_pt_BR_String_sortable",
-				"[[\"nopt_br\"], [\"nopt_br\"]]"
+				prefix + "_pt_BR",
+				StringBundler.concat(
+					"[[\"", optionValue,
+					LocaleUtil.toLanguageId(LocaleUtil.BRAZIL), "\"], [\"",
+					optionValue, LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+					"\"]]")
 			).put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix + "_en_US",
-				"[[\"refNo\"], [\"refNo\"]]"
+				prefix + "_pt_BR_String",
+				StringBundler.concat(
+					"[[\"", optionLabel,
+					LocaleUtil.toLanguageId(LocaleUtil.BRAZIL), "\"], [\"",
+					optionLabel, LocaleUtil.toLanguageId(LocaleUtil.BRAZIL),
+					"\"]]")
 			).put(
-				"ddmFieldArray.ddmFieldValue" + indexTypeSuffix + "_pt_BR",
-				"[[\"refNopt_BR\"], [\"refNopt_BR\"]]"
+				prefix + "_pt_BR_String_sortable",
+				StringBundler.concat(
+					"[[\"", StringUtil.toLowerCase(optionLabel),
+					StringUtil.toLowerCase(
+						LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)),
+					"\"], [\"", StringUtil.toLowerCase(optionLabel),
+					StringUtil.toLowerCase(
+						LocaleUtil.toLanguageId(LocaleUtil.BRAZIL)),
+					"\"]]")
 			).build(),
-			"ddmFieldArray.ddmFieldValue" + indexTypeSuffix, document,
-			StringPool.BLANK);
+			prefix, document, StringPool.BLANK);
 	}
 
 	private static final String _FIELD_NAME = RandomTestUtil.randomString();

@@ -15,7 +15,7 @@ import React, {useCallback, useState} from 'react';
 import {displayErrorToast} from '../../utils/toastUtil';
 import StateSelector, {State} from '../StateSelector';
 
-export default function EditBulkTaskStateModalContent({
+export default function BulkEditStateModalContent({
 	apiURL,
 	closeModal,
 	selectedData,
@@ -39,7 +39,7 @@ export default function EditBulkTaskStateModalContent({
 		triggerAssetBulkAction({
 			apiURL,
 			keyValues: {
-				state: selectedState,
+				status: selectedState,
 			},
 			onCreateError: ({error}) => {
 				setSubmitDisabled(false);
@@ -59,8 +59,8 @@ export default function EditBulkTaskStateModalContent({
 			},
 			overrideDefaultErrorToast: true,
 			selectedData,
-			type: 'UpdateTaskStateBulkAction',
-		} as IBulkActionTaskStarterDTO<'UpdateTaskStateBulkAction'>);
+			type: 'StatusBulkAction',
+		} as IBulkActionTaskStarterDTO<'StatusBulkAction'>);
 	}, [apiURL, closeModal, selectedData, selectedState, setSubmitDisabled]);
 
 	return (

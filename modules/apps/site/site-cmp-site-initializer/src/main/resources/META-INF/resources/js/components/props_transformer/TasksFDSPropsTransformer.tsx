@@ -21,8 +21,8 @@ import React from 'react';
 
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
+import BulkEditStateModalContent from '../modal/BulkEditStateModalContent';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
-import EditBulkTaskStateModalContent from '../modal/EditBulkTaskStateModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 import KanbanView from './views/kanban_view/KanbanView';
@@ -339,7 +339,7 @@ export default function TasksFDSPropsTransformer({
 					}: {
 						closeModal: () => void;
 					}) =>
-						EditBulkTaskStateModalContent({
+						BulkEditStateModalContent({
 							apiURL: otherProps?.apiURL,
 							closeModal,
 							selectedData,

@@ -55,8 +55,36 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String issuer, boolean localWellKnownEnabled,
-			String authorizationEndpoint, String jwksURI,
+			long userId, String metadataJSON, String wellKnownURISuffix)
+		throws PortalException {
+
+		OIDCProviderMetadata authorizationServerMetadata =
+			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
+				metadataJSON, wellKnownURISuffix);
+
+		return addOAuthClientASLocalMetadata(
+			userId,
+			String.valueOf(
+				authorizationServerMetadata.getAuthorizationEndpointURI()),
+			String.valueOf(authorizationServerMetadata.getIssuer()),
+			String.valueOf(authorizationServerMetadata.getJWKSetURI()), false,
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getScopes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				StringPool.COMMA),
+			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
+			String.valueOf(
+				authorizationServerMetadata.getUserInfoEndpointURI()));
+	}
+
+	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			long userId, String authorizationEndpoint, String issuer,
+			String jwksURI, boolean localWellKnownEnabled,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpoint,
 			String userInfoEndpoint)
@@ -120,35 +148,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			false, false);
 
 		return oAuthClientASLocalMetadata;
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String metadataJSON, String wellKnownURISuffix)
-		throws PortalException {
-
-		OIDCProviderMetadata authorizationServerMetadata =
-			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
-				metadataJSON, wellKnownURISuffix);
-
-		return addOAuthClientASLocalMetadata(
-			userId, String.valueOf(authorizationServerMetadata.getIssuer()),
-			false,
-			String.valueOf(
-				authorizationServerMetadata.getAuthorizationEndpointURI()),
-			String.valueOf(authorizationServerMetadata.getJWKSetURI()),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
-				StringPool.COMMA),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getScopes()),
-				StringPool.COMMA),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
-				StringPool.COMMA),
-			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
-			String.valueOf(
-				authorizationServerMetadata.getUserInfoEndpointURI()));
 	}
 
 	@Override
@@ -266,11 +265,40 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 	@Override
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String issuer,
-			boolean localWellKnownEnabled, String authorizationEndpoint,
-			String jwksURI, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
+			long oAuthClientASLocalMetadataId, String metadataJSON,
+			String wellKnownURISuffix)
+		throws PortalException {
+
+		OIDCProviderMetadata authorizationServerMetadata =
+			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
+				metadataJSON, wellKnownURISuffix);
+
+		return updateOAuthClientASLocalMetadata(
+			oAuthClientASLocalMetadataId,
+			String.valueOf(authorizationServerMetadata.getIssuer()),
+			String.valueOf(
+				authorizationServerMetadata.getAuthorizationEndpointURI()),
+			String.valueOf(authorizationServerMetadata.getJWKSetURI()), false,
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getScopes()),
+				StringPool.COMMA),
+			StringUtil.split(
+				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				StringPool.COMMA),
+			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
+			String.valueOf(
+				authorizationServerMetadata.getUserInfoEndpointURI()));
+	}
+
+	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException {
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
@@ -308,36 +336,6 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 		return oAuthClientASLocalMetadataPersistence.update(
 			oAuthClientASLocalMetadata);
-	}
-
-	@Override
-	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String metadataJSON,
-			String wellKnownURISuffix)
-		throws PortalException {
-
-		OIDCProviderMetadata authorizationServerMetadata =
-			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
-				metadataJSON, wellKnownURISuffix);
-
-		return updateOAuthClientASLocalMetadata(
-			oAuthClientASLocalMetadataId,
-			String.valueOf(
-				authorizationServerMetadata.getAuthorizationEndpointURI()),
-			false, String.valueOf(authorizationServerMetadata.getIssuer()),
-			String.valueOf(authorizationServerMetadata.getJWKSetURI()),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),
-				StringPool.COMMA),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getScopes()),
-				StringPool.COMMA),
-			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
-				StringPool.COMMA),
-			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
-			String.valueOf(
-				authorizationServerMetadata.getUserInfoEndpointURI()));
 	}
 
 	private String _generateAuthorizationServerJSON(

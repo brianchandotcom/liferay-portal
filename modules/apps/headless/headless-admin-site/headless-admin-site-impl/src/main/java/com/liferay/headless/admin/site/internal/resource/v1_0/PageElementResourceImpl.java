@@ -14,7 +14,7 @@ import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.LayoutServiceContextHelperUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
@@ -363,7 +363,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 		throws Exception {
 
 		try (AutoCloseable autoCloseable =
-				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
 			LayoutStructureItem layoutStructureItem =
@@ -414,6 +414,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageElementDTOConverter)"

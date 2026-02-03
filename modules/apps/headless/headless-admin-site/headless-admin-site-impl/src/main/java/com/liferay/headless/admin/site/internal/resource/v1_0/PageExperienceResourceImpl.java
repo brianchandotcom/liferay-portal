@@ -16,7 +16,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
-import com.liferay.layout.util.LayoutServiceContextHelperUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -179,7 +179,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		}
 
 		try (AutoCloseable autoCloseable =
-				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
 			return _toPageExperience(
@@ -216,7 +216,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		}
 
 		try (AutoCloseable autoCloseable =
-				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+				_layoutServiceContextHelper.getServiceContextAutoCloseable(
 					layout, contextUser)) {
 
 			SegmentsExperienceUtil.validateSegmentsExperienceLayout(layout);
@@ -280,6 +280,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	@Reference
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	@Reference
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageExperienceDTOConverter)"

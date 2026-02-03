@@ -599,13 +599,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _addFragmentEntryLinksAndPublishLayout(
-			String fragmentEntryKey, Layout layout,
-			JSONObject... editableFragmentEntryProcessorJSONObjects)
+			JSONObject fragmentEntryKeyJSONObject, Layout layout)
 		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				fragmentEntryKey);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -613,21 +608,31 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid());
 
-		for (JSONObject editableFragmentEntryProcessorJSONObject :
-				editableFragmentEntryProcessorJSONObjects) {
+		for (String fragmentEntryKey : fragmentEntryKeyJSONObject.keySet()) {
+			FragmentEntry fragmentEntry =
+				_fragmentCollectionContributorRegistry.getFragmentEntry(
+					fragmentEntryKey);
 
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					editableFragmentEntryProcessorJSONObject
-				).toString(),
-				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), draftLayout,
-				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
-				null, 0, segmentsExperienceId);
+			JSONArray jsonArray = fragmentEntryKeyJSONObject.getJSONArray(
+				fragmentEntryKey);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject editableFragmentEntryProcessorJSONObject =
+					jsonArray.getJSONObject(i);
+
+				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						editableFragmentEntryProcessorJSONObject
+					).toString(),
+					fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
+					fragmentEntry.getExternalReferenceCode(),
+					fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), draftLayout,
+					fragmentEntry.getFragmentEntryKey(),
+					fragmentEntry.getType(), null, 0, segmentsExperienceId);
+			}
 		}
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
@@ -2808,11 +2813,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String url = RandomTestUtil.randomString();
 
 		_addFragmentEntryLinksAndPublishLayout(
-			"BASIC_COMPONENT-image", layout,
-			JSONUtil.put("image-square", JSONUtil.put(languageId, url)),
 			JSONUtil.put(
-				"image-square",
-				JSONUtil.put(languageId, JSONUtil.put("url", url))));
+				"BASIC_COMPONENT-image",
+				JSONUtil.putAll(
+					JSONUtil.put("image-square", JSONUtil.put(languageId, url)),
+					JSONUtil.put(
+						"image-square",
+						JSONUtil.put(languageId, JSONUtil.put("url", url))))),
+			layout);
 
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");

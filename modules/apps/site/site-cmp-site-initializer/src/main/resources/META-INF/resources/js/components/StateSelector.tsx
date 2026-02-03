@@ -35,6 +35,7 @@ const Trigger = React.forwardRef(
 			onClick,
 			onKeyDown,
 			small,
+			triggerClassName,
 			...otherProps
 		}: {
 			children: string;
@@ -44,6 +45,7 @@ const Trigger = React.forwardRef(
 			onKeyDown?: (event: React.KeyboardEvent) => void;
 			otherProps: unknown;
 			small: boolean;
+			triggerClassName?: string;
 		},
 		ref: LegacyRef<HTMLDivElement>
 	) => {
@@ -60,20 +62,31 @@ const Trigger = React.forwardRef(
 			<div
 				{...otherProps}
 				{...eventHandlers}
-				className={classNames(
-					'lfr-cmp__state-selector',
-					{disabled},
-					className,
-					{
-						'lfr-cmp__state-selector--small': small,
-					}
-				)}
+				className={
+					triggerClassName
+						? triggerClassName
+						: classNames(
+								'lfr-cmp__state-selector',
+								{disabled},
+								className,
+								{
+									'lfr-cmp__state-selector--small': small,
+								}
+							)
+				}
 				ref={ref}
 				tabIndex={0}
 			>
-				<Label displayType={mapStateKeyToDisplayType[children]}>
-					{mapStateKeyToLabel[children]}
-				</Label>
+				{children !== Liferay.Language.get('select-state') ? (
+					<Label
+						className="my-0"
+						displayType={mapStateKeyToDisplayType[children]}
+					>
+						{mapStateKeyToLabel[children]}
+					</Label>
+				) : (
+					<span className="text-muted">{children}</span>
+				)}
 			</div>
 		);
 	}
@@ -89,6 +102,7 @@ export default function StateSelector({
 	showLabel = false,
 	small,
 	states,
+	triggerClassName,
 }: {
 	disabled?: boolean;
 	id?: string;
@@ -99,6 +113,7 @@ export default function StateSelector({
 	showLabel?: boolean;
 	small?: boolean;
 	states: State[];
+	triggerClassName?: string;
 }) {
 	const [selectedKey, setSelectedKey] = useControlledState({
 		defaultName: 'initialSelectedKey',
@@ -119,6 +134,14 @@ export default function StateSelector({
 		const baseStateKey = initialSelectedKey
 			? initialSelectedKey
 			: selectedKey;
+
+		if (!baseStateKey) {
+			return states.sort(
+				(a, b) =>
+					(mapKeyToDisplayOrder[a.key] || 0) -
+					(mapKeyToDisplayOrder[b.key] || 0)
+			);
+		}
 
 		const currentState = states.find(({key}) => key === baseStateKey);
 
@@ -173,8 +196,10 @@ export default function StateSelector({
 				}}
 				name={name}
 				onSelectionChange={handleSelectionChange}
+				placeholder={Liferay.Language.get('select-state')}
 				selectedKey={selectedKey}
 				small={small}
+				triggerClassName={triggerClassName}
 				width={125}
 			>
 				{(item) => (

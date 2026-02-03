@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal;
 
+import com.liferay.batch.engine.BatchEngineFileProcessor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -27,6 +28,7 @@ import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgress;
 import com.liferay.batch.engine.internal.task.progress.BatchEngineTaskProgressFactory;
 import com.liferay.batch.engine.internal.util.ErrorMessageUtil;
 import com.liferay.batch.engine.internal.util.ItemIndexThreadLocal;
+import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
@@ -37,6 +39,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
@@ -54,6 +57,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -201,6 +205,8 @@ public class BatchEngineImportTaskExecutorImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
+		_batchEngineFileProcessors = ServiceTrackerListFactory.open(
+			bundleContext, BatchEngineFileProcessor.class);
 		_batchEngineImportTaskExceptionHandlers =
 			ServiceTrackerListFactory.open(
 				bundleContext, BatchEngineImportTaskExceptionHandler.class);
@@ -246,6 +252,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Deactivate
 	protected void deactivate() {
+		_batchEngineFileProcessors.close();
 		_batchEngineImportTaskExceptionHandlers.close();
 		_importTaskPostActions.close();
 		_importTaskPreActions.close();
@@ -304,7 +311,7 @@ public class BatchEngineImportTaskExecutorImpl
 			).fieldNames(
 				ListUtil.fromCollection(fieldNameMapping.keySet())
 			).inputStream(
-				inputStream
+				_processInputStream(inputStream)
 			).parameters(
 				parameters
 			).build();
@@ -541,6 +548,27 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
+	private InputStream _processInputStream(InputStream zipInputStream)
+		throws Exception {
+
+		InputStream inputStream = ZipInputStreamUtil.asZipInputStream(
+			zipInputStream);
+
+		if (_batchEngineFileProcessors.isEmpty()) {
+			return inputStream;
+		}
+
+		String content = StringUtil.read(inputStream);
+
+		for (BatchEngineFileProcessor batchEngineFileProcessor :
+				_batchEngineFileProcessors) {
+
+			content = batchEngineFileProcessor.process(content);
+		}
+
+		return new ByteArrayInputStream(content.getBytes());
+	}
+
 	private <T> T _readItem(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader,
@@ -605,6 +633,9 @@ public class BatchEngineImportTaskExecutorImpl
 	@Reference
 	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
+
+	private ServiceTrackerList<BatchEngineFileProcessor>
+		_batchEngineFileProcessors;
 
 	@Reference
 	private BatchEngineImportTaskErrorLocalService

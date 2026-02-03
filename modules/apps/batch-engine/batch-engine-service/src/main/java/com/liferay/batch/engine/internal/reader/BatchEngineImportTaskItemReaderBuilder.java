@@ -6,7 +6,6 @@
 package com.liferay.batch.engine.internal.reader;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
-import com.liferay.batch.engine.internal.util.ZipInputStreamUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -35,31 +34,28 @@ public class BatchEngineImportTaskItemReaderBuilder {
 			_fieldNames = Collections.emptyList();
 		}
 
-		InputStream inputStream = ZipInputStreamUtil.asZipInputStream(
-			_inputStream);
-
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.CSV) {
 			return new CSVBatchEngineImportTaskItemReaderImpl(
-				_csvFileColumnDelimiter, inputStream, _parameters);
+				_csvFileColumnDelimiter, _inputStream, _parameters);
 		}
 
 		if ((_batchEngineTaskContentType == BatchEngineTaskContentType.JSON) ||
 			(_batchEngineTaskContentType == BatchEngineTaskContentType.JSONT)) {
 
 			return new JSONBatchEngineImportTaskItemReaderImpl(
-				_fieldNames, inputStream);
+				_fieldNames, _inputStream);
 		}
 
 		if (_batchEngineTaskContentType == BatchEngineTaskContentType.JSONL) {
 			return new JSONLBatchEngineImportTaskItemReaderImpl(
-				_fieldNames, inputStream);
+				_fieldNames, _inputStream);
 		}
 
 		if ((_batchEngineTaskContentType == BatchEngineTaskContentType.XLS) ||
 			(_batchEngineTaskContentType == BatchEngineTaskContentType.XLSX)) {
 
 			return new XLSBatchEngineImportTaskItemReaderImpl(
-				_fieldNames, inputStream);
+				_fieldNames, _inputStream);
 		}
 
 		throw new IllegalArgumentException(

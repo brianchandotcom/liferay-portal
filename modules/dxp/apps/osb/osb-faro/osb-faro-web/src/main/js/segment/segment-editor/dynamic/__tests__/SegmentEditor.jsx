@@ -3,7 +3,13 @@ import mockStore from 'test/mock-store';
 import React from 'react';
 import SegmentEditor, {validateSegmentEditor} from '../index';
 import {BrowserRouter} from 'react-router-dom';
-import {cleanup, render} from '@testing-library/react';
+import {
+	cleanup,
+	fireEvent,
+	render,
+	screen,
+	waitFor
+} from '@testing-library/react';
 import {DndProvider} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {Provider} from 'react-redux';
@@ -36,7 +42,7 @@ describe('SegmentEditor', () => {
 	});
 
 	it('should render with error message', () => {
-		const {getByText} = render(
+		render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
 					<DndProvider backend={HTML5Backend}>
@@ -58,7 +64,83 @@ describe('SegmentEditor', () => {
 			</Provider>
 		);
 
-		expect(getByText('Error:')).not.toBeNull();
+		expect(screen.getByText('Error:')).not.toBeNull();
+	});
+
+	it('renders the realtime segment with sequencial card disabled', () => {
+		render(
+			<Provider store={mockStore()}>
+				<BrowserRouter>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='REAL_TIME'
+						/>
+					</DndProvider>
+				</BrowserRouter>
+			</Provider>
+		);
+
+		expect(screen.getByText('Order')).toBeInTheDocument();
+		expect(screen.getByText('Enabled Sequencial')).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				'When this is enabled, Event 2 must occur after Event 1, with any number of events in between. When this is disabled, events can be completed in any order. Nested criteria are not supported.'
+			)
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'Drag and drop criterion from the right to add rules.'
+			)
+		).toBeInTheDocument();
+		expect(
+			screen.getByText(
+				'Drag and drop over an existing criteria to form groups.'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('renders the realtime segment with sequencial card and user enable it', async () => {
+		render(
+			<Provider store={mockStore()}>
+				<BrowserRouter>
+					<DndProvider backend={HTML5Backend}>
+						<SegmentEditor
+							channelId='321'
+							groupId='23'
+							type='REAL_TIME'
+						/>
+					</DndProvider>
+				</BrowserRouter>
+			</Provider>
+		);
+
+		expect(screen.getByText('Order')).toBeInTheDocument();
+		expect(screen.getByText('Enabled Sequencial')).toBeInTheDocument();
+
+		expect(
+			screen.getByText(
+				'When this is enabled, Event 2 must occur after Event 1, with any number of events in between. When this is disabled, events can be completed in any order. Nested criteria are not supported.'
+			)
+		).toBeInTheDocument();
+
+		fireEvent.click(screen.getByText('Enabled Sequencial'));
+
+		await waitFor(() => {
+			expect(
+				screen.queryByText(
+					'Drag and drop criterion from the right to add rules.'
+				)
+			).toBeInTheDocument();
+
+			expect(
+				screen.queryByText(
+					'Drag and drop over an existing criteria to form groups.'
+				)
+			).not.toBeInTheDocument();
+		});
 	});
 });
 

@@ -54,7 +54,11 @@ public class StatusBulkActionSerDes {
 
 			sb.append("\"status\": ");
 
-			sb.append(statusBulkAction.getStatus());
+			sb.append("\"");
+
+			sb.append(_escape(statusBulkAction.getStatus()));
+
+			sb.append("\"");
 		}
 
 		if (statusBulkAction.getBulkActionItems() != null) {
@@ -194,8 +198,7 @@ public class StatusBulkActionSerDes {
 
 			if (Objects.equals(jsonParserFieldName, "status")) {
 				if (jsonParserFieldValue != null) {
-					statusBulkAction.setStatus(
-						Integer.valueOf((String)jsonParserFieldValue));
+					statusBulkAction.setStatus((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {

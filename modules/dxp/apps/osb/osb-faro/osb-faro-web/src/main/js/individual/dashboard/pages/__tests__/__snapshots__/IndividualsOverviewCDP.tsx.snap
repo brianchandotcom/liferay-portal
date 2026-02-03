@@ -1,0 +1,212 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IndividualsOverviewCDP should render Individuals Metrics Cards 1`] = `
+<div>
+  <div
+    class="sub-header-root"
+  >
+    <div
+      class="row-root align-items-center d-flex justify-content-between header-container"
+    >
+      <div
+        class="d-flex justify-content-end w-100"
+      >
+        <button
+          class="btn btn-outline-borderless btn-sm btn-outline-secondary"
+          type="button"
+        >
+          <svg
+            class="lexicon-icon lexicon-icon-download mr-2"
+            role="presentation"
+          >
+            <use
+              href="#download"
+            />
+          </svg>
+          Download Reports
+        </button>
+      </div>
+    </div>
+  </div>
+  <div
+    class="body-root page-container"
+  >
+    <span
+      class="children-wrapper"
+    >
+      <div
+        class="d-flex flex-row justify-content-between"
+      >
+        <div
+          class="card card-root w-100"
+        >
+          <div
+            class="card-header"
+          >
+            <span
+              class="text-4 font-weight-semi-bold"
+            >
+              TOTAL INDIVIDUALS
+            </span>
+          </div>
+          <div
+            class="card-body d-flex flex-column"
+          >
+            <div
+              class="flex-grow-1"
+            >
+              <span
+                class="text-secondary"
+              >
+                This is the total number of individuals, including both known individuals and anonymous individuals.
+              </span>
+            </div>
+            <h2
+              class="mt-2"
+            >
+              2.12K Individuals
+            </h2>
+            <div>
+              <span
+                style="color: rgb(40, 125, 60);"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-top-l"
+                  role="presentation"
+                >
+                  <use
+                    href="#caret-top-l"
+                  />
+                </svg>
+              </span>
+              <span
+                class="text-secondary"
+              >
+                <span
+                  class="mr-1"
+                  style="color: rgb(40, 125, 60);"
+                >
+                  30.23%
+                </span>
+                 vs. Previous 30 days
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card card-root mx-3 w-100"
+        >
+          <div
+            class="card-header"
+          >
+            <span
+              class="text-4 font-weight-semi-bold"
+            >
+              KNOWN INDIVIDUALS
+            </span>
+          </div>
+          <div
+            class="card-body d-flex flex-column"
+          >
+            <div
+              class="flex-grow-1"
+            >
+              <span
+                class="text-secondary"
+              >
+                This is the total number of known individuals. An individual is considered known if we have any identifiable information about the individual.
+              </span>
+            </div>
+            <h2
+              class="mt-2"
+            >
+              1.1K Individuals
+            </h2>
+            <div>
+              <span
+                style="color: rgb(218, 20, 20);"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-top-l"
+                  role="presentation"
+                >
+                  <use
+                    href="#caret-top-l"
+                  />
+                </svg>
+              </span>
+              <span
+                class="text-secondary"
+              >
+                <span
+                  class="mr-1"
+                  style="color: rgb(218, 20, 20);"
+                >
+                  28.12%
+                </span>
+                 vs. Previous 30 days
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card card-root w-100"
+        >
+          <div
+            class="card-header"
+          >
+            <span
+              class="text-4 font-weight-semi-bold"
+            >
+              ANONYMOUS INDIVIDUALS
+            </span>
+          </div>
+          <div
+            class="card-body d-flex flex-column"
+          >
+            <div
+              class="flex-grow-1"
+            >
+              <span
+                class="text-secondary"
+              >
+                This is the total number of anonymous individuals. Anonymous individuals are removed after 30 days of inactivity.
+              </span>
+            </div>
+            <h2
+              class="mt-2"
+            >
+              5.12K Individuals
+            </h2>
+            <div>
+              <span
+                style="color: rgb(40, 125, 60);"
+              >
+                <svg
+                  class="lexicon-icon lexicon-icon-caret-top-l"
+                  role="presentation"
+                >
+                  <use
+                    href="#caret-top-l"
+                  />
+                </svg>
+              </span>
+              <span
+                class="text-secondary"
+              >
+                <span
+                  class="mr-1"
+                  style="color: rgb(40, 125, 60);"
+                >
+                  11.12%
+                </span>
+                 vs. Previous 30 days
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+`;

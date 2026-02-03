@@ -266,7 +266,9 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			group.getTypeSettingsProperty("depotEntryType"),
 			DepotConstants.TYPE_ASSET_LIBRARY);
 
-		if (depotEntryType != DepotConstants.TYPE_SPACE) {
+		if ((depotEntryType != DepotConstants.TYPE_PROJECT) &&
+			(depotEntryType != DepotConstants.TYPE_SPACE)) {
+
 			return false;
 		}
 

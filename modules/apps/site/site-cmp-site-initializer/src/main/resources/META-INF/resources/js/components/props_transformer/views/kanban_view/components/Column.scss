@@ -20,7 +20,7 @@
 		}
 	}
 
-	&-task {
+	&-state {
 		background-color: $light-l1;
 		border-radius: 12px;
 		display: flex;
@@ -34,6 +34,16 @@
 			font-size: 12px;
 			gap: 0.5rem;
 			padding-left: 0.5rem;
+		}
+
+		&-candidate {
+			border: 2px $secondary-l1 dashed;
+		}
+
+		&-over {
+			background-color: $primary-l3;
+			border: 1px $primary-l0 solid;
+			border-radius: 12px;
 		}
 
 		&-list {

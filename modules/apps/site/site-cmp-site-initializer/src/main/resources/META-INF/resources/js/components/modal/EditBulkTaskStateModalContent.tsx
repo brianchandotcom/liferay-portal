@@ -1,0 +1,110 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import ClayModal from '@clayui/modal';
+import {
+	IBulkActionFDSData,
+	IBulkActionTaskStarterDTO,
+	triggerAssetBulkAction,
+} from '@liferay/site-cms-site-initializer';
+import React, {useCallback, useState} from 'react';
+
+import {displayErrorToast} from '../../utils/toastUtil';
+import StateSelector, {State} from '../StateSelector';
+
+export default function EditBulkTaskStateModalContent({
+	apiURL,
+	closeModal,
+	selectedData,
+	states,
+}: {
+	apiURL?: string;
+	closeModal: () => void;
+	selectedData: IBulkActionFDSData;
+	states: State[];
+}) {
+	const [selectedState, setSelectedState] = useState<string>('');
+	const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
+
+	const doBulkSubmit = useCallback(async () => {
+		if (!selectedState) {
+			return;
+		}
+
+		setSubmitDisabled(true);
+
+		triggerAssetBulkAction({
+			apiURL,
+			keyValues: {
+				state: selectedState,
+			},
+			onCreateError: ({error}) => {
+				setSubmitDisabled(false);
+
+				displayErrorToast(error as string);
+			},
+			onCreateSuccess: ({error = ''}) => {
+				if (error) {
+					setSubmitDisabled(false);
+
+					displayErrorToast(error as string);
+
+					return;
+				}
+
+				closeModal();
+			},
+			overrideDefaultErrorToast: true,
+			selectedData,
+			type: 'UpdateTaskStateBulkAction',
+		} as IBulkActionTaskStarterDTO<'UpdateTaskStateBulkAction'>);
+	}, [apiURL, closeModal, selectedData, selectedState, setSubmitDisabled]);
+
+	return (
+		<>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
+				{Liferay.Language.get('update-state')}
+			</ClayModal.Header>
+
+			<ClayModal.Body>
+				<label>{Liferay.Language.get('state')}</label>
+
+				<StateSelector
+					initialSelectedKey=""
+					onChange={async (key: string) => {
+						setSelectedState(key);
+					}}
+					states={states}
+					triggerClassName="form-control form-control-select"
+				/>
+			</ClayModal.Body>
+
+			<ClayModal.Footer
+				last={
+					<ClayButton.Group spaced>
+						<ClayButton
+							displayType="secondary"
+							onClick={closeModal}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							disabled={submitDisabled}
+							displayType="primary"
+							onClick={doBulkSubmit}
+							type="button"
+						>
+							{Liferay.Language.get('save')}
+						</ClayButton>
+					</ClayButton.Group>
+				}
+			/>
+		</>
+	);
+}

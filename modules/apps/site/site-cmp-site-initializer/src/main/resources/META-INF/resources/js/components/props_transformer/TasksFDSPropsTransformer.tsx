@@ -22,6 +22,7 @@ import React from 'react';
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
+import EditBulkTaskStateModalContent from '../modal/EditBulkTaskStateModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
 import KanbanView from './views/kanban_view/KanbanView';
@@ -95,12 +96,14 @@ const WORKFLOW_TASK_MODALS: Record<
 };
 
 export default function TasksFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	id,
 	itemsActions = [],
 	views,
 	...otherProps
 }: {
+	additionalProps: any;
 	apiURL?: string;
 	creationMenu: any;
 	id: string;
@@ -328,7 +331,24 @@ export default function TasksFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-			if (action?.data?.id === 'delete') {
+			if (action?.data?.id === 'update-state') {
+				openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						EditBulkTaskStateModalContent({
+							apiURL: otherProps?.apiURL,
+							closeModal,
+							selectedData,
+							states: additionalProps.states,
+						}),
+					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
 					apiURL: otherProps.apiURL,
 					selectedData,

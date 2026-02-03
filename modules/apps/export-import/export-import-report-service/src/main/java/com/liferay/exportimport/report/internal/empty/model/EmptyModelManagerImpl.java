@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
@@ -146,7 +147,8 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 				exportImportReportEntry);
 		}
 		else {
-			exportImportReportEntry.setStatus(1);
+			exportImportReportEntry.setStatus(
+				ExportImportReportEntryConstants.STATUS_RESOLVED);
 
 			_exportImportReportEntryLocalService.updateExportImportReportEntry(
 				exportImportReportEntry);

@@ -14,10 +14,21 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectState;
+import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -57,6 +68,10 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		ClassNameLocalService classNameLocalService,
 		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
+		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectFieldLocalService objectFieldLocalService,
+		ObjectStateFlowLocalService objectStateFlowLocalService,
+		ObjectStateLocalService objectStateLocalService,
 		ObjectDefinition projectObjectDefinition, RoleService roleService,
 		ObjectDefinition taskObjectDefinition,
 		UserLocalService userLocalService) {
@@ -66,12 +81,47 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		_assetTagLocalService = assetTagLocalService;
 		_classNameLocalService = classNameLocalService;
 		_depotEntryLocalService = depotEntryLocalService;
+		_listTypeEntryLocalService = listTypeEntryLocalService;
+		_objectFieldLocalService = objectFieldLocalService;
+		_objectStateFlowLocalService = objectStateFlowLocalService;
+		_objectStateLocalService = objectStateLocalService;
 		_projectObjectDefinition = projectObjectDefinition;
 		_roleService = roleService;
 		_userLocalService = userLocalService;
 
 		_assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
+	}
+
+	public Map<String, Object> getAdditionalProps() throws Exception {
+		return HashMapBuilder.<String, Object>put(
+			"states",
+			() -> {
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				ObjectField objectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getObjectDefinitionId(), "state");
+
+				for (ListTypeEntry listTypeEntry :
+						_listTypeEntryLocalService.getListTypeEntries(
+							objectField.getListTypeDefinitionId())) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"key", listTypeEntry.getKey()
+						).put(
+							"name",
+							listTypeEntry.getName(themeDisplay.getLocale())
+						).put(
+							"nextStates",
+							_getNextStatesJSONArray(listTypeEntry, objectField)
+						));
+				}
+
+				return jsonArray;
+			}
+		).build();
 	}
 
 	public String getAPIURL() {
@@ -290,10 +340,42 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		).build();
 	}
 
+	private JSONArray _getNextStatesJSONArray(
+		ListTypeEntry currentListTypeEntry, ObjectField objectField) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ObjectStateFlow objectStateFlow =
+			_objectStateFlowLocalService.fetchObjectFieldObjectStateFlow(
+				objectField.getObjectFieldId());
+
+		ObjectState objectState =
+			_objectStateLocalService.fetchObjectStateFlowObjectState(
+				currentListTypeEntry.getListTypeEntryId(),
+				objectStateFlow.getObjectStateFlowId());
+
+		for (ObjectState nextObjectState :
+				_objectStateLocalService.getNextObjectStates(
+					objectState.getObjectStateId())) {
+
+			ListTypeEntry nextListTypeEntry =
+				_listTypeEntryLocalService.fetchListTypeEntry(
+					nextObjectState.getListTypeEntryId());
+
+			jsonArray.put(nextListTypeEntry.getKey());
+		}
+
+		return jsonArray;
+	}
+
 	private final AssetEntry _assetEntry;
 	private final AssetTagLocalService _assetTagLocalService;
 	private final ClassNameLocalService _classNameLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private final ListTypeEntryLocalService _listTypeEntryLocalService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectStateFlowLocalService _objectStateFlowLocalService;
+	private final ObjectStateLocalService _objectStateLocalService;
 	private final ObjectDefinition _projectObjectDefinition;
 	private final RoleService _roleService;
 	private final UserLocalService _userLocalService;

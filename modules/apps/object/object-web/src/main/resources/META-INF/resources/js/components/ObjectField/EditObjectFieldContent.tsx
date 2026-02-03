@@ -31,6 +31,7 @@ interface EditObjectFieldContentProps
 	decimalSeparator: string;
 	errors: ObjectFieldErrors;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	hasDepotEntry?: boolean;
 	modelBuilder?: boolean;
 	objectDefinition?: ObjectDefinition | ObjectDefinitionNodeData;
 	objectFieldId: number;
@@ -50,6 +51,7 @@ export function EditObjectFieldContent({
 	errors,
 	filterOperators,
 	handleChange,
+	hasDepotEntry,
 	isDefaultStorageType,
 	isRootDescendantNode,
 	learnResources,
@@ -178,6 +180,7 @@ export function EditObjectFieldContent({
 								errors={errors}
 								filterOperators={filterOperators}
 								handleChange={handleChange}
+								hasDepotEntry={hasDepotEntry}
 								learnResources={learnResources}
 								modelBuilder={modelBuilder}
 								objectDefinition={objectDefinition}
@@ -234,6 +237,7 @@ export function EditObjectFieldContent({
 					errors={errors}
 					filterOperators={filterOperators}
 					handleChange={handleChange}
+					hasDepotEntry={hasDepotEntry}
 					learnResources={learnResources}
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}

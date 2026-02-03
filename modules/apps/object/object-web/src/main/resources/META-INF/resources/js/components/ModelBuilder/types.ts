@@ -235,6 +235,7 @@ export type TState = {
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
+	hasDepotEntry?: boolean;
 	isLoadingObjectFolder: boolean;
 	isRootDescendantNode: boolean;
 	learnResourceContext: ILearnResourceContext;

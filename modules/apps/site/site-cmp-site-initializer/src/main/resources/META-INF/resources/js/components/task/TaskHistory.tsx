@@ -70,6 +70,7 @@ function joinWithAnd(items: string[]) {
 
 export default function TaskHistory({apiURL}: {apiURL: string}) {
 	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
+	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
 	const getAuditEventLabel = (auditEvent: AuditEvent) => {
 		if (auditEvent.eventType === EventType.ADD) {
@@ -119,26 +120,60 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 		});
 	}, [apiURL]);
 
+	/**
+	 * This effect lazily loads the task's audit history. It uses an
+	 * `IntersectionObserver` to fetch data only when the component first
+	 * becomes visible in the viewport (for example, when the user switches to
+	 * the 'History' tab).
+	 */
 	useEffect(() => {
-		fetchAuditEvents();
+		const taskHistoryContainerElement = document.querySelector(
+			'.task-history-container'
+		);
+
+		if (!taskHistoryContainerElement) {
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			([entry], observer) => {
+				if (entry.isIntersecting) {
+					fetchAuditEvents();
+
+					setInitialDataLoaded(true);
+
+					observer.disconnect();
+				}
+			},
+			{threshold: 0.01}
+		);
+
+		observer.observe(taskHistoryContainerElement);
+
+		return () => observer.disconnect();
 	}, [fetchAuditEvents]);
 
 	useEffect(() => {
 		const handleFDSDisplayUpdated = ({id}: {id: string}) => {
-			if (id === RELATED_ASSETS_SECTION) {
+			if (initialDataLoaded && id === RELATED_ASSETS_SECTION) {
+				fetchAuditEvents();
+			}
+		};
+
+		const handleUpdateTaskHistory = () => {
+			if (initialDataLoaded) {
 				fetchAuditEvents();
 			}
 		};
 
 		Liferay.on(FDS_EVENT.DISPLAY_UPDATED, handleFDSDisplayUpdated);
-
-		Liferay.on(UPDATE_TASK_HISTORY, fetchAuditEvents);
+		Liferay.on(UPDATE_TASK_HISTORY, handleUpdateTaskHistory);
 
 		return () => {
 			Liferay.detach(FDS_EVENT.DISPLAY_UPDATED, handleFDSDisplayUpdated);
-			Liferay.detach(UPDATE_TASK_HISTORY, fetchAuditEvents);
+			Liferay.detach(UPDATE_TASK_HISTORY, handleUpdateTaskHistory);
 		};
-	}, [fetchAuditEvents]);
+	}, [fetchAuditEvents, initialDataLoaded]);
 
 	return (
 		<div className="task-history-container">

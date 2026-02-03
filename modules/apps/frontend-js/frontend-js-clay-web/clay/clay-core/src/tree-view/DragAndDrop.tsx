@@ -122,46 +122,6 @@ function getFocusableTree(rootRef: React.RefObject<HTMLUListElement>) {
 	);
 }
 
-function getNextTarget(
-	rootRef: React.RefObject<HTMLUListElement>,
-	dragKey: React.Key
-) {
-	const focusableTree = getFocusableTree(rootRef);
-
-	let dragPosition = 0;
-
-	const items = focusableTree.filter((element, index) => {
-		const [type, key] = element.getAttribute('data-id')!.split(',');
-		const reactKey = type === 'number' ? Number(key) : key;
-
-		if (reactKey === dragKey) {
-			dragPosition = index;
-		}
-
-		return !(
-			reactKey === dragKey ||
-			element.closest(
-				`[data-id="${
-					typeof dragKey === 'number'
-						? `number,${dragKey}`
-						: `string,${dragKey}`
-				}"]`
-			)
-		);
-	});
-
-	const target =
-		items[dragPosition === items.length ? dragPosition - 1 : dragPosition];
-
-	if (!target) {
-		return null;
-	}
-
-	const [type, key] = target.getAttribute('data-id')!.split(',');
-
-	return type === 'number' ? Number(key) : key!;
-}
-
 const defaultMessages: DragAndDropMessages = {
 	dragDescriptionKeyboard: 'Press Enter to start dragging.',
 	dragItem: 'Drag',
@@ -225,19 +185,16 @@ export function DragAndDropProvider<T>({
 				}));
 			}
 			else {
-				const nextTargetKey = getNextTarget(rootRef, dragKey);
-
-				if (nextTargetKey === null) {
-					return;
-				}
-
 				announcerRef.current?.announce(messages.dragStartedKeyboard);
+
+				const [first] = [...dragKeys];
+
 				setState((state) => ({
 					...state,
 					currentDrag: dragKey,
 					currentDragKeys: dragKeys,
-					currentTarget: nextTargetKey,
-					position: 'bottom',
+					currentTarget: first!,
+					position: 'top',
 					source: 'keyboard',
 					status: null,
 				}));

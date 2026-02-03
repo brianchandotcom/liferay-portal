@@ -17,152 +17,169 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test('LPD-35306 Breadcrumb in My Organizations does not have a link if user does not have view permission of the Organization', async ({
-	apiHelpers,
-	context,
-	usersAndOrganizationsPage,
-}) => {
-	const organization = await apiHelpers.headlessAdminUser.postOrganization();
-	const organization2 = await apiHelpers.headlessAdminUser.postOrganization({
-		parentOrganization: {
-			externalReferenceCode: organization.externalReferenceCode,
-		},
-	});
-	const organization3 = await apiHelpers.headlessAdminUser.postOrganization({
-		parentOrganization: {
-			externalReferenceCode: organization2.externalReferenceCode,
-		},
-	});
+test(
+	'Breadcrumb in My Organizations does not have a link if user does not have view permission of the Organization',
+	{tag: ['@LPD-35306']},
+	async ({apiHelpers, context, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+		const organization2 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode: organization.externalReferenceCode,
+				},
+			});
+		const organization3 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode: organization2.externalReferenceCode,
+				},
+			});
 
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
-		organization2.id,
-		user.emailAddress
-	);
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization2.id,
+			user.emailAddress
+		);
 
-	const role = await apiHelpers.headlessAdminUser.getRoleByName(
-		'Organization Administrator'
-	);
+		const role = await apiHelpers.headlessAdminUser.getRoleByName(
+			'Organization Administrator'
+		);
 
-	await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
-		String(role.id),
-		user.id,
-		organization2.id
-	);
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationRole(
+			String(role.id),
+			user.id,
+			organization2.id
+		);
 
-	await usersAndOrganizationsPage.goToUsers();
+		await usersAndOrganizationsPage.goToUsers();
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowActions(
-			`${user.alternateName}`
-		)
-	).click();
+		const pagePromise = context.waitForEvent('page');
 
-	const pagePromise = context.waitForEvent('page');
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					`${user.alternateName}`
+				)
+			).click();
 
-	await usersAndOrganizationsPage.impersonateUserMenuItem.click();
+			await expect(
+				usersAndOrganizationsPage.impersonateUserMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
-	const newPage = await pagePromise;
-	const newPageUsersAndOrganizationsPage = new UsersAndOrganizationsPage(
-		newPage
-	);
+		await usersAndOrganizationsPage.impersonateUserMenuItem.click();
 
-	await newPageUsersAndOrganizationsPage.goToMyOrganizations();
-	await (
-		await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
-			organization3.name
-		)
-	).click();
+		const newPage = await pagePromise;
+		const newPageUsersAndOrganizationsPage = new UsersAndOrganizationsPage(
+			newPage
+		);
 
-	await expect(
-		await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
-			organization.name
-		)
-	).toHaveCount(0);
+		await newPageUsersAndOrganizationsPage.goToMyOrganizations();
+		await (
+			await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
+				organization3.name
+			)
+		).click();
 
-	await expect(
-		await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
-			organization2.name
-		)
-	).toHaveCount(1);
-});
+		await expect(
+			await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
+				organization.name
+			)
+		).toHaveCount(0);
 
-test('LPD-37376 Suborganizations in My Organizations portlet should be able to be edited with the "Update Suborganizations" permission', async ({
-	apiHelpers,
-	context,
-	page,
-	usersAndOrganizationsPage,
-}) => {
-	const organization = await apiHelpers.headlessAdminUser.postOrganization();
-	const organization2 = await apiHelpers.headlessAdminUser.postOrganization({
-		parentOrganization: {
-			externalReferenceCode: organization.externalReferenceCode,
-		},
-	});
+		await expect(
+			await newPageUsersAndOrganizationsPage.myOrganizationsBreadcrumbLink(
+				organization2.name
+			)
+		).toHaveCount(1);
+	}
+);
 
-	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+test(
+	'Suborganizations in My Organizations portlet should be able to be edited with the "Update Suborganizations" permission',
+	{tag: ['@LPD-37376']},
+	async ({apiHelpers, context, page, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+		const organization2 =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				parentOrganization: {
+					externalReferenceCode: organization.externalReferenceCode,
+				},
+			});
 
-	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
-		organization.id,
-		user.emailAddress
-	);
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-	const companyId = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getCompanyId();
-	});
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
 
-	const role = await apiHelpers.headlessAdminUser.postRole({
-		name: getRandomString(),
-		rolePermissions: [
-			{
-				actionIds: ['UPDATE', 'UPDATE_SUBORGANIZATIONS', 'VIEW'],
-				primaryKey: companyId,
-				resourceName: 'com.liferay.portal.kernel.model.Organization',
-				scope: 1,
-			},
-		],
-	});
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
 
-	await apiHelpers.headlessAdminUser.assignUserToRole(
-		role.externalReferenceCode,
-		user.id
-	);
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['UPDATE', 'UPDATE_SUBORGANIZATIONS', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com.liferay.portal.kernel.model.Organization',
+					scope: 1,
+				},
+			],
+		});
 
-	await usersAndOrganizationsPage.goToUsers();
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
 
-	await (
-		await usersAndOrganizationsPage.usersTableRowActions(
-			`${user.alternateName}`
-		)
-	).click();
+		await usersAndOrganizationsPage.goToUsers();
 
-	const pagePromise = context.waitForEvent('page');
+		const pagePromise = context.waitForEvent('page');
 
-	await usersAndOrganizationsPage.impersonateUserMenuItem.click();
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					`${user.alternateName}`
+				)
+			).click();
 
-	const newPage = await pagePromise;
-	const newPageUsersAndOrganizationsPage = new UsersAndOrganizationsPage(
-		newPage
-	);
+			await expect(
+				usersAndOrganizationsPage.impersonateUserMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
-	await newPageUsersAndOrganizationsPage.goToMyOrganizations();
+		await usersAndOrganizationsPage.impersonateUserMenuItem.click();
 
-	await expect(
-		await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
-			organization.name
-		)
-	).toBeVisible();
+		const newPage = await pagePromise;
+		const newPageUsersAndOrganizationsPage = new UsersAndOrganizationsPage(
+			newPage
+		);
 
-	await (
-		await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
-			organization.name
-		)
-	).click();
+		await newPageUsersAndOrganizationsPage.goToMyOrganizations();
 
-	await expect(
-		await newPageUsersAndOrganizationsPage.myOrganizationsUserAndOrgsTableRowLink(
-			organization2.name
-		)
-	).toBeVisible();
-});
+		await expect(
+			await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
+				organization.name
+			)
+		).toBeVisible();
+
+		await (
+			await newPageUsersAndOrganizationsPage.myOrganizationsTableRowLink(
+				organization.name
+			)
+		).click();
+
+		await expect(
+			await newPageUsersAndOrganizationsPage.myOrganizationsUserAndOrgsTableRowLink(
+				organization2.name
+			)
+		).toBeVisible();
+	}
+);

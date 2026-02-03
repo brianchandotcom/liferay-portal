@@ -155,9 +155,18 @@ export class PasswordPoliciesAdminPage {
 			.click();
 
 		if (passwordPolicy.checkSyntaxToggle) {
-			await this.page
-				.getByRole('button', {name: 'Password Syntax Checking'})
-				.click();
+			await expect(async () => {
+				await expect(
+					this.page.getByRole('button', {
+						name: 'Password Syntax Checking',
+					})
+				).toBeVisible({timeout: 500});
+
+				await this.page
+					.getByRole('button', {name: 'Password Syntax Checking'})
+					.click({timeout: 500});
+			}).toPass({timeout: 5000});
+
 			await this.checkSyntaxToggle.setChecked(
 				passwordPolicy.checkSyntaxToggle
 			);

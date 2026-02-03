@@ -43,28 +43,36 @@ test(
 	{tag: '@LPD-204541'},
 	async ({usersAndOrganizationsPage}) => {
 		await usersAndOrganizationsPage.goToUsers();
-		await usersAndOrganizationsPage.openOptionsMenu();
-		await expect(
-			usersAndOrganizationsPage.exportImportOptionsMenuItem
-		).toHaveCount(0);
-		await expect(
-			usersAndOrganizationsPage.exportUsersOptionsMenuItem
-		).toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
-		).toBeVisible();
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.openOptionsMenu();
+
+			await expect(
+				usersAndOrganizationsPage.exportImportOptionsMenuItem
+			).toHaveCount(0, {timeout: 500});
+			await expect(
+				usersAndOrganizationsPage.exportUsersOptionsMenuItem
+			).toBeVisible({timeout: 500});
+			await expect(
+				usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await usersAndOrganizationsPage.goToOrganizations();
-		await usersAndOrganizationsPage.openOptionsMenu();
-		await expect(
-			usersAndOrganizationsPage.exportImportOptionsMenuItem
-		).toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.exportUsersOptionsMenuItem
-		).toBeVisible();
-		await expect(
-			usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
-		).toHaveCount(0);
+
+		await expect(async () => {
+			await usersAndOrganizationsPage.openOptionsMenu();
+
+			await expect(
+				usersAndOrganizationsPage.exportImportOptionsMenuItem
+			).toBeVisible({timeout: 500});
+			await expect(
+				usersAndOrganizationsPage.exportUsersOptionsMenuItem
+			).toBeVisible({timeout: 500});
+			await expect(
+				usersAndOrganizationsPage.manageCustomFieldsOptionsMenuItem
+			).toHaveCount(0, {timeout: 500});
+		}).toPass({timeout: 5000});
 	}
 );
 
@@ -361,11 +369,18 @@ test(
 
 		await usersAndOrganizationsPage.goToOrganizations();
 
-		await (
-			await usersAndOrganizationsPage.organizationsTable.rowActions(
-				organization.name
-			)
-		).click();
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.assignUsersMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 6000});
+
 		await usersAndOrganizationsPage.assignUsersMenuItem.click();
 
 		await (await assignUsersPage.usersTableRowCheckbox(userName)).check();
@@ -1297,11 +1312,18 @@ test(
 
 		await usersAndOrganizationsPage.goToOrganizations();
 
-		await (
-			await usersAndOrganizationsPage.organizationsTable.rowActions(
-				organization.name
-			)
-		).click();
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organization.name
+				)
+			).click();
+
+			await expect(
+				editOrganizationPage.organizationEditMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 6000});
+
 		await editOrganizationPage.organizationEditMenuItem.click();
 		await editOrganizationPage.organizationSiteLink.click();
 		await editOrganizationPage.createSiteToggle.check();

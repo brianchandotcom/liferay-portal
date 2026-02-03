@@ -16,31 +16,32 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-test('LPD-18470 check edit orgLabor renders properly', async ({
-	apiHelpers,
-	editOrganizationPage,
-	usersAndOrganizationsPage,
-}) => {
-	const organization = await apiHelpers.headlessAdminUser.postOrganization({
-		name: 'Organization' + getRandomInt(),
-		services: [
-			{
-				hoursAvailable: [
+test(
+	'Check edit orgLabor renders properly',
+	{tag: ['@LPD-18470']},
+	async ({apiHelpers, editOrganizationPage, usersAndOrganizationsPage}) => {
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization({
+				name: 'Organization' + getRandomInt(),
+				services: [
 					{
-						closes: '-1',
-						opens: '-1',
+						hoursAvailable: [
+							{
+								closes: '-1',
+								opens: '-1',
+							},
+						],
+						serviceType: 'donation',
 					},
 				],
-				serviceType: 'donation',
-			},
-		],
-	});
-	await usersAndOrganizationsPage.goToOrganizations();
-	await editOrganizationPage.gotoOrganizationEditOpeningHoursTab(
-		organization.name
-	);
-	await expect(editOrganizationPage.orgLaborListTypeSelectedValue).toHaveText(
-		'Donation'
-	);
-	await apiHelpers.headlessAdminUser.deleteOrganization(organization.id);
-});
+			});
+		await usersAndOrganizationsPage.goToOrganizations();
+		await editOrganizationPage.gotoOrganizationEditOpeningHoursTab(
+			organization.name
+		);
+		await expect(
+			editOrganizationPage.orgLaborListTypeSelectedValue
+		).toHaveText('Donation');
+		await apiHelpers.headlessAdminUser.deleteOrganization(organization.id);
+	}
+);

@@ -27,7 +27,12 @@ test(
 
 		await userGroupsPage.goto();
 
-		await userGroupsPage.newUserGroupButton.click();
+		await expect(async () => {
+			await userGroupsPage.newUserGroupButton.click();
+
+			await expect(userGroupsPage.nameInput).toBeVisible({timeout: 1000});
+		}).toPass({timeout: 6000});
+
 		await userGroupsPage.nameInput.fill(userGroupName);
 		await userGroupsPage.saveButton.click();
 

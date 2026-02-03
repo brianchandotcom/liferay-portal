@@ -950,7 +950,9 @@ test(
 			await expect(async () => {
 				await accountsPage.accountsTable.newButton.click();
 
-				await expect(editAccountPage.accountNameInput).toBeVisible();
+				await expect(editAccountPage.accountNameInput).toBeVisible({
+					timeout: 1000,
+				});
 			}).toPass();
 
 			await editAccountPage.createAccount(apiHelpers, {

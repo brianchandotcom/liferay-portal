@@ -9,7 +9,7 @@ import {navigate, sessionStorage, sub} from 'frontend-js-web';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
-import expireEntriesBulkAction from "./actions/expireEntriesBulkAction";
+import expireEntriesBulkAction from './actions/expireEntriesBulkAction';
 import AssetVersionRenderer from './cell_renderers/AssetVersionRenderer';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import VersionRenderer from './cell_renderers/VersionRenderer';
@@ -205,13 +205,13 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-		if (action?.data.id === 'expire') {
+			if (action?.data.id === 'expire') {
 				expireEntriesBulkAction({
 					apiURL: otherProps.apiURL,
 					dataSetId: otherProps.id,
 					selectedData,
 				});
 			}
-		}
+		},
 	};
 }

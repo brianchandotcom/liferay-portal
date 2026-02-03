@@ -23,6 +23,7 @@ import type {AnnouncerAPI} from '../live-announcer';
 export type DragAndDropMessages = {
 	dragDescriptionKeyboard: string;
 	dragItem: string;
+	dragLayerPluralLabel: string;
 	dragStartedKeyboard: string;
 	dropCanceled: string;
 	dropComplete: string;
@@ -156,6 +157,7 @@ function getNextTarget(
 const defaultMessages: DragAndDropMessages = {
 	dragDescriptionKeyboard: 'Press Enter to start dragging.',
 	dragItem: 'Drag',
+	dragLayerPluralLabel: '{0} Items',
 	dragStartedKeyboard:
 		'Started dragging. Press Tab to navigate to a drop target, then press Enter to drop, or press Escape to cancel.',
 	dropCanceled: 'Drop cancelled.',

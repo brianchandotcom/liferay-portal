@@ -3,8 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {sub} from '@clayui/shared';
 import React, {CSSProperties} from 'react';
 import {DragLayerMonitor, XYCoord, useDragLayer} from 'react-dnd';
+
+import {useDnD} from './DragAndDrop';
 
 const layerStyles: CSSProperties = {
 	cursor: 'grabbing',
@@ -40,10 +43,17 @@ function DragLayer({itemNameKey}: {itemNameKey: string}) {
 			item: monitor.getItem(),
 		})
 	);
+
+	const {currentDragKeys, messages} = useDnD();
+
 	if (!isDragging || item.type !== 'treeViewItem') {
 		return null;
 	}
-	const name = item.item[itemNameKey];
+
+	const name =
+		currentDragKeys.size > 1
+			? sub(messages.dragLayerPluralLabel, [currentDragKeys.size])
+			: item.item[itemNameKey];
 
 	return (
 		<div style={layerStyles}>

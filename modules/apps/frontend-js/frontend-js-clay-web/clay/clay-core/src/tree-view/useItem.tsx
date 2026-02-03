@@ -59,7 +59,7 @@ export function ItemContextProvider({children, value}: Props) {
 	const keys = useCollectionKeys();
 
 	const {
-		currentDrag,
+		currentDragKeys,
 		currentTarget,
 		onDragStart,
 		onEnd,
@@ -300,9 +300,7 @@ export function ItemContextProvider({children, value}: Props) {
 	return (
 		<ItemContext.Provider value={item}>
 			{React.cloneElement(children as JSX.Element, {
-				isDragging:
-					(source === 'keyboard' && currentDrag === item.key) ||
-					isDragging,
+				isDragging: currentDragKeys.has(item.key),
 				overPosition: position,
 				overTarget: currentTarget === item.key || overTarget,
 				ref: childRef,

@@ -128,7 +128,7 @@ public class DisplayPageTemplateDTOConverter
 						}
 
 						return _displayPageTemplateFolderDTOConverter.toDTO(
-							layoutPageTemplateCollection);
+							dtoConverterContext, layoutPageTemplateCollection);
 					});
 				setThumbnailURLReference(
 					() -> NestedFieldsSupplier.supply(

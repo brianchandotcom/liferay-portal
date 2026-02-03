@@ -62,13 +62,16 @@ public class PageTemplateDTOConverter
 		if (layoutPageTemplateEntry.getType() ==
 				LayoutPageTemplateEntryTypeConstants.BASIC) {
 
-			return _getContentPageTemplate(layoutPageTemplateEntry);
+			return _getContentPageTemplate(
+				dtoConverterContext, layoutPageTemplateEntry);
 		}
 
-		return _getWidgetPageTemplate(layoutPageTemplateEntry);
+		return _getWidgetPageTemplate(
+			dtoConverterContext, layoutPageTemplateEntry);
 	}
 
 	private PageTemplate _getContentPageTemplate(
+			DTOConverterContext dtoConverterContext,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
@@ -105,7 +108,8 @@ public class PageTemplateDTOConverter
 						layoutPageTemplateEntry.getPlid()));
 				setName(layoutPageTemplateEntry::getName);
 				setPageTemplateSet(
-					() -> _getPageTemplateSet(layoutPageTemplateEntry));
+					() -> _getPageTemplateSet(
+						dtoConverterContext, layoutPageTemplateEntry));
 				setPageTemplateSettings(
 					() -> new ContentPageTemplateSettings() {
 						{
@@ -132,6 +136,7 @@ public class PageTemplateDTOConverter
 	}
 
 	private PageTemplateSet _getPageTemplateSet(
+			DTOConverterContext dtoConverterContext,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
@@ -145,10 +150,12 @@ public class PageTemplateDTOConverter
 			return null;
 		}
 
-		return _pageTemplateSetDTOConverter.toDTO(layoutPageTemplateCollection);
+		return _pageTemplateSetDTOConverter.toDTO(
+			dtoConverterContext, layoutPageTemplateCollection);
 	}
 
 	private PageTemplate _getWidgetPageTemplate(
+			DTOConverterContext dtoConverterContext,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
 		throws Exception {
 
@@ -206,7 +213,8 @@ public class PageTemplateDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						true, layoutPrototype.getNameMap()));
 				setPageTemplateSet(
-					() -> _getPageTemplateSet(layoutPageTemplateEntry));
+					() -> _getPageTemplateSet(
+						dtoConverterContext, layoutPageTemplateEntry));
 				setPageTemplateSettings(
 					() -> _getWidgetPageTemplateSettings(layout));
 				setTaxonomyCategoryItemExternalReferences(

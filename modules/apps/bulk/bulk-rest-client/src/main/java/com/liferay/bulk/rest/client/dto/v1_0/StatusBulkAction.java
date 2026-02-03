@@ -26,16 +26,16 @@ public class StatusBulkAction
 		return StatusBulkActionSerDes.toDTO(json);
 	}
 
-	public Integer getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
 	public void setStatus(
-		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
 
 		try {
 			status = statusUnsafeSupplier.get();
@@ -45,7 +45,7 @@ public class StatusBulkAction
 		}
 	}
 
-	protected Integer status;
+	protected String status;
 
 	@Override
 	public StatusBulkAction clone() throws CloneNotSupportedException {

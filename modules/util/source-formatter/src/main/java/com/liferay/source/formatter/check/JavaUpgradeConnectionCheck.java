@@ -115,13 +115,13 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 					content, javaTerm, javaClass.getContent(), fileName,
 					parameter, true, false);
 
-				if ((variableTypeName != null) &&
-					(variableTypeName.equals("String") ||
-					 variableTypeName.equals("String[]"))) {
+				if (((variableTypeName != null) &&
+					 variableTypeName.equals("String")) ||
+					variableTypeName.equals("String[]")) {
 
 					addMessage(
 						fileName,
-						"Missing parameter \"connection\" when calling \"" +
+						"Missing parameter \"connection\" for \"" +
 							variableName + ".runSQL\"",
 						javaTerm.getLineNumber(matcher.start()));
 				}
@@ -129,19 +129,17 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 				return;
 			}
 
-			if (!parameter.matches("(?i)(\\w+\\.)?\\w+SQL\\(.*\\)") &&
-				!parameter.startsWith("\"") &&
-				!parameter.startsWith("StringBundler.concat(") &&
-				!parameter.startsWith("new String[]")) {
+			if (parameter.matches("(?i)(\\w+\\.)?\\w+SQL\\(.*\\)") ||
+				parameter.startsWith("\"") ||
+				parameter.startsWith("StringBundler.concat(") ||
+				parameter.startsWith("new String[]")) {
 
-				continue;
+				addMessage(
+					fileName,
+					"Missing parameter \"connection\" for \"" + variableName +
+						".runSQL\"",
+					javaTerm.getLineNumber(matcher.start()));
 			}
-
-			addMessage(
-				fileName,
-				"Missing parameter \"connection\" when calling \"" +
-					variableName + ".runSQL\"",
-				javaTerm.getLineNumber(matcher.start()));
 		}
 	}
 

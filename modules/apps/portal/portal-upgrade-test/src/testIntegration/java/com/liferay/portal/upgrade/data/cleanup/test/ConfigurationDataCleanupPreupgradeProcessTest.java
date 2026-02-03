@@ -106,6 +106,32 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeWithNullDictionary() throws Exception {
+		String configurationId = "test.configuration.null.dictionary";
+
+		try {
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"insert into Configuration_ (configurationId, " +
+							"dictionary) values (?, ?)")) {
+
+				preparedStatement.setString(1, configurationId);
+				preparedStatement.setString(2, null);
+
+				preparedStatement.executeUpdate();
+			}
+
+			upgrade();
+		}
+		finally {
+			runSQL(
+				StringBundler.concat(
+					"delete from Configuration_ where configurationId = '",
+					configurationId, "'"));
+		}
+	}
+
+	@Test
 	public void testUpgradeWithoutOrphanConfigurations()
 		throws DataCleanupPreupgradeException {
 

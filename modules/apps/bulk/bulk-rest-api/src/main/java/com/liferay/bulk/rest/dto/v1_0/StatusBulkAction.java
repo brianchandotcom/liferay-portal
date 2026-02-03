@@ -47,7 +47,7 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public Integer getStatus() {
+	public String getStatus() {
 		if (_statusSupplier != null) {
 			status = _statusSupplier.get();
 
@@ -57,7 +57,7 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 
 		_statusSupplier = null;
@@ -65,7 +65,7 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 
 	@JsonIgnore
 	public void setStatus(
-		UnsafeSupplier<Integer, Exception> statusUnsafeSupplier) {
+		UnsafeSupplier<String, Exception> statusUnsafeSupplier) {
 
 		_statusSupplier = () -> {
 			try {
@@ -82,10 +82,10 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer status;
+	protected String status;
 
 	@JsonIgnore
-	private Supplier<Integer> _statusSupplier;
+	private Supplier<String> _statusSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -114,7 +114,7 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 
 		sb.append("{");
 
-		Integer status = getStatus();
+		String status = getStatus();
 
 		if (status != null) {
 			if (sb.length() > 1) {
@@ -123,7 +123,11 @@ public class StatusBulkAction extends BulkAction implements Serializable {
 
 			sb.append("\"status\": ");
 
-			sb.append(status);
+			sb.append("\"");
+
+			sb.append(_escape(status));
+
+			sb.append("\"");
 		}
 
 		BulkActionItem[] bulkActionItems = getBulkActionItems();

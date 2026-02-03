@@ -13,6 +13,8 @@ export const UPDATE_TASK_HISTORY = 'cmp-update-task-history';
 
 enum EventType {
 	ADD = 'ADD',
+	CMP_ADD_ASSET = 'CMP_ADD_ASSET',
+	CMP_REMOVE_ASSET = 'CMP_REMOVE_ASSET',
 	UPDATE = 'UPDATE',
 }
 
@@ -74,6 +76,22 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 			return sub(Liferay.Language.get('x-created-a-x'), [
 				<strong key="creatorName">{auditEvent.creator?.name}</strong>,
 				<strong key="type">{Liferay.Language.get('task')}</strong>,
+			]);
+		}
+		else if (auditEvent.eventType === EventType.CMP_ADD_ASSET) {
+			return sub(Liferay.Language.get('x-added-the-asset-x'), [
+				<strong key="creatorName">{auditEvent.creator?.name}</strong>,
+				<strong key="changedField">
+					{auditEvent.auditFieldChanges?.[0].name}
+				</strong>,
+			]);
+		}
+		else if (auditEvent.eventType === EventType.CMP_REMOVE_ASSET) {
+			return sub(Liferay.Language.get('x-removed-the-asset-x'), [
+				<strong key="creatorName">{auditEvent.creator?.name}</strong>,
+				<strong key="changedField">
+					{auditEvent.auditFieldChanges?.[0].name}
+				</strong>,
 			]);
 		}
 

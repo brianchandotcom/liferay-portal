@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -483,6 +486,21 @@ public class WorkflowTaskDisplayContext {
 
 		ThemeDisplay themeDisplay =
 			_workflowTaskRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		if (group.isCMS()) {
+			return StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				GroupConstants.CMS_FRIENDLY_URL,
+				"/edit_content_item?objectEntryId=",
+				getWorkflowContextEntryClassPK(
+					getWorkflowHandler(workflowTask), workflowTask),
+				"&portletResource=", getPortletResource(), "&redirect=",
+				URLCodec.encodeURL(themeDisplay.getURLCurrent()),
+				"&refererPlid=", themeDisplay.getPlid(), "&workflowTaskId=",
+				workflowTask.getWorkflowTaskId());
+		}
 
 		return PortletURLBuilder.create(
 			_getEditPortletURL(workflowTask)

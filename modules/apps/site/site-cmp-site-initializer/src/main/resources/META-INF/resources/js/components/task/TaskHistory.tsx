@@ -4,6 +4,7 @@
  */
 
 import List from '@clayui/list';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {fetch, sub} from 'frontend-js-web';
@@ -71,6 +72,7 @@ function joinWithAnd(items: string[]) {
 export default function TaskHistory({apiURL}: {apiURL: string}) {
 	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
 	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -113,13 +115,19 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	};
 
 	const fetchAuditEvents = useCallback(async () => {
-		fetch(apiURL, {
-			method: 'GET',
-		}).then(async (response: Response) => {
+		setLoading(true);
+
+		try {
+			const response = await fetch(apiURL, {
+				method: 'GET',
+			});
 			const data = (await response.json()) as Data;
 
 			setAuditEvents(data.auditEvents);
-		});
+		}
+		finally {
+			setLoading(false);
+		}
 	}, [apiURL]);
 
 	/**
@@ -175,37 +183,41 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 
 	return (
 		<div className="task-history-container" ref={containerRef}>
-			<List>
-				{auditEvents
-					.filter(({auditFieldChanges, eventType}) => {
-						return (
-							eventType !== EventType.UPDATE ||
-							!!auditFieldChanges?.length
-						);
-					})
-					.map((auditEvent, index) => (
-						<List.Item className="border-0" flex key={index}>
-							<List.ItemField>
-								<AssigneeAvatar
-									image={auditEvent.creator?.image}
-									name={auditEvent.creator?.name || ''}
-								/>
-							</List.ItemField>
+			{loading ? (
+				<ClayLoadingIndicator />
+			) : (
+				<List>
+					{auditEvents
+						.filter(({auditFieldChanges, eventType}) => {
+							return (
+								eventType !== EventType.UPDATE ||
+								!!auditFieldChanges?.length
+							);
+						})
+						.map((auditEvent, index) => (
+							<List.Item className="border-0" flex key={index}>
+								<List.ItemField>
+									<AssigneeAvatar
+										image={auditEvent.creator?.image}
+										name={auditEvent.creator?.name || ''}
+									/>
+								</List.ItemField>
 
-							<List.ItemField expand>
-								<List.ItemTitle className="text-weight-normal">
-									{getAuditEventLabel(auditEvent)}
-								</List.ItemTitle>
+								<List.ItemField expand>
+									<List.ItemTitle className="text-weight-normal">
+										{getAuditEventLabel(auditEvent)}
+									</List.ItemTitle>
 
-								<List.ItemText>
-									{new Date(
-										auditEvent.dateCreated
-									).toLocaleString()}
-								</List.ItemText>
-							</List.ItemField>
-						</List.Item>
-					))}
-			</List>
+									<List.ItemText>
+										{new Date(
+											auditEvent.dateCreated
+										).toLocaleString()}
+									</List.ItemText>
+								</List.ItemField>
+							</List.Item>
+						))}
+				</List>
+			)}
 		</div>
 	);
 }

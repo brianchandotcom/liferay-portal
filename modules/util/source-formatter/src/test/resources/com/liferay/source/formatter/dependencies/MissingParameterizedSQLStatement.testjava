@@ -26,9 +26,6 @@ public class MissingParameterizedSQLStatement {
 					"where portletId = '", portletId, "' AND ownerType = ",
 					ownerType))) {
 
-			preparedStatement.setString(1, portletId);
-			preparedStatement.setInt(2, ownerType);
-
 			return preparedStatement.executeQuery();
 		}
 	}

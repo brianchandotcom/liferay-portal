@@ -24,6 +24,7 @@ import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefin
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowInstanceTestUtil;
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowTaskTestUtil;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +47,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 import org.junit.Assert;
@@ -142,6 +145,12 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 				_workflowInstance.getId(), null, Pagination.of(1, 3));
 
 		Assert.assertEquals(3, page.getTotalCount());
+
+		List<WorkflowTask> workflowTasks = (List<WorkflowTask>)page.getItems();
+
+		_assertActions(workflowTasks.get(0));
+		_assertActions(workflowTasks.get(1));
+		_assertActions(workflowTasks.get(2));
 
 		assertEqualsIgnoringOrder(
 			Arrays.asList(
@@ -1014,6 +1023,20 @@ public class WorkflowTaskResourceTest extends BaseWorkflowTaskResourceTestCase {
 		throws Exception {
 
 		return testGetWorkflowTask_addWorkflowTask();
+	}
+
+	private void _assertActions(WorkflowTask workflowTask) {
+		Map<String, Map<String, String>> actions = workflowTask.getActions();
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://localhost:8080/o/headless-admin-workflow/v1.0",
+				"/workflow-tasks/", workflowTask.getId(), "/change-transition"),
+			MapUtil.getString(actions.get("workflow_join"), "href"));
+		Assert.assertEquals(
+			"Join", MapUtil.getString(actions.get("workflow_join"), "label"));
+		Assert.assertEquals(
+			"join", MapUtil.getString(actions.get("workflow_join"), "name"));
 	}
 
 	private void _testGetWorkflowInstanceWorkflowTasksPageWithPagination(

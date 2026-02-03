@@ -20,6 +20,7 @@ ViewTasksSectionDisplayContext viewTasksSectionDisplayContext = (ViewTasksSectio
 
 <div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
+		additionalProps="<%= viewTasksSectionDisplayContext.getAdditionalProps() %>"
 		apiURL="<%= viewTasksSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= viewTasksSectionDisplayContext.getBulkActionDropdownItems() %>"
 		creationMenu="<%= viewTasksSectionDisplayContext.getCreationMenu() %>"

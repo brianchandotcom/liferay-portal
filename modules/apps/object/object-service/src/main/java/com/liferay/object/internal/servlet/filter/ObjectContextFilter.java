@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"servlet-context-name=", "servlet-filter-name=Object Context Filter",
 		"url-pattern=/c/cms/*", "url-pattern=/c/portal/edit_info_item",
-		"url-pattern=/o/c/*"
+		"url-pattern=/o/c/*", "url-pattern=/o/cmp/*"
 	},
 	service = Filter.class
 )

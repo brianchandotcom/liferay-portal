@@ -48,7 +48,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			_checkDataAccessGetConnectionCall(fileName, childJavaTerm);
 		}
 
-		return _fixReusableConnection(fileName, javaClass);
+		return _fixReusableConnectionInDBRunSQLCall(fileName, javaClass);
 	}
 
 	@Override
@@ -82,7 +82,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			javaTerm.getLineNumber(index));
 	}
 
-	private String _fixReusableConnection(
+	private String _fixReusableConnectionInDBRunSQLCall(
 		String fileName, JavaClass javaClass) {
 
 		String content = javaClass.getContent();

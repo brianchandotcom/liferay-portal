@@ -16,6 +16,7 @@ import {createPortal} from 'react-dom';
 
 import {LiveAnnouncer} from '../live-announcer';
 import {MoveItemIndex, useTreeViewContext} from './context';
+import {Layout} from './useLayout';
 import {createImmutableTree} from './useTree';
 
 import type {AnnouncerAPI} from '../live-announcer';
@@ -113,13 +114,197 @@ function getFocusableTree(rootRef: React.RefObject<HTMLUListElement>) {
 		...rootRef.current.querySelectorAll(
 			'[role="treeitem"][data-dnd="true"]'
 		),
-	].filter(
-		(element) =>
-			!(
-				element.getAttribute('disabled') ||
-				element.closest('.treeview-item-dragging')
-			)
+	].filter((element) => !element.getAttribute('disabled'));
+}
+
+function getElementKey(element: Element): React.Key {
+	const [type, key] = element.getAttribute('data-id')!.split(',');
+
+	return type === 'number' ? Number(key) : key!;
+}
+
+export function isDescendantOfDraggedItems({
+	dragKeys,
+	element,
+	rootRef,
+}: {
+	dragKeys: State['currentDragKeys'];
+	element: Element;
+	rootRef: React.RefObject<HTMLUListElement>;
+}) {
+	const elements = getFocusableElements(rootRef);
+
+	const dragElements = elements.filter((element) => {
+		const key = getElementKey(element);
+
+		return dragKeys.has(key);
+	});
+
+	if (
+		dragElements.some((dragElement) =>
+			dragElement.closest('.treeview-item')!.contains(element)
+		)
+	) {
+		return true;
+	}
+
+	return false;
+}
+
+function getNextTarget<T>({
+	direction,
+	items,
+	layout,
+	nestedKey,
+	onItemHover,
+	rootRef,
+	state,
+}: {
+	direction: 'up' | 'down';
+	items?: Record<string, T>[];
+	layout: Layout;
+	nestedKey: string;
+	onItemHover?: (
+		item: T,
+		parentItem: T,
+		index: MoveItemIndex,
+		position: Position
+	) => boolean;
+	rootRef: React.RefObject<HTMLUListElement>;
+	state: State;
+}): {key: React.Key; position: Position} | null {
+	const elements = getFocusableElements(rootRef);
+
+	if (!elements.length) {
+		return null;
+	}
+
+	const currentIndex = elements.findIndex(
+		(element) => getElementKey(element) === state.currentTarget
 	);
+
+	let index = currentIndex;
+	let position = state.position || 'bottom';
+
+	// Function to find next position depending on direction
+
+	const advance = () => {
+		if (direction === 'down') {
+			if (position === 'top') {
+				position = 'middle';
+
+				return;
+			}
+
+			if (position === 'middle') {
+				position = 'bottom';
+
+				return;
+			}
+
+			if (position === 'bottom') {
+				position = 'middle';
+				index = index + 1;
+
+				return;
+			}
+		}
+
+		if (direction === 'up') {
+			if (position === 'bottom') {
+				position = 'middle';
+
+				return;
+			}
+
+			if (position === 'middle') {
+				position = 'top';
+
+				return;
+			}
+
+			if (position === 'top') {
+				position = 'middle';
+				index = index - 1;
+
+				return;
+			}
+		}
+	};
+
+	while (true) {
+		advance();
+
+		// Stop if we reach top or bottom limits
+
+		if (index < 0 || index >= elements.length) {
+			return null;
+		}
+
+		const targetElement = elements[index];
+
+		if (!targetElement) {
+			continue;
+		}
+
+		// Skip if target element is descendant of any dragged item
+
+		if (
+			isDescendantOfDraggedItems({
+				dragKeys: state.currentDragKeys,
+				element: targetElement,
+				rootRef,
+			})
+		) {
+			continue;
+		}
+
+		const targetKey = getElementKey(targetElement);
+
+		const nextTarget = {
+			key: targetKey,
+			position,
+		};
+
+		// If onItemHover was passed, validate target using it
+
+		if (onItemHover) {
+			const targetItem = layout.layoutKeys.current.get(targetKey);
+			const dragItem = layout.layoutKeys.current.get(state.currentDrag!);
+
+			if (!targetItem || !dragItem) {
+				continue;
+			}
+
+			const targetIndexes = getNewItemPath(targetItem.loc, position);
+
+			const tree = createImmutableTree(items as any, nestedKey!);
+			const dragNode = tree.nodeByPath(dragItem.loc);
+			const parentNode = tree.nodeByPath(targetIndexes).parent;
+
+			if (!parentNode) {
+				continue;
+			}
+
+			const isValid = onItemHover(
+				dragNode.item as Record<any, any>,
+				parentNode as Record<any, any>,
+				{
+					next: targetIndexes[targetIndexes.length - 1]!,
+					previous: dragNode.index,
+				},
+				position
+			);
+
+			if (!isValid) {
+				continue;
+			}
+		}
+
+		// Return next target
+
+		return nextTarget;
+	}
 }
 
 const defaultMessages: DragAndDropMessages = {
@@ -150,8 +335,10 @@ export function DragAndDropProvider<T>({
 }: Props<T>) {
 	const {
 		dragAndDrop,
+		expandedKeys,
 		items,
 		layout,
+		open,
 		reorder,
 		selection: {selectedKeys},
 	} = useTreeViewContext();
@@ -315,8 +502,6 @@ export function DragAndDropProvider<T>({
 
 	useEffect(() => {
 		if (state.source === 'keyboard') {
-			const denylist = new Set<React.Key>();
-
 			const onKeyDown = (event: KeyboardEvent) => {
 				switch (event.key) {
 					case Keys.Esc:
@@ -337,129 +522,42 @@ export function DragAndDropProvider<T>({
 						event.preventDefault();
 						event.stopPropagation();
 
-						const focusableItems = getFocusableTree(rootRef).filter(
-							(item) => {
-								if (item.getAttribute('data-dnd-dropping')) {
-									return true;
-								}
+						const nextTarget = getNextTarget<T>({
+							direction: event.key === Keys.Up ? 'up' : 'down',
+							items,
+							layout,
+							mode,
+							nestedKey,
+							onItemHover,
+							rootRef,
+							state,
+						});
 
-								const [type, key] = item
-									.getAttribute('data-id')!
-									.split(',');
+						if (!nextTarget) {
+							return;
+						}
 
-								return !denylist.has(
-									type === 'number' ? Number(key) : key!
-								);
-							}
-						);
-						const position = focusableItems.findIndex((element) =>
-							element.getAttribute('data-dnd-dropping')
-						);
+						const {key, position} = nextTarget;
 
-						const item =
-							focusableItems[
-								event.key === Keys.Up
-									? position - 1
-									: position + 1
-							];
+						const item = layout.layoutKeys.current.get(key);
 
-						const newState: State = {
+						if (!item) {
+							return;
+						}
+
+						if (
+							!expandedKeys.has(key) &&
+							(item.children.size || item.lazyChild)
+						) {
+							open(key);
+						}
+
+						setState((state) => ({
 							...state,
-						};
+							currentTarget: key,
+							position,
+						}));
 
-						if (item && denylist.has(newState.currentTarget!)) {
-							const [type, key] = item
-								.getAttribute('data-id')!
-								.split(',');
-
-							newState.position =
-								event.key === Keys.Up ? 'top' : 'bottom';
-							newState.currentTarget =
-								type === 'number' ? Number(key) : key!;
-						}
-						else if (
-							(event.key === Keys.Up &&
-								state.position === 'bottom') ||
-							(event.key === Keys.Down &&
-								state.position === 'top')
-						) {
-							newState.position = 'middle';
-						}
-						else if (
-							event.key === Keys.Down &&
-							state.position === 'middle'
-						) {
-							newState.position = 'bottom';
-						}
-						else {
-							if (!item) {
-								newState.position =
-									position === 0 ? 'top' : 'bottom';
-							}
-							else {
-								const [type, key] = item
-									.getAttribute('data-id')!
-									.split(',');
-
-								newState.position =
-									event.key === Keys.Up ? 'bottom' : 'middle';
-								newState.currentTarget =
-									type === 'number' ? Number(key) : key!;
-							}
-						}
-
-						if (onItemHover) {
-							const dropLayoutItem =
-								layout.layoutKeys.current.get(
-									newState.currentTarget!
-								);
-							const dragLayoutItem =
-								layout.layoutKeys.current.get(
-									newState.currentDrag!
-								);
-							const tree = createImmutableTree(
-								items as any,
-								nestedKey!
-							);
-							const indexes = getNewItemPath(
-								dropLayoutItem!.loc,
-								newState.position!
-							);
-
-							const dragNode = tree.nodeByPath(
-								dragLayoutItem!.loc
-							);
-
-							const isHovered = onItemHover(
-								dragNode.item as Record<any, any>,
-								tree.nodeByPath(indexes).parent as Record<
-									any,
-									any
-								>,
-
-								{
-									next: indexes[indexes.length - 1]!,
-									previous: dragNode.index,
-								},
-								newState.position!
-							);
-
-							if (!isHovered) {
-
-								// Removes the item from the list so that the next function
-								// call looks for the next element.
-
-								denylist.add(newState.currentTarget!);
-
-								// Try moving to the next item.
-
-								onKeyDown(event);
-
-								return;
-							}
-						}
-
-						setState(newState);
 						break;
 					}
 					default:

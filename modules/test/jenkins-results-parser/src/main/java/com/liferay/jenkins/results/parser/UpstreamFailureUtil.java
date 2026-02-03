@@ -77,7 +77,7 @@ public class UpstreamFailureUtil {
 					if (!testReportStatus.equals("PASSED")) {
 						upstreamFailures.add(
 							_formatUpstreamTestFailure(
-								batchName, testReport.getTestName()));
+								batchName, testReport.getTestIdentifier()));
 					}
 				}
 			}

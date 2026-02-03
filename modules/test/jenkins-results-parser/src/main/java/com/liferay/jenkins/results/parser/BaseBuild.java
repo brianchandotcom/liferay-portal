@@ -1724,6 +1724,12 @@ public abstract class BaseBuild implements Build {
 		_statusDurations.put(
 			_previousStatus, _statusModifiedTime - previousStatusModifiedTime);
 
+		String buildURL = getBuildURL();
+
+		if (!JenkinsResultsParserUtil.isURL(buildURL)) {
+			return;
+		}
+
 		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties properties = buildDatabase.getProperties(
@@ -1731,7 +1737,7 @@ public abstract class BaseBuild implements Build {
 
 		Set<String> cachedBuildURLs = properties.stringPropertyNames();
 
-		if (!cachedBuildURLs.contains(getBuildURL()) && different &&
+		if (!cachedBuildURLs.contains(buildURL) && different &&
 			isParentBuildRoot()) {
 
 			System.out.println(getBuildMessage());

@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -517,53 +518,34 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			false);
 	}
 
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = false, value = "LPD-35443"),
+			@FeatureFlag(enable = false, value = "LPD-35914"),
+			@FeatureFlag(enable = false, value = "LPD-41367")
+		}
+	)
 	@Test
 	@TestInfo("LPD-77689")
 	public void testExportImportLayoutUtilityPageEntryWithPreviewFileEntry()
 		throws Exception {
 
-		LayoutUtilityPageEntry layoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
-				null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
-				false, RandomTestUtil.randomString(),
-				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
-				ServiceContextTestUtil.getServiceContext(
-					group.getGroupId(), TestPropsValues.getUserId()));
+		_testExportImportLayoutUtilityPageEntryWithPreviewFileEntry();
+	}
 
-		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			group.getGroupId(), RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = true, value = "LPD-35443"),
+			@FeatureFlag(enable = true, value = "LPD-35914"),
+			@FeatureFlag(enable = true, value = "LPD-41367")
+		}
+	)
+	@Test
+	@TestInfo("LPD-77689")
+	public void testExportImportLayoutUtilityPageEntryWithPreviewFileEntryWithBatch()
+		throws Exception {
 
-		String randomString = StringUtil.randomString();
-
-		FileEntry previewFileEntry =
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				null, group.getGroupId(), TestPropsValues.getUserId(),
-				LayoutPageTemplateEntry.class.getName(),
-				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				RandomTestUtil.randomString(), repository.getDlFolderId(),
-				new ByteArrayInputStream(randomString.getBytes()),
-				RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
-
-		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
-			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-			previewFileEntry.getFileEntryId());
-
-		exportImportLayouts(new long[0], getImportParameterMap(), true);
-
-		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
-			_layoutUtilityPageEntryLocalService.
-				getLayoutUtilityPageEntryByExternalReferenceCode(
-					layoutUtilityPageEntry.getExternalReferenceCode(),
-					importedGroup.getGroupId());
-
-		FileEntry importedPreviewFileEntry =
-			PortletFileRepositoryUtil.getPortletFileEntry(
-				importedLayoutUtilityPageEntry.getPreviewFileEntryId());
-
-		Assert.assertEquals(
-			StreamUtil.toString(previewFileEntry.getContentStream()),
-			StreamUtil.toString(importedPreviewFileEntry.getContentStream()));
+		_testExportImportLayoutUtilityPageEntryWithPreviewFileEntry();
 	}
 
 	@Test
@@ -1091,6 +1073,53 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		}
 
 		return layoutPortletIds;
+	}
+
+	private void _testExportImportLayoutUtilityPageEntryWithPreviewFileEntry()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
+				false, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			group.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		String randomString = StringUtil.randomString();
+
+		FileEntry previewFileEntry =
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				null, group.getGroupId(), TestPropsValues.getUserId(),
+				LayoutPageTemplateEntry.class.getName(),
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				RandomTestUtil.randomString(), repository.getDlFolderId(),
+				new ByteArrayInputStream(randomString.getBytes()),
+				RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+			previewFileEntry.getFileEntryId());
+
+		exportImportLayouts(new long[0], getImportParameterMap(), true);
+
+		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					layoutUtilityPageEntry.getExternalReferenceCode(),
+					importedGroup.getGroupId());
+
+		FileEntry importedPreviewFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				importedLayoutUtilityPageEntry.getPreviewFileEntryId());
+
+		Assert.assertEquals(
+			StreamUtil.toString(previewFileEntry.getContentStream()),
+			StreamUtil.toString(importedPreviewFileEntry.getContentStream()));
 	}
 
 	private void

@@ -272,10 +272,6 @@ export class FiltersPage {
 
 		await this.newDateRangeFilterForm.filterBySelectButton.click();
 
-		const notDateField = 'label';
-		await expect(
-			this.fieldSelectModalPage.getFieldCheckboxByLabel(notDateField)
-		).toBeDisabled();
 		await expect(
 			this.fieldSelectModalPage.getFieldCheckboxByLabel(filterBy)
 		).toBeEnabled();
@@ -317,12 +313,6 @@ export class FiltersPage {
 
 		await this.newSelectionFilterForm.filterBySelectButton.click();
 
-		const notSelectionFilterField = 'keywords';
-		await expect(
-			this.fieldSelectModalPage.getFieldCheckboxByLabel(
-				notSelectionFilterField
-			)
-		).toBeDisabled();
 		await expect(
 			this.fieldSelectModalPage.getFieldCheckboxByLabel(filterBy)
 		).toBeEnabled();

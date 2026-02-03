@@ -12,6 +12,7 @@ import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-ty
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
 import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
+import {useDrag} from 'react-dnd';
 
 import {
 	deleteTaskById,
@@ -28,231 +29,251 @@ import {ITask} from '../../../../../utils/types';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import EditAssigneeModalContent from '../../../../modal/EditAssigneeModalContent';
 import {KanbanViewContext} from '../context';
+import {ItemTypes} from './Column';
 
 import './Task.scss';
 
 export default function Task(props: ITask) {
 	const {itemsActions, loadData} = useContext(KanbanViewContext);
 
+	const [_, drag] = useDrag<{task: ITask; type: string}, void, {}>({
+		item: {task: props, type: ItemTypes.TASK},
+	});
+
 	return (
-		<Card>
-			<Card.Body className="lfr__kaban-task-card-body">
-				<Card.Row>
-					<div className="lfr__kaban-task-card-row">
-						<strong className="lfr__kaban-task-card-row-text-content">
-							{props.embedded.title}
-						</strong>
+		<div className="lfr__kaban-task-card" ref={drag}>
+			<Card>
+				<Card.Body>
+					<Card.Row>
+						<div className="lfr__kaban-task-card-row">
+							<strong className="lfr__kaban-task-card-row-text-content">
+								{props.embedded.title}
+							</strong>
 
-						<ClayDropDownWithItems
-							items={[
-								{
-									label: Liferay.Language.get('edit'),
-									onClick: () => {
-										const editURL = itemsActions
-											.find(
-												(action) =>
-													action.data.id === 'edit'
-											)
-											?.href.replace(
-												'{embedded.id}',
-												String(props.embedded.id)
-											);
+							<ClayDropDownWithItems
+								items={[
+									{
+										label: Liferay.Language.get('edit'),
+										onClick: () => {
+											const editURL = itemsActions
+												.find(
+													(action) =>
+														action.data.id ===
+														'edit'
+												)
+												?.href.replace(
+													'{embedded.id}',
+													String(props.embedded.id)
+												);
 
-										if (editURL) {
-											navigate(editURL);
-										}
+											if (editURL) {
+												navigate(editURL);
+											}
+										},
+										symbolLeft: 'pencil',
 									},
-									symbolLeft: 'pencil',
-								},
-								{
-									label: Liferay.Language.get('view'),
-									onClick: () => {
-										const viewURL = itemsActions
-											.find(
-												(action) =>
-													action.data.id ===
-													'actionLink'
-											)
-											?.href.replace(
-												'{embedded.id}',
-												String(props.embedded.id)
-											);
+									{
+										label: Liferay.Language.get('view'),
+										onClick: () => {
+											const viewURL = itemsActions
+												.find(
+													(action) =>
+														action.data.id ===
+														'actionLink'
+												)
+												?.href.replace(
+													'{embedded.id}',
+													String(props.embedded.id)
+												);
 
-										if (viewURL) {
-											navigate(viewURL);
-										}
+											if (viewURL) {
+												navigate(viewURL);
+											}
+										},
+										symbolLeft: 'view',
 									},
-									symbolLeft: 'view',
-								},
-								{
-									type: 'divider',
-								},
-								{
-									label: Liferay.Language.get('assign-to-me'),
-									onClick: async () => {
-										const user = (await getUserAccount(
-											Liferay.ThemeDisplay.getUserId().toString()
-										)) as {
-											externalReferenceCode: string;
-											name: string;
-										};
-
-										const {error} = await patchTaskById({
-											body: {
-												assignTo: {
-													externalReferenceCode:
-														user.externalReferenceCode,
-													name: user.name,
-													type: 'User',
-												},
-											},
-											taskId: String(props.embedded.id),
-										});
-
-										if (!error) {
-											loadData();
-
-											displayAssignSuccessToast(
-												props.embedded.title,
-												user.name
-											);
-										}
-										else {
-											displayErrorToast(error);
-										}
+									{
+										type: 'divider',
 									},
-								},
-								{
-									label: Liferay.Language.get(
-										'assign-to-...'
-									),
-									onClick: async () => {
-										await openCMPModal({
-											center: true,
-											contentComponent: ({
-												closeModal,
-											}: {
-												closeModal: () => void;
-											}) => (
-												<EditAssigneeModalContent
-													closeModal={closeModal}
-													loadData={loadData}
-													taskId={String(
+									{
+										label: Liferay.Language.get(
+											'assign-to-me'
+										),
+										onClick: async () => {
+											const user = (await getUserAccount(
+												Liferay.ThemeDisplay.getUserId().toString()
+											)) as {
+												externalReferenceCode: string;
+												name: string;
+											};
+
+											const {error} = await patchTaskById(
+												{
+													body: {
+														assignTo: {
+															externalReferenceCode:
+																user.externalReferenceCode,
+															name: user.name,
+															type: 'User',
+														},
+													},
+													taskId: String(
 														props.embedded.id
-													)}
-													taskTitle={
-														props.embedded.title
-													}
-													value={
-														props.embedded.assignTo
-													}
-												/>
-											),
-											size: 'md',
-										});
+													),
+												}
+											);
+
+											if (!error) {
+												loadData();
+
+												displayAssignSuccessToast(
+													props.embedded.title,
+													user.name
+												);
+											}
+											else {
+												displayErrorToast(error);
+											}
+										},
 									},
-								},
-								{
-									type: 'divider',
-								},
-								{
-
-									// @ts-ignore
-
-									className: 'text-danger',
-									label: Liferay.Language.get('delete'),
-									onClick: async () => {
-										await openCMPModal({
-											center: true,
-											contentComponent: ({
-												closeModal,
-											}: {
-												closeModal: () => void;
-											}) => (
-												<DeleteTaskModal
-													closeModal={closeModal}
-													onSubmit={async () => {
-														const {error} =
-															await deleteTaskById(
-																{
-																	taskId: String(
-																		props
-																			.embedded
-																			.id
-																	),
-																}
-															);
-
-														if (!error) {
-															loadData();
-
-															displayDeleteSuccessToast(
-																props.embedded
-																	.title
-															);
+									{
+										label: Liferay.Language.get(
+											'assign-to-...'
+										),
+										onClick: async () => {
+											await openCMPModal({
+												center: true,
+												contentComponent: ({
+													closeModal,
+												}: {
+													closeModal: () => void;
+												}) => (
+													<EditAssigneeModalContent
+														closeModal={closeModal}
+														loadData={loadData}
+														taskId={String(
+															props.embedded.id
+														)}
+														taskTitle={
+															props.embedded.title
 														}
-														else {
-															displayErrorToast(
-																error
-															);
+														value={
+															props.embedded
+																.assignTo
 														}
-
-														closeModal();
-													}}
-													title={props.embedded.title}
-												/>
-											),
-											size: 'md',
-											status: 'danger',
-										});
+													/>
+												),
+												size: 'md',
+											});
+										},
 									},
-									symbolLeft: 'trash',
-								},
-							]}
-							trigger={
-								<ClayButton
-									aria-label={Liferay.Language.get('actions')}
-									className="component-action"
-									displayType="unstyled"
-									monospaced
-								>
-									<ClayIcon symbol="ellipsis-v" />
-								</ClayButton>
-							}
-						/>
-					</div>
-				</Card.Row>
+									{
+										type: 'divider',
+									},
+									{
 
-				<Card.Row>
-					<Card.Description
-						className="lfr__kaban-task-card-row-text-content"
-						displayType="subtitle"
-					>
-						{props.embedded.cmpProjectToCMPTasks.title}
-					</Card.Description>
-				</Card.Row>
+										// @ts-ignore
 
-				<Card.Row>
-					<div className="lfr__kaban-task-card-row">
-						<Label
-							displayType={
-								mapStateKeyToDisplayType[
-									props.embedded.state.key
-								]
-							}
-						>
-							{props.embedded.state.name}
-						</Label>
+										className: 'text-danger',
+										label: Liferay.Language.get('delete'),
+										onClick: async () => {
+											await openCMPModal({
+												center: true,
+												contentComponent: ({
+													closeModal,
+												}: {
+													closeModal: () => void;
+												}) => (
+													<DeleteTaskModal
+														closeModal={closeModal}
+														onSubmit={async () => {
+															const {error} =
+																await deleteTaskById(
+																	{
+																		taskId: String(
+																			props
+																				.embedded
+																				.id
+																		),
+																	}
+																);
 
-						<div className="lfr__kaban-task-card-assignee">
-							<AssigneeAvatar
-								name={props.embedded.assignTo.name}
-								portrait={props.embedded.assignTo.portrait}
+															if (!error) {
+																loadData();
+
+																displayDeleteSuccessToast(
+																	props
+																		.embedded
+																		.title
+																);
+															}
+															else {
+																displayErrorToast(
+																	error
+																);
+															}
+
+															closeModal();
+														}}
+														title={
+															props.embedded.title
+														}
+													/>
+												),
+												size: 'md',
+												status: 'danger',
+											});
+										},
+										symbolLeft: 'trash',
+									},
+								]}
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'actions'
+										)}
+										className="component-action"
+										displayType="unstyled"
+										monospaced
+									>
+										<ClayIcon symbol="ellipsis-v" />
+									</ClayButton>
+								}
 							/>
 						</div>
-					</div>
-				</Card.Row>
-			</Card.Body>
-		</Card>
+					</Card.Row>
+
+					<Card.Row>
+						<Card.Description
+							className="lfr__kaban-task-card-row-text-content"
+							displayType="subtitle"
+						>
+							{props.embedded.cmpProjectToCMPTasks.title}
+						</Card.Description>
+					</Card.Row>
+
+					<Card.Row>
+						<div className="lfr__kaban-task-card-row">
+							<Label
+								displayType={
+									mapStateKeyToDisplayType[
+										props.embedded.state.key
+									]
+								}
+							>
+								{props.embedded.state.name}
+							</Label>
+
+							<div className="lfr__kaban-task-card-assignee">
+								<AssigneeAvatar
+									name={props.embedded.assignTo.name}
+									portrait={props.embedded.assignTo.portrait}
+								/>
+							</div>
+						</div>
+					</Card.Row>
+				</Card.Body>
+			</Card>
+		</div>
 	);
 }

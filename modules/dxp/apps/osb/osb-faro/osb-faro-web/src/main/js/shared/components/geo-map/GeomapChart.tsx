@@ -5,7 +5,6 @@
 
 import * as d3 from 'd3';
 import React from 'react';
-import {FeatureCollection} from 'geojson';
 import {Grid, PointOptions} from 'billboard.js';
 
 const DEFAULT_COLOR = {
@@ -22,7 +21,7 @@ const DEFAULT_COLOR = {
  */
 class GeomapBase {
 	_color?: any;
-	_data: FeatureCollection;
+	_data: any;
 	_domainMax?: number;
 	_domainMin?: number;
 	_element?: any;
@@ -177,7 +176,7 @@ class GeomapBase {
 	/**
 	 * Data load handler
 	 */
-	_onDataLoad(mapData: FeatureCollection) {
+	_onDataLoad(mapData: any) {
 		const features = mapData.features;
 
 		// Calculate domain based on values received

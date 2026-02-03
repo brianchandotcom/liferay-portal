@@ -35,50 +35,50 @@ liferay-default:
     customInitContainers:
         x-liferay-install-opensearch-modules:
             -   containerTemplate: |
-                    - command:
-                          - bash
-                          - -c
-                          - |
-                                function download_module {
-                                    local product_version="{{ .image.tag }}"
+                    -   command:
+                        -   bash
+                        -   -c
+                        -   |
+                            function download_module {
+                                local product_version="{{ .image.tag }}"
 
-                                    local http_code=$(\
-                                        curl \
-                                            "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar" \
-                                            --location \
-                                            --output-dir /temp/liferay/deploy \
-                                            --remote-name \
-                                            --retry 5 \
-                                            --retry-all-errors \
-                                            --retry-delay 2 \
-                                            --write-out "%{http_code}")
+                                local http_code=$(\
+                                    curl \
+                                        "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar" \
+                                        --location \
+                                        --output-dir /temp/liferay/deploy \
+                                        --remote-name \
+                                        --retry 5 \
+                                        --retry-all-errors \
+                                        --retry-delay 2 \
+                                        --write-out "%{http_code}")
 
-                                    if [ "${http_code}" != "200" ]
-                                    then
-                                        echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
+                                if [ "${http_code}" != "200" ]
+                                then
+                                    echo "Unable to download OpenSearch modules for product version ${product_version}." >&2
 
-                                        exit 1
-                                    fi
-                                }
+                                    exit 1
+                                fi
+                            }
 
-                                function main {
-                                    set -e
+                            function main {
+                                set -e
 
-                                    mkdir --parents /temp/liferay/deploy
+                                mkdir --parents /temp/liferay/deploy
 
-                                    rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
+                                rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*
 
-                                    download_module "api"
-                                    download_module "impl"
-                                }
+                                download_module "api"
+                                download_module "impl"
+                            }
 
-                                main
-                      image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
-                      imagePullPolicy: {{ .image.pullPolicy }}
-                      name: liferay-install-opensearch-modules
-                      volumeMounts:
-                          - mountPath: /temp
-                            name: liferay-persistent-volume
+                            main
+                        image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                        imagePullPolicy: {{ .image.pullPolicy }}
+                        name: liferay-install-opensearch-modules
+                        volumeMounts:
+                            -   mountPath: /temp
+                                name: liferay-persistent-volume
     customLabels:
         origin: liferay-aws
     customVolumeMounts:

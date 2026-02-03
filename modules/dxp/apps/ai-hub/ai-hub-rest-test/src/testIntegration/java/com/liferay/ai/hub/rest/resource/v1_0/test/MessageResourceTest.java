@@ -7,6 +7,7 @@ package com.liferay.ai.hub.rest.resource.v1_0.test;
 
 import com.liferay.ai.hub.rest.resource.v1_0.test.util.SseEventSourceTestUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.ai.hub.security.JWTTokenUtil;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -16,8 +17,10 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -85,12 +88,14 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 	@Override
 	@Test
 	public void testPostChatByExternalReferenceCodeMessage() throws Exception {
-		CountDownLatch countDownLatch = new CountDownLatch(4);
+		CountDownLatch countDownLatch1 = new CountDownLatch(4);
+		CountDownLatch countDownLatch2 = new CountDownLatch(6);
 
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(
-			List.of(countDownLatch), lines, "chats/subscribe");
+			List.of(countDownLatch1, countDownLatch2), lines,
+			"chats/subscribe");
 
 		String text = "this is a short text.";
 
@@ -100,6 +105,10 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 			).toString(),
 			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
 				"/messages",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
 			Http.Method.POST);
 
 		Assert.assertEquals(
@@ -107,7 +116,7 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 
 		Assert.assertEquals(lines.toString(), 2, lines.size());
 
-		Assert.assertTrue(countDownLatch.await(10, TimeUnit.SECONDS));
+		Assert.assertTrue(countDownLatch1.await(10, TimeUnit.SECONDS));
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 		Assert.assertEquals("event: Chat Message Sent", lines.get(2));
@@ -115,6 +124,39 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 		String expandedText = lines.get(3);
 
 		Assert.assertTrue(expandedText.length() > text.length());
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"text", "What was the first message that I sent in this chat?"
+			).toString(),
+			"ai-hub/v1.0/chats/by-external-reference-code/" + sseEventSinkKey +
+				"/messages",
+			HashMapBuilder.put(
+				"Liferay-AI-Hub-On-Behalf-Of",
+				_generateToken(TestPropsValues.getUserId())
+			).build(),
+			Http.Method.POST);
+
+		Assert.assertEquals(
+			"What was the first message that I sent in this chat?",
+			jsonObject.getString("text"));
+
+		Assert.assertEquals(lines.toString(), 4, lines.size());
+
+		Assert.assertTrue(countDownLatch2.await(10, TimeUnit.SECONDS));
+
+		Assert.assertEquals(lines.toString(), 6, lines.size());
+		Assert.assertEquals("event: Chat Message Sent", lines.get(2));
+
+		String firstMessageSent = lines.get(5);
+
+		Assert.assertTrue(firstMessageSent, firstMessageSent.contains(text));
+	}
+
+	private String _generateToken(long userId) throws Exception {
+		return JWTTokenUtil.generateToken(
+			TimeUnit.MINUTES.toMillis(1), RandomTestUtil.randomString(),
+			userId);
 	}
 
 	private static String _originalName;

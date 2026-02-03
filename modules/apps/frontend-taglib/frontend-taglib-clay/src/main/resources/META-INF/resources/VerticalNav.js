@@ -23,6 +23,7 @@ export default function VerticalNav({
 	locale: _locale,
 	portletId: _portletId,
 	portletNamespace: _portletNamespace,
+	size,
 	triggerLabel,
 	...otherProps
 }) {
@@ -36,6 +37,7 @@ export default function VerticalNav({
 			displayType={displayType}
 			items={items}
 			large={large}
+			size={size}
 			triggerLabel={triggerLabel}
 			{...otherProps}
 		>

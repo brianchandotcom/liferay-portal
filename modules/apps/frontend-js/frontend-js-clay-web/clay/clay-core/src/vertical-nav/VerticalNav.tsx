@@ -59,8 +59,9 @@ type Props<T extends Record<string, any> | string> = {
 
 	/**
 	 * Determines the Vertical Nav variant to use.
+	 * @default transparent
 	 */
-	'displayType'?: null | 'primary';
+	'displayType'?: 'transparent' | 'primary';
 
 	/**
 	 * The currently expanded keys in the collection (controlled).
@@ -80,6 +81,7 @@ type Props<T extends Record<string, any> | string> = {
 
 	/**
 	 * Flag to indicate if `menubar-vertical-expand-lg` class is applied.
+	 * @deprecated Use "size" to determine the desired breakpoint
 	 */
 	'large'?: boolean;
 
@@ -88,6 +90,11 @@ type Props<T extends Record<string, any> | string> = {
 	 * (controlled).
 	 */
 	'onExpandedChange'?: InternalDispatch<Set<React.Key>>;
+
+	/**
+	 * Defines the size class to use with the menu
+	 */
+	'size'?: 'lg' | 'md';
 
 	/**
 	 * Path to the spritemap that Icon should use when referencing symbols.
@@ -136,13 +143,14 @@ function VerticalNav<T extends Record<string, any> | string>({
 	'aria-label': ariaLabel,
 	children,
 	decorated,
-	displayType,
+	displayType = 'transparent',
 	defaultExpandedKeys = new Set(),
 	'expandedKeys': externalExpandedKeys,
 	'itemAriaCurrent': ariaCurrent = true,
 	items,
 	large,
 	onExpandedChange,
+	size,
 	spritemap,
 	'trigger': CustomTrigger = Trigger,
 	triggerLabel = 'Menu',
@@ -286,12 +294,14 @@ function VerticalNav<T extends Record<string, any> | string>({
 	return (
 		<nav
 			aria-label={ariaLabel}
-			className={classNames('menubar menubar-transparent', {
+			className={classNames('menubar', {
 				['menubar-decorated']: decorated,
 				['menubar-primary']: displayType === 'primary',
-				['menubar-vertical-expand-lg']: large,
+				['menubar-transparent']: displayType === 'transparent',
+				['menubar-vertical-expand-lg']: !size && large,
 				['menubar-vertical-expand-md']:
-					!large && displayType !== 'primary',
+					!size && !large && displayType !== 'primary',
+				[`menubar-vertical-expand-${size}`]: size,
 			})}
 		>
 			{displayType !== 'primary' && (

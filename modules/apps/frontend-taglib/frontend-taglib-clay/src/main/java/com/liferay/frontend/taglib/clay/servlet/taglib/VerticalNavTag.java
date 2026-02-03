@@ -6,6 +6,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
+import com.liferay.frontend.taglib.clay.internal.servlet.taglib.util.CssClassesBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.IconItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
@@ -71,14 +72,6 @@ public class VerticalNavTag extends BaseContainerTag {
 		return _verticalNavItems;
 	}
 
-	public boolean isDisplayTypePrimary() {
-		if (Validator.isNotNull(_displayType)) {
-			return _displayType.equals("primary");
-		}
-
-		return false;
-	}
-
 	public void setActive(String active) {
 		_active = active;
 	}
@@ -92,11 +85,19 @@ public class VerticalNavTag extends BaseContainerTag {
 	}
 
 	public void setDisplayType(String displayType) {
-		_displayType = displayType;
+		if (_DISPLAY_TYPE_OPTIONS.contains(displayType)) {
+			_displayType = displayType;
+		}
 	}
 
 	public void setLarge(boolean large) {
 		_large = large;
+	}
+
+	public void setSize(String size) {
+		if (_SIZE_OPTIONS.contains(size)) {
+			_size = size;
+		}
 	}
 
 	public void setVerticalNavItems(List<VerticalNavItem> verticalNavItems) {
@@ -110,8 +111,9 @@ public class VerticalNavTag extends BaseContainerTag {
 		_active = null;
 		_decorated = false;
 		_defaultExpandedKeys = null;
-		_displayType = null;
+		_displayType = _DISPLAY_TYPE_DEFAULT;
 		_large = false;
+		_size = null;
 		_verticalNavItems = null;
 	}
 
@@ -133,30 +135,26 @@ public class VerticalNavTag extends BaseContainerTag {
 		props.put("displayType", _displayType);
 		props.put("large", _large);
 		props.put("items", _verticalNavItems);
+		props.put("size", _size);
 
 		return super.prepareProps(props);
 	}
 
 	@Override
 	protected String processCssClasses(Set<String> cssClasses) {
-		cssClasses.add("menubar menubar-transparent");
+		boolean sizeIsNull = Validator.isNull(_size);
 
-		if (_decorated) {
-			cssClasses.add("menubar-decorated");
-		}
+		CssClassesBuilder cssClassesBuilder = 
+			new CssClassesBuilder(cssClasses)
+				.add("menubar")
+				.add("menubar-decorated", _decorated)
+				.add("menubar-primary", _displayType.equals(_DISPLAY_TYPE_PRIMARY))
+				.add("menubar-transparent", _displayType.equals(_DISPLAY_TYPE_TRANSPARENT))
+				.add("menubar-vertical-expand-lg", sizeIsNull && _large)
+				.add("menubar-vertical-expand-md", sizeIsNull && !_large && !_displayType.equals(_DISPLAY_TYPE_PRIMARY))
+				.add(String.format("menubar-vertical-expand-%s", _size), !sizeIsNull);
 
-		if (isDisplayTypePrimary()) {
-			cssClasses.add("menubar-primary");
-		}
-
-		if (_large) {
-			cssClasses.add("menubar-vertical-expand-lg");
-		}
-		else if (!isDisplayTypePrimary()) {
-			cssClasses.add("menubar-vertical-expand-md");
-		}
-
-		return super.processCssClasses(cssClasses);
+		return super.processCssClasses(cssClassesBuilder.build());
 	}
 
 	@Override
@@ -165,13 +163,13 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		if (!isDisplayTypePrimary()) {
+		if (!_displayType.equals(_DISPLAY_TYPE_PRIMARY)) {
 			jspWriter.write("<div class=\"collapse menubar-collapse\">");
 		}
 
 		_renderVerticalNavItems(jspWriter, _verticalNavItems, 0);
 
-		if (!isDisplayTypePrimary()) {
+		if (!_displayType.equals(_DISPLAY_TYPE_PRIMARY)) {
 			jspWriter.write("</div>");
 		}
 
@@ -425,11 +423,25 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:vertical_nav:";
 
+	private static final String _DISPLAY_TYPE_PRIMARY = "primary";
+	private static final String _DISPLAY_TYPE_TRANSPARENT = "transparent";
+	private static final String _DISPLAY_TYPE_DEFAULT =
+		_DISPLAY_TYPE_TRANSPARENT;
+	private static final List<String> _DISPLAY_TYPE_OPTIONS =
+		List.of(_DISPLAY_TYPE_PRIMARY, _DISPLAY_TYPE_TRANSPARENT);
+
+	private static final String _SIZE_LARGE = "lg";
+	private static final String _SIZE_MEDIUM = "md";
+	private static final List<String> _SIZE_OPTIONS =
+		List.of(_SIZE_LARGE, _SIZE_MEDIUM);
+
 	private String _active;
 	private boolean _decorated;
 	private List<String> _defaultExpandedKeys;
-	private String _displayType;
+	private String _displayType = _DISPLAY_TYPE_DEFAULT;
 	private boolean _large;
+	private boolean _collapse;
+	private String _size;
 	private List<VerticalNavItem> _verticalNavItems;
 
 }

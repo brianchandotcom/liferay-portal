@@ -34,7 +34,7 @@ import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
 import io.modelcontextprotocol.server.McpSyncServerExchange;
-import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
+import io.modelcontextprotocol.server.transport.HttpServletStreamableServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 
 import jakarta.servlet.GenericServlet;
@@ -67,7 +67,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"osgi.http.whiteboard.context.path=/mcp",
 		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.internal.servlet.MCPServerServlet",
-		"osgi.http.whiteboard.servlet.pattern=/mcp/*"
+		"osgi.http.whiteboard.servlet.pattern=/mcp"
 	},
 	service = Servlet.class
 )
@@ -111,24 +111,20 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private Servlet _buildServlet(String baseURL, long companyId) {
-		HttpServletSseServerTransportProvider
-			httpServletSseServerTransportProvider =
-				HttpServletSseServerTransportProvider.builder(
-				).baseUrl(
-					baseURL + "/mcp"
+		HttpServletStreamableServerTransportProvider
+			httpServletStreamableServerTransportProvider =
+				HttpServletStreamableServerTransportProvider.builder(
 				).contextExtractor(
 					request -> McpTransportContext.create(
 						HashMapBuilder.<String, Object>put(
 							"authorization", request.getHeader("Authorization")
 						).build())
-				).messageEndpoint(
-					"/message"
 				).build();
 
 		JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
 
 		McpSyncServer mcpSyncServer = McpServer.sync(
-			httpServletSseServerTransportProvider
+			httpServletStreamableServerTransportProvider
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
 			).tools(
@@ -175,7 +171,7 @@ public class MCPServerServlet extends HttpServlet {
 					ServletResponse servletResponse)
 				throws IOException, ServletException {
 
-				httpServletSseServerTransportProvider.service(
+				httpServletStreamableServerTransportProvider.service(
 					servletRequest, servletResponse);
 			}
 

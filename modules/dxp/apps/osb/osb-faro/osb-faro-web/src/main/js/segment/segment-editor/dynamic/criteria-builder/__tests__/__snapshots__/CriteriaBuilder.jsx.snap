@@ -6,42 +6,46 @@ exports[`CriteriaBuilder should render 1`] = `
     class="criteria-builder-root"
   >
     <div
-      class="criteria-group-item-root"
+      class="empty-drop-zone-root"
     >
       <div
-        class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
+        class="empty-drop-zone-target"
       >
         <div
-          class="drop-zone-target p-5"
+          class="empty-drop-zone-indicator"
+        />
+        <div
+          class="empty-drop-zone-message"
         >
-          <div
-            class="empty-drop-zone-indicator"
-          />
-          <div
-            class="criteria-message"
-          >
+          <div>
             <svg
-              class="lexicon-icon lexicon-icon-ac_rule icon-root icon-size-md"
+              class="lexicon-icon lexicon-icon-ac_rule icon-root icon-size-md mr-3"
               role="presentation"
             >
               <use
                 href="#ac_rule"
               />
             </svg>
-            Drag and drop criterion from the right to add rules.
+            <span
+              class="text-4"
+            >
+              Drag and drop criterion from the right to add rules.
+            </span>
           </div>
-          <div
-            class="groups-message"
-          >
+          <div>
             <svg
-              class="lexicon-icon lexicon-icon-ac_group icon-root icon-size-md"
+              class="lexicon-icon lexicon-icon-ac_group icon-root icon-size-md mr-3"
               role="presentation"
             >
               <use
                 href="#ac_group"
               />
             </svg>
-            Drag and drop over an existing criteria to form groups.
+            <span
+              class="text-4"
+            >
+              Drag and drop over an existing criteria to form groups.
+            </span>
           </div>
         </div>
       </div>

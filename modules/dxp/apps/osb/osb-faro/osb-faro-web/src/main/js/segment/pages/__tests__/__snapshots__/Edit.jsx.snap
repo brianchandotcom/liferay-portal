@@ -704,49 +704,49 @@ exports[`Edit should render 1`] = `
                       class="content-wrapper"
                     >
                       <div
-                        class="sheet"
+                        class="criteria-builder-root"
                       >
                         <div
-                          class="criteria-builder-root"
+                          class="empty-drop-zone-root"
                         >
                           <div
-                            class="criteria-group-root criteria-group-item-root"
+                            class="empty-drop-zone-target"
                           >
                             <div
-                              class="empty-drop-zone-root empty-drop-zone-dashed border-primary rounded"
+                              class="empty-drop-zone-indicator"
+                            />
+                            <div
+                              class="empty-drop-zone-message"
                             >
-                              <div
-                                class="drop-zone-target p-5"
-                              >
-                                <div
-                                  class="empty-drop-zone-indicator"
-                                />
-                                <div
-                                  class="criteria-message"
+                              <div>
+                                <svg
+                                  class="lexicon-icon lexicon-icon-ac_rule icon-root icon-size-md mr-3"
+                                  role="presentation"
                                 >
-                                  <svg
-                                    class="lexicon-icon lexicon-icon-ac_rule icon-root icon-size-md"
-                                    role="presentation"
-                                  >
-                                    <use
-                                      href="#ac_rule"
-                                    />
-                                  </svg>
+                                  <use
+                                    href="#ac_rule"
+                                  />
+                                </svg>
+                                <span
+                                  class="text-4"
+                                >
                                   Drag and drop criterion from the right to add rules.
-                                </div>
-                                <div
-                                  class="groups-message"
+                                </span>
+                              </div>
+                              <div>
+                                <svg
+                                  class="lexicon-icon lexicon-icon-ac_group icon-root icon-size-md mr-3"
+                                  role="presentation"
                                 >
-                                  <svg
-                                    class="lexicon-icon lexicon-icon-ac_group icon-root icon-size-md"
-                                    role="presentation"
-                                  >
-                                    <use
-                                      href="#ac_group"
-                                    />
-                                  </svg>
+                                  <use
+                                    href="#ac_group"
+                                  />
+                                </svg>
+                                <span
+                                  class="text-4"
+                                >
                                   Drag and drop over an existing criteria to form groups.
-                                </div>
+                                </span>
                               </div>
                             </div>
                           </div>

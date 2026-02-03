@@ -276,7 +276,8 @@ export function ItemContextProvider({children, value}: Props) {
 					{
 						next: indexes[indexes.length - 1]!,
 						previous: (dragItem as unknown as Value)['item'].index,
-					}
+					},
+					currentPosition
 				);
 
 				if (!isHovered) {

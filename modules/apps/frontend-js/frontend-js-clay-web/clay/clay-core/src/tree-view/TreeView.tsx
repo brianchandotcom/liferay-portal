@@ -11,7 +11,11 @@ import {HTML5Backend} from 'react-dnd-html5-backend';
 
 import {FocusWithinProvider} from '../aria';
 import {ChildrenFunction, Collection, ICollectionProps} from './Collection';
-import {DragAndDropMessages, DragAndDropProvider} from './DragAndDrop';
+import {
+	DragAndDropMessages,
+	DragAndDropProvider,
+	Position,
+} from './DragAndDrop';
 import DragLayer from './DragLayer';
 import {Group} from './TreeViewGroup';
 import {Item, ItemStack} from './TreeViewItem';
@@ -87,7 +91,12 @@ interface ITreeViewProps<T extends Record<string, any>>
 	 * The callback is called whenever there is an item dragging over
 	 * another item.
 	 */
-	onItemHover?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
+	onItemHover?: (
+		item: T,
+		parentItem: T,
+		index: MoveItemIndex,
+		position: Position
+	) => boolean;
 
 	/**
 	 * Callback is called when an item is about to be moved elsewhere in the tree.

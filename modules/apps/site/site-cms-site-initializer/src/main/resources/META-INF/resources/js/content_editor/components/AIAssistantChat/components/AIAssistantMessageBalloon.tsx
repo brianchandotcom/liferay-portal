@@ -7,6 +7,7 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 import '../chat.scss';
+import renderAIAssistantMessageMarkdown from '../utils/renderAIAssistantMessageMarkdown';
 
 const AssistantMessageBalloon: React.FC<{error: boolean; message: string}> = ({
 	error,
@@ -26,11 +27,18 @@ const AssistantMessageBalloon: React.FC<{error: boolean; message: string}> = ({
 				/>
 			</div>
 
-			<span className="m-2">
-				{error
-					? Liferay.Language.get('unable-to-generate-content')
-					: message}
-			</span>
+			{error ? (
+				<span className="m-2">
+					{Liferay.Language.get('generating-content-failed')}
+				</span>
+			) : (
+				<div
+					className="m-2"
+					dangerouslySetInnerHTML={{
+						__html: renderAIAssistantMessageMarkdown(message),
+					}}
+				/>
+			)}
 		</div>
 	);
 };

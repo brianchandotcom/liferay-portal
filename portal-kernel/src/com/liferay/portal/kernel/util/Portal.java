@@ -618,9 +618,10 @@ public interface Portal {
 
 	public String getJsSafePortletId(String portletId);
 
-	public String getLayoutActualURL(Layout layout);
+	public String getLayoutActualURL(Layout layout) throws PortalException;
 
-	public String getLayoutActualURL(Layout layout, String mainPath);
+	public String getLayoutActualURL(Layout layout, String mainPath)
+		throws PortalException;
 
 	public String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,

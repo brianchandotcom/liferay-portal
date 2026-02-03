@@ -868,11 +868,15 @@ public class PortalUtil {
 		return _portal.getJsSafePortletId(portletId);
 	}
 
-	public static String getLayoutActualURL(Layout layout) {
+	public static String getLayoutActualURL(Layout layout)
+		throws PortalException {
+
 		return _portal.getLayoutActualURL(layout);
 	}
 
-	public static String getLayoutActualURL(Layout layout, String mainPath) {
+	public static String getLayoutActualURL(Layout layout, String mainPath)
+		throws PortalException {
+
 		return _portal.getLayoutActualURL(layout, mainPath);
 	}
 

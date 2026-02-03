@@ -107,7 +107,8 @@ public class FragmentEditableElementUtil {
 		throws Exception {
 
 		JSONObject editableValuesJSONObject =
-			fragmentEntryLink.getEditableValuesJSONObject();
+			JSONFactoryUtil.safeCreateJSONObject(
+				fragmentEntryLink.getEditableValues(), true);
 
 		if (editableValuesJSONObject == null) {
 			return null;

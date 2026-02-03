@@ -12,6 +12,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.MasterPageEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -164,6 +166,10 @@ public class MasterPageResourceImpl
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layoutPageTemplateEntry.getPlid(),
+				contextUriInfo, contextUser),
 			LayoutUtil.addDraftToLayout(
 				_cetManager, contentPageSpecification,
 				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
@@ -199,7 +205,13 @@ public class MasterPageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _masterPageDTOConverter.toDTO(layoutPageTemplateEntry);
+		return _masterPageDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				contextUriInfo, contextUser),
+			layoutPageTemplateEntry);
 	}
 
 	@Override
@@ -234,9 +246,19 @@ public class MasterPageResourceImpl
 				searchContext.setGroupIds(new long[] {groupId});
 			},
 			sorts,
-			document -> _masterPageDTOConverter.toDTO(
-				_layoutPageTemplateEntryService.fetchLayoutPageTemplateEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			document -> {
+				long layoutPageTemplateEntryId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _masterPageDTOConverter.toDTO(
+					DTOConverterContextUtil.getDTOConverterContext(
+						contextAcceptLanguage, _dtoConverterRegistry,
+						contextHttpServletRequest, layoutPageTemplateEntryId,
+						contextUriInfo, contextUser),
+					_layoutPageTemplateEntryService.
+						fetchLayoutPageTemplateEntry(
+							layoutPageTemplateEntryId));
+			});
 	}
 
 	@Override
@@ -324,6 +346,11 @@ public class MasterPageResourceImpl
 
 		try {
 			return _masterPageDTOConverter.toDTO(
+				DTOConverterContextUtil.getDTOConverterContext(
+					contextAcceptLanguage, _dtoConverterRegistry,
+					contextHttpServletRequest,
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					contextUriInfo, contextUser),
 				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					masterPage.getName()));
@@ -390,7 +417,7 @@ public class MasterPageResourceImpl
 
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
-		return _masterPageDTOConverter.toDTO(
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
 				LayoutPageTemplateConstants.
@@ -404,7 +431,15 @@ public class MasterPageResourceImpl
 				_getLayoutPlid(groupId, masterPage, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
 					masterPage.getPageSpecifications()),
-				serviceContext));
+				serviceContext);
+
+		return _masterPageDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				contextUriInfo, contextUser),
+			layoutPageTemplateEntry);
 	}
 
 	private long _getLayoutPlid(
@@ -447,6 +482,9 @@ public class MasterPageResourceImpl
 
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

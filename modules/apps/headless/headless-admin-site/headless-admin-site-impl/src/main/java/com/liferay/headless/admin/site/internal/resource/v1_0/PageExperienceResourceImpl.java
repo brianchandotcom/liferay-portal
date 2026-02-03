@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
@@ -21,9 +22,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsExperience;
@@ -252,17 +253,22 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(null, null, null, null, null);
-
-		dtoConverterContext.setAttribute(
-			"companyId", layoutPageTemplateStructureRel.getCompanyId());
-		dtoConverterContext.setAttribute(
-			"scopeGroupId", layoutPageTemplateStructureRel.getGroupId());
-
 		return _pageExperienceDTOConverter.toDTO(
-			dtoConverterContext, layoutPageTemplateStructureRel);
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage,
+				HashMapBuilder.<String, Object>put(
+					"companyId", segmentsExperience.getCompanyId()
+				).put(
+					"scopeGroupId", segmentsExperience.getGroupId()
+				).build(),
+				_dtoConverterRegistry, contextHttpServletRequest,
+				segmentsExperience.getSegmentsExperienceId(), contextUriInfo,
+				contextUser),
+			layoutPageTemplateStructureRel);
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

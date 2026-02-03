@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 
 import java.util.Objects;
@@ -155,11 +155,10 @@ public class WidgetPageWidgetInstanceResourceImpl
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, contextHttpServletRequest,
-				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser);
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser);
 
 		return Page.of(
 			transform(
@@ -304,15 +303,12 @@ public class WidgetPageWidgetInstanceResourceImpl
 			Layout layout, String portletId)
 		throws Exception {
 
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, contextHttpServletRequest,
-				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser);
-
 		return _toWidgetPageWidgetInstance(
-			dtoConverterContext, layout, portletId);
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser),
+			layout, portletId);
 	}
 
 	@Reference

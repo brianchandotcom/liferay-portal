@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSEOSettings;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.UtilityPageEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -158,6 +160,10 @@ public class UtilityPageResourceImpl
 						siteExternalReferenceCode));
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layoutUtilityPageEntry.getPlid(),
+				contextUriInfo, contextUser),
 			LayoutUtil.addDraftToLayout(
 				_cetManager, contentPageSpecification,
 				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
@@ -177,13 +183,21 @@ public class UtilityPageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _utilityPageDTOConverter.toDTO(
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.
 				getLayoutUtilityPageEntryByExternalReferenceCode(
 					utilityPageExternalReferenceCode,
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode)));
+						siteExternalReferenceCode));
+
+		return _utilityPageDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest,
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				contextUriInfo, contextUser),
+			layoutUtilityPageEntry);
 	}
 
 	@Override
@@ -212,9 +226,18 @@ public class UtilityPageResourceImpl
 				searchContext.setGroupIds(new long[] {groupId});
 			},
 			sorts,
-			document -> _utilityPageDTOConverter.toDTO(
-				_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+			document -> {
+				long layoutUtilityPageEntryId = GetterUtil.getLong(
+					document.get(Field.ENTRY_CLASS_PK));
+
+				return _utilityPageDTOConverter.toDTO(
+					DTOConverterContextUtil.getDTOConverterContext(
+						contextAcceptLanguage, _dtoConverterRegistry,
+						contextHttpServletRequest, layoutUtilityPageEntryId,
+						contextUriInfo, contextUser),
+					_layoutUtilityPageEntryService.fetchLayoutUtilityPageEntry(
+						layoutUtilityPageEntryId));
+			});
 	}
 
 	@Override
@@ -374,7 +397,7 @@ public class UtilityPageResourceImpl
 		ServiceContext serviceContext = _getServiceContext(
 			groupId, utilityPage);
 
-		return _utilityPageDTOConverter.toDTO(
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.addLayoutUtilityPageEntry(
 				utilityPage.getExternalReferenceCode(), groupId,
 				_getLayoutPlid(groupId, utilityPage, serviceContext),
@@ -383,7 +406,15 @@ public class UtilityPageResourceImpl
 					_getServiceContext(groupId, utilityPage),
 					utilityPage.getThumbnailURLReference()),
 				utilityPage.getMarkedAsDefault(), utilityPage.getName(),
-				_getType(utilityPage.getType()), null, serviceContext));
+				_getType(utilityPage.getType()), null, serviceContext);
+
+		return _utilityPageDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest,
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				contextUriInfo, contextUser),
+			layoutUtilityPageEntry);
 	}
 
 	private long _getLayoutPlid(
@@ -495,6 +526,9 @@ public class UtilityPageResourceImpl
 
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

@@ -20,10 +20,14 @@ import java.util.Locale;
  */
 public class MissingPortlet extends PortletWrapper {
 
-	public MissingPortlet(String className, String name, Portlet portlet) {
+	public MissingPortlet(
+		String name, Portlet portlet, String portletDataHandlerKey,
+		String portletId) {
+
 		super(portlet);
 
-		_portletDataHandler = new MissingPortletDataHandler(className, name);
+		_portletDataHandler = new MissingPortletDataHandler(
+			name, portletDataHandlerKey, portletId);
 	}
 
 	@Override
@@ -34,12 +38,15 @@ public class MissingPortlet extends PortletWrapper {
 	public static class MissingPortletDataHandler
 		extends BasePortletDataHandler {
 
-		public MissingPortletDataHandler(String className, String name) {
+		public MissingPortletDataHandler(
+			String name, String portletDataHandlerKey, String portletId) {
+
 			setEmptyControlsAllowed(true);
 			setPublishToLiveByDefault(true);
 
-			_className = className;
 			_name = name;
+			_portletDataHandlerKey = portletDataHandlerKey;
+			_portletId = portletId;
 		}
 
 		@Override
@@ -61,13 +68,14 @@ public class MissingPortlet extends PortletWrapper {
 				manifestSummary,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						null, _className, null, true, false, null, _className,
-						null)
+						_portletId, _portletDataHandlerKey, null, true, false,
+						null, _portletDataHandlerKey, null)
 				});
 		}
 
-		private final String _className;
 		private final String _name;
+		private final String _portletDataHandlerKey;
+		private final String _portletId;
 
 	}
 

@@ -414,8 +414,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				if ((activeRegistrations.size() > 1) &&
 					!portletDataContext.getBooleanParameter(
-						getPortletId(),
-						exportImportDescriptor.getResourceClassName())) {
+						getPortletId(), exportImportDescriptor.getKey())) {
 
 					continue;
 				}
@@ -451,8 +450,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						portletDataContext.getManifestSummary();
 
 					manifestSummary.addModelAdditionCount(
-						new StagedModelType(
-							exportImportDescriptor.getResourceClassName()),
+						new StagedModelType(exportImportDescriptor.getKey()),
 						batchEngineExportTask.getProcessedItemsCount());
 				}
 			}
@@ -488,8 +486,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			if ((activeRegistrations.size() > 1) &&
 				!portletDataContext.getBooleanParameter(
-					getPortletId(),
-					exportImportDescriptor.getResourceClassName())) {
+					getPortletId(), exportImportDescriptor.getKey())) {
 
 				continue;
 			}
@@ -604,8 +601,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					result.getBatchEngineExportTask();
 
 				manifestSummary.addModelAdditionCount(
-					new StagedModelType(
-						exportImportDescriptor.getResourceClassName()),
+					new StagedModelType(exportImportDescriptor.getKey()),
 					batchEngineExportTask.getTotalItemsCount());
 			}
 		}
@@ -841,9 +837,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(), exportImportDescriptor.getResourceClassName(),
+			getPortletId(), exportImportDescriptor.getKey(),
 			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
-			exportImportDescriptor.getResourceClassName(), null);
+			exportImportDescriptor.getKey(), null);
 	}
 
 	private <T> T _getSoleProperty(

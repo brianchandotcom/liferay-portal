@@ -197,4 +197,37 @@ describe('Breadcrumb', () => {
 			})
 		);
 	});
+
+	it('renders the enterprise badge when `showEnterpriseBadge` is true and there is a single breadcrumb item', () => {
+		render(
+			<Breadcrumb
+				breadcrumbItems={testBreadcrumbItemsSingle}
+				showEnterpriseBadge
+			/>
+		);
+
+		expect(screen.getByText('enterprise')).toBeInTheDocument();
+	});
+
+	it('does not render the enterprise badge when `showEnterpriseBadge` is false', () => {
+		render(
+			<Breadcrumb
+				breadcrumbItems={testBreadcrumbItemsSingle}
+				showEnterpriseBadge={false}
+			/>
+		);
+
+		expect(screen.queryByText('enterprise')).not.toBeInTheDocument();
+	});
+
+	it('does not render the enterprise badge when there are multiple breadcrumb items', () => {
+		render(
+			<Breadcrumb
+				breadcrumbItems={testBreadcrumbItemsShort}
+				showEnterpriseBadge
+			/>
+		);
+
+		expect(screen.queryByText('enterprise')).not.toBeInTheDocument();
+	});
 });

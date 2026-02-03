@@ -376,7 +376,13 @@ public class LoginPostAction extends Action {
 						fetchCommerceOrderByUuidAndGroupId(
 							uuid, commerceChannelGroupId);
 
-				if (commerceOrder == null) {
+				if ((commerceOrder == null) || !commerceOrder.isOpen()) {
+					commerceOrder = null;
+
+					CookiesManagerUtil.deleteCookies(
+						cookie.getDomain(), httpServletRequest,
+						httpServletResponse, cookieName);
+
 					continue;
 				}
 

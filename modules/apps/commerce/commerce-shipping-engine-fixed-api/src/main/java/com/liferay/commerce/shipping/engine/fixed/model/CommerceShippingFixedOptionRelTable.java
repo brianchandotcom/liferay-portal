@@ -51,40 +51,40 @@ public class CommerceShippingFixedOptionRelTable
 		modifiedDate = createColumn(
 			"modifiedDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Long>
-		commerceShippingMethodId = createColumn(
-			"commerceShippingMethodId", Long.class, Types.BIGINT,
+		commerceInventoryWarehouseId = createColumn(
+			"commerceInventoryWarehouseId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Long>
 		commerceShippingFixedOptionId = createColumn(
 			"commerceShippingFixedOptionId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Long>
-		commerceInventoryWarehouseId = createColumn(
-			"commerceInventoryWarehouseId", Long.class, Types.BIGINT,
+		commerceShippingMethodId = createColumn(
+			"commerceShippingMethodId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Long> countryId =
 		createColumn(
 			"countryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Long> regionId =
 		createColumn("regionId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionRelTable, String> zip =
-		createColumn("zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionRelTable, BigDecimal>
+		fixedPrice = createColumn(
+			"fixedPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionRelTable, Double>
+		ratePercentage = createColumn(
+			"ratePercentage", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionRelTable, BigDecimal>
+		rateUnitWeightPrice = createColumn(
+			"rateUnitWeightPrice", BigDecimal.class, Types.DECIMAL,
+			Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Double>
 		weightFrom = createColumn(
 			"weightFrom", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
 	public final Column<CommerceShippingFixedOptionRelTable, Double> weightTo =
 		createColumn(
 			"weightTo", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionRelTable, BigDecimal>
-		fixedPrice = createColumn(
-			"fixedPrice", BigDecimal.class, Types.DECIMAL, Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionRelTable, BigDecimal>
-		rateUnitWeightPrice = createColumn(
-			"rateUnitWeightPrice", BigDecimal.class, Types.DECIMAL,
-			Column.FLAG_DEFAULT);
-	public final Column<CommerceShippingFixedOptionRelTable, Double>
-		ratePercentage = createColumn(
-			"ratePercentage", Double.class, Types.DOUBLE, Column.FLAG_DEFAULT);
+	public final Column<CommerceShippingFixedOptionRelTable, String> zip =
+		createColumn("zip", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private CommerceShippingFixedOptionRelTable() {
 		super(

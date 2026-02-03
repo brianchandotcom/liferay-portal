@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,24 +70,11 @@ public interface CommerceShippingFixedOptionRelLocalService
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel);
 
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long userId, long groupId, long commerceShippingMethodId,
-			long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long commerceShippingMethodId, long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage, ServiceContext serviceContext)
+			long userId, long groupId, long commerceInventoryWarehouseId,
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			long countryId, long regionId, BigDecimal fixedPrice,
+			double ratePercentage, BigDecimal rateUnitWeightPrice,
+			double weightFrom, double weightTo, String zip)
 		throws PortalException;
 
 	/**
@@ -270,6 +256,14 @@ public interface CommerceShippingFixedOptionRelLocalService
 			OrderByComparator<CommerceShippingFixedOptionRel>
 				orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOptionRel>
+		getCommerceShippingFixedOptionRels(
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			int start, int end,
+			OrderByComparator<CommerceShippingFixedOptionRel>
+				orderByComparator);
+
 	/**
 	 * Returns the number of commerce shipping fixed option rels.
 	 *
@@ -281,6 +275,10 @@ public interface CommerceShippingFixedOptionRelLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceShippingFixedOptionRelsCount(
 		long commerceShippingFixedOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShippingFixedOptionRelsCount(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingFixedOptionRel>
@@ -333,9 +331,9 @@ public interface CommerceShippingFixedOptionRelLocalService
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId,
 			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
+			BigDecimal fixedPrice, double ratePercentage,
+			BigDecimal rateUnitWeightPrice, double weightFrom, double weightTo,
+			String zip)
 		throws PortalException;
 
 }

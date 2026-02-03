@@ -7,7 +7,7 @@ import List from '@clayui/list';
 import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {fetch, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 export const UPDATE_TASK_HISTORY = 'cmp-update-task-history';
 
@@ -72,6 +72,8 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
 	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	const getAuditEventLabel = (auditEvent: AuditEvent) => {
 		if (auditEvent.eventType === EventType.ADD) {
 			return sub(Liferay.Language.get('x-created-a-x'), [
@@ -127,11 +129,7 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	 * the 'History' tab).
 	 */
 	useEffect(() => {
-		const taskHistoryContainerElement = document.querySelector(
-			'.task-history-container'
-		);
-
-		if (!taskHistoryContainerElement) {
+		if (!containerRef.current) {
 			return;
 		}
 
@@ -148,7 +146,7 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 			{threshold: 0.01}
 		);
 
-		observer.observe(taskHistoryContainerElement);
+		observer.observe(containerRef.current);
 
 		return () => observer.disconnect();
 	}, [fetchAuditEvents]);
@@ -176,7 +174,7 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	}, [fetchAuditEvents, initialDataLoaded]);
 
 	return (
-		<div className="task-history-container">
+		<div className="task-history-container" ref={containerRef}>
 			<List>
 				{auditEvents
 					.filter(({auditFieldChanges, eventType}) => {

@@ -262,8 +262,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor,
 		String taskItemDelegateName) {
 
-		String fileNamePrefix = GetterUtil.getString(
-			taskItemDelegateName, batchEngineClassName);
+		String key = exportImportDescriptor.getKey();
+
+		String fileNamePrefix = (key != null) ? key :
+			GetterUtil.get(taskItemDelegateName, batchEngineClassName);
 
 		_registrations.add(
 			new Registration() {

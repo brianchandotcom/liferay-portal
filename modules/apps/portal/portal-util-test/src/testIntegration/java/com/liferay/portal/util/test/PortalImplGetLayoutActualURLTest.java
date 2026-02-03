@@ -187,8 +187,8 @@ public class PortalImplGetLayoutActualURLTest
 		return lastLevelLayouts.get(pos);
 	}
 
-	private void _assertGetLayoutActualURL(
-		Layout expectedLayout, Layout layout) {
+	private void _assertGetLayoutActualURL(Layout expectedLayout, Layout layout)
+		throws Exception {
 
 		_multiVMPool.clear();
 

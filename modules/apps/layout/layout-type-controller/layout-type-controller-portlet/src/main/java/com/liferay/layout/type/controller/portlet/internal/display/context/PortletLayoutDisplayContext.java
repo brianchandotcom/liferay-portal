@@ -6,7 +6,6 @@
 package com.liferay.layout.type.controller.portlet.internal.display.context;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -21,13 +20,10 @@ public class PortletLayoutDisplayContext {
 
 	public PortletLayoutDisplayContext(
 		LayoutLocalService layoutLocalService,
-		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
 		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService) {
 
 		_layoutLocalService = layoutLocalService;
-		_layoutPageTemplateEntryLocalService =
-			layoutPageTemplateEntryLocalService;
 		_layoutPageTemplateStructureLocalService =
 			layoutPageTemplateStructureLocalService;
 	}
@@ -83,8 +79,6 @@ public class PortletLayoutDisplayContext {
 	}
 
 	private final LayoutLocalService _layoutLocalService;
-	private final LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 	private final LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
 	private LayoutStructure _layoutStructure;

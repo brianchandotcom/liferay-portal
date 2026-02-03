@@ -44,6 +44,14 @@ interface ITreeViewProps<T extends Record<string, any>>
 	dragAndDropContext?: Window & typeof globalThis;
 
 	/**
+	 * Flag changes the behavior of Drag and Drop functionality.
+	 * - single: allows dragging only one node.
+	 * - multiple: several nodes can be dragged at once.
+	 */
+
+	dragAndDropMode?: 'multiple' | 'single';
+
+	/**
 	 * Flag to expand the node's children when double-clicking the node.
 	 */
 	expandDoubleClick?: boolean;
@@ -134,6 +142,7 @@ export function TreeView<T extends Record<string, any>>({
 	displayType = 'light',
 	dragAndDrop = false,
 	dragAndDropContext = window,
+	dragAndDropMode = 'single',
 	expandDoubleClick = false,
 	expandedKeys,
 	expanderClassName,
@@ -185,6 +194,7 @@ export function TreeView<T extends Record<string, any>>({
 	const context = {
 		childrenRoot: childrenRootRef,
 		dragAndDrop,
+		dragAndDropMode,
 		expandDoubleClick,
 		expandOnCheck,
 		expanderClassName,
@@ -239,6 +249,7 @@ export function TreeView<T extends Record<string, any>>({
 						<TreeViewContext.Provider value={context}>
 							<DragAndDropProvider<T>
 								messages={messages}
+								mode={dragAndDropMode}
 								nestedKey={nestedKey}
 								onItemHover={onItemHover}
 								onItemMove={onItemMove}

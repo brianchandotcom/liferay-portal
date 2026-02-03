@@ -74,6 +74,7 @@ const DnDContext = React.createContext<ContextProps>({} as ContextProps);
 type Props<T> = {
 	children: React.ReactNode;
 	messages?: DragAndDropMessages;
+	mode: 'single' | 'multiple';
 	nestedKey: string;
 	onItemHover?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
 	onItemMove?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
@@ -157,6 +158,7 @@ const defaultMessages: DragAndDropMessages = {
 export function DragAndDropProvider<T>({
 	children,
 	messages = defaultMessages,
+	mode,
 	nestedKey,
 	onItemMove,
 	onItemHover,

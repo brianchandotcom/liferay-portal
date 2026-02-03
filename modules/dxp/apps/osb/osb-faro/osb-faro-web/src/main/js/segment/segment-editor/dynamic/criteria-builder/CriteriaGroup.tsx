@@ -78,6 +78,7 @@ interface ICriteriaGroupProps {
 	criteria: CriterionGroup;
 	criteriaGroupId: string;
 	dragging?: boolean;
+	enabledSequencialSegment: boolean;
 	groupId: string;
 	id?: string;
 	index?: number;
@@ -304,12 +305,14 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			criteria,
 			criteriaGroupId,
 			dragging,
+			enabledSequencialSegment,
 			id,
 			onMove,
 			root
 		} = this.props;
 
 		const classes = getCN(
+			'sheet',
 			{
 				'criteria-group-root': criteria
 			},
@@ -321,51 +324,50 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		const singleRow =
 			criteria && criteria.items && criteria.items.length === 1;
 
+		if (this.isCriteriaEmpty()) {
+			return (
+				<EmptyDropZone
+					enabledSequencialSegment={enabledSequencialSegment}
+					id={id}
+					onCriterionAdd={this.handleCriterionAdd}
+				/>
+			);
+		}
+
 		return connectDragPreview(
 			<div className={classes}>
-				{this.isCriteriaEmpty() ? (
-					<EmptyDropZone
+				<>
+					<DropZone
+						criteriaGroupId={criteriaGroupId}
+						dropIndex={0}
 						id={id}
 						onCriterionAdd={this.handleCriterionAdd}
+						onMove={onMove}
 					/>
-				) : (
-					<>
-						<DropZone
-							criteriaGroupId={criteriaGroupId}
-							dropIndex={0}
-							id={id}
-							onCriterionAdd={this.handleCriterionAdd}
-							onMove={onMove}
-						/>
 
-						{singleRow &&
-							!root &&
-							connectDragSource(
-								<div className='criteria-group-drag-icon drag-icon'>
-									<ClayIcon
-										className='icon-root'
-										symbol='drag'
-									/>
-								</div>
-							)}
+					{singleRow &&
+						!root &&
+						connectDragSource(
+							<div className='criteria-group-drag-icon drag-icon'>
+								<ClayIcon className='icon-root' symbol='drag' />
+							</div>
+						)}
 
-						{isCriterionGroup(criteria) &&
-							criteria.items.map((criterion, index) => (
-								<Fragment
-									key={`${criteriaGroupId}-${
-										isCriterionGroup(criterion)
-											? criterion.criteriaGroupId
-											: criterion.rowId
-									}`}
-								>
-									{index !== 0 &&
-										this.renderConjunction(index)}
+					{isCriterionGroup(criteria) &&
+						criteria.items.map((criterion, index) => (
+							<Fragment
+								key={`${criteriaGroupId}-${
+									isCriterionGroup(criterion)
+										? criterion.criteriaGroupId
+										: criterion.rowId
+								}`}
+							>
+								{index !== 0 && this.renderConjunction(index)}
 
-									{this.renderCriterion(criterion, index)}
-								</Fragment>
-							))}
-					</>
-				)}
+								{this.renderCriterion(criterion, index)}
+							</Fragment>
+						))}
+				</>
 			</div>
 		);
 	}

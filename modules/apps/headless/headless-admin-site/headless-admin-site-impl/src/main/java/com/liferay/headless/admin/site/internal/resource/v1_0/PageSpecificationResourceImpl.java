@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SettingsUtil;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -180,7 +182,12 @@ public class PageSpecificationResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageSpecificationDTOConverter.toDTO(layout);
+		return _pageSpecificationDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser),
+			layout);
 	}
 
 	@NestedField(parentClass = PageTemplate.class, value = "pageSpecifications")
@@ -317,6 +324,10 @@ public class PageSpecificationResourceImpl
 			}
 
 			return _pageSpecificationDTOConverter.toDTO(
+				DTOConverterContextUtil.getDTOConverterContext(
+					contextAcceptLanguage, _dtoConverterRegistry,
+					contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+					contextUser),
 				LayoutUtil.updateLayout(
 					_cetManager, _fragmentEntryProcessorRegistry,
 					_infoItemServiceRegistry, layout, layout.getNameMap(),
@@ -338,6 +349,10 @@ public class PageSpecificationResourceImpl
 		}
 
 		return _pageSpecificationDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser),
 			LayoutUtil.updateLayout(
 				_cetManager, _fragmentEntryProcessorRegistry,
 				_infoItemServiceRegistry, layout, layout.getNameMap(),
@@ -461,16 +476,34 @@ public class PageSpecificationResourceImpl
 			}
 
 			return ListUtil.fromArray(
-				_pageSpecificationDTOConverter.toDTO(layout));
+				_pageSpecificationDTOConverter.toDTO(
+					DTOConverterContextUtil.getDTOConverterContext(
+						contextAcceptLanguage, _dtoConverterRegistry,
+						contextHttpServletRequest, layout.getPlid(),
+						contextUriInfo, contextUser),
+					layout));
 		}
 
 		return ListUtil.fromArray(
-			_pageSpecificationDTOConverter.toDTO(layout),
-			_pageSpecificationDTOConverter.toDTO(draftLayout));
+			_pageSpecificationDTOConverter.toDTO(
+				DTOConverterContextUtil.getDTOConverterContext(
+					contextAcceptLanguage, _dtoConverterRegistry,
+					contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+					contextUser),
+				layout),
+			_pageSpecificationDTOConverter.toDTO(
+				DTOConverterContextUtil.getDTOConverterContext(
+					contextAcceptLanguage, _dtoConverterRegistry,
+					contextHttpServletRequest, draftLayout.getPlid(),
+					contextUriInfo, contextUser),
+				draftLayout));
 	}
 
 	@Reference
 	private CETManager _cetManager;
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

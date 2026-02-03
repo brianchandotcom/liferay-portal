@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -22,9 +23,10 @@ import com.liferay.layout.util.structure.exception.NoSuchLayoutStructureItemExce
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -149,8 +151,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		return _pageElementDTOConverter.toDTO(
 			_getDTOConverterContext(
-				layoutPageTemplateStructure.getCompanyId(), layoutStructure,
-				groupId),
+				layoutPageTemplateStructure.getCompanyId(),
+				layoutStructureItem.getItemId(), layoutStructure, groupId),
 			layoutStructureItem);
 	}
 
@@ -205,7 +207,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layoutStructureItem.getItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
 					_getDTOConverterContext(
-						layoutPageTemplateStructure.getCompanyId(),
+						layoutPageTemplateStructure.getCompanyId(), itemId,
 						layoutStructure, groupId),
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
@@ -256,7 +258,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 					layoutStructure.getMainItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
 					_getDTOConverterContext(
-						layoutPageTemplateStructure.getCompanyId(),
+						layoutPageTemplateStructure.getCompanyId(), itemId,
 						layoutStructure, groupId),
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
@@ -383,24 +385,31 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 			return _pageElementDTOConverter.toDTO(
 				_getDTOConverterContext(
-					layout.getCompanyId(), layoutStructure, groupId),
+					layout.getCompanyId(), layoutStructureItem.getItemId(),
+					layoutStructure, groupId),
 				layoutStructureItem);
 		}
 	}
 
 	private DTOConverterContext _getDTOConverterContext(
-		long companyId, LayoutStructure layoutStructure, long scopeGroupId) {
+		long companyId, String itemId, LayoutStructure layoutStructure,
+		long scopeGroupId) {
 
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(null, null, null, null, null);
-
-		dtoConverterContext.setAttribute(
-			LayoutStructure.class.getName(), layoutStructure);
-		dtoConverterContext.setAttribute("companyId", companyId);
-		dtoConverterContext.setAttribute("scopeGroupId", scopeGroupId);
-
-		return dtoConverterContext;
+		return DTOConverterContextUtil.getDTOConverterContext(
+			contextAcceptLanguage,
+			HashMapBuilder.<String, Object>put(
+				LayoutStructure.class.getName(), layoutStructure
+			).put(
+				"companyId", companyId
+			).put(
+				"scopeGroupId", scopeGroupId
+			).build(),
+			_dtoConverterRegistry, contextHttpServletRequest, itemId,
+			contextUriInfo, contextUser);
 	}
+
+	@Reference
+	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;

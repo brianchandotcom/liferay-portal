@@ -25,6 +25,7 @@ import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageNavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
@@ -73,7 +74,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -268,6 +268,10 @@ public class SitePageResourceImpl
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser),
 			LayoutUtil.addDraftToLayout(
 				_cetManager, contentPageSpecification,
 				_fragmentEntryProcessorRegistry, _infoItemServiceRegistry,
@@ -978,11 +982,10 @@ public class SitePageResourceImpl
 
 	private SitePage _toSitePage(Layout layout) throws Exception {
 		return _sitePageDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), null,
-				_dtoConverterRegistry, contextHttpServletRequest,
-				layout.getPlid(), contextAcceptLanguage.getPreferredLocale(),
-				contextUriInfo, contextUser),
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest, layout.getPlid(), contextUriInfo,
+				contextUser),
 			layout);
 	}
 

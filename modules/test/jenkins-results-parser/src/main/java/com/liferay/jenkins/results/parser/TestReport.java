@@ -24,6 +24,8 @@ public interface TestReport {
 
 	public String getTestClassName();
 
+	public String getTestIdentifier();
+
 	public String getTestName();
 
 	public String getTestTaskName();

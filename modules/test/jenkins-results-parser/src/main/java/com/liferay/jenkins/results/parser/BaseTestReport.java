@@ -60,6 +60,11 @@ public class BaseTestReport implements TestReport {
 	}
 
 	@Override
+	public String getTestIdentifier() {
+		return _jsonObject.getString("name");
+	}
+
+	@Override
 	public String getTestName() {
 		return _jsonObject.getString("name");
 	}

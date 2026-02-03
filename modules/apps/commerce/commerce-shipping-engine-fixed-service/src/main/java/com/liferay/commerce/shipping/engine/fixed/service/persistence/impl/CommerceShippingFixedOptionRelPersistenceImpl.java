@@ -85,543 +85,6 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
-	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
-	private FinderPath
-		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
-	private FinderPath _finderPathCountByCommerceShippingMethodId;
-
-	/**
-	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @return the matching commerce shipping fixed option rels
-	 */
-	@Override
-	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
-		long commerceShippingMethodId) {
-
-		return findByCommerceShippingMethodId(
-			commerceShippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
-	}
-
-	/**
-	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @return the range of matching commerce shipping fixed option rels
-	 */
-	@Override
-	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
-		long commerceShippingMethodId, int start, int end) {
-
-		return findByCommerceShippingMethodId(
-			commerceShippingMethodId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching commerce shipping fixed option rels
-	 */
-	@Override
-	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
-		long commerceShippingMethodId, int start, int end,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		return findByCommerceShippingMethodId(
-			commerceShippingMethodId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
-	 * </p>
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param start the lower bound of the range of commerce shipping fixed option rels
-	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching commerce shipping fixed option rels
-	 */
-	@Override
-	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
-		long commerceShippingMethodId, int start, int end,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
-		boolean useFinderCache) {
-
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-			(orderByComparator == null)) {
-
-			if (useFinderCache) {
-				finderPath =
-					_finderPathWithoutPaginationFindByCommerceShippingMethodId;
-				finderArgs = new Object[] {commerceShippingMethodId};
-			}
-		}
-		else if (useFinderCache) {
-			finderPath =
-				_finderPathWithPaginationFindByCommerceShippingMethodId;
-			finderArgs = new Object[] {
-				commerceShippingMethodId, start, end, orderByComparator
-			};
-		}
-
-		List<CommerceShippingFixedOptionRel> list = null;
-
-		if (useFinderCache) {
-			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (CommerceShippingFixedOptionRel
-						commerceShippingFixedOptionRel : list) {
-
-					if (commerceShippingMethodId !=
-							commerceShippingFixedOptionRel.
-								getCommerceShippingMethodId()) {
-
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler sb = null;
-
-			if (orderByComparator != null) {
-				sb = new StringBundler(
-					3 + (orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				sb = new StringBundler(3);
-			}
-
-			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(
-					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-			}
-			else {
-				sb.append(
-					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingMethodId);
-
-				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
-					query, getDialect(), start, end);
-
-				cacheResult(list);
-
-				if (useFinderCache) {
-					finderCache.putResult(finderPath, finderArgs, list);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel findByCommerceShippingMethodId_First(
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByCommerceShippingMethodId_First(
-				commerceShippingMethodId, orderByComparator);
-
-		if (commerceShippingFixedOptionRel != null) {
-			return commerceShippingFixedOptionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel fetchByCommerceShippingMethodId_First(
-		long commerceShippingMethodId,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		List<CommerceShippingFixedOptionRel> list =
-			findByCommerceShippingMethodId(
-				commerceShippingMethodId, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel findByCommerceShippingMethodId_Last(
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			fetchByCommerceShippingMethodId_Last(
-				commerceShippingMethodId, orderByComparator);
-
-		if (commerceShippingFixedOptionRel != null) {
-			return commerceShippingFixedOptionRel;
-		}
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("commerceShippingMethodId=");
-		sb.append(commerceShippingMethodId);
-
-		sb.append("}");
-
-		throw new NoSuchShippingFixedOptionRelException(sb.toString());
-	}
-
-	/**
-	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel fetchByCommerceShippingMethodId_Last(
-		long commerceShippingMethodId,
-		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
-
-		int count = countByCommerceShippingMethodId(commerceShippingMethodId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CommerceShippingFixedOptionRel> list =
-			findByCommerceShippingMethodId(
-				commerceShippingMethodId, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next commerce shipping fixed option rel
-	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
-	 */
-	@Override
-	public CommerceShippingFixedOptionRel[]
-			findByCommerceShippingMethodId_PrevAndNext(
-				long commerceShippingFixedOptionRelId,
-				long commerceShippingMethodId,
-				OrderByComparator<CommerceShippingFixedOptionRel>
-					orderByComparator)
-		throws NoSuchShippingFixedOptionRelException {
-
-		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
-			findByPrimaryKey(commerceShippingFixedOptionRelId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CommerceShippingFixedOptionRel[] array =
-				new CommerceShippingFixedOptionRelImpl[3];
-
-			array[0] = getByCommerceShippingMethodId_PrevAndNext(
-				session, commerceShippingFixedOptionRel,
-				commerceShippingMethodId, orderByComparator, true);
-
-			array[1] = commerceShippingFixedOptionRel;
-
-			array[2] = getByCommerceShippingMethodId_PrevAndNext(
-				session, commerceShippingFixedOptionRel,
-				commerceShippingMethodId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CommerceShippingFixedOptionRel
-		getByCommerceShippingMethodId_PrevAndNext(
-			Session session,
-			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel,
-			long commerceShippingMethodId,
-			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
-			boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(3);
-		}
-
-		sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-		sb.append(
-			_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(commerceShippingMethodId);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(
-						commerceShippingFixedOptionRel)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<CommerceShippingFixedOptionRel> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the commerce shipping fixed option rels where commerceShippingMethodId = &#63; from the database.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 */
-	@Override
-	public void removeByCommerceShippingMethodId(
-		long commerceShippingMethodId) {
-
-		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
-				findByCommerceShippingMethodId(
-					commerceShippingMethodId, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
-
-			remove(commerceShippingFixedOptionRel);
-		}
-	}
-
-	/**
-	 * Returns the number of commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
-	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID
-	 * @return the number of matching commerce shipping fixed option rels
-	 */
-	@Override
-	public int countByCommerceShippingMethodId(long commerceShippingMethodId) {
-		FinderPath finderPath = _finderPathCountByCommerceShippingMethodId;
-
-		Object[] finderArgs = new Object[] {commerceShippingMethodId};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler sb = new StringBundler(2);
-
-			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
-
-			sb.append(
-				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(commerceShippingMethodId);
-
-				count = (Long)query.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String
-		_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2 =
-			"commerceShippingFixedOptionRel.commerceShippingMethodId = ?";
-
 	private FinderPath
 		_finderPathWithPaginationFindByCommerceShippingFixedOptionId;
 	private FinderPath
@@ -1176,6 +639,1123 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 	private static final String
 		_FINDER_COLUMN_COMMERCESHIPPINGFIXEDOPTIONID_COMMERCESHIPPINGFIXEDOPTIONID_2 =
 			"commerceShippingFixedOptionRel.commerceShippingFixedOptionId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByCommerceShippingMethodId;
+	private FinderPath
+		_finderPathWithoutPaginationFindByCommerceShippingMethodId;
+	private FinderPath _finderPathCountByCommerceShippingMethodId;
+
+	/**
+	 * Returns all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
+		long commerceShippingMethodId) {
+
+		return findByCommerceShippingMethodId(
+			commerceShippingMethodId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @return the range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
+		long commerceShippingMethodId, int start, int end) {
+
+		return findByCommerceShippingMethodId(
+			commerceShippingMethodId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
+		long commerceShippingMethodId, int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		return findByCommerceShippingMethodId(
+			commerceShippingMethodId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByCommerceShippingMethodId(
+		long commerceShippingMethodId, int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByCommerceShippingMethodId;
+				finderArgs = new Object[] {commerceShippingMethodId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath =
+				_finderPathWithPaginationFindByCommerceShippingMethodId;
+			finderArgs = new Object[] {
+				commerceShippingMethodId, start, end, orderByComparator
+			};
+		}
+
+		List<CommerceShippingFixedOptionRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceShippingFixedOptionRel
+						commerceShippingFixedOptionRel : list) {
+
+					if (commerceShippingMethodId !=
+							commerceShippingFixedOptionRel.
+								getCommerceShippingMethodId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(
+					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceShippingMethodId);
+
+				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel findByCommerceShippingMethodId_First(
+			long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			fetchByCommerceShippingMethodId_First(
+				commerceShippingMethodId, orderByComparator);
+
+		if (commerceShippingFixedOptionRel != null) {
+			return commerceShippingFixedOptionRel;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+
+		sb.append("}");
+
+		throw new NoSuchShippingFixedOptionRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel fetchByCommerceShippingMethodId_First(
+		long commerceShippingMethodId,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		List<CommerceShippingFixedOptionRel> list =
+			findByCommerceShippingMethodId(
+				commerceShippingMethodId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel findByCommerceShippingMethodId_Last(
+			long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			fetchByCommerceShippingMethodId_Last(
+				commerceShippingMethodId, orderByComparator);
+
+		if (commerceShippingFixedOptionRel != null) {
+			return commerceShippingFixedOptionRel;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+
+		sb.append("}");
+
+		throw new NoSuchShippingFixedOptionRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel fetchByCommerceShippingMethodId_Last(
+		long commerceShippingMethodId,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		int count = countByCommerceShippingMethodId(commerceShippingMethodId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceShippingFixedOptionRel> list =
+			findByCommerceShippingMethodId(
+				commerceShippingMethodId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel[]
+			findByCommerceShippingMethodId_PrevAndNext(
+				long commerceShippingFixedOptionRelId,
+				long commerceShippingMethodId,
+				OrderByComparator<CommerceShippingFixedOptionRel>
+					orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			findByPrimaryKey(commerceShippingFixedOptionRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceShippingFixedOptionRel[] array =
+				new CommerceShippingFixedOptionRelImpl[3];
+
+			array[0] = getByCommerceShippingMethodId_PrevAndNext(
+				session, commerceShippingFixedOptionRel,
+				commerceShippingMethodId, orderByComparator, true);
+
+			array[1] = commerceShippingFixedOptionRel;
+
+			array[2] = getByCommerceShippingMethodId_PrevAndNext(
+				session, commerceShippingFixedOptionRel,
+				commerceShippingMethodId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceShippingFixedOptionRel
+		getByCommerceShippingMethodId_PrevAndNext(
+			Session session,
+			CommerceShippingFixedOptionRel commerceShippingFixedOptionRel,
+			long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
+			boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+		sb.append(
+			_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(commerceShippingMethodId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceShippingFixedOptionRel)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceShippingFixedOptionRel> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce shipping fixed option rels where commerceShippingMethodId = &#63; from the database.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 */
+	@Override
+	public void removeByCommerceShippingMethodId(
+		long commerceShippingMethodId) {
+
+		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
+				findByCommerceShippingMethodId(
+					commerceShippingMethodId, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null)) {
+
+			remove(commerceShippingFixedOptionRel);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce shipping fixed option rels where commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the number of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public int countByCommerceShippingMethodId(long commerceShippingMethodId) {
+		FinderPath finderPath = _finderPathCountByCommerceShippingMethodId;
+
+		Object[] finderArgs = new Object[] {commerceShippingMethodId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+			sb.append(
+				_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceShippingMethodId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_COMMERCESHIPPINGMETHODID_COMMERCESHIPPINGMETHODID_2 =
+			"commerceShippingFixedOptionRel.commerceShippingMethodId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByC_C;
+	private FinderPath _finderPathWithoutPaginationFindByC_C;
+	private FinderPath _finderPathCountByC_C;
+
+	/**
+	 * Returns all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
+
+		return findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @return the range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		int start, int end) {
+
+		return findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		return findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CommerceShippingFixedOptionRelModelImpl</code>.
+	 * </p>
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param start the lower bound of the range of commerce shipping fixed option rels
+	 * @param end the upper bound of the range of commerce shipping fixed option rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public List<CommerceShippingFixedOptionRel> findByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_C;
+				finderArgs = new Object[] {
+					commerceShippingFixedOptionId, commerceShippingMethodId
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_C;
+			finderArgs = new Object[] {
+				commerceShippingFixedOptionId, commerceShippingMethodId, start,
+				end, orderByComparator
+			};
+		}
+
+		List<CommerceShippingFixedOptionRel> list = null;
+
+		if (useFinderCache) {
+			list = (List<CommerceShippingFixedOptionRel>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceShippingFixedOptionRel
+						commerceShippingFixedOptionRel : list) {
+
+					if ((commerceShippingFixedOptionId !=
+							commerceShippingFixedOptionRel.
+								getCommerceShippingFixedOptionId()) ||
+						(commerceShippingMethodId !=
+							commerceShippingFixedOptionRel.
+								getCommerceShippingMethodId())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(4);
+			}
+
+			sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(
+					CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceShippingFixedOptionId);
+
+				queryPos.add(commerceShippingMethodId);
+
+				list = (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel findByC_C_First(
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			fetchByC_C_First(
+				commerceShippingFixedOptionId, commerceShippingMethodId,
+				orderByComparator);
+
+		if (commerceShippingFixedOptionRel != null) {
+			return commerceShippingFixedOptionRel;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceShippingFixedOptionId=");
+		sb.append(commerceShippingFixedOptionId);
+
+		sb.append(", commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+
+		sb.append("}");
+
+		throw new NoSuchShippingFixedOptionRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the first commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel fetchByC_C_First(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		List<CommerceShippingFixedOptionRel> list = findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, 0, 1,
+			orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel findByC_C_Last(
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			fetchByC_C_Last(
+				commerceShippingFixedOptionId, commerceShippingMethodId,
+				orderByComparator);
+
+		if (commerceShippingFixedOptionRel != null) {
+			return commerceShippingFixedOptionRel;
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("commerceShippingFixedOptionId=");
+		sb.append(commerceShippingFixedOptionId);
+
+		sb.append(", commerceShippingMethodId=");
+		sb.append(commerceShippingMethodId);
+
+		sb.append("}");
+
+		throw new NoSuchShippingFixedOptionRelException(sb.toString());
+	}
+
+	/**
+	 * Returns the last commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce shipping fixed option rel, or <code>null</code> if a matching commerce shipping fixed option rel could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel fetchByC_C_Last(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator) {
+
+		int count = countByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceShippingFixedOptionRel> list = findByC_C(
+			commerceShippingFixedOptionId, commerceShippingMethodId, count - 1,
+			count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce shipping fixed option rels before and after the current commerce shipping fixed option rel in the ordered set where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionRelId the primary key of the current commerce shipping fixed option rel
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce shipping fixed option rel
+	 * @throws NoSuchShippingFixedOptionRelException if a commerce shipping fixed option rel with the primary key could not be found
+	 */
+	@Override
+	public CommerceShippingFixedOptionRel[] findByC_C_PrevAndNext(
+			long commerceShippingFixedOptionRelId,
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator)
+		throws NoSuchShippingFixedOptionRelException {
+
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			findByPrimaryKey(commerceShippingFixedOptionRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceShippingFixedOptionRel[] array =
+				new CommerceShippingFixedOptionRelImpl[3];
+
+			array[0] = getByC_C_PrevAndNext(
+				session, commerceShippingFixedOptionRel,
+				commerceShippingFixedOptionId, commerceShippingMethodId,
+				orderByComparator, true);
+
+			array[1] = commerceShippingFixedOptionRel;
+
+			array[2] = getByC_C_PrevAndNext(
+				session, commerceShippingFixedOptionRel,
+				commerceShippingFixedOptionId, commerceShippingMethodId,
+				orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceShippingFixedOptionRel getByC_C_PrevAndNext(
+		Session session,
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel,
+		long commerceShippingFixedOptionId, long commerceShippingMethodId,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(4);
+		}
+
+		sb.append(_SQL_SELECT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2);
+
+		sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(CommerceShippingFixedOptionRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(commerceShippingFixedOptionId);
+
+		queryPos.add(commerceShippingMethodId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						commerceShippingFixedOptionRel)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<CommerceShippingFixedOptionRel> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63; from the database.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 */
+	@Override
+	public void removeByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
+
+		for (CommerceShippingFixedOptionRel commerceShippingFixedOptionRel :
+				findByC_C(
+					commerceShippingFixedOptionId, commerceShippingMethodId,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(commerceShippingFixedOptionRel);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce shipping fixed option rels where commerceShippingFixedOptionId = &#63; and commerceShippingMethodId = &#63;.
+	 *
+	 * @param commerceShippingFixedOptionId the commerce shipping fixed option ID
+	 * @param commerceShippingMethodId the commerce shipping method ID
+	 * @return the number of matching commerce shipping fixed option rels
+	 */
+	@Override
+	public int countByC_C(
+		long commerceShippingFixedOptionId, long commerceShippingMethodId) {
+
+		FinderPath finderPath = _finderPathCountByC_C;
+
+		Object[] finderArgs = new Object[] {
+			commerceShippingFixedOptionId, commerceShippingMethodId
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(_SQL_COUNT_COMMERCESHIPPINGFIXEDOPTIONREL_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2);
+
+			sb.append(_FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(commerceShippingFixedOptionId);
+
+				queryPos.add(commerceShippingMethodId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String
+		_FINDER_COLUMN_C_C_COMMERCESHIPPINGFIXEDOPTIONID_2 =
+			"commerceShippingFixedOptionRel.commerceShippingFixedOptionId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_C_COMMERCESHIPPINGMETHODID_2 =
+		"commerceShippingFixedOptionRel.commerceShippingMethodId = ?";
 
 	public CommerceShippingFixedOptionRelPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
@@ -1783,6 +2363,29 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0], new String[0], false);
 
+		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+				"findByCommerceShippingFixedOptionId",
+				new String[] {
+					Long.class.getName(), Integer.class.getName(),
+					Integer.class.getName(), OrderByComparator.class.getName()
+				},
+				new String[] {"commerceShippingFixedOptionId"}, true);
+
+		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId =
+			new FinderPath(
+				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+				"findByCommerceShippingFixedOptionId",
+				new String[] {Long.class.getName()},
+				new String[] {"commerceShippingFixedOptionId"}, true);
+
+		_finderPathCountByCommerceShippingFixedOptionId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCommerceShippingFixedOptionId",
+			new String[] {Long.class.getName()},
+			new String[] {"commerceShippingFixedOptionId"}, false);
+
 		_finderPathWithPaginationFindByCommerceShippingMethodId =
 			new FinderPath(
 				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -1806,28 +2409,33 @@ public class CommerceShippingFixedOptionRelPersistenceImpl
 			new String[] {Long.class.getName()},
 			new String[] {"commerceShippingMethodId"}, false);
 
-		_finderPathWithPaginationFindByCommerceShippingFixedOptionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-				"findByCommerceShippingFixedOptionId",
-				new String[] {
-					Long.class.getName(), Integer.class.getName(),
-					Integer.class.getName(), OrderByComparator.class.getName()
-				},
-				new String[] {"commerceShippingFixedOptionId"}, true);
+		_finderPathWithPaginationFindByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {
+				"commerceShippingFixedOptionId", "commerceShippingMethodId"
+			},
+			true);
 
-		_finderPathWithoutPaginationFindByCommerceShippingFixedOptionId =
-			new FinderPath(
-				FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				"findByCommerceShippingFixedOptionId",
-				new String[] {Long.class.getName()},
-				new String[] {"commerceShippingFixedOptionId"}, true);
+		_finderPathWithoutPaginationFindByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {
+				"commerceShippingFixedOptionId", "commerceShippingMethodId"
+			},
+			true);
 
-		_finderPathCountByCommerceShippingFixedOptionId = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCommerceShippingFixedOptionId",
-			new String[] {Long.class.getName()},
-			new String[] {"commerceShippingFixedOptionId"}, false);
+		_finderPathCountByC_C = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
+			new String[] {Long.class.getName(), Long.class.getName()},
+			new String[] {
+				"commerceShippingFixedOptionId", "commerceShippingMethodId"
+			},
+			false);
 
 		CommerceShippingFixedOptionRelUtil.setPersistence(this);
 	}

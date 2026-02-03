@@ -43,16 +43,16 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="commerceShippingMethodId" type="long" />
-		<field name="commerceShippingFixedOptionId" type="long" />
 		<field name="commerceInventoryWarehouseId" type="long" />
+		<field name="commerceShippingFixedOptionId" type="long" />
+		<field name="commerceShippingMethodId" type="long" />
 		<field name="countryId" type="long" />
 		<field name="regionId" type="long" />
-		<field name="zip" type="String" />
+		<field name="fixedPrice" type="BigDecimal" />
+		<field name="ratePercentage" type="double" />
+		<field name="rateUnitWeightPrice" type="BigDecimal" />
 		<field name="weightFrom" type="double" />
 		<field name="weightTo" type="double" />
-		<field name="fixedPrice" type="BigDecimal" />
-		<field name="rateUnitWeightPrice" type="BigDecimal" />
-		<field name="ratePercentage" type="double" />
+		<field name="zip" type="String" />
 	</model>
 </model-hints>

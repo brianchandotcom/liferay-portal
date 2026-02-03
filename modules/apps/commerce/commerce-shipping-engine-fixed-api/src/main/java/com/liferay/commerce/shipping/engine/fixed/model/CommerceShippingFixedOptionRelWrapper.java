@@ -49,20 +49,20 @@ public class CommerceShippingFixedOptionRelWrapper
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put(
-			"commerceShippingMethodId", getCommerceShippingMethodId());
+			"commerceInventoryWarehouseId", getCommerceInventoryWarehouseId());
 		attributes.put(
 			"commerceShippingFixedOptionId",
 			getCommerceShippingFixedOptionId());
 		attributes.put(
-			"commerceInventoryWarehouseId", getCommerceInventoryWarehouseId());
+			"commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("countryId", getCountryId());
 		attributes.put("regionId", getRegionId());
-		attributes.put("zip", getZip());
+		attributes.put("fixedPrice", getFixedPrice());
+		attributes.put("ratePercentage", getRatePercentage());
+		attributes.put("rateUnitWeightPrice", getRateUnitWeightPrice());
 		attributes.put("weightFrom", getWeightFrom());
 		attributes.put("weightTo", getWeightTo());
-		attributes.put("fixedPrice", getFixedPrice());
-		attributes.put("rateUnitWeightPrice", getRateUnitWeightPrice());
-		attributes.put("ratePercentage", getRatePercentage());
+		attributes.put("zip", getZip());
 
 		return attributes;
 	}
@@ -119,11 +119,11 @@ public class CommerceShippingFixedOptionRelWrapper
 			setModifiedDate(modifiedDate);
 		}
 
-		Long commerceShippingMethodId = (Long)attributes.get(
-			"commerceShippingMethodId");
+		Long commerceInventoryWarehouseId = (Long)attributes.get(
+			"commerceInventoryWarehouseId");
 
-		if (commerceShippingMethodId != null) {
-			setCommerceShippingMethodId(commerceShippingMethodId);
+		if (commerceInventoryWarehouseId != null) {
+			setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
 		}
 
 		Long commerceShippingFixedOptionId = (Long)attributes.get(
@@ -133,11 +133,11 @@ public class CommerceShippingFixedOptionRelWrapper
 			setCommerceShippingFixedOptionId(commerceShippingFixedOptionId);
 		}
 
-		Long commerceInventoryWarehouseId = (Long)attributes.get(
-			"commerceInventoryWarehouseId");
+		Long commerceShippingMethodId = (Long)attributes.get(
+			"commerceShippingMethodId");
 
-		if (commerceInventoryWarehouseId != null) {
-			setCommerceInventoryWarehouseId(commerceInventoryWarehouseId);
+		if (commerceShippingMethodId != null) {
+			setCommerceShippingMethodId(commerceShippingMethodId);
 		}
 
 		Long countryId = (Long)attributes.get("countryId");
@@ -152,10 +152,23 @@ public class CommerceShippingFixedOptionRelWrapper
 			setRegionId(regionId);
 		}
 
-		String zip = (String)attributes.get("zip");
+		BigDecimal fixedPrice = (BigDecimal)attributes.get("fixedPrice");
 
-		if (zip != null) {
-			setZip(zip);
+		if (fixedPrice != null) {
+			setFixedPrice(fixedPrice);
+		}
+
+		Double ratePercentage = (Double)attributes.get("ratePercentage");
+
+		if (ratePercentage != null) {
+			setRatePercentage(ratePercentage);
+		}
+
+		BigDecimal rateUnitWeightPrice = (BigDecimal)attributes.get(
+			"rateUnitWeightPrice");
+
+		if (rateUnitWeightPrice != null) {
+			setRateUnitWeightPrice(rateUnitWeightPrice);
 		}
 
 		Double weightFrom = (Double)attributes.get("weightFrom");
@@ -170,23 +183,10 @@ public class CommerceShippingFixedOptionRelWrapper
 			setWeightTo(weightTo);
 		}
 
-		BigDecimal fixedPrice = (BigDecimal)attributes.get("fixedPrice");
+		String zip = (String)attributes.get("zip");
 
-		if (fixedPrice != null) {
-			setFixedPrice(fixedPrice);
-		}
-
-		BigDecimal rateUnitWeightPrice = (BigDecimal)attributes.get(
-			"rateUnitWeightPrice");
-
-		if (rateUnitWeightPrice != null) {
-			setRateUnitWeightPrice(rateUnitWeightPrice);
-		}
-
-		Double ratePercentage = (Double)attributes.get("ratePercentage");
-
-		if (ratePercentage != null) {
-			setRatePercentage(ratePercentage);
+		if (zip != null) {
+			setZip(zip);
 		}
 	}
 

@@ -198,18 +198,19 @@ public interface CommerceShippingFixedOptionRelModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the commerce shipping method ID of this commerce shipping fixed option rel.
+	 * Returns the commerce inventory warehouse ID of this commerce shipping fixed option rel.
 	 *
-	 * @return the commerce shipping method ID of this commerce shipping fixed option rel
+	 * @return the commerce inventory warehouse ID of this commerce shipping fixed option rel
 	 */
-	public long getCommerceShippingMethodId();
+	public long getCommerceInventoryWarehouseId();
 
 	/**
-	 * Sets the commerce shipping method ID of this commerce shipping fixed option rel.
+	 * Sets the commerce inventory warehouse ID of this commerce shipping fixed option rel.
 	 *
-	 * @param commerceShippingMethodId the commerce shipping method ID of this commerce shipping fixed option rel
+	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID of this commerce shipping fixed option rel
 	 */
-	public void setCommerceShippingMethodId(long commerceShippingMethodId);
+	public void setCommerceInventoryWarehouseId(
+		long commerceInventoryWarehouseId);
 
 	/**
 	 * Returns the commerce shipping fixed option ID of this commerce shipping fixed option rel.
@@ -227,19 +228,18 @@ public interface CommerceShippingFixedOptionRelModel
 		long commerceShippingFixedOptionId);
 
 	/**
-	 * Returns the commerce inventory warehouse ID of this commerce shipping fixed option rel.
+	 * Returns the commerce shipping method ID of this commerce shipping fixed option rel.
 	 *
-	 * @return the commerce inventory warehouse ID of this commerce shipping fixed option rel
+	 * @return the commerce shipping method ID of this commerce shipping fixed option rel
 	 */
-	public long getCommerceInventoryWarehouseId();
+	public long getCommerceShippingMethodId();
 
 	/**
-	 * Sets the commerce inventory warehouse ID of this commerce shipping fixed option rel.
+	 * Sets the commerce shipping method ID of this commerce shipping fixed option rel.
 	 *
-	 * @param commerceInventoryWarehouseId the commerce inventory warehouse ID of this commerce shipping fixed option rel
+	 * @param commerceShippingMethodId the commerce shipping method ID of this commerce shipping fixed option rel
 	 */
-	public void setCommerceInventoryWarehouseId(
-		long commerceInventoryWarehouseId);
+	public void setCommerceShippingMethodId(long commerceShippingMethodId);
 
 	/**
 	 * Returns the country ID of this commerce shipping fixed option rel.
@@ -270,19 +270,46 @@ public interface CommerceShippingFixedOptionRelModel
 	public void setRegionId(long regionId);
 
 	/**
-	 * Returns the zip of this commerce shipping fixed option rel.
+	 * Returns the fixed price of this commerce shipping fixed option rel.
 	 *
-	 * @return the zip of this commerce shipping fixed option rel
+	 * @return the fixed price of this commerce shipping fixed option rel
 	 */
-	@AutoEscape
-	public String getZip();
+	public BigDecimal getFixedPrice();
 
 	/**
-	 * Sets the zip of this commerce shipping fixed option rel.
+	 * Sets the fixed price of this commerce shipping fixed option rel.
 	 *
-	 * @param zip the zip of this commerce shipping fixed option rel
+	 * @param fixedPrice the fixed price of this commerce shipping fixed option rel
 	 */
-	public void setZip(String zip);
+	public void setFixedPrice(BigDecimal fixedPrice);
+
+	/**
+	 * Returns the rate percentage of this commerce shipping fixed option rel.
+	 *
+	 * @return the rate percentage of this commerce shipping fixed option rel
+	 */
+	public double getRatePercentage();
+
+	/**
+	 * Sets the rate percentage of this commerce shipping fixed option rel.
+	 *
+	 * @param ratePercentage the rate percentage of this commerce shipping fixed option rel
+	 */
+	public void setRatePercentage(double ratePercentage);
+
+	/**
+	 * Returns the rate unit weight price of this commerce shipping fixed option rel.
+	 *
+	 * @return the rate unit weight price of this commerce shipping fixed option rel
+	 */
+	public BigDecimal getRateUnitWeightPrice();
+
+	/**
+	 * Sets the rate unit weight price of this commerce shipping fixed option rel.
+	 *
+	 * @param rateUnitWeightPrice the rate unit weight price of this commerce shipping fixed option rel
+	 */
+	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice);
 
 	/**
 	 * Returns the weight from of this commerce shipping fixed option rel.
@@ -313,46 +340,19 @@ public interface CommerceShippingFixedOptionRelModel
 	public void setWeightTo(double weightTo);
 
 	/**
-	 * Returns the fixed price of this commerce shipping fixed option rel.
+	 * Returns the zip of this commerce shipping fixed option rel.
 	 *
-	 * @return the fixed price of this commerce shipping fixed option rel
+	 * @return the zip of this commerce shipping fixed option rel
 	 */
-	public BigDecimal getFixedPrice();
+	@AutoEscape
+	public String getZip();
 
 	/**
-	 * Sets the fixed price of this commerce shipping fixed option rel.
+	 * Sets the zip of this commerce shipping fixed option rel.
 	 *
-	 * @param fixedPrice the fixed price of this commerce shipping fixed option rel
+	 * @param zip the zip of this commerce shipping fixed option rel
 	 */
-	public void setFixedPrice(BigDecimal fixedPrice);
-
-	/**
-	 * Returns the rate unit weight price of this commerce shipping fixed option rel.
-	 *
-	 * @return the rate unit weight price of this commerce shipping fixed option rel
-	 */
-	public BigDecimal getRateUnitWeightPrice();
-
-	/**
-	 * Sets the rate unit weight price of this commerce shipping fixed option rel.
-	 *
-	 * @param rateUnitWeightPrice the rate unit weight price of this commerce shipping fixed option rel
-	 */
-	public void setRateUnitWeightPrice(BigDecimal rateUnitWeightPrice);
-
-	/**
-	 * Returns the rate percentage of this commerce shipping fixed option rel.
-	 *
-	 * @return the rate percentage of this commerce shipping fixed option rel
-	 */
-	public double getRatePercentage();
-
-	/**
-	 * Sets the rate percentage of this commerce shipping fixed option rel.
-	 *
-	 * @param ratePercentage the rate percentage of this commerce shipping fixed option rel
-	 */
-	public void setRatePercentage(double ratePercentage);
+	public void setZip(String zip);
 
 	@Override
 	public CommerceShippingFixedOptionRel cloneWithOriginalValues();

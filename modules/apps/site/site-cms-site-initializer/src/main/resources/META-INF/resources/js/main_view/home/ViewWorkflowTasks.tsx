@@ -151,6 +151,8 @@ export default function ViewWorkflowTasks({
 							data: {
 								id: 'approve',
 							},
+							isVisible: (itemData: any) =>
+								itemData.name === 'review',
 							label: Liferay.Language.get('approve'),
 							onClick: ({itemData}: any) => {
 								openCMSModal({
@@ -173,6 +175,8 @@ export default function ViewWorkflowTasks({
 							data: {
 								id: 'reject',
 							},
+							isVisible: (itemData: any) =>
+								itemData.name === 'review',
 							label: Liferay.Language.get('reject'),
 							onClick: ({itemData}: any) => {
 								openCMSModal({

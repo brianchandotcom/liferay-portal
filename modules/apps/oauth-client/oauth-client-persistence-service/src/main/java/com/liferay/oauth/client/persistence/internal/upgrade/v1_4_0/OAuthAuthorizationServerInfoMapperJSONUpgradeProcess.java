@@ -16,6 +16,7 @@ import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  * @author Alvaro Saugar
@@ -25,10 +26,10 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
 				"select oAuthClientASLocalMetadataId, metadataJSON from " +
-					"OAuthClientASLocalMetadata");
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+					"OAuthClientASLocalMetadata")) {
 
 			while (resultSet.next()) {
 				long oAuthClientASLocalMetadataId = resultSet.getLong(

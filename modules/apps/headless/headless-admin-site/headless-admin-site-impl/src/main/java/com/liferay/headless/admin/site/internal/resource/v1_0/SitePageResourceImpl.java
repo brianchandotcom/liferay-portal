@@ -849,6 +849,17 @@ public class SitePageResourceImpl
 			return unicodePropertiesWrapper.build();
 		}
 
+		if (sitePage.getType() == SitePage.Type.EMBEDDED_PAGE) {
+			EmbeddedPageSettings embeddedPageSettings =
+				(EmbeddedPageSettings)pageSettings;
+
+			unicodePropertiesWrapper.setProperty(
+				LayoutTypePortletConstants.EMBEDDED_LAYOUT_URL,
+				embeddedPageSettings.getPageURL());
+
+			return unicodePropertiesWrapper.build();
+		}
+
 		if (sitePage.getType() == SitePage.Type.LINK_TO_PAGE_PAGE) {
 			LinkToPagePageSettings linkToPagePageSettings =
 				(LinkToPagePageSettings)pageSettings;

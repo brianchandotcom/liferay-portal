@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
@@ -192,6 +193,23 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			return _toContentPageSettings(layout);
+		}
+		else if (type == SitePage.Type.EMBEDDED_PAGE) {
+			return new EmbeddedPageSettings() {
+				{
+					setPageURL(
+						() -> {
+							UnicodeProperties typeSettingsUnicodeProperties =
+								layout.getTypeSettingsProperties();
+
+							return typeSettingsUnicodeProperties.getProperty(
+								com.liferay.layout.admin.kernel.model.
+									LayoutTypePortletConstants.EMBEDDED_LAYOUT_URL,
+								StringPool.BLANK);
+						});
+					setType(() -> Type.EMBEDDED_PAGE_SETTINGS);
+				}
+			};
 		}
 		else if (type == SitePage.Type.LINK_TO_PAGE_PAGE) {
 			return new LinkToPagePageSettings() {

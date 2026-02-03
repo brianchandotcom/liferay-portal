@@ -12,6 +12,7 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSettings;
@@ -729,6 +730,12 @@ public class SitePageResourceImpl
 
 		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) &&
 			!(pageSettings instanceof ContentPageSettings)) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		if ((sitePage.getType() == SitePage.Type.EMBEDDED_PAGE) &&
+			!(pageSettings instanceof EmbeddedPageSettings)) {
 
 			throw new UnsupportedOperationException();
 		}

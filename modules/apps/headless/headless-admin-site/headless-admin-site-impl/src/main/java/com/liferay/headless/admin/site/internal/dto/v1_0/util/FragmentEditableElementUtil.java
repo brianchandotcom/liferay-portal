@@ -697,11 +697,25 @@ public class FragmentEditableElementUtil {
 			long companyId, long scopeGroupId, Object value)
 		throws Exception {
 
-		if (!(value instanceof JSONObject)) {
-			return _getURLImageValue(GetterUtil.getString(value));
-		}
+		JSONObject jsonObject = null;
 
-		JSONObject jsonObject = (JSONObject)value;
+		if (value instanceof JSONObject) {
+			jsonObject = (JSONObject)value;
+		}
+		else {
+			String stringValue = GetterUtil.getString(value);
+
+			if (Validator.isNull(stringValue)) {
+				return null;
+			}
+
+			jsonObject = JSONFactoryUtil.safeCreateJSONObject(
+				stringValue, true);
+
+			if (jsonObject == null) {
+				return _getURLImageValue(stringValue);
+			}
+		}
 
 		if (JSONUtil.isEmpty(jsonObject)) {
 			return null;

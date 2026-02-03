@@ -160,9 +160,9 @@ export class ExportImportPage {
 				success: 'Successful',
 			};
 
-			return this.taskRow(taskName).getByText(
-				taskStatusTexts[taskStatus]
-			);
+			return this.taskRow(taskName)
+				.first()
+				.getByText(taskStatusTexts[taskStatus]);
 		};
 		this.title = page.getByPlaceholder('Enter the name of the process');
 		this.updateDataAlert = page.locator('[role="alert"]', {
@@ -350,6 +350,16 @@ export class ExportImportPage {
 		await expect(this.taskStatusLabel(fileName, taskStatus)).toBeVisible({
 			timeout,
 		});
+	}
+
+	async importByDefault(filePath: string) {
+		await this.selectImportFile({filePath});
+
+		await this.importButton.click();
+
+		await expect(
+			this.taskStatusLabel(path.basename(filePath), 'success')
+		).toBeVisible();
 	}
 
 	async getExportableItems() {

@@ -24,11 +24,14 @@ import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {HomePage} from '../../../pages/portal-web/HomePage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {openFieldset} from '../../../utils/openFieldset';
+import {performLoginViaApi} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {readFileFromZip} from '../../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
@@ -733,5 +736,48 @@ testWithDeprecationFFDisabled(
 				await uiElementsPage.cancelButton.click();
 			}
 		);
+	}
+);
+
+testWithDeprecationFF(
+	'Can import the default site on a new instance twice',
+	async ({apiHelpers, exportImportPage, page}) => {
+		test.slow();
+
+		await exportImportPage.goToExport();
+
+		const exportFilePath = await exportImportPage.export();
+
+		const virtualInstance =
+			await apiHelpers.headlessPortalInstance.addVirtualInstance({
+				domain: 'liferay.com',
+				portalInstanceId: 'www.able.com',
+				virtualHost: 'www.able.com',
+			});
+		apiHelpers.data.push({
+			id: virtualInstance.portalInstanceId,
+			type: 'virtual-instance',
+		});
+
+		await performLoginViaApi({
+			loginUrl: 'http://www.able.com:8080',
+			page,
+			screenName: 'test',
+		});
+
+		const virtualInstanceApiHelpers = new DataApiHelpers(
+			page,
+			'http://www.able.com:8080'
+		);
+
+		const site = await virtualInstanceApiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		await page.goto(
+			`http://www.able.com:8080/group${site.friendlyUrlPath}${PORTLET_URLS.import}`
+		);
+		await exportImportPage.importByDefault(exportFilePath);
+		await exportImportPage.importByDefault(exportFilePath);
 	}
 );

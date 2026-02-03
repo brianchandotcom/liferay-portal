@@ -959,7 +959,7 @@ definition {
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
 			value1 = ${newDefault});
 
-		Button.clickSave();
+		Button.click(button = "Save");
 	}
 
 	@summary = "Default summary"
@@ -1415,7 +1415,7 @@ definition {
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
 			value1 = ${currencyName});
 
-		Button.clickSave();
+		Button.click(button = "Save");
 	}
 
 	@summary = "Default summary"
@@ -1444,7 +1444,7 @@ definition {
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
 			value1 = ${discountTitle});
 
-		Button.clickSave();
+		Button.click(button = "Save");
 	}
 
 	@summary = "Default summary"

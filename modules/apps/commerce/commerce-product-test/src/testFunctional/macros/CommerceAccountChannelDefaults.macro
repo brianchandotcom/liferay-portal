@@ -115,7 +115,7 @@ definition {
 				value1 = ${newPriceListName});
 		}
 
-		Button.clickSave();
+		Button.click(button = "Save");
 
 		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");
@@ -227,7 +227,7 @@ definition {
 			locator1 = "CommerceEntry#LABEL_GENERIC_SELECT",
 			value1 = ${priceListTitle});
 
-		Button.clickSave();
+		Button.click(button = "Save");
 
 		if (isSet(assertError) && (${assertError} == "true")) {
 			Alert.viewErrorMessage(errorMessage = "Error:There is already a price list defined for the selected channel.");

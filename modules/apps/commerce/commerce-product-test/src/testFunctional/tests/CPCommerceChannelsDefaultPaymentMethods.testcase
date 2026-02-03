@@ -591,7 +591,7 @@ definition {
 				key_radioOption = "Use Priority Settings",
 				locator1 = "CommerceEntry#RADIO_BUTTON");
 
-			Button.clickSave();
+			Button.click(button = "Save");
 
 			IFrame.selectTopFrame();
 

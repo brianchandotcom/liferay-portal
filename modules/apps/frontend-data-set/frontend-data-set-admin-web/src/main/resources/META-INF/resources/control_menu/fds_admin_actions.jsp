@@ -21,6 +21,7 @@ final String manageUserViewsURLString = manageUserViewsURL;
 	<clay:dropdown-menu
 		aria-label='<%= LanguageUtil.get(themeDisplay.getLocale(), "options") %>'
 		cssClass="control-menu-nav-link lfr-portal-tooltip"
+		data-qa-id="fdsAdminOptionsMenu"
 		displayType="unstyled"
 		dropdownItems='<%=
 			new JSPDropdownItemList(pageContext) {

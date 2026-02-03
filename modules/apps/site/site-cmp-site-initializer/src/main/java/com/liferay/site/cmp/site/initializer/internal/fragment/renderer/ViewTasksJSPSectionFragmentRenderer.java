@@ -10,6 +10,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
@@ -53,8 +54,9 @@ public class ViewTasksJSPSectionFragmentRenderer
 		return new ViewTasksSectionDisplayContext(
 			_assetTagLocalService, _classNameLocalService,
 			_depotEntryLocalService, httpServletRequest,
-			_listTypeEntryLocalService, _objectFieldLocalService,
-			_objectStateFlowLocalService, _objectStateLocalService,
+			_listTypeEntryLocalService, _objectEntryService,
+			_objectFieldLocalService, _objectStateFlowLocalService,
+			_objectStateLocalService,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", themeDisplay.getCompanyId()),
@@ -84,6 +86,9 @@ public class ViewTasksJSPSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

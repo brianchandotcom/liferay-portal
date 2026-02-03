@@ -45,7 +45,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			}
 
 			_checkDataAccessGetConnectionCall(fileName, childJavaTerm);
-			_checkMissingReusableConnectionInDBRunSQLCall(
+			_checkMissingConnectionInDBRunSQLCall(
 				fileName, childJavaTerm, javaClass);
 		}
 
@@ -83,7 +83,7 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 			javaTerm.getLineNumber(index));
 	}
 
-	private void _checkMissingReusableConnectionInDBRunSQLCall(
+	private void _checkMissingConnectionInDBRunSQLCall(
 		String fileName, JavaTerm javaTerm, JavaClass javaClass) {
 
 		String content = javaTerm.getContent();
@@ -110,25 +110,6 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 
 			String parameter = parameterList.get(0);
 
-			if (parameter.matches("\\w+")) {
-				variableTypeName = getVariableTypeName(
-					content, javaTerm, javaClass.getContent(), fileName,
-					parameter, true, false);
-
-				if (((variableTypeName != null) &&
-					 variableTypeName.equals("String")) ||
-					variableTypeName.equals("String[]")) {
-
-					addMessage(
-						fileName,
-						"Missing parameter \"connection\" for \"" +
-							variableName + ".runSQL\"",
-						javaTerm.getLineNumber(matcher.start()));
-				}
-
-				return;
-			}
-
 			if (parameter.matches("(?i)(\\w+\\.)?\\w+SQL\\(.*\\)") ||
 				parameter.startsWith("\"") ||
 				parameter.startsWith("StringBundler.concat(") ||
@@ -139,7 +120,30 @@ public class JavaUpgradeConnectionCheck extends BaseJavaTermCheck {
 					"Missing parameter \"connection\" for \"" + variableName +
 						".runSQL\"",
 					javaTerm.getLineNumber(matcher.start()));
+
+				continue;
 			}
+
+			if (!parameter.matches("\\w+")) {
+				continue;
+			}
+
+			variableTypeName = getVariableTypeName(
+				content, javaTerm, javaClass.getContent(), fileName, parameter,
+				true, false);
+
+			if ((variableTypeName == null) ||
+				(!variableTypeName.equals("String") &&
+				 !variableTypeName.equals("String[]"))) {
+
+				continue;
+			}
+
+			addMessage(
+				fileName,
+				"Missing parameter \"connection\" for \"" + variableName +
+					".runSQL\"",
+				javaTerm.getLineNumber(matcher.start()));
 		}
 	}
 

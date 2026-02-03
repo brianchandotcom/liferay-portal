@@ -46,7 +46,19 @@ export type Value = {
 };
 
 type ContextProps = {
+
+	/**
+	 * Key of the item from which the drag interaction was initiated.
+	 * This is the item the user clicked to start dragging, even when
+	 * multiple items are selected.
+	 */
 	currentDrag: React.Key | null;
+
+	/**
+	 * Set of keys representing all selected items being dragged together.
+	 * Includes the drag origin item and any other selected items.
+	 */
+	currentDragKeys: Set<React.Key>;
 	currentTarget: React.Key | null;
 	dragCancelDescribedBy: string;
 	dragDescribedBy: string;
@@ -63,7 +75,7 @@ type ContextProps = {
 
 type State = Pick<
 	ContextProps,
-	'currentTarget' | 'currentDrag' | 'position' | 'source'
+	'currentTarget' | 'currentDrag' | 'currentDragKeys' | 'position' | 'source'
 > & {
 	lastItem: React.Key | null;
 	status: 'complete' | 'canceled' | null;
@@ -80,6 +92,8 @@ type Props<T> = {
 	onItemMove?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
 	rootRef: React.RefObject<HTMLUListElement>;
 };
+
+const emptySet = () => new Set<React.Key>();
 
 function getFocusableTree(rootRef: React.RefObject<HTMLUListElement>) {
 	if (!rootRef.current) {
@@ -164,12 +178,19 @@ export function DragAndDropProvider<T>({
 	onItemHover,
 	rootRef,
 }: Props<T>) {
-	const {dragAndDrop, items, layout, reorder} = useTreeViewContext();
+	const {
+		dragAndDrop,
+		items,
+		layout,
+		reorder,
+		selection: {selectedKeys},
+	} = useTreeViewContext();
 
 	const announcerRef = useRef<AnnouncerAPI>(null);
 
 	const [state, setState] = useState<State>({
 		currentDrag: null,
+		currentDragKeys: emptySet(),
 		currentTarget: null,
 		lastItem: null,
 		position: null,
@@ -179,10 +200,16 @@ export function DragAndDropProvider<T>({
 
 	const onDragStart = useCallback(
 		(source: 'keyboard' | 'mouse', dragKey: React.Key) => {
+			const dragKeys =
+				mode === 'multiple' && selectedKeys.has(dragKey)
+					? selectedKeys
+					: new Set([dragKey]);
+
 			if (source === 'mouse') {
 				setState((state) => ({
 					...state,
 					currentDrag: dragKey,
+					currentDragKeys: dragKeys,
 					source: 'mouse',
 					status: null,
 				}));
@@ -198,6 +225,7 @@ export function DragAndDropProvider<T>({
 				setState((state) => ({
 					...state,
 					currentDrag: dragKey,
+					currentDragKeys: dragKeys,
 					currentTarget: nextTargetKey,
 					position: 'bottom',
 					source: 'keyboard',
@@ -205,12 +233,13 @@ export function DragAndDropProvider<T>({
 				}));
 			}
 		},
-		[]
+		[selectedKeys]
 	);
 
 	const onEnd = useCallback(() => {
 		setState((state) => ({
 			currentDrag: null,
+			currentDragKeys: emptySet(),
 			currentTarget: null,
 			lastItem: state.currentDrag,
 			position: null,
@@ -234,6 +263,7 @@ export function DragAndDropProvider<T>({
 		announcerRef.current?.announce(messages.dropCanceled);
 		setState((state) => ({
 			currentDrag: null,
+			currentDragKeys: emptySet(),
 			currentTarget: null,
 			lastItem: state.currentDrag,
 			position: null,
@@ -273,6 +303,7 @@ export function DragAndDropProvider<T>({
 		reorder(dragLayoutItem!.cursor, dropLayoutItem!.cursor, position!);
 		setState({
 			currentDrag: null,
+			currentDragKeys: emptySet(),
 			currentTarget: null,
 			lastItem: currentDrag,
 			position: null,

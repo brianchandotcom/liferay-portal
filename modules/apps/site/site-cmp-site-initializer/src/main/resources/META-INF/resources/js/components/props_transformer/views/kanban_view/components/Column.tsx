@@ -7,9 +7,10 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col} from '@clayui/layout';
 import React, {useContext} from 'react';
+import {useDrop} from 'react-dnd';
 
 import {openCMPModal} from '../../../../../utils/openCMPModal';
-import {IColumn} from '../../../../../utils/types';
+import {IColumn, ITask} from '../../../../../utils/types';
 import StateLabel from '../../../../StateLabel';
 import CreateTaskModal from '../../../../modal/CreateTaskModal';
 import {KanbanViewContext} from '../context';
@@ -21,56 +22,73 @@ interface IColumnProps {
 	column: IColumn;
 }
 
+export const ItemTypes = {
+	TASK: 'KANBAN_TASK',
+};
+
 export default function Column({
 	column: {icon, key, name, tasks},
 }: IColumnProps) {
 	const {loadData} = useContext(KanbanViewContext);
+	const {changeTaskStatus} = useContext(KanbanViewContext);
+
+	const [_, drop] = useDrop<{task: ITask; type: string}, void, {}>({
+		accept: ItemTypes.TASK,
+		drop: (item: {task: ITask}) => {
+			changeTaskStatus(item.task, {name, key});
+		},
+	});
 
 	return (
-		<Col className="lfr__kaban-view-column">
-			<div className="lfr__kaban-view-column-header">
-				<StateLabel state={{key, name}} />
+		<div className="lfr__kaban-view-column" ref={drop}>
+			<Col>
+				<div className="lfr__kaban-view-column-header">
+					<StateLabel state={{key, name}} />
 
-				{icon.name && (
-					<ClayIcon style={{color: icon.color}} symbol={icon.name} />
-				)}
+					{icon.name && (
+						<ClayIcon
+							style={{color: icon.color}}
+							symbol={icon.name}
+						/>
+					)}
 
-				<span>{tasks.length}</span>
-			</div>
-
-			<div className="lfr__kaban-view-column-task">
-				<div className="lfr__kaban-view-column-task-list">
-					{tasks.map((task) => {
-						return <Task key={task.embedded.id} {...task} />;
-					})}
+					<span>{tasks.length}</span>
 				</div>
 
-				<ClayButton
-					borderless
-					className="lfr__kaban-view-column-task-add-button"
-					onClick={async () => {
-						await openCMPModal({
-							center: true,
-							contentComponent: ({
-								closeModal,
-							}: {
-								closeModal: () => void;
-							}) => (
-								<CreateTaskModal
-									closeModal={closeModal}
-									loadData={loadData}
-									state={key}
-								/>
-							),
-							size: 'md',
-						});
-					}}
-				>
-					<ClayIcon symbol="plus" />
+				<div className="lfr__kaban-view-column-task">
+					<div className="lfr__kaban-view-column-task-list">
+						{tasks.map((task) => {
+							return <Task key={task.embedded.id} {...task} />;
+						})}
+					</div>
 
-					{Liferay.Language.get('add-task')}
-				</ClayButton>
-			</div>
-		</Col>
+					<ClayButton
+						borderless
+						className="lfr__kaban-view-column-task-add-button"
+						onClick={async () => {
+							await openCMPModal({
+								center: true,
+								contentComponent: ({
+									closeModal,
+								}: {
+									closeModal: () => void;
+								}) => (
+									<CreateTaskModal
+										closeModal={closeModal}
+										loadData={loadData}
+										state={key}
+									/>
+								),
+								size: 'md',
+							});
+						}}
+					>
+						<ClayIcon symbol="plus" />
+
+						{Liferay.Language.get('add-task')}
+					</ClayButton>
+				</div>
+			</Col>
+		</div>
 	);
 }

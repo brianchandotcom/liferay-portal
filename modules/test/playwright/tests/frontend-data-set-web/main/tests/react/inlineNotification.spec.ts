@@ -63,7 +63,7 @@ test(
 			await page
 				.getByRole('button', {exact: true, name: 'Close'})
 				.click();
-			await expect(page.getByRole('alert')).not.toBeInViewport();
+			await expect(alert).not.toBeInViewport();
 		});
 
 		await test.step('Check that the "Reload" button request new data and closes the alert', async () => {

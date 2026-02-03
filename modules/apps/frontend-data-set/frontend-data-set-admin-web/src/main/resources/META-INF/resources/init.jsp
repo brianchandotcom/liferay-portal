@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 <%@ page import="com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys" %><%@
 page import="com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext" %><%@
 page import="com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminItemSelectorDisplayContext" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPDropdownItemList" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.object.exception.NoSuchObjectEntryException" %><%@

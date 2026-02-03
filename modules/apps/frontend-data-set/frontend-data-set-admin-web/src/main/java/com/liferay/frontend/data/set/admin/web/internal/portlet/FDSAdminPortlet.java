@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminWebKeys;
 import com.liferay.frontend.data.set.admin.web.internal.display.context.FDSAdminDisplayContext;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
@@ -106,7 +107,7 @@ public class FDSAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			FDSAdminWebKeys.FDS_ADMIN_DISPLAY_CONTEXT,
 			new FDSAdminDisplayContext(
-				_cetManager, _fdsAPIURLResolverRegistry,
+				_cetManager, _fdsAPIURLResolverRegistry, _fdsSerializer,
 				_objectDefinitionLocalService, renderRequest, renderResponse,
 				_serviceTrackerList, _systemFDSEntryRegistry));
 
@@ -120,6 +121,9 @@ public class FDSAdminPortlet extends MVCPortlet {
 
 	@Reference
 	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
+
+	@Reference
+	private FDSSerializer _fdsSerializer;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

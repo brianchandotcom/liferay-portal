@@ -11,6 +11,7 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
 import com.liferay.frontend.data.set.admin.web.internal.portlet.FDSAdminPortlet;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -51,6 +52,7 @@ public class FDSAdminDisplayContext {
 	public FDSAdminDisplayContext(
 		CETManager cetManager,
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry,
+		FDSSerializer fdsSerializer,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		ServiceTrackerList<FDSAdminPortlet.CompanyScopedOpenAPIResource>
@@ -59,6 +61,7 @@ public class FDSAdminDisplayContext {
 
 		_cetManager = cetManager;
 		_fdsAPIURLResolverRegistry = fdsAPIURLResolverRegistry;
+		_fdsSerializer = fdsSerializer;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_serviceTrackerList = serviceTrackerList;
@@ -301,6 +304,7 @@ public class FDSAdminDisplayContext {
 	private final CETManager _cetManager;
 	private final ObjectDefinition _dataSetObjectDefinition;
 	private final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
+	private final FDSSerializer _fdsSerializer;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final ServiceTrackerList

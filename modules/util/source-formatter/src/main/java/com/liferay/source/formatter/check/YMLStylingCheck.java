@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.source.formatter.check.util.SourceUtil;
+import com.liferay.source.formatter.check.util.YMLSourceUtil;
 
 import java.io.IOException;
 
@@ -108,11 +110,31 @@ public class YMLStylingCheck extends BaseFileCheck {
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
+			String blockStyleLeadingSpaces = null;
+			boolean insideBlockStyle = false;
+			String leadingSpaces = null;
 			String line = null;
 			int lineNumber = 0;
 
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineNumber++;
+
+				if (insideBlockStyle) {
+					leadingSpaces = SourceUtil.getLeadingSpaces(line);
+
+					if (leadingSpaces.length() >
+							blockStyleLeadingSpaces.length()) {
+
+						continue;
+					}
+
+					insideBlockStyle = false;
+				}
+
+				if (YMLSourceUtil.isBlockStyle(line)) {
+					blockStyleLeadingSpaces = SourceUtil.getLeadingSpaces(line);
+					insideBlockStyle = true;
+				}
 
 				String trimmedLine = StringUtil.trimLeading(line);
 

@@ -1,6 +1,5 @@
 import * as API from 'shared/api';
 import Card from 'shared/components/Card';
-import Loading from 'shared/components/Loading';
 import React, {useMemo} from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {
@@ -22,17 +21,6 @@ import {IndividualsListCDPColumns} from 'shared/util/table-columns';
 import {useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
-
-type Data = {
-	channelId: string;
-	delta: number;
-	groupId: string;
-	orderIOMap: string;
-	profileTypes: ProfileTypes[];
-	filter: string;
-	page: number;
-	query: string;
-};
 
 const ORDER_BY_OPTIONS = [
 	{
@@ -80,7 +68,7 @@ const DEFAULT_FILTER_BY_OPTIONS: FilterOptionType[] = [
 
 function transformCountriesInQueryString(countries: string[]) {
 	if (!countries || countries.length === 0) {
-		return undefined;
+		return;
 	}
 
 	return countries
@@ -98,35 +86,11 @@ const IndividualsList = () => {
 		initialOrderIOMap: createOrderIOMap(NAME)
 	});
 
-	const fetchIndividuals = async (data: Data) => {
-		const {
-			channelId,
-			delta,
-			filter,
-			groupId,
-			orderIOMap,
-			page,
-			profileTypes,
-			query
-		} = data;
-
-		return API.individuals.search({
-			channelId,
-			delta,
-			filter,
-			groupId,
-			orderIOMap,
-			page,
-			profileTypes,
-			query
-		});
-	};
-
 	const {data: countriesData, loading: countriesLoading} = useRequest({
 		dataSourceFn: API.individuals.fetchFieldValues,
 		variables: {
 			channelId,
-			fieldName: 'country',
+			fieldMappingFieldName: 'country',
 			groupId
 		}
 	});
@@ -149,7 +113,7 @@ const IndividualsList = () => {
 		}
 
 		return DEFAULT_FILTER_BY_OPTIONS;
-	}, [countriesData]);
+	}, [countriesData, countriesLoading]);
 
 	const selectedFilters = {
 		filter: transformCountriesInQueryString(
@@ -159,14 +123,10 @@ const IndividualsList = () => {
 			paginationParams.filterBy.get('profileTypes')?.toArray() || []
 	};
 
-	if (countriesLoading) {
-		return <Loading />;
-	}
-
 	return (
 		<Card>
 			<Card.Title className='card-header'>
-				{'individuals-profiles'}
+				{Liferay.Language.get('individuals-profiles')}
 			</Card.Title>
 			<Card.Body className='no-padding'>
 				<div className='individuals-dashboard-known-individuals-root'>
@@ -183,7 +143,7 @@ const IndividualsList = () => {
 							IndividualsListCDPColumns.lastActive,
 							IndividualsListCDPColumns.profileType
 						]}
-						dataSourceFn={fetchIndividuals}
+						dataSourceFn={API.individuals.search}
 						dataSourceParams={{
 							channelId,
 							filter: selectedFilters.filter,

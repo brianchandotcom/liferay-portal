@@ -28,6 +28,11 @@ public class YMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testFormatQuotes() throws Exception {
+		test("FormatQuotes.testyaml");
+	}
+
+	@Test
 	public void testFormatReviewComments() throws Exception {
 		test("FormatReviewComments.testyaml");
 	}

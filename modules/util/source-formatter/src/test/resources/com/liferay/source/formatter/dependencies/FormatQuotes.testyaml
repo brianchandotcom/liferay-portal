@@ -1,0 +1,22 @@
+"name1": 'value1'
+"name2": "value2"
+"name3": "123"
+"name4": "-123"
+"name5": |
+    {
+        "Statement": [
+            {
+                "Action": [
+                    "s3:DeleteObject",
+                    "s3:DeleteObjectVersion"
+                ],
+                "Effect": "Deny",
+                "Resource": [
+                    "arn:aws:s3:::{{ $overlayBucketName }}",
+                    "arn:aws:s3:::{{ $overlayBucketName }}/*"
+                ],
+                "Sid": "DenyDeleteBucket"
+            }
+        ],
+       "Version": "2012-10-17"
+    }

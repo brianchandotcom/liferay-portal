@@ -26,7 +26,10 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (Statement statement = connection.createStatement();
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update OAuthClientASLocalMetadata set issuer = ? where " +
+					"oAuthClientASLocalMetadataId = ?");
+			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				"select oAuthClientASLocalMetadataId, metadataJSON from " +
 					"OAuthClientASLocalMetadata")) {
@@ -64,19 +67,14 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 					continue;
 				}
 
-				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(
-							"update OAuthClientASLocalMetadata set " +
-								"issuer = ? WHERE " +
-									"oAuthClientASLocalMetadataId = ?")) {
+				preparedStatement.setString(
+					1, String.valueOf(oidcProviderMetadata.getIssuer()));
+				preparedStatement.setLong(2, oAuthClientASLocalMetadataId);
 
-					preparedStatement2.setString(
-						1, String.valueOf(oidcProviderMetadata.getIssuer()));
-					preparedStatement2.setLong(2, oAuthClientASLocalMetadataId);
-
-					preparedStatement2.execute();
-				}
+				preparedStatement.addBatch();
 			}
+
+			preparedStatement.executeBatch();
 		}
 	}
 

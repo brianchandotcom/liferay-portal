@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -64,7 +63,8 @@ public class PageExperienceDTOConverter
 					() -> LocalizedMapUtil.getI18nMap(
 						true, segmentsExperience.getNameMap()));
 				setPageElements(
-					() -> _getPageElements(layoutPageTemplateStructureRel));
+					() -> _getPageElements(
+						dtoConverterContext, layoutPageTemplateStructureRel));
 				setPageSpecificationExternalReferenceCode(
 					layout::getExternalReferenceCode);
 				setPriority(segmentsExperience::getPriority);
@@ -99,25 +99,20 @@ public class PageExperienceDTOConverter
 		};
 	}
 
-	private DTOConverterContext _getDTOConverterContext(
-		long companyId, LayoutStructure layoutStructure, long scopeGroupId) {
-
-		DTOConverterContext dtoConverterContext =
-			new DefaultDTOConverterContext(null, null, null, null, null);
-
-		dtoConverterContext.setAttribute(
-			LayoutStructure.class.getName(), layoutStructure);
-		dtoConverterContext.setAttribute("companyId", companyId);
-		dtoConverterContext.setAttribute("scopeGroupId", scopeGroupId);
-
-		return dtoConverterContext;
-	}
-
 	private PageElement[] _getPageElements(
+		DTOConverterContext dtoConverterContext,
 		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
+
+		dtoConverterContext.setAttribute(
+			LayoutStructure.class.getName(), layoutStructure);
+
+		dtoConverterContext.setAttribute(
+			"companyId", layoutPageTemplateStructureRel.getCompanyId());
+		dtoConverterContext.setAttribute(
+			"scopeGroupId", layoutPageTemplateStructureRel.getGroupId());
 
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
@@ -125,10 +120,7 @@ public class PageExperienceDTOConverter
 		return TransformUtil.transformToArray(
 			rootLayoutStructureItem.getChildrenItemIds(),
 			childrenItemId -> _pageElementDTOConverter.toDTO(
-				_getDTOConverterContext(
-					layoutPageTemplateStructureRel.getCompanyId(),
-					layoutStructure,
-					layoutPageTemplateStructureRel.getGroupId()),
+				dtoConverterContext,
 				layoutStructure.getLayoutStructureItem(childrenItemId)),
 			PageElement.class);
 	}

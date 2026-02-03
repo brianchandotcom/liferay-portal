@@ -17,6 +17,7 @@ import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 import {ProductMenuPage} from '../../../pages/product-navigation-control-menu-web/ProductMenuPage';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import performLoginViaApi, {performLogout} from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -1778,5 +1779,64 @@ test(
 		await expect(
 			page.getByText(layoutWithoutViewPermission.nameCurrentValue)
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'Translation is shown for Display Page type Navigation Menu Item',
+	{
+		tag: '@LPD-76461',
+	},
+	async ({apiHelpers, navigationMenusPage, page, site}) => {
+		const navigationMenuName = getRandomString();
+		const webContentTitle = getRandomString();
+
+		await test.step('Create Web Content Article', async () => {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: await getBasicWebContentStructureId(apiHelpers),
+				groupId: site.id,
+				titleMap: {en_US: webContentTitle},
+			});
+		});
+
+		await test.step('Add Navigation Menu for created Web Content Article', async () => {
+			await navigationMenusPage.goto(site.friendlyUrlPath);
+
+			await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+			await navigationMenusPage.addWebContentArticleItem(webContentTitle);
+		});
+
+		await test.step('Switch to es_ES and add translation', async () => {
+			await page.getByText(webContentTitle).click();
+
+			await page.getByText('Use Custom Name').click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator('#es_ES'),
+				trigger: page.getByLabel('Select a Language'),
+			});
+
+			await page.getByLabel('Name', {exact: true}).fill('Spanish');
+
+			await page.getByRole('button', {name: 'Save'}).click();
+		});
+
+		await test.step('Assert translation is visible', async () => {
+			await expect(page.getByLabel('Name', {exact: true})).toHaveValue(
+				webContentTitle
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.locator('#es_ES'),
+				trigger: page.getByLabel('Select a Language'),
+			});
+
+			await expect(page.getByLabel('Name', {exact: true})).toHaveValue(
+				'Spanish'
+			);
+		});
 	}
 );

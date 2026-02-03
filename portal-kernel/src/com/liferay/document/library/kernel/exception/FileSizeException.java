@@ -38,6 +38,12 @@ public class FileSizeException extends PortalException {
 		_maxSize = maxSize;
 	}
 
+	public FileSizeException(String msg, long maxSize, String mimeType) {
+		this(msg, maxSize);
+
+		_mimeType = mimeType;
+	}
+
 	public FileSizeException(String msg, long maxSize, Throwable throwable) {
 		super(msg, throwable);
 
@@ -61,6 +67,11 @@ public class FileSizeException extends PortalException {
 			GroupThreadLocal.getGroupId(), null);
 	}
 
+	public String getMimeType() {
+		return _mimeType;
+	}
+
 	private final long _maxSize;
+	private String _mimeType;
 
 }

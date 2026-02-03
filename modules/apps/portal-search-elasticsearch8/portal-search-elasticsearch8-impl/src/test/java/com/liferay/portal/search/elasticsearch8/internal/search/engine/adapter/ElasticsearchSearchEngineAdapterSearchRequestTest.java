@@ -65,7 +65,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -169,7 +168,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 			"completion|[search]", "completion2|[message]");
 	}
 
-	@Ignore
 	@Test
 	public void testDeepPaginationWithScroll() throws Exception {
 		_indexSuggestKeyword(RandomTestUtil.randomString());
@@ -198,7 +196,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		Assert.assertEquals(0, _getDocumentsLength(searchSearchResponse));
 	}
 
-	@Ignore
 	@Test
 	public void testDeepPaginationWithSearchAfter() throws IOException {
 		_indexSuggestKeyword(RandomTestUtil.randomString());

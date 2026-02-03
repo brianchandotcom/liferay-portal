@@ -14,7 +14,6 @@ import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -51,7 +50,6 @@ public class ElasticsearchDateRangeFilterTest
 		assertHits("20001122000000");
 	}
 
-	@Ignore
 	@Test
 	public void testMalformed() throws Exception {
 		addDocument(getDate(2000, 11, 22));
@@ -62,7 +60,6 @@ public class ElasticsearchDateRangeFilterTest
 		assertElasticsearchException();
 	}
 
-	@Ignore
 	@Test
 	public void testMalformedMultiple() throws Exception {
 		addDocument(getDate(2000, 11, 22));

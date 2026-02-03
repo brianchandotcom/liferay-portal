@@ -942,6 +942,26 @@ components:
             description:
                 The definition of a submission result of type embedded message.
             type: object
+        EmbeddedPageSettings:
+            allOf:
+                -   $ref: "#/components/schemas/PageSettings"
+                -   properties:
+                        pageURL:
+                            # @review
+                            description:
+                                The URL of the page to embed.
+                            type: string
+            # @review
+            description:
+                The settings of an embedded page.
+            type: object
+        EmbeddedPageSpecification:
+            allOf:
+                -   $ref: "#/components/schemas/PageSpecification"
+            # @review
+            description:
+                A page specification of an embedded page.
+            type: object
         EmptyCollectionConfig:
             properties:
                 displayMessage:
@@ -2982,6 +3002,7 @@ components:
             discriminator:
                 mapping:
                     ContentPageSettings: "#/components/schemas/ContentPageSettings"
+                    EmbeddedPageSettings: "#/components/schemas/EmbeddedPageSettings"
                     LinkToPagePageSettings: "#/components/schemas/LinkToPagePageSettings"
                     LinkToURLPageSettings: "#/components/schemas/LinkToURLPageSettings"
                     PageSetPageSettings: "#/components/schemas/PageSetPageSettings"
@@ -3010,6 +3031,7 @@ components:
                 type:
                     enum:
                         -   ContentPageSettings
+                        -   EmbeddedPageSettings
                         -   LinkToPagePageSettings
                         -   LinkToURLPageSettings
                         -   PageSetPageSettings
@@ -3025,6 +3047,7 @@ components:
             discriminator:
                 mapping:
                     ContentPageSpecification: "#/components/schemas/ContentPageSpecification"
+                    EmbeddedPageSpecification: "#/components/schemas/EmbeddedPageSpecification"
                     LinkToPagePageSpecification: "#/components/schemas/LinkToPagePageSpecification"
                     LinkToURLPageSpecification: "#/components/schemas/LinkToURLPageSpecification"
                     PageSetPageSpecification: "#/components/schemas/PageSetPageSpecification"
@@ -3057,6 +3080,7 @@ components:
                         The type of the page specification.
                     enum:
                         -   ContentPageSpecification
+                        -   EmbeddedPageSpecification
                         -   LinkToPagePageSpecification
                         -   LinkToURLPageSpecification
                         -   PageSetPageSpecification
@@ -3653,6 +3677,7 @@ components:
                 type:
                     enum:
                         -   ContentPage
+                        -   EmbeddedPage
                         -   LinkToPagePage
                         -   LinkToURLPage
                         -   PageSetPage

@@ -75,8 +75,8 @@ public abstract class BaseObjectRelationshipRelatedInfoCollectionProvider
 	public String getKey() {
 		return StringBundler.concat(
 			RelatedInfoItemCollectionProvider.super.getKey(), "_",
-			_objectDefinition1.getCompanyId(), "_",
-			_objectDefinition1.getName(), "_", objectRelationship.getName());
+			_objectDefinition1.getClassName(), "_",
+			objectRelationship.getName());
 	}
 
 	@Override

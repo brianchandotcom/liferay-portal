@@ -6,6 +6,9 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
@@ -74,6 +77,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -84,6 +88,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -93,6 +98,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -119,6 +125,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -154,6 +161,7 @@ public class ObjectFieldLocalServiceTest {
 				new ServiceContext());
 	}
 
+	@FeatureFlag("LPD-74813")
 	@Test
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
@@ -572,6 +580,22 @@ public class ObjectFieldLocalServiceTest {
 						).build())));
 		}
 
+		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
+			ObjectFieldSettingConstants.VALUE_DEPOT_FILES,
+			SetUtil.fromArray(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH));
+		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
+			ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
+			SetUtil.fromArray(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH));
+		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
+			ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA,
+			SetUtil.fromArray(ObjectFieldSettingConstants.NAME_STORAGE_DEPOT));
+
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
 			"The settings anySetting are not allowed for object field text",
@@ -675,6 +699,68 @@ public class ObjectFieldLocalServiceTest {
 				String.valueOf(initialValue), null, null, false,
 				StringPool.BLANK));
 
+		Group group = GroupTestUtil.addGroup();
+
+		String storageDepot = group.getExternalReferenceCode();
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.InvalidValue.class,
+			String.format(
+				"The value %s of setting \"%s\" is invalid for object field " +
+					"\"upload\"",
+				storageDepot, ObjectFieldSettingConstants.NAME_STORAGE_DEPOT),
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"upload"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER_TO_DEPOT_FILES
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_SHOW_FILES_IN_LIBRARY
+							).value(
+								StringPool.TRUE
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+							).value(
+								storageDepot
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_LIBRARY_PATH
+							).value(
+								RandomTestUtil.randomString()
+							).build())
+					).build())));
+
 		String uniqueValues = RandomTestUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -745,6 +831,55 @@ public class ObjectFieldLocalServiceTest {
 			"The settings \"maxLength\" are required for object field \"text\"",
 			() -> _addCustomObjectDefinitionWithTextObjectField(
 				null, "true", null));
+		AssertUtils.assertFailure(
+			ObjectFieldSettingValueException.MissingRequiredValues.class,
+			"The settings \"storageLibraryPath\" are required for object " +
+				"field \"upload\"",
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"upload"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.
+									VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_SHOW_FILES_IN_LIBRARY
+							).value(
+								StringPool.TRUE
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_LIBRARY_PATH
+							).value(
+								StringPool.BLANK
+							).build())
+					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
 			"The settings \"timeStorage\" are required for object field " +
@@ -1737,6 +1872,7 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
+	@FeatureFlag("LPD-74813")
 	@Test
 	public void testObjectFieldSettings() throws Exception {
 
@@ -1789,6 +1925,12 @@ public class ObjectFieldLocalServiceTest {
 						ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
 					).value(
 						"100"
+					).build(),
+					new ObjectFieldSettingBuilder(
+					).name(
+						ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY
+					).value(
+						StringPool.FALSE
 					).build())
 			).build());
 
@@ -1803,6 +1945,9 @@ public class ObjectFieldLocalServiceTest {
 					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"
+			).put(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				StringPool.FALSE
 			).build());
 
 		_addOrUpdateCustomObjectField(
@@ -1834,6 +1979,204 @@ public class ObjectFieldLocalServiceTest {
 			).put(
 				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
 				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA
+			).put(
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
+			).build());
+
+		_addOrUpdateCustomObjectField(
+			attachmentObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS
+				).value(
+					"png"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE
+				).value(
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+				).value(
+					"10"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY
+				).value(
+					StringPool.TRUE
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH
+				).value(
+					objectDefinition.getLabel(LocaleUtil.US)
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			attachmentObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
+			).put(
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+			).put(
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
+			).put(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				StringPool.TRUE
+			).put(
+				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				objectDefinition.getLabel(LocaleUtil.US)
+			).build());
+
+		_addOrUpdateCustomObjectField(
+			attachmentObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS
+				).value(
+					"png"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE
+				).value(
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DEPOT_FILES
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+				).value(
+					"10"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY
+				).value(
+					StringPool.FALSE
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			attachmentObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
+			).put(
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+				ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DEPOT_FILES
+			).put(
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
+			).put(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				StringPool.FALSE
+			).build());
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		Group group = depotEntry.getGroup();
+
+		_addOrUpdateCustomObjectField(
+			attachmentObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS
+				).value(
+					"png"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE
+				).value(
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DEPOT_FILES
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+				).value(
+					"10"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY
+				).value(
+					StringPool.TRUE
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+				).value(
+					String.valueOf(group.getGroupId())
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH
+				).value(
+					objectDefinition.getLabel(LocaleUtil.US)
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			attachmentObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
+			).put(
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+				ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DEPOT_FILES
+			).put(
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
+			).put(
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				StringPool.TRUE
+			).put(
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				String.valueOf(group.getGroupId())
+			).put(
+				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				objectDefinition.getLabel(LocaleUtil.US)
+			).build());
+
+		_addOrUpdateCustomObjectField(
+			attachmentObjectField,
+			Arrays.asList(
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS
+				).value(
+					"png"
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE
+				).value(
+					ObjectFieldSettingConstants.VALUE_DEPOT_FILES
+				).build(),
+				new ObjectFieldSettingBuilder(
+				).name(
+					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+				).value(
+					"10"
+				).build()));
+
+		_assertObjectFieldSettingsValues(
+			attachmentObjectField.getObjectFieldId(),
+			HashMapBuilder.put(
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
+			).put(
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+				ObjectFieldSettingConstants.VALUE_DEPOT_FILES
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).build());
@@ -2813,6 +3156,67 @@ public class ObjectFieldLocalServiceTest {
 				objectField.getDBTableName(), objectField.getDBColumnName()));
 	}
 
+	private void _assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
+		String fileSource, Set<String> objectFieldSettingsNames) {
+
+		AssertUtils.assertFailure(
+			ObjectFieldSettingNameException.NotAllowedNames.class,
+			String.format(
+				"The settings %s are not allowed for object field upload",
+				StringUtil.merge(
+					objectFieldSettingsNames, StringPool.COMMA_AND_SPACE)),
+			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				Collections.singletonList(
+					new AttachmentObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"upload"
+					).objectFieldSettings(
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								fileSource
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_SHOW_FILES_IN_LIBRARY
+							).value(
+								String.valueOf(RandomTestUtil.randomBoolean())
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+							).value(
+								RandomTestUtil.randomString()
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_LIBRARY_PATH
+							).value(
+								RandomTestUtil.randomString()
+							).build())
+					).build())));
+	}
+
 	private void _assertFailureObjectFieldSettingInvalidDefaultValueType(
 			String businessType)
 		throws Exception {
@@ -3275,6 +3679,9 @@ public class ObjectFieldLocalServiceTest {
 			readOnlyConditionExpression, objectField.isRequired(),
 			objectField.isState(), objectField.getObjectFieldSettings());
 	}
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;

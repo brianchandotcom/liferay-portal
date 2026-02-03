@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.cluster.ClusterableInvokerUtil;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -670,6 +671,9 @@ public class ClientExtensionEntryLocalServiceImpl
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

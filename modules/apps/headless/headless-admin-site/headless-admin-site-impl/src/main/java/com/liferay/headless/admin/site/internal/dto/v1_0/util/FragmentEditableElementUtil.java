@@ -540,10 +540,9 @@ public class FragmentEditableElementUtil {
 				companyId,
 				actionFragmentEditableElementValue.getErrorActionInteraction(),
 				actionFragmentEditableElementValue.getFragmentMappedValue(),
-				infoItemServiceRegistry,
+				infoItemServiceRegistry, scopeGroupId,
 				actionFragmentEditableElementValue.
-					getSuccessActionInteraction(),
-				scopeGroupId),
+					getSuccessActionInteraction()),
 			_getTextFragmentValueJSONObject(
 				companyId, infoItemServiceRegistry, scopeGroupId,
 				actionFragmentEditableElementValue.getTextFragmentValue()));
@@ -946,8 +945,8 @@ public class FragmentEditableElementUtil {
 	private static JSONObject _toConfigJSONObject(
 		long companyId, ActionInteraction errorActionInteraction,
 		FragmentMappedValue fragmentMappedValue,
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		ActionInteraction successActionInteraction, long scopeGroupId) {
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId,
+		ActionInteraction successActionInteraction) {
 
 		return JSONUtil.put(
 			"config",

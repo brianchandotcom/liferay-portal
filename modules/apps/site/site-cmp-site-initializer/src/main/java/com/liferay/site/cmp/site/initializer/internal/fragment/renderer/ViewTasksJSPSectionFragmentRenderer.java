@@ -6,7 +6,11 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
+import com.liferay.object.service.ObjectStateFlowLocalService;
+import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.display.context.ViewTasksSectionDisplayContext;
@@ -42,7 +46,9 @@ public class ViewTasksJSPSectionFragmentRenderer
 				WebKeys.THEME_DISPLAY);
 
 		return new ViewTasksSectionDisplayContext(
-			httpServletRequest,
+			httpServletRequest, _listTypeEntryLocalService,
+			_objectFieldLocalService, _objectStateFlowLocalService,
+			_objectStateLocalService,
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
 					"L_CMP_PROJECT", themeDisplay.getCompanyId()),
@@ -57,6 +63,18 @@ public class ViewTasksJSPSectionFragmentRenderer
 	}
 
 	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
+
+	@Reference
+	private ObjectStateFlowLocalService _objectStateFlowLocalService;
+
+	@Reference
+	private ObjectStateLocalService _objectStateLocalService;
 
 }

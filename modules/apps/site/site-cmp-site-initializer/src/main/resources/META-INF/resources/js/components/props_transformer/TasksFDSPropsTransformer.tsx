@@ -19,6 +19,7 @@ import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
+import EditBulkTaskStateModalContent from '../modal/EditBulkTaskStateModalContent';
 import {cmpTasksFDSAtom} from './atoms';
 
 const _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
@@ -90,10 +91,12 @@ const WORKFLOW_TASK_MODALS: Record<
 };
 
 export default function TasksFDSPropsTransformer({
+	additionalProps,
 	creationMenu,
 	itemsActions = [],
 	...otherProps
 }: {
+	additionalProps: any;
 	apiURL?: string;
 	creationMenu: any;
 	itemsActions?: any[];
@@ -277,7 +280,24 @@ export default function TasksFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-			if (action?.data?.id === 'delete') {
+			if (action?.data?.id === 'update-state') {
+				openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						EditBulkTaskStateModalContent({
+							apiURL: otherProps?.apiURL,
+							closeModal,
+							selectedData,
+							states: additionalProps.states,
+						}),
+					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
 					apiURL: otherProps.apiURL,
 					selectedData,

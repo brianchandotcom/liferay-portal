@@ -19,6 +19,16 @@ const displayAssignSuccessToast = (title: string, value: string) => {
 	});
 };
 
+const displayErrorToast = (errorMessage?: string) => {
+	openToast({
+		message:
+			errorMessage ||
+			Liferay.Language.get('an-unexpected-error-occurred'),
+		title: Liferay.Language.get('error'),
+		type: 'danger',
+	});
+};
+
 const displayStateSuccessToast = () => {
 	openToast({
 		message: Liferay.Language.get('state-was-successfully-updated'),
@@ -26,4 +36,4 @@ const displayStateSuccessToast = () => {
 	});
 };
 
-export {displayAssignSuccessToast, displayStateSuccessToast};
+export {displayAssignSuccessToast, displayErrorToast, displayStateSuccessToast};

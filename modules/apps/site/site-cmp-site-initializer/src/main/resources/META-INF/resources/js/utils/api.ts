@@ -5,6 +5,8 @@
 
 import {ApiHelper} from '@liferay/site-cms-site-initializer';
 
+import {ITask} from './types';
+
 export async function deleteTaskById({taskId}: {taskId: string}) {
 	return await ApiHelper.delete(`/o/cmp/tasks/${taskId}`);
 }
@@ -48,7 +50,7 @@ export async function patchTaskById({
 	body: {[key: string]: any};
 	taskId: string;
 }) {
-	return await ApiHelper.patch(body, `/o/cmp/tasks/${taskId}`);
+	return await ApiHelper.patch<ITask>(body, `/o/cmp/tasks/${taskId}`);
 }
 
 export async function postTaskByScope({

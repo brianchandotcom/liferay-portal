@@ -71,7 +71,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 				button
 				className='button-root'
 				displayType='primary'
-				href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
+				href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 					groupId
 				})}
 			>
@@ -133,7 +133,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 									className='button-root'
 									displayType='primary'
 									href={toRoute(
-										Routes.SETTINGS_ADD_DATA_SOURCE,
+										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
 											groupId
 										}
@@ -203,7 +203,7 @@ const KnownIndividuals: React.FC<IKnownIndividualsProps> = () => {
 									className='button-root'
 									displayType='primary'
 									href={toRoute(
-										Routes.SETTINGS_ADD_DATA_SOURCE,
+										Routes.SETTINGS_DATA_SOURCE_LIST,
 										{
 											groupId
 										}

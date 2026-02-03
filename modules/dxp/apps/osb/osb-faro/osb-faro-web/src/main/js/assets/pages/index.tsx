@@ -182,7 +182,7 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 												className='button-root'
 												displayType='primary'
 												href={toRoute(
-													Routes.SETTINGS_ADD_DATA_SOURCE,
+													Routes.SETTINGS_DATA_SOURCE_LIST,
 													{
 														groupId
 													}

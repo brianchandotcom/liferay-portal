@@ -91,9 +91,12 @@ const List: React.FC<IListProps> = ({channelId, groupId, ...otherProps}) => {
 								button
 								className='button-root'
 								displayType='primary'
-								href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
-									groupId
-								})}
+								href={toRoute(
+									Routes.SETTINGS_DATA_SOURCE_LIST,
+									{
+										groupId
+									}
+								)}
 							>
 								{Liferay.Language.get('connect-data-source')}
 							</ClayLink>

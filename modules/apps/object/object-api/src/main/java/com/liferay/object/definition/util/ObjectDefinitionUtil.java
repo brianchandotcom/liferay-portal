@@ -26,14 +26,6 @@ import java.util.Map;
  */
 public class ObjectDefinitionUtil {
 
-	public static String getClassName(String portletId) {
-		return StringUtil.replaceFirst(
-			portletId,
-			ObjectPortletKeys.OBJECT_DEFINITIONS + StringPool.UNDERLINE,
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
-	}
-
 	public static String generateRandomClassName() {
 		StringBuilder sb = new StringBuilder();
 

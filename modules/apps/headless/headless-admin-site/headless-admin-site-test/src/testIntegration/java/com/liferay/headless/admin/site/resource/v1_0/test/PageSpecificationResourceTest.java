@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
-import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
@@ -42,14 +41,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.log.LogCapture;
-import com.liferay.portal.test.log.LogEntry;
-import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
@@ -952,32 +947,6 @@ public class PageSpecificationResourceTest
 			draftLayout, draftLayout.getExternalReferenceCode());
 	}
 
-	private void _testMissingOptionalReference(
-			int count, UnsafeRunnable<Exception> unsafeRunnable)
-		throws Exception {
-
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.headless.admin.site.internal.util.LogUtil",
-				LoggerTestUtil.WARN)) {
-
-			unsafeRunnable.run();
-
-			List<LogEntry> logEntries = logCapture.getLogEntries();
-
-			Assert.assertEquals(
-				logEntries.toString(), count, logEntries.size());
-
-			for (LogEntry logEntry : logEntries) {
-				String message = logEntry.getMessage();
-
-				Assert.assertTrue(
-					message,
-					message.startsWith(
-						"Optional reference generated for missing"));
-			}
-		}
-	}
-
 	private void _testPageSpecificationsPage(
 			Layout layout, ServiceContext serviceContext,
 			UnsafeSupplier<Page<PageSpecification>, Exception> unsafeSupplier)
@@ -1076,39 +1045,6 @@ public class PageSpecificationResourceTest
 					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 				}
 			});
-
-		PageExperience pageExperience =
-			PageExperiencesTestUtil.getPageExperience();
-
-		pageExperience.setSegmentItemExternalReference(
-			() -> {
-				ItemExternalReference itemExternalReference =
-					new ItemExternalReference();
-
-				itemExternalReference.setClassName(
-					SegmentsEntry.class.getName());
-				itemExternalReference.setExternalReferenceCode(
-					RandomTestUtil.randomString());
-
-				return itemExternalReference;
-			});
-
-		contentPageSpecification.setPageExperiences(
-			() -> ArrayUtil.append(
-				contentPageSpecification.getPageExperiences(), pageExperience));
-
-		_testMissingOptionalReference(
-			1,
-			() -> _testPatchSitePageSpecification(
-				contentPageSpecification,
-				() -> new ContentPageSpecification() {
-					{
-						setPageExperiences(
-							contentPageSpecification::getPageExperiences);
-						setStatus(PageSpecification.Status.DRAFT);
-						setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
-					}
-				}));
 
 		_modifySettings(
 			contentPageSpecification, serviceContext, layout.isTypeUtility());

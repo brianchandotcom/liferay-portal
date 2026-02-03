@@ -5,5 +5,6 @@
 
 export {default as FDSAdminItemSelector} from '../item/selector/FDSAdminItemSelector';
 export {default as CustomDataSets} from './CustomDataSets';
+export {default as ManageUserViews} from './ManageUserViews';
 export {default as SystemDataSets} from './SystemDataSets';
 export {default as DataSet} from './data_set/DataSet';

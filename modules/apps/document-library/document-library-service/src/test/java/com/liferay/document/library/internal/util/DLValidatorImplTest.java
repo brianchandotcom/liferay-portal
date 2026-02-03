@@ -10,6 +10,7 @@ import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfigurati
 import com.liferay.document.library.internal.configuration.helper.DLSizeLimitConfigurationHelper;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
 import com.liferay.document.library.kernel.exception.FileMimeTypeException;
+import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -160,6 +161,59 @@ public class DLValidatorImplTest {
 		_validateFileMimeType(new String[] {"*"}, "text/plain");
 		_validateFileMimeType(new String[] {"text/plain"}, "application/pdf");
 		_validateFileMimeType(new String[] {"text/plain"}, "text/plain");
+	}
+
+	@Test
+	public void testValidateFileSize() throws Exception {
+		Mockito.when(
+			_uploadServletRequestConfigurationProvider.getMaxSize()
+		).thenReturn(
+			40L
+		);
+
+		long groupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_dlSizeLimitConfigurationHelper.getGroupMimeTypeSizeLimit(
+				groupId, "image/png")
+		).thenReturn(
+			10L
+		);
+
+		String fileName = RandomTestUtil.randomString();
+		String mimeType = RandomTestUtil.randomString();
+
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, 20L);
+
+		_dlValidator.validateFileSize(groupId, fileName, "image/png", 10L);
+
+		try {
+			_dlValidator.validateFileSize(groupId, fileName, mimeType, 50L);
+
+			Assert.fail();
+		}
+		catch (FileSizeException fileSizeException) {
+			Assert.assertEquals(40L, fileSizeException.getMaxSize());
+			Assert.assertEquals(
+				"50 exceeds the global maximum permitted size of 40 for file " +
+					fileName,
+				fileSizeException.getMessage());
+			Assert.assertNull(fileSizeException.getMimeType());
+		}
+
+		try {
+			_dlValidator.validateFileSize(groupId, fileName, "image/png", 20L);
+
+			Assert.fail();
+		}
+		catch (FileSizeException fileSizeException) {
+			Assert.assertEquals(10L, fileSizeException.getMaxSize());
+			Assert.assertEquals(
+				"20 exceeds the mime type 'image/png' maximum permitted size " +
+					"of 10 for file " + fileName,
+				fileSizeException.getMessage());
+			Assert.assertEquals("image/png", fileSizeException.getMimeType());
+		}
 	}
 
 	@Test

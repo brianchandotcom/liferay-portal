@@ -255,6 +255,15 @@
 		]
 	},
 	{
+		"classNames": [
+			"SchedulerEntry"
+		],
+		"issueKey": "LPD-8091",
+		"removeImplements": [
+			"StorageTypeAware"
+		]
+	},
+	{
 		"from": "new CalendarBookingStartTimeComparator()",
 		"issueKey": "LPD-25955",
 		"skipParametersValidation": true,

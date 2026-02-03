@@ -125,28 +125,35 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	return (
 		<div className="task-history-container">
 			<List>
-				{auditEvents.map((auditEvent, index) => (
-					<List.Item className="border-0" flex key={index}>
-						<List.ItemField>
-							<AssigneeAvatar
-								image={auditEvent.creator?.image}
-								name={auditEvent.creator?.name || ''}
-							/>
-						</List.ItemField>
+				{auditEvents
+					.filter(({auditFieldChanges, eventType}) => {
+						return (
+							eventType !== EventType.UPDATE ||
+							!!auditFieldChanges?.length
+						);
+					})
+					.map((auditEvent, index) => (
+						<List.Item className="border-0" flex key={index}>
+							<List.ItemField>
+								<AssigneeAvatar
+									image={auditEvent.creator?.image}
+									name={auditEvent.creator?.name || ''}
+								/>
+							</List.ItemField>
 
-						<List.ItemField expand>
-							<List.ItemTitle className="text-weight-normal">
-								{getAuditEventLabel(auditEvent)}
-							</List.ItemTitle>
+							<List.ItemField expand>
+								<List.ItemTitle className="text-weight-normal">
+									{getAuditEventLabel(auditEvent)}
+								</List.ItemTitle>
 
-							<List.ItemText>
-								{new Date(
-									auditEvent.dateCreated
-								).toLocaleString()}
-							</List.ItemText>
-						</List.ItemField>
-					</List.Item>
-				))}
+								<List.ItemText>
+									{new Date(
+										auditEvent.dateCreated
+									).toLocaleString()}
+								</List.ItemText>
+							</List.ItemField>
+						</List.Item>
+					))}
 			</List>
 		</div>
 	);

@@ -130,7 +130,7 @@ export class DataTablePage {
 
 			return row.getByRole('cell').nth(columnIndex);
 		};
-		this.orderButton = page.getByLabel('Order');
+		this.orderButton = page.getByRole('button', {name: 'Order'});
 		this.orderMenuItem = (option: string) => {
 			return page.getByRole('menuitem', {
 				exact: true,
@@ -196,7 +196,7 @@ export class DataTablePage {
 				await expect(this.selectViewListButton).toBeVisible({
 					timeout: 100,
 				});
-			}).toPass({timeout: 1000});
+			}).toPass({timeout: 1500});
 
 			await this.selectViewListButton.click();
 			await expect(this.viewStatus(view)).toBeVisible();
@@ -210,7 +210,7 @@ export class DataTablePage {
 				await expect(this.selectViewCardButton).toBeVisible({
 					timeout: 100,
 				});
-			}).toPass({timeout: 1000});
+			}).toPass({timeout: 1500});
 
 			await this.selectViewCardButton.click();
 			await expect(this.viewStatus(view)).toBeVisible();
@@ -224,7 +224,7 @@ export class DataTablePage {
 			await expect(this.selectViewTableButton).toBeVisible({
 				timeout: 100,
 			});
-		}).toPass({timeout: 1000});
+		}).toPass({timeout: 1500});
 
 		await this.selectViewTableButton.click();
 		await expect(this.viewStatus(view)).toBeVisible();

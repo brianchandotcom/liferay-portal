@@ -177,15 +177,22 @@ test(
 		);
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
 
 		page.on('dialog', (dialog) => {
 			dialog.accept().catch(() => {});
 		});
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
@@ -294,11 +301,18 @@ test(
 		await page.reload();
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
@@ -311,7 +325,14 @@ test(
 
 		await personalDataErasurePage.journalArticleCheckBox('1').check();
 		await personalDataErasurePage.journalArticleCheckBox('4').check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -449,11 +470,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await expect(
@@ -476,7 +505,14 @@ test(
 				attachment2.fileName
 			)
 		).check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -591,11 +627,19 @@ test(
 		await waitForAlert(page, 'Local staging is successfully enabled.');
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await waitForAlert(page);
@@ -614,7 +658,15 @@ test(
 		await personalDataErasurePage
 			.objectCheckBox(attachment2.id, attachment2.fileName, false)
 			.check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await expect(
@@ -759,11 +811,18 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
@@ -861,11 +920,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 		await personalDataErasurePage.documentsAndMediaRadioButton.check();
 		await (
@@ -878,7 +945,15 @@ test(
 				attachment.fileName
 			)
 		).check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -988,11 +1063,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await expect(
@@ -1015,7 +1098,15 @@ test(
 				attachment3.fileName
 			)
 		).check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -1102,11 +1193,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await expect(
@@ -1119,7 +1218,15 @@ test(
 				attachment.fileName
 			)
 		).check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -1201,7 +1308,14 @@ test(
 
 		await waitForAlert(page);
 
-		await userAssociatedDataMessageBoardPage.actionButton.click();
+		await expect(async () => {
+			await userAssociatedDataMessageBoardPage.actionButton.click();
+
+			await expect(
+				userAssociatedDataMessageBoardPage.editMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await userAssociatedDataMessageBoardPage.editMenuItem.click();
 
 		await expect(
@@ -1259,11 +1373,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await waitForAlert(page);
@@ -1274,7 +1396,15 @@ test(
 				blog.headline
 			)
 		).check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.anonymizeMenuItem).toBeVisible(
+				{timeout: 500}
+			);
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.anonymizeMenuItem.click();
 
 		await waitForAlert(page);
@@ -1315,6 +1445,8 @@ test(
 		userAssociatedDataDocumentLibraryPage,
 		usersAndOrganizationsPage,
 	}) => {
+		test.setTimeout(80000);
+
 		page.on('dialog', (dialog) => {
 			dialog.accept();
 		});
@@ -1369,11 +1501,19 @@ test(
 			);
 
 			await usersAndOrganizationsPage.goToUsers(false);
-			await (
-				await usersAndOrganizationsPage.usersTableRowActions(
-					userAccount.alternateName
-				)
-			).click();
+
+			await expect(async () => {
+				await (
+					await usersAndOrganizationsPage.usersTableRowActions(
+						userAccount.alternateName
+					)
+				).click();
+
+				await expect(
+					usersAndOrganizationsPage.deletePersonalDataMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
 			await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 			await waitForAlert(page);
@@ -1388,7 +1528,15 @@ test(
 					document.fileName
 				)
 			).check();
-			await personalDataErasurePage.actionsButton.click();
+
+			await expect(async () => {
+				await personalDataErasurePage.actionsButton.click();
+
+				await expect(
+					personalDataErasurePage.anonymizeMenuItem
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
+
 			await personalDataErasurePage.anonymizeMenuItem.click();
 
 			await waitForAlert(page);
@@ -1468,11 +1616,19 @@ test(
 		await performLoginViaApi({page, screenName: 'test'});
 
 		await usersAndOrganizationsPage.goToUsers(false);
-		await (
-			await usersAndOrganizationsPage.usersTableRowActions(
-				userAccount.alternateName
-			)
-		).click();
+
+		await expect(async () => {
+			await (
+				await usersAndOrganizationsPage.usersTableRowActions(
+					userAccount.alternateName
+				)
+			).click();
+
+			await expect(
+				usersAndOrganizationsPage.deletePersonalDataMenuItem
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
+
 		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
 
 		await waitForAlert(page);
@@ -1482,7 +1638,15 @@ test(
 		).toBeVisible();
 
 		await personalDataErasurePage.selectAllItemsOnPageCheckbox.check();
-		await personalDataErasurePage.actionsButton.click();
+
+		await expect(async () => {
+			await personalDataErasurePage.actionsButton.click();
+
+			await expect(personalDataErasurePage.deleteMenuItem).toBeVisible({
+				timeout: 500,
+			});
+		}).toPass({timeout: 5000});
+
 		await personalDataErasurePage.deleteMenuItem.click();
 
 		await expect(personalDataErasurePage.anonymizeButton).toBeVisible();

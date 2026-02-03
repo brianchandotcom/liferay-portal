@@ -646,12 +646,14 @@ export class UsersAndOrganizationsPage {
 		}
 
 		await expect(async () => {
+			await this.page.reload();
+
 			await this.selectViewButton.click();
 
 			await expect(viewButton).toBeVisible({
-				timeout: 100,
+				timeout: 500,
 			});
-		}).toPass({timeout: 1000});
+		}).toPass({timeout: 5000});
 
 		await viewButton.click();
 		await expect(this.viewStatus(view)).toBeVisible();

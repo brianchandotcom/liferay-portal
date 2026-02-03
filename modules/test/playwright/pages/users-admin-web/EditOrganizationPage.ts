@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {UsersAndOrganizationsPage} from './UsersAndOrganizationsPage';
@@ -77,11 +77,16 @@ export class EditOrganizationPage {
 	}
 
 	async gotoOrganizationEditOpeningHoursTab(organizationName: string) {
-		await (
-			await this.usersAndOrganizationsPage.organizationsTable.rowActions(
-				organizationName
-			)
-		).click();
+		await expect(async () => {
+			await (
+				await this.usersAndOrganizationsPage.organizationsTable.rowActions(
+					organizationName
+				)
+			).click();
+
+			await expect(this.organizationEditMenuItem).toBeVisible();
+		}).toPass({timeout: 5000});
+
 		await this.organizationEditMenuItem.click();
 		await this.contactLink.click();
 		await this.openingHoursLink.click();

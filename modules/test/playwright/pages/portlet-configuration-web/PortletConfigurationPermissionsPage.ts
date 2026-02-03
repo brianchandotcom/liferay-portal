@@ -42,9 +42,11 @@ export class PortletConfigurationPermissionsPage {
 		this.productMenuPage = new ProductMenuPage(page);
 
 		this.clearLink = this.permissionsFrame.getByLabel('Clear');
-		this.ownerRoleCell = this.permissionsFrame.getByRole('cell', {
-			name: 'Owner',
-		});
+		this.ownerRoleCell = this.permissionsFrame
+			.getByRole('cell', {
+				name: 'Owner',
+			})
+			.first();
 		this.resultsBanner = this.permissionsFrame.getByText('Found for');
 		this.saveButton = this.permissionsFrame.getByRole('button', {
 			name: 'Save',

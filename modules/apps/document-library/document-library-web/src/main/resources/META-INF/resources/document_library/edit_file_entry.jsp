@@ -250,9 +250,18 @@ renderResponse.setTitle(headerTitle);
 
 				<%
 				FileSizeException fileSizeException = (FileSizeException)errorException;
+
+				String maxSize = LanguageUtil.formatStorageSize(fileSizeException.getMaxSize(), locale);
 				%>
 
-				<liferay-ui:message arguments="<%= LanguageUtil.formatStorageSize(fileSizeException.getMaxSize(), locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+				<c:choose>
+					<c:when test="<%= fileSizeException.getMimeType() == null %>">
+						<liferay-ui:message arguments="<%= maxSize %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+					</c:when>
+					<c:otherwise>
+						<liferay-ui:message arguments="<%= new Object[] {maxSize, fileSizeException.getMimeType()} %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x-for-type-x" translateArguments="<%= false %>" />
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:error>
 
 			<liferay-ui:error exception="<%= UploadRequestSizeException.class %>">

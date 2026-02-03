@@ -1278,16 +1278,22 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		Assert.assertThrows(
-			MissingPortletDataHandlerException.class,
-			() -> new ExportImportExecutor(
-			).withGroupId(
-				group.getGroupId()
-			).withLARFile(
-				larFile
-			).withObjectEntries(
-				objectDefinition
-			).executeImport());
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.exportimport.internal.lifecycle." +
+					"LoggerExportImportLifecycleListener",
+				LoggerTestUtil.ERROR)) {
+
+			Assert.assertThrows(
+				MissingPortletDataHandlerException.class,
+				() -> new ExportImportExecutor(
+				).withGroupId(
+					group.getGroupId()
+				).withLARFile(
+					larFile
+				).withObjectEntries(
+					objectDefinition
+				).executeImport());
+		}
 
 		ObjectDefinition targetObjectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(

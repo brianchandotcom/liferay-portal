@@ -44,14 +44,14 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the o auth client as local metadata remote service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OAuthClientASLocalMetadataServiceUtil} if injection and service tracking are not available.
 	 */
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String authorizationEndpoint, boolean enabled, String issuer,
-			String jwksUri, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpointString, String userinfoEndpoint)
+			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String metadataJSON, String wellKnownURISuffix)
+			String authorizationEndpoint, String issuer, String jwksURI,
+			boolean localWellKnownEnabled, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
@@ -83,7 +83,7 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, boolean enabled,
+			long companyId, boolean localWellKnownEnabled,
 			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
 		throws PortalException;
 
@@ -113,16 +113,16 @@ public interface OAuthClientASLocalMetadataService extends BaseService {
 		long userId, int start, int end);
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			boolean enabled, String issuerString, String jwksUri,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpointString,
-			String userinfoEndpoint)
+			long oAuthClientASLocalMetadataId, String metadataJSON,
+			String wellKnownURISuffix)
 		throws PortalException;
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String metadataJSON,
-			String wellKnownURISuffix)
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException;
 
 }

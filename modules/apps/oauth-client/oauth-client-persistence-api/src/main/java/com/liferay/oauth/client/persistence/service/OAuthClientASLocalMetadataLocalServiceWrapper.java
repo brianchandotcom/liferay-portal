@@ -34,29 +34,29 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			addOAuthClientASLocalMetadata(
-				long userId, String issuer, boolean localWellKnownEnabled,
-				String authorizationEndpoint, String jwksUri,
-				String[] supportedGrantTypes, String[] supportedScopes,
-				String[] supportedSubjectTypes, String tokenEndpointString,
-				String userinfoEndpoint)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			addOAuthClientASLocalMetadata(
-				userId, issuer, localWellKnownEnabled, authorizationEndpoint,
-				jwksUri, supportedGrantTypes, supportedScopes,
-				supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			addOAuthClientASLocalMetadata(
 				long userId, String metadataJSON, String wellKnownURISuffix)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
 				userId, metadataJSON, wellKnownURISuffix);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			addOAuthClientASLocalMetadata(
+				long userId, String authorizationEndpoint, String issuer,
+				String jwksURI, boolean localWellKnownEnabled,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpoint,
+				String userInfoEndpoint)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataLocalService.
+			addOAuthClientASLocalMetadata(
+				userId, authorizationEndpoint, issuer, jwksURI,
+				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
+				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**
@@ -284,14 +284,14 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 		fetchOAuthClientASLocalMetadata(
-			long companyId, boolean enabled,
+			long companyId, boolean localWellKnownEnabled,
 			com.liferay.portal.kernel.util.OrderByComparator
 				<com.liferay.oauth.client.persistence.model.
 					OAuthClientASLocalMetadata> orderByComparator) {
 
 		return _oAuthClientASLocalMetadataLocalService.
 			fetchOAuthClientASLocalMetadata(
-				companyId, enabled, orderByComparator);
+				companyId, localWellKnownEnabled, orderByComparator);
 	}
 
 	@Override
@@ -451,24 +451,6 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 			updateOAuthClientASLocalMetadata(
-				long oAuthClientASLocalMetadataId, String issuer,
-				boolean localWellKnownEnabled, String authorizationEndpoint,
-				String jwksUri, String[] supportedGrantTypes,
-				String[] supportedScopes, String[] supportedSubjectTypes,
-				String tokenEndpointString, String userinfoEndpoint)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _oAuthClientASLocalMetadataLocalService.
-			updateOAuthClientASLocalMetadata(
-				oAuthClientASLocalMetadataId, issuer, localWellKnownEnabled,
-				authorizationEndpoint, jwksUri, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpointString,
-				userinfoEndpoint);
-	}
-
-	@Override
-	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
-			updateOAuthClientASLocalMetadata(
 				long oAuthClientASLocalMetadataId, String metadataJSON,
 				String wellKnownURISuffix)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -476,6 +458,24 @@ public class OAuthClientASLocalMetadataLocalServiceWrapper
 		return _oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadataId, metadataJSON, wellKnownURISuffix);
+	}
+
+	@Override
+	public com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
+			updateOAuthClientASLocalMetadata(
+				long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+				String issuer, String jwksURI, boolean localWellKnownEnabled,
+				String[] supportedGrantTypes, String[] supportedScopes,
+				String[] supportedSubjectTypes, String tokenEndpoint,
+				String userInfoEndpoint)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _oAuthClientASLocalMetadataLocalService.
+			updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
+				jwksURI, localWellKnownEnabled, supportedGrantTypes,
+				supportedScopes, supportedSubjectTypes, tokenEndpoint,
+				userInfoEndpoint);
 	}
 
 	/**

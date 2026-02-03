@@ -32,24 +32,24 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			String authorizationEndpoint, boolean enabled, String issuer,
-			String jwksUri, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpointString, String userinfoEndpoint)
-		throws PortalException {
-
-		return getService().addOAuthClientASLocalMetadata(
-			authorizationEndpoint, enabled, issuer, jwksUri,
-			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-			tokenEndpointString, userinfoEndpoint);
-	}
-
-	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
 			metadataJSON, wellKnownURISuffix);
+	}
+
+	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			String authorizationEndpoint, String issuer, String jwksURI,
+			boolean localWellKnownEnabled, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
+		throws PortalException {
+
+		return getService().addOAuthClientASLocalMetadata(
+			authorizationEndpoint, issuer, jwksURI, localWellKnownEnabled,
+			supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+			tokenEndpoint, userInfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadata deleteOAuthClientASLocalMetadata(
@@ -97,12 +97,12 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
-			long companyId, boolean enabled,
+			long companyId, boolean localWellKnownEnabled,
 			OrderByComparator<OAuthClientASLocalMetadata> orderByComparator)
 		throws PortalException {
 
 		return getService().getOAuthClientASLocalMetadata(
-			companyId, enabled, orderByComparator);
+			companyId, localWellKnownEnabled, orderByComparator);
 	}
 
 	public static OAuthClientASLocalMetadata getOAuthClientASLocalMetadata(
@@ -142,26 +142,27 @@ public class OAuthClientASLocalMetadataServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
-			boolean enabled, String issuerString, String jwksUri,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpointString,
-			String userinfoEndpoint)
-		throws PortalException {
-
-		return getService().updateOAuthClientASLocalMetadata(
-			oAuthClientASLocalMetadataId, authorizationEndpoint, enabled,
-			issuerString, jwksUri, supportedGrantTypes, supportedScopes,
-			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
-	}
-
-	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String metadataJSON,
 			String wellKnownURISuffix)
 		throws PortalException {
 
 		return getService().updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId, metadataJSON, wellKnownURISuffix);
+	}
+
+	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
+		throws PortalException {
+
+		return getService().updateOAuthClientASLocalMetadata(
+			oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
+			jwksURI, localWellKnownEnabled, supportedGrantTypes,
+			supportedScopes, supportedSubjectTypes, tokenEndpoint,
+			userInfoEndpoint);
 	}
 
 	public static OAuthClientASLocalMetadataService getService() {

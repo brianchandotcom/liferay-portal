@@ -37,25 +37,25 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.oauth.client.persistence.service.impl.OAuthClientASLocalMetadataLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
-			long userId, String issuer, boolean localWellKnownEnabled,
-			String authorizationEndpoint, String jwksUri,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpointString,
-			String userinfoEndpoint)
-		throws PortalException {
-
-		return getService().addOAuthClientASLocalMetadata(
-			userId, issuer, localWellKnownEnabled, authorizationEndpoint,
-			jwksUri, supportedGrantTypes, supportedScopes,
-			supportedSubjectTypes, tokenEndpointString, userinfoEndpoint);
-	}
-
-	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
 		return getService().addOAuthClientASLocalMetadata(
 			userId, metadataJSON, wellKnownURISuffix);
+	}
+
+	public static OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
+			long userId, String authorizationEndpoint, String issuer,
+			String jwksURI, boolean localWellKnownEnabled,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
+		throws PortalException {
+
+		return getService().addOAuthClientASLocalMetadata(
+			userId, authorizationEndpoint, issuer, jwksURI,
+			localWellKnownEnabled, supportedGrantTypes, supportedScopes,
+			supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 	}
 
 	/**
@@ -246,11 +246,11 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
-		long companyId, boolean enabled,
+		long companyId, boolean localWellKnownEnabled,
 		OrderByComparator<OAuthClientASLocalMetadata> orderByComparator) {
 
 		return getService().fetchOAuthClientASLocalMetadata(
-			companyId, enabled, orderByComparator);
+			companyId, localWellKnownEnabled, orderByComparator);
 	}
 
 	public static OAuthClientASLocalMetadata fetchOAuthClientASLocalMetadata(
@@ -376,27 +376,27 @@ public class OAuthClientASLocalMetadataLocalServiceUtil {
 	}
 
 	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
-			long oAuthClientASLocalMetadataId, String issuer,
-			boolean localWellKnownEnabled, String authorizationEndpoint,
-			String jwksUri, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpointString, String userinfoEndpoint)
-		throws PortalException {
-
-		return getService().updateOAuthClientASLocalMetadata(
-			oAuthClientASLocalMetadataId, issuer, localWellKnownEnabled,
-			authorizationEndpoint, jwksUri, supportedGrantTypes,
-			supportedScopes, supportedSubjectTypes, tokenEndpointString,
-			userinfoEndpoint);
-	}
-
-	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String metadataJSON,
 			String wellKnownURISuffix)
 		throws PortalException {
 
 		return getService().updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId, metadataJSON, wellKnownURISuffix);
+	}
+
+	public static OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
+			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
+			String issuer, String jwksURI, boolean localWellKnownEnabled,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
+		throws PortalException {
+
+		return getService().updateOAuthClientASLocalMetadata(
+			oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
+			jwksURI, localWellKnownEnabled, supportedGrantTypes,
+			supportedScopes, supportedSubjectTypes, tokenEndpoint,
+			userInfoEndpoint);
 	}
 
 	/**

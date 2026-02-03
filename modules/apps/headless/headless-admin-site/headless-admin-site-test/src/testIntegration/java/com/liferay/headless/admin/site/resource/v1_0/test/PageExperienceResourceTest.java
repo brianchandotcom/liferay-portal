@@ -12,15 +12,22 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestU
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.ReferencesTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -172,6 +179,25 @@ public class PageExperienceResourceTest
 				_draftLayout.getExternalReferenceCode(), 3,
 				testGroup.getGroupId(),
 				SegmentsTestUtil.addSegmentsEntry(testCompany.getGroupId())));
+
+		Group companyGroup = GroupLocalServiceUtil.getGroup(
+			testCompany.getGroupId());
+
+		_testMissingOptionalReference(
+			1,
+			() -> _testPostSitePageSpecificationPageExperience(
+				PageExperiencesTestUtil.getPageExperience(
+					_draftLayout.getExternalReferenceCode(), 4,
+					testGroup.getGroupId(), RandomTestUtil.randomString(),
+					companyGroup.getExternalReferenceCode())));
+
+		_testMissingOptionalReference(
+			1,
+			() -> _testPostSitePageSpecificationPageExperience(
+				PageExperiencesTestUtil.getPageExperience(
+					_draftLayout.getExternalReferenceCode(), 5,
+					testGroup.getGroupId(), RandomTestUtil.randomString(),
+					null)));
 	}
 
 	@Override
@@ -352,6 +378,32 @@ public class PageExperienceResourceTest
 			_draftLayout.getExternalReferenceCode());
 
 		return pageExperience;
+	}
+
+	private void _testMissingOptionalReference(
+			int count, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.util.LogUtil",
+				LoggerTestUtil.WARN)) {
+
+			unsafeRunnable.run();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(
+				logEntries.toString(), count, logEntries.size());
+
+			for (LogEntry logEntry : logEntries) {
+				String message = logEntry.getMessage();
+
+				Assert.assertTrue(
+					message,
+					message.startsWith(
+						"Optional reference generated for missing"));
+			}
+		}
 	}
 
 	private void _testPostSitePageSpecificationPageExperience(

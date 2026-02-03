@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
@@ -111,18 +112,31 @@ public class PageExperiencesTestUtil {
 		String pageSpecificationExternalReferenceCode, int priority,
 		long scopeGroupId, SegmentsEntry segmentsEntry) {
 
-		PageExperience pageExperience = getPageExperience();
-
-		pageExperience.setPageElements(
-			PageElementsTestUtil.getPageElements(scopeGroupId));
-		pageExperience.setPageSpecificationExternalReferenceCode(
-			pageSpecificationExternalReferenceCode);
-		pageExperience.setPriority(priority);
+		PageExperience pageExperience = _createBasePageExperience(
+			pageSpecificationExternalReferenceCode, priority, scopeGroupId);
 
 		if (segmentsEntry != null) {
 			pageExperience.setSegmentItemExternalReference(
 				() -> ReferencesTestUtil.getItemExternalReference(
 					segmentsEntry, scopeGroupId));
+		}
+
+		return pageExperience;
+	}
+
+	public static PageExperience getPageExperience(
+		String pageSpecificationExternalReferenceCode, int priority,
+		long scopeGroupId, String segmentsEntryERC,
+		String segmentsEntryScopeERC) {
+
+		PageExperience pageExperience = _createBasePageExperience(
+			pageSpecificationExternalReferenceCode, priority, scopeGroupId);
+
+		if (Validator.isNotNull(segmentsEntryERC)) {
+			pageExperience.setSegmentItemExternalReference(
+				() -> ReferencesTestUtil.getItemExternalReference(
+					SegmentsEntry.class.getName(), segmentsEntryERC,
+					segmentsEntryScopeERC));
 		}
 
 		return pageExperience;
@@ -188,6 +202,21 @@ public class PageExperiencesTestUtil {
 						dropZonePageElements.toArray(new PageElement[0]));
 				});
 		}
+	}
+
+	private static PageExperience _createBasePageExperience(
+		String pageSpecificationExternalReferenceCode, int priority,
+		long scopeGroupId) {
+
+		PageExperience pageExperience = getPageExperience();
+
+		pageExperience.setPageElements(
+			PageElementsTestUtil.getPageElements(scopeGroupId));
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
+		pageExperience.setPriority(priority);
+
+		return pageExperience;
 	}
 
 }

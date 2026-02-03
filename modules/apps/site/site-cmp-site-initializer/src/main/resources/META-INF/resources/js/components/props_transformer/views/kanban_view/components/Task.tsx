@@ -10,6 +10,7 @@ import ClayIcon from '@clayui/icon';
 import Label from '@clayui/label';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
+import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
@@ -33,21 +34,29 @@ import {ItemTypes} from './Column';
 
 import './Task.scss';
 
-export default function Task(props: ITask) {
+export default function Task(task: ITask) {
 	const {itemsActions, loadData} = useContext(KanbanViewContext);
 
-	const [_, drag] = useDrag<{task: ITask; type: string}, void, {}>({
-		item: {task: props, type: ItemTypes.TASK},
+	const [{isDragging}, drag] = useDrag({
+		collect: (monitor) => ({
+			isDragging: !!monitor.isDragging(),
+		}),
+		item: {task, type: ItemTypes.TASK},
 	});
 
 	return (
-		<div className="lfr__kaban-task-card" ref={drag}>
+		<div
+			className={classNames('lfr__kaban-task-card', {
+				'lfr__kaban-task-card-dragging': isDragging,
+			})}
+			ref={drag}
+		>
 			<Card>
 				<Card.Body>
 					<Card.Row>
 						<div className="lfr__kaban-task-card-row">
 							<strong className="lfr__kaban-task-card-row-text-content">
-								{props.embedded.title}
+								{task.embedded.title}
 							</strong>
 
 							<ClayDropDownWithItems
@@ -63,7 +72,7 @@ export default function Task(props: ITask) {
 												)
 												?.href.replace(
 													'{embedded.id}',
-													String(props.embedded.id)
+													String(task.embedded.id)
 												);
 
 											if (editURL) {
@@ -83,7 +92,7 @@ export default function Task(props: ITask) {
 												)
 												?.href.replace(
 													'{embedded.id}',
-													String(props.embedded.id)
+													String(task.embedded.id)
 												);
 
 											if (viewURL) {
@@ -118,7 +127,7 @@ export default function Task(props: ITask) {
 														},
 													},
 													taskId: String(
-														props.embedded.id
+														task.embedded.id
 													),
 												}
 											);
@@ -127,7 +136,7 @@ export default function Task(props: ITask) {
 												loadData();
 
 												displayAssignSuccessToast(
-													props.embedded.title,
+													task.embedded.title,
 													user.name
 												);
 											}
@@ -152,13 +161,13 @@ export default function Task(props: ITask) {
 														closeModal={closeModal}
 														loadData={loadData}
 														taskId={String(
-															props.embedded.id
+															task.embedded.id
 														)}
 														taskTitle={
-															props.embedded.title
+															task.embedded.title
 														}
 														value={
-															props.embedded
+															task.embedded
 																.assignTo
 														}
 													/>
@@ -191,7 +200,7 @@ export default function Task(props: ITask) {
 																await deleteTaskById(
 																	{
 																		taskId: String(
-																			props
+																			task
 																				.embedded
 																				.id
 																		),
@@ -202,7 +211,7 @@ export default function Task(props: ITask) {
 																loadData();
 
 																displayDeleteSuccessToast(
-																	props
+																	task
 																		.embedded
 																		.title
 																);
@@ -216,7 +225,7 @@ export default function Task(props: ITask) {
 															closeModal();
 														}}
 														title={
-															props.embedded.title
+															task.embedded.title
 														}
 													/>
 												),
@@ -248,7 +257,7 @@ export default function Task(props: ITask) {
 							className="lfr__kaban-task-card-row-text-content"
 							displayType="subtitle"
 						>
-							{props.embedded.cmpProjectToCMPTasks.title}
+							{task.embedded.cmpProjectToCMPTasks.title}
 						</Card.Description>
 					</Card.Row>
 
@@ -257,17 +266,17 @@ export default function Task(props: ITask) {
 							<Label
 								displayType={
 									mapStateKeyToDisplayType[
-										props.embedded.state.key
+										task.embedded.state.key
 									]
 								}
 							>
-								{props.embedded.state.name}
+								{task.embedded.state.name}
 							</Label>
 
 							<div className="lfr__kaban-task-card-assignee">
 								<AssigneeAvatar
-									name={props.embedded.assignTo.name}
-									portrait={props.embedded.assignTo.portrait}
+									name={task.embedded.assignTo.name}
+									portrait={task.embedded.assignTo.portrait}
 								/>
 							</div>
 						</div>

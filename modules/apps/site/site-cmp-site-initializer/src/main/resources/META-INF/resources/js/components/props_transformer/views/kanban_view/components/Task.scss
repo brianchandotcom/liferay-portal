@@ -15,6 +15,9 @@
 			font-size: 0.75rem;
 		}
 	}
+	&-dragging {
+		opacity: 0.4;
+	}
 	&-row {
 		align-items: center;
 		display: flex;

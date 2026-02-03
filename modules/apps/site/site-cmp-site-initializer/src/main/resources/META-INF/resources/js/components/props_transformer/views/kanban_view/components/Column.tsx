@@ -18,13 +18,20 @@ import Task from './Task';
 
 import './Column.scss';
 
+import classNames from 'classnames';
+
+interface DragItem {
+	task: ITask;
+	type: ItemTypes;
+}
+
 interface IColumnProps {
 	column: IColumn;
 }
 
-export const ItemTypes = {
-	TASK: 'KANBAN_TASK',
-};
+export enum ItemTypes {
+	TASK = 'KANBAN_TASK',
+}
 
 export default function Column({
 	column: {icon, key, name, tasks},
@@ -32,11 +39,16 @@ export default function Column({
 	const {loadData} = useContext(KanbanViewContext);
 	const {changeTaskStatus} = useContext(KanbanViewContext);
 
-	const [_, drop] = useDrop<{task: ITask; type: string}, void, {}>({
+	const [{canDrop, isOver}, drop] = useDrop({
 		accept: ItemTypes.TASK,
-		drop: (item: {task: ITask}) => {
-			changeTaskStatus(item.task, {name, key});
+		canDrop: ({task}: DragItem) => {
+			return task.embedded.state.key !== key;
 		},
+		drop: (item) => changeTaskStatus(item.task, {name, key}),
+		collect: (monitor) => ({
+			canDrop: !!monitor.canDrop(),
+			isOver: !!monitor.isOver(),
+		}),
 	});
 
 	return (
@@ -55,8 +67,14 @@ export default function Column({
 					<span>{tasks.length}</span>
 				</div>
 
-				<div className="lfr__kaban-view-column-task">
-					<div className="lfr__kaban-view-column-task-list">
+				<div
+					className={classNames('lfr__kaban-view-column-state', {
+						'lfr__kaban-view-column-state-candidate':
+							!isOver && canDrop,
+						'lfr__kaban-view-column-state-over': isOver && canDrop,
+					})}
+				>
+					<div className="lfr__kaban-view-column-state-list">
 						{tasks.map((task) => {
 							return <Task key={task.embedded.id} {...task} />;
 						})}
@@ -64,7 +82,7 @@ export default function Column({
 
 					<ClayButton
 						borderless
-						className="lfr__kaban-view-column-task-add-button"
+						className="lfr__kaban-view-column-state-add-button"
 						onClick={async () => {
 							await openCMPModal({
 								center: true,

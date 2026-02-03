@@ -7,12 +7,14 @@ package com.liferay.layout.type.controller.link.to.page.internal.layout.type.con
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -74,6 +76,15 @@ public class LinkToPageLayoutTypeControllerTest {
 		Assert.assertEquals(
 			String.valueOf(linkToLayout.getLayoutId()),
 			typeSettingsUnicodeProperties.getProperty("linkToLayoutId"));
+
+		typeSettingsUnicodeProperties.clear();
+
+		typeSettingsUnicodeProperties.put(
+			"linkToLayoutExternalReferenceCode", StringUtil.randomString());
+
+		Assert.assertThrows(
+			NoSuchLayoutException.class,
+			() -> _layoutTypeController.getTypeSettingsProperties(layout));
 	}
 
 	private Group _group;

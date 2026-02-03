@@ -33,7 +33,6 @@ import org.elasticsearch.ElasticsearchStatusException;
 import org.hamcrest.CustomMatcher;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -50,7 +49,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 		new AggregateTestRule(
 			ExpectedLogMethodTestRule.INSTANCE, LiferayUnitTestRule.INSTANCE);
 
-	@Ignore
 	@Test
 	public void testAddDocument() {
 		String regex = StringBundler.concat(
@@ -103,7 +101,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testCommit() {
 		expectedException.expect(ElasticsearchStatusException.class);
@@ -130,7 +127,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 		expectedClass = ElasticsearchIndexWriter.class,
 		expectedLevel = ExpectedLog.Level.INFO, expectedLog = "no such index"
 	)
-	@Ignore
 	@Test
 	public void testDeleteDocument() {
 		SearchContext searchContext = new SearchContext();
@@ -174,7 +170,6 @@ public class ElasticsearchIndexWriterExceptionsTest
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testDeleteEntityDocuments() {
 		expectedException.expect(ElasticsearchStatusException.class);

@@ -30,7 +30,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -83,7 +82,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 		_setAutoCreateIndexSetting(null);
 	}
 
-	@Ignore
 	@Test
 	public void testDisableAutoCreateIndexWithExistingValueBlank()
 		throws Exception {
@@ -98,7 +96,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 			_getAutoCreateIndexSetting());
 	}
 
-	@Ignore
 	@Test
 	public void testDisableAutoCreateIndexWithExistingValueDisabled()
 		throws Exception {
@@ -134,7 +131,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 			_getAutoCreateIndexSetting());
 	}
 
-	@Ignore
 	@Test
 	public void testDisableAutoCreateIndexWithExistingValueEnabled()
 		throws Exception {
@@ -184,7 +180,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 			_getAutoCreateIndexSetting());
 	}
 
-	@Ignore
 	@Test
 	public void testEnableAutoCreateIndexWithExistingValueDisabled()
 		throws Exception {
@@ -217,7 +212,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 			_getAutoCreateIndexSetting());
 	}
 
-	@Ignore
 	@Test
 	public void testEnableAutoCreateIndexWithExistingValueEnabled()
 		throws Exception {
@@ -258,7 +252,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 			_getAutoCreateIndexSetting());
 	}
 
-	@Ignore
 	@Test
 	public void testEnableAutoCreateIndexWithExistingValueNull()
 		throws Exception {

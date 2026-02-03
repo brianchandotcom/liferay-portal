@@ -15,7 +15,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -40,7 +39,6 @@ public class StatsIndexRequestExecutorTest {
 		_elasticsearchFixture.tearDown();
 	}
 
-	@Ignore
 	@Test
 	public void testStatsIndexRequestTranslationWithMoreThanOneIndex() {
 		StatsIndexRequest statsIndexRequest = new StatsIndexRequest(
@@ -58,7 +56,6 @@ public class StatsIndexRequestExecutorTest {
 			indicesStatsRequest.index());
 	}
 
-	@Ignore
 	@Test
 	public void testStatsIndexRequestTranslationWithOneIndex() {
 		StatsIndexRequest statsIndexRequest = new StatsIndexRequest(
@@ -74,7 +71,6 @@ public class StatsIndexRequestExecutorTest {
 		Assert.assertEquals("/liferay-1/_stats", indicesStatsRequest.index());
 	}
 
-	@Ignore
 	@Test
 	public void testStatsIndexRequestTranslationWithoutIndex() {
 		StatsIndexRequest statsIndexRequest = new StatsIndexRequest();

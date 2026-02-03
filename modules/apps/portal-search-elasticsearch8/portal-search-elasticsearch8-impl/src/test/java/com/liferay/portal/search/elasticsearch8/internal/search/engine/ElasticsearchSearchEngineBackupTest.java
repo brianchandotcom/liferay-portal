@@ -28,7 +28,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -64,7 +63,6 @@ public class ElasticsearchSearchEngineBackupTest {
 		_elasticsearchSearchEngineFixture.tearDown();
 	}
 
-	@Ignore
 	@Test
 	public void testBackup() throws SearchException {
 		ElasticsearchSearchEngine elasticsearchSearchEngine =
@@ -86,7 +84,6 @@ public class ElasticsearchSearchEngineBackupTest {
 		_deleteSnapshot("liferay_backup", "backup_test");
 	}
 
-	@Ignore
 	@Test
 	public void testRestore() throws SearchException {
 		ElasticsearchSearchEngine elasticsearchSearchEngine =

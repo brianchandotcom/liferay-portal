@@ -17,7 +17,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -42,7 +41,6 @@ public class CloseIndexRequestExecutorTest {
 		_elasticsearchFixture.tearDown();
 	}
 
-	@Ignore
 	@Test
 	public void testIndexRequestTranslation() {
 		CloseIndexRequest closeIndexRequest = new CloseIndexRequest(

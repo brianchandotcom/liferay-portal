@@ -11,9 +11,7 @@ import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
 
 /**
  * @author Michael C. Han
@@ -25,12 +23,6 @@ public class MovingFunctionPipelineAggregationTest
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Ignore
-	@Override
-	@Test
-	public void testMovingFunction() throws Exception {
-	}
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {

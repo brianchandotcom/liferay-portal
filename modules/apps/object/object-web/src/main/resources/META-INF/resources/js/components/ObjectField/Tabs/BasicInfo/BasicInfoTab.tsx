@@ -38,6 +38,7 @@ interface BasicInfoTabProps {
 	errors: ObjectFieldErrors;
 	filterOperators: TFilterOperators;
 	handleChange: React.ChangeEventHandler<HTMLInputElement>;
+	hasDepotEntry?: boolean;
 	learnResources: ILearnResourceContext;
 	modelBuilder?: boolean;
 	objectDefinition?: ObjectDefinition | ObjectDefinitionNodeData;
@@ -59,6 +60,7 @@ export function BasicInfoTab({
 	errors,
 	filterOperators,
 	handleChange,
+	hasDepotEntry,
 	learnResources,
 	modelBuilder = false,
 	objectDefinition,
@@ -101,6 +103,7 @@ export function BasicInfoTab({
 					dbObjectFieldRequired={dbObjectFieldRequired}
 					errors={errors}
 					handleChange={handleChange}
+					hasDepotEntry={hasDepotEntry}
 					learnResources={learnResources}
 					modelBuilder={modelBuilder}
 					objectDefinition={objectDefinition}

@@ -41,6 +41,7 @@ export function RightSidebarObjectFieldDetails() {
 			forbiddenChars,
 			forbiddenLastChars,
 			forbiddenNames,
+			hasDepotEntry,
 			isRootDescendantNode,
 			learnResourceContext,
 			selectedObjectDefinitionNode,
@@ -213,6 +214,7 @@ export function RightSidebarObjectFieldDetails() {
 							errors={errors}
 							filterOperators={filterOperators}
 							handleChange={handleChange}
+							hasDepotEntry={hasDepotEntry}
 							isDefaultStorageType={isDefaultStorageType}
 							isRootDescendantNode={isRootDescendantNode}
 							learnResources={learnResourceContext}

@@ -65,6 +65,7 @@ export default function EditObjectFolder({
 			deletedObjectDefinition,
 			editObjectDefinitionURL,
 			elements,
+			hasDepotEntry,
 			isLoadingObjectFolder,
 			learnResourceContext,
 			leftSidebarItems,
@@ -313,6 +314,7 @@ export default function EditObjectFolder({
 						creationLanguageId={
 							selectedObjectDefinitionNode.data.defaultLanguageId
 						}
+						hasDepotEntry={hasDepotEntry}
 						objectDefinitionExternalReferenceCode={
 							selectedObjectDefinitionNode.data
 								.externalReferenceCode

@@ -21,6 +21,7 @@ interface CustomObjectFolderWrapperProps {
 	forbiddenChars: string[];
 	forbiddenLastChars: string[];
 	forbiddenNames: string[];
+	hasDepotEntry?: boolean;
 	learnResourceContext: ILearnResourceContext;
 	objectDefinitionPermissionsURL: string;
 	objectDefinitionsStorageTypes: LabelValueObject[];
@@ -44,6 +45,7 @@ export default function CustomObjectFolderWrapper({
 	forbiddenChars,
 	forbiddenLastChars,
 	forbiddenNames,
+	hasDepotEntry,
 	learnResourceContext,
 	objectDefinitionPermissionsURL,
 	objectDefinitionsStorageTypes,
@@ -64,6 +66,7 @@ export default function CustomObjectFolderWrapper({
 					forbiddenChars,
 					forbiddenLastChars,
 					forbiddenNames,
+					hasDepotEntry,
 					learnResourceContext,
 					objectDefinitionPermissionsURL,
 					objectDefinitionsStorageTypes,

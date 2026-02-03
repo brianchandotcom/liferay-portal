@@ -47,7 +47,7 @@ public class BatchEnginePortletDataHandlerUtil {
 		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
-		HashMap<String, Serializable> importParameters =
+		HashMap<String, Serializable> deleteParameters =
 			HashMapBuilder.<String, Serializable>putAll(
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
@@ -56,12 +56,12 @@ public class BatchEnginePortletDataHandlerUtil {
 			portletDataContext.getScopeGroupId());
 
 		if (!_isCompanyScoped(group, stagingGroupHelper)) {
-			importParameters.put(
+			deleteParameters.put(
 				"siteExternalReferenceCode", group.getExternalReferenceCode());
-			importParameters.put("siteId", group.getGroupId());
+			deleteParameters.put("siteId", group.getGroupId());
 		}
 
-		return importParameters;
+		return deleteParameters;
 	}
 
 	public static Map<String, Serializable> buildExportParameters(

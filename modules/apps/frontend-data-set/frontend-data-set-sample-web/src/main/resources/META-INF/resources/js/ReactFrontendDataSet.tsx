@@ -14,6 +14,12 @@ import {
 } from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+enum EComponentType {
+	ALERT = 'alert',
+	BREADCRUMB = 'breadcrumb',
+	SPAN = 'span',
+}
+
 const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 	const cardsView = {
 		_key: 'cards',
@@ -46,19 +52,6 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 		thumbnail: 'cards2',
 	};
 
-	const props = {...initialProps};
-
-	props.sorts = [];
-
-	props.sorts.push({
-		active: true,
-		direction: 'asc',
-		key: 'title',
-		label: 'By Title',
-	});
-
-	props.views.push(cardsView);
-
 	const listView = {
 		contentRenderer: 'list',
 		default: false,
@@ -74,27 +67,36 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 		thumbnail: 'list',
 	};
 
-	props.views.push(listView);
+	const props: IFrontendDataSetProps = {
+		...initialProps,
+		sorts: [
+			{
+				active: true,
+				direction: 'asc',
+				key: 'title',
+				label: 'By Title',
+			},
+		],
+	};
 
-	const [component, setComponent] = React.useState<string>('alert');
+	props.views.push(cardsView, listView);
+
+	const [componentType, setComponentType] =
+		React.useState<EComponentType | null>(null);
 	const [selectedItems, setSelectedItems] = React.useState<any[]>([]);
-	const [showInlineNotification, setShowInlineNotification] =
-		React.useState(false);
 
-	let notification;
-
-	if (component === 'alert') {
-		notification = ({
-			context,
-		}: {
-			context: IInlineNotificationComponent['context'];
-		}) => (
+	const AlertInlineNotificationComponent = ({
+		context,
+	}: {
+		context: IInlineNotificationComponent['context'];
+	}) => {
+		return (
 			<ClayAlert
 				displayType="info"
-				onClose={() => setShowInlineNotification(false)}
+				onClose={() => setComponentType(null)}
 				variant="stripe"
 			>
-				{context.selectedItems?.length
+				{context?.selectedItems?.length
 					? `${selectedItems.length} items selected`
 					: 'No items selected'}
 
@@ -113,7 +115,7 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 
 							updatedSorts = updatedSorts
 								.concat(
-									context.sorts?.map((sort) => {
+									context?.sorts?.map((sort) => {
 										sort.active = false;
 
 										return sort;
@@ -123,9 +125,9 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 
 							updatedSorts.push(newSort);
 
-							context.forceSortsUpdate(updatedSorts);
+							context && context.forceSortsUpdate(updatedSorts);
 
-							setShowInlineNotification(false);
+							setComponentType(null);
 						}}
 						size="sm"
 					>
@@ -135,11 +137,12 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 					<ClayButton
 						displayType="danger"
 						onClick={() => {
-							context.updateAdditionalAPIURLParameters(
-								`sort=dateCreated:desc&t=${Date.now()}`
-							);
+							context &&
+								context.updateAdditionalAPIURLParameters(
+									`sort=dateCreated:desc&t=${Date.now()}`
+								);
 
-							setShowInlineNotification(false);
+							setComponentType(null);
 						}}
 						size="sm"
 					>
@@ -148,7 +151,7 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 
 					<ClayButton
 						alert
-						onClick={() => setShowInlineNotification(false)}
+						onClick={() => setComponentType(null)}
 						size="sm"
 					>
 						{Liferay.Language.get('dismiss')}
@@ -156,9 +159,10 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 				</ClayButton.Group>
 			</ClayAlert>
 		);
-	}
-	else if (component === 'breadcrumb') {
-		notification = () => (
+	};
+
+	const BreadCrumbInlineNotificationComponent = () => {
+		return (
 			<ClayBreadCrumb
 				items={[
 					{
@@ -176,10 +180,19 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 				]}
 			/>
 		);
-	}
-	else {
-		notification = () => <span>This is a notification message</span>;
-	}
+	};
+
+	const SpanInlineNotificationComponent = ({
+		context,
+	}: {
+		context: IInlineNotificationComponent['context'];
+	}) => {
+		return (
+			<span>
+				This is a notification message with {context?.selectedItems}
+			</span>
+		);
+	};
 
 	return (
 		<>
@@ -194,8 +207,7 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 				<ClayButton
 					displayType="info"
 					onClick={() => {
-						setComponent('alert');
-						setShowInlineNotification(true);
+						setComponentType(EComponentType.ALERT);
 					}}
 				>
 					Show info message
@@ -204,8 +216,7 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 				<ClayButton
 					displayType="secondary"
 					onClick={() => {
-						setComponent('breadcrumb');
-						setShowInlineNotification(true);
+						setComponentType(EComponentType.BREADCRUMB);
 					}}
 				>
 					Show breadcrumb
@@ -214,8 +225,7 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 				<ClayButton
 					displayType="secondary"
 					onClick={() => {
-						setComponent('span');
-						setShowInlineNotification(true);
+						setComponentType(EComponentType.SPAN);
 					}}
 				>
 					Show text
@@ -224,11 +234,31 @@ const ReactFrontendDataSet = (initialProps: IFrontendDataSetProps) => {
 
 			<FrontendDataSet
 				{...props}
-				inlineNotificationContent={notification}
+				inlineNotificationComponent={({context}) => {
+					if (componentType === EComponentType.ALERT) {
+						return (
+							<AlertInlineNotificationComponent
+								context={context}
+							/>
+						);
+					}
+					else if (componentType === EComponentType.BREADCRUMB) {
+						return <BreadCrumbInlineNotificationComponent />;
+					}
+					else if (componentType === EComponentType.SPAN) {
+						return (
+							<SpanInlineNotificationComponent
+								context={context}
+							/>
+						);
+					}
+					else {
+						return null;
+					}
+				}}
 				onSelectedItemsChange={setSelectedItems}
 				selectedItems={selectedItems}
 				selectionType="multiple"
-				showInlineNotification={showInlineNotification}
 			/>
 		</>
 	);

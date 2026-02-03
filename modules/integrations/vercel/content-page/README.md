@@ -54,7 +54,7 @@ Liferay provides some predefined content structures, but you can create your own
 | Title             |   Text    |         Yes |
 | Virtual           |  Boolean  |           - |
 
-1. Click _Publish_.
+1. Click *Publish*.
 
 ## Creating an Event
 

@@ -15,6 +15,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -57,11 +58,12 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		ClassNameLocalService classNameLocalService,
 		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
+		ObjectEntryService objectEntryService,
 		ObjectDefinition projectObjectDefinition, RoleService roleService,
 		ObjectDefinition taskObjectDefinition,
 		UserLocalService userLocalService) {
 
-		super(httpServletRequest, taskObjectDefinition);
+		super(httpServletRequest, taskObjectDefinition, objectEntryService);
 
 		_assetTagLocalService = assetTagLocalService;
 		_classNameLocalService = classNameLocalService;
@@ -104,7 +106,11 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return sb.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws Exception {
+		if (!hasAddObjectEntryPortletResourcePermission()) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", CMPActionConstants.CREATE_TASK);

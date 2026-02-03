@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -38,9 +39,11 @@ public class ViewProjectsSectionDisplayContext
 
 	public ViewProjectsSectionDisplayContext(
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition objectDefinition, UserLocalService userLocalService) {
+		ObjectDefinition objectDefinition,
+		ObjectEntryService objectEntryService,
+		UserLocalService userLocalService) {
 
-		super(httpServletRequest, objectDefinition);
+		super(httpServletRequest, objectDefinition, objectEntryService);
 
 		_userLocalService = userLocalService;
 	}
@@ -79,7 +82,11 @@ public class ViewProjectsSectionDisplayContext
 		).build();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws Exception {
+		if (!hasAddObjectEntryPortletResourcePermission()) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData(

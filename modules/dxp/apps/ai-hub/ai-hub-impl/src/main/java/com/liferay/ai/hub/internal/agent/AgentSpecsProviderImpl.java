@@ -62,6 +62,8 @@ public class AgentSpecsProviderImpl implements AgentSpecsProvider {
 					WorkflowConstants.CONTEXT_SERVICE_CONTEXT,
 					_agentContext.getServiceContext()
 				).put(
+					"memoryId", _agentContext.getSseEventSinkKey()
+				).put(
 					"userToken", _agentContext.getUserToken()
 				).build();
 

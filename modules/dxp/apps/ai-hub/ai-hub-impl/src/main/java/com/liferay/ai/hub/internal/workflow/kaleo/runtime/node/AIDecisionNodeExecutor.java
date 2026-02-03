@@ -167,8 +167,7 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 					executionContext, "userMessage", kaleoNodeSettingValues)
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
-			).build(),
-			"default");
+			).build());
 	}
 
 	@Override

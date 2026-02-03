@@ -10,6 +10,7 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadata
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataMetadataJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.base.OAuthClientASLocalMetadataLocalServiceBaseImpl;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -34,11 +35,7 @@ import java.net.URI;
 
 import java.security.MessageDigest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import net.minidev.json.JSONObject;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -347,31 +344,15 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 			authorizationServerMetadata.setAuthorizationEndpointURI(
 				new URI(authorizationEndpoint));
+			authorizationServerMetadata.setGrantTypes(
+				TransformUtil.transformToList(
+					supportedGrantTypes, GrantType::parse));
 			authorizationServerMetadata.setJWKSetURI(new URI(jwksURI));
+			authorizationServerMetadata.setScopes(new Scope(supportedScopes));
 			authorizationServerMetadata.setTokenEndpointURI(
 				new URI(tokenEndpoint));
 
-			Scope scope = new Scope();
-
-			for (String supportedScope : supportedScopes) {
-				scope.add(supportedScope);
-			}
-
-			authorizationServerMetadata.setScopes(scope);
-
-			GrantType[] grantTypes = new GrantType[supportedGrantTypes.length];
-
-			for (int i = 0; i < supportedGrantTypes.length; i++) {
-				grantTypes[i] = GrantType.parse(supportedGrantTypes[i]);
-			}
-
-			authorizationServerMetadata.setGrantTypes(
-				Arrays.asList(grantTypes));
-
-			JSONObject metadataJSONObject =
-				authorizationServerMetadata.toJSONObject();
-
-			return metadataJSONObject.toString();
+			return String.valueOf(authorizationServerMetadata.toJSONObject());
 		}
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
@@ -416,44 +397,24 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		try {
-			List<SubjectType> subjectTypes = new ArrayList<>();
-
-			if (supportedSubjectTypes != null) {
-				for (String supportedSubjectType : supportedSubjectTypes) {
-					subjectTypes.add(SubjectType.parse(supportedSubjectType));
-				}
-			}
-
 			OIDCProviderMetadata oidcProviderMetadata =
 				new OIDCProviderMetadata(
-					new Issuer(issuer), subjectTypes, new URI(jwksURI));
+					new Issuer(issuer),
+					TransformUtil.transformToList(
+						supportedSubjectTypes, SubjectType::parse),
+					new URI(jwksURI));
 
 			oidcProviderMetadata.setAuthorizationEndpointURI(
 				new URI(authorizationEndpoint));
+			oidcProviderMetadata.setGrantTypes(
+				TransformUtil.transformToList(
+					supportedGrantTypes, GrantType::parse));
+			oidcProviderMetadata.setScopes(new Scope(supportedScopes));
 			oidcProviderMetadata.setTokenEndpointURI(new URI(tokenEndpoint));
-
-			Scope scope = new Scope();
-
-			for (String supportedScope : supportedScopes) {
-				scope.add(supportedScope);
-			}
-
-			oidcProviderMetadata.setScopes(scope);
-
 			oidcProviderMetadata.setUserInfoEndpointURI(
 				new URI(userInfoEndpoint));
 
-			GrantType[] grantTypes = new GrantType[supportedGrantTypes.length];
-
-			for (int i = 0; i < supportedGrantTypes.length; i++) {
-				grantTypes[i] = GrantType.parse(supportedGrantTypes[i]);
-			}
-
-			oidcProviderMetadata.setGrantTypes(Arrays.asList(grantTypes));
-
-			JSONObject jsonObject = oidcProviderMetadata.toJSONObject();
-
-			return jsonObject.toString();
+			return String.valueOf(oidcProviderMetadata.toJSONObject());
 		}
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(

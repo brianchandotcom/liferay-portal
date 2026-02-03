@@ -83,12 +83,14 @@ public class TaskDefinitionDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/update-active?active=false", "no-bot",
-				"disable", LanguageUtil.get(_httpServletRequest, "disable"),
+				getAPIURL() + "/{id}/update-active?active=false", "block",
+				"deactivate",
+				LanguageUtil.get(_httpServletRequest, "deactivate"),
 				"patch", "deactivate", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/update-active?active=true", "plug",
-				"enable", LanguageUtil.get(_httpServletRequest, "enable"),
+				getAPIURL() + "/{id}/update-active?active=true", "logout",
+				"activate",
+				LanguageUtil.get(_httpServletRequest, "activate"),
 				"patch", "activate", "async"));
 	}
 

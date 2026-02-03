@@ -10,7 +10,6 @@ import com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingF
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -33,12 +32,11 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 
 	@Override
 	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long userId, long groupId, long commerceShippingMethodId,
-			long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
+			long userId, long groupId, long commerceInventoryWarehouseId,
+			long commerceShippingFixedOptionId, long commerceShippingMethodId,
+			long countryId, long regionId, BigDecimal fixedPrice,
+			double ratePercentage, BigDecimal rateUnitWeightPrice,
+			double weightFrom, double weightTo, String zip)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -71,28 +69,6 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);
-	}
-
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Override
-	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
-			long commerceShippingMethodId, long commerceShippingFixedOptionId,
-			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage, ServiceContext serviceContext)
-		throws PortalException {
-
-		return commerceShippingFixedOptionRelLocalService.
-			addCommerceShippingFixedOptionRel(
-				serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceInventoryWarehouseId, countryId, regionId, zip,
-				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-				ratePercentage);
 	}
 
 	@Override
@@ -177,9 +153,9 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
 			long commerceShippingFixedOptionRelId,
 			long commerceInventoryWarehouseId, long countryId, long regionId,
-			String zip, double weightFrom, double weightTo,
-			BigDecimal fixedPrice, BigDecimal rateUnitWeightPrice,
-			double ratePercentage)
+			BigDecimal fixedPrice, double ratePercentage,
+			BigDecimal rateUnitWeightPrice, double weightFrom, double weightTo,
+			String zip)
 		throws PortalException {
 
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =

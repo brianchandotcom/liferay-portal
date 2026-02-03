@@ -51,21 +51,21 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 		commerceShippingFixedOptionRel.setCompanyId(user.getCompanyId());
 		commerceShippingFixedOptionRel.setUserId(user.getUserId());
 		commerceShippingFixedOptionRel.setUserName(user.getFullName());
-		commerceShippingFixedOptionRel.setCommerceShippingMethodId(
-			commerceShippingMethodId);
-		commerceShippingFixedOptionRel.setCommerceShippingFixedOptionId(
-			commerceShippingFixedOptionId);
 		commerceShippingFixedOptionRel.setCommerceInventoryWarehouseId(
 			commerceInventoryWarehouseId);
+		commerceShippingFixedOptionRel.setCommerceShippingFixedOptionId(
+			commerceShippingFixedOptionId);
+		commerceShippingFixedOptionRel.setCommerceShippingMethodId(
+			commerceShippingMethodId);
 		commerceShippingFixedOptionRel.setCountryId(countryId);
 		commerceShippingFixedOptionRel.setRegionId(regionId);
-		commerceShippingFixedOptionRel.setZip(zip);
-		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
-		commerceShippingFixedOptionRel.setWeightTo(weightTo);
 		commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
 		commerceShippingFixedOptionRel.setRateUnitWeightPrice(
 			rateUnitWeightPrice);
-		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRel.setWeightTo(weightTo);
+		commerceShippingFixedOptionRel.setZip(zip);
 
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);
@@ -187,13 +187,13 @@ public class CommerceShippingFixedOptionRelLocalServiceImpl
 			commerceInventoryWarehouseId);
 		commerceShippingFixedOptionRel.setCountryId(countryId);
 		commerceShippingFixedOptionRel.setRegionId(regionId);
-		commerceShippingFixedOptionRel.setZip(zip);
-		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
-		commerceShippingFixedOptionRel.setWeightTo(weightTo);
 		commerceShippingFixedOptionRel.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
 		commerceShippingFixedOptionRel.setRateUnitWeightPrice(
 			rateUnitWeightPrice);
-		commerceShippingFixedOptionRel.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRel.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRel.setWeightTo(weightTo);
+		commerceShippingFixedOptionRel.setZip(zip);
 
 		return commerceShippingFixedOptionRelPersistence.update(
 			commerceShippingFixedOptionRel);

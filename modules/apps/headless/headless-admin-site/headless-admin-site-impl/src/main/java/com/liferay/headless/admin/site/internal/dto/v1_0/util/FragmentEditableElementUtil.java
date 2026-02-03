@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -102,8 +102,9 @@ public class FragmentEditableElementUtil {
 	public static FragmentEditableElement[] getFragmentEditableElements(
 			long companyId, FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
-		throws PortalException {
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId,
+			User user)
+		throws Exception {
 
 		JSONObject editableValuesJSONObject =
 			fragmentEntryLink.getEditableValuesJSONObject();
@@ -131,8 +132,7 @@ public class FragmentEditableElementUtil {
 			companyId,
 			EditableFragmentEntryProcessorUtil.getEditableTypes(
 				FragmentEntryLinkUtil.getProcessedHTML(
-					fragmentEntryLink, fragmentEntryProcessorRegistry,
-					ServiceContextThreadLocal.getServiceContext())),
+					fragmentEntryLink, fragmentEntryProcessorRegistry, user)),
 			infoItemServiceRegistry,
 			JSONUtil.merge(
 				backgroundImageFragmentEntryProcessorJSONObject,

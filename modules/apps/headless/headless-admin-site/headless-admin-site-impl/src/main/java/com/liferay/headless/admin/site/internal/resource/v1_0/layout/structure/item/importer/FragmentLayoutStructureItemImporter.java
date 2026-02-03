@@ -239,7 +239,7 @@ public class FragmentLayoutStructureItemImporter
 					fragmentEntryLink.getEditableValuesJSONObject(),
 					FragmentEntryLinkUtil.getProcessedHTML(
 						fragmentEntryLink, fragmentEntryProcessorRegistry,
-						serviceContext)),
+						layoutStructureItemImporterContext.getUser())),
 				false);
 		}
 		finally {
@@ -427,7 +427,7 @@ public class FragmentLayoutStructureItemImporter
 				fragmentEntryLink.getEditableValuesJSONObject(),
 				FragmentEntryLinkUtil.getProcessedHTML(
 					fragmentEntryLink, fragmentEntryProcessorRegistry,
-					ServiceContextThreadLocal.getServiceContext())),
+					layoutStructureItemImporterContext.getUser())),
 			false);
 	}
 

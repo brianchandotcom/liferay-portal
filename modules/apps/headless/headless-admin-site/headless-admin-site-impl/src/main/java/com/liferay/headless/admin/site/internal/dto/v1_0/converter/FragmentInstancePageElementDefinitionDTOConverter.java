@@ -28,6 +28,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -102,7 +103,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						() -> _getFragmentInstance(
 							companyId, fragmentEntryLink,
 							fragmentStyledLayoutStructureItem,
-							freeMarkerJSONObject, scopeGroupId));
+							freeMarkerJSONObject, scopeGroupId,
+							dtoConverterContext.getUser()));
 					setType(Type.BASIC_FRAGMENT);
 				}
 			};
@@ -118,7 +120,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 					() -> _getFragmentInstance(
 						companyId, fragmentEntryLink,
 						fragmentStyledLayoutStructureItem, freeMarkerJSONObject,
-						scopeGroupId));
+						scopeGroupId, dtoConverterContext.getUser()));
 				setHelpText_i18n(
 					() -> _getI18nMap(freeMarkerJSONObject, "inputHelpText"));
 				setLabel_i18n(
@@ -232,7 +234,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 	private FragmentInstance _getFragmentInstance(
 		long companyId, FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		JSONObject freeMarkerJSONObject, long scopeGroupId) {
+		JSONObject freeMarkerJSONObject, long scopeGroupId, User user) {
 
 		return new FragmentInstance() {
 			{
@@ -261,7 +263,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						FragmentEditableElementUtil.getFragmentEditableElements(
 							companyId, fragmentEntryLink,
 							_fragmentEntryProcessorRegistry,
-							_infoItemServiceRegistry, scopeGroupId));
+							_infoItemServiceRegistry, scopeGroupId, user));
 				setFragmentInstanceExternalReferenceCode(
 					fragmentEntryLink::getExternalReferenceCode);
 				setFragmentReference(

@@ -2883,9 +2883,9 @@ public class ObjectDefinitionLocalServiceImpl
 
 		objectDefinition.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				objectDefinition.getStatus(), 0,
-				objectDefinition.getCompanyId(), externalReferenceCode,
-				objectDefinition.getModelClassName(),
+				externalReferenceCode, objectDefinition.getModelClassName(),
+				objectDefinition.getCompanyId(), 0,
+				objectDefinition.getStatus(),
 				() -> {
 					if (status == WorkflowConstants.STATUS_DRAFT) {
 						return status;

@@ -2003,8 +2003,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		role.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				role.getStatus(), 0, role.getCompanyId(), externalReferenceCode,
-				role.getModelClassName(),
+				externalReferenceCode, role.getModelClassName(),
+				role.getCompanyId(), 0, role.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		role.setExpandoBridgeAttributes(serviceContext);

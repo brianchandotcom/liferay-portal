@@ -3248,8 +3248,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		layout.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				layout.getStatus(), groupId, layout.getCompanyId(),
 				layout.getExternalReferenceCode(), layout.getClassName(),
+				layout.getCompanyId(), groupId, layout.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		layout = layoutLocalService.updateLayout(layout);

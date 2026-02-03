@@ -43,8 +43,8 @@ public interface EmptyModelManager {
 	public boolean isEmptyModel();
 
 	public int solveEmptyModel(
-			int status, long groupId, long companyId,
-			String classExternalReferenceCode, String className,
+			String classExternalReferenceCode, String className, long companyId,
+			long groupId, int status,
 			Supplier<Integer> updatedModelStatusSupplier)
 		throws PortalException;
 

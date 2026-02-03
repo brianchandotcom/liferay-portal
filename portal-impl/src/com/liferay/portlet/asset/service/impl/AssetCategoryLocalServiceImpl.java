@@ -650,10 +650,9 @@ public class AssetCategoryLocalServiceImpl
 
 		category.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				category.getStatus(), category.getGroupId(),
-				category.getCompanyId(), externalReferenceCode,
-				category.getModelClassName(),
-				() -> WorkflowConstants.STATUS_APPROVED));
+				externalReferenceCode, category.getModelClassName(),
+				category.getCompanyId(), category.getGroupId(),
+				category.getStatus(), () -> WorkflowConstants.STATUS_APPROVED));
 
 		return _moveCategory(category, parentCategoryId, vocabularyId);
 	}

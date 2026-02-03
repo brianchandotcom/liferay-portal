@@ -530,9 +530,9 @@ public class AssetVocabularyLocalServiceImpl
 
 		vocabulary.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				vocabulary.getStatus(), vocabulary.getGroupId(),
-				vocabulary.getCompanyId(), externalReferenceCode,
-				vocabulary.getModelClassName(),
+				externalReferenceCode, vocabulary.getModelClassName(),
+				vocabulary.getCompanyId(), vocabulary.getGroupId(),
+				vocabulary.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return assetVocabularyPersistence.update(vocabulary);
@@ -567,9 +567,9 @@ public class AssetVocabularyLocalServiceImpl
 
 		vocabulary.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				vocabulary.getStatus(), vocabulary.getGroupId(),
-				vocabulary.getCompanyId(), externalReferenceCode,
-				vocabulary.getModelClassName(),
+				externalReferenceCode, vocabulary.getModelClassName(),
+				vocabulary.getCompanyId(), vocabulary.getGroupId(),
+				vocabulary.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);

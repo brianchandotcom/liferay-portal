@@ -175,9 +175,9 @@ public class ListTypeDefinitionLocalServiceImpl
 
 		listTypeDefinition.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				listTypeDefinition.getStatus(), 0,
-				listTypeDefinition.getCompanyId(), externalReferenceCode,
-				listTypeDefinition.getModelClassName(),
+				externalReferenceCode, listTypeDefinition.getModelClassName(),
+				listTypeDefinition.getCompanyId(), 0,
+				listTypeDefinition.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		listTypeDefinition = listTypeDefinitionPersistence.update(

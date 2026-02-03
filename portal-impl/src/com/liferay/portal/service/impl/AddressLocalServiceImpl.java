@@ -323,8 +323,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		address.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				address.getStatus(), 0, address.getCompanyId(),
 				externalReferenceCode, address.getModelClassName(),
+				address.getCompanyId(), 0, address.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		address = addressPersistence.update(address);

@@ -575,8 +575,8 @@ public class EmptyModelManagerImplTest {
 		Assert.assertSame(
 			WorkflowConstants.STATUS_APPROVED,
 			_emptyModelManager.solveEmptyModel(
-				WorkflowConstants.STATUS_EMPTY, 0L, companyId,
-				externalReferenceCode, User.class.getName(),
+				externalReferenceCode, User.class.getName(), companyId, 0L,
+				WorkflowConstants.STATUS_EMPTY,
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		Mockito.verify(

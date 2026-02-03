@@ -64,15 +64,15 @@ public class EmptyModelManagerUtil {
 	}
 
 	public static int solveEmptyModel(
-			int status, long groupId, long companyId,
-			String classExternalReferenceCode, String className,
+			String classExternalReferenceCode, String className, long companyId,
+			long groupId, int status,
 			Supplier<Integer> updatedModelStatusSupplier)
 		throws PortalException {
 
 		EmptyModelManager emptyModelManager = _emptyModelManagerSnapshot.get();
 
 		return emptyModelManager.solveEmptyModel(
-			status, groupId, companyId, classExternalReferenceCode, className,
+			classExternalReferenceCode, className, companyId, groupId, status,
 			updatedModelStatusSupplier);
 	}
 

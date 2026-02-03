@@ -358,8 +358,8 @@ public class AccountGroupLocalServiceImpl
 
 		accountGroup.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				accountGroup.getStatus(), 0, accountGroup.getCompanyId(),
 				externalReferenceCode, accountGroup.getModelClassName(),
+				accountGroup.getCompanyId(), 0, accountGroup.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return accountGroupPersistence.update(accountGroup);

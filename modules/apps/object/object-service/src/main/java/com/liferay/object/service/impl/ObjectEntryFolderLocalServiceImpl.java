@@ -571,10 +571,10 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		objectEntryFolder.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				objectEntryFolder.getStatus(), objectEntryFolder.getGroupId(),
-				objectEntryFolder.getCompanyId(),
 				objectEntryFolder.getExternalReferenceCode(),
 				objectEntryFolder.getModelClassName(),
+				objectEntryFolder.getCompanyId(),
+				objectEntryFolder.getGroupId(), objectEntryFolder.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		_updateWorkflowDefinitionLinks(objectEntryFolderId, serviceContext);

@@ -230,8 +230,8 @@ public class ListTypeEntryLocalServiceImpl
 
 		listTypeEntry.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
-				listTypeEntry.getStatus(), 0, listTypeEntry.getCompanyId(),
 				externalReferenceCode, listTypeEntry.getModelClassName(),
+				listTypeEntry.getCompanyId(), 0, listTypeEntry.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		if (listTypeEntry.isSystem() &&

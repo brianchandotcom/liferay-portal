@@ -8,6 +8,7 @@ package com.liferay.ai.hub.internal.agent;
 import com.liferay.ai.hub.agent.AgentContext;
 import com.liferay.ai.hub.agent.AgentsFactory;
 import com.liferay.ai.hub.agent.SupervisorAgent;
+import com.liferay.ai.hub.internal.memory.store.InMemoryChatMemoryStore;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
@@ -17,7 +18,9 @@ import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCall
 import com.liferay.portal.kernel.util.MapUtil;
 
 import dev.langchain4j.agentic.AgenticServices;
+import dev.langchain4j.agentic.supervisor.SupervisorContextStrategy;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
 
 import org.osgi.framework.BundleContext;
@@ -82,8 +85,19 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
 			AgenticServices.supervisorBuilder(
+			).chatMemoryProvider(
+				id -> MessageWindowChatMemory.builder(
+				).chatMemoryStore(
+					InMemoryChatMemoryStore.getInstance()
+				).id(
+					agentContext.getSseEventSinkKey()
+				).maxMessages(
+					30
+				).build()
 			).chatModel(
 				vertexAiGeminiChatModel
+			).contextGenerationStrategy(
+				SupervisorContextStrategy.CHAT_MEMORY_AND_SUMMARIZATION
 			).maxAgentsInvocations(
 				5
 			).subAgents(

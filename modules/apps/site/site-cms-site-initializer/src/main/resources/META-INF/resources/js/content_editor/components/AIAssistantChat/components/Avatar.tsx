@@ -13,11 +13,11 @@ const Avatar: React.FC<{image?: string; name: string}> = ({image, name}) => {
 			{image ? (
 				<img
 					alt={Liferay.Language.get('user-profile-image')}
-					className="ai-assistant-chat__user-image ml-2"
+					className="ai-assistant-chat__user-image"
 					src={image}
 				/>
 			) : (
-				<span className="ai-assistant-chat__user-initials ml-2">
+				<span className="ai-assistant-chat__user-initials">
 					{getInitials(name)}
 				</span>
 			)}

@@ -60,23 +60,21 @@ public class OAuthAuthorizationServerInfoMapperJSONUpgradeProcess
 								"authorization server local metadata ID " +
 									oAuthClientASLocalMetadataId);
 					}
+
+					continue;
 				}
-				else {
-					String issuer = oidcProviderMetadata.getIssuer(
-					).toString();
 
-					try (PreparedStatement preparedStatement2 =
-							connection.prepareStatement(
-								"update OAuthClientASLocalMetadata set " +
-									"issuer = ? WHERE " +
-										"oAuthClientASLocalMetadataId = ?")) {
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(
+							"update OAuthClientASLocalMetadata set " +
+								"issuer = ? WHERE " +
+									"oAuthClientASLocalMetadataId = ?")) {
 
-						preparedStatement2.setString(1, issuer);
-						preparedStatement2.setLong(
-							2, oAuthClientASLocalMetadataId);
+					preparedStatement2.setString(
+						1, String.valueOf(oidcProviderMetadata.getIssuer()));
+					preparedStatement2.setLong(2, oAuthClientASLocalMetadataId);
 
-						preparedStatement2.execute();
-					}
+					preparedStatement2.execute();
 				}
 			}
 		}

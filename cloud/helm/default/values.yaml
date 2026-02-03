@@ -51,7 +51,7 @@ customInitContainers:
                             name: {{ .overlay.bucketName }}
                         -   mountPath: /temp
                             name: liferay-persistent-volume
-                   {{- end }}
+                    {{- end }}
     x-liferay-prepopulate-data:
         -   containerTemplate: |
                 -   command:

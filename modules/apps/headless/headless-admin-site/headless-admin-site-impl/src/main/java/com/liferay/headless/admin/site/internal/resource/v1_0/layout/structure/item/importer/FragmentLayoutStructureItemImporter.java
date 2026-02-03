@@ -6,11 +6,8 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -21,6 +18,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryLinkUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReference;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReferenceUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
@@ -32,7 +30,6 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.osgi.util.ServiceTrackerFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -43,17 +40,12 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -245,7 +237,7 @@ public class FragmentLayoutStructureItemImporter
 				fragmentEntryProcessorRegistry.mergeDefaultEditableValues(
 					fragmentEntryLink.getConfigurationJSONObject(),
 					fragmentEntryLink.getEditableValuesJSONObject(),
-					_getProcessedHTML(
+					FragmentEntryLinkUtil.getProcessedHTML(
 						fragmentEntryLink, fragmentEntryProcessorRegistry,
 						serviceContext)),
 				false);
@@ -358,45 +350,6 @@ public class FragmentLayoutStructureItemImporter
 		return portletIds;
 	}
 
-	private String _getProcessedHTML(
-			FragmentEntryLink fragmentEntryLink,
-			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (serviceContext == null) {
-			return fragmentEntryLink.getHtml();
-		}
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-		HttpServletResponse httpServletResponse = serviceContext.getResponse();
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if ((httpServletRequest == null) && (themeDisplay != null)) {
-			httpServletRequest = themeDisplay.getRequest();
-		}
-
-		if ((httpServletResponse == null) && (themeDisplay != null)) {
-			httpServletResponse = themeDisplay.getResponse();
-		}
-
-		if ((httpServletRequest == null) || (httpServletResponse == null)) {
-			return fragmentEntryLink.getHtml();
-		}
-
-		fragmentEntryLink.setEditableValues(null);
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				fragmentEntryLink.getCompanyId(), httpServletRequest,
-				httpServletResponse, LocaleUtil.getMostRelevantLocale(),
-				FragmentEntryLinkConstants.EDIT,
-				fragmentEntryLink.getGroupId());
-
-		return fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-			fragmentEntryLink, fragmentEntryProcessorContext);
-	}
-
 	private int _getType(PageElementDefinition.Type pageElementDefinitionType) {
 		int type = FragmentConstants.TYPE_COMPONENT;
 
@@ -472,7 +425,7 @@ public class FragmentLayoutStructureItemImporter
 			fragmentEntryProcessorRegistry.mergeDefaultEditableValues(
 				fragmentEntryLink.getConfigurationJSONObject(),
 				fragmentEntryLink.getEditableValuesJSONObject(),
-				_getProcessedHTML(
+				FragmentEntryLinkUtil.getProcessedHTML(
 					fragmentEntryLink, fragmentEntryProcessorRegistry,
 					ServiceContextThreadLocal.getServiceContext())),
 			false);

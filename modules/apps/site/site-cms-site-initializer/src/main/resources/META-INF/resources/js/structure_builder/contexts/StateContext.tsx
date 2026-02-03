@@ -36,6 +36,7 @@ import {
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
+import getHistory from '../utils/getHistory';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
@@ -514,14 +515,17 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			const nextChildren = deleteChildren({
-				root: structure,
-				uuids: [child.uuid],
-			});
+			const {deletedChildrenUuids, updatedChildren: nextChildren} =
+				deleteChildren({
+					root: structure,
+					uuids: [child.uuid],
+				});
 
 			const invalids = new Map(state.invalids);
 
-			invalids.delete(uuid);
+			for (const deletedChild of deletedChildrenUuids) {
+				invalids.delete(deletedChild);
+			}
 
 			let nextState: State = {
 				...state,
@@ -536,67 +540,15 @@ function reducer(state: State, action: Action): State {
 				};
 			}
 
-			if (state.publishedChildren.has(uuid)) {
-				nextState = {
-					...nextState,
-					history: {
-						...nextState.history,
-						deletedChildren: [
-							...nextState.history.deletedChildren,
-							child,
-						],
-					},
-				};
-
-				if (
-					child.type === 'repeatable-group' ||
-					child.type === 'related-content' ||
-					child.type === 'referenced-structure'
-				) {
-					let parentERC =
-						child.parent === state.structure.uuid
-							? state.structure.erc
-							: findChild({root: structure, uuid: child.parent})
-									?.erc || '';
-
-					if (
-						child.type === 'related-content' &&
-						!child.multiselection
-					) {
-						parentERC = child.relatedStructureERC;
-					}
-
-					nextState = {
-						...nextState,
-						history: {
-							...nextState.history,
-							deletedRelationships: [
-								...nextState.history.deletedRelationships,
-								{
-									relationshipERC:
-										child.type === 'related-content'
-											? child.erc
-											: child.relationshipERC,
-									structureERC: parentERC,
-								},
-							],
-						},
-					};
-				}
-
-				if (child.type === 'repeatable-group') {
-					nextState = {
-						...nextState,
-						history: {
-							...nextState.history,
-							deletedGroupERCs: [
-								...nextState.history.deletedGroupERCs,
-								child.erc,
-							],
-						},
-					};
-				}
-			}
+			nextState = {
+				...nextState,
+				history: getHistory({
+					deletedChildrenUuids,
+					initialHistory: nextState.history,
+					publishedChildren: state.publishedChildren,
+					structure,
+				}),
+			};
 
 			return nextState;
 		}
@@ -620,93 +572,26 @@ function reducer(state: State, action: Action): State {
 				});
 			}
 
-			const nextChildren = deleteChildren({
-				root: structure,
-				uuids: selection.filter((uuid) => !undeletables.has(uuid)),
-			});
+			const {deletedChildrenUuids, updatedChildren: nextChildren} =
+				deleteChildren({
+					root: structure,
+					uuids: selection.filter((uuid) => !undeletables.has(uuid)),
+				});
 
-			let nextState = {
+			return {
 				...state,
+				history: getHistory({
+					deletedChildrenUuids,
+					initialHistory: state.history,
+					publishedChildren: state.publishedChildren,
+					structure,
+				}),
 				selection: [...undeletables.keys()],
 				structure: {
 					...structure,
 					children: nextChildren,
 				},
 			};
-
-			for (const uuid of selection) {
-				const child = findChild({root: structure, uuid});
-
-				if (!child) {
-					continue;
-				}
-
-				if (state.publishedChildren.has(uuid)) {
-					nextState = {
-						...nextState,
-						history: {
-							...nextState.history,
-							deletedChildren: [
-								...nextState.history.deletedChildren,
-								child,
-							],
-						},
-					};
-
-					if (
-						child.type === 'repeatable-group' ||
-						child.type === 'related-content' ||
-						child.type === 'referenced-structure'
-					) {
-						let parentERC =
-							child.parent === state.structure.uuid
-								? state.structure.erc
-								: findChild({
-										root: structure,
-										uuid: child.parent,
-									})?.erc || '';
-
-						if (
-							child.type === 'related-content' &&
-							!child.multiselection
-						) {
-							parentERC = child.relatedStructureERC;
-						}
-
-						nextState = {
-							...nextState,
-							history: {
-								...nextState.history,
-								deletedRelationships: [
-									...nextState.history.deletedRelationships,
-									{
-										relationshipERC:
-											child.type === 'related-content'
-												? child.erc
-												: child.relationshipERC,
-										structureERC: parentERC,
-									},
-								],
-							},
-						};
-					}
-
-					if (child.type === 'repeatable-group') {
-						nextState = {
-							...nextState,
-							history: {
-								...nextState.history,
-								deletedGroupERCs: [
-									...nextState.history.deletedGroupERCs,
-									child.erc,
-								],
-							},
-						};
-					}
-				}
-			}
-
-			return nextState;
 		}
 		case 'duplicate-child': {
 			const {structure} = state;

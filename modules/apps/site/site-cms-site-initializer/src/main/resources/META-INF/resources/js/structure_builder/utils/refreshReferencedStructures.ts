@@ -45,7 +45,8 @@ export default function refreshReferencedStructures({
 
 			const objectRelationship =
 				objectDefinition?.objectRelationships?.find(
-					({name}) => name === child.name
+					({objectDefinitionName2}) =>
+						objectDefinitionName2 === child.name
 				);
 
 			if (objectDefinition && !objectRelationship) {
@@ -79,7 +80,8 @@ export default function refreshReferencedStructures({
 
 			const objectRelationship =
 				objectDefinition?.objectRelationships?.find(
-					({name}) => name === child.name
+					({objectDefinitionName2}) =>
+						objectDefinitionName2 === child.name
 				);
 
 			if (objectDefinition && !objectRelationship) {
@@ -164,7 +166,9 @@ export default function refreshReferencedStructures({
 			objectDefinition.objectRelationships || []
 		).filter(
 			(objectRelationship) =>
-				!childrenNames.includes(objectRelationship.name)
+				!childrenNames.includes(
+					objectRelationship.objectDefinitionName2!
+				)
 		);
 
 		for (const objectRelationship of newObjectRelationships) {

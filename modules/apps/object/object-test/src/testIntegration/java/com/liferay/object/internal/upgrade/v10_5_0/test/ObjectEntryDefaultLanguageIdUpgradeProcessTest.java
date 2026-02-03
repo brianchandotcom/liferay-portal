@@ -43,6 +43,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -191,6 +192,22 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcessTest {
 			LocaleUtil.SPAIN,
 			LocaleUtil.fromLanguageId(
 				siteObjectEntry.getDefaultLanguageId(), false, false));
+	}
+
+	@Test
+	public void testUpgradeWithEmptyBatch() throws Exception {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME, LoggerTestUtil.ERROR)) {
+
+			UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+				_upgradeStepRegistrator, _CLASS_NAME);
+
+			upgradeProcess.upgrade();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertEquals(messages.toString(), 0, messages.size());
+		}
 	}
 
 	private static final String _CLASS_NAME =

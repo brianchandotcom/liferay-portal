@@ -69,7 +69,10 @@ type ContextProps = {
 	onDragStart: (source: 'keyboard' | 'mouse', target: React.Key) => void;
 	onDrop: () => void;
 	onEnd: () => void;
-	onPositionChange: (key: React.Key, position: Position) => void;
+	onPositionChange: (
+		key: React.Key | null,
+		position: Position | null
+	) => void;
 	position: 'bottom' | 'middle' | 'top' | null;
 	source: 'keyboard' | 'mouse' | null;
 };
@@ -251,7 +254,7 @@ export function DragAndDropProvider<T>({
 	}, []);
 
 	const onPositionChange = useCallback(
-		(key: React.Key, position: Position) => {
+		(key: React.Key | null, position: Position | null) => {
 			setState((state) => ({
 				...state,
 				currentTarget: key,

@@ -282,6 +282,8 @@ export function ItemContextProvider({children, value}: Props) {
 				if (!isHovered) {
 					isValidDropRef.current = false;
 
+					onPositionChange(null, null);
+
 					return;
 				}
 			}

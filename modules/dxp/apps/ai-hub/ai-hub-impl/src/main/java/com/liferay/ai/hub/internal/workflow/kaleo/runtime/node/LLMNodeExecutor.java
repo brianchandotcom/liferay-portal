@@ -5,8 +5,8 @@
 
 package com.liferay.ai.hub.internal.workflow.kaleo.runtime.node;
 
+import com.liferay.ai.hub.internal.assistant.handler.AssistantHandler;
 import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerContext;
-import com.liferay.ai.hub.internal.assistant.handler.AssistantHandlerUtil;
 import com.liferay.ai.hub.internal.mcp.tool.provider.MCPToolProviderUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ContentRetrieverUtil;
 import com.liferay.ai.hub.internal.workflow.kaleo.runtime.node.util.ToolsUtil;
@@ -105,7 +105,9 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		AssistantHandlerUtil.handle(
+		AssistantHandler assistantHandler = new AssistantHandler();
+
+		assistantHandler.handle(
 			AssistantHandlerContext.builder(
 			).contentRetriever(
 				ContentRetrieverUtil.createContentRetriever(
@@ -140,9 +142,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 					executionContext, "userMessage", kaleoNodeSettingValues)
 			).vertexAiGeminiStreamingChatModel(
 				vertexAiGeminiStreamingChatModel
-			).build(),
-			GetterUtil.getString(
-				workflowContext.get("assistantKey"), "default"));
+			).build());
 	}
 
 	@Override

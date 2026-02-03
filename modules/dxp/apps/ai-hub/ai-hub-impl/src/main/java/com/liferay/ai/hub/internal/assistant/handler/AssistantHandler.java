@@ -5,11 +5,86 @@
 
 package com.liferay.ai.hub.internal.assistant.handler;
 
+import com.liferay.portal.kernel.util.Validator;
+
+import dev.langchain4j.invocation.InvocationParameters;
+import dev.langchain4j.memory.chat.MessageWindowChatMemory;
+import dev.langchain4j.service.AiServices;
+import dev.langchain4j.service.MemoryId;
+import dev.langchain4j.service.TokenStream;
+import dev.langchain4j.service.UserMessage;
+import dev.langchain4j.service.memory.ChatMemoryAccess;
+import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
+
 /**
  * @author Feliphe Marinho
  */
-public interface AssistantHandler {
+public class AssistantHandler {
 
-	public void handle(AssistantHandlerContext assistantHandlerContext);
+	public void handle(AssistantHandlerContext assistantHandlerContext) {
+		AiServices<Assistant> aiServices = AiServices.builder(Assistant.class);
+
+		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
+			aiServices.chatMemoryProvider(
+				id -> MessageWindowChatMemory.builder(
+				).chatMemoryStore(
+					_inMemoryChatMemoryStore
+				).id(
+					id
+				).maxMessages(
+					30
+				).build());
+		}
+
+		if (assistantHandlerContext.getContentRetriever() != null) {
+			aiServices.contentRetriever(
+				assistantHandlerContext.getContentRetriever());
+		}
+
+		aiServices.streamingChatModel(
+			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
+		).systemMessageProvider(
+			assistantHandlerContext.getSystemMessageProvider()
+		).toolProvider(
+			assistantHandlerContext.getToolProvider()
+		).tools(
+			assistantHandlerContext.getTools()
+		).build();
+
+		Assistant assistant = aiServices.build();
+
+		TokenStream tokenStream = null;
+
+		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
+			tokenStream = assistant.invoke(
+				assistantHandlerContext.getMemoryId(),
+				assistantHandlerContext.getUserMessage());
+		}
+		else {
+			tokenStream = assistant.invoke(
+				assistantHandlerContext.getInvocationParameters(),
+				assistantHandlerContext.getUserMessage());
+		}
+
+		tokenStream.onCompleteResponse(
+			assistantHandlerContext.getOnCompleteResponse()
+		).onError(
+			assistantHandlerContext.getOnError()
+		).start();
+	}
+
+	public interface Assistant extends ChatMemoryAccess {
+
+		public TokenStream invoke(
+			InvocationParameters invocationParameters,
+			@UserMessage String userMessage);
+
+		public TokenStream invoke(
+			@MemoryId String memoryId, @UserMessage String userMessage);
+
+	}
+
+	private final InMemoryChatMemoryStore _inMemoryChatMemoryStore =
+		new InMemoryChatMemoryStore();
 
 }

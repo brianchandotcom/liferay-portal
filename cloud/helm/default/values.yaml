@@ -164,6 +164,8 @@ env:
         value: ${env.POD_IP}
     -   name: LIFERAY_PORTAL_PERIOD_INSTANCE_PERIOD_INET_PERIOD_SOCKET_PERIOD_ADDRESS
         value: ${env.POD_IP}:8080
+    -   name: LIFERAY_PORTLET_PERIOD_SESSION_PERIOD_REPLICATE_PERIOD_ENABLED
+        value: "true"
     -   name: LIFERAY_TOMCAT_SESSION_REPLICATION_ENABLED
         value: "true"
     -   name: POD_APP

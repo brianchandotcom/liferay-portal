@@ -75,7 +75,6 @@ data:
         cluster.link.channel.properties.transport.0=/opt/liferay/unicast.xml
         cluster.link.enabled=true
         enterprise.product.notification.enabled=false
-        portlet.session.replicate.enabled=true
         {{ end }}
         {{- tpl (.Files.Get "resources/portal-cloud.properties") $ | nindent 8 }}
     portal-ext.properties: |

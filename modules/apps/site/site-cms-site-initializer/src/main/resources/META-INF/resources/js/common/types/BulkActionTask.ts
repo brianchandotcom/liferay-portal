@@ -113,13 +113,13 @@ export interface IBulkActionTaskType {
 		roleKey?: string;
 	};
 	ResetPermissionBulkAction: {};
+	StatusBulkAction: {
+		status?: string;
+	};
 	TaxonomyCategoryBulkAction: {
 		append?: boolean;
 		taxonomyCategoryIdsToAdd?: number[];
 		taxonomyCategoryIdsToRemove?: number[];
-	};
-	UpdateTaskStateBulkAction: {
-		state?: string;
 	};
 }
 

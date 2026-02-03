@@ -9,6 +9,7 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.util.EditableFragmentEntryProcessorUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue;
@@ -49,10 +50,10 @@ import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -100,8 +101,9 @@ public class FragmentEditableElementUtil {
 
 	public static FragmentEditableElement[] getFragmentEditableElements(
 			long companyId, FragmentEntryLink fragmentEntryLink,
+			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
-		throws JSONException {
+		throws PortalException {
 
 		JSONObject editableValuesJSONObject =
 			fragmentEntryLink.getEditableValuesJSONObject();
@@ -128,7 +130,9 @@ public class FragmentEditableElementUtil {
 		return _getFragmentEditableElements(
 			companyId,
 			EditableFragmentEntryProcessorUtil.getEditableTypes(
-				fragmentEntryLink.getHtml()),
+				FragmentEntryLinkUtil.getProcessedHTML(
+					fragmentEntryLink, fragmentEntryProcessorRegistry,
+					ServiceContextThreadLocal.getServiceContext())),
 			infoItemServiceRegistry,
 			JSONUtil.merge(
 				backgroundImageFragmentEntryProcessorJSONObject,

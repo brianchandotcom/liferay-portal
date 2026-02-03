@@ -44,7 +44,10 @@ import useFDSDrop from './dnd/useFDSDrop';
 import useFileUploader from './dnd/useFileUploader';
 import EmptyState from './empty_state/EmptyState';
 import {InfoPanel} from './info_panel/InfoPanel';
-import {InlineNotification} from './inline_notification/InlineNotification';
+import {
+	IInlineNotificationComponent,
+	InlineNotification,
+} from './inline_notification/InlineNotification';
 import ManagementBar from './management_bar/ManagementBar';
 import {FILTER_IMPLEMENTATIONS} from './management_bar/controls/filters/Filter';
 
@@ -1531,18 +1534,26 @@ const FrontendDataSetContent = ({
 		</div>
 	) : null;
 
-	const inlineNotificationSlot = inlineNotificationComponent ? (
-		<div
-			className={classNames(
-				'container-fluid align-items-center inline-notification-bar',
-				style === 'fluid' && 'px-0'
-			)}
-		>
-			<InlineNotification
-				component={inlineNotificationComponent}
-			></InlineNotification>
-		</div>
-	) : null;
+	const InlineNotificationWrapper = ({
+		inlineNotificationComponent,
+	}: {
+		inlineNotificationComponent: React.ComponentType<IInlineNotificationComponent>;
+	}) => {
+		return inlineNotificationComponent ? (
+			<div
+				className={classNames(
+					'container-fluid align-items-center inline-notification-bar',
+					style === 'fluid' && 'px-0'
+				)}
+			>
+				<InlineNotification
+					component={inlineNotificationComponent}
+				></InlineNotification>
+			</div>
+		) : (
+			<></>
+		);
+	};
 
 	const view =
 		!dataLoading && !componentLoading ? (
@@ -2118,7 +2129,13 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-inline">
 									{managementBar}
 
-									{inlineNotificationSlot}
+									{inlineNotificationComponent && (
+										<InlineNotificationWrapper
+											inlineNotificationComponent={
+												inlineNotificationComponent
+											}
+										/>
+									)}
 
 									{view}
 
@@ -2130,7 +2147,13 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-stacked">
 									{managementBar}
 
-									{inlineNotificationSlot}
+									{inlineNotificationComponent && (
+										<InlineNotificationWrapper
+											inlineNotificationComponent={
+												inlineNotificationComponent
+											}
+										/>
+									)}
 
 									{view}
 
@@ -2142,7 +2165,13 @@ const FrontendDataSetContent = ({
 								<div className="data-set data-set-fluid">
 									{managementBar}
 
-									{inlineNotificationSlot}
+									{inlineNotificationComponent && (
+										<InlineNotificationWrapper
+											inlineNotificationComponent={
+												inlineNotificationComponent
+											}
+										/>
+									)}
 
 									<div className="container-fluid mt-3">
 										{view}

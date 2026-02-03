@@ -28,7 +28,6 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.portlet.data.handler.util.ExportImportGroupedModelUtil;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
-import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -1698,10 +1697,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				PortletDataHandler portletDataHandler =
 					_portletDataHandlerProvider.provide(portlet);
 
-				if (portletDataHandler == null) {
+				String portletDataHandlerKey = element.attributeValue(
+					"portlet-data-handler-key");
+
+				if ((portletDataHandler == null) &&
+					(portletDataHandlerKey != null)) {
+
 					MissingPortlet missingPortlet = new MissingPortlet(
-						ObjectDefinitionUtil.getClassName(portletId),
-						element.attributeValue("display-name"), portlet);
+						element.attributeValue("display-name"), portlet,
+						portletDataHandlerKey, portletId);
 
 					_manifestSummary.addDataPortlet(
 						missingPortlet, configurationPortletOptions);

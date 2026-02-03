@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
+exports[`Individuals List renders 1`] = `
 <div>
   <div
     class="card card-root"
@@ -8,7 +8,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
     <div
       class="card-title card-header"
     >
-      individuals-profiles
+      Individuals Profiles
     </div>
     <div
       class="card-body no-padding"

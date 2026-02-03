@@ -79,9 +79,7 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_EXPIRE]: {
 		info: {
 			all: Liferay.Language.get('expire-action-started-for-all-assets'),
-			plural: Liferay.Language.get(
-				'expire-action-started-for-x-assets'
-			),
+			plural: Liferay.Language.get('expire-action-started-for-x-assets'),
 			singular: Liferay.Language.get(
 				'expire-action-started-for-one-asset'
 			),

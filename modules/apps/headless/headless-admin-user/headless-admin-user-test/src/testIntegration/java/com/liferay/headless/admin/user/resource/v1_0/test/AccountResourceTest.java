@@ -1901,26 +1901,43 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 	private void _testPatchAccountWithPostalAddressPhoneNumber()
 		throws Exception {
 
-		Account postAccount = testPatchAccount_addAccount();
-
-		Account randomPatchAccount = randomPatchAccount();
+		Account postAccount = randomAccount();
 
 		PostalAddress postalAddress = _randomPostalAddress();
 
 		postalAddress.setPhoneNumber(RandomTestUtil.randomString());
 
-		randomPatchAccount.setPostalAddresses(
-			new PostalAddress[] {postalAddress});
+		postAccount.setPostalAddresses(new PostalAddress[] {postalAddress});
 
-		Account patchAccount = accountResource.patchAccount(
-			postAccount.getId(), randomPatchAccount);
+		postAccount = testPostAccount_addAccount(postAccount);
 
 		List<Address> addresses = _addressLocalService.getAddresses(
 			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
-			patchAccount.getId());
+			postAccount.getId());
 
 		Address address = addresses.get(0);
 
+		Assert.assertEquals(
+			postalAddress.getPhoneNumber(), address.getPhoneNumber());
+
+		postalAddress.setId(address.getAddressId());
+
+		postalAddress.setPhoneNumber(RandomTestUtil.randomString() + "1");
+
+		postAccount.setPostalAddresses(new PostalAddress[] {postalAddress});
+
+		Account patchAccount = accountResource.patchAccount(
+			postAccount.getId(), postAccount);
+
+		addresses = _addressLocalService.getAddresses(
+			TestPropsValues.getCompanyId(), AccountEntry.class.getName(),
+			patchAccount.getId());
+
+		address = addresses.get(0);
+
+		Assert.assertEquals(postAccount.getId(), patchAccount.getId());
+		Assert.assertEquals(
+			GetterUtil.getLong(postalAddress.getId()), address.getAddressId());
 		Assert.assertEquals(
 			postalAddress.getPhoneNumber(), address.getPhoneNumber());
 	}

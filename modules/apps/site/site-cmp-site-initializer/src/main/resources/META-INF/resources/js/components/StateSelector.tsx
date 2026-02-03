@@ -38,19 +38,36 @@ const Trigger = React.forwardRef(
 		{
 			children,
 			className,
+			triggerClassName,
 			...otherProps
-		}: {children: string; className?: string; otherProps: unknown},
+		}: {
+			children: string;
+			className?: string;
+			otherProps: unknown;
+			triggerClassName?: string;
+		},
 		ref: LegacyRef<HTMLDivElement>
 	) => (
 		<div
 			{...otherProps}
-			className={classNames('lfr-cmp__state-selector', className)}
+			className={
+				triggerClassName
+					? triggerClassName
+					: classNames('lfr-cmp__state-selector', className)
+			}
 			ref={ref}
 			tabIndex={0}
 		>
-			<Label displayType={mapLabelToLabelDisplayType[children]}>
-				{children}
-			</Label>
+			{children !== Liferay.Language.get('select-state') ? (
+				<Label
+					className="my-0"
+					displayType={mapLabelToLabelDisplayType[children]}
+				>
+					{children}
+				</Label>
+			) : (
+				<span className="text-muted">{children}</span>
+			)}
 		</div>
 	)
 );
@@ -59,14 +76,20 @@ export default function StateSelector({
 	initialSelectedKey,
 	onChange,
 	states,
+	triggerClassName,
 }: {
 	initialSelectedKey: string;
 	onChange: (key: string) => Promise<void>;
 	states: State[];
+	triggerClassName?: string;
 }) {
 	const [selectedKey, setSelectedKey] = useState(initialSelectedKey);
 
 	function getNextStates() {
+		if (!selectedKey) {
+			return states;
+		}
+
 		const {nextStates} = states.find(
 			({key}) => key === selectedKey
 		) as State;
@@ -97,7 +120,9 @@ export default function StateSelector({
 
 					await onChange(item as string);
 				}}
+				placeholder={Liferay.Language.get('select-state')}
 				selectedKey={selectedKey}
+				triggerClassName={triggerClassName}
 				width={125}
 			>
 				{(item) => (

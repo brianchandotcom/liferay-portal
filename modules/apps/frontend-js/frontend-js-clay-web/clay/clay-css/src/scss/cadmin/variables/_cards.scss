@@ -379,12 +379,12 @@ $cadmin-card-interactive-after-highlight: () !default;
 $cadmin-card-interactive-after-highlight: map-deep-merge(
 	(
 		border-radius: 0 0 $cadmin-card-border-radius $cadmin-card-border-radius,
-		bottom: math-sign($cadmin-card-border-width),
+		bottom: calc(#{$cadmin-card-border-width} * -1),
 		content: '',
 		height: 0,
-		left: math-sign($cadmin-card-border-width),
+		left: calc(#{$cadmin-card-border-width} * -1),
 		position: absolute,
-		right: math-sign($cadmin-card-border-width),
+		right: calc(#{$cadmin-card-border-width} * -1),
 		transition: height 0.15s ease-out,
 
 		hover: (

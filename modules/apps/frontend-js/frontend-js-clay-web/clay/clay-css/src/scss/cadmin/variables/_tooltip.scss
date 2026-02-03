@@ -94,7 +94,7 @@ $cadmin-clay-tooltip-bottom: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin-left: math-sign($cadmin-tooltip-arrow-width * 0.5),
+			margin-left: calc(#{$cadmin-tooltip-arrow-width} * -0.5),
 			top: 0,
 
 			before: (
@@ -151,7 +151,7 @@ $cadmin-clay-tooltip-left: map-deep-merge(
 
 		arrow: (
 			height: $cadmin-tooltip-arrow-width,
-			margin-top: math-sign($cadmin-tooltip-arrow-width * 0.5),
+			margin-top: calc(#{$cadmin-tooltip-arrow-width} * -0.5),
 			right: 0,
 			top: 50%,
 			width: $cadmin-tooltip-arrow-height,
@@ -212,7 +212,7 @@ $cadmin-clay-tooltip-right: map-deep-merge(
 		arrow: (
 			height: $cadmin-tooltip-arrow-width,
 			left: 0,
-			margin-top: math-sign($cadmin-tooltip-arrow-width * 0.5),
+			margin-top: calc(#{$cadmin-tooltip-arrow-width} * -0.5),
 			top: 50%,
 			width: $cadmin-tooltip-arrow-height,
 
@@ -272,7 +272,7 @@ $cadmin-tooltip-top: map-deep-merge(
 		arrow: (
 			bottom: 0,
 			left: 50%,
-			margin-left: math-sign($cadmin-tooltip-arrow-width * 0.5),
+			margin-left: calc(#{$cadmin-tooltip-arrow-width} * -0.5),
 			before: (
 				border-top-color: $cadmin-tooltip-arrow-color,
 				border-width: $cadmin-tooltip-arrow-height

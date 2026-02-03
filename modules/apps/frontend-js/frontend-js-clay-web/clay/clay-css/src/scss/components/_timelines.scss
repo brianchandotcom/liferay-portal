@@ -71,12 +71,12 @@
 
 	.panel {
 		.timeline-increment {
-			margin-left: math-sign(
-				if(
-					variable-exists(panel-border-left-width),
-					$panel-border-left-width,
-					1px
-				)
+			margin-left: calc(
+				#{if(
+						variable-exists(panel-border-left-width),
+						$panel-border-left-width,
+						1px
+					)} * -1
 			);
 		}
 	}

@@ -61,8 +61,8 @@
 	.row {
 		display: flex;
 		flex-wrap: wrap;
-		margin-left: math-sign($grid-gutter-width * 0.5);
-		margin-right: math-sign($grid-gutter-width * 0.5);
+		margin-left: calc(#{$grid-gutter-width} * -0.5);
+		margin-right: calc(#{$grid-gutter-width} * -0.5);
 	}
 
 	// Remove the negative margin from default .row, then the horizontal padding
@@ -210,8 +210,8 @@
 
 		.container &,
 		.container-fluid & {
-			margin-left: math-sign($grid-gutter-width * 0.5);
-			margin-right: math-sign($grid-gutter-width * 0.5);
+			margin-left: calc(#{$grid-gutter-width} * -0.5);
+			margin-right: calc(#{$grid-gutter-width} * -0.5);
 		}
 	}
 

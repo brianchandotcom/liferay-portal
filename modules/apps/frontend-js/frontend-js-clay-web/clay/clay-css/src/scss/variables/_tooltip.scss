@@ -94,7 +94,7 @@ $clay-tooltip-bottom: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin-left: math-sign($tooltip-arrow-width * 0.5),
+			margin-left: calc(#{$tooltip-arrow-width} * -0.5),
 			top: 0,
 
 			before: (
@@ -151,7 +151,7 @@ $clay-tooltip-left: map-deep-merge(
 
 		arrow: (
 			height: $tooltip-arrow-width,
-			margin-top: math-sign($tooltip-arrow-width * 0.5),
+			margin-top: calc(#{$tooltip-arrow-width} * -0.5),
 			right: 0,
 			top: 50%,
 			width: $tooltip-arrow-height,
@@ -211,7 +211,7 @@ $clay-tooltip-right: map-deep-merge(
 		arrow: (
 			height: $tooltip-arrow-width,
 			left: 0,
-			margin-top: math-sign($tooltip-arrow-width * 0.5),
+			margin-top: calc(#{$tooltip-arrow-width} * -0.5),
 			width: $tooltip-arrow-height,
 			top: 50%,
 
@@ -270,7 +270,7 @@ $clay-tooltip-top: map-deep-merge(
 		arrow: (
 			bottom: 0,
 			left: 50%,
-			margin-left: math-sign($tooltip-arrow-width * 0.5),
+			margin-left: calc(#{$tooltip-arrow-width} * -0.5),
 			before: (
 				border-top-color: $tooltip-arrow-color,
 				border-width: $tooltip-arrow-height

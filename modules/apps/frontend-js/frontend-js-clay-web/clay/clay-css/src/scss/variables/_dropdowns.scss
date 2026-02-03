@@ -33,7 +33,7 @@ $dropdown-border-radius: $border-radius !default;
 /// @deprecated as of v3.x with no replacement
 
 $dropdown-inner-border-radius: $dropdown-border-radius
-	math-sign($dropdown-border-width) !default;
+	calc(#{$dropdown-border-width} * -1) !default;
 
 /// @deprecated as of v3.x use map $dropdown-menu instead
 
@@ -972,11 +972,11 @@ $dropdown-menu-alert-fluid: map-deep-merge(
 		margin-right: 0,
 
 		first-child: (
-			margin-top: math-sign($dropdown-padding-y),
+			margin-top: calc(#{$dropdown-padding-y} * -1),
 		),
 
 		last-child: (
-			margin-bottom: math-sign($dropdown-padding-y),
+			margin-bottom: calc(#{$dropdown-padding-y} * -1),
 		),
 	),
 	$dropdown-menu-alert-fluid

@@ -213,7 +213,7 @@ $cadmin-clay-popover-top: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin-left: math-sign($cadmin-popover-arrow-width * 0.5),
+			margin-left: calc(#{$cadmin-popover-arrow-width} * -0.5),
 			bottom:
 				calc(
 					(
@@ -290,7 +290,7 @@ $cadmin-clay-popover-right: map-deep-merge(
 							#{$cadmin-popover-arrow-height} + #{$cadmin-popover-border-width}
 						) * -1
 				),
-			margin: math-sign($cadmin-popover-arrow-height * 0.5) 0 0,
+			margin: calc(#{$cadmin-popover-arrow-height} * -0.5) 0 0,
 			top: 50%,
 			width: $cadmin-popover-arrow-height,
 
@@ -358,7 +358,7 @@ $cadmin-clay-popover-bottom: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin: 0 0 0 math-sign($cadmin-popover-arrow-width * 0.5),
+			margin: 0 0 0 calc(#{$cadmin-popover-arrow-width} * -0.5),
 			top:
 				calc(
 					(
@@ -429,7 +429,7 @@ $cadmin-clay-popover-left: map-deep-merge(
 
 		arrow: (
 			height: $cadmin-popover-arrow-width,
-			margin: math-sign($cadmin-popover-arrow-height * 0.5) 0 0,
+			margin: calc(#{$cadmin-popover-arrow-height} * -0.5) 0 0,
 			right:
 				calc(
 					(

@@ -21,7 +21,7 @@
 
 	> .arrow {
 		top: calc(
-			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+			#{$cadmin-popover-arrow-height} * -1 - #{$cadmin-popover-border-width}
 		);
 
 		&::before {
@@ -49,7 +49,7 @@
 		content: '';
 		display: block;
 		left: 50%;
-		margin-left: calc(#{math-sign($cadmin-popover-arrow-width)} / 2);
+		margin-left: calc(#{$cadmin-popover-arrow-width} / -2);
 		position: absolute;
 		top: 0;
 		width: $cadmin-popover-arrow-width;
@@ -63,7 +63,7 @@
 		height: $cadmin-popover-arrow-width;
 		margin: $cadmin-popover-border-radius 0;
 		right: calc(
-			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+			#{$cadmin-popover-arrow-height} * -1 - #{$cadmin-popover-border-width}
 		);
 		width: $cadmin-popover-arrow-height;
 
@@ -91,7 +91,7 @@
 	> .arrow {
 		height: $cadmin-popover-arrow-width;
 		left: calc(
-			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+			#{$cadmin-popover-arrow-height} * -1 - #{$cadmin-popover-border-width}
 		);
 		margin: $cadmin-popover-border-radius 0;
 		width: $cadmin-popover-arrow-height;
@@ -119,7 +119,7 @@
 
 	> .arrow {
 		bottom: calc(
-			#{math-sign($cadmin-popover-arrow-height)} - #{$cadmin-popover-border-width}
+			#{$cadmin-popover-arrow-height} * -1 - #{$cadmin-popover-border-width}
 		);
 
 		&::before {

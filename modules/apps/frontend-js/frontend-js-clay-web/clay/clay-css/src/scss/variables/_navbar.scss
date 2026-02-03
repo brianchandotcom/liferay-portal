@@ -65,7 +65,7 @@ $navbar-underline: map-deep-merge(
 		navbar-toggler-link: (
 			after: (
 				background-color: $navbar-underline-active-bg,
-				bottom: math-sign($navbar-padding-y),
+				bottom: calc(#{$navbar-padding-y} * -1),
 				content: '',
 				display: block,
 				height: 0.1875rem,
@@ -86,7 +86,7 @@ $navbar-underline: map-deep-merge(
 									after: (
 										background-color:
 											$navbar-underline-active-bg,
-										bottom: math-sign($navbar-padding-y),
+										bottom: calc(#{$navbar-padding-y} * -1),
 										content: '',
 										display: block,
 										height: 0.1875rem,

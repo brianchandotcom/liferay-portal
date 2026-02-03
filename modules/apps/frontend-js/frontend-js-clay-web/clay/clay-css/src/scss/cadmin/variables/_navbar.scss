@@ -67,7 +67,7 @@ $cadmin-navbar-underline: map-deep-merge(
 		navbar-toggler-link: (
 			after: (
 				background-color: $cadmin-navbar-underline-active-bg,
-				bottom: math-sign($cadmin-navbar-padding-y),
+				bottom: calc(#{$cadmin-navbar-padding-y} * -1),
 				content: '',
 				display: block,
 				height: 0.25rem,
@@ -89,7 +89,9 @@ $cadmin-navbar-underline: map-deep-merge(
 										background-color:
 											$cadmin-navbar-underline-active-bg,
 										bottom:
-											math-sign($cadmin-navbar-padding-y),
+											calc(
+												#{$cadmin-navbar-padding-y} * -1
+											),
 										content: '',
 										display: block,
 										height: 0.25rem,

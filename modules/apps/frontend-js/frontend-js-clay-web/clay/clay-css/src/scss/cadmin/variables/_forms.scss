@@ -1773,8 +1773,8 @@ $cadmin-input-group-inset-item-btn-monospaced: map-deep-merge(
 	(
 		font-size: 16px,
 		height: 32px,
-		margin-bottom: math-sign($cadmin-input-border-bottom-width),
-		margin-top: math-sign($cadmin-input-border-bottom-width),
+		margin-bottom: calc(#{$cadmin-input-border-bottom-width} * -1),
+		margin-top: calc(#{$cadmin-input-border-bottom-width} * -1),
 		padding: 0,
 		width: 32px,
 	),

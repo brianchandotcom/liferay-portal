@@ -370,7 +370,7 @@ textarea.form-control-plaintext,
 }
 
 .form-check-input {
-	margin-left: math-sign($form-check-input-gutter);
+	margin-left: calc(#{$form-check-input-gutter} * -1);
 	margin-top: $form-check-input-margin-y;
 	position: static;
 
@@ -614,8 +614,8 @@ textarea.form-control-sm,
 	.form-row {
 		display: flex;
 		flex-wrap: wrap;
-		margin-left: math-sign($form-grid-gutter-width * 0.5);
-		margin-right: math-sign($form-grid-gutter-width * 0.5);
+		margin-left: calc(#{$form-grid-gutter-width} * -0.5);
+		margin-right: calc(#{$form-grid-gutter-width} * -0.5);
 
 		> .col,
 		> [class*='col-'] {

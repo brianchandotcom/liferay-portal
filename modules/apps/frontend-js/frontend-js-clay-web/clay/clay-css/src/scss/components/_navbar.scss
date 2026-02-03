@@ -310,8 +310,8 @@
 							}
 
 							.dropdown-divider {
-								margin-left: math-sign($navbar-padding-x);
-								margin-right: math-sign($navbar-padding-x);
+								margin-left: calc(#{$navbar-padding-x} * -1);
+								margin-right: calc(#{$navbar-padding-x} * -1);
 							}
 
 							.dropdown-item {

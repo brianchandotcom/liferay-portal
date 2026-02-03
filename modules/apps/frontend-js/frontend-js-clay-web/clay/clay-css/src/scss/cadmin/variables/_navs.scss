@@ -106,9 +106,9 @@ $cadmin-nav-btn: map-deep-merge(
 
 		c-inner: (
 			margin-bottom: 0,
-			margin-left: math-sign($cadmin-nav-btn-padding-x),
-			margin-right: math-sign($cadmin-nav-btn-padding-x),
-			margin-top: math-sign($cadmin-btn-border-width),
+			margin-left: calc(#{$cadmin-nav-btn-padding-x} * -1),
+			margin-right: calc(#{$cadmin-nav-btn-padding-x} * -1),
+			margin-top: calc(#{$cadmin-btn-border-width} * -1),
 		),
 
 		btn-link: (
@@ -129,8 +129,8 @@ $cadmin-nav-btn-monospaced: map-deep-merge(
 		padding: 0,
 
 		c-inner: (
-			margin-left: math-sign($cadmin-btn-border-width),
-			margin-right: math-sign($cadmin-btn-border-width),
+			margin-left: calc(#{$cadmin-btn-border-width} * -1),
+			margin-right: calc(#{$cadmin-btn-border-width} * -1),
 		),
 	),
 	$cadmin-nav-btn-monospaced
@@ -421,7 +421,7 @@ $cadmin-nav-tabs: map-deep-merge(
 		font-size: $cadmin-nav-tabs-font-size,
 
 		nav-item: (
-			margin-bottom: math-sign($cadmin-nav-tabs-border-width),
+			margin-bottom: calc(#{$cadmin-nav-tabs-border-width} * -1),
 		),
 
 		nav-link: $cadmin-nav-tabs-link,

@@ -76,7 +76,7 @@
 
 	.panel {
 		.timeline-increment {
-			margin-left: math-sign($cadmin-panel-border-left-width);
+			margin-left: calc(#{$cadmin-panel-border-left-width} * -1);
 		}
 	}
 }

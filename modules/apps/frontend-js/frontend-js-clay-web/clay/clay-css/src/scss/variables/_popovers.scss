@@ -227,7 +227,7 @@ $clay-popover-top: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin-left: math-sign($popover-arrow-width * 0.5),
+			margin-left: calc(#{$popover-arrow-width} * -0.5),
 			bottom:
 				calc((#{$popover-arrow-height} + #{$popover-border-width}) * -1),
 			margin: 0,
@@ -296,7 +296,7 @@ $clay-popover-right: map-deep-merge(
 			height: $popover-arrow-width,
 			left:
 				calc((#{$popover-arrow-height} + #{$popover-border-width}) * -1),
-			margin: math-sign($popover-arrow-height * 0.5) 0 0,
+			margin: calc(#{$popover-arrow-height} * -0.5) 0 0,
 			top: 50%,
 			width: $popover-arrow-height,
 
@@ -362,7 +362,7 @@ $clay-popover-bottom: map-deep-merge(
 
 		arrow: (
 			left: 50%,
-			margin: 0 0 0 math-sign($popover-arrow-width * 0.5),
+			margin: 0 0 0 calc(#{$popover-arrow-width} * -0.5),
 			top:
 				calc((#{$popover-arrow-height} + #{$popover-border-width}) * -1),
 			before: (
@@ -426,7 +426,7 @@ $clay-popover-left: map-deep-merge(
 
 		arrow: (
 			height: $popover-arrow-width,
-			margin: math-sign($popover-arrow-height * 0.5) 0 0,
+			margin: calc(#{$popover-arrow-height} * -0.5) 0 0,
 			right:
 				calc((#{$popover-arrow-height} + #{$popover-border-width}) * -1),
 			top: 50%,

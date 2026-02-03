@@ -28,7 +28,7 @@ exports[`DistributionCard AddDataSource renders 1`] = `
         </div>
         <a
           class="button-root btn btn-primary"
-          href="/workspace/123/settings/data-source/add"
+          href="/workspace/123/settings/data-source"
         >
           Add Data Source
         </a>

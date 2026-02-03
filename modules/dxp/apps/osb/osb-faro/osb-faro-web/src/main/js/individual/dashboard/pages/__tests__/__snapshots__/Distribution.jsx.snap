@@ -202,7 +202,7 @@ exports[`Individuals Dashboard Distribution renders with data source empty state
         </a>
         <a
           class="button-root btn btn-primary"
-          href="/workspace/123/settings/data-source/add"
+          href="/workspace/123/settings/data-source"
         >
           Connect Data Source
         </a>

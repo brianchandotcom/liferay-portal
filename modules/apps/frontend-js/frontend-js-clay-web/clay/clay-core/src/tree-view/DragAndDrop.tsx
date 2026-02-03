@@ -52,18 +52,18 @@ type ContextProps = {
 	dragDescribedBy: string;
 	dragDropDescribedBy: string;
 	messages: DragAndDropMessages;
-	mode: 'keyboard' | 'mouse' | null;
 	onCancel: () => void;
-	onDragStart: (mode: 'keyboard' | 'mouse', target: React.Key) => void;
+	onDragStart: (source: 'keyboard' | 'mouse', target: React.Key) => void;
 	onDrop: () => void;
 	onEnd: () => void;
 	onPositionChange: (key: React.Key, position: Position) => void;
 	position: 'bottom' | 'middle' | 'top' | null;
+	source: 'keyboard' | 'mouse' | null;
 };
 
 type State = Pick<
 	ContextProps,
-	'mode' | 'currentTarget' | 'currentDrag' | 'position'
+	'currentTarget' | 'currentDrag' | 'position' | 'source'
 > & {
 	lastItem: React.Key | null;
 	status: 'complete' | 'canceled' | null;
@@ -170,18 +170,18 @@ export function DragAndDropProvider<T>({
 		currentDrag: null,
 		currentTarget: null,
 		lastItem: null,
-		mode: null,
 		position: null,
+		source: null,
 		status: null,
 	});
 
 	const onDragStart = useCallback(
-		(mode: 'keyboard' | 'mouse', dragKey: React.Key) => {
-			if (mode === 'mouse') {
+		(source: 'keyboard' | 'mouse', dragKey: React.Key) => {
+			if (source === 'mouse') {
 				setState((state) => ({
 					...state,
 					currentDrag: dragKey,
-					mode: 'mouse',
+					source: 'mouse',
 					status: null,
 				}));
 			}
@@ -197,8 +197,8 @@ export function DragAndDropProvider<T>({
 					...state,
 					currentDrag: dragKey,
 					currentTarget: nextTargetKey,
-					mode: 'keyboard',
 					position: 'bottom',
+					source: 'keyboard',
 					status: null,
 				}));
 			}
@@ -211,8 +211,8 @@ export function DragAndDropProvider<T>({
 			currentDrag: null,
 			currentTarget: null,
 			lastItem: state.currentDrag,
-			mode: null,
 			position: null,
+			source: null,
 			status: null,
 		}));
 	}, []);
@@ -234,8 +234,8 @@ export function DragAndDropProvider<T>({
 			currentDrag: null,
 			currentTarget: null,
 			lastItem: state.currentDrag,
-			mode: null,
 			position: null,
+			source: null,
 			status: 'canceled',
 		}));
 	}, []);
@@ -273,8 +273,8 @@ export function DragAndDropProvider<T>({
 			currentDrag: null,
 			currentTarget: null,
 			lastItem: currentDrag,
-			mode: null,
 			position: null,
+			source: null,
 			status: 'complete',
 		});
 		announcerRef.current?.announce(messages.dropComplete);
@@ -297,7 +297,7 @@ export function DragAndDropProvider<T>({
 	}, [state]);
 
 	useEffect(() => {
-		if (rootRef.current && state.mode === 'keyboard') {
+		if (rootRef.current && state.source === 'keyboard') {
 			return suppressOthers([
 				...rootRef.current.querySelectorAll(
 					'[aria-roledescription="drop indicator"], [data-draggable="true"], [class="component-text"]'
@@ -307,14 +307,14 @@ export function DragAndDropProvider<T>({
 				)!,
 			]);
 		}
-	}, [state.mode]);
+	}, [state.source]);
 
 	const dragDescribedBy = useId();
 	const dragDropDescribedBy = useId();
 	const dragCancelDescribedBy = useId();
 
 	useEffect(() => {
-		if (state.mode === 'keyboard') {
+		if (state.source === 'keyboard') {
 			const denylist = new Set<React.Key>();
 
 			const onKeyDown = (event: KeyboardEvent) => {
@@ -491,7 +491,7 @@ export function DragAndDropProvider<T>({
 		>
 			{dragAndDrop && <LiveAnnouncer ref={announcerRef} />}
 
-			{state.mode === 'keyboard' ? (
+			{state.source === 'keyboard' ? (
 				<>
 					<span data-focus-scope-start="true" />
 					{children}
@@ -514,7 +514,7 @@ export function DragAndDropProvider<T>({
 						document.body
 					)}
 
-					{state.mode === 'keyboard' && (
+					{state.source === 'keyboard' && (
 						<>
 							{createPortal(
 								<div

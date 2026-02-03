@@ -114,7 +114,7 @@ export const Item = React.forwardRef<HTMLDivElement, ITreeViewItemProps>(
 		} = useTreeViewContext();
 		const [focus, setFocus] = useState(false);
 		const [loading, setLoading] = useState(false);
-		const {mode} = useDnD();
+		const {source} = useDnD();
 		const item = useItem();
 		const clickCapturedRef = useRef(false);
 		const api = useAPI();
@@ -191,7 +191,7 @@ export const Item = React.forwardRef<HTMLDivElement, ITreeViewItemProps>(
 			disabled:
 				itemStackProps.disabled ||
 				nodeProps.disabled ||
-				mode === 'keyboard',
+				source === 'keyboard',
 			id: item.key,
 		});
 		const labelId = useId();
@@ -1017,7 +1017,7 @@ type ItemIndicatorProps = {
 };
 
 function ItemIndicator({labelId, target}: ItemIndicatorProps) {
-	const {currentTarget, dragDropDescribedBy, messages, mode, position} =
+	const {currentTarget, dragDropDescribedBy, messages, position, source} =
 		useDnD();
 	const indicatorRef = useRef<HTMLDivElement>(null);
 
@@ -1025,7 +1025,7 @@ function ItemIndicator({labelId, target}: ItemIndicatorProps) {
 
 	useEffect(() => {
 		if (
-			mode === 'keyboard' &&
+			source === 'keyboard' &&
 			indicatorRef.current &&
 			currentTarget === target.key &&
 			target.dropPosition === position
@@ -1034,11 +1034,11 @@ function ItemIndicator({labelId, target}: ItemIndicatorProps) {
 		}
 	}, [currentTarget, target]);
 
-	if (!mode) {
+	if (!source) {
 		return null;
 	}
 
-	if (mode === 'mouse') {
+	if (source === 'mouse') {
 		return (
 			<div
 				aria-hidden="true"
@@ -1063,7 +1063,7 @@ function ItemIndicator({labelId, target}: ItemIndicatorProps) {
 	return (
 		<Component
 			aria-describedby={dragDropDescribedBy}
-			aria-hidden={mode !== 'keyboard' ? true : undefined}
+			aria-hidden={source !== 'keyboard' ? true : undefined}
 			aria-label={classNames({
 				[messages.dropOn]: target.dropPosition === 'middle',
 				[messages.insertAfter]: target.dropPosition === 'bottom',
@@ -1104,9 +1104,9 @@ function Drag({labelId, tabIndex}: DragProps) {
 		dragCancelDescribedBy,
 		dragDescribedBy,
 		messages,
-		mode,
 		onCancel,
 		onDragStart,
+		source,
 	} = useDnD();
 	const item = useItem();
 	const isFocusVisible = useFocusVisible();
@@ -1138,7 +1138,7 @@ function Drag({labelId, tabIndex}: DragProps) {
 						return;
 					}
 
-					if (mode === 'keyboard') {
+					if (source === 'keyboard') {
 						onCancel();
 					}
 					else {

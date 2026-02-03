@@ -61,11 +61,11 @@ export function ItemContextProvider({children, value}: Props) {
 	const {
 		currentDrag,
 		currentTarget,
-		mode,
 		onDragStart,
 		onEnd,
 		onPositionChange,
 		position,
+		source,
 	} = useDnD();
 
 	const keyRef = useRef(getKey(value['key']));
@@ -142,10 +142,10 @@ export function ItemContextProvider({children, value}: Props) {
 
 		// Resets the flag when the drag and drop is finished or cancelled.
 
-		if (mode === null) {
+		if (source === null) {
 			isValidDropRef.current = true;
 		}
-	}, [mode]);
+	}, [source]);
 
 	useEffect(() => {
 		preview(getEmptyImage(), {captureDraggingState: true});
@@ -301,7 +301,7 @@ export function ItemContextProvider({children, value}: Props) {
 		<ItemContext.Provider value={item}>
 			{React.cloneElement(children as JSX.Element, {
 				isDragging:
-					(mode === 'keyboard' && currentDrag === item.key) ||
+					(source === 'keyboard' && currentDrag === item.key) ||
 					isDragging,
 				overPosition: position,
 				overTarget: currentTarget === item.key || overTarget,

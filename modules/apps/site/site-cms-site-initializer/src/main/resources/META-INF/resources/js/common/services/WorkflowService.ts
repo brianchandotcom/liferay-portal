@@ -47,7 +47,7 @@ export async function getWorkflowTasksAssignedToMe({
 		const filteredWorkflowTasks = data.items.filter(
 			(item) =>
 				!item.completed &&
-				item.name === 'review' &&
+				(item.name === 'review' || item.name === 'update') &&
 				assetTypes.includes(item.objectReviewed.assetType)
 		);
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -162,7 +163,8 @@ public class SegmentsExperienceUtil {
 			new LayoutStructureItemImporterContext(
 				serviceContext.getCompanyId(), fragmentEntryProcessorRegistry,
 				layout.getGroupId(), infoItemServiceRegistry, layout,
-				segmentsExperienceId, serviceContext.getUserId());
+				segmentsExperienceId,
+				UserLocalServiceUtil.getUser(serviceContext.getUserId()));
 
 		for (PageElement pageElement : pageExperience.getPageElements()) {
 			LayoutStructureUtil.addLayoutStructureItem(

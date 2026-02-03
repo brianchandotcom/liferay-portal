@@ -373,7 +373,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 						contextCompany.getCompanyId(),
 						_fragmentEntryProcessorRegistry, groupId,
 						_infoItemServiceRegistry, layout, segmentsExperienceId,
-						contextUser.getUserId()),
+						contextUser),
 					pageElement);
 
 			_layoutPageTemplateStructureLocalService.

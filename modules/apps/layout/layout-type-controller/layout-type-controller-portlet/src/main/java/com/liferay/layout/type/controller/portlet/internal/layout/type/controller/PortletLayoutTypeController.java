@@ -5,7 +5,6 @@
 
 package com.liferay.layout.type.controller.portlet.internal.layout.type.controller;
 
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.portlet.internal.constants.PortletLayoutTypeControllerWebKeys;
@@ -105,8 +104,7 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		httpServletRequest.setAttribute(
 			PortletLayoutTypeControllerWebKeys.PORTLET_LAYOUT_DISPLAY_CONTEXT,
 			new PortletLayoutDisplayContext(
-				_layoutLocalService, _layoutPageTemplateEntryLocalService,
-				_layoutPageTemplateStructureLocalService));
+				_layoutLocalService, _layoutPageTemplateStructureLocalService));
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -186,10 +184,6 @@ public class PortletLayoutTypeController extends BaseLayoutTypeControllerImpl {
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutPageTemplateEntryLocalService
-		_layoutPageTemplateEntryLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

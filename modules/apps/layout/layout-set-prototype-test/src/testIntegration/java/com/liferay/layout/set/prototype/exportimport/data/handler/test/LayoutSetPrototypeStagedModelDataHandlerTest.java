@@ -74,8 +74,10 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 						_layoutSetPrototype.getUuid(),
 						_layoutSetPrototype.getCompanyId());
 
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
-				_layoutSetPrototype);
+			if (_layoutSetPrototype != null) {
+				LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+					_layoutSetPrototype);
+			}
 		}
 
 		if (_layoutPrototype != null) {
@@ -85,8 +87,10 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 						_layoutPrototype.getUuid(),
 						_layoutPrototype.getCompanyId());
 
-			LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
-				_layoutPrototype);
+			if (_layoutPrototype != null) {
+				LayoutPrototypeLocalServiceUtil.deleteLayoutPrototype(
+					_layoutPrototype);
+			}
 		}
 	}
 

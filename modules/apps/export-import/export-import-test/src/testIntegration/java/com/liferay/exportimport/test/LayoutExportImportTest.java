@@ -23,6 +23,10 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.utility.page.kernel.constants.LayoutUtilityPageEntryConstants;
+import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
+import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.LocaleException;
@@ -35,6 +39,9 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -49,6 +56,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -61,6 +69,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.staging.configuration.StagingConfiguration;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.util.Arrays;
@@ -506,6 +515,55 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			Arrays.asList(LocaleUtil.US, LocaleUtil.US),
 			Arrays.asList(LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.US),
 			false);
+	}
+
+	@Test
+	@TestInfo("LPD-77689")
+	public void testExportImportLayoutUtilityPageEntryWithPreviewFileEntry()
+		throws Exception {
+
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.addLayoutUtilityPageEntry(
+				null, TestPropsValues.getUserId(), group.getGroupId(), 0, 0,
+				false, RandomTestUtil.randomString(),
+				LayoutUtilityPageEntryConstants.TYPE_SC_NOT_FOUND, null,
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId()));
+
+		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
+			group.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		String randomString = StringUtil.randomString();
+
+		FileEntry previewFileEntry =
+			PortletFileRepositoryUtil.addPortletFileEntry(
+				null, group.getGroupId(), TestPropsValues.getUserId(),
+				LayoutPageTemplateEntry.class.getName(),
+				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+				RandomTestUtil.randomString(), repository.getDlFolderId(),
+				new ByteArrayInputStream(randomString.getBytes()),
+				RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
+
+		_layoutUtilityPageEntryLocalService.updateLayoutUtilityPageEntry(
+			layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
+			previewFileEntry.getFileEntryId());
+
+		exportImportLayouts(new long[0], getImportParameterMap(), true);
+
+		LayoutUtilityPageEntry importedLayoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					layoutUtilityPageEntry.getExternalReferenceCode(),
+					importedGroup.getGroupId());
+
+		FileEntry importedPreviewFileEntry =
+			PortletFileRepositoryUtil.getPortletFileEntry(
+				importedLayoutUtilityPageEntry.getPreviewFileEntryId());
+
+		Assert.assertEquals(
+			StreamUtil.toString(previewFileEntry.getContentStream()),
+			StreamUtil.toString(importedPreviewFileEntry.getContentStream()));
 	}
 
 	@Test
@@ -1132,6 +1190,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Inject
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Inject
+	private LayoutUtilityPageEntryLocalService
+		_layoutUtilityPageEntryLocalService;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

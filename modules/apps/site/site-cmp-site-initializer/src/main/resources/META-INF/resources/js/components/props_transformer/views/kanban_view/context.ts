@@ -5,11 +5,17 @@
 
 import React from 'react';
 
-import {IColumn, IItemsActions, IKanbanState} from '../../../../utils/types';
+import {IColumn, IItemsActions, ITask} from '../../../../utils/types';
 
 interface IKanbanContext {
 	boardData: {[k: string]: IColumn};
-	changeTaskStatus: React.Dispatch<React.SetStateAction<IKanbanState>>;
+	changeTaskStatus: (
+		task: ITask,
+		newStatus: {
+			key: string;
+			name: string;
+		}
+	) => void;
 	itemsActions: IItemsActions[];
 	loadData: Function;
 }

@@ -30,6 +30,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePage
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.admin.site.client.dto.v1_0.EmbeddedPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImage;
@@ -413,6 +414,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_testPutSiteSitePage(serviceContext, SitePage.Type.CONTENT_PAGE);
+		_testPutSiteSitePage(serviceContext, SitePage.Type.EMBEDDED_PAGE);
 		_testPutSiteSitePage(serviceContext, SitePage.Type.LINK_TO_PAGE_PAGE);
 		_testPutSiteSitePage(serviceContext, SitePage.Type.LINK_TO_URL_PAGE);
 		_testPutSiteSitePage(serviceContext, SitePage.Type.PAGE_SET_PAGE);
@@ -663,6 +665,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode()));
 		}
+	}
+
+	private void _assertEmbeddedSitePage(SitePage sitePage) {
+		Assert.assertTrue(
+			sitePage.getPageSettings() instanceof EmbeddedPageSettings);
+		Assert.assertEquals(SitePage.Type.EMBEDDED_PAGE, sitePage.getType());
 	}
 
 	private void _assertFragmentImageValue(
@@ -1060,6 +1068,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			_assertContentSitePage(sitePage);
 		}
 		else if (Objects.equals(
+					layout.getType(), LayoutConstants.TYPE_EMBEDDED)) {
+
+			_assertEmbeddedSitePage(sitePage);
+		}
+		else if (Objects.equals(
 					layout.getType(), LayoutConstants.TYPE_LINK_TO_LAYOUT)) {
 
 			_assertLinkToPageSitePage(sitePage);
@@ -1389,6 +1402,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					setOpenGraphSettings(() -> _getOpenGraphSettings());
 					setSeoSettings(() -> _getSeoSettings());
 					setType(Type.CONTENT_PAGE_SETTINGS);
+				}
+			};
+		}
+		else if (type == SitePage.Type.EMBEDDED_PAGE) {
+			pageSettings = new EmbeddedPageSettings() {
+				{
+					setPageURL(
+						"http://www." + RandomTestUtil.randomString() + ".com");
+					setType(Type.EMBEDDED_PAGE_SETTINGS);
 				}
 			};
 		}
@@ -3258,6 +3280,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPutSiteSitePageWithPageSpecificationsWithCustomFields();
+		_testPutSiteSitePageWithPageSpecificationsWithEmbeddedPageSpecification();
 		_testPutSiteSitePageWithPageSpecificationsWithLinkToPagePageSpecification();
 		_testPutSiteSitePageWithPageSpecificationsWithLinkToURLPageSpecification();
 		_testPutSiteSitePageWithPageSpecificationsWithPageSetPageSpecification();
@@ -3361,6 +3384,49 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				pageSpecification -> pageSpecification.getCustomFields(),
 				CustomField[].class),
 			testGroup.getGroupId(), updateSitePage.getPageSpecifications());
+	}
+
+	private void _testPutSiteSitePageWithPageSpecificationsWithEmbeddedPageSpecification()
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomWidgetPage = _getRandomSitePage(
+			SitePage.Type.WIDGET_PAGE);
+
+		randomWidgetPage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
+
+		sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), randomWidgetPage);
+
+		SitePage randomSitePage = _getRandomSitePage(
+			SitePage.Type.EMBEDDED_PAGE);
+
+		randomSitePage.setPageSpecifications(
+			PageSpecificationsTestUtil.getEmbeddedPageSpecifications(
+				randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), randomSitePage);
+
+		sitePage.setPageSpecifications(
+			() -> PageSpecificationsTestUtil.getEmbeddedPageSpecifications(
+				sitePage.getExternalReferenceCode()));
+
+		SitePage putSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			sitePage.getExternalReferenceCode(), sitePage);
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			putSitePage.getPageSpecifications(),
+			sitePage.getPageSpecifications());
+
+		sitePageResource.deleteSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			putSitePage.getExternalReferenceCode());
 	}
 
 	private void _testPutSiteSitePageWithPageSpecificationsWithLinkToPagePageSpecification()

@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.custom.field.CustomValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicWidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.EmbeddedPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.GeneralConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToPagePageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkToURLPageSpecification;
@@ -427,6 +428,17 @@ public class PageSpecificationsTestUtil {
 			_getCustomField(_EXPANDO_ATTRIBUTE_NAMES[0], (String)null),
 			_getCustomField(
 				_EXPANDO_ATTRIBUTE_NAMES[1], RandomTestUtil.randomString())
+		};
+	}
+
+	public static PageSpecification[] getEmbeddedPageSpecifications(
+			String externalReferenceCode)
+		throws Exception {
+
+		return new PageSpecification[] {
+			_getPageSpecification(
+				externalReferenceCode, EmbeddedPageSpecification::new,
+				PageSpecification.Type.EMBEDDED_PAGE_SPECIFICATION)
 		};
 	}
 

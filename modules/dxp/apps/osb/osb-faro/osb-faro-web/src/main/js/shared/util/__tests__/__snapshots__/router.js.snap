@@ -63,7 +63,6 @@ Object {
   "LOGOUT": "/c/portal/logout",
   "OAUTH_RECEIVE": "/oauth/receive",
   "SETTINGS": "/workspace/:groupId([\\\\w._-]+)/settings",
-  "SETTINGS_ADD_DATA_SOURCE": "/workspace/:groupId([\\\\w._-]+)/settings/data-source/add",
   "SETTINGS_APIS": "/workspace/:groupId([\\\\w._-]+)/settings/apis",
   "SETTINGS_APIS_TOKEN_LIST": "/workspace/:groupId([\\\\w._-]+)/settings/apis/tokens",
   "SETTINGS_CHANNELS": "/workspace/:groupId([\\\\w._-]+)/settings/properties",

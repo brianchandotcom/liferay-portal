@@ -457,7 +457,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders with data source em
             </a>
             <a
               class="button-root btn btn-primary"
-              href="/workspace/23/settings/data-source/add"
+              href="/workspace/23/settings/data-source"
             >
               Connect Data Source
             </a>

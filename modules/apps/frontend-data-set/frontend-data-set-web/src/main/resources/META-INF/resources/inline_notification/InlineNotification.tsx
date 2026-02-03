@@ -10,7 +10,7 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 
 export interface IInlineNotificationComponent {
-	context: Pick<
+	context?: Pick<
 		IFrontendDataSetContext,
 		| 'forceSortsUpdate'
 		| 'loadData'
@@ -22,7 +22,7 @@ export interface IInlineNotificationComponent {
 }
 
 export function InlineNotification({
-	component: InlineNotificationContent,
+	component: InlineNotificationComponent,
 }: {
 	component: React.ComponentType<IInlineNotificationComponent>;
 }) {
@@ -44,5 +44,5 @@ export function InlineNotification({
 		updateAdditionalAPIURLParameters,
 	}))(FDSContext);
 
-	return <InlineNotificationContent context={InlineNotificationContext} />;
+	return <InlineNotificationComponent context={InlineNotificationContext} />;
 }

@@ -149,7 +149,7 @@ const FrontendDataSetContent = ({
 	infoPanelComponent,
 	inlineAddingSettings,
 	inlineEditingSettings,
-	inlineNotificationContent,
+	inlineNotificationComponent,
 	items: itemsProp,
 	itemsActions,
 	namespace,
@@ -166,7 +166,6 @@ const FrontendDataSetContent = ({
 	selectionType,
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
-	showInlineNotification,
 	showManagementBar = true,
 	showNavBarWhenSelected = false,
 	showPagination = true,
@@ -1532,19 +1531,18 @@ const FrontendDataSetContent = ({
 		</div>
 	) : null;
 
-	const inlineNotificationSlot =
-		showInlineNotification && inlineNotificationContent ? (
-			<div
-				className={classNames(
-					'container-fluid align-items-center inline-notification-bar',
-					style === 'fluid' && 'px-0'
-				)}
-			>
-				<InlineNotification
-					component={inlineNotificationContent}
-				></InlineNotification>
-			</div>
-		) : null;
+	const inlineNotificationSlot = inlineNotificationComponent ? (
+		<div
+			className={classNames(
+				'container-fluid align-items-center inline-notification-bar',
+				style === 'fluid' && 'px-0'
+			)}
+		>
+			<InlineNotification
+				component={inlineNotificationComponent}
+			></InlineNotification>
+		</div>
+	) : null;
 
 	const view =
 		!dataLoading && !componentLoading ? (

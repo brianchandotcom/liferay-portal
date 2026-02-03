@@ -73,7 +73,7 @@ type ContextProps = {
 		key: React.Key | null,
 		position: Position | null
 	) => void;
-	position: 'bottom' | 'middle' | 'top' | null;
+	position: Position | null;
 	source: 'keyboard' | 'mouse' | null;
 };
 
@@ -92,7 +92,12 @@ type Props<T> = {
 	messages?: DragAndDropMessages;
 	mode: 'single' | 'multiple';
 	nestedKey: string;
-	onItemHover?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
+	onItemHover?: (
+		item: T,
+		parentItem: T,
+		index: MoveItemIndex,
+		position: Position
+	) => boolean;
 	onItemMove?: (item: T, parentItem: T, index: MoveItemIndex) => boolean;
 	rootRef: React.RefObject<HTMLUListElement>;
 };
@@ -478,7 +483,8 @@ export function DragAndDropProvider<T>({
 								{
 									next: indexes[indexes.length - 1]!,
 									previous: dragNode.index,
-								}
+								},
+								newState.position!
 							);
 
 							if (!isHovered) {

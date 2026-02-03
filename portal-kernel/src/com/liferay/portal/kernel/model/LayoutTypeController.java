@@ -31,7 +31,9 @@ public interface LayoutTypeController extends Serializable {
 
 	public String getType();
 
-	public default UnicodeProperties getTypeSettingsProperties(Layout layout) {
+	public default UnicodeProperties getTypeSettingsProperties(Layout layout)
+		throws PortalException {
+
 		return layout.getTypeSettingsProperties();
 	}
 

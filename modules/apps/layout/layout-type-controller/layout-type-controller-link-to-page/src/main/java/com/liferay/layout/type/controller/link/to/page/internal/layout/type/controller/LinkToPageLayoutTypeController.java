@@ -10,6 +10,7 @@ import com.liferay.layout.type.controller.BaseLayoutTypeControllerImpl;
 import com.liferay.layout.type.controller.link.to.page.internal.constants.LinkToPageLayoutTypeControllerWebKeys;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
@@ -44,7 +45,9 @@ public class LinkToPageLayoutTypeController
 	}
 
 	@Override
-	public UnicodeProperties getTypeSettingsProperties(Layout layout) {
+	public UnicodeProperties getTypeSettingsProperties(Layout layout)
+		throws PortalException {
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
@@ -70,12 +73,8 @@ public class LinkToPageLayoutTypeController
 		}
 
 		Layout linkToLayout =
-			_layoutLocalService.fetchLayoutByExternalReferenceCode(
+			_layoutLocalService.getLayoutByExternalReferenceCode(
 				linkToLayoutExternalReferenceCode, layout.getGroupId());
-
-		if (linkToLayout == null) {
-			return typeSettingsUnicodeProperties;
-		}
 
 		typeSettingsUnicodeProperties.put(
 			"linkToLayoutId", String.valueOf(linkToLayout.getLayoutId()));

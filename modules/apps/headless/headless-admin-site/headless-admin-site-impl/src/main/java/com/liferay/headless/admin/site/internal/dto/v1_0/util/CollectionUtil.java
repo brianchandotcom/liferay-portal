@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.RelatedInfoItemCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
@@ -106,6 +107,12 @@ public class CollectionUtil {
 				classNameReference.getClassName());
 
 		if (infoCollectionProvider == null) {
+			infoCollectionProvider = infoItemServiceRegistry.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class,
+				classNameReference.getClassName());
+		}
+
+		if (infoCollectionProvider == null) {
 			LogUtil.logOptionalReference(
 				InfoCollectionProvider.class, classNameReference.getClassName(),
 				companyId);
@@ -117,10 +124,13 @@ public class CollectionUtil {
 			);
 		}
 
+		InfoCollectionProvider finalInfoCollectionProvider =
+			infoCollectionProvider;
+
 		return JSONUtil.put(
 			"itemSubtype",
 			() -> {
-				if (!(infoCollectionProvider instanceof
+				if (!(finalInfoCollectionProvider instanceof
 						SingleFormVariationInfoCollectionProvider)) {
 
 					return null;
@@ -129,7 +139,7 @@ public class CollectionUtil {
 				SingleFormVariationInfoCollectionProvider<?>
 					singleFormVariationInfoCollectionProvider =
 						(SingleFormVariationInfoCollectionProvider<?>)
-							infoCollectionProvider;
+							finalInfoCollectionProvider;
 
 				return singleFormVariationInfoCollectionProvider.
 					getFormVariationKey();
@@ -140,7 +150,7 @@ public class CollectionUtil {
 			"key", infoCollectionProvider.getKey()
 		).put(
 			"title",
-			() -> infoCollectionProvider.getLabel(LocaleUtil.getDefault())
+			() -> finalInfoCollectionProvider.getLabel(LocaleUtil.getDefault())
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);

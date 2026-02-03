@@ -10,8 +10,11 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.layout.util.LayoutServiceContextHelperUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
@@ -26,40 +29,47 @@ public class FragmentEntryLinkUtil {
 	public static String getProcessedHTML(
 			FragmentEntryLink fragmentEntryLink,
 			FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
-			ServiceContext serviceContext)
-		throws PortalException {
+			User user)
+		throws Exception {
 
-		if (serviceContext == null) {
-			return fragmentEntryLink.getHtml();
+		try (AutoCloseable autoCloseable =
+				LayoutServiceContextHelperUtil.getServiceContextAutoCloseable(
+					LayoutLocalServiceUtil.getLayout(
+						fragmentEntryLink.getPlid()),
+					user)) {
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+			HttpServletResponse httpServletResponse =
+				serviceContext.getResponse();
+			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
+			if ((httpServletRequest == null) && (themeDisplay != null)) {
+				httpServletRequest = themeDisplay.getRequest();
+			}
+
+			if ((httpServletResponse == null) && (themeDisplay != null)) {
+				httpServletResponse = themeDisplay.getResponse();
+			}
+
+			if ((httpServletRequest == null) || (httpServletResponse == null)) {
+				return fragmentEntryLink.getHtml();
+			}
+
+			fragmentEntryLink.setEditableValues(null);
+
+			FragmentEntryProcessorContext fragmentEntryProcessorContext =
+				new DefaultFragmentEntryProcessorContext(
+					fragmentEntryLink.getCompanyId(), httpServletRequest,
+					httpServletResponse, LocaleUtil.getMostRelevantLocale(),
+					FragmentEntryLinkConstants.EDIT,
+					fragmentEntryLink.getGroupId());
+
+			return fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, fragmentEntryProcessorContext);
 		}
-
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-		HttpServletResponse httpServletResponse = serviceContext.getResponse();
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if ((httpServletRequest == null) && (themeDisplay != null)) {
-			httpServletRequest = themeDisplay.getRequest();
-		}
-
-		if ((httpServletResponse == null) && (themeDisplay != null)) {
-			httpServletResponse = themeDisplay.getResponse();
-		}
-
-		if ((httpServletRequest == null) || (httpServletResponse == null)) {
-			return fragmentEntryLink.getHtml();
-		}
-
-		fragmentEntryLink.setEditableValues(null);
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				fragmentEntryLink.getCompanyId(), httpServletRequest,
-				httpServletResponse, LocaleUtil.getMostRelevantLocale(),
-				FragmentEntryLinkConstants.EDIT,
-				fragmentEntryLink.getGroupId());
-
-		return fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-			fragmentEntryLink, fragmentEntryProcessorContext);
 	}
 
 }

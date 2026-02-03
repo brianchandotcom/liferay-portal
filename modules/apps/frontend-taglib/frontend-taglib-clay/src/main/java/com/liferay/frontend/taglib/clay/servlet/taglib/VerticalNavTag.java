@@ -76,6 +76,10 @@ public class VerticalNavTag extends BaseContainerTag {
 		_active = active;
 	}
 
+	public void setCollapse(boolean collapse) {
+		_collapse = collapse;
+	}
+
 	public void setDecorated(boolean decorated) {
 		_decorated = decorated;
 	}
@@ -109,6 +113,7 @@ public class VerticalNavTag extends BaseContainerTag {
 		super.cleanUp();
 
 		_active = null;
+		_collapse = false;
 		_decorated = false;
 		_defaultExpandedKeys = null;
 		_displayType = _DISPLAY_TYPE_DEFAULT;
@@ -130,6 +135,7 @@ public class VerticalNavTag extends BaseContainerTag {
 			props.put("active", getActive());
 		}
 
+		props.put("collapse", _collapse);
 		props.put("decorated", _decorated);
 		props.put("defaultExpandedKeys", getDefaultExpandedKeys());
 		props.put("displayType", _displayType);
@@ -163,13 +169,13 @@ public class VerticalNavTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		if (!_displayType.equals(_DISPLAY_TYPE_PRIMARY)) {
+		if (_collapse) {
 			jspWriter.write("<div class=\"collapse menubar-collapse\">");
 		}
 
 		_renderVerticalNavItems(jspWriter, _verticalNavItems, 0);
 
-		if (!_displayType.equals(_DISPLAY_TYPE_PRIMARY)) {
+		if (_collapse) {
 			jspWriter.write("</div>");
 		}
 

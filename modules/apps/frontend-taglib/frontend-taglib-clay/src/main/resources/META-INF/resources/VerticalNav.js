@@ -13,6 +13,7 @@ export default function VerticalNav({
 	activation,
 	active,
 	additionalProps: _additionalProps,
+	collapse,
 	componentId: _componentId,
 	cssClass,
 	decorated,
@@ -32,6 +33,7 @@ export default function VerticalNav({
 			activation={activation}
 			active={active}
 			className={cssClass}
+			collapse={collapse}
 			decorated={decorated}
 			defaultExpandedKeys={new Set(defaultExpandedKeys)}
 			displayType={displayType}

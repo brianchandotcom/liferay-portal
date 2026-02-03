@@ -48,6 +48,11 @@ type Props<T extends Record<string, any> | string> = {
 	'children'?: React.ReactNode | ChildrenFunction<T, null>;
 
 	/**
+	 * Flag to determine whether the collapse wrapper should be rendered or not
+	 */
+	'collapse'?: boolean;
+
+	/**
 	 * Flag to activate the Decorator variation.
 	 */
 	'decorated'?: boolean;
@@ -142,6 +147,7 @@ function VerticalNav<T extends Record<string, any> | string>({
 	activation = 'manual',
 	'aria-label': ariaLabel,
 	children,
+	collapse,
 	decorated,
 	displayType = 'transparent',
 	defaultExpandedKeys = new Set(),
@@ -304,7 +310,7 @@ function VerticalNav<T extends Record<string, any> | string>({
 				[`menubar-vertical-expand-${size}`]: size,
 			})}
 		>
-			{displayType !== 'primary' && (
+			{collapse && (
 				<>
 					<CustomTrigger onClick={() => setIsOpen(!isOpen)}>
 						<span className="inline-item inline-item-before">
@@ -329,7 +335,7 @@ function VerticalNav<T extends Record<string, any> | string>({
 				</>
 			)}
 
-			{displayType === 'primary' && content}
+			{!collapse && content}
 		</nav>
 	);
 }

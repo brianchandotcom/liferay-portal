@@ -3209,6 +3209,12 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>collapse</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>decorated</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

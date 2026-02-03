@@ -197,6 +197,30 @@ export default function ViewWorkflowTasks({
 						},
 						{
 							data: {
+								id: 'resubmit',
+							},
+							isVisible: (itemData: any) =>
+								itemData.name === 'update',
+							label: Liferay.Language.get('resubmit'),
+							onClick: ({itemData}: any) => {
+								openCMSModal({
+									contentComponent: ({
+										closeModal,
+									}: {
+										closeModal: () => void;
+									}) =>
+										TransitionWorkflowStateModalContent({
+											closeModal,
+											loadData: getWorkflowTasks,
+											transitionName: 'resubmit',
+											workflowTaskId: Number(itemData.id),
+										}),
+									size: 'md',
+								});
+							},
+						},
+						{
+							data: {
 								id: 'assignTo',
 							},
 							label: Liferay.Language.get('assign-to'),

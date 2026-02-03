@@ -666,15 +666,30 @@ public class AccountResourceImpl
 				contextCompany.getCompanyId(), postalAddress,
 				AccountListTypeConstants.ACCOUNT_ENTRY_ADDRESS);
 
-			_addressLocalService.addAddress(
-				address.getExternalReferenceCode(), contextUser.getUserId(),
-				AccountEntry.class.getName(), accountId, address.getCountryId(),
-				address.getListTypeId(), address.getRegionId(),
-				address.getCity(), address.getDescription(),
-				address.isMailing(), address.getName(), address.isPrimary(),
-				address.getStreet1(), address.getStreet2(),
-				address.getStreet3(), address.getSubtype(), address.getZip(),
-				postalAddress.getPhoneNumber(), _createServiceContext(account));
+			if ((address != null) && (address.getAddressId() == 0)) {
+				_addressLocalService.addAddress(
+					address.getExternalReferenceCode(), contextUser.getUserId(),
+					AccountEntry.class.getName(), accountId,
+					address.getCountryId(), address.getListTypeId(),
+					address.getRegionId(), address.getCity(),
+					address.getDescription(), address.isMailing(),
+					address.getName(), address.isPrimary(),
+					address.getStreet1(), address.getStreet2(),
+					address.getStreet3(), address.getSubtype(),
+					address.getZip(), postalAddress.getPhoneNumber(),
+					_createServiceContext(account));
+			}
+			else {
+				_addressLocalService.updateAddress(
+					address.getExternalReferenceCode(), address.getAddressId(),
+					address.getCountryId(), address.getListTypeId(),
+					address.getRegionId(), address.getCity(),
+					address.getDescription(), address.isMailing(),
+					address.getName(), address.isPrimary(),
+					address.getStreet1(), address.getStreet2(),
+					address.getStreet3(), address.getSubtype(),
+					address.getZip(), postalAddress.getPhoneNumber());
+			}
 		}
 	}
 

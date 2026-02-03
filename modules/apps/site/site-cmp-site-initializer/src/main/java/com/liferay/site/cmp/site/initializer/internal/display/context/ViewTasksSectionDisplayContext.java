@@ -20,6 +20,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
@@ -69,6 +70,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
 		ListTypeEntryLocalService listTypeEntryLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectStateFlowLocalService objectStateFlowLocalService,
 		ObjectStateLocalService objectStateLocalService,
@@ -76,7 +78,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		ObjectDefinition taskObjectDefinition,
 		UserLocalService userLocalService) {
 
-		super(httpServletRequest, taskObjectDefinition);
+		super(httpServletRequest, taskObjectDefinition, objectEntryService);
 
 		_assetTagLocalService = assetTagLocalService;
 		_classNameLocalService = classNameLocalService;
@@ -154,7 +156,11 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		return sb.toString();
 	}
 
-	public CreationMenu getCreationMenu() {
+	public CreationMenu getCreationMenu() throws Exception {
+		if (!hasAddObjectEntryPortletResourcePermission()) {
+			return null;
+		}
+
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", CMPActionConstants.CREATE_TASK);

@@ -11,14 +11,7 @@ import {
 } from '@liferay/frontend-data-set-web';
 
 import openDefaultFailureToast from './openDefaultFailureToast';
-import {
-	EFieldFormat,
-	EFieldType,
-	IField,
-	IFilterable,
-	IProperties,
-	ISchemas,
-} from './types';
+import {EFieldFormat, EFieldType, IField, IProperties, ISchemas} from './types';
 
 export const BLACKLISTED_FIELDS = [
 	'actions',
@@ -149,7 +142,12 @@ async function getFilterableFields({
 		return [];
 	}
 
-	const filterablePaths: IFilterable = schemas[restSchema]['x-filterable'];
+	const filterablePaths = schemas[restSchema]['x-filterable'];
+
+	if (!filterablePaths) {
+		return [];
+	}
+
 	const filterableItemList = Object.keys(filterablePaths);
 
 	if (!filterableItemList) {

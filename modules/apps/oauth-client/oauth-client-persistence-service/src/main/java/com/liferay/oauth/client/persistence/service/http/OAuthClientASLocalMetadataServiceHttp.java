@@ -44,11 +44,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				addOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, String authorizationEndpoint,
-					boolean enabled, String issuer, String jwksUri,
-					String[] supportedGrantTypes, String[] supportedScopes,
-					String[] supportedSubjectTypes, String tokenEndpointString,
-					String userinfoEndpoint)
+					HttpPrincipal httpPrincipal, String metadataJSON,
+					String wellKnownURISuffix)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -58,9 +55,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_addOAuthClientASLocalMetadataParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, authorizationEndpoint, enabled, issuer, jwksUri,
-				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
-				tokenEndpointString, userinfoEndpoint);
+				methodKey, metadataJSON, wellKnownURISuffix);
 
 			Object returnObj = null;
 
@@ -94,8 +89,11 @@ public class OAuthClientASLocalMetadataServiceHttp {
 	public static
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				addOAuthClientASLocalMetadata(
-					HttpPrincipal httpPrincipal, String metadataJSON,
-					String wellKnownURISuffix)
+					HttpPrincipal httpPrincipal, String authorizationEndpoint,
+					String issuer, String jwksURI,
+					boolean localWellKnownEnabled, String[] supportedGrantTypes,
+					String[] supportedScopes, String[] supportedSubjectTypes,
+					String tokenEndpoint, String userInfoEndpoint)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -105,7 +103,9 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_addOAuthClientASLocalMetadataParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, metadataJSON, wellKnownURISuffix);
+				methodKey, authorizationEndpoint, issuer, jwksURI,
+				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
+				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 
 			Object returnObj = null;
 
@@ -393,7 +393,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				getOAuthClientASLocalMetadata(
 					HttpPrincipal httpPrincipal, long companyId,
-					boolean enabled,
+					boolean localWellKnownEnabled,
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.oauth.client.persistence.model.
 							OAuthClientASLocalMetadata> orderByComparator)
@@ -406,7 +406,7 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_getOAuthClientASLocalMetadataParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, enabled, orderByComparator);
+				methodKey, companyId, localWellKnownEnabled, orderByComparator);
 
 			Object returnObj = null;
 
@@ -602,12 +602,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				updateOAuthClientASLocalMetadata(
 					HttpPrincipal httpPrincipal,
-					long oAuthClientASLocalMetadataId,
-					String authorizationEndpoint, boolean enabled,
-					String issuerString, String jwksUri,
-					String[] supportedGrantTypes, String[] supportedScopes,
-					String[] supportedSubjectTypes, String tokenEndpointString,
-					String userinfoEndpoint)
+					long oAuthClientASLocalMetadataId, String metadataJSON,
+					String wellKnownURISuffix)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -617,10 +613,8 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_updateOAuthClientASLocalMetadataParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, oAuthClientASLocalMetadataId, authorizationEndpoint,
-				enabled, issuerString, jwksUri, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpointString,
-				userinfoEndpoint);
+				methodKey, oAuthClientASLocalMetadataId, metadataJSON,
+				wellKnownURISuffix);
 
 			Object returnObj = null;
 
@@ -655,8 +649,11 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata
 				updateOAuthClientASLocalMetadata(
 					HttpPrincipal httpPrincipal,
-					long oAuthClientASLocalMetadataId, String metadataJSON,
-					String wellKnownURISuffix)
+					long oAuthClientASLocalMetadataId,
+					String authorizationEndpoint, String issuer, String jwksURI,
+					boolean localWellKnownEnabled, String[] supportedGrantTypes,
+					String[] supportedScopes, String[] supportedSubjectTypes,
+					String tokenEndpoint, String userInfoEndpoint)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -666,8 +663,10 @@ public class OAuthClientASLocalMetadataServiceHttp {
 				_updateOAuthClientASLocalMetadataParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, oAuthClientASLocalMetadataId, metadataJSON,
-				wellKnownURISuffix);
+				methodKey, oAuthClientASLocalMetadataId, authorizationEndpoint,
+				issuer, jwksURI, localWellKnownEnabled, supportedGrantTypes,
+				supportedScopes, supportedSubjectTypes, tokenEndpoint,
+				userInfoEndpoint);
 
 			Object returnObj = null;
 
@@ -703,13 +702,13 @@ public class OAuthClientASLocalMetadataServiceHttp {
 
 	private static final Class<?>[]
 		_addOAuthClientASLocalMetadataParameterTypes0 = new Class[] {
-			String.class, boolean.class, String.class, String.class,
-			String[].class, String[].class, String[].class, String.class,
-			String.class
+			String.class, String.class
 		};
 	private static final Class<?>[]
 		_addOAuthClientASLocalMetadataParameterTypes1 = new Class[] {
-			String.class, String.class
+			String.class, String.class, String.class, boolean.class,
+			String[].class, String[].class, String[].class, String.class,
+			String.class
 		};
 	private static final Class<?>[]
 		_deleteOAuthClientASLocalMetadataParameterTypes2 = new Class[] {
@@ -758,13 +757,13 @@ public class OAuthClientASLocalMetadataServiceHttp {
 		};
 	private static final Class<?>[]
 		_updateOAuthClientASLocalMetadataParameterTypes13 = new Class[] {
-			long.class, String.class, boolean.class, String.class, String.class,
-			String[].class, String[].class, String[].class, String.class,
-			String.class
+			long.class, String.class, String.class
 		};
 	private static final Class<?>[]
 		_updateOAuthClientASLocalMetadataParameterTypes14 = new Class[] {
-			long.class, String.class, String.class
+			long.class, String.class, String.class, String.class, boolean.class,
+			String[].class, String[].class, String[].class, String.class,
+			String.class
 		};
 
 }

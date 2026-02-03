@@ -125,6 +125,10 @@ public class ConfigurationDataCleanupPreupgradeProcess
 	}
 
 	private long _getPrimaryKey(String dictionary, Pattern pattern) {
+		if (dictionary == null) {
+			return -1;
+		}
+
 		Matcher matcher = pattern.matcher(dictionary);
 
 		if (matcher.find()) {

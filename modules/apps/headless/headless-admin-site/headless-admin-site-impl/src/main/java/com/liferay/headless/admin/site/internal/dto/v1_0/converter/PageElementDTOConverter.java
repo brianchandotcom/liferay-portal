@@ -145,6 +145,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_COLUMN)) {
 
 			return _modulePageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(ColumnLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -193,6 +194,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP_CONTAINER)) {
 
 			return _formStepContainerPageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(FormStepContainerStyledLayoutStructureItem)
 					layoutStructureItem);
 		}
@@ -219,6 +221,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_FRAGMENT_DROP_ZONE)) {
 
 			return _fragmentDropZonePageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(FragmentDropZoneLayoutStructureItem)layoutStructureItem);
 		}
 

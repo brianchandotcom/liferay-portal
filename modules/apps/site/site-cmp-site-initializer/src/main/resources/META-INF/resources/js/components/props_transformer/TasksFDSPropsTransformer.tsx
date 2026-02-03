@@ -17,9 +17,9 @@ import React from 'react';
 
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
+import BulkEditStateModalContent from '../modal/BulkEditStateModalContent';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
-import EditBulkTaskStateModalContent from '../modal/EditBulkTaskStateModalContent';
 import {cmpTasksFDSAtom} from './atoms';
 
 const _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
@@ -288,7 +288,7 @@ export default function TasksFDSPropsTransformer({
 					}: {
 						closeModal: () => void;
 					}) =>
-						EditBulkTaskStateModalContent({
+						BulkEditStateModalContent({
 							apiURL: otherProps?.apiURL,
 							closeModal,
 							selectedData,

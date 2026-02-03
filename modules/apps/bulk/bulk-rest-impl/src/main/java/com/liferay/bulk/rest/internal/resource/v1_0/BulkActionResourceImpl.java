@@ -12,8 +12,8 @@ import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
+import com.liferay.bulk.rest.dto.v1_0.StatusBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.UpdateTaskStateBulkAction;
 import com.liferay.bulk.rest.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
@@ -415,8 +415,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
 			return _editObjectCategoriesBulkSelectionAction;
 		}
-		else if (BulkAction.Type.UPDATE_TASK_STATE_BULK_ACTION.equals(type)) {
-			return _updateTaskStateObjectBulkSelectionAction;
+		else if (BulkAction.Type.STATUS_BULK_ACTION.equals(type)) {
+			return _statusObjectBulkSelectionAction;
 		}
 
 		throw new UnsupportedOperationException();
@@ -484,6 +484,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.RESET_PERMISSION_BULK_ACTION.equals(type)) {
 			return hashMapWrapper.build();
 		}
+		else if (BulkAction.Type.STATUS_BULK_ACTION.equals(type)) {
+			StatusBulkAction statusBulkAction = (StatusBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"status", statusBulkAction.getStatus()
+			).build();
+		}
 		else if (BulkAction.Type.TAXONOMY_CATEGORY_BULK_ACTION.equals(type)) {
 			TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
 				(TaxonomyCategoryBulkAction)bulkAction;
@@ -497,14 +504,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"toRemoveCategoryIds",
 				taxonomyCategoryBulkAction.getTaxonomyCategoryIdsToRemove()
-			).build();
-		}
-		else if (BulkAction.Type.UPDATE_TASK_STATE_BULK_ACTION.equals(type)) {
-			UpdateTaskStateBulkAction updateTaskStateBulkAction =
-				(UpdateTaskStateBulkAction)bulkAction;
-
-			return hashMapWrapper.put(
-				"state", updateTaskStateBulkAction.getState()
 			).build();
 		}
 
@@ -907,11 +906,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private SearchResultResource.Factory _searchResultResourceFactory;
 
+	@Reference(target = "(bulk.selection.action.key=status.object)")
+	private BulkSelectionAction<Object> _statusObjectBulkSelectionAction;
+
 	@Reference
 	private TrashHelper _trashHelper;
-
-	@Reference(target = "(bulk.selection.action.key=update.task.state)")
-	private BulkSelectionAction<Object>
-		_updateTaskStateObjectBulkSelectionAction;
 
 }

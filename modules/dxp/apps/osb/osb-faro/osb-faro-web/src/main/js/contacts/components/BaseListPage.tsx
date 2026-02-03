@@ -93,7 +93,7 @@ const BaseListPage: React.FC<IBaseListPageProps> = ({
 			button
 			className='button-root'
 			displayType='primary'
-			href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
+			href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 				channelId,
 				groupId
 			})}

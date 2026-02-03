@@ -26,7 +26,7 @@ const AddDataSource: React.FC<IAddDataSourceProps> = ({groupId}) => (
 					button
 					className='button-root'
 					displayType='primary'
-					href={toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {groupId})}
+					href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {groupId})}
 				>
 					{Liferay.Language.get('add-data-source')}
 				</ClayLink>

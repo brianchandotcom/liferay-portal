@@ -108,7 +108,7 @@ export default class UploadCSV extends React.Component {
 				breadcrumbItems={[
 					breadcrumbs.getDataSources({groupId}),
 					{
-						href: toRoute(Routes.SETTINGS_ADD_DATA_SOURCE, {
+						href: toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
 							groupId
 						}),
 						label: Liferay.Language.get('add-data-source')
@@ -177,7 +177,7 @@ export default class UploadCSV extends React.Component {
 								<Sheet.Footer divider={false}>
 									<FormNavigation
 										cancelHref={toRoute(
-											Routes.SETTINGS_ADD_DATA_SOURCE,
+											Routes.SETTINGS_DATA_SOURCE_LIST,
 											{
 												groupId
 											}

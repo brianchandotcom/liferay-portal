@@ -17,11 +17,10 @@ const FileNamePicker = ({
 	namespace,
 	validExtensions,
 }) => {
-	const [maxFileSize, setMaxFileSize] = useState(Number(initialMaxFileSize));
 	const inputId = `${namespace}file`;
 	const [inputValue, setInputValue] = useState('');
 	const [fileName, setFileName] = useState('');
-	const [maxFileSizeError, setMaxFileSizeError] = useState(false);
+	const [maxFileSizeErrorMessage, setMaxFileSizeErrorMessage] = useState('');
 	const inputFileRef = useRef();
 
 	useEffect(() => {
@@ -31,21 +30,39 @@ const FileNamePicker = ({
 	const onInputChange = ({target}) => {
 		const fileType = target.files[0]?.type;
 		const maxFileTypeSize = Number(maxMimeTypeSize[fileType]);
+		let isMaxFileTypeSize = false;
 		let maxSize = Number(initialMaxFileSize);
 
 		if (maxFileTypeSize && maxSize > maxFileTypeSize) {
 			maxSize = maxFileTypeSize;
+			isMaxFileTypeSize = true;
 		}
 
-		setMaxFileSize(maxSize);
-
 		if (target.files[0]?.size > maxSize) {
-			setMaxFileSizeError(true);
+			const formattedMaxSize = formatStorage(maxSize, {
+				addSpaceBeforeSuffix: true,
+			});
+
+			setMaxFileSizeErrorMessage(
+				isMaxFileTypeSize
+					? sub(
+							Liferay.Language.get(
+								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x-for-type-x'
+							),
+							[formattedMaxSize, fileType]
+						)
+					: sub(
+							Liferay.Language.get(
+								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+							),
+							formattedMaxSize
+						)
+			);
+
 			setInputValue('');
 		}
 		else {
-			setMaxFileSizeError(false);
-
+			setMaxFileSizeErrorMessage('');
 			setInputValue(target.value);
 
 			window[`${namespace}updateFileNameAndTitle`]();
@@ -55,7 +72,7 @@ const FileNamePicker = ({
 	return (
 		<ClayForm.Group
 			className={classNames({
-				'has-error': maxFileSizeError,
+				'has-error': !!maxFileSizeErrorMessage,
 			})}
 		>
 			<ClayButton
@@ -97,19 +114,12 @@ const FileNamePicker = ({
 				value={inputValue}
 			/>
 
-			{maxFileSizeError && (
+			{maxFileSizeErrorMessage && (
 				<ClayForm.FeedbackGroup>
 					<ClayForm.FeedbackItem>
 						<ClayIcon className="mr-1" symbol="exclamation-full" />
 
-						{sub(
-							Liferay.Language.get(
-								'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
-							),
-							formatStorage(maxFileSize, {
-								addSpaceBeforeSuffix: true,
-							})
-						)}
+						{maxFileSizeErrorMessage}
 					</ClayForm.FeedbackItem>
 				</ClayForm.FeedbackGroup>
 			)}

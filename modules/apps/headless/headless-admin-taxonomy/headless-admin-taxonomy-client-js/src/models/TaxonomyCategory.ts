@@ -31,6 +31,7 @@
 			"numberOfTaxonomyCategories"?: number;
 			"parentTaxonomyCategory"?: object;
 			"parentTaxonomyVocabulary"?: object;
+			"path"?: string;
 			"permissions"?: Array<Permission>;
 			"siteExternalReferenceCode"?: string;
 			"siteId"?: number;
@@ -120,6 +121,11 @@
 			baseName: "parentTaxonomyVocabulary",
 			name: "parentTaxonomyVocabulary",
 			type: "object",
+		},
+		{
+			baseName: "path",
+			name: "path",
+			type: "string",
 		},
 		{
 			baseName: "permissions",

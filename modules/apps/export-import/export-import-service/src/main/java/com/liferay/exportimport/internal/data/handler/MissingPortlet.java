@@ -10,6 +10,7 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletWrapper;
 
@@ -47,6 +48,13 @@ public class MissingPortlet extends PortletWrapper {
 			_name = name;
 			_portletDataHandlerKey = portletDataHandlerKey;
 			_portletId = portletId;
+		}
+
+		@Override
+		public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+			return new StagedModelType[] {
+				new StagedModelType(_portletDataHandlerKey)
+			};
 		}
 
 		@Override

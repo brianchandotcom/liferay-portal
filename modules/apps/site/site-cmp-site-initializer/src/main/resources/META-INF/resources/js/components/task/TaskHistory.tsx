@@ -3,32 +3,89 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
+import List from '@clayui/list';
+import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
+enum EventType {
+	ADD = 'ADD',
+	UPDATE = 'UPDATE',
+}
+
 type Creator = {
+	additionalName: string;
+	contentType: string;
+	externalReferenceCode: string;
+	familyName: string;
+	givenName: string;
+	id: number;
+	image?: string;
 	name: string;
 };
 
-type AuditFieldChanges = {
+type AuditFieldChange = {
 	name: string;
+	newValue: any;
+	oldValue: any;
 };
 
 type AuditEvent = {
-	auditFieldChanges?: AuditFieldChanges[];
+	auditFieldChanges?: AuditFieldChange[];
 	creator: Creator;
 	dateCreated: string;
-	eventType: string;
+	eventType: EventType;
 };
 
 type Data = {
 	auditEvents: AuditEvent[];
 };
 
+const FIELD_NAME: {[key: string]: string} = {
+	assignTo: Liferay.Language.get('assignee'),
+	description: Liferay.Language.get('description'),
+	dueDate: Liferay.Language.get('due-date'),
+	state: Liferay.Language.get('state'),
+	title: Liferay.Language.get('title'),
+};
+
+function joinWithAnd(items: string[]) {
+	if (!items?.length) {
+		return '';
+	}
+
+	return new Intl.ListFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
+		style: 'long',
+		type: 'conjunction',
+	}).format(items);
+}
+
 export default function TaskHistory({apiURL}: {apiURL: string}) {
 	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
 
-	const fetchData = useCallback(async () => {
+	const getAuditEventLabel = (auditEvent: AuditEvent) => {
+		if (auditEvent.eventType === EventType.ADD) {
+			return sub(Liferay.Language.get('x-created-a-x'), [
+				<strong key="creatorName">{auditEvent.creator?.name}</strong>,
+				<strong key="type">{Liferay.Language.get('task')}</strong>,
+			]);
+		}
+
+		return sub(Liferay.Language.get('x-updated-the-x'), [
+			<strong key="creatorName">{auditEvent.creator?.name}</strong>,
+			<strong key="changedFields">
+				{joinWithAnd(
+					auditEvent.auditFieldChanges?.map(
+						(auditFieldChange) =>
+							FIELD_NAME[auditFieldChange.name] ??
+							auditFieldChange.name
+					) || []
+				)}
+			</strong>,
+		]);
+	};
+
+	const fetchAuditEvents = useCallback(async () => {
 		fetch(apiURL, {
 			method: 'GET',
 		}).then(async (response: Response) => {
@@ -39,35 +96,35 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 	}, [apiURL]);
 
 	useEffect(() => {
-		fetchData();
-	}, [fetchData]);
+		fetchAuditEvents();
+	}, [fetchAuditEvents]);
 
 	return (
 		<div className="task-history-container">
-			<ul style={{listStyleType: 'none', padding: 0}}>
-				{auditEvents.map(
-					(
-						{auditFieldChanges, creator, dateCreated, eventType},
-						index
-					) => (
-						<li key={index}>
-							<strong>
-								{new Date(dateCreated).toLocaleString()}
-							</strong>
+			<List>
+				{auditEvents.map((auditEvent, index) => (
+					<List.Item className="border-0" flex key={index}>
+						<List.ItemField>
+							<AssigneeAvatar
+								image={auditEvent.creator?.image}
+								name={auditEvent.creator?.name || ''}
+							/>
+						</List.ItemField>
 
-							–<span> {creator.name} </span>
+						<List.ItemField expand>
+							<List.ItemTitle className="text-weight-normal">
+								{getAuditEventLabel(auditEvent)}
+							</List.ItemTitle>
 
-							<em>({eventType})</em>
--
-							<span style={{marginLeft: '5px', fontWeight: 500}}>
-								{auditFieldChanges
-									?.map((field) => field.name)
-									.join(', ')}
-							</span>
-						</li>
-					)
-				)}
-			</ul>
+							<List.ItemText>
+								{new Date(
+									auditEvent.dateCreated
+								).toLocaleString()}
+							</List.ItemText>
+						</List.ItemField>
+					</List.Item>
+				))}
+			</List>
 		</div>
 	);
 }

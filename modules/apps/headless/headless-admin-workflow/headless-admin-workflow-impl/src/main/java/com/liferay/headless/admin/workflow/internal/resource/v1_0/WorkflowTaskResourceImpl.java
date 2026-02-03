@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -518,48 +519,69 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
 		throws Exception {
 
-		return _workflowTaskDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(),
-				HashMapBuilder.<String, Map<String, String>>put(
-					"assignToMe",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToMe",
-						_kaleoTaskInstanceTokenModelResourcePermission)
+		Map<String, Map<String, String>> actions =
+			HashMapBuilder.<String, Map<String, String>>put(
+				"assignToMe",
+				addAction(
+					ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+					"postWorkflowTaskAssignToMe",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).put(
+				"assignToRole",
+				addAction(
+					ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+					"postWorkflowTaskAssignToRole",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).put(
+				"assignToUser",
+				addAction(
+					ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+					"postWorkflowTaskAssignToUser",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).put(
+				"changeTransition",
+				addAction(
+					ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+					"postWorkflowTaskChangeTransition",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).put(
+				"get",
+				addAction(
+					ActionKeys.VIEW, workflowTask.getWorkflowTaskId(),
+					"getWorkflowTask",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).put(
+				"updateDueDate",
+				addAction(
+					ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
+					"patchWorkflowTaskUpdateDueDate",
+					_kaleoTaskInstanceTokenModelResourcePermission)
+			).build();
+
+		for (WorkflowTransition workflowTransition :
+				_workflowTaskManager.getNextWorkflowTransitions(
+					workflowTask.getWorkflowTaskId())) {
+
+			actions.put(
+				"workflow_" + workflowTransition.getName(),
+				HashMapBuilder.put(
+					"label",
+					workflowTransition.getLabel(
+						contextAcceptLanguage.getPreferredLocale())
 				).put(
-					"assignToRole",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToRole",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"assignToUser",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"postWorkflowTaskAssignToUser",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"changeTransition",
+					"name", workflowTransition.getName()
+				).putAll(
 					addAction(
 						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
 						"postWorkflowTaskChangeTransition",
 						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"get",
-					addAction(
-						ActionKeys.VIEW, workflowTask.getWorkflowTaskId(),
-						"getWorkflowTask",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).put(
-					"updateDueDate",
-					addAction(
-						ActionKeys.UPDATE, workflowTask.getWorkflowTaskId(),
-						"patchWorkflowTaskUpdateDueDate",
-						_kaleoTaskInstanceTokenModelResourcePermission)
-				).build(),
-				null, contextHttpServletRequest,
-				workflowTask.getWorkflowTaskId(),
+				).build());
+		}
+
+		return _workflowTaskDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), actions, null,
+				contextHttpServletRequest, workflowTask.getWorkflowTaskId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

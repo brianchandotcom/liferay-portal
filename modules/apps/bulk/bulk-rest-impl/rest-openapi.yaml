@@ -8,6 +8,12 @@ components:
                     type: string
                 url:
                     type: string
+        AssignStructureDefaultWorkflowBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        workflow:
+                            type: string
         AssignToBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
@@ -21,6 +27,7 @@ components:
         BulkAction:
             discriminator:
                 mapping:
+                    AssignStructureDefaultWorkflowBulkAction: "#/components/schemas/AssignStructureDefaultWorkflowBulkAction"
                     AssignToBulkAction: "#/components/schemas/AssignToBulkAction"
                     CopyBulkAction: "#/components/schemas/CopyBulkAction"
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
@@ -44,6 +51,7 @@ components:
                     $ref: "#/components/schemas/SelectionScope"
                 type:
                     enum:
+                        -   AssignStructureDefaultWorkflowBulkAction
                         -   AssignToBulkAction
                         -   CopyBulkAction
                         -   DefaultPermissionBulkAction

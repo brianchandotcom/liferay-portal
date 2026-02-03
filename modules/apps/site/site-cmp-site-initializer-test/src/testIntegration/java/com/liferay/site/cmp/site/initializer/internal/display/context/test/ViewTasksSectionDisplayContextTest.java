@@ -181,7 +181,7 @@ public class ViewTasksSectionDisplayContextTest
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(1));
 		assertFDSActionDropdownItem(
-			null, "assign-to", "Assign to...", null,
+			null, "assign-to", "Assign to...", "get",
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(2));

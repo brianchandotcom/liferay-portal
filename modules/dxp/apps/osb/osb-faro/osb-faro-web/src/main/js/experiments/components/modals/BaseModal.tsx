@@ -3,7 +3,7 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import Loading, {Align} from 'shared/components/Loading';
 import React, {useState} from 'react';
-import type {Observer, Size, Status} from '@clayui/modal/src/types';
+import type {Observer, Size, Status} from '@clayui/modal/lib/types';
 
 interface IBaseModalProps extends React.HTMLAttributes<HTMLElement> {
 	cancelMessage?: string;

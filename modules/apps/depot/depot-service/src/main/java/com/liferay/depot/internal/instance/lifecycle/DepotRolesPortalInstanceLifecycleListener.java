@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Objects;
 
@@ -72,8 +73,11 @@ public class DepotRolesPortalInstanceLifecycleListener
 
 				User user = _userLocalService.getGuestUser(companyId);
 
+				String externalReferenceCode = StringUtil.toUpperCase(
+					"L_" + StringUtil.replace(name, ' ', '_'));
+
 				return _roleLocalService.addRole(
-					null, user.getUserId(), null, 0, name,
+					externalReferenceCode, user.getUserId(), null, 0, name,
 					DepotRoleUtil.getTitleMap(companyId, _language, name),
 					DepotRoleUtil.getDescriptionMap(companyId, _language, name),
 					RoleConstants.TYPE_DEPOT, null, null);

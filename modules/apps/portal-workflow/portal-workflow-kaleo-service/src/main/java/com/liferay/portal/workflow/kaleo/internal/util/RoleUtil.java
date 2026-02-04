@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
@@ -66,9 +67,12 @@ public class RoleUtil {
 				role = accountRole.getRole();
 			}
 			else {
+				String externalReferenceCode = StringUtil.toUpperCase(
+					"L_" + StringUtil.replace(name, ' ', '_'));
+
 				role = RoleLocalServiceUtil.addRole(
-					null, serviceContext.getUserId(), null, 0, name, null,
-					descriptionMap, roleType, null, null);
+					externalReferenceCode, serviceContext.getUserId(), null, 0,
+					name, null, descriptionMap, roleType, null, null);
 			}
 		}
 		else if (role.getType() != roleType) {

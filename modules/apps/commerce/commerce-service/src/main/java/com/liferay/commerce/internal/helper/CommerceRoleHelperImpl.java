@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -173,8 +174,11 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
+			String externalReferenceCode = StringUtil.toUpperCase(
+				"L_" + StringUtil.replace(name, ' ', '_'));
+
 			AccountRole accountRole = _accountRoleLocalService.addAccountRole(
-				null, serviceContext.getUserId(),
+				externalReferenceCode, serviceContext.getUserId(),
 				AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name,
 				Collections.singletonMap(serviceContext.getLocale(), name),
 				Collections.emptyMap());
@@ -200,8 +204,12 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			serviceContext.getCompanyId(), name);
 
 		if (role == null) {
+			String externalReferenceCode = StringUtil.toUpperCase(
+				"L_" + StringUtil.replace(name, ' ', '_'));
+
 			role = _roleLocalService.addRole(
-				null, serviceContext.getUserId(), null, 0, name,
+				externalReferenceCode, serviceContext.getUserId(), null, 0,
+				name,
 				Collections.singletonMap(serviceContext.getLocale(), name),
 				Collections.emptyMap(), type, null, serviceContext);
 

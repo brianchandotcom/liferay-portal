@@ -303,7 +303,7 @@ test('can export custom object entries at instance level with date filter', asyn
 	});
 
 	const content1 = await readFileFromZip(
-		`C_${objectDefinition.name}.json`,
+		`${objectDefinition.externalReferenceCode}.json`,
 		exportFilePath1
 	);
 
@@ -332,7 +332,10 @@ test('can export custom object entries at instance level with date filter', asyn
 	});
 
 	await expect(
-		checkInZip(exportFilePath2, `C_${objectDefinition.name}.json`)
+		checkInZip(
+			exportFilePath2,
+			`${objectDefinition.externalReferenceCode}.json`
+		)
 	).resolves.toBe(false);
 
 	await applicationsMenuPage.goToExport();
@@ -343,7 +346,7 @@ test('can export custom object entries at instance level with date filter', asyn
 	});
 
 	const content3 = await readFileFromZip(
-		`C_${objectDefinition.name}.json`,
+		`${objectDefinition.externalReferenceCode}.json`,
 		exportFilePath3
 	);
 
@@ -424,7 +427,7 @@ test('can export custom object entries at instance level with permissions', asyn
 	});
 
 	const content = await readFileFromZip(
-		`C_${objectDefinition.name}.json`,
+		`${objectDefinition.externalReferenceCode}.json`,
 		exportFilePath
 	);
 
@@ -473,7 +476,7 @@ test('can see corresponding elements at instance level', async ({
 
 	await expect(
 		companyExportImportPage.page.getByText(
-			`C_${objectDefinition.name} Change`
+			`${objectDefinition.externalReferenceCode} Change`
 		)
 	).not.toBeVisible();
 

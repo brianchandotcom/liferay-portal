@@ -80,51 +80,44 @@ public class MarketplaceTopicSubscriber {
 				).build());
 
 		for (String topicName : MarketplaceConstants.PUBSUB_TOPIC_NAMES) {
+			String subscriptionName = StringBundler.concat(
+				"projects/", _projectId, "/subscriptions/marketplace_",
+				topicName, "-subscription");
+
 			try {
-				String subscriptionName = StringBundler.concat(
-					"projects/", _projectId, "/subscriptions/marketplace_",
-					topicName, "-subscription");
-
-				try {
-					_subscriptionAdminClient.getSubscription(subscriptionName);
-				}
-				catch (NotFoundException notFoundException) {
-					_subscriptionAdminClient.createSubscription(
-						Subscription.newBuilder(
-						).setAckDeadlineSeconds(
-							30
-						).setName(
-							subscriptionName
-						).setTopic(
-							String.valueOf(
-								TopicName.ofProjectTopicName(
-									_projectId, topicName))
-						).build());
-				}
-
-				Subscriber subscriber = Subscriber.newBuilder(
-					subscriptionName,
-					new MarketplaceMessageReceiver(topicName)
-				).setCredentialsProvider(
-					credentialsProvider
-				).build();
-
-				_subscribers.add(subscriber);
-
-				ApiService apiService = subscriber.startAsync();
-
-				apiService.awaitRunning();
-
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Subscribed to " +
-							subscriber.getSubscriptionNameString());
-				}
+				_subscriptionAdminClient.getSubscription(subscriptionName);
 			}
-			catch (Exception exception) {
-				_log.error(exception);
+			catch (NotFoundException notFoundException) {
+				_subscriptionAdminClient.createSubscription(
+					Subscription.newBuilder(
+					).setAckDeadlineSeconds(
+						30
+					).setName(
+						subscriptionName
+					).setTopic(
+						String.valueOf(
+							TopicName.ofProjectTopicName(
+								_projectId, topicName))
+					).build());
+			}
 
-				throw exception;
+			Subscriber subscriber = Subscriber.newBuilder(
+				subscriptionName,
+				new MarketplaceMessageReceiver(topicName)
+			).setCredentialsProvider(
+				credentialsProvider
+			).build();
+
+			_subscribers.add(subscriber);
+
+			ApiService apiService = subscriber.startAsync();
+
+			apiService.awaitRunning();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Subscribed to " +
+						subscriber.getSubscriptionNameString());
 			}
 		}
 	}

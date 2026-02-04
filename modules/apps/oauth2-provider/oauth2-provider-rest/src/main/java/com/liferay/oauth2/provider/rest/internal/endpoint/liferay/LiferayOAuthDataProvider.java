@@ -367,9 +367,8 @@ public class LiferayOAuthDataProvider
 			}
 			catch (PortalException portalException) {
 				_log.error(
-					"Unable to populate access token for Liferay OAuth 2 " +
-						"application " +
-							oAuth2Authorization.getOAuth2ApplicationId(),
+					"Unable to populate access token for OAuth 2 application " +
+						oAuth2Authorization.getOAuth2ApplicationId(),
 					portalException);
 
 				throw new OAuthServiceException(portalException);

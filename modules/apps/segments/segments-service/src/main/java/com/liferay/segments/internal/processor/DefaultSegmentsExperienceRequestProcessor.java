@@ -98,17 +98,12 @@ public class DefaultSegmentsExperienceRequestProcessor
 		for (Map.Entry<String, List<String>> mapEntry :
 				segmentsEntryScopeERCToEntriesMap.entrySet()) {
 
-			String segmentsEntryScopeERC = mapEntry.getKey();
-
 			List<String> segmentsEntryERCs = mapEntry.getValue();
-
-			String[] segmentsEntryERCsArray = segmentsEntryERCs.toArray(
-				new String[0]);
 
 			segmentsExperiences.addAll(
 				_segmentsExperienceLocalService.getSegmentsExperiences(
-					groupId, segmentsEntryERCsArray, segmentsEntryScopeERC,
-					plid, true));
+					groupId, segmentsEntryERCs.toArray(new String[0]),
+					mapEntry.getKey(), plid, true));
 		}
 
 		segmentsExperiences.sort(

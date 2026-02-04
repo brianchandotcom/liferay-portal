@@ -101,7 +101,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-string")
 	testImplementation group: "com.fasterxml.jackson.core", name: "jackson-annotations", version: "2.18.2"
 	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
-	testImplementation group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	testImplementation project(":apps:portal-search:portal-search")
 	testImplementation project(":apps:portal-search:portal-search-test-util")
 	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")

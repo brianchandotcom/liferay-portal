@@ -111,4 +111,4 @@ configuration below.
 
 - `jdbc.default.username` **(Required)**
 
-- `jdbc.default.password` **(Required)**   
+- `jdbc.default.password` **(Required)**

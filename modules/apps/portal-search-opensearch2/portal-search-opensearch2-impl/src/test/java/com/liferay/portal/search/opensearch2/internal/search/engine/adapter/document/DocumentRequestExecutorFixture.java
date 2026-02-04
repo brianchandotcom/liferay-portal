@@ -11,7 +11,6 @@ import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
 
 /**
  * @author Dylan Rebelak
@@ -54,27 +53,9 @@ public class DocumentRequestExecutorFixture {
 			deleteByQueryDocumentRequestExecutor =
 				new DeleteByQueryDocumentRequestExecutorImpl();
 
-		com.liferay.portal.search.opensearch2.internal.legacy.query.
-			OpenSearchQueryTranslatorFixture
-				legacyOpenSearchQueryTranslatorFixture =
-					new com.liferay.portal.search.opensearch2.internal.legacy.
-						query.OpenSearchQueryTranslatorFixture();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
-			legacyOpenSearchQueryTranslatorFixture.
-				getOpenSearchQueryTranslator());
-
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutor,
 			"_openSearchConnectionManager", openSearchConnectionManager);
-
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor, "_queryTranslator",
-			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator());
 
 		return deleteByQueryDocumentRequestExecutor;
 	}
@@ -167,27 +148,9 @@ public class DocumentRequestExecutorFixture {
 			updateByQueryDocumentRequestExecutor =
 				new UpdateByQueryDocumentRequestExecutorImpl();
 
-		com.liferay.portal.search.opensearch2.internal.legacy.query.
-			OpenSearchQueryTranslatorFixture
-				lecacyOpenSearchQueryTranslatorFixture =
-					new com.liferay.portal.search.opensearch2.internal.legacy.
-						query.OpenSearchQueryTranslatorFixture();
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
-			lecacyOpenSearchQueryTranslatorFixture.
-				getOpenSearchQueryTranslator());
-
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor,
 			"_openSearchConnectionManager", openSearchConnectionManager);
-
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_queryTranslator",
-			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor, "_scripts",

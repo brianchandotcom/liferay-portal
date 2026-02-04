@@ -6,12 +6,10 @@
 package com.liferay.portal.search.opensearch2.internal.filter;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
@@ -56,23 +54,15 @@ import org.opensearch.client.opensearch._types.query_dsl.RangeQuery;
 import org.opensearch.client.opensearch._types.query_dsl.TermQuery;
 import org.opensearch.client.opensearch._types.query_dsl.TermsSetQuery;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Marco Leo
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch", service = FilterTranslator.class
-)
-public class OpenSearchFilterTranslator
-	implements FilterTranslator<QueryVariant>, FilterVisitor<QueryVariant> {
+public class OpenSearchFilterVisitor implements FilterVisitor<QueryVariant> {
 
-	@Override
-	public QueryVariant translate(Filter filter, SearchContext searchContext) {
-		return filter.accept(this);
-	}
+	public static final OpenSearchFilterVisitor INSTANCE =
+		new OpenSearchFilterVisitor();
 
 	@Override
 	public QueryVariant visit(BooleanFilter booleanFilter) {
@@ -317,6 +307,9 @@ public class OpenSearchFilterTranslator
 		Filter filter = booleanClause.getClause();
 
 		return filter.accept(filterVisitor);
+	}
+
+	private OpenSearchFilterVisitor() {
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();

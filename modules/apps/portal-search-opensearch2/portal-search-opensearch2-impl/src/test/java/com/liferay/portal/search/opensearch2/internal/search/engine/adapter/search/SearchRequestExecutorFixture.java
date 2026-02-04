@@ -6,7 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
@@ -35,11 +34,8 @@ import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.facet.NestedFacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.facet.RangeFacetProcessor;
-import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterTranslatorFixture;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslatorImpl;
@@ -49,7 +45,6 @@ import com.liferay.portal.search.query.Queries;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
 import org.osgi.framework.BundleContext;
@@ -66,12 +61,6 @@ public class SearchRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
-		OpenSearchQueryTranslator openSearchQueryTranslator =
-			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator();
-
 		StatsTranslator statsTranslator = new StatsTranslatorImpl();
 
 		ReflectionTestUtil.setFieldValue(
@@ -81,8 +70,7 @@ public class SearchRequestExecutorFixture {
 		_searchRequestExecutor = _createSearchRequestExecutor(
 			createComplexQueryBuilderFactory(new QueriesImpl()),
 			_facetProcessor, _openSearchConnectionManager,
-			openSearchQueryTranslator, new StatsRequestBuilderFactoryImpl(),
-			statsTranslator);
+			new StatsRequestBuilderFactoryImpl(), statsTranslator);
 	}
 
 	public void tearDown() {
@@ -96,9 +84,7 @@ public class SearchRequestExecutorFixture {
 	protected static CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler(
 			ComplexQueryBuilderFactory complexQueryBuilderFactory,
-			FacetProcessor<?> facetProcessor,
-			OpenSearchQueryTranslator openSearchQueryTranslator,
-			StatsTranslator statsTranslator) {
+			FacetProcessor<?> facetProcessor, StatsTranslator statsTranslator) {
 
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
@@ -117,42 +103,15 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
 			complexQueryBuilderFactory);
 
-		com.liferay.portal.search.opensearch2.internal.legacy.query.
-			OpenSearchQueryTranslatorFixture
-				legacyOpenSearchQueryTranslatorFixture =
-					new com.liferay.portal.search.opensearch2.internal.legacy.
-						query.OpenSearchQueryTranslatorFixture();
-
-		com.liferay.portal.search.opensearch2.internal.legacy.query.
-			OpenSearchQueryTranslator legacyOpenSearchQueryTranslator =
-				legacyOpenSearchQueryTranslatorFixture.
-					getOpenSearchQueryTranslator();
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			_createFacetTranslator(
-				facetProcessor, legacyOpenSearchQueryTranslator));
-
-		OpenSearchFilterTranslatorFixture openSearchFilterTranslatorFixture =
-			new OpenSearchFilterTranslatorFixture(
-				legacyOpenSearchQueryTranslator);
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_filterTranslator",
-			openSearchFilterTranslatorFixture.getOpenSearchFilterTranslator());
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_legacyQueryTranslator",
-			legacyOpenSearchQueryTranslator);
+			_createFacetTranslator(facetProcessor));
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler,
 			"_pipelineAggregationTranslator",
 			new OpenSearchPipelineAggregationTranslator());
 
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_queryTranslator",
-			openSearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_statsTranslator",
 			statsTranslator);
@@ -183,8 +142,7 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private static FacetTranslator _createFacetTranslator(
-		FacetProcessor<?> facetProcessor,
-		QueryTranslator<QueryVariant> queryTranslator) {
+		FacetProcessor<?> facetProcessor) {
 
 		_facetTranslatorImpl = new FacetTranslatorImpl();
 
@@ -214,13 +172,6 @@ public class SearchRequestExecutorFixture {
 					MapUtil.singletonDictionary(
 						"class.name", NestedFacetImpl.class.getName())));
 		}
-
-		OpenSearchFilterTranslatorFixture openSearchFilterTranslatorFixture =
-			new OpenSearchFilterTranslatorFixture(queryTranslator);
-
-		ReflectionTestUtil.setFieldValue(
-			_facetTranslatorImpl, "_filterTranslator",
-			openSearchFilterTranslatorFixture.getOpenSearchFilterTranslator());
 
 		return _facetTranslatorImpl;
 	}
@@ -306,7 +257,6 @@ public class SearchRequestExecutorFixture {
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		FacetProcessor<?> facetProcessor,
 		OpenSearchConnectionManager openSearchConnectionManager,
-		OpenSearchQueryTranslator openSearchQueryTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
@@ -322,7 +272,7 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler =
 				createCommonSearchRequestBuilderAssembler(
 					complexQueryBuilderFactory, facetProcessor,
-					openSearchQueryTranslator, statsTranslator);
+					statsTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_countSearchRequestExecutor",
@@ -332,8 +282,8 @@ public class SearchRequestExecutorFixture {
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			_createSearchSearchRequestAssembler(
-				commonSearchRequestBuilderAssembler, openSearchQueryTranslator,
-				statsRequestBuilderFactory, statsTranslator);
+				commonSearchRequestBuilderAssembler, statsRequestBuilderFactory,
+				statsTranslator);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			_createSearchSearchResponseAssembler(
@@ -362,7 +312,6 @@ public class SearchRequestExecutorFixture {
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
 		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
-		OpenSearchQueryTranslator openSearchQueryTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
@@ -379,9 +328,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_highlightTranslator",
 			new HighlightTranslator());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_queryTranslator",
-			openSearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
 			statsRequestBuilderFactory);

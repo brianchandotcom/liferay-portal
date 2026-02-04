@@ -14,11 +14,11 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,14 +32,12 @@ import org.opensearch.client.opensearch._types.aggregations.TermsAggregation;
 import org.opensearch.client.opensearch._types.aggregations.TermsInclude;
 import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.QueryBuilders;
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -66,9 +64,11 @@ public class FacetTranslatorImpl implements FacetTranslator {
 			postFilterQueries = new ArrayList<>();
 
 		if ((query != null) && (query.getPostFilter() != null)) {
+			Filter filter = query.getPostFilter();
+
 			postFilterQueries.add(
 				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_filterTranslator.translate(query.getPostFilter(), null)));
+					filter.accept(OpenSearchFilterVisitor.INSTANCE)));
 		}
 
 		for (Facet facet : facets) {
@@ -164,7 +164,7 @@ public class FacetTranslatorImpl implements FacetTranslator {
 			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
 
 		return new org.opensearch.client.opensearch._types.query_dsl.Query(
-			_filterTranslator.translate(booleanFilter, null));
+			booleanFilter.accept(OpenSearchFilterVisitor.INSTANCE));
 	}
 
 	private org.opensearch.client.opensearch._types.query_dsl.Query
@@ -250,9 +250,6 @@ public class FacetTranslatorImpl implements FacetTranslator {
 			}
 
 		};
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private FilterTranslator<QueryVariant> _filterTranslator;
 
 	@SuppressWarnings("rawtypes")
 	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;

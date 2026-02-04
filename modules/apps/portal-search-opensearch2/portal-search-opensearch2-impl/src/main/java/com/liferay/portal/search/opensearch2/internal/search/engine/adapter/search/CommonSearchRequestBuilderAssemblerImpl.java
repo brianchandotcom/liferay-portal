@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -15,6 +15,7 @@ import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
+import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
@@ -413,10 +414,11 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			searchRequestBuilder.postFilter(query);
 		}
 		else if (baseSearchRequest.getPostFilter() != null) {
+			Filter filter = baseSearchRequest.getPostFilter();
+
 			searchRequestBuilder.postFilter(
 				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_filterTranslator.translate(
-						baseSearchRequest.getPostFilter(), null)));
+					filter.accept(OpenSearchFilterVisitor.INSTANCE)));
 		}
 	}
 
@@ -579,10 +581,12 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 		BoolQuery.Builder builder = QueryBuilders.bool();
 
+		Filter filter = query.getPreBooleanFilter();
+
 		builder.filter(
 			new org.opensearch.client.opensearch._types.query_dsl.Query(
-				_filterTranslator.translate(
-					query.getPreBooleanFilter(), null)));
+				filter.accept(OpenSearchFilterVisitor.INSTANCE)));
+
 		builder.must(translatedQuery);
 
 		return new org.opensearch.client.opensearch._types.query_dsl.Query(
@@ -610,9 +614,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Reference
 	private FacetTranslator _facetTranslator;
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private FilterTranslator<QueryVariant> _filterTranslator;
 
 	private final com.liferay.portal.kernel.search.query.QueryTranslator
 		<QueryVariant> _legacyQueryTranslator = new OpenSearchQueryTranslator();

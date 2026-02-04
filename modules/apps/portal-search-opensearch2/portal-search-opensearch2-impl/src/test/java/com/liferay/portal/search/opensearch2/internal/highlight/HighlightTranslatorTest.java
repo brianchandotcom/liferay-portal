@@ -16,7 +16,6 @@ import com.liferay.portal.search.internal.highlight.HighlightImpl;
 import com.liferay.portal.search.internal.query.StringQueryImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -60,8 +59,6 @@ public class HighlightTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_openSearchQueryTranslator =
-			_openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator();
 		_highlightPrototype = _createHighlightPrototype();
 	}
 
@@ -756,9 +753,7 @@ public class HighlightTranslatorTest {
 	private HighlightPrototype _highlightPrototype;
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-	private OpenSearchQueryTranslator _openSearchQueryTranslator;
-	private final OpenSearchQueryTranslatorFixture
-		_openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
+	private final OpenSearchQueryTranslator _openSearchQueryTranslator =
+		new OpenSearchQueryTranslator();
 
 }

@@ -14,8 +14,6 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -56,15 +54,6 @@ public class UpdateByQueryDocumentRequestExecutorTest
 
 		booleanQuery.addExactTerm(_FIELD_NAME, true);
 
-		com.liferay.portal.search.opensearch2.internal.legacy.query.
-			OpenSearchQueryTranslatorFixture
-				lecacyOpenSearchQueryTranslatorFixture =
-					new com.liferay.portal.search.opensearch2.internal.legacy.
-						query.OpenSearchQueryTranslatorFixture();
-
-		OpenSearchQueryTranslatorFixture openSearchQueryTranslatorFixture =
-			new OpenSearchQueryTranslatorFixture();
-
 		UpdateByQueryDocumentRequest updateByQueryDocumentRequest =
 			new UpdateByQueryDocumentRequest(
 				booleanQuery, null, new String[] {TEST_INDEX_NAME});
@@ -76,20 +65,10 @@ public class UpdateByQueryDocumentRequestExecutorTest
 				new UpdateByQueryDocumentRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_legacyQueryTranslator",
-			lecacyOpenSearchQueryTranslatorFixture.
-				getOpenSearchQueryTranslator());
-		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutorImpl,
 			"_openSearchConnectionManager", openSearchConnectionManager);
 		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_queryTranslator",
-			openSearchQueryTranslatorFixture.getOpenSearchQueryTranslator());
-		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutorImpl, "_scripts", _scripts);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_scriptTranslator",
-			new ScriptTranslator());
 
 		UpdateByQueryRequest updateByQueryRequest =
 			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(

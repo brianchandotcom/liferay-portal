@@ -6,9 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.legacy.query;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -18,7 +15,6 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.generic.DisMaxQuery;
 import com.liferay.portal.kernel.search.generic.FuzzyQuery;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
@@ -32,6 +28,7 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 
@@ -113,19 +110,8 @@ public class OpenSearchQueryTranslator
 			wrapperBoolQueryBuilder.must(new Query(boolQueryBuilder.build()));
 		}
 
-		FilterTranslator<QueryVariant> filterTranslator =
-			_filterTranslatorSnapshot.get();
-
-		if (filterTranslator == null) {
-			_log.error(
-				"Unable to translate boolean filter " + booleanFilter +
-					" because filter translator is null");
-
-			return boolQueryBuilder.build();
-		}
-
 		Query filterQuery = new Query(
-			filterTranslator.translate(booleanFilter, null));
+			booleanFilter.accept(OpenSearchFilterVisitor.INSTANCE));
 
 		wrapperBoolQueryBuilder.filter(filterQuery);
 
@@ -655,14 +641,5 @@ public class OpenSearchQueryTranslator
 		throw new IllegalArgumentException(
 			"Invalid multi match query type " + type);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		OpenSearchQueryTranslator.class);
-
-	private static final Snapshot<FilterTranslator<QueryVariant>>
-		_filterTranslatorSnapshot = new Snapshot<>(
-			OpenSearchQueryTranslator.class,
-			Snapshot.cast(FilterTranslator.class),
-			"(search.engine.impl=OpenSearch)", true);
 
 }

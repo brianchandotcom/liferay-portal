@@ -415,7 +415,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			null, new DocumentImpl());
 
 		Assert.assertEquals(201, indexDocumentResponse.getStatus());
-
 		Assert.assertNotNull(indexDocumentResponse.getUid());
 	}
 
@@ -450,7 +449,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			null, document);
 
 		Assert.assertEquals(201, indexDocumentResponse.getStatus());
-
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 
@@ -461,7 +459,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 			"1", new DocumentImpl());
 
 		Assert.assertEquals(201, indexDocumentResponse.getStatus());
-
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 

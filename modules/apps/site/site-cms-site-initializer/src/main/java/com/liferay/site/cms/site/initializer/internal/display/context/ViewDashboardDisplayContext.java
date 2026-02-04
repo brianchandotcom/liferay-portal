@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -68,7 +69,7 @@ public class ViewDashboardDisplayContext {
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
 		).put(
-			"isFreeTier", _FREE_TIER
+			"freeTier", FeatureFlagManagerUtil.isEnabled("LPD-74377")
 		).put(
 			"learnResources", _getLearnResourcesJSONObject()
 		).build();
@@ -91,8 +92,6 @@ public class ViewDashboardDisplayContext {
 						"url", "#"
 					))));
 	}
-
-	private static final boolean _FREE_TIER = false; // TEMP - BACKEND INTEGRATION IN LPD-77107
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewDashboardDisplayContext.class);

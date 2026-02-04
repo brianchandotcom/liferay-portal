@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -42,7 +43,7 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!_FREE_TIER) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-74377")) {
 			return;
 		}
 
@@ -68,7 +69,5 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 
 		return Collections.emptyMap();
 	}
-
-	private static final boolean _FREE_TIER = false;  // TEMP - BACKEND INTEGRATION IN LPD-77107
 
 }

@@ -27,6 +27,12 @@ public enum StoreArea {
 
 	DELETED("_deleted"), LIVE(StringPool.BLANK), NEW("_new");
 
+	public static String getCurrentStoreAreaPath(long companyId) {
+		StoreArea storeArea = _storeAreaThreadLocal.get();
+
+		return storeArea.getPath(companyId);
+	}
+
 	public static String getCurrentStoreAreaPath(
 		long companyId, long repositoryId, String... path) {
 
@@ -178,8 +184,16 @@ public enum StoreArea {
 	}
 
 	public String getPath(long companyId) {
-		return StringBundler.concat(
-			_namespace, StringPool.SLASH, String.valueOf(companyId));
+		StringBundler sb = new StringBundler(3);
+
+		if (Validator.isNotNull(_namespace)) {
+			sb.append(_namespace);
+			sb.append(StringPool.SLASH);
+		}
+
+		sb.append(companyId + StringPool.SLASH);
+
+		return sb.toString();
 	}
 
 	public String getPath(long companyId, long repositoryId, String... path) {

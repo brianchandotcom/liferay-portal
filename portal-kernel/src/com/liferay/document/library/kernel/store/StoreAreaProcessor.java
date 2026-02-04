@@ -28,4 +28,8 @@ public interface StoreAreaProcessor {
 		long companyId, long repositoryId, String dirName,
 		StoreArea[] sourceStoreAreas, StoreArea destinationStoreArea);
 
+	public boolean copyDirectory(
+		long companyId, StoreArea[] sourceStoreAreas,
+		StoreArea destinationStoreArea);
+
 }

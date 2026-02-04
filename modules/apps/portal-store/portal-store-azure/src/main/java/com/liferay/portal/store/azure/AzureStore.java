@@ -100,55 +100,15 @@ public class AzureStore implements Store {
 	}
 
 	@Override
+	public void deleteDirectory(long companyId) {
+		_deleteBlob(companyId + StringPool.SLASH);
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		BlobBatchClient blobBatchClient = new BlobBatchClientBuilder(
-			_blobContainerClient.getServiceClient()
-		).buildClient();
-
-		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
-
-		listBlobsOptions.setMaxResultsPerPage(256);
-		listBlobsOptions.setPrefix(
-			_getPrefix(companyId, repositoryId, dirName));
-
-		PagedIterable<BlobItem> pagedIterable = _blobContainerClient.listBlobs(
-			listBlobsOptions, null);
-
-		for (PagedResponse<BlobItem> pagedResponse :
-				pagedIterable.iterableByPage()) {
-
-			BlobBatch blobBatch = blobBatchClient.getBlobBatch();
-
-			List<BlobItem> blobItems = pagedResponse.getValue();
-
-			List<Response<Void>> responses = new ArrayList<>(blobItems.size());
-
-			blobItems.forEach(
-				blobItem -> responses.add(
-					blobBatch.deleteBlob(
-						_blobContainerClient.getBlobContainerName(),
-						blobItem.getName())));
-
-			if (!blobItems.isEmpty()) {
-				blobBatchClient.submitBatchWithResponse(
-					blobBatch, false, null, Context.NONE);
-			}
-
-			for (Response<Void> response : responses) {
-				if (response.getStatusCode() < 400) {
-					continue;
-				}
-
-				HttpRequest httpRequest = response.getRequest();
-
-				_log.error(
-					StringBundler.concat(
-						"Unable to delete ", httpRequest.getUrl(),
-						" due to status code ", response.getStatusCode()));
-			}
-		}
+		_deleteBlob(_getPrefix(companyId, repositoryId, dirName));
 	}
 
 	@Override
@@ -337,6 +297,54 @@ public class AzureStore implements Store {
 	@Deactivate
 	protected void deactivate() {
 		_blobContainerClient = null;
+	}
+
+	private void _deleteBlob(String prefix) {
+		BlobBatchClient blobBatchClient = new BlobBatchClientBuilder(
+			_blobContainerClient.getServiceClient()
+		).buildClient();
+
+		ListBlobsOptions listBlobsOptions = new ListBlobsOptions();
+
+		listBlobsOptions.setMaxResultsPerPage(256);
+		listBlobsOptions.setPrefix(prefix);
+
+		PagedIterable<BlobItem> pagedIterable = _blobContainerClient.listBlobs(
+			listBlobsOptions, null);
+
+		for (PagedResponse<BlobItem> pagedResponse :
+				pagedIterable.iterableByPage()) {
+
+			BlobBatch blobBatch = blobBatchClient.getBlobBatch();
+
+			List<BlobItem> blobItems = pagedResponse.getValue();
+
+			List<Response<Void>> responses = new ArrayList<>(blobItems.size());
+
+			blobItems.forEach(
+				blobItem -> responses.add(
+					blobBatch.deleteBlob(
+						_blobContainerClient.getBlobContainerName(),
+						blobItem.getName())));
+
+			if (!blobItems.isEmpty()) {
+				blobBatchClient.submitBatchWithResponse(
+					blobBatch, false, null, Context.NONE);
+			}
+
+			for (Response<Void> response : responses) {
+				if (response.getStatusCode() < 400) {
+					continue;
+				}
+
+				HttpRequest httpRequest = response.getRequest();
+
+				_log.error(
+					StringBundler.concat(
+						"Unable to delete ", httpRequest.getUrl(),
+						" due to status code ", response.getStatusCode()));
+			}
+		}
 	}
 
 	private String _getAzurePath(

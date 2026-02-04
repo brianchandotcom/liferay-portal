@@ -14,6 +14,10 @@ import com.liferay.petra.string.StringPool;
  */
 public class S3KeyTransformerUtil {
 
+	public static String getDirectoryKey(long companyId) {
+		return companyId + StringPool.SLASH;
+	}
+
 	public static String getDirectoryKey(
 		long companyId, long repositoryId, String folderName) {
 

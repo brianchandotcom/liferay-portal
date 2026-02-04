@@ -194,50 +194,17 @@ public class S3Store implements Store {
 	}
 
 	@Override
+	public void deleteDirectory(long companyId) {
+		_deleteObjects(S3KeyTransformerUtil.getDirectoryKey(companyId));
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		try {
-			List<ObjectIdentifier> objectIdentifiers = new ArrayList<>(
-				_DELETE_MAX);
-
-			List<S3Object> s3Objects = _getS3Objects(
-				S3KeyTransformerUtil.getDirectoryKey(
-					companyId, repositoryId, dirName));
-
-			Iterator<S3Object> iterator = s3Objects.iterator();
-
-			while (iterator.hasNext()) {
-				for (int i = 0; i < _DELETE_MAX; i++) {
-					if (iterator.hasNext()) {
-						S3Object s3Object = iterator.next();
-
-						objectIdentifiers.add(
-							ObjectIdentifier.builder(
-							).key(
-								s3Object.key()
-							).build());
-					}
-				}
-
-				CompletableFuture<DeleteObjectsResponse> completableFuture =
-					_s3AsyncClient.deleteObjects(
-						deleteObjectsRequestBuilder ->
-							deleteObjectsRequestBuilder.bucket(
-								_s3StoreConfiguration.bucketName()
-							).delete(
-								deleteBuilder -> deleteBuilder.objects(
-									objectIdentifiers)
-							));
-
-				completableFuture.join();
-
-				objectIdentifiers.clear();
-			}
-		}
-		catch (CompletionException completionException) {
-			throw _toSystemException(completionException.getCause());
-		}
+		_deleteObjects(
+			S3KeyTransformerUtil.getDirectoryKey(
+				companyId, repositoryId, dirName));
 	}
 
 	@Override
@@ -565,6 +532,48 @@ public class S3Store implements Store {
 		_s3AsyncClient.close();
 		_s3TransferManager.close();
 		_threadPoolExecutor.shutdown();
+	}
+
+	private void _deleteObjects(String prefix) {
+		try {
+			List<ObjectIdentifier> objectIdentifiers = new ArrayList<>(
+				_DELETE_MAX);
+
+			List<S3Object> s3Objects = _getS3Objects(prefix);
+
+			Iterator<S3Object> iterator = s3Objects.iterator();
+
+			while (iterator.hasNext()) {
+				for (int i = 0; i < _DELETE_MAX; i++) {
+					if (iterator.hasNext()) {
+						S3Object s3Object = iterator.next();
+
+						objectIdentifiers.add(
+							ObjectIdentifier.builder(
+							).key(
+								s3Object.key()
+							).build());
+					}
+				}
+
+				CompletableFuture<DeleteObjectsResponse> completableFuture =
+					_s3AsyncClient.deleteObjects(
+						deleteObjectsRequestBuilder ->
+							deleteObjectsRequestBuilder.bucket(
+								_s3StoreConfiguration.bucketName()
+							).delete(
+								deleteBuilder -> deleteBuilder.objects(
+									objectIdentifiers)
+							));
+
+				completableFuture.join();
+
+				objectIdentifiers.clear();
+			}
+		}
+		catch (CompletionException completionException) {
+			throw _toSystemException(completionException.getCause());
+		}
 	}
 
 	private String _getHeadVersionLabel(

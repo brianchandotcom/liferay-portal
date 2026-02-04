@@ -140,44 +140,17 @@ public class IBMS3Store implements Store {
 	}
 
 	@Override
+	public void deleteDirectory(long companyId) {
+		_deleteObjects(S3KeyTransformerUtil.getDirectoryKey(companyId));
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 
-		try {
-			String[] keys = new String[_DELETE_MAX];
-
-			List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(
-				S3KeyTransformerUtil.getDirectoryKey(
-					companyId, repositoryId, dirName));
-
-			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
-
-			while (iterator.hasNext()) {
-				DeleteObjectsRequest deleteObjectsRequest =
-					new DeleteObjectsRequest(
-						_s3StoreConfiguration.bucketName());
-
-				for (int i = 0; i < keys.length; i++) {
-					if (iterator.hasNext()) {
-						S3ObjectSummary s3ObjectSummary = iterator.next();
-
-						keys[i] = s3ObjectSummary.getKey();
-					}
-					else {
-						keys = Arrays.copyOfRange(keys, 0, i);
-
-						break;
-					}
-				}
-
-				deleteObjectsRequest.withKeys(keys);
-
-				_amazonS3.deleteObjects(deleteObjectsRequest);
-			}
-		}
-		catch (AmazonClientException amazonClientException) {
-			throw _transform(amazonClientException);
-		}
+		_deleteObjects(
+			S3KeyTransformerUtil.getDirectoryKey(
+				companyId, repositoryId, dirName));
 	}
 
 	@Override
@@ -532,6 +505,43 @@ public class IBMS3Store implements Store {
 		}
 
 		clientConfiguration.setSignerOverride(signerOverride);
+	}
+
+	private void _deleteObjects(String prefix) {
+		try {
+			String[] keys = new String[_DELETE_MAX];
+
+			List<S3ObjectSummary> s3ObjectSummaries = _getS3ObjectSummaries(
+				prefix);
+
+			Iterator<S3ObjectSummary> iterator = s3ObjectSummaries.iterator();
+
+			while (iterator.hasNext()) {
+				DeleteObjectsRequest deleteObjectsRequest =
+					new DeleteObjectsRequest(
+						_s3StoreConfiguration.bucketName());
+
+				for (int i = 0; i < keys.length; i++) {
+					if (iterator.hasNext()) {
+						S3ObjectSummary s3ObjectSummary = iterator.next();
+
+						keys[i] = s3ObjectSummary.getKey();
+					}
+					else {
+						keys = Arrays.copyOfRange(keys, 0, i);
+
+						break;
+					}
+				}
+
+				deleteObjectsRequest.withKeys(keys);
+
+				_amazonS3.deleteObjects(deleteObjectsRequest);
+			}
+		}
+		catch (AmazonClientException amazonClientException) {
+			throw _transform(amazonClientException);
+		}
 	}
 
 	private String _getHeadVersionLabel(

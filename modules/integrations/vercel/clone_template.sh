@@ -20,10 +20,7 @@ function main {
 
 	echo "Moving ${template_origin} to ${destination}"
 
-	if [ ! -d "${destination}" ]
-	then
-		mkdir -p "${destination}"
-	fi
+	mkdir -p "${destination}"
 
 	mv -v "${template_origin}" "${destination}"
 

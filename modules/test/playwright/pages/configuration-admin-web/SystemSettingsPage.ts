@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {waitForPageToBeLoaded} from '../../utils/waitForPageToBeLoaded';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SystemSettingsPage {
@@ -41,6 +42,8 @@ export class SystemSettingsPage {
 			})
 			.first()
 			.click();
+
+		await waitForPageToBeLoaded(this.page);
 	}
 
 	async assertOptionVisible(options: {

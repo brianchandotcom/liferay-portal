@@ -63,15 +63,12 @@ public class NotificationTemplateService extends BaseService {
 				subject, placeholder, placeholdersJSONObject.getString(key));
 		}
 
-		JSONObject processedTemplateJSONObject = new JSONObject();
-
-		processedTemplateJSONObject.put(
+		return new JSONObject(
+		).put(
 			"body", body
 		).put(
 			"subject", subject
 		);
-
-		return processedTemplateJSONObject;
 	}
 
 	private String _getAuthorization() {

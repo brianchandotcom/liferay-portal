@@ -2043,10 +2043,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			PermissionThreadLocal.setAddResource(false);
 
 			try {
+				String externalReferenceCode = StringUtil.toUpperCase(
+					"L_" + StringUtil.replace(name, ' ', '_'));
+
 				role = roleLocalService.addRole(
-					null, user.getUserId(), null, 0, name, null,
-					LocalizationUtil.getLocalizationMap(description), type,
-					null, null);
+					externalReferenceCode, user.getUserId(), null, 0, name,
+					null, LocalizationUtil.getLocalizationMap(description),
+					type, null, null);
 			}
 			finally {
 				PermissionThreadLocal.setAddResource(true);

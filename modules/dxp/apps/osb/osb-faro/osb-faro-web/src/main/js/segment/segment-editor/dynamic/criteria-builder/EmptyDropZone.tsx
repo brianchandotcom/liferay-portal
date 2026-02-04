@@ -50,7 +50,7 @@ interface IEmptyDropZone extends React.HTMLAttributes<HTMLDivElement> {
 	addProperty: AddProperty;
 	canDrop: boolean;
 	connectDropTarget: ConnectDropTarget;
-	enabledSequencialSegment: boolean;
+	enabledSequentialSegment: boolean;
 	hover?: boolean;
 	onCriterionAdd: OnCriterionAdd;
 }
@@ -60,13 +60,13 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 		const {
 			canDrop,
 			connectDropTarget,
-			enabledSequencialSegment,
+			enabledSequentialSegment,
 			hover
 		} = this.props;
 
 		const targetClasses = getCN('empty-drop-zone-target', {
 			'dnd-hover': canDrop && hover,
-			'enabled-sequencial-segment': enabledSequencialSegment
+			'enabled-sequential-segment': enabledSequentialSegment
 		});
 
 		return (
@@ -89,7 +89,7 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 								</Text>
 							</div>
 
-							{!enabledSequencialSegment && (
+							{!enabledSequentialSegment && (
 								<div>
 									<ClayIcon
 										className='icon-root icon-size-md mr-3'

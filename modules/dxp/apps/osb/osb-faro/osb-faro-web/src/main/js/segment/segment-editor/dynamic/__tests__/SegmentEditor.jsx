@@ -67,7 +67,7 @@ describe('SegmentEditor', () => {
 		expect(screen.getByText('Error:')).not.toBeNull();
 	});
 
-	it('renders the realtime segment with sequencial card disabled', () => {
+	it('renders the realtime segment with sequential card disabled', () => {
 		render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
@@ -83,7 +83,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enabled Sequencial')).toBeInTheDocument();
+		expect(screen.getByText('Enabled Sequential')).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				'When this is enabled, Event 2 must occur after Event 1, with any number of events in between. When this is disabled, events can be completed in any order. Nested criteria are not supported.'
@@ -102,7 +102,7 @@ describe('SegmentEditor', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders the realtime segment with sequencial card and user enable it', async () => {
+	it('renders the realtime segment with sequential card and user enable it', async () => {
 		render(
 			<Provider store={mockStore()}>
 				<BrowserRouter>
@@ -118,7 +118,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enabled Sequencial')).toBeInTheDocument();
+		expect(screen.getByText('Enabled Sequential')).toBeInTheDocument();
 
 		expect(
 			screen.getByText(
@@ -126,7 +126,7 @@ describe('SegmentEditor', () => {
 			)
 		).toBeInTheDocument();
 
-		fireEvent.click(screen.getByText('Enabled Sequencial'));
+		fireEvent.click(screen.getByText('Enabled Sequential'));
 
 		await waitFor(() => {
 			expect(

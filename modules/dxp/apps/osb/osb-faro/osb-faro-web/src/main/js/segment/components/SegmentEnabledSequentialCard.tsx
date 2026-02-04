@@ -3,12 +3,12 @@ import React from 'react';
 import {ClayToggle} from '@clayui/form';
 import {Text} from '@clayui/core';
 
-interface ISegmentEnabledSequencialCardProps {
+interface ISegmentEnabledSequentialCardProps {
 	onToggle: (enabled: boolean) => void;
 	toggled: boolean;
 }
 
-const SegmentEnabledSequencialCard: React.FC<ISegmentEnabledSequencialCardProps> = ({
+const SegmentEnabledSequentialCard: React.FC<ISegmentEnabledSequentialCardProps> = ({
 	onToggle,
 	toggled
 }) => (
@@ -20,8 +20,8 @@ const SegmentEnabledSequencialCard: React.FC<ISegmentEnabledSequencialCardProps>
 		<Card.Body>
 			<p>
 				<ClayToggle
-					data-testid='segment-enabled-sequencial-toggle'
-					label={Liferay.Language.get('enabled-sequencial')}
+					data-testid='segment-enabled-sequential-toggle'
+					label={Liferay.Language.get('enabled-sequential')}
 					onToggle={onToggle}
 					toggled={toggled}
 				/>
@@ -36,4 +36,4 @@ const SegmentEnabledSequencialCard: React.FC<ISegmentEnabledSequencialCardProps>
 	</Card>
 );
 
-export {SegmentEnabledSequencialCard};
+export {SegmentEnabledSequentialCard};

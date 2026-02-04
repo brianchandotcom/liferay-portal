@@ -9,7 +9,7 @@ import {SegmentTypes} from 'shared/util/constants';
 interface ICriteriaBuilderProps {
 	channelId: string;
 	criteria: CriterionGroup;
-	enabledSequencialSegment?: boolean;
+	enabledSequentialSegment?: boolean;
 	groupId: string;
 	id?: string;
 	onChange: (items: Criteria) => void;
@@ -160,7 +160,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 		const {
 			channelId,
 			criteria,
-			enabledSequencialSegment,
+			enabledSequentialSegment,
 			groupId,
 			id,
 			segmentType
@@ -172,7 +172,7 @@ class CriteriaBuilder extends React.Component<ICriteriaBuilderProps> {
 					channelId={channelId}
 					criteria={criteria}
 					criteriaGroupId={criteria && criteria.criteriaGroupId}
-					enabledSequencialSegment={enabledSequencialSegment}
+					enabledSequentialSegment={enabledSequentialSegment}
 					groupId={groupId}
 					id={id}
 					onChange={this.handleCriteriaChange}

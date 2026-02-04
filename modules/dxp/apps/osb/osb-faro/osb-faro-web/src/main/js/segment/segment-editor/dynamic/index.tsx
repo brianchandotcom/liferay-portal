@@ -27,7 +27,7 @@ import {
 	ReferencedObjectsContext,
 	withReferencedObjectsProvider
 } from './context/referencedObjects';
-import {SegmentEnabledSequencialCard} from 'segment/components/SegmentEnabledSequencialCard';
+import {SegmentEnabledSequentialCard} from 'segment/components/SegmentEnabledSequentialCard';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 
 /**
@@ -105,7 +105,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	};
 
 	state = {
-		enabledSequencialSegment: false
+		enabledSequentialSegment: false
 	};
 
 	_formRef = React.createRef<Formik>();
@@ -249,17 +249,17 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 													<div className='content-wrapper'>
 														{type ===
 															SegmentTypes.RealTime && (
-															<SegmentEnabledSequencialCard
+															<SegmentEnabledSequentialCard
 																onToggle={value =>
 																	this.setState(
 																		{
-																			enabledSequencialSegment: value
+																			enabledSequentialSegment: value
 																		}
 																	)
 																}
 																toggled={
 																	this.state
-																		.enabledSequencialSegment
+																		.enabledSequentialSegment
 																}
 															/>
 														)}
@@ -288,9 +288,9 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 															channelId={
 																channelId
 															}
-															enabledSequencialSegment={
+															enabledSequentialSegment={
 																this.state
-																	.enabledSequencialSegment
+																	.enabledSequentialSegment
 															}
 															groupId={groupId}
 															id={id}

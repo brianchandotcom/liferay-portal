@@ -78,7 +78,7 @@ interface ICriteriaGroupProps {
 	criteria: CriterionGroup;
 	criteriaGroupId: string;
 	dragging?: boolean;
-	enabledSequencialSegment: boolean;
+	enabledSequentialSegment: boolean;
 	groupId: string;
 	id?: string;
 	index?: number;
@@ -305,7 +305,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 			criteria,
 			criteriaGroupId,
 			dragging,
-			enabledSequencialSegment,
+			enabledSequentialSegment,
 			id,
 			onMove,
 			root
@@ -327,7 +327,7 @@ class CriteriaGroup extends React.Component<ICriteriaGroupProps> {
 		if (this.isCriteriaEmpty()) {
 			return (
 				<EmptyDropZone
-					enabledSequencialSegment={enabledSequencialSegment}
+					enabledSequentialSegment={enabledSequentialSegment}
 					id={id}
 					onCriterionAdd={this.handleCriterionAdd}
 				/>

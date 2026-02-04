@@ -36,9 +36,8 @@ test('Should persist and apply system configuration changes made via the User In
 		const accessibilityMenuItem = page.getByRole('menuitem', {
 			name: SETTING_CONFIGURATION_NAME,
 		});
-		const accessibilityModal = page
-			.locator('.modal')
-			.getByLabel(SETTING_CONFIGURATION_NAME);
+
+		await expect(userProfileTrigger).toBeVisible();
 
 		await userProfileTrigger.click();
 
@@ -47,14 +46,20 @@ test('Should persist and apply system configuration changes made via the User In
 
 			await accessibilityMenuItem.click();
 
+			const accessibilityModal = page
+				.locator('.modal')
+				.getByLabel(SETTING_CONFIGURATION_NAME);
+
 			await expect(accessibilityModal).toBeVisible();
 
 			await accessibilityModal.getByLabel('Close').click();
+
+			await expect(accessibilityModal).toBeHidden();
 		}
 		else if (expectedStatus === 'hidden') {
 			await expect(accessibilityMenuItem).toBeHidden();
 
-			await userProfileTrigger.click();
+			await page.keyboard.press('Escape');
 		}
 	}
 

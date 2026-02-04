@@ -9,6 +9,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveBulkAction;
@@ -63,6 +64,11 @@ public class BulkActionSerDes {
 			if (typeString.equals("DeleteBulkAction")) {
 				return DeleteBulkActionSerDes.toJSON(
 					(DeleteBulkAction)bulkAction);
+			}
+
+			if (typeString.equals("DueDateBulkAction")) {
+				return DueDateBulkActionSerDes.toJSON(
+					(DueDateBulkAction)bulkAction);
 			}
 
 			if (typeString.equals("ExpireBulkAction")) {
@@ -190,6 +196,10 @@ public class BulkActionSerDes {
 
 				if (typeString.equals("DeleteBulkAction")) {
 					return DeleteBulkAction.toDTO(json);
+				}
+
+				if (typeString.equals("DueDateBulkAction")) {
+					return DueDateBulkAction.toDTO(json);
 				}
 
 				if (typeString.equals("ExpireBulkAction")) {

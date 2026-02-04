@@ -17,6 +17,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.MoveBulkAction;
@@ -350,6 +351,18 @@ public abstract class BaseBulkActionResourceTestCase {
 				if (((DefaultPermissionBulkAction)bulkAction).getTreePath() ==
 						null) {
 
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dueDate", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DueDateBulkAction)) {
+					continue;
+				}
+
+				if (((DueDateBulkAction)bulkAction).getDueDate() == null) {
 					valid = false;
 				}
 
@@ -820,6 +833,23 @@ public abstract class BaseBulkActionResourceTestCase {
 							getTreePath(),
 						((DefaultPermissionBulkAction)bulkAction2).
 							getTreePath())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("dueDate", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DueDateBulkAction) ||
+					!(bulkAction2 instanceof DueDateBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DueDateBulkAction)bulkAction1).getDueDate(),
+						((DueDateBulkAction)bulkAction2).getDueDate())) {
 
 					return false;
 				}
@@ -1332,6 +1362,15 @@ public abstract class BaseBulkActionResourceTestCase {
 				DeleteBulkAction bulkAction = new DeleteBulkAction();
 
 				bulkAction.setType(BulkAction.Type.create("DeleteBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				DueDateBulkAction bulkAction = new DueDateBulkAction();
+
+				bulkAction.setDueDate(RandomTestUtil.nextDate());
+
+				bulkAction.setType(BulkAction.Type.create("DueDateBulkAction"));
 
 				return bulkAction;
 			},

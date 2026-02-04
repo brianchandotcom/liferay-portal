@@ -29,39 +29,32 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	public void receiveMessage(
 		PubsubMessage pubsubMessage, AckReplyConsumer ackReplyConsumer) {
 
-		try {
-			if (Objects.equals(
+		if (Objects.equals(
+				_topicName,
+				MarketplaceConstants.
+					PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE)) {
+
+			// TODO
+
+		}
+		else if (Objects.equals(
 					_topicName,
 					MarketplaceConstants.
-						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE)) {
+						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_UPDATE)) {
 
-				// TODO
+			// TODO
 
-			}
-			else if (Objects.equals(
-						_topicName,
-						MarketplaceConstants.
-							PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_UPDATE)) {
-
-				// TODO
-
-			}
-			else if (Objects.equals(
-						_topicName,
-						MarketplaceConstants.
-							PUBSUB_TOPIC_NAME_KORONEIKI_ENTITLEMENT_CREATE)) {
-
-				// TODO
-
-			}
-
-			ackReplyConsumer.ack();
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+		else if (Objects.equals(
+					_topicName,
+					MarketplaceConstants.
+						PUBSUB_TOPIC_NAME_KORONEIKI_ENTITLEMENT_CREATE)) {
 
-			ackReplyConsumer.nack();
+			// TODO
+
 		}
+
+		ackReplyConsumer.ack();
 	}
 
 	private static final Log _log = LogFactory.getLog(

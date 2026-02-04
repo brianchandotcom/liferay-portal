@@ -125,6 +125,9 @@ public interface Rels {
 	public static final String INDIVIDUAL_SEGMENT_ACCOUNTS =
 		"individual-segment-accounts";
 
+	public static final String INDIVIDUAL_SEGMENT_ACTIVATION =
+		"individual-segment-activation";
+
 	public static final String INDIVIDUAL_SEGMENT_ASSIGN_CHANNEL =
 		"individual-segment-assign-channel";
 

@@ -41,6 +41,7 @@ import com.liferay.osb.faro.engine.client.model.ProjectUsageMetric;
 import com.liferay.osb.faro.engine.client.model.Provider;
 import com.liferay.osb.faro.engine.client.model.RealTimeMembershipMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.engine.client.model.SegmentActivation;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
@@ -538,5 +539,11 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, String id, long userId, String channelId,
 		String filterString, boolean includeAnonymousUsers, String name,
 		String segmentType);
+
+	public SegmentActivation updateSegmentActivation(
+		FaroProject faroProject, String cronExpression,
+		SegmentActivation.FrequencyType frequencyType, Date scheduleEndDate,
+		Date scheduleStartDate, SegmentActivation.ScheduleType scheduleType,
+		String segmentId);
 
 }

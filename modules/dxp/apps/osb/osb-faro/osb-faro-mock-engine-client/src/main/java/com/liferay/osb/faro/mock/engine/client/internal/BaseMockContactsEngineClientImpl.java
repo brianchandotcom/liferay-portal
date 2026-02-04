@@ -1110,6 +1110,19 @@ public abstract class BaseMockContactsEngineClientImpl
 			includeAnonymousUsers, name, segmentType);
 	}
 
+	@Override
+	public SegmentActivation updateSegmentActivation(
+			FaroProject faroProject, String cronExpression,
+			SegmentActivation.FrequencyType frequencyType, Date scheduleEndDate,
+			Date scheduleStartDate, SegmentActivation.ScheduleType scheduleType,
+			String segmentId){
+
+		return contactsEngineClient.updateSegmentActivation(
+				faroProject, cronExpression,
+				frequencyType, scheduleEndDate, scheduleStartDate, scheduleType,
+				segmentId);
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.osb.faro.engine.client.internal.ContactsEngineClientImpl)"
 	)

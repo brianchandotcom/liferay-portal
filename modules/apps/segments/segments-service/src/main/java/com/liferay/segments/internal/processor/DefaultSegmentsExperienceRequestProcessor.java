@@ -63,12 +63,12 @@ public class DefaultSegmentsExperienceRequestProcessor
 			long[] segmentsEntryIds, long[] segmentsExperienceIds)
 		throws PortalException {
 
-		Map<String, List<String>> segmentsEntryScopeERCToEntriesMap =
+		Map<String, List<String>> scopeERCToSegmentsEntriesMap =
 			new HashMap<>();
 
 		for (long segmentsEntryId : segmentsEntryIds) {
 			if (segmentsEntryId == SegmentsEntryConstants.ID_DEFAULT) {
-				segmentsEntryScopeERCToEntriesMap.computeIfAbsent(
+				scopeERCToSegmentsEntriesMap.computeIfAbsent(
 					null, k -> new ArrayList<>()
 				).add(
 					null
@@ -84,7 +84,7 @@ public class DefaultSegmentsExperienceRequestProcessor
 				continue;
 			}
 
-			segmentsEntryScopeERCToEntriesMap.computeIfAbsent(
+			scopeERCToSegmentsEntriesMap.computeIfAbsent(
 				ScopeUtil.getItemScopeExternalReferenceCode(
 					segmentsEntry.getGroupId(), groupId),
 				k -> new ArrayList<>()
@@ -96,7 +96,7 @@ public class DefaultSegmentsExperienceRequestProcessor
 		List<SegmentsExperience> segmentsExperiences = new ArrayList<>();
 
 		for (Map.Entry<String, List<String>> mapEntry :
-				segmentsEntryScopeERCToEntriesMap.entrySet()) {
+				scopeERCToSegmentsEntriesMap.entrySet()) {
 
 			List<String> segmentsEntryERCs = mapEntry.getValue();
 

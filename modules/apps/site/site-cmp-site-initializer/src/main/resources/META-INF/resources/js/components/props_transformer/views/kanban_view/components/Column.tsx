@@ -6,9 +6,14 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col} from '@clayui/layout';
-import React, {useContext} from 'react';
+import {
+	ObjectField,
+	StateFlowValue,
+} from '@liferay/site-cms-site-initializer/src/main/resources/META-INF/resources/js/common/types/ObjectDefinition';
+import React, {useContext, useEffect, useState} from 'react';
 import {useDrop} from 'react-dnd';
 
+import {getStateObjectField} from '../../../../../utils/api';
 import {openCMPModal} from '../../../../../utils/openCMPModal';
 import {IColumn, ITask} from '../../../../../utils/types';
 import StateLabel from '../../../../StateLabel';
@@ -29,26 +34,56 @@ interface IColumnProps {
 	column: IColumn;
 }
 
+interface IColumnViewProps extends IColumnProps {
+	stateFlow?: StateFlowValue;
+}
+
 export enum ItemTypes {
 	TASK = 'KANBAN_TASK',
 }
 
-export default function Column({
+export function ColumnView({
 	column: {icon, key, name, tasks},
-}: IColumnProps) {
-	const {loadData} = useContext(KanbanViewContext);
-	const {changeTaskStatus} = useContext(KanbanViewContext);
+	stateFlow,
+}: IColumnViewProps) {
+	const {changeTaskStatus, loadData} = useContext(KanbanViewContext);
+
+	const canTransition = (taskStateKey: string) => {
+		if (!stateFlow) {
+			return false;
+		}
+
+		const state = stateFlow.objectStates.find(
+			({key}) => key === taskStateKey
+		);
+
+		if (!state) {
+			return false;
+		}
+
+		const {objectStateTransitions} = state;
+
+		return objectStateTransitions.some(
+			({key: transitionsKey}) => transitionsKey === key
+		);
+	};
 
 	const [{canDrop, isOver}, drop] = useDrop({
 		accept: ItemTypes.TASK,
-		canDrop: ({task}: DragItem) => {
-			return task.embedded.state.key !== key;
+		canDrop: ({task: {actions, embedded}}: DragItem) => {
+			if (!actions.update) {
+				return false;
+			}
+
+			const taskStateKey = embedded.state.key;
+
+			return taskStateKey !== key && canTransition(taskStateKey);
 		},
-		drop: (item) => changeTaskStatus(item.task, {name, key}),
 		collect: (monitor) => ({
 			canDrop: !!monitor.canDrop(),
 			isOver: !!monitor.isOver(),
 		}),
+		drop: (item) => changeTaskStatus(item.task, {key, name}),
 	});
 
 	return (
@@ -109,4 +144,33 @@ export default function Column({
 			</Col>
 		</div>
 	);
+}
+
+export default function Column(props: IColumnProps) {
+	const [stateFlow, setStateFlow] = useState<StateFlowValue>();
+
+	useEffect(() => {
+		const makeFetch = async () => {
+			const {data} = (await getStateObjectField()) as {
+				data: {items: ObjectField[]};
+			};
+
+			const objectFieldSettings =
+				data?.items?.[0]?.objectFieldSettings ?? [];
+
+			const setting = objectFieldSettings!.find(
+				({name}) => name === 'stateFlow'
+			)!;
+
+			const value = setting?.value as StateFlowValue;
+
+			if (value) {
+				setStateFlow(value);
+			}
+		};
+
+		makeFetch();
+	}, []);
+
+	return <ColumnView {...props} stateFlow={stateFlow} />;
 }

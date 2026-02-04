@@ -83,7 +83,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enabled Sequential')).toBeInTheDocument();
+		expect(screen.getByText('Enable Sequential')).toBeInTheDocument();
 		expect(
 			screen.getByText(
 				'When this is enabled, Event 2 must occur after Event 1, with any number of events in between. When this is disabled, events can be completed in any order. Nested criteria are not supported.'
@@ -118,7 +118,7 @@ describe('SegmentEditor', () => {
 		);
 
 		expect(screen.getByText('Order')).toBeInTheDocument();
-		expect(screen.getByText('Enabled Sequential')).toBeInTheDocument();
+		expect(screen.getByText('Enable Sequential')).toBeInTheDocument();
 
 		expect(
 			screen.getByText(
@@ -126,7 +126,7 @@ describe('SegmentEditor', () => {
 			)
 		).toBeInTheDocument();
 
-		fireEvent.click(screen.getByText('Enabled Sequential'));
+		fireEvent.click(screen.getByText('Enable Sequential'));
 
 		await waitFor(() => {
 			expect(

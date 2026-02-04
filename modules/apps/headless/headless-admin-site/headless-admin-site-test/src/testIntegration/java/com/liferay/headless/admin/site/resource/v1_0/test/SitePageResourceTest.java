@@ -1325,9 +1325,16 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				"attachment"
 			).objectFieldSettings(
 				Arrays.asList(
-					_createObjectFieldSetting("acceptedFileExtensions", "txt"),
-					_createObjectFieldSetting("fileSource", "userComputer"),
-					_createObjectFieldSetting("maximumFileSize", "100"))
+					_createObjectFieldSetting(
+						ObjectFieldSettingConstants.
+							NAME_ACCEPTED_FILE_EXTENSIONS,
+						"txt"),
+					_createObjectFieldSetting(
+						ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+						ObjectFieldSettingConstants.
+							VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA),
+					_createObjectFieldSetting(
+						ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"))
 			).build(),
 			ObjectFieldUtil.createObjectField(
 				ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,

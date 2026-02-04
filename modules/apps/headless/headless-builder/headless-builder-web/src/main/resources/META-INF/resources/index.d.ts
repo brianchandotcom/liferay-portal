@@ -396,9 +396,9 @@ type ObjectFieldSettingName =
 	| 'output'
 	| 'script'
 	| 'showCounter'
-	| 'showFilesInDocumentsAndMedia'
+	| 'showFilesInLibrary'
 	| 'stateFlow'
-	| 'storageDLFolderPath'
+	| 'storageLibraryPath'
 	| 'timeStorage'
 	| 'uniqueValues'
 	| 'uniqueValuesErrorMessage';

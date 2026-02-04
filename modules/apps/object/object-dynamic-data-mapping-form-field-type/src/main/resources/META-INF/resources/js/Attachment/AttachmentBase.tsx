@@ -168,7 +168,9 @@ export default function AttachmentBase({
 									url,
 								});
 							}
-							else if (fileSource === 'userComputer') {
+							else if (
+								fileSource === 'userComputerToDocumentsAndMedia'
+							) {
 								const filePicker = inputRef.current;
 								if (filePicker) {
 									filePicker.value = '';

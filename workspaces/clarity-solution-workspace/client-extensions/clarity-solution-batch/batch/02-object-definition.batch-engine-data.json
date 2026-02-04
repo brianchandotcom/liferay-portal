@@ -185,18 +185,18 @@
 						},
 						{
 							"name": "fileSource",
-							"value": "userComputer"
+							"value": "userComputerToDocumentsAndMedia"
 						},
 						{
 							"name": "maximumFileSize",
 							"value": 100
 						},
 						{
-							"name": "showFilesInDocumentsAndMedia",
+							"name": "showFilesInLibrary",
 							"value": true
 						},
 						{
-							"name": "storageDLFolderPath",
+							"name": "storageLibraryPath",
 							"value": "/DistributorApplication"
 						}
 					],
@@ -581,14 +581,14 @@
 						},
 						{
 							"name": "fileSource",
-							"value": "userComputer"
+							"value": "userComputerToDocumentsAndMedia"
 						},
 						{
 							"name": "maximumFileSize",
 							"value": 100
 						},
 						{
-							"name": "showFilesInDocumentsAndMedia",
+							"name": "showFilesInLibrary",
 							"value": false
 						}
 					],

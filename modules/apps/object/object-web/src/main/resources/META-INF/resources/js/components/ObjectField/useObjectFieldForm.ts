@@ -185,21 +185,21 @@ export function useObjectFieldForm({
 				);
 			}
 
-			if (settings.showFilesInDocumentsAndMedia) {
+			if (settings.showFilesInLibrary) {
 				if (
 					invalidateRequired(
-						settings.storageDLFolderPath as string | undefined
+						settings.storageLibraryPath as string | undefined
 					)
 				) {
-					errors.storageDLFolderPath = constantsUtils.REQUIRED_MSG;
+					errors.storageLibraryPath = constantsUtils.REQUIRED_MSG;
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(
-						settings.storageDLFolderPath as string
+						settings.storageLibraryPath as string
 					);
 
 					if (sourceFolderError !== null) {
-						errors.storageDLFolderPath = sourceFolderError;
+						errors.storageLibraryPath = sourceFolderError;
 					}
 				}
 			}

@@ -1310,9 +1310,14 @@ public class ObjectFieldLocalServiceImpl
 
 			ObjectFieldSetting objectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
-					objectField.getObjectFieldId(), "fileSource");
+					objectField.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
-			if (Objects.equals(objectFieldSetting.getValue(), "userComputer")) {
+			if (Objects.equals(
+					objectFieldSetting.getValue(),
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
+
 				List<ObjectEntry> objectEntries =
 					_objectEntryPersistence.findByObjectDefinitionId(
 						objectField.getObjectDefinitionId());

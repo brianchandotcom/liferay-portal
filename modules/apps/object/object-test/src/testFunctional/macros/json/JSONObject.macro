@@ -288,14 +288,14 @@ definition {
 			var indexedAsKeyword = "true";
 		}
 
-		if (!(isSet(showFilesInDocumentsAndMedia))) {
-			var showFilesInDocumentsAndMedia = "false";
+		if (!(isSet(showFilesInLibrary))) {
+			var showFilesInLibrary = "false";
 		}
 
-		if (!(isSet(storageDLFolderPath))) {
-			var storageDLFolderPath = StringUtil.removeSpaces(${objectName});
+		if (!(isSet(storageLibraryPath))) {
+			var storageLibraryPath = StringUtil.removeSpaces(${objectName});
 
-			var storageDLFolderPath = "/${storageDLFolderPath}";
+			var storageLibraryPath = "/${storageLibraryPath}";
 		}
 
 		if (!(isSet(isReadOnly))) {
@@ -316,8 +316,8 @@ definition {
 			var externalReferenceCode = "";
 		}
 
-		if (${fileSource} == "userComputer") {
-			if (${showFilesInDocumentsAndMedia} == "false") {
+		if (${fileSource} == "userComputerToDocumentsAndMedia") {
+			if (${showFilesInLibrary} == "false") {
 				var curl = '''
 					${portalURL}/o/object-admin/v1.0/object-definitions/${objectId}/object-fields \
 						-H 'Content-Type: application/json' \
@@ -343,10 +343,10 @@ definition {
 								},
 								{
 									"name": "fileSource",
-									"value": "userComputer"
+									"value": "userComputerToDocumentsAndMedia"
 								},
 								{
-									"name": "showFilesInDocumentsAndMedia",
+									"name": "showFilesInLibrary",
 									"value": "false"
 								}
 							],
@@ -382,15 +382,15 @@ definition {
 								},
 								{
 									"name": "fileSource",
-									"value": "userComputer"
+									"value": "userComputerToDocumentsAndMedia"
 								},
 								{
-									"name": "showFilesInDocumentsAndMedia",
+									"name": "showFilesInLibrary",
 									"value": "true"
 								},
 								{
-									"name": "storageDLFolderPath",
-									"value": "${storageDLFolderPath}"
+									"name": "storageLibraryPath",
+									"value": "${storageLibraryPath}"
 								}
 							],
 							"readOnly": "${isReadOnly}",

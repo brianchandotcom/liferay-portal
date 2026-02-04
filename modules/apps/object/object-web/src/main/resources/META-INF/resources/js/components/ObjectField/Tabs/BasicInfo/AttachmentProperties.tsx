@@ -29,9 +29,9 @@ export function AttachmentProperties({
 	return (
 		<>
 			<ClayForm.Group>
-				{settings.showFilesInDocumentsAndMedia && (
+				{settings.showFilesInLibrary && (
 					<Input
-						error={errors.storageDLFolderPath}
+						error={errors.storageLibraryPath}
 						feedbackMessage={sub(
 							Liferay.Language.get(
 								'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
@@ -49,12 +49,12 @@ export function AttachmentProperties({
 						}}
 						onChange={({target: {value}}) =>
 							onSettingsChange({
-								name: 'storageDLFolderPath',
+								name: 'storageLibraryPath',
 								value,
 							})
 						}
 						required
-						value={settings.storageDLFolderPath as string}
+						value={settings.storageLibraryPath as string}
 					/>
 				)}
 			</ClayForm.Group>

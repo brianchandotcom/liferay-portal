@@ -35,7 +35,7 @@ definition {
 				fieldLabelName = "From Computer And Show Files In DM",
 				fieldName = "fromComputerAndShowFilesInDM",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "CustomObject161924");
 		}
@@ -153,7 +153,7 @@ definition {
 					fieldLabelName = "Custom Attachment Field ${letters}",
 					fieldName = "customAttachmentField${letters}",
 					fieldType = "Long",
-					fileSource = "userComputer",
+					fileSource = "userComputerToDocumentsAndMedia",
 					isRequired = "false",
 					objectName = "CustomObject${letters}183441");
 
@@ -216,7 +216,7 @@ definition {
 				fieldLabelName = "From Computer And Show Files In DM",
 				fieldName = "fromComputerAndShowFilesInDM",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "CustomObject161928");
 		}
@@ -318,10 +318,10 @@ definition {
 				fieldLabelName = "Custom Field",
 				fieldName = "customObjectField",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "CustomObject161922",
-				showFilesInDocumentsAndMedia = "true");
+				showFilesInLibrary = "true");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject161922");
 		}

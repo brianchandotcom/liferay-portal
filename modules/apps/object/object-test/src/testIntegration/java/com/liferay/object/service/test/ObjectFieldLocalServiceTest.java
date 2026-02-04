@@ -1529,7 +1529,8 @@ public class ObjectFieldLocalServiceTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_FILE_SOURCE
 					).value(
-						ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						ObjectFieldSettingConstants.
+							VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
@@ -1780,7 +1781,8 @@ public class ObjectFieldLocalServiceTest {
 					).name(
 						ObjectFieldSettingConstants.NAME_FILE_SOURCE
 					).value(
-						ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						ObjectFieldSettingConstants.
+							VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 					).build(),
 					new ObjectFieldSettingBuilder(
 					).name(
@@ -1797,7 +1799,8 @@ public class ObjectFieldLocalServiceTest {
 				"jpg, png"
 			).put(
 				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "100"
 			).build());

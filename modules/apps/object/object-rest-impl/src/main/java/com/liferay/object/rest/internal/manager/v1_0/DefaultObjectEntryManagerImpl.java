@@ -2940,7 +2940,9 @@ public class DefaultObjectEntryManagerImpl
 		if (!StringUtil.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) &&
 			!StringUtil.equals(
-				fileSource, ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+				fileSource,
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 			throw new UnsupportedOperationException(
 				"File source " + fileSource + " is not supported");
@@ -3033,7 +3035,8 @@ public class DefaultObjectEntryManagerImpl
 		}
 		else if (StringUtil.equals(
 					fileSource,
-					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(
 				objectField.getCompanyId(),

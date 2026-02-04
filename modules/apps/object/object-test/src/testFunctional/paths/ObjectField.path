@@ -144,12 +144,12 @@
 	</tr>
 	<tr>
 		<td>SHOW_FILES_IN_DM_SIDE_PANEL_DISABLED</td>
-		<td>//input[@name='showFilesInDocumentsAndMedia' and (@disabled)]</td>
+		<td>//input[@name='showFilesInLibrary' and (@disabled)]</td>
 		<td></td>
 	</tr>
 	<tr>
 		<td>SHOW_FILES_IN_DM_SIDE_PANEL_NOT_DISABLED</td>
-		<td>//input[@name='showFilesInDocumentsAndMedia' and not(@disabled)]</td>
+		<td>//input[@name='showFilesInLibrary' and not(@disabled)]</td>
 		<td></td>
 	</tr>
 	<tr>

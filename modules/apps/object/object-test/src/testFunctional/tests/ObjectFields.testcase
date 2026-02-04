@@ -1434,7 +1434,7 @@ definition {
 				fieldLabelName = "Custom Attachment",
 				fieldName = "customAttachment",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "CustomObject");
 
@@ -2149,10 +2149,10 @@ definition {
 				fieldLabelName = "Custom Attachment From Computer",
 				fieldName = "customAttachmentFromComputer",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "CustomObject182078",
-				showFilesInDocumentsAndMedia = "true");
+				showFilesInLibrary = "true");
 
 			ObjectAdmin.publishObjectViaAPI(objectName = "CustomObject182078");
 		}

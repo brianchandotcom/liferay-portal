@@ -140,6 +140,24 @@ components:
                 label:
                     type: string
             type: object
+        ValidationResult:
+            properties:
+                errorMessages:
+                    description:
+                        List of error messages.
+                    items:
+                        type: string
+                    type: array
+                fileEntryId:
+                    description:
+                        Identifier of the temporary lar file created.
+                    format: int64
+                    type: integer
+                success:
+                    description:
+                        Shows if the file can be imported without critical errors.
+                    type: boolean
+            type: object
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -460,4 +478,63 @@ paths:
                                 items:
                                     $ref: "#/components/schemas/ImportProcess"
                                 type: array
+            tags: ["ImportProcess"]
+    "/sites/{siteId}/validate-import-file":
+        description:
+            Validates a lar file to check whether it can be imported.
+        post:
+            operationId: postSiteValidateImportFile
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    description:
+                                        .lar file to validate
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ValidationResult"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ValidationResult"
+            tags: ["ImportProcess"]
+    "/validate-import-file":
+        post:
+            description:
+                Validates a lar file at instance level.
+            operationId: postValidateImportFile
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    description:
+                                        .lar file to validate
+                                    format: binary
+                                    type: string
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ValidationResult"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ValidationResult"
             tags: ["ImportProcess"]

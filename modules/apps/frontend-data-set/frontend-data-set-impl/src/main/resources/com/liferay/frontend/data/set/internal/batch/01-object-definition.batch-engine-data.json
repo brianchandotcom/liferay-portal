@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#T9Q0",
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_DATA_SET",
 			"label": {
@@ -456,6 +457,7 @@
 			"titleObjectFieldName": "label"
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#V0H2",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_ACTION",
@@ -720,6 +722,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#T6T7",
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_DATA_SET_CARDS_SECTION",
 			"label": {
@@ -804,6 +807,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#K8Y5",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_CLIENT_EXTENSION_FILTER",
@@ -892,6 +896,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#U0S3",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_DATE_FILTER",
@@ -1012,6 +1017,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#C0E7",
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_DATA_SET_LIST_SECTION",
 			"label": {
@@ -1096,6 +1102,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#C1K2",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_SELECTION_FILTER",
@@ -1328,6 +1335,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#D0O2",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_SORT",
@@ -1432,6 +1440,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#M0U6",
 			"enableFormContainer": false,
 			"enableLocalization": true,
 			"externalReferenceCode": "L_DATA_SET_TABLE_SECTION",
@@ -1568,6 +1577,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#Z7H2",
 			"externalReferenceCode": "L_DATA_SET_SNAPSHOT",
 			"label": {
 				"en_US": "Data Set Snapshot"

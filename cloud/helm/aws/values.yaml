@@ -39,6 +39,8 @@ liferay-default:
                         -   bash
                         -   -c
                         -   |
+                            set -e
+
                             function download_module {
                                 local product_version="{{ .image.tag }}"
 
@@ -62,8 +64,6 @@ liferay-default:
                             }
 
                             function main {
-                                set -e
-
                                 mkdir --parents /temp/liferay/deploy
 
                                 rm --force --verbose "/temp/osgi/modules/com.liferay.portal.search.opensearch2"*

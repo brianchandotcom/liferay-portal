@@ -1,6 +1,10 @@
 .cms-control-menu {
 	border-bottom-width: 0.05rem;
 	border-color: $secondary-l0;
+
+	@media (max-resolution: 1dppx) {
+		border-color: $secondary-l2;
+	}
 }
 
 .top-bar {

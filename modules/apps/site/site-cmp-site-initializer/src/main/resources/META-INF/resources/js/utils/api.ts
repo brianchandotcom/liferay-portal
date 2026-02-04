@@ -23,6 +23,12 @@ export async function getAllStates() {
 	);
 }
 
+export async function getStateObjectField() {
+	return await ApiHelper.get(
+		'/o/object-admin/v1.0/object-definitions/by-external-reference-code/L_CMP_TASK/object-fields?search=state'
+	);
+}
+
 export async function getUserAccount(id: string) {
 	return ApiHelper.get(`/o/headless-admin-user/v1.0/user-accounts/${id}`)
 		.then((response) => {

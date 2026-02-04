@@ -81,14 +81,15 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 
 		ddmFormFieldOptions.setDefaultLocale(LocaleUtil.BRAZIL);
 
-		String optionValue = "OptionA";
+		String optionLabel = RandomTestUtil.randomString();
+		String optionValue = RandomTestUtil.randomString();
 
 		ddmFormFieldOptions.addOptionLabel(
-			optionValue, LocaleUtil.US, "Option A");
+			optionValue, LocaleUtil.US, optionLabel);
 		ddmFormFieldOptions.addOptionLabel(optionValue, LocaleUtil.BRAZIL, "");
 
 		Map<Locale, String> nameMap = LinkedHashMapBuilder.put(
-			LocaleUtil.US, "Option A"
+			LocaleUtil.US, optionLabel
 		).build();
 
 		long listTypeDefinitionId = RandomTestUtil.randomLong();
@@ -103,7 +104,7 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 
 		Map<String, Object> option = options.get(0);
 
-		Assert.assertEquals("Option A", option.get("label"));
+		Assert.assertEquals(optionLabel, option.get("label"));
 		Assert.assertEquals(nameMap, option.get("labelMap"));
 	}
 

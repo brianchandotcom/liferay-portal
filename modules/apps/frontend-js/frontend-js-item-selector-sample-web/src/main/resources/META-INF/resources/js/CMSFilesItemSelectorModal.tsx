@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {IView} from '@liferay/frontend-data-set-web';
+import {EConfigInURLBehavior, IView} from '@liferay/frontend-data-set-web';
 import {
 	IItemSelectorModalProps,
 	ItemSelectorModal,
@@ -107,6 +107,7 @@ function CMSFilesItemSelectorModal({
 					deltas: [{label: 20}, {label: 40}, {label: 60}],
 					initialDelta: 20,
 				},
+				configInURLBehavior: EConfigInURLBehavior.OFF,
 				...fdsProps,
 				customRenderers: {
 					tableCell: [

@@ -162,7 +162,7 @@ public class InviteMemberMVCActionCommand
 					StringBundler.concat(
 						"Role type ",
 						RoleConstants.getTypeLabel(role.getType()),
-						" is not role type ",
+						" is not ",
 						RoleConstants.getTypeLabel(RoleConstants.TYPE_SITE)));
 			}
 

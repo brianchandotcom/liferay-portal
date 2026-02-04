@@ -549,7 +549,7 @@ public class RoleResourceImpl
 				StringBundler.concat(
 					"Role type ",
 					RoleConstants.getTypeLabel(serviceBuilderRole.getType()),
-					" is not role type ", RoleConstants.getTypeLabel(type)));
+					" is not ", RoleConstants.getTypeLabel(type)));
 		}
 	}
 

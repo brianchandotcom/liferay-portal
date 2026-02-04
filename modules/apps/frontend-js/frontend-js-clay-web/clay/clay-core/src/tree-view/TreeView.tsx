@@ -56,6 +56,11 @@ interface ITreeViewProps<T extends Record<string, any>>
 	dragAndDropMode?: 'multiple' | 'single';
 
 	/**
+	 * Flag to control drag handler visibility.
+	 */
+	dragHandlerVisibility?: 'keyboard' | 'visible';
+
+	/**
 	 * Flag to expand the node's children when double-clicking the node.
 	 */
 	expandDoubleClick?: boolean;
@@ -156,6 +161,7 @@ export function TreeView<T extends Record<string, any>>({
 	dragAndDrop = false,
 	dragAndDropContext = window,
 	dragAndDropMode = 'single',
+	dragHandlerVisibility = 'visible',
 	expandDoubleClick = false,
 	expandedKeys,
 	expanderClassName,
@@ -208,6 +214,7 @@ export function TreeView<T extends Record<string, any>>({
 		childrenRoot: childrenRootRef,
 		dragAndDrop,
 		dragAndDropMode,
+		dragHandlerVisibility,
 		expandDoubleClick,
 		expandOnCheck,
 		expanderClassName,

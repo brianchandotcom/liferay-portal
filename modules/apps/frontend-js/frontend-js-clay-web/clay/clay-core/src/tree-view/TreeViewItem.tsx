@@ -1098,7 +1098,7 @@ type DragProps = {
 };
 
 function Drag({labelId, tabIndex}: DragProps) {
-	const {dragAndDrop} = useTreeViewContext();
+	const {dragAndDrop, dragHandlerVisibility} = useTreeViewContext();
 	const {
 		currentDrag,
 		dragCancelDescribedBy,
@@ -1126,6 +1126,10 @@ function Drag({labelId, tabIndex}: DragProps) {
 				}
 				aria-label={messages.dragItem}
 				aria-labelledby={`${dragButtonId} ${labelId}`}
+				className={classNames({
+					'p-1 sr-only sr-only-focusable':
+						dragHandlerVisibility === 'keyboard',
+				})}
 				data-draggable={currentDrag === item.key}
 				displayType={null}
 				draggable

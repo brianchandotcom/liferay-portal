@@ -2535,12 +2535,12 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private JSONArray _getExportedObjectEntriesJSONArray(
-			String className, File file, long groupId)
+			String fileNamePrefix, File file, long groupId)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(className + ".json", groupId));
+				_getBatchFileNameWithPath(fileNamePrefix + ".json", groupId));
 
 			return JSONFactoryUtil.createJSONArray(
 				StringUtil.read(zipFile.getInputStream(zipEntry)));
@@ -2647,13 +2647,13 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private JSONArray _getExternalReferenceCodesJSONArray(
-			String className, File file, long groupId)
+			String fileNamePrefix, File file, long groupId)
 		throws Exception {
 
 		try (ZipFile zipFile = new ZipFile(file)) {
 			ZipEntry zipEntry = zipFile.getEntry(
 				_getBatchFileNameWithPath(
-					className + "_deletions.json", groupId));
+					fileNamePrefix + "_deletions.json", groupId));
 
 			if (zipEntry == null) {
 				throw new FileNotFoundException();
@@ -2856,7 +2856,8 @@ public class BatchEnginePortletDataHandlerTest {
 				_getExternalReferenceCodes(objectEntries)
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				objectDefinition1.getName(), larFile, group.getGroupId()
+				objectDefinition1.getExternalReferenceCode(), larFile,
+				group.getGroupId()
 			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
@@ -2881,7 +2882,8 @@ public class BatchEnginePortletDataHandlerTest {
 				objectEntry.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				objectDefinition2.getName(), larFile, group.getGroupId()
+				objectDefinition2.getExternalReferenceCode(), larFile,
+				group.getGroupId()
 			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
@@ -2907,7 +2909,8 @@ public class BatchEnginePortletDataHandlerTest {
 				_getExternalReferenceCodes(objectEntries)
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				objectDefinition1.getName(), larFile, group.getGroupId()
+				objectDefinition1.getExternalReferenceCode(), larFile,
+				group.getGroupId()
 			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
@@ -2915,7 +2918,8 @@ public class BatchEnginePortletDataHandlerTest {
 				objectEntry.getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
-				objectDefinition2.getName(), larFile, group.getGroupId()
+				objectDefinition2.getExternalReferenceCode(), larFile,
+				group.getGroupId()
 			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
@@ -3281,7 +3285,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		JSONArray exportedObjectEntriesJSONArray =
 			_getExportedObjectEntriesJSONArray(
-				objectDefinition2.getName(), larFile, group.getGroupId());
+				objectDefinition2.getExternalReferenceCode(), larFile,
+				group.getGroupId());
 
 		if (Objects.equals(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
@@ -3303,7 +3308,8 @@ public class BatchEnginePortletDataHandlerTest {
 				JSONCompareMode.NON_EXTENSIBLE);
 
 			exportedObjectEntriesJSONArray = _getExportedObjectEntriesJSONArray(
-				objectDefinition1.getName(), larFile, group.getGroupId());
+				objectDefinition1.getExternalReferenceCode(), larFile,
+				group.getGroupId());
 
 			JSONAssert.assertEquals(
 				JSONUtil.toJSONArray(

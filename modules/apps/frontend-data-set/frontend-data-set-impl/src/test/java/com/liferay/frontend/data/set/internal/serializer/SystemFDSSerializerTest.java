@@ -815,19 +815,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		};
 
-		String json = JSONUtil.putAll(
-			JSONUtil.put(
-				"filters", JSONUtil.putAll(IDS[0], IDS[1])
-			).put(
-				"label", TITLES[0]
-			),
-			JSONUtil.put(
-				"filters", JSONUtil.putAll(IDS[2], IDS[3])
-			).put(
-				"label", TITLES[1]
-			)
-		).toString();
-
 		_registerServices(
 			_registerGroupedFDSFilters(FDS_NAMES[0], groupedFDSFilters),
 			_registerGroupedFDSFilters(
@@ -846,6 +833,19 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				}),
 			_registerSystemFDSEntry(FDS_NAMES[0]),
 			_registerSystemFDSEntry(FDS_NAMES[1]));
+
+		String json = JSONUtil.putAll(
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[0], IDS[1])
+			).put(
+				"label", TITLES[0]
+			),
+			JSONUtil.put(
+				"filters", JSONUtil.putAll(IDS[2], IDS[3])
+			).put(
+				"label", TITLES[1]
+			)
+		).toString();
 
 		JSONAssert.assertEquals(
 			json,

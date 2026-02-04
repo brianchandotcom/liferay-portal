@@ -29,7 +29,6 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class BatchEnginePortletDataHandlerUtil {
 		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
-		HashMap<String, Serializable> deleteParameters =
+		Map<String, Serializable> deleteParameters =
 			HashMapBuilder.<String, Serializable>putAll(
 				exportImportDescriptor.getParameters(portletDataContext)
 			).build();
@@ -71,7 +70,7 @@ public class BatchEnginePortletDataHandlerUtil {
 		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
-		HashMap<String, Serializable> exportParameters =
+		Map<String, Serializable> exportParameters =
 			HashMapBuilder.<String, Serializable>put(
 				"batchNestedFields",
 				() -> {
@@ -174,7 +173,7 @@ public class BatchEnginePortletDataHandlerUtil {
 		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
-		HashMap<String, Serializable> importParameters =
+		Map<String, Serializable> importParameters =
 			HashMapBuilder.<String, Serializable>put(
 				"batchRestrictFields",
 				() -> {

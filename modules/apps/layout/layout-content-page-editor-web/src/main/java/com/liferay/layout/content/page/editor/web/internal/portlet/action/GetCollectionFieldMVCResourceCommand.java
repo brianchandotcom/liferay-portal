@@ -78,9 +78,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import jakarta.portlet.PortletURL;
@@ -172,32 +170,23 @@ public class GetCollectionFieldMVCResourceCommand
 	}
 
 	private long[] _filterSegmentsEntryIds(
-			LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
-			ListObjectReference listObjectReference, long segmentsExperienceId)
-		throws PortalException {
+		LayoutListRetriever<?, ListObjectReference> layoutListRetriever,
+		ListObjectReference listObjectReference, long segmentsExperienceId) {
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperienceId);
 
-		if (segmentsExperience.isDefault()) {
-			return new long[] {SegmentsEntryConstants.ID_DEFAULT};
-		}
+		long segmentsEntryId = segmentsExperience.getSegmentsEntryId();
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.
-				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
-
-		if (segmentsEntry == null) {
+		if (segmentsEntryId == SegmentsEntryConstants.ID_MISSING) {
 			return new long[0];
 		}
 
 		if (!(layoutListRetriever instanceof
 				SegmentsEntryLayoutListRetriever)) {
 
-			return new long[] {segmentsEntry.getSegmentsEntryId()};
+			return new long[] {segmentsEntryId};
 		}
 
 		SegmentsEntryLayoutListRetriever<ListObjectReference>
@@ -206,9 +195,9 @@ public class GetCollectionFieldMVCResourceCommand
 					layoutListRetriever;
 
 		if (segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsEntry.getSegmentsEntryId())) {
+				listObjectReference, segmentsEntryId)) {
 
-			return new long[] {segmentsEntry.getSegmentsEntryId()};
+			return new long[] {segmentsEntryId};
 		}
 
 		return new long[] {
@@ -744,9 +733,6 @@ public class GetCollectionFieldMVCResourceCommand
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

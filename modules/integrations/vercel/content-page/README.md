@@ -13,7 +13,7 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 1. Run the following command in your terminal:
 
     ```bash
-    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone-template.sh | bash -s -- content-page
+    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- content-page
     ```
 
 1. Navigate to the repository directory:
@@ -60,11 +60,11 @@ Liferay provides some predefined content structures, but you can create your own
 
 1. Go to the Contents tab under Assets.
 
-1. Click *New*.
-
-1. Select the Content Structure.
+1. Click *New* &rarr; *Event*.
 
     ![Select the content structure to create an event](./images/02.png)
+
+1. Select the Content Structure.
 
 1. Choose the Space for the content.
 

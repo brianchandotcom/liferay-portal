@@ -13,7 +13,7 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 1. Run the following command in your terminal:
 
     ```bash
-    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone-template.sh | bash -s -- blog
+    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- blog
     ```
 
 1. Navigate to the repository directory:

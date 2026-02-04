@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.query;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
@@ -46,7 +46,6 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator();
 		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
 	}
 
@@ -163,7 +162,7 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
-		String queryString = _elasticsearchFilterTranslator.visit(
+		String queryString = ElasticsearchFilterVisitor.INSTANCE.visit(
 			termsFilter
 		).toString();
 
@@ -182,7 +181,6 @@ public class ElasticsearchQueryTranslatorTest {
 
 	private static final Float _BOOST = 1.5F;
 
-	private ElasticsearchFilterTranslator _elasticsearchFilterTranslator;
 	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 
 }

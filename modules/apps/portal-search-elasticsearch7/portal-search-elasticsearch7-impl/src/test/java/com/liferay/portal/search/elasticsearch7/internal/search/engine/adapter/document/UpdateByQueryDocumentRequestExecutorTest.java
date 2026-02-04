@@ -9,8 +9,6 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.script.Scripts;
@@ -71,21 +69,9 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 			updateByQueryDocumentRequestExecutorImpl =
 				new UpdateByQueryDocumentRequestExecutorImpl();
 
-		ElasticsearchQueryTranslatorFixture
-			lecacyElasticsearchQueryTranslatorFixture =
-				new ElasticsearchQueryTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutorImpl,
 			"_elasticsearchClientResolver", _elasticsearchFixture);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_legacyQueryTranslator",
-			lecacyElasticsearchQueryTranslatorFixture.
-				getElasticsearchQueryTranslator());
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_queryTranslator",
-			new ElasticsearchQueryTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutorImpl, "_scripts", _scripts);

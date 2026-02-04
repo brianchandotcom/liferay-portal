@@ -6,12 +6,10 @@
 package com.liferay.portal.search.elasticsearch7.internal.filter;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
@@ -52,23 +50,14 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.index.query.TermsSetQueryBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Marco Leo
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = FilterTranslator.class
-)
-public class ElasticsearchFilterTranslator
-	implements FilterTranslator<QueryBuilder>, FilterVisitor<QueryBuilder> {
+public class ElasticsearchFilterVisitor implements FilterVisitor<QueryBuilder> {
 
-	@Override
-	public QueryBuilder translate(Filter filter, SearchContext searchContext) {
-		return filter.accept(this);
-	}
+	public static final ElasticsearchFilterVisitor INSTANCE =
+		new ElasticsearchFilterVisitor();
 
 	@Override
 	public QueryBuilder visit(BooleanFilter booleanFilter) {
@@ -333,6 +322,9 @@ public class ElasticsearchFilterTranslator
 		Filter filter = booleanClause.getClause();
 
 		return filter.accept(this);
+	}
+
+	private ElasticsearchFilterVisitor() {
 	}
 
 	private final QueryTranslator<QueryBuilder> _queryTranslator =

@@ -14,10 +14,10 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +39,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -64,8 +63,10 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		List<QueryBuilder> postFilterQueryBuilders = new ArrayList<>();
 
 		if ((query != null) && (query.getPostFilter() != null)) {
+			Filter filter = query.getPostFilter();
+
 			postFilterQueryBuilders.add(
-				_filterTranslator.translate(query.getPostFilter(), null));
+				filter.accept(ElasticsearchFilterVisitor.INSTANCE));
 		}
 
 		for (Facet facet : facets) {
@@ -182,7 +183,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 		booleanFilter.add(
 			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
 
-		return _filterTranslator.translate(booleanFilter, null);
+		return booleanFilter.accept(ElasticsearchFilterVisitor.INSTANCE);
 	}
 
 	private final FacetProcessor<SearchRequestBuilder> _defaultFacetProcessor =
@@ -227,9 +228,6 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			}
 
 		};
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private FilterTranslator<QueryBuilder> _filterTranslator;
 
 	@SuppressWarnings("rawtypes")
 	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;

@@ -169,7 +169,9 @@ public class DisplayPageLayoutTypeController
 			displayPageLayoutTypeControllerDisplayContext);
 
 		if (!displayPageLayoutTypeControllerDisplayContext.hasInfoItem() &&
-			!themeDisplay.isSignedIn()) {
+			!themeDisplay.isSignedIn() &&
+			!AuthLoginGroupSettingsUtil.isPromptEnabled(
+				layout.getGroupId())) {
 
 			throw new NoSuchLayoutException();
 		}

@@ -424,6 +424,17 @@ public class ObjectEntryModelDocumentContributor
 				values = objectEntry.getIndexedValues();
 			}
 
+			Map<String, Long> assigneeMap = (Map<String, Long>)values.get(
+				"assignTo");
+
+			if (assigneeMap != null) {
+				document.addKeyword(
+					"cmpAssignTo",
+					StringBundler.concat(
+						assigneeMap.get("classNameId"), StringPool.UNDERLINE,
+						assigneeMap.get("classPK")));
+			}
+
 			document.addDate("cmpDueDate", (Timestamp)values.get("dueDate"));
 			document.addKeyword(
 				"cmpProjectManagerUserId",

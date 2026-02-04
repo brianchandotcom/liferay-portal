@@ -46,6 +46,8 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 	public Page<TaskAssignee> getTaskAssigneesPage(String search)
 		throws Exception {
 
+		List<TaskAssignee> taskAssignees = new ArrayList<>();
+
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilderFactory.builder(
 			).companyId(
@@ -59,8 +61,6 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 			).size(
 				20
 			).build());
-
-		List<TaskAssignee> taskAssignees = new ArrayList<>();
 
 		for (Document document : searchResponse.getDocuments()) {
 			String name = document.getString(Field.NAME);

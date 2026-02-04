@@ -415,7 +415,7 @@ public class UpstreamFailureUtil {
 		try {
 			String testHistoryRoutineURL = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
-				"test.history.routine.url",
+				"upstream.comparison.testray.routine.url",
 				branchInformation.getUpstreamBranchName());
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(testHistoryRoutineURL)) {

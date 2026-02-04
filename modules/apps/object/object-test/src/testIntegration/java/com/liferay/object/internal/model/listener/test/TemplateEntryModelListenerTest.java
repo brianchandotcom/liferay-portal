@@ -6,6 +6,7 @@
 package com.liferay.object.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.template.model.TemplateEntry;
@@ -25,6 +26,17 @@ public class TemplateEntryModelListenerTest extends BaseModelListenerTestCase {
 	@Test
 	public void testOnBeforeCreate() throws Exception {
 		super.testOnBeforeCreate();
+
+		_testOnBeforeCreate(
+			modifiableSystemObjectDefinition1,
+			modifiableSystemObjectDefinition2);
+		_testOnBeforeCreate(objectDefinition1, objectDefinition2);
+	}
+
+	private void _testOnBeforeCreate(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
 
 		TemplateEntry templateEntry =
 			_templateEntryLocalService.addTemplateEntry(

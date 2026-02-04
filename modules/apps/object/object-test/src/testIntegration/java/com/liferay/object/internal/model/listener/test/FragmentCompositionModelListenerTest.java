@@ -35,24 +35,10 @@ public class FragmentCompositionModelListenerTest
 	public void testOnBeforeCreate() throws Exception {
 		super.testOnBeforeCreate();
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, companyAdminUser.getUserId(), group.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				serviceContext);
-
-		FragmentComposition fragmentComposition =
-			_fragmentCompositionLocalService.addFragmentComposition(
-				null, companyAdminUser.getUserId(), group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				StringUtil.randomId(), RandomTestUtil.randomString(),
-				StringPool.BLANK,
-				_getFragmentCompositionData(objectDefinition1), 0,
-				WorkflowConstants.STATUS_APPROVED, serviceContext);
-
-		JSONAssert.assertEquals(
-			fragmentComposition.getData(),
-			_getFragmentCompositionData(objectDefinition2), true);
+		_testOnBeforeCreate(
+			modifiableSystemObjectDefinition1,
+			modifiableSystemObjectDefinition2);
+		_testOnBeforeCreate(objectDefinition1, objectDefinition2);
 	}
 
 	private String _getFragmentCompositionData(
@@ -77,6 +63,31 @@ public class FragmentCompositionModelListenerTest
 						JSONUtil.put(
 							"widgetName", objectDefinition.getPortletId()))))
 		).toString();
+	}
+
+	private void _testOnBeforeCreate(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, companyAdminUser.getUserId(), group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				serviceContext);
+
+		FragmentComposition fragmentComposition =
+			_fragmentCompositionLocalService.addFragmentComposition(
+				null, companyAdminUser.getUserId(), group.getGroupId(),
+				fragmentCollection.getFragmentCollectionId(),
+				StringUtil.randomId(), RandomTestUtil.randomString(),
+				StringPool.BLANK,
+				_getFragmentCompositionData(objectDefinition1), 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		JSONAssert.assertEquals(
+			fragmentComposition.getData(),
+			_getFragmentCompositionData(objectDefinition2), true);
 	}
 
 	@Inject

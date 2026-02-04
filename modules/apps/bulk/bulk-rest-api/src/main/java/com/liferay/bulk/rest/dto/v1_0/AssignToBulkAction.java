@@ -1,18 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.bulk.rest.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -22,8 +17,6 @@ import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
-
-import jakarta.validation.Valid;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -40,89 +33,43 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("BulkAction")
+@GraphQLName("AssignToBulkAction")
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "AssignToBulkAction", value = AssignToBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "DefaultPermissionBulkAction",
-			value = DefaultPermissionBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "DeleteBulkAction", value = DeleteBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "DueDateBulkAction", value = DueDateBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "ExpireBulkAction", value = ExpireBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "KeywordBulkAction", value = KeywordBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "MoveBulkAction", value = MoveBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "PermissionBulkAction", value = PermissionBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "ResetPermissionBulkAction",
-			value = ResetPermissionBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "StatusBulkAction", value = StatusBulkAction.class
-		),
-		@JsonSubTypes.Type(
-			name = "TaxonomyCategoryBulkAction",
-			value = TaxonomyCategoryBulkAction.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "BulkAction")
-public abstract class BulkAction implements Serializable {
+@XmlRootElement(name = "AssignToBulkAction")
+public class AssignToBulkAction extends BulkAction implements Serializable {
 
-	public static BulkAction toDTO(String json) {
-		return ObjectMapperUtil.readValue(BulkAction.class, json);
+	public static AssignToBulkAction toDTO(String json) {
+		return ObjectMapperUtil.readValue(AssignToBulkAction.class, json);
 	}
 
-	public static BulkAction unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(BulkAction.class, json);
+	public static AssignToBulkAction unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AssignToBulkAction.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public BulkActionItem[] getBulkActionItems() {
-		if (_bulkActionItemsSupplier != null) {
-			bulkActionItems = _bulkActionItemsSupplier.get();
+	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
 
-			_bulkActionItemsSupplier = null;
+			_classNameSupplier = null;
 		}
 
-		return bulkActionItems;
+		return className;
 	}
 
-	public void setBulkActionItems(BulkActionItem[] bulkActionItems) {
-		this.bulkActionItems = bulkActionItems;
+	public void setClassName(String className) {
+		this.className = className;
 
-		_bulkActionItemsSupplier = null;
+		_classNameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBulkActionItems(
-		UnsafeSupplier<BulkActionItem[], Exception>
-			bulkActionItemsUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
-		_bulkActionItemsSupplier = () -> {
+		_classNameSupplier = () -> {
 			try {
-				return bulkActionItemsUnsafeSupplier.get();
+				return classNameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -135,37 +82,35 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected BulkActionItem[] bulkActionItems;
+	protected String className;
 
 	@JsonIgnore
-	private Supplier<BulkActionItem[]> _bulkActionItemsSupplier;
+	private Supplier<String> _classNameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public SelectionScope getSelectionScope() {
-		if (_selectionScopeSupplier != null) {
-			selectionScope = _selectionScopeSupplier.get();
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
 
-			_selectionScopeSupplier = null;
+			_externalReferenceCodeSupplier = null;
 		}
 
-		return selectionScope;
+		return externalReferenceCode;
 	}
 
-	public void setSelectionScope(SelectionScope selectionScope) {
-		this.selectionScope = selectionScope;
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
 
-		_selectionScopeSupplier = null;
+		_externalReferenceCodeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSelectionScope(
-		UnsafeSupplier<SelectionScope, Exception>
-			selectionScopeUnsafeSupplier) {
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
 
-		_selectionScopeSupplier = () -> {
+		_externalReferenceCodeSupplier = () -> {
 			try {
-				return selectionScopeUnsafeSupplier.get();
+				return externalReferenceCodeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -178,46 +123,33 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected SelectionScope selectionScope;
+	protected String externalReferenceCode;
 
 	@JsonIgnore
-	private Supplier<SelectionScope> _selectionScopeSupplier;
+	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("type")
-	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public String getName() {
+		if (_nameSupplier != null) {
+			name = _nameSupplier.get();
 
-			_typeSupplier = null;
+			_nameSupplier = null;
 		}
 
-		return type;
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+
+		_nameSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
-
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
+		_nameSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return nameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -230,10 +162,10 @@ public abstract class BulkAction implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected String name;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<String> _nameSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -241,13 +173,13 @@ public abstract class BulkAction implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof BulkAction)) {
+		if (!(object instanceof AssignToBulkAction)) {
 			return false;
 		}
 
-		BulkAction bulkAction = (BulkAction)object;
+		AssignToBulkAction assignToBulkAction = (AssignToBulkAction)object;
 
-		return Objects.equals(toString(), bulkAction.toString());
+		return Objects.equals(toString(), assignToBulkAction.toString());
 	}
 
 	@Override
@@ -261,6 +193,54 @@ public abstract class BulkAction implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String className = getClassName();
+
+		if (className != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"className\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(className));
+
+			sb.append("\"");
+		}
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String name = getName();
+
+		if (name != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"name\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
 
 		BulkActionItem[] bulkActionItems = getBulkActionItems();
 
@@ -317,58 +297,10 @@ public abstract class BulkAction implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.bulk.rest.dto.v1_0.BulkAction",
+		defaultValue = "com.liferay.bulk.rest.dto.v1_0.AssignToBulkAction",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
-		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
-		DELETE_BULK_ACTION("DeleteBulkAction"),
-		DUE_DATE_BULK_ACTION("DueDateBulkAction"),
-		EXPIRE_BULK_ACTION("ExpireBulkAction"),
-		KEYWORD_BULK_ACTION("KeywordBulkAction"),
-		MOVE_BULK_ACTION("MoveBulkAction"),
-		PERMISSION_BULK_ACTION("PermissionBulkAction"),
-		RESET_PERMISSION_BULK_ACTION("ResetPermissionBulkAction"),
-		STATUS_BULK_ACTION("StatusBulkAction"),
-		TAXONOMY_CATEGORY_BULK_ACTION("TaxonomyCategoryBulkAction");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

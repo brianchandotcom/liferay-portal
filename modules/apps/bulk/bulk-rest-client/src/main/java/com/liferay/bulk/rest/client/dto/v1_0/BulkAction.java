@@ -129,6 +129,7 @@ public abstract class BulkAction implements Cloneable, Serializable {
 
 	public static enum Type {
 
+		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
 		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
 		DELETE_BULK_ACTION("DeleteBulkAction"),
 		DUE_DATE_BULK_ACTION("DueDateBulkAction"),

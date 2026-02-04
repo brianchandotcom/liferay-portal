@@ -5,6 +5,7 @@
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
+import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
@@ -55,6 +56,11 @@ public class BulkActionSerDes {
 
 		if (type != null) {
 			String typeString = type.toString();
+
+			if (typeString.equals("AssignToBulkAction")) {
+				return AssignToBulkActionSerDes.toJSON(
+					(AssignToBulkAction)bulkAction);
+			}
 
 			if (typeString.equals("DefaultPermissionBulkAction")) {
 				return DefaultPermissionBulkActionSerDes.toJSON(
@@ -189,6 +195,10 @@ public class BulkActionSerDes {
 
 			if (type != null) {
 				String typeString = type.toString();
+
+				if (typeString.equals("AssignToBulkAction")) {
+					return AssignToBulkAction.toDTO(json);
+				}
 
 				if (typeString.equals("DefaultPermissionBulkAction")) {
 					return DefaultPermissionBulkAction.toDTO(json);

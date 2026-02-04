@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
@@ -293,6 +294,46 @@ public abstract class BaseBulkActionResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (bulkAction.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof AssignToBulkAction)) {
+					continue;
+				}
+
+				if (((AssignToBulkAction)bulkAction).getClassName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!(bulkAction instanceof AssignToBulkAction)) {
+					continue;
+				}
+
+				if (((AssignToBulkAction)bulkAction).
+						getExternalReferenceCode() == null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof AssignToBulkAction)) {
+					continue;
+				}
+
+				if (((AssignToBulkAction)bulkAction).getName() == null) {
 					valid = false;
 				}
 
@@ -756,6 +797,61 @@ public abstract class BaseBulkActionResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						bulkAction1.getType(), bulkAction2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("className", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof AssignToBulkAction) ||
+					!(bulkAction2 instanceof AssignToBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((AssignToBulkAction)bulkAction1).getClassName(),
+						((AssignToBulkAction)bulkAction2).getClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!(bulkAction1 instanceof AssignToBulkAction) ||
+					!(bulkAction2 instanceof AssignToBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((AssignToBulkAction)bulkAction1).
+							getExternalReferenceCode(),
+						((AssignToBulkAction)bulkAction2).
+							getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof AssignToBulkAction) ||
+					!(bulkAction2 instanceof AssignToBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((AssignToBulkAction)bulkAction1).getName(),
+						((AssignToBulkAction)bulkAction2).getName())) {
 
 					return false;
 				}
@@ -1341,6 +1437,21 @@ public abstract class BaseBulkActionResourceTestCase {
 
 	protected BulkAction randomBulkAction() throws Exception {
 		List<Supplier<BulkAction>> suppliers = Arrays.asList(
+			() -> {
+				AssignToBulkAction bulkAction = new AssignToBulkAction();
+
+				bulkAction.setClassName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				bulkAction.setExternalReferenceCode(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+				bulkAction.setName(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				bulkAction.setType(
+					BulkAction.Type.create("AssignToBulkAction"));
+
+				return bulkAction;
+			},
 			() -> {
 				DefaultPermissionBulkAction bulkAction =
 					new DefaultPermissionBulkAction();

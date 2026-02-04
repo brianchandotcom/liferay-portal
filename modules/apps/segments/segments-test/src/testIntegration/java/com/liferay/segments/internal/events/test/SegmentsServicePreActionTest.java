@@ -269,8 +269,8 @@ public class SegmentsServicePreActionTest {
 				User user = _userLocalService.getUser(
 					TestPropsValues.getUserId());
 
-				SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
-					user, _group.getGroupId());
+				SegmentsEntry segmentsEntry1 = _getSegmentsEntry(
+					_group.getGroupId(), user);
 
 				SegmentsExperience segmentsExperience1 =
 					_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -287,8 +287,8 @@ public class SegmentsServicePreActionTest {
 				Group globalGroup = _groupLocalService.getCompanyGroup(
 					TestPropsValues.getCompanyId());
 
-				SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
-					user, globalGroup.getGroupId());
+				SegmentsEntry segmentsEntry2 = _getSegmentsEntry(
+					globalGroup.getGroupId(), user);
 
 				SegmentsExperience segmentsExperience2 =
 					_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -561,19 +561,6 @@ public class SegmentsServicePreActionTest {
 		}
 	}
 
-	private SegmentsEntry _addMatchingSegmentsEntry(User user, long groupId)
-		throws Exception {
-
-		Criteria criteria = new Criteria();
-
-		_userSegmentsCriteriaContributor.contribute(
-			criteria, String.format("(firstName eq '%s')", user.getFirstName()),
-			Criteria.Conjunction.AND);
-
-		return SegmentsTestUtil.addSegmentsEntry(
-			groupId, CriteriaSerializer.serialize(criteria));
-	}
-
 	private LifecycleAction _getLifecycleAction() {
 		Bundle bundle = FrameworkUtil.getBundle(
 			SegmentsServicePreActionTest.class);
@@ -596,6 +583,19 @@ public class SegmentsServicePreActionTest {
 		}
 
 		throw new AssertionError("SegmentsServicePreAction is not registered");
+	}
+
+	private SegmentsEntry _getSegmentsEntry(long groupId, User user)
+		throws Exception {
+
+		Criteria criteria = new Criteria();
+
+		_userSegmentsCriteriaContributor.contribute(
+			criteria, String.format("(firstName eq '%s')", user.getFirstName()),
+			Criteria.Conjunction.AND);
+
+		return SegmentsTestUtil.addSegmentsEntry(
+			groupId, CriteriaSerializer.serialize(criteria));
 	}
 
 	private ThemeDisplay _getThemeDisplay(Layout layout) throws Exception {

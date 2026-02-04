@@ -133,8 +133,8 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
-			user, _group.getGroupId());
+		SegmentsEntry segmentsEntry1 = _getSegmentsEntry(
+			_group.getGroupId(), user);
 
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -149,8 +149,8 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
-			user, companyGroup.getGroupId());
+		SegmentsEntry segmentsEntry2 = _getSegmentsEntry(
+			companyGroup.getGroupId(), user);
 
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -188,7 +188,7 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				new long[0]));
 	}
 
-	private SegmentsEntry _addMatchingSegmentsEntry(User user, long groupId)
+	private SegmentsEntry _getSegmentsEntry(long groupId, User user)
 		throws Exception {
 
 		Criteria criteria = new Criteria();

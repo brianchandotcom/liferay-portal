@@ -992,6 +992,12 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntry fetchObjectEntry(long groupId, long objectDefinitionId) {
+		return objectEntryPersistence.fetchByG_ODI_First(
+			groupId, objectDefinitionId, null);
+	}
+
+	@Override
 	public ObjectEntry fetchObjectEntry(
 		long groupId, ObjectDefinition objectDefinition, String urlTitle) {
 

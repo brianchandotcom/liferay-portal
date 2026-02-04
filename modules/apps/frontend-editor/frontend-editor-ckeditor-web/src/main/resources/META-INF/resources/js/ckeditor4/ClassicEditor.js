@@ -59,33 +59,61 @@ const ClassicEditor = forwardRef(
 						};
 					}}
 					onInstanceReady={({editor}) => {
-						editor.setData(contents, {
-							callback: () => {
-								editor.resetUndo();
+						const loadData = () => {
+							editor.setData(contents, {
+								callback: () => {
+									editor.resetUndo();
 
-								onReady({editor});
-							},
-							noSnapshot: true,
-						});
+									onReady({editor});
+								},
+								noSnapshot: true,
+							});
+						};
+
+						const isBBCodePluginEnabled =
+							editor.config.extraPlugins?.indexOf('bbcode') !==
+							-1;
+
+						if (isBBCodePluginEnabled) {
+							const hasProcessor =
+								editor.dataProcessor &&
+								editor.dataProcessor.constructor.name ===
+									'BBCodeDataProcessor';
+
+							if (hasProcessor) {
+								loadData();
+							}
+							else {
+								editor.once(
+									'customDataProcessorLoaded',
+									loadData
+								);
+							}
+						}
+						else {
+							loadData();
+						}
 
 						const iframe = document.querySelector(
 							'iframe.cke_wysiwyg_frame'
 						);
 
-						iframe.onload = function () {
-							const iframeDocument = iframe.contentDocument;
-							const iframeBody =
-								iframeDocument.querySelector(
-									'body.cke_editable'
-								);
+						if (iframe) {
+							iframe.onload = function () {
+								const iframeDocument = iframe.contentDocument;
+								const iframeBody =
+									iframeDocument.querySelector(
+										'body.cke_editable'
+									);
 
-							if (iframeBody) {
-								iframeBody.setAttribute(
-									'aria-required',
-									ariaRequired
-								);
-							}
-						};
+								if (iframeBody) {
+									iframeBody.setAttribute(
+										'aria-required',
+										ariaRequired
+									);
+								}
+							};
+						}
 					}}
 					ref={ref}
 					{...otherProps}

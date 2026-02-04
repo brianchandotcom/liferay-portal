@@ -90,10 +90,10 @@ public class MarketplacePubsubSubscriber {
 			throw exception;
 		}
 
-		for (String topic : MarketplaceConstants.KORONEIKI_PUBSUB_TOPICS) {
+		for (String pubsubTopic : MarketplaceConstants.PUBSUB_TOPICS) {
 			String subscriptionName = StringBundler.concat(
-				"projects/", _projectId, "/subscriptions/marketplace_", topic,
-				"-subscription");
+				"projects/", _projectId, "/subscriptions/marketplace_",
+				pubsubTopic, "-subscription");
 
 			try {
 				try {
@@ -103,7 +103,7 @@ public class MarketplacePubsubSubscriber {
 					_log.error("Subscription not found", notFoundException);
 
 					TopicName topicName = TopicName.ofProjectTopicName(
-						_projectId, topic);
+						_projectId, pubsubTopic);
 
 					_subscriptionAdminClient.createSubscription(
 						Subscription.newBuilder(
@@ -121,7 +121,8 @@ public class MarketplacePubsubSubscriber {
 				}
 
 				Subscriber subscriber = Subscriber.newBuilder(
-					subscriptionName, new MarketplaceMessageReceiver(topic)
+					subscriptionName,
+					new MarketplaceMessageReceiver(pubsubTopic)
 				).setCredentialsProvider(
 					credentialsProvider
 				).build();
@@ -141,7 +142,7 @@ public class MarketplacePubsubSubscriber {
 			catch (Exception exception) {
 				_log.error(
 					"Failed to initialize Pubsub subscription for topic: " +
-						topic,
+						pubsubTopic,
 					exception);
 
 				throw exception;

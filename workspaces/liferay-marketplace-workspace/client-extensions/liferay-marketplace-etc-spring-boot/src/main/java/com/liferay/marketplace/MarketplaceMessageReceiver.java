@@ -7,7 +7,6 @@ package com.liferay.marketplace;
 
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
-import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
@@ -30,31 +29,27 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	public void receiveMessage(
 		PubsubMessage pubsubMessage, AckReplyConsumer ackReplyConsumer) {
 
-		if (_log.isInfoEnabled()) {
-			ByteString byteString = pubsubMessage.getData();
-
-			String messageBody = byteString.toStringUtf8();
-
-			_log.info("Found message: " + messageBody);
-		}
-
 		try {
 			if (Objects.equals(
-					_topic, MarketplaceConstants.KORONEIKI_ACCOUNT_CREATE)) {
+					_topic,
+					MarketplaceConstants.
+						PUBSUB_TOPIC_KORONEIKI_ACCOUNT_CREATE)) {
 
 				// PLACEHOLDER
 
 			}
 			else if (Objects.equals(
 						_topic,
-						MarketplaceConstants.KORONEIKI_ACCOUNT_UPDATE)) {
+						MarketplaceConstants.
+							PUBSUB_TOPIC_KORONEIKI_ACCOUNT_UPDATE)) {
 
 				// PLACEHOLDER
 
 			}
 			else if (Objects.equals(
 						_topic,
-						MarketplaceConstants.KORONEIKI_ENTITLEMENT_CREATE)) {
+						MarketplaceConstants.
+							PUBSUB_TOPIC_KORONEIKI_ENTITLEMENT_CREATE)) {
 
 				// PLACEHOLDER
 

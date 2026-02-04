@@ -458,7 +458,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						portletDataContext.getManifestSummary();
 
 					manifestSummary.addModelAdditionCount(
-						new StagedModelType(exportImportDescriptor.getKey()),
+						exportImportDescriptor.getKey(),
 						batchEngineExportTask.getProcessedItemsCount());
 				}
 			}
@@ -609,7 +609,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					result.getBatchEngineExportTask();
 
 				manifestSummary.addModelAdditionCount(
-					new StagedModelType(exportImportDescriptor.getKey()),
+					exportImportDescriptor.getKey(),
 					batchEngineExportTask.getTotalItemsCount());
 			}
 		}

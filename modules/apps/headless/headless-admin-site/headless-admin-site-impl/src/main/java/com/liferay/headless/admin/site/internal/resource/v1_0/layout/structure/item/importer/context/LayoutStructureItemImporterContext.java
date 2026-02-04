@@ -10,6 +10,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
@@ -21,7 +22,7 @@ public class LayoutStructureItemImporterContext {
 		long companyId,
 		FragmentEntryProcessorRegistry fragmentEntryProcessorRegistry,
 		long groupId, InfoItemServiceRegistry infoItemServiceRegistry,
-		Layout layout, long segmentsExperienceId, long userId) {
+		Layout layout, long segmentsExperienceId, User user) {
 
 		_companyId = companyId;
 		_fragmentEntryProcessorRegistry = fragmentEntryProcessorRegistry;
@@ -29,7 +30,7 @@ public class LayoutStructureItemImporterContext {
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layout = layout;
 		_segmentsExperienceId = segmentsExperienceId;
-		_userId = userId;
+		_user = user;
 	}
 
 	public long getCompanyId() {
@@ -66,8 +67,16 @@ public class LayoutStructureItemImporterContext {
 		return _segmentsExperienceId;
 	}
 
+	public User getUser() {
+		return _user;
+	}
+
 	public long getUserId() {
-		return _userId;
+		if (_user == null) {
+			return 0;
+		}
+
+		return _user.getUserId();
 	}
 
 	private final long _companyId;
@@ -78,6 +87,6 @@ public class LayoutStructureItemImporterContext {
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final Layout _layout;
 	private final long _segmentsExperienceId;
-	private final long _userId;
+	private final User _user;
 
 }

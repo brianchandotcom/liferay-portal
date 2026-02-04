@@ -85,12 +85,11 @@ public class TaskDefinitionDisplayContext {
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/update-active?active=false", "block",
 				"deactivate",
-				LanguageUtil.get(_httpServletRequest, "deactivate"),
-				"patch", "deactivate", "async"),
+				LanguageUtil.get(_httpServletRequest, "deactivate"), "patch",
+				"deactivate", "async"),
 			new FDSActionDropdownItem(
 				getAPIURL() + "/{id}/update-active?active=true", "logout",
-				"activate",
-				LanguageUtil.get(_httpServletRequest, "activate"),
+				"activate", LanguageUtil.get(_httpServletRequest, "activate"),
 				"patch", "activate", "async"));
 	}
 

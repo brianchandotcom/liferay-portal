@@ -55,6 +55,7 @@ import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -330,6 +331,42 @@ public class DigitalSalesRoomResourceTest
 		Assert.assertEquals(
 			digitalSalesRoom.getSecondaryColor(),
 			jsonObject2.getString("value"));
+	}
+
+	private void _assertLayouts(long groupId, String[] names) throws Exception {
+		List<Layout> layouts = _layoutLocalService.getLayouts(groupId, false);
+
+		Assert.assertTrue(
+			ArrayUtil.containsAll(
+				TransformUtil.transformToArray(
+					layouts,
+					layout -> layout.getName(LocaleUtil.getSiteDefault()),
+					String.class),
+				names));
+
+		Role role = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), "Guest");
+
+		for (Layout layout : layouts) {
+			boolean hasResourcePermission =
+				_resourcePermissionLocalService.hasResourcePermission(
+					layout.getCompanyId(), Layout.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(layout.getPlid()), role.getRoleId(),
+					ActionKeys.VIEW);
+
+			if (Objects.equals(
+					layout.getName(LocaleUtil.getSiteDefault()), "Documents") ||
+				Objects.equals(
+					layout.getName(LocaleUtil.getSiteDefault()),
+					"Onboarding")) {
+
+				Assert.assertFalse(hasResourcePermission);
+			}
+			else {
+				Assert.assertTrue(hasResourcePermission);
+			}
+		}
 	}
 
 	private DigitalSalesRoom _randomDigitalSalesRoom(
@@ -724,18 +761,13 @@ public class DigitalSalesRoomResourceTest
 					"Video Block", "Welcome Block"
 				}));
 
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				TransformUtil.transformToArray(
-					_layoutLocalService.getLayouts(
-						digitalSalesRoomTemplate.getId(), false),
-					layout -> layout.getName(LocaleUtil.getSiteDefault()),
-					String.class),
-				new String[] {
-					"Documents", "Onboarding",
-					layout1.getName(LocaleUtil.getSiteDefault()),
-					layout2.getName(LocaleUtil.getSiteDefault())
-				}));
+		_assertLayouts(
+			digitalSalesRoomTemplate.getId(),
+			new String[] {
+				"Documents", "Login", "Onboarding",
+				layout1.getName(LocaleUtil.getSiteDefault()),
+				layout2.getName(LocaleUtil.getSiteDefault())
+			});
 	}
 
 	private void _testPostDigitalSalesRoomWithPermission() throws Exception {
@@ -806,17 +838,11 @@ public class DigitalSalesRoomResourceTest
 					"Video Block", "Welcome Block"
 				}));
 
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				TransformUtil.transformToArray(
-					_layoutLocalService.getLayouts(
-						postDigitalSalesRoom.getId(), false),
-					layout -> layout.getName(LocaleUtil.getSiteDefault()),
-					String.class),
-				new String[] {"Documents", "Onboarding"}));
-
 		_assertEqualsStyleBookEntry(
 			randomDigitalSalesRoom, postDigitalSalesRoom.getId());
+		_assertLayouts(
+			postDigitalSalesRoom.getId(),
+			new String[] {"Documents", "Login", "Onboarding"});
 	}
 
 	private void _testPostDigitalSalesRoomWithUserAccount() throws Exception {

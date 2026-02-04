@@ -10,7 +10,7 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 
 export interface IInlineNotificationComponent {
-	context?: Pick<
+	context: Pick<
 		IFrontendDataSetContext,
 		| 'forceSortsUpdate'
 		| 'loadData'

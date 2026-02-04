@@ -187,13 +187,13 @@ test(
 
 			await test.step('Check only the "status" filter appears', async () => {
 				await expect(
+					page.getByRole('menuitem', {name: 'Client Extension'})
+				).not.toBeVisible();
+				await expect(
 					page.getByRole('menuitem', {name: 'Color'})
 				).not.toBeVisible();
 				await expect(
 					page.getByRole('menuitem', {name: 'Date Range'})
-				).not.toBeVisible();
-				await expect(
-					page.getByRole('menuitem', {name: 'Client Extension'})
 				).not.toBeVisible();
 				await expect(
 					page.getByRole('menuitem', {name: 'Size'})

@@ -117,7 +117,7 @@ public class MarketplaceTopicSubscriber {
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
-						"Listening for messages on " +
+						"Subscribed to " +
 							subscriber.getSubscriptionNameString());
 				}
 			}

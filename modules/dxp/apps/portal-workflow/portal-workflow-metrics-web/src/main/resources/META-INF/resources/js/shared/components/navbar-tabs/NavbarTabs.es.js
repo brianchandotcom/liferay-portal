@@ -5,15 +5,12 @@
 
 import ClayNavigationBar from '@clayui/navigation-bar';
 import React, {useCallback} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router';
 
-import {useRouter} from '../../hooks/useRouter.es';
 import {getPathname} from '../router/routerUtil.es';
 
 const Item = ({active, name, params, path}) => {
-	const {
-		location: {search},
-	} = useRouter();
+	const {search} = useLocation();
 
 	return (
 		<ClayNavigationBar.Item active={active}>
@@ -31,9 +28,7 @@ const Item = ({active, name, params, path}) => {
 };
 
 const NavbarTabs = ({tabs = []}) => {
-	const {
-		location: {pathname},
-	} = useRouter();
+	const {pathname} = useLocation();
 
 	const isActive = useCallback(
 		(tab) => pathname.includes(tab.key),

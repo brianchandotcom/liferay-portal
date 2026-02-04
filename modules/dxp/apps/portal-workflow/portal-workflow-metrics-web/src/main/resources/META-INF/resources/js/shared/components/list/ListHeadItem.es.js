@@ -6,16 +6,13 @@
 import ClayIcon from '@clayui/icon';
 import pathToRegexp from 'path-to-regexp';
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link, useLocation, useParams} from 'react-router';
 
-const ListHeadItem = ({
-	iconColor,
-	iconName,
-	location: {search},
-	match: {params, path},
-	name,
-	title,
-}) => {
+const ListHeadItem = ({iconColor, iconName, name, title}) => {
+	const {search} = useLocation();
+	const params = useParams();
+	const path = useRoutePath();
+
 	const sort = params && params.sort ? params.sort : `${name}:asc`;
 
 	const [field, order] = decodeURIComponent(sort).split(':');
@@ -65,4 +62,4 @@ const ListHeadItem = ({
 	);
 };
 
-export default withRouter(ListHeadItem);
+export default ListHeadItem;

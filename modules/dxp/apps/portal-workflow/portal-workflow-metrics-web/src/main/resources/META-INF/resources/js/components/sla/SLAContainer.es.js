@@ -4,7 +4,7 @@
  */
 
 import React, {createContext, useState} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Outlet} from 'react-router';
 
 import {withParams} from '../../shared/components/router/routerUtil.es';
 import SLAFormPage from './form-page/SLAFormPage.es';
@@ -17,25 +17,7 @@ export default function SLAContainer() {
 
 	return (
 		<SLAContext.Provider value={{SLAUpdated, setSLAUpdated}}>
-			<Switch>
-				<Route
-					exact
-					path="/sla/:processId/list/:pageSize/:page"
-					render={withParams(SLAListPage)}
-				/>
-
-				<Route
-					exact
-					path="/sla/:processId/new"
-					render={withParams(SLAFormPage)}
-				/>
-
-				<Route
-					exact
-					path="/sla/:processId/edit/:id"
-					render={withParams(SLAFormPage)}
-				/>
-			</Switch>
+			<Outlet />
 		</SLAContext.Provider>
 	);
 }

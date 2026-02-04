@@ -4,10 +4,9 @@
  */
 
 import {useContext} from 'react';
-import {__RouterContext as RouterContext} from 'react-router-dom';
 
 const useRouter = () => {
-	return useContext(RouterContext);
+	return useContext({});
 };
 
 export {useRouter};

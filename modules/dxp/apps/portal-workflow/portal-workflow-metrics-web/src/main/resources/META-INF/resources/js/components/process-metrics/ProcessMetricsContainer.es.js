@@ -7,7 +7,7 @@ import ClayLayout from '@clayui/layout';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Outlet} from 'react-router';
 
 import {replaceHistory} from '../../shared/components/filter/util/filterUtil.es';
 import HeaderKebab from '../../shared/components/header/HeaderKebab.es';
@@ -34,7 +34,7 @@ import PendingItemsCard from './process-items/PendingItemsCard.es';
 import WorkloadByAssigneeCard from './workload-by-assignee-card/WorkloadByAssigneeCard.es';
 import WorkloadByStepCard from './workload-by-step-card/WorkloadByStepCard.es';
 
-const DashboardTab = ({processId, routeParams}) => {
+export function DashboardTab({processId, routeParams}) {
 	const {fetchDateModified} = useContext(AppContext);
 
 	const {dateModified, fetchData} = useDateModified({
@@ -81,7 +81,7 @@ const DashboardTab = ({processId, routeParams}) => {
 	);
 };
 
-function PerformanceTab({processId, routeParams}) {
+export function PerformanceTab({processId, routeParams}) {
 	const {fetchDateModified} = useContext(AppContext);
 	const routerProps = useRouter();
 
@@ -236,19 +236,7 @@ export default function ProcessMetricsContainer({history, processId, query}) {
 
 			<SLAInfo processId={processId} />
 
-			<Switch>
-				<Route
-					exact
-					path={tabs.dashboard.path}
-					render={withParams(DashboardTab)}
-				/>
-
-				<Route
-					exact
-					path={tabs.performance.path}
-					render={withParams(PerformanceTab)}
-				/>
-			</Switch>
+			<Outlet />
 		</div>
 	);
 }

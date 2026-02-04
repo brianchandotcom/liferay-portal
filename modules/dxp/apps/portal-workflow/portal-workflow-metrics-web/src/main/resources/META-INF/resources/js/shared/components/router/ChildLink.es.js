@@ -4,15 +4,12 @@
  */
 
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router';
 
-import {useRouter} from '../../hooks/useRouter.es';
 import {stringify} from './queryString.es';
 
 const ChildLink = ({children, query, to, ...otherProps}) => {
-	const {
-		location: {pathname, search},
-	} = useRouter();
+	const {pathname, search} = useLocation();
 
 	return (
 		<Link

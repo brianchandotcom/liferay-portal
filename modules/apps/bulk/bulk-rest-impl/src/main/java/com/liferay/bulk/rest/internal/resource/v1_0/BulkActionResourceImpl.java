@@ -9,6 +9,7 @@ import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
@@ -400,6 +401,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
 			return _deleteObjectBulkSelectionAction;
 		}
+		else if (BulkAction.Type.DUE_DATE_BULK_ACTION.equals(type)) {
+			return _dueDateObjectBulkSelectionAction;
+		}
 		else if (BulkAction.Type.EXPIRE_BULK_ACTION.equals(type)) {
 			return _expireObjectBulkSelectionAction;
 		}
@@ -451,6 +455,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
 			return hashMapWrapper.build();
+		}
+		else if (BulkAction.Type.DUE_DATE_BULK_ACTION.equals(type)) {
+			DueDateBulkAction dueDateBulkAction = (DueDateBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"dueDate", dueDateBulkAction.getDueDate()
+			).build();
 		}
 		else if (BulkAction.Type.EXPIRE_BULK_ACTION.equals(type)) {
 			return hashMapWrapper.build();
@@ -836,6 +847,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private DLMimeTypeDisplayContext _dlMimeTypeDisplayContext;
+
+	@Reference(target = "(bulk.selection.action.key=due.date.object)")
+	private BulkSelectionAction<Object> _dueDateObjectBulkSelectionAction;
 
 	@Reference(target = "(bulk.selection.action.key=edit.object.categories)")
 	private BulkSelectionAction<Object>

@@ -39,7 +39,10 @@ jest.mock('frontend-js-components-web', () => {
 describe('EnterpriseOnlyPlaceholder', () => {
 	it('renders the placeholder with all its elements', () => {
 		render(
-			<EnterpriseOnlyPlaceholder learnResources={mockLearnResources} />
+			<EnterpriseOnlyPlaceholder
+				enterpriseDetailsActionLink="/my-temp-link"
+				learnResources={mockLearnResources}
+			/>
 		);
 
 		const image = screen.getByAltText('empty-state-image');
@@ -67,6 +70,6 @@ describe('EnterpriseOnlyPlaceholder', () => {
 			name: 'get-enterprise-details',
 		});
 		expect(detailsLink).toBeInTheDocument();
-		expect(detailsLink).toHaveAttribute('href', '#');
+		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
 	});
 });

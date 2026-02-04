@@ -111,7 +111,10 @@ function QuerySXPElements({
 		>
 			<>
 				{!elementInstances.length ? (
-					<span className="selected-sxp-elements-empty-text text-4 text-secondary">
+					<span
+						className="text-4 text-secondary"
+						data-testid="selected-sxp-elements-empty-text"
+					>
 						{Liferay.Language.get(
 							'add-elements-to-optimize-search-results-for-your-use-cases'
 						)}

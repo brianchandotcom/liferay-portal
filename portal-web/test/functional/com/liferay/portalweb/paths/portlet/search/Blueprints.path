@@ -127,7 +127,7 @@
 </tr>
 <tr>
 	<td>BLUEPRINTS_ADDED_ELEMENTS_EMPTY</td>
-	<td>//div[contains(@class,'selected-sxp-elements-empty-text')]</td>
+	<td>//span[@data-testid='selected-sxp-elements-empty-text']</td>
 	<td></td>
 </tr>
 <tr>

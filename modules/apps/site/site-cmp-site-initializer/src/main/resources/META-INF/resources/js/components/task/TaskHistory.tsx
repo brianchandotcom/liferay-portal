@@ -71,9 +71,130 @@ function joinWithAnd(items: string[]) {
 	}).format(items);
 }
 
+function AssigneeValueLabel({
+	value,
+}: {
+	value: {
+		classNameId: number;
+		classPK: number;
+	};
+}) {
+	const [assigneeName, setAssigneeName] = useState<string | null>(null);
+	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		if (value?.classPK) {
+			setLoading(true);
+
+			fetch(`/o/headless-admin-user/v1.0/user-accounts/${value.classPK}`)
+				.then((response) => response.json())
+				.then((responseData) => {
+					setAssigneeName(responseData.name);
+				})
+				.catch(() => {
+					setAssigneeName(Liferay.Language.get('none'));
+				})
+				.finally(() => {
+					setLoading(false);
+				});
+		}
+	}, [value]);
+
+	if (loading) {
+		return <ClayLoadingIndicator className="m-0" size="xs" />;
+	}
+
+	if (!value) {
+		return Liferay.Language.get('none');
+	}
+
+	return assigneeName || Liferay.Language.get('none');
+}
+
+function TaskHistoryItemDetails({
+	auditFieldChanges,
+}: {
+	auditFieldChanges?: AuditFieldChange[];
+}) {
+
+	/**
+	 * The `oldValue` and `newValue` can be in different formats according to
+	 * the field's `name` property. For example:
+	 * {
+	 * 	name: "state",
+	 *  newValue: {key: "inProgress", name: "In Progress"},
+	 * 	oldValue: {key: "notStarted", name: "Not Started"},
+	 * }
+	 *
+	 * {
+	 * 	name: "title",
+	 *  newValue: "New Title",
+	 * 	oldValue: "Old Title",
+	 * }
+	 */
+	const getAuditFieldChangeValueLabel = (name: string, value: any) => {
+		if (name === 'assignTo') {
+			return <AssigneeValueLabel value={value} />;
+		}
+
+		if (name === 'dueDate' && value) {
+			const date = new Date(value);
+
+			return !isNaN(date.getTime())
+				? date.toLocaleDateString()
+				: Liferay.Language.get('none');
+		}
+
+		if (typeof value === 'string' && value) {
+			return value;
+		}
+
+		if (typeof value === 'object' && value?.name) {
+			return value?.name;
+		}
+
+		return Liferay.Language.get('none');
+	};
+
+	return (
+		<div>
+			{auditFieldChanges?.map((auditFieldChange, index) => (
+				<div className="c-mt-3" key={index}>
+					<strong>{FIELD_NAME[auditFieldChange.name]}:</strong>
+
+					<div className="autofit-padded-no-gutters-x autofit-row autofit-row-center">
+						<div className="autofit-col text-secondary">
+							{getAuditFieldChangeValueLabel(
+								auditFieldChange.name,
+								auditFieldChange.oldValue
+							)}
+						</div>
+
+						<div className="autofit-col text-secondary">
+							<div>
+								<ClayIcon symbol="order-arrow-right" />
+							</div>
+						</div>
+
+						<div className="autofit-col autofit-col-expand">
+							{getAuditFieldChangeValueLabel(
+								auditFieldChange.name,
+								auditFieldChange.newValue
+							)}
+						</div>
+					</div>
+				</div>
+			))}
+		</div>
+	);
+}
+
 function TaskHistoryItem({auditEvent}: {auditEvent: AuditEvent}) {
 	const [showDetails, setShowDetails] = useState(false);
 
+	/**
+	 * Gets the label like: "Test Test updated the Task."
+	 */
 	const getAuditEventLabel = (auditEvent: AuditEvent) => {
 		if (auditEvent.eventType === EventType.ADD) {
 			return sub(Liferay.Language.get('x-created-a-x'), [
@@ -112,35 +233,8 @@ function TaskHistoryItem({auditEvent}: {auditEvent: AuditEvent}) {
 		]);
 	};
 
-	/**
-	 * The `oldValue` and `newValue` can be in different formats according to
-	 * the field's `name` property. For example:
-	 * {
-	 * 	name: "state",
-	 *  newValue: {key: "inProgress", name: "In Progress"},
-	 * 	oldValue: {key: "notStarted", name: "Not Started"},
-	 * }
-	 *
-	 * {
-	 * 	name: "title",
-	 *  newValue: "New Title",
-	 * 	oldValue: "Old Title",
-	 * }
-	 */
-	const getAuditFieldChangeValueLabel = (value: any): string => {
-		if (typeof value === 'string') {
-			return value ?? Liferay.Language.get('none');
-		}
-
-		if (typeof value === 'object') {
-			return value?.name ?? Liferay.Language.get('none');
-		}
-
-		return Liferay.Language.get('none');
-	};
-
 	return (
-		<List.Item className="border-0" flex>
+		<List.Item className="border-0 c-mb-2 c-py-2" flex>
 			<List.ItemField>
 				<AssigneeAvatar
 					image={auditEvent.creator?.image}
@@ -158,43 +252,15 @@ function TaskHistoryItem({auditEvent}: {auditEvent: AuditEvent}) {
 				</List.ItemText>
 
 				{showDetails && (
-					<div>
-						{auditEvent.auditFieldChanges?.map(
-							(auditFieldChange, index) => (
-								<span className="c-mt-2" key={index}>
-									<strong>
-										{FIELD_NAME[auditFieldChange.name]}:
-									</strong>
-
-									<div className="autofit-padded-no-gutters-x autofit-row autofit-row-center">
-										<div className="autofit-col text-secondary">
-											{getAuditFieldChangeValueLabel(
-												auditFieldChange.oldValue
-											)}
-										</div>
-
-										<div className="autofit-col text-secondary">
-											<div>
-												<ClayIcon symbol="order-arrow-right" />
-											</div>
-										</div>
-
-										<div className="autofit-col autofit-col-expand">
-											{getAuditFieldChangeValueLabel(
-												auditFieldChange.newValue
-											)}
-										</div>
-									</div>
-								</span>
-							)
-						)}
-					</div>
+					<TaskHistoryItemDetails
+						auditFieldChanges={auditEvent.auditFieldChanges}
+					/>
 				)}
 
 				<div className="c-mt-2">
 					<ClayButton
 						borderless
-						className="c-px-2 c-py-1 text-2"
+						className="btn-xs"
 						displayType="secondary"
 						onClick={() => setShowDetails(!showDetails)}
 					>

@@ -117,8 +117,7 @@ export class FDSSamplePage {
 		};
 		this.creatorFilterSearchInput = page
 			.locator('.data-set-filter')
-			.getByRole('textbox', {name: 'Search'})
-			.first();
+			.getByRole('textbox', {name: 'Search'});
 		this.emptyStateContainer = page.locator('.fds .c-empty-state');
 		this.fdsWrapper = page.locator('div.data-set-wrapper').first();
 		this.fileDropModal = page.getByRole('dialog', {

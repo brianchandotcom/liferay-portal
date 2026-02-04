@@ -12,7 +12,7 @@ import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSN
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Liferay
+ * @author Kresimir Coko
  */
 @Component(
 	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
@@ -425,16 +426,10 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 				return Collections.emptyMap();
 			}
 
-			List<Group> groups = _groupLocalService.getGroups(
-				companyId, GroupConstants.ANY_PARENT_GROUP_ID, true);
-
-			long[] groupIds = new long[groups.size()];
-
-			for (int i = 0; i < groupIds.length; i++) {
-				Group group = groups.get(i);
-
-				groupIds[i] = group.getGroupId();
-			}
+			long[] groupIds = ListUtil.toLongArray(
+				_groupLocalService.getGroups(
+					companyId, GroupConstants.ANY_PARENT_GROUP_ID, true),
+				Group.GROUP_ID_ACCESSOR);
 
 			Arrays.sort(groupIds);
 

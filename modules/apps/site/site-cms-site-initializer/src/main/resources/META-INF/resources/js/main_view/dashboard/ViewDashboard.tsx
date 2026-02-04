@@ -27,27 +27,27 @@ interface IViewDashboard {
 	constants: {
 		[key: string]: string;
 	};
-	isFreeTier: boolean;
+	freeTier: boolean;
 	learnResources: ILearnResourceContext;
 }
 
 const ViewDashboard: React.FC<IViewDashboard> = ({
 	constants,
-	isFreeTier,
+	freeTier,
 	learnResources,
 }) => {
 	return (
 		<>
 			<Breadcrumb
 				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
+				freeTier={freeTier}
 				hideSpace
-				showEnterpriseBadge={isFreeTier}
 			/>
 
 			<ClayTooltipProvider>
 				<ViewDashboardContextProvider value={{constants}}>
 					<ClayLayout.Container className="px-4" fluid>
-						{isFreeTier ? (
+						{freeTier ? (
 							<EnterpriseOnlyPlaceholder
 								learnResources={learnResources}
 							/>

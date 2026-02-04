@@ -257,7 +257,7 @@ public class ActionUtil {
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
 			objectDefinition.getName(), false, true, segmentsExperienceId,
-			serviceContext, JSONUtil.put("marginBottom", "16px"));
+			serviceContext, JSONUtil.put("marginBottom", "16px"), false);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
@@ -361,7 +361,7 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
 			layoutStructure, formStyledLayoutStructureItem, name, true, false,
 			segmentsExperienceId, serviceContext,
-			JSONUtil.put("marginBottom", "24px"));
+			JSONUtil.put("marginBottom", "24px"), true);
 
 		FragmentEntryLink localizationSelectFragmentEntryLink =
 			_addFragmentEntryLink(
@@ -424,7 +424,7 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
 			layoutStructure, formStyledLayoutStructureItem, name, false, false,
 			segmentsExperienceId, serviceContext,
-			JSONUtil.put("marginBottom", "24px"));
+			JSONUtil.put("marginBottom", "24px"), true);
 
 		localizationSelectFragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.toString(
@@ -1248,7 +1248,7 @@ public class ActionUtil {
 			LayoutStructureItem layoutStructureItem,
 			String objectDefinitionName, boolean readOnly, boolean repeatable,
 			long segmentsExperienceId, ServiceContext serviceContext,
-			JSONObject stylesJSONObject)
+			JSONObject stylesJSONObject, boolean translation)
 		throws Exception {
 
 		if (infoFieldSet.isRelationship()) {
@@ -1360,7 +1360,18 @@ public class ActionUtil {
 				if (RelationshipInfoFieldType.INSTANCE ==
 						infoField.getInfoFieldType()) {
 
-					continue;
+					if (translation) {
+						continue;
+					}
+
+					InfoField<RelationshipInfoFieldType> relationshipInfoField =
+						(InfoField<RelationshipInfoFieldType>)infoField;
+
+					if (relationshipInfoField.getAttribute(
+							RelationshipInfoFieldType.INHERITANCE)) {
+
+						continue;
+					}
 				}
 
 				_addInputFragmentEntryLink(
@@ -1376,7 +1387,8 @@ public class ActionUtil {
 					fragmentRendererRegistry, (InfoFieldSet)infoFieldSetEntry,
 					layout, layoutStructure, layoutStructureItem,
 					objectDefinitionName, readOnly, repeatable,
-					segmentsExperienceId, serviceContext, stylesJSONObject);
+					segmentsExperienceId, serviceContext, stylesJSONObject,
+					translation);
 			}
 		}
 

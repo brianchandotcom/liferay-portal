@@ -29,7 +29,7 @@ function main {
 
 	mv -v "${template_origin}" "${DESTINATION}"
 
-	cd "${DESTINATION}/${TEMPLATE}" && git init && git add . && git commit --message "chore: clone TEMPLATE"
+	cd "${DESTINATION}/${TEMPLATE}" && git init && git add . && git commit --message "chore: clone ${1}"
 }
 
 main "${@}"

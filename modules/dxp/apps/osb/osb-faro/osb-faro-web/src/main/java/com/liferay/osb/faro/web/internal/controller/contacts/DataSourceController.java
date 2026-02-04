@@ -713,7 +713,8 @@ public class DataSourceController extends BaseFaroController {
 				Results<Individual> individualResults =
 					contactsEngineClient.getIndividuals(
 						faroProject, null, null, id, null, null, null, null,
-						null, null, false, 1, 0, null);
+						Collections.singletonList("KNOWN"), null, null, false,
+						1, 0, null);
 
 				return individualResults.getTotal();
 			}

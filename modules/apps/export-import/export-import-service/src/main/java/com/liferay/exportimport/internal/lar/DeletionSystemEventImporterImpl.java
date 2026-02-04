@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.internal.lar;
 
+import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegistry;
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -94,17 +95,34 @@ public class DeletionSystemEventImporterImpl
 		}
 
 		for (Element portletElement : sitePortletsElement.elements()) {
+			String portletDataHandlerKey = portletElement.attributeValue(
+				"portlet-data-handler-key");
+
 			String portletId = portletElement.attributeValue("portlet-id");
 
 			Portlet portlet = _portletLocalService.getPortletById(
 				portletDataContext.getCompanyId(), portletId);
 
-			if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
+			if ((portletDataHandlerKey == null) &&
+				(!portlet.isActive() || portlet.isUndeployedPortlet())) {
+
 				continue;
 			}
 
+			if (portletDataHandlerKey != null) {
+				PortletDataHandler portletDataHandler =
+					_batchEnginePortletDataHandlerRegistry.getByKey(
+						portletDataContext.getCompanyId(),
+						portletDataHandlerKey);
+
+				if (portletDataHandler != null) {
+					portletId = portletDataHandler.getPortletId();
+				}
+			}
+
 			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(portlet);
+				_portletDataHandlerProvider.provide(
+					portletDataContext.getCompanyId(), portletId);
 
 			if (portletDataHandler instanceof BatchEnginePortletDataHandler) {
 				portletDataHandler.deleteData(
@@ -170,6 +188,10 @@ public class DeletionSystemEventImporterImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DeletionSystemEventImporterImpl.class);
+
+	@Reference
+	private BatchEnginePortletDataHandlerRegistry
+		_batchEnginePortletDataHandlerRegistry;
 
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;

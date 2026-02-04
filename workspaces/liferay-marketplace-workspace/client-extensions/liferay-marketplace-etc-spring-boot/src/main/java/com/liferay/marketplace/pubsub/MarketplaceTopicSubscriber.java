@@ -91,9 +91,6 @@ public class MarketplaceTopicSubscriber {
 				catch (NotFoundException notFoundException) {
 					_log.error("Subscription not found", notFoundException);
 
-					TopicName topicName = TopicName.ofProjectTopicName(
-						_projectId, pubsubTopic);
-
 					_subscriptionAdminClient.createSubscription(
 						Subscription.newBuilder(
 						).setAckDeadlineSeconds(
@@ -101,7 +98,9 @@ public class MarketplaceTopicSubscriber {
 						).setName(
 							subscriptionName
 						).setTopic(
-							topicName.toString()
+							String.valueOf(
+								TopicName.ofProjectTopicName(
+									_projectId, pubsubTopic))
 						).build());
 
 					if (_log.isInfoEnabled()) {

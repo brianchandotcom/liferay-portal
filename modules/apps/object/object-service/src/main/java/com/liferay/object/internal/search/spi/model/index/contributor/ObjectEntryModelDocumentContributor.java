@@ -417,11 +417,20 @@ public class ObjectEntryModelDocumentContributor
 			}
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-58677")) {
-
+		if (objectDefinition.isCMP()) {
 			if (values == null) {
 				values = objectEntry.getIndexedValues();
+			}
+
+			Map<String, Long> assigneeMap = (Map<String, Long>)values.get(
+				"assignTo");
+
+			if (assigneeMap != null) {
+				document.addKeyword(
+					"cmpAssignTo",
+					StringBundler.concat(
+						assigneeMap.get("classNameId"), StringPool.UNDERLINE,
+						assigneeMap.get("classPK")));
 			}
 
 			document.addDate("cmpDueDate", (Timestamp)values.get("dueDate"));

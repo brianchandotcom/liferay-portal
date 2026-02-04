@@ -88,6 +88,17 @@ public class FileSystemStore implements Store {
 	}
 
 	@Override
+	public void deleteDirectory(long companyId) {
+		File companyDir = new File(_rootDir, String.valueOf(companyId));
+
+		if (!companyDir.exists()) {
+			return;
+		}
+
+		FileUtil.deltree(companyDir);
+	}
+
+	@Override
 	public void deleteDirectory(
 		long companyId, long repositoryId, String dirName) {
 

@@ -12,6 +12,12 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.io.InputStream;
 
@@ -40,6 +46,29 @@ public class DBStore implements Store {
 
 		_dlContentLocalService.addContent(
 			companyId, repositoryId, fileName, versionLabel, inputStream);
+	}
+
+	@Override
+	public void deleteDirectory(long companyId) throws PortalException {
+		if (PropsValues.DATABASE_PARTITION_ENABLED &&
+			!ArrayUtil.contains(
+				PortalInstancePool.getCompanyIds(), companyId)) {
+
+			return;
+		}
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			_dlContentLocalService.getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(DLContent dlContent) -> _dlContentLocalService.deleteDLContent(
+				dlContent));
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override

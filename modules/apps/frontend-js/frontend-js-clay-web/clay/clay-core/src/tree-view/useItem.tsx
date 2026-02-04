@@ -9,7 +9,13 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {useCollectionKeys} from '../collection';
 import {removeItemInternalProps} from './Collection';
-import {Position, TARGET_POSITION, getNewItemPath, useDnD} from './DragAndDrop';
+import {
+	Position,
+	TARGET_POSITION,
+	getNewItemPath,
+	isDescendantOfDraggedItems,
+	useDnD,
+} from './DragAndDrop';
 import {useTreeViewContext} from './context';
 import {createImmutableTree} from './useTree';
 
@@ -49,6 +55,7 @@ export function ItemContextProvider({children, value}: Props) {
 		onItemMove,
 		open,
 		reorder,
+		rootRef,
 	} = useTreeViewContext();
 	const {
 		cursor: parentCursor,
@@ -265,6 +272,16 @@ export function ItemContextProvider({children, value}: Props) {
 						open(item.key);
 					}
 				}, 500) as unknown as number;
+			}
+
+			if (
+				isDescendantOfDraggedItems({
+					dragKeys: currentDragKeys,
+					element: childRef.current!,
+					rootRef,
+				})
+			) {
+				return;
 			}
 
 			if (onItemHover) {

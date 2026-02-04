@@ -255,7 +255,7 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 					}
 
 					com.liferay.object.model.ObjectRelationship
-						objectRelationship =
+						serviceBuilderObjectRelationship =
 							_objectRelationshipLocalService.
 								getObjectRelationshipByExternalReferenceCode(
 									jsonObject.getString(
@@ -263,22 +263,26 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 									_companyId,
 									objectDefinition.getObjectDefinitionId());
 
-					if (objectRelationship.isEdge()) {
-						objectRelationship =
+					if (serviceBuilderObjectRelationship.isEdge()) {
+						serviceBuilderObjectRelationship =
 							_objectRelationshipLocalService.
 								updateObjectRelationship(
-									objectRelationship.
+									serviceBuilderObjectRelationship.
 										getExternalReferenceCode(),
-									objectRelationship.
+									serviceBuilderObjectRelationship.
 										getObjectRelationshipId(),
-									objectRelationship.
+									serviceBuilderObjectRelationship.
 										getParameterObjectFieldId(),
-									objectRelationship.getDeletionType(), false,
-									objectRelationship.getLabelMap(), null);
+									serviceBuilderObjectRelationship.
+										getDeletionType(),
+										false,
+									serviceBuilderObjectRelationship.
+										getLabelMap(),
+										null);
 					}
 
 					_objectRelationshipLocalService.deleteObjectRelationship(
-						objectRelationship);
+						serviceBuilderObjectRelationship);
 				}
 			}
 
@@ -319,19 +323,20 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 				for (ObjectRelationship objectRelationship :
 						_objectRelationships) {
 
-					com.liferay.object.model.ObjectDefinition objectDefinition =
-						_objectDefinitionLocalService.
-							fetchObjectDefinitionByExternalReferenceCode(
-								objectRelationship.
-									getObjectDefinitionExternalReferenceCode2(),
-								_companyId);
+					com.liferay.object.model.ObjectDefinition
+						serviceBuilderObjectDefinition =
+							_objectDefinitionLocalService.
+								fetchObjectDefinitionByExternalReferenceCode(
+									objectRelationship.
+										getObjectDefinitionExternalReferenceCode2(),
+									_companyId);
 
-					if (objectDefinition == null) {
+					if (serviceBuilderObjectDefinition == null) {
 						continue;
 					}
 
 					_deleteRelationships(
-						objectDefinition.getObjectDefinitionId());
+						serviceBuilderObjectDefinition.getObjectDefinitionId());
 
 					objectRelationshipResource.
 						postObjectDefinitionByExternalReferenceCodeObjectRelationship(

@@ -7,20 +7,19 @@ package com.liferay.osb.faro.web.internal.model.display.contacts;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.type.TypeReference;
 
 import com.liferay.osb.faro.engine.client.model.Field;
 import com.liferay.osb.faro.engine.client.model.Individual;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
-import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -36,14 +35,9 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	}
 
 	public IndividualDisplay(Individual individual) {
-		Map<String, Object> embeddedResources =
-			individual.getEmbeddedResources();
-
-		if (MapUtil.isNotEmpty(embeddedResources)) {
-			_accountNames = JSONUtil.convertValue(
-				embeddedResources.get("account-names"),
-				new TypeReference<List<String>>() {
-				});
+		if (Validator.isNotNull(individual.getAccountName())) {
+			_accountNames = Collections.singletonList(
+				individual.getAccountName());
 		}
 
 		_individual = individual;
@@ -67,6 +61,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 
 		_name = sb.toString();
 
+		_profileType = individual.getProfileType();
 		_type = FaroConstants.TYPE_INDIVIDUAL;
 
 		addProperties(_propertyNames);
@@ -114,7 +109,8 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	}
 
 	private static final List<String> _propertyNames = Arrays.asList(
-		"email", "familyName", "givenName", "image", "jobTitle", "worksFor");
+		"country", "email", "familyName", "givenName", "image", "jobTitle",
+		"worksFor");
 
 	private List<String> _accountNames;
 	private Long _activitiesCount;
@@ -128,6 +124,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 
 	private Date _lastActivityDate;
 	private String _name;
+	private String _profileType;
 
 	@JsonProperty("properties")
 	private Map<String, Object> _propertiesMap = new HashMap<>();

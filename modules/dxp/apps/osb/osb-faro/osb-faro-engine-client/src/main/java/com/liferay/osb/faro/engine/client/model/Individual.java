@@ -18,6 +18,10 @@ import java.util.Map;
  */
 public class Individual {
 
+	public String getAccountName() {
+		return _accountName;
+	}
+
 	public Long getActivitiesCount() {
 		return _activitiesCount;
 	}
@@ -75,6 +79,14 @@ public class Individual {
 		return new Date(_lastActivityDate.getTime());
 	}
 
+	public String getProfileType() {
+		return _profileType;
+	}
+
+	public void setAccountName(String accountName) {
+		_accountName = accountName;
+	}
+
 	public void setActivitiesCount(long activitiesCount) {
 		_activitiesCount = activitiesCount;
 	}
@@ -125,6 +137,10 @@ public class Individual {
 		}
 	}
 
+	public void setProfileType(String profileType) {
+		_profileType = profileType;
+	}
+
 	public static class DataSourceIndividualPK {
 
 		public String getDataSourceId() {
@@ -157,6 +173,7 @@ public class Individual {
 
 	}
 
+	private String _accountName;
 	private Long _activitiesCount;
 	private Map<String, List<Field>> _custom = new HashMap<>();
 	private List<DataSourceIndividualPK> _dataSourceIndividualPKs =
@@ -168,5 +185,6 @@ public class Individual {
 	private Date _firstActivityDate;
 	private String _id;
 	private Date _lastActivityDate;
+	private String _profileType;
 
 }

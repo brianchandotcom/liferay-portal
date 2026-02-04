@@ -162,13 +162,13 @@ public class ConfigurationFilterStringUtilTest {
 		_test(
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
+				"companyId", "any"
+			).put(
 				"groupId", "any"
 			).build());
 		_test(
 			false, filterString,
 			HashMapBuilder.<String, Serializable>put(
-				"companyId", "any"
-			).put(
 				"groupId", "any"
 			).build());
 		_test(

@@ -20,8 +20,6 @@ import React, {useEffect, useState} from 'react';
 type IItemSelectorModalFDSProps = Omit<
 	IFrontendDataSetProps,
 	| 'apiURL'
-	| 'selectedItems'
-	| 'selectedItemsKey'
 	| 'onSelectedItemsChange'
 	| 'selectedItems'
 	| 'selectedItemsKey'

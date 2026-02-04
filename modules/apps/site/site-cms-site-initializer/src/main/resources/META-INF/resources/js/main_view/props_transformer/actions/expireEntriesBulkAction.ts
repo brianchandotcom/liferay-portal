@@ -6,45 +6,7 @@
 import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
-/**
- * Executes the bulk expire action.
- */
-export function executeBulkExpireAction(
-	apiURL: string,
-	dataSetId: string,
-	selectedData: IBulkActionFDSData,
-	processClose?: () => void
-): void {
-	triggerAssetBulkAction({
-		apiURL,
-		dataSetId,
-		onCreateSuccess: () => {
-			processClose?.();
-		},
-		selectedData,
-		type: 'ExpireBulkAction',
-	});
-}
-
-/**
- * Handles bulk expiration logic and modal display based on trash status of spaces.
- */
-async function handleBulkExpiration({
-	apiURL,
-	dataSetId,
-	selectedData,
-}: {
-	apiURL: string;
-	dataSetId: string;
-	selectedData: IBulkActionFDSData;
-}): Promise<void> {
-	executeBulkExpireAction(apiURL, dataSetId, selectedData);
-}
-
-/**
- * Entry point for bulk expire action.
- */
-export default async function expireEntriesBulkAction({
+export default function expireEntriesBulkAction({
 	apiURL = '',
 	dataSetId = '',
 	selectedData,
@@ -52,6 +14,11 @@ export default async function expireEntriesBulkAction({
 	apiURL?: string;
 	dataSetId?: string;
 	selectedData: IBulkActionFDSData;
-}): Promise<void> {
-	await handleBulkExpiration({apiURL, dataSetId, selectedData});
+}): void {
+	triggerAssetBulkAction({
+		apiURL,
+		dataSetId,
+		selectedData,
+		type: 'ExpireBulkAction',
+	});
 }

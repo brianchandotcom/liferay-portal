@@ -74,6 +74,11 @@ public interface SegmentsEntryService extends BaseService {
 			long segmentsEntryId, long[] classPKs)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SegmentsEntry fetchSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws PortalException;
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

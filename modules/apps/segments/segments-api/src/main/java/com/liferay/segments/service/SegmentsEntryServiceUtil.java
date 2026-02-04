@@ -78,6 +78,14 @@ public class SegmentsEntryServiceUtil {
 		getService().deleteSegmentsEntryClassPKs(segmentsEntryId, classPKs);
 	}
 
+	public static SegmentsEntry fetchSegmentsEntryByExternalReferenceCode(
+			String segmentsEntryERC, long groupId)
+		throws PortalException {
+
+		return getService().fetchSegmentsEntryByExternalReferenceCode(
+			segmentsEntryERC, groupId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

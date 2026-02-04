@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ContainerFluid} from '@clayui/layout';
 import React, {useContext} from 'react';
 
 import {KANBAN_COLUMN_ORDER} from '../../../../../utils/constants';
@@ -14,18 +13,16 @@ export default function Board() {
 	const {boardData} = useContext(KanbanViewContext);
 
 	return (
-		<ContainerFluid size="xxxl">
-			<div className="d-flex">
-				{KANBAN_COLUMN_ORDER.map((state) => {
-					const column = boardData[state];
+		<div className="d-flex">
+			{KANBAN_COLUMN_ORDER.map((state) => {
+				const column = boardData[state];
 
-					if (column) {
-						return <Column column={column} key={state} />;
-					}
+				if (column) {
+					return <Column column={column} key={state} />;
+				}
 
-					return null;
-				})}
-			</div>
-		</ContainerFluid>
+				return null;
+			})}
+		</div>
 	);
 }

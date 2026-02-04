@@ -351,14 +351,14 @@ public class LiferayOAuthDataProvider
 			Client client, UserSubject userSubject)
 		throws OAuthServiceException {
 
+		List<ServerAccessToken> serverAccessTokens = new ArrayList<>();
+
 		OAuth2Application oAuth2Application = resolveOAuth2Application(client);
 
 		List<OAuth2Authorization> oAuth2Authorizations =
 			_oAuth2AuthorizationLocalService.getOAuth2Authorizations(
 				oAuth2Application.getOAuth2ApplicationId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
-
-		List<ServerAccessToken> serverAccessTokens = new ArrayList<>();
 
 		for (OAuth2Authorization oAuth2Authorization : oAuth2Authorizations) {
 			try {

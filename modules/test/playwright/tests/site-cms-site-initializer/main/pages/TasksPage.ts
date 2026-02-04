@@ -17,6 +17,7 @@ export class TasksPage {
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly updateDueDateDialog: Locator;
 	readonly updateStateDialog: Locator;
 	readonly updateStateSelector: Locator;
 
@@ -25,6 +26,9 @@ export class TasksPage {
 
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.updateDueDateDialog = page.getByRole('dialog', {
+			name: 'Update Due Date',
+		});
 		this.updateStateDialog = page.getByRole('dialog', {
 			name: 'Update State',
 		});

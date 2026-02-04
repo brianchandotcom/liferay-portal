@@ -92,11 +92,14 @@ public class OAuth2ApplicationAnalyticsCloudUpgradeProcess
 				fetchOAuth2ApplicationByExternalReferenceCode(
 					"ANALYTICS-CLOUD", companyId);
 
-		if (oAuth2Application != null) {
+		User user = _userLocalService.fetchUserByScreenName(
+			companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
+
+		if ((oAuth2Application != null) || (user == null)) {
 			return;
 		}
 
-		User user = _userLocalService.getGuestUser(companyId);
+		long guestUserId = _userLocalService.getGuestUserId(companyId);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -106,10 +109,10 @@ public class OAuth2ApplicationAnalyticsCloudUpgradeProcess
 					"clientCredentialUserId = ? and clientProfile = ? and ",
 					"homePageURL = ? and redirectURIs = ?"))) {
 
-			preparedStatement.setLong(1, user.getUserId());
+			preparedStatement.setLong(1, guestUserId);
 			preparedStatement.setString(2, "AUTHORIZATION_CODE,REFRESH_TOKEN");
 			preparedStatement.setString(3, "client_secret_post");
-			preparedStatement.setLong(4, user.getUserId());
+			preparedStatement.setLong(4, guestUserId);
 			preparedStatement.setLong(5, ClientProfile.WEB_APPLICATION.id());
 			preparedStatement.setString(6, "https://analytics.liferay.com");
 			preparedStatement.setString(
@@ -122,9 +125,6 @@ public class OAuth2ApplicationAnalyticsCloudUpgradeProcess
 					resultSet.getLong(1));
 			}
 		}
-
-		user = _userLocalService.getUserByScreenName(
-			companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
 
 		oAuth2Application =
 			_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(

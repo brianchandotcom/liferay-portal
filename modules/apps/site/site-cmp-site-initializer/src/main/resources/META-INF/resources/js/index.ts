@@ -6,9 +6,11 @@
 export {default as CustomAssignee} from './components/CustomAssignee';
 export {default as EditorToolbar} from './components/EditorToolbar';
 export {default as Tags} from './components/Tags';
+export {default as ProjectHistory} from './components/project/ProjectHistory';
 export {default as ProjectInfoSummary} from './components/project/ProjectInfoSummary';
 export {default as ProjectsFDSPropsTransformer} from './components/props_transformer/ProjectsFDSPropsTransformer';
 export {default as TasksFDSPropsTransformer} from './components/props_transformer/TasksFDSPropsTransformer';
+export {default as TaskHistory} from './components/task/TaskHistory';
 export {default as TaskInfoSummary} from './components/task/TaskInfoSummary';
 export {default as TasksOverview} from './components/task/TasksOverview';
 export {default as TasksQuickFilters} from './components/task/TasksQuickFilters';

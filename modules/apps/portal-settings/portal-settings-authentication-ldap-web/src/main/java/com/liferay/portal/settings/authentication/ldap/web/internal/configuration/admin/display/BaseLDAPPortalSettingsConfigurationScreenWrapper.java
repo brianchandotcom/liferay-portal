@@ -8,7 +8,6 @@ package com.liferay.portal.settings.authentication.ldap.web.internal.configurati
 import com.liferay.configuration.admin.display.ConfigurationScreen;
 import com.liferay.configuration.admin.display.ConfigurationScreenWrapper;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenContributor;
 import com.liferay.portal.settings.configuration.admin.display.PortalSettingsConfigurationScreenFactory;
 
@@ -31,15 +30,6 @@ public abstract class BaseLDAPPortalSettingsConfigurationScreenWrapper
 	@Override
 	public String getScope() {
 		return _scope.getValue();
-	}
-
-	@Override
-	public boolean isVisible() {
-		if (_scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM)) {
-			return FeatureFlagManagerUtil.isEnabled("LPD-45613");
-		}
-
-		return super.isVisible();
 	}
 
 	@Override

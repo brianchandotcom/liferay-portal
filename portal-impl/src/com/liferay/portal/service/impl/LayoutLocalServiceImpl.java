@@ -784,7 +784,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws Exception {
 
 		if (Validator.isNull(type)) {
-			throw new IllegalArgumentException("type is null");
+			throw new IllegalArgumentException("Type is null");
 		}
 
 		if (type.equals(LayoutConstants.TYPE_EMBEDDED) ||

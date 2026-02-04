@@ -249,9 +249,17 @@ public class ObjectFieldInfoFieldConverter {
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
+			ObjectRelationship objectRelationship =
+				_objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
+
 			finalStep.attribute(
+				RelationshipInfoFieldType.INHERITANCE,
+				objectRelationship.isEdge()
+			).attribute(
 				RelationshipInfoFieldType.LABEL_FIELD_NAME,
-				_getRelationshipLabelFieldName(objectField)
+				_getRelationshipLabelFieldName(objectRelationship)
 			).attribute(
 				RelationshipInfoFieldType.URL, _getRelationshipURL(objectField)
 			).attribute(

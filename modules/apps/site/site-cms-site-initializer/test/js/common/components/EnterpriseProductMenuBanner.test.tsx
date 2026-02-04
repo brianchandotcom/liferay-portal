@@ -11,7 +11,9 @@ import EnterpriseProductMenuBanner from '../../../../src/main/resources/META-INF
 
 describe('EnterpriseProductMenuBanner', () => {
 	it('renders the banner with all its elements', () => {
-		render(<EnterpriseProductMenuBanner />);
+		render(
+			<EnterpriseProductMenuBanner enterpriseDetailsActionLink="/my-temp-link" />
+		);
 
 		expect(screen.getByText('enterprise')).toBeInTheDocument();
 
@@ -30,6 +32,6 @@ describe('EnterpriseProductMenuBanner', () => {
 		});
 
 		expect(detailsLink).toBeInTheDocument();
-		expect(detailsLink).toHaveAttribute('href', '#');
+		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
 	});
 });

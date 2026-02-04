@@ -61,6 +61,11 @@ public class ViewDashboardDisplayContext {
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
+
+			// Will be properly filled in LPD-77107
+
+			"enterpriseDetailsActionLink", "/my-temp-url"
+		).put(
 			"constants", getConstants()
 		).put(
 			"dashboard",
@@ -69,7 +74,9 @@ public class ViewDashboardDisplayContext {
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
 		).put(
-			"freeTier", FeatureFlagManagerUtil.isEnabled("LPD-74377")
+			"freeTier",
+			FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-74377")
 		).put(
 			"learnResources", _getLearnResourcesJSONObject()
 		).build();

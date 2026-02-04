@@ -310,10 +310,9 @@ public class SegmentsServicePreActionTest {
 				mockHttpServletRequest.setAttribute(
 					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
-				LifecycleEvent lifecycleEvent = new LifecycleEvent(
-					mockHttpServletRequest, new MockHttpServletResponse());
-
-				lifecycleAction.processLifecycleEvent(lifecycleEvent);
+				lifecycleAction.processLifecycleEvent(
+					new LifecycleEvent(
+						mockHttpServletRequest, new MockHttpServletResponse()));
 
 				Assert.assertArrayEquals(
 					new long[] {

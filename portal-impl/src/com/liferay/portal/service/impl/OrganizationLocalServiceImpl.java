@@ -2181,7 +2181,7 @@ public class OrganizationLocalServiceImpl
 		organization.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
 				externalReferenceCode, organization.getModelClassName(),
-				organization.getCompanyId(), organization.getGroupId(),
+				organization.getCompanyId(), 0L,
 				organization.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 

@@ -99,6 +99,9 @@ export interface IBulkActionTaskType {
 	};
 	DeleteBulkAction: {};
 	DownloadBulkAction: {};
+	DueDateBulkAction: {
+		dueDate?: string;
+	};
 	ExpireBulkAction: {};
 	KeywordBulkAction: {
 		append?: boolean;

@@ -17,6 +17,7 @@ import React from 'react';
 
 import {openCMPModal} from '../../utils/openCMPModal';
 import StateLabel from '../StateLabel';
+import BulkEditDueDateModalContent from '../modal/BulkEditDueDateModalContent';
 import BulkEditStateModalContent from '../modal/BulkEditStateModalContent';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
@@ -280,7 +281,23 @@ export default function TasksFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-			if (action?.data?.id === 'update-state') {
+			if (action?.data?.id === 'update-due-date') {
+				openCMPModal({
+					center: true,
+					contentComponent: ({
+						closeModal,
+					}: {
+						closeModal: () => void;
+					}) =>
+						BulkEditDueDateModalContent({
+							apiURL: otherProps?.apiURL,
+							closeModal,
+							selectedData,
+						}),
+					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'update-state') {
 				openCMPModal({
 					center: true,
 					contentComponent: ({

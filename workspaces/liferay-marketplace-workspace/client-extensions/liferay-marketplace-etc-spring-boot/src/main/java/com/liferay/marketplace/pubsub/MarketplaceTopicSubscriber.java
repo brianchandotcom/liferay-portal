@@ -42,7 +42,7 @@ import org.springframework.stereotype.Service;
  * @author Caleb Hall
  */
 @Service
-public class MarketplacePubsubSubscriber {
+public class MarketplaceTopicSubscriber {
 
 	@PreDestroy
 	public void tearDown() {
@@ -173,7 +173,7 @@ public class MarketplacePubsubSubscriber {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		MarketplacePubsubSubscriber.class);
+		MarketplaceTopicSubscriber.class);
 
 	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;

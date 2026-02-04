@@ -1,8 +1,6 @@
 #!/bin/bash
 
 function main {
-	TEMPLATE="${1}"
-
 	DESTINATION=$(pwd)
 
 	if [ -n "${2}" ]
@@ -18,7 +16,7 @@ function main {
 		--single-branch \
 		https://github.com/liferay/liferay-portal.git "${TEMP_DIR}"
 
-	local template_origin="${TEMP_DIR}/modules/integrations/vercel/${TEMPLATE}"
+	local template_origin="${TEMP_DIR}/modules/integrations/vercel/${1}"
 
 	echo "Moving ${template_origin} to ${DESTINATION}"
 
@@ -29,7 +27,7 @@ function main {
 
 	mv -v "${template_origin}" "${DESTINATION}"
 
-	cd "${DESTINATION}/${TEMPLATE}" && git init && git add . && git commit --message "chore: clone ${1}"
+	cd "${DESTINATION}/${1}" && git init && git add . && git commit --message "chore: clone ${1}"
 }
 
 main "${@}"

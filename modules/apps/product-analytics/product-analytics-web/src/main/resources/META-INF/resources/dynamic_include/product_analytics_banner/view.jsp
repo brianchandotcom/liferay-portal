@@ -7,8 +7,8 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
-<div aria-label="analytics banner product" class="product-analytics-banner product-analytics-banner-bottom" role="dialog">
-	<liferay-portlet:runtime
-		portletName="<%= ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_BANNER %>"
-	/>
-</div>
+<liferay-portlet:runtime
+	portletName="<%= ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_BANNER %>"
+/>
+
+<aui:script src="https://storage.googleapis.com/liferaycloud-cdn-product-experience-manager-assets-nonprd/self-hosted-script/product-analytics-script.umd.min.js" type="text/javascript"></aui:script>

@@ -5,10 +5,6 @@
 
 // Product Analytics API
 
-export {
-	default as ProductAnalyticsBanner,
-	checkProductAnalyticsConsentForTypes,
-	openProductAnalyticsConsentModal,
-} from '../product_analytics_banner/js/ProductAnalyticsBanner';
+export {default as ProductAnalyticsBanner} from '../product_analytics_banner/js/ProductAnalyticsBanner';
 
 export {default as ProductAnalyticsConsentPanel} from '../product_analytics_consent_panel/js/ProductAnalyticsConsentPanel';

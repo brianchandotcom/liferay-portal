@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -14,6 +14,7 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
@@ -397,9 +398,10 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			searchSourceBuilder.postFilter(queryBuilder);
 		}
 		else if (baseSearchRequest.getPostFilter() != null) {
+			Filter filter = baseSearchRequest.getPostFilter();
+
 			searchSourceBuilder.postFilter(
-				_filterTranslator.translate(
-					baseSearchRequest.getPostFilter(), null));
+				filter.accept(ElasticsearchFilterVisitor.INSTANCE));
 		}
 	}
 
@@ -545,8 +547,11 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
+		Filter filter = query.getPreBooleanFilter();
+
 		boolQueryBuilder.filter(
-			_filterTranslator.translate(query.getPreBooleanFilter(), null));
+			filter.accept(ElasticsearchFilterVisitor.INSTANCE));
+
 		boolQueryBuilder.must(queryBuilder);
 
 		return boolQueryBuilder;
@@ -568,9 +573,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 	@Reference
 	private FacetTranslator _facetTranslator;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private FilterTranslator<QueryBuilder> _filterTranslator;
 
 	private final com.liferay.portal.kernel.search.query.QueryTranslator
 		<QueryBuilder> _legacyQueryTranslator =

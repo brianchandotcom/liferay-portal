@@ -44,7 +44,7 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A page on a site, which can be of type content or widget.",
+	description = "A page on a site, which can be of type content, embedded, link to page, link to URL, page set or widget.",
 	value = "SitePage"
 )
 @JsonFilter("Liferay.Vulcan")

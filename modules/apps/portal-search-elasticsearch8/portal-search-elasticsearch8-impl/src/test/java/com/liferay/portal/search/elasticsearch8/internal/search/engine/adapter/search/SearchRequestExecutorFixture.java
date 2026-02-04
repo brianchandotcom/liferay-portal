@@ -18,9 +18,6 @@ import com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.facet.NestedFacetProcessor;
 import com.liferay.portal.search.elasticsearch8.internal.facet.RangeFacetProcessor;
-import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchHitDocumentTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.DefaultStatsTranslator;
@@ -62,9 +59,6 @@ public class SearchRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		ElasticsearchQueryTranslator elasticsearchQueryTranslator =
-			new ElasticsearchQueryTranslator();
-
 		StatsTranslator statsTranslator = new DefaultStatsTranslator();
 
 		ReflectionTestUtil.setFieldValue(
@@ -73,9 +67,8 @@ public class SearchRequestExecutorFixture {
 
 		_searchRequestExecutor = _createSearchRequestExecutor(
 			createComplexQueryBuilderFactory(new QueriesImpl()),
-			_elasticsearchClientResolver, elasticsearchQueryTranslator,
-			_facetProcessor, new StatsRequestBuilderFactoryImpl(),
-			statsTranslator);
+			_elasticsearchClientResolver, _facetProcessor,
+			new StatsRequestBuilderFactoryImpl(), statsTranslator);
 	}
 
 	public void tearDown() {
@@ -89,7 +82,6 @@ public class SearchRequestExecutorFixture {
 	protected static CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler(
 			ComplexQueryBuilderFactory complexQueryBuilderFactory,
-			ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 			FacetProcessor<?> facetProcessor, StatsTranslator statsTranslator) {
 
 		CommonSearchRequestBuilderAssembler
@@ -111,31 +103,12 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
 			_createFacetTranslator(facetProcessor));
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_filterTranslator",
-			new ElasticsearchFilterTranslator());
-
-		ElasticsearchQueryTranslatorFixture
-			legacyElasticsearchQueryTranslatorFixture =
-				new ElasticsearchQueryTranslatorFixture();
-
-		com.liferay.portal.search.elasticsearch8.internal.legacy.query.
-			ElasticsearchQueryTranslator legacyElasticsearchQueryTranslator =
-				legacyElasticsearchQueryTranslatorFixture.
-					getElasticsearchQueryTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_legacyQueryTranslator",
-			legacyElasticsearchQueryTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler,
 			"_pipelineAggregationTranslator",
 			new ElasticsearchPipelineAggregationTranslator());
 
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_queryTranslator",
-			elasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_statsTranslator",
 			statsTranslator);
@@ -196,10 +169,6 @@ public class SearchRequestExecutorFixture {
 					MapUtil.singletonDictionary(
 						"class.name", NestedFacetImpl.class.getName())));
 		}
-
-		ReflectionTestUtil.setFieldValue(
-			_defaultFacetTranslator, "_filterTranslator",
-			new ElasticsearchFilterTranslator());
 
 		return _defaultFacetTranslator;
 	}
@@ -285,7 +254,6 @@ public class SearchRequestExecutorFixture {
 	private SearchRequestExecutor _createSearchRequestExecutor(
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		ElasticsearchClientResolver elasticsearchClientResolver,
-		ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 		FacetProcessor<?> facetProcessor,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
@@ -301,8 +269,8 @@ public class SearchRequestExecutorFixture {
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
 				createCommonSearchRequestBuilderAssembler(
-					complexQueryBuilderFactory, elasticsearchQueryTranslator,
-					facetProcessor, statsTranslator);
+					complexQueryBuilderFactory, facetProcessor,
+					statsTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_countSearchRequestExecutor",
@@ -312,8 +280,7 @@ public class SearchRequestExecutorFixture {
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			_createSearchSearchRequestAssembler(
-				commonSearchRequestBuilderAssembler,
-				elasticsearchQueryTranslator, statsRequestBuilderFactory,
+				commonSearchRequestBuilderAssembler, statsRequestBuilderFactory,
 				statsTranslator);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
@@ -343,7 +310,6 @@ public class SearchRequestExecutorFixture {
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
 		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
-		ElasticsearchQueryTranslator elasticsearchQueryTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsTranslator statsTranslator) {
 
@@ -357,9 +323,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_groupByRequestFactory",
 			new GroupByRequestFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_queryTranslator",
-			elasticsearchQueryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
 			statsRequestBuilderFactory);

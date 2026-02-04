@@ -18,13 +18,14 @@ import co.elastic.clients.elasticsearch.core.search.ScoreMode;
 import co.elastic.clients.elasticsearch.core.search.TrackHits;
 import co.elastic.clients.util.NamedValue;
 
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
@@ -419,10 +420,11 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			searchRequestBuilder.postFilter(query);
 		}
 		else if (baseSearchRequest.getPostFilter() != null) {
+			Filter filter = baseSearchRequest.getPostFilter();
+
 			searchRequestBuilder.postFilter(
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_filterTranslator.translate(
-						baseSearchRequest.getPostFilter(), null)));
+					filter.accept(ElasticsearchFilterVisitor.INSTANCE)));
 		}
 	}
 
@@ -586,10 +588,12 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 		BoolQuery.Builder builder = QueryBuilders.bool();
 
+		Filter filter = query.getPreBooleanFilter();
+
 		builder.filter(
 			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-				_filterTranslator.translate(
-					query.getPreBooleanFilter(), null)));
+				filter.accept(ElasticsearchFilterVisitor.INSTANCE)));
+
 		builder.must(translatedQuery);
 
 		return new co.elastic.clients.elasticsearch._types.query_dsl.Query(
@@ -615,9 +619,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Reference
 	private FacetTranslator _facetTranslator;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private FilterTranslator<QueryVariant> _filterTranslator;
 
 	private final com.liferay.portal.kernel.search.query.QueryTranslator
 		<QueryVariant> _legacyQueryTranslator =

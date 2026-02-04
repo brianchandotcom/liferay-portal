@@ -12,7 +12,6 @@ import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.TermsInclude;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.util.NamedValue;
 
@@ -25,10 +24,10 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +38,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -65,9 +63,11 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			postFilterQueries = new ArrayList<>();
 
 		if ((query != null) && (query.getPostFilter() != null)) {
+			Filter filter = query.getPostFilter();
+
 			postFilterQueries.add(
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_filterTranslator.translate(query.getPostFilter(), null)));
+					filter.accept(ElasticsearchFilterVisitor.INSTANCE)));
 		}
 
 		for (Facet facet : facets) {
@@ -163,7 +163,7 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			booleanClause.getClause(), booleanClause.getBooleanClauseOccur());
 
 		return new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-			_filterTranslator.translate(booleanFilter, null));
+			booleanFilter.accept(ElasticsearchFilterVisitor.INSTANCE));
 	}
 
 	private co.elastic.clients.elasticsearch._types.query_dsl.Query
@@ -246,9 +246,6 @@ public class DefaultFacetTranslator implements FacetTranslator {
 			}
 
 		};
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private FilterTranslator<QueryVariant> _filterTranslator;
 
 	@SuppressWarnings("rawtypes")
 	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;

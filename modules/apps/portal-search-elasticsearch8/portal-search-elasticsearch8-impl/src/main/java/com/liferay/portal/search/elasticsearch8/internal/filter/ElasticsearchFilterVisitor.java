@@ -26,12 +26,10 @@ import co.elastic.clients.elasticsearch._types.query_dsl.TermsSetQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.UntypedRangeQuery;
 
 import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
@@ -59,23 +57,14 @@ import com.liferay.portal.search.filter.TermsSetFilter;
 import java.text.Format;
 import java.text.ParseException;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Marco Leo
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = FilterTranslator.class
-)
-public class ElasticsearchFilterTranslator
-	implements FilterTranslator<QueryVariant>, FilterVisitor<QueryVariant> {
+public class ElasticsearchFilterVisitor implements FilterVisitor<QueryVariant> {
 
-	@Override
-	public QueryVariant translate(Filter filter, SearchContext searchContext) {
-		return filter.accept(this);
-	}
+	public static final ElasticsearchFilterVisitor INSTANCE =
+		new ElasticsearchFilterVisitor();
 
 	@Override
 	public QueryVariant visit(BooleanFilter booleanFilter) {
@@ -345,6 +334,9 @@ public class ElasticsearchFilterTranslator
 		Filter filter = booleanClause.getClause();
 
 		return filter.accept(filterVisitor);
+	}
+
+	private ElasticsearchFilterVisitor() {
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();

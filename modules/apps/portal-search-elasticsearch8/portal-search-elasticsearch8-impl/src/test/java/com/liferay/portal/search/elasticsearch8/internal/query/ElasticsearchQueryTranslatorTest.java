@@ -9,7 +9,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
 import com.liferay.portal.search.internal.query.BooleanQueryImpl;
@@ -47,7 +47,6 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_elasticsearchFilterTranslator = new ElasticsearchFilterTranslator();
 		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
 	}
 
@@ -174,8 +173,8 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
-		String queryString = _elasticsearchFilterTranslator.visit(
-			termsFilter
+		String queryString = termsFilter.accept(
+			ElasticsearchFilterVisitor.INSTANCE
 		).toString();
 
 		Assert.assertEquals(
@@ -193,7 +192,6 @@ public class ElasticsearchQueryTranslatorTest {
 
 	private static final Float _BOOST = 1.5F;
 
-	private ElasticsearchFilterTranslator _elasticsearchFilterTranslator;
 	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 
 }

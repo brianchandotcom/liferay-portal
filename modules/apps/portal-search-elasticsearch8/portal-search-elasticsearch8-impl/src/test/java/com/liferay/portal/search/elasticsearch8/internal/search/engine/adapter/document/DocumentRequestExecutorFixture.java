@@ -7,8 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslatorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
@@ -56,20 +54,9 @@ public class DocumentRequestExecutorFixture {
 			deleteByQueryDocumentRequestExecutor =
 				new DeleteByQueryDocumentRequestExecutorImpl();
 
-		ElasticsearchQueryTranslatorFixture
-			legacyElasticsearchQueryTranslatorFixture =
-				new ElasticsearchQueryTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutor,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
-			legacyElasticsearchQueryTranslatorFixture.
-				getElasticsearchQueryTranslator());
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor, "_queryTranslator",
-			new ElasticsearchQueryTranslator());
 
 		return deleteByQueryDocumentRequestExecutor;
 	}
@@ -160,20 +147,9 @@ public class DocumentRequestExecutorFixture {
 			updateByQueryDocumentRequestExecutor =
 				new UpdateByQueryDocumentRequestExecutorImpl();
 
-		ElasticsearchQueryTranslatorFixture
-			lecacyElasticsearchQueryTranslatorFixture =
-				new ElasticsearchQueryTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_legacyQueryTranslator",
-			lecacyElasticsearchQueryTranslatorFixture.
-				getElasticsearchQueryTranslator());
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_queryTranslator",
-			new ElasticsearchQueryTranslator());
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor, "_scripts", _scripts);
 

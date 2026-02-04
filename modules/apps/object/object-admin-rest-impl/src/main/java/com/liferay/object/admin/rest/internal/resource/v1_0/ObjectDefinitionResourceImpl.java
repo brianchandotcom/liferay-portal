@@ -356,6 +356,8 @@ public class ObjectDefinitionResourceImpl
 						GetterUtil.getBoolean(
 							objectDefinition.getEnableObjectEntryDraft()),
 						GetterUtil.getBoolean(
+							objectDefinition.getEnableObjectEntryHistory()),
+						GetterUtil.getBoolean(
 							objectDefinition.getEnableObjectEntrySchedule()),
 						GetterUtil.getBoolean(
 							objectDefinition.

@@ -510,7 +510,10 @@ function filterRemoteOptions(query, abortController) {
 		.then((response) => response.json())
 		.then((result) => {
 			return result.items.map((entry) => {
-				let label = entry[input.attributes.relationshipLabelFieldName];
+				const finalEntry = entry.embedded || entry;
+
+				let label =
+					finalEntry[input.attributes.relationshipLabelFieldName];
 
 				if (Array.isArray(label)) {
 					label = label.map((label) => label.name).join(', ');
@@ -523,7 +526,7 @@ function filterRemoteOptions(query, abortController) {
 					textContent: label,
 					textValue: label,
 					value: `${
-						entry[input.attributes.relationshipValueFieldName]
+						finalEntry[input.attributes.relationshipValueFieldName]
 					}`,
 				};
 			});

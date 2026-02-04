@@ -46,10 +46,13 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -314,6 +317,17 @@ public class ObjectFieldInfoFieldConverter {
 		return null;
 	}
 
+	private Group _getGroup(ServiceContext serviceContext) {
+		try {
+			return serviceContext.getScopeGroup();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return null;
+	}
+
 	private long _getGroupId(
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition) {
@@ -462,11 +476,8 @@ public class ObjectFieldInfoFieldConverter {
 				listTypeEntry.getKey()));
 	}
 
-	private String _getRelationshipLabelFieldName(ObjectField objectField) {
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				fetchObjectRelationshipByObjectFieldId2(
-					objectField.getObjectFieldId());
+	private String _getRelationshipLabelFieldName(
+		ObjectRelationship objectRelationship) {
 
 		ObjectDefinition relatedObjectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
@@ -512,6 +523,18 @@ public class ObjectFieldInfoFieldConverter {
 
 		if (relatedObjectDefinition == null) {
 			return StringPool.BLANK;
+		}
+
+		Group group = _getGroup(serviceContext);
+
+		if ((group != null) && group.isCMS()) {
+			return StringBundler.concat(
+				_portal.getPortalURL(serviceContext.getRequest()),
+				"/o/search/v1.0/search?",
+				"emptySearch=true&nestedFields=embedded&filter=status in (0) ",
+				"and objectDefinitionId in (",
+				objectRelationship.getObjectDefinitionId1(),
+				CharPool.CLOSE_PARENTHESIS);
 		}
 
 		RESTContextPathResolver restContextPathResolver =

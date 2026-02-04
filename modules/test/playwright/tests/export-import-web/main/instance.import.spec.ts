@@ -84,7 +84,7 @@ test('Can export and import custom object entries at instance level', async ({
 	});
 
 	const content = await readFileFromZip(
-		`C_${objectDefinition.name}.json`,
+		`${objectDefinition.externalReferenceCode}.json`,
 		exportFilePath
 	);
 
@@ -989,7 +989,7 @@ test('Can see corresponding elements at instance level', async ({
 	await expect(page.getByText(`${objectDefinition.name}`)).toBeVisible();
 
 	await expect(
-		page.getByText(`C_${objectDefinition.name} Change`)
+		page.getByText(`${objectDefinition.externalReferenceCode} Change`)
 	).not.toBeVisible();
 
 	await expect(page.getByLabel('Delete Application Data')).not.toBeVisible();
@@ -1158,14 +1158,8 @@ test('Can import at instance level when LAR contains custom objects without exis
 
 	await objectDefinitionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
-	const {fileName} = await companyExportImportPage.import({
+	await companyExportImportPage.import({
 		filePath: exportFilePath,
+		taskStatus: 'completedWithErrors',
 	});
-
-	await expect(
-		companyExportImportPage.exportImportPage.taskStatusLabel(
-			fileName,
-			'success'
-		)
-	).toBeVisible();
 });

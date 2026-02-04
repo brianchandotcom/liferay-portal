@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.layout.util.LayoutServiceContextHelperUtil;
 import com.liferay.portal.kernel.model.User;
@@ -58,17 +57,24 @@ public class FragmentEntryLinkUtil {
 				return fragmentEntryLink.getHtml();
 			}
 
+			String editableValues = fragmentEntryLink.getEditableValues();
+
 			fragmentEntryLink.setEditableValues(null);
 
-			FragmentEntryProcessorContext fragmentEntryProcessorContext =
-				new DefaultFragmentEntryProcessorContext(
-					fragmentEntryLink.getCompanyId(), httpServletRequest,
-					httpServletResponse, LocaleUtil.getMostRelevantLocale(),
-					FragmentEntryLinkConstants.EDIT,
-					fragmentEntryLink.getGroupId());
-
-			return fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink, fragmentEntryProcessorContext);
+			try {
+				return fragmentEntryProcessorRegistry.
+					processFragmentEntryLinkHTML(
+						fragmentEntryLink,
+						new DefaultFragmentEntryProcessorContext(
+							fragmentEntryLink.getCompanyId(),
+							httpServletRequest, httpServletResponse,
+							LocaleUtil.getMostRelevantLocale(),
+							FragmentEntryLinkConstants.EDIT,
+							fragmentEntryLink.getGroupId()));
+			}
+			finally {
+				fragmentEntryLink.setEditableValues(editableValues);
+			}
 		}
 	}
 

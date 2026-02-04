@@ -66,7 +66,7 @@ class EmptyDropZone extends Component<IEmptyDropZone> {
 
 		const targetClasses = getCN('empty-drop-zone-target', {
 			'dnd-hover': canDrop && hover,
-			'enabled-sequential-segment': enabledSequentialSegment
+			'enable-sequential-segment': enabledSequentialSegment
 		});
 
 		return (

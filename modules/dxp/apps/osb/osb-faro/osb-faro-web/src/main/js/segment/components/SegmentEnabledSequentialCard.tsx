@@ -20,8 +20,8 @@ const SegmentEnabledSequentialCard: React.FC<ISegmentEnabledSequentialCardProps>
 		<Card.Body>
 			<p>
 				<ClayToggle
-					data-testid='segment-enabled-sequential-toggle'
-					label={Liferay.Language.get('enabled-sequential')}
+					data-testid='segment-enable-sequential-toggle'
+					label={Liferay.Language.get('enable-sequential')}
 					onToggle={onToggle}
 					toggled={toggled}
 				/>

@@ -9,6 +9,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.upgrade.DeleteDuplicateUniqueFinderRowsUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -69,6 +70,18 @@ public class MarketplaceServiceUpgradeStepRegistrator
 				"Marketplace_App", "title", "VARCHAR(255) null"),
 			UpgradeProcessFactory.alterColumnType(
 				"Marketplace_App", "category", "VARCHAR(255) null"));
+
+		registry.register(
+			"2.0.3", "3.0.0",
+			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
+				"Marketplace_App", new String[] {"remoteAppId"}, "appId asc"));
+
+		registry.register(
+			"3.0.0", "4.0.0",
+			new DeleteDuplicateUniqueFinderRowsUpgradeProcess(
+				"Marketplace_Module",
+				new String[] {"appId", "bundleSymbolicName", "bundleVersion"},
+				"moduleId asc"));
 	}
 
 	@Reference

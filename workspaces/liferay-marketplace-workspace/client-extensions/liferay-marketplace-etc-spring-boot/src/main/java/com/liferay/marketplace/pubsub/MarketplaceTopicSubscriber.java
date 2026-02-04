@@ -48,8 +48,9 @@ public class MarketplaceTopicSubscriber {
 	public void tearDown() {
 		for (Subscriber subscriber : _subscribers) {
 			if (subscriber != null) {
-				subscriber.stopAsync(
-				).awaitTerminated();
+				ApiService apiService = subscriber.stopAsync();
+
+				apiService.awaitTerminated();
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Subscriber shut down cleanly");

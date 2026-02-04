@@ -112,7 +112,7 @@ public class PageExperiencesTestUtil {
 		String pageSpecificationExternalReferenceCode, int priority,
 		long scopeGroupId, SegmentsEntry segmentsEntry) {
 
-		PageExperience pageExperience = _createBasePageExperience(
+		PageExperience pageExperience = _getPageExperience(
 			pageSpecificationExternalReferenceCode, priority, scopeGroupId);
 
 		if (segmentsEntry != null) {
@@ -129,7 +129,7 @@ public class PageExperiencesTestUtil {
 		long scopeGroupId, String segmentsEntryERC,
 		String segmentsEntryScopeERC) {
 
-		PageExperience pageExperience = _createBasePageExperience(
+		PageExperience pageExperience = _getPageExperience(
 			pageSpecificationExternalReferenceCode, priority, scopeGroupId);
 
 		if (Validator.isNotNull(segmentsEntryERC)) {
@@ -204,7 +204,7 @@ public class PageExperiencesTestUtil {
 		}
 	}
 
-	private static PageExperience _createBasePageExperience(
+	private static PageExperience _getPageExperience(
 		String pageSpecificationExternalReferenceCode, int priority,
 		long scopeGroupId) {
 

@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -101,7 +100,6 @@ import com.liferay.portal.kernel.util.SubscriptionSender;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
@@ -1818,23 +1816,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return StringPool.BLANK;
 	}
 
-	private String _getLayoutFullURL(
-			ThemeDisplay themeDisplay, ServiceContext serviceContext)
-		throws PortalException {
-
-		if (themeDisplay == null) {
-			return serviceContext.getLayoutFullURL();
-		}
-
-		if (themeDisplay.getRefererPlid() == 0) {
-			return _portal.getLayoutFullURL(themeDisplay);
-		}
-
-		return _portal.getLayoutFullURL(
-			_layoutLocalService.getLayout(themeDisplay.getRefererPlid()),
-			themeDisplay);
-	}
-
 	private String _getUniqueFileName(
 			long groupId, String fileName, long folderId)
 		throws PortalException {
@@ -1969,9 +1950,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_URL);
 
 		if (Validator.isNull(entryURL)) {
+			String prefixEntryLayoutFullUrl = GetterUtil.getString(
+				serviceContext.getAttribute("prefixEntryLayoutFullUrl"));
+
 			entryURL = StringBundler.concat(
-				serviceContext.getLayoutFullURL(),
-				Portal.FRIENDLY_URL_SEPARATOR, "blogs/", entry.getEntryId());
+				prefixEntryLayoutFullUrl, Portal.FRIENDLY_URL_SEPARATOR,
+				"blogs/", entry.getEntryId());
 		}
 
 		BlogsGroupServiceSettings blogsGroupServiceSettings =
@@ -2201,11 +2185,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String layoutFullURL = _getLayoutFullURL(themeDisplay, serviceContext);
+		String layoutFullURL = serviceContext.getLayoutFullURL();
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -2251,11 +2231,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		String layoutFullURL = _getLayoutFullURL(themeDisplay, serviceContext);
+		String layoutFullURL = serviceContext.getLayoutFullURL();
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

@@ -9,11 +9,17 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
@@ -31,6 +37,42 @@ import org.osgi.service.component.annotations.Reference;
 	service = WorkflowHandler.class
 )
 public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
+
+	@Override
+	public void contributeWorkflowContext(
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
+			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return;
+		}
+
+		serviceContext.setAttribute(
+			"prefixEntryLayoutFullUrl", serviceContext.getLayoutFullURL());
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			if (themeDisplay.getRefererPlid() == 0) {
+				serviceContext.setLayoutFullURL(
+					_portal.getLayoutFullURL(themeDisplay));
+			}
+			else {
+				serviceContext.setLayoutFullURL(
+					_portal.getLayoutFullURL(
+						_layoutLocalService.getLayout(
+							themeDisplay.getRefererPlid()),
+						themeDisplay));
+			}
+		}
+	}
 
 	@Override
 	public String getClassName() {
@@ -62,5 +104,11 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 
 	@Reference
 	private BlogsEntryLocalService _blogsEntryLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 }

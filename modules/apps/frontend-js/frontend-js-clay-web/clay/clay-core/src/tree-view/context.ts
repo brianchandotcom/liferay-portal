@@ -35,6 +35,7 @@ export interface ITreeViewContext<T extends Record<string, any>>
 	childrenRoot: React.MutableRefObject<ChildrenFunction<Object> | null>;
 	dragAndDrop?: boolean;
 	dragAndDropMode: 'single' | 'multiple';
+	dragHandlerVisibility?: 'visible' | 'keyboard';
 	expandDoubleClick?: boolean;
 	expandOnCheck?: boolean;
 	expanderClassName?: string;

@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.Inject;
@@ -27,6 +28,17 @@ public class AssetListEntryModelListenerTest extends BaseModelListenerTestCase {
 	@Test
 	public void testOnBeforeUpdate() throws Exception {
 		super.testOnBeforeUpdate();
+
+		_testOnBeforeUpdate(
+			modifiableSystemObjectDefinition1,
+			modifiableSystemObjectDefinition2);
+		_testOnBeforeUpdate(objectDefinition1, objectDefinition2);
+	}
+
+	private void _testOnBeforeUpdate(
+			ObjectDefinition objectDefinition1,
+			ObjectDefinition objectDefinition2)
+		throws Exception {
 
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(

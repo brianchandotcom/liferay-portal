@@ -11,6 +11,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -34,6 +35,23 @@ public class FragmentEntryLinkModelListenerTest
 	@Test
 	public void testOnBeforeCreate() throws Exception {
 		super.testOnBeforeCreate();
+
+		_testOnBeforeCreate(
+			modifiableSystemObjectDefinition1,
+			modifiableSystemObjectDefinition1ClassNameId,
+			modifiableSystemObjectDefinition2,
+			modifiableSystemObjectDefinition2ClassNameId);
+		_testOnBeforeCreate(
+			objectDefinition1, objectDefinition1ClassNameId, objectDefinition2,
+			objectDefinition2ClassNameId);
+	}
+
+	private void _testOnBeforeCreate(
+			ObjectDefinition objectDefinition1,
+			long objectDefinition1ClassNameId,
+			ObjectDefinition objectDefinition2,
+			long objectDefinition2ClassNameId)
+		throws Exception {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 

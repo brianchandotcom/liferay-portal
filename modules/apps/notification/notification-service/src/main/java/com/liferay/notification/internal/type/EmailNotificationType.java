@@ -659,6 +659,10 @@ public class EmailNotificationType extends BaseNotificationType {
 				template.put(infoField.getUniqueId(), templateNode);
 			}
 
+			template.put(
+				"classNameId",
+				portal.getClassNameId(notificationContext.getClassName()));
+
 			if (httpServletRequest != null) {
 				template.put("locale", portal.getLocale(httpServletRequest));
 				template.put(

@@ -175,6 +175,10 @@ export class WidgetPagePage {
 			.waitFor({state: 'visible'});
 
 		await this.page.mouse.up();
+
+		await expect(
+			this.page.locator('.sortable-layout-drag-indicator')
+		).toBeHidden();
 	}
 
 	async goto(

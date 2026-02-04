@@ -6,7 +6,6 @@
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {ldapConfigurationPagesTest} from '../../../fixtures/ldapConfigurationPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -35,10 +34,7 @@ export const test = mergeTests(
 	ldapConfigurationPagesTest,
 	systemSettingsPageTest,
 	usersAndOrganizationsPagesTest,
-	userGroupsPageTest,
-	featureFlagsTest({
-		'LPD-45613': {enabled: true, system: true},
-	})
+	userGroupsPageTest
 );
 
 const LDAP_GROUP_1 = 'ldapgroup1';

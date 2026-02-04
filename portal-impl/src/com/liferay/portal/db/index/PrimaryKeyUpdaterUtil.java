@@ -162,7 +162,7 @@ public class PrimaryKeyUpdaterUtil {
 
 		DB db = DBManagerUtil.getDB();
 
-		db.process(
+		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {
 				try {
 					try (Connection connection = DataAccess.getConnection()) {

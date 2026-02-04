@@ -365,8 +365,9 @@ public interface ContactsEngineClient {
 		FaroProject faroProject, String accountId, String channelId,
 		String dataSourceId, String individualSegmentId,
 		String notIndividualSegmentId, String interestName, String filterString,
-		String query, List<String> fields, boolean includeAnonymousUsers,
-		int cur, int delta, List<OrderByField> orderByFields);
+		List<String> profileTypes, String query, List<String> fields,
+		boolean includeAnonymousUsers, int cur, int delta,
+		List<OrderByField> orderByFields);
 
 	public Results<Individual> getIndividualsByIndividualSegment(
 		FaroProject faroProject, String individualSegmentsId, String query,

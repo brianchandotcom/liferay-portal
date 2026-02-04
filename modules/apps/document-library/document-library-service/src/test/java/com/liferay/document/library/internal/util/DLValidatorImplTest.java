@@ -192,8 +192,8 @@ public class DLValidatorImplTest {
 		catch (FileSizeException fileSizeException) {
 			Assert.assertEquals(10L, fileSizeException.getMaxSize());
 			Assert.assertEquals(
-				"20 exceeds the mime type 'image/png' maximum permitted size " +
-					"of 10 for file " + fileName,
+				"20 exceeds the mime type \"image/png\" maximum permitted " +
+					"size of 10 for file " + fileName,
 				fileSizeException.getMessage());
 			Assert.assertEquals("image/png", fileSizeException.getMimeType());
 		}

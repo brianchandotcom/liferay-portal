@@ -302,8 +302,8 @@ public final class DLValidatorImpl implements DLValidator {
 
 			throw new FileSizeException(
 				StringBundler.concat(
-					size, " exceeds the mime type '", mimeType,
-					"' maximum permitted size of ", maxSize, " for file ",
+					size, " exceeds the mime type \"", mimeType,
+					"\" maximum permitted size of ", maxSize, " for file ",
 					fileName),
 				maxSize, mimeType);
 		}

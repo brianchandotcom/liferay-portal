@@ -141,13 +141,8 @@ public class UserAccountBriefResourceImpl
 			new long[] {user.getUserId()}, group.getGroupId());
 
 		if (Validator.isNotNull(userAccountBrief.getRoleKey())) {
-			Role role = _roleLocalService.fetchRole(
+			Role role = _roleLocalService.getRole(
 				group.getCompanyId(), userAccountBrief.getRoleKey());
-
-			if (role == null) {
-				throw new RoleNotFoundException(
-					"Role not found: " + userAccountBrief.getRoleKey());
-			}
 
 			if (role.getType() != RoleConstants.TYPE_SITE) {
 				throw new RoleAssignmentException(
@@ -202,13 +197,8 @@ public class UserAccountBriefResourceImpl
 		_userLocalService.addGroupUser(group.getGroupId(), user.getUserId());
 
 		if (Validator.isNotNull(userAccountBrief.getRoleKey())) {
-			Role role = _roleLocalService.fetchRole(
+			Role role = _roleLocalService.getRole(
 				group.getCompanyId(), userAccountBrief.getRoleKey());
-
-			if (role == null) {
-				throw new RoleNotFoundException(
-					"Role not found: " + userAccountBrief.getRoleKey());
-			}
 
 			if (role.getType() != RoleConstants.TYPE_SITE) {
 				throw new RoleAssignmentException(

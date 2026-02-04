@@ -11,6 +11,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -33,6 +34,16 @@ public class AssetListEntrySegmentsEntryRelModelListenerTest
 	public void testOnBeforeCreate() throws Exception {
 		super.testOnBeforeCreate();
 
+		_testOnBeforeCreate(
+			modifiableSystemObjectDefinition1,
+			modifiableSystemObjectDefinition2ClassNameId);
+		_testOnBeforeCreate(objectDefinition1, objectDefinition2ClassNameId);
+	}
+
+	private void _testOnBeforeCreate(
+			ObjectDefinition objectDefinition, long objectDefinitionClassNameId)
+		throws Exception {
+
 		AssetListEntry assetListEntry =
 			_assetListEntryLocalService.addAssetListEntry(
 				RandomTestUtil.randomString(), companyAdminUser.getUserId(),
@@ -52,10 +63,9 @@ public class AssetListEntrySegmentsEntryRelModelListenerTest
 					UnicodePropertiesBuilder.create(
 						true
 					).put(
-						"anyAssetTypeClassName",
-						objectDefinition1.getClassName()
+						"anyAssetTypeClassName", objectDefinition.getClassName()
 					).put(
-						"classNames", objectDefinition1.getClassName()
+						"classNames", objectDefinition.getClassName()
 					).buildString(),
 					serviceContext);
 
@@ -64,10 +74,10 @@ public class AssetListEntrySegmentsEntryRelModelListenerTest
 		).build();
 
 		Assert.assertEquals(
-			String.valueOf(objectDefinition2ClassNameId),
+			String.valueOf(objectDefinitionClassNameId),
 			unicodeProperties.getProperty("anyAssetType"));
 		Assert.assertEquals(
-			String.valueOf(objectDefinition2ClassNameId),
+			String.valueOf(objectDefinitionClassNameId),
 			unicodeProperties.getProperty("classNameIds"));
 	}
 

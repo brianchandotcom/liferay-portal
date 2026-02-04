@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import List from '@clayui/list';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FDS_EVENT} from '@liferay/frontend-data-set-web';
@@ -69,12 +71,8 @@ function joinWithAnd(items: string[]) {
 	}).format(items);
 }
 
-export default function TaskHistory({apiURL}: {apiURL: string}) {
-	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
-	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-	const [loading, setLoading] = useState(true);
-
-	const containerRef = useRef<HTMLDivElement>(null);
+function TaskHistoryItem({auditEvent}: {auditEvent: AuditEvent}) {
+	const [showDetails, setShowDetails] = useState(false);
 
 	const getAuditEventLabel = (auditEvent: AuditEvent) => {
 		if (auditEvent.eventType === EventType.ADD) {
@@ -113,6 +111,109 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 			</strong>,
 		]);
 	};
+
+	/**
+	 * The `oldValue` and `newValue` can be in different formats according to
+	 * the field's `name` property. For example:
+	 * {
+	 * 	name: "state",
+	 *  newValue: {key: "inProgress", name: "In Progress"},
+	 * 	oldValue: {key: "notStarted", name: "Not Started"},
+	 * }
+	 *
+	 * {
+	 * 	name: "title",
+	 *  newValue: "New Title",
+	 * 	oldValue: "Old Title",
+	 * }
+	 */
+	const getAuditFieldChangeValueLabel = (value: any): string => {
+		if (typeof value === 'string') {
+			return value ?? Liferay.Language.get('none');
+		}
+
+		if (typeof value === 'object') {
+			return value?.name ?? Liferay.Language.get('none');
+		}
+
+		return Liferay.Language.get('none');
+	};
+
+	return (
+		<List.Item className="border-0" flex>
+			<List.ItemField>
+				<AssigneeAvatar
+					image={auditEvent.creator?.image}
+					name={auditEvent.creator?.name || ''}
+				/>
+			</List.ItemField>
+
+			<List.ItemField expand>
+				<List.ItemTitle className="text-weight-normal">
+					{getAuditEventLabel(auditEvent)}
+				</List.ItemTitle>
+
+				<List.ItemText>
+					{new Date(auditEvent.dateCreated).toLocaleString()}
+				</List.ItemText>
+
+				{showDetails && (
+					<div>
+						{auditEvent.auditFieldChanges?.map(
+							(auditFieldChange, index) => (
+								<span className="c-mt-2" key={index}>
+									<strong>
+										{FIELD_NAME[auditFieldChange.name]}:
+									</strong>
+
+									<div className="autofit-padded-no-gutters-x autofit-row autofit-row-center">
+										<div className="autofit-col text-secondary">
+											{getAuditFieldChangeValueLabel(
+												auditFieldChange.oldValue
+											)}
+										</div>
+
+										<div className="autofit-col text-secondary">
+											<div>
+												<ClayIcon symbol="order-arrow-right" />
+											</div>
+										</div>
+
+										<div className="autofit-col autofit-col-expand">
+											{getAuditFieldChangeValueLabel(
+												auditFieldChange.newValue
+											)}
+										</div>
+									</div>
+								</span>
+							)
+						)}
+					</div>
+				)}
+
+				<div className="c-mt-2">
+					<ClayButton
+						borderless
+						className="c-px-2 c-py-1 text-2"
+						displayType="secondary"
+						onClick={() => setShowDetails(!showDetails)}
+					>
+						{showDetails
+							? Liferay.Language.get('hide-details')
+							: Liferay.Language.get('view-details')}
+					</ClayButton>
+				</div>
+			</List.ItemField>
+		</List.Item>
+	);
+}
+
+export default function TaskHistory({apiURL}: {apiURL: string}) {
+	const [auditEvents, setAuditEvents] = useState<AuditEvent[]>([]);
+	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+	const [loading, setLoading] = useState(true);
+
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	const fetchAuditEvents = useCallback(async () => {
 		setLoading(true);
@@ -195,26 +296,10 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 							);
 						})
 						.map((auditEvent, index) => (
-							<List.Item className="border-0" flex key={index}>
-								<List.ItemField>
-									<AssigneeAvatar
-										image={auditEvent.creator?.image}
-										name={auditEvent.creator?.name || ''}
-									/>
-								</List.ItemField>
-
-								<List.ItemField expand>
-									<List.ItemTitle className="text-weight-normal">
-										{getAuditEventLabel(auditEvent)}
-									</List.ItemTitle>
-
-									<List.ItemText>
-										{new Date(
-											auditEvent.dateCreated
-										).toLocaleString()}
-									</List.ItemText>
-								</List.ItemField>
-							</List.Item>
+							<TaskHistoryItem
+								auditEvent={auditEvent}
+								key={index}
+							/>
 						))}
 				</List>
 			)}

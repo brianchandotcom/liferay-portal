@@ -885,38 +885,34 @@ AUI.add(
 					const instance = this;
 
 					const contentNode = instance.byId('content_' + portletId);
+					const portletDataNode = instance.byId(
+						'PORTLET_DATA_' + portletId
+					);
 
 					const inputs = contentNode.all('.field');
 
 					const selectedContent = [];
 
 					inputs.each((item) => {
-						const checked = item.attr(STR_CHECKED);
-
-						if (checked) {
+						if (item.attr('checked')) {
 							selectedContent.push(item.attr('data-name'));
 						}
 					});
 
-					if (
-						!selectedContent.length ||
-						!instance
-							.byId('PORTLET_DATA_' + portletId)
-							.attr('checked')
-					) {
-						if (
-							inputs.size() > 0 ||
-							!instance
-								.byId('PORTLET_DATA_' + portletId)
-								.ancestor('[data-portlet-type="batch"]')
-						) {
-							instance
-								.byId('PORTLET_DATA_' + portletId)
-								.attr('checked', false);
+					const hasSelectedContent = selectedContent.length;
+					const isPortletChecked = portletDataNode.attr('checked');
+
+					if (!hasSelectedContent || !isPortletChecked) {
+						const hasChildrenControls = inputs.size() > 0;
+						const isBatchPortlet = portletDataNode.ancestor(
+							'[data-portlet-type="batch"]'
+						);
+
+						if (!isBatchPortlet || hasChildrenControls) {
+							portletDataNode.attr('checked', false);
 						}
 
 						instance.byId('showChangeContent_' + portletId).hide();
-
 						contentNode.hide();
 					}
 					else {

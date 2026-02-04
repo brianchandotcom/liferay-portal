@@ -4,6 +4,7 @@
  */
 
 import Label from '@clayui/label';
+import {DateRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import React from 'react';
 
@@ -13,13 +14,11 @@ import {
 	displayStateSuccessToast,
 } from '../../utils/toastUtil';
 import CustomAssignee from '../CustomAssignee';
+import {UPDATE_HISTORY} from '../History';
 import InfoSummary from '../InfoSummary';
 import StateSelector, {State} from '../StateSelector';
 
 import '../AssigneeTrigger.scss';
-import {UPDATE_TASK_HISTORY} from './TaskHistory';
-
-import {DateRenderer} from '@liferay/frontend-data-set-web';
 
 interface TaskInfoSummaryProps {
 	assignTo: AssigneeValue;
@@ -58,7 +57,7 @@ export default function TaskInfoSummary({
 								if (response.ok) {
 									displayStateSuccessToast();
 
-									Liferay.fire(UPDATE_TASK_HISTORY);
+									Liferay.fire(UPDATE_HISTORY);
 								}
 							}}
 							states={states}
@@ -81,7 +80,7 @@ export default function TaskInfoSummary({
 										(value as AssigneeValue).name
 									);
 
-									Liferay.fire(UPDATE_TASK_HISTORY);
+									Liferay.fire(UPDATE_HISTORY);
 								}
 							}}
 							showLabel={false}

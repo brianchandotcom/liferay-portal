@@ -281,15 +281,9 @@ public class SegmentsServicePreActionTest {
 				User user = _userLocalService.getUser(
 					TestPropsValues.getUserId());
 
-				SegmentsExperience segmentsExperience0 =
+				SegmentsExperience defaultSegmentsExperience =
 					_segmentsExperienceLocalService.
 						fetchDefaultSegmentsExperience(layout.getPlid());
-
-				segmentsExperience0.setPriority(1);
-
-				segmentsExperience0 =
-					_segmentsExperienceLocalService.updateSegmentsExperience(
-						segmentsExperience0);
 
 				SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
 					user, _group.getGroupId());
@@ -341,7 +335,7 @@ public class SegmentsServicePreActionTest {
 					new long[] {
 						segmentsExperience2.getSegmentsExperienceId(),
 						segmentsExperience1.getSegmentsExperienceId(),
-						segmentsExperience0.getSegmentsExperienceId()
+						defaultSegmentsExperience.getSegmentsExperienceId()
 					},
 					(long[])mockHttpServletRequest.getAttribute(
 						SegmentsWebKeys.SEGMENTS_EXPERIENCE_IDS));

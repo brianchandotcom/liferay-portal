@@ -57,7 +57,7 @@ public class ConfigurationFilterStringUtil {
 
 			throw new IllegalArgumentException(
 				"A valid company is expected when building a group scoped " +
-					"configuration filter string");
+					"configuration filter");
 		}
 
 		return StringBundler.concat(

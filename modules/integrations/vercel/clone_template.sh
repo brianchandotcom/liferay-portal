@@ -9,22 +9,22 @@ function main {
 		--single-branch \
 		https://github.com/liferay/liferay-portal.git "${temp_dir}"
 
-	local template_origin="${temp_dir}/modules/integrations/vercel/${1}"
+	local template_dir="${temp_dir}/modules/integrations/vercel/${1}"
 
-	local destination=$(pwd)
+	local destination_dir=$(pwd)
 
 	if [ -n "${2}" ]
 	then
-		destination="${2}"
+		destination_dir="${2}"
 	fi
 
-	echo "Moving ${template_origin} to ${destination}"
+	echo "Moving ${template_dir} to ${destination_dir}"
 
-	mkdir -p "${destination}"
+	mkdir -p "${destination_dir}"
 
-	mv -v "${template_origin}" "${destination}"
+	mv -v "${template_dir}" "${destination_dir}"
 
-	cd "${destination}/${1}" && git init && git add . && git commit --message "chore: clone ${1}"
+	cd "${destination_dir}/${1}" && git init && git add . && git commit --message "chore: clone ${1}"
 }
 
 main "${@}"

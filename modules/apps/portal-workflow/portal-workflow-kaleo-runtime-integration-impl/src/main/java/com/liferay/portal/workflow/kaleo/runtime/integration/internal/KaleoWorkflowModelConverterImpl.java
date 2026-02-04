@@ -139,10 +139,7 @@ public class KaleoWorkflowModelConverterImpl
 			kaleoDefinition.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinition.getName());
 		defaultWorkflowDefinition.setScope(kaleoDefinition.getScope());
-		defaultWorkflowDefinition.setSystem(
-			ArrayUtil.contains(
-				WorkflowDefinitionConstants.SYSTEM_WORKFLOW_DEFINITION_NAMES,
-				kaleoDefinition.getName()));
+		defaultWorkflowDefinition.setSystem(kaleoDefinition.isSystem());
 		defaultWorkflowDefinition.setTitle(kaleoDefinition.getTitle());
 		defaultWorkflowDefinition.setUserId(kaleoDefinition.getUserId());
 		defaultWorkflowDefinition.setVersion(kaleoDefinition.getVersion());

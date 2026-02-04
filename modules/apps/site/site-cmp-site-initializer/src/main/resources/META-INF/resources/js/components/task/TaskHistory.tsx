@@ -33,7 +33,7 @@ type Creator = {
 };
 
 type AuditFieldChange = {
-	name: string;
+	name: FieldName;
 	newValue: any;
 	oldValue: any;
 };
@@ -52,13 +52,18 @@ type Data = {
 const RELATED_ASSETS_SECTION =
 	'com.liferay.site.cms.site.initializer-relatedAssetsSection';
 
-const FIELD_NAME: {[key: string]: string} = {
-	assignTo: Liferay.Language.get('assignee'),
-	description: Liferay.Language.get('description'),
-	dueDate: Liferay.Language.get('due-date'),
-	state: Liferay.Language.get('state'),
-	title: Liferay.Language.get('title'),
-};
+const FIELDS = {
+	assignTo: {label: Liferay.Language.get('assignee')},
+	description: {label: Liferay.Language.get('description')},
+	dueDate: {label: Liferay.Language.get('due-date')},
+	r_cmpProjectToCMPTasks_c_cmpProjectId: {
+		label: Liferay.Language.get('project'),
+	},
+	state: {label: Liferay.Language.get('state')},
+	title: {label: Liferay.Language.get('title')},
+} as const;
+
+type FieldName = keyof typeof FIELDS;
 
 function joinWithAnd(items: string[]) {
 	if (!items?.length) {
@@ -120,29 +125,45 @@ function TaskHistoryItemDetails({
 	/**
 	 * The `oldValue` and `newValue` can be in different formats according to
 	 * the field's `name` property. For example:
+	 *
 	 * {
 	 * 	name: "state",
-	 *  newValue: {key: "inProgress", name: "In Progress"},
+	 * 	newValue: {key: "inProgress", name: "In Progress"},
 	 * 	oldValue: {key: "notStarted", name: "Not Started"},
 	 * }
 	 *
 	 * {
 	 * 	name: "title",
-	 *  newValue: "New Title",
+	 * 	newValue: "New Title",
 	 * 	oldValue: "Old Title",
 	 * }
+	 *
+	 * {
+	 * 	"name": "r_cmpProjectToCMPTasks_c_cmpProjectId",
+	 * 	"newValue": { "objectEntryId": 37141, "titleValue": "Project 1"}
+	 * }
 	 */
-	const getAuditFieldChangeValueLabel = (name: string, value: any) => {
-		if (name === 'assignTo') {
+	const getAuditFieldChangeValueLabel = (
+		fieldName: FieldName,
+		value: any
+	) => {
+		if (fieldName === 'assignTo') {
 			return <AssigneeValueLabel value={value} />;
 		}
 
-		if (name === 'dueDate' && value) {
+		if (fieldName === 'dueDate' && value) {
 			const date = new Date(value);
 
 			return !isNaN(date.getTime())
 				? date.toLocaleDateString()
 				: Liferay.Language.get('none');
+		}
+
+		if (
+			fieldName === 'r_cmpProjectToCMPTasks_c_cmpProjectId' &&
+			value?.titleValue
+		) {
+			return value?.titleValue;
 		}
 
 		if (typeof value === 'string' && value) {
@@ -160,7 +181,7 @@ function TaskHistoryItemDetails({
 		<div>
 			{auditFieldChanges?.map((auditFieldChange, index) => (
 				<div className="c-mt-3" key={index}>
-					<strong>{FIELD_NAME[auditFieldChange.name]}:</strong>
+					<strong>{FIELDS[auditFieldChange.name].label}:</strong>
 
 					<div className="autofit-padded-no-gutters-x autofit-row autofit-row-center">
 						<div className="autofit-col text-secondary">
@@ -224,9 +245,7 @@ function TaskHistoryItem({auditEvent}: {auditEvent: AuditEvent}) {
 			<strong key="changedFields">
 				{joinWithAnd(
 					auditEvent.auditFieldChanges?.map(
-						(auditFieldChange) =>
-							FIELD_NAME[auditFieldChange.name] ??
-							auditFieldChange.name
+						({name}) => FIELDS[name].label ?? name
 					) || []
 				)}
 			</strong>,

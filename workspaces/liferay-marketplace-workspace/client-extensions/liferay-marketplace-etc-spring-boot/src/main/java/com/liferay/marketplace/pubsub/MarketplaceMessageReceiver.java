@@ -58,7 +58,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			ackReplyConsumer.ack();
 		}
 		catch (Exception exception) {
-			_log.error("Error processing message", exception);
+			_log.error(exception);
 
 			ackReplyConsumer.nack();
 		}

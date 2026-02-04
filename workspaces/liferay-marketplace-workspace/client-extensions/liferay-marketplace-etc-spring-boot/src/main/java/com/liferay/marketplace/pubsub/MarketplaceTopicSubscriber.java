@@ -128,10 +128,7 @@ public class MarketplaceTopicSubscriber {
 				}
 			}
 			catch (Exception exception) {
-				_log.error(
-					"Failed to initialize Pubsub subscription for topicName: " +
-						topicName,
-					exception);
+				_log.error(exception);
 
 				throw exception;
 			}

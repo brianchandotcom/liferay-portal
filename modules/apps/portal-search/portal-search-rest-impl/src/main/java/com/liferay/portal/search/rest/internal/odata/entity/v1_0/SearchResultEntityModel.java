@@ -75,6 +75,7 @@ public class SearchResultEntityModel implements EntityModel {
 				"objectDefinitionId", locale -> "objectDefinitionId"),
 			new IntegerEntityField("scopeGroupId", locale -> "scopeGroupId"),
 			new IntegerEntityField("status", locale -> Field.STATUS),
+			new StringEntityField("cmpAssignTo", locale -> "cmpAssignTo"),
 			new StringEntityField("cmpState", locale -> "cmpState"),
 			new StringEntityField("cmsKind", locale -> "cms_kind"),
 			new StringEntityField("cmsSection", locale -> "cms_section"),

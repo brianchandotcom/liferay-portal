@@ -430,16 +430,14 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Assert.assertEquals(lines.toString(), 4, lines.size());
 		Assert.assertEquals("event: Fix Spelling and Grammar", lines.get(2));
-
-		String jsonString = StringUtil.removeSubstring(lines.get(3), "data: ");
-
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"data", "This text is wrong."
 			).put(
 				"nodeName", "fixSpellingAndGrammar"
 			).toString(),
-			jsonString, JSONCompareMode.LENIENT);
+			StringUtil.removeSubstring(lines.get(3), "data: "),
+			JSONCompareMode.LENIENT);
 
 		IdempotentRetryAssert.retryAssert(
 			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
@@ -501,7 +499,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		String response = StringUtil.toLowerCase(lines.get(3));
 
 		Assert.assertFalse(response, response.contains("brazilian barbecue"));
-
 		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
 
 		_objectEntryLocalService.addObjectEntry(
@@ -542,7 +539,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		response = StringUtil.toLowerCase(lines.get(5));
 
 		Assert.assertTrue(response, response.contains("brazilian barbecue"));
-
 		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
 
 		SseUtil.closeAll();
@@ -621,7 +617,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 				Assert.assertFalse(
 					response, response.contains("brazilian barbecue"));
-
 				Assert.assertTrue(
 					response, response.contains("\"nodename\":\"llm\""));
 
@@ -665,7 +660,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 				Assert.assertTrue(
 					response, response.contains("brazilian barbecue"));
-
 				Assert.assertTrue(
 					response, response.contains("\"nodename\":\"llm\""));
 			}
@@ -705,9 +699,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		String response = StringUtil.toLowerCase(lines.get(3));
 
-		Assert.assertTrue(response, response.contains("yes"));
-
 		Assert.assertTrue(response, response.contains("\"nodename\":\"llm\""));
+		Assert.assertTrue(response, response.contains("yes"));
 
 		SseUtil.closeAll();
 	}

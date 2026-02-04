@@ -20,9 +20,7 @@ function main {
 
 	mkdir --parents "${destination_dir}"
 
-	echo "Moving ${template_dir} to ${destination_dir}."
-
-	mv -v "${template_dir}" "${destination_dir}"
+	mv "${template_dir}" "${destination_dir}"
 
 	cd "${destination_dir}/${1}" && git init && git add . && git commit --message "chore: clone ${1}"
 }

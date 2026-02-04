@@ -73,14 +73,11 @@ public class MarketplaceTopicSubscriber {
 		CredentialsProvider credentialsProvider =
 			FixedCredentialsProvider.create(googleCredentials);
 
-		SubscriptionAdminSettings subscriptionAdminSettings =
-			SubscriptionAdminSettings.newBuilder(
-			).setCredentialsProvider(
-				credentialsProvider
-			).build();
-
 		_subscriptionAdminClient = SubscriptionAdminClient.create(
-			subscriptionAdminSettings);
+			SubscriptionAdminSettings.newBuilder(
+				).setCredentialsProvider(
+					credentialsProvider
+				).build());
 
 		for (String pubsubTopic : MarketplaceConstants.PUBSUB_TOPICS) {
 			String subscriptionName = StringBundler.concat(

@@ -272,12 +272,12 @@
 </tr>
 <tr>
 	<td>INFO</td>
-	<td>//a[contains(@class,'btn')][normalize-space()='Info'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //button[contains(@class,'btn')]//*[name()='svg'][contains(@class,'lexicon-icon-info')]</td>
+	<td>//a[contains(@class,'btn')][normalize-space()='Info'] | //div[contains(@class,'management-bar-default')]//a[contains(@class,'infoPanelToggler')] | //*[contains(@class,'btn') and not(ancestor::div[@class='control-menu-nav'])]//*[name()='svg'][contains(@class,'lexicon-icon-info')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_DM</td>
-	<td>//*[*[name()='svg'][contains(@class,'lexicon-icon-info-circle-open')]]</td>
+	<td>//*[contains(@class,'btn') and not(ancestor::div[@class='control-menu-nav'])]//*[name()='svg'][contains(@class,'lexicon-icon-info-circle-open')]</td>
 	<td></td>
 </tr>
 <tr>

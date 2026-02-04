@@ -3355,16 +3355,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
-		SitePage randomWidgetPage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
-
-		randomWidgetPage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
-
-		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomWidgetPage);
-
 		SitePage randomSitePage = _getRandomSitePage(sitePageType);
 
 		randomSitePage.setPageSpecifications(

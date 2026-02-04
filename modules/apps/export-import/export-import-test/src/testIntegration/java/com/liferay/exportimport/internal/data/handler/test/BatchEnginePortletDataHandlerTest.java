@@ -347,12 +347,16 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	@TestInfo({"LPD-49421", "LPD-50142"})
+	@TestInfo({"LPD-49421", "LPD-50142", "LPD-77963"})
 	public void testExportImportCompanyObjectEntriesWithIndividualDeletions()
 		throws Exception {
 
 		_testExportCompanyObjectEntriesWithIndividualDeletions();
 		_testImportCompanyObjectEntriesWithIndividualDeletions();
+		_testExportImportObjectEntriesWithIndividualDeletionsAndMissingPortlet(
+			_stagingGroupHelper.fetchCompanyGroup(
+				TestPropsValues.getCompanyId()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	@Test
@@ -1248,6 +1252,9 @@ public class BatchEnginePortletDataHandlerTest {
 		_assertNull(
 			objectDefinition.getObjectDefinitionId(), objectEntries[0],
 			objectEntries[1]);
+
+		_testExportImportObjectEntriesWithIndividualDeletionsAndMissingPortlet(
+			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Test
@@ -3132,6 +3139,105 @@ public class BatchEnginePortletDataHandlerTest {
 			"model.resource." + objectDefinition.getResourceName(),
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntry);
+	}
+
+	private void
+			_testExportImportObjectEntriesWithIndividualDeletionsAndMissingPortlet(
+				Group group, String scope)
+		throws Exception {
+
+		List<ObjectField> objectFields = Collections.singletonList(
+			ObjectFieldUtil.createObjectField(
+				ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+				ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+				RandomTestUtil.randomString(), "textField", false));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields, scope);
+
+		ObjectEntry[] objectEntries = new ObjectEntry[2];
+
+		for (int i = 0; i < 2; i++) {
+			objectEntries[i] = _addObjectEntry(
+				_getObjectEntryGroupId(group.getGroupId(), scope),
+				objectDefinition,
+				(Map)HashMapBuilder.<String, Serializable>put(
+					"textField", RandomTestUtil.randomString()
+				).build());
+		}
+
+		File larFile1 = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeObjectDefinitions(
+		).withObjectEntries(
+			objectDefinition
+		).executeExport();
+
+		_objectEntryLocalService.deleteObjectEntry(objectEntries[0]);
+
+		File larFile2 = new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			group.getGroupId()
+		).withIncludeObjectDefinitions(
+		).withObjectEntries(
+			objectDefinition
+		).executeExport();
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+
+		ObjectDefinition targetObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(), objectFields, scope);
+
+		targetObjectDefinition.setExternalReferenceCode(
+			objectDefinition.getExternalReferenceCode());
+
+		targetObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				targetObjectDefinition);
+
+		_objectDefinitionLocalService.deployObjectDefinition(
+			targetObjectDefinition);
+
+		new ExportImportExecutor(
+		).withExpectError(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile1
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		Assert.assertEquals(
+			2,
+			_objectEntryLocalService.getObjectEntriesCount(
+				targetObjectDefinition.getObjectDefinitionId()));
+
+		new ExportImportExecutor(
+		).withDeletions(
+		).withExpectError(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntriesCount(
+				targetObjectDefinition.getObjectDefinitionId()));
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntries[0].getExternalReferenceCode(),
+				objectEntries[0].getGroupId(),
+				objectDefinition.getObjectDefinitionId()));
 	}
 
 	private void _testExportImportObjectEntriesWithRelatedObjectEntries(

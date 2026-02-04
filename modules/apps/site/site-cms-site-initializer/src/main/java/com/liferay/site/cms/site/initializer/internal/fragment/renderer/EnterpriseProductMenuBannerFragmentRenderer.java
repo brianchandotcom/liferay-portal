@@ -44,7 +44,9 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 		throws IOException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				fragmentRendererContext.getCompanyId(), "LPD-74377")) {
+				fragmentRendererContext.getFragmentEntryLink(
+				).getCompanyId(),
+				"LPD-74377")) {
 
 			return;
 		}

@@ -68,7 +68,7 @@ public class MarketplaceTopicSubscriber {
 
 	@PostConstruct
 	protected void activate() throws Exception {
-		CredentialsProvider credentialsProvider = getCredentialsProvider();
+		CredentialsProvider credentialsProvider = _getCredentialsProvider();
 
 		if (credentialsProvider == null) {
 			return;
@@ -150,26 +150,17 @@ public class MarketplaceTopicSubscriber {
 		}
 	}
 
-	protected CredentialsProvider getCredentialsProvider() throws IOException {
-		try {
-			GoogleCredentials googleCredentials =
-				ServiceAccountCredentials.fromStream(
-					new ByteArrayInputStream(
-						_serviceAccountKey.getBytes(StandardCharsets.UTF_8))
-				).createScoped(
-					Collections.singletonList(
-						"https://www.googleapis.com/auth/cloud-platform")
-				);
+	private CredentialsProvider _getCredentialsProvider() throws Exception {
+		GoogleCredentials googleCredentials =
+			ServiceAccountCredentials.fromStream(
+				new ByteArrayInputStream(
+					_serviceAccountKey.getBytes(StandardCharsets.UTF_8))
+			).createScoped(
+				Collections.singletonList(
+					"https://www.googleapis.com/auth/cloud-platform")
+			);
 
-			return FixedCredentialsProvider.create(googleCredentials);
-		}
-		catch (Exception exception) {
-			_log.error(
-				"Unable to retrieve credentials provider: " +
-					exception.getMessage());
-
-			return null;
-		}
+		return FixedCredentialsProvider.create(googleCredentials);
 	}
 
 	private static final Log _log = LogFactory.getLog(

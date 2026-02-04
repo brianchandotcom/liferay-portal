@@ -122,6 +122,42 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"href",
+				StringBundler.concat(
+					"/o", _taskObjectDefinition.getRESTContextPath(),
+					"/scopes/", _taskObjectEntry.getGroupId(),
+					"/by-external-reference-code/",
+					_taskObjectEntry.getExternalReferenceCode(), "/subscribe")
+			).put(
+				"label", "Watch Task"
+			).put(
+				"redirect",
+				StringBundler.concat(
+					themeDisplay.getPathFriendlyURLPublic(),
+					GroupConstants.CMS_FRIENDLY_URL, "/e/task/",
+					PortalUtil.getClassNameId(
+						_taskObjectDefinition.getClassName()),
+					StringPool.SLASH, _taskObjectEntry.getObjectEntryId())
+			).put(
+				"successMessage",
+				LanguageUtil.format(
+					mockHttpServletRequest, "you-are-successfully-watching-x",
+					StringBundler.concat(
+						"<strong>",
+						MapUtil.getString(
+							_taskObjectEntry.getValues(), "title"),
+						"</strong>"))
+			).put(
+				"symbolLeft", "bell-on"
+			).put(
+				"target", "asyncPost"
+			).toString(),
+			jsonObject.toString(), true);
+
+		jsonObject = jsonArray.getJSONObject(2);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
 				"className", "text-danger"
 			).put(
 				"confirmationMessage",

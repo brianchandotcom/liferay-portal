@@ -392,18 +392,6 @@ public class FileInstallDeployTest {
 								dictionaryKey, StringPool.EQUAL,
 								StringPool.QUOTE, dictionaryValue,
 								StringPool.QUOTE);
-
-							if (dictionaryKey.equals(
-									ExtendedObjectClassDefinition.Scope.GROUP.
-										getPropertyKey())) {
-
-								content = StringBundler.concat(
-									content, StringPool.RETURN_NEW_LINE,
-									ExtendedObjectClassDefinition.Scope.COMPANY.
-										getPropertyKey(),
-									StringPool.EQUAL, StringPool.QUOTE,
-									_company.getCompanyId(), StringPool.QUOTE);
-							}
 						}
 
 						Files.write(path, content.getBytes());
@@ -432,18 +420,6 @@ public class FileInstallDeployTest {
 							content, StringPool.RETURN_NEW_LINE, dictionaryKey,
 							StringPool.EQUAL, StringPool.QUOTE, dictionaryValue,
 							StringPool.QUOTE);
-
-						if (dictionaryKey.equals(
-								ExtendedObjectClassDefinition.Scope.GROUP.
-									getPropertyKey())) {
-
-							content = StringBundler.concat(
-								content, StringPool.RETURN_NEW_LINE,
-								ExtendedObjectClassDefinition.Scope.COMPANY.
-									getPropertyKey(),
-								StringPool.EQUAL, StringPool.QUOTE,
-								_company.getCompanyId(), StringPool.QUOTE);
-						}
 					}
 
 					Files.write(path, content.getBytes());

@@ -13,6 +13,7 @@
 	},
 	"items": [
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#J3W4",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_SORT",
@@ -60,6 +61,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#G4R1",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_FILTER",
@@ -107,6 +109,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#B1U1",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_ENDPOINT",
@@ -291,6 +294,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#Z9M6",
 			"enableCategorization": true,
 			"enableComments": false,
 			"enableFormContainer": false,
@@ -411,6 +415,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#C7A3",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_SCHEMA",
@@ -530,6 +535,7 @@
 			"system": true
 		},
 		{
+			"className": "com.liferay.object.model.ObjectDefinition#K6K2",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_APPLICATION",

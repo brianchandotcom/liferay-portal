@@ -198,22 +198,19 @@ describe('Breadcrumb', () => {
 		);
 	});
 
-	it('renders the enterprise badge when `showEnterpriseBadge` is true and there is a single breadcrumb item', () => {
+	it('renders the enterprise badge when `freeTier` is true and there is a single breadcrumb item', () => {
 		render(
-			<Breadcrumb
-				breadcrumbItems={testBreadcrumbItemsSingle}
-				showEnterpriseBadge
-			/>
+			<Breadcrumb breadcrumbItems={testBreadcrumbItemsSingle} freeTier />
 		);
 
 		expect(screen.getByText('enterprise')).toBeInTheDocument();
 	});
 
-	it('does not render the enterprise badge when `showEnterpriseBadge` is false', () => {
+	it('does not render the enterprise badge when `freeTier` is false', () => {
 		render(
 			<Breadcrumb
 				breadcrumbItems={testBreadcrumbItemsSingle}
-				showEnterpriseBadge={false}
+				freeTier={false}
 			/>
 		);
 
@@ -222,10 +219,7 @@ describe('Breadcrumb', () => {
 
 	it('does not render the enterprise badge when there are multiple breadcrumb items', () => {
 		render(
-			<Breadcrumb
-				breadcrumbItems={testBreadcrumbItemsShort}
-				showEnterpriseBadge
-			/>
+			<Breadcrumb breadcrumbItems={testBreadcrumbItemsShort} freeTier />
 		);
 
 		expect(screen.queryByText('enterprise')).not.toBeInTheDocument();

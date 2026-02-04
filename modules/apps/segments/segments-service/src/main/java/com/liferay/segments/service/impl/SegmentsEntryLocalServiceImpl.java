@@ -9,6 +9,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -231,16 +233,20 @@ public class SegmentsEntryLocalServiceImpl
 
 		// Segments experiences
 
-		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
-			segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), 0));
+		Group group = _groupLocalService.fetchGroup(segmentsEntry.getGroupId());
+
+		if ((group != null) &&
+			Validator.isNotNull(group.getExternalReferenceCode())) {
+
+			_segmentsExperienceLocalService.
+				deleteSegmentsEntrySegmentsExperiences(
+					segmentsEntry.getExternalReferenceCode(),
+					group.getExternalReferenceCode());
+		}
 
 		_segmentsExperienceLocalService.deleteSegmentsEntrySegmentsExperiences(
 			segmentsEntry.getGroupId(),
-			segmentsEntry.getExternalReferenceCode(),
-			ScopeUtil.getItemScopeExternalReferenceCode(
-				segmentsEntry.getGroupId(), segmentsEntry.getGroupId()));
+			segmentsEntry.getExternalReferenceCode(), null);
 
 		// Segments rels
 
@@ -593,6 +599,9 @@ public class SegmentsEntryLocalServiceImpl
 				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private MessageBus _messageBus;

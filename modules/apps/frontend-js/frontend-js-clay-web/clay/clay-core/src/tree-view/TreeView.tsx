@@ -143,6 +143,11 @@ interface ITreeViewProps<T extends Record<string, any>>
 	 * Flag to indicate if the TreeView will show the expander in the hover in the Node.
 	 */
 	showExpanderOnHover?: boolean;
+
+	/**
+	 * Path to the spritemap that Icon should use when referencing symbols.
+	 */
+	spritemap?: string;
 }
 
 const focusableElements = ['.treeview-link[tabindex]'];
@@ -183,6 +188,7 @@ export function TreeView<T extends Record<string, any>>({
 	selectedKeys,
 	selectionHydrationMode = 'hydrate-first',
 	selectionMode = 'single',
+	spritemap,
 	showExpanderOnHover = true,
 	...otherProps
 }: ITreeViewProps<T>) {
@@ -284,7 +290,7 @@ export function TreeView<T extends Record<string, any>>({
 										{children}
 									</Collection>
 
-									<DragLayer itemNameKey={itemNameKey} />
+									<DragLayer spritemap={spritemap} />
 								</FocusWithinProvider>
 							</DragAndDropProvider>
 						</TreeViewContext.Provider>

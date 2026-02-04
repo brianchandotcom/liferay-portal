@@ -1008,9 +1008,23 @@ public class EditAssetListDisplayContext {
 						return true;
 					}
 
-					String className =
-						_infoSearchClassMapperRegistry.getSearchClassName(
-							PortalUtil.getClassName(classNameId));
+					String className = "";
+
+					try {
+						className =
+							_infoSearchClassMapperRegistry.getSearchClassName(
+								PortalUtil.getClassName(classNameId));
+					}
+					catch (Exception exception) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Unable to get class name for class name ID " +
+									classNameId,
+								exception);
+						}
+
+						continue;
+					}
 
 					AssetRendererFactory<?> assetRendererFactory =
 						AssetRendererFactoryRegistryUtil.

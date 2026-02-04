@@ -20,7 +20,7 @@ public class DefaultServiceAccountPermission {
 
 	public void check(Jwt jwt) throws Exception {
 		if (!contains(jwt)) {
-			throw new PrincipalException("Unauthorized");
+			throw new PrincipalException();
 		}
 	}
 

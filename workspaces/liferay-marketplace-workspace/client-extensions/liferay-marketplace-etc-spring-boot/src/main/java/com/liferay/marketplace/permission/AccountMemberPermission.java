@@ -28,7 +28,7 @@ public class AccountMemberPermission {
 		throws Exception {
 
 		if (!_contains(accountExternalReferenceCode, jwt)) {
-			throw new PrincipalException("Unauthorized");
+			throw new PrincipalException();
 		}
 	}
 

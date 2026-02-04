@@ -200,6 +200,10 @@ public interface ImageLocalService
 	public Image fetchImage(long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image fetchImageByExternalReferenceCode(
+		String externalReferenceCode, long companyId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -214,6 +218,11 @@ public interface ImageLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Image getImage(long imageId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Image getImageByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public InputStream getImageInputStream(

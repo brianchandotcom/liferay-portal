@@ -216,6 +216,14 @@ public class ImageLocalServiceWrapper
 	}
 
 	@Override
+	public Image fetchImageByExternalReferenceCode(
+		String externalReferenceCode, long companyId) {
+
+		return _imageLocalService.fetchImageByExternalReferenceCode(
+			externalReferenceCode, companyId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -239,6 +247,15 @@ public class ImageLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _imageLocalService.getImage(imageId);
+	}
+
+	@Override
+	public Image getImageByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _imageLocalService.getImageByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	@Override

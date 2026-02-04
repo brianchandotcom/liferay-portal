@@ -35,6 +35,7 @@ public class ImageWrapper
 
 		attributes.put("mvccVersion", getMvccVersion());
 		attributes.put("ctCollectionId", getCtCollectionId());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("imageId", getImageId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("modifiedDate", getModifiedDate());
@@ -58,6 +59,13 @@ public class ImageWrapper
 
 		if (ctCollectionId != null) {
 			setCtCollectionId(ctCollectionId);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long imageId = (Long)attributes.get("imageId");
@@ -126,6 +134,16 @@ public class ImageWrapper
 	@Override
 	public long getCtCollectionId() {
 		return model.getCtCollectionId();
+	}
+
+	/**
+	 * Returns the external reference code of this image.
+	 *
+	 * @return the external reference code of this image
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -236,6 +254,16 @@ public class ImageWrapper
 	@Override
 	public void setCtCollectionId(long ctCollectionId) {
 		model.setCtCollectionId(ctCollectionId);
+	}
+
+	/**
+	 * Sets the external reference code of this image.
+	 *
+	 * @param externalReferenceCode the external reference code of this image
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

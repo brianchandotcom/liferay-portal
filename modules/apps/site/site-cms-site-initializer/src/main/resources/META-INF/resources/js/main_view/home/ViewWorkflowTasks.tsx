@@ -187,7 +187,13 @@ export default function ViewWorkflowTasks({
 									}) =>
 										TransitionWorkflowStateModalContent({
 											closeModal,
-											loadData: getWorkflowTasks,
+											loadData: () =>
+												new Promise<void>((resolve) =>
+													setTimeout(() => {
+														getWorkflowTasks();
+														resolve();
+													}, 1000)
+												),
 											transitionName: 'reject',
 											workflowTaskId: Number(itemData.id),
 										}),

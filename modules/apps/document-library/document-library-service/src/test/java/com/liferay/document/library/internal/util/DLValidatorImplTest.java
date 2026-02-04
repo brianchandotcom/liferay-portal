@@ -181,25 +181,8 @@ public class DLValidatorImplTest {
 		);
 
 		String fileName = RandomTestUtil.randomString();
-		String mimeType = RandomTestUtil.randomString();
-
-		_dlValidator.validateFileSize(groupId, fileName, mimeType, 20L);
 
 		_dlValidator.validateFileSize(groupId, fileName, "image/png", 10L);
-
-		try {
-			_dlValidator.validateFileSize(groupId, fileName, mimeType, 50L);
-
-			Assert.fail();
-		}
-		catch (FileSizeException fileSizeException) {
-			Assert.assertEquals(40L, fileSizeException.getMaxSize());
-			Assert.assertEquals(
-				"50 exceeds the global maximum permitted size of 40 for file " +
-					fileName,
-				fileSizeException.getMessage());
-			Assert.assertNull(fileSizeException.getMimeType());
-		}
 
 		try {
 			_dlValidator.validateFileSize(groupId, fileName, "image/png", 20L);
@@ -213,6 +196,24 @@ public class DLValidatorImplTest {
 					"of 10 for file " + fileName,
 				fileSizeException.getMessage());
 			Assert.assertEquals("image/png", fileSizeException.getMimeType());
+		}
+
+		String mimeType = RandomTestUtil.randomString();
+
+		_dlValidator.validateFileSize(groupId, fileName, mimeType, 20L);
+
+		try {
+			_dlValidator.validateFileSize(groupId, fileName, mimeType, 50L);
+
+			Assert.fail();
+		}
+		catch (FileSizeException fileSizeException) {
+			Assert.assertEquals(40L, fileSizeException.getMaxSize());
+			Assert.assertEquals(
+				"50 exceeds the global maximum permitted size of 40 for file " +
+					fileName,
+				fileSizeException.getMessage());
+			Assert.assertNull(fileSizeException.getMimeType());
 		}
 	}
 

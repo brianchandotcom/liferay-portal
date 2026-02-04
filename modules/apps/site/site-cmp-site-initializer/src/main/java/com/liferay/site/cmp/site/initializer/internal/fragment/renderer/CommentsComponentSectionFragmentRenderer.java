@@ -43,7 +43,7 @@ public class CommentsComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getComponentName() {
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
 		return "CommentsPanel";
 	}
 

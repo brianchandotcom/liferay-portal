@@ -44,7 +44,7 @@ public class EditorToolbarComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getComponentName() {
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
 		return "EditorToolbar";
 	}
 

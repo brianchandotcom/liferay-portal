@@ -39,7 +39,7 @@ public class TagsComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getComponentName() {
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
 		return "Tags";
 	}
 

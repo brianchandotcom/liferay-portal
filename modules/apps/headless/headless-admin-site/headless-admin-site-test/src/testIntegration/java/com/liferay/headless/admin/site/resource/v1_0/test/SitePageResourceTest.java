@@ -92,6 +92,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -3175,10 +3176,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			PageSpecification.Status.DRAFT, PageSpecification.Status.DRAFT,
 			PageSpecification.Status.APPROVED, PageSpecification.Status.DRAFT);
 		_testPutSiteSitePageWithPageSpecificationsWithCustomFields();
-		_testPutSiteSitePageWithPageSpecificationsWithEmbeddedPageSpecification();
-		_testPutSiteSitePageWithPageSpecificationsWithLinkToPagePageSpecification();
-		_testPutSiteSitePageWithPageSpecificationsWithLinkToURLPageSpecification();
-		_testPutSiteSitePageWithPageSpecificationsWithPageSetPageSpecification();
+		_testPutSiteSitePageWithPageSpecifications(
+			PageSpecificationsTestUtil::getEmbeddedPageSpecifications,
+			SitePage.Type.EMBEDDED_PAGE);
+		_testPutSiteSitePageWithPageSpecifications(
+			PageSpecificationsTestUtil::getLinkToPagePageSpecifications,
+			SitePage.Type.LINK_TO_PAGE_PAGE);
+		_testPutSiteSitePageWithPageSpecifications(
+			PageSpecificationsTestUtil::getLinkToURLPageSpecifications,
+			SitePage.Type.LINK_TO_URL_PAGE);
+		_testPutSiteSitePageWithPageSpecifications(
+			PageSpecificationsTestUtil::getPageSetPageSpecifications,
+			SitePage.Type.PAGE_SET_PAGE);
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			"1_column", "1_2_1_columns_i");
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
@@ -3232,6 +3241,51 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode(), sitePage));
 	}
 
+	private void _testPutSiteSitePageWithPageSpecifications(
+			UnsafeFunction<String, PageSpecification[], Exception>
+				pageSpecificationsUnsafeFunction,
+			SitePage.Type sitePageType)
+		throws Exception {
+
+		SitePageResource sitePageResource = _getSitePageResource(
+			"pageSpecifications");
+
+		SitePage randomWidgetPage = _getRandomSitePage(
+			SitePage.Type.WIDGET_PAGE);
+
+		randomWidgetPage.setPageSpecifications(
+			PageSpecificationsTestUtil.getWidgetPageSpecifications(
+				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
+
+		sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), randomWidgetPage);
+
+		SitePage randomSitePage = _getRandomSitePage(sitePageType);
+
+		randomSitePage.setPageSpecifications(
+			pageSpecificationsUnsafeFunction.apply(
+				randomSitePage.getExternalReferenceCode()));
+
+		SitePage sitePage = sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), randomSitePage);
+
+		sitePage.setPageSpecifications(
+			pageSpecificationsUnsafeFunction.apply(
+				randomSitePage.getExternalReferenceCode()));
+
+		SitePage putSitePage = sitePageResource.putSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			sitePage.getExternalReferenceCode(), sitePage);
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			putSitePage.getPageSpecifications(),
+			sitePage.getPageSpecifications());
+
+		sitePageResource.deleteSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			putSitePage.getExternalReferenceCode());
+	}
+
 	private void _testPutSiteSitePageWithPageSpecificationsWithCustomFields()
 		throws Exception {
 
@@ -3279,178 +3333,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				pageSpecification -> pageSpecification.getCustomFields(),
 				CustomField[].class),
 			testGroup.getGroupId(), updateSitePage.getPageSpecifications());
-	}
-
-	private void _testPutSiteSitePageWithPageSpecificationsWithEmbeddedPageSpecification()
-		throws Exception {
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		SitePage randomWidgetPage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
-
-		randomWidgetPage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
-
-		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomWidgetPage);
-
-		SitePage randomSitePage = _getRandomSitePage(
-			SitePage.Type.EMBEDDED_PAGE);
-
-		randomSitePage.setPageSpecifications(
-			PageSpecificationsTestUtil.getEmbeddedPageSpecifications(
-				randomSitePage.getExternalReferenceCode()));
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
-
-		sitePage.setPageSpecifications(
-			() -> PageSpecificationsTestUtil.getEmbeddedPageSpecifications(
-				sitePage.getExternalReferenceCode()));
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			putSitePage.getPageSpecifications(),
-			sitePage.getPageSpecifications());
-
-		sitePageResource.deleteSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			putSitePage.getExternalReferenceCode());
-	}
-
-	private void _testPutSiteSitePageWithPageSpecificationsWithLinkToPagePageSpecification()
-		throws Exception {
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		SitePage randomWidgetPage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
-
-		randomWidgetPage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
-
-		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomWidgetPage);
-
-		SitePage randomSitePage = _getRandomSitePage(
-			SitePage.Type.LINK_TO_PAGE_PAGE);
-
-		randomSitePage.setPageSpecifications(
-			PageSpecificationsTestUtil.getLinkToPagePageSpecifications(
-				randomSitePage.getExternalReferenceCode()));
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
-
-		sitePage.setPageSpecifications(
-			() -> PageSpecificationsTestUtil.getLinkToPagePageSpecifications(
-				sitePage.getExternalReferenceCode()));
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			putSitePage.getPageSpecifications(),
-			sitePage.getPageSpecifications());
-
-		sitePageResource.deleteSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			putSitePage.getExternalReferenceCode());
-	}
-
-	private void _testPutSiteSitePageWithPageSpecificationsWithLinkToURLPageSpecification()
-		throws Exception {
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		SitePage randomWidgetPage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
-
-		randomWidgetPage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
-
-		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomWidgetPage);
-
-		SitePage randomSitePage = _getRandomSitePage(
-			SitePage.Type.LINK_TO_URL_PAGE);
-
-		randomSitePage.setPageSpecifications(
-			PageSpecificationsTestUtil.getLinkToURLPageSpecifications(
-				randomSitePage.getExternalReferenceCode()));
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
-
-		sitePage.setPageSpecifications(
-			() -> PageSpecificationsTestUtil.getLinkToURLPageSpecifications(
-				sitePage.getExternalReferenceCode()));
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			putSitePage.getPageSpecifications(),
-			sitePage.getPageSpecifications());
-
-		sitePageResource.deleteSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			putSitePage.getExternalReferenceCode());
-	}
-
-	private void _testPutSiteSitePageWithPageSpecificationsWithPageSetPageSpecification()
-		throws Exception {
-
-		SitePageResource sitePageResource = _getSitePageResource(
-			"pageSpecifications");
-
-		SitePage randomWidgetPage = _getRandomSitePage(
-			SitePage.Type.WIDGET_PAGE);
-
-		randomWidgetPage.setPageSpecifications(
-			PageSpecificationsTestUtil.getWidgetPageSpecifications(
-				null, "1_column", randomWidgetPage.getExternalReferenceCode()));
-
-		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomWidgetPage);
-
-		SitePage randomSitePage = _getRandomSitePage(
-			SitePage.Type.PAGE_SET_PAGE);
-
-		randomSitePage.setPageSpecifications(
-			PageSpecificationsTestUtil.getPageSetPageSpecifications(
-				randomSitePage.getExternalReferenceCode()));
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
-
-		sitePage.setPageSpecifications(
-			() -> PageSpecificationsTestUtil.getPageSetPageSpecifications(
-				sitePage.getExternalReferenceCode()));
-
-		SitePage putSitePage = sitePageResource.putSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			putSitePage.getPageSpecifications(),
-			sitePage.getPageSpecifications());
-
-		sitePageResource.deleteSiteSitePage(
-			testGroup.getExternalReferenceCode(),
-			putSitePage.getExternalReferenceCode());
 	}
 
 	private void

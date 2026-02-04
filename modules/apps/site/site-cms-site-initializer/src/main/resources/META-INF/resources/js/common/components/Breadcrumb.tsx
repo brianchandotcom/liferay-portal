@@ -42,7 +42,7 @@ interface Props extends Pick<React.ComponentProps<typeof ClaySticker>, 'size'> {
 	breadcrumbItems: BreadcrumbItem[];
 	displayType?: LogoColor;
 	hideSpace?: boolean;
-	showEnterpriseBadge?: boolean;
+	freeTier?: boolean;
 }
 
 export interface BreadcrumbItem {
@@ -182,8 +182,8 @@ export default function Breadcrumb({
 	actionItems,
 	breadcrumbItems,
 	displayType,
+	freeTier,
 	hideSpace,
-	showEnterpriseBadge,
 	size,
 }: Props) {
 	const isTitle = breadcrumbItems.length === 1;
@@ -211,9 +211,7 @@ export default function Breadcrumb({
 							{breadcrumbItems[0]?.label}
 						</h2>
 
-						{showEnterpriseBadge && (
-							<EnterpriseFeatureIndicator showTooltip />
-						)}
+						{freeTier && <EnterpriseFeatureIndicator showTooltip />}
 					</div>
 				) : (
 					<ClayBreadcrumb className="p-0" items={breadcrumbItems} />

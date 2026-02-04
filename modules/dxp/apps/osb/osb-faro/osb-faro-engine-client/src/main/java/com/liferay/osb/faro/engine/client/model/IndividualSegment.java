@@ -102,6 +102,11 @@ public class IndividualSegment {
 		return _scope;
 	}
 
+	@JsonProperty("activation")
+	public SegmentActivation getSegmentActivation() {
+		return _segmentActivation;
+	}
+
 	public String getSegmentType() {
 		return _segmentType;
 	}
@@ -199,6 +204,10 @@ public class IndividualSegment {
 		_scope = scope;
 	}
 
+	public void setSegmentActivation(SegmentActivation segmentActivation) {
+		_segmentActivation = segmentActivation;
+	}
+
 	public void setSegmentType(String segmentType) {
 		_segmentType = segmentType;
 	}
@@ -253,6 +262,7 @@ public class IndividualSegment {
 	private Date _lastMembershipUpdateDate;
 	private String _name;
 	private String _scope = Scope.PROJECT.name();
+	private SegmentActivation _segmentActivation;
 	private String _segmentType = Type.BATCH.name();
 	private String _state = State.READY.name();
 	private String _status = Status.ACTIVE.name();

@@ -28,10 +28,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.segments.constants.SegmentsEntryConstants;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
-import com.liferay.segments.service.SegmentsEntryLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.translation.exporter.TranslationInfoItemFieldValuesExporter;
@@ -108,8 +105,8 @@ public class ExportTranslationDisplayContext {
 				"label", segmentsExperience.getName(_themeDisplay.getLocale())
 			).put(
 				"segment",
-				_getSegmentsEntryName(
-					segmentsExperience, _themeDisplay.getLocale())
+				segmentsExperience.getSegmentsEntryName(
+					_themeDisplay.getLocale())
 			).put(
 				"value",
 				String.valueOf(segmentsExperience.getSegmentsExperienceId())
@@ -284,22 +281,6 @@ public class ExportTranslationDisplayContext {
 				)));
 
 		return jsonArray;
-	}
-
-	private String _getSegmentsEntryName(
-		SegmentsExperience segmentsExperience, Locale locale) {
-
-		if (segmentsExperience.hasDefaultSegmentsEntry()) {
-			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
-		}
-
-		SegmentsEntry segmentsEntry =
-			SegmentsEntryLocalServiceUtil.
-				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
-
-		return segmentsEntry.getName(locale);
 	}
 
 	private List<SegmentsExperience> _getSegmentsExperiences()

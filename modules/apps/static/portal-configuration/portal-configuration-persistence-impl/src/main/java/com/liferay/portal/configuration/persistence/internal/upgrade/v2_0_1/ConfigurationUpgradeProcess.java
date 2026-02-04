@@ -93,8 +93,8 @@ public class ConfigurationUpgradeProcess extends UpgradeProcess {
 				_log.warn(
 					StringBundler.concat(
 						"Skipping configuration \"", configurationId,
-						"\" because the group \"", groupId,
-						"\" could not be found for company \"",
+						"\" because group \"", groupId,
+						"\" does not exist for company \"",
 						CompanyThreadLocal.getCompanyId(), "\""));
 			}
 

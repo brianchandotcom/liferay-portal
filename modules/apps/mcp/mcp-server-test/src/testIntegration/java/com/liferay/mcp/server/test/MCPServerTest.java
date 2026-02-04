@@ -51,10 +51,10 @@ public class MCPServerTest {
 		McpSyncClient mcpSyncClient = McpClient.sync(
 			HttpClientStreamableHttpTransport.builder(
 				"http://localhost:8080/o/"
-			).endpoint(
-				"mcp"
 			).customizeRequest(
 				builder -> builder.header("Authorization", _getAuthorization())
+			).endpoint(
+				"mcp"
 			).build()
 		).capabilities(
 			McpSchema.ClientCapabilities.builder(

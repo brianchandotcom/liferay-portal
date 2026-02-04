@@ -21,9 +21,9 @@ describe('DefaultPage', () => {
 	});
 
 	it('renders DefaultPage component without crashing ', () => {
-		const {getByText} = render(<DefaultPage />);
+		const {getByRole} = render(<DefaultPage />);
 
-		const menu = getByText('Menu');
+		const menu = getByRole('menubar');
 
 		expect(menu).toBeInTheDocument();
 	});

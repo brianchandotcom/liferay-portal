@@ -67,7 +67,8 @@ public abstract class BaseComponentSectionFragmentRenderer
 
 			componentTag.setModule(
 				StringBundler.concat(
-					"{", getComponentName(), "} from ", getModuleName()));
+					"{", getComponentName(httpServletRequest), "} from ",
+					getModuleName()));
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
@@ -89,7 +90,8 @@ public abstract class BaseComponentSectionFragmentRenderer
 		}
 	}
 
-	protected abstract String getComponentName();
+	protected abstract String getComponentName(
+		HttpServletRequest httpServletRequest);
 
 	protected abstract String getLabelKey();
 

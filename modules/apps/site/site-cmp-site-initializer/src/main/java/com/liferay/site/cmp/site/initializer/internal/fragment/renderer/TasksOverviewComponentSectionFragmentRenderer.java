@@ -36,7 +36,7 @@ public class TasksOverviewComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getComponentName() {
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
 		return "TasksOverview";
 	}
 

@@ -46,7 +46,7 @@ public class TaskBreadcrumbComponentSectionFragmentRenderer
 	}
 
 	@Override
-	protected String getComponentName() {
+	protected String getComponentName(HttpServletRequest httpServletRequest) {
 		return "Breadcrumb";
 	}
 

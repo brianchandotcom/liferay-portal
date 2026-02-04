@@ -250,7 +250,7 @@ public class LPKGDeployerRegistrar {
 	private ModuleLocalService _moduleLocalService;
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=2.0.3))"
+		target = "(&(release.bundle.symbolic.name=com.liferay.marketplace.service)(release.schema.version=4.0.0))"
 	)
 	private Release _release;
 

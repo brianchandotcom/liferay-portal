@@ -80,11 +80,11 @@ public class MarketplaceTopicSubscriber {
 				).build());
 
 		for (String topicName : MarketplaceConstants.PUBSUB_TOPIC_NAMES) {
-			String subscriptionName = StringBundler.concat(
-				"projects/", _projectId, "/subscriptions/marketplace_",
-				topicName, "-subscription");
-
 			try {
+				String subscriptionName = StringBundler.concat(
+					"projects/", _projectId, "/subscriptions/marketplace_",
+					topicName, "-subscription");
+
 				try {
 					_subscriptionAdminClient.getSubscription(subscriptionName);
 				}

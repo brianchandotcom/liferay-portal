@@ -161,8 +161,7 @@ public class InviteMemberMVCActionCommand
 				throw new RoleAssignmentException(
 					StringBundler.concat(
 						"Role type ",
-						RoleConstants.getTypeLabel(role.getType()),
-						" is not ",
+						RoleConstants.getTypeLabel(role.getType()), " is not ",
 						RoleConstants.getTypeLabel(RoleConstants.TYPE_SITE)));
 			}
 

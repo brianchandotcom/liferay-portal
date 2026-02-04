@@ -58,8 +58,6 @@ import jakarta.validation.ValidationException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import javax.management.relation.RoleNotFoundException;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -148,8 +146,7 @@ public class UserAccountBriefResourceImpl
 				throw new RoleAssignmentException(
 					StringBundler.concat(
 						"Role type ",
-						RoleConstants.getTypeLabel(role.getType()),
-						" is not ",
+						RoleConstants.getTypeLabel(role.getType()), " is not ",
 						RoleConstants.getTypeLabel(RoleConstants.TYPE_SITE)));
 			}
 
@@ -204,8 +201,7 @@ public class UserAccountBriefResourceImpl
 				throw new RoleAssignmentException(
 					StringBundler.concat(
 						"Role type ",
-						RoleConstants.getTypeLabel(role.getType()),
-						" is not ",
+						RoleConstants.getTypeLabel(role.getType()), " is not ",
 						RoleConstants.getTypeLabel(RoleConstants.TYPE_SITE)));
 			}
 

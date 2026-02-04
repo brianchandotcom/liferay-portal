@@ -185,13 +185,11 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 		List<ObjectDefinition> repeatableGroupObjectDefinitions =
 			_getObjectDefinitions(repeatableGroupObjectDefinitionsJSONArray);
 
-		List<ObjectRelationship> objectRelationships = _getObjectRelationships(
-			objectRelationshipsJSONArray);
-
 		Callable<Void> callable = new UpdateStructureCallable(
 			themeDisplay.getCompanyId(), deletedObjectRelationshipsJSONArray,
 			deletedRepeatableGroupsERCs,
-			ObjectDefinition.toDTO(objectDefinitionString), objectRelationships,
+			ObjectDefinition.toDTO(objectDefinitionString),
+			_getObjectRelationships(objectRelationshipsJSONArray),
 			repeatableGroupObjectDefinitions, themeDisplay.getUser());
 
 		try {

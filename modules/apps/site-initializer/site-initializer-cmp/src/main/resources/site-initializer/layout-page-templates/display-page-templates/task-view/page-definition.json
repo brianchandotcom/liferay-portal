@@ -347,7 +347,8 @@
 								"key": "BASIC_COMPONENT-tabs"
 							},
 							"fragmentConfig": {
-								"numberOfTabs": 2
+								"numberOfTabs": 2,
+								"persistSelectedTab": false
 							},
 							"fragmentFields": [
 								{
@@ -411,6 +412,24 @@
 								"definition": {
 									"fragmentDropZoneId": "2"
 								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.HistoryComponentSectionFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"fragmentStyle": {
+												"paddingTop": "3"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
 								"type": "FragmentDropZone"
 							}
 						],

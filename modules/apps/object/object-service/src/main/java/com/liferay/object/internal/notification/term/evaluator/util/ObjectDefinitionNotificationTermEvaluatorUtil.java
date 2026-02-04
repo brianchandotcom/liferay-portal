@@ -24,7 +24,9 @@ import java.util.Date;
  */
 public class ObjectDefinitionNotificationTermEvaluatorUtil {
 
-	public static Object getTermValue(ObjectField objectField, Object value) {
+	public static Object getTermValue(
+		String languageId, ObjectField objectField, Object value) {
+
 		if (objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_DATE) &&
 			!StringUtil.equals(objectField.getName(), "createDate") &&
@@ -74,6 +76,10 @@ public class ObjectDefinitionNotificationTermEvaluatorUtil {
 					objectField.getListTypeDefinitionId(), (String)value);
 
 			if (listTypeEntry != null) {
+				if (languageId != null) {
+					return listTypeEntry.getName(languageId, true);
+				}
+
 				return listTypeEntry.getNameCurrentValue();
 			}
 		}

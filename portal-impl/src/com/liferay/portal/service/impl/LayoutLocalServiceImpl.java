@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -1016,7 +1017,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		// Icon
 
-		_imageLocalService.deleteImage(layout.getIconImageId());
+		Image image = layout.getIconImage();
+
+		if (image != null) {
+			_imageLocalService.deleteImage(image);
+		}
 
 		// Scope group
 
@@ -1290,25 +1295,31 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Layout fetchLayoutByIconImageId(
-		boolean privateLayout, long iconImageId) {
+	public Layout fetchLayoutByIconImageERC(
+		boolean privateLayout, String iconImageERC) {
 
-		if (iconImageId <= 0) {
+		if (Validator.isNull(iconImageERC)) {
 			return null;
 		}
 
-		List<Layout> layouts = layoutPersistence.findByP_I(
-			privateLayout, iconImageId);
+		List<Layout> layouts = layoutPersistence.findByP_IconImageERC(
+			privateLayout, iconImageERC);
 
 		if (layouts.isEmpty()) {
 			return null;
 		}
 
+		Layout layout = layouts.get(layouts.size() - 1);
+
 		if ((layouts.size() > 1) && _log.isWarnEnabled()) {
-			_log.warn("More than one layout uses icon image ID " + iconImageId);
+			_log.warn(
+				StringBundler.concat(
+					"More than one layout uses icon image with external ",
+					"reference code ", iconImageERC, " in company ",
+					layout.getCompanyId()));
 		}
 
-		return layouts.get(layouts.size() - 1);
+		return layout;
 	}
 
 	/**
@@ -3004,8 +3015,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			return null;
 		}
 
-		PortalUtil.updateImageId(
-			layout, bytes != null, bytes, "iconImageId", 0, 0, 0);
+		PortalUtil.updateImageERC(
+			layout, bytes != null, bytes, "iconImageERC", 0, 0, 0);
 
 		return layoutLocalService.updateLayout(layout);
 	}
@@ -3179,8 +3190,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setHidden(hidden);
 		layout.setFriendlyURL(friendlyURLMap.get(LocaleUtil.getSiteDefault()));
 
-		PortalUtil.updateImageId(
-			layout, hasIconImage, iconBytes, "iconImageId", 0, 0, 0);
+		PortalUtil.updateImageERC(
+			layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0);
 
 		layout.setStyleBookEntryERC(styleBookEntryERC);
 		layout.setFaviconFileEntryERC(faviconFileEntryERC);
@@ -3303,8 +3314,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setMasterLayoutPageTemplateEntryERC(
 			masterLayoutPageTemplateEntryERC);
 
-		PortalUtil.updateImageId(
-			layout, iconBytes != null, iconBytes, "iconImageId", 0, 0, 0);
+		PortalUtil.updateImageERC(
+			layout, iconBytes != null, iconBytes, "iconImageERC", 0, 0, 0);
 
 		return layoutPersistence.update(layout);
 	}

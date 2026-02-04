@@ -769,10 +769,14 @@ public class LayoutImpl extends LayoutBaseImpl {
 		Image iconImage = null;
 
 		if (hasIconImage()) {
-			iconImage = ImageLocalServiceUtil.fetchImage(getIconImageId());
+			iconImage = ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
+				getIconImageERC(), getCompanyId());
 
 			if ((iconImage == null) && _log.isWarnEnabled()) {
-				_log.warn("Unable to get image with ID " + getIconImageId());
+				_log.warn(
+					StringBundler.concat(
+						"Unable to get image with external reference code ",
+						getIconImageERC(), " and company ", getCompanyId()));
 			}
 		}
 
@@ -1081,11 +1085,7 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean hasIconImage() {
-		if (getIconImageId() > 0) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getIconImageERC());
 	}
 
 	@Override

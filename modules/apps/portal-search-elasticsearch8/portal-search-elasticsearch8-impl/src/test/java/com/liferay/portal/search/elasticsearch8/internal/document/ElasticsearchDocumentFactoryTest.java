@@ -174,14 +174,12 @@ public class ElasticsearchDocumentFactoryTest {
 	@Test
 	public void testSpaces() throws Exception {
 		_assertDocument("{\"field\":\" \"}", StringPool.SPACE);
-
 		_assertDocument("{\"field\":\"   \"}", StringPool.THREE_SPACES);
 	}
 
 	@Test
 	public void testSpacesLegacy() throws Exception {
 		assertDocumentLegacy("{\"field\":\"\"}", StringPool.SPACE);
-
 		assertDocumentLegacy("{\"field\":\"\"}", StringPool.THREE_SPACES);
 	}
 

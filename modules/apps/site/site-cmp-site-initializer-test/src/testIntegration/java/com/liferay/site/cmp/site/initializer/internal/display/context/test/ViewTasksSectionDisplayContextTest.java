@@ -227,32 +227,42 @@ public class ViewTasksSectionDisplayContextTest
 	public void testGetFDSFilters() throws Exception {
 		List<FDSFilter> fdsFilters = getFDSFilters(null);
 
-		Assert.assertEquals(fdsFilters.toString(), 4, fdsFilters.size());
+		Assert.assertEquals(fdsFilters.toString(), 6, fdsFilters.size());
 
 		assertFDSFilter(
-			FDSEntityFieldTypes.DATE_TIME, "dateCreated", "create-date",
+			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
 			fdsFilters.get(0));
 		assertFDSFilter(
-			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			FDSEntityFieldTypes.DATE_TIME, "dateCreated", "create-date",
 			fdsFilters.get(1));
 		assertFDSFilter(
-			FDSEntityFieldTypes.INTEGER, "cmpTaskCMPProjectId", "project",
+			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
 			fdsFilters.get(2));
 		assertFDSFilter(
-			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(3));
+			FDSEntityFieldTypes.INTEGER, "cmpTaskCMPProjectId", "project",
+			fdsFilters.get(3));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(4));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "keywords", "tag", fdsFilters.get(5));
 
 		fdsFilters = getFDSFilters(_assetEntry);
 
-		Assert.assertEquals(fdsFilters.toString(), 3, fdsFilters.size());
+		Assert.assertEquals(fdsFilters.toString(), 5, fdsFilters.size());
 
 		assertFDSFilter(
-			FDSEntityFieldTypes.DATE_TIME, "dateCreated", "create-date",
+			FDSEntityFieldTypes.STRING, "cmpAssignTo", "assignee",
 			fdsFilters.get(0));
 		assertFDSFilter(
-			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			FDSEntityFieldTypes.DATE_TIME, "dateCreated", "create-date",
 			fdsFilters.get(1));
 		assertFDSFilter(
-			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(2));
+			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
+			fdsFilters.get(2));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(3));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "keywords", "tag", fdsFilters.get(4));
 	}
 
 	@Override

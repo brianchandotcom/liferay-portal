@@ -275,10 +275,10 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 										getParameterObjectFieldId(),
 									serviceBuilderObjectRelationship.
 										getDeletionType(),
-										false,
+									false,
 									serviceBuilderObjectRelationship.
 										getLabelMap(),
-										null);
+									null);
 					}
 
 					_objectRelationshipLocalService.deleteObjectRelationship(

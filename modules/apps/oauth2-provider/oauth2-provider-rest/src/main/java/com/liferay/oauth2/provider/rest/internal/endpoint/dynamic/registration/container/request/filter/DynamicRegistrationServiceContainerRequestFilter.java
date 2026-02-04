@@ -239,15 +239,14 @@ public class DynamicRegistrationServiceContainerRequestFilter
 	private JwtToken _getJwtToken(HttpServletRequest httpServletRequest)
 		throws WebApplicationException {
 
-		String authorizationHeader = httpServletRequest.getHeader(
+		String authorization = httpServletRequest.getHeader(
 			"Authorization");
 
-		if (!StringUtil.startsWith(authorizationHeader, "Bearer ")) {
+		if (!StringUtil.startsWith(authorization, "Bearer ")) {
 			throw ExceptionUtils.toNotAuthorizedException(null, null);
 		}
 
-		String accessTokenContent = authorizationHeader.substring(
-			"Bearer ".length());
+		String accessTokenContent = authorization.substring("Bearer ".length());
 
 		OAuth2Authorization oAuth2Authorization =
 			_oAuth2AuthorizationLocalService.

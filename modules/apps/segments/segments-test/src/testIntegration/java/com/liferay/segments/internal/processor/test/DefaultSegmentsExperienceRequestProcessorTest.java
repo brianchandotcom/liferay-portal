@@ -152,12 +152,6 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		segmentsExperience1.setPriority(2);
-
-		segmentsExperience1 =
-			_segmentsExperienceLocalService.updateSegmentsExperience(
-				segmentsExperience1);
-
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -174,12 +168,6 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		segmentsExperience3.setPriority(4);
-
-		segmentsExperience3 =
-			_segmentsExperienceLocalService.updateSegmentsExperience(
-				segmentsExperience3);
 
 		Assert.assertArrayEquals(
 			new long[] {

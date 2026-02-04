@@ -8,9 +8,20 @@ components:
                     type: string
                 url:
                     type: string
+        AssignToBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        className:
+                            type: string
+                        externalReferenceCode:
+                            type: string
+                        name:
+                            type: string
         BulkAction:
             discriminator:
                 mapping:
+                    AssignToBulkAction: "#/components/schemas/AssignToBulkAction"
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
                     DueDateBulkAction: "#/components/schemas/DueDateBulkAction"
@@ -31,6 +42,7 @@ components:
                     $ref: "#/components/schemas/SelectionScope"
                 type:
                     enum:
+                        -   AssignToBulkAction
                         -   DefaultPermissionBulkAction
                         -   DeleteBulkAction
                         -   DueDateBulkAction

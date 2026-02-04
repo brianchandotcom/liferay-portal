@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -28,7 +28,7 @@ public class AccountMemberPermission {
 		throws Exception {
 
 		if (!_contains(accountExternalReferenceCode, jwt)) {
-			throw new PrincipalException();
+			throw new PrincipalException("Unauthorized");
 		}
 	}
 
@@ -42,11 +42,8 @@ public class AccountMemberPermission {
 		UserAccount userAccount = _marketplaceService.getMyUserAccount(jwt);
 
 		for (AccountBrief accountBrief : userAccount.getAccountBriefs()) {
-			String accountBriefExternalReferenceCode =
-				accountBrief.getExternalReferenceCode();
-
 			if (Objects.equals(
-					accountBriefExternalReferenceCode,
+					accountBrief.getExternalReferenceCode(),
 					accountExternalReferenceCode)) {
 
 				return true;
@@ -54,9 +51,9 @@ public class AccountMemberPermission {
 		}
 
 		for (RoleBrief roleBrief : userAccount.getRoleBriefs()) {
-			String roleBriefName = roleBrief.getName();
+			if (Objects.equals(
+					roleBrief.getName(), RoleConstants.ADMINISTRATOR)) {
 
-			if (roleBriefName.equals(RoleConstants.ADMINISTRATOR)) {
 				return true;
 			}
 		}

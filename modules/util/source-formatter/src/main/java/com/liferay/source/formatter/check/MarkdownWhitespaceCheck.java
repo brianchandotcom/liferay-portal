@@ -5,8 +5,14 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.SourceUtil;
+
+import java.io.IOException;
 
 import java.util.regex.Pattern;
 
@@ -14,6 +20,24 @@ import java.util.regex.Pattern;
  * @author Hugo Huijser
  */
 public class MarkdownWhitespaceCheck extends WhitespaceCheck {
+
+	@Override
+	protected String doProcess(
+			String fileName, String absolutePath, String content)
+		throws IOException {
+
+		content = _formatWhitespace(fileName, absolutePath, content);
+
+		if (content.endsWith(StringPool.NEW_LINE)) {
+			content = content.substring(0, content.length() - 1);
+		}
+
+		if (content.startsWith(StringPool.NEW_LINE)) {
+			content = content.substring(1);
+		}
+
+		return content;
+	}
 
 	@Override
 	protected String formatDoubleSpace(String line) {
@@ -26,21 +50,42 @@ public class MarkdownWhitespaceCheck extends WhitespaceCheck {
 		return super.formatDoubleSpace(line);
 	}
 
-	@Override
-	protected String trimLine(
-		String fileName, String absolutePath, String content, String line,
-		int lineNumber) {
+	private String _formatWhitespace(
+			String fileName, String absolutePath, String content)
+		throws IOException {
 
-		int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
-			content, _codeBlockPattern);
+		StringBundler sb = new StringBundler();
 
-		if (SourceUtil.isInsideMultiLines(
-				lineNumber, multiLineStringsPositions)) {
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
-			return line;
+			String line = null;
+			int lineNumber = 0;
+			int[] multiLineStringsPositions = SourceUtil.getMultiLinePositions(
+				content, _codeBlockPattern);
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber++;
+
+				if (SourceUtil.isInsideMultiLines(
+						lineNumber, multiLineStringsPositions)) {
+
+					sb.append(line);
+					sb.append(StringPool.NEW_LINE);
+
+					continue;
+				}
+
+				sb.append(trimLine(fileName, absolutePath, line));
+				sb.append(StringPool.NEW_LINE);
+			}
 		}
 
-		return trimLine(fileName, absolutePath, line);
+		if (sb.length() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		return sb.toString();
 	}
 
 	private static final Pattern _codeBlockPattern = Pattern.compile(

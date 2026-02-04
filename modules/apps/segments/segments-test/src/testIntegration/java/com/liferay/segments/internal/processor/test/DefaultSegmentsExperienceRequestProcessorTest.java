@@ -142,10 +142,6 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		SegmentsExperience defaultSegmentsExperience =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
-				layout.getPlid());
-
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
 				TestPropsValues.getUserId(), _group.getGroupId(),
@@ -190,7 +186,8 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				segmentsExperience3.getSegmentsExperienceId(),
 				segmentsExperience2.getSegmentsExperienceId(),
 				segmentsExperience1.getSegmentsExperienceId(),
-				defaultSegmentsExperience.getSegmentsExperienceId()
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout.getPlid())
 			},
 			_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 				new MockHttpServletRequest(), new MockHttpServletResponse(),

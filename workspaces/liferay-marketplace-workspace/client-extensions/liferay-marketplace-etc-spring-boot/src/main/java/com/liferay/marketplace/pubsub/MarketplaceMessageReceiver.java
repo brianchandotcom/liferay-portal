@@ -35,7 +35,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					MarketplaceConstants.
 						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE)) {
 
-				// PLACEHOLDER
+				// TODO
 
 			}
 			else if (Objects.equals(
@@ -43,7 +43,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 						MarketplaceConstants.
 							PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_UPDATE)) {
 
-				// PLACEHOLDER
+				// TODO
 
 			}
 			else if (Objects.equals(
@@ -51,7 +51,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 						MarketplaceConstants.
 							PUBSUB_TOPIC_NAME_KORONEIKI_ENTITLEMENT_CREATE)) {
 
-				// PLACEHOLDER
+				// TODO
 
 			}
 

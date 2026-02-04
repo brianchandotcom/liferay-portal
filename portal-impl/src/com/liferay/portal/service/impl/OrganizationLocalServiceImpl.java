@@ -2181,8 +2181,7 @@ public class OrganizationLocalServiceImpl
 		organization.setStatus(
 			EmptyModelManagerUtil.solveEmptyModel(
 				externalReferenceCode, organization.getModelClassName(),
-				organization.getCompanyId(), 0L,
-				organization.getStatus(),
+				organization.getCompanyId(), 0L, organization.getStatus(),
 				() -> WorkflowConstants.STATUS_APPROVED));
 
 		organization.setExpandoBridgeAttributes(serviceContext);

@@ -691,8 +691,7 @@ public class AccountEntryLocalServiceImpl
 
 			status = EmptyModelManagerUtil.solveEmptyModel(
 				externalReferenceCode, accountEntry.getModelClassName(),
-				accountEntry.getCompanyId(),
-				0L, status,
+				accountEntry.getCompanyId(), 0L, status,
 				() -> WorkflowConstants.STATUS_APPROVED);
 
 			ServiceContext workflowServiceContext = new ServiceContext();

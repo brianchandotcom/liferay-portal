@@ -5181,6 +5181,24 @@
 	},
 	{
 		"classNames": [
+			"FragmentEntryLinkLocalService",
+			"FragmentEntryLinkLocalServiceUtil"
+		],
+		"from": "addFragmentEntryLink(long paramName, long paramName, long paramName, long paramName, long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, String paramName, int paramName, String paramName, int paramName, ServiceContext paramName)",
+		"issueKey": "LPD-58603",
+		"to": "addFragmentEntryLink(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#, param#15#)"
+	},
+	{
+		"classNames": [
+			"FragmentEntryLinkService",
+			"FragmentEntryLinkServiceUtil"
+		],
+		"from": "addFragmentEntryLink(long paramName, long paramName, long paramName, long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, String paramName, int paramName, String paramName, int paramName, ServiceContext paramName)",
+		"issueKey": "LPD-58603",
+		"to": "addFragmentEntryLink(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, param#14#)"
+	},
+	{
+		"classNames": [
 			"LayoutPageTemplateStructureLocalService",
 			"LayoutPageTemplateStructureLocalServiceUtil"
 		],

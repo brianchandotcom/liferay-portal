@@ -9,9 +9,9 @@ import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 import {waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
-import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 
 const test = mergeTests(
 	apiHelpersTest,

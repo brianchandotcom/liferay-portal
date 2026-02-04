@@ -7,7 +7,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import jakarta.servlet.jsp.JspException;
@@ -31,12 +30,8 @@ public class ProgressBarTag extends BaseContainerTag {
 	}
 
 	public Map<String, String> getMessages() {
-        return _messages;
-    }
-
-    public void setMessages(Map<String, String> messages) {
-        _messages = messages;
-    }
+		return _messages;
+	}
 
 	public int getValue() {
 		return _value;
@@ -44,6 +39,10 @@ public class ProgressBarTag extends BaseContainerTag {
 
 	public boolean isWarn() {
 		return _warn;
+	}
+
+	public void setMessages(Map<String, String> messages) {
+		_messages = messages;
 	}
 
 	public void setValue(int value) {
@@ -58,9 +57,9 @@ public class ProgressBarTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_messages = null;
 		_value = 0;
 		_warn = false;
-		_messages = null;
 	}
 
 	@Override
@@ -83,10 +82,8 @@ public class ProgressBarTag extends BaseContainerTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		String ariaLabel = _getAriaLabel();
-
 		jspWriter.write("<div class=\"progress\"><div aria-label=\"");
-		jspWriter.write(ariaLabel);
+		jspWriter.write(_getAriaLabel());
 		jspWriter.write(
 			"\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"");
 		jspWriter.write(String.valueOf(_value));
@@ -118,23 +115,37 @@ public class ProgressBarTag extends BaseContainerTag {
 	}
 
 	private String _getAriaLabel() {
-        if (_warn) {
-            String key = (_messages != null) ? _messages.get("ariaLabelAttention") : "attention-value-is-at-x";
-            return LanguageUtil.format(TagResourceBundleUtil.getResourceBundle(pageContext), key, _value);
-        }
-        
-        if (_value == 100) {
-            String key = (_messages != null) ? _messages.get("ariaLabelComplete") : "complete";
-            return LanguageUtil.get(TagResourceBundleUtil.getResourceBundle(pageContext), key);
-        }
+		if (_warn) {
+			String key =
+				(_messages != null) ? _messages.get("ariaLabelAttention") :
+					"attention-value-is-at-x";
 
-        String key = (_messages != null) ? _messages.get("ariaLabelInProgress") : "progress-x";
-        return LanguageUtil.format(TagResourceBundleUtil.getResourceBundle(pageContext), key, _value);
-    }
+			return LanguageUtil.format(
+				TagResourceBundleUtil.getResourceBundle(pageContext), key,
+				_value);
+		}
+
+		if (_value == 100) {
+			String key =
+				(_messages != null) ? _messages.get("ariaLabelComplete") :
+					"complete";
+
+			return LanguageUtil.get(
+				TagResourceBundleUtil.getResourceBundle(pageContext), key);
+		}
+
+		String key =
+			(_messages != null) ? _messages.get("ariaLabelInProgress") :
+				"progress-x";
+
+		return LanguageUtil.format(
+			TagResourceBundleUtil.getResourceBundle(pageContext), key, _value);
+	}
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:progressbar:";
 
 	private Map<String, String> _messages;
 	private int _value;
 	private boolean _warn;
+
 }

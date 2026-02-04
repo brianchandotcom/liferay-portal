@@ -30,11 +30,13 @@ page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.contex
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarDelta" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.PaginationBarLabels" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %>
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.TabsItem" %><%@
+page import="com.liferay.portal.kernel.util.HashMapBuilder" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Arrays" %><%@
-page import="java.util.List" %>
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 

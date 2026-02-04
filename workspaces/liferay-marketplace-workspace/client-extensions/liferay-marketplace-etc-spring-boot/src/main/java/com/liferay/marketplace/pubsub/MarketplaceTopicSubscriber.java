@@ -90,15 +90,8 @@ public class MarketplaceTopicSubscriber {
 				credentialsProvider
 			).build();
 
-		try {
-			_subscriptionAdminClient = SubscriptionAdminClient.create(
-				subscriptionAdminSettings);
-		}
-		catch (Exception exception) {
-			_log.error("Failed to create subscription admin client", exception);
-
-			throw exception;
-		}
+		_subscriptionAdminClient = SubscriptionAdminClient.create(
+			subscriptionAdminSettings);
 
 		for (String pubsubTopic : MarketplaceConstants.PUBSUB_TOPICS) {
 			String subscriptionName = StringBundler.concat(

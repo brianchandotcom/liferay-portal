@@ -8,7 +8,13 @@ import React from 'react';
 
 import EnterpriseFeatureIndicator from './EnterpriseFeatureIndicator';
 
-export default function EnterpriseProductMenuBanner() {
+interface EnterpriseProductMenuBannerProps {
+	enterpriseDetailsActionLink: string;
+}
+
+export default function EnterpriseProductMenuBanner({
+	enterpriseDetailsActionLink,
+}: EnterpriseProductMenuBannerProps) {
 	return (
 		<div className="p-3">
 			<div className="bg-white border p-2 rounded-lg">
@@ -28,7 +34,7 @@ export default function EnterpriseProductMenuBanner() {
 
 						<ClayLink
 							className="btn btn-primary btn-sm w-100"
-							href="#" // TODO: Waiting for link
+							href={enterpriseDetailsActionLink}
 						>
 							{Liferay.Language.get('get-enterprise-details')}
 						</ClayLink>

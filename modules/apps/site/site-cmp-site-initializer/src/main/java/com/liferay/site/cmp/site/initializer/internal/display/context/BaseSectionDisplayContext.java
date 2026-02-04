@@ -40,6 +40,10 @@ public abstract class BaseSectionDisplayContext {
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
+				null, "date-time", "update-due-date",
+				LanguageUtil.get(httpServletRequest, "update-due-date"), "post",
+				"update-due-date", null),
+			new FDSActionDropdownItem(
 				null, "arrow-start", "update-state",
 				LanguageUtil.get(httpServletRequest, "update-state"), "post",
 				"update-state", null),

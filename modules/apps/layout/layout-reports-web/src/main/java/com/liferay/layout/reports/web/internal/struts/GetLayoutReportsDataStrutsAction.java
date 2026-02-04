@@ -24,11 +24,9 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
-import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.model.SegmentsExperimentRel;
-import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.service.SegmentsExperimentRelLocalService;
@@ -215,25 +213,12 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 		boolean segmentsExperienceIsActive = _isActive(
 			segmentsExperience, segmentsExperiences);
 
-		SegmentsEntry segmentsEntry =
-			_segmentsEntryLocalService.
-				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
-
 		return JSONUtil.put(
 			"active", segmentsExperienceIsActive
 		).put(
 			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 		).put(
-			"segmentsEntryId",
-			() -> {
-				if (segmentsEntry != null) {
-					return segmentsEntry.getSegmentsEntryId();
-				}
-
-				return SegmentsEntryConstants.ID_DEFAULT;
-			}
+			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 		).put(
 			"segmentsEntryName",
 			segmentsExperience.getSegmentsEntryName(themeDisplay.getLocale())
@@ -384,9 +369,6 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SegmentsEntryLocalService _segmentsEntryLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

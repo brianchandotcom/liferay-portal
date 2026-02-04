@@ -117,7 +117,6 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 				new PutMappingRequest.Builder();
 
 			putMappingRequestBuilder.index(indexName);
-
 			putMappingRequestBuilder.properties(
 				IndexUtil.getPropertiesMap(
 					JSONUtil.put(

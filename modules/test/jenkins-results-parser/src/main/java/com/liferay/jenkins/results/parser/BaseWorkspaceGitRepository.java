@@ -1028,11 +1028,11 @@ public abstract class BaseWorkspaceGitRepository
 				return true;
 			}
 
-			if ((jobName.contains("master") &&
-				 !JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-				 jobVariant.contains("modules-unit")) ||
-				jobVariant.contains("rest-builder") ||
-				jobVariant.contains("service-builder")) {
+			if (jobName.contains("master") &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				(jobVariant.contains("modules-unit") ||
+				 jobVariant.contains("rest-builder") ||
+				 jobVariant.contains("service-builder"))) {
 
 				return true;
 			}

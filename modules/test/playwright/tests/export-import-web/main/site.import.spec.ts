@@ -132,7 +132,7 @@ testWithExportImportAtInstanceLevelFF(
 		});
 
 		const content = await readFileFromZip(
-			`C_${objectDefinition.name}.json`,
+			`${objectDefinition.externalReferenceCode}.json`,
 			exportFilePath
 		);
 

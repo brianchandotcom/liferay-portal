@@ -285,20 +285,16 @@ public class SegmentsServicePreActionTest {
 					user, _group.getGroupId());
 
 				SegmentsExperience segmentsExperience1 =
-					_segmentsExperienceLocalService.addSegmentsExperience(
-						null, TestPropsValues.getUserId(), _group.getGroupId(),
+					_segmentsExperienceLocalService.appendSegmentsExperience(
+						TestPropsValues.getUserId(), _group.getGroupId(),
 						segmentsEntry1.getExternalReferenceCode(),
 						ScopeUtil.getItemScopeExternalReferenceCode(
 							segmentsEntry1.getGroupId(), _group.getGroupId()),
 						layout.getPlid(),
 						RandomTestUtil.randomLocaleStringMap(), true,
-						new UnicodeProperties(true), serviceContext);
-
-				segmentsExperience1.setPriority(2);
-
-				segmentsExperience1 =
-					_segmentsExperienceLocalService.updateSegmentsExperience(
-						segmentsExperience1);
+						new UnicodeProperties(true),
+						ServiceContextTestUtil.getServiceContext(
+							_group.getGroupId()));
 
 				Group globalGroup = _groupLocalService.getCompanyGroup(
 					TestPropsValues.getCompanyId());
@@ -307,20 +303,16 @@ public class SegmentsServicePreActionTest {
 					user, globalGroup.getGroupId());
 
 				SegmentsExperience segmentsExperience2 =
-					_segmentsExperienceLocalService.addSegmentsExperience(
-						null, TestPropsValues.getUserId(), _group.getGroupId(),
+					_segmentsExperienceLocalService.appendSegmentsExperience(
+						TestPropsValues.getUserId(), _group.getGroupId(),
 						segmentsEntry2.getExternalReferenceCode(),
 						ScopeUtil.getItemScopeExternalReferenceCode(
 							segmentsEntry2.getGroupId(), _group.getGroupId()),
 						layout.getPlid(),
 						RandomTestUtil.randomLocaleStringMap(), true,
-						new UnicodeProperties(true), serviceContext);
-
-				segmentsExperience2.setPriority(3);
-
-				segmentsExperience2 =
-					_segmentsExperienceLocalService.updateSegmentsExperience(
-						segmentsExperience2);
+						new UnicodeProperties(true),
+						ServiceContextTestUtil.getServiceContext(
+							_group.getGroupId()));
 
 				LifecycleEvent lifecycleEvent = new LifecycleEvent(
 					mockHttpServletRequest, new MockHttpServletResponse());

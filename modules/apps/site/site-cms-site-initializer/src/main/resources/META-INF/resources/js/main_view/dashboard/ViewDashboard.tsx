@@ -27,12 +27,14 @@ interface IViewDashboard {
 	constants: {
 		[key: string]: string;
 	};
+	enterpriseDetailsActionLink: string;
 	freeTier: boolean;
 	learnResources: ILearnResourceContext;
 }
 
 const ViewDashboard: React.FC<IViewDashboard> = ({
 	constants,
+	enterpriseDetailsActionLink,
 	freeTier,
 	learnResources,
 }) => {
@@ -49,6 +51,9 @@ const ViewDashboard: React.FC<IViewDashboard> = ({
 					<ClayLayout.Container className="px-4" fluid>
 						{freeTier ? (
 							<EnterpriseOnlyPlaceholder
+								enterpriseDetailsActionLink={
+									enterpriseDetailsActionLink
+								}
 								learnResources={learnResources}
 							/>
 						) : (

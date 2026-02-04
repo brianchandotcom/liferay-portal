@@ -6,6 +6,7 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
+import com.liferay.document.library.kernel.store.Store;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.VirtualHost;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -1637,6 +1639,10 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 				() -> {
 					_clearCache(companyId);
 
+					Store store = _storeSnapshot.get();
+
+					store.deleteDirectory(companyId);
+
 					PortalInstances.removeCompany(company.getCompanyId());
 
 					unregisterCompany(company);
@@ -2629,6 +2635,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	private static final MethodHandler _methodHandler = new MethodHandler(
 		new MethodKey(
 			CompanyLocalServiceImpl.class, "_doSynchronizePortalInstances"));
+	private static final Snapshot<Store> _storeSnapshot = new Snapshot<>(
+		CompanyLocalServiceImpl.class, Store.class, "(default=true)");
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});

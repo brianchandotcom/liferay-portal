@@ -167,7 +167,7 @@ public class ViewTasksSectionDisplayContextTest
 			getFDSActionDropdownItems(_assetEntry);
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 8,
+			fdsActionDropdownItems.toString(), 10,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -181,20 +181,26 @@ public class ViewTasksSectionDisplayContextTest
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(1));
 		assertFDSActionDropdownItem(
-			null, "assign-to", "Assign to...", "get",
+			"bell-on", "subscribe", "Watch Task", "post",
+			fdsActionDropdownItems.get(2));
+		assertFDSActionDropdownItem(
+			"bell-off", "unsubscribe", "Stop Watching Task", "post",
+			fdsActionDropdownItems.get(3));
+		assertFDSActionDropdownItem(
+			null, "assign-to", "Assign to...", null,
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(2));
+			fdsActionDropdownItems.get(4));
 		assertFDSActionDropdownItem(
 			"trash", "delete", "Delete", null,
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
-			fdsActionDropdownItems.get(3));
+			fdsActionDropdownItems.get(5));
 		assertFDSActionDropdownItem(
 			"view", "actionLinkWorkflowTask", "View", null,
 			Collections.singletonMap(
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN),
-			fdsActionDropdownItems.get(4));
+			fdsActionDropdownItems.get(6));
 		assertFDSActionDropdownItem(
 			null, "assignToMeWorkflowTask", "Assign to Me", null,
 			HashMapBuilder.<String, Object>put(
@@ -204,7 +210,7 @@ public class ViewTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			fdsActionDropdownItems.get(5));
+			fdsActionDropdownItems.get(7));
 		assertFDSActionDropdownItem(
 			null, "assignToWorkflowTask", "Assign to...", null,
 			HashMapBuilder.<String, Object>put(
@@ -212,7 +218,7 @@ public class ViewTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			fdsActionDropdownItems.get(6));
+			fdsActionDropdownItems.get(8));
 		assertFDSActionDropdownItem(
 			"date-time", "updateDueDateWorkflowTask", "Update Due Date", null,
 			HashMapBuilder.<String, Object>put(
@@ -220,7 +226,7 @@ public class ViewTasksSectionDisplayContextTest
 			).put(
 				"entryClassName", _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 			).build(),
-			fdsActionDropdownItems.get(7));
+			fdsActionDropdownItems.get(9));
 	}
 
 	@Test

@@ -13,9 +13,10 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResou
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
+import com.liferay.marketplace.permission.AccountMemberPermission;
+import com.liferay.marketplace.permission.DefaultServiceAccountPermission;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
-import com.liferay.marketplace.util.MarketplacePermissionUtil;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
@@ -24,6 +25,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductConsumption;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchaseView;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.AccountResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ContactResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
@@ -65,9 +67,26 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("accountKey") String accountKey)
 		throws Exception {
 
-		MarketplacePermissionUtil.checkDefaultServiceAccountPermission(jwt);
+		_accountMemberPermission.check(accountKey, jwt);
 
 		return _koroneikiService.getKoroneikiAccount(accountKey);
+	}
+
+	@GetMapping("account/{accountKey}/child-accounts")
+	public Page<Account> getChildAccounts(
+			@AuthenticationPrincipal Jwt jwt,
+			@PathVariable("accountKey") String accountKey)
+		throws Exception {
+
+		_accountMemberPermission.check(accountKey, jwt);
+
+		AccountResource accountResource =
+			_koroneikiService.getAccountResource();
+
+		return accountResource.getAccountChildAccountsPage(
+			accountKey,
+			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination.
+				of(1, 20));
 	}
 
 	@GetMapping("contact/by-email-address/{emailAddress}")
@@ -76,7 +95,7 @@ public class KoroneikiRestController extends BaseRestController {
 			@PathVariable("emailAddress") String emailAddress)
 		throws Exception {
 
-		MarketplacePermissionUtil.checkDefaultServiceAccountPermission(jwt);
+		_defaultServiceAccountPermission.check(jwt);
 
 		ContactResource contactResource =
 			_koroneikiService.getContactResource();
@@ -300,6 +319,12 @@ public class KoroneikiRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		KoroneikiRestController.class);
+
+	@Autowired
+	private AccountMemberPermission _accountMemberPermission;
+
+	@Autowired
+	private DefaultServiceAccountPermission _defaultServiceAccountPermission;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

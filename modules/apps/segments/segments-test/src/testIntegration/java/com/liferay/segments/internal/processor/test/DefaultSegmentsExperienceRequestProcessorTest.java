@@ -129,18 +129,12 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 	public void testGetSegmentsExperienceIdsWithSegmentEntryIds()
 		throws Exception {
 
-		Group companyGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		User user = _userLocalService.getUser(TestPropsValues.getUserId());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsEntry segmentsEntry1 = _addMatchingSegmentsEntry(
 			user, _group.getGroupId());
-
-		SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
-			user, companyGroup.getGroupId());
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(
@@ -151,6 +145,12 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 				layout.getPlid(), RandomTestUtil.randomLocaleStringMap(), true,
 				new UnicodeProperties(true),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		SegmentsEntry segmentsEntry2 = _addMatchingSegmentsEntry(
+			user, companyGroup.getGroupId());
 
 		SegmentsExperience segmentsExperience2 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(

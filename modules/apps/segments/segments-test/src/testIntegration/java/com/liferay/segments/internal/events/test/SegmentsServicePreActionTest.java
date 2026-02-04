@@ -252,31 +252,19 @@ public class SegmentsServicePreActionTest {
 				_segmentsConfigurationProvider.
 					clearSegmentsCompanyConfigurations();
 
-				LifecycleAction lifecycleAction = _getLifecycleAction();
-
-				MockHttpServletRequest mockHttpServletRequest =
-					new MockHttpServletRequest();
-
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						_group.getGroupId(), TestPropsValues.getUserId());
-
-				Map<Locale, String> nameMap = Collections.singletonMap(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString());
-
 				Layout layout = _layoutLocalService.addLayout(
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, 0, 0,
-					nameMap, nameMap, Collections.emptyMap(),
+					RandomTestUtil.randomLocaleStringMap(),
+					RandomTestUtil.randomLocaleStringMap(),
 					Collections.emptyMap(), Collections.emptyMap(),
-					LayoutConstants.TYPE_CONTENT,
+					Collections.emptyMap(), LayoutConstants.TYPE_CONTENT,
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), null, serviceContext);
-
-				mockHttpServletRequest.setAttribute(
-					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
+					false, false, Collections.emptyMap(), null,
+					ServiceContextTestUtil.getServiceContext(
+						_group.getGroupId(), TestPropsValues.getUserId()));
 
 				User user = _userLocalService.getUser(
 					TestPropsValues.getUserId());
@@ -313,6 +301,14 @@ public class SegmentsServicePreActionTest {
 						new UnicodeProperties(true),
 						ServiceContextTestUtil.getServiceContext(
 							_group.getGroupId()));
+
+				LifecycleAction lifecycleAction = _getLifecycleAction();
+
+				MockHttpServletRequest mockHttpServletRequest =
+					new MockHttpServletRequest();
+
+				mockHttpServletRequest.setAttribute(
+					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
 
 				LifecycleEvent lifecycleEvent = new LifecycleEvent(
 					mockHttpServletRequest, new MockHttpServletResponse());

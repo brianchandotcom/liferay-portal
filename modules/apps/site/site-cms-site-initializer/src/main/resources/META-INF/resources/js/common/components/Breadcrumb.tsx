@@ -41,8 +41,8 @@ interface Props extends Pick<React.ComponentProps<typeof ClaySticker>, 'size'> {
 		ActionDropdownItemProps;
 	breadcrumbItems: BreadcrumbItem[];
 	displayType?: LogoColor;
-	hideSpace?: boolean;
 	freeTier?: boolean;
+	hideSpace?: boolean;
 }
 
 export interface BreadcrumbItem {

@@ -8,13 +8,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +43,9 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-74377")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				fragmentRendererContext.getCompanyId(), "LPD-74377")) {
+
 			return;
 		}
 
@@ -67,7 +69,10 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return Collections.emptyMap();
+	return HashMapBuilder.<String, Object>put(
+			 // Will be properly filled in LPD-77107
+			"enterpriseDetailsActionLink", "/my-temp-url"
+		).build();
 	}
 
 }

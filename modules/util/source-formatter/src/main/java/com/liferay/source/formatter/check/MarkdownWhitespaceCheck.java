@@ -28,15 +28,7 @@ public class MarkdownWhitespaceCheck extends WhitespaceCheck {
 
 		content = _formatWhitespace(fileName, absolutePath, content);
 
-		if (content.endsWith(StringPool.NEW_LINE)) {
-			content = content.substring(0, content.length() - 1);
-		}
-
-		if (content.startsWith(StringPool.NEW_LINE)) {
-			content = content.substring(1);
-		}
-
-		return content;
+		return content.trim();
 	}
 
 	@Override

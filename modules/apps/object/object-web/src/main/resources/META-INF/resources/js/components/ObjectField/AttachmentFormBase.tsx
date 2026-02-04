@@ -27,7 +27,7 @@ const attachmentSources = [
 			'files-can-be-stored-in-an-object-entry-or-in-a-specific-folder-in-documents-and-media'
 		),
 		label: Liferay.Language.get('upload-directly-from-users-computer'),
-		value: 'userComputer',
+		value: 'userComputerToDocumentsAndMedia',
 	},
 	{
 		description: Liferay.Language.get(
@@ -61,15 +61,15 @@ export function AttachmentFormBase({
 		const updatedSettings = objectFieldSettings.filter(
 			(setting) =>
 				setting.name !== 'fileSource' &&
-				setting.name !== 'showFilesInDocumentsAndMedia' &&
-				setting.name !== 'storageDLFolderPath'
+				setting.name !== 'showFilesInLibrary' &&
+				setting.name !== 'storageLibraryPath'
 		);
 
 		updatedSettings.push(fileSource);
 
-		if (value === 'userComputer') {
+		if (value === 'userComputerToDocumentsAndMedia') {
 			updatedSettings.push({
-				name: 'showFilesInDocumentsAndMedia',
+				name: 'showFilesInLibrary',
 				value: false,
 			});
 		}
@@ -87,18 +87,18 @@ export function AttachmentFormBase({
 	const toggleShowFiles = (value: boolean) => {
 		const updatedSettings = objectFieldSettings.filter(
 			(setting) =>
-				setting.name !== 'showFilesInDocumentsAndMedia' &&
-				setting.name !== 'storageDLFolderPath'
+				setting.name !== 'showFilesInLibrary' &&
+				setting.name !== 'storageLibraryPath'
 		);
 
 		updatedSettings.push({
-			name: 'showFilesInDocumentsAndMedia',
+			name: 'showFilesInLibrary',
 			value,
 		});
 
 		if (value) {
 			updatedSettings.push({
-				name: 'storageDLFolderPath',
+				name: 'storageLibraryPath',
 				value: `/${objectDefinitionName}`,
 			});
 		}
@@ -120,14 +120,14 @@ export function AttachmentFormBase({
 				selectedKey={attachmentSource?.value}
 			/>
 
-			{settings.fileSource === 'userComputer' && (
+			{settings.fileSource === 'userComputerToDocumentsAndMedia' && (
 				<ClayForm.Group className="lfr-objects__object-field-form-base-container">
 					<Toggle
 						disabled={disabled}
 						label={Liferay.Language.get(
 							'show-files-in-documents-and-media'
 						)}
-						name="showFilesInDocumentsAndMedia"
+						name="showFilesInLibrary"
 						onBlur={(event) => {
 							event.stopPropagation();
 
@@ -136,7 +136,7 @@ export function AttachmentFormBase({
 							}
 						}}
 						onToggle={toggleShowFiles}
-						toggled={!!settings.showFilesInDocumentsAndMedia}
+						toggled={!!settings.showFilesInLibrary}
 						tooltip={Liferay.Language.get(
 							'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
 						)}

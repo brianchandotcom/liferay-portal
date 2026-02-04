@@ -21,14 +21,14 @@
 				},
 				{
 					"name": "fileSource",
-					"value": "userComputer"
+					"value": "userComputerToDocumentsAndMedia"
 				},
 				{
-					"name": "showFilesInDocumentsAndMedia",
+					"name": "showFilesInLibrary",
 					"value": "true"
 				},
 				{
-					"name": "storageDLFolderPath",
+					"name": "storageLibraryPath",
 					"value": "/MDFClaimActivityFiles"
 				}
 			],
@@ -56,10 +56,10 @@
 				},
 				{
 					"name": "fileSource",
-					"value": "userComputer"
+					"value": "userComputerToDocumentsAndMedia"
 				},
 				{
-					"name": "showFilesInDocumentsAndMedia",
+					"name": "showFilesInLibrary",
 					"value": "false"
 				}
 			],
@@ -87,10 +87,10 @@
 				},
 				{
 					"name": "fileSource",
-					"value": "userComputer"
+					"value": "userComputerToDocumentsAndMedia"
 				},
 				{
-					"name": "showFilesInDocumentsAndMedia",
+					"name": "showFilesInLibrary",
 					"value": "false"
 				}
 			],

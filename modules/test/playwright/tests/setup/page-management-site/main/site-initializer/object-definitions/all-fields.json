@@ -88,14 +88,14 @@
 				},
 				{
 					"name": "fileSource",
-					"value": "userComputer"
+					"value": "userComputerToDocumentsAndMedia"
 				},
 				{
-					"name": "showFilesInDocumentsAndMedia",
+					"name": "showFilesInLibrary",
 					"value": true
 				},
 				{
-					"name": "storageDLFolderPath",
+					"name": "storageLibraryPath",
 					"value": "/FileUpload"
 				}
 			],

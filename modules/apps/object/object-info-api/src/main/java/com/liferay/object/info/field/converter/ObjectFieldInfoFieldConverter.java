@@ -23,6 +23,7 @@ import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
@@ -294,7 +295,8 @@ public class ObjectFieldInfoFieldConverter {
 	private String _getAcceptedFileExtensions(ObjectField objectField) {
 		ObjectFieldSetting acceptedFileExtensionsObjectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), "acceptedFileExtensions");
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS);
 
 		if (acceptedFileExtensionsObjectFieldSetting == null) {
 			return StringPool.BLANK;
@@ -308,19 +310,23 @@ public class ObjectFieldInfoFieldConverter {
 
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), "fileSource");
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
 		if (objectFieldSetting == null) {
 			return null;
 		}
 
 		if (Objects.equals(
-				objectFieldSetting.getValue(), "documentsAndMedia")) {
+				objectFieldSetting.getValue(),
+				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
 			return FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA;
 		}
 		else if (Objects.equals(
-					objectFieldSetting.getValue(), "userComputer")) {
+					objectFieldSetting.getValue(),
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 			return FileInfoFieldType.FileSourceType.USER_COMPUTER;
 		}
@@ -362,7 +368,8 @@ public class ObjectFieldInfoFieldConverter {
 	private long _getMaximumFileSize(ObjectField objectField) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), "maximumFileSize");
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE);
 
 		long maximumFileSizeForGuestUsers =
 			_objectConfiguration.maximumFileSizeForGuestUsers();
@@ -386,7 +393,8 @@ public class ObjectFieldInfoFieldConverter {
 	private long _getMaxLength(ObjectField objectField, long defaultMaxLength) {
 		ObjectFieldSetting objectFieldSetting =
 			_objectFieldSettingLocalService.fetchObjectFieldSetting(
-				objectField.getObjectFieldId(), "maxLength");
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_MAX_LENGTH);
 
 		if (objectFieldSetting == null) {
 			return defaultMaxLength;

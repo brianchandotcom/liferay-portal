@@ -404,10 +404,10 @@ describe('StructureFieldSettings', () => {
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
-				fileSource: 'userComputer',
+				fileSource: 'userComputerToDocumentsAndMedia',
 				maximumFileSize: 100,
-				showFilesInDocumentsAndMedia: true,
-				storageDLFolderPath: '/new',
+				showFilesInLibrary: true,
+				storageLibraryPath: '/new',
 			},
 			type: 'update-field',
 			uuid,
@@ -426,7 +426,7 @@ describe('StructureFieldSettings', () => {
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'gif',
-				fileSource: 'userComputer',
+				fileSource: 'userComputerToDocumentsAndMedia',
 				maximumFileSize: 100,
 			},
 			type: 'update-field',
@@ -442,7 +442,7 @@ describe('StructureFieldSettings', () => {
 		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
 			settings: {
 				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
-				fileSource: 'userComputer',
+				fileSource: 'userComputerToDocumentsAndMedia',
 				maximumFileSize: 200,
 			},
 			type: 'update-field',

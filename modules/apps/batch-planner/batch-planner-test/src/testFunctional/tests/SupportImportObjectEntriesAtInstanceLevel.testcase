@@ -27,7 +27,7 @@ definition {
 				fieldLabelName = "diploma",
 				fieldName = "diploma",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = "Student");
 		}

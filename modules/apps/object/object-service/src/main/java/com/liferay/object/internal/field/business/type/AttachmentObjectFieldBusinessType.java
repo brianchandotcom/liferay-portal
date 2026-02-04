@@ -84,8 +84,8 @@ public class AttachmentObjectFieldBusinessType
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
-			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+			ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH);
 	}
 
 	@Override
@@ -221,9 +221,9 @@ public class AttachmentObjectFieldBusinessType
 			objectField, objectFieldRenderingContext);
 
 		properties.remove(
-			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA);
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY);
 		properties.remove(
-			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
+			ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH);
 
 		return HashMapBuilder.<String, Object>put(
 			"groupAware",
@@ -296,19 +296,19 @@ public class AttachmentObjectFieldBusinessType
 
 			validateNotAllowedObjectFieldSettingNames(
 				SetUtil.fromArray(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH),
 				objectField.getName(), objectFieldSettingsValues);
 		}
 		else if (Objects.equals(
 					fileSource,
-					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 			validateRelatedObjectFieldSettings(
 				objectField,
-				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
 				objectFieldSettingsValues);
 		}
 		else {
@@ -380,15 +380,16 @@ public class AttachmentObjectFieldBusinessType
 	private String _getFileURL(DLFileEntry dlFileEntry, ObjectField objectField)
 		throws Exception {
 
-		if (!Objects.equals(
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER,
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-					objectField)) ||
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
+
+		if (Objects.equals(
+				ObjectFieldSettingConstants.VALUE_DEPOT_FILES, fileSource) ||
+			Objects.equals(
+				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA, fileSource) ||
 			GetterUtil.getBoolean(
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 					objectField.getObjectFieldSettings()))) {
 
 			return null;

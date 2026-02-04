@@ -311,11 +311,13 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 		settings.fileSource = objectFieldSettings.fileSource;
 		settings.maximumFileSize = objectFieldSettings.maximumFileSize;
 
-		if (objectFieldSettings.fileSource === 'userComputer') {
-			settings.showFilesInDocumentsAndMedia =
-				objectFieldSettings.showFilesInDocumentsAndMedia;
-			settings.storageDLFolderPath =
-				objectFieldSettings.storageDLFolderPath;
+		if (
+			objectFieldSettings.fileSource === 'userComputerToDocumentsAndMedia'
+		) {
+			settings.showFilesInLibrary =
+				objectFieldSettings.showFilesInLibrary;
+			settings.storageLibraryPath =
+				objectFieldSettings.storageLibraryPath;
 		}
 	}
 	else if (objectField.businessType === 'DateTime') {

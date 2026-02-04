@@ -10,6 +10,9 @@ package com.liferay.info.field.type;
  */
 public class RelationshipInfoFieldType implements InfoFieldType {
 
+	public static final Attribute<RelationshipInfoFieldType, Boolean>
+		INHERITANCE = new Attribute<>();
+
 	public static final RelationshipInfoFieldType INSTANCE =
 		new RelationshipInfoFieldType();
 

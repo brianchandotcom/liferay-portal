@@ -97,14 +97,14 @@ public class DLSizeLimitConfigurationProviderImpl
 			Map<String, Long> mimeTypeSizeLimit)
 		throws Exception {
 
+		Group group = _groupLocalService.fetchGroup(groupId);
+
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		_updateMimeTypeSizeLimitProperty(properties, mimeTypeSizeLimit);
 
 		properties.put("fileMaxSize", fileMaxSize);
 		properties.put("maxSizeToCopy", maxSizeToCopy);
-
-		Group group = _groupLocalService.fetchGroup(groupId);
 
 		_configurationProvider.saveGroupConfiguration(
 			DLSizeLimitConfiguration.class, group.getCompanyId(), groupId,

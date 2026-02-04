@@ -1929,8 +1929,9 @@ public class ContactsEngineClientImpl
 		FaroProject faroProject, String accountId, String channelId,
 		String dataSourceId, String individualSegmentId,
 		String notIndividualSegmentId, String interestName, String filterString,
-		String query, List<String> fields, boolean includeAnonymousUsers,
-		int cur, int delta, List<OrderByField> orderByFields) {
+		List<String> profileTypes, String query, List<String> fields,
+		boolean includeAnonymousUsers, int cur, int delta,
+		List<OrderByField> orderByFields) {
 
 		Map<String, Object> uriVariables = getUriVariables(
 			faroProject, cur, delta, orderByFields,
@@ -1964,6 +1965,11 @@ public class ContactsEngineClientImpl
 
 		if (Validator.isNotNull(notIndividualSegmentId)) {
 			uriVariables.put("notSegmentId", notIndividualSegmentId);
+		}
+
+		if (profileTypes != null) {
+			uriVariables.put(
+				"profileTypes", String.join(StringPool.COMMA, profileTypes));
 		}
 
 		if (Validator.isNotNull(query)) {

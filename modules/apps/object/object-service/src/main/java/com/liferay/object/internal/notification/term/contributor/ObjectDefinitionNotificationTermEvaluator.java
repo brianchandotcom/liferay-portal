@@ -422,7 +422,8 @@ public class ObjectDefinitionNotificationTermEvaluator
 
 		return String.valueOf(
 			ObjectDefinitionNotificationTermEvaluatorUtil.getTermValue(
-				parentObjectField, values.get(parentObjectField.getName())));
+				null, parentObjectField,
+				values.get(parentObjectField.getName())));
 	}
 
 	private String _format(Date date, Locale locale) {

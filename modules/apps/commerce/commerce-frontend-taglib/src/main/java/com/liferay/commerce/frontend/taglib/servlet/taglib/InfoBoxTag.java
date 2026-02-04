@@ -30,7 +30,7 @@ public class InfoBoxTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:info-box:actionTargetId", getActionTargetId());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:info-box:actionUrl", getActionUrl());
+			"liferay-commerce:info-box:actionURL", getActionURL());
 		httpServletRequest.setAttribute(
 			"liferay-commerce:info-box:elementClasses", getElementClasses());
 		httpServletRequest.setAttribute(
@@ -53,8 +53,8 @@ public class InfoBoxTag extends IncludeTag {
 		return _actionTargetId;
 	}
 
-	public String getActionUrl() {
-		return _actionUrl;
+	public String getActionURL() {
+		return _actionURL;
 	}
 
 	public String getElementClasses() {
@@ -77,8 +77,8 @@ public class InfoBoxTag extends IncludeTag {
 		_actionTargetId = actionTargetId;
 	}
 
-	public void setActionUrl(String actionUrl) {
-		_actionUrl = actionUrl;
+	public void setActionURL(String actionURL) {
+		_actionURL = actionURL;
 	}
 
 	public void setElementClasses(String elementClasses) {
@@ -103,7 +103,7 @@ public class InfoBoxTag extends IncludeTag {
 		_actionContext = null;
 		_actionLabel = null;
 		_actionTargetId = null;
-		_actionUrl = null;
+		_actionURL = null;
 		_elementClasses = null;
 		_title = null;
 	}
@@ -125,7 +125,7 @@ public class InfoBoxTag extends IncludeTag {
 	private Map<String, Object> _actionContext;
 	private String _actionLabel;
 	private String _actionTargetId;
-	private String _actionUrl;
+	private String _actionURL;
 	private String _elementClasses;
 	private String _title;
 

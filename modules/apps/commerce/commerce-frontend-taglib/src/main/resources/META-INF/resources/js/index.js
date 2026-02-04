@@ -85,7 +85,7 @@ export function compareCheckboxTag({
 	inCompare,
 	itemId,
 	label,
-	pictureUrl,
+	pictureURL,
 	refreshOnRemove,
 	rootId,
 }) {
@@ -95,7 +95,7 @@ export function compareCheckboxTag({
 		inCompare,
 		itemId,
 		label,
-		pictureUrl,
+		pictureURL,
 		refreshOnRemove,
 	});
 }
@@ -212,9 +212,9 @@ export function cart({
 
 	if (customCartViews.length) {
 		props.cartViews = customCartViews.reduce(
-			(views, [viewName, contentRendererModuleUrl]) => ({
+			(views, [viewName, contentRendererModuleURL]) => ({
 				...views,
-				[viewName]: {contentRendererModuleUrl},
+				[viewName]: {contentRendererModuleURL},
 			}),
 			{}
 		);

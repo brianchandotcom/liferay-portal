@@ -9,9 +9,9 @@
 
 		</div>
 
-		<c:if test="<%= Validator.isNotNull(showMoreId) || Validator.isNotNull(showMoreUrl) %>">
+		<c:if test="<%= Validator.isNotNull(showMoreId) || Validator.isNotNull(showMoreURL) %>">
 			<div class="border-top card-footer p-0" id="<%= HtmlUtil.escapeAttribute(showMoreButtonWrapperId) %>">
-				<a class="border-0 btn btn-secondary w-100" href="<%= Validator.isNotNull(showMoreUrl) ? HtmlUtil.escapeHREF(showMoreUrl) : '#' %>" id="<%= HtmlUtil.escapeAttribute(showMoreButtonId) %>">
+				<a class="border-0 btn btn-secondary w-100" href="<%= Validator.isNotNull(showMoreURL) ? HtmlUtil.escapeHREF(showMoreURL) : '#' %>" id="<%= HtmlUtil.escapeAttribute(showMoreButtonId) %>">
 					<liferay-ui:message key="you" />
 				</a>
 			</div>

@@ -25,10 +25,10 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 	<div class="container-fluid container-fluid-max-xxxl<%= Validator.isNotNull(cssClasses) ? StringPool.SPACE + HtmlUtil.escapeAttribute(cssClasses) : StringPool.BLANK %>">
 		<div class="align-items-center c-py-3 c-py-lg-2 d-lg-flex">
 			<div class="align-items-center d-flex">
-				<c:if test="<%= Validator.isNotNull(thumbnailUrl) %>">
+				<c:if test="<%= Validator.isNotNull(thumbnailURL) %>">
 					<span class="d-none d-sm-block sticker sticker-xl">
 						<span class="sticker-overlay">
-							<img alt="thumbnail" class="sticker-img" src="<%= HtmlUtil.escapeAttribute(thumbnailUrl) %>" />
+							<img alt="thumbnail" class="sticker-img" src="<%= HtmlUtil.escapeAttribute(thumbnailURL) %>" />
 						</span>
 					</span>
 				</c:if>
@@ -83,7 +83,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						</div>
 					</c:if>
 
-					<c:if test="<%= Validator.isNotNull(externalReferenceCode) || Validator.isNotNull(externalReferenceCodeEditUrl) %>">
+					<c:if test="<%= Validator.isNotNull(externalReferenceCode) || Validator.isNotNull(externalReferenceCodeEditURL) %>">
 						<div class="align-items-center c-mt-n2 d-flex py-1">
 							<span class="header-info-title text-black-50">
 								<liferay-ui:message key="erc" />
@@ -99,13 +99,13 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 								/>
 							</span>
 
-							<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditUrl) %>">
+							<c:if test="<%= Validator.isNotNull(externalReferenceCodeEditURL) %>">
 								<clay:button
 									additionalProps='<%=
 										HashMapBuilder.<String, Object>put(
 											"title", LanguageUtil.format(request, "edit-x", "external-reference-code")
 										).put(
-											"url", externalReferenceCodeEditUrl
+											"url", externalReferenceCodeEditURL
 										).build()
 									%>'
 									cssClass="text-secondary"
@@ -302,7 +302,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 					</div>
 				</c:if>
 
-				<c:if test="<%= Validator.isNotNull(dropdownItems) || Validator.isNotNull(previewUrl) %>">
+				<c:if test="<%= Validator.isNotNull(dropdownItems) || Validator.isNotNull(previewURL) %>">
 					<c:if test="<%= Validator.isNotNull(dropdownItems) && (dropdownItems.size() > 0) %>">
 						<div class="c-ml-3" id="dropdown-header-container">
 							<liferay-ui:icon
@@ -323,10 +323,10 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 						/>
 					</c:if>
 
-					<c:if test="<%= Validator.isNotNull(previewUrl) %>">
+					<c:if test="<%= Validator.isNotNull(previewURL) %>">
 						<clay:link
 							cssClass="btn btn-outline-borderless btn-outline-secondary btn-sm text-primary"
-							href="<%= previewUrl %>"
+							href="<%= previewURL %>"
 							icon="shortcut"
 						/>
 					</c:if>

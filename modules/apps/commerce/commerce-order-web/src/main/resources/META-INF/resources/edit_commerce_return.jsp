@@ -27,9 +27,9 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	additionalStatusLabelStyle="<%= CommerceReturnConstants.getReturnStatusLabelStyle(commerceReturn.getReturnStatus()) %>"
 	bean="<%= commerceReturn.getObjectEntry() %>"
 	externalReferenceCode="<%= commerceReturn.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceReturnExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceReturnExternalReferenceCodeURL %>"
 	model="<%= CommerceReturn.class %>"
-	thumbnailUrl="<%= commerceReturnEditDisplayContext.getCommerceReturnAccountEntryThumbnailURL() %>"
+	thumbnailURL="<%= commerceReturnEditDisplayContext.getCommerceReturnAccountEntryThumbnailURL() %>"
 	title="<%= String.valueOf(commerceReturnEditDisplayContext.getCommerceReturnId()) %>"
 />
 

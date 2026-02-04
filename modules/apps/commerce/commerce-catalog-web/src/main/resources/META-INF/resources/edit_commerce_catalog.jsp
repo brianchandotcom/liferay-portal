@@ -23,7 +23,7 @@ CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatal
 	bean="<%= commerceCatalog %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= HtmlUtil.escape(commerceCatalog.getExternalReferenceCode()) %>"
-	externalReferenceCodeEditUrl="<%= editCommerceCatalogExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceCatalogExternalReferenceCodeURL %>"
 	model="<%= CommerceCatalog.class %>"
 	title="<%= commerceCatalog.getName() %>"
 />

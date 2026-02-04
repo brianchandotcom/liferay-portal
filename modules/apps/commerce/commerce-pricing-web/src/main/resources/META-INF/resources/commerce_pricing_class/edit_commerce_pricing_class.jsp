@@ -26,7 +26,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	bean="<%= commercePricingClass %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commercePricingClass.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommercePricingClassExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommercePricingClassExternalReferenceCodeURL %>"
 	model="<%= CommercePricingClass.class %>"
 	title="<%= commercePricingClass.getTitle(locale) %>"
 />

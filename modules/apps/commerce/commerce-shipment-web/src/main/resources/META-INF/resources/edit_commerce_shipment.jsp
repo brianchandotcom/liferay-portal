@@ -28,9 +28,9 @@ AccountEntry accountEntry = commerceShipment.getAccountEntry();
 	bean="<%= commerceShipment %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceShipment.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceShipmentExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceShipmentExternalReferenceCodeURL %>"
 	model="<%= CommerceShipment.class %>"
-	thumbnailUrl="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(accountEntry, themeDisplay.getPathImage()) %>"
+	thumbnailURL="<%= commerceShipmentDisplayContext.getCommerceAccountThumbnailURL(accountEntry, themeDisplay.getPathImage()) %>"
 	title="<%= String.valueOf(commerceShipment.getCommerceShipmentId()) %>"
 	wrapperCssClasses="side-panel-top-anchor"
 />

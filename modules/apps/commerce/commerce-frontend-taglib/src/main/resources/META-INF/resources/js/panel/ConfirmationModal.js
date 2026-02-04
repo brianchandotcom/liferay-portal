@@ -5,8 +5,8 @@
 
 import {openModal} from 'frontend-js-components-web';
 
-export default function ({actionUrl, linkId}) {
-	if (!actionUrl || actionUrl === '#') {
+export default function ({actionURL, linkId}) {
+	if (!actionURL || actionURL === '#') {
 		return;
 	}
 
@@ -41,7 +41,7 @@ export default function ({actionUrl, linkId}) {
 				{
 					label: Liferay.Language.get('continue'),
 					onClick: () => {
-						location.href = actionUrl;
+						location.href = actionURL;
 					},
 				},
 			],

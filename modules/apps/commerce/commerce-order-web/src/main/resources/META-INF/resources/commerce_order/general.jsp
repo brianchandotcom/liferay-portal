@@ -52,7 +52,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel='<%= hasPermission ? LanguageUtil.get(request, Validator.isNull(name) ? "add" : "edit") : null %>'
-						actionUrl="<%= hasPermission ? editNameURL: null %>"
+						actionURL="<%= hasPermission ? editNameURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "name") %>'
 					>
@@ -109,7 +109,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel='<%= hasPermission ? LanguageUtil.get(request, Validator.isNull(purchaseOrderNumber) ? "add" : "edit") : null %>'
-						actionUrl="<%= hasPermission ? editPurchaseOrderNumberURL: null %>"
+						actionURL="<%= hasPermission ? editPurchaseOrderNumberURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "purchase-order-number") %>'
 					>
@@ -178,7 +178,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel="<%= billingCommerceAddressActionLabel %>"
-						actionUrl="<%= billingCommerceAddressActionURL %>"
+						actionURL="<%= billingCommerceAddressActionURL %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "billing-address") %>'
 					>
@@ -260,7 +260,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel="<%= shippingCommerceAddressActionLabel %>"
-						actionUrl="<%= shippingCommerceAddressActionURL %>"
+						actionURL="<%= shippingCommerceAddressActionURL %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "shipping-address") %>'
 					>
@@ -318,7 +318,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentTermsPermission() ? LanguageUtil.get(request, (commerceOrder.getPaymentCommerceTermEntryId() == 0) ? "add" : "edit") : null %>'
-						actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentTermsPermission() ? editPaymentTermsURL : null %>"
+						actionURL="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPaymentTermsPermission() ? editPaymentTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "payment-terms") %>'
 					>
@@ -356,7 +356,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() ? LanguageUtil.get(request, (commerceOrder.getDeliveryCommerceTermEntryId() == 0) ? "add" : "edit") : null %>'
-						actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() ? editDeliveryTermsURL : null %>"
+						actionURL="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() ? editDeliveryTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "delivery-terms") %>'
 					>
@@ -413,7 +413,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel="<%= requestedDeliveryDateActionLabel %>"
-						actionUrl="<%= requestedDeliveryDateActionURL %>"
+						actionURL="<%= requestedDeliveryDateActionURL %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "requested-delivery-date") %>'
 					>
@@ -460,7 +460,7 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 							).build()
 						%>'
 						actionLabel='<%= hasPermission ? LanguageUtil.get(request, Validator.isNull(printedNote) ? "add" : "edit") : null %>'
-						actionUrl="<%= hasPermission ? editPrintedNoteURL: null %>"
+						actionURL="<%= hasPermission ? editPrintedNoteURL: null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "printed-note") %>'
 					>
@@ -536,9 +536,9 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 			%>'
 			actionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? LanguageUtil.get(request, "edit") : null %>'
 			actionTargetId="order-summary-modal"
-			actionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? editOrderSummaryURL : null %>"
+			actionURL="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? editOrderSummaryURL : null %>"
 			secondaryActionLabel='<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? LanguageUtil.get(request, "recalculate") : null %>'
-			secondaryActionUrl="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? recalculateOrderSummaryURL : null %>"
+			secondaryActionURL="<%= commerceOrderEditDisplayContext.hasManageCommerceOrderPricesPermission() ? recalculateOrderSummaryURL : null %>"
 			title='<%= LanguageUtil.get(request, "order-summary") %>'
 		>
 			<div id="summary-root"></div>

@@ -189,15 +189,15 @@ public class AccountSelectorTag extends IncludeTag {
 			_commerceChannelId);
 
 		if (_accountEntry != null) {
-			String thumbnailUrl = null;
+			String thumbnailURL = null;
 
 			if (_accountEntry.getLogoId() == 0) {
-				thumbnailUrl =
+				thumbnailURL =
 					_themeDisplay.getPathImage() +
 						"/organization_logo?img_id=0";
 			}
 			else {
-				thumbnailUrl = StringBundler.concat(
+				thumbnailURL = StringBundler.concat(
 					_themeDisplay.getPathImage(), "/organization_logo?img_id=",
 					_accountEntry.getLogoId(), "&t=",
 					WebServerServletTokenUtil.getToken(
@@ -206,7 +206,7 @@ public class AccountSelectorTag extends IncludeTag {
 
 			CurrentCommerceAccountModel currentCommerceAccountModel =
 				new CurrentCommerceAccountModel(
-					_accountEntry.getAccountEntryId(), thumbnailUrl,
+					_accountEntry.getAccountEntryId(), thumbnailURL,
 					_accountEntry.getName());
 
 			httpServletRequest.setAttribute(

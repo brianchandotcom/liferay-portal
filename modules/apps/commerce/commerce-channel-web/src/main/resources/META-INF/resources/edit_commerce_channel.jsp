@@ -23,9 +23,9 @@ CommerceChannel commerceChannel = commerceChannelDisplayContext.getCommerceChann
 	bean="<%= commerceChannel %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceChannel.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceChannelExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceChannelExternalReferenceCodeURL %>"
 	model="<%= CommerceChannel.class %>"
-	thumbnailUrl='<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-channel-web/images/channel-default-icon.svg" %>'
+	thumbnailURL='<%= PortalUtil.getPortalURL(request) + PortalUtil.getPathContext() + "/o/commerce-channel-web/images/channel-default-icon.svg" %>'
 	title="<%= commerceChannel.getName() %>"
 />
 

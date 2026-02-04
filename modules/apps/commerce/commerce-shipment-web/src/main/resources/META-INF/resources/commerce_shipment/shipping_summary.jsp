@@ -53,7 +53,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 						).build()
 					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionUrl="<%= editCommerceShipmentCourierDetailURL %>"
+					actionURL="<%= editCommerceShipmentCourierDetailURL %>"
 					title='<%= LanguageUtil.get(request, "carrier-details") %>'
 				>
 
@@ -166,7 +166,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 						).build()
 					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionUrl="<%= editCommerceShipmentAddressURL %>"
+					actionURL="<%= editCommerceShipmentAddressURL %>"
 					title='<%= LanguageUtil.get(request, "shipping-address") %>'
 				>
 					<div class="item">
@@ -202,7 +202,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 						).build()
 					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionUrl="<%= editCommerceShipmentShippingDateURL %>"
+					actionURL="<%= editCommerceShipmentShippingDateURL %>"
 					title='<%= LanguageUtil.get(request, "estimated-shipping-date") %>'
 				>
 
@@ -240,7 +240,7 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 						).build()
 					%>'
 					actionLabel='<%= LanguageUtil.get(request, "edit") %>'
-					actionUrl="<%= editCommerceShipmentExpectedDateURL %>"
+					actionURL="<%= editCommerceShipmentExpectedDateURL %>"
 					elementClasses="pt-4"
 					title='<%= LanguageUtil.get(request, "estimated-delivery-date") %>'
 				>

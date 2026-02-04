@@ -148,7 +148,7 @@ CommerceOrder commerceOrder = commerceReturnEditDisplayContext.getCommerceReturn
 								).build()
 							%>'
 							actionLabel='<%= LanguageUtil.get(request, Validator.isNull(note) ? "add" : "edit") %>'
-							actionUrl="<%= editCommerceReturnNoteURL %>"
+							actionURL="<%= editCommerceReturnNoteURL %>"
 							elementClasses="py-3"
 							title='<%= LanguageUtil.get(request, "comment") %>'
 						>

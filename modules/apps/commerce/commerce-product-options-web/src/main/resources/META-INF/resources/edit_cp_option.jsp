@@ -30,7 +30,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	bean="<%= cpOption %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= cpOption.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCPOptionExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCPOptionExternalReferenceCodeURL %>"
 	model="<%= CPOption.class %>"
 	title="<%= cpOption.getName(locale) %>"
 	wrapperCssClasses="side-panel-top-anchor"

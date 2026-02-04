@@ -23,7 +23,7 @@ CommerceDiscount commerceDiscount = commerceDiscountDisplayContext.getCommerceDi
 	bean="<%= commerceDiscount %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceDiscount.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceDiscountExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceDiscountExternalReferenceCodeURL %>"
 	model="<%= CommerceDiscount.class %>"
 	title="<%= commerceDiscount.getTitle() %>"
 />

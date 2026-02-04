@@ -23,7 +23,7 @@ CommerceInventoryWarehouse commerceInventoryWarehouse = commerceInventoryWarehou
 	bean="<%= commerceInventoryWarehouse %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceInventoryWarehouse.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= commerceInventoryWarehousesDisplayContext.hasPermission() ? editCommerceInventoryWarehouseExternalReferenceCodeURL : null %>"
+	externalReferenceCodeEditURL="<%= commerceInventoryWarehousesDisplayContext.hasPermission() ? editCommerceInventoryWarehouseExternalReferenceCodeURL : null %>"
 	model="<%= CommerceInventoryWarehouse.class %>"
 	title="<%= commerceInventoryWarehouse.getName(locale) %>"
 />

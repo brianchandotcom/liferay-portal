@@ -26,7 +26,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	bean="<%= corEntry %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= corEntry.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCOREntryExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCOREntryExternalReferenceCodeURL %>"
 	model="<%= COREntry.class %>"
 	title="<%= corEntry.getName() %>"
 />

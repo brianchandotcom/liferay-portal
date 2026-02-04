@@ -28,7 +28,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	bean="<%= cpTaxCategory %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= cpTaxCategory.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCPTaxCategoryExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCPTaxCategoryExternalReferenceCodeURL %>"
 	model="<%= CPTaxCategory.class %>"
 	title="<%= cpTaxCategory.getName(locale) %>"
 	wrapperCssClasses="side-panel-top-anchor"

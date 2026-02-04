@@ -23,7 +23,7 @@ CPCatalogEntry cpCatalogEntry = (CPCatalogEntry)request.getAttribute("liferay-co
 Boolean disabled = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:disabled");
 Boolean inCompare = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:inCompare");
 String label = (String)request.getAttribute("liferay-commerce:compare-checkbox:label");
-String pictureUrl = (String)request.getAttribute("liferay-commerce:compare-checkbox:pictureUrl");
+String pictureURL = (String)request.getAttribute("liferay-commerce:compare-checkbox:pictureURL");
 Boolean refreshOnRemove = (Boolean)request.getAttribute("liferay-commerce:compare-checkbox:refreshOnRemove");
 
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_compare-checkbox") + StringPool.UNDERLINE;

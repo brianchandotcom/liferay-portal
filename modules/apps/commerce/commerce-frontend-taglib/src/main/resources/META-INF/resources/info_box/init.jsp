@@ -24,7 +24,7 @@ page import="com.liferay.portal.kernel.util.Validator" %>
 <%
 Map<String, Object> actionContext = (Map<String, Object>)request.getAttribute("liferay-commerce:info-box:actionContext");
 String actionLabel = (String)request.getAttribute("liferay-commerce:info-box:actionLabel");
-String actionUrl = (String)request.getAttribute("liferay-commerce:info-box:actionUrl");
+String actionURL = (String)request.getAttribute("liferay-commerce:info-box:actionURL");
 String elementClasses = (String)request.getAttribute("liferay-commerce:info-box:elementClasses");
 String title = (String)request.getAttribute("liferay-commerce:info-box:title");
 %>

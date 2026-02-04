@@ -58,7 +58,7 @@ public class PanelTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:actionTargetId", _actionTargetId);
 		httpServletRequest.setAttribute(
-			"liferay-commerce:panel:actionUrl", _actionUrl);
+			"liferay-commerce:panel:actionURL", _actionURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:bodyClasses", _bodyClasses);
 		httpServletRequest.setAttribute(
@@ -85,11 +85,11 @@ public class PanelTag extends IncludeTag {
 			"liferay-commerce:panel:secondaryActionTargetId",
 			_secondaryActionTargetId);
 		httpServletRequest.setAttribute(
-			"liferay-commerce:panel:secondaryActionUrl", _secondaryActionUrl);
+			"liferay-commerce:panel:secondaryActionURL", _secondaryActionURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:showMoreId", _showMoreId);
 		httpServletRequest.setAttribute(
-			"liferay-commerce:panel:showMoreUrl", _showMoreUrl);
+			"liferay-commerce:panel:showMoreURL", _showMoreURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:panel:spritemap", _spritemap);
 		httpServletRequest.setAttribute("liferay-commerce:panel:title", _title);
@@ -115,8 +115,8 @@ public class PanelTag extends IncludeTag {
 		return _actionTargetId;
 	}
 
-	public String getActionUrl() {
-		return _actionUrl;
+	public String getActionURL() {
+		return _actionURL;
 	}
 
 	public String getBodyClasses() {
@@ -159,16 +159,16 @@ public class PanelTag extends IncludeTag {
 		return _secondaryActionTargetId;
 	}
 
-	public String getSecondaryActionUrl() {
-		return _secondaryActionUrl;
+	public String getSecondaryActionURL() {
+		return _secondaryActionURL;
 	}
 
 	public String getShowMoreId() {
 		return _showMoreId;
 	}
 
-	public String getShowMoreUrl() {
-		return _showMoreUrl;
+	public String getShowMoreURL() {
+		return _showMoreURL;
 	}
 
 	public String getSpritemap() {
@@ -195,8 +195,8 @@ public class PanelTag extends IncludeTag {
 		_actionTargetId = actionTargetId;
 	}
 
-	public void setActionUrl(String actionUrl) {
-		_actionUrl = actionUrl;
+	public void setActionURL(String actionURL) {
+		_actionURL = actionURL;
 	}
 
 	public void setBodyClasses(String bodyClasses) {
@@ -248,16 +248,16 @@ public class PanelTag extends IncludeTag {
 		_secondaryActionTargetId = secondaryActionTargetId;
 	}
 
-	public void setSecondaryActionUrl(String secondaryActionUrl) {
-		_secondaryActionUrl = secondaryActionUrl;
+	public void setSecondaryActionURL(String secondaryActionURL) {
+		_secondaryActionURL = secondaryActionURL;
 	}
 
 	public void setShowMoreId(String showMoreId) {
 		_showMoreId = showMoreId;
 	}
 
-	public void setShowMoreUrl(String showMoreUrl) {
-		_showMoreUrl = showMoreUrl;
+	public void setShowMoreURL(String showMoreURL) {
+		_showMoreURL = showMoreURL;
 	}
 
 	public void setSpritemap(String spritemap) {
@@ -276,7 +276,7 @@ public class PanelTag extends IncludeTag {
 		_actionIcon = null;
 		_actionLabel = null;
 		_actionTargetId = null;
-		_actionUrl = null;
+		_actionURL = null;
 		_bodyClasses = null;
 		_collapsed = false;
 		_collapseLabel = null;
@@ -287,9 +287,9 @@ public class PanelTag extends IncludeTag {
 		_secondaryActionIcon = null;
 		_secondaryActionLabel = null;
 		_secondaryActionTargetId = null;
-		_secondaryActionUrl = null;
+		_secondaryActionURL = null;
 		_showMoreId = null;
-		_showMoreUrl = null;
+		_showMoreURL = null;
 		_spritemap = null;
 		_title = null;
 	}
@@ -315,7 +315,7 @@ public class PanelTag extends IncludeTag {
 	private String _actionIcon;
 	private String _actionLabel;
 	private String _actionTargetId;
-	private String _actionUrl;
+	private String _actionURL;
 	private String _bodyClasses;
 	private boolean _collapsed;
 	private String _collapseLabel;
@@ -326,9 +326,9 @@ public class PanelTag extends IncludeTag {
 	private String _secondaryActionIcon;
 	private String _secondaryActionLabel;
 	private String _secondaryActionTargetId;
-	private String _secondaryActionUrl;
+	private String _secondaryActionURL;
 	private String _showMoreId;
-	private String _showMoreUrl;
+	private String _showMoreURL;
 	private String _spritemap;
 	private String _title;
 

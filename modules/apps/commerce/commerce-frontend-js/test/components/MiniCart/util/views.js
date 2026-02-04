@@ -119,7 +119,7 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 
 				const customViews = {
 					[OPENER]: {
-						contentRendererModuleUrl: `@module/${CustomView.name}`,
+						contentRendererModuleURL: `@module/${CustomView.name}`,
 					},
 				};
 
@@ -141,7 +141,7 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 						);
 						expect(
 							resolvedViews[viewType].component.moduleURL
-						).toEqual(customViews[OPENER].contentRendererModuleUrl);
+						).toEqual(customViews[OPENER].contentRendererModuleURL);
 					}
 					else {
 						expect(resolvedViews[viewType].component.name).toEqual(
@@ -167,7 +167,7 @@ describe.skip('MiniCart tests_utilities -> Views', () => {
 
 				const customViews = {
 					[OPENER]: {
-						contentRendererModuleUrl: `@failing-module/${CustomView.name}`,
+						contentRendererModuleURL: `@failing-module/${CustomView.name}`,
 					},
 				};
 

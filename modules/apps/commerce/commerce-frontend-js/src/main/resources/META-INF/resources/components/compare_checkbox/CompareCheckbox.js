@@ -27,7 +27,7 @@ function CompareCheckbox({
 	itemId,
 	label,
 	onUpdate,
-	pictureUrl,
+	pictureURL,
 	refreshOnRemove,
 }) {
 	const [inCompare, setInCompare] = useState(isInCompare);
@@ -57,7 +57,7 @@ function CompareCheckbox({
 		setInCompare((currentlyInCompare) => {
 			Liferay.fire(TOGGLE_ITEM_IN_PRODUCT_COMPARISON, {
 				id: itemId,
-				thumbnail: pictureUrl,
+				thumbnail: pictureURL,
 			});
 
 			return !currentlyInCompare;
@@ -116,7 +116,7 @@ CompareCheckbox.defaultProps = {
 	inCompare: false,
 	label: '',
 	onUpdate: () => {},
-	pictureUrl: '',
+	pictureURL: '',
 	refreshOnRemove: false,
 };
 
@@ -128,7 +128,7 @@ CompareCheckbox.propTypes = {
 		.isRequired,
 	label: PropTypes.string,
 	onUpdate: PropTypes.func,
-	pictureUrl: PropTypes.string,
+	pictureURL: PropTypes.string,
 	refreshOnRemove: PropTypes.bool,
 };
 

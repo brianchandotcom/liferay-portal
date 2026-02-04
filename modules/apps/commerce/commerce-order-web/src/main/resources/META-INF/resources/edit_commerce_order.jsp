@@ -35,9 +35,9 @@ portletDisplay.setURLBack(ParamUtil.getString(request, "backURL", String.valueOf
 	bean="<%= commerceOrder %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= commerceOrder.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= editCommerceOrderExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= editCommerceOrderExternalReferenceCodeURL %>"
 	model="<%= CommerceOrder.class %>"
-	thumbnailUrl="<%= commerceOrderEditDisplayContext.getCommerceAccountThumbnailURL() %>"
+	thumbnailURL="<%= commerceOrderEditDisplayContext.getCommerceAccountThumbnailURL() %>"
 	title="<%= headerTitle %>"
 	transitionPortletURL="<%= commerceOrderEditDisplayContext.getTransitionOrderPortletURL() %>"
 />

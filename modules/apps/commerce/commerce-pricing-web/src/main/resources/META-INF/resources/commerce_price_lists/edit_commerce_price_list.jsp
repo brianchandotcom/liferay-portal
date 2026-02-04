@@ -29,7 +29,7 @@ if (commercePriceList != null) {
 	bean="<%= commercePriceList %>"
 	beanIdLabel="id"
 	externalReferenceCode="<%= (commercePriceList == null) ? StringPool.BLANK : commercePriceList.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= (commercePriceList == null) ? StringPool.BLANK : editCommercePriceListExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= (commercePriceList == null) ? StringPool.BLANK : editCommercePriceListExternalReferenceCodeURL %>"
 	model="<%= CommercePriceList.class %>"
 	title="<%= headerTitle %>"
 	wrapperCssClasses="side-panel-top-anchor"

@@ -27,7 +27,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 	beanIdLabel="id"
 	displayBeanId="<%= cpConfigurationListDisplayContext.getCPConfigurationListId() %>"
 	externalReferenceCode="<%= (cpConfigurationList == null) ? StringPool.BLANK : cpConfigurationList.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= (cpConfigurationList == null) ? StringPool.BLANK : editCPConfigurationListExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= (cpConfigurationList == null) ? StringPool.BLANK : editCPConfigurationListExternalReferenceCodeURL %>"
 	model="<%= CPConfigurationList.class %>"
 	title="<%= (cpConfigurationList == null) ? StringPool.BLANK : cpConfigurationList.getName() %>"
 	wrapperCssClasses="side-panel-top-anchor"

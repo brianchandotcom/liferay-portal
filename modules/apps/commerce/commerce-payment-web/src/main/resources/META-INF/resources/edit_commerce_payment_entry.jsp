@@ -31,7 +31,7 @@ portletDisplay.setURLBack(backURL);
 	bean="<%= commercePaymentEntry %>"
 	beanIdLabel='<%= (commercePaymentEntry == null) ? null : "id" %>'
 	externalReferenceCode="<%= (commercePaymentEntry == null) ? StringPool.BLANK : commercePaymentEntry.getExternalReferenceCode() %>"
-	externalReferenceCodeEditUrl="<%= (commercePaymentEntry == null) ? null : editCommercePaymentEntryExternalReferenceCodeURL %>"
+	externalReferenceCodeEditURL="<%= (commercePaymentEntry == null) ? null : editCommercePaymentEntryExternalReferenceCodeURL %>"
 	model="<%= CommercePaymentEntry.class %>"
 	title="<%= (commercePaymentEntry == null) ? StringPool.BLANK : String.valueOf(commercePaymentEntry.getCommercePaymentEntryId()) %>"
 />
@@ -179,7 +179,7 @@ portletDisplay.setURLBack(backURL);
 										).build()
 									%>'
 									actionLabel='<%= commercePaymentEntryDisplayContext.hasCommercePaymentEntryModelPermission(ActionKeys.UPDATE) ? LanguageUtil.get(request, Validator.isNull(note) ? "add" : "edit") : null %>'
-									actionUrl="<%= commercePaymentEntryDisplayContext.hasCommercePaymentEntryModelPermission(ActionKeys.UPDATE) ? editCommercePaymentEntryNoteURL : null %>"
+									actionURL="<%= commercePaymentEntryDisplayContext.hasCommercePaymentEntryModelPermission(ActionKeys.UPDATE) ? editCommercePaymentEntryNoteURL : null %>"
 									elementClasses="py-3"
 									title='<%= LanguageUtil.get(request, "comment") %>'
 								>

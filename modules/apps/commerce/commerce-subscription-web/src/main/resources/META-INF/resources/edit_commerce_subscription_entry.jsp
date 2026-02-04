@@ -18,7 +18,7 @@ CommerceSubscriptionEntry commerceSubscriptionEntry = commerceSubscriptionEntryD
 	bean="<%= commerceSubscriptionEntry %>"
 	beanIdLabel="id"
 	model="<%= CommerceSubscriptionEntry.class %>"
-	thumbnailUrl="<%= commerceSubscriptionEntryDisplayContext.getAccountEntryThumbnailURL() %>"
+	thumbnailURL="<%= commerceSubscriptionEntryDisplayContext.getAccountEntryThumbnailURL() %>"
 	title="<%= String.valueOf(commerceSubscriptionEntryDisplayContext.getCommerceSubscriptionEntryId()) %>"
 />
 

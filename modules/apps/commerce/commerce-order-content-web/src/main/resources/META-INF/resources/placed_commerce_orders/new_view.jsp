@@ -30,7 +30,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 			dropdownItems="<%= commerceOrderContentDisplayContext.getDropdownItems() %>"
 			externalReferenceCode="<%= commerceOrder.getExternalReferenceCode() %>"
 			model="<%= CommerceOrder.class %>"
-			thumbnailUrl="<%= commerceOrderContentDisplayContext.getCommerceAccountThumbnailURL() %>"
+			thumbnailURL="<%= commerceOrderContentDisplayContext.getCommerceAccountThumbnailURL() %>"
 			title="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>"
 			transitionPortletURL="<%= commerceOrderContentDisplayContext.getTransitionOrderPortletURL(commerceOrder) %>"
 		/>
@@ -183,7 +183,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 							).build()
 						%>'
 						actionLabel='<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderPaymentTermsPermission() && (commerceOrder.getPaymentCommerceTermEntryId() > 0)) ? LanguageUtil.get(request, "view") : null %>'
-						actionUrl="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderPaymentTermsPermission() && (commerceOrder.getPaymentCommerceTermEntryId() > 0)) ? editPaymentTermsURL : null %>"
+						actionURL="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderPaymentTermsPermission() && (commerceOrder.getPaymentCommerceTermEntryId() > 0)) ? editPaymentTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "payment-terms") %>'
 					>
@@ -209,7 +209,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 							).build()
 						%>'
 						actionLabel='<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() && (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) ? LanguageUtil.get(request, "view") : null %>'
-						actionUrl="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() && (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) ? editDeliveryTermsURL : null %>"
+						actionURL="<%= (commerceOrderContentDisplayContext.hasManageCommerceOrderDeliveryTermsPermission() && (commerceOrder.getDeliveryCommerceTermEntryId() > 0)) ? editDeliveryTermsURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "delivery-terms") %>'
 					>
@@ -261,7 +261,7 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 
 					<commerce-ui:info-box
 						actionLabel='<%= (commerceOrderNotes.size() > 0) ? LanguageUtil.get(request, "view") : null %>'
-						actionUrl="<%= (commerceOrderNotes.size() > 0) ? viewCommerceOrderNotesURL : null %>"
+						actionURL="<%= (commerceOrderNotes.size() > 0) ? viewCommerceOrderNotesURL : null %>"
 						elementClasses="py-3"
 						title='<%= LanguageUtil.get(request, "notes") %>'
 					/>

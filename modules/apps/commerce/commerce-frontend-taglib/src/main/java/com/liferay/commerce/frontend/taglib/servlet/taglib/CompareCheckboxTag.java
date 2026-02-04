@@ -66,7 +66,7 @@ public class CompareCheckboxTag extends IncludeTag {
 				CPDefinitionLocalServiceUtil.getCPDefinition(
 					_cpCatalogEntry.getCPDefinitionId());
 
-			_pictureUrl = cpDefinition.getDefaultImageThumbnailSrc(
+			_pictureURL = cpDefinition.getDefaultImageThumbnailSrc(
 				commerceAccountId);
 		}
 		catch (Exception exception) {
@@ -118,7 +118,7 @@ public class CompareCheckboxTag extends IncludeTag {
 		_disabled = false;
 		_inCompare = false;
 		_label = StringPool.BLANK;
-		_pictureUrl = null;
+		_pictureURL = null;
 		_refreshOnRemove = false;
 	}
 
@@ -142,7 +142,7 @@ public class CompareCheckboxTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:compare-checkbox:label", _label);
 		httpServletRequest.setAttribute(
-			"liferay-commerce:compare-checkbox:pictureUrl", _pictureUrl);
+			"liferay-commerce:compare-checkbox:pictureURL", _pictureURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:compare-checkbox:refreshOnRemove",
 			_refreshOnRemove);
@@ -178,7 +178,7 @@ public class CompareCheckboxTag extends IncludeTag {
 	private boolean _disabled;
 	private boolean _inCompare;
 	private String _label = StringPool.BLANK;
-	private String _pictureUrl;
+	private String _pictureURL;
 	private boolean _refreshOnRemove;
 
 }

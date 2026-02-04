@@ -383,7 +383,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[HEADER]: PropTypes.oneOfType([
@@ -391,7 +391,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[ITEM]: PropTypes.oneOfType([
@@ -399,7 +399,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[ITEMS_LIST]: PropTypes.oneOfType([
@@ -407,7 +407,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[ITEMS_LIST_ACTIONS]: PropTypes.oneOfType([
@@ -415,7 +415,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[OPENER]: PropTypes.oneOfType([
@@ -423,7 +423,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[ORDER_BUTTON]: PropTypes.oneOfType([
@@ -431,7 +431,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 		[SUMMARY]: PropTypes.oneOfType([
@@ -439,7 +439,7 @@ MiniCart.propTypes = {
 				component: PropTypes.func,
 			}),
 			PropTypes.shape({
-				contentRendererModuleUrl: PropTypes.string,
+				contentRendererModuleURL: PropTypes.string,
 			}),
 		]),
 	}),

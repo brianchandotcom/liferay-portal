@@ -20,7 +20,7 @@ String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box"
 		<c:if test="<%= Validator.isNotNull(actionLabel) %>">
 
 			<%
-			String href = Validator.isNotNull(actionUrl) ? actionUrl : "#";
+			String href = Validator.isNotNull(actionURL) ? actionURL : "#";
 			%>
 
 			<c:if test="<%= Validator.isNotNull(actionContext) %>">
@@ -34,7 +34,7 @@ String linkId = HtmlUtil.escape(PortalUtil.generateRandomKey(request, "info-box"
 						HashMapBuilder.<String, Object>put(
 							"title", title
 						).put(
-							"url", actionUrl
+							"url", actionURL
 						).putAll(
 							actionContext
 						).put(

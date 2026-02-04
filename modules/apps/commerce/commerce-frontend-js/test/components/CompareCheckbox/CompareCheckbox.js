@@ -17,7 +17,7 @@ import {
 describe('CompareCheckbox', () => {
 	const BASE_PROPS = {
 		itemId: 12345,
-		pictureUrl: 'http://some.url/picture.png',
+		pictureURL: 'http://some.url/picture.png',
 	};
 
 	let removeFromCompareTrigger;
@@ -108,7 +108,7 @@ describe('CompareCheckbox', () => {
 					TOGGLE_ITEM_IN_PRODUCT_COMPARISON,
 					{
 						id: BASE_PROPS.itemId,
-						thumbnail: BASE_PROPS.pictureUrl,
+						thumbnail: BASE_PROPS.pictureURL,
 					}
 				);
 			});

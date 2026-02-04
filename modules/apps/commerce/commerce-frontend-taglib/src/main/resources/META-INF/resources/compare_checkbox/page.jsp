@@ -22,7 +22,7 @@
 		).put(
 			"label", label
 		).put(
-			"pictureUrl", pictureUrl
+			"pictureURL", pictureURL
 		).put(
 			"refreshOnRemove", refreshOnRemove
 		).put(

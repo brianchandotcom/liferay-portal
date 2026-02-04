@@ -54,17 +54,17 @@ function decorateWith(componentFn, keyValuePairs) {
 	return component;
 }
 
-function resolveView({component, contentRendererModuleUrl}) {
+function resolveView({component, contentRendererModuleURL}) {
 	if (component) {
 		return Promise.resolve(
 			decorateWith((props) => component(props), {name: component.name})
 		);
 	}
 
-	return loadModule(contentRendererModuleUrl).then((module) =>
+	return loadModule(contentRendererModuleURL).then((module) =>
 		Promise.resolve(
 			decorateWith(module, {
-				moduleURL: contentRendererModuleUrl,
+				moduleURL: contentRendererModuleURL,
 				name: module.name,
 			})
 		)

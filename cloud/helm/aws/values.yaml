@@ -44,14 +44,14 @@ liferay-default:
 
                                 local http_code=$( \
                                     curl \
-                                        "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar" \
                                         --location \
                                         --output-dir /temp/liferay/deploy \
                                         --remote-name \
                                         --retry 5 \
                                         --retry-all-errors \
                                         --retry-delay 2 \
-                                        --write-out "%{http_code}")
+                                        --write-out "%{http_code}") \
+                                        "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
 
                                 if [ "${http_code}" != "200" ]
                                 then

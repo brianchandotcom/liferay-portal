@@ -6,6 +6,14 @@
 	"name_i18n": {
 		"en_US": "Onboarding"
 	},
+	"permissions": [
+		{
+			"actionIds": [
+			],
+			"roleName": "Guest",
+			"scope": 4
+		}
+	],
 	"private": false,
 	"system": false,
 	"type": "content"

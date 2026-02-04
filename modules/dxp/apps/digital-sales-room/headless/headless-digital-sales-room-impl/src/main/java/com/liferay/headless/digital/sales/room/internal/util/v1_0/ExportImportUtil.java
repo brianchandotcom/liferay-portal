@@ -82,6 +82,9 @@ public class ExportImportUtil {
 
 	private static Map<String, String[]> _getExportParameterMap() {
 		return LinkedHashMapBuilder.put(
+			PortletDataHandlerKeys.PERMISSIONS,
+			new String[] {Boolean.TRUE.toString()}
+		).put(
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION,
 			new String[] {Boolean.TRUE.toString()}
 		).put(

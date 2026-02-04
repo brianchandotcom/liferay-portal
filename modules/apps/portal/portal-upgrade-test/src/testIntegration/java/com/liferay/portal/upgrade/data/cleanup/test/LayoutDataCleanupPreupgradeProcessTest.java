@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -32,17 +31,16 @@ import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.LayoutDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.ResourcePermissionDataCleanupPreupgradeProcess;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,26 +58,6 @@ public class LayoutDataCleanupPreupgradeProcessTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_resourcePermissions =
-			_resourcePermissionLocalService.getResourcePermissions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		List<ResourcePermission> resourcePermissions = ListUtil.remove(
-			_resourcePermissionLocalService.getResourcePermissions(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-			_resourcePermissions);
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			_resourcePermissionLocalService.deleteResourcePermission(
-				resourcePermission);
-		}
-	}
 
 	@Test
 	public void testUpgrade() throws Exception {
@@ -172,6 +150,11 @@ public class LayoutDataCleanupPreupgradeProcessTest
 				String.valueOf(widgetPageLayout.getPrimaryKey()));
 
 		Assert.assertTrue(resourcePermissions.isEmpty());
+
+		UpgradeProcess upgradeProcess =
+			new ResourcePermissionDataCleanupPreupgradeProcess();
+
+		upgradeProcess.upgrade();
 	}
 
 	protected String getPortletPreferencesXML(String name, String[] values) {
@@ -203,8 +186,6 @@ public class LayoutDataCleanupPreupgradeProcessTest
 
 		return sb.toString();
 	}
-
-	private static List<ResourcePermission> _resourcePermissions;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

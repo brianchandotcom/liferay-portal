@@ -32,7 +32,8 @@ function FormikWrapper({
 		>
 			{({field, meta}: FieldProps) =>
 				children({
-					errorMessage: meta.error,
+					errorMessage:
+						meta.touched && meta.error ? meta.error : undefined,
 					field,
 				})
 			}

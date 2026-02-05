@@ -224,10 +224,10 @@ public class ClientExtensionOSGiCommandsTest {
 
 		Assert.assertTrue(lines.length >= 3);
 
-		String header = lines[0];
+		String firstLine = lines[0];
 
 		Assert.assertTrue(
-			header.matches(
+			firstLine.matches(
 				"\\| pid\\s*\\| name\\s*\\| type\\s*\\| webId\\s*\\|"));
 
 		String dataRow = lines[2];

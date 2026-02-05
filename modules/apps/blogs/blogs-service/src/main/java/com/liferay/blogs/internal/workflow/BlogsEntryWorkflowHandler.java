@@ -52,8 +52,7 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 			return;
 		}
 
-		serviceContext.setAttribute(
-			"prefixEntryLayoutFullUrl", serviceContext.getLayoutFullURL());
+		String layoutFullURL = serviceContext.getLayoutFullURL();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -61,17 +60,17 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 
 		if (themeDisplay != null) {
 			if (themeDisplay.getRefererPlid() == 0) {
-				serviceContext.setLayoutFullURL(
-					_portal.getLayoutFullURL(themeDisplay));
+				layoutFullURL = _portal.getLayoutFullURL(themeDisplay);
 			}
 			else {
-				serviceContext.setLayoutFullURL(
-					_portal.getLayoutFullURL(
-						_layoutLocalService.getLayout(
-							themeDisplay.getRefererPlid()),
-						themeDisplay));
+				layoutFullURL = _portal.getLayoutFullURL(
+					_layoutLocalService.getLayout(
+						themeDisplay.getRefererPlid()),
+					themeDisplay);
 			}
 		}
+
+		serviceContext.setAttribute("layoutFullURL", layoutFullURL);
 	}
 
 	@Override

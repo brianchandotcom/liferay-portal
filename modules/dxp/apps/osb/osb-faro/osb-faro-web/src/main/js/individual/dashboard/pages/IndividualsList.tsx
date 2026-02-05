@@ -98,14 +98,14 @@ const IndividualsList = () => {
 	const FILTER_BY_OPTIONS: FilterOptionType[] = useMemo(() => {
 		const countries = countriesData?.items;
 
-		if (countries) {
+		if (countries?.length) {
 			return [
 				{
 					key: 'countries',
 					label: Liferay.Language.get('country'),
 					values: countries.map(country => ({
-						label: country.value,
-						value: country.value
+						label: country,
+						value: country
 					}))
 				},
 				...DEFAULT_FILTER_BY_OPTIONS

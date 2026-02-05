@@ -364,6 +364,23 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 			List<Element> failureElements = getTestResultGitHubElements(
 				getUniqueFailureTestResults(), true);
 
+			List<Element> upstreamJobFailureElements =
+				getTestResultGitHubElements(
+					getUpstreamJobFailureTestResults(), false);
+
+			if (!upstreamJobFailureElements.isEmpty()) {
+				upstreamJobFailureMessageElement = messageElement.createCopy();
+
+				Dom4JUtil.getOrderedListElement(
+					upstreamJobFailureElements,
+					upstreamJobFailureMessageElement, 3);
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"[", getBuildName(), "] Saved an upstream failure ",
+						"GitHub message"));
+			}
+
 			Dom4JUtil.getOrderedListElement(failureElements, messageElement, 3);
 
 			if (failureElements.isEmpty()) {

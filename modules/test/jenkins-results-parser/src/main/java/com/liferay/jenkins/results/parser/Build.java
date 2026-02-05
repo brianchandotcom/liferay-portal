@@ -92,6 +92,8 @@ public interface Build {
 
 	public Element getGitHubMessageElement();
 
+	public Element getGitHubMessageUpstreamJobFailureElement();
+
 	public Map<String, String> getInjectedEnvironmentVariablesMap()
 		throws IOException;
 

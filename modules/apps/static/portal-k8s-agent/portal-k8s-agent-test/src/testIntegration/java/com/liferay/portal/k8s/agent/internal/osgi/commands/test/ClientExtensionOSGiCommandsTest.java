@@ -218,7 +218,7 @@ public class ClientExtensionOSGiCommandsTest {
 
 	@Test
 	public void testList() throws Exception {
-		String output = _captureStout(() -> _list("deploymentType=bundle"));
+		String output = _getOutput(() -> _list("deploymentType=bundle"));
 
 		String[] lines = output.split(System.lineSeparator());
 
@@ -301,7 +301,7 @@ public class ClientExtensionOSGiCommandsTest {
 		_testShow(pid, "Unable to find configuration for PID " + pid);
 	}
 
-	private String _captureStout(UnsafeRunnable<Exception> unsafeRunnable)
+	private String _getOutput(UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		PrintStream systemOutPrintStream = System.out;
@@ -390,13 +390,13 @@ public class ClientExtensionOSGiCommandsTest {
 	private void _testReload(String pid, String expectedOutput)
 		throws Exception {
 
-		String output = _captureStout(() -> _reload(pid));
+		String output = _getOutput(() -> _reload(pid));
 
 		Assert.assertTrue(output.contains(expectedOutput));
 	}
 
 	private void _testShow(String pid, String expectedOutput) throws Exception {
-		String output = _captureStout(() -> _show(pid));
+		String output = _getOutput(() -> _show(pid));
 
 		Assert.assertTrue(output.contains(expectedOutput));
 	}

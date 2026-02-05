@@ -14,6 +14,8 @@ import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.admin.user.client.custom.field.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.pagination.Page;
+import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
@@ -48,10 +50,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		ByteString byteString = pubsubMessage.getData();
 
 		JSONObject jsonObject = new JSONObject(byteString.toStringUtf8());
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Found message: " + jsonObject);
-		}
 
 		try {
 			if (Objects.equals(
@@ -89,10 +87,31 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			ackReplyConsumer.ack();
 		}
 		catch (Exception exception) {
+			_log.error("Unable to process message from topic " + _topicName);
+			_log.error("Message " + jsonObject);
 			_log.error(exception);
 
 			ackReplyConsumer.nack();
 		}
+	}
+
+	private Account _getAccount(String externalReferenceCode) throws Exception {
+		AccountResource accountResource =
+			_marketplaceService.getAccountResource();
+
+		Page<Account> accountsPage = accountResource.getAccountsPage(
+			externalReferenceCode, "", Pagination.of(0, -1), "");
+
+		for (Account account : accountsPage.getItems()) {
+			if (Objects.equals(
+					account.getExternalReferenceCode(),
+					externalReferenceCode)) {
+
+				return account;
+			}
+		}
+
+		return null;
 	}
 
 	private PostalAddress _getPostalAddress(
@@ -115,14 +134,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				koroneikiAccount)
 		throws Exception {
 
-		Account account = _marketplaceService.getAccountByExternalReferenceCode(
-			koroneikiAccount.getKey());
+		Account account = _getAccount(koroneikiAccount.getKey());
 
 		if (account == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Account " + koroneikiAccount.getName() +
-						" does not exists in Marketplace");
+					"Account \"" + koroneikiAccount.getName() +
+						"\" not found in Marketplace");
 			}
 
 			return;
@@ -197,8 +215,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Account " + koroneikiAccount.getName() +
-					"synced in Marketplace");
+				"Account \"" + koroneikiAccount.getName() +
+					"\" updated in Marketplace");
 		}
 	}
 

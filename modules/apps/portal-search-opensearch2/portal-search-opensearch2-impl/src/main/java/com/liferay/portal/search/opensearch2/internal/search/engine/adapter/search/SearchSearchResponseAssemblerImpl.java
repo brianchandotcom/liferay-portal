@@ -30,7 +30,6 @@ import com.liferay.portal.search.opensearch2.internal.aggregation.PipelineAggreg
 import com.liferay.portal.search.opensearch2.internal.hits.HitsMetadataTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslator;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
-import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
@@ -105,8 +104,7 @@ public class SearchSearchResponseAssemblerImpl
 	protected void activate() {
 		_searchResponseTranslator = new SearchResponseTranslator(
 			_groupByResponseFactory, _hitDocumentTranslator,
-			_statsRequestBuilderFactory, _statsResultsTranslator,
-			_statsTranslator);
+			_statsRequestBuilderFactory, _statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -228,8 +226,5 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private StatsResultsTranslator _statsResultsTranslator;
-
-	@Reference
-	private StatsTranslator _statsTranslator;
 
 }

@@ -62,10 +62,8 @@ public class TokenResourceTest extends BaseTokenResourceTestCase {
 		OAuth2Application oAuth2Application =
 			_oAuth2ApplicationLocalService.addOAuth2Application(
 				user.getCompanyId(), user.getUserId(), user.getFullName(),
-				List.of(
-					GrantType.AUTHORIZATION_CODE, GrantType.CLIENT_CREDENTIALS,
-					GrantType.REFRESH_TOKEN),
-				"client_secret_post", user.getUserId(),
+				List.of(GrantType.CLIENT_CREDENTIALS), "client_secret_post",
+				user.getUserId(),
 				OAuth2SecureRandomGenerator.generateClientId(),
 				ClientProfile.WEB_APPLICATION.id(),
 				OAuth2SecureRandomGenerator.generateClientSecret(), "",

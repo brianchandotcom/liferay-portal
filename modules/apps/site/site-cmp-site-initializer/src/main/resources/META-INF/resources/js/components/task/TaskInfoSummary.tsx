@@ -18,6 +18,8 @@ import StateSelector, {State} from '../StateSelector';
 
 import '../AssigneeTrigger.scss';
 
+import {DateRenderer} from '@liferay/frontend-data-set-web';
+
 interface TaskInfoSummaryProps {
 	assignTo: AssigneeValue;
 	dueDate: string;
@@ -82,7 +84,10 @@ export default function TaskInfoSummary({
 						/>
 					),
 				},
-				{label: 'Due Date', value: dueDate},
+				{
+					label: 'Due Date',
+					value: DateRenderer({value: dueDate}) ?? '',
+				},
 				{
 					label: 'Tags',
 					value: (

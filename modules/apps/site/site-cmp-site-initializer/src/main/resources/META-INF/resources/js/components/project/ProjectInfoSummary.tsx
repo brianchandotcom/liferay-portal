@@ -4,6 +4,7 @@
  */
 
 import Label from '@clayui/label';
+import {DateRenderer} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import {patchProjectById} from '../../utils/api';
@@ -56,7 +57,10 @@ export default function ProjectInfoSummary({
 				},
 				{label: 'Manager', value: <User {...manager} />},
 				{label: 'Sponsor', value: <User {...sponsor} />},
-				{label: 'Due Date', value: dueDate},
+				{
+					label: 'Due Date',
+					value: DateRenderer({value: dueDate}) ?? '',
+				},
 				{
 					label: 'Tags',
 					value: (

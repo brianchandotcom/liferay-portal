@@ -765,6 +765,14 @@ public class DigitalSalesRoomResourceTest
 					"Video Block", "Welcome Block"
 				}));
 
+		_assertLayouts(
+			digitalSalesRoomTemplate.getId(),
+			new String[] {
+				"Documents", "Login", "Onboarding",
+				layout1.getName(LocaleUtil.getSiteDefault()),
+				layout2.getName(LocaleUtil.getSiteDefault())
+			});
+
 		digitalSalesRoomTemplate =
 			digitalSalesRoomTemplateResource.getDigitalSalesRoomTemplate(
 				digitalSalesRoomTemplate.getId());
@@ -781,14 +789,6 @@ public class DigitalSalesRoomResourceTest
 
 		Assert.assertEquals(
 			0, GetterUtil.getLong(digitalSalesRoomTemplate.getUsages()));
-
-		_assertLayouts(
-			digitalSalesRoomTemplate.getId(),
-			new String[] {
-				"Documents", "Login", "Onboarding",
-				layout1.getName(LocaleUtil.getSiteDefault()),
-				layout2.getName(LocaleUtil.getSiteDefault())
-			});
 	}
 
 	private void _testPostDigitalSalesRoomWithPermission() throws Exception {

@@ -11,7 +11,9 @@ import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionFactory;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -32,12 +34,14 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 	public ObjectBulkSelection(
 		AssetEntryLocalService assetEntryLocalService,
 		DepotEntryLocalService depotEntryLocalService,
+		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		Map<String, String[]> parameterMap) {
 
 		_assetEntryLocalService = assetEntryLocalService;
 		_depotEntryLocalService = depotEntryLocalService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 		_parameterMap = parameterMap;
@@ -62,6 +66,11 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 				}
 
 				unsafeConsumer.accept(depotEntry);
+			}
+			else if (split[0].equals(ObjectDefinition.class.getName())) {
+				unsafeConsumer.accept(
+					_objectDefinitionLocalService.getObjectDefinition(
+						GetterUtil.getLong(split[1])));
 			}
 			else if (split[0].equals(ObjectEntryFolder.class.getName())) {
 				unsafeConsumer.accept(
@@ -107,6 +116,7 @@ public class ObjectBulkSelection implements BulkSelection<Object> {
 
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final Map<String, String[]> _parameterMap;

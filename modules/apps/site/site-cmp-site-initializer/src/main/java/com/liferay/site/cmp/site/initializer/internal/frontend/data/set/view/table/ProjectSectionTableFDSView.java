@@ -11,7 +11,6 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.site.cmp.site.initializer.internal.constants.CMPSiteInitializerFDSNames;
-import com.liferay.site.cmp.site.initializer.internal.util.FDSViewUtil;
 
 import java.util.Locale;
 
@@ -40,8 +39,9 @@ public class ProjectSectionTableFDSView extends BaseTableFDSView {
 				"simpleActionLinkTableCellRenderer"
 			)
 		).add(
-			FDSViewUtil.getDateFDSTableSchemaField(
-				"embedded.dueDate", "due-date")
+			"embedded.dueDate", "due-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"dueDateTableCellRenderer")
 		).add(
 			"embedded.completionRate", "completion-rate",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

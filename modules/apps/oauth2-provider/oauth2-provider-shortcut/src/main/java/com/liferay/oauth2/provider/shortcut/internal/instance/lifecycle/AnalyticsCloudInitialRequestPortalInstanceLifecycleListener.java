@@ -122,7 +122,9 @@ public class AnalyticsCloudInitialRequestPortalInstanceLifecycleListener
 			OAuth2Application oAuth2Application = _addOAuth2Application(
 				companyId);
 
-			_addResourcePermissions(oAuth2Application);
+			if (oAuth2Application != null) {
+				_addResourcePermissions(oAuth2Application);
+			}
 		}
 		finally {
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
@@ -141,8 +143,12 @@ public class AnalyticsCloudInitialRequestPortalInstanceLifecycleListener
 			return oAuth2Application;
 		}
 
-		User user = _userLocalService.getUserByScreenName(
+		User user = _userLocalService.fetchUserByScreenName(
 			companyId, UserConstants.SCREEN_NAME_DEFAULT_SERVICE_ACCOUNT);
+
+		if (user == null) {
+			return null;
+		}
 
 		_addSAPEntries(companyId, user.getUserId());
 

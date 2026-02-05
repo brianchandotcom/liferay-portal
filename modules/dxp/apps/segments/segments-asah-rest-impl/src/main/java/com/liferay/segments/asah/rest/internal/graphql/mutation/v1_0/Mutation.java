@@ -14,9 +14,11 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.segments.asah.rest.dto.v1_0.AsahSegmentsEntry;
 import com.liferay.segments.asah.rest.dto.v1_0.Experiment;
 import com.liferay.segments.asah.rest.dto.v1_0.ExperimentRun;
 import com.liferay.segments.asah.rest.dto.v1_0.Status;
+import com.liferay.segments.asah.rest.resource.v1_0.AsahSegmentsEntryResource;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
@@ -40,6 +42,14 @@ import org.osgi.service.component.ComponentServiceObjects;
 @Generated("")
 public class Mutation {
 
+	public static void setAsahSegmentsEntryResourceComponentServiceObjects(
+		ComponentServiceObjects<AsahSegmentsEntryResource>
+			asahSegmentsEntryResourceComponentServiceObjects) {
+
+		_asahSegmentsEntryResourceComponentServiceObjects =
+			asahSegmentsEntryResourceComponentServiceObjects;
+	}
+
 	public static void setExperimentResourceComponentServiceObjects(
 		ComponentServiceObjects<ExperimentResource>
 			experimentResourceComponentServiceObjects) {
@@ -62,6 +72,34 @@ public class Mutation {
 
 		_statusResourceComponentServiceObjects =
 			statusResourceComponentServiceObjects;
+	}
+
+	@GraphQLField
+	public Response createAsahSegmentsEntry(
+			@GraphQLName("asahSegmentsEntry") AsahSegmentsEntry
+				asahSegmentsEntry)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_asahSegmentsEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			asahSegmentsEntryResource ->
+				asahSegmentsEntryResource.postAsahSegmentsEntry(
+					asahSegmentsEntry));
+	}
+
+	@GraphQLField
+	public Response createAsahSegmentsEntryBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_asahSegmentsEntryResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			asahSegmentsEntryResource ->
+				asahSegmentsEntryResource.postAsahSegmentsEntryBatch(
+					callbackURL, object));
 	}
 
 	@GraphQLField
@@ -169,6 +207,28 @@ public class Mutation {
 		}
 	}
 
+	private void _populateResourceContext(
+			AsahSegmentsEntryResource asahSegmentsEntryResource)
+		throws Exception {
+
+		asahSegmentsEntryResource.setContextAcceptLanguage(_acceptLanguage);
+		asahSegmentsEntryResource.setContextCompany(_company);
+		asahSegmentsEntryResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		asahSegmentsEntryResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		asahSegmentsEntryResource.setContextUriInfo(_uriInfo);
+		asahSegmentsEntryResource.setContextUser(_user);
+		asahSegmentsEntryResource.setGroupLocalService(_groupLocalService);
+		asahSegmentsEntryResource.setRoleLocalService(_roleLocalService);
+
+		asahSegmentsEntryResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		asahSegmentsEntryResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(ExperimentResource experimentResource)
 		throws Exception {
 
@@ -222,6 +282,8 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private static ComponentServiceObjects<AsahSegmentsEntryResource>
+		_asahSegmentsEntryResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ExperimentResource>
 		_experimentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ExperimentRunResource>

@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {fetch, runScriptsInElement} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 export default function FormRelationshipAddButton({
 	contentId,
@@ -48,8 +49,7 @@ export default function FormRelationshipAddButton({
 
 		url.searchParams.set(
 			'relatedItemExternalReferenceCode',
-			'LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE' +
-				String(numberOfChildren).padStart(4, '0')
+			String(numberOfChildren).padStart(4, '0') + uuidv4()
 		);
 
 		fetch(url.toString())

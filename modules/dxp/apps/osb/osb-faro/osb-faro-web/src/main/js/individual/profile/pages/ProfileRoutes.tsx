@@ -9,6 +9,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {ChannelContext} from 'shared/context/channel';
 import {compose, withIndividual} from 'shared/hoc';
 import {CSVType} from 'shared/components/download-report/utils';
+import {ENABLE_CDP} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
 import {useDataSource} from 'shared/hooks/useDataSource';
@@ -33,6 +34,9 @@ const Interests = lazy(
 );
 const Overview = lazy(
 	() => import(/* webpackChunkName: "IndividualOverview" */ './Overview')
+);
+const OverviewCDP = lazy(
+	() => import(/* webpackChunkName: "IndividualOverview" */ './OverviewCDP')
 );
 
 const NAV_ITEMS = [
@@ -152,7 +156,7 @@ export const IndividualProfileRoutes = ({
 
 						<BundleRouter
 							componentProps={componentProps}
-							data={Overview}
+							data={ENABLE_CDP ? OverviewCDP : Overview}
 							exact
 							path={Routes.CONTACTS_INDIVIDUAL}
 						/>

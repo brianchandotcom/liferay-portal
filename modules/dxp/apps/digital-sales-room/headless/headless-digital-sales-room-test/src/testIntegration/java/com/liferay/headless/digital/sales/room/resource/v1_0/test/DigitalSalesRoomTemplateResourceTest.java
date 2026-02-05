@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -45,10 +45,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.Map;
-import java.util.Objects;
-
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.Assert;
@@ -240,6 +238,37 @@ public class DigitalSalesRoomTemplateResourceTest
 			digitalSalesRoomTemplate);
 	}
 
+	private void _addUserRole(String[] actionIds, long userId)
+		throws Exception {
+
+		Role role = _roleLocalService.addRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(), null, null,
+			RoleConstants.TYPE_REGULAR, null, new ServiceContext());
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), Group.class.getName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			ActionKeys.VIEW);
+
+		for (String actionId : actionIds) {
+			String name = _dsrTemplateObjectDefinition.getClassName();
+
+			if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
+				name = _dsrTemplateObjectDefinition.getResourceName();
+			}
+
+			_resourcePermissionLocalService.addResourcePermission(
+				TestPropsValues.getCompanyId(), name,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(TestPropsValues.getCompanyId()),
+				role.getRoleId(), actionId);
+		}
+
+		_roleLocalService.addUserRole(userId, role.getRoleId());
+	}
+
 	private void _assertLayouts(long groupId, String[] names) throws Exception {
 		List<Layout> layouts = _layoutLocalService.getLayouts(groupId, false);
 
@@ -274,37 +303,6 @@ public class DigitalSalesRoomTemplateResourceTest
 				Assert.assertTrue(hasResourcePermission);
 			}
 		}
-	}
-
-	private void _addUserRole(String[] actionIds, long userId)
-		throws Exception {
-
-		Role role = _roleLocalService.addRole(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
-			RandomTestUtil.randomString(), null, null,
-			RoleConstants.TYPE_REGULAR, null, new ServiceContext());
-
-		_resourcePermissionLocalService.addResourcePermission(
-			TestPropsValues.getCompanyId(), Group.class.getName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			ActionKeys.VIEW);
-
-		for (String actionId : actionIds) {
-			String name = _dsrTemplateObjectDefinition.getClassName();
-
-			if (Objects.equals(actionId, ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-				name = _dsrTemplateObjectDefinition.getResourceName();
-			}
-
-			_resourcePermissionLocalService.addResourcePermission(
-				TestPropsValues.getCompanyId(), name,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(TestPropsValues.getCompanyId()),
-				role.getRoleId(), actionId);
-		}
-
-		_roleLocalService.addUserRole(userId, role.getRoleId());
 	}
 
 	private void _testDeleteDigitalSalesRoomTemplateWithPermission()
@@ -718,12 +716,12 @@ public class DigitalSalesRoomTemplateResourceTest
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Inject
 	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

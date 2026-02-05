@@ -10,6 +10,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
@@ -20,6 +21,7 @@ import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchas
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseViewResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductResource;
 import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 
 import java.net.URL;
 
@@ -110,6 +112,22 @@ public class KoroneikiService {
 		).endpoint(
 			new URL(_koroneikiAuthURL)
 		).build();
+	}
+
+	public String getSalesforceAccountKey(Account koroneikiAccount) {
+		for (ExternalLink externalLink : koroneikiAccount.getExternalLinks()) {
+			if ((StringUtil.equalsIgnoreCase(
+					externalLink.getDomain(), "salesforce") ||
+				 StringUtil.equalsIgnoreCase(
+					 externalLink.getDomain(), "dossiera")) &&
+				StringUtil.equalsIgnoreCase(
+					externalLink.getEntityName(), "account")) {
+
+				return externalLink.getEntityId();
+			}
+		}
+
+		return "";
 	}
 
 	public boolean hasEntitlement(

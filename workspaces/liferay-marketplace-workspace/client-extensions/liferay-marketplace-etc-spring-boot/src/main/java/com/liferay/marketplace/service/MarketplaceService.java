@@ -7,6 +7,7 @@ package com.liferay.marketplace.service;
 
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
+import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
@@ -146,6 +147,23 @@ public class MarketplaceService extends BaseService {
 		updateOrder(customFields, order.getId(), order.getOrderStatus());
 	}
 
+	public Account getAccountByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		AccountResource accountResource = getAccountResource();
+
+		try {
+			return accountResource.getAccountByExternalReferenceCode(
+				externalReferenceCode);
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+
+			return null;
+		}
+	}
+
 	public AccountResource getAccountResource() throws Exception {
 		return AccountResource.builder(
 		).header(
@@ -154,6 +172,8 @@ public class MarketplaceService extends BaseService {
 				"liferay-marketplace-etc-spring-boot-oahs")
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).parameters(
+			"nestedFields", "postalAddresses"
 		).build();
 	}
 

@@ -72,7 +72,13 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 
 		_company = _companyLocalService.getCompany(_group.getCompanyId());
 
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_draftLayout = layout.fetchDraftLayout();
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
@@ -82,35 +88,27 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 
 	@Test
 	public void testValidateFragmentCompositionInvalid() throws Exception {
-		Layout draftLayout = _layout.fetchDraftLayout();
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				segmentsExperienceId, draftLayout.getPlid(), StringPool.BLANK,
+				_segmentsExperienceId, _draftLayout.getPlid(), StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, 0, null,
 				FragmentConstants.TYPE_COMPONENT, _serviceContext);
 
 		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
-			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider, segmentsExperienceId);
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
 		String containerItemId = addItemJSONObject.getString("addedItemId");
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, containerItemId, 0,
-			segmentsExperienceId);
+			fragmentEntryLink, _draftLayout, containerItemId, 0,
+			_segmentsExperienceId);
 
 		JSONObject jsonObject = _testValidateFragmentComposition(
-			containerItemId,
-			_getMockLiferayPortletActionRequest(
-				draftLayout, segmentsExperienceId));
+			containerItemId, _getMockLiferayPortletActionRequest());
 
 		int invalidFragmentsCount = jsonObject.getInt("invalidFragmentsCount");
 
@@ -135,53 +133,45 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 				FragmentConstants.TYPE_COMPONENT, null,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
-		Layout draftLayout = _layout.fetchDraftLayout();
-
-		long segmentsExperienceId =
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid());
-
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), segmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getScopeERC(), _segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
 				fragmentEntry.getConfiguration(), StringPool.BLANK,
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(), _serviceContext);
 
 		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
-			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider, segmentsExperienceId);
+			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
+			_layoutStructureProvider, _segmentsExperienceId);
 
 		String containerItemId = addItemJSONObject.getString("addedItemId");
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, draftLayout, containerItemId, 0,
-			segmentsExperienceId);
+			fragmentEntryLink, _draftLayout, containerItemId, 0,
+			_segmentsExperienceId);
 
 		JSONObject jsonObject = _testValidateFragmentComposition(
-			containerItemId,
-			_getMockLiferayPortletActionRequest(
-				draftLayout, segmentsExperienceId));
+			containerItemId, _getMockLiferayPortletActionRequest());
 
 		int invalidFragmentsCount = jsonObject.getInt("invalidFragmentsCount");
 
 		Assert.assertEquals(0, invalidFragmentsCount);
 	}
 
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			Layout layout, long segmentsExperienceId)
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
-				_company, _group, layout);
+				_company, _group, _draftLayout);
 
 		mockLiferayPortletActionRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(segmentsExperienceId));
+			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
 
 		return mockLiferayPortletActionRequest;
 	}
@@ -213,6 +203,8 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	private Layout _draftLayout;
+
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
@@ -225,10 +217,10 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private Layout _layout;
-
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

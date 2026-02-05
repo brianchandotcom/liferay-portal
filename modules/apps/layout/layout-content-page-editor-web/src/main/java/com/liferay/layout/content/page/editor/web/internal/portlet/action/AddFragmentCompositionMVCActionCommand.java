@@ -61,27 +61,6 @@ public class AddFragmentCompositionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long fragmentCollectionId = ParamUtil.getLong(
-			actionRequest, "fragmentCollectionId");
-
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionService.fetchFragmentCollection(
-				fragmentCollectionId);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		if (fragmentCollection == null) {
-			String fragmentCollectionName = _language.get(
-				themeDisplay.getRequest(), "saved-fragments");
-
-			fragmentCollection =
-				_fragmentCollectionService.addFragmentCollection(
-					null, themeDisplay.getScopeGroupId(),
-					fragmentCollectionName, fragmentCollectionName,
-					serviceContext);
-		}
-
 		String itemId = ParamUtil.getString(actionRequest, "itemId");
 		boolean saveInlineContent = ParamUtil.getBoolean(
 			actionRequest, "saveInlineContent");
@@ -107,6 +86,27 @@ public class AddFragmentCompositionMVCActionCommand
 				).put(
 					"type", ContentPageEditorConstants.TYPE_COMPOSITION
 				));
+		}
+
+		long fragmentCollectionId = ParamUtil.getLong(
+			actionRequest, "fragmentCollectionId");
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionService.fetchFragmentCollection(
+				fragmentCollectionId);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		if (fragmentCollection == null) {
+			String fragmentCollectionName = _language.get(
+				themeDisplay.getRequest(), "saved-fragments");
+
+			fragmentCollection =
+				_fragmentCollectionService.addFragmentCollection(
+					null, themeDisplay.getScopeGroupId(),
+					fragmentCollectionName, fragmentCollectionName,
+					serviceContext);
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");

@@ -701,7 +701,7 @@ public class IndexFactoryTest {
 			_elasticsearchFixture.getElasticsearchClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, elasticsearchClient.indices(), field,
+			elasticsearchClient.indices(), analyzer, field,
 			_indexFactoryFixture.getIndexName());
 	}
 
@@ -718,7 +718,7 @@ public class IndexFactoryTest {
 			_elasticsearchFixture.getElasticsearchClient();
 
 		FieldMappingAssert.assertType(
-			type, elasticsearchClient.indices(), field,
+			elasticsearchClient.indices(), type, field,
 			_indexFactoryFixture.getIndexName());
 	}
 

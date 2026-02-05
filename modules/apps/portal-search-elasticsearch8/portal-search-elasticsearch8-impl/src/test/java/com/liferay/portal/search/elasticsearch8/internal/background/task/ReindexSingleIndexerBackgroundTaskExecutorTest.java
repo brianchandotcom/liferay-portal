@@ -60,7 +60,7 @@ public class ReindexSingleIndexerBackgroundTaskExecutorTest
 			_elasticsearchConnectionFixture.getElasticsearchClient();
 
 		FieldMappingAssert.assertType(
-			fieldType, elasticsearchClient.indices(), fieldName,
+			elasticsearchClient.indices(), fieldType, fieldName,
 			getIndexName());
 	}
 

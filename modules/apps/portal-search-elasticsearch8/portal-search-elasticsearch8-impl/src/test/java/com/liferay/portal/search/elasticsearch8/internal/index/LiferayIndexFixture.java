@@ -45,7 +45,7 @@ public class LiferayIndexFixture {
 		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
 		FieldMappingAssert.assertAnalyzer(
-			analyzer, elasticsearchClient.indices(), field,
+			elasticsearchClient.indices(), analyzer, field,
 			_indexName.getName());
 	}
 
@@ -53,7 +53,7 @@ public class LiferayIndexFixture {
 		ElasticsearchClient elasticsearchClient = getElasticsearchClient();
 
 		FieldMappingAssert.assertType(
-			type, elasticsearchClient.indices(), field, _indexName.getName());
+			elasticsearchClient.indices(), type, field, _indexName.getName());
 	}
 
 	public ElasticsearchClient getElasticsearchClient() {

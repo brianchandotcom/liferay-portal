@@ -61,14 +61,12 @@ public class SearchResponseTranslator {
 		GroupByResponseFactory groupByResponseFactory,
 		SearchHitDocumentTranslator searchHitDocumentTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
-		StatsResultsTranslator statsResultsTranslator,
-		StatsTranslator statsTranslator) {
+		StatsResultsTranslator statsResultsTranslator) {
 
 		_groupByResponseFactory = groupByResponseFactory;
 		_searchHitDocumentTranslator = searchHitDocumentTranslator;
 		_statsRequestBuilderFactory = statsRequestBuilderFactory;
 		_statsResultsTranslator = statsResultsTranslator;
-		_statsTranslator = statsTranslator;
 	}
 
 	public void populate(
@@ -338,6 +336,6 @@ public class SearchResponseTranslator {
 	private final SearchHitDocumentTranslator _searchHitDocumentTranslator;
 	private final StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private final StatsResultsTranslator _statsResultsTranslator;
-	private final StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

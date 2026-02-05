@@ -580,7 +580,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	@Reference
 	private FacetTranslator _facetTranslator;
 
-	@Reference
-	private StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

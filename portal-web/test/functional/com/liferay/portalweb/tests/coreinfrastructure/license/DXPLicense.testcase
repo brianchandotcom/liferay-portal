@@ -58,7 +58,7 @@ definition {
 
 		Navigator.openURL();
 
-		Alert.viewErrorMessage(errorMessage = "This instance is not registered.");
+		Alert.viewErrorMessage(errorMessage = "This instance is expired.");
 	}
 
 	@description = "This is a use case for LPS-150970. Verify Terms Of Use not reappear after dismissed once with non root context."

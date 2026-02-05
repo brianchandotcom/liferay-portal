@@ -55,9 +55,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			long userId, String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
-		OIDCProviderMetadata authorizationServerMetadata =
-			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
-				metadataJSON, wellKnownURISuffix);
+		AuthorizationServerMetadata authorizationServerMetadata =
+			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
 		return addOAuthClientASLocalMetadata(
 			userId,
@@ -72,11 +71,10 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				StringUtil.merge(authorizationServerMetadata.getScopes()),
 				StringPool.COMMA),
 			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				_getSubjectTypes(authorizationServerMetadata),
 				StringPool.COMMA),
 			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
-			String.valueOf(
-				authorizationServerMetadata.getUserInfoEndpointURI()));
+			_getUserInfoEndpointURI(authorizationServerMetadata));
 	}
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
@@ -266,9 +264,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String wellKnownURISuffix)
 		throws PortalException {
 
-		OIDCProviderMetadata authorizationServerMetadata =
-			(OIDCProviderMetadata)_parseAuthorizationServerMetadata(
-				metadataJSON, wellKnownURISuffix);
+		AuthorizationServerMetadata authorizationServerMetadata =
+			_parseAuthorizationServerMetadata(metadataJSON, wellKnownURISuffix);
 
 		return updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId,
@@ -283,11 +280,10 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				StringUtil.merge(authorizationServerMetadata.getScopes()),
 				StringPool.COMMA),
 			StringUtil.split(
-				StringUtil.merge(authorizationServerMetadata.getSubjectTypes()),
+				_getSubjectTypes(authorizationServerMetadata),
 				StringPool.COMMA),
 			String.valueOf(authorizationServerMetadata.getTokenEndpointURI()),
-			String.valueOf(
-				authorizationServerMetadata.getUserInfoEndpointURI()));
+			_getUserInfoEndpointURI(authorizationServerMetadata));
 	}
 
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
@@ -420,6 +416,31 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
 		}
+	}
+
+	private String _getSubjectTypes(
+		AuthorizationServerMetadata authorizationServerMetadata) {
+
+		if (authorizationServerMetadata instanceof
+				OIDCProviderMetadata oidcProviderMetadata) {
+
+			return StringUtil.merge(oidcProviderMetadata.getSubjectTypes());
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private String _getUserInfoEndpointURI(
+		AuthorizationServerMetadata authorizationServerMetadata) {
+
+		if (authorizationServerMetadata instanceof
+				OIDCProviderMetadata oidcProviderMetadata) {
+
+			return String.valueOf(
+				oidcProviderMetadata.getUserInfoEndpointURI());
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private AuthorizationServerMetadata _parseAuthorizationServerMetadata(

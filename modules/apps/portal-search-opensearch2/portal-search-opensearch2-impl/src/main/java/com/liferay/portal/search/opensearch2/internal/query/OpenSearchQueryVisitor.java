@@ -49,7 +49,6 @@ import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.query.QueryVisitor;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.RegexQuery;
@@ -98,10 +97,11 @@ import org.opensearch.client.opensearch._types.query_dsl.ZeroTermsQuery;
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-public class OpenSearchQueryTranslator
-	implements QueryTranslator<QueryVariant>, QueryVisitor<QueryVariant> {
+public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 
-	@Override
+	public static final OpenSearchQueryVisitor INSTANCE =
+		new OpenSearchQueryVisitor();
+
 	public QueryVariant translate(Query query) {
 		QueryVariant queryVariant = query.accept(this);
 
@@ -1109,6 +1109,9 @@ public class OpenSearchQueryTranslator
 
 		throw new IllegalArgumentException(
 			"Invalid multi match query type " + type);
+	}
+
+	private OpenSearchQueryVisitor() {
 	}
 
 	private void _processBooleanQueryClauses(

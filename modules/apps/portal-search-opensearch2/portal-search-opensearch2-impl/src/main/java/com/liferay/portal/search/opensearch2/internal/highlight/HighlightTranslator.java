@@ -9,11 +9,10 @@ import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
+import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
-import com.liferay.portal.search.query.QueryTranslator;
 
 import org.opensearch.client.opensearch._types.query_dsl.Query;
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.search.BoundaryScanner;
 import org.opensearch.client.opensearch.core.search.BuiltinHighlighterType;
 import org.opensearch.client.opensearch.core.search.HighlightField;
@@ -30,7 +29,7 @@ import org.opensearch.client.opensearch.core.search.HighlighterType;
 public class HighlightTranslator {
 
 	public org.opensearch.client.opensearch.core.search.Highlight translate(
-		Highlight highlight, QueryTranslator<QueryVariant> queryTranslator) {
+		Highlight highlight) {
 
 		org.opensearch.client.opensearch.core.search.Highlight.Builder builder =
 			new org.opensearch.client.opensearch.core.search.Highlight.
@@ -60,7 +59,7 @@ public class HighlightTranslator {
 		for (FieldConfig fieldConfig : highlight.getFieldConfigs()) {
 			builder.fields(
 				fieldConfig.getFieldName(),
-				_translateFieldConfigs(fieldConfig, queryTranslator));
+				_translateFieldConfigs(fieldConfig));
 		}
 
 		if (highlight.getFragmenter() != null) {
@@ -73,7 +72,8 @@ public class HighlightTranslator {
 		if (highlight.getHighlightQuery() != null) {
 			builder.highlightQuery(
 				new Query(
-					queryTranslator.translate(highlight.getHighlightQuery())));
+					OpenSearchQueryVisitor.INSTANCE.translate(
+						highlight.getHighlightQuery())));
 		}
 
 		SetterUtil.setNotNullInteger(
@@ -164,10 +164,7 @@ public class HighlightTranslator {
 			"Invalid highlight encoder scanner for " + encoder);
 	}
 
-	private HighlightField _translateFieldConfigs(
-		FieldConfig fieldConfig,
-		QueryTranslator<QueryVariant> queryTranslator) {
-
+	private HighlightField _translateFieldConfigs(FieldConfig fieldConfig) {
 		HighlightField.Builder builder = new HighlightField.Builder();
 
 		if (ArrayUtil.isNotEmpty(fieldConfig.getBoundaryChars())) {
@@ -204,7 +201,7 @@ public class HighlightTranslator {
 		if (fieldConfig.getHighlightQuery() != null) {
 			builder.highlightQuery(
 				new Query(
-					queryTranslator.translate(
+					OpenSearchQueryVisitor.INSTANCE.translate(
 						fieldConfig.getHighlightQuery())));
 		}
 

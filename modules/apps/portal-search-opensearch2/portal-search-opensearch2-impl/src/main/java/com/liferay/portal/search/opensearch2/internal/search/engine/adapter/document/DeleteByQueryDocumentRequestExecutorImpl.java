@@ -10,14 +10,11 @@ import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
 
 import java.io.IOException;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.DeleteByQueryRequest;
 import org.opensearch.client.opensearch.core.DeleteByQueryResponse;
 
@@ -56,8 +53,10 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 		if (deleteByQueryDocumentRequest.getPortalSearchQuery() != null) {
 			builder.query(
 				new Query(
-					_queryTranslator.translate(
-						deleteByQueryDocumentRequest.getPortalSearchQuery())));
+					com.liferay.portal.search.opensearch2.internal.query.
+						OpenSearchQueryVisitor.INSTANCE.translate(
+							deleteByQueryDocumentRequest.
+								getPortalSearchQuery())));
 		}
 		else {
 			builder.query(
@@ -90,8 +89,5 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new OpenSearchQueryTranslator();
 
 }

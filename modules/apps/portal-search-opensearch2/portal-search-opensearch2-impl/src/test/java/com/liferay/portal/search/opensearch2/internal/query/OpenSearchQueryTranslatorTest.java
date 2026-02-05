@@ -97,7 +97,7 @@ public class OpenSearchQueryTranslatorTest {
 		org.opensearch.client.opensearch._types.query_dsl.Query
 			openSearchQuery =
 				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_openSearchQueryTranslator.translate(booleanQuery));
+					OpenSearchQueryVisitor.INSTANCE.translate(booleanQuery));
 
 		BoolQuery boolQuery = openSearchQuery.bool();
 
@@ -165,7 +165,7 @@ public class OpenSearchQueryTranslatorTest {
 		org.opensearch.client.opensearch._types.query_dsl.Query
 			openSearchQuery =
 				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_openSearchQueryTranslator.translate(query));
+					OpenSearchQueryVisitor.INSTANCE.translate(query));
 
 		String jsonp = JsonpUtil.toString(openSearchQuery);
 
@@ -184,14 +184,11 @@ public class OpenSearchQueryTranslatorTest {
 	private void _assertTermsCount(int expected, TermsQuery termsQuery) {
 		String jsonp = JsonpUtil.toString(
 			new org.opensearch.client.opensearch._types.query_dsl.Query(
-				_openSearchQueryTranslator.translate(termsQuery)));
+				OpenSearchQueryVisitor.INSTANCE.translate(termsQuery)));
 
 		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
 	}
 
 	private static final Float _BOOST = 1.5F;
-
-	private final OpenSearchQueryTranslator _openSearchQueryTranslator =
-		new OpenSearchQueryTranslator();
 
 }

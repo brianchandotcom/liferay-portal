@@ -286,6 +286,40 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	@Test
+	public void testDisplayPageTypeControllerWithContentWithoutGuestAccessWithPromptEnabled()
+		throws Exception {
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				 new ConfigurationTemporarySwapper(
+					 _PID,
+					 HashMapDictionaryBuilder.<String, Object>put(
+						 "promptEnabled", true
+					 ).build())) {
+
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+					null, _group.getGroupId(), 0, null,
+					_portal.getClassNameId(AssetCategory.class.getName()), 0,
+					RandomTestUtil.randomString(), 0,
+					WorkflowConstants.STATUS_DRAFT, _serviceContext);
+
+			Layout layout = _layoutLocalService.getLayout(
+				layoutPageTemplateEntry.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			Assert.assertNotNull(draftLayout);
+
+			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+			Assert.assertTrue(layout.isPublished());
+
+			_assertIncludeLayoutContent(
+				HttpServletResponse.SC_OK, false, layout.getPlid(), _guestUser);
+		}
+	}
+
+	@Test
 	public void testDisplayPageTypeControllerWithInfoItem() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(

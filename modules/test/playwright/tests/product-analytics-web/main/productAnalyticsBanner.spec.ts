@@ -208,7 +208,7 @@ test(
 	async ({page, productAnalyticsBannerPage, systemSettingsPage}) => {
 		await test.step('Verify Product Analytics Banner is present', async () => {
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).toBeVisible();
 		});
 
@@ -245,8 +245,10 @@ test(
 		});
 
 		await test.step('Verify Product Analytics Banner is no longer present', async () => {
+			page.reload();
+
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).not.toBeVisible();
 		});
 	}
@@ -292,7 +294,7 @@ test(
 
 		await test.step('Verify Product Analytics Banner is present', async () => {
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).toBeVisible();
 		});
 
@@ -303,14 +305,16 @@ test(
 		await acceptAll.click();
 
 		await test.step('Verify Product Analytics Banner is no longer present', async () => {
+			page.reload();
+
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).not.toBeVisible();
 		});
 
 		await test.step('Verify Cookies Banner shows up', async () => {
 			await expect(
-				await page.locator(
+				page.locator(
 					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
 				)
 			).toBeVisible();
@@ -361,7 +365,7 @@ test(
 
 		await test.step('Verify Product Analytics Banner is present', async () => {
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).toBeVisible();
 		});
 
@@ -373,13 +377,13 @@ test(
 
 		await test.step('Verify Product Analytics Banner is no longer present', async () => {
 			await expect(
-				await productAnalyticsBannerPage.bannerLocator
+				productAnalyticsBannerPage.bannerLocator
 			).not.toBeVisible();
 		});
 
 		await test.step('Verify Cookies Banner shows up', async () => {
 			await expect(
-				await page.locator(
+				page.locator(
 					'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
 				)
 			).toBeVisible();
@@ -456,6 +460,8 @@ test(
 		});
 
 		await accountSettingsPage.goToAccountSettings();
+
+		page.reload();
 
 		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
 			'.nav-link',

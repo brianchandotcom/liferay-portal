@@ -20,6 +20,7 @@ public class AgentContext {
 	}
 
 	public AgentContext(AgentContext.Builder builder) {
+		_accessToken = builder._accessToken;
 		_companyId = builder._companyId;
 		_dtoConverterContext = builder._dtoConverterContext;
 		_groupId = builder._groupId;
@@ -28,6 +29,10 @@ public class AgentContext {
 		_sseEventSinkKey = builder._sseEventSinkKey;
 		_userId = builder._userId;
 		_userToken = builder._userToken;
+	}
+
+	public String getAccessToken() {
+		return _accessToken;
 	}
 
 	public long getCompanyId() {
@@ -63,6 +68,12 @@ public class AgentContext {
 	}
 
 	public static class Builder {
+
+		public Builder accessToken(String accessToken) {
+			_accessToken = accessToken;
+
+			return this;
+		}
 
 		public AgentContext build() {
 			return new AgentContext(this);
@@ -118,6 +129,7 @@ public class AgentContext {
 			return this;
 		}
 
+		private String _accessToken;
 		private long _companyId;
 		private DTOConverterContext _dtoConverterContext;
 		private long _groupId;
@@ -129,6 +141,7 @@ public class AgentContext {
 
 	}
 
+	private final String _accessToken;
 	private final long _companyId;
 	private final DTOConverterContext _dtoConverterContext;
 	private final long _groupId;

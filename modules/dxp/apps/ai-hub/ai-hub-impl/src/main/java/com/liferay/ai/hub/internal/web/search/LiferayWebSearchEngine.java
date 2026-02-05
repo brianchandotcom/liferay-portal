@@ -5,6 +5,10 @@
 
 package com.liferay.ai.hub.internal.web.search;
 
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.model.OAuth2Authorization;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalServiceUtil;
+import com.liferay.oauth2.provider.service.OAuth2AuthorizationLocalServiceUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,12 +40,11 @@ import java.util.Map;
  */
 public class LiferayWebSearchEngine implements WebSearchEngine {
 
-	public LiferayWebSearchEngine() {
-	}
-
 	public LiferayWebSearchEngine(
-		String blueprintExternalReferenceCode, String userToken) {
+		String accessToken, String blueprintExternalReferenceCode,
+		String userToken) {
 
+		_accessToken = accessToken;
 		_blueprintExternalReferenceCode = blueprintExternalReferenceCode;
 		_userToken = userToken;
 	}
@@ -70,9 +73,17 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_JSON);
 		options.addHeader("Liferay-AI-Hub-On-Behalf-Of", _userToken);
 
-		// TODO replace http://localhost:8080 with origin's base URL
+		OAuth2Authorization oAuth2Authorization =
+			OAuth2AuthorizationLocalServiceUtil.
+				getOAuth2AuthorizationByAccessTokenContent(
+					_accessToken.substring(7));
 
-		String location = "http://localhost:8080/o/search/v1.0/search";
+		OAuth2Application oAuth2Application =
+			OAuth2ApplicationLocalServiceUtil.getOAuth2Application(
+				oAuth2Authorization.getOAuth2ApplicationId());
+
+		String location =
+			oAuth2Application.getHomePageURL() + "/o/search/v1.0/search";
 
 		if (!Validator.isBlank(_blueprintExternalReferenceCode)) {
 			location = HttpComponentsUtil.addParameter(
@@ -128,7 +139,8 @@ public class LiferayWebSearchEngine implements WebSearchEngine {
 	private static final Log _log = LogFactoryUtil.getLog(
 		LiferayWebSearchEngine.class);
 
-	private String _blueprintExternalReferenceCode;
-	private String _userToken;
+	private final String _accessToken;
+	private final String _blueprintExternalReferenceCode;
+	private final String _userToken;
 
 }

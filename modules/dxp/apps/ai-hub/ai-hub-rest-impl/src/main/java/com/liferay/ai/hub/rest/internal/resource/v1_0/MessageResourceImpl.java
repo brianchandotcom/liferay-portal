@@ -44,6 +44,8 @@ public class MessageResourceImpl extends BaseMessageResourceImpl {
 
 		_supervisorAgent.invoke(
 			AgentContext.builder(
+			).accessToken(
+				contextHttpServletRequest.getHeader("Authorization")
 			).companyId(
 				contextCompany.getCompanyId()
 			).dtoConverterContext(

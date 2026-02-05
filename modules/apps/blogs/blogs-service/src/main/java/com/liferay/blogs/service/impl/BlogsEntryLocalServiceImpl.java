@@ -1816,6 +1816,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return StringPool.BLANK;
 	}
 
+	private String _getLayoutFullURL(ServiceContext serviceContext) {
+		String layoutFullURL = GetterUtil.getString(
+			serviceContext.getAttribute("layoutFullURL"));
+
+		if (!StringUtil.equals(layoutFullURL, StringPool.BLANK)) {
+			return layoutFullURL;
+		}
+
+		return serviceContext.getLayoutFullURL();
+	}
+
 	private String _getUniqueFileName(
 			long groupId, String fileName, long folderId)
 		throws PortalException {
@@ -1950,12 +1961,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			WorkflowConstants.CONTEXT_URL);
 
 		if (Validator.isNull(entryURL)) {
-			String prefixEntryLayoutFullUrl = GetterUtil.getString(
-				serviceContext.getAttribute("prefixEntryLayoutFullUrl"));
-
 			entryURL = StringBundler.concat(
-				prefixEntryLayoutFullUrl, Portal.FRIENDLY_URL_SEPARATOR,
-				"blogs/", entry.getEntryId());
+				serviceContext.getLayoutFullURL(),
+				Portal.FRIENDLY_URL_SEPARATOR, "blogs/", entry.getEntryId());
 		}
 
 		BlogsGroupServiceSettings blogsGroupServiceSettings =
@@ -2185,7 +2193,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
+		String layoutFullURL = _getLayoutFullURL(serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -2231,7 +2239,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
+		String layoutFullURL = _getLayoutFullURL(serviceContext);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

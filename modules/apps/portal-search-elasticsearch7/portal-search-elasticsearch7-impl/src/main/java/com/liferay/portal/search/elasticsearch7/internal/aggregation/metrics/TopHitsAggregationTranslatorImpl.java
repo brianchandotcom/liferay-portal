@@ -10,10 +10,8 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
@@ -21,7 +19,6 @@ import com.liferay.portal.search.sort.SortFieldTranslator;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -81,7 +78,7 @@ public class TopHitsAggregationTranslatorImpl
 
 		if (topHitsAggregation.getHighlight() != null) {
 			HighlightBuilder highlightBuilder = _highlightTranslator.translate(
-				topHitsAggregation.getHighlight(), _queryTranslator);
+				topHitsAggregation.getHighlight());
 
 			topHitsAggregationBuilder.highlighter(highlightBuilder);
 		}
@@ -142,8 +139,6 @@ public class TopHitsAggregationTranslatorImpl
 
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();

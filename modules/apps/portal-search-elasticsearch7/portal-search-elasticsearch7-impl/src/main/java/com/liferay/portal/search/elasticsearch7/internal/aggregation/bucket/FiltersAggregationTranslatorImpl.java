@@ -9,8 +9,7 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,8 +45,9 @@ public class FiltersAggregationTranslatorImpl
 
 		keyedQueries.forEach(
 			keyedQuery -> {
-				QueryBuilder filterQueryBuilder = _queryTranslator.translate(
-					keyedQuery.getQuery());
+				QueryBuilder filterQueryBuilder =
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						keyedQuery.getQuery());
 
 				keyedFilters.add(
 					new FiltersAggregator.KeyedFilter(
@@ -79,7 +79,5 @@ public class FiltersAggregationTranslatorImpl
 
 	private final BaseAggregationTranslator _baseAggregationTranslator =
 		new BaseAggregationTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 }

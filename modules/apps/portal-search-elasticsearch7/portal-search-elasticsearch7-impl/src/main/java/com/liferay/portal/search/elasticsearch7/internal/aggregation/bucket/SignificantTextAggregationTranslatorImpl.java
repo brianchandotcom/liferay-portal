@@ -10,11 +10,9 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.significance.SignificanceHeuristicTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
@@ -51,7 +49,7 @@ public class SignificantTextAggregationTranslatorImpl
 
 		if (significantTextAggregation.getBackgroundFilterQuery() != null) {
 			significantTextAggregationBuilder.backgroundFilter(
-				_queryTranslator.translate(
+				ElasticsearchQueryVisitor.INSTANCE.translate(
 					significantTextAggregation.getBackgroundFilterQuery()));
 		}
 
@@ -106,8 +104,6 @@ public class SignificantTextAggregationTranslatorImpl
 			new BucketCountThresholdsTranslator();
 	private final IncludeExcludeTranslator _includeExcludeTranslator =
 		new IncludeExcludeTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final SignificanceHeuristicTranslator
 		_significanceHeuristicTranslator =
 			new SignificanceHeuristicTranslator();

@@ -6,11 +6,9 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.bucket.SignificantTermsAggregation;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.significance.SignificanceHeuristicTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
 
@@ -42,7 +40,7 @@ public class SignificantTermsAggregationTranslatorImpl
 
 		if (significantTermsAggregation.getBackgroundFilterQuery() != null) {
 			significantTermsAggregationBuilder.backgroundFilter(
-				_queryTranslator.translate(
+				ElasticsearchQueryVisitor.INSTANCE.translate(
 					significantTermsAggregation.getBackgroundFilterQuery()));
 		}
 
@@ -86,8 +84,6 @@ public class SignificantTermsAggregationTranslatorImpl
 			new BucketCountThresholdsTranslator();
 	private final IncludeExcludeTranslator _includeExcludeTranslator =
 		new IncludeExcludeTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final SignificanceHeuristicTranslator
 		_significanceHeuristicTranslator =
 			new SignificanceHeuristicTranslator();

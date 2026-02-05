@@ -49,7 +49,6 @@ import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.query.QueryVisitor;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.RegexQuery;
@@ -113,10 +112,11 @@ import org.elasticsearch.xcontent.XContentType;
 /**
  * @author Michael C. Han
  */
-public class ElasticsearchQueryTranslator
-	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
+public class ElasticsearchQueryVisitor implements QueryVisitor<QueryBuilder> {
 
-	@Override
+	public static final ElasticsearchQueryVisitor INSTANCE =
+		new ElasticsearchQueryVisitor();
+
 	public QueryBuilder translate(Query query) {
 		QueryBuilder queryBuilder = query.accept(this);
 
@@ -288,7 +288,7 @@ public class ElasticsearchQueryTranslator
 				TransformUtil.transformToArray(
 					functionScoreQuery.getFilterQueryScoreFunctionHolders(),
 					filterQueryScoreFunctionHolder -> _translateFilterFunction(
-						filterQueryScoreFunctionHolder, this,
+						filterQueryScoreFunctionHolder,
 						_translateScoreFunction(
 							filterQueryScoreFunctionHolder.getScoreFunction())),
 					FunctionScoreQueryBuilder.FilterFunctionBuilder.class));
@@ -1105,6 +1105,9 @@ public class ElasticsearchQueryTranslator
 
 	}
 
+	private ElasticsearchQueryVisitor() {
+	}
+
 	private QueryBuilder _addBoost(Query query, QueryBuilder queryBuilder) {
 		if (query.getBoost() != null) {
 			queryBuilder.boost(query.getBoost());
@@ -1277,7 +1280,6 @@ public class ElasticsearchQueryTranslator
 		_translateFilterFunction(
 			FunctionScoreQuery.FilterQueryScoreFunctionHolder
 				filterQueryScoreFunctionHolder,
-			QueryTranslator<QueryBuilder> queryTranslator,
 			ScoreFunctionBuilder<?> scoreFunctionBuilder) {
 
 		if (filterQueryScoreFunctionHolder.getFilterQuery() == null) {
@@ -1286,8 +1288,7 @@ public class ElasticsearchQueryTranslator
 		}
 
 		return new FunctionScoreQueryBuilder.FilterFunctionBuilder(
-			queryTranslator.translate(
-				filterQueryScoreFunctionHolder.getFilterQuery()),
+			translate(filterQueryScoreFunctionHolder.getFilterQuery()),
 			scoreFunctionBuilder);
 	}
 

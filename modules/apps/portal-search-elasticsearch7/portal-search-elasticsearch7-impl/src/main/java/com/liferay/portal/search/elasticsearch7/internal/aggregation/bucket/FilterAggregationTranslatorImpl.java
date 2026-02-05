@@ -9,8 +9,7 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
-import com.liferay.portal.search.query.QueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -34,8 +33,9 @@ public class FilterAggregationTranslatorImpl
 		PipelineAggregationTranslator<PipelineAggregationBuilder>
 			pipelineAggregationTranslator) {
 
-		QueryBuilder filterQueryBuilder = _queryTranslator.translate(
-			filterAggregation.getFilterQuery());
+		QueryBuilder filterQueryBuilder =
+			ElasticsearchQueryVisitor.INSTANCE.translate(
+				filterAggregation.getFilterQuery());
 
 		FilterAggregationBuilder filterAggregationBuilder =
 			AggregationBuilders.filter(
@@ -50,7 +50,5 @@ public class FilterAggregationTranslatorImpl
 
 	private final BaseAggregationTranslator _baseAggregationTranslator =
 		new BaseAggregationTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 }

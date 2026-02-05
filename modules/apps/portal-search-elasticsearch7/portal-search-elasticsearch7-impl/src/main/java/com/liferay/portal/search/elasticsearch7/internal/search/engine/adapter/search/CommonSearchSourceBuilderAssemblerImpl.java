@@ -16,7 +16,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
@@ -24,7 +23,6 @@ import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.stats.StatsRequest;
 
@@ -142,8 +140,10 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		QueryBuilder queryBuilder = null;
 
 		if (baseSearchRequest.getPostFilterQuery() != null) {
-			queryBuilder = _queryTranslator.translate(
-				baseSearchRequest.getPostFilterQuery());
+			queryBuilder =
+				com.liferay.portal.search.elasticsearch7.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						baseSearchRequest.getPostFilterQuery());
 		}
 
 		List<ComplexQueryPart> postFilterQueryParts =
@@ -432,7 +432,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		}
 
 		searchSourceBuilder.addRescorer(
-			new QueryRescorerBuilder(_queryTranslator.translate(query)));
+			new QueryRescorerBuilder(
+				com.liferay.portal.search.elasticsearch7.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(query)));
 	}
 
 	private void _setRescorers(
@@ -445,7 +447,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 		for (Rescore rescore : rescores) {
 			QueryRescorerBuilder queryRescorerBuilder =
 				new QueryRescorerBuilder(
-					_queryTranslator.translate(rescore.getQuery()));
+					com.liferay.portal.search.elasticsearch7.internal.query.
+						ElasticsearchQueryVisitor.INSTANCE.translate(
+							rescore.getQuery()));
 
 			if (rescore.getQueryWeight() != null) {
 				queryRescorerBuilder.setQueryWeight(rescore.getQueryWeight());
@@ -560,7 +564,8 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 	private QueryBuilder _translateQuery(Query query) {
 		if (query != null) {
-			return _queryTranslator.translate(query);
+			return com.liferay.portal.search.elasticsearch7.internal.query.
+				ElasticsearchQueryVisitor.INSTANCE.translate(query);
 		}
 
 		return null;
@@ -578,9 +583,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;
-
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private StatsTranslator _statsTranslator;

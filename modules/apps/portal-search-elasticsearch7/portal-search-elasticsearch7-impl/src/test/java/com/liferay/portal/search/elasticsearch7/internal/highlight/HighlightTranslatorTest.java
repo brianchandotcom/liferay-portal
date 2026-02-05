@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.highlight;
 
-import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.internal.highlight.FieldConfigImpl;
@@ -43,7 +43,6 @@ public class HighlightTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
 		_highlightPrototype = _createHighlightPrototype();
 	}
 
@@ -471,7 +470,7 @@ public class HighlightTranslatorTest {
 		Highlight highlight = _buildHighlight(highlightPrototype);
 
 		HighlightBuilder highlightBuilder = _highlightTranslator.translate(
-			highlight, _elasticsearchQueryTranslator);
+			highlight);
 
 		_assertHighlightBuilder(highlightBuilder, highlight);
 	}
@@ -672,13 +671,12 @@ public class HighlightTranslatorTest {
 
 	private QueryBuilder _getQueryBuilder(Query query) {
 		if (query != null) {
-			return _elasticsearchQueryTranslator.translate(query);
+			return ElasticsearchQueryVisitor.INSTANCE.translate(query);
 		}
 
 		return null;
 	}
 
-	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 	private HighlightPrototype _highlightPrototype;
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();

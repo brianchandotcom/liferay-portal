@@ -6,11 +6,10 @@
 package com.liferay.portal.search.elasticsearch7.internal.highlight;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
-import com.liferay.portal.search.query.QueryTranslator;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
 /**
@@ -18,9 +17,7 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
  */
 public class HighlightTranslator {
 
-	public HighlightBuilder translate(
-		Highlight highlight, QueryTranslator<QueryBuilder> queryTranslator) {
-
+	public HighlightBuilder translate(Highlight highlight) {
 		HighlightBuilder highlightBuilder = new HighlightBuilder();
 
 		if (ArrayUtil.isNotEmpty(highlight.getBoundaryChars())) {
@@ -46,7 +43,7 @@ public class HighlightTranslator {
 		}
 
 		for (FieldConfig fieldConfig : highlight.getFieldConfigs()) {
-			highlightBuilder.field(_translate(fieldConfig, queryTranslator));
+			highlightBuilder.field(_translate(fieldConfig));
 		}
 
 		if (highlight.getForceSource() != null) {
@@ -71,7 +68,8 @@ public class HighlightTranslator {
 
 		if (highlight.getHighlightQuery() != null) {
 			highlightBuilder.highlightQuery(
-				queryTranslator.translate(highlight.getHighlightQuery()));
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					highlight.getHighlightQuery()));
 		}
 
 		if (highlight.getHighlighterType() != null) {
@@ -119,10 +117,7 @@ public class HighlightTranslator {
 		return highlightBuilder;
 	}
 
-	private HighlightBuilder.Field _translate(
-		FieldConfig fieldConfig,
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
+	private HighlightBuilder.Field _translate(FieldConfig fieldConfig) {
 		HighlightBuilder.Field field = new HighlightBuilder.Field(
 			fieldConfig.getFieldName());
 
@@ -168,7 +163,8 @@ public class HighlightTranslator {
 
 		if (fieldConfig.getHighlightQuery() != null) {
 			field.highlightQuery(
-				queryTranslator.translate(fieldConfig.getHighlightQuery()));
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					fieldConfig.getHighlightQuery()));
 		}
 
 		if (ArrayUtil.isNotEmpty(fieldConfig.getMatchedFields())) {

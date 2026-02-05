@@ -29,7 +29,6 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -43,11 +42,6 @@ public class ElasticsearchQueryTranslatorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
-	}
 
 	@Test
 	public void testTranslateBoostCommonTermsQuery() {
@@ -90,8 +84,8 @@ public class ElasticsearchQueryTranslatorTest {
 
 		booleanQuery.addMustQueryClauses(query);
 
-		QueryBuilder queryBuilder = _elasticsearchQueryTranslator.translate(
-			booleanQuery);
+		QueryBuilder queryBuilder =
+			ElasticsearchQueryVisitor.INSTANCE.translate(booleanQuery);
 
 		BoolQueryBuilder boolQueryBuilder = (BoolQueryBuilder)queryBuilder;
 
@@ -153,8 +147,8 @@ public class ElasticsearchQueryTranslatorTest {
 	private void _assertBoost(Query query) {
 		query.setBoost(_BOOST);
 
-		QueryBuilder queryBuilder = _elasticsearchQueryTranslator.translate(
-			query);
+		QueryBuilder queryBuilder =
+			ElasticsearchQueryVisitor.INSTANCE.translate(query);
 
 		Assert.assertEquals(
 			queryBuilder.toString(), String.valueOf(_BOOST),
@@ -171,7 +165,7 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(int expected, TermsQuery termsQuery) {
-		String queryString = _elasticsearchQueryTranslator.visit(
+		String queryString = ElasticsearchQueryVisitor.INSTANCE.visit(
 			termsQuery
 		).toString();
 
@@ -180,7 +174,5 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private static final Float _BOOST = 1.5F;
-
-	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 
 }

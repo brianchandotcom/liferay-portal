@@ -160,6 +160,7 @@ public class ObjectDefinitionServiceHttp {
 				boolean enableComments, boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
 				boolean enableIndexSearch, boolean enableObjectEntryDraft,
+				boolean enableObjectEntryHistory,
 				boolean enableObjectEntrySchedule,
 				boolean enableObjectEntrySubscription,
 				boolean enableObjectEntryVersioning,
@@ -186,11 +187,11 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, externalReferenceCode, userId, objectFolderId,
 				className, enableComments, enableFormContainer,
 				enableFriendlyURLCustomization, enableIndexSearch,
-				enableObjectEntryDraft, enableObjectEntrySchedule,
-				enableObjectEntrySubscription, enableObjectEntryVersioning,
-				friendlyURLSeparator, labelMap, name, panelAppOrder,
-				panelCategoryKey, pluralLabelMap, portlet, scope,
-				objectDefinitionSettings, objectFields,
+				enableObjectEntryDraft, enableObjectEntryHistory,
+				enableObjectEntrySchedule, enableObjectEntrySubscription,
+				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
+				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
+				scope, objectDefinitionSettings, objectFields,
 				workflowDefinitionLinks);
 
 			Object returnObj = null;
@@ -889,9 +890,9 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			java.util.Map.class, boolean.class, String.class,
+			boolean.class, boolean.class, boolean.class, boolean.class,
+			String.class, java.util.Map.class, String.class, String.class,
+			String.class, java.util.Map.class, boolean.class, String.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =

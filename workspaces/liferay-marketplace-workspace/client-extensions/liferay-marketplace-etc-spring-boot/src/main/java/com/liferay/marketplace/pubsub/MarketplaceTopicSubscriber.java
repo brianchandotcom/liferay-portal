@@ -18,6 +18,8 @@ import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
+import com.liferay.marketplace.service.KoroneikiService;
+import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
@@ -34,6 +36,7 @@ import javax.annotation.PreDestroy;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -119,7 +122,9 @@ public class MarketplaceTopicSubscriber {
 		}
 
 		Subscriber subscriber = Subscriber.newBuilder(
-			subscriptionName, new MarketplaceMessageReceiver(topicName)
+			subscriptionName,
+			new MarketplaceMessageReceiver(
+				_koroneikiService, _marketplaceService, topicName)
 		).setCredentialsProvider(
 			credentialsProvider
 		).build();
@@ -138,6 +143,12 @@ public class MarketplaceTopicSubscriber {
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceTopicSubscriber.class);
+
+	@Autowired
+	private KoroneikiService _koroneikiService;
+
+	@Autowired
+	private MarketplaceService _marketplaceService;
 
 	@Value("${liferay.marketplace.pubsub.gcp.project.id}")
 	private String _projectId;

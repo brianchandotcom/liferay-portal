@@ -414,7 +414,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 	@Reference
 	private StatsResultsTranslator _statsResultsTranslator;
 
-	@Reference
-	private StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

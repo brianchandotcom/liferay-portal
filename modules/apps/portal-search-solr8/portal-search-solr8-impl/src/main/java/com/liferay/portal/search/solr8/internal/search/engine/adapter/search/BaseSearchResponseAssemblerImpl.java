@@ -20,7 +20,6 @@ import org.apache.solr.client.solrj.response.FieldStatsInfo;
 import org.apache.solr.client.solrj.response.QueryResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -112,7 +111,6 @@ public class BaseSearchResponseAssemblerImpl
 		}
 	}
 
-	@Reference
-	private StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

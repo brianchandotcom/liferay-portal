@@ -46,7 +46,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -359,8 +358,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 
 	private final SolrQueryTranslator _solrQueryTranslator =
 		new SolrQueryTranslator();
-
-	@Reference
-	private StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

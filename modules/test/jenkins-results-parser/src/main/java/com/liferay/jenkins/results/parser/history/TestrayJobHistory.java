@@ -84,6 +84,8 @@ public class TestrayJobHistory extends BaseJobHistory {
 		}
 
 		for (TestrayRoutine testrayRoutine : _testrayRoutines) {
+			TestrayBuild latestTestrayBuild = null;
+
 			List<TestrayBuild> testrayBuilds = testrayRoutine.getTestrayBuilds(
 				_maxBuildCount);
 
@@ -104,8 +106,8 @@ public class TestrayJobHistory extends BaseJobHistory {
 
 				boolean latestBuild = false;
 
-				if (_latestTestrayBuild == null) {
-					_latestTestrayBuild = testrayBuild;
+				if (latestTestrayBuild == null) {
+					latestTestrayBuild = testrayBuild;
 
 					latestBuild = true;
 				}
@@ -276,7 +278,6 @@ public class TestrayJobHistory extends BaseJobHistory {
 		return status;
 	}
 
-	private TestrayBuild _latestTestrayBuild;
 	private final int _maxBuildCount;
 	private boolean _populated;
 	private final List<TestrayRoutine> _testrayRoutines;

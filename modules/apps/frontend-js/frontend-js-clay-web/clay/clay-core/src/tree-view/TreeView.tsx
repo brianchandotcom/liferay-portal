@@ -219,6 +219,7 @@ export function TreeView<T extends Record<string, any>>({
 		expandOnCheck,
 		expanderClassName,
 		expanderIcons,
+		itemNameKey,
 		nestedKey,
 		onItemHover,
 		onItemMove,

@@ -40,6 +40,7 @@ export interface ITreeViewContext<T extends Record<string, any>>
 	expandOnCheck?: boolean;
 	expanderClassName?: string;
 	expanderIcons?: Icons;
+	itemNameKey?: string;
 	nestedKey?: string;
 	onItemHover?: (
 		items: T | Set<Key>,
@@ -58,6 +59,7 @@ export interface ITreeViewContext<T extends Record<string, any>>
 	rootRef: React.RefObject<HTMLUListElement>;
 	selectionMode?: 'single' | 'multiple' | 'multiple-recursive' | null;
 	showExpanderOnHover?: boolean;
+	spritemap?: string;
 }
 
 export const TreeViewContext = React.createContext<ITreeViewContext<any>>(

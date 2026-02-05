@@ -74,7 +74,10 @@ export default async function deleteItemAction(
 		);
 
 		if (!itemSpace.settings?.trashEnabled) {
-			const title = itemData.title || embedded.title;
+			const title =
+				itemData.title ||
+				embedded.title ||
+				Liferay.Language.get('untitled-asset');
 
 			confirmAndDeleteEntryAction({
 				bodyHTML:
@@ -112,7 +115,7 @@ export default async function deleteItemAction(
 
 				showSuccessToast(
 					actions.get.href,
-					embedded.title,
+					embedded.title || Liferay.Language.get('untitled-asset'),
 					loadData,
 					actions.get.method
 				);

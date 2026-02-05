@@ -845,6 +845,38 @@ public class LayoutServiceHttp {
 	}
 
 	public static long getDefaultPlid(
+		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout) {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				LayoutServiceUtil.class, "getDefaultPlid",
+				_getDefaultPlidParameterTypes19);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, privateLayout);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return ((Long)returnObj).longValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static long getDefaultPlid(
 			HttpPrincipal httpPrincipal, long groupId, long scopeGroupId,
 			boolean privateLayout, String portletId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -852,7 +884,7 @@ public class LayoutServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				LayoutServiceUtil.class, "getDefaultPlid",
-				_getDefaultPlidParameterTypes19);
+				_getDefaultPlidParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, scopeGroupId, privateLayout, portletId);
@@ -870,38 +902,6 @@ public class LayoutServiceHttp {
 						exception;
 				}
 
-				throw new com.liferay.portal.kernel.exception.SystemException(
-					exception);
-			}
-
-			return ((Long)returnObj).longValue();
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException
-					systemException) {
-
-			_log.error(systemException, systemException);
-
-			throw systemException;
-		}
-	}
-
-	public static long getDefaultPlid(
-		HttpPrincipal httpPrincipal, long groupId, boolean privateLayout) {
-
-		try {
-			MethodKey methodKey = new MethodKey(
-				LayoutServiceUtil.class, "getDefaultPlid",
-				_getDefaultPlidParameterTypes20);
-
-			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, privateLayout);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception exception) {
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -2926,9 +2926,9 @@ public class LayoutServiceHttp {
 	private static final Class<?>[] _getControlPanelLayoutPlidParameterTypes18 =
 		new Class[] {};
 	private static final Class<?>[] _getDefaultPlidParameterTypes19 =
-		new Class[] {long.class, long.class, boolean.class, String.class};
-	private static final Class<?>[] _getDefaultPlidParameterTypes20 =
 		new Class[] {long.class, boolean.class};
+	private static final Class<?>[] _getDefaultPlidParameterTypes20 =
+		new Class[] {long.class, long.class, boolean.class, String.class};
 	private static final Class<?>[] _getDefaultPlidParameterTypes21 =
 		new Class[] {long.class, long.class, String.class};
 	private static final Class<?>[] _getLayoutParameterTypes22 = new Class[] {

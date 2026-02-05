@@ -156,6 +156,8 @@ public class JSUnitModulesBatchTestClassGroup
 
 					String testClassMethodName = testClassMethod.getName();
 
+					testClassMethodName = testClassMethodName.replace("/", ":");
+
 					for (String excludedMethodName : excludedTestMethodNames) {
 						if (testClassMethodName.contains(excludedMethodName)) {
 							iterator.remove();

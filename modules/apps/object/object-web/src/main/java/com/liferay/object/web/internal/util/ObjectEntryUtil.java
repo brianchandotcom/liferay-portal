@@ -15,7 +15,6 @@ import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
-import com.liferay.layout.taglib.constants.LayoutStructureRendererConstants;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -393,10 +392,7 @@ public class ObjectEntryUtil {
 							childEntry.getKey());
 
 						if (!childProperties.containsKey(
-								"externalReferenceCode") &&
-							!externalReferenceCode.startsWith(
-								LayoutStructureRendererConstants.
-									LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE)) {
+								"externalReferenceCode")) {
 
 							childProperties.put(
 								"externalReferenceCode", externalReferenceCode);
@@ -425,13 +421,9 @@ public class ObjectEntryUtil {
 					Map<String, Object> childProperties =
 						(Map<String, Object>)entry.getValue();
 
-					String externalReferenceCode = GetterUtil.getString(
-						entry.getKey());
-
-					if (!childProperties.containsKey("externalReferenceCode") &&
-						!externalReferenceCode.startsWith(
-							LayoutStructureRendererConstants.
-								LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE)) {
+					if (!childProperties.containsKey("externalReferenceCode")) {
+						String externalReferenceCode = GetterUtil.getString(
+							entry.getKey());
 
 						childProperties.put(
 							"externalReferenceCode", externalReferenceCode);

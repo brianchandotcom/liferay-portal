@@ -10,9 +10,6 @@ package com.liferay.layout.taglib.constants;
  */
 public class LayoutStructureRendererConstants {
 
-	public static final String LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE =
-		"LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE";
-
 	public static final String LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE =
 		"LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE";
 

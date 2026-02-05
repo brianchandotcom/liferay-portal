@@ -339,7 +339,9 @@ export default function History<T>({
 						.filter(({auditFieldChanges, eventType}) => {
 							return (
 								eventType !== EventType.UPDATE ||
-								!!auditFieldChanges?.length
+								auditFieldChanges?.some(
+									({name}) => fields[name]
+								)
 							);
 						})
 						.map((auditEvent, index) => (

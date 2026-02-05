@@ -259,11 +259,11 @@ public class ClientExtensionOSGiCommandsTest {
 
 		CountDownLatch countDownLatch = new CountDownLatch(2);
 
-		List<Integer> eventTypes = new ArrayList<>();
+		List<Integer> types = new ArrayList<>();
 
 		ConfigurationListener configurationListener = event -> {
 			if (Objects.equals(event.getPid(), pid)) {
-				eventTypes.add(event.getType());
+				types.add(event.getType());
 
 				countDownLatch.countDown();
 			}
@@ -278,11 +278,9 @@ public class ClientExtensionOSGiCommandsTest {
 
 			Assert.assertTrue(countDownLatch.await(5, TimeUnit.SECONDS));
 
-			Assert.assertEquals(eventTypes.toString(), 2, eventTypes.size());
-			Assert.assertTrue(
-				eventTypes.contains(ConfigurationEvent.CM_DELETED));
-			Assert.assertTrue(
-				eventTypes.contains(ConfigurationEvent.CM_UPDATED));
+			Assert.assertEquals(types.toString(), 2, types.size());
+			Assert.assertTrue(types.contains(ConfigurationEvent.CM_DELETED));
+			Assert.assertTrue(types.contains(ConfigurationEvent.CM_UPDATED));
 		}
 		finally {
 			serviceRegistration.unregister();

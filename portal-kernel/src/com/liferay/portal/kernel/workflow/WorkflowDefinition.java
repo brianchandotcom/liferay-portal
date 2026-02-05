@@ -39,6 +39,14 @@ public interface WorkflowDefinition extends WorkflowModel {
 		return null;
 	}
 
+	public default String getGroupExternalReferenceCode() {
+		return null;
+	}
+
+	public default long getGroupId() {
+		return 0;
+	}
+
 	public InputStream getInputStream();
 
 	public default Date getModifiedDate() {

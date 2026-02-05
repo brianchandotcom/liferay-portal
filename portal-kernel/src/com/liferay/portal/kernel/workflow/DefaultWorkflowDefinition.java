@@ -58,6 +58,16 @@ public class DefaultWorkflowDefinition
 	}
 
 	@Override
+	public String getGroupExternalReferenceCode() {
+		return _groupExternalReferenceCode;
+	}
+
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
 	public InputStream getInputStream() {
 		return _inputStream;
 	}
@@ -159,6 +169,16 @@ public class DefaultWorkflowDefinition
 		_externalReferenceCode = externalReferenceCode;
 	}
 
+	public void setGroupExternalReferenceCode(
+		String groupExternalReferenceCode) {
+
+		_groupExternalReferenceCode = groupExternalReferenceCode;
+	}
+
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setInputStream(InputStream inputStream) {
 		_inputStream = inputStream;
 	}
@@ -216,6 +236,8 @@ public class DefaultWorkflowDefinition
 	private Date _createDate;
 	private String _description;
 	private String _externalReferenceCode;
+	private String _groupExternalReferenceCode;
+	private long _groupId;
 	private InputStream _inputStream;
 	private Date _modifiedDate;
 	private String _name;

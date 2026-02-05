@@ -82,7 +82,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                       class="dropdown dropdown-root"
                     >
                       <button
-                        aria-controls="clay-dropdown-menu-4"
+                        aria-controls="clay-dropdown-menu-3"
                         aria-expanded="false"
                         aria-haspopup="true"
                         class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
@@ -401,9 +401,145 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                         >
                           <a
                             class="text-dark"
-                            href="/workspace/23/123/contacts/individuals/known-individuals/0"
+                            href="/workspace/23/123/contacts/individuals/known-individuals/47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c1"
                           >
-                            Foo Bar
+                            Test Test
+                          </a>
+                        </span>
+                      </div>
+                      <span
+                        class="text-3 text-secondary"
+                      >
+                        test@liferay.com
+                      </span>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        Liferay Inc.
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        United States
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        January 29, 2026
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        January 29, 2026
+                      </div>
+                    </td>
+                    <td
+                      class="text-capitalize"
+                    >
+                      Known
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
+                  >
+                    <td
+                      class="name-cell-root table-cell-expand"
+                    >
+                      <div
+                        class="text-dark"
+                      >
+                        <span
+                          class="text-3 font-weight-semi-bold"
+                        >
+                          <a
+                            class="text-dark"
+                            href="/workspace/23/123/contacts/individuals/known-individuals/47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c3"
+                          >
+                            John Doe
+                          </a>
+                        </span>
+                      </div>
+                      <span
+                        class="text-3 text-secondary"
+                      >
+                        john.doe@liferay.com
+                      </span>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        Liferay
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        Canada
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        January 29, 2026
+                      </div>
+                    </td>
+                    <td
+                      class="name-cell-root"
+                    >
+                      <div
+                        class="text-truncate"
+                      >
+                        January 29, 2026
+                      </div>
+                    </td>
+                    <td
+                      class="text-capitalize"
+                    >
+                      Known
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
+                  >
+                    <td
+                      class="name-cell-root table-cell-expand"
+                    >
+                      <div
+                        class="text-dark"
+                      >
+                        <span
+                          class="text-3 font-weight-semi-bold"
+                        >
+                          <a
+                            class="text-dark"
+                            href="/workspace/23/123/contacts/individuals/known-individuals/47ff64395860b1d498241d907069f649b98c198a95b3ba5303b87094058590c2"
+                          >
+                            AC-79742349
                           </a>
                         </span>
                       </div>
@@ -428,7 +564,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                       <div
                         class="text-truncate"
                       >
-                        February 3, 2026
+                        January 29, 2026
                       </div>
                     </td>
                     <td
@@ -437,12 +573,14 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                       <div
                         class="text-truncate"
                       >
-                        February 3, 2026
+                        January 29, 2026
                       </div>
                     </td>
                     <td
                       class="text-capitalize"
-                    />
+                    >
+                      Anonymous
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -458,7 +596,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                 class="dropdown dropdown-root pagination-items-per-page"
               >
                 <button
-                  aria-controls="clay-dropdown-menu-5"
+                  aria-controls="clay-dropdown-menu-4"
                   aria-expanded="false"
                   aria-haspopup="true"
                   class="dropdown-toggle button-root btn btn-sm btn-secondary"
@@ -478,7 +616,7 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
               <div
                 class="pagination-results"
               >
-                Showing 1 to 1 of 1 entry.
+                Showing 1 to 2 of 3 entries.
               </div>
               <ul
                 class="pagination pagination-root"
@@ -514,11 +652,21 @@ exports[`Individuals Dashboard KnownIndividuals List renders 1`] = `
                   </button>
                 </li>
                 <li
-                  class="page-item disabled"
+                  class="page-item"
                 >
                   <button
                     class="button-root btn btn-unstyled page-link btn btn-primary"
-                    disabled=""
+                    href=""
+                    type="button"
+                  >
+                    2
+                  </button>
+                </li>
+                <li
+                  class="page-item"
+                >
+                  <button
+                    class="button-root btn btn-unstyled page-link btn btn-primary"
                     href=""
                     type="button"
                   >

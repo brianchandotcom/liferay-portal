@@ -5,34 +5,86 @@
 
 package com.liferay.portal.search.stats;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface StatsResponseBuilder {
+public class StatsResponseBuilder {
 
-	public StatsResponse build();
+	public StatsResponse build() {
+		return new StatsResponse(
+			_cardinality, _count, _field, _max, _mean, _min, _missing,
+			_standardDeviation, _sum, _sumOfSquares);
+	}
 
-	public StatsResponseBuilder cardinality(long cardinality);
+	public StatsResponseBuilder cardinality(long cardinality) {
+		_cardinality = cardinality;
 
-	public StatsResponseBuilder count(long count);
+		return this;
+	}
 
-	public StatsResponseBuilder field(String field);
+	public StatsResponseBuilder count(long count) {
+		_count = count;
 
-	public StatsResponseBuilder max(double max);
+		return this;
+	}
 
-	public StatsResponseBuilder mean(double mean);
+	public StatsResponseBuilder field(String field) {
+		_field = field;
 
-	public StatsResponseBuilder min(double min);
+		return this;
+	}
 
-	public StatsResponseBuilder missing(long missing);
+	public StatsResponseBuilder max(double max) {
+		_max = max;
 
-	public StatsResponseBuilder standardDeviation(double standardDeviation);
+		return this;
+	}
 
-	public StatsResponseBuilder sum(double sum);
+	public StatsResponseBuilder mean(double mean) {
+		_mean = mean;
 
-	public StatsResponseBuilder sumOfSquares(double sumOfSquares);
+		return this;
+	}
+
+	public StatsResponseBuilder min(double min) {
+		_min = min;
+
+		return this;
+	}
+
+	public StatsResponseBuilder missing(long missing) {
+		_missing = missing;
+
+		return this;
+	}
+
+	public StatsResponseBuilder standardDeviation(double standardDeviation) {
+		_standardDeviation = standardDeviation;
+
+		return this;
+	}
+
+	public StatsResponseBuilder sum(double sum) {
+		_sum = sum;
+
+		return this;
+	}
+
+	public StatsResponseBuilder sumOfSquares(double sumOfSquares) {
+		_sumOfSquares = sumOfSquares;
+
+		return this;
+	}
+
+	private long _cardinality;
+	private long _count;
+	private String _field;
+	private double _max;
+	private double _mean;
+	private double _min;
+	private long _missing;
+	private double _standardDeviation;
+	private double _sum;
+	private double _sumOfSquares;
 
 }

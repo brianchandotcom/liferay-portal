@@ -104,7 +104,7 @@ public class LoginPostActionTest {
 	}
 
 	@Test
-	public void testGuestOrderReconciliation() throws Exception {
+	public void testRun() throws Exception {
 		User user = _company.getGuestUser();
 
 		try (ContextUserReplace contextUserReplace = new ContextUserReplace(

@@ -236,6 +236,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-77498")
 	public void testAddFragmentCompositionMissingFragmentEntry()
 		throws Exception {
 

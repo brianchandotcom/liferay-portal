@@ -12,16 +12,22 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.ServletContext;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -35,10 +41,53 @@ public class ObjectEntryAssetRendererFactoryTest {
 
 	@Before
 	public void setUp() throws Exception {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
 		_objectEntryAssetRendererFactory = new ObjectEntryAssetRendererFactory(
 			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
 			_objectDefinition, _objectEntryDisplayContextFactoryImpl,
 			_objectEntryLocalService, _objectEntryService, _servletContext);
+
+		_objectEntryAssetRendererFactory.setClassName(
+			RandomTestUtil.randomString());
+
+		_resourceActionsUtilMockedStatic.when(
+			ResourceActionsUtil::getModelResourceNamePrefix
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_resourceActionsUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testGetTypeName() throws Exception {
+		Mockito.when(
+			_objectDefinition.isCMS()
+		).thenReturn(
+			false
+		);
+
+		String baseTypeName = _objectEntryAssetRendererFactory.getTypeName(
+			LocaleUtil.getDefault());
+
+		Assert.assertFalse(baseTypeName.contains("(CMS)"));
+
+		Mockito.when(
+			_objectDefinition.isCMS()
+		).thenReturn(
+			true
+		);
+
+		String cmsTypeName = _objectEntryAssetRendererFactory.getTypeName(
+			LocaleUtil.getDefault());
+
+		Assert.assertEquals(baseTypeName + " (CMS)", cmsTypeName);
 	}
 
 	@Test
@@ -98,6 +147,9 @@ public class ObjectEntryAssetRendererFactoryTest {
 		Mockito.mock(ObjectEntryLocalService.class);
 	private final ObjectEntryService _objectEntryService = Mockito.mock(
 		ObjectEntryService.class);
+	private final MockedStatic<ResourceActionsUtil>
+		_resourceActionsUtilMockedStatic = Mockito.mockStatic(
+			ResourceActionsUtil.class);
 	private final ServletContext _servletContext = Mockito.mock(
 		ServletContext.class);
 

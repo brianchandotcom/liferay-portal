@@ -457,6 +457,18 @@ public class InfoRequestFieldValuesProviderHelper {
 			return ListUtil.filter(values, Validator::isNotNull);
 		}
 
+		if (infoField.getInfoFieldType() instanceof RelationshipInfoFieldType) {
+			InfoField<RelationshipInfoFieldType>
+				relationshipInfoFieldTypeInfoField =
+					(InfoField<RelationshipInfoFieldType>)infoField;
+
+			if (relationshipInfoFieldTypeInfoField.getAttribute(
+					RelationshipInfoFieldType.MULTIPLE)) {
+
+				return ListUtil.filter(values, Validator::isNotNull);
+			}
+		}
+
 		if (ListUtil.isEmpty(values)) {
 			return null;
 		}

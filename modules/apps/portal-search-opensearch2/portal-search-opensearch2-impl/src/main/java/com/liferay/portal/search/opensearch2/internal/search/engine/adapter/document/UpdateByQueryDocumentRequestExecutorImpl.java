@@ -9,7 +9,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
+import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
@@ -69,8 +70,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		else {
 			builder.query(
 				new Query(
-					_legacyQueryTranslator.translate(
-						updateByQueryDocumentRequest.getQuery(), null)));
+					OpenSearchQueryVisitor.INSTANCE.translate(
+						updateByQueryDocumentRequest.getQuery())));
 		}
 
 		if (updateByQueryDocumentRequest.isRefresh()) {
@@ -144,15 +145,11 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		}
 	}
 
-	private final com.liferay.portal.kernel.search.query.QueryTranslator
-		<QueryVariant> _legacyQueryTranslator = new OpenSearchQueryTranslator();
-
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 
 	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new com.liferay.portal.search.opensearch2.internal.query.
-			OpenSearchQueryTranslator();
+		new OpenSearchQueryTranslator();
 
 	@Reference
 	private Scripts _scripts;

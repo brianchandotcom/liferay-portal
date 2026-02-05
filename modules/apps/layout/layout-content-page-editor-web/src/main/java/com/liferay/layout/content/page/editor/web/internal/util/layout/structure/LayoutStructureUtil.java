@@ -35,23 +35,6 @@ import java.util.List;
  */
 public class LayoutStructureUtil {
 
-	public static int countInvalidFragments(
-		String itemId, LayoutStructure layoutStructure) {
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
-
-		if (layoutStructureItem == null) {
-			return 0;
-		}
-
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_getMissingFragmentEntryFragmentEntryLinks(
-				layoutStructureItem.getChildrenItemIds(), layoutStructure);
-
-		return fragmentEntryLinks.size();
-	}
-
 	public static void deleteMarkedForDeletionItems(
 			long groupId, long plid, long userId)
 		throws PortalException {
@@ -116,6 +99,23 @@ public class LayoutStructureUtil {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getData(segmentsExperienceKey));
+	}
+
+	public static int getMissingFragmentEntryFragmentEntryLinksCount(
+		String itemId, LayoutStructure layoutStructure) {
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		if (layoutStructureItem == null) {
+			return 0;
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_getMissingFragmentEntryFragmentEntryLinks(
+				layoutStructureItem.getChildrenItemIds(), layoutStructure);
+
+		return fragmentEntryLinks.size();
 	}
 
 	public static JSONObject updateLayoutPageTemplateData(

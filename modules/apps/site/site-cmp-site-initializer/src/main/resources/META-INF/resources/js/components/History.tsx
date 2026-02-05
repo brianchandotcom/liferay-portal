@@ -204,8 +204,8 @@ function HistoryItem<T>({
 		<List.Item className="border-0 c-mb-2 c-py-2" flex>
 			<List.ItemField>
 				<AssigneeAvatar
-					image={auditEvent.creator?.image}
 					name={auditEvent.creator?.name || ''}
+					portrait={auditEvent.creator?.image}
 				/>
 			</List.ItemField>
 
@@ -259,8 +259,18 @@ export default function History<T>({
 	const [auditEvents, setAuditEvents] = useState<AuditEvent<T>[]>([]);
 	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [viewMore, setViewMore] = useState(false);
 
 	const containerRef = useRef<HTMLDivElement>(null);
+
+	const filteredAuditEvents = auditEvents.filter(
+		({auditFieldChanges, eventType}) => {
+			return (
+				eventType !== EventType.UPDATE ||
+				auditFieldChanges?.some(({name}) => fields[name])
+			);
+		}
+	);
 
 	const fetchAuditEvents = useCallback(async () => {
 		setLoading(true);
@@ -334,25 +344,35 @@ export default function History<T>({
 			{loading ? (
 				<ClayLoadingIndicator />
 			) : (
-				<List>
-					{auditEvents
-						.filter(({auditFieldChanges, eventType}) => {
-							return (
-								eventType !== EventType.UPDATE ||
-								auditFieldChanges?.some(
-									({name}) => fields[name]
-								)
-							);
-						})
-						.map((auditEvent, index) => (
-							<HistoryItem
-								auditEvent={auditEvent}
-								fields={fields}
-								getAuditEventLabel={getAuditEventLabel}
-								key={index}
-							/>
-						))}
-				</List>
+				<>
+					<List className="c-mb-3">
+						{filteredAuditEvents
+							.slice(0, viewMore ? undefined : 5)
+							.map((auditEvent, index) => (
+								<HistoryItem
+									auditEvent={auditEvent}
+									fields={fields}
+									getAuditEventLabel={getAuditEventLabel}
+									key={index}
+								/>
+							))}
+					</List>
+
+					{filteredAuditEvents.length > 5 && (
+						<div className="text-center">
+							<ClayButton
+								borderless
+								className="btn-sm"
+								displayType="secondary"
+								onClick={() => setViewMore(!viewMore)}
+							>
+								{viewMore
+									? Liferay.Language.get('view-less')
+									: Liferay.Language.get('view-more')}
+							</ClayButton>
+						</div>
+					)}
+				</>
 			)}
 		</div>
 	);

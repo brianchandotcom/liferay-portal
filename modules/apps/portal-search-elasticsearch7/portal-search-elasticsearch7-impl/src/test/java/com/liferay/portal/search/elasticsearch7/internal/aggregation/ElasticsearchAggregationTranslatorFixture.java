@@ -6,19 +6,19 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateHistogramAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateRangeAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FilterAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FiltersAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.GeoDistanceAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.HistogramAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.RangeAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTermsAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTextAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.TermsAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.ScriptedMetricAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.WeightedAvgAggregationTranslatorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateHistogramAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateRangeAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FilterAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FiltersAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.HistogramAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.RangeAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.SignificantTextAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.TermsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 
 /**
  * @author Michael C. Han
@@ -32,37 +32,37 @@ public class ElasticsearchAggregationTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_aggregationBuilderAssemblerFactory",
-			new AggregationBuilderAssemblerFactoryImpl());
+			new AggregationBuilderAssemblerFactory());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_dateHistogramAggregationTranslator",
-			new DateHistogramAggregationTranslatorImpl());
+			new DateHistogramAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_dateRangeAggregationTranslator",
-			new DateRangeAggregationTranslatorImpl());
+			new DateRangeAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_histogramAggregationTranslator",
-			new HistogramAggregationTranslatorImpl());
+			new HistogramAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_rangeAggregationTranslator",
-			new RangeAggregationTranslatorImpl());
+			new RangeAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_termsAggregationTranslator",
-			new TermsAggregationTranslatorImpl());
+			new TermsAggregationTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_geoDistanceAggregationTranslator",
-			new GeoDistanceAggregationTranslatorImpl());
+			new GeoDistanceAggregationTranslator());
 
 		_injectQueryAggregationTranslators(elasticsearchAggregationTranslator);
 		_injectScriptAggregationTranslators(elasticsearchAggregationTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_topHitsAggregationTranslator",
-			new TopHitsAggregationTranslatorImpl());
+			new TopHitsAggregationTranslator());
 
 		_elasticsearchAggregationTranslator =
 			elasticsearchAggregationTranslator;
@@ -79,21 +79,21 @@ public class ElasticsearchAggregationTranslatorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_filterAggregationTranslator",
-			new FilterAggregationTranslatorImpl());
+			new FilterAggregationTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_filtersAggregationTranslator",
-			new FiltersAggregationTranslatorImpl());
+			new FiltersAggregationTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_significantTermsAggregationTranslator",
-			new SignificantTermsAggregationTranslatorImpl());
+			new SignificantTermsAggregationTranslator());
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_significantTextAggregationTranslator",
-			new SignificantTextAggregationTranslatorImpl());
+			new SignificantTextAggregationTranslator());
 	}
 
 	private void _injectScriptAggregationTranslators(
@@ -102,11 +102,11 @@ public class ElasticsearchAggregationTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_scriptedMetricAggregationTranslator",
-			new ScriptedMetricAggregationTranslatorImpl());
+			new ScriptedMetricAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_weightedAvgAggregationTranslator",
-			new WeightedAvgAggregationTranslatorImpl());
+			new WeightedAvgAggregationTranslator());
 	}
 
 	private final ElasticsearchAggregationTranslator

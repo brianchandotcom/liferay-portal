@@ -5,16 +5,70 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
 
+import java.util.List;
+
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 
 /**
  * @author Michael C. Han
  */
-public interface DateHistogramAggregationTranslator {
+public class DateHistogramAggregationTranslator {
 
 	public DateHistogramAggregationBuilder translate(
-		DateHistogramAggregation histogramAggregation);
+		DateHistogramAggregation dateHistogramAggregation) {
+
+		DateHistogramAggregationBuilder dateHistogramAggregationBuilder =
+			AggregationBuilders.dateHistogram(
+				dateHistogramAggregation.getName());
+
+		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
+			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+				dateHistogramAggregation.getOrders());
+
+			dateHistogramAggregationBuilder.order(bucketOrders);
+		}
+
+		if ((dateHistogramAggregation.getMaxBound() != null) &&
+			(dateHistogramAggregation.getMinBound() != null)) {
+
+			LongBounds longBounds = new LongBounds(
+				dateHistogramAggregation.getMinBound(),
+				dateHistogramAggregation.getMaxBound());
+
+			dateHistogramAggregationBuilder.extendedBounds(longBounds);
+		}
+
+		if (dateHistogramAggregation.getMinDocCount() != null) {
+			dateHistogramAggregationBuilder.minDocCount(
+				dateHistogramAggregation.getMinDocCount());
+		}
+
+		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
+			dateHistogramAggregationBuilder.dateHistogramInterval(
+				new DateHistogramInterval(
+					dateHistogramAggregation.getDateHistogramInterval()));
+		}
+
+		if (dateHistogramAggregation.getInterval() != null) {
+			dateHistogramAggregationBuilder.interval(
+				dateHistogramAggregation.getInterval());
+		}
+
+		if (dateHistogramAggregation.getOffset() != null) {
+			dateHistogramAggregationBuilder.offset(
+				dateHistogramAggregation.getOffset());
+		}
+
+		return dateHistogramAggregationBuilder;
+	}
+
+	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 }

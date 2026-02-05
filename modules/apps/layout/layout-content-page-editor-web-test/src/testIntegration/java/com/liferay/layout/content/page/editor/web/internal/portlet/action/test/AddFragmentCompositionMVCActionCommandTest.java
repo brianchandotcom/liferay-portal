@@ -285,10 +285,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		Assert.assertNotNull(fragmentCompositionJSONObject);
 
-		int invalidCount = fragmentCompositionJSONObject.getInt(
-			"invalidFragmentsCount");
-
-		Assert.assertTrue(invalidCount > 0);
+		Assert.assertEquals(
+			1, fragmentCompositionJSONObject.getInt("invalidFragmentsCount"));
 
 		Assert.assertFalse(
 			fragmentCompositionJSONObject.has("fragmentEntryKey"));

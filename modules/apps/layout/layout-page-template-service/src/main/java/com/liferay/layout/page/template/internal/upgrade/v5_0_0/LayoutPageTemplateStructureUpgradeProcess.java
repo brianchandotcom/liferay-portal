@@ -50,7 +50,9 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					long plid = _getPlidFromLayoutPageTemplateEntry(
 						ctCollectionId, classPK);
 
-					if (_hasLayoutPageTemplateStructure(ctCollectionId, plid)) {
+					if ((plid == 0) ||
+						_hasLayoutPageTemplateStructure(ctCollectionId, plid)) {
+
 						deletePreparedStatement.setLong(1, ctCollectionId);
 						deletePreparedStatement.setLong(
 							2, layoutPageTemplateStructureId);

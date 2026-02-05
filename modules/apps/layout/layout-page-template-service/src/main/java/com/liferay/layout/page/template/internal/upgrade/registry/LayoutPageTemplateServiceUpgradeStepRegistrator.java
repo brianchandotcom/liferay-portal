@@ -17,6 +17,8 @@ import com.liferay.layout.page.template.internal.upgrade.v3_1_4.ResourcePermissi
 import com.liferay.layout.page.template.internal.upgrade.v3_3_0.LayoutPageTemplateStructureRelUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v3_4_1.FragmentEntryLinkEditableValuesUpgradeProcess;
 import com.liferay.layout.page.template.internal.upgrade.v5_3_0.LayoutPageTemplateCollectionUpgradeProcess;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
@@ -253,6 +255,13 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 			"5.7.1", "5.8.0",
 			UpgradeProcessFactory.addColumns(
 				"LayoutPageTemplateEntry", "classTypeKey VARCHAR(75) null"));
+
+		registry.register(
+			"5.8.0", "6.0.0",
+			new com.liferay.layout.page.template.internal.upgrade.v6_0_0.
+				LayoutPageTemplateStructureRelUpgradeProcess(
+					_objectDefinitionLocalService,
+					_objectDefinitionSettingLocalService));
 	}
 
 	@Reference
@@ -269,6 +278,13 @@ public class LayoutPageTemplateServiceUpgradeStepRegistrator
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Reference
 	private Portal _portal;

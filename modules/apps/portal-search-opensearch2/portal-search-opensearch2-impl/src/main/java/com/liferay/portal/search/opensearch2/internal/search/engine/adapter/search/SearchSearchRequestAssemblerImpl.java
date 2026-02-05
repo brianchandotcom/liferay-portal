@@ -18,11 +18,9 @@ import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.opensearch2.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.sort.SortTranslator;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.sort.OpenSearchSortFieldTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -37,7 +35,6 @@ import org.opensearch.client.opensearch._types.SortOptions;
 import org.opensearch.client.opensearch._types.Time;
 import org.opensearch.client.opensearch._types.TimeUnit;
 import org.opensearch.client.opensearch._types.query_dsl.FieldAndFormat;
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.search.SourceConfig;
 
@@ -176,7 +173,7 @@ public class SearchSearchRequestAssemblerImpl
 		if (searchSearchRequest.getHighlight() != null) {
 			searchRequestBuilder.highlight(
 				_highlightTranslator.translate(
-					searchSearchRequest.getHighlight(), _queryTranslator));
+					searchSearchRequest.getHighlight()));
 		}
 		else if (searchSearchRequest.isHighlightEnabled()) {
 			searchRequestBuilder.highlight(
@@ -313,8 +310,6 @@ public class SearchSearchRequestAssemblerImpl
 		new GroupByTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new OpenSearchQueryTranslator();
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new OpenSearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();

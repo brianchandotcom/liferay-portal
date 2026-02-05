@@ -54,13 +54,12 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
 import com.liferay.portal.search.opensearch2.internal.sort.OpenSearchSortFieldTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.opensearch2.internal.util.OpenSearchStringUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
@@ -104,7 +103,6 @@ import org.opensearch.client.opensearch._types.aggregations.TermsExclude;
 import org.opensearch.client.opensearch._types.aggregations.TermsInclude;
 import org.opensearch.client.opensearch._types.aggregations.WeightedAverageValue;
 import org.opensearch.client.opensearch._types.query_dsl.Query;
-import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 import org.opensearch.client.opensearch.core.search.SourceConfig;
 import org.opensearch.client.opensearch.core.search.SourceConfigBuilders;
 import org.opensearch.client.opensearch.core.search.SourceFilter;
@@ -396,7 +394,7 @@ public class OpenSearchAggregationTranslator
 			filterAggregation,
 			builder.filter(
 				new Query(
-					_queryTranslator.translate(
+					OpenSearchQueryVisitor.INSTANCE.translate(
 						filterAggregation.getFilterQuery()))));
 	}
 
@@ -420,7 +418,9 @@ public class OpenSearchAggregationTranslator
 		keyedQueries.forEach(
 			keyedQuery -> keyedFilters.put(
 				keyedQuery.getKey(),
-				new Query(_queryTranslator.translate(keyedQuery.getQuery()))));
+				new Query(
+					OpenSearchQueryVisitor.INSTANCE.translate(
+						keyedQuery.getQuery()))));
 
 		Buckets.Builder<Query> bucketsBuilder = new Buckets.Builder<>();
 
@@ -1369,7 +1369,7 @@ public class OpenSearchAggregationTranslator
 		if (topHitsAggregation.getHighlight() != null) {
 			topHitsAggregationBuilder.highlight(
 				_highlightTranslator.translate(
-					topHitsAggregation.getHighlight(), _queryTranslator));
+					topHitsAggregation.getHighlight()));
 		}
 
 		ListUtil.isNotEmptyForEach(
@@ -1501,7 +1501,8 @@ public class OpenSearchAggregationTranslator
 		Consumer<Query> consumer, com.liferay.portal.search.query.Query query) {
 
 		if (query != null) {
-			consumer.accept(new Query(_queryTranslator.translate(query)));
+			consumer.accept(
+				new Query(OpenSearchQueryVisitor.INSTANCE.translate(query)));
 		}
 	}
 
@@ -1785,8 +1786,6 @@ public class OpenSearchAggregationTranslator
 		<org.opensearch.client.opensearch._types.aggregations.Aggregation>
 			_pipelineAggregationTranslator;
 
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new OpenSearchQueryTranslator();
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new OpenSearchSortFieldTranslator();
 

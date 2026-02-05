@@ -102,12 +102,8 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			fragmentEntryLink, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		JSONObject jsonObject = _testValidateFragmentComposition(
-			containerItemId, _getMockLiferayPortletActionRequest());
-
-		int invalidFragmentsCount = jsonObject.getInt("invalidFragmentsCount");
-
-		Assert.assertEquals(1, invalidFragmentsCount);
+		_testValidateFragmentComposition(
+			1, containerItemId, _getMockLiferayPortletActionRequest());
 	}
 
 	@Test
@@ -122,12 +118,8 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			StringPool.BLANK, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		JSONObject jsonObject = _testValidateFragmentComposition(
-			containerItemId, _getMockLiferayPortletActionRequest());
-
-		int invalidFragmentsCount = jsonObject.getInt("invalidFragmentsCount");
-
-		Assert.assertEquals(0, invalidFragmentsCount);
+		_testValidateFragmentComposition(
+			0, containerItemId, _getMockLiferayPortletActionRequest());
 	}
 
 	private MockLiferayPortletActionRequest
@@ -144,8 +136,8 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private JSONObject _testValidateFragmentComposition(
-		String itemId,
+	private void _testValidateFragmentComposition(
+		int expectedCount, String itemId,
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
 
 		mockLiferayPortletActionRequest.addParameter("itemId", itemId);
@@ -161,9 +153,8 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
-		Assert.assertNotNull(jsonObject);
-
-		return jsonObject;
+		Assert.assertEquals(
+			expectedCount, jsonObject.getInt("invalidFragmentsCount"));
 	}
 
 	private Company _company;

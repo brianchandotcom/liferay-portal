@@ -5,7 +5,9 @@
 
 package com.liferay.portal.workflow.kaleo.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 /**
  * Provides the remote service utility for KaleoTaskInstanceToken. This utility wraps
@@ -26,6 +28,12 @@ public class KaleoTaskInstanceTokenServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.workflow.kaleo.service.impl.KaleoTaskInstanceTokenServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static KaleoTaskInstanceToken getKaleoTaskInstanceToken(
+			long workflowTaskId)
+		throws PortalException {
+
+		return getService().getKaleoTaskInstanceToken(workflowTaskId);
+	}
 
 	/**
 	 * Returns the OSGi service identifier.

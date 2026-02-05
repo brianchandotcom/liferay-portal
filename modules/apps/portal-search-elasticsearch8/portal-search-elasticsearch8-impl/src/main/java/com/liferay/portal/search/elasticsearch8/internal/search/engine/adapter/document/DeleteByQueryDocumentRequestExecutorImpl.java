@@ -13,7 +13,8 @@ import co.elastic.clients.elasticsearch.core.DeleteByQueryResponse;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
 import com.liferay.portal.search.query.QueryTranslator;
@@ -60,8 +61,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 		else {
 			builder.query(
 				new Query(
-					_legacyQueryTranslator.translate(
-						deleteByQueryDocumentRequest.getQuery(), null)));
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						deleteByQueryDocumentRequest.getQuery())));
 		}
 
 		builder.refresh(deleteByQueryDocumentRequest.isRefresh());
@@ -89,11 +90,7 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	private final com.liferay.portal.kernel.search.query.QueryTranslator
-		<QueryVariant> _legacyQueryTranslator =
-			new ElasticsearchQueryTranslator();
 	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new com.liferay.portal.search.elasticsearch8.internal.query.
-			ElasticsearchQueryTranslator();
+		new ElasticsearchQueryTranslator();
 
 }

@@ -5,6 +5,7 @@
 
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
+import com.liferay.bulk.rest.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
@@ -398,6 +399,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private BulkSelectionAction<Object> _getBulkSelectionAction(
 		BulkAction.Type type) {
 
+		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
+			equals(type)) {
+
+			return _assignStructureDefaultWorkflowBulkSelectionAction;
+		}
 		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
 			return _assignToObjectBulkSelectionAction;
 		}
@@ -456,7 +462,19 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			HashMapBuilder.<String, Serializable>put(
 				"bulkActionTaskId", bulkActionTask.getId());
 
-		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
+		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
+			equals(type)) {
+
+			AssignStructureDefaultWorkflowBulkAction
+				assignStructureDefaultWorkflowBulkAction =
+				(AssignStructureDefaultWorkflowBulkAction) bulkAction;
+
+			return hashMapWrapper.put(
+				"workflow",
+				assignStructureDefaultWorkflowBulkAction::getWorkflow
+			).build();
+		}
+		else if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
 			AssignToBulkAction assignToBulkAction =
 				(AssignToBulkAction)bulkAction;
 
@@ -875,6 +893,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private static final EntityModel _entityModel = new BulkActionEntityModel();
+
+	@Reference(
+		target = "(bulk.selection.action.key=assign.structure.default.workflow.object.definition)"
+	)
+	private BulkSelectionAction<Object>
+		_assignStructureDefaultWorkflowBulkSelectionAction;
 
 	@Reference(target = "(bulk.selection.action.key=assign.to.object)")
 	private BulkSelectionAction<Object> _assignToObjectBulkSelectionAction;

@@ -4876,7 +4876,7 @@
 				"imageDefaultUseInitials": {
 					"default": true,
 					"description": "Enable to set the user's initials as the default user portrait. Otherwise, the default portrait image files will be used. The default portrait image path is set by the \"image.default.user.portrait\" property in portal.properties.",
-					"title": "Use Initials For Default User Portrait",
+					"title": "Use Initials for Default User Portrait",
 					"type": "boolean"
 				},
 				"imageMaxHeight": {

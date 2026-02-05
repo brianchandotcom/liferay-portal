@@ -7,18 +7,15 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.UpdateByQueryRequest;
 import co.elastic.clients.elasticsearch.core.UpdateByQueryResponse;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
@@ -63,8 +60,10 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		if (updateByQueryDocumentRequest.getPortalSearchQuery() != null) {
 			builder.query(
 				new Query(
-					_queryTranslator.translate(
-						updateByQueryDocumentRequest.getPortalSearchQuery())));
+					com.liferay.portal.search.elasticsearch8.internal.query.
+						ElasticsearchQueryVisitor.INSTANCE.translate(
+							updateByQueryDocumentRequest.
+								getPortalSearchQuery())));
 		}
 		else {
 			builder.query(
@@ -146,9 +145,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private Scripts _scripts;

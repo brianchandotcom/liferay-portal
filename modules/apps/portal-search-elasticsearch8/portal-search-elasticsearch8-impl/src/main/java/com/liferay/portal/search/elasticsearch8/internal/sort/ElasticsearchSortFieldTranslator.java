@@ -11,14 +11,12 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOptionsBuilders;
 import co.elastic.clients.elasticsearch._types.mapping.FieldType;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.GeoDistanceSort;
 import com.liferay.portal.search.sort.NestedSort;
@@ -151,7 +149,8 @@ public class ElasticsearchSortFieldTranslator
 		if (nestedSort.getFilterQuery() != null) {
 			builder.filter(
 				new Query(
-					_queryTranslator.translate(nestedSort.getFilterQuery())));
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						nestedSort.getFilterQuery())));
 		}
 
 		builder.maxChildren(nestedSort.getMaxChildren());
@@ -198,8 +197,6 @@ public class ElasticsearchSortFieldTranslator
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

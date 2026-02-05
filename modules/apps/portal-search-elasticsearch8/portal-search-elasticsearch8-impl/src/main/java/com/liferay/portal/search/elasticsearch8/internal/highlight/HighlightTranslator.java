@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch8.internal.highlight;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.search.BoundaryScanner;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.HighlighterEncoder;
@@ -17,10 +16,10 @@ import co.elastic.clients.elasticsearch.core.search.HighlighterType;
 
 import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
-import com.liferay.portal.search.query.QueryTranslator;
 
 /**
  * @author Michael C. Han
@@ -28,7 +27,7 @@ import com.liferay.portal.search.query.QueryTranslator;
 public class HighlightTranslator {
 
 	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
-		Highlight highlight, QueryTranslator<QueryVariant> queryTranslator) {
+		Highlight highlight) {
 
 		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder =
 			new co.elastic.clients.elasticsearch.core.search.Highlight.
@@ -58,7 +57,7 @@ public class HighlightTranslator {
 		for (FieldConfig fieldConfig : highlight.getFieldConfigs()) {
 			builder.fields(
 				fieldConfig.getFieldName(),
-				_translateFieldConfigs(fieldConfig, queryTranslator));
+				_translateFieldConfigs(fieldConfig));
 		}
 
 		if (highlight.getFragmenter() != null) {
@@ -71,7 +70,8 @@ public class HighlightTranslator {
 		if (highlight.getHighlightQuery() != null) {
 			builder.highlightQuery(
 				new Query(
-					queryTranslator.translate(highlight.getHighlightQuery())));
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						highlight.getHighlightQuery())));
 		}
 
 		SetterUtil.setNotNullInteger(
@@ -162,10 +162,7 @@ public class HighlightTranslator {
 			"Invalid highlight encoder scanner for " + encoder);
 	}
 
-	private HighlightField _translateFieldConfigs(
-		FieldConfig fieldConfig,
-		QueryTranslator<QueryVariant> queryTranslator) {
-
+	private HighlightField _translateFieldConfigs(FieldConfig fieldConfig) {
 		HighlightField.Builder builder = new HighlightField.Builder();
 
 		if (ArrayUtil.isNotEmpty(fieldConfig.getBoundaryChars())) {
@@ -202,7 +199,7 @@ public class HighlightTranslator {
 		if (fieldConfig.getHighlightQuery() != null) {
 			builder.highlightQuery(
 				new Query(
-					queryTranslator.translate(
+					ElasticsearchQueryVisitor.INSTANCE.translate(
 						fieldConfig.getHighlightQuery())));
 		}
 

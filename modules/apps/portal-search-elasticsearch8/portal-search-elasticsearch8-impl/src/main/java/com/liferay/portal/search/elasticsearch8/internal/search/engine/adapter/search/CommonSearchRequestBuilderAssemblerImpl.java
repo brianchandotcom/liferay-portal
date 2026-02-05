@@ -10,7 +10,6 @@ import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.search.PointInTimeReference;
 import co.elastic.clients.elasticsearch.core.search.RescoreQuery;
@@ -27,7 +26,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
@@ -36,7 +34,6 @@ import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.rescore.Rescore;
 import com.liferay.portal.search.stats.StatsRequest;
 
@@ -138,8 +135,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 		if (baseSearchRequest.getPostFilterQuery() != null) {
 			query = new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-				_queryTranslator.translate(
-					baseSearchRequest.getPostFilterQuery()));
+				com.liferay.portal.search.elasticsearch8.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						baseSearchRequest.getPostFilterQuery()));
 		}
 
 		List<ComplexQueryPart> complexQueryParts =
@@ -450,7 +448,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 		rescoreQueryBuilder.query(
 			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-				_queryTranslator.translate(query)));
+				com.liferay.portal.search.elasticsearch8.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(query)));
 
 		co.elastic.clients.elasticsearch.core.search.Rescore.Builder
 			rescoreBuilder =
@@ -485,7 +484,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 			rescoreQueryBuilder.query(
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_queryTranslator.translate(rescore.getQuery())));
+					com.liferay.portal.search.elasticsearch8.internal.query.
+						ElasticsearchQueryVisitor.INSTANCE.translate(
+							rescore.getQuery())));
 
 			SetterUtil.setNotNullFloatAsDouble(
 				rescoreQueryBuilder::queryWeight, rescore.getQueryWeight());
@@ -609,7 +610,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		}
 
 		return new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-			_queryTranslator.translate(query));
+			com.liferay.portal.search.elasticsearch8.internal.query.
+				ElasticsearchQueryVisitor.INSTANCE.translate(query));
 	}
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
@@ -624,9 +626,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<Aggregation>
 		_pipelineAggregationTranslator;
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private StatsTranslator _statsTranslator;

@@ -29,7 +29,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -44,11 +43,6 @@ public class ElasticsearchQueryTranslatorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@Before
-	public void setUp() throws Exception {
-		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
-	}
 
 	@Test
 	public void testTranslateBoostCommonTermsQuery() {
@@ -94,7 +88,7 @@ public class ElasticsearchQueryTranslatorTest {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query
 			elasticsearchQuery =
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_elasticsearchQueryTranslator.translate(booleanQuery));
+					ElasticsearchQueryVisitor.INSTANCE.translate(booleanQuery));
 
 		BoolQuery boolQuery = elasticsearchQuery.bool();
 
@@ -164,7 +158,7 @@ public class ElasticsearchQueryTranslatorTest {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query
 			elasticsearchQuery =
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_elasticsearchQueryTranslator.translate(query));
+					ElasticsearchQueryVisitor.INSTANCE.translate(query));
 
 		String jsonp = JsonpUtil.toString(elasticsearchQuery);
 
@@ -182,7 +176,7 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(int expected, TermsQuery termsQuery) {
-		String queryString = _elasticsearchQueryTranslator.visit(
+		String queryString = ElasticsearchQueryVisitor.INSTANCE.visit(
 			termsQuery
 		).toString();
 
@@ -191,7 +185,5 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private static final Float _BOOST = 1.5F;
-
-	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 
 }

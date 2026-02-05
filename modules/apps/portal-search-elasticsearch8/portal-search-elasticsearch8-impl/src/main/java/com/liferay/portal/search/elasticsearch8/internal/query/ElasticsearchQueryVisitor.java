@@ -76,7 +76,6 @@ import com.liferay.portal.search.query.Operator;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.query.QueryVisitor;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.RegexQuery;
@@ -100,10 +99,11 @@ import java.util.function.Consumer;
 /**
  * @author Michael C. Han
  */
-public class ElasticsearchQueryTranslator
-	implements QueryTranslator<QueryVariant>, QueryVisitor<QueryVariant> {
+public class ElasticsearchQueryVisitor implements QueryVisitor<QueryVariant> {
 
-	@Override
+	public static final ElasticsearchQueryVisitor INSTANCE =
+		new ElasticsearchQueryVisitor();
+
 	public QueryVariant translate(Query query) {
 		QueryVariant queryVariant = query.accept(this);
 
@@ -1127,6 +1127,9 @@ public class ElasticsearchQueryTranslator
 
 		throw new IllegalArgumentException(
 			"Invalid multi match query type " + type);
+	}
+
+	private ElasticsearchQueryVisitor() {
 	}
 
 	private void _processBooleanQueryClauses(

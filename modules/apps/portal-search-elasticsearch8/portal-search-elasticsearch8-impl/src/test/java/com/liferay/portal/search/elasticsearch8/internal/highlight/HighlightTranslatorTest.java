@@ -11,7 +11,7 @@ import co.elastic.clients.elasticsearch.core.search.HighlightField;
 import co.elastic.clients.elasticsearch.core.search.HighlighterOrder;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.internal.highlight.FieldConfigImpl;
@@ -49,7 +49,6 @@ public class HighlightTranslatorTest {
 
 	@Before
 	public void setUp() {
-		_elasticsearchQueryTranslator = new ElasticsearchQueryTranslator();
 		_highlightPrototype = _createHighlightPrototype();
 	}
 
@@ -514,8 +513,7 @@ public class HighlightTranslatorTest {
 		Highlight highlight = _buildHighlight(highlightPrototype);
 
 		co.elastic.clients.elasticsearch.core.search.Highlight
-			elasticsearchHighlight = _highlightTranslator.translate(
-				highlight, _elasticsearchQueryTranslator);
+			elasticsearchHighlight = _highlightTranslator.translate(highlight);
 
 		_assertHighlightBuilder(elasticsearchHighlight, highlight);
 	}
@@ -735,14 +733,13 @@ public class HighlightTranslatorTest {
 		co.elastic.clients.elasticsearch._types.query_dsl.Query
 			elasticsearchQuery =
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_elasticsearchQueryTranslator.translate(query));
+					ElasticsearchQueryVisitor.INSTANCE.translate(query));
 
 		Kind kind = elasticsearchQuery._kind();
 
 		return kind.jsonValue();
 	}
 
-	private ElasticsearchQueryTranslator _elasticsearchQueryTranslator;
 	private HighlightPrototype _highlightPrototype;
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();

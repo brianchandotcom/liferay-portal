@@ -33,7 +33,6 @@ import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageAggre
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.FieldAndFormat;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 import co.elastic.clients.elasticsearch.core.search.SourceConfigBuilders;
 import co.elastic.clients.elasticsearch.core.search.SourceFilter;
@@ -89,13 +88,12 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
@@ -397,7 +395,7 @@ public class ElasticsearchAggregationTranslator
 			filterAggregation,
 			builder.filter(
 				new Query(
-					_queryTranslator.translate(
+					ElasticsearchQueryVisitor.INSTANCE.translate(
 						filterAggregation.getFilterQuery()))));
 	}
 
@@ -421,7 +419,9 @@ public class ElasticsearchAggregationTranslator
 		keyedQueries.forEach(
 			keyedQuery -> keyedFilters.put(
 				keyedQuery.getKey(),
-				new Query(_queryTranslator.translate(keyedQuery.getQuery()))));
+				new Query(
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						keyedQuery.getQuery()))));
 
 		Buckets.Builder<Query> bucketsBuilder = new Buckets.Builder<>();
 
@@ -1377,7 +1377,7 @@ public class ElasticsearchAggregationTranslator
 		if (topHitsAggregation.getHighlight() != null) {
 			topHitsAggregationBuilder.highlight(
 				_highlightTranslator.translate(
-					topHitsAggregation.getHighlight(), _queryTranslator));
+					topHitsAggregation.getHighlight()));
 		}
 
 		ListUtil.isNotEmptyForEach(
@@ -1507,7 +1507,8 @@ public class ElasticsearchAggregationTranslator
 		Consumer<Query> consumer, com.liferay.portal.search.query.Query query) {
 
 		if (query != null) {
-			consumer.accept(new Query(_queryTranslator.translate(query)));
+			consumer.accept(
+				new Query(ElasticsearchQueryVisitor.INSTANCE.translate(query)));
 		}
 	}
 
@@ -1785,8 +1786,6 @@ public class ElasticsearchAggregationTranslator
 		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>
 			_pipelineAggregationTranslator;
 
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 

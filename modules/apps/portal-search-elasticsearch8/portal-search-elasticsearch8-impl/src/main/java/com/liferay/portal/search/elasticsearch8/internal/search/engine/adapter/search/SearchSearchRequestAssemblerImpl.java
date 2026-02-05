@@ -10,7 +10,6 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
 import co.elastic.clients.elasticsearch._types.query_dsl.FieldAndFormat;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.search.FieldCollapse;
 import co.elastic.clients.elasticsearch.core.search.InnerHits;
@@ -29,7 +28,6 @@ import com.liferay.portal.search.collapse.InnerCollapse;
 import com.liferay.portal.search.elasticsearch8.internal.groupby.GroupByTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.sort.SortTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
@@ -37,7 +35,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -206,7 +203,7 @@ public class SearchSearchRequestAssemblerImpl
 		if (searchSearchRequest.getHighlight() != null) {
 			searchRequestBuilder.highlight(
 				_highlightTranslator.translate(
-					searchSearchRequest.getHighlight(), _queryTranslator));
+					searchSearchRequest.getHighlight()));
 		}
 		else if (searchSearchRequest.isHighlightEnabled()) {
 			searchRequestBuilder.highlight(
@@ -371,8 +368,6 @@ public class SearchSearchRequestAssemblerImpl
 		new GroupByTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();

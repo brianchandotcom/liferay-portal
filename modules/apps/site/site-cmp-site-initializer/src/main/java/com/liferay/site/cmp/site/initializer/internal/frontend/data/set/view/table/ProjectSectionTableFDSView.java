@@ -47,11 +47,11 @@ public class ProjectSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"progressBarTableCellRenderer")
 		).add(
-			"embedded.r_userToCMPProjectManager_userERC", "manager",
+			"embedded.r_userToCMPProjectManager_user", "manager",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"userRelationshipTableCellRenderer")
 		).add(
-			"embedded.r_userToCMPProjectSponsor_userERC", "sponsor",
+			"embedded.r_userToCMPProjectSponsor_user", "sponsor",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"userRelationshipTableCellRenderer")
 		).add(

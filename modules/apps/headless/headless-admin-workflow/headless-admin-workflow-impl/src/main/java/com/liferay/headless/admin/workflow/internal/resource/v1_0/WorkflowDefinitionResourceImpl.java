@@ -359,6 +359,8 @@ public class WorkflowDefinitionResourceImpl
 				setDescription(workflowDefinition::getDescription);
 				setExternalReferenceCode(
 					workflowDefinition::getExternalReferenceCode);
+				setGroupExternalReferenceCode(
+					workflowDefinition::getGroupExternalReferenceCode);
 				setId(workflowDefinition::getWorkflowDefinitionId);
 				setName(workflowDefinition::getName);
 				setNodes(

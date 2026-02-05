@@ -10,7 +10,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -135,6 +137,16 @@ public class KaleoWorkflowModelConverterImpl
 			kaleoDefinition.getDescription());
 		defaultWorkflowDefinition.setExternalReferenceCode(
 			kaleoDefinition.getExternalReferenceCode());
+
+		if (kaleoDefinition.getGroupId() != 0) {
+			Group group = _groupLocalService.fetchGroup(
+				kaleoDefinition.getGroupId());
+
+			defaultWorkflowDefinition.setGroupExternalReferenceCode(
+				group.getExternalReferenceCode());
+			defaultWorkflowDefinition.setGroupId(group.getGroupId());
+		}
+
 		defaultWorkflowDefinition.setModifiedDate(
 			kaleoDefinition.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinition.getName());
@@ -231,6 +243,16 @@ public class KaleoWorkflowModelConverterImpl
 			kaleoDefinitionVersion.getCreateDate());
 		defaultWorkflowDefinition.setDescription(
 			kaleoDefinitionVersion.getDescription());
+
+		if (kaleoDefinitionVersion.getGroupId() != 0) {
+			Group group = _groupLocalService.fetchGroup(
+				kaleoDefinitionVersion.getGroupId());
+
+			defaultWorkflowDefinition.setGroupExternalReferenceCode(
+				group.getExternalReferenceCode());
+			defaultWorkflowDefinition.setGroupId(group.getGroupId());
+		}
+
 		defaultWorkflowDefinition.setModifiedDate(
 			kaleoDefinitionVersion.getModifiedDate());
 		defaultWorkflowDefinition.setName(kaleoDefinitionVersion.getName());
@@ -518,6 +540,9 @@ public class KaleoWorkflowModelConverterImpl
 
 	@Reference
 	private DefinitionExporter _definitionExporter;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;

@@ -5,13 +5,21 @@
 
 package com.liferay.portal.workflow.kaleo.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * <code>com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenServiceUtil</code> service
+ * <code>KaleoTaskInstanceTokenServiceUtil</code> service
  * utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * <code>com.liferay.portal.kernel.security.auth.HttpPrincipal</code> parameter.
+ * <code>HttpPrincipal</code> parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -32,4 +40,54 @@ package com.liferay.portal.workflow.kaleo.service.http;
  * @generated
  */
 public class KaleoTaskInstanceTokenServiceHttp {
+
+	public static com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken
+			getKaleoTaskInstanceToken(
+				HttpPrincipal httpPrincipal, long workflowTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				KaleoTaskInstanceTokenServiceUtil.class,
+				"getKaleoTaskInstanceToken",
+				_getKaleoTaskInstanceTokenParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, workflowTaskId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.workflow.kaleo.model.
+				KaleoTaskInstanceToken)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		KaleoTaskInstanceTokenServiceHttp.class);
+
+	private static final Class<?>[] _getKaleoTaskInstanceTokenParameterTypes0 =
+		new Class[] {long.class};
+
 }

@@ -6,6 +6,7 @@
 package com.liferay.portal.workflow.kaleo.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 
 /**
  * Provides a wrapper for {@link KaleoTaskInstanceTokenService}.
@@ -26,6 +27,14 @@ public class KaleoTaskInstanceTokenServiceWrapper
 		KaleoTaskInstanceTokenService kaleoTaskInstanceTokenService) {
 
 		_kaleoTaskInstanceTokenService = kaleoTaskInstanceTokenService;
+	}
+
+	@Override
+	public KaleoTaskInstanceToken getKaleoTaskInstanceToken(long workflowTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoTaskInstanceTokenService.getKaleoTaskInstanceToken(
+			workflowTaskId);
 	}
 
 	/**

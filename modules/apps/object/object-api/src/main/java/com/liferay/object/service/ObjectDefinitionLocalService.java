@@ -118,7 +118,7 @@ public interface ObjectDefinitionLocalService
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, boolean modifiable, String name,

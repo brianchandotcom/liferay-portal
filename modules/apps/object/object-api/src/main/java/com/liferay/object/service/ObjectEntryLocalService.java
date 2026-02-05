@@ -260,6 +260,9 @@ public interface ObjectEntryLocalService
 	public ObjectEntry fetchObjectEntry(long objectEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectEntry fetchObjectEntry(long groupId, long objectDefinitionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectEntry fetchObjectEntry(
 		long groupId, ObjectDefinition objectDefinition, String urlTitle);
 

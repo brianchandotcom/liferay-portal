@@ -74,7 +74,7 @@ public interface ObjectDefinitionService extends BaseService {
 			String className, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,

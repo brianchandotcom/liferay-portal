@@ -8,6 +8,7 @@ package com.liferay.site.cmp.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -108,13 +109,13 @@ public class ViewTaskInfoSummarySectionDisplayContextTest
 		JSONAssert.assertEquals(
 			JSONUtil.put(
 				"assignTo",
-				HashMapBuilder.put(
+				JSONUtil.put(
 					"externalReferenceCode", role.getExternalReferenceCode()
 				).put(
 					"name", role.getName()
 				).put(
-					"type", "role"
-				).build()
+					"type", Assignee.Type.ROLE.toString()
+				)
 			).put(
 				"dueDate", "2026-01-31"
 			).put(

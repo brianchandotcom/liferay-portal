@@ -6,7 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
@@ -26,7 +25,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
-import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
@@ -115,8 +114,8 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 	@Override
 	public String getQueryString(Query query) {
 		try {
-			QueryVariant translatedQueryVariant = _queryTranslator.translate(
-				query, null);
+			QueryVariant translatedQueryVariant =
+				OpenSearchQueryVisitor.INSTANCE.translate(query);
 
 			return translatedQueryVariant.toString();
 		}
@@ -169,9 +168,6 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private IndexRequestExecutor _indexRequestExecutor;
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new OpenSearchQueryTranslator();
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private SearchRequestExecutor _searchRequestExecutor;

@@ -16,7 +16,8 @@ import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
-import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
+import com.liferay.portal.search.opensearch2.internal.query.OpenSearchQueryTranslator;
 import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.pit.PointInTime;
@@ -565,7 +566,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		org.opensearch.client.opensearch._types.query_dsl.Query
 			translatedQuery =
 				new org.opensearch.client.opensearch._types.query_dsl.Query(
-					_legacyQueryTranslator.translate(query, null));
+					OpenSearchQueryVisitor.INSTANCE.translate(query));
 
 		if ((query.getPreBooleanFilter() == null) ||
 			(query instanceof com.liferay.portal.kernel.search.BooleanQuery)) {
@@ -615,17 +616,13 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	@Reference
 	private FacetTranslator _facetTranslator;
 
-	private final com.liferay.portal.kernel.search.query.QueryTranslator
-		<QueryVariant> _legacyQueryTranslator = new OpenSearchQueryTranslator();
-
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private PipelineAggregationTranslator
 		<org.opensearch.client.opensearch._types.aggregations.Aggregation>
 			_pipelineAggregationTranslator;
 
 	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new com.liferay.portal.search.opensearch2.internal.query.
-			OpenSearchQueryTranslator();
+		new OpenSearchQueryTranslator();
 
 	@Reference
 	private StatsTranslator _statsTranslator;

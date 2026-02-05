@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.QueryTerm;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -57,13 +55,13 @@ import org.opensearch.client.opensearch._types.query_dsl.ZeroTermsQuery;
  * @author Miguel Angelo Caldas Gallindo
  * @author Petteri Karttunen
  */
-public class OpenSearchQueryTranslator
-	implements QueryTranslator<QueryVariant>, QueryVisitor<QueryVariant> {
+public class OpenSearchQueryVisitor implements QueryVisitor<QueryVariant> {
 
-	@Override
+	public static final OpenSearchQueryVisitor INSTANCE =
+		new OpenSearchQueryVisitor();
+
 	public QueryVariant translate(
-		com.liferay.portal.kernel.search.Query query,
-		SearchContext searchContext) {
+		com.liferay.portal.kernel.search.Query query) {
 
 		QueryVariant queryVariant = query.accept(this);
 
@@ -397,6 +395,9 @@ public class OpenSearchQueryTranslator
 		builder.value(queryTerm.getValue());
 
 		return builder.build();
+	}
+
+	private OpenSearchQueryVisitor() {
 	}
 
 	private void _addBooleanClause(

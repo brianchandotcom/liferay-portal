@@ -23,14 +23,13 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.geolocation.DistanceUnit;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
 import com.liferay.portal.search.filter.RangeFilter;
 import com.liferay.portal.search.filter.TermsSetFilter;
 import com.liferay.portal.search.opensearch2.internal.geolocation.GeoTranslator;
-import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryTranslator;
+import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 
@@ -234,7 +233,8 @@ public class OpenSearchFilterVisitor implements FilterVisitor<QueryVariant> {
 
 	@Override
 	public QueryVariant visit(QueryFilter queryFilter) {
-		return _queryTranslator.translate(queryFilter.getQuery(), null);
+		return OpenSearchQueryVisitor.INSTANCE.translate(
+			queryFilter.getQuery());
 	}
 
 	@Override
@@ -313,7 +313,5 @@ public class OpenSearchFilterVisitor implements FilterVisitor<QueryVariant> {
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new OpenSearchQueryTranslator();
 
 }

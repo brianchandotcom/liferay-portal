@@ -200,7 +200,10 @@ export default function TasksFDSPropsTransformer({
 							return '-';
 						}
 
-						return StateLabel(itemData.embedded?.state);
+						return StateLabel({
+							dueDate: itemData.embedded?.dueDate,
+							state: itemData.embedded?.state,
+						});
 					},
 					name: 'stateTableCellRenderer',
 					type: 'internal',

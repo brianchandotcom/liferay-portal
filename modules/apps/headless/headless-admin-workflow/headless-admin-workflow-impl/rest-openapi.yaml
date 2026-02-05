@@ -229,6 +229,8 @@ components:
                     type: string
                 externalReferenceCode:
                     type: string
+                groupExternalReferenceCode:
+                    type: string
                 id:
                     format: int64
                     readOnly: true

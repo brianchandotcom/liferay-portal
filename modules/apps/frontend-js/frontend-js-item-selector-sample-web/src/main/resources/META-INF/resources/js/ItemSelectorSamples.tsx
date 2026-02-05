@@ -463,16 +463,18 @@ export default function ItemSelectorSamples() {
 			</SampleContainer>
 
 			<SampleContainer label="Item Selector Modal">
-				<CMSFilesItemSelectorModal
-					items={cmsFiles}
-					multiSelect
-					observer={cmsFilesItemSelectorObserver}
-					onItemsChange={(items: any) => {
-						setCMSFiles(items);
-					}}
-					onOpenChange={cmsFilesItemSelectorOpenChange}
-					open={cmsFilesItemSelectorOpen}
-				/>
+				{cmsFilesItemSelectorOpen && (
+					<CMSFilesItemSelectorModal
+						items={cmsFiles}
+						multiSelect
+						observer={cmsFilesItemSelectorObserver}
+						onItemsChange={(items: any) => {
+							setCMSFiles(items);
+						}}
+						onOpenChange={cmsFilesItemSelectorOpenChange}
+						open={cmsFilesItemSelectorOpen}
+					/>
+				)}
 
 				<ItemSelectorModal<Document>
 					apiURL={documentsItemSelectorConfig.apiURL}

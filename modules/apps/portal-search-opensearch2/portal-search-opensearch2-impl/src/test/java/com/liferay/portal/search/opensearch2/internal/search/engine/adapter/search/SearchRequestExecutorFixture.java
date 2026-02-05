@@ -26,8 +26,7 @@ import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImp
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
-import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationTranslatorFixture;
-import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationTranslator;
+import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationTranslator;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
@@ -90,28 +89,15 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler =
 				new CommonSearchRequestBuilderAssemblerImpl();
 
-		OpenSearchAggregationTranslatorFixture
-			openSearchAggregationTranslatorFixture =
-				new OpenSearchAggregationTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_aggregationTranslator",
-			openSearchAggregationTranslatorFixture.
-				getOpenSearchAggregationTranslator());
-
+			new OpenSearchAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
 			complexQueryBuilderFactory);
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
 			_createFacetTranslator(facetProcessor));
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler,
-			"_pipelineAggregationTranslator",
-			new OpenSearchPipelineAggregationTranslator());
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_statsTranslator",
 			statsTranslator);

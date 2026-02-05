@@ -10,10 +10,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationVisitor;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
@@ -377,7 +377,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			baseSearchRequest.getPipelineAggregationsMap(),
 			(key, pipelineAggregation) -> searchRequestBuilder.aggregations(
 				key,
-				_pipelineAggregationTranslator.translate(pipelineAggregation)));
+				pipelineAggregation.accept(
+					OpenSearchPipelineAggregationVisitor.INSTANCE)));
 	}
 
 	private void _setPointInTime(
@@ -617,11 +618,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 
 	@Reference
 	private FacetTranslator _facetTranslator;
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private PipelineAggregationTranslator
-		<org.opensearch.client.opensearch._types.aggregations.Aggregation>
-			_pipelineAggregationTranslator;
 
 	@Reference
 	private StatsTranslator _statsTranslator;

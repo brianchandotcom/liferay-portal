@@ -21,8 +21,6 @@ import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregati
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
@@ -56,24 +54,15 @@ import org.opensearch.client.opensearch._types.aggregations.SerialDifferencingAg
 import org.opensearch.client.opensearch._types.aggregations.StatsBucketAggregation;
 import org.opensearch.client.opensearch._types.aggregations.SumBucketAggregation;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = PipelineAggregationTranslator.class
-)
-public class OpenSearchPipelineAggregationTranslator
-	implements PipelineAggregationTranslator<Aggregation>,
-			   PipelineAggregationVisitor<Aggregation> {
+public class OpenSearchPipelineAggregationVisitor
+	implements PipelineAggregationVisitor<Aggregation> {
 
-	@Override
-	public Aggregation translate(PipelineAggregation pipelineAggregation) {
-		return pipelineAggregation.accept(this);
-	}
+	public static final OpenSearchPipelineAggregationVisitor INSTANCE =
+		new OpenSearchPipelineAggregationVisitor();
 
 	@Override
 	public Aggregation visit(
@@ -354,6 +343,9 @@ public class OpenSearchPipelineAggregationTranslator
 			builder::gapPolicy, sumBucketPipelineAggregation.getGapPolicy());
 
 		return new Aggregation(builder.build());
+	}
+
+	private OpenSearchPipelineAggregationVisitor() {
 	}
 
 	private void _setNotBlankBucketsPath(

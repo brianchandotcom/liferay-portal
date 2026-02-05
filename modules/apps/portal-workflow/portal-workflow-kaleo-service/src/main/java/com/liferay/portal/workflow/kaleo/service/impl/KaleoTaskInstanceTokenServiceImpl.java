@@ -6,12 +6,17 @@
 package com.liferay.portal.workflow.kaleo.service.impl;
 
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoTaskInstanceTokenServiceBaseImpl;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Victor Kammerer
  */
 @Component(
 	property = {
@@ -22,4 +27,26 @@ import org.osgi.service.component.annotations.Component;
 )
 public class KaleoTaskInstanceTokenServiceImpl
 	extends KaleoTaskInstanceTokenServiceBaseImpl {
+
+	@Override
+	public KaleoTaskInstanceToken getKaleoTaskInstanceToken(long workflowTaskId)
+		throws PortalException {
+
+		_kaleoTaskInstanceTokenModelResourcePermission.check(
+			getPermissionChecker(), workflowTaskId, null);
+
+		return _kaleoTaskInstanceTokenLocalService.getKaleoTaskInstanceToken(
+			workflowTaskId);
+	}
+
+	@Reference
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken)"
+	)
+	private ModelResourcePermission<KaleoTaskInstanceToken>
+		_kaleoTaskInstanceTokenModelResourcePermission;
+
 }

@@ -8,7 +8,10 @@ import {
 	IInternalRenderer,
 	IView,
 } from '@liferay/frontend-data-set-web';
-import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
+import {
+	AssigneeAvatar,
+	AssigneeValue,
+} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
 	AssignToModalContent,
 	SimpleActionLinkRenderer,
@@ -159,7 +162,21 @@ export default function TasksFDSPropsTransformer({
 								.join(', ');
 						}
 
-						return itemData.embedded?.assignTo?.name;
+						return (
+							<span className="align-items-center d-flex">
+								<div className="c-mr-2">
+									<AssigneeAvatar
+										image={
+											itemData.embedded?.assignTo
+												?.portrait
+										}
+										name={itemData.embedded?.assignTo?.name}
+									/>
+								</div>
+
+								{itemData.embedded?.assignTo?.name}
+							</span>
+						);
 					},
 					name: 'assigneeTableCellRenderer',
 					type: 'internal',

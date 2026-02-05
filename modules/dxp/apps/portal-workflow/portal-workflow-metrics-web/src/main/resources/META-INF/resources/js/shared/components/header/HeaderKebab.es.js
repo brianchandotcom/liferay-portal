@@ -38,6 +38,7 @@ const HeaderKebab = ({kebabItems = []}) => {
 				onActiveChange={setActive}
 				trigger={
 					<ClayButton
+						aria-label={Liferay.Language.get('settings')}
 						className="component-action"
 						displayType="unstyled"
 						monospaced

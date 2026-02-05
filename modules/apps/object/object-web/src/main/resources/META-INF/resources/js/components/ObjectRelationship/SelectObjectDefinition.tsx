@@ -3,134 +3,142 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Option} from '@clayui/core';
+import Autocomplete from '@clayui/autocomplete';
+import {useResource} from '@clayui/data-provider';
 import ClayLabel from '@clayui/label';
-import {
-	API,
-	SingleSelect,
-	stringUtils,
-} from '@liferay/object-js-components-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import {stringUtils} from '@liferay/object-js-components-web';
+import {FieldBase} from 'frontend-js-components-web';
+import React, {useMemo, useState} from 'react';
 
 import './SelectObjectDefinition.scss';
 
 interface SelectObjectDefinitionProps {
-	creationLanguageId: Liferay.Language.Locale;
 	disabled?: boolean;
 	error?: string;
 	label?: string;
-	objectDefinition?: Partial<ObjectDefinition>;
-	objectDefinitionExternalReferenceCode?: string;
-	objectDefinitions: Partial<ObjectDefinition>[];
-	readOnly?: boolean;
+	objectDefinition1?: Partial<ObjectDefinition>;
 	reverseOrder: boolean;
-	setObjectDefinition: (
-		value: React.SetStateAction<Partial<ObjectDefinition> | undefined>
-	) => void;
 	setValues: (values: Partial<ObjectRelationship>) => void;
 }
 
 export default function SelectObjectDefinition({
-	creationLanguageId,
 	disabled,
 	error,
 	label,
-	objectDefinition,
-	objectDefinitionExternalReferenceCode,
-	objectDefinitions,
-	readOnly,
+	objectDefinition1,
 	reverseOrder,
-	setObjectDefinition,
 	setValues,
 }: SelectObjectDefinitionProps) {
-	const [
-		selectedObjectDefinitionExternalReferenceCode,
-		setSelectedObjectDefinitionExternalReferenceCode,
-	] = useState<string | undefined>(objectDefinition?.externalReferenceCode);
+	const [networkStatus, setNetworkStatus] = useState(4);
+	const [search, setSearch] = useState('');
 
-	const objectDefinitionsItems = useMemo(() => {
-		return objectDefinitions.map(
-			({externalReferenceCode, label, name, system}) => ({
-				label: stringUtils.getLocalizableLabel({
-					fallbackLabel: name,
-					fallbackLanguageId:
-						creationLanguageId as Liferay.Language.Locale,
-					labels: label,
-				}),
-				system,
-				value: externalReferenceCode,
-			})
-		);
-	}, [creationLanguageId, objectDefinitions]);
+	const {
+		resource,
+	}: {
+		resource: {
+			items: Partial<ObjectDefinition>[];
+		};
+	} = useResource({
+		fetchOptions: {
+			credentials: 'include',
+			headers: new Headers({'x-csrf-token': Liferay.authToken}),
+			method: 'GET',
+		},
+		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/object-admin/v1.0/object-definitions`,
+		onNetworkStatusChange: setNetworkStatus,
+		variables: {
+			search,
+		},
+	});
 
-	useEffect(() => {
-		if (readOnly && !objectDefinition) {
-			const fetchObjectDefinition = async () => {
-				const {externalReferenceCode} =
-					await API.getObjectDefinitionByExternalReferenceCode(
-						objectDefinitionExternalReferenceCode as string
-					);
-
-				setSelectedObjectDefinitionExternalReferenceCode(
-					externalReferenceCode
-				);
-			};
-
-			fetchObjectDefinition();
-		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const objectDefinitions = useMemo(
+		() =>
+			resource?.items
+				? resource.items.filter(
+						({modifiable, parameterRequired, storageType}) =>
+							(objectDefinition1?.modifiable || modifiable) &&
+							(!Liferay.FeatureFlags['LPS-135430'] ||
+								storageType === 'default') &&
+							!parameterRequired
+					)
+				: [],
+		[resource, objectDefinition1]
+	);
 
 	return (
-		<SingleSelect
+		<FieldBase
 			disabled={disabled}
-			error={error}
+			errorMessage={error}
 			id="objectRelationshipSelectObjectDefinition"
-			items={objectDefinitionsItems}
-			label={label ?? ''}
-			onSelectionChange={(value) => {
-				const selectedObjectDefinition = objectDefinitions.find(
-					({externalReferenceCode}) => externalReferenceCode === value
-				);
-
-				if (!reverseOrder) {
-					setValues({
-						objectDefinitionExternalReferenceCode2:
-							selectedObjectDefinition?.externalReferenceCode,
-						objectDefinitionId2: selectedObjectDefinition?.id,
-						objectDefinitionName2: selectedObjectDefinition?.name,
-					});
-				}
-				else {
-					setValues({
-						objectDefinitionExternalReferenceCode1:
-							selectedObjectDefinition?.externalReferenceCode,
-						objectDefinitionId1: selectedObjectDefinition?.id,
-					});
-				}
-
-				setObjectDefinition(selectedObjectDefinition);
-				setSelectedObjectDefinitionExternalReferenceCode(
-					selectedObjectDefinition?.externalReferenceCode
-				);
-			}}
+			label={label}
 			required
-			selectedKey={selectedObjectDefinitionExternalReferenceCode}
 		>
-			{({label, system, value}) => (
-				<Option key={value} textValue={label}>
-					<div className="lfr-objects__select-object-definition-option">
-						<div>{label}</div>
+			<Autocomplete
+				aria-label={label}
+				disabled={disabled}
+				filterKey="name"
+				items={objectDefinitions}
+				loadingState={networkStatus}
+				menuTrigger="focus"
+				messages={{
+					loading: Liferay.Language.get('loading...'),
+					notFound: Liferay.Language.get('no-results-found'),
+				}}
+				onChange={setSearch}
+				onItemsChange={() => {}}
+				placeholder={Liferay.Language.get(
+					'search-for-an-object-definition'
+				)}
+				value={search}
+			>
+				{(item) => {
+					const label = stringUtils.getLocalizableLabel({
+						fallbackLabel: item.name,
+						fallbackLanguageId: item.defaultLanguageId,
+						labels: item.label,
+					});
 
-						<ClayLabel displayType={system ? 'info' : 'warning'}>
-							{system
-								? Liferay.Language.get('system')
-								: Liferay.Language.get('custom')}
-						</ClayLabel>
-					</div>
-				</Option>
-			)}
-		</SingleSelect>
+					return (
+						<Autocomplete.Item
+							key={item.externalReferenceCode}
+							onClick={() => {
+								if (!reverseOrder) {
+									setValues({
+										objectDefinitionExternalReferenceCode2:
+											item.externalReferenceCode,
+										objectDefinitionId2: item.id,
+										objectDefinitionName2: item.name,
+									});
+								}
+								else {
+									setValues({
+										objectDefinitionExternalReferenceCode1:
+											item.externalReferenceCode,
+										objectDefinitionId1: item.id,
+									});
+								}
+
+								setSearch(label);
+							}}
+							textValue={label}
+						>
+							<div className="lfr-objects__select-object-definition-option">
+								<div>{label}</div>
+
+								<ClayLabel
+									displayType={
+										item.system ? 'info' : 'warning'
+									}
+								>
+									{item.system
+										? Liferay.Language.get('system')
+										: Liferay.Language.get('custom')}
+								</ClayLabel>
+							</div>
+						</Autocomplete.Item>
+					);
+				}}
+			</Autocomplete>
+		</FieldBase>
 	);
 }

@@ -492,8 +492,7 @@ public class ElasticsearchAggregationTranslator
 		AB aggregationBuilder, Aggregation aggregation) {
 
 		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
+			new AggregationBuilderAssemblerImpl(this);
 
 		return aggregationBuilderAssemblerImpl.assembleAggregation(
 			aggregationBuilder, aggregation);
@@ -504,16 +503,12 @@ public class ElasticsearchAggregationTranslator
 		FieldAggregation fieldAggregation) {
 
 		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
+			new AggregationBuilderAssemblerImpl(this);
 
 		return aggregationBuilderAssemblerImpl.assembleFieldAggregation(
 			valuesSourceAggregationBuilder, fieldAggregation);
 	}
 
-	private final AggregationBuilderAssemblerFactory
-		_aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactory();
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
 	private final DateHistogramAggregationTranslator

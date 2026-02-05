@@ -10,11 +10,10 @@ import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
@@ -201,7 +200,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 	@Override
 	public String getQueryString(Query query) {
 		try {
-			QueryVariant queryVariant = _queryTranslator.translate(query, null);
+			QueryVariant queryVariant =
+				ElasticsearchQueryVisitor.INSTANCE.translate(query);
 
 			return queryVariant.toString();
 		}
@@ -260,9 +260,6 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private IndexRequestExecutor _indexRequestExecutor;
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SearchRequestExecutor _searchRequestExecutor;

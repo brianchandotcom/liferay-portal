@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.suggest;
 
 import co.elastic.clients.elasticsearch._types.SuggestMode;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.search.DirectGenerator;
 import co.elastic.clients.elasticsearch.core.search.FieldSuggester;
 import co.elastic.clients.elasticsearch.core.search.FieldSuggesterBuilders;
@@ -18,7 +17,6 @@ import co.elastic.clients.elasticsearch.core.search.StringDistance;
 import co.elastic.clients.elasticsearch.core.search.SuggestSort;
 
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.suggest.CompletionSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
@@ -28,7 +26,7 @@ import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
@@ -245,8 +243,8 @@ public class ElasticsearchSuggesterTranslator
 				phraseSuggestCollateQuery -> phraseSuggestCollateQuery.source(
 					JsonpUtil.toString(
 						new Query(
-							_queryTranslator.translate(
-								collate.getQuery(), null))))));
+							ElasticsearchQueryVisitor.INSTANCE.translate(
+								collate.getQuery()))))));
 
 		return builder.build();
 	}
@@ -290,8 +288,5 @@ public class ElasticsearchSuggesterTranslator
 
 		return SuggestMode.Missing;
 	}
-
-	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 }

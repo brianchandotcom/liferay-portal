@@ -26,7 +26,8 @@ import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
@@ -572,7 +573,7 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		co.elastic.clients.elasticsearch._types.query_dsl.Query
 			translatedQuery =
 				new co.elastic.clients.elasticsearch._types.query_dsl.Query(
-					_legacyQueryTranslator.translate(query, null));
+					ElasticsearchQueryVisitor.INSTANCE.translate(query));
 
 		if ((query.getPreBooleanFilter() == null) ||
 			(query instanceof com.liferay.portal.kernel.search.BooleanQuery)) {
@@ -620,17 +621,12 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	@Reference
 	private FacetTranslator _facetTranslator;
 
-	private final com.liferay.portal.kernel.search.query.QueryTranslator
-		<QueryVariant> _legacyQueryTranslator =
-			new ElasticsearchQueryTranslator();
-
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<Aggregation>
 		_pipelineAggregationTranslator;
 
 	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new com.liferay.portal.search.elasticsearch8.internal.query.
-			ElasticsearchQueryTranslator();
+		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private StatsTranslator _statsTranslator;

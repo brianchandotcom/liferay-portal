@@ -13,7 +13,8 @@ import co.elastic.clients.elasticsearch.core.UpdateByQueryResponse;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
+import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
@@ -68,8 +69,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		else {
 			builder.query(
 				new Query(
-					_legacyQueryTranslator.translate(
-						updateByQueryDocumentRequest.getQuery(), null)));
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						updateByQueryDocumentRequest.getQuery())));
 		}
 
 		if (updateByQueryDocumentRequest.isRefresh()) {
@@ -146,12 +147,8 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	private final com.liferay.portal.kernel.search.query.QueryTranslator
-		<QueryVariant> _legacyQueryTranslator =
-			new ElasticsearchQueryTranslator();
 	private final QueryTranslator<QueryVariant> _queryTranslator =
-		new com.liferay.portal.search.elasticsearch8.internal.query.
-			ElasticsearchQueryTranslator();
+		new ElasticsearchQueryTranslator();
 
 	@Reference
 	private Scripts _scripts;

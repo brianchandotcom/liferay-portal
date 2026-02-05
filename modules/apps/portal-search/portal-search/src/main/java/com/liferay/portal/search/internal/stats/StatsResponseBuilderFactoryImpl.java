@@ -19,7 +19,7 @@ public class StatsResponseBuilderFactoryImpl
 
 	@Override
 	public StatsResponseBuilder getStatsResponseBuilder() {
-		return new StatsResponseBuilderImpl();
+		return new StatsResponseBuilder();
 	}
 
 }

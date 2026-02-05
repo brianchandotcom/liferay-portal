@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.kernel.search.StatsResults;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.search.internal.stats.StatsRequestBuilderFactoryImpl;
-import com.liferay.portal.search.internal.stats.StatsResponseBuilderImpl;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 import com.liferay.portal.search.stats.StatsRequestBuilderFactory;
@@ -144,8 +143,7 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 			true
 		).build();
 
-		StatsResponseBuilder statsResponseBuilder =
-			new StatsResponseBuilderImpl();
+		StatsResponseBuilder statsResponseBuilder = new StatsResponseBuilder();
 
 		StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
 			31
@@ -205,8 +203,7 @@ public abstract class BaseStatisticsTestCase extends BaseIndexingTestCase {
 			field
 		).build();
 
-		StatsResponseBuilder statsResponseBuilder =
-			new StatsResponseBuilderImpl();
+		StatsResponseBuilder statsResponseBuilder = new StatsResponseBuilder();
 
 		StatsResponse expectedStatsResponse = statsResponseBuilder.cardinality(
 			31

@@ -5,6 +5,7 @@
 
 package com.liferay.bulk.rest.client.serdes.v1_0;
 
+import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
@@ -58,6 +59,11 @@ public class BulkActionSerDes {
 
 		if (type != null) {
 			String typeString = type.toString();
+
+			if (typeString.equals("AssignStructureDefaultWorkflowBulkAction")) {
+				return AssignStructureDefaultWorkflowBulkActionSerDes.toJSON(
+					(AssignStructureDefaultWorkflowBulkAction)bulkAction);
+			}
 
 			if (typeString.equals("AssignToBulkAction")) {
 				return AssignToBulkActionSerDes.toJSON(
@@ -206,6 +212,12 @@ public class BulkActionSerDes {
 
 			if (type != null) {
 				String typeString = type.toString();
+
+				if (typeString.equals(
+						"AssignStructureDefaultWorkflowBulkAction")) {
+
+					return AssignStructureDefaultWorkflowBulkAction.toDTO(json);
+				}
 
 				if (typeString.equals("AssignToBulkAction")) {
 					return AssignToBulkAction.toDTO(json);

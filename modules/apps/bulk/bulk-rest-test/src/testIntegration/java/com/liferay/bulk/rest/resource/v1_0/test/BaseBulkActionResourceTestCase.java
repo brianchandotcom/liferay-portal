@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
@@ -296,6 +297,22 @@ public abstract class BaseBulkActionResourceTestCase {
 
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (bulkAction.getType() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("workflow", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof
+						AssignStructureDefaultWorkflowBulkAction)) {
+
+					continue;
+				}
+
+				if (((AssignStructureDefaultWorkflowBulkAction)bulkAction).
+						getWorkflow() == null) {
+
 					valid = false;
 				}
 
@@ -829,6 +846,27 @@ public abstract class BaseBulkActionResourceTestCase {
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						bulkAction1.getType(), bulkAction2.getType())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("workflow", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof
+						AssignStructureDefaultWorkflowBulkAction) ||
+					!(bulkAction2 instanceof
+						AssignStructureDefaultWorkflowBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((AssignStructureDefaultWorkflowBulkAction)bulkAction1).
+							getWorkflow(),
+						((AssignStructureDefaultWorkflowBulkAction)bulkAction2).
+							getWorkflow())) {
 
 					return false;
 				}
@@ -1508,6 +1546,19 @@ public abstract class BaseBulkActionResourceTestCase {
 
 	protected BulkAction randomBulkAction() throws Exception {
 		List<Supplier<BulkAction>> suppliers = Arrays.asList(
+			() -> {
+				AssignStructureDefaultWorkflowBulkAction bulkAction =
+					new AssignStructureDefaultWorkflowBulkAction();
+
+				bulkAction.setWorkflow(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
+
+				bulkAction.setType(
+					BulkAction.Type.create(
+						"AssignStructureDefaultWorkflowBulkAction"));
+
+				return bulkAction;
+			},
 			() -> {
 				AssignToBulkAction bulkAction = new AssignToBulkAction();
 

@@ -148,8 +148,7 @@ public class ClientExtensionOSGiCommandsTest {
 	@Test
 	public void testGetConfiguration() {
 		String pid =
-			CETConfiguration.class.getName() +
-				"~liferay-test-cx-1/liferay.com";
+			CETConfiguration.class.getName() + "~liferay-test-cx-1/liferay.com";
 
 		Configuration configuration = _getConfiguration(pid);
 
@@ -163,21 +162,53 @@ public class ClientExtensionOSGiCommandsTest {
 
 	@Test
 	public void testGetConfigurations() {
-		_testGetConfigurations(List.of("deploymentType=agent"), List.of("Liferay Test CX 2", "Liferay Test CX 3"));
-		_testGetConfigurations(List.of("deploymentType=agent", "webId=" + _companyWebId, "type=instanceSettings"), List.of("Liferay Test CX 3"));
-		_testGetConfigurations(List.of("deploymentType=bundle"), List.of("Liferay Test CX 1"));
-		_testGetConfigurations(List.of("deploymentType=bundle", "type=customElement"), List.of("Liferay Test CX 1"));
-		_testGetConfigurations(List.of("deploymentType=prod", "name=" + RandomTestUtil.randomString()), List.of());
-		_testGetConfigurations(List.of("name=" + RandomTestUtil.randomString()), List.of());
-		_testGetConfigurations(List.of("type=customElement"), List.of("Liferay Test CX 1", "Liferay Test CX 2"));
-		_testGetConfigurations(List.of("type=instanceSettings"), List.of("Liferay Test CX 3"));
-		_testGetConfigurations(List.of("webId=" + _companyWebId), List.of("Liferay Test CX 3"));
-		_testGetConfigurations(List.of("webId=default"), List.of("Liferay Test CX 1", "Liferay Test CX 2"));
-		_testGetConfigurations(List.of("webId=liferay.com"), List.of("Liferay Test CX 1", "Liferay Test CX 2"));
-		_testGetConfigurations(List.of(), List.of("Liferay Test CX 1", "Liferay Test CX 2", "Liferay Test CX 3"));
-		_testGetConfigurations(List.of(RandomTestUtil.randomString() + "=" + RandomTestUtil.randomString()), List.of());
-		_testGetConfigurations(List.of(RandomTestUtil.randomString()), List.of());
-		_testGetConfigurations(List.of(RandomTestUtil.randomString(), RandomTestUtil.randomString()), List.of());
+		_testGetConfigurations(
+			List.of("deploymentType=agent"),
+			List.of("Liferay Test CX 2", "Liferay Test CX 3"));
+		_testGetConfigurations(
+			List.of(
+				"deploymentType=agent", "webId=" + _companyWebId,
+				"type=instanceSettings"),
+			List.of("Liferay Test CX 3"));
+		_testGetConfigurations(
+			List.of("deploymentType=bundle"), List.of("Liferay Test CX 1"));
+		_testGetConfigurations(
+			List.of("deploymentType=bundle", "type=customElement"),
+			List.of("Liferay Test CX 1"));
+		_testGetConfigurations(
+			List.of(
+				"deploymentType=prod", "name=" + RandomTestUtil.randomString()),
+			List.of());
+		_testGetConfigurations(
+			List.of("name=" + RandomTestUtil.randomString()), List.of());
+		_testGetConfigurations(
+			List.of("type=customElement"),
+			List.of("Liferay Test CX 1", "Liferay Test CX 2"));
+		_testGetConfigurations(
+			List.of("type=instanceSettings"), List.of("Liferay Test CX 3"));
+		_testGetConfigurations(
+			List.of("webId=" + _companyWebId), List.of("Liferay Test CX 3"));
+		_testGetConfigurations(
+			List.of("webId=default"),
+			List.of("Liferay Test CX 1", "Liferay Test CX 2"));
+		_testGetConfigurations(
+			List.of("webId=liferay.com"),
+			List.of("Liferay Test CX 1", "Liferay Test CX 2"));
+		_testGetConfigurations(
+			List.of(),
+			List.of(
+				"Liferay Test CX 1", "Liferay Test CX 2", "Liferay Test CX 3"));
+		_testGetConfigurations(
+			List.of(
+				RandomTestUtil.randomString() + "=" +
+					RandomTestUtil.randomString()),
+			List.of());
+		_testGetConfigurations(
+			List.of(RandomTestUtil.randomString()), List.of());
+		_testGetConfigurations(
+			List.of(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()),
+			List.of());
 	}
 
 	@Test
@@ -201,8 +232,7 @@ public class ClientExtensionOSGiCommandsTest {
 	@Test
 	public void testReload() throws Exception {
 		String pid =
-			CETConfiguration.class.getName() +
-				"~liferay-test-cx-1/liferay.com";
+			CETConfiguration.class.getName() + "~liferay-test-cx-1/liferay.com";
 
 		_testReload(pid, "Reloaded configuration for PID " + pid);
 
@@ -248,13 +278,24 @@ public class ClientExtensionOSGiCommandsTest {
 	@Test
 	public void testShow() throws Exception {
 		_testShow(
-			CETConfiguration.class.getName() +
-				"~liferay-test-cx-1/liferay.com",
+			CETConfiguration.class.getName() + "~liferay-test-cx-1/liferay.com",
 			"projectName: liferay-test-cx-1");
 
 		String pid = RandomTestUtil.randomString();
 
 		_testShow(pid, "Unable to find configuration for PID " + pid);
+	}
+
+	private Configuration _getConfiguration(String pid) {
+		return ReflectionTestUtil.invoke(
+			_osgiCommands, "_getConfiguration", new Class<?>[] {String.class},
+			pid);
+	}
+
+	private Configuration[] _getConfigurations(String[] filterStrings) {
+		return ReflectionTestUtil.invoke(
+			_osgiCommands, "_getConfigurations",
+			new Class<?>[] {String[].class}, (Object)filterStrings);
 	}
 
 	private String _getOutput(UnsafeRunnable<Exception> unsafeRunnable)
@@ -275,18 +316,6 @@ public class ClientExtensionOSGiCommandsTest {
 		finally {
 			System.setOut(systemOutPrintStream);
 		}
-	}
-
-	private Configuration _getConfiguration(String pid) {
-		return ReflectionTestUtil.invoke(
-			_osgiCommands, "_getConfiguration", new Class<?>[] {String.class},
-			pid);
-	}
-
-	private Configuration[] _getConfigurations(String[] filterStrings) {
-		return ReflectionTestUtil.invoke(
-			_osgiCommands, "_getConfigurations",
-			new Class<?>[] {String[].class}, (Object)filterStrings);
 	}
 
 	private void _list(String... filterStrings) throws Exception {
@@ -356,7 +385,7 @@ public class ClientExtensionOSGiCommandsTest {
 
 	private static BundleContext _bundleContext;
 	private static String _companyWebId;
-	private static List<String> _configurationPids = new ArrayList<>();
+	private static final List<String> _configurationPids = new ArrayList<>();
 
 	@Inject(filter = "osgi.command.scope=clientextension")
 	private OSGiCommands _osgiCommands;

@@ -72,7 +72,6 @@ import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuild
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -512,54 +511,42 @@ public class ElasticsearchAggregationTranslator
 			valuesSourceAggregationBuilder, fieldAggregation);
 	}
 
-	@Reference
-	private AggregationBuilderAssemblerFactory
-		_aggregationBuilderAssemblerFactory;
-
+	private final AggregationBuilderAssemblerFactory
+		_aggregationBuilderAssemblerFactory =
+			new AggregationBuilderAssemblerFactory();
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
-
-	@Reference
-	private DateHistogramAggregationTranslator
-		_dateHistogramAggregationTranslator;
-
-	@Reference
-	private DateRangeAggregationTranslator _dateRangeAggregationTranslator;
-
-	@Reference
-	private FilterAggregationTranslator _filterAggregationTranslator;
-
-	@Reference
-	private FiltersAggregationTranslator _filtersAggregationTranslator;
-
-	@Reference
-	private GeoDistanceAggregationTranslator _geoDistanceAggregationTranslator;
-
-	@Reference
-	private HistogramAggregationTranslator _histogramAggregationTranslator;
-
-	@Reference
-	private RangeAggregationTranslator _rangeAggregationTranslator;
-
-	@Reference
-	private ScriptedMetricAggregationTranslator
-		_scriptedMetricAggregationTranslator;
-
-	@Reference
-	private SignificantTermsAggregationTranslator
-		_significantTermsAggregationTranslator;
-
-	@Reference
-	private SignificantTextAggregationTranslator
-		_significantTextAggregationTranslator;
-
-	@Reference
-	private TermsAggregationTranslator _termsAggregationTranslator;
-
-	@Reference
-	private TopHitsAggregationTranslator _topHitsAggregationTranslator;
-
-	@Reference
-	private WeightedAvgAggregationTranslator _weightedAvgAggregationTranslator;
+	private final DateHistogramAggregationTranslator
+		_dateHistogramAggregationTranslator =
+			new DateHistogramAggregationTranslator();
+	private final DateRangeAggregationTranslator
+		_dateRangeAggregationTranslator = new DateRangeAggregationTranslator();
+	private final FilterAggregationTranslator _filterAggregationTranslator =
+		new FilterAggregationTranslator();
+	private final FiltersAggregationTranslator _filtersAggregationTranslator =
+		new FiltersAggregationTranslator();
+	private final GeoDistanceAggregationTranslator
+		_geoDistanceAggregationTranslator =
+			new GeoDistanceAggregationTranslator();
+	private final HistogramAggregationTranslator
+		_histogramAggregationTranslator = new HistogramAggregationTranslator();
+	private final RangeAggregationTranslator _rangeAggregationTranslator =
+		new RangeAggregationTranslator();
+	private final ScriptedMetricAggregationTranslator
+		_scriptedMetricAggregationTranslator =
+			new ScriptedMetricAggregationTranslator();
+	private final SignificantTermsAggregationTranslator
+		_significantTermsAggregationTranslator =
+			new SignificantTermsAggregationTranslator();
+	private final SignificantTextAggregationTranslator
+		_significantTextAggregationTranslator =
+			new SignificantTextAggregationTranslator();
+	private final TermsAggregationTranslator _termsAggregationTranslator =
+		new TermsAggregationTranslator();
+	private final TopHitsAggregationTranslator _topHitsAggregationTranslator =
+		new TopHitsAggregationTranslator();
+	private final WeightedAvgAggregationTranslator
+		_weightedAvgAggregationTranslator =
+			new WeightedAvgAggregationTranslator();
 
 }

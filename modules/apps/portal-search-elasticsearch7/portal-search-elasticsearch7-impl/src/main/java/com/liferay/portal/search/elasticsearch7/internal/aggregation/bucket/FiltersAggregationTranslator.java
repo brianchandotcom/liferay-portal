@@ -7,17 +7,68 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 
 /**
  * @author Michael C. Han
  */
-public interface FiltersAggregationTranslator {
+public class FiltersAggregationTranslator {
 
 	public FiltersAggregationBuilder translate(
 		FiltersAggregation filtersAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator);
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+
+		List<FiltersAggregation.KeyedQuery> keyedQueries =
+			filtersAggregation.getKeyedQueries();
+
+		List<FiltersAggregator.KeyedFilter> keyedFilters = new ArrayList<>(
+			keyedQueries.size());
+
+		keyedQueries.forEach(
+			keyedQuery -> {
+				QueryBuilder filterQueryBuilder =
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						keyedQuery.getQuery());
+
+				keyedFilters.add(
+					new FiltersAggregator.KeyedFilter(
+						keyedQuery.getKey(), filterQueryBuilder));
+			});
+
+		FiltersAggregationBuilder filtersAggregationBuilder =
+			AggregationBuilders.filters(
+				filtersAggregation.getName(),
+				keyedFilters.toArray(
+					new FiltersAggregator.KeyedFilter[keyedQueries.size()]));
+
+		if (filtersAggregation.getOtherBucket() != null) {
+			filtersAggregationBuilder.otherBucket(
+				filtersAggregation.getOtherBucket());
+		}
+
+		if (filtersAggregation.getOtherBucketKey() != null) {
+			filtersAggregationBuilder.otherBucketKey(
+				filtersAggregation.getOtherBucketKey());
+		}
+
+		_baseAggregationTranslator.translate(
+			filtersAggregationBuilder, filtersAggregation,
+			aggregationTranslator);
+
+		return filtersAggregationBuilder;
+	}
+
+	private final BaseAggregationTranslator _baseAggregationTranslator =
+		new BaseAggregationTranslator();
 
 }

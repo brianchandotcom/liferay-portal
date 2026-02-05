@@ -5,19 +5,68 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
+
+import java.util.List;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface HistogramAggregationTranslator {
+public class HistogramAggregationTranslator {
 
 	public HistogramAggregationBuilder translate(
 		HistogramAggregation histogramAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator);
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+
+		HistogramAggregationBuilder histogramAggregationBuilder =
+			_baseFieldAggregationTranslator.translate(
+				baseMetricsAggregation -> AggregationBuilders.histogram(
+					baseMetricsAggregation.getName()),
+				histogramAggregation, aggregationTranslator);
+
+		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
+			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+				histogramAggregation.getOrders());
+
+			histogramAggregationBuilder.order(bucketOrders);
+		}
+
+		if ((histogramAggregation.getMaxBound() != null) &&
+			(histogramAggregation.getMinBound() != null)) {
+
+			histogramAggregationBuilder.extendedBounds(
+				histogramAggregation.getMinBound(),
+				histogramAggregation.getMaxBound());
+		}
+
+		if (histogramAggregation.getMinDocCount() != null) {
+			histogramAggregationBuilder.minDocCount(
+				histogramAggregation.getMinDocCount());
+		}
+
+		if (histogramAggregation.getInterval() != null) {
+			histogramAggregationBuilder.interval(
+				histogramAggregation.getInterval());
+		}
+
+		if (histogramAggregation.getOffset() != null) {
+			histogramAggregationBuilder.offset(
+				histogramAggregation.getOffset());
+		}
+
+		return histogramAggregationBuilder;
+	}
+
+	private final BaseFieldAggregationTranslator
+		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
+	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 }

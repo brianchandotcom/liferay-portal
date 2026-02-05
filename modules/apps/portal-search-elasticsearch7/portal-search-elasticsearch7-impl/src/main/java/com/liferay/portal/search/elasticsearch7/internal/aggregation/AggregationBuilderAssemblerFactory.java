@@ -12,9 +12,12 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 /**
  * @author André de Oliveira
  */
-public interface AggregationBuilderAssemblerFactory {
+public class AggregationBuilderAssemblerFactory {
 
 	public AggregationBuilderAssemblerImpl getAggregationBuilderAssembler(
-		AggregationTranslator<AggregationBuilder> aggregationTranslator);
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+
+		return new AggregationBuilderAssemblerImpl(aggregationTranslator);
+	}
 
 }

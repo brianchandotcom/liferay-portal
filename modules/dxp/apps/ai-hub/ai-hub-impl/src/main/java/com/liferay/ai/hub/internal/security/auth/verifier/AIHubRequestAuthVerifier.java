@@ -5,9 +5,7 @@
 
 package com.liferay.ai.hub.internal.security.auth.verifier;
 
-import com.liferay.ai.hub.configuration.AIHubConfiguration;
 import com.liferay.ai.hub.security.JWTTokenUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
@@ -15,7 +13,6 @@ import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.service.access.policy.ServiceAccessPolicy;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +23,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -53,18 +49,10 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 			HttpServletRequest httpServletRequest =
 				accessControlContext.getRequest();
 
-			AIHubConfiguration aiHubConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					AIHubConfiguration.class,
-					_portal.getCompanyId(httpServletRequest));
-			String requestURL = String.valueOf(
-				httpServletRequest.getRequestURL());
 			String token = httpServletRequest.getHeader(
 				"Liferay-AI-Hub-On-Behalf-Of");
 
-			if (!requestURL.startsWith(aiHubConfiguration.serviceURL()) ||
-				Validator.isBlank(token)) {
-
+			if (Validator.isBlank(token)) {
 				return new AuthVerifierResult();
 			}
 
@@ -107,11 +95,5 @@ public class AIHubRequestAuthVerifier implements AuthVerifier {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AIHubRequestAuthVerifier.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private Portal _portal;
 
 }

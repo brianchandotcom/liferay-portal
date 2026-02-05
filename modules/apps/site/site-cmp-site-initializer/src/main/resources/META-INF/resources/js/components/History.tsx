@@ -66,17 +66,6 @@ export interface HistoryHandle {
 	refresh: () => void;
 }
 
-export function joinWithAnd(items: string[]) {
-	if (!items?.length) {
-		return '';
-	}
-
-	return new Intl.ListFormat(Liferay.ThemeDisplay.getBCP47LanguageId(), {
-		style: 'long',
-		type: 'conjunction',
-	}).format(items);
-}
-
 function UserValueLabel({userId}: {userId: number}) {
 	const [loading, setLoading] = useState(false);
 	const [userName, setUserName] = useState<string | null>(null);

@@ -15,6 +15,7 @@
 		"@clayui/modal": "^3.159.0",
 		"@clayui/panel": "^3.159.0",
 		"@clayui/popover": "^3.159.0",
+		"@clayui/sticker": "^3.159.0",
 		"@clayui/tabs": "^3.159.0",
 		"@clayui/tooltip": "^3.159.0",
 		"@liferay/friendly-url-web": "*",

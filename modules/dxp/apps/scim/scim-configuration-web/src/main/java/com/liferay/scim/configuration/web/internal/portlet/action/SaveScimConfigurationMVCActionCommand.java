@@ -298,6 +298,21 @@ public class SaveScimConfigurationMVCActionCommand
 			});
 
 		actionableDynamicQuery.performActions();
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+				"=com.liferay.scim.rest.internal.configuration.",
+				"ScimClientOAuth2ApplicationConfiguration)(companyId=",
+				oAuth2Application.getCompanyId(), "))"));
+
+		if (configurations == null) {
+			return;
+		}
+
+		for (Configuration configuration : configurations) {
+			configuration.delete();
+		}
 	}
 
 	@Reference

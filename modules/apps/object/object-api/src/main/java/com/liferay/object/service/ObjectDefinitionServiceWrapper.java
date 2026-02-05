@@ -76,7 +76,7 @@ public class ObjectDefinitionServiceWrapper
 			String className, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -94,7 +94,7 @@ public class ObjectDefinitionServiceWrapper
 		return _objectDefinitionService.addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
 			enableComments, enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableObjectEntryDraft,
+			enableIndexSearch, enableObjectEntryDraft, enableObjectEntryHistory,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,

@@ -116,7 +116,7 @@ public class ObjectDefinitionLocalServiceUtil {
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<java.util.Locale, String> labelMap, boolean modifiable,
@@ -135,13 +135,13 @@ public class ObjectDefinitionLocalServiceUtil {
 			externalReferenceCode, userId, objectFolderId, className,
 			dbTableName, enableComments, enableFormContainer,
 			enableFriendlyURLCustomization, enableIndexSearch,
-			enableObjectEntryDraft, enableObjectEntrySchedule,
-			enableObjectEntrySubscription, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, modifiable, name, panelAppOrder,
-			panelCategoryKey, pkObjectFieldDBColumnName, pkObjectFieldName,
-			pluralLabelMap, portlet, scope, titleObjectFieldName, version,
-			status, objectDefinitionSettings, objectFields,
-			workflowDefinitionLinks);
+			enableObjectEntryDraft, enableObjectEntryHistory,
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
+			modifiable, name, panelAppOrder, panelCategoryKey,
+			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
+			portlet, scope, titleObjectFieldName, version, status,
+			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
 	}
 
 	/**

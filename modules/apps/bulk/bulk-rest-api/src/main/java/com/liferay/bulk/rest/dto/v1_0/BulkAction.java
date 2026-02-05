@@ -45,6 +45,10 @@ import java.util.function.Supplier;
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
+			name = "AssignStructureDefaultWorkflowBulkAction",
+			value = AssignStructureDefaultWorkflowBulkAction.class
+		),
+		@JsonSubTypes.Type(
 			name = "AssignToBulkAction", value = AssignToBulkAction.class
 		),
 		@JsonSubTypes.Type(
@@ -332,6 +336,8 @@ public abstract class BulkAction implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
+		ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION(
+			"AssignStructureDefaultWorkflowBulkAction"),
 		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
 		COPY_BULK_ACTION("CopyBulkAction"),
 		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),

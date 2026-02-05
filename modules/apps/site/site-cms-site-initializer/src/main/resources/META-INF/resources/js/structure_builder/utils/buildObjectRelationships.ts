@@ -4,7 +4,7 @@
  */
 
 import {ObjectRelationship} from '../../common/types/ObjectDefinition';
-import {RelatedContent, Structure} from '../types/Structure';
+import {RelatedContent, RepeatableGroup, Structure} from '../types/Structure';
 
 export default function buildObjectRelationships({
 	children,
@@ -13,9 +13,9 @@ export default function buildObjectRelationships({
 	children: Structure['children'];
 	structureERC: Structure['erc'];
 }): ObjectRelationship[] {
-	return getRelatedContents(children)
-		.filter((relatedContent) => !relatedContent.multiselection)
-		.map((relatedContent) => {
+	return getRelatedContents(children, structureERC)
+		.filter(({relatedContent}) => !relatedContent.multiselection)
+		.map(({parentERC, relatedContent}) => {
 			return {
 				deletionType: 'disassociate',
 				externalReferenceCode: relatedContent.erc,
@@ -23,14 +23,31 @@ export default function buildObjectRelationships({
 				name: relatedContent.name,
 				objectDefinitionExternalReferenceCode1:
 					relatedContent.relatedStructureERC!,
-				objectDefinitionExternalReferenceCode2: structureERC,
+				objectDefinitionExternalReferenceCode2: parentERC,
 				type: 'oneToMany',
 			};
 		});
 }
 
-function getRelatedContents(children: Structure['children']): RelatedContent[] {
-	return Array.from(children.values()).filter(
-		(child) => child.type === 'related-content'
-	) as RelatedContent[];
+function getRelatedContents(
+	children: Structure['children'] | RepeatableGroup['children'],
+	parentERC: Structure['erc'] | RepeatableGroup['erc']
+): {
+	parentERC: Structure['erc'] | RepeatableGroup['erc'];
+	relatedContent: RelatedContent;
+}[] {
+	const relatedContents = [];
+
+	for (const child of children.values()) {
+		if (child.type === 'repeatable-group') {
+			relatedContents.push(
+				...getRelatedContents(child.children, child.erc)
+			);
+		}
+		else if (child.type === 'related-content') {
+			relatedContents.push({parentERC, relatedContent: child});
+		}
+	}
+
+	return relatedContents;
 }

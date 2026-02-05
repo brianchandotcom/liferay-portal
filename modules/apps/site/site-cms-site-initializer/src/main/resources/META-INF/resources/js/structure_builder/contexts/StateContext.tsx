@@ -339,9 +339,11 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const children = new Map(structure.children);
-
-			children.set(relatedContent.uuid, relatedContent);
+			const children = insertChild({
+				child: relatedContent,
+				parentUuid: relatedContent.parent,
+				root: structure,
+			});
 
 			const sortedChildren = sortChildren(children);
 

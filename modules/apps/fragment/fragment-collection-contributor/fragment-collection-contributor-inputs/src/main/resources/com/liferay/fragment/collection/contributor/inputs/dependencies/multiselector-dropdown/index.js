@@ -380,11 +380,13 @@ async function main() {
 	function renderLabels() {
 		labelContainer.innerHTML = '';
 
-		if (selection.size) {
-			inputElement.removeAttribute('required');
-		}
-		else {
-			inputElement.setAttribute('required', '');
+		if (input.required) {
+			if (selection.size) {
+				inputElement.removeAttribute('required');
+			}
+			else {
+				inputElement.setAttribute('required', '');
+			}
 		}
 
 		if (!options.length) {

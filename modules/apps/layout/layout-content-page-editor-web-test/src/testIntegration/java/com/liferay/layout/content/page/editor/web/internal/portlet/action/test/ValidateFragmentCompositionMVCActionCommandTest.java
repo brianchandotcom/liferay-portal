@@ -7,12 +7,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.constants.FragmentConstants;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -36,7 +32,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -117,33 +112,6 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 
 	@Test
 	public void testValidateFragmentCompositionValid() throws Exception {
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				_serviceContext);
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				StringPool.BLANK, "<div>test</div>", StringPool.BLANK, false,
-				StringPool.BLANK, null, 0, false, false,
-				FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_APPROVED, _serviceContext);
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
-				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), _segmentsExperienceId,
-				_draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getConfiguration(), StringPool.BLANK,
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(), _serviceContext);
-
 		JSONObject addItemJSONObject = ContentLayoutTestUtil.addItemToLayout(
 			"{}", LayoutDataItemTypeConstants.TYPE_CONTAINER, _draftLayout,
 			_layoutStructureProvider, _segmentsExperienceId);
@@ -151,7 +119,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 		String containerItemId = addItemJSONObject.getString("addedItemId");
 
 		ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			fragmentEntryLink, _draftLayout, containerItemId, 0,
+			StringPool.BLANK, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
 		JSONObject jsonObject = _testValidateFragmentComposition(
@@ -206,13 +174,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 	private Layout _draftLayout;
 
 	@Inject
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

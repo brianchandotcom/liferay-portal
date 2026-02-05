@@ -36,7 +36,7 @@ export default function deleteDSRUserAction({
 
 						Liferay.Util.openToast({
 							message: Liferay.Language.get(
-								'user-removed-successfully'
+								'user-was-removed-successfully'
 							),
 							type: 'success',
 						});

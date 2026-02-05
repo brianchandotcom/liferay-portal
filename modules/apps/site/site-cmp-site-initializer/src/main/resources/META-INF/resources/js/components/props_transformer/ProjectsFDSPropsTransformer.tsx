@@ -4,7 +4,7 @@
  */
 
 import ClayProgressBar from '@clayui/progress-bar';
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {DateRenderer, IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {
 	ACTIONS,
 	AdditionalProps,
@@ -76,6 +76,14 @@ export default function ProjectsFDSPropsTransformer({
 		},
 		customRenderers: {
 			tableCell: [
+				{
+					component: ({itemData}) =>
+						DateRenderer({
+							value: itemData.embedded?.dueDate,
+						}),
+					name: 'dueDateTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
 				{
 					component: ({value}) => ClayProgressBar({value}),
 					name: 'progressBarTableCellRenderer',

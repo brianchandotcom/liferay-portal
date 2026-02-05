@@ -200,10 +200,7 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914"),
-			@FeatureFlag("LPD-66179")
-		}
+		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
 	)
 	@Test
 	public void testGetLayoutSiteNavigationMenuItemFromExportImport()

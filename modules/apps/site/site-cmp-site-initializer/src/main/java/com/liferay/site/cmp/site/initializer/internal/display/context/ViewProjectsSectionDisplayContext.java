@@ -46,12 +46,13 @@ public class ViewProjectsSectionDisplayContext
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=objectDefinitionId eq ");
 		sb.append(objectDefinition.getObjectDefinitionId());
-		sb.append("&nestedFields=embedded");
+		sb.append("&nestedFields=embedded,r_userToCMPProjectManager_user");
+		sb.append(",r_userToCMPProjectSponsor_user");
 
 		return sb.toString();
 	}

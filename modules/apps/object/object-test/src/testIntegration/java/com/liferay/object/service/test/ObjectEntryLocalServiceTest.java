@@ -100,6 +100,7 @@ import com.liferay.object.model.ObjectStateTransition;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
 import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.scope.CompanyScoped;
 import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -3690,8 +3691,30 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
 
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				_objectDefinition.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
 		ObjectEntry objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
+				"assignee",
+				HashMapBuilder.put(
+					"classNameId",
+					_classNameLocalService.getClassNameId(Role.class.getName())
+				).put(
+					"classPK", role.getRoleId()
+				).build()
+			).put(
 				"emailAddressRequired", "james@liferay.com"
 			).put(
 				"firstName", "James"
@@ -3710,6 +3733,15 @@ public class ObjectEntryLocalServiceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode", role.getExternalReferenceCode()
+				).put(
+					"name", role.getName()
+				).put(
+					"type", Assignee.Type.ROLE.toString()
+				).build()
+			).put(
 				"emailAddressRequired", "james@liferay.com"
 			).put(
 				"firstName", "James"
@@ -3728,10 +3760,20 @@ public class ObjectEntryLocalServiceTest {
 
 		auditMessages.clear();
 
+		User user = UserTestUtil.addUser();
+
 		_objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			objectEntry.getObjectEntryFolderId(),
 			HashMapBuilder.<String, Serializable>put(
+				"assignee",
+				HashMapBuilder.put(
+					"classNameId",
+					_classNameLocalService.getClassNameId(User.class.getName())
+				).put(
+					"classPK", user.getUserId()
+				).build()
+			).put(
 				"emailAddressRequired", "peter@liferay.com"
 			).put(
 				"firstName", "Peter"
@@ -3753,6 +3795,29 @@ public class ObjectEntryLocalServiceTest {
 			JSONUtil.put(
 				"attributes",
 				JSONUtil.putAll(
+					JSONUtil.put(
+						"name", "assignee"
+					).put(
+						"newValue",
+						JSONUtil.put(
+							"externalReferenceCode",
+							user.getExternalReferenceCode()
+						).put(
+							"name", user.getFullName()
+						).put(
+							"type", Assignee.Type.USER.toString()
+						)
+					).put(
+						"oldValue",
+						JSONUtil.put(
+							"externalReferenceCode",
+							role.getExternalReferenceCode()
+						).put(
+							"name", role.getName()
+						).put(
+							"type", Assignee.Type.ROLE.toString()
+						)
+					),
 					JSONUtil.put(
 						"name", "emailAddressRequired"
 					).put(
@@ -3804,6 +3869,15 @@ public class ObjectEntryLocalServiceTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"assignee",
+				JSONUtil.put(
+					"externalReferenceCode", user.getExternalReferenceCode()
+				).put(
+					"name", user.getFullName()
+				).put(
+					"type", Assignee.Type.USER.toString()
+				)
+			).put(
 				"emailAddressRequired", "peter@liferay.com"
 			).put(
 				"firstName", "Peter"

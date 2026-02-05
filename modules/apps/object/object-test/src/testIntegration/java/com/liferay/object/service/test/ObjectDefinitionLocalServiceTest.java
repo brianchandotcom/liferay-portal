@@ -86,6 +86,7 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -1865,6 +1866,23 @@ public class ObjectDefinitionLocalServiceTest {
 				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
 				Collections.emptyList(), Collections.emptyList()));
 
+		// Enable object entry history
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionEnableObjectEntryHistoryException.class,
+			"Enable object entry history is not allowed for unmodifiable " +
+				"system object definitions",
+			() -> _objectDefinitionLocalService.addSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), 0,
+				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
+				false, true, false, true, false, false, false, null,
+				RandomTestUtil.randomLocaleStringMap(), false,
+				ObjectDefinitionTestUtil.getRandomName(), null, null, null,
+				null, RandomTestUtil.randomLocaleStringMap(), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList()));
+
 		// Enable object entry schedule
 
 		AssertUtils.assertFailure(
@@ -2145,17 +2163,21 @@ public class ObjectDefinitionLocalServiceTest {
 		// Publish modifiable system object definition
 
 		objectDefinition =
-			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, null, false, true,
+				false, true, false, true, false, false, false, null,
+				RandomTestUtil.randomLocaleStringMap(), true, "Test", null,
+				null, null, null, RandomTestUtil.randomLocaleStringMap(), false,
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
-				Arrays.asList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING,
-						RandomTestUtil.randomString(), StringUtil.randomId())));
+				WorkflowConstants.STATUS_DRAFT, Collections.emptyList(),
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				Collections.emptyList());
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishSystemObjectDefinition(
@@ -2170,14 +2192,19 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition.getDBTableName(),
 				ObjectDefinitionConstants.
 					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_DEFINITION));
+		Assert.assertTrue(objectDefinition.isEnableCategorization());
+		Assert.assertTrue(objectDefinition.isEnableObjectEntryHistory());
+		Assert.assertEquals("test", objectDefinition.getFriendlyURLSeparator());
+		Assert.assertTrue(objectDefinition.isModifiable());
 		Assert.assertEquals(
 			"l_testId", objectDefinition.getPKObjectFieldName());
 		Assert.assertEquals("/test", objectDefinition.getRESTContextPath());
-		Assert.assertTrue(objectDefinition.isApproved());
-		Assert.assertTrue(objectDefinition.isEnableCategorization());
-		Assert.assertEquals("test", objectDefinition.getFriendlyURLSeparator());
-		Assert.assertTrue(objectDefinition.isModifiable());
 		Assert.assertTrue(objectDefinition.isSystem());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED, objectDefinition.getStatus());
+
+		// Database table
+
 		Assert.assertTrue(_hasTable(objectDefinition.getDBTableName()));
 		Assert.assertTrue(
 			_hasTable(objectDefinition.getExtensionDBTableName()));

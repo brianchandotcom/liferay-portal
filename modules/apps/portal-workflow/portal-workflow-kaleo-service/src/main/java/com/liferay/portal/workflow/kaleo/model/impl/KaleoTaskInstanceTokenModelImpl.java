@@ -10,6 +10,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -49,6 +50,7 @@ import java.util.function.Function;
  * @see KaleoTaskInstanceTokenImpl
  * @generated
  */
+@JSON(strict = true)
 public class KaleoTaskInstanceTokenModelImpl
 	extends BaseModelImpl<KaleoTaskInstanceToken>
 	implements KaleoTaskInstanceTokenModel {
@@ -451,6 +453,7 @@ public class KaleoTaskInstanceTokenModelImpl
 
 	}
 
+	@JSON
 	@Override
 	public long getMvccVersion() {
 		return _mvccVersion;
@@ -465,6 +468,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_mvccVersion = mvccVersion;
 	}
 
+	@JSON
 	@Override
 	public long getCtCollectionId() {
 		return _ctCollectionId;
@@ -479,6 +483,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_ctCollectionId = ctCollectionId;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoTaskInstanceTokenId() {
 		return _kaleoTaskInstanceTokenId;
@@ -493,6 +498,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_kaleoTaskInstanceTokenId = kaleoTaskInstanceTokenId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -507,6 +513,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_groupId = groupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -531,6 +538,7 @@ public class KaleoTaskInstanceTokenModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -570,6 +578,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("userId"));
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -589,6 +598,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -603,6 +613,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -623,6 +634,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoDefinitionId() {
 		return _kaleoDefinitionId;
@@ -637,6 +649,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_kaleoDefinitionId = kaleoDefinitionId;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoDefinitionVersionId() {
 		return _kaleoDefinitionVersionId;
@@ -661,6 +674,7 @@ public class KaleoTaskInstanceTokenModelImpl
 			this.<Long>getColumnOriginalValue("kaleoDefinitionVersionId"));
 	}
 
+	@JSON
 	@Override
 	public long getKaleoInstanceId() {
 		return _kaleoInstanceId;
@@ -685,6 +699,7 @@ public class KaleoTaskInstanceTokenModelImpl
 			this.<Long>getColumnOriginalValue("kaleoInstanceId"));
 	}
 
+	@JSON
 	@Override
 	public long getKaleoInstanceTokenId() {
 		return _kaleoInstanceTokenId;
@@ -699,6 +714,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_kaleoInstanceTokenId = kaleoInstanceTokenId;
 	}
 
+	@JSON
 	@Override
 	public long getKaleoTaskId() {
 		return _kaleoTaskId;
@@ -723,6 +739,7 @@ public class KaleoTaskInstanceTokenModelImpl
 			this.<Long>getColumnOriginalValue("kaleoTaskId"));
 	}
 
+	@JSON
 	@Override
 	public String getKaleoTaskName() {
 		if (_kaleoTaskName == null) {
@@ -742,6 +759,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_kaleoTaskName = kaleoTaskName;
 	}
 
+	@JSON
 	@Override
 	public String getClassName() {
 		if (_className == null) {
@@ -770,6 +788,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		return getColumnOriginalValue("className");
 	}
 
+	@JSON
 	@Override
 	public long getClassPK() {
 		return _classPK;
@@ -793,6 +812,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		return GetterUtil.getLong(this.<Long>getColumnOriginalValue("classPK"));
 	}
 
+	@JSON
 	@Override
 	public long getCompletionUserId() {
 		return _completionUserId;
@@ -823,11 +843,13 @@ public class KaleoTaskInstanceTokenModelImpl
 	public void setCompletionUserUuid(String completionUserUuid) {
 	}
 
+	@JSON
 	@Override
 	public boolean getCompleted() {
 		return _completed;
 	}
 
+	@JSON
 	@Override
 	public boolean isCompleted() {
 		return _completed;
@@ -852,6 +874,7 @@ public class KaleoTaskInstanceTokenModelImpl
 			this.<Boolean>getColumnOriginalValue("completed"));
 	}
 
+	@JSON
 	@Override
 	public Date getCompletionDate() {
 		return _completionDate;
@@ -866,6 +889,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_completionDate = completionDate;
 	}
 
+	@JSON
 	@Override
 	public Date getDueDate() {
 		return _dueDate;
@@ -880,6 +904,7 @@ public class KaleoTaskInstanceTokenModelImpl
 		_dueDate = dueDate;
 	}
 
+	@JSON
 	@Override
 	public String getWorkflowContext() {
 		if (_workflowContext == null) {

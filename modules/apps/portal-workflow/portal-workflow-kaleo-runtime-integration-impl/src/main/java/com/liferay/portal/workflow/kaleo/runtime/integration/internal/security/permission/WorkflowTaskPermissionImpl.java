@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
-import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.io.Serializable;
@@ -70,9 +70,10 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 		boolean notifiableUser = false;
 
 		try {
-			notifiableUser = _workflowTaskManager.isNotifiableUser(
-				permissionChecker.getUserId(),
-				workflowTask.getWorkflowTaskId());
+			notifiableUser =
+				_kaleoTaskInstanceTokenLocalService.isNotifiableUser(
+					permissionChecker.getUserId(),
+					workflowTask.getWorkflowTaskId());
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
@@ -243,9 +244,10 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
+	private KaleoTaskInstanceTokenLocalService
+		_kaleoTaskInstanceTokenLocalService;
 
 	@Reference
-	private WorkflowTaskManager _workflowTaskManager;
+	private OrganizationLocalService _organizationLocalService;
 
 }

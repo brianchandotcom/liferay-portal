@@ -925,12 +925,16 @@ public class MarketplaceRestController extends BaseRestController {
 
 			Account account = accountResource.getAccount(order.getAccountId());
 
-			account.setExternalReferenceCode(
-				() -> _koroneikiService.postKoroneikiAccount(
-					account, jwt
-				).getKey());
-
-			accountResource.patchAccount(account.getId(), account);
+			accountResource.patchAccount(
+				account.getId(),
+				new Account() {
+					{
+						setExternalReferenceCode(
+							() -> _koroneikiService.postKoroneikiAccount(
+								account, jwt
+							).getKey());
+					}
+				});
 		}
 
 		try {

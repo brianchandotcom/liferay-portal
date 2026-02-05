@@ -6783,6 +6783,160 @@ ${custom.upgrade.properties}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-playwright-click-to-chat-properties">
+		<sequential>
+			<var name="env.click.to.chat.chatwoot.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_CHATWOOT_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.chatwoot.password" value="--env=CLICK_TO_CHAT_CHATWOOT_PASSWORD=${env.CLICK_TO_CHAT_CHATWOOT_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.chatwoot.password" />
+					<then>
+						<var name="env.click.to.chat.chatwoot.password" value="--env=CLICK_TO_CHAT_CHATWOOT_PASSWORD=${click.to.chat.chatwoot.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.crisp.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_CRISP_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.crisp.password" value="--env=CLICK_TO_CHAT_CRISP_PASSWORD=${env.CLICK_TO_CHAT_CRISP_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.crisp.password" />
+					<then>
+						<var name="env.click.to.chat.crisp.password" value="--env=CLICK_TO_CHAT_CRISP_PASSWORD=${click.to.chat.crisp.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.hubspot.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_HUBSPOT_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.hubspot.password" value="--env=CLICK_TO_CHAT_HUBSPOT_PASSWORD=${env.CLICK_TO_CHAT_HUBSPOT_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.hubspot.password" />
+					<then>
+						<var name="env.click.to.chat.hubspot.password" value="--env=CLICK_TO_CHAT_HUBSPOT_PASSWORD=${click.to.chat.hubspot.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.jivochat.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_JIVOCHAT_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.jivochat.password" value="--env=CLICK_TO_CHAT_JIVOCHAT_PASSWORD=${env.CLICK_TO_CHAT_JIVOCHAT_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.jivochat.password" />
+					<then>
+						<var name="env.click.to.chat.jivochat.password" value="--env=CLICK_TO_CHAT_JIVOCHAT_PASSWORD=${click.to.chat.jivochat.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.livechat.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_LIVECHAT_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.livechat.password" value="--env=CLICK_TO_CHAT_LIVECHAT_PASSWORD=${env.CLICK_TO_CHAT_LIVECHAT_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.livechat.password" />
+					<then>
+						<var name="env.click.to.chat.livechat.password" value="--env=CLICK_TO_CHAT_LIVECHAT_PASSWORD=${click.to.chat.livechat.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.liveperson.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_LIVEPERSON_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.liveperson.password" value="--env=CLICK_TO_CHAT_LIVEPERSON_PASSWORD=${env.CLICK_TO_CHAT_LIVEPERSON_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.liveperson.password" />
+					<then>
+						<var name="env.click.to.chat.liveperson.password" value="--env=CLICK_TO_CHAT_LIVEPERSON_PASSWORD=${click.to.chat.liveperson.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.smartsupp.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_SMARTSUPP_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.smartsupp.password" value="--env=CLICK_TO_CHAT_SMARTSUPP_PASSWORD=${env.CLICK_TO_CHAT_SMARTSUPP_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.smartsupp.password" />
+					<then>
+						<var name="env.click.to.chat.smartsupp.password" value="--env=CLICK_TO_CHAT_SMARTSUPP_PASSWORD=${click.to.chat.smartsupp.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.tawkto.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_TAWKTO_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.tawkto.password" value="--env=CLICK_TO_CHAT_TAWKTO_PASSWORD=${env.CLICK_TO_CHAT_TAWKTO_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.tawkto.password" />
+					<then>
+						<var name="env.click.to.chat.tawkto.password" value="--env=CLICK_TO_CHAT_TAWKTO_PASSWORD=${click.to.chat.tawkto.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.tidio.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_TIDIO_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.tidio.password" value="--env=CLICK_TO_CHAT_TIDIO_PASSWORD=${env.CLICK_TO_CHAT_TIDIO_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.tidio.password" />
+					<then>
+						<var name="env.click.to.chat.tidio.password" value="--env=CLICK_TO_CHAT_TIDIO_PASSWORD=${click.to.chat.tidio.password}" />
+					</then>
+				</elseif>
+			</if>
+
+			<var name="env.click.to.chat.zendesk.password" value="" />
+
+			<if>
+				<isset property="env.CLICK_TO_CHAT_ZENDESK_PASSWORD" />
+				<then>
+					<var name="env.click.to.chat.zendesk.password" value="--env=CLICK_TO_CHAT_ZENDESK_PASSWORD=${env.CLICK_TO_CHAT_ZENDESK_PASSWORD}" />
+				</then>
+				<elseif>
+					<isset property="click.to.chat.zendesk.password" />
+					<then>
+						<var name="env.click.to.chat.zendesk.password" value="--env=CLICK_TO_CHAT_ZENDESK_PASSWORD=${click.to.chat.zendesk.password}" />
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="set-portal-impl-portal-test-ext-properties">
 		<sequential>
 			<generate-jdbc-properties properties.file="portal-impl/test/portal-test-ext.properties">
@@ -8346,6 +8500,8 @@ ${docker.start.error}</fail>
 				</elseif>
 			</if>
 
+			<set-playwright-click-to-chat-properties />
+
 			<local name="env.portal.url.arg" />
 
 			<condition else="" property="env.portal.url.arg" value="--env=PORTAL_URL=http://${env.NODE_NAME}:8080">
@@ -8370,6 +8526,16 @@ ${docker.start.error}</fail>
 				--add-host www.easy.com:${ip.address} \
 				--add-host www.fox.com:${ip.address} \
 				${env.ci.arg} \
+				${env.click.to.chat.chatwoot.password} \
+				${env.click.to.chat.crisp.password} \
+				${env.click.to.chat.hubspot.password} \
+				${env.click.to.chat.jivochat.password} \
+				${env.click.to.chat.livechat.password} \
+				${env.click.to.chat.liveperson.password} \
+				${env.click.to.chat.smartsupp.password} \
+				${env.click.to.chat.tawkto.password} \
+				${env.click.to.chat.tidio.password} \
+				${env.click.to.chat.zendesk.password} \
 				${env.osb.asah.api.token} \
 				${env.osb.asah.backend.url} \
 				${env.osb.asah.batch.curator.url} \

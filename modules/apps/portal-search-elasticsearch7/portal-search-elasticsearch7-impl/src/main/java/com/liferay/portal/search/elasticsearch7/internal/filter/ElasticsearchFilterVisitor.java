@@ -22,11 +22,10 @@ import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.geolocation.GeoDistance;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
 import com.liferay.portal.search.filter.DateRangeFilter;
 import com.liferay.portal.search.filter.FilterVisitor;
@@ -254,7 +253,8 @@ public class ElasticsearchFilterVisitor implements FilterVisitor<QueryBuilder> {
 
 	@Override
 	public QueryBuilder visit(QueryFilter queryFilter) {
-		return _queryTranslator.translate(queryFilter.getQuery(), null);
+		return ElasticsearchQueryVisitor.INSTANCE.translate(
+			queryFilter.getQuery());
 	}
 
 	@Override
@@ -326,8 +326,5 @@ public class ElasticsearchFilterVisitor implements FilterVisitor<QueryBuilder> {
 
 	private ElasticsearchFilterVisitor() {
 	}
-
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 
 }

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.search.generic.MoreLikeThisQuery;
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.generic.StringQuery;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,11 +60,12 @@ import org.elasticsearch.index.query.ZeroTermsQueryOption;
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-public class ElasticsearchQueryTranslator
-	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
+public class ElasticsearchQueryVisitor implements QueryVisitor<QueryBuilder> {
 
-	@Override
-	public QueryBuilder translate(Query query, SearchContext searchContext) {
+	public static final ElasticsearchQueryVisitor INSTANCE =
+		new ElasticsearchQueryVisitor();
+
+	public QueryBuilder translate(Query query) {
 		QueryBuilder queryBuilder = query.accept(this);
 
 		if (queryBuilder == null) {
@@ -476,6 +475,9 @@ public class ElasticsearchQueryTranslator
 		}
 
 		return wildcardQueryBuilder;
+	}
+
+	private ElasticsearchQueryVisitor() {
 	}
 
 	private void _addClause(

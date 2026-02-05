@@ -297,9 +297,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		Assert.assertNotNull(fragmentCompositionJSONObject);
 
-		Assert.assertEquals(
-			1, fragmentCompositionJSONObject.getInt("invalidFragmentsCount"));
-
 		Assert.assertFalse(
 			fragmentCompositionJSONObject.has("fragmentEntryKey"));
 
@@ -307,6 +304,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			0,
 			_fragmentCompositionLocalService.getFragmentCompositionsCount(
 				fragmentCollection.getFragmentCollectionId()));
+
+		Assert.assertEquals(1, jsonObject.getInt("invalidFragmentsCount"));
 	}
 
 	@Test

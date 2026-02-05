@@ -17,8 +17,7 @@ export const FIELD_TYPES = [
 	'rich-text',
 	'integer',
 	'decimal',
-	'single-select',
-	'multiselect',
+	'select-from-list',
 	'date',
 	'datetime',
 	'boolean',
@@ -32,9 +31,8 @@ export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
 	'decimal': Liferay.Language.get('decimal'),
 	'integer': Liferay.Language.get('numeric'),
 	'long-text': Liferay.Language.get('long-text'),
-	'multiselect': Liferay.Language.get('multiselect'),
 	'rich-text': Liferay.Language.get('rich-text'),
-	'single-select': Liferay.Language.get('single-select'),
+	'select-from-list': Liferay.Language.get('select-from-list'),
 	'text': Liferay.Language.get('text'),
 	'upload': Liferay.Language.get('upload'),
 } as const;
@@ -46,29 +44,46 @@ export const FIELD_TYPE_ICON: Record<FieldType, string> = {
 	'decimal': 'decimal',
 	'integer': 'number',
 	'long-text': 'field-area',
-	'multiselect': 'select-from-list',
 	'rich-text': 'textbox',
-	'single-select': 'select',
+	'select-from-list': 'select',
 	'text': 'custom-field',
 	'upload': 'upload',
 } as const;
 
-export const FIELD_TYPE_TO_BUSINESS_TYPE: Record<
-	FieldType,
-	ObjectField['businessType']
-> = {
-	'boolean': 'Boolean',
-	'date': 'Date',
-	'datetime': 'DateTime',
-	'decimal': 'Decimal',
-	'integer': 'Integer',
-	'long-text': 'LongText',
-	'multiselect': 'MultiselectPicklist',
-	'rich-text': 'RichText',
-	'single-select': 'Picklist',
-	'text': 'Text',
-	'upload': 'Attachment',
-} as const;
+export function getFieldBusinessType(
+	field: Field
+): ObjectField['businessType'] {
+	if (field.type === 'select-from-list') {
+		if ((field as SelectFromListField).multiselection) {
+			return 'MultiselectPicklist';
+		}
+
+		return 'Picklist';
+	}
+
+	switch (field.type) {
+		case 'boolean':
+			return 'Boolean';
+		case 'date':
+			return 'Date';
+		case 'datetime':
+			return 'DateTime';
+		case 'decimal':
+			return 'Decimal';
+		case 'integer':
+			return 'Integer';
+		case 'long-text':
+			return 'LongText';
+		case 'rich-text':
+			return 'RichText';
+		case 'text':
+			return 'Text';
+		case 'upload':
+			return 'Attachment';
+		default:
+			throw new Error(`Unsupported field type: ${field.type}`);
+	}
+}
 
 export const FIELD_TYPE_TO_DB_TYPE: Record<FieldType, string> = {
 	'boolean': 'Boolean',
@@ -77,9 +92,8 @@ export const FIELD_TYPE_TO_DB_TYPE: Record<FieldType, string> = {
 	'decimal': 'Double',
 	'integer': 'Integer',
 	'long-text': 'Clob',
-	'multiselect': 'String',
 	'rich-text': 'Clob',
-	'single-select': 'String',
+	'select-from-list': 'String',
 	'text': 'String',
 	'upload': 'Long',
 } as const;
@@ -129,18 +143,14 @@ export type LongTextField = BaseField & {
 	type: 'long-text';
 } & MaxLengthSettingsField;
 
-export type MultiselectField = BaseField & {
-	picklistId: number;
-	type: 'multiselect';
-};
-
 export type NumericField = BaseField & {
 	type: 'integer';
 } & UniqueValuesSettingsField;
 
-export type SingleSelectField = BaseField & {
+export type SelectFromListField = BaseField & {
+	multiselection: boolean;
 	picklistId: number;
-	type: 'single-select';
+	type: 'select-from-list';
 };
 
 export type TextField = BaseField & {
@@ -163,9 +173,8 @@ export type UploadField = BaseField & {
 export type Field =
 	| DateTimeField
 	| LongTextField
-	| MultiselectField
 	| NumericField
-	| SingleSelectField
+	| SelectFromListField
 	| TextField
 	| UploadField
 	| (BaseField & {
@@ -177,7 +186,7 @@ export type Field =
 					'long-text',
 					'multiselect',
 					'numeric',
-					'single-select',
+					'select-from-list',
 					'text',
 					'upload',
 				]
@@ -232,6 +241,14 @@ export function getDefaultField({
 			type: 'datetime',
 		};
 	}
+	else if (type === 'select-from-list') {
+		return {
+			...base,
+			multiselection: false,
+			picklistId: 0,
+			type: 'select-from-list',
+		};
+	}
 	else if (type === 'upload') {
 		return {
 			...base,
@@ -241,20 +258,6 @@ export function getDefaultField({
 				maximumFileSize: 100,
 			},
 			type: 'upload',
-		};
-	}
-	else if (type === 'single-select') {
-		return {
-			...base,
-			picklistId: 0,
-			type: 'single-select',
-		};
-	}
-	else if (type === 'multiselect') {
-		return {
-			...base,
-			picklistId: 0,
-			type: 'multiselect',
 		};
 	}
 

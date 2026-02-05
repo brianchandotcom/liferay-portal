@@ -17,11 +17,7 @@ import {
 	RepeatableGroup,
 	Structure,
 } from '../types/Structure';
-import {
-	FIELD_TYPE_TO_BUSINESS_TYPE,
-	FIELD_TYPE_TO_DB_TYPE,
-	Field,
-} from './field';
+import {FIELD_TYPE_TO_DB_TYPE, Field, getFieldBusinessType} from './field';
 import isField from './isField';
 import {isFieldTextSearchable} from './isFieldTextSearchable';
 
@@ -138,7 +134,7 @@ function buildFields(fields: Field[]) {
 	return fields.map((field) => {
 		const objectField: ObjectField = {
 			DBType: FIELD_TYPE_TO_DB_TYPE[field.type],
-			businessType: FIELD_TYPE_TO_BUSINESS_TYPE[field.type],
+			businessType: getFieldBusinessType(field),
 			externalReferenceCode: field.erc,
 			indexed: field.indexableConfig.indexed,
 			label: field.label,

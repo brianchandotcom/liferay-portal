@@ -450,7 +450,7 @@ describe('StructureFieldSettings', () => {
 		});
 	});
 
-	it('updates the single select field with the selected picklist', async () => {
+	it('updates the select from list field with the selected picklist', async () => {
 		const uuid = getUuid();
 
 		renderComponent({
@@ -464,42 +464,7 @@ describe('StructureFieldSettings', () => {
 							{
 								...getDefaultField({
 									parent: getUuid(),
-									type: 'single-select',
-								}),
-								uuid,
-							},
-						],
-					]),
-				},
-			},
-			uuid,
-		});
-
-		await userEvent.click(screen.getByLabelText('picklist'));
-		await userEvent.click(screen.getByText('papaya'));
-
-		expect(MOCK_DISPATCH).toHaveBeenCalledWith({
-			picklistId: 1,
-			type: 'update-field',
-			uuid,
-		});
-	});
-
-	it('updates the multiselect field with the selected picklist', async () => {
-		const uuid = getUuid();
-
-		renderComponent({
-			state: {
-				...DEFAULT_STATE,
-				structure: {
-					...DEFAULT_STATE.structure,
-					children: new Map([
-						[
-							uuid,
-							{
-								...getDefaultField({
-									parent: getUuid(),
-									type: 'multiselect',
+									type: 'select-from-list',
 								}),
 								uuid,
 							},
@@ -535,7 +500,7 @@ describe('StructureFieldSettings', () => {
 							{
 								...getDefaultField({
 									parent: getUuid(),
-									type: 'single-select',
+									type: 'select-from-list',
 								}),
 								uuid,
 							},

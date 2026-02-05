@@ -77,10 +77,10 @@ public class AddFragmentCompositionMVCActionCommand
 			return JSONUtil.put(
 				"fragmentComposition",
 				JSONUtil.put(
-					"invalidFragmentsCount", invalidFragmentsCount
-				).put(
-					"type", ContentPageEditorConstants.TYPE_COMPOSITION
-				));
+					"type", ContentPageEditorConstants.TYPE_COMPOSITION)
+			).put(
+				"invalidFragmentsCount", invalidFragmentsCount
+			);
 		}
 
 		long fragmentCollectionId = ParamUtil.getLong(
@@ -158,12 +158,12 @@ public class AddFragmentCompositionMVCActionCommand
 				"imagePreviewURL",
 				fragmentComposition.getImagePreviewURL(themeDisplay)
 			).put(
-				"invalidFragmentsCount", invalidFragmentsCount
-			).put(
 				"name", fragmentComposition.getName()
 			).put(
 				"type", ContentPageEditorConstants.TYPE_COMPOSITION
 			)
+		).put(
+			"invalidFragmentsCount", invalidFragmentsCount
 		).put(
 			"url",
 			PortletURLBuilder.create(

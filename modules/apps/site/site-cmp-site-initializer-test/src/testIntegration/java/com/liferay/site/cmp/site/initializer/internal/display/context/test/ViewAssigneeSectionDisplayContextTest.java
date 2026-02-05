@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -30,9 +31,11 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -115,6 +118,7 @@ public class ViewAssigneeSectionDisplayContextTest {
 					_companyLocalService.fetchCompany(
 						TestPropsValues.getCompanyId()));
 				setLocale(LocaleUtil.US);
+				setPathImage(_portal.getPathImage());
 				setScopeGroupId(TestPropsValues.getGroupId());
 			}
 		};
@@ -140,15 +144,21 @@ public class ViewAssigneeSectionDisplayContextTest {
 
 		_assertAssigneeFieldValue(
 			className.getClassNameId(), role.getRoleId(),
-			role.getExternalReferenceCode(), role.getName(), null, "role");
+			role.getExternalReferenceCode(), role.getName(), null,
+			Assignee.Type.ROLE.toString());
 
 		className = _classNameLocalService.getClassName(User.class.getName());
-		User user = _userLocalService.getUser(_taskObjectEntry.getUserId());
+
+		User user = UserTestUtil.addUser();
+
+		user.setPortraitId(RandomTestUtil.nextLong());
+
+		user = _userLocalService.updateUser(user);
 
 		_assertAssigneeFieldValue(
 			className.getClassNameId(), user.getUserId(),
 			user.getExternalReferenceCode(), user.getFullName(),
-			user.getPortraitURL(_themeDisplay), "user");
+			user.getPortraitURL(_themeDisplay), Assignee.Type.USER.toString());
 	}
 
 	private void _assertAssigneeFieldValue(
@@ -173,7 +183,8 @@ public class ViewAssigneeSectionDisplayContextTest {
 		_httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM, _taskObjectEntry);
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(_getProperties());
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			_jsonFactory.looseSerializeDeep(_getProperties()));
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
@@ -220,6 +231,9 @@ public class ViewAssigneeSectionDisplayContextTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private RoleLocalService _roleLocalService;

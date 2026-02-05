@@ -284,11 +284,11 @@ public class SegmentsServicePreActionTest {
 						ServiceContextTestUtil.getServiceContext(
 							_group.getGroupId()));
 
-				Group globalGroup = _groupLocalService.getCompanyGroup(
+				Group companyGroup = _groupLocalService.getCompanyGroup(
 					TestPropsValues.getCompanyId());
 
 				SegmentsEntry segmentsEntry2 = _getSegmentsEntry(
-					globalGroup.getGroupId(), user);
+					companyGroup.getGroupId(), user);
 
 				SegmentsExperience segmentsExperience2 =
 					_segmentsExperienceLocalService.appendSegmentsExperience(

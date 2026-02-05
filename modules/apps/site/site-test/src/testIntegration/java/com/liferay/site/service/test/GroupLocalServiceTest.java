@@ -121,22 +121,22 @@ public class GroupLocalServiceTest {
 
 			// Verify initial state after company creation
 
-			Group globalGroup = company.getGroup();
+			Group companyGroup1 = company.getGroup();
 
 			long companyId = company.getCompanyId();
 
-			_assertGlobalGroup(companyId, globalGroup);
+			_assertGlobalGroup(companyId, companyGroup1);
 
 			// Verify idempotency
 
 			_groupLocalService.checkSystemGroups(companyId);
 
-			Group afterCheckGlobalGroup = company.getGroup();
+			Group companyGroup2 = company.getGroup();
 
 			Assert.assertEquals(
-				globalGroup.getGroupId(), afterCheckGlobalGroup.getGroupId());
+				companyGroup1.getGroupId(), companyGroup2.getGroupId());
 
-			_assertGlobalGroup(companyId, afterCheckGlobalGroup);
+			_assertGlobalGroup(companyId, companyGroup2);
 		}
 		finally {
 			_companyLocalService.deleteCompany(company);

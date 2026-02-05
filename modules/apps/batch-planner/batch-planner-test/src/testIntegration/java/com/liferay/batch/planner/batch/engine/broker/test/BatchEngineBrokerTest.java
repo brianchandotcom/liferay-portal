@@ -502,10 +502,10 @@ public class BatchEngineBrokerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
 		_testImportExportSiteScopeObjectEntryCSV(
-			globalGroup.getGroupId(),
+			companyGroup.getGroupId(),
 			_objectDefinition1.getExternalReferenceCode(), _OBJECT_ENTRY_ERC_3);
 
 		// New group
@@ -532,10 +532,10 @@ public class BatchEngineBrokerTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
 		_testImportExportSiteScopeObjectEntryJSON(
-			globalGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
+			companyGroup.getGroupId(), _OBJECT_ENTRY_ERC_3);
 
 		// New group
 

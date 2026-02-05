@@ -116,12 +116,12 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		ServiceContext globalServiceContext =
 			ServiceContextTestUtil.getServiceContext(
-				globalGroup.getGroupId(), TestPropsValues.getUserId());
+				companyGroup.getGroupId(), TestPropsValues.getUserId());
 
 		FragmentCollection globalFragmentCollection =
 			FragmentTestUtil.addFragmentCollection(

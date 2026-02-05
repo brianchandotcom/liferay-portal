@@ -77,14 +77,14 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
 		FragmentCollection globalFragmentCollection =
-			FragmentTestUtil.addFragmentCollection(globalGroup.getGroupId());
+			FragmentTestUtil.addFragmentCollection(companyGroup.getGroupId());
 
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());

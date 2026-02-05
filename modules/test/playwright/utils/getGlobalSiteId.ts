@@ -11,9 +11,9 @@ export default async function getGlobalSiteId(apiHelpers: ApiHelpers) {
 			'liferay.com'
 		);
 
-	const globalGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
+	const companyGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
 		company.companyId
 	);
 
-	return globalGroup.groupId;
+	return companyGroup.groupId;
 }

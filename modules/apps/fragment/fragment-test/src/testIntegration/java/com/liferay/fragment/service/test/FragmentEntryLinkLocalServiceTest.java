@@ -93,7 +93,7 @@ public class FragmentEntryLinkLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
@@ -108,21 +108,21 @@ public class FragmentEntryLinkLocalServiceTest {
 			_group.getGroupId());
 
 		FragmentCollection globalFragmentCollection =
-			FragmentTestUtil.addFragmentCollection(globalGroup.getGroupId());
+			FragmentTestUtil.addFragmentCollection(companyGroup.getGroupId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContext globalServiceContext =
 			ServiceContextTestUtil.getServiceContext(
-				globalGroup.getGroupId(), TestPropsValues.getUserId());
+				companyGroup.getGroupId(), TestPropsValues.getUserId());
 
 		_serviceContext.setRequest(_getMockHttpServletRequest());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_globalFragmentEntry = _addFragmentEntry(
-			globalGroup.getGroupId(),
+			companyGroup.getGroupId(),
 			globalFragmentCollection.getFragmentCollectionId(),
 			"Fragment Name Global", "<div>test</div>",
 			_read("configuration-light.json"), FragmentConstants.TYPE_SECTION,

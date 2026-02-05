@@ -241,15 +241,15 @@ public class LayoutGetFaviconURLTest {
 	public void testLayoutWithGlobalScopeERC() throws Exception {
 		byte[] expectedBytes = _getExpectedBytes();
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		FileEntry fileEntry = _addFileEntry(expectedBytes, globalGroup);
+		FileEntry fileEntry = _addFileEntry(expectedBytes, companyGroup);
 
 		_layout.setFaviconFileEntryERC(fileEntry.getExternalReferenceCode());
 
 		_layout.setFaviconFileEntryScopeERC(
-			globalGroup.getExternalReferenceCode());
+			companyGroup.getExternalReferenceCode());
 
 		Assert.assertArrayEquals(
 			expectedBytes, _getBytes(_layout.getFaviconURL()));

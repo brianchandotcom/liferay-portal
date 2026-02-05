@@ -198,12 +198,10 @@ public class EditLayoutDesignMVCActionCommandTest {
 				StringPool.BLANK, RandomTestUtil.randomString(),
 				serviceContext);
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		_testEditLayoutDesignDoesntChangeWithNotEditedValues(
-			draftLayout, globalGroup, masterLayoutPageTemplateEntry,
-			styleBookEntry);
+			draftLayout,
+			_groupLocalService.getCompanyGroup(TestPropsValues.getCompanyId()),
+			masterLayoutPageTemplateEntry, styleBookEntry);
 
 		_testEditLayoutDesignDoesntChangeWithNotEditedValues(
 			draftLayout, _group, masterLayoutPageTemplateEntry, styleBookEntry);

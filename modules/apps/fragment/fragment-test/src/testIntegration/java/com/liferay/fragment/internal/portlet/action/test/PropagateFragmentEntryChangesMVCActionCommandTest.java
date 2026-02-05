@@ -80,11 +80,11 @@ public class PropagateFragmentEntryChangesMVCActionCommandTest {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		FragmentCollection globalFragmentCollection =
-			FragmentTestUtil.addFragmentCollection(globalGroup.getGroupId());
+			FragmentTestUtil.addFragmentCollection(companyGroup.getGroupId());
 
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());

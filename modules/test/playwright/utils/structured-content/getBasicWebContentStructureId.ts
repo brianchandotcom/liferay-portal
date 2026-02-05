@@ -13,13 +13,13 @@ export default async function getBasicWebContentStructureId(
 			'liferay.com'
 		);
 
-	const globalGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
+	const companyGroup = await apiHelpers.jsonWebServicesGroup.getCompanyGroup(
 		company.companyId
 	);
 
 	return getWebContentStructureId(
 		apiHelpers,
-		globalGroup.groupId,
+		companyGroup.groupId,
 		'BASIC-WEB-CONTENT'
 	);
 }

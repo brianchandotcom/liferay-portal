@@ -102,11 +102,11 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 
 		String newName = RandomTestUtil.randomString(10);
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		SegmentsEntry segmentsEntry2 = SegmentsTestUtil.addSegmentsEntry(
-			globalGroup.getGroupId());
+			companyGroup.getGroupId());
 
 		String segmentsEntryScopeERC =
 			ScopeUtil.getItemScopeExternalReferenceCode(

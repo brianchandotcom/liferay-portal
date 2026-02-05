@@ -175,10 +175,9 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		_testAddSegmentsExperiment(sourceFragmentEntryLink, globalGroup);
+		_testAddSegmentsExperiment(
+			sourceFragmentEntryLink,
+			_groupLocalService.getCompanyGroup(TestPropsValues.getCompanyId()));
 
 		_testAddSegmentsExperiment(sourceFragmentEntryLink, _group);
 	}

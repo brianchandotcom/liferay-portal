@@ -80,7 +80,7 @@ public class SegmentsExperienceServiceTest {
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
-		_globalGroup = _groupLocalService.getCompanyGroup(
+		_companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
@@ -100,7 +100,7 @@ public class SegmentsExperienceServiceTest {
 
 	@Test
 	public void testAddSegmentsExperience() throws Exception {
-		_testAddSegmentsExperience(_globalGroup);
+		_testAddSegmentsExperience(_companyGroup);
 		_testAddSegmentsExperience(_group);
 	}
 
@@ -753,7 +753,7 @@ public class SegmentsExperienceServiceTest {
 
 	@Test
 	public void testUpdateSegmentsExperience() throws Exception {
-		_testUpdateSegmentsExperience(_globalGroup);
+		_testUpdateSegmentsExperience(_companyGroup);
 		_testUpdateSegmentsExperience(_group);
 	}
 
@@ -1005,11 +1005,11 @@ public class SegmentsExperienceServiceTest {
 	}
 
 	private long _classPK;
+	private Group _companyGroup;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	private Group _globalGroup;
 	private Group _group;
 
 	@Inject

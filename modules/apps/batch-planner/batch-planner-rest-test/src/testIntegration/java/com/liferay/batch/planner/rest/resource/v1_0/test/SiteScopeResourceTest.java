@@ -64,7 +64,7 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		_testGetPlanInternalClassNameKeySiteScopesPageNotFound(
 			true, internalClassNameKey);
 
-		Group globalGroup = testCompany.getGroup();
+		Group companyGroup = testCompany.getGroup();
 
 		Group group = GroupTestUtil.addGroupToCompany(
 			testCompany.getCompanyId());
@@ -103,13 +103,13 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		internalClassNameKey = _getInternalClassNameKey(objectDefinition2);
 
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), null,
+			Arrays.asList(companyGroup, group, testGroup), null,
 			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), false,
+			Arrays.asList(companyGroup, group, testGroup), false,
 			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), true,
+			Arrays.asList(companyGroup, group, testGroup), true,
 			internalClassNameKey);
 
 		// Service builder entity (company scoped)
@@ -122,7 +122,7 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 		_testGetPlanInternalClassNameKeySiteScopesPage(
 			Collections.emptyList(), false, internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, testGroup), true, internalClassNameKey);
+			Arrays.asList(companyGroup, testGroup), true, internalClassNameKey);
 
 		// Service builder entity (site scoped)
 
@@ -130,13 +130,13 @@ public class SiteScopeResourceTest extends BaseSiteScopeResourceTestCase {
 			"com.liferay.headless.delivery.dto.v1_0.BlogPosting";
 
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), null,
+			Arrays.asList(companyGroup, group, testGroup), null,
 			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), false,
+			Arrays.asList(companyGroup, group, testGroup), false,
 			internalClassNameKey);
 		_testGetPlanInternalClassNameKeySiteScopesPage(
-			Arrays.asList(globalGroup, group, testGroup), true,
+			Arrays.asList(companyGroup, group, testGroup), true,
 			internalClassNameKey);
 	}
 

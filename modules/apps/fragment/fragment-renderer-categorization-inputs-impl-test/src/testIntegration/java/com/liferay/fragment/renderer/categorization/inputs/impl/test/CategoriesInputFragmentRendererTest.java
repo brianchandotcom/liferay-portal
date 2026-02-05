@@ -107,9 +107,9 @@ public class CategoriesInputFragmentRendererTest
 		Company company = companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
-		Assert.assertTrue(groupIds.contains(globalGroup.getGroupId()));
+		Assert.assertTrue(groupIds.contains(companyGroup.getGroupId()));
 	}
 
 	@Test
@@ -135,9 +135,9 @@ public class CategoriesInputFragmentRendererTest
 		Company company = companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		Group globalGroup = company.getGroup();
+		Group companyGroup = company.getGroup();
 
-		Assert.assertTrue(groupIds.contains(globalGroup.getGroupId()));
+		Assert.assertTrue(groupIds.contains(companyGroup.getGroupId()));
 	}
 
 	@Override

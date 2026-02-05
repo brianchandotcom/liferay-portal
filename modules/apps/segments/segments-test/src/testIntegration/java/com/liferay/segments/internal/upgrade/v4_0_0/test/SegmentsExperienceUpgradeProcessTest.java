@@ -97,12 +97,12 @@ public class SegmentsExperienceUpgradeProcessTest
 	@Test
 	@TestInfo("LPD-73850")
 	public void testUpgrade() throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		SegmentsEntry segmentsEntry1 = _addSegmentsEntry(_group.getGroupId());
 		SegmentsEntry segmentsEntry2 = _addSegmentsEntry(
-			globalGroup.getGroupId());
+			companyGroup.getGroupId());
 
 		SegmentsExperience segmentsExperience0 =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
@@ -144,7 +144,7 @@ public class SegmentsExperienceUpgradeProcessTest
 		_assertSegmentsExperience(_group, segmentsEntry1, segmentsExperience1);
 
 		_assertSegmentsExperience(
-			globalGroup, segmentsEntry2, segmentsExperience2);
+			companyGroup, segmentsEntry2, segmentsExperience2);
 
 		Assert.assertTrue(
 			_dbInspector.hasColumn("SegmentsExperience", "segmentsEntryERC"));

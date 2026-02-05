@@ -92,11 +92,12 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 	@Test
 	@TestInfo("LPD-68134")
 	public void testUpgrade() throws Exception {
-		Group globalGroup = _groupLocalService.getCompanyGroup(
+		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
 		DLFileEntry dlFileEntry = _addFileEntry(_group.getGroupId());
-		DLFileEntry globalDLFileEntry = _addFileEntry(globalGroup.getGroupId());
+		DLFileEntry globalDLFileEntry = _addFileEntry(
+			companyGroup.getGroupId());
 
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(_group);
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
@@ -123,7 +124,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 			globalDLFileEntry.getExternalReferenceCode(),
 			layout2.getFaviconFileEntryERC());
 		Assert.assertEquals(
-			globalGroup.getExternalReferenceCode(),
+			companyGroup.getExternalReferenceCode(),
 			layout2.getFaviconFileEntryScopeERC());
 
 		Assert.assertTrue(

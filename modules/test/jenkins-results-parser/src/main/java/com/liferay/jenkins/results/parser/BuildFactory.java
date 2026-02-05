@@ -173,6 +173,11 @@ public class BuildFactory {
 				buildURL, (TopLevelBuild)parentBuild);
 		}
 
+		if (jobName.equals("sanitize-language")) {
+			return new SanitizeLanguageTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
+		}
+
 		if (jobName.startsWith("test-jenkins-acceptance-pullrequest")) {
 			return new JenkinsTopLevelBuild(
 				buildURL, (TopLevelBuild)parentBuild);

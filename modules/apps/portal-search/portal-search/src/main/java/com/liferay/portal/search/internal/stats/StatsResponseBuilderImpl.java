@@ -15,7 +15,7 @@ public class StatsResponseBuilderImpl implements StatsResponseBuilder {
 
 	@Override
 	public StatsResponse build() {
-		return new StatsResponseImpl(
+		return new StatsResponse(
 			_cardinality, _count, _field, _max, _mean, _min, _missing,
 			_standardDeviation, _sum, _sumOfSquares);
 	}

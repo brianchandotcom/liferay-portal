@@ -5,32 +5,79 @@
 
 package com.liferay.portal.search.stats;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.io.Serializable;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface StatsResponse {
+public class StatsResponse implements Serializable {
 
-	public long getCardinality();
+	public StatsResponse(
+		long cardinality, long count, String field, double max, double mean,
+		double min, long missing, double standardDeviation, double sum,
+		double sumOfSquares) {
 
-	public long getCount();
+		_cardinality = cardinality;
+		_count = count;
+		_field = field;
+		_max = max;
+		_mean = mean;
+		_min = min;
+		_missing = missing;
+		_standardDeviation = standardDeviation;
+		_sum = sum;
+		_sumOfSquares = sumOfSquares;
+	}
 
-	public String getField();
+	public long getCardinality() {
+		return _cardinality;
+	}
 
-	public double getMax();
+	public long getCount() {
+		return _count;
+	}
 
-	public double getMean();
+	public String getField() {
+		return _field;
+	}
 
-	public double getMin();
+	public double getMax() {
+		return _max;
+	}
 
-	public long getMissing();
+	public double getMean() {
+		return _mean;
+	}
 
-	public double getStandardDeviation();
+	public double getMin() {
+		return _min;
+	}
 
-	public double getSum();
+	public long getMissing() {
+		return _missing;
+	}
 
-	public double getSumOfSquares();
+	public double getStandardDeviation() {
+		return _standardDeviation;
+	}
+
+	public double getSum() {
+		return _sum;
+	}
+
+	public double getSumOfSquares() {
+		return _sumOfSquares;
+	}
+
+	private final long _cardinality;
+	private final long _count;
+	private final String _field;
+	private final double _max;
+	private final double _mean;
+	private final double _min;
+	private final long _missing;
+	private final double _standardDeviation;
+	private final double _sum;
+	private final double _sumOfSquares;
 
 }

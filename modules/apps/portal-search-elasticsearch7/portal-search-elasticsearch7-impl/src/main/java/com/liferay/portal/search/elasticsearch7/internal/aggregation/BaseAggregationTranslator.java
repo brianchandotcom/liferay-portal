@@ -8,10 +8,9 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitor;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 
 /**
  * @author Michael C. Han
@@ -20,9 +19,7 @@ public class BaseAggregationTranslator {
 
 	public AggregationBuilder translate(
 		AggregationBuilder aggregationBuilder, Aggregation aggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		for (Aggregation childAggregation :
 				aggregation.getChildrenAggregations()) {
@@ -35,7 +32,8 @@ public class BaseAggregationTranslator {
 				aggregation.getPipelineAggregations()) {
 
 			aggregationBuilder.subAggregation(
-				pipelineAggregationTranslator.translate(pipelineAggregation));
+				pipelineAggregation.accept(
+					ElasticsearchPipelineAggregationVisitor.INSTANCE));
 		}
 
 		return aggregationBuilder;

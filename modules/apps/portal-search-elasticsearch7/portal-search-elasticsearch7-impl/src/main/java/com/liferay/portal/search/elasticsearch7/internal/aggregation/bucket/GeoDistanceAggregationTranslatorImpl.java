@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.geolocation.GeoDistanceTypeTranslator;
@@ -20,7 +19,6 @@ import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,9 +33,7 @@ public class GeoDistanceAggregationTranslatorImpl
 	@Override
 	public GeoDistanceAggregationBuilder translate(
 		GeoDistanceAggregation geoDistanceAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		GeoPoint geoPoint = GeoLocationPointTranslator.translate(
 			geoDistanceAggregation.getGeoLocationPoint());
@@ -46,8 +42,7 @@ public class GeoDistanceAggregationTranslatorImpl
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.geoDistance(
 					baseMetricsAggregation.getName(), geoPoint),
-				geoDistanceAggregation, aggregationTranslator,
-				pipelineAggregationTranslator);
+				geoDistanceAggregation, aggregationTranslator);
 
 		if (geoDistanceAggregation.getDistanceUnit() != null) {
 			geoDistanceAggregationBuilder.unit(

@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.sort.ElasticsearchSortFieldTranslator;
@@ -22,7 +21,6 @@ import java.util.List;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.TopHitsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -40,9 +38,7 @@ public class TopHitsAggregationTranslatorImpl
 	@Override
 	public TopHitsAggregationBuilder translate(
 		TopHitsAggregation topHitsAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =
 			AggregationBuilders.topHits(topHitsAggregation.getName());

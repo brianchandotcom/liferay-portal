@@ -17,8 +17,6 @@ import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregati
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
@@ -45,25 +43,14 @@ import org.elasticsearch.search.aggregations.pipeline.SerialDiffPipelineAggregat
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = PipelineAggregationTranslator.class
-)
-public class ElasticsearchPipelineAggregationTranslator
-	implements PipelineAggregationTranslator<PipelineAggregationBuilder>,
-			   PipelineAggregationVisitor<PipelineAggregationBuilder> {
+public class ElasticsearchPipelineAggregationVisitor
+	implements PipelineAggregationVisitor<PipelineAggregationBuilder> {
 
-	@Override
-	public PipelineAggregationBuilder translate(
-		PipelineAggregation pipelineAggregation) {
-
-		return pipelineAggregation.accept(this);
-	}
+	public static final ElasticsearchPipelineAggregationVisitor INSTANCE =
+		new ElasticsearchPipelineAggregationVisitor();
 
 	@Override
 	public PipelineAggregationBuilder visit(
@@ -354,6 +341,9 @@ public class ElasticsearchPipelineAggregationTranslator
 					bucketMetricsPipelineAggregation.getName(),
 					bucketMetricsPipelineAggregation.getBucketsPath()),
 			sumBucketPipelineAggregation);
+	}
+
+	private ElasticsearchPipelineAggregationVisitor() {
 	}
 
 	private final BucketMetricsPipelineAggregationTranslator

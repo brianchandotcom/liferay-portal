@@ -7,12 +7,10 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,16 +26,13 @@ public class DateRangeAggregationTranslatorImpl
 	@Override
 	public DateRangeAggregationBuilder translate(
 		DateRangeAggregation dateRangeAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		DateRangeAggregationBuilder dateRangeAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.dateRange(
 					baseMetricsAggregation.getName()),
-				dateRangeAggregation, aggregationTranslator,
-				pipelineAggregationTranslator);
+				dateRangeAggregation, aggregationTranslator);
 
 		populateRangeAggregationBuilder(
 			dateRangeAggregation, dateRangeAggregationBuilder);

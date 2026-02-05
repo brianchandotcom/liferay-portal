@@ -7,10 +7,8 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
 
 /**
@@ -20,8 +18,6 @@ public interface WeightedAvgAggregationTranslator {
 
 	public WeightedAvgAggregationBuilder translate(
 		WeightedAvgAggregation weightedAvgAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator);
+		AggregationTranslator<AggregationBuilder> aggregationTranslator);
 
 }

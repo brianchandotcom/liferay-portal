@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
@@ -362,8 +362,8 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			pipelineAggregations.forEach(
 				pipelineAggregation -> {
 					PipelineAggregationBuilder pipelineAggregationBuilder =
-						_pipelineAggregationTranslator.translate(
-							pipelineAggregation);
+						pipelineAggregation.accept(
+							ElasticsearchPipelineAggregationVisitor.INSTANCE);
 
 					searchSourceBuilder.aggregation(pipelineAggregationBuilder);
 				});
@@ -579,10 +579,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 	@Reference
 	private FacetTranslator _facetTranslator;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private PipelineAggregationTranslator<PipelineAggregationBuilder>
-		_pipelineAggregationTranslator;
 
 	@Reference
 	private StatsTranslator _statsTranslator;

@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FiltersAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
@@ -17,7 +16,6 @@ import java.util.List;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 
@@ -33,9 +31,7 @@ public class FiltersAggregationTranslatorImpl
 	@Override
 	public FiltersAggregationBuilder translate(
 		FiltersAggregation filtersAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		List<FiltersAggregation.KeyedQuery> keyedQueries =
 			filtersAggregation.getKeyedQueries();
@@ -72,7 +68,7 @@ public class FiltersAggregationTranslatorImpl
 
 		_baseAggregationTranslator.translate(
 			filtersAggregationBuilder, filtersAggregation,
-			aggregationTranslator, pipelineAggregationTranslator);
+			aggregationTranslator);
 
 		return filtersAggregationBuilder;
 	}

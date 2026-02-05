@@ -8,14 +8,12 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 
 import java.util.List;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
@@ -32,16 +30,13 @@ public class RangeAggregationTranslatorImpl
 	@Override
 	public RangeAggregationBuilder translate(
 		RangeAggregation rangeAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		RangeAggregationBuilder rangeAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.range(
 					baseMetricsAggregation.getName()),
-				rangeAggregation, aggregationTranslator,
-				pipelineAggregationTranslator);
+				rangeAggregation, aggregationTranslator);
 
 		populateRangeAggregationBuilder(
 			rangeAggregation, rangeAggregationBuilder);

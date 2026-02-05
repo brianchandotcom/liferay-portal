@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 
 import java.util.List;
@@ -16,7 +15,6 @@ import java.util.List;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,16 +29,13 @@ public class HistogramAggregationTranslatorImpl
 	@Override
 	public HistogramAggregationBuilder translate(
 		HistogramAggregation histogramAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		HistogramAggregationBuilder histogramAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.histogram(
 					baseMetricsAggregation.getName()),
-				histogramAggregation, aggregationTranslator,
-				pipelineAggregationTranslator);
+				histogramAggregation, aggregationTranslator);
 
 		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
 			List<BucketOrder> bucketOrders = _orderTranslator.translate(

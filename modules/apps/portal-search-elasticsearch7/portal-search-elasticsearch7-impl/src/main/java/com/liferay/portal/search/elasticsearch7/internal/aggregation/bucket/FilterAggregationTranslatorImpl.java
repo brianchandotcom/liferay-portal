@@ -7,14 +7,12 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,9 +27,7 @@ public class FilterAggregationTranslatorImpl
 	@Override
 	public FilterAggregationBuilder translate(
 		FilterAggregation filterAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		QueryBuilder filterQueryBuilder =
 			ElasticsearchQueryVisitor.INSTANCE.translate(
@@ -42,8 +38,7 @@ public class FilterAggregationTranslatorImpl
 				filterAggregation.getName(), filterQueryBuilder);
 
 		_baseAggregationTranslator.translate(
-			filterAggregationBuilder, filterAggregation, aggregationTranslator,
-			pipelineAggregationTranslator);
+			filterAggregationBuilder, filterAggregation, aggregationTranslator);
 
 		return filterAggregationBuilder;
 	}

@@ -43,7 +43,6 @@ import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateHistogramAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateRangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FilterAggregationTranslator;
@@ -61,7 +60,6 @@ import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.Wei
 import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
@@ -119,7 +117,7 @@ public class ElasticsearchAggregationTranslator
 			baseMetricsAggregation -> new ChildrenAggregationBuilder(
 				baseMetricsAggregation.getName(),
 				childrenAggregation.getChildType()),
-			childrenAggregation, this, _pipelineAggregationTranslator);
+			childrenAggregation, this);
 	}
 
 	@Override
@@ -135,7 +133,7 @@ public class ElasticsearchAggregationTranslator
 	@Override
 	public AggregationBuilder visit(DateRangeAggregation dateRangeAggregation) {
 		return _dateRangeAggregationTranslator.translate(
-			dateRangeAggregation, this, _pipelineAggregationTranslator);
+			dateRangeAggregation, this);
 	}
 
 	@Override
@@ -147,8 +145,7 @@ public class ElasticsearchAggregationTranslator
 				baseMetricsAggregation ->
 					AggregationBuilders.diversifiedSampler(
 						diversifiedSamplerAggregation.getName()),
-				diversifiedSamplerAggregation, this,
-				_pipelineAggregationTranslator);
+				diversifiedSamplerAggregation, this);
 
 		if (diversifiedSamplerAggregation.getExecutionHint() != null) {
 			diversifiedAggregationBuilder.executionHint(
@@ -176,7 +173,7 @@ public class ElasticsearchAggregationTranslator
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.extendedStats(
 					baseMetricsAggregation.getName()),
-				extendedStatsAggregation, this, _pipelineAggregationTranslator);
+				extendedStatsAggregation, this);
 
 		if (extendedStatsAggregation.getSigma() != null) {
 			extendedStatsAggregationBuilder.sigma(
@@ -188,14 +185,13 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(FilterAggregation filterAggregation) {
-		return _filterAggregationTranslator.translate(
-			filterAggregation, this, _pipelineAggregationTranslator);
+		return _filterAggregationTranslator.translate(filterAggregation, this);
 	}
 
 	@Override
 	public AggregationBuilder visit(FiltersAggregation filtersAggregation) {
 		return _filtersAggregationTranslator.translate(
-			filtersAggregation, this, _pipelineAggregationTranslator);
+			filtersAggregation, this);
 	}
 
 	@Override
@@ -204,7 +200,7 @@ public class ElasticsearchAggregationTranslator
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.geoBounds(
 					geoBoundsAggregation.getName()),
-				geoBoundsAggregation, this, _pipelineAggregationTranslator);
+				geoBoundsAggregation, this);
 
 		if (geoBoundsAggregation.getWrapLongitude() != null) {
 			geoBoundsAggregationBuilder.wrapLongitude(
@@ -221,7 +217,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.geoCentroid(
 				geoCentroidAggregation.getName()),
-			geoCentroidAggregation, this, _pipelineAggregationTranslator);
+			geoCentroidAggregation, this);
 	}
 
 	@Override
@@ -229,7 +225,7 @@ public class ElasticsearchAggregationTranslator
 		GeoDistanceAggregation geoDistanceAggregation) {
 
 		return _geoDistanceAggregationTranslator.translate(
-			geoDistanceAggregation, this, _pipelineAggregationTranslator);
+			geoDistanceAggregation, this);
 	}
 
 	@Override
@@ -240,7 +236,7 @@ public class ElasticsearchAggregationTranslator
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.geohashGrid(
 					geoHashGridAggregation.getName()),
-				geoHashGridAggregation, this, _pipelineAggregationTranslator);
+				geoHashGridAggregation, this);
 
 		if (geoHashGridAggregation.getPrecision() != null) {
 			geoGridAggregationBuilder.precision(
@@ -269,7 +265,7 @@ public class ElasticsearchAggregationTranslator
 	@Override
 	public AggregationBuilder visit(HistogramAggregation histogramAggregation) {
 		return _histogramAggregationTranslator.translate(
-			histogramAggregation, this, _pipelineAggregationTranslator);
+			histogramAggregation, this);
 	}
 
 	@Override
@@ -277,7 +273,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.max(
 				baseMetricsAggregation.getName()),
-			maxAggregation, this, _pipelineAggregationTranslator);
+			maxAggregation, this);
 	}
 
 	@Override
@@ -285,7 +281,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.min(
 				baseMetricsAggregation.getName()),
-			minAggregation, this, _pipelineAggregationTranslator);
+			minAggregation, this);
 	}
 
 	@Override
@@ -293,7 +289,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.missing(
 				baseMetricsAggregation.getName()),
-			missingAggregation, this, _pipelineAggregationTranslator);
+			missingAggregation, this);
 	}
 
 	@Override
@@ -313,8 +309,7 @@ public class ElasticsearchAggregationTranslator
 				baseMetricsAggregation -> AggregationBuilders.percentileRanks(
 					baseMetricsAggregation.getName(),
 					percentileRanksAggregation.getValues()),
-				percentileRanksAggregation, this,
-				_pipelineAggregationTranslator);
+				percentileRanksAggregation, this);
 
 		if (percentileRanksAggregation.getCompression() != null) {
 			percentileRanksAggregationBuilder.compression(
@@ -351,7 +346,7 @@ public class ElasticsearchAggregationTranslator
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.percentiles(
 					baseMetricsAggregation.getName()),
-				percentilesAggregation, this, _pipelineAggregationTranslator);
+				percentilesAggregation, this);
 
 		if (percentilesAggregation.getCompression() != null) {
 			percentilesAggregationBuilder.compression(
@@ -388,8 +383,7 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(RangeAggregation rangeAggregation) {
-		return _rangeAggregationTranslator.translate(
-			rangeAggregation, this, _pipelineAggregationTranslator);
+		return _rangeAggregationTranslator.translate(rangeAggregation, this);
 	}
 
 	@Override
@@ -427,7 +421,7 @@ public class ElasticsearchAggregationTranslator
 		ScriptedMetricAggregation scriptedMetricAggregation) {
 
 		return _scriptedMetricAggregationTranslator.translate(
-			scriptedMetricAggregation, this, _pipelineAggregationTranslator);
+			scriptedMetricAggregation, this);
 	}
 
 	@Override
@@ -445,7 +439,7 @@ public class ElasticsearchAggregationTranslator
 		SignificantTextAggregation significantTextAggregation) {
 
 		return _significantTextAggregationTranslator.translate(
-			significantTextAggregation, this, _pipelineAggregationTranslator);
+			significantTextAggregation, this);
 	}
 
 	@Override
@@ -453,7 +447,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.stats(
 				baseMetricsAggregation.getName()),
-			statsAggregation, this, _pipelineAggregationTranslator);
+			statsAggregation, this);
 	}
 
 	@Override
@@ -461,7 +455,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.sum(
 				baseMetricsAggregation.getName()),
-			sumAggregation, this, _pipelineAggregationTranslator);
+			sumAggregation, this);
 	}
 
 	@Override
@@ -474,7 +468,7 @@ public class ElasticsearchAggregationTranslator
 	@Override
 	public AggregationBuilder visit(TopHitsAggregation topHitsAggregation) {
 		return _topHitsAggregationTranslator.translate(
-			topHitsAggregation, this, _pipelineAggregationTranslator);
+			topHitsAggregation, this);
 	}
 
 	@Override
@@ -484,7 +478,7 @@ public class ElasticsearchAggregationTranslator
 		return _baseFieldAggregationTranslator.translate(
 			baseMetricsAggregation -> AggregationBuilders.count(
 				baseMetricsAggregation.getName()),
-			valueCountAggregation, this, _pipelineAggregationTranslator);
+			valueCountAggregation, this);
 	}
 
 	@Override
@@ -492,7 +486,7 @@ public class ElasticsearchAggregationTranslator
 		WeightedAvgAggregation weightedAvgAggregation) {
 
 		return _weightedAvgAggregationTranslator.translate(
-			weightedAvgAggregation, this, _pipelineAggregationTranslator);
+			weightedAvgAggregation, this);
 	}
 
 	private <AB extends AggregationBuilder> AB _assemble(
@@ -543,10 +537,6 @@ public class ElasticsearchAggregationTranslator
 
 	@Reference
 	private HistogramAggregationTranslator _histogramAggregationTranslator;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private PipelineAggregationTranslator<PipelineAggregationBuilder>
-		_pipelineAggregationTranslator;
 
 	@Reference
 	private RangeAggregationTranslator _rangeAggregationTranslator;

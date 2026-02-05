@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.ValueTypeTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
@@ -15,7 +14,6 @@ import com.liferay.portal.search.script.Script;
 
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.MultiValuesSourceFieldConfig;
 
@@ -31,9 +29,7 @@ public class WeightedAvgAggregationTranslatorImpl
 	@Override
 	public WeightedAvgAggregationBuilder translate(
 		WeightedAvgAggregation weightedAvgAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		WeightedAvgAggregationBuilder weightedAvgAggregationBuilder =
 			AggregationBuilders.weightedAvg(weightedAvgAggregation.getName());
@@ -68,7 +64,7 @@ public class WeightedAvgAggregationTranslatorImpl
 
 		_baseAggregationTranslator.translate(
 			weightedAvgAggregationBuilder, weightedAvgAggregation,
-			aggregationTranslator, pipelineAggregationTranslator);
+			aggregationTranslator);
 
 		return weightedAvgAggregationBuilder;
 	}

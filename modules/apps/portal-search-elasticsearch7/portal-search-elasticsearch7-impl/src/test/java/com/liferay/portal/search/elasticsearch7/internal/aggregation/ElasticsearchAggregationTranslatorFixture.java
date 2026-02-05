@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateHistogramAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.DateRangeAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.FilterAggregationTranslatorImpl;
@@ -20,9 +19,6 @@ import com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket.Term
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.ScriptedMetricAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.TopHitsAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics.WeightedAvgAggregationTranslatorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationTranslator;
-
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 
 /**
  * @author Michael C. Han
@@ -30,24 +26,13 @@ import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 public class ElasticsearchAggregationTranslatorFixture {
 
 	public ElasticsearchAggregationTranslatorFixture() {
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator =
-				new ElasticsearchPipelineAggregationTranslator();
-
-		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactoryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			aggregationBuilderAssemblerFactory,
-			"_pipelineAggregationTranslator", pipelineAggregationTranslator);
-
 		ElasticsearchAggregationTranslator elasticsearchAggregationTranslator =
 			new ElasticsearchAggregationTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_aggregationBuilderAssemblerFactory",
-			aggregationBuilderAssemblerFactory);
+			new AggregationBuilderAssemblerFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_dateHistogramAggregationTranslator",
@@ -60,9 +45,6 @@ public class ElasticsearchAggregationTranslatorFixture {
 			elasticsearchAggregationTranslator,
 			"_histogramAggregationTranslator",
 			new HistogramAggregationTranslatorImpl());
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchAggregationTranslator,
-			"_pipelineAggregationTranslator", pipelineAggregationTranslator);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_rangeAggregationTranslator",
 			new RangeAggregationTranslatorImpl());

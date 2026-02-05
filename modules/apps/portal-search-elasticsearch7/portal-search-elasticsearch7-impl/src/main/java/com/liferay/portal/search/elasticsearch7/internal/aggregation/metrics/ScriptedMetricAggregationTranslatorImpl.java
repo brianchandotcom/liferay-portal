@@ -7,14 +7,12 @@ package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.ScriptedMetricAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,9 +27,7 @@ public class ScriptedMetricAggregationTranslatorImpl
 	@Override
 	public ScriptedMetricAggregationBuilder translate(
 		ScriptedMetricAggregation scriptedMetricAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator,
-		PipelineAggregationTranslator<PipelineAggregationBuilder>
-			pipelineAggregationTranslator) {
+		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
 		ScriptedMetricAggregationBuilder scriptedMetricAggregationBuilder =
 			AggregationBuilders.scriptedMetric(
@@ -73,7 +69,7 @@ public class ScriptedMetricAggregationTranslatorImpl
 
 		_baseAggregationTranslator.translate(
 			scriptedMetricAggregationBuilder, scriptedMetricAggregation,
-			aggregationTranslator, pipelineAggregationTranslator);
+			aggregationTranslator);
 
 		return scriptedMetricAggregationBuilder;
 	}

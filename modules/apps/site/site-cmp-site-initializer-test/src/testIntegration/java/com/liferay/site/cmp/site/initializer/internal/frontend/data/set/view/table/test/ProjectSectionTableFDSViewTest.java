@@ -39,7 +39,8 @@ public class ProjectSectionTableFDSViewTest
 		assertFDSTableSchemaField(
 			null, "progressBarTableCellRenderer", "completion-rate",
 			"embedded.completionRate");
-		assertFDSTableSchemaField(null, "date", "due-date", "embedded.dueDate");
+		assertFDSTableSchemaField(
+			null, "dueDateTableCellRenderer", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
 			null, "userRelationshipTableCellRenderer", "manager",
 			"embedded.r_userToCMPProjectManager_userERC");

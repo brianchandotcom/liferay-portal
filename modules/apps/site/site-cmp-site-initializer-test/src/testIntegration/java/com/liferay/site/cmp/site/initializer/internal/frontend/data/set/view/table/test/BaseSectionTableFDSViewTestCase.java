@@ -7,10 +7,8 @@ package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.view.ta
 
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewRegistry;
-import com.liferay.frontend.data.set.view.table.DateFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 
@@ -19,8 +17,6 @@ import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
-
-import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Pedro Leite
@@ -50,22 +46,6 @@ public abstract class BaseSectionTableFDSViewTestCase {
 			expectedActionId, fdsTableSchemaField.getActionId());
 		Assert.assertEquals(
 			expectedContentRenderer, fdsTableSchemaField.getContentRenderer());
-
-		if (fdsTableSchemaField instanceof DateFDSTableSchemaField) {
-			DateFDSTableSchemaField dateFDSTableSchemaField =
-				(DateFDSTableSchemaField)fdsTableSchemaField;
-
-			JSONAssert.assertEquals(
-				JSONUtil.put(
-					"day", "numeric"
-				).put(
-					"month", "numeric"
-				).put(
-					"year", "numeric"
-				).toString(),
-				String.valueOf(dateFDSTableSchemaField.getFormat()), true);
-		}
-
 		Assert.assertEquals(expectedLabel, fdsTableSchemaField.getLabel());
 	}
 

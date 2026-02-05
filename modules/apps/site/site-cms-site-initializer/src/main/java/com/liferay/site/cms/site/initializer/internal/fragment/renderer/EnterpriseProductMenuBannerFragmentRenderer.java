@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -43,10 +44,11 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		FragmentEntryLink fragmentEntryLink =
+			fragmentRendererContext.getFragmentEntryLink();
+
 		if (!FeatureFlagManagerUtil.isEnabled(
-				fragmentRendererContext.getFragmentEntryLink(
-				).getCompanyId(),
-				"LPD-74377")) {
+				fragmentEntryLink.getCompanyId(), "LPD-74377")) {
 
 			return;
 		}

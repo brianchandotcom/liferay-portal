@@ -223,7 +223,7 @@
 				{
 					"DBType": "Long",
 					"businessType": "LongInteger",
-					"externalReferenceCode": "TEMPLATE_GROUP_ID",
+					"externalReferenceCode": "DSR_TEMPLATE_GROUP_ID",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"label": {

@@ -386,6 +386,7 @@ type ObjectFieldSettingName =
 	| 'showCounter'
 	| 'showFilesInLibrary'
 	| 'stateFlow'
+	| 'storageDepot'
 	| 'storageLibraryPath'
 	| 'suffix'
 	| 'timeStorage'

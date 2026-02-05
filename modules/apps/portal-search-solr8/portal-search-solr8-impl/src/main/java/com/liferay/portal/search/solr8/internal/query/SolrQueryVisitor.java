@@ -6,18 +6,16 @@
 package com.liferay.portal.search.solr8.internal.query;
 
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-public class SolrQueryTranslator
-	extends BaseQueryVisitor implements QueryTranslator<String> {
+public class SolrQueryVisitor extends BaseQueryVisitor {
 
-	@Override
-	public String translate(Query query, SearchContext searchContext) {
+	public static final SolrQueryVisitor INSTANCE = new SolrQueryVisitor();
+
+	public String translate(Query query) {
 		org.apache.lucene.search.Query luceneQuery = query.accept(this);
 
 		if (luceneQuery != null) {
@@ -25,6 +23,9 @@ public class SolrQueryTranslator
 		}
 
 		return null;
+	}
+
+	private SolrQueryVisitor() {
 	}
 
 }

@@ -6,12 +6,11 @@
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
 import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
+import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
 
 import java.util.Map;
 
@@ -40,8 +39,8 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 
 		UpdateRequest updateRequest = new UpdateRequest();
 
-		String queryString = _queryTranslator.translate(
-			deleteByQueryDocumentRequest.getQuery(), null);
+		String queryString = SolrQueryVisitor.INSTANCE.translate(
+			deleteByQueryDocumentRequest.getQuery());
 
 		updateRequest.deleteByQuery(queryString);
 
@@ -77,8 +76,6 @@ public class DeleteByQueryDocumentRequestExecutorImpl
 	}
 
 	private volatile String _defaultCollection;
-	private final QueryTranslator<String> _queryTranslator =
-		new SolrQueryTranslator();
 
 	@Reference
 	private SolrClientManager _solrClientManager;

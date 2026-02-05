@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,6 +27,7 @@ import com.liferay.portal.search.solr8.internal.FacetProcessorContext;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetUtil;
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
+import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
 import com.liferay.portal.search.solr8.internal.query.translator.SolrQueryTranslator;
 import com.liferay.portal.search.solr8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -154,7 +154,7 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		Query legacyQuery = baseSearchRequest.getQuery71();
 
 		if (legacyQuery != null) {
-			return _queryTranslator.translate(legacyQuery, null);
+			return SolrQueryVisitor.INSTANCE.translate(legacyQuery);
 		}
 
 		return null;
@@ -353,9 +353,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		};
 
 	private final FilterTranslator _filterTranslator = new FilterTranslator();
-	private final QueryTranslator<String> _queryTranslator =
-		new com.liferay.portal.search.solr8.internal.query.
-			SolrQueryTranslator();
 
 	@SuppressWarnings("rawtypes")
 	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;

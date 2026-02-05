@@ -86,7 +86,6 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 
 		ddmFormFieldOptions.addOptionLabel(
 			optionValue, LocaleUtil.US, optionLabel);
-		ddmFormFieldOptions.addOptionLabel(optionValue, LocaleUtil.BRAZIL, "");
 
 		Map<Locale, String> nameMap = LinkedHashMapBuilder.put(
 			LocaleUtil.US, optionLabel

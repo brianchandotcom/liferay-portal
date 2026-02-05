@@ -107,7 +107,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 
 		int invalidFragmentsCount = jsonObject.getInt("invalidFragmentsCount");
 
-		Assert.assertTrue(invalidFragmentsCount > 0);
+		Assert.assertEquals(1, invalidFragmentsCount);
 	}
 
 	@Test

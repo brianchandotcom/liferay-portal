@@ -15,19 +15,17 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Page;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,8 +44,6 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 	public Page<TaskAssignee> getTaskAssigneesPage(String search)
 		throws Exception {
 
-		List<TaskAssignee> taskAssignees = new ArrayList<>();
-
 		SearchResponse searchResponse = _searcher.search(
 			_searchRequestBuilderFactory.builder(
 			).companyId(
@@ -62,67 +58,32 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 				20
 			).build());
 
-		for (Document document : searchResponse.getDocuments()) {
-			String name = document.getString(Field.NAME);
+		SearchHits searchHits = searchResponse.getSearchHits();
 
-			String type = StringUtil.extractLast(
-				document.getString(Field.ENTRY_CLASS_NAME), StringPool.PERIOD);
-
-			if (StringUtil.equals(type, "User")) {
-				name = document.getString("fullName");
-			}
-
-			if (Validator.isNull(name)) {
-				continue;
-			}
-
-			String assigneeName = name;
-			String assigneeType = type;
-
-			taskAssignees.add(
-				new TaskAssignee() {
-					{
-						setExternalReferenceCode(
-							() -> document.getString("externalReferenceCode"));
-						setImage(
-							() -> {
-								if (!StringUtil.equals(type, "User")) {
-									return null;
-								}
-
-								User user = _userLocalService.fetchUser(
-									document.getLong(Field.ENTRY_CLASS_PK));
-
-								if (user == null) {
-									return null;
-								}
-
-								return user.getPortraitURL(
-									(ThemeDisplay)
-										contextHttpServletRequest.getAttribute(
-											WebKeys.THEME_DISPLAY));
-							});
-						setName(() -> assigneeName);
-						setType(() -> assigneeType);
-					}
-				});
-		}
-
-		return Page.of(taskAssignees);
+		return Page.of(
+			transform(
+				searchHits.getSearchHits(),
+				searchHit -> _toTaskAssignee(searchHit.getDocument())));
 	}
 
-	private BooleanQuery _getBooleanQuery(String search) {
+	private String _getAssigneeName(String assigneeType, Document document) {
+		if (StringUtil.equals(assigneeType, "User")) {
+			return document.getString("fullName");
+		}
+
+		return document.getString(Field.NAME);
+	}
+
+	private BooleanQuery _getBooleanQuery(String search) throws Exception {
 		BooleanQuery booleanQuery = _queries.booleanQuery();
 
 		BooleanQuery roleBooleanQuery = _queries.booleanQuery();
 
-		Role guestRole = _roleLocalService.fetchRole(
+		Role guestRole = _roleLocalService.getRole(
 			contextCompany.getCompanyId(), RoleConstants.GUEST);
 
-		if (guestRole != null) {
-			roleBooleanQuery.addMustNotQueryClauses(
-				_queries.term(Field.ENTRY_CLASS_PK, guestRole.getRoleId()));
-		}
+		roleBooleanQuery.addMustNotQueryClauses(
+			_queries.term(Field.ENTRY_CLASS_PK, guestRole.getRoleId()));
 
 		if (Validator.isNull(search)) {
 			return booleanQuery.addShouldQueryClauses(roleBooleanQuery);
@@ -141,6 +102,49 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 		return booleanQuery.addShouldQueryClauses(
 			roleBooleanQuery, userBooleanQuery);
 	}
+
+	private TaskAssignee _toTaskAssignee(Document document) {
+		String assigneeType = StringUtil.extractLast(
+			document.getString(Field.ENTRY_CLASS_NAME), StringPool.PERIOD);
+
+		String assigneeName = _getAssigneeName(assigneeType, document);
+
+		if (Validator.isNull(assigneeName)) {
+			return null;
+		}
+
+		return new TaskAssignee() {
+			{
+				setExternalReferenceCode(
+					() -> document.getString("externalReferenceCode"));
+				setImage(
+					() -> {
+						if (!StringUtil.equals(assigneeType, "User")) {
+							return null;
+						}
+
+						User user = _userLocalService.fetchUser(
+							document.getLong(Field.ENTRY_CLASS_PK));
+
+						if ((user == null) || (user.getPortraitId() == 0)) {
+							return null;
+						}
+
+						return user.getPortraitURL(
+							new ThemeDisplay() {
+								{
+									setPathImage(_portal.getPathImage());
+								}
+							});
+					});
+				setName(() -> assigneeName);
+				setType(() -> assigneeType);
+			}
+		};
+	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Queries _queries;

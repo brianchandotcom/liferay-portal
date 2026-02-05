@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCache;
+import com.liferay.segments.asah.connector.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.context.contributor.SegmentsAsahRequestContextContributor;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntryRel;

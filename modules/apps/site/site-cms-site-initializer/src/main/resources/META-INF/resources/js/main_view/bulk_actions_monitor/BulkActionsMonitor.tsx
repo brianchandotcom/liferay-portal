@@ -193,6 +193,7 @@ function BulkActionsMonitor() {
 			trigger={
 				<div>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('task-status-toggle')}
 						borderless
 						className={classnames('task-status-toggle', {
 							'task-status-toggle-show': !processingTasks,

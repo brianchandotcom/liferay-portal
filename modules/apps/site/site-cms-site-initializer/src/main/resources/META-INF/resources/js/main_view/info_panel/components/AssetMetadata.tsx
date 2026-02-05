@@ -130,6 +130,7 @@ const AssetMetadata = () => {
 
 							<ClayInput.GroupItem append shrink>
 								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get('copy')}
 									data-clipboard-text={asset.file?.link?.href}
 									displayType="secondary"
 									onClick={copyText}

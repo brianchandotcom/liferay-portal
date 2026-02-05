@@ -17,7 +17,7 @@ import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectErrors from '../selectors/selectErrors';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
-import {Field, MultiselectField, SingleSelectField} from '../utils/field';
+import {Field, SelectFromListField} from '../utils/field';
 import AsyncPicker from './AsyncPicker';
 
 export default function PicklistPicker({
@@ -27,10 +27,10 @@ export default function PicklistPicker({
 	disabled?: boolean;
 	field: Field;
 }) {
-	const selectField = field as SingleSelectField | MultiselectField;
+	const selectFromListField = field as SelectFromListField;
 
 	const [selectedKey, setSelectedKey] = useState<React.Key>(
-		selectField.picklistId
+		selectFromListField.picklistId
 	);
 
 	const dispatch = useStateDispatch();

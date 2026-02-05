@@ -18,7 +18,7 @@ import {
 	Structure,
 	StructureChild,
 } from '../types/Structure';
-import {Field, MultiselectField, SingleSelectField} from './field';
+import {Field, SelectFromListField} from './field';
 
 const NAME_MAX_LENGTH = 41;
 const ERC_MAX_LENGTH = 75;
@@ -59,9 +59,8 @@ export function validateField({
 		erc?: Field['erc'];
 		label?: Field['label'];
 		name?: Field['name'];
-		picklistId?:
-			| SingleSelectField['picklistId']
-			| MultiselectField['picklistId'];
+		picklistId?: SelectFromListField['picklistId'];
+
 		settings?: Field['settings'];
 	};
 	deletedChildren: State['history']['deletedChildren'];

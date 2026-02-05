@@ -5,9 +5,8 @@
 
 import getDateTimeFieldComponents from '../components/field_components/DateTimeFieldComponents';
 import getLongTextFieldComponents from '../components/field_components/LongTextFieldComponents';
-import getMultiSelectFieldComponents from '../components/field_components/MultiSelectFieldComponents';
 import getNumericFieldComponents from '../components/field_components/NumericFieldComponents';
-import getSingleSelectFieldComponents from '../components/field_components/SingleSelectFieldComponents';
+import getSelectFromListFieldComponents from '../components/field_components/SelectFromListFieldComponents';
 import getTextFieldComponents from '../components/field_components/TextFieldComponents';
 import getUploadFieldComponents from '../components/field_components/UploadFieldComponents';
 import {Field, FieldType} from './field';
@@ -24,9 +23,8 @@ const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
 	'decimal': () => ({}),
 	'integer': getNumericFieldComponents,
 	'long-text': getLongTextFieldComponents,
-	'multiselect': getMultiSelectFieldComponents,
 	'rich-text': () => ({}),
-	'single-select': getSingleSelectFieldComponents,
+	'select-from-list': getSelectFromListFieldComponents,
 	'text': getTextFieldComponents,
 	'upload': getUploadFieldComponents,
 };

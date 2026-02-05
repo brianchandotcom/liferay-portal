@@ -27,12 +27,7 @@ import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
 import addGroup from '../utils/addGroup';
 import deleteChildren from '../utils/deleteChildren';
-import {
-	Field,
-	MultiselectField,
-	SingleSelectField,
-	getDefaultField,
-} from '../utils/field';
+import {Field, SelectFromListField, getDefaultField} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
@@ -190,6 +185,7 @@ type UpdateFieldAction = {
 	indexableConfig?: Field['indexableConfig'];
 	label?: Liferay.Language.LocalizedValue<string>;
 	localized?: boolean;
+	multiselection?: boolean;
 	name?: string;
 	newName?: string;
 	picklistId?: number;
@@ -796,6 +792,7 @@ function reducer(state: State, action: Action): State {
 				indexableConfig,
 				label,
 				localized,
+				multiselection,
 				name,
 				picklistId,
 				required,
@@ -840,9 +837,13 @@ function reducer(state: State, action: Action): State {
 				settings: settings ?? field.settings,
 			};
 
+			if (multiselection !== undefined) {
+				(nextField as SelectFromListField).multiselection =
+					multiselection;
+			}
+
 			if (picklistId) {
-				(nextField as SingleSelectField | MultiselectField).picklistId =
-					picklistId;
+				(nextField as SelectFromListField).picklistId = picklistId;
 			}
 
 			const nextChildren = updateChild({

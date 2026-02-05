@@ -18,7 +18,7 @@ import {
 	Structure,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import {Field, FieldType, MultiselectField, SingleSelectField} from './field';
+import {Field, FieldType, SelectFromListField} from './field';
 import getUuid from './getUuid';
 import isCustomObjectField from './isCustomObjectField';
 import sortChildren from './sortChildren';
@@ -193,11 +193,19 @@ export function buildField({
 	};
 
 	if (
-		(field.type === 'single-select' || field.type === 'multiselect') &&
+		field.type === 'select-from-list' &&
 		!isNullOrUndefined(objectField.listTypeDefinitionId)
 	) {
-		(field as SingleSelectField | MultiselectField).picklistId =
+		(field as SelectFromListField).picklistId =
 			objectField.listTypeDefinitionId;
+	}
+
+	if (objectField.businessType === 'MultiselectPicklist') {
+		(field as SelectFromListField).multiselection = true;
+	}
+
+	if (objectField.businessType === 'Picklist') {
+		(field as SelectFromListField).multiselection = false;
 	}
 
 	return field;
@@ -335,11 +343,11 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 }
 
 function getFieldType(objectField: ObjectField): FieldType {
-	if (objectField.businessType === 'Picklist') {
-		return 'single-select';
-	}
-	else if (objectField.businessType === 'MultiselectPicklist') {
-		return 'multiselect';
+	if (
+		objectField.businessType === 'Picklist' ||
+		objectField.businessType === 'MultiselectPicklist'
+	) {
+		return 'select-from-list';
 	}
 
 	const DB_TYPE_TO_FIELD_TYPE: Record<string, FieldType> = {

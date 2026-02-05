@@ -10,8 +10,7 @@ export function isFieldTextSearchable(field: Field) {
 		case 'text':
 		case 'long-text':
 		case 'rich-text':
-		case 'single-select':
-		case 'multiselect':
+		case 'select-from-list':
 		case 'upload':
 			return true;
 		case 'boolean':

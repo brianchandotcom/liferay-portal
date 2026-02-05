@@ -11,16 +11,22 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.relationship.util.ObjectRelationshipUtil;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
+import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManagerProvider;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -40,6 +47,7 @@ import com.liferay.portal.vulcan.scope.Scope;
 
 import java.text.DateFormat;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -173,7 +181,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					});
 			}
 
-			return ObjectEntryUtil.toObjectEntry(
+			ObjectEntry updatedObjectEntry = ObjectEntryUtil.toObjectEntry(
 				_objectDefinition,
 				objectEntryManager.updateObjectEntry(
 					objectEntry.getCompanyId(),
@@ -182,6 +190,12 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 						null, themeDisplay.getUser()),
 					dtoObjectEntry.getExternalReferenceCode(),
 					_objectDefinition, dtoObjectEntry, scopeKey));
+
+			_relateObjectEntry(
+				infoItemFieldValues, _objectDefinition, updatedObjectEntry,
+				serviceContext, themeDisplay.getUserId());
+
+			return updatedObjectEntry;
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(
@@ -243,6 +257,60 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 		return ObjectEntryUtil.toProperties(
 			infoItemFieldValues, _objectDefinition, objectEntry.getValues());
+	}
+
+	private void _relateObjectEntry(
+			InfoItemFieldValues infoItemFieldValues,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					objectDefinition.getCompanyId(),
+					objectDefinition.getStorageType()));
+
+		for (ObjectRelationship objectRelationship :
+				ObjectRelationshipLocalServiceUtil.getObjectRelationships(
+					objectDefinition.getObjectDefinitionId(),
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			ObjectDefinition relatedObjectDefinition =
+				ObjectRelationshipUtil.getRelatedObjectDefinition(
+					objectDefinition, objectRelationship);
+
+			defaultObjectEntryManager.disassociateRelatedModels(
+				new DefaultDTOConverterContext(
+					false, null, null, null,
+					LocaleUtil.fromLanguageId(
+						objectDefinition.getDefaultLanguageId(), true, false),
+					null, null),
+				objectDefinition, objectRelationship,
+				objectEntry.getPrimaryKey(), relatedObjectDefinition, userId);
+
+			InfoFieldValue<Object> infoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					ObjectRelationshipConstants.
+						OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX +
+							objectRelationship.getName());
+
+			Object value = infoFieldValue.getValue();
+
+			if (value instanceof List) {
+				List<String> relatedObjectEntryIds = (List<String>)value;
+
+				for (String relatedObjectEntryId : relatedObjectEntryIds) {
+					ObjectRelationshipLocalServiceUtil.
+						addObjectRelationshipMappingTableValues(
+							userId,
+							objectRelationship.getObjectRelationshipId(),
+							objectEntry.getPrimaryKey(),
+							GetterUtil.getLong(relatedObjectEntryId),
+							serviceContext);
+				}
+			}
+		}
 	}
 
 	private TaxonomyCategoryBrief[] _toTaxonomyCategoryBriefs(

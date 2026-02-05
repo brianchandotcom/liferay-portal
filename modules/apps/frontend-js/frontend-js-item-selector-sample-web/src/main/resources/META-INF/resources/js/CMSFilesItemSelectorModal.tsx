@@ -190,6 +190,7 @@ function CMSFilesItemSelectorModal({
 							};
 
 							if (
+								item.embedded.file &&
 								!item.embedded.file.mimeType.startsWith('image')
 							) {
 								return {

@@ -31,10 +31,6 @@ public class ElasticsearchAggregationTranslatorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
-			"_aggregationBuilderAssemblerFactory",
-			new AggregationBuilderAssemblerFactory());
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchAggregationTranslator,
 			"_dateHistogramAggregationTranslator",
 			new DateHistogramAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(

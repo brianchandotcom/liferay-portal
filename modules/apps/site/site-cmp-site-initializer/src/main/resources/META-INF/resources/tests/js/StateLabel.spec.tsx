@@ -9,15 +9,20 @@ import React from 'react';
 
 import StateLabel from '../../js/components/StateLabel';
 
-const getYesterdaysDateString = () => {
-	const date = new Date();
-
-	date.setDate(date.getDate() - 1);
-
-	return date.toISOString();
-};
+const dueDate = '2026-02-04T00:00:00Z';
+const mockedSystemDate = '2026-02-05T00:00:00Z';
 
 describe('StateLabel', () => {
+	beforeAll(() => {
+		jest.useFakeTimers();
+
+		jest.setSystemTime(new Date(mockedSystemDate));
+	});
+
+	afterAll(() => {
+		jest.useRealTimers();
+	});
+
 	it('renders the name text', () => {
 		const state = {
 			key: 'inProgress',
@@ -42,7 +47,7 @@ describe('StateLabel', () => {
 		};
 
 		const {getByText} = render(
-			<StateLabel dueDate={getYesterdaysDateString()} state={state} />
+			<StateLabel dueDate={dueDate} state={state} />
 		);
 
 		expect(getByText(state.name)).toBeInTheDocument();
@@ -56,7 +61,7 @@ describe('StateLabel', () => {
 		};
 
 		const {getByText, queryByText} = render(
-			<StateLabel dueDate={getYesterdaysDateString()} state={state} />
+			<StateLabel dueDate={dueDate} state={state} />
 		);
 
 		expect(getByText(state.name)).toBeInTheDocument();

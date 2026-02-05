@@ -923,7 +923,7 @@ public class ObjectDefinitionLocalServiceTest {
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.saveWorkflowDefinition(
 				kaleoDefinition.getExternalReferenceCode(),
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+				TestPropsValues.getCompanyId(), 0, TestPropsValues.getUserId(),
 				kaleoDefinition.getTitle(), kaleoDefinition.getName(),
 				kaleoDefinition.getScope(), content.getBytes());
 

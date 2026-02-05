@@ -13,6 +13,7 @@ import com.liferay.headless.admin.workflow.client.serdes.v1_0.WorkflowDefinition
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -302,6 +303,7 @@ public class WorkflowDefinitionResourceTest
 			WorkflowDefinitionTestUtil.getContent(
 				workflowDefinition.getDescription(), "workflow-definition.xml",
 				workflowDefinition.getName()));
+		workflowDefinition.setGroupExternalReferenceCode(StringPool.BLANK);
 		workflowDefinition.setNodes(
 			new Node[] {
 				new Node() {

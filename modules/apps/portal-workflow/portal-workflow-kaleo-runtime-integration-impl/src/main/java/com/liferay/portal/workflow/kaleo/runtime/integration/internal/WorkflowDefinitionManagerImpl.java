@@ -52,29 +52,30 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, byte[] bytes)
-		throws WorkflowException {
-
-		return deployWorkflowDefinition(
-			externalReferenceCode, companyId, userId, title, name,
-			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
-	}
-
-	@Override
-	public WorkflowDefinition deployWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, String scope, byte[] bytes)
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 
 		return _workflowEngine.deployWorkflowDefinition(
 			externalReferenceCode, title, name, scope,
 			new UnsyncByteArrayInputStream(bytes), serviceContext);
+	}
+
+	@Override
+	public WorkflowDefinition deployWorkflowDefinition(
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, byte[] bytes)
+		throws WorkflowException {
+
+		return deployWorkflowDefinition(
+			externalReferenceCode, companyId, 0, userId, title, name,
+			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
 	}
 
 	@Override
@@ -318,28 +319,29 @@ public class WorkflowDefinitionManagerImpl
 
 	@Override
 	public WorkflowDefinition saveWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, byte[] bytes)
-		throws WorkflowException {
-
-		return saveWorkflowDefinition(
-			externalReferenceCode, companyId, userId, title, name,
-			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
-	}
-
-	@Override
-	public WorkflowDefinition saveWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, String scope, byte[] bytes)
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
+		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 
 		return _workflowEngine.saveWorkflowDefinition(
 			externalReferenceCode, title, name, scope, bytes, serviceContext);
+	}
+
+	@Override
+	public WorkflowDefinition saveWorkflowDefinition(
+			String externalReferenceCode, long companyId, long userId,
+			String title, String name, byte[] bytes)
+		throws WorkflowException {
+
+		return saveWorkflowDefinition(
+			externalReferenceCode, companyId, 0, userId, title, name,
+			WorkflowDefinitionConstants.SCOPE_ALL, bytes);
 	}
 
 	@Override

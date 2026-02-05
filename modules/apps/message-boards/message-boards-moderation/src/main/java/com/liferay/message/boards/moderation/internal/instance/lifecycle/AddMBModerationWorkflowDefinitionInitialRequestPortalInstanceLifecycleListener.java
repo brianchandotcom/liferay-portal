@@ -70,7 +70,7 @@ public class
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				WorkflowDefinitionConstants.
 					EXTERNAL_REFERENCE_CODE_MESSAGE_BOARDS_USER_STATS_MODERATION,
-				companyId, guestUserId,
+				companyId, 0, guestUserId,
 				_localization.getXml(
 					_getTitleMap(companyId),
 					_language.getLanguageId(company.getLocale()), "title"),

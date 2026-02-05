@@ -17,9 +17,11 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -218,8 +221,10 @@ public class WorkflowDefinitionResourceImpl
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				workflowDefinition.getExternalReferenceCode(),
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				_getTitle(workflowDefinition), workflowDefinition.getName(),
+				contextCompany.getCompanyId(),
+				_getGroupId(workflowDefinition.getGroupExternalReferenceCode()),
+				contextUser.getUserId(), _getTitle(workflowDefinition),
+				workflowDefinition.getName(),
 				GetterUtil.getString(
 					workflowDefinition.getScope(),
 					WorkflowDefinitionConstants.SCOPE_ALL),
@@ -236,8 +241,10 @@ public class WorkflowDefinitionResourceImpl
 		return _toWorkflowDefinition(
 			_workflowDefinitionManager.saveWorkflowDefinition(
 				workflowDefinition.getExternalReferenceCode(),
-				contextCompany.getCompanyId(), contextUser.getUserId(),
-				_getTitle(workflowDefinition), workflowDefinition.getName(),
+				contextCompany.getCompanyId(),
+				_getGroupId(workflowDefinition.getGroupExternalReferenceCode()),
+				contextUser.getUserId(), _getTitle(workflowDefinition),
+				workflowDefinition.getName(),
 				GetterUtil.getString(
 					workflowDefinition.getScope(),
 					WorkflowDefinitionConstants.SCOPE_ALL),
@@ -264,6 +271,17 @@ public class WorkflowDefinitionResourceImpl
 			contextCompany.getCompanyId(), workflowDefinition.getName());
 
 		return postWorkflowDefinitionDeploy(workflowDefinition);
+	}
+
+	private long _getGroupId(String externalReferenceCode) throws Exception {
+		if (Validator.isNull(externalReferenceCode)) {
+			return 0;
+		}
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			externalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getGroupId();
 	}
 
 	private String _getTitle(WorkflowDefinition workflowDefinition)
@@ -413,6 +431,9 @@ public class WorkflowDefinitionResourceImpl
 
 	private static final EntityModel _entityModel =
 		new WorkflowDefinitionEntityModel();
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

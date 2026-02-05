@@ -162,7 +162,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 		String workflowDefinitionName = StringUtil.randomString();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			null, companyId, dtoConverterContext.getUserId(),
+			null, companyId, workflowDefinition.getGroupId(),
+			dtoConverterContext.getUserId(),
 			LanguageUtil.format(
 				locale, "copy-of-x",
 				workflowDefinition.getTitle(locale.getDisplayLanguage())),

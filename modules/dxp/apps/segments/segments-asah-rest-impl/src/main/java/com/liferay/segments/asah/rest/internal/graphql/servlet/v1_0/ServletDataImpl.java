@@ -9,9 +9,11 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.segments.asah.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.segments.asah.rest.internal.graphql.query.v1_0.Query;
+import com.liferay.segments.asah.rest.internal.resource.v1_0.AsahSegmentsEntryResourceImpl;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.ExperimentResourceImpl;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.ExperimentRunResourceImpl;
 import com.liferay.segments.asah.rest.internal.resource.v1_0.StatusResourceImpl;
+import com.liferay.segments.asah.rest.resource.v1_0.AsahSegmentsEntryResource;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentResource;
 import com.liferay.segments.asah.rest.resource.v1_0.ExperimentRunResource;
 import com.liferay.segments.asah.rest.resource.v1_0.StatusResource;
@@ -38,6 +40,8 @@ public class ServletDataImpl implements ServletData {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
+		Mutation.setAsahSegmentsEntryResourceComponentServiceObjects(
+			_asahSegmentsEntryResourceComponentServiceObjects);
 		Mutation.setExperimentResourceComponentServiceObjects(
 			_experimentResourceComponentServiceObjects);
 		Mutation.setExperimentRunResourceComponentServiceObjects(
@@ -84,6 +88,11 @@ public class ServletDataImpl implements ServletData {
 			new HashMap<String, ObjectValuePair<Class<?>, String>>() {
 				{
 					put(
+						"mutation#createSegmentsEntry",
+						new ObjectValuePair<>(
+							AsahSegmentsEntryResourceImpl.class,
+							"postSegmentsEntry"));
+					put(
 						"mutation#deleteExperiment",
 						new ObjectValuePair<>(
 							ExperimentResourceImpl.class, "deleteExperiment"));
@@ -113,6 +122,10 @@ public class ServletDataImpl implements ServletData {
 							ExperimentResourceImpl.class, "getExperiment"));
 				}
 			};
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<AsahSegmentsEntryResource>
+		_asahSegmentsEntryResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<ExperimentResource>

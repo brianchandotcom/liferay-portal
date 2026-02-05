@@ -9,6 +9,7 @@ import React from 'react';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import ProcessVersionFilter from '../filter/ProcessVersionFilter.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
@@ -21,12 +22,14 @@ const hasFilterToShow = (selectedFilters = [], hideFilters = []) =>
 export default function Header({
 	filterKeys,
 	hideFilters = [],
-	routeParams,
 	selectedFilters,
 	totalCount,
 }) {
-	const showFiltersResult =
-		routeParams.search || hasFilterToShow(selectedFilters, hideFilters);
+	const {
+		location: {search},
+		routeParams
+	} = useRouter();
+	const showFiltersResult = search || hasFilterToShow(selectedFilters, hideFilters);
 
 	return (
 		<>
@@ -62,7 +65,7 @@ export default function Header({
 			{showFiltersResult && (
 				<ResultsBar>
 					<ResultsBar.TotalCount
-						search={routeParams.search}
+						search={search}
 						totalCount={totalCount}
 					/>
 

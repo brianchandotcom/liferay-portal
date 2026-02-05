@@ -10,13 +10,15 @@ import {parse} from '../../shared/components/router/queryString.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
 import {usePost} from '../../shared/hooks/usePost.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import Body from './WorkloadByAssigneePageBody.es';
 import Header from './WorkloadByAssigneePageHeader.es';
 
-function WorkloadByAssigneePage({query, routeParams}) {
-	const {processId, ...paginationParams} = routeParams;
+function WorkloadByAssigneePage() {
+	const {location, routeParams} = useRouter();
 
-	const {search = null} = parse(query);
+	const {processId, ...paginationParams} = routeParams;
+	const {search = null} = parse(location.search);
 	const filterKeys = ['processStep', 'roles'];
 
 	useProcessTitle(processId, Liferay.Language.get('workload-by-assignee'));
@@ -48,7 +50,6 @@ function WorkloadByAssigneePage({query, routeParams}) {
 		<PromisesResolver promises={promises}>
 			<WorkloadByAssigneePage.Header
 				filterKeys={prefixedKeys}
-				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data?.totalCount}
 			/>

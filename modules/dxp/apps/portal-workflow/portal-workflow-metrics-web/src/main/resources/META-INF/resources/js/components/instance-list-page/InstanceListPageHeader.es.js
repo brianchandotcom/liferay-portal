@@ -230,10 +230,7 @@ export default function Header({
 
 			{!!selectedFilterItems.length && (
 				<ResultsBar>
-					<ResultsBar.TotalCount
-						search={routeParams.search}
-						totalCount={totalCount}
-					/>
+					<ResultsBar.TotalCount totalCount={totalCount} />
 
 					<ResultsBar.FilterItems
 						filters={selectedFilterItems}

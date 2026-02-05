@@ -9,17 +9,20 @@ import PromisesResolver from '../../shared/components/promises-resolver/Promises
 import {parse} from '../../shared/components/router/queryString.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
 import {usePost} from '../../shared/hooks/usePost.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import {getTimeRangeParams} from '../filter/util/timeRangeUtil.es';
 import Body from './PerformanceByAssigneePageBody.es';
 import Header from './PerformanceByAssigneePageHeader.es';
 
-function PerformanceByAssigneePage({query, routeParams}) {
+function PerformanceByAssigneePage() {
 	useTimeRangeFetch();
 
+	const {location, routeParams} = useRouter();
+
 	const {processId, ...paginationParams} = routeParams;
-	const {search = null} = parse(query);
+	const {search = null} = parse(location.search);
 	const filterKeys = ['processStep', 'roles'];
 
 	useProcessTitle(processId, Liferay.Language.get('performance-by-assignee'));
@@ -61,7 +64,6 @@ function PerformanceByAssigneePage({query, routeParams}) {
 		<PromisesResolver promises={promises}>
 			<PerformanceByAssigneePage.Header
 				filterKeys={prefixedKeys}
-				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data?.totalCount}
 			/>

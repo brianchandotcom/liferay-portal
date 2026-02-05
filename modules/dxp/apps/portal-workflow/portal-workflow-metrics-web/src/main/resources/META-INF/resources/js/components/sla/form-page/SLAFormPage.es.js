@@ -8,11 +8,11 @@ import React from 'react';
 import Body from './SLAFormPageBody.es';
 import SLAFormPageProvider from './SLAFormPageProvider.es';
 
-function SLAFormPage(props) {
+function SLAFormPage() {
 	return (
 		<div className="sla-form">
-			<SLAFormPageProvider {...props}>
-				<SLAFormPage.Body {...props} />
+			<SLAFormPageProvider>
+				<SLAFormPage.Body />
 			</SLAFormPageProvider>
 		</div>
 	);

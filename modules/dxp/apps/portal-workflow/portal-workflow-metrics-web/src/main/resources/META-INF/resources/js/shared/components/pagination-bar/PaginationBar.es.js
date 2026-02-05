@@ -4,11 +4,11 @@
  */
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import pathToRegexp from 'path-to-regexp';
 import React, {useCallback, useContext} from 'react';
 
 import {AppContext} from '../../../components/AppContext.es';
 import {useRouter} from '../../hooks/useRouter.es';
+import {getPathname} from '../router/routerUtil.es';
 
 const PaginationBar = ({
 	page,
@@ -21,9 +21,10 @@ const PaginationBar = ({
 }) => {
 	const {deltaValues} = useContext(AppContext);
 	const {
-		history,
 		location: {search},
-		match: {params, path},
+		navigate,
+		path,
+		routeParams,
 	} = useRouter();
 
 	const deltas = deltaValues.map((label) => ({label}));
@@ -36,13 +37,13 @@ const PaginationBar = ({
 	const handleChangePageSize = useCallback(
 		(newPageSize) => {
 			if (!withoutRouting) {
-				const pathname = pathToRegexp.compile(path)({
-					...params,
+				const pathname = getPathname({
+					...routeParams,
 					page: 1,
 					pageSize: newPageSize,
-				});
+				}, path);
 
-				history.push({pathname, search});
+				navigate({pathname, search});
 			}
 			else {
 				setPage(1);
@@ -51,18 +52,18 @@ const PaginationBar = ({
 		},
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[params, path, search]
+		[routeParams, path, search]
 	);
 
 	const handleChangePage = useCallback(
 		(newPage) => {
 			if (!withoutRouting) {
-				const pathname = pathToRegexp.compile(path)({
-					...params,
+				const pathname = getPathname({
+					...routeParams,
 					page: newPage,
-				});
+				}, path);
 
-				history.push({pathname, search});
+				navigate({pathname, search});
 			}
 			else {
 				setPage(newPage);
@@ -70,7 +71,7 @@ const PaginationBar = ({
 		},
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[params, path, search]
+		[routeParams, path, search]
 	);
 
 	if (totalCount <= deltaValues[0]) {

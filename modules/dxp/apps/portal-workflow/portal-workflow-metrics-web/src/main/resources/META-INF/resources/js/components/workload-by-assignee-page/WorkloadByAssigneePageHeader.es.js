@@ -9,16 +9,20 @@ import React from 'react';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
 import ResultsBar from '../../shared/components/results-bar/ResultsBar.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import RoleFilter from '../filter/RoleFilter.es';
 
 export default function Header({
 	filterKeys,
-	routeParams,
 	selectedFilters,
 	totalCount,
 }) {
-	const showFiltersResult = routeParams.search || !!selectedFilters.length;
+	const {
+		location: {search},
+		routeParams,
+	} = useRouter();
+	const showFiltersResult = search || !!selectedFilters.length;
 
 	return (
 		<>
@@ -52,7 +56,7 @@ export default function Header({
 			{showFiltersResult && (
 				<ResultsBar>
 					<ResultsBar.TotalCount
-						search={routeParams.search}
+						search={search}
 						totalCount={totalCount}
 					/>
 

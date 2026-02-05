@@ -10,16 +10,19 @@ import {parse} from '../../shared/components/router/queryString.es';
 import {useFetch} from '../../shared/hooks/useFetch.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import {getTimeRangeParams} from '../filter/util/timeRangeUtil.es';
 import Body from './PerformanceByStepPageBody.es';
 import Header from './PerformanceByStepPageHeader.es';
 
-function PerformanceByStepPage({query, routeParams}) {
+function PerformanceByStepPage() {
 	useTimeRangeFetch();
 
+	const {location, routeParams} = useRouter();
+
 	const {processId, ...paginationParams} = routeParams;
-	const {search = null} = parse(query);
+	const {search = null} = parse(location.search);
 	const filterKeys = ['processVersion'];
 	const hideFilters = ['processVersion'];
 
@@ -57,7 +60,6 @@ function PerformanceByStepPage({query, routeParams}) {
 			<PerformanceByStepPage.Header
 				filterKeys={prefixedKeys}
 				hideFilters={hideFilters}
-				routeParams={{...routeParams, search}}
 				selectedFilters={selectedFilters}
 				totalCount={data?.totalCount}
 			/>

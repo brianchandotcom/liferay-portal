@@ -11,12 +11,12 @@ import {useRouter} from './useRouter.es';
 const useRouterParams = () => {
 	const {
 		location: {search},
-		match: {params},
+		routeParams,
 	} = useRouter();
 
 	const filters = useMemo(() => getFiltersParam(search), [search]);
 
-	return useMemo(() => ({...params, filters}), [filters, params]);
+	return useMemo(() => ({...routeParams, filters}), [filters, routeParams]);
 };
 
 export {useRouterParams};

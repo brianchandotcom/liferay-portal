@@ -13,6 +13,7 @@ import {parse} from '../../shared/components/router/queryString.es';
 import SearchField from '../../shared/components/search-field/SearchField.es';
 import {useFetch} from '../../shared/hooks/useFetch.es';
 import {usePageTitle} from '../../shared/hooks/usePageTitle.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import Body from './ProcessListPageBody.es';
 
 const Header = ({page, pageSize, search, sort, totalCount}) => {
@@ -40,15 +41,13 @@ const Header = ({page, pageSize, search, sort, totalCount}) => {
 	);
 };
 
-function ProcessListPage({history, query, routeParams}) {
-	if (history.location.pathname === '/') {
-		history.replace(`/processes/20/1/overdueInstanceCount:desc`);
-	}
+function ProcessListPage() {
+	const {location, routeParams} = useRouter();
 
 	usePageTitle(Liferay.Language.get('metrics'));
 
 	const {page, pageSize, sort} = routeParams;
-	const {search = ''} = parse(query);
+	const {search = ''} = parse(location.search);
 
 	const {data, fetchData} = useFetch({
 		params: {

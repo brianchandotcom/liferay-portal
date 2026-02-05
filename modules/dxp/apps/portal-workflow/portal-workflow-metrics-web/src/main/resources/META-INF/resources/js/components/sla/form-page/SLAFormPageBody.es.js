@@ -14,6 +14,7 @@ import ReloadButton from '../../../shared/components/list/ReloadButton.es';
 import {parse} from '../../../shared/components/router/queryString.es';
 import {useToaster} from '../../../shared/components/toaster/hooks/useToaster.es';
 import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
+import {useRouter} from '../../../shared/hooks/useRouter.es';
 import {AppContext} from '../../AppContext.es';
 import {SLAContext} from '../SLAContainer.es';
 import {
@@ -37,9 +38,18 @@ import {
 	validateNodeKeys,
 } from './util/slaFormUtil.es';
 
-function Body({history, id, processId, query}) {
+function Body() {
 	const {defaultDelta} = useContext(AppContext);
 	const {setSLAUpdated} = useContext(SLAContext);
+
+	const {
+		location: {search},
+		navigate,
+		routeParams,
+	} = useRouter();
+
+	const {id, processId} = routeParams;
+
 	const {
 		changeValue,
 		errors,
@@ -51,7 +61,7 @@ function Body({history, id, processId, query}) {
 	} = useContext(SLAFormContext);
 	const toaster = useToaster();
 
-	const {slaInfoLink} = parse(query);
+	const {slaInfoLink} = parse(search);
 
 	usePageTitle(id ? sla.name : Liferay.Language.get('new-sla'));
 
@@ -112,7 +122,7 @@ function Body({history, id, processId, query}) {
 					if (id) {
 						setSLAUpdated(true);
 
-						history.goBack();
+						navigate(-1);
 
 						toaster.success(
 							Liferay.Language.get('sla-was-updated')
@@ -120,13 +130,13 @@ function Body({history, id, processId, query}) {
 					}
 					else {
 						if (slaInfoLink) {
-							history.push({
+							navigate({
 								pathname: `/sla/${processId}/list/${defaultDelta}/1`,
-								search: query,
+								search,
 							});
 						}
 						else {
-							history.goBack();
+							navigate(-1);
 						}
 
 						toaster.success(Liferay.Language.get('sla-was-saved'));
@@ -245,7 +255,7 @@ function Body({history, id, processId, query}) {
 
 							<ClayButton
 								displayType="secondary"
-								onClick={() => history.goBack()}
+								onClick={() => navigate(-1)}
 							>
 								{Liferay.Language.get('cancel')}
 							</ClayButton>

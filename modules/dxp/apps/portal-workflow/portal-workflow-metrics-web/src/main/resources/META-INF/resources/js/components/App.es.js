@@ -18,6 +18,7 @@ import ProcessMetricsContainer, {
 	PerformanceTab,
 } from './process-metrics/ProcessMetricsContainer.es';
 import SettingsContainer from './settings/SettingsContainer.es';
+import IndexesPage from './settings/indexes-page/IndexesPage.es';
 import SLAContainer from './sla/SLAContainer.es';
 import SLAFormPage from './sla/form-page/SLAFormPage.es';
 import SLAListPage from './sla/list-page/SLAListPage.es';
@@ -123,8 +124,15 @@ const router = createHashRouter([
 				path: '/performance/assignee/:processId/:pageSize/:page/:sort',
 			},
 			{
+				children: [
+					{
+						element: <IndexesPage />,
+						index: true,
+						path: '/settings/indexes',
+					}
+				],
 				element: <SettingsContainer />,
-				path: '/settings/*',
+				path: '/settings',
 			},
 		],
 		element: <Layout />,

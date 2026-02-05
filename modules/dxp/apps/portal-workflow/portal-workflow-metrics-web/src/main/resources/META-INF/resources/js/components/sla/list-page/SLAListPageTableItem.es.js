@@ -27,9 +27,10 @@ export default function Item({
 	status,
 }) {
 	const {
-		history,
 		location: {search},
+		navigate,
 	} = useRouter();
+
 	const {showDeleteModal} = useContext(SLAListPageContext);
 
 	const handleDelete = useCallback(() => {
@@ -49,7 +50,7 @@ export default function Item({
 		{
 			label: Liferay.Language.get('edit'),
 			onClick: () => {
-				history.push({
+				navigate({
 					pathname: `/sla/${processId}/edit/${id}`,
 					search,
 				});

@@ -10,14 +10,17 @@ import React, {createContext, useContext, useMemo, useState} from 'react';
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
 import {useFetch} from '../../../shared/hooks/useFetch.es';
 import {usePageTitle} from '../../../shared/hooks/usePageTitle.es';
+import {useRouter} from '../../../shared/hooks/useRouter.es';
 import {SLAContext} from '../SLAContainer.es';
 import BlockedSLAInfo from './BlockedSLAInfo.es';
 import Body from './SLAListPageBody.es';
 import Header from './SLAListPageHeader.es';
 import DeleteSLAModal from './modal/DeleteSLAModal.es';
 
-function SLAListPage({page, pageSize, processId}) {
+function SLAListPage() {
 	const {SLAUpdated, setSLAUpdated} = useContext(SLAContext);
+	const {routeParams} = useRouter();
+	const {page, pageSize, processId} = routeParams;
 
 	const [itemToRemove, setItemToRemove] = useState(null);
 	const [visible, setVisible] = useState(false);

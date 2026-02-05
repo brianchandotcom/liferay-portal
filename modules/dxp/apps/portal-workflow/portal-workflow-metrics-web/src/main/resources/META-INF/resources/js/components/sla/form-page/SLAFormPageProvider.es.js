@@ -6,14 +6,17 @@
 import React, {createContext, useMemo, useState} from 'react';
 
 import PromisesResolver from '../../../shared/components/promises-resolver/PromisesResolver.es';
+import {useRouter} from '../../../shared/hooks/useRouter.es';
 import {useCalendars} from './hooks/useCalendars.es';
 import {useSLAFormState} from './hooks/useSLAFormState.es';
 import {useSLANodes} from './hooks/useSLANodes.es';
 
 const SLAFormContext = createContext({});
 
-function SLAFormPageProvider({children, id, processId}) {
+function SLAFormPageProvider({children}) {
 	const [errors, setErrors] = useState({});
+	const {routeParams} = useRouter();
+	const {id, processId} = routeParams;
 
 	const {fetchCalendars, ...calendarsData} = useCalendars();
 	const {fetchNodes, ...SLANodes} = useSLANodes(processId);

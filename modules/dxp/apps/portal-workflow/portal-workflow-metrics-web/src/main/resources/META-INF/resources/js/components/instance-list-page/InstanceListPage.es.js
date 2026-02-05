@@ -7,6 +7,7 @@ import React from 'react';
 
 import {useFetch} from '../../shared/hooks/useFetch.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
 import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
@@ -16,8 +17,10 @@ import Header from './InstanceListPageHeader.es';
 import InstanceListPageProvider from './InstanceListPageProvider.es';
 import ModalProvider from './modal/ModalProvider.es';
 
-function InstanceListPage({routeParams}) {
+function InstanceListPage() {
 	useTimeRangeFetch();
+
+	const {routeParams} = useRouter();
 
 	const {page, pageSize, processId, sort} = routeParams;
 

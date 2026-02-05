@@ -9,16 +9,16 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {useRouter} from '../../hooks/useRouter.es';
-import {replaceHistory} from '../filter/util/filterUtil.es';
 import {parse, stringify} from '../router/queryString.es';
+import {getPathname} from '../router/routerUtil.es';
 
 const SearchField = ({
 	disabled,
 	placeholder = Liferay.Language.get('search-for'),
 }) => {
-	const routerProps = useRouter();
+	const {location, navigate, path, routeParams} = useRouter();
 
-	const query = parse(routerProps.location.search);
+	const query = parse(location.search);
 	const {search = ''} = query;
 
 	const [searchValue, setSearchValue] = useState('');
@@ -36,7 +36,11 @@ const SearchField = ({
 
 		query.search = searchValue;
 
-		replaceHistory(stringify(query), routerProps);
+		const pathname = path
+			? getPathname({...routeParams, page: 1}, path)
+			: location.pathname;
+		
+		navigate({pathname, search: stringify(query)}, {replace: true});
 	};
 
 	return (

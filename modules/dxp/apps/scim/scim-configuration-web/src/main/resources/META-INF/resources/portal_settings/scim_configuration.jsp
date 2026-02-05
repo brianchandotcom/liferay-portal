@@ -15,103 +15,111 @@ String oAuth2ApplicationName = GetterUtil.getString(request.getAttribute(ScimWeb
 
 <aui:input name="<%= Constants.CMD %>" type="hidden" value="" />
 
-<aui:input label="oauth2-application-name" name="oAuth2ApplicationName" readonly="<%= Validator.isNotNull(oAuth2ApplicationName) %>" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
+<div class="col-md-12">
+	<aui:input label="oauth2-application-name" name="oAuth2ApplicationName" readonly="<%= Validator.isNotNull(oAuth2ApplicationName) %>" required="<%= true %>" type="text" value="<%= oAuth2ApplicationName %>" />
 
-<aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute(ScimWebKeys.SCIM_MATCHER_FIELD) %>">
-	<aui:option label="" value="" />
-	<aui:option label="email" localizeLabel="<%= false %>" value="email" />
-	<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
-</aui:select>
+	<aui:select helpMessage="scim-matcher-field-help" label="scim-matcher-field" name="matcherField" required="<%= true %>" value="<%= request.getAttribute(ScimWebKeys.SCIM_MATCHER_FIELD) %>">
+		<aui:option label="" value="" />
+		<aui:option label="email" localizeLabel="<%= false %>" value="email" />
+		<aui:option label="userName" localizeLabel="<%= false %>" value="userName" />
+	</aui:select>
 
-<c:if test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
+	<c:if test="<%= Validator.isNotNull(oAuth2ApplicationName) %>">
 
-	<%
-	String oAuth2AccessTokenInputId = liferayPortletResponse.getNamespace() + "oAuth2AccessToken";
-	%>
+		<%
+		String oAuth2AccessTokenInputId = liferayPortletResponse.getNamespace() + "oAuth2AccessToken";
+		%>
 
-	<div class="form-group">
-		<label for="<%= oAuth2AccessTokenInputId %>">
-			<liferay-ui:message key="access-token" />
-		</label>
+		<div class="form-group">
+			<label for="<%= oAuth2AccessTokenInputId %>">
+				<liferay-ui:message key="access-token" />
+			</label>
 
-		<div class="input-group input-group-sm">
-			<div class="input-group-item input-group-prepend">
-				<input class="form-control" id="<%= oAuth2AccessTokenInputId %>" readonly value="<%= oAuth2AccessToken %>" />
+			<div class="input-group input-group-sm">
+				<div class="input-group-item input-group-prepend">
+					<input class="form-control" id="<%= oAuth2AccessTokenInputId %>" readonly value="<%= oAuth2AccessToken %>" />
+				</div>
+
+				<span class="input-group-append input-group-item input-group-item-shrink">
+					<clay:button
+						cssClass="lfr-portal-tooltip scim-infopanel-copy-clipboard"
+						data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
+						displayType="secondary"
+						icon="paste"
+						id="copyAccessToken"
+						name="copyAccessToken"
+						title="copy-link"
+					/>
+				</span>
 			</div>
-
-			<span class="input-group-append input-group-item input-group-item-shrink">
-				<clay:button
-					cssClass="lfr-portal-tooltip scim-infopanel-copy-clipboard"
-					data-clipboard-target='<%= "#" + oAuth2AccessTokenInputId %>'
-					displayType="secondary"
-					icon="paste"
-					id="copyAccessToken"
-					name="copyAccessToken"
-					title="copy-link"
-				/>
-			</span>
 		</div>
-	</div>
 
-	<c:if test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
-		<c:choose>
-			<c:when test="<%= (oAuth2AccessTokenExpirationDays < 30) && (oAuth2AccessTokenExpirationDays > 0) %>">
-				<div class="alert alert-warning">
-					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE)) %>" key="the-access-token-for-the-scim-client-will-expire-at-x" translateArguments="<%= false %>" />
-				</div>
-			</c:when>
-			<c:when test="<%= oAuth2AccessTokenExpirationDays < 0 %>">
-				<div class="alert alert-danger">
-					<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE)) %>" key="the-access-token-for-the-scim-client-expired-at-x" translateArguments="<%= false %>" />
-				</div>
-			</c:when>
-		</c:choose>
-	</c:if>
+		<c:if test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
+			<c:choose>
+				<c:when test="<%= (oAuth2AccessTokenExpirationDays < 30) && (oAuth2AccessTokenExpirationDays > 0) %>">
+					<div class="alert alert-warning">
+						<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE)) %>" key="the-access-token-for-the-scim-client-will-expire-at-x" translateArguments="<%= false %>" />
+					</div>
+				</c:when>
+				<c:when test="<%= oAuth2AccessTokenExpirationDays < 0 %>">
+					<div class="alert alert-danger">
+						<liferay-ui:message arguments="<%= GetterUtil.getString(request.getAttribute(ScimWebKeys.SCIM_OAUTH2_ACCESS_TOKEN_EXPIRATION_DATE)) %>" key="the-access-token-for-the-scim-client-expired-at-x" translateArguments="<%= false %>" />
+					</div>
+				</c:when>
+			</c:choose>
+		</c:if>
 
-	<label for="<portlet:namespace />generateAccessToken">
-		<liferay-ui:message key="scim-generate-access-token" />
+		<div class="form-group">
+			<label for="<portlet:namespace />generateAccessToken">
+				<liferay-ui:message key="scim-generate-access-token" />
 
-		<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
-			<clay:icon
-				symbol="question-circle-full"
-			/>
-		</span>
-	</label>
+				<span aria-label="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-generate-access-token-help") %>">
+					<clay:icon
+						symbol="question-circle-full"
+					/>
+				</span>
+			</label>
 
-	<div class="input-group input-group-sm">
-		<aui:button id="generateAccessToken" label="discard-changes" name="generateAccessToken" small="<%= true %>" value="generate" />
-	</div>
-
-	<label for="<portlet:namespace />resetSCIMClientData">
-		<liferay-ui:message key="scim-reset-client-data" />
-
-		<span aria-label="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>">
-			<clay:icon
-				symbol="question-circle-full"
-			/>
-		</span>
-	</label>
-
-	<div class="input-group input-group-sm">
-		<aui:button id="resetSCIMClientData" label="discard-changes" name="resetSCIMClientData" small="<%= true %>" value="reset" />
-	</div>
-
-	<c:if test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
-		<label for="<portlet:namespace />revokeAccessToken">
-			<liferay-ui:message key="scim-revoke-all" />
-
-			<span aria-label="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>">
-				<clay:icon
-					symbol="question-circle-full"
-				/>
-			</span>
-		</label>
-
-		<div class="input-group input-group-sm">
-			<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
+			<div class="input-group input-group-sm">
+				<aui:button id="generateAccessToken" label="discard-changes" name="generateAccessToken" small="<%= true %>" value="generate" />
+			</div>
 		</div>
+
+		<div class="form-group">
+			<label for="<portlet:namespace />resetSCIMClientData">
+				<liferay-ui:message key="scim-reset-client-data" />
+
+				<span aria-label="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-reset-client-data-help") %>">
+					<clay:icon
+						symbol="question-circle-full"
+					/>
+				</span>
+			</label>
+
+			<div class="input-group input-group-sm">
+				<aui:button id="resetSCIMClientData" label="discard-changes" name="resetSCIMClientData" small="<%= true %>" value="reset" />
+			</div>
+		</div>
+
+		<c:if test="<%= Validator.isNotNull(oAuth2AccessToken) %>">
+			<div class="form-group">
+				<label for="<portlet:namespace />revokeAccessToken">
+					<liferay-ui:message key="scim-revoke-all" />
+
+					<span aria-label="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>" class="lfr-portal-tooltip" tabindex="0" title="<%= LanguageUtil.get(request, "scim-revoke-all-help") %>">
+						<clay:icon
+							symbol="question-circle-full"
+						/>
+					</span>
+				</label>
+
+				<div class="input-group input-group-sm">
+					<aui:button id="revokeAccessToken" label="discard-changes" name="revokeAccessToken" small="<%= true %>" value="revoke" />
+				</div>
+			</div>
+		</c:if>
 	</c:if>
-</c:if>
+</div>
 
 <liferay-frontend:component
 	module="{InfoPanel} from scim-configuration-web"

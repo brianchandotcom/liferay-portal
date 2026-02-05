@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
@@ -65,8 +66,8 @@ public class DepotEntryUserNotificationHandler
 		}
 
 		return StringBundler.concat(
-			"<div class=\"title\">",
-			_getTitle(depotEntry.getGroup(), serviceContext), "</div>");
+			"<div class=\"title\">", _getTitle(depotEntry, serviceContext),
+			"</div>");
 	}
 
 	@Override
@@ -81,14 +82,17 @@ public class DepotEntryUserNotificationHandler
 		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
 			jsonObject.getLong("classPK"));
 
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
 		if (depotEntry.getType() == DepotConstants.TYPE_PROJECT) {
 			return StringBundler.concat(
-				serviceContext.getPortalURL(), GroupConstants.CMS_FRIENDLY_URL,
-				"/projects");
+				serviceContext.getPortalURL(),
+				themeDisplay.getPathFriendlyURLPublic(),
+				GroupConstants.CMS_FRIENDLY_URL, "/projects");
 		}
 
 		String spaceURL = ActionUtil.getSpaceURL(
-			jsonObject.getLong("classPK"), serviceContext.getThemeDisplay());
+			jsonObject.getLong("classPK"), themeDisplay);
 
 		return serviceContext.getPortalURL() + spaceURL;
 	}
@@ -111,10 +115,21 @@ public class DepotEntryUserNotificationHandler
 			return null;
 		}
 
-		return _getTitle(depotEntry.getGroup(), serviceContext);
+		return _getTitle(depotEntry, serviceContext);
 	}
 
-	private String _getTitle(Group group, ServiceContext serviceContext) {
+	private String _getTitle(
+			DepotEntry depotEntry, ServiceContext serviceContext)
+		throws Exception {
+
+		Group group = depotEntry.getGroup();
+
+		if (depotEntry.getType() == DepotConstants.TYPE_PROJECT) {
+			return serviceContext.translate(
+				"you-have-been-invited-to-collaborate-in-the-x-project",
+				HtmlUtil.escape(group.getName(serviceContext.getLocale())));
+		}
+
 		return serviceContext.translate(
 			"you-have-been-invited-to-collaborate-in-the-x-space",
 			HtmlUtil.escape(group.getName(serviceContext.getLocale())));

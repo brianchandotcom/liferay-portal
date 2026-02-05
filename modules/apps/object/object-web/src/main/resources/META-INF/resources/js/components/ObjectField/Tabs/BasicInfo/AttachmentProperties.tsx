@@ -5,31 +5,68 @@
 
 import ClayForm from '@clayui/form';
 import {Input} from '@liferay/object-js-components-web';
+import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {normalizeFieldSettings} from '../../../../utils/fieldSettings';
 import {ObjectFieldErrors} from '../../ObjectFieldFormBase';
+import SpacePicker from './SpacePicker';
 
 interface IAttachmentPropertiesProps {
 	errors: ObjectFieldErrors;
+	modelBuilder?: boolean;
 	objectFieldSettings: ObjectFieldSetting[];
 	onSettingsChange: (setting: ObjectFieldSetting) => void;
-	onSubmit?: () => void;
+	onSubmit?: (values?: Partial<ObjectField>) => void;
+	values: Partial<ObjectField>;
 }
 
 export function AttachmentProperties({
 	errors,
+	modelBuilder,
 	objectFieldSettings,
 	onSettingsChange,
 	onSubmit,
+	values,
 }: IAttachmentPropertiesProps) {
 	const settings = normalizeFieldSettings(objectFieldSettings);
+
+	const usesDepotStorage =
+		settings.showFilesInLibrary &&
+		settings.fileSource === 'userComputerToDepot';
+
+	const usesDocumentsAndMediaStorage =
+		settings.showFilesInLibrary &&
+		settings.fileSource === 'userComputerToDocumentsAndMedia';
+
+	const handleSpaceChange = (value: string) => {
+		const setting: ObjectFieldSetting = {
+			name: 'storageDepot' as ObjectFieldSettingName,
+			value,
+		};
+
+		const updatedSettings = [
+			...objectFieldSettings.filter(
+				(setting) => setting.name !== 'storageDepot'
+			),
+			setting,
+		];
+
+		onSettingsChange(setting);
+
+		if (onSubmit) {
+			onSubmit({
+				...values,
+				objectFieldSettings: updatedSettings,
+			});
+		}
+	};
 
 	return (
 		<>
 			<ClayForm.Group>
-				{settings.showFilesInLibrary && (
+				{usesDocumentsAndMediaStorage ? (
 					<Input
 						error={errors.storageLibraryPath}
 						feedbackMessage={sub(
@@ -56,6 +93,64 @@ export function AttachmentProperties({
 						required
 						value={settings.storageLibraryPath as string}
 					/>
+				) : (
+					usesDepotStorage && (
+						<div
+							className={classNames({
+								row: !modelBuilder,
+							})}
+						>
+							<div
+								className={classNames({
+									'col-lg-2': !modelBuilder,
+								})}
+							>
+								<SpacePicker
+									error={errors.storageDepot}
+									onChange={handleSpaceChange}
+									value={settings.storageDepot as string}
+								/>
+							</div>
+
+							<div
+								className={classNames({
+									'col-lg-10': !modelBuilder,
+								})}
+							>
+								<Input
+									error={errors.storageLibraryPath}
+									feedbackMessage={sub(
+										Liferay.Language.get(
+											'input-the-path-of-the-chosen-folder-in-cms-files-an-example-of-a-valid-path-is-x'
+										),
+										'/myCMSFolder'
+									)}
+									id="storageDepotFolderPathInput"
+									label={Liferay.Language.get(
+										'cms-folder-storage'
+									)}
+									maxLength={255}
+									onBlur={(event) => {
+										event.stopPropagation();
+
+										if (onSubmit) {
+											onSubmit();
+										}
+									}}
+									onChange={({target: {value}}) =>
+										onSettingsChange({
+											name: 'storageLibraryPath',
+											value,
+										})
+									}
+									required
+									value={
+										settings.storageLibraryPath as string
+									}
+								/>
+							</div>
+						</div>
+					)
 				)}
 			</ClayForm.Group>
 			<Input

@@ -141,7 +141,7 @@ export function AttachmentFormBase({
 				updatedSettings.push(
 					{
 						name: 'storageLibraryPath',
-						value: '/CMSFolder',
+						value: `/${objectDefinitionName}`,
 					},
 					{
 						name: 'storageDepot',

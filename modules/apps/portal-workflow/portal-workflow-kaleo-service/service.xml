@@ -916,7 +916,7 @@
 			<finder-column name="kaleoTaskFormId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="KaleoTaskInstanceToken" remote-service="false">
+	<entity local-service="true" name="KaleoTaskInstanceToken" remote-service="true">
 
 		<!-- PK fields -->
 

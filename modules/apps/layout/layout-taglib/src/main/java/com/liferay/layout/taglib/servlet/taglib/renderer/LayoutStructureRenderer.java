@@ -1044,14 +1044,12 @@ public class LayoutStructureRenderer {
 							LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE +
 								itemId),
 					currentRelatedItemExternalReferenceCode),
-				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
+				PortalUUIDUtil.generate());
 			String relatedItemExternalReferenceCode = GetterUtil.getString(
 				_httpServletRequest.getAttribute(
 					LayoutStructureRendererConstants.
 						LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE + itemId),
-				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
+				_INITIAL_UUID_PREFIX + PortalUUIDUtil.generate());
 
 			_httpServletRequest.setAttribute(
 				LayoutStructureRendererConstants.
@@ -2004,6 +2002,8 @@ public class LayoutStructureRenderer {
 
 		jspWriter.write(StringPool.GREATER_THAN);
 	}
+
+	private static final String _INITIAL_UUID_PREFIX = "0000";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LayoutStructure _layoutStructure;

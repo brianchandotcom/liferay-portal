@@ -8,7 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.stats;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsResponse;
 import com.liferay.portal.search.stats.StatsResponseBuilder;
-import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import org.opensearch.client.opensearch._types.aggregations.ValueCountAggregate;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -128,8 +126,7 @@ public class StatsTranslatorImpl implements StatsTranslator {
 	public StatsResponse translateResponse(
 		Map<String, Aggregate> aggregateMap, StatsRequest statsRequest) {
 
-		StatsResponseBuilder statsResponseBuilder =
-			_statsResponseBuilderFactory.getStatsResponseBuilder();
+		StatsResponseBuilder statsResponseBuilder = new StatsResponseBuilder();
 
 		String field = statsRequest.getField();
 
@@ -213,8 +210,5 @@ public class StatsTranslatorImpl implements StatsTranslator {
 
 		return statsResponseBuilder.build();
 	}
-
-	@Reference
-	private StatsResponseBuilderFactory _statsResponseBuilderFactory;
 
 }

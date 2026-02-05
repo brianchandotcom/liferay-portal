@@ -38,7 +38,6 @@ import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryIm
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
-import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.query.Queries;
 
@@ -58,16 +57,10 @@ public class SearchRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		StatsTranslator statsTranslator = new DefaultStatsTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			statsTranslator, "_statsResponseBuilderFactory",
-			new StatsResponseBuilderFactoryImpl());
-
 		_searchRequestExecutor = _createSearchRequestExecutor(
 			createComplexQueryBuilderFactory(new QueriesImpl()),
 			_elasticsearchClientResolver, _facetProcessor,
-			new StatsRequestBuilderFactoryImpl(), statsTranslator);
+			new StatsRequestBuilderFactoryImpl(), new DefaultStatsTranslator());
 	}
 
 	public void tearDown() {

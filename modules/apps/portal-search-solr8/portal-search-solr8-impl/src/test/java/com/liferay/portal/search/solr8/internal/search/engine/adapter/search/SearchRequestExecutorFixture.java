@@ -15,14 +15,12 @@ import com.liferay.portal.search.internal.legacy.document.DocumentBuilderFactory
 import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
-import com.liferay.portal.search.internal.stats.StatsResponseBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.search.response.DefaultSearchSearchResponseAssemblerHelperImpl;
 import com.liferay.portal.search.solr8.internal.search.response.SearchSearchResponseAssemblerHelper;
 import com.liferay.portal.search.solr8.internal.sort.SolrSortFieldTranslator;
 import com.liferay.portal.search.solr8.internal.stats.DefaultStatsTranslator;
-import com.liferay.portal.search.solr8.internal.stats.StatsTranslator;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
@@ -48,7 +46,7 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			baseSearchResponseAssemblerImpl, "_statsTranslator",
-			createStatsTranslator());
+			new DefaultStatsTranslator());
 
 		return baseSearchResponseAssemblerImpl;
 	}
@@ -60,7 +58,7 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			_baseSolrQueryAssemblerImpl, "_statsTranslator",
-			createStatsTranslator());
+			new DefaultStatsTranslator());
 
 		if (facetProcessor != null) {
 			ReflectionTestUtil.setFieldValue(
@@ -167,7 +165,7 @@ public class SearchRequestExecutorFixture {
 			"_searchHitsBuilderFactory", new SearchHitsBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			defaultSearchSearchResponseAssemblerHelperImpl, "_statsTranslator",
-			createStatsTranslator());
+			new DefaultStatsTranslator());
 		ReflectionTestUtil.setFieldValue(
 			defaultSearchSearchResponseAssemblerHelperImpl,
 			"_statsResultsTranslator", new StatsResultsTranslatorImpl());
@@ -193,20 +191,9 @@ public class SearchRequestExecutorFixture {
 			new StatsRequestBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSolrQueryAssemblerImpl, "_statsTranslator",
-			createStatsTranslator());
+			new DefaultStatsTranslator());
 
 		return searchSolrQueryAssemblerImpl;
-	}
-
-	protected StatsTranslator createStatsTranslator() {
-		DefaultStatsTranslator defaultStatsTranslator =
-			new DefaultStatsTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			defaultStatsTranslator, "_statsResponseBuilderFactory",
-			new StatsResponseBuilderFactoryImpl());
-
-		return defaultStatsTranslator;
 	}
 
 	protected void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {

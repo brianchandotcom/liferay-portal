@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsResponse;
 import com.liferay.portal.search.stats.StatsResponseBuilder;
-import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +19,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.FieldStatsInfo;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Angelo Caldas Gallindo
@@ -81,8 +79,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 	@Override
 	public StatsResponse translateResponse(FieldStatsInfo fieldStatsInfo) {
-		StatsResponseBuilder statsResponseBuilder =
-			_statsResponseBuilderFactory.getStatsResponseBuilder();
+		StatsResponseBuilder statsResponseBuilder = new StatsResponseBuilder();
 
 		String field = fieldStatsInfo.getName();
 
@@ -154,8 +151,5 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 		return sb.toString();
 	}
-
-	@Reference
-	private StatsResponseBuilderFactory _statsResponseBuilderFactory;
 
 }

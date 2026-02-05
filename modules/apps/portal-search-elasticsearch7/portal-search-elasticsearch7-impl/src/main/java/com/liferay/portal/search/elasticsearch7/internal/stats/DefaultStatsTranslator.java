@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch7.internal.stats;
 import com.liferay.portal.search.stats.StatsRequest;
 import com.liferay.portal.search.stats.StatsResponse;
 import com.liferay.portal.search.stats.StatsResponseBuilder;
-import com.liferay.portal.search.stats.StatsResponseBuilderFactory;
 
 import java.util.Map;
 
@@ -33,7 +32,6 @@ import org.elasticsearch.search.aggregations.metrics.ValueCountAggregationBuilde
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -126,8 +124,7 @@ public class DefaultStatsTranslator implements StatsTranslator {
 	public StatsResponse translateResponse(
 		Map<String, Aggregation> aggregationMap, StatsRequest statsRequest) {
 
-		StatsResponseBuilder statsResponseBuilder =
-			_statsResponseBuilderFactory.getStatsResponseBuilder();
+		StatsResponseBuilder statsResponseBuilder = new StatsResponseBuilder();
 
 		String field = statsRequest.getField();
 
@@ -194,8 +191,5 @@ public class DefaultStatsTranslator implements StatsTranslator {
 
 		return statsResponseBuilder.build();
 	}
-
-	@Reference
-	private StatsResponseBuilderFactory _statsResponseBuilderFactory;
 
 }

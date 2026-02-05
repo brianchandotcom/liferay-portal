@@ -374,6 +374,10 @@ public interface KaleoTaskInstanceTokenLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isNotifiableUser(long userId, long workflowTaskId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<KaleoTaskInstanceToken> search(
 		String keywords, Boolean completed, Boolean searchByUserRoles,
 		int start, int end,

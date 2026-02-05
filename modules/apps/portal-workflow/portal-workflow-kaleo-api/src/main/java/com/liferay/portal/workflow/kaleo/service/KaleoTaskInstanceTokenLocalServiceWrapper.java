@@ -549,6 +549,14 @@ public class KaleoTaskInstanceTokenLocalServiceWrapper
 	}
 
 	@Override
+	public boolean isNotifiableUser(long userId, long workflowTaskId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _kaleoTaskInstanceTokenLocalService.isNotifiableUser(
+			userId, workflowTaskId);
+	}
+
+	@Override
 	public java.util.List<KaleoTaskInstanceToken> search(
 		String keywords, Boolean completed, Boolean searchByUserRoles,
 		int start, int end,

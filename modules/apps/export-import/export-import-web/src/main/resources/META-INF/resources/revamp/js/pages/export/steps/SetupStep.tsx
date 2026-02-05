@@ -7,13 +7,15 @@ import ClayLayout from '@clayui/layout';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
+import {FieldCheckbox} from '../../../components/forms/FieldCheckbox';
 import {FormikFieldText} from '../../../components/forms/FormikFields';
+import {mockPorletDataHandlerSections} from '../../../utils/mockPorletDataHandlerSections';
 
 export default function SetupStep() {
 	return (
 		<>
 			<ClayLayout.Sheet>
-				<ClayLayout.SheetHeader>
+				<ClayLayout.SheetHeader className="mb-0">
 					<div className="mb-2 sheet-title">
 						{sub(
 							Liferay.Language.get('x-details'),
@@ -36,7 +38,28 @@ export default function SetupStep() {
 			</ClayLayout.Sheet>
 
 			<ClayLayout.Sheet>
-				{Liferay.Language.get('what-would-you-like-to-export')}
+				<ClayLayout.SheetHeader className="mb-0">
+					<div className="mb-2 sheet-title">
+						{Liferay.Language.get('what-would-you-like-to-export')}
+					</div>
+
+					<div className="sheet-text text-3">
+						{Liferay.Language.get(
+							'select-all-the-entity-types-that-you-want-to-export.-please-select-at-least-one-to-continue'
+						)}
+					</div>
+				</ClayLayout.SheetHeader>
+
+				{mockPorletDataHandlerSections.map(({name, portletEntries}) => (
+					<FieldCheckbox
+						description={portletEntries
+							.map(({portletTitle}) => portletTitle)
+							.join(', ')}
+						key={name}
+						label={name}
+						name={name}
+					/>
+				))}
 			</ClayLayout.Sheet>
 		</>
 	);

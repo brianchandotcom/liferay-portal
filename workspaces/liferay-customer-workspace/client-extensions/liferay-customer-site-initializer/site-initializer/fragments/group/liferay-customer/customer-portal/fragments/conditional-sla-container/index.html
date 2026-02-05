@@ -1,36 +1,11 @@
-[#assign userAccount = (restClient.get("/headless-admin-user/v1.0/user-accounts/${themeDisplay.getUserId()}"))! /]
+<div class="align-items-center d-flex justify-content-center loading-container py-5 text-center">
+	<span>${languageUtil.get(locale, "loading", "Loading")}...</span>
+</div>
 
-[#if userAccount?is_hash && userAccount.accountBriefs?has_content]
-	[#assign accountBriefs = (userAccount.accountBriefs)![] /]
-[/#if]
+<div class="callback-form-container d-none">
+	<lfr-drop-zone></lfr-drop-zone>
+</div>
 
-[#assign hasUserPermission = false /]
-
-[#if accountBriefs?has_content]
-	[#list accountBriefs as account]
-		[#assign externalReferenceCode = (account.externalReferenceCode)!"" /]
-		[#assign validSLAs = ["Global 24/7 Support", "Gold Subscription", "Platinum Subscription", "Premier 24/7 Support", "Premium Subscription", "Standard 8/5 Support", "Strategic 24/7 Support"] /]
-
-		[#assign koroneikiAccount = (restClient.get("/c/koroneikiaccounts/by-external-reference-code/${externalReferenceCode}"))!{} /]
-
-		[#assign accountSLA = (koroneikiAccount.slaCurrent)!"" /]
-
-		[#assign hasSLAPermission = validSLAs?seq_contains(accountSLA) /]
-
-		[#if hasSLAPermission]
-			[#assign hasUserPermission = true /]
-		[/#if]
-	[/#list]
-[/#if]
-
-[#assign editMode = layoutMode == 'edit' /]
-
-<div>
-	<div class="callback-form-container [#if !editMode && !hasUserPermission]d-none[/#if]">
-		<lfr-drop-zone></lfr-drop-zone>
-	</div>
-
-	<div class="error-container [#if !editMode && hasUserPermission]d-none[/#if]">
-		<lfr-drop-zone></lfr-drop-zone>
-	</div>
+<div class="d-none error-container">
+	<lfr-drop-zone></lfr-drop-zone>
 </div>

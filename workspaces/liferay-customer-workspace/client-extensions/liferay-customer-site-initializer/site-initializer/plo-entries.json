@@ -243,6 +243,15 @@
 		}
 	},
 	{
+		"key": "loading",
+		"value": {
+			"en-US": "Loading",
+			"es-ES": "Cargando",
+			"ja-JP": "読み込み中",
+			"pt-BR": "Carregando"
+		}
+	},
+	{
 		"key": "marketplace",
 		"value": {
 			"en-US": "Marketplace"

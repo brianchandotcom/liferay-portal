@@ -215,6 +215,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		workflowDefinition.setContent(regex);
 		workflowDefinition.setDescription(regex);
 		workflowDefinition.setExternalReferenceCode(regex);
+		workflowDefinition.setGroupExternalReferenceCode(regex);
 		workflowDefinition.setName(regex);
 		workflowDefinition.setScope(regex);
 		workflowDefinition.setTitle(regex);
@@ -230,6 +231,8 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		Assert.assertEquals(regex, workflowDefinition.getDescription());
 		Assert.assertEquals(
 			regex, workflowDefinition.getExternalReferenceCode());
+		Assert.assertEquals(
+			regex, workflowDefinition.getGroupExternalReferenceCode());
 		Assert.assertEquals(regex, workflowDefinition.getName());
 		Assert.assertEquals(regex, workflowDefinition.getScope());
 		Assert.assertEquals(regex, workflowDefinition.getTitle());
@@ -1739,6 +1742,18 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"groupExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (workflowDefinition.getGroupExternalReferenceCode() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (workflowDefinition.getName() == null) {
 					valid = false;
@@ -2003,6 +2018,19 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowDefinition1.getExternalReferenceCode(),
 						workflowDefinition2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"groupExternalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						workflowDefinition1.getGroupExternalReferenceCode(),
+						workflowDefinition2.getGroupExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2417,6 +2445,52 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("groupExternalReferenceCode")) {
+			Object object = workflowDefinition.getGroupExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2673,6 +2747,8 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				description = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				groupExternalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());

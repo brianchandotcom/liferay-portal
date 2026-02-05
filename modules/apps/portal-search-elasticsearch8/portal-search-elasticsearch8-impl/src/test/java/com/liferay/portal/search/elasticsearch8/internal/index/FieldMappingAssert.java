@@ -33,20 +33,18 @@ import org.junit.Assert;
 public class FieldMappingAssert {
 
 	public static void assertAnalyzer(
-			String expectedValue,
-			ElasticsearchIndicesClient elasticsearchIndicesClient, String field,
-			String index)
+			ElasticsearchIndicesClient elasticsearchIndicesClient,
+			String expectedValue, String field, String index)
 		throws Exception {
 
 		assertFieldMappingMetadata(
-			expectedValue, elasticsearchIndicesClient, field, index,
+			elasticsearchIndicesClient, expectedValue, field, index,
 			"analyzer");
 	}
 
 	public static void assertFieldMappingMetadata(
-			String expectedValue,
-			ElasticsearchIndicesClient elasticsearchIndicesClient, String field,
-			String index, String key)
+			ElasticsearchIndicesClient elasticsearchIndicesClient,
+			String expectedValue, String field, String index, String key)
 		throws Exception {
 
 		IdempotentRetryAssert.retryAssert(
@@ -54,7 +52,7 @@ public class FieldMappingAssert {
 			() -> {
 				try {
 					_assertFieldMappingMetadata(
-						expectedValue, elasticsearchIndicesClient, field, index,
+						elasticsearchIndicesClient, expectedValue, field, index,
 						key);
 				}
 				catch (JSONException jsonException) {
@@ -64,19 +62,17 @@ public class FieldMappingAssert {
 	}
 
 	public static void assertType(
-			String expectedValue,
-			ElasticsearchIndicesClient elasticsearchIndicesClient, String field,
-			String index)
+			ElasticsearchIndicesClient elasticsearchIndicesClient,
+			String expectedValue, String field, String index)
 		throws Exception {
 
 		assertFieldMappingMetadata(
-			expectedValue, elasticsearchIndicesClient, field, index, "type");
+			elasticsearchIndicesClient, expectedValue, field, index, "type");
 	}
 
 	private static void _assertFieldMappingMetadata(
-			String expectedValue,
-			ElasticsearchIndicesClient elasticsearchIndicesClient, String field,
-			String index, String key)
+			ElasticsearchIndicesClient elasticsearchIndicesClient,
+			String expectedValue, String field, String index, String key)
 		throws JSONException {
 
 		Assert.assertEquals(

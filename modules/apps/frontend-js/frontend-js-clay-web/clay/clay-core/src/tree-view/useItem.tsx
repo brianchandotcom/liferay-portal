@@ -48,6 +48,7 @@ export function ItemContextProvider({children, value}: Props) {
 		dragAndDrop,
 		dragAndDropMode,
 		expandedKeys,
+		itemNameKey,
 		items,
 		layout,
 		nestedKey,
@@ -116,6 +117,8 @@ export function ItemContextProvider({children, value}: Props) {
 				keyRef.current,
 				hasLazyChildren,
 				indexes,
+				value[itemNameKey!],
+				value['icon'],
 				cursor,
 				parentKey
 			),

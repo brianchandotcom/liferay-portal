@@ -42,7 +42,6 @@ import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.asset.criterion.AssetEntryItemSelectorCriterion;
 import com.liferay.item.selector.criteria.group.criterion.GroupItemSelectorCriterion;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -1394,18 +1393,7 @@ public class EditAssetListDisplayContext {
 						_httpServletRequest, "select-x", classTypeName,
 						false)));
 
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-					_themeDisplay.getCompanyId(),
-					assetRendererFactory.getClassName());
-
-			if ((objectDefinition != null) && objectDefinition.isCMS()) {
-				dropdownItem.setLabel(
-					StringUtil.appendParentheticalSuffix(classTypeName, "CMS"));
-			}
-			else {
-				dropdownItem.setLabel(classTypeName);
-			}
+			dropdownItem.setLabel(classTypeName);
 		};
 	}
 

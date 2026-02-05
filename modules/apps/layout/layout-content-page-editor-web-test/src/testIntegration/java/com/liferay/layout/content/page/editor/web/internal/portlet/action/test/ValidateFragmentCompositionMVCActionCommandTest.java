@@ -102,8 +102,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			fragmentEntryLink, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		_testValidateFragmentComposition(
-			1, containerItemId, _getMockLiferayPortletActionRequest());
+		_testValidateFragmentComposition(1, containerItemId);
 	}
 
 	@Test
@@ -118,33 +117,24 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			StringPool.BLANK, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		_testValidateFragmentComposition(
-			0, containerItemId, _getMockLiferayPortletActionRequest());
+		_testValidateFragmentComposition(0, containerItemId);
 	}
 
-	private MockLiferayPortletActionRequest
-			_getMockLiferayPortletActionRequest()
+	private void _testValidateFragmentComposition(
+			int expectedCount, String itemId)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_company, _group, _draftLayout);
 
-		mockLiferayPortletActionRequest.addParameter(
-			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
-
-		return mockLiferayPortletActionRequest;
-	}
-
-	private void _testValidateFragmentComposition(
-		int expectedCount, String itemId,
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest) {
-
 		mockLiferayPortletActionRequest.addParameter("itemId", itemId);
 		mockLiferayPortletActionRequest.addParameter(
 			"saveInlineContent", Boolean.TRUE.toString());
 		mockLiferayPortletActionRequest.addParameter(
 			"saveMappingConfiguration", Boolean.TRUE.toString());
+		mockLiferayPortletActionRequest.addParameter(
+			"segmentsExperienceId", String.valueOf(_segmentsExperienceId));
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_validateFragmentCompositionMVCActionCommand,

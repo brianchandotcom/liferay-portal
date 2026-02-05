@@ -291,11 +291,10 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		Assert.assertFalse(
 			fragmentCompositionJSONObject.has("fragmentEntryKey"));
 
-		int compositionCount =
+		Assert.assertEquals(
+			0,
 			_fragmentCompositionLocalService.getFragmentCompositionsCount(
-				fragmentCollection.getFragmentCollectionId());
-
-		Assert.assertEquals(0, compositionCount);
+				fragmentCollection.getFragmentCollectionId()));
 	}
 
 	@Test

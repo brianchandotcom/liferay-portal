@@ -375,7 +375,6 @@ public class SearchSearchRequestAssemblerImpl
 	@Reference
 	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
 
-	@Reference
-	private StatsTranslator _statsTranslator;
+	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

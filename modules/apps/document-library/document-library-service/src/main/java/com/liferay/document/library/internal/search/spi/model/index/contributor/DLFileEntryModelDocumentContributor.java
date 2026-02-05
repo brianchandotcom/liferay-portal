@@ -303,6 +303,12 @@ public class DLFileEntryModelDocumentContributor
 				DLStoreRequest.builder(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName()
+				).className(
+					dlFileEntry.getModelClassName()
+				).classPK(
+					dlFileEntry.getFileEntryId()
+				).sourceFileName(
+					dlFileEntry.getFileName()
 				).versionLabel(
 					indexVersionLabel
 				).build(),

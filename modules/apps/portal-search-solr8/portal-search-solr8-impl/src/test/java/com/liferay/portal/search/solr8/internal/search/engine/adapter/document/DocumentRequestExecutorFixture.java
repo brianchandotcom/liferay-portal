@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
@@ -24,7 +23,7 @@ public class DocumentRequestExecutorFixture {
 
 	public void setUp() {
 		_documentRequestExecutor = createDocumentRequestExecutor(
-			_queryTranslator, _solrClientManager);
+			_solrClientManager);
 	}
 
 	protected static BulkDocumentRequestExecutor
@@ -46,7 +45,6 @@ public class DocumentRequestExecutorFixture {
 
 	protected static DeleteByQueryDocumentRequestExecutor
 		createDeleteByQueryDocumentRequestExecutor(
-			QueryTranslator<String> queryTranslator,
 			SolrClientManager solrClientManager) {
 
 		DeleteByQueryDocumentRequestExecutorImpl
@@ -57,9 +55,6 @@ public class DocumentRequestExecutorFixture {
 					}
 				};
 
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutorImpl, "_queryTranslator",
-			queryTranslator);
 		ReflectionTestUtil.setFieldValue(
 			deleteByQueryDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);
@@ -82,7 +77,6 @@ public class DocumentRequestExecutorFixture {
 	}
 
 	protected static DocumentRequestExecutor createDocumentRequestExecutor(
-		QueryTranslator<String> queryTranslator,
 		SolrClientManager solrClientManager) {
 
 		SolrDocumentRequestExecutor solrDocumentRequestExecutor =
@@ -94,8 +88,7 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor,
 			"_deleteByQueryDocumentRequestExecutor",
-			createDeleteByQueryDocumentRequestExecutor(
-				queryTranslator, solrClientManager));
+			createDeleteByQueryDocumentRequestExecutor(solrClientManager));
 
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
@@ -172,10 +165,6 @@ public class DocumentRequestExecutorFixture {
 		_properties = properties;
 	}
 
-	protected void setQueryTranslator(QueryTranslator<String> queryTranslator) {
-		_queryTranslator = queryTranslator;
-	}
-
 	protected void setSolrClientManager(SolrClientManager solrClientManager) {
 		_solrClientManager = solrClientManager;
 	}
@@ -183,7 +172,6 @@ public class DocumentRequestExecutorFixture {
 	private static Map<String, Object> _properties;
 
 	private DocumentRequestExecutor _documentRequestExecutor;
-	private QueryTranslator<String> _queryTranslator;
 	private SolrClientManager _solrClientManager;
 
 }

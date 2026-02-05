@@ -26,7 +26,6 @@ import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
-import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.SolrSearchEngineAdapterFixture;
 import com.liferay.portal.search.solr8.internal.suggest.NGramHolderBuilderImpl;
 import com.liferay.portal.search.solr8.internal.suggest.NGramQueryBuilderImpl;
@@ -133,7 +132,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 			{
 				setFacetProcessor(facetProcessor);
 				setProperties(properties);
-				setQueryTranslator(new SolrQueryTranslator());
 				setSolrClientManager(solrClientManager);
 			}
 		};

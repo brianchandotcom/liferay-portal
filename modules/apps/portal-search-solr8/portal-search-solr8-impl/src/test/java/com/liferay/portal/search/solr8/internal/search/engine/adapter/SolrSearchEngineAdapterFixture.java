@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter;
 
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
@@ -31,30 +30,23 @@ public class SolrSearchEngineAdapterFixture {
 		_properties = properties;
 	}
 
-	public void setQueryTranslator(QueryTranslator<String> queryTranslator) {
-		_queryTranslator = queryTranslator;
-	}
-
 	public void setSolrClientManager(SolrClientManager solrClientManager) {
 		_solrClientManager = solrClientManager;
 	}
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_facetProcessor, _solrClientManager, _queryTranslator, _properties);
+			_facetProcessor, _solrClientManager, _properties);
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
 		FacetProcessor<SolrQuery> facetProcessor,
-		SolrClientManager solrClientManager,
-		QueryTranslator<String> queryTranslator,
-		Map<String, Object> properties) {
+		SolrClientManager solrClientManager, Map<String, Object> properties) {
 
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
 			new DocumentRequestExecutorFixture() {
 				{
 					setProperties(properties);
-					setQueryTranslator(queryTranslator);
 					setSolrClientManager(solrClientManager);
 				}
 			};
@@ -62,7 +54,6 @@ public class SolrSearchEngineAdapterFixture {
 		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
 			{
 				setFacetProcessor(facetProcessor);
-				setQueryTranslator(queryTranslator);
 				setSolrClientManager(solrClientManager);
 			}
 		};
@@ -97,7 +88,6 @@ public class SolrSearchEngineAdapterFixture {
 
 	private FacetProcessor<SolrQuery> _facetProcessor;
 	private Map<String, Object> _properties;
-	private QueryTranslator<String> _queryTranslator;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestExecutorFixture _searchRequestExecutorFixture;
 	private SolrClientManager _solrClientManager;

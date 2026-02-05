@@ -6,7 +6,6 @@
 package com.liferay.portal.search.solr8.internal.search.engine.adapter;
 
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.query.QueryTranslator;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRResponse;
@@ -25,7 +24,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
-import com.liferay.portal.search.solr8.internal.query.SolrQueryTranslator;
+import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -104,7 +103,7 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 	@Override
 	public String getQueryString(Query query) {
 		try {
-			return _queryTranslator.translate(query, null);
+			return SolrQueryVisitor.INSTANCE.translate(query);
 		}
 		catch (RuntimeException runtimeException) {
 			throw _getRuntimeException(runtimeException);
@@ -146,9 +145,6 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private IndexRequestExecutor _indexRequestExecutor;
-
-	private final QueryTranslator<String> _queryTranslator =
-		new SolrQueryTranslator();
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private SearchRequestExecutor _searchRequestExecutor;

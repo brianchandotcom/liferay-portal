@@ -112,8 +112,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId(), TestPropsValues.getUserId());
 
-		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 
 		_objectMapper = new ObjectMapper() {

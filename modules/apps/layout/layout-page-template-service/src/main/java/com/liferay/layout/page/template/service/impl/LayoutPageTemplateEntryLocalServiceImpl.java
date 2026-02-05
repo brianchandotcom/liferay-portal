@@ -272,8 +272,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			addLayoutPageTemplateEntry(
 				externalReferenceCode, userId, groupId,
 				layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
-				classNameId, classTypeId, name, type, 0, false, 0, 0,
-				masterLayoutPlid, status, serviceContext);
+				classNameId, classTypeId, classTypeKey, name, type, 0, false, 0,
+				0, masterLayoutPlid, status, serviceContext);
 
 		// Dynamic data mapping structure link
 
@@ -297,7 +297,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return addLayoutPageTemplateEntry(
 			externalReferenceCode, userId, groupId,
 			layoutPageTemplateCollectionId, layoutPageTemplateEntryKey, 0, 0,
-			name, type, 0, false, 0, 0, masterLayoutPlid, status,
+			null, name, type, 0, false, 0, 0, masterLayoutPlid, status,
 			serviceContext);
 	}
 
@@ -341,7 +341,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			addLayoutPageTemplateEntry(
 				null, userId, groupId, layoutPageTemplateCollectionId, null,
 				sourceLayoutPageTemplateEntry.getClassNameId(),
-				sourceLayoutPageTemplateEntry.getClassTypeId(), name,
+				sourceLayoutPageTemplateEntry.getClassTypeId(),
+				sourceLayoutPageTemplateEntry.getClassTypeKey(), name,
 				sourceLayoutPageTemplateEntry.getType(), 0, false,
 				sourceLayoutPageTemplateEntry.getLayoutPrototypeId(), 0,
 				masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
@@ -1066,7 +1067,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		return addLayoutPageTemplateEntry(
-			null, layoutPrototype.getUserId(), groupId, 0, null, 0, 0,
+			null, layoutPrototype.getUserId(), groupId, 0, null, 0, 0, null,
 			nameMap.get(defaultLocale),
 			LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0, false,
 			layoutPrototype.getLayoutPrototypeId(), layout.getPlid(), 0, status,

@@ -236,7 +236,9 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	}
 
 	@Test
-	public void testAddFragmentCompositionInvalid() throws Exception {
+	public void testAddFragmentCompositionMissingFragmentEntry()
+		throws Exception {
+
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),

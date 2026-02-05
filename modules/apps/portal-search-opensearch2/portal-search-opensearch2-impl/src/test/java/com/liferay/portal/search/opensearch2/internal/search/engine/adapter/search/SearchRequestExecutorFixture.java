@@ -35,8 +35,6 @@ import com.liferay.portal.search.opensearch2.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
-import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslator;
-import com.liferay.portal.search.opensearch2.internal.stats.StatsTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.suggest.OpenSearchSuggesterTranslator;
 import com.liferay.portal.search.query.Queries;
 
@@ -62,7 +60,7 @@ public class SearchRequestExecutorFixture {
 		_searchRequestExecutor = _createSearchRequestExecutor(
 			createComplexQueryBuilderFactory(new QueriesImpl()),
 			_facetProcessor, _openSearchConnectionManager,
-			new StatsRequestBuilderFactoryImpl(), new StatsTranslatorImpl());
+			new StatsRequestBuilderFactoryImpl());
 	}
 
 	public void tearDown() {
@@ -76,7 +74,7 @@ public class SearchRequestExecutorFixture {
 	protected static CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler(
 			ComplexQueryBuilderFactory complexQueryBuilderFactory,
-			FacetProcessor<?> facetProcessor, StatsTranslator statsTranslator) {
+			FacetProcessor<?> facetProcessor) {
 
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
@@ -91,9 +89,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
 			_createFacetTranslator(facetProcessor));
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_statsTranslator",
-			statsTranslator);
 
 		return commonSearchRequestBuilderAssembler;
 	}
@@ -171,24 +166,17 @@ public class SearchRequestExecutorFixture {
 
 	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
 		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
-		OpenSearchConnectionManager openSearchConnectionManager,
-		StatsTranslator statsTranslator) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		CountSearchRequestExecutor countSearchRequestExecutor =
 			new CountSearchRequestExecutorImpl();
-
-		CommonSearchResponseAssembler commonSearchResponseAssembler =
-			new CommonSearchResponseAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_commonSearchRequestBuilderAssembler",
 			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_commonSearchResponseAssembler",
-			commonSearchResponseAssembler);
+			new CommonSearchResponseAssemblerImpl());
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
@@ -236,8 +224,7 @@ public class SearchRequestExecutorFixture {
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		FacetProcessor<?> facetProcessor,
 		OpenSearchConnectionManager openSearchConnectionManager,
-		StatsRequestBuilderFactory statsRequestBuilderFactory,
-		StatsTranslator statsTranslator) {
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		SearchRequestExecutor searchRequestExecutor =
 			new OpenSearchSearchRequestExecutor();
@@ -250,23 +237,21 @@ public class SearchRequestExecutorFixture {
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
 				createCommonSearchRequestBuilderAssembler(
-					complexQueryBuilderFactory, facetProcessor,
-					statsTranslator);
+					complexQueryBuilderFactory, facetProcessor);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_countSearchRequestExecutor",
 			_createCountSearchRequestExecutor(
 				commonSearchRequestBuilderAssembler,
-				openSearchConnectionManager, statsTranslator));
+				openSearchConnectionManager));
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			_createSearchSearchRequestAssembler(
-				commonSearchRequestBuilderAssembler, statsRequestBuilderFactory,
-				statsTranslator);
+				commonSearchRequestBuilderAssembler,
+				statsRequestBuilderFactory);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			_createSearchSearchResponseAssembler(
-				statsRequestBuilderFactory, statsTranslator);
+			_createSearchSearchResponseAssembler(statsRequestBuilderFactory);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_multisearchSearchRequestExecutor",
@@ -291,8 +276,7 @@ public class SearchRequestExecutorFixture {
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
 		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
-		StatsRequestBuilderFactory statsRequestBuilderFactory,
-		StatsTranslator statsTranslator) {
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			new SearchSearchRequestAssemblerImpl();
@@ -310,8 +294,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
 			statsRequestBuilderFactory);
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_statsTranslator", statsTranslator);
 
 		return searchSearchRequestAssembler;
 	}
@@ -338,24 +320,17 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchSearchResponseAssembler _createSearchSearchResponseAssembler(
-		StatsRequestBuilderFactory statsRequestBuilderFactory,
-		StatsTranslator statsTranslator) {
+		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			new SearchSearchResponseAssemblerImpl();
-
-		CommonSearchResponseAssembler commonSearchResponseAssembler =
-			new CommonSearchResponseAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchResponseAssembler, "_statsTranslator", statsTranslator);
 
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_aggregationResults",
 			new AggregationResultsImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_commonSearchResponseAssembler",
-			commonSearchResponseAssembler);
+			new CommonSearchResponseAssemblerImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());
@@ -376,7 +351,7 @@ public class SearchRequestExecutorFixture {
 			new SearchResponseTranslator(
 				new GroupByResponseFactoryImpl(),
 				new HitDocumentTranslatorImpl(), statsRequestBuilderFactory,
-				new StatsResultsTranslatorImpl(), statsTranslator));
+				new StatsResultsTranslatorImpl()));
 
 		return searchSearchResponseAssembler;
 	}

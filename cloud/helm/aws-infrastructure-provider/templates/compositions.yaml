@@ -286,42 +286,42 @@ spec:
                             forProvider:
                                 policy: |
                                     {
-                                        Statement: [
+                                        "Statement": [
                                             {
-                                                Action: [
+                                                "Action": [
                                                     "s3:ListBucket",
                                                     "s3:PutObject"
                                                 ],
-                                                Effect: "Allow",
-                                                Resource: [
+                                                "Effect": "Allow",
+                                                "Resource": [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}"
                                                 ],
-                                                Sid: AllowListBucket
+                                                "Sid": "AllowListBucket"
                                             },
                                             {
-                                                Action: [
+                                                "Action": [
                                                     "s3:PutObject"
                                                 ],
-                                                Effect: "Allow",
-                                                Resource: [
+                                                "Effect": "Allow",
+                                                "Resource": [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}/*"
                                                 ],
-                                                Sid: AllowPutBucket
+                                                "Sid": "AllowPutBucket"
                                             },
                                             {
-                                                Action: [
+                                                "Action": [
                                                     "s3:DeleteObject",
                                                     "s3:DeleteObjectVersion"
                                                 ],
-                                                Effect: "Deny",
-                                                Resource: [
+                                                "Effect": "Deny",
+                                                "Resource": [
                                                     "arn:aws:s3:::{{ $overlayBucketName }}",
                                                     "arn:aws:s3:::{{ $overlayBucketName }}/*"
                                                 ],
-                                                Sid: DenyDeleteBucket
+                                                "Sid": "DenyDeleteBucket"
                                             }
                                         ],
-                                       Version: 2012-10-17
+                                       "Version": "2012-10-17"
                                     }
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -500,22 +500,22 @@ spec:
                             forProvider:
                                 policy: |
                                     {
-                                        Statement: [
+                                        "Statement": [
                                             {
-                                                Action: [
+                                                "Action": [
                                                     "s3:DeleteObject",
                                                     "s3:GetObject",
                                                     "s3:ListBucket",
                                                     "s3:PutObject"
                                                 ],
-                                                Effect: "Allow",
-                                                Resource: [
+                                                "Effect": "Allow",
+                                                "Resource": [
                                                     "arn:aws:s3:::{{ $storageName }}-{{ $slot }}",
                                                     "arn:aws:s3:::{{ $storageName }}-{{ $slot }}/*"
                                                 ]
                                             }
                                         ],
-                                        Version: 2012-10-17
+                                        "Version": "2012-10-17"
                                     }
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -623,17 +623,17 @@ spec:
                             forProvider:
                                 accessPolicies: |
                                     {
-                                        Version: "2012-10-17",
-                                        Statement: [
+                                        "Statement": [
                                             {
-                                                Action: "es:*",
-                                                Effect: "Allow",
-                                                Principal: {
-                                                    AWS: "*"
+                                                "Action": "es:*",
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "AWS": "*"
                                                 },
-                                                Resource: arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*
+                                                "Resource": "arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*"
                                             }
-                                        ]
+                                        ],
+                                        "Version": "2012-10-17",
                                     }
                                 domainName: {{ $searchName }}
                                 region: {{ $searchSpec.region }}

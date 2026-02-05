@@ -229,7 +229,7 @@
 					"label": {
 						"en_US": "Template Group ID"
 					},
-					"name": "templateGroupId",
+					"name": "dsrTemplateGroupId",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,

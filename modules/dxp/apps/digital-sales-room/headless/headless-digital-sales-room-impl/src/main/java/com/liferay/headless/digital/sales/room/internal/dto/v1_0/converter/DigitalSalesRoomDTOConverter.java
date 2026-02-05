@@ -125,7 +125,7 @@ public class DigitalSalesRoomDTOConverter
 					() -> group.getDescription(
 						dtoConverterContext.getLocale()));
 				setDigitalSalesRoomTemplateId(
-					() -> GetterUtil.getLong(values.get("templateGroupId")));
+					() -> GetterUtil.getLong(values.get("dsrTemplateGroupId")));
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setFriendlyUrlPath(group::getFriendlyURL);
 				setId(group::getGroupId);

@@ -116,21 +116,21 @@ public class DigitalSalesRoomResourceImpl
 		Map<String, Serializable> values =
 			serviceBuilderObjectEntry.getValues();
 
-		long templateGroupId = GetterUtil.getLong(
-			values.get("templateGroupId"));
+		long dsrTemplateGroupId = GetterUtil.getLong(
+			values.get("dsrTemplateGroupId"));
 
-		if (templateGroupId > 0) {
-			Group templateGroup = _groupLocalService.fetchGroup(
-				templateGroupId);
+		if (dsrTemplateGroupId > 0) {
+			Group dsrTemplateGroup = _groupLocalService.fetchGroup(
+				dsrTemplateGroupId);
 
-			if (templateGroup != null) {
+			if (dsrTemplateGroup != null) {
 				ObjectDefinition dsrTemplateObjectDefinition =
 					_objectDefinitionLocalService.
 						getObjectDefinitionByExternalReferenceCode(
 							"L_DSR_TEMPLATE", contextCompany.getCompanyId());
 
 				_updateDSRTemplateObjectEntryUsages(
-					templateGroup,
+					dsrTemplateGroup,
 					dsrTemplateObjectDefinition.getObjectDefinitionId(), -1);
 			}
 		}
@@ -811,7 +811,8 @@ public class DigitalSalesRoomResourceImpl
 
 						if (digitalSalesRoomTemplateId > 0) {
 							propertiesMap.put(
-								"templateGroupId", digitalSalesRoomTemplateId);
+								"dsrTemplateGroupId",
+								digitalSalesRoomTemplateId);
 						}
 
 						return Collections.unmodifiableMap(propertiesMap);

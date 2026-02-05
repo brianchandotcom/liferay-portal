@@ -15,6 +15,11 @@
 		"type": 1
 	},
 	{
+		"externalReferenceCode": "ROLE_CUSTOMER_EXPERIENCE_MANAGER",
+		"name": "Customer Experience Manager",
+		"type": 6
+	},
+	{
 		"externalReferenceCode": "ROLE_DATA_BREACH_CONTACT",
 		"name": "Data Breach Contact",
 		"type": 6
@@ -77,6 +82,11 @@
 	{
 		"externalReferenceCode": "ROLE_REQUESTER",
 		"name": "Requester",
+		"type": 6
+	},
+	{
+		"externalReferenceCode": "ROLE_SOLUTION_ARCHITECT",
+		"name": "Solution Architect",
 		"type": 6
 	},
 	{

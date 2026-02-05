@@ -63,9 +63,10 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		_group = GroupTestUtil.addGroup();
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

@@ -124,32 +124,6 @@ test(
 		finally {
 			await tasksPage.goto();
 
-			const bulkActionTasks = 'cms/bulk-action-tasks';
-			const bulkActionTasksItems = 'cms/bulk-action-task-items';
-
-			const bulkTasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
-			const bulkTasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			for (let i = 0; i < bulkTasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					bulkTasksItems.items[i].id
-				);
-			}
-			for (let i = 0; i < bulkTasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					bulkTasks.items[i].id
-				);
-			}
-
 			if (project) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					cmpProject,
@@ -164,6 +138,34 @@ test(
 						task.id
 					);
 				}
+			}
+
+			const bulkActionTaskItems = 'cms/bulk-action-task-items';
+
+			const bulkTaskItems =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTaskItems
+				);
+
+			for (const bulkTaskItem of bulkTaskItems.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTaskItems,
+					bulkTaskItem.id
+				);
+			}
+
+			const bulkActionTasks = 'cms/bulk-action-tasks';
+
+			const bulkTasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasks
+				);
+
+			for (const bulkTask of bulkTasks.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasks,
+					bulkTask.id
+				);
 			}
 		}
 	}
@@ -251,32 +253,6 @@ test(
 		finally {
 			await tasksPage.goto();
 
-			const bulkActionTasks = 'cms/bulk-action-tasks';
-			const bulkActionTasksItems = 'cms/bulk-action-task-items';
-
-			const bulkTasksItems =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasksItems
-				);
-
-			const bulkTasks =
-				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
-					bulkActionTasks
-				);
-
-			for (let i = 0; i < bulkTasksItems.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasksItems,
-					bulkTasksItems.items[i].id
-				);
-			}
-			for (let i = 0; i < bulkTasks.totalCount; i++) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					bulkActionTasks,
-					bulkTasks.items[i].id
-				);
-			}
-
 			if (project) {
 				await apiHelpers.objectEntry.deleteObjectEntry(
 					cmpProject,
@@ -291,6 +267,34 @@ test(
 						task.id
 					);
 				}
+			}
+
+			const bulkActionTaskItems = 'cms/bulk-action-task-items';
+
+			const bulkTaskItems =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTaskItems
+				);
+
+			for (const bulkTaskItem of bulkTaskItems.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTaskItems,
+					bulkTaskItem.id
+				);
+			}
+
+			const bulkActionTasks = 'cms/bulk-action-tasks';
+
+			const bulkTasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasks
+				);
+
+			for (const bulkTask of bulkTasks.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasks,
+					bulkTask.id
+				);
 			}
 		}
 	}

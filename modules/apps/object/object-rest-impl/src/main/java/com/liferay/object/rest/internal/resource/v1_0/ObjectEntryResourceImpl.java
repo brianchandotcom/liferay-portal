@@ -601,6 +601,11 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
+			public boolean isMissingPortletSupported() {
+				return true;
+			}
+
+			@Override
 			public boolean isStagingSupported() {
 				return false;
 			}

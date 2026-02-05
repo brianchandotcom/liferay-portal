@@ -74,6 +74,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return false;
 		}
 
+		public default boolean isMissingPortletSupported() {
+			return false;
+		}
+
 		public default boolean isStagingSupported() {
 			return false;
 		}

@@ -12,6 +12,7 @@ import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletExportController;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.exception.ExportImportIOException;
@@ -561,8 +562,16 @@ public class PortletExportControllerImpl implements PortletExportController {
 		element.addAttribute(
 			"portlet-data",
 			String.valueOf(exportPortletData || portletDataHandler.isHidden()));
-		element.addAttribute(
-			"portlet-data-handler-key", portletDataHandler.getKey());
+
+		if ((portletDataHandler instanceof
+				BatchEnginePortletDataHandler batchEnginePortletDataHandler) &&
+			batchEnginePortletDataHandler.isMissingPortletSupported()) {
+
+			element.addAttribute(
+				"portlet-data-handler-key",
+				batchEnginePortletDataHandler.getKey());
+		}
+
 		element.addAttribute(
 			"schema-version", portletDataHandler.getSchemaVersion());
 

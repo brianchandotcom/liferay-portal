@@ -10,6 +10,7 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.type.ActionInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -30,6 +31,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -359,6 +361,48 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						ObjectEntryInfoItemFields.getFriendlyURLInfoField(
 							objectDefinition.isEnableFriendlyURLCustomization(),
 							name, namespace));
+				}
+
+				for (ObjectRelationship objectRelationship :
+						ObjectRelationshipLocalServiceUtil.
+							getObjectRelationships(
+								objectDefinition.getObjectDefinitionId(),
+								ObjectRelationshipConstants.
+									DELETION_TYPE_DISASSOCIATE,
+								false)) {
+
+					if (!objectRelationship.compareType(
+							ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+						continue;
+					}
+
+					unsafeConsumer.accept(
+						objectFieldInfoFieldConverter.
+							addRelationshipInfoFieldAttributes(
+								InfoField.builder(
+									namespace
+								).infoFieldType(
+									RelationshipInfoFieldType.INSTANCE
+								).name(
+									ObjectRelationshipConstants.
+										OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX +
+											objectRelationship.getName()
+								).labelInfoLocalizedValue(
+									InfoLocalizedValue.<String>builder(
+									).values(
+										objectRelationship.getLabelMap()
+									).defaultLocale(
+										LocaleUtil.fromLanguageId(
+											objectRelationship.
+												getDefaultLanguageId())
+									).build()
+								).editable(
+									true
+								).localizable(
+									false
+								),
+								objectRelationship));
 				}
 			}
 		).infoFieldSetEntry(

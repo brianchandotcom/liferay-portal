@@ -24,6 +24,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.info.field.type.util.ObjectFieldInfoFieldTypeUtil;
@@ -104,6 +105,26 @@ public class ObjectFieldInfoFieldConverter {
 		_portal = portal;
 		_restContextPathResolverRegistry = restContextPathResolverRegistry;
 		_userLocalService = userLocalService;
+	}
+
+	public InfoField<?> addRelationshipInfoFieldAttributes(
+		InfoField.FinalStep finalStep, ObjectRelationship objectRelationship) {
+
+		return finalStep.attribute(
+			RelationshipInfoFieldType.INHERITANCE, objectRelationship.isEdge()
+		).attribute(
+			RelationshipInfoFieldType.LABEL_FIELD_NAME,
+			_getRelationshipLabelFieldName(objectRelationship)
+		).attribute(
+			RelationshipInfoFieldType.MULTIPLE,
+			objectRelationship.compareType(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)
+		).attribute(
+			RelationshipInfoFieldType.URL,
+			_getRelationshipURL(objectRelationship)
+		).attribute(
+			RelationshipInfoFieldType.VALUE_FIELD_NAME, "id"
+		).build();
 	}
 
 	public InfoField<?> getInfoField(
@@ -257,17 +278,8 @@ public class ObjectFieldInfoFieldConverter {
 					fetchObjectRelationshipByObjectFieldId2(
 						objectField.getObjectFieldId());
 
-			finalStep.attribute(
-				RelationshipInfoFieldType.INHERITANCE,
-				objectRelationship.isEdge()
-			).attribute(
-				RelationshipInfoFieldType.LABEL_FIELD_NAME,
-				_getRelationshipLabelFieldName(objectRelationship)
-			).attribute(
-				RelationshipInfoFieldType.URL, _getRelationshipURL(objectField)
-			).attribute(
-				RelationshipInfoFieldType.VALUE_FIELD_NAME, "id"
-			);
+			return addRelationshipInfoFieldAttributes(
+				finalStep, objectRelationship);
 		}
 		else if (Objects.equals(
 					objectField.getBusinessType(),
@@ -479,9 +491,20 @@ public class ObjectFieldInfoFieldConverter {
 	private String _getRelationshipLabelFieldName(
 		ObjectRelationship objectRelationship) {
 
-		ObjectDefinition relatedObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+		ObjectDefinition relatedObjectDefinition = null;
+
+		if (objectRelationship.compareType(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+		}
+		else {
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+		}
 
 		if (relatedObjectDefinition == null) {
 			return "id";
@@ -504,7 +527,7 @@ public class ObjectFieldInfoFieldConverter {
 		return titleObjectField.getName();
 	}
 
-	private String _getRelationshipURL(ObjectField objectField) {
+	private String _getRelationshipURL(ObjectRelationship objectRelationship) {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -512,14 +535,20 @@ public class ObjectFieldInfoFieldConverter {
 			return StringPool.BLANK;
 		}
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.
-				fetchObjectRelationshipByObjectFieldId2(
-					objectField.getObjectFieldId());
+		ObjectDefinition relatedObjectDefinition = null;
 
-		ObjectDefinition relatedObjectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
+		if (objectRelationship.compareType(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId2());
+		}
+		else {
+			relatedObjectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					objectRelationship.getObjectDefinitionId1());
+		}
 
 		if (relatedObjectDefinition == null) {
 			return StringPool.BLANK;
@@ -533,7 +562,7 @@ public class ObjectFieldInfoFieldConverter {
 				"/o/search/v1.0/search?",
 				"emptySearch=true&nestedFields=embedded&filter=status in (0) ",
 				"and objectDefinitionId in (",
-				objectRelationship.getObjectDefinitionId1(),
+				relatedObjectDefinition.getObjectDefinitionId(),
 				CharPool.CLOSE_PARENTHESIS);
 		}
 

@@ -8,16 +8,20 @@ package com.liferay.object.web.internal.info.item.provider;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.field.reader.InfoItemFieldReaderFieldSetProvider;
 import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.info.item.ObjectEntryInfoItemFields;
@@ -25,6 +29,9 @@ import com.liferay.object.info.item.provider.util.ObjectEntryInfoItemValuesProvi
 import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
@@ -44,6 +51,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
@@ -77,6 +85,7 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManagerRegistry objectEntryManagerRegistry,
 		ObjectFieldLocalService objectFieldLocalService,
+		ObjectRelatedModelsProviderRegistry objectRelatedModelsProviderRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService,
 		ObjectScopeProviderRegistry objectScopeProviderRegistry, Portal portal,
 		TemplateInfoItemFieldSetProvider templateInfoItemFieldSetProvider,
@@ -97,6 +106,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
 		_objectFieldLocalService = objectFieldLocalService;
+		_objectRelatedModelsProviderRegistry =
+			objectRelatedModelsProviderRegistry;
 		_objectRelationshipLocalService = objectRelationshipLocalService;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
@@ -260,6 +271,54 @@ public class ObjectEntryInfoItemFieldValuesProvider
 							_friendlyURLEntryLocalService,
 							objectEntry.getObjectEntryId())));
 
+		for (ObjectRelationship objectRelationship :
+				_objectRelationshipLocalService.getObjectRelationships(
+					_objectDefinition.getObjectDefinitionId(),
+					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+					false)) {
+
+			if (!objectRelationship.compareType(
+					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+				continue;
+			}
+
+			objectEntryFieldValues.add(
+				new InfoFieldValue<>(
+					_objectFieldInfoFieldConverter.
+						addRelationshipInfoFieldAttributes(
+							InfoField.builder(
+								ObjectField.class.getSimpleName()
+							).infoFieldType(
+								RelationshipInfoFieldType.INSTANCE
+							).name(
+								ObjectRelationshipConstants.
+									OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX +
+										objectRelationship.getName()
+							).labelInfoLocalizedValue(
+								InfoLocalizedValue.<String>builder(
+								).values(
+									objectRelationship.getLabelMap()
+								).defaultLocale(
+									LocaleUtil.fromLanguageId(
+										objectRelationship.
+											getDefaultLanguageId())
+								).build()
+							).editable(
+								true
+							).localizable(
+								false
+							),
+							objectRelationship),
+					() ->
+						ObjectEntryInfoItemValuesProviderUtil.
+							getMultipleRelationshipInfoFieldValue(
+								objectRelationship,
+								_objectDefinitionLocalService,
+								objectEntry.getObjectEntryId(),
+								_objectRelatedModelsProviderRegistry)));
+		}
+
 		return objectEntryFieldValues;
 	}
 
@@ -404,6 +463,8 @@ public class ObjectEntryInfoItemFieldValuesProvider
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 	private final ObjectFieldInfoFieldConverter _objectFieldInfoFieldConverter;
 	private final ObjectFieldLocalService _objectFieldLocalService;
+	private final ObjectRelatedModelsProviderRegistry
+		_objectRelatedModelsProviderRegistry;
 	private final ObjectRelationshipLocalService
 		_objectRelationshipLocalService;
 	private final ObjectScopeProviderRegistry _objectScopeProviderRegistry;

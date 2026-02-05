@@ -6,13 +6,13 @@
 import Label from '@clayui/label';
 import React from 'react';
 
-declare type NameDisplayType =
-	| 'secondary'
-	| 'info'
-	| 'warning'
+type NameDisplayType =
 	| 'danger'
+	| 'info'
+	| 'secondary'
 	| 'success'
-	| 'unstyled';
+	| 'unstyled'
+	| 'warning';
 
 const mapKeyToNameDisplayType: {[key: string]: NameDisplayType} = {
 	blocked: 'danger',
@@ -22,13 +22,37 @@ const mapKeyToNameDisplayType: {[key: string]: NameDisplayType} = {
 	overdue: 'warning',
 };
 
-interface StateLabelProps {
+type State = {
 	key: string;
 	name: string;
+};
+
+interface StateLabelProps {
+	dueDate?: string;
+	state?: State;
 }
 
-const StateLabel = ({key, name}: StateLabelProps) => (
-	<Label displayType={mapKeyToNameDisplayType[key]}>{name}</Label>
-);
+function StateLabel({dueDate, state}: StateLabelProps) {
+	if (!state || !state.name) {
+		return null;
+	}
+
+	const isOverdue =
+		dueDate && state.key !== 'done' && new Date(dueDate) < new Date();
+
+	return (
+		<>
+			<Label displayType={mapKeyToNameDisplayType[state.key]}>
+				{state.name}
+			</Label>
+
+			{isOverdue && (
+				<Label displayType="warning">
+					{Liferay.Language.get('overdue')}
+				</Label>
+			)}
+		</>
+	);
+}
 
 export default StateLabel;

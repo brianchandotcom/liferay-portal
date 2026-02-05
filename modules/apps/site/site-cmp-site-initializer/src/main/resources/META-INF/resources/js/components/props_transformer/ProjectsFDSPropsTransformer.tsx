@@ -102,7 +102,7 @@ export default function ProjectsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => StateLabel(value),
+					component: ({value}) => StateLabel({state: value}),
 					name: 'stateTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

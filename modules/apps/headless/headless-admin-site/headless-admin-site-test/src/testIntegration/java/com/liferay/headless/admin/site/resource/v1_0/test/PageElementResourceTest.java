@@ -1966,7 +1966,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 						testGroup.getGroupId(),
-						_portal.getClassNameId(className), 0, true,
+						_portal.getClassNameId(className), 0, null, true,
 						WorkflowConstants.STATUS_APPROVED);
 
 				displayPageFormContainerSubmissionResult.

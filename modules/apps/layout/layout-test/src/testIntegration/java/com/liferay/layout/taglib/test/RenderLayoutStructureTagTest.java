@@ -325,7 +325,7 @@ public class RenderLayoutStructureTagTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, 0, true,
+				_group.getGroupId(), classNameId, 0, null, true,
 				WorkflowConstants.STATUS_APPROVED);
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -746,7 +746,7 @@ public class RenderLayoutStructureTagTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, 0, true,
+				_group.getGroupId(), classNameId, 0, null, true,
 				WorkflowConstants.STATUS_APPROVED);
 
 		Layout layout = _layoutLocalService.getLayout(

@@ -2746,6 +2746,11 @@ public class JenkinsResultsParserUtil {
 	public static int getJobTimeoutMinutes(
 		JenkinsMaster jenkinsMaster, String jobName) {
 
+		if (jenkinsMaster.isBlackListed()) {
+			jenkinsMaster = JenkinsMaster.getInstance(
+				System.getenv("MASTER_HOSTNAME"));
+		}
+
 		String key = jenkinsMaster.getName() + "_" + jobName;
 
 		synchronized (_jobTimeoutMinutes) {

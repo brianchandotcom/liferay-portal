@@ -440,6 +440,12 @@ test.describe('Comments Panel', () => {
 			await expect(childComment).toContainText(
 				'Editing the child comment'
 			);
+
+			// Delete content
+
+			await contentsPage.goto();
+
+			await contentsPage.deleteContent('Untitled Asset');
 		}
 	);
 
@@ -480,6 +486,12 @@ test.describe('Comments Panel', () => {
 			autoClose: true,
 			type: 'danger',
 		});
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent('Untitled Asset');
 	});
 
 	test('Error when a comment is added', async ({contentsPage, page}) => {
@@ -522,6 +534,12 @@ test.describe('Comments Panel', () => {
 			autoClose: true,
 			type: 'danger',
 		});
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		await contentsPage.deleteContent('Untitled Asset');
 	});
 
 	test(

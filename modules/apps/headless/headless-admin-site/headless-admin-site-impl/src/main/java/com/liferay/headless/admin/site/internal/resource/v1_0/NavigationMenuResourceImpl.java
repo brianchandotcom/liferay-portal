@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenu;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuItem;
@@ -14,7 +13,6 @@ import com.liferay.headless.admin.site.internal.odata.entity.v1_0.NavigationMenu
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Field;
@@ -77,12 +75,6 @@ public class NavigationMenuResourceImpl
 			String navigationMenuExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			navigationMenuExternalReferenceCode,
 			GroupUtil.getGroupId(
@@ -125,12 +117,6 @@ public class NavigationMenuResourceImpl
 			}
 
 			@Override
-			public boolean isActive(PortletDataContext portletDataContext) {
-				return FeatureFlagManagerUtil.isEnabled(
-					portletDataContext.getCompanyId(), "LPD-66179");
-			}
-
-			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}
@@ -143,12 +129,6 @@ public class NavigationMenuResourceImpl
 			String siteExternalReferenceCode,
 			String navigationMenuExternalReferenceCode)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		return _toNavigationMenu(
 			_siteNavigationMenuService.
@@ -164,12 +144,6 @@ public class NavigationMenuResourceImpl
 			String siteExternalReferenceCode, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -208,12 +182,6 @@ public class NavigationMenuResourceImpl
 			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		return _addNavigationMenu(
 			navigationMenu.getExternalReferenceCode(),
 			GroupUtil.getGroupId(
@@ -227,12 +195,6 @@ public class NavigationMenuResourceImpl
 			String navigationMenuExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);

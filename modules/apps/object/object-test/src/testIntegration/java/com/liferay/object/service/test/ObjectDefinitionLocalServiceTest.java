@@ -2933,7 +2933,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 			objectDefinition =
 				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					objectDefinition.getObjectFolderExternalReferenceCode(),
+					objectDefinition.getExternalReferenceCode(),
 					objectDefinition.getObjectDefinitionId(), 0, 0,
 					objectDefinition.getObjectFolderId(),
 					objectDefinition.getTitleObjectFieldId(),

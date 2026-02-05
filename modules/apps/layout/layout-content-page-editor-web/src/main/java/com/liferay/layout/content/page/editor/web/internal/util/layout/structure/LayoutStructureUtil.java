@@ -5,43 +5,51 @@
 
 package com.liferay.layout.content.page.editor.web.internal.util.layout.structure;
 
+import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureServiceUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.DeletedLayoutStructureItem;
+import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Víctor Galán
  */
 public class LayoutStructureUtil {
 
-	public static int countInvalidFragments(String layoutStructureItemJSON)
-		throws JSONException {
+	public static int countInvalidFragments(
+		String itemId, LayoutStructure layoutStructure) {
 
-		if (Validator.isNull(layoutStructureItemJSON)) {
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		if (layoutStructureItem == null) {
 			return 0;
 		}
 
-		JSONObject layoutStructureItemJSONObject =
-			JSONFactoryUtil.createJSONObject(layoutStructureItemJSON);
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_getMissingFragmentEntryFragmentEntryLinks(
+				layoutStructureItem.getChildrenItemIds(), layoutStructure);
 
-		return _countMissingFragments(layoutStructureItemJSONObject);
+		return fragmentEntryLinks.size();
 	}
 
 	public static void deleteMarkedForDeletionItems(
@@ -129,45 +137,84 @@ public class LayoutStructureUtil {
 		return dataJSONObject;
 	}
 
-	private static int _countMissingFragments(
-		JSONObject layoutStructureItemJSONObject) {
+	private static FragmentEntry _getFragmentEntry(
+		FragmentEntryLink fragmentEntryLink) {
 
-		int count = 0;
+		if (Validator.isNull(fragmentEntryLink.getFragmentEntryERC())) {
+			return FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+				fragmentEntryLink.getRendererKey());
+		}
 
-		String type = layoutStructureItemJSONObject.getString("type");
+		Long fragmentEntryGroupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
 
-		if (Objects.equals(
-				LayoutDataItemTypeConstants.TYPE_FRAGMENT,
-				StringUtil.toLowerCase(type))) {
+		if (fragmentEntryGroupId == null) {
+			return null;
+		}
 
-			JSONObject definitionJSONObject =
-				layoutStructureItemJSONObject.getJSONObject("definition");
+		return FragmentEntryLocalServiceUtil.
+			fetchFragmentEntryByExternalReferenceCode(
+				fragmentEntryLink.getFragmentEntryERC(), fragmentEntryGroupId);
+	}
 
-			if (definitionJSONObject != null) {
-				JSONObject fragmentJSONObject =
-					definitionJSONObject.getJSONObject("fragment");
+	private static List<FragmentEntryLink>
+		_getMissingFragmentEntryFragmentEntryLinks(
+			List<String> itemIds, LayoutStructure layoutStructure) {
 
-				if (fragmentJSONObject != null) {
-					String key = fragmentJSONObject.getString("key");
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
 
-					if (Validator.isNull(key)) {
-						count++;
-					}
-				}
+		for (String itemId : itemIds) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(itemId);
+
+			fragmentEntryLinks.addAll(
+				_getMissingFragmentEntryFragmentEntryLinks(
+					layoutStructureItem.getChildrenItemIds(), layoutStructure));
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink =
+				FragmentEntryLinkLocalServiceUtil.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (Validator.isNull(fragmentEntryLink.getFragmentEntryERC()) &&
+				Validator.isNull(fragmentEntryLink.getRendererKey())) {
+
+				continue;
+			}
+
+			FragmentEntry fragmentEntry = _getFragmentEntry(fragmentEntryLink);
+
+			if (fragmentEntry != null) {
+				continue;
+			}
+
+			if (Validator.isNull(fragmentEntryLink.getRendererKey())) {
+				fragmentEntryLinks.add(fragmentEntryLink);
+
+				continue;
+			}
+
+			FragmentRenderer fragmentRenderer =
+				FragmentRendererRegistryUtil.getFragmentRenderer(
+					fragmentEntryLink.getRendererKey());
+
+			if (fragmentRenderer == null) {
+				fragmentEntryLinks.add(fragmentEntryLink);
 			}
 		}
 
-		JSONArray pageElementsJSONArray =
-			layoutStructureItemJSONObject.getJSONArray("pageElements");
-
-		if (pageElementsJSONArray != null) {
-			for (int i = 0; i < pageElementsJSONArray.length(); i++) {
-				count += _countMissingFragments(
-					pageElementsJSONArray.getJSONObject(i));
-			}
-		}
-
-		return count;
+		return fragmentEntryLinks;
 	}
 
 }

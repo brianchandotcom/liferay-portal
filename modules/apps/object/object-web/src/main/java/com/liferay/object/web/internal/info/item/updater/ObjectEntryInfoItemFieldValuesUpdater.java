@@ -7,7 +7,10 @@ package com.liferay.object.web.internal.info.item.updater;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RelatedInfoFieldValue;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
@@ -26,6 +29,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
@@ -47,6 +51,7 @@ import com.liferay.portal.vulcan.scope.Scope;
 
 import java.text.DateFormat;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -191,9 +196,13 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					dtoObjectEntry.getExternalReferenceCode(),
 					_objectDefinition, dtoObjectEntry, scopeKey));
 
-			_relateObjectEntry(
+			_relateMainObjectEntry(
 				infoItemFieldValues, _objectDefinition, updatedObjectEntry,
 				serviceContext, themeDisplay.getUserId());
+
+			_relateNestedObjectEntries(
+				themeDisplay.getCompanyId(), updatedObjectEntry.getGroupId(),
+				infoItemFieldValues, serviceContext, themeDisplay.getUserId());
 
 			return updatedObjectEntry;
 		}
@@ -259,7 +268,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			infoItemFieldValues, _objectDefinition, objectEntry.getValues());
 	}
 
-	private void _relateObjectEntry(
+	private void _relateMainObjectEntry(
 			InfoItemFieldValues infoItemFieldValues,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ServiceContext serviceContext, long userId)
@@ -274,7 +283,14 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		for (ObjectRelationship objectRelationship :
 				ObjectRelationshipLocalServiceUtil.getObjectRelationships(
 					objectDefinition.getObjectDefinitionId(),
+					ObjectRelationshipConstants.DELETION_TYPE_DISASSOCIATE,
+					false)) {
+
+			if (!objectRelationship.compareType(
 					ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+				continue;
+			}
 
 			ObjectDefinition relatedObjectDefinition =
 				ObjectRelationshipUtil.getRelatedObjectDefinition(
@@ -298,6 +314,135 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			Object value = infoFieldValue.getValue();
 
 			if (value instanceof List) {
+				List<String> relatedObjectEntryIds = (List<String>)value;
+
+				for (String relatedObjectEntryId : relatedObjectEntryIds) {
+					ObjectRelationshipLocalServiceUtil.
+						addObjectRelationshipMappingTableValues(
+							userId,
+							objectRelationship.getObjectRelationshipId(),
+							objectEntry.getPrimaryKey(),
+							GetterUtil.getLong(relatedObjectEntryId),
+							serviceContext);
+				}
+			}
+		}
+	}
+
+	private void _relateNestedObjectEntries(
+			long companyId, long groupId,
+			InfoItemFieldValues infoItemFieldValues,
+			ServiceContext serviceContext, long userId)
+		throws Exception {
+
+		Map<String, ObjectDefinition> objectDefinitionMap = new HashMap<>();
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			if (!StringUtil.startsWith(
+					infoField.getUniqueId(),
+					ObjectRelationship.class.getSimpleName()) ||
+				!(infoField.getInfoFieldType() instanceof
+					RelationshipInfoFieldType)) {
+
+				continue;
+			}
+
+			InfoField<RelationshipInfoFieldType>
+				relationshipInfoFieldTypeInfoField =
+					(InfoField<RelationshipInfoFieldType>)infoField;
+
+			if (!relationshipInfoFieldTypeInfoField.getAttribute(
+					RelationshipInfoFieldType.MULTIPLE)) {
+
+				continue;
+			}
+
+			RelatedInfoFieldValue relatedInfoFieldValue =
+				(RelatedInfoFieldValue)infoFieldValue.getValue();
+
+			String[] parts = StringUtil.split(
+				infoField.getUniqueId(), StringPool.POUND);
+
+			Map
+				<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
+				 InfoFieldValue<?>> relatedInfoFieldValues =
+					relatedInfoFieldValue.getRelatedInfoFieldValues();
+
+			for (Map.Entry
+					<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
+					 InfoFieldValue<?>> entry :
+						relatedInfoFieldValues.entrySet()) {
+
+				InfoFieldValue<?> entryInfoFieldValue = entry.getValue();
+
+				if (entryInfoFieldValue == null) {
+					continue;
+				}
+
+				Object value = entryInfoFieldValue.getValue();
+
+				if (!(value instanceof List<?>) ||
+					ListUtil.isEmpty((List<?>)value)) {
+
+					continue;
+				}
+
+				String objectDefinitionName = parts[1];
+
+				ObjectDefinition objectDefinition = objectDefinitionMap.get(
+					objectDefinitionName);
+
+				if (objectDefinition == null) {
+					objectDefinition =
+						ObjectDefinitionLocalServiceUtil.getObjectDefinition(
+							companyId, objectDefinitionName);
+
+					objectDefinitionMap.put(
+						objectDefinitionName, objectDefinition);
+				}
+
+				DefaultObjectEntryManager defaultObjectEntryManager =
+					DefaultObjectEntryManagerProvider.provide(
+						_objectEntryManagerRegistry.getObjectEntryManager(
+							objectDefinition.getCompanyId(),
+							objectDefinition.getStorageType()));
+
+				RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier
+					relatedInfoFieldValueIdentifier = entry.getKey();
+
+				ObjectEntry objectEntry =
+					ObjectEntryLocalServiceUtil.fetchObjectEntry(
+						relatedInfoFieldValueIdentifier.
+							getExternalReferenceCode(),
+						groupId, objectDefinition.getObjectDefinitionId());
+
+				ObjectRelationship objectRelationship =
+					ObjectRelationshipLocalServiceUtil.getObjectRelationship(
+						objectDefinition.getObjectDefinitionId(),
+						StringUtil.removeSubstring(
+							infoField.getName(),
+							ObjectRelationshipConstants.
+								OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX));
+
+				ObjectDefinition relatedObjectDefinition =
+					ObjectRelationshipUtil.getRelatedObjectDefinition(
+						objectDefinition, objectRelationship);
+
+				defaultObjectEntryManager.disassociateRelatedModels(
+					new DefaultDTOConverterContext(
+						false, null, null, null,
+						LocaleUtil.fromLanguageId(
+							objectDefinition.getDefaultLanguageId(), true,
+							false),
+						null, null),
+					objectDefinition, objectRelationship,
+					objectEntry.getPrimaryKey(), relatedObjectDefinition,
+					userId);
+
 				List<String> relatedObjectEntryIds = (List<String>)value;
 
 				for (String relatedObjectEntryId : relatedObjectEntryIds) {

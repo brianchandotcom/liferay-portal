@@ -114,8 +114,10 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 						getObjectRelationshipsByObjectDefinitionId2(
 							objectDefinitionId, false)) {
 
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				serviceBuilderObjectRelationship);
+			if (!serviceBuilderObjectRelationship.isReverse()) {
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					serviceBuilderObjectRelationship);
+			}
 		}
 	}
 

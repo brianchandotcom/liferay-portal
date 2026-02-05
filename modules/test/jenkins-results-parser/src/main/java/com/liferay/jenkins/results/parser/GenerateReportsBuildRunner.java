@@ -319,9 +319,9 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 
 		List<String> keys = new ArrayList<>();
 
-		String jobName = "test-portal-acceptance-pullrequest(master)";
-
 		for (String jenkinsMasterName : jenkinsMasterNames) {
+			String jobName = "test-portal-acceptance-pullrequest(master)";
+
 			keys.addAll(
 				_getTestrayBucketBuildReportJSONFilePaths(
 					currentMonthString, jenkinsMasterName, jobName));

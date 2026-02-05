@@ -269,11 +269,11 @@ export const IndividualsListCDPColumns = {
 		sortable: true
 	},
 	firstSeen: {
-		accessor: 'firstSeenTime',
-		cellRenderer: ({className, data: {firstSeenTime}}) => (
+		accessor: 'firstActivityDate',
+		cellRenderer: ({className, data: {firstActivityDate}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
-					{formatUTCDate(firstSeenTime) || '-'}
+					{formatUTCDate(firstActivityDate) || '-'}
 				</div>
 			</td>
 		),
@@ -294,11 +294,11 @@ export const IndividualsListCDPColumns = {
 		sortable: true
 	}),
 	lastActive: {
-		accessor: 'lastActivityTime',
-		cellRenderer: ({className, data: {lastActivityTime}}) => (
+		accessor: 'lastActivityDate',
+		cellRenderer: ({className, data: {lastActivityDate}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
-					{formatUTCDate(lastActivityTime) || '-'}
+					{formatUTCDate(lastActivityDate) || '-'}
 				</div>
 			</td>
 		),

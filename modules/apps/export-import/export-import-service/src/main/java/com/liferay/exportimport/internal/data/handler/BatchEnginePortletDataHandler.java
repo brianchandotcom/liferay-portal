@@ -171,7 +171,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				locale));
 	}
 
-	@Override
 	public String getKey() {
 		return _getSoleProperty(
 			ExportImportVulcanBatchEngineTaskItemDelegate.
@@ -255,6 +254,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			_getSoleProperty(
 				ExportImportVulcanBatchEngineTaskItemDelegate.
 					ExportImportDescriptor::isHidden));
+	}
+
+	public boolean isMissingPortletSupported() {
+		return Boolean.TRUE.equals(
+			_getSoleProperty(
+				ExportImportVulcanBatchEngineTaskItemDelegate.
+					ExportImportDescriptor::isMissingPortletSupported));
 	}
 
 	@Override

@@ -1169,15 +1169,17 @@ public abstract class BaseTopLevelBuild
 			Element gitHubMessageElement =
 				failedDownstreamBuild.getGitHubMessageElement();
 
-			if (gitHubMessageElement == null) {
-				continue;
-			}
-
-			if (failedDownstreamBuild.isUniqueFailure()) {
+			if (gitHubMessageElement != null) {
 				allCurrentBuildFailureElements.add(gitHubMessageElement);
 			}
-			else {
-				upstreamBuildFailureElements.add(gitHubMessageElement);
+
+			Element gitHubMessageUpstreamJobFailureElement =
+				failedDownstreamBuild.
+					getGitHubMessageUpstreamJobFailureElement();
+
+			if (gitHubMessageUpstreamJobFailureElement != null) {
+				upstreamBuildFailureElements.add(
+					gitHubMessageUpstreamJobFailureElement);
 			}
 		}
 

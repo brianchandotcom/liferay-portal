@@ -10,8 +10,7 @@ import co.elastic.clients.elasticsearch.core.SearchRequest;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationTranslatorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.facet.DefaultFacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor;
@@ -88,27 +87,15 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler =
 				new CommonSearchRequestBuilderAssemblerImpl();
 
-		ElasticsearchAggregationTranslatorFixture
-			elasticsearchAggregationTranslatorFixture =
-				new ElasticsearchAggregationTranslatorFixture();
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_aggregationTranslator",
-			elasticsearchAggregationTranslatorFixture.
-				getElasticsearchAggregationTranslator());
-
+			new ElasticsearchAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
 			complexQueryBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
 			_createFacetTranslator(facetProcessor));
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler,
-			"_pipelineAggregationTranslator",
-			new ElasticsearchPipelineAggregationTranslator());
-
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_statsTranslator",
 			statsTranslator);

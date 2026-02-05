@@ -85,7 +85,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
@@ -111,7 +110,6 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -1662,7 +1660,8 @@ public class ElasticsearchAggregationTranslator
 
 			containerBuilder.aggregations(
 				pipelineAggregation.getName(),
-				_pipelineAggregationTranslator.translate(pipelineAggregation));
+				pipelineAggregation.accept(
+					ElasticsearchPipelineAggregationVisitor.INSTANCE));
 		}
 
 		return containerBuilder.build();
@@ -1780,12 +1779,6 @@ public class ElasticsearchAggregationTranslator
 	private final GeoTranslator _geoTranslator = new GeoTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private PipelineAggregationTranslator
-		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>
-			_pipelineAggregationTranslator;
-
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 

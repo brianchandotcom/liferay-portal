@@ -40,8 +40,6 @@ import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregati
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PercentilesBucketPipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor;
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
@@ -56,23 +54,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = PipelineAggregationTranslator.class
-)
-public class ElasticsearchPipelineAggregationTranslator
-	implements PipelineAggregationTranslator<Aggregation>,
-			   PipelineAggregationVisitor<Aggregation> {
+public class ElasticsearchPipelineAggregationVisitor
+	implements PipelineAggregationVisitor<Aggregation> {
 
-	@Override
-	public Aggregation translate(PipelineAggregation pipelineAggregation) {
-		return pipelineAggregation.accept(this);
-	}
+	public static final ElasticsearchPipelineAggregationVisitor INSTANCE =
+		new ElasticsearchPipelineAggregationVisitor();
 
 	@Override
 	public Aggregation visit(
@@ -353,6 +342,9 @@ public class ElasticsearchPipelineAggregationTranslator
 			builder::gapPolicy, sumBucketPipelineAggregation.getGapPolicy());
 
 		return new Aggregation(builder.build());
+	}
+
+	private ElasticsearchPipelineAggregationVisitor() {
 	}
 
 	private void _setNotBlankBucketsPath(

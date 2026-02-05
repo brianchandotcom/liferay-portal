@@ -155,7 +155,8 @@ const filterItemActions = ({
 					});
 
 					if (
-						action.type === EItemActionsType.GROUP &&
+						(action.type === EItemActionsType.CONTEXTUAL ||
+							action.type === EItemActionsType.GROUP) &&
 						action.items
 					) {
 						return {

@@ -5,11 +5,14 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal.security.permission.resource;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 
@@ -18,6 +21,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Rafael Praxedes
@@ -67,6 +71,20 @@ public class WorkflowPortletResourcePermission
 			return true;
 		}
 
+		Group group = _groupLocalService.fetchGroup(groupId);
+
+		if (group == null) {
+			return false;
+		}
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.fetchUserAccountEntry(
+				permissionChecker.getUserId(), group.getClassPK());
+
+		if (accountEntry != null) {
+			return true;
+		}
+
 		return false;
 	}
 
@@ -86,6 +104,12 @@ public class WorkflowPortletResourcePermission
 			workflowDefinitionConfiguration.companyAdministratorCanPublish();
 	}
 
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
 	private volatile boolean _companyAdministratorCanPublish;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

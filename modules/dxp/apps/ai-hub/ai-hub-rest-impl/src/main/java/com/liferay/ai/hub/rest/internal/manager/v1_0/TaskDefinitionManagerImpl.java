@@ -134,7 +134,7 @@ public class TaskDefinitionManagerImpl implements TaskDefinitionManager {
 		workflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				null, workflowDefinition.getCompanyId(),
-				workflowDefinition.getUserId(),
+				workflowDefinition.getGroupId(), workflowDefinition.getUserId(),
 				LanguageUtil.format(
 					locale, "copy-of-x",
 					workflowDefinition.getTitle(locale.getDisplayLanguage())),

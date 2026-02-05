@@ -22,8 +22,8 @@ import java.util.List;
 public interface WorkflowDefinitionManager {
 
 	public default WorkflowDefinition deployWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, byte[] bytes)
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -31,7 +31,7 @@ public interface WorkflowDefinitionManager {
 
 	public default WorkflowDefinition deployWorkflowDefinition(
 			String externalReferenceCode, long companyId, long userId,
-			String title, String name, String scope, byte[] bytes)
+			String title, String name, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -170,14 +170,15 @@ public interface WorkflowDefinitionManager {
 	 * @param  userId the ID of the user saving the workflow definition
 	 * @param  title the workflow definition's title
 	 * @param  name the workflow definition's name
+	 * @param  scope the workflow definition's scope
 	 * @param  bytes the data saved as the workflow definition's content
 	 * @return the workflow definition
 	 * @throws WorkflowException if there was an issue saving the workflow
 	 *         definition
 	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
-			String externalReferenceCode, long companyId, long userId,
-			String title, String name, byte[] bytes)
+			String externalReferenceCode, long companyId, long groupId,
+			long userId, String title, String name, String scope, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
@@ -192,7 +193,6 @@ public interface WorkflowDefinitionManager {
 	 * @param  userId the ID of the user saving the workflow definition
 	 * @param  title the workflow definition's title
 	 * @param  name the workflow definition's name
-	 * @param  scope the workflow definition's scope
 	 * @param  bytes the data saved as the workflow definition's content
 	 * @return the workflow definition
 	 * @throws WorkflowException if there was an issue saving the workflow
@@ -200,7 +200,7 @@ public interface WorkflowDefinitionManager {
 	 */
 	public default WorkflowDefinition saveWorkflowDefinition(
 			String externalReferenceCode, long companyId, long userId,
-			String title, String name, String scope, byte[] bytes)
+			String title, String name, byte[] bytes)
 		throws WorkflowException {
 
 		throw new UnsupportedOperationException();

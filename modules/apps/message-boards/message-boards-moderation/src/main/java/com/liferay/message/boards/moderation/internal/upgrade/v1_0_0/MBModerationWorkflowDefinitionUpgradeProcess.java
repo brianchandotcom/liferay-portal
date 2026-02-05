@@ -60,7 +60,7 @@ public class MBModerationWorkflowDefinitionUpgradeProcess
 
 		try {
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, companyId, latestWorkflowDefinition.getUserId(),
+				null, companyId, 0, latestWorkflowDefinition.getUserId(),
 				latestWorkflowDefinition.getTitle(),
 				latestWorkflowDefinition.getName(),
 				latestWorkflowDefinition.getScope(), content.getBytes());

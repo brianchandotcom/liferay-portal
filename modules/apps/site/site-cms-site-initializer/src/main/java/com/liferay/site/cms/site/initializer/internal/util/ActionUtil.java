@@ -1372,6 +1372,20 @@ public class ActionUtil {
 
 						continue;
 					}
+
+					if (relationshipInfoField.getAttribute(
+							RelationshipInfoFieldType.MULTIPLE)) {
+
+						_addInputFragmentEntryLink(
+							addedFragmentEntryLinks, null, formManager,
+							"INPUTS-multiselector-dropdown",
+							(InfoField<?>)infoFieldSetEntry, layout,
+							layoutStructure, layoutStructureItem, readOnly,
+							segmentsExperienceId, serviceContext,
+							stylesJSONObject);
+
+						continue;
+					}
 				}
 
 				_addInputFragmentEntryLink(

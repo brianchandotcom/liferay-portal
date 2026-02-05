@@ -240,12 +240,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 	public void testAddFragmentCompositionMissingFragmentEntry()
 		throws Exception {
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), StringPool.BLANK,
-				_serviceContext);
-
 		Layout draftLayout = _layout.fetchDraftLayout();
 
 		long segmentsExperienceId =
@@ -275,9 +269,16 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_company, _group, draftLayout);
 
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				_serviceContext);
+
 		mockLiferayPortletActionRequest.addParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentCollection.getFragmentCollectionId()));
+
 		mockLiferayPortletActionRequest.addParameter(
 			"name", RandomTestUtil.randomString());
 		mockLiferayPortletActionRequest.addParameter("itemId", containerItemId);

@@ -118,7 +118,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			localWellKnownEnabled);
 		oAuthClientASLocalMetadata.setLocalWellKnownURI(localWellKnownURI);
 		oAuthClientASLocalMetadata.setMetadataJSON(
-			_generateOpenIdConfigurationJSON(
+			_generateMetadataJSON(
 				authorizationEndpoint, issuer, jwksURI, supportedGrantTypes,
 				supportedScopes, supportedSubjectTypes, tokenEndpoint,
 				userInfoEndpoint));
@@ -311,7 +311,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				_generateLocalWellKnownURI(
 					issuer, tokenEndpoint, "openid-configuration"));
 			oAuthClientASLocalMetadata.setMetadataJSON(
-				_generateOpenIdConfigurationJSON(
+				_generateMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedGrantTypes,
 					supportedScopes, supportedSubjectTypes, tokenEndpoint,
 					userInfoEndpoint));
@@ -385,7 +385,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private String _generateOpenIdConfigurationJSON(
+	private String _generateMetadataJSON(
 			String authorizationEndpoint, String issuer, String jwksURI,
 			String[] supportedGrantTypes, String[] supportedScopes,
 			String[] supportedSubjectTypes, String tokenEndpoint,

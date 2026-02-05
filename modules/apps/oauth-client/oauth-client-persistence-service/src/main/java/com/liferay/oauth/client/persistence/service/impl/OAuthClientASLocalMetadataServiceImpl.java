@@ -39,8 +39,6 @@ public class OAuthClientASLocalMetadataServiceImpl
 			String metadataJSON, String wellKnownURISuffix)
 		throws PortalException {
 
-		long userId = getUserId();
-
 		ModelResourcePermissionUtil.check(
 			_oAuthClientASLocalMetadataModelResourcePermission,
 			getPermissionChecker(), GroupConstants.DEFAULT_LIVE_GROUP_ID, 0,
@@ -49,7 +47,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		return oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
-				userId, metadataJSON, wellKnownURISuffix);
+				getUserId(), metadataJSON, wellKnownURISuffix);
 	}
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
@@ -59,8 +57,6 @@ public class OAuthClientASLocalMetadataServiceImpl
 			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
-		long userId = getUserId();
-
 		ModelResourcePermissionUtil.check(
 			_oAuthClientASLocalMetadataModelResourcePermission,
 			getPermissionChecker(), GroupConstants.DEFAULT_LIVE_GROUP_ID, 0,
@@ -69,7 +65,7 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 		return oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
-				userId, authorizationEndpoint, issuer, jwksURI,
+				getUserId(), authorizationEndpoint, issuer, jwksURI,
 				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
 				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
 	}

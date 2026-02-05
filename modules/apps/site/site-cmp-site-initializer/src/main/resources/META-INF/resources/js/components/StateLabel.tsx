@@ -38,7 +38,7 @@ function StateLabel({dueDate, state}: StateLabelProps) {
 	}
 
 	const isOverdue =
-		dueDate && state.key !== 'done' && new Date(dueDate) < new Date();
+		dueDate && state.key !== 'done' && Date.parse(dueDate) < Date.now();
 
 	return (
 		<>

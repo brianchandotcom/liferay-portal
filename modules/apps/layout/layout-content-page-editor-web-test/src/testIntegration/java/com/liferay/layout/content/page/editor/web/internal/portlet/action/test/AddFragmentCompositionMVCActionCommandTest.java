@@ -80,6 +80,7 @@ import jakarta.portlet.ActionResponse;
 
 import java.util.HashMap;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -120,6 +121,11 @@ public class AddFragmentCompositionMVCActionCommandTest {
 				configure(MapperFeature.SORT_PROPERTIES_ALPHABETICALLY, true);
 			}
 		};
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

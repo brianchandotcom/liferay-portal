@@ -40,6 +40,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -80,6 +81,11 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			_group.getGroupId(), TestPropsValues.getUserId());
 
 		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test

@@ -14,12 +14,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.Serializable;
 
@@ -46,28 +43,25 @@ public class BlogsEntryWorkflowHandler extends BaseWorkflowHandler<BlogsEntry> {
 		ServiceContext serviceContext = (ServiceContext)workflowContext.get(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT);
 
-		HttpServletRequest httpServletRequest = serviceContext.getRequest();
-
-		if (httpServletRequest == null) {
+		if (serviceContext == null) {
 			return;
 		}
 
-		String layoutFullURL = serviceContext.getLayoutFullURL();
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		if (themeDisplay == null) {
+			return;
+		}
 
-		if (themeDisplay != null) {
-			if (themeDisplay.getRefererPlid() == 0) {
-				layoutFullURL = _portal.getLayoutFullURL(themeDisplay);
-			}
-			else {
-				layoutFullURL = _portal.getLayoutFullURL(
-					_layoutLocalService.getLayout(
-						themeDisplay.getRefererPlid()),
-					themeDisplay);
-			}
+		String layoutFullURL;
+
+		if (themeDisplay.getRefererPlid() == 0) {
+			layoutFullURL = _portal.getLayoutFullURL(themeDisplay);
+		}
+		else {
+			layoutFullURL = _portal.getLayoutFullURL(
+				_layoutLocalService.getLayout(themeDisplay.getRefererPlid()),
+				themeDisplay);
 		}
 
 		serviceContext.setAttribute("layoutFullURL", layoutFullURL);

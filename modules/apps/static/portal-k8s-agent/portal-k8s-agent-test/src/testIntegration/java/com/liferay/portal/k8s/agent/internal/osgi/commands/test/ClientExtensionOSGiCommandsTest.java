@@ -333,12 +333,12 @@ public class ClientExtensionOSGiCommandsTest {
 			new Class<?>[] {String[].class}, (Object)filterStrings);
 	}
 
-	private void _list(String... filters) throws Exception {
+	private void _list(String... filterStrings) throws Exception {
 		Class<?> clazz = _osgiCommands.getClass();
 
 		Method method = clazz.getMethod("list", String[].class);
 
-		method.invoke(_osgiCommands, (Object)filters);
+		method.invoke(_osgiCommands, (Object)filterStrings);
 	}
 
 	private void _reload(Configuration configuration) {

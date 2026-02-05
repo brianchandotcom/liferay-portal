@@ -269,6 +269,8 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			ContentLayoutTestUtil.getMockLiferayPortletActionRequest(
 				_company, _group, draftLayout);
 
+		mockLiferayPortletActionRequest.addParameter("itemId", containerItemId);
+
 		FragmentCollection fragmentCollection =
 			_fragmentCollectionLocalService.addFragmentCollection(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -281,7 +283,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter(
 			"name", RandomTestUtil.randomString());
-		mockLiferayPortletActionRequest.addParameter("itemId", containerItemId);
 
 		JSONObject jsonObject = ReflectionTestUtil.invoke(
 			_mvcActionCommand, "doTransactionalCommand",

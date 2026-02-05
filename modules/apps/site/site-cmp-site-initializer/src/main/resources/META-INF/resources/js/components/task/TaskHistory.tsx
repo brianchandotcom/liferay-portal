@@ -12,7 +12,6 @@ import History, {
 	EventType,
 	Fields,
 	HistoryHandle,
-	joinWithAnd,
 } from '../History';
 
 const RELATED_ASSETS_SECTION =
@@ -82,15 +81,17 @@ export default function TaskHistory({apiURL}: {apiURL: string}) {
 			]);
 		}
 
+		let updatedFieldLabel = Liferay.Language.get('task');
+
+		if (auditEvent.auditFieldChanges?.length === 1) {
+			const fieldName = auditEvent.auditFieldChanges[0].name;
+
+			updatedFieldLabel = FIELDS[fieldName]?.label ?? fieldName;
+		}
+
 		return sub(Liferay.Language.get('x-updated-the-x'), [
 			<strong key="creatorName">{auditEvent.creator?.name}</strong>,
-			<strong key="changedFields">
-				{joinWithAnd(
-					auditEvent.auditFieldChanges?.map(
-						({name}) => FIELDS[name].label ?? name
-					) || []
-				)}
-			</strong>,
+			<strong key="changedFields">{updatedFieldLabel}</strong>,
 		]);
 	};
 

@@ -58,25 +58,20 @@ public class AddFragmentCompositionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		String itemId = ParamUtil.getString(actionRequest, "itemId");
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
-		boolean saveInlineContent = ParamUtil.getBoolean(
-			actionRequest, "saveInlineContent");
-		boolean saveMappingConfiguration = ParamUtil.getBoolean(
-			actionRequest, "saveMappingConfiguration");
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
-		String layoutStructureItemJSON =
-			_layoutStructureItemJSONSerializer.toJSONString(
-				_layoutLocalService.getLayout(themeDisplay.getPlid()), itemId,
-				saveInlineContent, saveMappingConfiguration,
-				segmentsExperienceId);
-
-		int invalidFragmentsCount = LayoutStructureUtil.countInvalidFragments(
-			layoutStructureItemJSON);
+		int invalidFragmentsCount =
+			LayoutStructureUtil.getMissingFragmentEntryFragmentEntryLinksCount(
+				itemId,
+				LayoutStructureUtil.getLayoutStructure(
+					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+					segmentsExperienceId));
 
 		if (invalidFragmentsCount > 0) {
 			return JSONUtil.put(
@@ -111,6 +106,17 @@ public class AddFragmentCompositionMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+
+		boolean saveInlineContent = ParamUtil.getBoolean(
+			actionRequest, "saveInlineContent");
+		boolean saveMappingConfiguration = ParamUtil.getBoolean(
+			actionRequest, "saveMappingConfiguration");
+
+		String layoutStructureItemJSON =
+			_layoutStructureItemJSONSerializer.toJSONString(
+				_layoutLocalService.getLayout(themeDisplay.getPlid()), itemId,
+				saveInlineContent, saveMappingConfiguration,
+				segmentsExperienceId);
 
 		FragmentComposition fragmentComposition =
 			_fragmentCompositionService.addFragmentComposition(

@@ -7,11 +7,9 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
-import com.liferay.layout.page.template.serializer.LayoutStructureItemJSONSerializer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -20,7 +18,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Georgel Pop
@@ -43,31 +40,13 @@ public class ValidateFragmentCompositionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String itemId = ParamUtil.getString(actionRequest, "itemId");
-		boolean saveInlineContent = ParamUtil.getBoolean(
-			actionRequest, "saveInlineContent");
-		boolean saveMappingConfiguration = ParamUtil.getBoolean(
-			actionRequest, "saveMappingConfiguration");
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId");
-
-		String layoutStructureItemJSON =
-			_layoutStructureItemJSONSerializer.toJSONString(
-				_layoutLocalService.getLayout(themeDisplay.getPlid()), itemId,
-				saveInlineContent, saveMappingConfiguration,
-				segmentsExperienceId);
-
-		int invalidFragmentsCount = LayoutStructureUtil.countInvalidFragments(
-			layoutStructureItemJSON);
-
-		return JSONUtil.put("invalidFragmentsCount", invalidFragmentsCount);
+		return JSONUtil.put(
+			"invalidFragmentsCount",
+			LayoutStructureUtil.getMissingFragmentEntryFragmentEntryLinksCount(
+				ParamUtil.getString(actionRequest, "itemId"),
+				LayoutStructureUtil.getLayoutStructure(
+					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+					ParamUtil.getLong(actionRequest, "segmentsExperienceId"))));
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
-
-	@Reference
-	private LayoutStructureItemJSONSerializer
-		_layoutStructureItemJSONSerializer;
 
 }

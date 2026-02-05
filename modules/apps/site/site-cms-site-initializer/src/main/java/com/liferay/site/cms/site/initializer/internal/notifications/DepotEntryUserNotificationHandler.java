@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.notifications;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -12,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
@@ -75,6 +77,15 @@ public class DepotEntryUserNotificationHandler
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			userNotificationEvent.getPayload());
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			jsonObject.getLong("classPK"));
+
+		if (depotEntry.getType() == DepotConstants.TYPE_PROJECT) {
+			return StringBundler.concat(
+				serviceContext.getPortalURL(), GroupConstants.CMS_FRIENDLY_URL,
+				"/projects");
+		}
 
 		String spaceURL = ActionUtil.getSpaceURL(
 			jsonObject.getLong("classPK"), serviceContext.getThemeDisplay());

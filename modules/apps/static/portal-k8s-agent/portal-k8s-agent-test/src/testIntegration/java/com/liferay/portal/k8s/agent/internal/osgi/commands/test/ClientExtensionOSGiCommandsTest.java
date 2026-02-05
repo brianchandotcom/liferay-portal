@@ -364,7 +364,7 @@ public class ClientExtensionOSGiCommandsTest {
 	}
 
 	private void _testGetConfigurations(
-		List<String> filterStrings, List<String> expectedConfigurationNames) {
+		List<String> filterStrings, List<String> expectedNames) {
 
 		Configuration[] configurations = _getConfigurations(
 			ArrayUtil.append(
@@ -381,8 +381,7 @@ public class ClientExtensionOSGiCommandsTest {
 			}
 		}
 
-		Assert.assertEquals(
-			new HashSet<>(expectedConfigurationNames), namesSet);
+		Assert.assertEquals(new HashSet<>(expectedNames), namesSet);
 	}
 
 	private void _testReload(String pid, String expectedOutput)

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.segments.asah.connector.cache.AsahSegmentsEntryCache;
 import com.liferay.segments.asah.connector.internal.configuration.provider.SegmentsAsahConfigurationProvider;
 
 import org.osgi.service.component.annotations.Activate;
@@ -22,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author David Arques
  */
 @Component(service = AsahSegmentsEntryCache.class)
-public class AsahSegmentsEntryCache {
+public class AsahSegmentsEntryCacheImpl implements AsahSegmentsEntryCache {
 
 	public long[] getSegmentsEntryIds(String userId) {
 		return _portalCache.get(_generateCacheKey(userId));
@@ -64,7 +65,7 @@ public class AsahSegmentsEntryCache {
 	private static final String _CACHE_PREFIX = "segments-";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AsahSegmentsEntryCache.class);
+		AsahSegmentsEntryCacheImpl.class);
 
 	@Reference
 	private MultiVMPool _multiVMPool;

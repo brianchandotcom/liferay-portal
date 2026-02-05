@@ -1071,7 +1071,9 @@ public class TaxonomyVocabularyResourceImpl
 		}
 
 		return _assetVocabularyService.updateVocabulary(
-			taxonomyVocabulary.getExternalReferenceCode(),
+			(taxonomyVocabulary.getExternalReferenceCode() == null) ?
+				assetVocabulary.getExternalReferenceCode() :
+					taxonomyVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),

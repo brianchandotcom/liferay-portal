@@ -7474,7 +7474,11 @@ public class ObjectEntryLocalServiceImpl
 			throw new RuntimeException(portalException);
 		}
 
-		if (objectEntriesCount == 0) {
+		String valueString = GetterUtil.getString(value);
+
+		if ((objectEntriesCount == 0) ||
+			Validator.isBlank(valueString.trim())) {
+
 			return;
 		}
 

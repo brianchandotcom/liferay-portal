@@ -100,7 +100,6 @@ public class PrimaryKeyUpdaterUtil {
 		}
 
 		ExecutorService executorService = _getExecutorService();
-
 		List<Future<?>> futures = _futures.get();
 		ThrowableCollector throwableCollector = _throwableCollector.get();
 

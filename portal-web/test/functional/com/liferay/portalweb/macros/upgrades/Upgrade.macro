@@ -34,9 +34,15 @@ definition {
 		var releaseBundleVersion = PropsUtil.get("test.released.release.bundle.version");
 		var releaseBundleZipURL = PropsUtil.get("test.released.test.portal.bundle.zip.url");
 
+		echo("Running ant command: prepare-upgrade-released-bundle-test-environment");
+
 		AntCommands.runCommand("build-test.xml", "prepare-upgrade-released-bundle-test-environment -Dtest.released.release.bundle.version=${releaseBundleVersion} -Dtest.released.test.portal.bundle.zip.url=${releaseBundleZipURL}");
 
+		echo("Ant command finished running, starting app server");
+
 		Portlet.startServer(keepOsGiState = "true");
+
+		echo("Started app server, waiting for license");
 
 		AntCommands.runCommand("build-test.xml", "wait-for-license-activation");
 

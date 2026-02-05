@@ -663,7 +663,11 @@ definition {
 			AntCommands.runCommand("build-test.xml", "start-app-server -Dkeep.cached.app.server.data=true");
 		}
 		else if (${keepOsGiState} == "true") {
+			echo("Running start-app-server");
+
 			AntCommands.runCommand("build-test.xml", "start-app-server -Dkeep.osgi.state=true");
+
+			echo("Finished running start-app-server");
 		}
 		else if (${noLicense} == "true") {
 			AntCommands.runCommand("build-test.xml", "start-app-server -Ddelete.liferay.home=false -Dlicense.not.present=true");

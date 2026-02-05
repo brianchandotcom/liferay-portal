@@ -6,15 +6,24 @@
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntryModel;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -23,10 +32,12 @@ import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.site.cmp.site.initializer.internal.constants.CMPActionConstants;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.AssigneeSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.CreateDateFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.DueDateRangeFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.TagSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
 
 import jakarta.portlet.ActionRequest;
@@ -43,16 +54,25 @@ import java.util.Map;
 public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ViewTasksSectionDisplayContext(
+		AssetTagLocalService assetTagLocalService,
+		ClassNameLocalService classNameLocalService,
+		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
-		ObjectDefinition projectObjectDefinition,
-		ObjectDefinition taskObjectDefinition) {
+		ObjectDefinition projectObjectDefinition, RoleService roleService,
+		ObjectDefinition taskObjectDefinition,
+		UserLocalService userLocalService) {
 
 		super(httpServletRequest, taskObjectDefinition);
 
+		_assetTagLocalService = assetTagLocalService;
+		_classNameLocalService = classNameLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
+		_projectObjectDefinition = projectObjectDefinition;
+		_roleService = roleService;
+		_userLocalService = userLocalService;
+
 		_assetEntry = (AssetEntry)httpServletRequest.getAttribute(
 			WebKeys.LAYOUT_ASSET_ENTRY);
-
-		_projectObjectDefinition = projectObjectDefinition;
 	}
 
 	public String getAPIURL() {
@@ -225,6 +245,10 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	public List<FDSFilter> getFDSFilters() {
 		List<FDSFilter> fdsFilters = new ArrayList<>();
 
+		fdsFilters.add(
+			new AssigneeSelectionFDSFilter(
+				_classNameLocalService, _projectObjectDefinition.getCompanyId(),
+				_getGroupIds(), _roleService, _userLocalService));
 		fdsFilters.add(new CreateDateFDSFilter());
 		fdsFilters.add(new DueDateRangeFDSFilter());
 
@@ -234,6 +258,8 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		}
 
 		fdsFilters.add(new StateSelectionFDSFilter());
+		fdsFilters.add(
+			new TagSelectionFDSFilter(_assetTagLocalService, _getGroupIds()));
 
 		return fdsFilters;
 	}
@@ -251,7 +277,23 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		).build();
 	}
 
+	private long[] _getGroupIds() {
+		if (_assetEntry != null) {
+			return new long[] {_assetEntry.getGroupId()};
+		}
+
+		return TransformUtil.transformToLongArray(
+			_depotEntryLocalService.getDepotEntries(
+				CompanyThreadLocal.getCompanyId(), DepotConstants.TYPE_PROJECT),
+			DepotEntryModel::getGroupId);
+	}
+
 	private final AssetEntry _assetEntry;
+	private final AssetTagLocalService _assetTagLocalService;
+	private final ClassNameLocalService _classNameLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 	private final ObjectDefinition _projectObjectDefinition;
+	private final RoleService _roleService;
+	private final UserLocalService _userLocalService;
 
 }

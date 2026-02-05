@@ -74,8 +74,6 @@ public class ClientExtensionOSGiCommandsTest {
 
 		_companyWebId = company.getWebId();
 
-		_configurationPids = new ArrayList<>();
-
 		_configurationPids.add(
 			ConfigurationTestUtil.createFactoryConfiguration(
 				CETConfiguration.class.getName(),
@@ -392,7 +390,7 @@ public class ClientExtensionOSGiCommandsTest {
 
 	private static BundleContext _bundleContext;
 	private static String _companyWebId;
-	private static List<String> _configurationPids;
+	private static List<String> _configurationPids = new ArrayList<>();
 
 	@Inject(filter = "osgi.command.scope=clientextension")
 	private OSGiCommands _osgiCommands;

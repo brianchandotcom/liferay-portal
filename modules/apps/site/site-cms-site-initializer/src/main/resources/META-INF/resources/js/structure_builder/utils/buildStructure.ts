@@ -26,11 +26,9 @@ import sortChildren from './sortChildren';
 export default function buildStructure({
 	mainObjectDefinition,
 	objectDefinitions,
-	relatedContentObjectRelationships,
 }: {
 	mainObjectDefinition: ObjectDefinition;
 	objectDefinitions: ObjectDefinitions;
-	relatedContentObjectRelationships: ObjectRelationship[];
 }): Structure {
 	const uuid = getUuid();
 
@@ -41,7 +39,6 @@ export default function buildStructure({
 			objectDefinition: mainObjectDefinition,
 			objectDefinitions,
 			parent: uuid,
-			relatedContentObjectRelationships,
 		}),
 		erc: mainObjectDefinition.externalReferenceCode,
 		id: mainObjectDefinition.id,
@@ -61,13 +58,11 @@ export function buildChildren({
 	objectDefinition,
 	objectDefinitions,
 	parent,
-	relatedContentObjectRelationships,
 }: {
 	ancestors?: Array<ObjectDefinition['externalReferenceCode']>;
 	objectDefinition: ObjectDefinition;
 	objectDefinitions: ObjectDefinitions;
 	parent: Uuid;
-	relatedContentObjectRelationships?: ObjectRelationship[];
 }) {
 	const objectFields = objectDefinition.objectFields || [];
 	const objectRelationships = objectDefinition.objectRelationships || [];
@@ -136,22 +131,26 @@ export function buildChildren({
 		}
 	}
 
-	if (relatedContentObjectRelationships) {
-		for (const relatedContentObjectRelationship of relatedContentObjectRelationships) {
-			const relatedContent: RelatedContent = {
-				erc: relatedContentObjectRelationship.externalReferenceCode,
-				label: relatedContentObjectRelationship.label,
-				multiselection: false,
-				name: relatedContentObjectRelationship.name,
-				parent,
-				relatedStructureERC:
-					relatedContentObjectRelationship.objectDefinitionExternalReferenceCode1,
-				type: 'related-content',
-				uuid: getUuid(),
-			};
+	const relatedContentObjectRelationships =
+		getRelatedContentObjectRelationships(
+			objectDefinition,
+			objectDefinitions
+		);
 
-			children.set(relatedContent.uuid, relatedContent);
-		}
+	for (const relatedContentObjectRelationship of relatedContentObjectRelationships) {
+		const relatedContent: RelatedContent = {
+			erc: relatedContentObjectRelationship.externalReferenceCode,
+			label: relatedContentObjectRelationship.label,
+			multiselection: false,
+			name: relatedContentObjectRelationship.name,
+			parent,
+			relatedStructureERC:
+				relatedContentObjectRelationship.objectDefinitionExternalReferenceCode1,
+			type: 'related-content',
+			uuid: getUuid(),
+		};
+
+		children.set(relatedContent.uuid, relatedContent);
 	}
 
 	return sortChildren(children);
@@ -418,4 +417,35 @@ function isRelatedContent(objectRelationship: ObjectRelationship) {
 	}
 
 	return false;
+}
+
+function getRelatedContentObjectRelationships(
+	mainObjectDefinition: ObjectDefinition,
+	objectDefinitions: ObjectDefinitions
+) {
+	const relationships: ObjectRelationship[] = [];
+
+	for (const objectDefinition of Object.values(objectDefinitions)) {
+		if (
+			mainObjectDefinition.externalReferenceCode ===
+			objectDefinition.externalReferenceCode
+		) {
+			continue;
+		}
+
+		for (const objectRelationship of objectDefinition.objectRelationships ||
+			[]) {
+			if (
+				objectRelationship.objectDefinitionExternalReferenceCode2 ===
+					mainObjectDefinition.externalReferenceCode &&
+				!objectRelationship.edge &&
+				objectRelationship.type === 'oneToMany' &&
+				objectRelationship.deletionType === 'disassociate'
+			) {
+				relationships.push(objectRelationship);
+			}
+		}
+	}
+
+	return relationships;
 }

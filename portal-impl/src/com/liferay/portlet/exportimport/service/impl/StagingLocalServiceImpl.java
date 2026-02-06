@@ -1105,8 +1105,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 	}
 
 	protected Layout updateLayoutWithLayoutRevision(
-			LayoutRevision layoutRevision)
-		throws PortalException {
+		LayoutRevision layoutRevision) {
 
 		// Suppress the usage of the advice to get the latest layout to prevent
 		// a StaleObjectStateException
@@ -1139,7 +1138,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		layout.setKeywords(layoutRevision.getKeywords());
 		layout.setRobots(layoutRevision.getRobots());
 		layout.setTypeSettings(layoutRevision.getTypeSettings());
-		layout.setIconImageId(layoutRevision.getIconImageId());
+		layout.setIconImageERC(layoutRevision.getIconImageERC());
 		layout.setThemeId(layoutRevision.getThemeId());
 		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
 		layout.setCss(layoutRevision.getCss());

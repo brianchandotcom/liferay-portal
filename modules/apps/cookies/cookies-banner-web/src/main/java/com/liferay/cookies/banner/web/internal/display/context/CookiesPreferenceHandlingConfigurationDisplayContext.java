@@ -37,6 +37,11 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			isCookiesPreferenceHandlingExplicitConsentMode(_scope, _scopePK);
 	}
 
+	public boolean getCookiesPreferenceHandlingStoreConsent() {
+		return _cookiesConfigurationProvider.
+			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);
+	}
+
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
 	private final ExtendedObjectClassDefinition.Scope _scope;
 	private final long _scopePK;

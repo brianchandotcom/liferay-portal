@@ -19,11 +19,16 @@ export default function ({namespace}) {
 				`input[type='checkbox'][name='${namespace}explicitConsentMode']`
 			);
 
+			const storeConsent = document.querySelector(
+				`input[type='checkbox'][name='${namespace}storeConsent']`
+			);
+
 			if (event.delegateTarget.id === `${namespace}enabled`) {
 				if (event.delegateTarget.checked) {
 					consentRenewalPeriod.removeAttribute('disabled');
 					consentRenewalPeriod.required = true;
 					explicitConsentMode.removeAttribute('disabled');
+					storeConsent.removeAttribute('disabled');
 				}
 				else {
 					consentRenewalPeriod.required = false;
@@ -31,6 +36,8 @@ export default function ({namespace}) {
 					consentRenewalPeriod.value = 12;
 					explicitConsentMode.checked = true;
 					explicitConsentMode.setAttribute('disabled', '');
+					storeConsent.checked = false;
+					storeConsent.setAttribute('disabled', '');
 				}
 			}
 		}

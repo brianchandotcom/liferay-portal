@@ -62,6 +62,26 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-sm-12 form-group">
+		<div class="form-group__inner">
+			<clay:checkbox
+				checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingStoreConsent() %>"
+				disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
+				id='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
+				label="cookie-store-consent"
+				name='<%= liferayPortletResponse.getNamespace() + "storeConsent" %>'
+			/>
+
+			<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-text text-weight-normal">
+					<liferay-ui:message key="cookie-store-consent-help" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <liferay-frontend:component
 	module="{ConfigurationFormEventHandler} from cookies-banner-web"
 />

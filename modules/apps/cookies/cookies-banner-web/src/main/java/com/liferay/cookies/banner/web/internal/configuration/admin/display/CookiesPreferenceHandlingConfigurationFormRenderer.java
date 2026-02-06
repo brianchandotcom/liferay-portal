@@ -66,6 +66,9 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 				return ParamUtil.getLong(
 					httpServletRequest, "modifiedDate", now.getTime());
 			}
+		).put(
+			"storeConsent",
+			ParamUtil.getBoolean(httpServletRequest, "storeConsent")
 		).build();
 	}
 

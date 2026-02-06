@@ -45,4 +45,10 @@ public interface CookiesPreferenceHandlingConfiguration {
 	@Meta.AD(deflt = "0", name = "modified-date", required = false)
 	public long modifiedDate();
 
+	@Meta.AD(
+		deflt = "false", description = "cookie-store-consent-help",
+		name = "cookie-store-consent", required = false
+	)
+	public boolean storeConsent();
+
 }

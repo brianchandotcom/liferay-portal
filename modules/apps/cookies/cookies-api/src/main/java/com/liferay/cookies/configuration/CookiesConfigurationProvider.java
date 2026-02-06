@@ -59,6 +59,9 @@ public interface CookiesConfigurationProvider {
 	public boolean isCookiesPreferenceHandlingExplicitConsentMode(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 
+	public boolean isCookiesPreferenceHandlingStoreConsent(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
 	public void resetCookiesPreferenceHandlingConfiguration(
 			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws ConfigurationException;
@@ -66,7 +69,8 @@ public interface CookiesConfigurationProvider {
 	public void updateCookiesPreferenceHandlingConfiguration(
 			int consentRenewalPeriod, boolean enabled,
 			boolean explicitConsentMode,
-			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+			ExtendedObjectClassDefinition.Scope scope, long scopePK,
+			boolean storeConsent)
 		throws Exception;
 
 }

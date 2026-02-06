@@ -265,6 +265,16 @@ public class TaxonomyVocabularyResourceTest
 
 	@Override
 	@Test
+	public void testPutSiteTaxonomyVocabularyByExternalReferenceCode()
+		throws Exception {
+
+		super.testPutSiteTaxonomyVocabularyByExternalReferenceCode();
+
+		_testPutSiteTaxonomyVocabularyByExternalReferenceCodeExternalReferenceCode();
+	}
+
+	@Override
+	@Test
 	public void testPutTaxonomyVocabulary() throws Exception {
 		super.testPutTaxonomyVocabulary();
 
@@ -528,6 +538,45 @@ public class TaxonomyVocabularyResourceTest
 				postTaxonomyVocabulary.getId());
 
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
+	}
+
+	private void _testPutSiteTaxonomyVocabularyByExternalReferenceCodeExternalReferenceCode()
+		throws Exception {
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			testPutSiteTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
+
+		TaxonomyVocabulary randomTaxonomyVocabulary =
+			randomTaxonomyVocabulary();
+
+		randomTaxonomyVocabulary.setExternalReferenceCode(() -> null);
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				putSiteTaxonomyVocabularyByExternalReferenceCode(
+					postTaxonomyVocabulary.getSiteId(),
+					postTaxonomyVocabulary.getExternalReferenceCode(),
+					randomTaxonomyVocabulary);
+
+		Assert.assertEquals(
+			postTaxonomyVocabulary.getExternalReferenceCode(),
+			putTaxonomyVocabulary.getExternalReferenceCode());
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		randomTaxonomyVocabulary.setExternalReferenceCode(
+			externalReferenceCode);
+
+		putTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				putSiteTaxonomyVocabularyByExternalReferenceCode(
+					postTaxonomyVocabulary.getSiteId(),
+					postTaxonomyVocabulary.getExternalReferenceCode(),
+					randomTaxonomyVocabulary);
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			putTaxonomyVocabulary.getExternalReferenceCode());
 	}
 
 	private void _testPutTaxonomyVocabularyUpdatesEmptyVocabulary()

@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/color-picker": "*",
+		"@clayui/color-picker": "3.158.0",
 		"react": "18.2.0"
 	},
 	"main": "js/index.js",

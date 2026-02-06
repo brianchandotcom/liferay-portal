@@ -1,8 +1,8 @@
 {
 	"dependencies": {
-		"@clayui/button": "*",
-		"@clayui/icon": "*",
-		"@clayui/loading-indicator": "*",
+		"@clayui/button": "3.158.0",
+		"@clayui/icon": "3.158.0",
+		"@clayui/loading-indicator": "3.158.0",
 		"@liferay/marketplace-js-components-web": "*",
 		"commerce-frontend-js": "*",
 		"frontend-js-components-web": "*",

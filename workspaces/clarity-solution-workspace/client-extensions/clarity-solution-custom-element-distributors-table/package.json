@@ -1,7 +1,7 @@
 {
 	"dependencies": {
-		"@clayui/button": "*",
-		"@clayui/table": "*",
+		"@clayui/button": "3.158.0",
+		"@clayui/table": "3.158.0",
 		"clarity-distributors-api": "*",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

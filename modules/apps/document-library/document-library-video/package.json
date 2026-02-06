@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "*",
-		"@clayui/form": "*",
-		"@clayui/icon": "*",
-		"@clayui/loading-indicator": "*",
+		"@clayui/button": "3.158.0",
+		"@clayui/form": "3.158.0",
+		"@clayui/icon": "3.158.0",
+		"@clayui/loading-indicator": "3.158.0",
 		"@liferay/frontend-js-react-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",

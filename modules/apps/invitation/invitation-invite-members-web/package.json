@@ -1,13 +1,13 @@
 {
 	"dependencies": {
-		"@clayui/button": "*",
-		"@clayui/core": "*",
-		"@clayui/form": "*",
-		"@clayui/icon": "*",
-		"@clayui/list": "*",
-		"@clayui/modal": "*",
-		"@clayui/table": "*",
-		"@clayui/tooltip": "*",
+		"@clayui/button": "3.158.0",
+		"@clayui/core": "3.158.0",
+		"@clayui/form": "3.158.0",
+		"@clayui/icon": "3.158.0",
+		"@clayui/list": "3.158.0",
+		"@clayui/modal": "3.158.0",
+		"@clayui/table": "3.158.0",
+		"@clayui/tooltip": "3.158.0",
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},

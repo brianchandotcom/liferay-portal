@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/button": "*",
-		"@clayui/icon": "*",
-		"@clayui/layout": "*",
-		"@clayui/sticker": "*",
+		"@clayui/button": "3.158.0",
+		"@clayui/icon": "3.158.0",
+		"@clayui/layout": "3.158.0",
+		"@clayui/sticker": "3.158.0",
 		"classnames": "2.3.1",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

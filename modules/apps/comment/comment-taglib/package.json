@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/icon": "*",
-		"@clayui/layout": "*",
-		"@clayui/popover": "*",
-		"@clayui/sticker": "*",
+		"@clayui/icon": "3.158.0",
+		"@clayui/layout": "3.158.0",
+		"@clayui/popover": "3.158.0",
+		"@clayui/sticker": "3.158.0",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

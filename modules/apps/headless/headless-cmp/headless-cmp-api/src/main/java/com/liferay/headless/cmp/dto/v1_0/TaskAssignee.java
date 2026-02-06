@@ -88,47 +88,6 @@ public class TaskAssignee implements Serializable {
 	private Supplier<String> _externalReferenceCodeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getImage() {
-		if (_imageSupplier != null) {
-			image = _imageSupplier.get();
-
-			_imageSupplier = null;
-		}
-
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-
-		_imageSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setImage(
-		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
-
-		_imageSupplier = () -> {
-			try {
-				return imageUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected String image;
-
-	@JsonIgnore
-	private Supplier<String> _imageSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -166,6 +125,47 @@ public class TaskAssignee implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getPortrait() {
+		if (_portraitSupplier != null) {
+			portrait = _portraitSupplier.get();
+
+			_portraitSupplier = null;
+		}
+
+		return portrait;
+	}
+
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+
+		_portraitSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPortrait(
+		UnsafeSupplier<String, Exception> portraitUnsafeSupplier) {
+
+		_portraitSupplier = () -> {
+			try {
+				return portraitUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String portrait;
+
+	@JsonIgnore
+	private Supplier<String> _portraitSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getType() {
@@ -249,22 +249,6 @@ public class TaskAssignee implements Serializable {
 			sb.append("\"");
 		}
 
-		String image = getImage();
-
-		if (image != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"image\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(image));
-
-			sb.append("\"");
-		}
-
 		String name = getName();
 
 		if (name != null) {
@@ -277,6 +261,22 @@ public class TaskAssignee implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(name));
+
+			sb.append("\"");
+		}
+
+		String portrait = getPortrait();
+
+		if (portrait != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portrait\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(portrait));
 
 			sb.append("\"");
 		}

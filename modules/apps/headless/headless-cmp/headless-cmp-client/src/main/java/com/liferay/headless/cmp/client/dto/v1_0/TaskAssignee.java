@@ -46,27 +46,6 @@ public class TaskAssignee implements Cloneable, Serializable {
 
 	protected String externalReferenceCode;
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
-
-	public void setImage(
-		UnsafeSupplier<String, Exception> imageUnsafeSupplier) {
-
-		try {
-			image = imageUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String image;
-
 	public String getName() {
 		return name;
 	}
@@ -85,6 +64,27 @@ public class TaskAssignee implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public String getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
+
+	public void setPortrait(
+		UnsafeSupplier<String, Exception> portraitUnsafeSupplier) {
+
+		try {
+			portrait = portraitUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String portrait;
 
 	public String getType() {
 		return type;

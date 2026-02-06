@@ -60,20 +60,6 @@ public class TaskAssigneeSerDes {
 			sb.append("\"");
 		}
 
-		if (taskAssignee.getImage() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"image\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(taskAssignee.getImage()));
-
-			sb.append("\"");
-		}
-
 		if (taskAssignee.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -84,6 +70,20 @@ public class TaskAssigneeSerDes {
 			sb.append("\"");
 
 			sb.append(_escape(taskAssignee.getName()));
+
+			sb.append("\"");
+		}
+
+		if (taskAssignee.getPortrait() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"portrait\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(taskAssignee.getPortrait()));
 
 			sb.append("\"");
 		}
@@ -130,18 +130,18 @@ public class TaskAssigneeSerDes {
 				String.valueOf(taskAssignee.getExternalReferenceCode()));
 		}
 
-		if (taskAssignee.getImage() == null) {
-			map.put("image", null);
-		}
-		else {
-			map.put("image", String.valueOf(taskAssignee.getImage()));
-		}
-
 		if (taskAssignee.getName() == null) {
 			map.put("name", null);
 		}
 		else {
 			map.put("name", String.valueOf(taskAssignee.getName()));
+		}
+
+		if (taskAssignee.getPortrait() == null) {
+			map.put("portrait", null);
+		}
+		else {
+			map.put("portrait", String.valueOf(taskAssignee.getPortrait()));
 		}
 
 		if (taskAssignee.getType() == null) {
@@ -172,10 +172,10 @@ public class TaskAssigneeSerDes {
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "image")) {
+			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
+			else if (Objects.equals(jsonParserFieldName, "portrait")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -196,14 +196,14 @@ public class TaskAssigneeSerDes {
 						(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "image")) {
-				if (jsonParserFieldValue != null) {
-					taskAssignee.setImage((String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				if (jsonParserFieldValue != null) {
 					taskAssignee.setName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "portrait")) {
+				if (jsonParserFieldValue != null) {
+					taskAssignee.setPortrait((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

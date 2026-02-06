@@ -8,14 +8,11 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 
 import java.util.Map;
-
-import org.apache.solr.client.solrj.SolrQuery;
 
 /**
  * @author Bryan Engler
@@ -36,11 +33,10 @@ public class SolrSearchEngineAdapterFixture {
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_facetProcessor, _solrClientManager, _properties);
+			_solrClientManager, _properties);
 	}
 
 	protected SearchEngineAdapter createSearchEngineAdapter(
-		FacetProcessor<SolrQuery> facetProcessor,
 		SolrClientManager solrClientManager, Map<String, Object> properties) {
 
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
@@ -53,7 +49,6 @@ public class SolrSearchEngineAdapterFixture {
 
 		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
 			{
-				setFacetProcessor(facetProcessor);
 				setSolrClientManager(solrClientManager);
 			}
 		};
@@ -82,11 +77,6 @@ public class SolrSearchEngineAdapterFixture {
 		return solrSearchEngineAdapterImpl;
 	}
 
-	protected void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {
-		_facetProcessor = facetProcessor;
-	}
-
-	private FacetProcessor<SolrQuery> _facetProcessor;
 	private Map<String, Object> _properties;
 	private SearchEngineAdapter _searchEngineAdapter;
 	private SearchRequestExecutorFixture _searchRequestExecutorFixture;

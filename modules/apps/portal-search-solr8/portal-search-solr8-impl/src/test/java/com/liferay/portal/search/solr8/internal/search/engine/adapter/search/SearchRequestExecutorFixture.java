@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
@@ -16,12 +15,9 @@ import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryIm
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.search.response.DefaultSearchSearchResponseAssemblerHelperImpl;
 import com.liferay.portal.search.solr8.internal.search.response.SearchSearchResponseAssemblerHelper;
 import com.liferay.portal.search.solr8.internal.sort.SolrSortFieldTranslator;
-
-import org.apache.solr.client.solrj.SolrQuery;
 
 /**
  * @author Bryan Engler
@@ -33,25 +29,8 @@ public class SearchRequestExecutorFixture {
 	}
 
 	public void setUp() {
-		createBaseSolrQueryAssembler(_facetProcessor);
-
 		_searchRequestExecutor = createSearchRequestExecutor(
 			_solrClientManager);
-	}
-
-	protected void createBaseSolrQueryAssembler(
-		FacetProcessor<SolrQuery> facetProcessor) {
-
-		_baseSolrQueryAssemblerImpl = new BaseSolrQueryAssemblerImpl();
-
-		if (facetProcessor != null) {
-			ReflectionTestUtil.setFieldValue(
-				_baseSolrQueryAssemblerImpl, "_defaultFacetProcessor",
-				facetProcessor);
-		}
-
-		_baseSolrQueryAssemblerImpl.activate(
-			SystemBundleUtil.getBundleContext());
 	}
 
 	protected CountSearchRequestExecutor createCountSearchRequestExecutor(
@@ -174,16 +153,12 @@ public class SearchRequestExecutorFixture {
 		return searchSolrQueryAssemblerImpl;
 	}
 
-	protected void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {
-		_facetProcessor = facetProcessor;
-	}
-
 	protected void setSolrClientManager(SolrClientManager solrClientManager) {
 		_solrClientManager = solrClientManager;
 	}
 
-	private BaseSolrQueryAssemblerImpl _baseSolrQueryAssemblerImpl;
-	private FacetProcessor<SolrQuery> _facetProcessor;
+	private final BaseSolrQueryAssemblerImpl _baseSolrQueryAssemblerImpl =
+		new BaseSolrQueryAssemblerImpl();
 	private SearchRequestExecutor _searchRequestExecutor;
 	private SolrClientManager _solrClientManager;
 

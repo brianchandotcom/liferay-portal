@@ -5,12 +5,15 @@
 
 package com.liferay.portal.search.solr8.internal.facet;
 
-import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.BaseSolrQueryAssemblerImpl;
 import com.liferay.portal.search.test.util.facet.BaseClassicModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -24,18 +27,25 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_defaultFacetProcessor = ReflectionTestUtil.getAndSetFieldValue(
+			BaseSolrQueryAssemblerImpl.class, "_defaultFacetProcessor",
+			RangeFacetProcessor.INSTANCE);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			BaseSolrQueryAssemblerImpl.class, "_defaultFacetProcessor",
+			_defaultFacetProcessor);
+	}
+
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		SolrIndexingFixture solrIndexingFixture = new SolrIndexingFixture();
-
-		solrIndexingFixture.setFacetProcessor(
-			new RangeFacetProcessor() {
-				{
-					jsonFactory = new JSONFactoryImpl();
-				}
-			});
-
-		return solrIndexingFixture;
+		return new SolrIndexingFixture();
 	}
+
+	private static Object _defaultFacetProcessor;
 
 }

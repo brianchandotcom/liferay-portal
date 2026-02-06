@@ -7,8 +7,8 @@ package com.liferay.portal.search.solr8.internal.facet;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -24,22 +24,14 @@ import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  * @author Tibor Lipusz
  */
-@Component(
-	property = {
-		"class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
-		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
-		"class.name=com.liferay.portal.search.internal.facet.RangeFacetImpl"
-	},
-	service = FacetProcessor.class
-)
 public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
+
+	public static final RangeFacetProcessor INSTANCE =
+		new RangeFacetProcessor();
 
 	@Override
 	public Map<String, JSONObject> processFacet(Facet facet) {
@@ -103,15 +95,11 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 	protected JSONObject getFacetParametersJSONObject(
 		Facet facet, String range) {
 
-		JSONObject jsonObject = jsonFactory.createJSONObject();
-
-		jsonObject.put(
+		return JSONUtil.put(
 			"q", facet.getFieldName() + StringPool.COLON + range
 		).put(
 			"type", "query"
 		);
-
-		return jsonObject;
 	}
 
 	protected void putFacetParameters(
@@ -124,8 +112,5 @@ public class RangeFacetProcessor implements FacetProcessor<SolrQuery> {
 
 		map.put(name, jsonObject);
 	}
-
-	@Reference
-	protected JSONFactory jsonFactory;
 
 }

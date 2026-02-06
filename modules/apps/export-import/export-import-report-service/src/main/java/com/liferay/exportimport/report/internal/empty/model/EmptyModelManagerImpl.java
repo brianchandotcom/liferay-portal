@@ -124,10 +124,9 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 
 	@Override
 	public int solveEmptyModel(
-			String classExternalReferenceCode, String className, long companyId,
-			long groupId, int status,
-			Supplier<Integer> updatedModelStatusSupplier)
-		throws PortalException {
+		String classExternalReferenceCode, String className, long companyId,
+		long groupId, int status,
+		Supplier<Integer> updatedModelStatusSupplier) {
 
 		if (status != WorkflowConstants.STATUS_EMPTY) {
 			return status;
@@ -135,9 +134,13 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 
 		ExportImportReportEntry exportImportReportEntry =
 			_exportImportReportEntryLocalService.
-				getEmptyExportImportReportEntryByG_C_C_C(
+				fetchEmptyExportImportReportEntryByG_C_C_C(
 					groupId, companyId, classExternalReferenceCode,
 					_classNameLocalService.getClassNameId(className));
+
+		if (exportImportReportEntry == null) {
+			return updatedModelStatusSupplier.get();
+		}
 
 		if (ExportImportThreadLocal.isImportInProcess() &&
 			(ExportImportThreadLocal.getExportImportConfigurationId() ==

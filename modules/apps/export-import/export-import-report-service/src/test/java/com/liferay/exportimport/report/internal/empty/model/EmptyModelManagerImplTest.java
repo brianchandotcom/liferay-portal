@@ -567,7 +567,7 @@ public class EmptyModelManagerImplTest {
 
 		Mockito.when(
 			_exportImportReportEntryLocalService.
-				getEmptyExportImportReportEntryByG_C_C_C(
+				fetchEmptyExportImportReportEntryByG_C_C_C(
 					0L, companyId, externalReferenceCode, classNameId)
 		).thenReturn(
 			mockEntry
@@ -588,7 +588,7 @@ public class EmptyModelManagerImplTest {
 
 		Mockito.verify(
 			_exportImportReportEntryLocalService
-		).getEmptyExportImportReportEntryByG_C_C_C(
+		).fetchEmptyExportImportReportEntryByG_C_C_C(
 			0L, companyId, externalReferenceCode, classNameId
 		);
 

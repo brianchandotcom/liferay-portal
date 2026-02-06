@@ -96,13 +96,11 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 			ObjectEntryFolderUtil.deleteObjectEntryFolders(depotEntry);
+
+			_deleteCMSDefaultPermissions(depotEntry.getGroup());
 		}
 
-		depotEntry = super.deleteDepotEntry(depotEntry);
-
-		_deleteCMSDefaultPermissions(depotEntry.getGroup());
-
-		return depotEntry;
+		return super.deleteDepotEntry(depotEntry);
 	}
 
 	@Override
@@ -113,13 +111,11 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 			ObjectEntryFolderUtil.deleteObjectEntryFolders(depotEntry);
+
+			_deleteCMSDefaultPermissions(depotEntry.getGroup());
 		}
 
-		depotEntry = super.deleteDepotEntry(depotEntryId);
-
-		_deleteCMSDefaultPermissions(depotEntry.getGroup());
-
-		return depotEntry;
+		return super.deleteDepotEntry(depotEntryId);
 	}
 
 	private void _addCMSDefaultPermissions(Group group) throws PortalException {

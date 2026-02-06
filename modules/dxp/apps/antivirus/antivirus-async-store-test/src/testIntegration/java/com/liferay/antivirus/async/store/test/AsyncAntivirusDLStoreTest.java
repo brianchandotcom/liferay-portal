@@ -31,33 +31,17 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.io.File;
-import java.io.InputStream;
-
-import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import javax.management.DynamicMBean;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -66,13 +50,29 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+
+import javax.management.DynamicMBean;
+import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Dictionary;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Raymond Augé
@@ -326,16 +326,16 @@ public class AsyncAntivirusDLStoreTest {
 
 	@Test
 	public void testQueueOverflow() throws Exception {
-		AtomicInteger calledSchedule = new AtomicInteger();
+		AtomicInteger calledSchedule1 = new AtomicInteger();
 
-		AtomicInteger firedEventPrepare = new AtomicInteger();
+		AtomicInteger firedEventPrepare1 = new AtomicInteger();
 
 		_registerService(
 			AntivirusAsyncEventListener.class,
 			_create(
 				HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
 					AntivirusAsyncEvent.PREPARE,
-					firedEventPrepare::incrementAndGet
+					firedEventPrepare1::incrementAndGet
 				).put(
 					AntivirusAsyncEvent.SUCCESS,
 					() -> {
@@ -349,7 +349,7 @@ public class AsyncAntivirusDLStoreTest {
 
 				@Override
 				public void schedule(Message message) {
-					calledSchedule.incrementAndGet();
+					calledSchedule1.incrementAndGet();
 				}
 
 				@Override
@@ -400,10 +400,94 @@ public class AsyncAntivirusDLStoreTest {
 				}
 
 				Assert.assertTrue(
-					String.valueOf(calledSchedule.get()),
-					calledSchedule.get() > 0);
-				Assert.assertEquals(count, firedEventPrepare.get());
+					String.valueOf(calledSchedule1.get()),
+					calledSchedule1.get() > 0);
+				Assert.assertEquals(count, firedEventPrepare1.get());
 			});
+
+		AtomicInteger calledSchedule2 = new AtomicInteger();
+
+		AtomicInteger firedEventPrepare2 = new AtomicInteger();
+
+		_registerService(
+			AntivirusAsyncEventListener.class,
+			_create(
+				HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
+					AntivirusAsyncEvent.PREPARE,
+					firedEventPrepare2::incrementAndGet
+				).put(
+					AntivirusAsyncEvent.SUCCESS,
+					() -> {
+					}
+				).build()),
+			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
+
+		_registerService(
+			AntivirusAsyncRetryScheduler.class,
+			new AntivirusAsyncRetryScheduler() {
+
+				@Override
+				public void schedule(Message message) {
+					calledSchedule2.incrementAndGet();
+				}
+
+				@Override
+				public void unschedule(Message message) {
+				}
+
+			},
+			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, 100));
+
+		CountDownLatch countDownLatch = new CountDownLatch(1);
+
+		countDownLatch.await(2, TimeUnit.SECONDS);
+
+		String[] tempFilesArray = FileUtil.listFiles(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
+		long tempFilesArrayCount = tempFilesArray.length;
+
+		_withAsyncAntivirusConfiguration(
+			"0 0/10 * * * ?", 0, false,
+			() -> {
+				DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+				int count = 10;
+
+				try (LogCapture logCapture =
+						LoggerTestUtil.configureLog4JLogger(
+							"com.liferay.antivirus.async.store.internal." +
+								"messaging.AntivirusAsyncMessageListener",
+							LoggerTestUtil.DEBUG)) {
+
+					for (int i = count; i > 0; i--) {
+						DLTestUtil.addDLFileEntry(dlFolder.getFolderId());
+					}
+
+					List<LogEntry> logEntries = logCapture.getLogEntries();
+
+					for (LogEntry logEntry : logEntries) {
+						String message = logEntry.getMessage();
+
+						Assert.assertTrue(
+							message.contains(
+								"into persistent storage because the async " +
+									"antivirus queue is overflowing"));
+					}
+				}
+
+				Assert.assertTrue(
+					String.valueOf(calledSchedule2.get()),
+					calledSchedule2.get() == 0);
+				Assert.assertEquals(count, firedEventPrepare2.get());
+			});
+
+		tempFilesArray = FileUtil.listFiles(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
+		Assert.assertEquals(
+			Arrays.toString(tempFilesArray), tempFilesArrayCount,
+			tempFilesArray.length);
 	}
 
 	@Test

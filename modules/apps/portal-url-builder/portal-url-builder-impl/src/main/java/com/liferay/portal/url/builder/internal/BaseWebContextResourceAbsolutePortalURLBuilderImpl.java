@@ -7,11 +7,14 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.PathProxyAwareAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.internal.util.URLUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera Avellón
@@ -23,8 +26,8 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 
 	public BaseWebContextResourceAbsolutePortalURLBuilderImpl(
 		String cdnHost, HashedFilesRegistry hashedFilesRegistry,
-		String pathModule, String pathProxy, String resourcePath,
-		String webContextPath) {
+		HttpServletRequest httpServletRequest, String pathModule,
+		String pathProxy, String resourcePath, String webContextPath) {
 
 		if (!resourcePath.startsWith(StringPool.SLASH)) {
 			resourcePath = StringPool.SLASH + resourcePath;
@@ -36,7 +39,9 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 
 		String prefix = pathModule + webContextPath;
 
-		if (hashedFilesRegistry != null) {
+		if (hashedFilesRegistry.getCachingLevel(httpServletRequest) ==
+				CachingLevel.USE_ONE_HASH_PER_FILE) {
+
 			String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
 				prefix + resourcePath);
 

@@ -48,9 +48,8 @@ public class PortalImageAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockConfigurationProvider(),
-			mockHashedFilesRegistry(), mockPortal(context, proxy, cdnHost),
-			mockHttpServletRequest());
+			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		_portalImageAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forPortalImage("path/to/image.png");

@@ -8,12 +8,11 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.url.builder.configuration.PortalURLBuilderConfiguration;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -47,32 +46,6 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		_testWriteGlobalImports(StringPool.BLANK);
 	}
 
-	private ConfigurationProvider _mockConfigurationProvider()
-		throws Exception {
-
-		ConfigurationProvider configurationProvider = Mockito.mock(
-			ConfigurationProvider.class);
-
-		PortalURLBuilderConfiguration portalURLBuilderConfiguration =
-			Mockito.mock(PortalURLBuilderConfiguration.class);
-
-		Mockito.when(
-			portalURLBuilderConfiguration.enableESModulesHashing()
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			configurationProvider.getCompanyConfiguration(
-				Mockito.eq(PortalURLBuilderConfiguration.class),
-				Mockito.anyLong())
-		).thenReturn(
-			portalURLBuilderConfiguration
-		);
-
-		return configurationProvider;
-	}
-
 	private HashedFilesRegistry _mockHashedFileRegistry(String pathContext) {
 		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
 			HashedFilesRegistry.class);
@@ -94,6 +67,12 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			hashedFilesRegistry
 		).forEach(
 			Mockito.any()
+		);
+
+		Mockito.when(
+			hashedFilesRegistry.getCachingLevel(Mockito.any())
+		).thenReturn(
+			CachingLevel.USE_ONE_HASH_PER_FILE
 		);
 
 		return hashedFilesRegistry;
@@ -138,9 +117,6 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 			frontendJsWebDynamicJSImportMapsContributor =
 				new FrontendJsWebDynamicJSImportMapsContributor();
 
-		ReflectionTestUtils.setField(
-			frontendJsWebDynamicJSImportMapsContributor,
-			"_configurationProvider", _mockConfigurationProvider());
 		ReflectionTestUtils.setField(
 			frontendJsWebDynamicJSImportMapsContributor, "_hashedFilesRegistry",
 			_mockHashedFileRegistry(pathContext));

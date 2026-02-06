@@ -8,6 +8,8 @@ package com.liferay.portal.url.builder.internal;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.url.builder.ESModuleAbsolutePortalURLBuilder;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 /**
  * @author Iván Zaera Avellón
  */
@@ -18,12 +20,13 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 
 	public ESModuleAbsolutePortalURLBuilderImpl(
 		String cdnHost, String esModulePath,
-		HashedFilesRegistry hashedFilesRegistry, String pathModule,
+		HashedFilesRegistry hashedFilesRegistry,
+		HttpServletRequest httpServletRequest, String pathModule,
 		String pathProxy, String webContextPath) {
 
 		super(
-			cdnHost, hashedFilesRegistry, pathModule, pathProxy,
-			"/__liferay__/" + esModulePath, webContextPath);
+			cdnHost, hashedFilesRegistry, httpServletRequest, pathModule,
+			pathProxy, "/__liferay__/" + esModulePath, webContextPath);
 	}
 
 }

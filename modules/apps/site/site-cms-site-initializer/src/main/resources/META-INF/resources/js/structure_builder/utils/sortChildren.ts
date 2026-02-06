@@ -21,9 +21,14 @@ export default function sortChildren(
 
 function getWeight(type: StructureChild['type']) {
 	if (type === 'repeatable-group') {
+		return 3;
+	}
+
+	if (type === 'referenced-structure') {
 		return 2;
 	}
-	if (type === 'referenced-structure') {
+
+	if (type === 'related-content') {
 		return 1;
 	}
 

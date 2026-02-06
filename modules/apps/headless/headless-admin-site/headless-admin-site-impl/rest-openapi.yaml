@@ -2032,13 +2032,13 @@ components:
         HTMLFragmentInlineValue:
             # @review
             allOf:
+                -   $ref: "#/components/schemas/HTMLFragmentValue"
                 -   properties:
                         fragmentInlineValue:
                             $ref: "#/components/schemas/FragmentInlineValue"
                             # @review
                             description:
                                 The fragment inline value.
-                -   $ref: "#/components/schemas/HTMLFragmentValue"
             # @review
             description:
                 An inline value of a fragment HTML element.
@@ -2046,13 +2046,13 @@ components:
         HTMLFragmentMappedValue:
             # @review
             allOf:
+                -   $ref: "#/components/schemas/HTMLFragmentValue"
                 -   properties:
                         fragmentMappedValue:
                             $ref: "#/components/schemas/FragmentMappedValue"
                             # @review
                             description:
                                 The fragment mapped value.
-                -   $ref: "#/components/schemas/HTMLFragmentValue"
             # @review
             description:
                 A mapped value of a fragment HTML element.

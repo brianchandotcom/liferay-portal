@@ -10,21 +10,21 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 
 ## Clone the Template
 
-1. Run the following command in your terminal:
+1. Run this command:
 
-    ```bash
-    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- commerce
-    ```
+   ```bash
+   curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- commerce
+   ```
 
 1. Navigate to the repository directory:
 
-    ```bash
-    cd commerce
-    ```
+   ```bash
+   cd commerce
+   ```
 
-## Set up your local Liferay instance
+## Set Up Your Local Liferay Instance
 
-1. Go to your running liferay instance [http://localhost:8080](http://localhost:8080)
+1. Go to your running Liferay instance [http://localhost:8080](http://localhost:8080).
 
 1. Create a Commerce site, following [this guide](https://learn.liferay.com/w/dxp/commerce/starting-a-store/accelerators).
 
@@ -34,19 +34,19 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 
 ## Add the Service Access Policy
 
-Liferay restricts some APIs access by default for security. You must configure a [Service Access Policy](https://learn.liferay.com/w/dxp/security-and-administration/security/securing-web-services/setting-service-access-policies) to allow public access to the necessary endpoints.
+Liferay restricts API access by default for security. You must configure a [Service Access Policy](https://learn.liferay.com/w/dxp/security-and-administration/security/securing-web-services/setting-service-access-policies) to allow access to the necessary endpoints.
 
 1. Navigate to Control Panel &rarr; Security &rarr; Service Access Policies.
 
-1. Click the *`COMMERCE_DEFAULT`* policy.
+1. Click the *COMMERCE_DEFAULT* policy.
 
 1. In the Allowed Service Signatures section, add a new row with the following values:
-    - **Service Class:** `com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductResourceImpl`
-    - **Method Name:** `getChannelProductByFriendlyUrlPath`
+   - **Service Class:** `com.liferay.headless.commerce.delivery.catalog.internal.resource.v1_0.ProductResourceImpl`
+   - **Method Name:** `getChannelProductByFriendlyUrlPath`
 
-1. Click Save.
+1. Click *Save*.
 
-## Run your Template
+## Run Your Template
 
 To get your template up and running, first, install the dependencies:
 
@@ -54,21 +54,25 @@ To get your template up and running, first, install the dependencies:
 npm install
 ```
 
-And before starting it, define your environment variables.
+Before starting it, define your environment variables.
 
-1. Copy the `.env.example` file to `.env`
+1. Configure your environment variables:
+
+   ```bash
+   cp .env.example .env
+   ```
 
 1. Open `.env` and define the following keys:
 
-    - `LIFERAY_HOST`: Your Liferay instance URL (`http://localhost:8080` for local development).
-    - `LIFERAY_CHANNEL_ID`: Your Liferay Commerce Channel ID.
-    - `NEXT_PUBLIC_SITE_NAME`: Your site name (e.g., `Minium`).
+   - `LIFERAY_HOST`: your Liferay instance URL (`http://localhost:8080` for local development)
+   - `LIFERAY_CHANNEL_ID`: your Liferay Commerce Channel ID
+   - `NEXT_PUBLIC_SITE_NAME`: your site name (e.g., `Minium`)
 
 1. Run the development server:
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 1. Open [http://localhost:3000](http://localhost:3000) in your browser.
 

@@ -8,34 +8,34 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 -   Node.js 22+
 -   Liferay Portal 2025.Q4+
 
-## Set up your Template
+## Set Up Your Template
 
-1. Run the following command in your terminal:
+1. Run this command: 
 
-    ```bash
-    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- content-page
-    ```
+   ```bash
+   curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- content-page
+   ```
 
 1. Navigate to the repository directory:
 
-    ```bash
-    cd content-page
-    ```
+   ```bash
+   cd content-page
+   ```
 
-## Set up your local Liferay instance
+## Set Up Your Local Liferay Instance
 
-1. Log in with your email to the Liferay instance at [http://localhost:8080](http://localhost:8080)
+1. Log into the Liferay instance at [http://localhost:8080](http://localhost:8080)
 
 ## Creating an Event Structure
 
 Liferay provides some predefined content structures, but you can create your own.
 
 !!! important
-    Currently, this feature is behind a beta feature flag (LPD-17564) and also depends on release feature flags (LPD-32050 and LPD-34594). Read [Feature Flags](https://learn.liferay.com/w/dxp/security-and-administration/administration/configuring-liferay/feature-flags) for more information.
+    Currently, this feature is behind a beta feature flag ([LPD-17564](https://liferay.atlassian.net/browse/LPD-17564)) and also depends on release feature flags ([LPD-32050](https://liferay.atlassian.net/browse/LPD-32050) and [LPD-34594](https://liferay.atlassian.net/browse/LPD-34594)). Read [Feature Flags](https://learn.liferay.com/w/dxp/security-and-administration/administration/configuring-liferay/feature-flags) for more information.
 
-1. Go to the Structures page in Liferay CMS Dashboard and click on *add* (![Add icon](../content-page/images/icon-add.png)) &rarr; *Content*.
+1. Go to the Structures page in Liferay CMS Dashboard and click *Add* (![Add icon](../content-page/images/icon-add.png)) &rarr; *Content*.
 
-    ![Click on Content to create an event structure](./images/01.png)
+   ![Click on Content to create an event structure](./images/01.png)
 
 1. Under the General tab, edit the Structure Name field and check the box to make it available for all spaces.
 
@@ -62,7 +62,7 @@ Liferay provides some predefined content structures, but you can create your own
 
 1. Click *New* &rarr; *Event*.
 
-    ![Select the content structure to create an event](./images/02.png)
+   ![Select the content structure to create an event](./images/02.png)
 
 1. Select the Content Structure.
 
@@ -72,18 +72,18 @@ Liferay provides some predefined content structures, but you can create your own
 
 ## Add the Service Access Policy
 
-Liferay restricts some APIs access by default for security. You must configure a [Service Access Policy](https://learn.liferay.com/w/dxp/security-and-administration/security/securing-web-services/setting-service-access-policies) to allow public access to the necessary endpoints.
+Liferay restricts API access by default for security. You must configure a [Service Access Policy](https://learn.liferay.com/w/dxp/security-and-administration/security/securing-web-services/setting-service-access-policies) to allow access to the necessary endpoints.
 
 1. Navigate to Control Panel &rarr; Security &rarr; Service Access Policies.
 
-1. Click the *`OBJECT_DEFAULT`* policy.
+1. Click the *OBJECT_DEFAULT* policy.
 
 1. In the Allowed Service Signatures section, add a new row with the following values:
 
     - Service Class: `com.liferay.object.rest.internal.resource.v1_0.ObjectEntryResourceImpl`
     - Method Name: `getScopeScopeKeyPage`
 
-1. Click Save.
+1. Click *Save*.
 
 ## Grant Guest Permissions
 
@@ -97,30 +97,30 @@ Once the API is exposed via policy, you must ensure unauthenticated users ([Gues
 
 1. Install the dependencies:
 
-    ```bash
-    npm install
-    ```
+   ```bash
+   npm install
+   ```
 
 1. Configure your environment variables:
 
-    ```bash
-    cp .env.example .env
-    ```
+   ```bash
+   cp .env.example .env
+   ```
 
 1. Open `.env` and define the following keys:
 
-    - `LIFERAY_HOST`: Your Liferay instance URL (`http://localhost:8080` for local development).
-    - `LIFERAY_SPACE_ID`: Your CMS Space ID (also known as Group ID, or Scope ID).
-    - `LIFERAY_LANGUAGES`: The available languages that you can consume to extract data to display (e.g.: `en_US,es_ES,pt_BR`).
-    - `LIFERAY_CONTENT_PATH`: Your content path, including ID.
+   - `LIFERAY_HOST`: your Liferay instance URL (`http://localhost:8080` for local development)
+   - `LIFERAY_SPACE_ID`: your CMS Space ID (also known as Group ID, or Scope ID)
+   - `LIFERAY_LANGUAGES`: the available languages that you can consume to extract data to display (e.g.: `en_US,es_ES,pt_BR`)
+   - `LIFERAY_CONTENT_PATH`: your content path, including ID
 
-        - If you are using a custom structure, follow this pattern: `/o/c/[structure_name]/scopes/[space_id]` (e.g., `/o/c/events/scopes/35367`).
+   If you are using a custom structure, follow this pattern: `/o/c/[structure_name]/scopes/[space_id]` (e.g., `/o/c/events/scopes/35367`).
 
 1. Start the development server:
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 1. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -128,6 +128,6 @@ You can now edit `app/page.tsx` to modify the page. The application auto-updates
 
 ## Learn More
 
--   [Foundations of Liferay Headless APIs](https://learn.liferay.com/l/29393515)
--   [Mastering Consuming Liferay Headless APIs](https://learn.liferay.com/l/29852017)
--   [Learn Next.js](https://nextjs.org/learn)
+- [Foundations of Liferay Headless APIs](https://learn.liferay.com/l/29393515)
+- [Mastering Consuming Liferay Headless APIs](https://learn.liferay.com/l/29852017)
+- [Learn Next.js](https://nextjs.org/learn)

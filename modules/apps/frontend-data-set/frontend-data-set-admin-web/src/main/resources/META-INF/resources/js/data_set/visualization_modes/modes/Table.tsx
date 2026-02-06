@@ -26,6 +26,7 @@ import FieldSelectModalContent, {
 import OrderableTable from '../../../components/OrderableTable';
 import {
 	DEFAULT_FETCH_HEADERS,
+	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
 	PAGE_SIZE,
@@ -420,7 +421,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 		setTableSections(
 			sortItems(
 				storedFDSFields,
-				tableSectionsOrder
+				tableSectionsOrder,
+				false,
+				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
 			) as IDataSetTableSection[]
 		);
 	};
@@ -571,7 +574,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 			setTableSections(
 				sortItems(
 					tableSections,
-					storedFDSFieldsOrder
+					storedFDSFieldsOrder,
+					false,
+					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
 				) as IDataSetTableSection[]
 			);
 
@@ -759,6 +764,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 						tableSectionsOrder: order,
 					});
 				}}
+				orderByERC={
+					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				}
 				title={title}
 			/>
 		</ClayLayout.ContentCol>

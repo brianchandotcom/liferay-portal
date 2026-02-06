@@ -13,6 +13,7 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	DEFAULT_FETCH_HEADERS,
+	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	OBJECT_RELATIONSHIP,
 	PAGE_SIZE,
 } from '../../utils/constants';
@@ -200,7 +201,14 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 				actionTypeOrder
 			];
 
-		setActions(sortItems(storedActions, actionsOrder) as IAction[]);
+		setActions(
+			sortItems(
+				storedActions,
+				actionsOrder,
+				false,
+				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+			) as IAction[]
+		);
 
 		setLoading(false);
 	};
@@ -296,7 +304,14 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 		const storedActionsOrder = responseJSON?.[actionTypeOrder];
 
 		if (actions && storedActionsOrder && storedActionsOrder === order) {
-			setActions(sortItems(actions, storedActionsOrder) as IAction[]);
+			setActions(
+				sortItems(
+					actions,
+					storedActionsOrder,
+					false,
+					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				) as IAction[]
+			);
 
 			openDefaultSuccessToast();
 		}
@@ -409,6 +424,11 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-item-action'
 										)}
+										orderByERC={
+											!!Liferay.FeatureFlags?.[
+												FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
+											]
+										}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}
@@ -436,6 +456,11 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-creation-action'
 										)}
+										orderByERC={
+											!!Liferay.FeatureFlags?.[
+												FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
+											]
+										}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}

@@ -37,6 +37,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -852,14 +853,26 @@ public class CustomFDSSerializer
 			externalReferenceCode, httpServletRequest, predicate,
 			relationshipNames);
 
-		objectEntries.sort(
-			new ObjectEntryComparator(
-				ListUtil.toList(
-					ListUtil.fromString(
-						MapUtil.getString(
-							objectEntry.getProperties(), propertyKey),
-						StringPool.COMMA),
-					GetterUtil::getLong)));
+		String orderValue = MapUtil.getString(
+			objectEntry.getProperties(), propertyKey);
+
+		boolean orderByERC = FeatureFlagManagerUtil.isEnabled(
+			PortalUtil.getCompanyId(httpServletRequest),
+			FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY);
+
+		if (orderByERC) {
+			List<String> ercs = ListUtil.fromString(
+				orderValue, StringPool.COMMA);
+
+			objectEntries.sort(new ObjectEntryERCComparator(ercs));
+		}
+		else {
+			List<Long> ids = ListUtil.toList(
+				ListUtil.fromString(orderValue, StringPool.COMMA),
+				GetterUtil::getLong);
+
+			objectEntries.sort(new ObjectEntryIdComparator(ids));
+		}
 
 		return objectEntries;
 	}
@@ -1336,10 +1349,48 @@ public class CustomFDSSerializer
 	)
 	private FDSSerializer _systemFDSSerializer;
 
-	private static class ObjectEntryComparator
+	private static class ObjectEntryERCComparator
 		implements Comparator<ObjectEntry> {
 
-		public ObjectEntryComparator(List<Long> ids) {
+		public ObjectEntryERCComparator(List<String> ercs) {
+			_ercs = ercs;
+		}
+
+		@Override
+		public int compare(
+			ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
+
+			String erc1 = objectEntry1.getExternalReferenceCode();
+			String erc2 = objectEntry2.getExternalReferenceCode();
+
+			int index1 = _ercs.indexOf(erc1);
+			int index2 = _ercs.indexOf(erc2);
+
+			if ((index1 == -1) && (index2 == -1)) {
+				Date date = objectEntry1.getDateCreated();
+
+				return date.compareTo(objectEntry2.getDateCreated());
+			}
+
+			if (index1 == -1) {
+				return 1;
+			}
+
+			if (index2 == -1) {
+				return -1;
+			}
+
+			return Integer.compare(index1, index2);
+		}
+
+		private final List<String> _ercs;
+
+	}
+
+	private static class ObjectEntryIdComparator
+		implements Comparator<ObjectEntry> {
+
+		public ObjectEntryIdComparator(List<Long> ids) {
 			_ids = ids;
 		}
 

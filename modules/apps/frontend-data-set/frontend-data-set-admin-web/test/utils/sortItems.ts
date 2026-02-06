@@ -9,18 +9,22 @@ import {IOrderable} from '../../src/main/resources/META-INF/resources/js/utils/t
 const items = [
 	{
 		dateCreated: '2024-06-05T10:49:04Z',
+		externalReferenceCode: 'erc-4',
 		id: 4,
 	},
 	{
 		dateCreated: '2024-06-05T10:49:03Z',
+		externalReferenceCode: 'erc-3',
 		id: '3',
 	},
 	{
 		dateCreated: '2024-06-05T10:49:02Z',
+		externalReferenceCode: 'erc-2',
 		id: 2,
 	},
 	{
 		dateCreated: '2024-06-05T10:49:01Z',
+		externalReferenceCode: 'erc-1',
 		id: '1',
 	},
 ] as IOrderable[];
@@ -44,13 +48,20 @@ const creationDatePartialSortCases: IOrderResult = {
 	'4,3': [4, 3, 1, 2],
 };
 
-const testCases = (expected: IOrderResult, useCreationDate?: boolean) =>
+const testCases = (
+	expected: IOrderResult,
+	useCreationDate?: boolean,
+	orderByERC?: boolean
+) =>
 	Object.keys(expected).forEach((itemsOrder) =>
 		expect(
 			JSON.stringify(
-				sortItems(items, itemsOrder, useCreationDate).map((item) =>
-					Number(item.id)
-				)
+				sortItems(
+					items,
+					itemsOrder,
+					useCreationDate ?? false,
+					orderByERC ?? false
+				).map((item) => Number(item.id))
 			)
 		).toBe(JSON.stringify(expected[itemsOrder]))
 	);
@@ -64,4 +75,17 @@ describe('sortItems', () => {
 
 	it('sorts over a partial order, with dates', () =>
 		testCases(creationDatePartialSortCases, true));
+
+	it('sorts by externalReferenceCode when orderByERC is true', () => {
+		const ercOrder = 'erc-3,erc-1,erc-2,erc-4';
+
+		const result = sortItems(items, ercOrder, false, true);
+
+		expect(result.map((item) => item.externalReferenceCode)).toEqual([
+			'erc-3',
+			'erc-1',
+			'erc-2',
+			'erc-4',
+		]);
+	});
 });

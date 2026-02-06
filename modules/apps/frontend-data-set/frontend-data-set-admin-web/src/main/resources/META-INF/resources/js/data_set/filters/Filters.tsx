@@ -13,6 +13,7 @@ import React, {useEffect, useState} from 'react';
 import {visit} from '../../components/AddDataSourceFieldsModalContent';
 import {
 	DEFAULT_FETCH_HEADERS,
+	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
@@ -241,7 +242,8 @@ function Filters({
 			filtersOrdered = sortItems(
 				filtersOrdered,
 				responseJSON.filtersOrder,
-				true
+				true,
+				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
 			) as FilterCollection;
 
 			setFilters(
@@ -292,7 +294,12 @@ function Filters({
 			storedFiltersOrder === filtersOrder
 		) {
 			setFilters(
-				sortItems(filters, storedFiltersOrder, true) as FilterCollection
+				sortItems(
+					filters,
+					storedFiltersOrder,
+					true,
+					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				) as FilterCollection
 			);
 
 			openDefaultSuccessToast();

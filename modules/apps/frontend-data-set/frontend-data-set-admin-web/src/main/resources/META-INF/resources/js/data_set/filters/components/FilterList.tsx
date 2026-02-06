@@ -7,6 +7,7 @@ import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
 import Toggle from '../../../components/Toggle';
+import {FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY} from '../../../utils/constants';
 import {
 	EFilterType,
 	ESelectionFilterSourceType,
@@ -96,6 +97,9 @@ const FilterList = ({
 			onOrderChange={({order}: {order: string}) => {
 				updateFiltersOrder({filtersOrder: order});
 			}}
+			orderByERC={
+				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+			}
 			title={Liferay.Language.get('filters')}
 		/>
 	);

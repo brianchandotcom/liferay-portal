@@ -20,6 +20,7 @@ import RequiredMark from '../../components/RequiredMark';
 import Toggle from '../../components/Toggle';
 import {
 	DEFAULT_FETCH_HEADERS,
+	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
@@ -519,9 +520,10 @@ const Sorting = ({
 		setFDSSorts(
 			sortItems(
 				storedFDSSorts,
-
 				storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORTS]
-					?.sortsOrder as string
+					?.sortsOrder as string,
+				false,
+				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
 			) as IDataSetSort[]
 		);
 
@@ -650,7 +652,12 @@ const Sorting = ({
 
 		if (fdsSorts && storedSortsOrder && storedSortsOrder === sortsOrder) {
 			setFDSSorts(
-				sortItems(fdsSorts, storedSortsOrder) as IDataSetSort[]
+				sortItems(
+					fdsSorts,
+					storedSortsOrder,
+					false,
+					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				) as IDataSetSort[]
 			);
 
 			openDefaultSuccessToast();
@@ -782,6 +789,11 @@ const Sorting = ({
 						onOrderChange={({order}: {order: string}) => {
 							updateSortsOrder({sortsOrder: order});
 						}}
+						orderByERC={
+							!!Liferay.FeatureFlags?.[
+								FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
+							]
+						}
 						title={Liferay.Language.get('sorting')}
 					/>
 				</>

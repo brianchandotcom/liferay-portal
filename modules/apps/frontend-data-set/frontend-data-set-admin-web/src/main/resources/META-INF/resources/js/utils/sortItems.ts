@@ -6,38 +6,57 @@
 import {IOrderable} from './types';
 
 /**
- * sorts the provided items array according to the itemsOrder comma-separated list of ids.
- * If array contains items not included in the list of ids, then those are appended after
- * Example:
- * 		items = [ {id: 1}, {id: 4}, {id: 2}, {id: 3} ]
- * 		itemsOrder = "2, 3, 1"
- * 		output is [ {id: 2}, {id: 3}, {id: 1}, {id: 4} ]
- * Optionally, not included items can be sorted by creation date
+ * Sorts the provided items array according to the itemsOrder comma-separated list.
+ * When orderByERC is false, itemsOrder is a list of ids; when true, a list of externalReferenceCodes.
+ * If array contains items not included in the list, then those are appended after.
+ * Optionally, not included items can be sorted by creation date.
  *
  * @param items {IOrderable[]}
- * @param itemsOrder {string}
+ * @param itemsOrder {string} - CSV of ids or externalReferenceCodes
  * @param useCreationDate {boolean}
+ * @param orderByERC {boolean} - when true, itemsOrder is CSV of ERCs; when false, CSV of ids
  * @returns {Array}
  */
 export default function sortItems(
 	items: IOrderable[],
 	itemsOrder: string,
-	useCreationDate: boolean = false
+	useCreationDate: boolean = false,
+	orderByERC: boolean = false
 ): IOrderable[] {
 	const itemsOrderArray = itemsOrder?.split(',') || ([] as string[]);
 
 	let included: IOrderable[] = [];
 	let notIncluded: IOrderable[] = [];
 
-	included = itemsOrderArray
-		.map((itemId) =>
-			items.find((item) => Number(item.id) === Number(itemId))
-		)
-		.filter(Boolean) as IOrderable[];
+	if (orderByERC) {
+		included = itemsOrderArray
+			.map((erc) =>
+				items.find(
+					(item) =>
+						String(item.externalReferenceCode ?? '') ===
+						String(erc ?? '')
+				)
+			)
+			.filter(Boolean) as IOrderable[];
 
-	notIncluded = items.filter(
-		(item) => !itemsOrderArray.includes(String(item.id))
-	);
+		notIncluded = items.filter(
+			(item) =>
+				!itemsOrderArray.includes(
+					String(item.externalReferenceCode ?? '')
+				)
+		);
+	}
+	else {
+		included = itemsOrderArray
+			.map((itemId) =>
+				items.find((item) => Number(item.id) === Number(itemId))
+			)
+			.filter(Boolean) as IOrderable[];
+
+		notIncluded = items.filter(
+			(item) => !itemsOrderArray.includes(String(item.id))
+		);
+	}
 
 	if (useCreationDate) {
 		const creationDates = {} as {[key: number]: number};

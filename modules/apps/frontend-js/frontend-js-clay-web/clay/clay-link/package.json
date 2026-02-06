@@ -17,7 +17,7 @@
 	"main": "src/index.tsx",
 	"name": "@clayui/link",
 	"peerDependencies": {
-		"@clayui/css": "*",
+		"@clayui/css": "^3.158.0",
 		"react": "^16.0.0 || ^17.0.0 || ^18.0.0",
 		"react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0"
 	},
@@ -29,5 +29,5 @@
 		"buildTypes": "cross-env NODE_ENV=production tsc --project ./tsconfig.declarations.json",
 		"test": "jest --config ../../jest.config.js"
 	},
-	"version": "3.144.1"
+	"version": "3.158.0"
 }

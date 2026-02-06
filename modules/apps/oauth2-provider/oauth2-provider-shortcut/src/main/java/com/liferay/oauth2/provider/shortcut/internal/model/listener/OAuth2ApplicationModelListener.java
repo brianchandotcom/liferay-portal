@@ -11,6 +11,8 @@ import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.util.Base64;
@@ -36,12 +38,13 @@ public class OAuth2ApplicationModelListener
 			OAuth2Application oAuth2Application)
 		throws ModelListenerException {
 
-		if (StringUtil.equals(
+		if (!_isAnalyticsEnabled(oAuth2Application.getCompanyId()) ||
+			(StringUtil.equals(
 				originalOAuth2Application.getClientId(),
 				oAuth2Application.getClientId()) &&
-			StringUtil.equals(
-				originalOAuth2Application.getClientSecret(),
-				oAuth2Application.getClientSecret())) {
+			 StringUtil.equals(
+				 originalOAuth2Application.getClientSecret(),
+				 oAuth2Application.getClientSecret()))) {
 
 			return;
 		}
@@ -50,7 +53,7 @@ public class OAuth2ApplicationModelListener
 			_postOAuth2Application(oAuth2Application);
 		}
 		catch (Exception exception) {
-			throw new ModelListenerException(exception);
+			_log.error(exception);
 		}
 	}
 
@@ -58,15 +61,22 @@ public class OAuth2ApplicationModelListener
 	public void onBeforeRemove(OAuth2Application oAuth2Application)
 		throws ModelListenerException {
 
-		if (!StringUtil.equals(
-				oAuth2Application.getExternalReferenceCode(),
-				"ANALYTICS-CLOUD")) {
+		try {
+			if (!_isAnalyticsEnabled(oAuth2Application.getCompanyId()) ||
+				!StringUtil.equals(
+					oAuth2Application.getExternalReferenceCode(),
+					"ANALYTICS-CLOUD")) {
 
-			return;
+				return;
+			}
+
+			throw new ModelListenerException(
+				"Unable to delete OAuth 2 application " +
+					oAuth2Application.getOAuth2ApplicationId());
 		}
-
-		throw new ModelListenerException(
-			"Unable to delete OAuth 2 application");
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	@Override
@@ -75,12 +85,44 @@ public class OAuth2ApplicationModelListener
 			OAuth2Application oAuth2Application)
 		throws ModelListenerException {
 
-		if (!StringUtil.equals(
-				originalOAuth2Application.getExternalReferenceCode(),
-				"ANALYTICS-CLOUD")) {
+		try {
+			if (!_isAnalyticsEnabled(oAuth2Application.getCompanyId()) ||
+				!StringUtil.equals(
+					originalOAuth2Application.getExternalReferenceCode(),
+					"ANALYTICS-CLOUD")) {
 
-			return;
+				return;
+			}
+
+			if (_oAuth2ApplicationChanged(
+					originalOAuth2Application, oAuth2Application)) {
+
+				throw new ModelListenerException(
+					"Unable to update OAuth 2 application" +
+						oAuth2Application.getOAuth2ApplicationId());
+			}
 		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+	}
+
+	private boolean _isAnalyticsEnabled(long companyId) {
+		try {
+			if (_analyticsSettingsManager.isAnalyticsEnabled(companyId)) {
+				return true;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
+	}
+
+	private boolean _oAuth2ApplicationChanged(
+		OAuth2Application originalOAuth2Application,
+		OAuth2Application oAuth2Application) {
 
 		if (!StringUtil.equals(
 				originalOAuth2Application.getClientAuthenticationMethod(),
@@ -98,9 +140,10 @@ public class OAuth2ApplicationModelListener
 				originalOAuth2Application.getRedirectURIs(),
 				oAuth2Application.getRedirectURIs())) {
 
-			throw new ModelListenerException(
-				"Unable to update OAuth2Application");
+			return true;
 		}
+
+		return false;
 	}
 
 	private void _postOAuth2Application(OAuth2Application oAuth2Application)
@@ -137,6 +180,9 @@ public class OAuth2ApplicationModelListener
 			throw new Exception("Unable to update analytics data source");
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OAuth2ApplicationModelListener.class);
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;

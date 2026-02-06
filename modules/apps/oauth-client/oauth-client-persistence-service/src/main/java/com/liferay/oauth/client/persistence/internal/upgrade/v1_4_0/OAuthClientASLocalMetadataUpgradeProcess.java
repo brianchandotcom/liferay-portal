@@ -25,6 +25,10 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		runSQL(
+			"update OAuthClientASLocalMetadata set localWellKnownEnabled = " +
+				"[$FALSE$]");
+
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"update OAuthClientASLocalMetadata set issuer = ? where " +
 					"oAuthClientASLocalMetadataId = ?");

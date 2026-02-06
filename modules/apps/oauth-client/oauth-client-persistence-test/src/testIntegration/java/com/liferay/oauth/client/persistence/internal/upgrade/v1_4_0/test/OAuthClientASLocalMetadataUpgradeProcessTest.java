@@ -84,6 +84,8 @@ public class OAuthClientASLocalMetadataUpgradeProcessTest {
 
 		Assert.assertTrue(
 			Validator.isNull(oAuthClientASLocalMetadata1.getIssuer()));
+		Assert.assertFalse(
+			oAuthClientASLocalMetadata1.isLocalWellKnownEnabled());
 
 		oAuthClientASLocalMetadata2 =
 			_oAuthClientASLocalMetadataLocalService.
@@ -92,6 +94,8 @@ public class OAuthClientASLocalMetadataUpgradeProcessTest {
 						getOAuthClientASLocalMetadataId());
 
 		Assert.assertEquals(issuer, oAuthClientASLocalMetadata2.getIssuer());
+		Assert.assertFalse(
+			oAuthClientASLocalMetadata2.isLocalWellKnownEnabled());
 	}
 
 	private void _runUpgrade() throws Exception {

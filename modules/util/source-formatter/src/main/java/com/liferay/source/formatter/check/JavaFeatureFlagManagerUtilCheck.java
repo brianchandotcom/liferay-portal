@@ -58,6 +58,10 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+			return;
+		}
+
 		String[] lines = StringUtil.splitLines(
 			GitUtil.getCurrentBranchFileDiff(
 				sourceFormatterArgs.getBaseDirName(),

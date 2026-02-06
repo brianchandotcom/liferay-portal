@@ -142,7 +142,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		if (account == null) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
-					"Account \"" + koroneikiAccount.getName() +
+					"Account \"" + koroneikiAccount.getKey() +
 						"\" not found in Marketplace");
 			}
 
@@ -218,7 +218,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Account \"" + koroneikiAccount.getName() +
+				"Account \"" + koroneikiAccount.getKey() +
 					"\" updated in Marketplace");
 		}
 	}

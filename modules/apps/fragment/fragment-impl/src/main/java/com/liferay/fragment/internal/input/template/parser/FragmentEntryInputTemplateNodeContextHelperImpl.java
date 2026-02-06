@@ -937,8 +937,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			Validator.isNotNull(relatedItemExternalReferenceCode)) {
 
 			return StringBundler.concat(
-				infoField.getUniqueId(), "[$", parentExternalReferenceCode,
-				StringPool.DOLLAR, relatedItemExternalReferenceCode, "$]");
+				infoField.getUniqueId(), "[$", relatedItemExternalReferenceCode,
+				StringPool.DOLLAR, parentExternalReferenceCode, "$]");
 		}
 
 		return infoField.getUniqueId();

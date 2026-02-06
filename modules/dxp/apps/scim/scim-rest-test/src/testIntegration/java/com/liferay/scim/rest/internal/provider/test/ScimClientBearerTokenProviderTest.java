@@ -77,29 +77,23 @@ public class ScimClientBearerTokenProviderTest {
 				"userId", user.getUserId()
 			).build());
 
-		try {
-			OAuth2Application scimOAuth2Application =
-				_oAuth2ApplicationLocalService.getOAuth2Application(
-					TestPropsValues.getCompanyId(),
-					ScimClientUtil.generateScimClientId(
-						scimOAuth2ApplicationName));
+		OAuth2Application scimOAuth2Application =
+			_oAuth2ApplicationLocalService.getOAuth2Application(
+				TestPropsValues.getCompanyId(),
+				ScimClientUtil.generateScimClientId(scimOAuth2ApplicationName));
 
-			Assert.assertEquals(
-				600,
-				_getExpiresIn(
-					oAuth2Application.getClientId(),
-					oAuth2Application.getClientSecret()));
-			Assert.assertEquals(
-				TimeUnit.DAYS.toSeconds(365),
-				_getExpiresIn(
-					scimOAuth2Application.getClientId(),
-					scimOAuth2Application.getClientSecret()));
-		}
-		finally {
-			if (pid != null) {
-				ConfigurationTestUtil.deleteConfiguration(pid);
-			}
-		}
+		Assert.assertEquals(
+			600,
+			_getExpiresIn(
+				oAuth2Application.getClientId(),
+				oAuth2Application.getClientSecret()));
+		Assert.assertEquals(
+			TimeUnit.DAYS.toSeconds(365),
+			_getExpiresIn(
+				scimOAuth2Application.getClientId(),
+				scimOAuth2Application.getClientSecret()));
+
+		ConfigurationTestUtil.deleteConfiguration(pid);
 	}
 
 	private int _getExpiresIn(String clientId, String clientSecret)

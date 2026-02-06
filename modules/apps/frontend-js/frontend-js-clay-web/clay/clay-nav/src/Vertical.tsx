@@ -7,7 +7,7 @@ import {Nav, VerticalNav} from '@clayui/core';
 import React from 'react';
 import warning from 'warning';
 
-export type DisplayType = null | 'primary';
+export type DisplayType = 'transparent' | 'primary';
 
 interface IItem extends React.ComponentProps<typeof Nav.Item> {
 

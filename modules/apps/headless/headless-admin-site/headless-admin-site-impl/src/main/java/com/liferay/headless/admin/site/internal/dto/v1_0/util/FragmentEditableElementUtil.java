@@ -570,20 +570,6 @@ public class FragmentEditableElementUtil {
 				fragmentLinkTextValue.getTextFragmentValue()));
 	}
 
-	private static JSONObject _getFragmentMappedValueJSONObject(
-			long companyId, FragmentMappedValue fragmentMappedValue,
-			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
-		throws Exception {
-
-		if (fragmentMappedValue == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
-			companyId, infoItemServiceRegistry,
-			fragmentMappedValue.getMapping(), scopeGroupId);
-	}
-
 	private static JSONObject _getHTMLFragmentEditableElementJSONObject(
 			long companyId,
 			HTMLFragmentEditableElementValue htmlFragmentEditableElementValue,
@@ -612,7 +598,7 @@ public class FragmentEditableElementUtil {
 		HTMLFragmentMappedValue htmlFragmentMappedValue =
 			(HTMLFragmentMappedValue)htmlFragmentValue;
 
-		return _getFragmentMappedValueJSONObject(
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
 			companyId, htmlFragmentMappedValue.getFragmentMappedValue(),
 			infoItemServiceRegistry, scopeGroupId);
 	}
@@ -818,7 +804,7 @@ public class FragmentEditableElementUtil {
 		TextFragmentMappedValue textFragmentMappedValue =
 			(TextFragmentMappedValue)textFragmentValue;
 
-		return _getFragmentMappedValueJSONObject(
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
 			companyId, textFragmentMappedValue.getFragmentMappedValue(),
 			infoItemServiceRegistry, scopeGroupId);
 	}
@@ -971,7 +957,7 @@ public class FragmentEditableElementUtil {
 			"config",
 			JSONUtil.put(
 				"mappedAction",
-				() -> _getFragmentMappedValueJSONObject(
+				() -> FragmentMappingUtil.getFragmentMappedValueJSONObject(
 					companyId, fragmentMappedValue, infoItemServiceRegistry,
 					scopeGroupId)
 			).put(
@@ -1255,7 +1241,7 @@ public class FragmentEditableElementUtil {
 		MappedFragmentImageValue mappedFragmentImageValue =
 			(MappedFragmentImageValue)fragmentImageValue;
 
-		return _getFragmentMappedValueJSONObject(
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
 			layoutStructureItemImporterContext.getCompanyId(),
 			mappedFragmentImageValue.getFragmentMappedValue(),
 			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),

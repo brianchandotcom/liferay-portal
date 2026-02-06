@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -92,6 +93,20 @@ public class FragmentMappingUtil {
 			() -> FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
 
 		return fragmentMappedValueItemContextReference;
+	}
+
+	public static JSONObject getFragmentMappedValueJSONObject(
+			long companyId, FragmentMappedValue fragmentMappedValue,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		if (fragmentMappedValue == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return getFragmentMappedValueJSONObject(
+			companyId, infoItemServiceRegistry,
+			fragmentMappedValue.getMapping(), scopeGroupId);
 	}
 
 	public static JSONObject getFragmentMappedValueJSONObject(

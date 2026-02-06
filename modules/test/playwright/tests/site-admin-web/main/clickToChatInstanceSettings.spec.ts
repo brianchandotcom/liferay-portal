@@ -32,6 +32,122 @@ test.beforeEach(async ({clickToChatInstanceSettingsPage}) => {
 	await clickToChatInstanceSettingsPage.enableClickToChat();
 });
 
+const providers = [
+	{
+		iconKey: 'chatwootIcon',
+		name: 'Chatwoot',
+		passwordKey: 'chatwoot',
+	},
+	{
+		iconKey: 'crispIcon',
+		name: 'Crisp',
+		passwordKey: 'crisp',
+	},
+	{
+		iconKey: 'hubspotIcon',
+		name: 'Hubspot',
+		passwordKey: 'hubspot',
+	},
+	{
+		iconKey: 'jivoChatIcon',
+		name: 'JivoChat',
+		passwordKey: 'jivochat',
+	},
+	{
+		iconKey: 'liveChatIcon',
+		name: 'LiveChat',
+		passwordKey: 'livechat',
+	},
+	{
+		iconKey: 'livePersonIcon',
+		name: 'LivePerson',
+		passwordKey: 'liveperson',
+		skip: true,
+	},
+	{
+		iconKey: 'smartsuppIcon',
+		name: 'Smartsupp',
+		passwordKey: 'smartsupp',
+	},
+	{
+		iconKey: 'tawkToIcon',
+		name: 'TawkTo',
+		passwordKey: 'tawkto',
+		skip: true,
+	},
+	{
+		iconKey: 'tidioIcon',
+		name: 'Tidio',
+		passwordKey: 'tidio',
+	},
+	{
+		iconKey: 'zendeskIcon',
+		name: 'Zendesk Web Widget Classic',
+		passwordKey: 'zendesk',
+		skip: true,
+	},
+];
+
+for (const provider of providers) {
+	const runTest = provider.skip ? test.skip : test;
+
+	runTest(
+		`${provider.name} can be enabled and disabled`,
+		{
+			tag: '@LPS-129042',
+		},
+		async ({clickToChatInstanceSettingsPage, page}) => {
+			await clickToChatInstanceSettingsPage.selectChatProvider(
+				provider.name
+			);
+
+			await clickToChatInstanceSettingsPage.setChatProviderPassword(
+				clickToChatConfig.password[provider.passwordKey]
+			);
+
+			await expect(
+				clickToChatInstanceSettingsPage[provider.iconKey].first()
+			).toBeAttached({timeout: 1000});
+
+			await page.getByLabel('Enable Click to Chat').uncheck();
+
+			await clickToChatInstanceSettingsPage.saveConfiguration();
+
+			await expect(
+				clickToChatInstanceSettingsPage[provider.iconKey]
+			).not.toBeAttached({timeout: 1000});
+		}
+	);
+
+	runTest(
+		`${provider.name} provider keeps enabled after logout and login`,
+		{
+			tag: '@LPS-133453',
+		},
+		async ({clickToChatInstanceSettingsPage, page}) => {
+			await clickToChatInstanceSettingsPage.selectChatProvider(
+				provider.name
+			);
+
+			await clickToChatInstanceSettingsPage.setChatProviderPassword(
+				clickToChatConfig.password[provider.passwordKey]
+			);
+
+			await expect(
+				clickToChatInstanceSettingsPage[provider.iconKey].first()
+			).toBeAttached({timeout: 1000});
+
+			await performLogout(page);
+
+			await performLoginViaApi({page, screenName: 'test'});
+
+			await expect(
+				clickToChatInstanceSettingsPage[provider.iconKey]
+			).toBeAttached({timeout: 1000});
+		}
+	);
+}
+
 test(
 	'Can hide chat widget in control panel',
 	{
@@ -86,104 +202,6 @@ test.skip(
 );
 
 test(
-	'Chatwoot can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Chatwoot');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.chatwoot
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.chatwootIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.chatwootIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Chatwoot provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Chatwoot');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.chatwoot
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.chatwootIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.chatwootIcon
-		).toBeAttached();
-	}
-);
-
-test(
-	'Crisp can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Crisp');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.crisp
-		);
-
-		await expect(clickToChatInstanceSettingsPage.crispIcon).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.crispIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Crisp provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Crisp');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.crisp
-		);
-
-		await expect(clickToChatInstanceSettingsPage.crispIcon).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(clickToChatInstanceSettingsPage.crispIcon).toBeAttached();
-	}
-);
-
-test(
 	'Hide Chat Provider',
 	{
 		tag: '@LPS-129042',
@@ -204,58 +222,6 @@ test(
 );
 
 test(
-	'Hubspot can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Hubspot');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.hubspot
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.hubspotIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.hubspotIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Hubspot provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Hubspot');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.hubspot
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.hubspotIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.hubspotIcon
-		).toBeAttached();
-	}
-);
-
-test(
 	'Is api key invalid for hubspot',
 	{
 		tag: '@LPS-137169',
@@ -270,361 +236,5 @@ test(
 		await waitForAlert(page, `Error:The API key provided is invalid.`, {
 			type: 'danger',
 		});
-	}
-);
-
-test(
-	'JivoChat can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.jivochat
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'JivoChat provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.jivochat
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
-	}
-);
-
-test(
-	'LiveChat can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('LiveChat');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.livechat
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.liveChatIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.liveChatIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'LiveChat provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('LiveChat');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.livechat
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.liveChatIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.liveChatIcon
-		).toBeAttached();
-	}
-);
-
-test(
-	'LivePerson can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('LivePerson');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.liveperson
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.livePersonIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.livePersonIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'LivePerson provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('LivePerson');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.liveperson
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.livePersonIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.livePersonIcon
-		).toBeAttached();
-	}
-);
-
-test(
-	'Smartsupp can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Smartsupp');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.smartsupp
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.smartsuppIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.smartsuppIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Smartsupp provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Smartsupp');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.smartsupp
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.smartsuppIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.smartsuppIcon
-		).toBeAttached();
-	}
-);
-
-test(
-	'TawkTo can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('TawkTo');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.tawkto
-		);
-
-		await expect(clickToChatInstanceSettingsPage.tawktoIcon).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.tawktoIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'TawkTo provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('TawkTo');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.tawkto
-		);
-
-		await expect(clickToChatInstanceSettingsPage.tawktoIcon).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(clickToChatInstanceSettingsPage.tawktoIcon).toBeAttached();
-	}
-);
-
-test(
-	'Tidio can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Tidio');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.tidio
-		);
-
-		await expect(clickToChatInstanceSettingsPage.tidioIcon).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.tidioIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Tidio provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Tidio');
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.tidio
-		);
-
-		await expect(clickToChatInstanceSettingsPage.tidioIcon).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(clickToChatInstanceSettingsPage.tidioIcon).toBeAttached();
-	}
-);
-
-test(
-	'Zendesk can be enabled and disabled',
-	{
-		tag: '@LPS-129042',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider(
-			'Zendesk Web Widget Classic'
-		);
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.zendesk
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.zendeskIcon
-		).toBeAttached();
-
-		await page.getByLabel('Enable Click to Chat').uncheck();
-
-		await clickToChatInstanceSettingsPage.saveConfiguration();
-
-		await expect(
-			clickToChatInstanceSettingsPage.zendeskIcon
-		).not.toBeAttached();
-	}
-);
-
-test(
-	'Zendesk provider keeps enabled after logout and login',
-	{
-		tag: '@LPS-133453',
-	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider(
-			'Zendesk Web Widget Classic'
-		);
-
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
-			clickToChatConfig.password.zendesk
-		);
-
-		await expect(
-			clickToChatInstanceSettingsPage.zendeskIcon
-		).toBeAttached();
-
-		await performLogout(page);
-
-		await performLoginViaApi({page, screenName: 'test'});
-
-		await expect(
-			clickToChatInstanceSettingsPage.zendeskIcon
-		).toBeAttached();
 	}
 );

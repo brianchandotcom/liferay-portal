@@ -14,8 +14,10 @@
 			<p class="mb-2 text-secondary" id="${fragmentElementId}-inline-text-input-help-text">${htmlUtil.escape(input.helpText)}</p>
 		[/#if]
 
-		<div class="d-flex inline-text-border mt-1">
-			<input aria-describedby="${fragmentElementId}-inline-text-input-help-text" aria-labelledby="${fragmentElementId}-inline-text-input-label [#if  input.errorMessage?has_content]${fragmentElementId}-inline-text-input-error-message[/#if]" class="form-control form-control-inline" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentElementId}-inline-text-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+		<div class="d-flex-inline mt-1 position-relative">
+			<div class="inline-text-border">
+				<input aria-describedby="${fragmentElementId}-inline-text-input-help-text" aria-labelledby="${fragmentElementId}-inline-text-input-label [#if  input.errorMessage?has_content]${fragmentElementId}-inline-text-input-error-message[/#if]" class="form-control form-control-inline" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentElementId}-inline-text-input" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
+			</div>
 
 			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
 				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentElementId}-unlocalized-info" role="tooltip" tabindex="0">

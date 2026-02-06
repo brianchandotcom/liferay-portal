@@ -263,6 +263,17 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public boolean isCookiesPreferenceHandlingStoreConsent(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK,
+			this::_isCompanyCookiesPreferenceHandlingStoreConsent,
+			this::_isGroupCookiesPreferenceHandlingStoreConsent,
+			this::_isSystemCookiesPreferenceHandlingStoreConsent);
+	}
+
+	@Override
 	public void resetCookiesPreferenceHandlingConfiguration(
 			ExtendedObjectClassDefinition.Scope scope, long scopePK)
 		throws ConfigurationException {
@@ -288,11 +299,12 @@ public class CookiesConfigurationProviderImpl
 	public void updateCookiesPreferenceHandlingConfiguration(
 			int consentRenewalPeriod, boolean enabled,
 			boolean explicitConsentMode,
-			ExtendedObjectClassDefinition.Scope scope, long scopePK)
+			ExtendedObjectClassDefinition.Scope scope, long scopePK,
+			boolean storeConsent)
 		throws Exception {
 
 		Dictionary<String, Object> dictionary = _createDictionary(
-			consentRenewalPeriod, enabled, explicitConsentMode);
+			consentRenewalPeriod, enabled, explicitConsentMode, storeConsent);
 
 		if (scope == ExtendedObjectClassDefinition.Scope.COMPANY) {
 			_configurationProvider.saveCompanyConfiguration(
@@ -316,8 +328,8 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	private HashMapDictionary<String, Object> _createDictionary(
-		int consentRenewalPeriod, boolean enabled,
-		boolean explicitConsentMode) {
+		int consentRenewalPeriod, boolean enabled, boolean explicitConsentMode,
+		boolean storeConsent) {
 
 		return HashMapDictionaryBuilder.<String, Object>put(
 			"consentRenewalPeriod", consentRenewalPeriod
@@ -329,6 +341,8 @@ public class CookiesConfigurationProviderImpl
 			"modifiedDate",
 			new Date(
 			).getTime()
+		).put(
+			"storeConsent", storeConsent
 		).build();
 	}
 
@@ -492,6 +506,19 @@ public class CookiesConfigurationProviderImpl
 			getCompanyExplicitConsentMode(companyId);
 	}
 
+	private boolean _isCompanyCookiesPreferenceHandlingStoreConsent(
+		long companyId) {
+
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyStoreConsent(companyId);
+	}
+
 	private boolean _isGroupCookiesPreferenceHandlingEnabled(long groupId) {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -516,6 +543,19 @@ public class CookiesConfigurationProviderImpl
 			getGroupExplicitConsentMode(groupId);
 	}
 
+	private boolean _isGroupCookiesPreferenceHandlingStoreConsent(
+		long groupId) {
+
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getGroupStoreConsent(groupId);
+	}
+
 	private boolean _isSystemCookiesPreferenceHandlingEnabled() {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -536,6 +576,17 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemExplicitConsentMode();
+	}
+
+	private boolean _isSystemCookiesPreferenceHandlingStoreConsent() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemStoreConsent();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

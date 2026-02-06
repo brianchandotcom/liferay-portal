@@ -903,14 +903,18 @@ public class LayoutStagedModelDataHandler
 			_getUniqueFriendlyURL(
 				importedLayout, friendlyURL, portletDataContext));
 
-		if (layout.getIconImageId() > 0) {
+		if (layout.hasIconImage()) {
 			_importLayoutIconImage(
 				importedLayout, layoutElement, portletDataContext);
 		}
-		else if (importedLayout.getIconImageId() > 0) {
-			_imageLocalService.deleteImage(importedLayout.getIconImageId());
+		else if (importedLayout.hasIconImage()) {
+			Image image = importedLayout.getIconImage();
 
-			importedLayout.setIconImageId(0);
+			if (image != null) {
+				_imageLocalService.deleteImage(image);
+			}
+
+			importedLayout.setIconImageERC(null);
 		}
 
 		_importStyleBookEntry(importedLayout, layout, portletDataContext);
@@ -1406,11 +1410,10 @@ public class LayoutStagedModelDataHandler
 	}
 
 	private void _exportLayoutIconImage(
-			Layout layout, Element layoutElement,
-			PortletDataContext portletDataContext)
-		throws Exception {
+		Layout layout, Element layoutElement,
+		PortletDataContext portletDataContext) {
 
-		Image image = _imageLocalService.getImage(layout.getIconImageId());
+		Image image = layout.getIconImage();
 
 		if ((image != null) && (image.getTextObj() != null)) {
 			String iconPath = ExportImportPathUtil.getModelPath(
@@ -1425,11 +1428,12 @@ public class LayoutStagedModelDataHandler
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to export icon image ", layout.getIconImageId(),
-						" to layout ", layout.getLayoutId()));
+						"Unable to export icon image with external reference ",
+						"code ", layout.getIconImageERC(), " to layout ",
+						layout.getLayoutId()));
 			}
 
-			layout.setIconImageId(0);
+			layout.setIconImageERC(null);
 		}
 	}
 
@@ -2276,13 +2280,22 @@ public class LayoutStagedModelDataHandler
 			iconImagePath);
 
 		if (ArrayUtil.isNotEmpty(iconBytes)) {
-			if (importedLayout.getIconImageId() == 0) {
-				importedLayout.setIconImageId(_counterLocalService.increment());
-			}
+			Image image = importedLayout.getIconImage();
 
-			_imageLocalService.updateImage(
-				importedLayout.getCompanyId(), importedLayout.getIconImageId(),
-				iconBytes);
+			if (image != null) {
+				_imageLocalService.updateImage(
+					importedLayout.getCompanyId(), image.getImageId(),
+					iconBytes);
+			}
+			else {
+				long imageId = _counterLocalService.increment();
+
+				image = _imageLocalService.updateImage(
+					importedLayout.getCompanyId(), imageId, iconBytes);
+
+				importedLayout.setIconImageERC(
+					image.getExternalReferenceCode());
+			}
 		}
 	}
 

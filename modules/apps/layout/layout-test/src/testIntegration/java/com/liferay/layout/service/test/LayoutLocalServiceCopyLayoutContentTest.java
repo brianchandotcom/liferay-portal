@@ -845,17 +845,18 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		Assert.assertNotEquals(
 			sourceLayout.getIconImageId(), targetLayout.getIconImageId());
 
+		Assert.assertNotEquals(
+			sourceLayout.getIconImageERC(), targetLayout.getIconImageERC());
+
 		targetLayout = _layoutLocalService.copyLayoutContent(
 			sourceLayout, targetLayout);
 
 		Assert.assertTrue(sourceLayout.hasIconImage());
 		Assert.assertTrue(targetLayout.hasIconImage());
 
-		Image sourceImage = _imageLocalService.getImage(
-			sourceLayout.getIconImageId());
+		Image sourceImage = sourceLayout.getIconImage();
 
-		Image targetImage = _imageLocalService.getImage(
-			sourceLayout.getIconImageId());
+		Image targetImage = targetLayout.getIconImage();
 
 		Assert.assertNotEquals(
 			sourceImage.getTextObj(), targetImage.getTextObj());

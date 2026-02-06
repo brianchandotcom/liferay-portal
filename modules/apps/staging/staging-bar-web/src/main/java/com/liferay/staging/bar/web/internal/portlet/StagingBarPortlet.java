@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys;
@@ -491,9 +492,15 @@ public class StagingBarPortlet extends MVCPortlet {
 		}
 
 		long layoutRevisionIconImageId = layoutRevision.getIconImageId();
+		String iconImageERC = layoutRevision.getIconImageERC();
 
-		if (layoutRevisionIconImageId == GetterUtil.DEFAULT_LONG) {
+		if (layoutRevisionIconImageId <= GetterUtil.DEFAULT_LONG) {
 			layoutRevisionIconImageId = layout.getIconImageId();
+			iconImageERC = layout.getIconImageERC();
+		}
+
+		if (layoutRevisionIconImageId <= GetterUtil.DEFAULT_LONG) {
+			return;
 		}
 
 		DynamicQuery layoutRevisionDynamicQuery =
@@ -506,21 +513,24 @@ public class StagingBarPortlet extends MVCPortlet {
 		long sameImageCount = _layoutRevisionLocalService.dynamicQueryCount(
 			layoutRevisionDynamicQuery);
 
-		DynamicQuery layoutDynamicQuery = _layoutLocalService.dynamicQuery();
+		if (Validator.isNotNull(iconImageERC)) {
+			DynamicQuery layoutDynamicQuery =
+				_layoutLocalService.dynamicQuery();
 
-		layoutDynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"iconImageId", layoutRevisionIconImageId));
-		layoutDynamicQuery.add(
-			RestrictionsFactoryUtil.ne("plid", layout.getPlid()));
+			layoutDynamicQuery.add(
+				RestrictionsFactoryUtil.eq("iconImageERC", iconImageERC));
+			layoutDynamicQuery.add(
+				RestrictionsFactoryUtil.ne("plid", layout.getPlid()));
 
-		sameImageCount += _layoutLocalService.dynamicQueryCount(
-			layoutDynamicQuery);
+			sameImageCount += _layoutLocalService.dynamicQueryCount(
+				layoutDynamicQuery);
+		}
 
-		if ((layoutRevisionIconImageId > 0) && (sameImageCount < 1)) {
-			layout.setIconImageId(layoutRevisionIconImageId);
+		if (sameImageCount < 1) {
+			layout.setIconImageERC(iconImageERC);
 
-			_portal.updateImageId(layout, false, null, "iconImageId", 0, 0, 0);
+			_portal.updateImageERC(
+				layout, false, null, "iconImageERC", 0, 0, 0);
 		}
 	}
 

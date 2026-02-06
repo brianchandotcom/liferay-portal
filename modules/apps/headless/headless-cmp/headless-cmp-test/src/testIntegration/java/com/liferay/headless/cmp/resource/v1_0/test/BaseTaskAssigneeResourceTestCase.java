@@ -166,8 +166,8 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 		TaskAssignee taskAssignee = randomTaskAssignee();
 
 		taskAssignee.setExternalReferenceCode(regex);
-		taskAssignee.setImage(regex);
 		taskAssignee.setName(regex);
+		taskAssignee.setPortrait(regex);
 		taskAssignee.setType(regex);
 
 		String json = TaskAssigneeSerDes.toJSON(taskAssignee);
@@ -177,8 +177,8 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 		taskAssignee = TaskAssigneeSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, taskAssignee.getExternalReferenceCode());
-		Assert.assertEquals(regex, taskAssignee.getImage());
 		Assert.assertEquals(regex, taskAssignee.getName());
+		Assert.assertEquals(regex, taskAssignee.getPortrait());
 		Assert.assertEquals(regex, taskAssignee.getType());
 	}
 
@@ -305,16 +305,16 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("image", additionalAssertFieldName)) {
-				if (taskAssignee.getImage() == null) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
+				if (taskAssignee.getName() == null) {
 					valid = false;
 				}
 
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (taskAssignee.getName() == null) {
+			if (Objects.equals("portrait", additionalAssertFieldName)) {
+				if (taskAssignee.getPortrait() == null) {
 					valid = false;
 				}
 
@@ -462,9 +462,9 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("image", additionalAssertFieldName)) {
+			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskAssignee1.getImage(), taskAssignee2.getImage())) {
+						taskAssignee1.getName(), taskAssignee2.getName())) {
 
 					return false;
 				}
@@ -472,9 +472,10 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
+			if (Objects.equals("portrait", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskAssignee1.getName(), taskAssignee2.getName())) {
+						taskAssignee1.getPortrait(),
+						taskAssignee2.getPortrait())) {
 
 					return false;
 				}
@@ -645,8 +646,8 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("image")) {
-			Object object = taskAssignee.getImage();
+		if (entityFieldName.equals("name")) {
+			Object object = taskAssignee.getName();
 
 			String value = String.valueOf(object);
 
@@ -691,8 +692,8 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 			return sb.toString();
 		}
 
-		if (entityFieldName.equals("name")) {
-			Object object = taskAssignee.getName();
+		if (entityFieldName.equals("portrait")) {
+			Object object = taskAssignee.getPortrait();
 
 			String value = String.valueOf(object);
 
@@ -830,8 +831,9 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				image = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				portrait = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				type = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};

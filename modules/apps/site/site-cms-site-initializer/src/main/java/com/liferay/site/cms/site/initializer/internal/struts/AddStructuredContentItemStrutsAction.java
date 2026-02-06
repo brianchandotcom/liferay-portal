@@ -94,21 +94,21 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 					ParamUtil.getLong(httpServletRequest, "groupId"),
 					objectDefinition.getCompanyId());
 
-		String filter = StringBundler.concat(
+		String filterString = StringBundler.concat(
 			"status eq ", WorkflowConstants.STATUS_DRAFT,
 			" and title eq null and userId eq ", themeDisplay.getUserId());
 
 		if (objectEntryFolder != null) {
-			filter = StringBundler.concat(
+			filterString = StringBundler.concat(
 				"folderId eq ", objectEntryFolder.getObjectEntryFolderId(),
-				" and ", filter);
+				" and ", filterString);
 		}
 
 		Page<ObjectEntry> page = objectEntryManager.getObjectEntries(
 			objectDefinition.getCompanyId(), objectDefinition,
 			String.valueOf(ParamUtil.getLong(httpServletRequest, "groupId")),
-			null, defaultDTOConverterContext, filter, Pagination.of(1, 1), null,
-			null);
+			null, defaultDTOConverterContext, filterString, Pagination.of(1, 1),
+			null, null);
 
 		if (page.getTotalCount() > 0) {
 			objectEntry = page.fetchFirstItem();

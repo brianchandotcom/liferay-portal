@@ -1,0 +1,30 @@
+{
+	"compilerOptions": {
+		"allowJs": false,
+		"allowUnreachableCode": true,
+		"allowUnusedLabels": true,
+		"baseUrl": ".",
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		"esModuleInterop": true,
+		"jsx": "react",
+		"module": "esnext",
+		"moduleResolution": "node",
+		"noEmit": false,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitAny": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedParameters": true,
+		"paths": {},
+		"removeComments": false,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"strictFunctionTypes": true,
+		"strictNullChecks": true,
+		"types": ["node", "react", "react-dom"],
+		"target": "esnext"
+	},
+	"exclude": ["**/node_modules/**", "**/lib", "**/__tests__/**"]
+}

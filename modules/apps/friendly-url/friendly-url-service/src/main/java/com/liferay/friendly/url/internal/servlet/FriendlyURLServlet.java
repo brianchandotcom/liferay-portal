@@ -272,10 +272,9 @@ public class FriendlyURLServlet extends HttpServlet {
 							if (AuthLoginGroupSettingsUtil.isPromptEnabled(
 									group.getGroupId())) {
 
-								String redirect = portal.getLayoutActualURL(
-									layout, Portal.PATH_MAIN);
-
-								return new Redirect(redirect);
+								return new Redirect(
+									portal.getLayoutActualURL(
+										layout, Portal.PATH_MAIN));
 							}
 
 							throw new LayoutPermissionException();
@@ -287,10 +286,9 @@ public class FriendlyURLServlet extends HttpServlet {
 						if (AuthLoginGroupSettingsUtil.isPromptEnabled(
 								group.getGroupId())) {
 
-							String redirect = portal.getLayoutActualURL(
-								layout, Portal.PATH_MAIN);
-
-							return new Redirect(redirect);
+							return new Redirect(
+								portal.getLayoutActualURL(
+									layout, Portal.PATH_MAIN));
 						}
 
 						throw new LayoutPermissionException();

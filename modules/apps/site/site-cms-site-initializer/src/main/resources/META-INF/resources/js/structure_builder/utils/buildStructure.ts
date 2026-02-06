@@ -114,7 +114,7 @@ export function buildChildren({
 
 			children.set(repeatableGroup.uuid, repeatableGroup);
 		}
-		else if (objectRelationship.edge) {
+		else if (objectRelationship.deletionType === 'cascade') {
 			const referencedStructure = buildReferencedStructure({
 				ancestors: [
 					...ancestors,
@@ -446,7 +446,6 @@ function getRelatedContentObjectRelationships(
 			if (
 				objectRelationship.objectDefinitionExternalReferenceCode2 ===
 					mainObjectDefinition.externalReferenceCode &&
-				!objectRelationship.edge &&
 				objectRelationship.type === 'oneToMany' &&
 				objectRelationship.deletionType === 'disassociate'
 			) {

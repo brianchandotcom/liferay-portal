@@ -265,24 +265,6 @@ public class UpdateStructureStrutsAction implements StrutsAction {
 									_companyId,
 									objectDefinition.getObjectDefinitionId());
 
-					if (serviceBuilderObjectRelationship.isEdge()) {
-						serviceBuilderObjectRelationship =
-							_objectRelationshipLocalService.
-								updateObjectRelationship(
-									serviceBuilderObjectRelationship.
-										getExternalReferenceCode(),
-									serviceBuilderObjectRelationship.
-										getObjectRelationshipId(),
-									serviceBuilderObjectRelationship.
-										getParameterObjectFieldId(),
-									serviceBuilderObjectRelationship.
-										getDeletionType(),
-									false,
-									serviceBuilderObjectRelationship.
-										getLabelMap(),
-									null);
-					}
-
 					_objectRelationshipLocalService.deleteObjectRelationship(
 						serviceBuilderObjectRelationship);
 				}

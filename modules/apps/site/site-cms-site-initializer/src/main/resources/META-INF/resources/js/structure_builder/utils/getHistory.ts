@@ -37,33 +37,14 @@ export default function getHistory({
 				deletedChildren: [...nextHistory.deletedChildren, child],
 			};
 
-			if (
-				child.type === 'repeatable-group' ||
-				child.type === 'related-content' ||
-				child.type === 'referenced-structure'
-			) {
-				let parentERC =
-					child.parent === structure.uuid
-						? structure.erc
-						: findChild({
-								root: structure,
-								uuid: child.parent,
-							})?.erc || '';
-
-				if (child.type === 'related-content' && !child.multiselection) {
-					parentERC = child.relatedStructureERC;
-				}
-
+			if (child.type === 'related-content' && !child.multiselection) {
 				nextHistory = {
 					...nextHistory,
 					deletedRelationships: [
 						...nextHistory.deletedRelationships,
 						{
-							relationshipERC:
-								child.type === 'related-content'
-									? child.erc
-									: child.relationshipERC,
-							structureERC: parentERC,
+							relationshipERC: child.erc,
+							structureERC: child.relatedStructureERC,
 						},
 					],
 				};

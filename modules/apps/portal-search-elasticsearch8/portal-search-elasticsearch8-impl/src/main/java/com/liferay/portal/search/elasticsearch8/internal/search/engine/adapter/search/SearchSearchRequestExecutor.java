@@ -54,10 +54,15 @@ public class SearchSearchRequestExecutor {
 					DebugStringsUtil.getStackTraceString()));
 		}
 
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
+
 		SearchRequest searchRequest = searchRequestBuilder.build();
 
 		String searchRequestString = DebugStringsUtil.getSearchRequestString(
-			searchRequest);
+			elasticsearchClient, searchRequest);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -69,11 +74,11 @@ public class SearchSearchRequestExecutor {
 		SearchResponse<JsonData> searchResponse = null;
 
 		if (searchSearchRequest.getScrollId() != null) {
-			_getScrollResponse(searchSearchRequest);
+			_getScrollResponse(elasticsearchClient, searchSearchRequest);
 		}
 		else {
 			searchResponse = _getSearchResponse(
-				searchRequest, searchSearchRequest);
+				elasticsearchClient, searchRequest);
 		}
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
@@ -93,12 +98,8 @@ public class SearchSearchRequestExecutor {
 	}
 
 	private ScrollResponse<JsonData> _getScrollResponse(
+		ElasticsearchClient elasticsearchClient,
 		SearchSearchRequest searchSearchRequest) {
-
-		ElasticsearchClient elasticsearchClient =
-			_elasticsearchClientResolver.getElasticsearchClient(
-				searchSearchRequest.getConnectionId(),
-				searchSearchRequest.isPreferLocalCluster());
 
 		ScrollRequest.Builder scrollRequestBuilder =
 			new ScrollRequest.Builder();
@@ -126,12 +127,7 @@ public class SearchSearchRequestExecutor {
 	}
 
 	private SearchResponse _getSearchResponse(
-		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
-
-		ElasticsearchClient elasticsearchClient =
-			_elasticsearchClientResolver.getElasticsearchClient(
-				searchSearchRequest.getConnectionId(),
-				searchSearchRequest.isPreferLocalCluster());
+		ElasticsearchClient elasticsearchClient, SearchRequest searchRequest) {
 
 		try {
 			return elasticsearchClient.search(searchRequest, JsonData.class);

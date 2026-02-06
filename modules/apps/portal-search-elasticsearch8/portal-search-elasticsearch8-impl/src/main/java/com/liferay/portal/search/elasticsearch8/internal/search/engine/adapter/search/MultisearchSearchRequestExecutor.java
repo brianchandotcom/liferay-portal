@@ -75,13 +75,20 @@ public class MultisearchSearchRequestExecutor {
 				msearchRequestBuilder.searches(_toRequestItem(searchRequest));
 			});
 
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				multisearchSearchRequest.getConnectionId(),
+				multisearchSearchRequest.isPreferLocalCluster());
+
 		return _createMultisearchSearchResponse(
+			elasticsearchClient,
 			_getMsearchResponse(
-				msearchRequestBuilder.build(), multisearchSearchRequest),
+				elasticsearchClient, msearchRequestBuilder.build()),
 			searchRequestHolders);
 	}
 
 	private MultisearchSearchResponse _createMultisearchSearchResponse(
+		ElasticsearchClient elasticsearchClient,
 		MsearchResponse<JsonData> msearchResponse,
 		List<SearchRequestHolder> searchRequestHolders) {
 
@@ -110,6 +117,7 @@ public class MultisearchSearchRequestExecutor {
 			SearchSearchResponseAssembler.INSTANCE.assemble(
 				multiSearchItem,
 				DebugStringsUtil.getSearchRequestString(
+					elasticsearchClient,
 					searchRequestHolder.getSearchRequest()),
 				searchSearchRequest, searchSearchResponse);
 
@@ -133,13 +141,8 @@ public class MultisearchSearchRequestExecutor {
 	}
 
 	private MsearchResponse<JsonData> _getMsearchResponse(
-		MsearchRequest msearchRequest,
-		MultisearchSearchRequest multisearchSearchRequest) {
-
-		ElasticsearchClient elasticsearchClient =
-			_elasticsearchClientResolver.getElasticsearchClient(
-				multisearchSearchRequest.getConnectionId(),
-				multisearchSearchRequest.isPreferLocalCluster());
+		ElasticsearchClient elasticsearchClient,
+		MsearchRequest msearchRequest) {
 
 		try {
 			return elasticsearchClient.msearch(msearchRequest, JsonData.class);

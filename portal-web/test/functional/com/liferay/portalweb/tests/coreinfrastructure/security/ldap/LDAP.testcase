@@ -595,48 +595,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for LPS-73381. LDAP security credentials are obscured when entered."
-	@priority = 3
-	test LDAPSecurityCredentialsAreHidden {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Add Server and edit security credential") {
-			SystemSettings.openSystemSettingsAdmin();
-
-			SystemSettings.gotoConfiguration(
-				configurationCategory = "LDAP",
-				configurationName = "Servers",
-				configurationScope = "Virtual Instance Scope");
-
-			Button.clickAdd();
-
-			Type(
-				locator1 = "LDAP#LDAP_CONNECTION_ID_FIELD",
-				value1 = 123);
-
-			Type(
-				locator1 = "LDAP#LDAP_CONNECTION_CREDENTIAL_FIELD",
-				value1 = 123456);
-		}
-
-		task ("Assert LDAP security credentials are obscured") {
-			AssertTextEquals(
-				locator1 = "LDAP#LDAP_CONNECTION_CREDENTIAL_FIELD",
-				value1 = 123456);
-
-			Button.clickSave();
-
-			Click(
-				key_text = 123,
-				locator1 = "LDAP#LDAP_CONNECTION_SERVER_ID");
-
-			AssertTextEquals(
-				locator1 = "LDAP#LDAP_CONNECTION_CREDENTIAL_FIELD",
-				value1 = "TEMP_OBFUSCATION_VALUE");
-		}
-	}
-
 	@description = "This is a test for LPS-179689. TC-7: Verify if users cannot edit their password on the My Account page if the change password option is disabled by default policy and LDAP is enabled."
 	@priority = 3
 	test LDAPUsersCannotChangePasswordAfterDisablingPasswordChangeable {

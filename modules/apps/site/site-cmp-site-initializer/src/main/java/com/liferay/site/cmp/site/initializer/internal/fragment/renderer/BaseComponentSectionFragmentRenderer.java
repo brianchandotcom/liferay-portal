@@ -8,10 +8,20 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -90,6 +100,63 @@ public abstract class BaseComponentSectionFragmentRenderer
 		}
 	}
 
+	protected void addSubscribeActionItem(
+			HttpServletRequest httpServletRequest, JSONArray jsonArray,
+			String label1, String label2, ObjectDefinition objectDefinition,
+			ObjectEntry objectEntry, String redirectURL,
+			ThemeDisplay themeDisplay, String title)
+		throws PortalException {
+
+		if (!objectEntryService.hasModelResourcePermission(
+				objectEntry, ActionKeys.SUBSCRIBE)) {
+
+			return;
+		}
+
+		String restContextPath = StringBundler.concat(
+			"/o", objectDefinition.getRESTContextPath(), "/scopes/",
+			objectEntry.getGroupId(), "/by-external-reference-code/",
+			objectEntry.getExternalReferenceCode());
+
+		if (!subscriptionLocalService.isSubscribed(
+				objectEntry.getCompanyId(), themeDisplay.getUserId(),
+				objectEntry.getModelClassName(),
+				objectEntry.getObjectEntryId())) {
+
+			jsonArray.put(
+				JSONUtil.put(
+					"href", restContextPath + "/subscribe"
+				).put(
+					"label", LanguageUtil.get(httpServletRequest, label1)
+				).put(
+					"redirect", redirectURL
+				).put(
+					"successMessage",
+					LanguageUtil.format(
+						httpServletRequest, "you-are-successfully-watching-x",
+						StringBundler.concat("<strong>", title, "</strong>"))
+				).put(
+					"symbolLeft", "bell-on"
+				).put(
+					"target", "asyncPost"
+				));
+		}
+		else {
+			jsonArray.put(
+				JSONUtil.put(
+					"href", restContextPath + "/unsubscribe"
+				).put(
+					"label", LanguageUtil.get(httpServletRequest, label2)
+				).put(
+					"redirect", redirectURL
+				).put(
+					"symbolLeft", "bell-off"
+				).put(
+					"target", "asyncPost"
+				));
+		}
+	}
+
 	protected abstract String getComponentName(
 		HttpServletRequest httpServletRequest);
 
@@ -105,9 +172,15 @@ public abstract class BaseComponentSectionFragmentRenderer
 	@Reference
 	protected Language language;
 
+	@Reference
+	protected ObjectEntryService objectEntryService;
+
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cmp.site.initializer)"
 	)
 	protected ServletContext servletContext;
+
+	@Reference
+	protected SubscriptionLocalService subscriptionLocalService;
 
 }

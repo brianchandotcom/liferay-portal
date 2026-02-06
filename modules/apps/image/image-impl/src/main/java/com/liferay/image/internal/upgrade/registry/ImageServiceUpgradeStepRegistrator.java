@@ -40,37 +40,39 @@ public class ImageServiceUpgradeStepRegistrator
 			"0.0.1", "0.0.2",
 			new ImageCompanyIdUpgradeProcess<>(
 				_companyLocalService::getActionableDynamicQuery,
-				Company::getCompanyId, Company::getLogoId));
+				Company::getCompanyId, Company::getLogoId, null));
 
 		registry.register(
 			"0.0.2", "0.0.3",
 			new ImageCompanyIdUpgradeProcess<>(
 				_ddmTemplateLocalService::getActionableDynamicQuery,
-				DDMTemplate::getCompanyId, DDMTemplate::getSmallImageId));
+				DDMTemplate::getCompanyId, DDMTemplate::getSmallImageId, null));
 
 		registry.register(
 			"0.0.3", "0.0.4",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutLocalService::getActionableDynamicQuery,
-				Layout::getCompanyId, Layout::getIconImageId));
+				Layout::getCompanyId, null, Layout::getIconImageERC));
 
 		registry.register(
 			"0.0.4", "0.0.5",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetLocalService::getActionableDynamicQuery,
-				LayoutSet::getCompanyId, LayoutSet::getLogoId));
+				LayoutSet::getCompanyId, LayoutSet::getLogoId, null));
 
 		registry.register(
 			"0.0.5", "0.0.6",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetBranchLocalService::getActionableDynamicQuery,
-				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLogoId));
+				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLogoId,
+				null));
 
 		registry.register(
 			"0.0.6", "0.0.7",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetBranchLocalService::getActionableDynamicQuery,
-				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLiveLogoId));
+				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLiveLogoId,
+				null));
 
 		registry.register(
 			"0.0.7", "1.0.0",
@@ -86,19 +88,24 @@ public class ImageServiceUpgradeStepRegistrator
 	@Reference
 	private ImageLocalService _imageLocalService;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.journal.service)(release.schema.version>=1.1.0))"
+	)
+	private Release _journalServiceRelease;
+
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.layout.service)(release.schema.version>=7.0.0))"
+	)
+	private Release _layoutServiceRelease;
 
 	@Reference
 	private LayoutSetBranchLocalService _layoutSetBranchLocalService;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;
-
-	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.journal.service)(release.schema.version>=1.1.0))"
-	)
-	private Release _release;
 
 	@Reference(target = "(default=true)")
 	private Store _store;

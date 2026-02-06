@@ -28,7 +28,8 @@ public class JournalImageServiceUpgradeStepRegistrator
 			"0.0.1", "1.0.0",
 			new ImageCompanyIdUpgradeProcess<>(
 				_journalArticleLocalService::getActionableDynamicQuery,
-				JournalArticle::getCompanyId, JournalArticle::getSmallImageId));
+				JournalArticle::getCompanyId, JournalArticle::getSmallImageId,
+				null));
 	}
 
 	@Reference

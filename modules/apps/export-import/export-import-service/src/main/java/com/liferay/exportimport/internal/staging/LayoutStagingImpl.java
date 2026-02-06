@@ -187,7 +187,7 @@ public class LayoutStagingImpl implements LayoutStaging {
 		layout.setKeywords(layoutRevision.getKeywords());
 		layout.setRobots(layoutRevision.getRobots());
 		layout.setTypeSettings(layoutRevision.getTypeSettings());
-		layout.setIconImageId(layoutRevision.getIconImageId());
+		layout.setIconImageERC(layoutRevision.getIconImageERC());
 		layout.setThemeId(layoutRevision.getThemeId());
 		layout.setColorSchemeId(layoutRevision.getColorSchemeId());
 		layout.setCss(layoutRevision.getCss());

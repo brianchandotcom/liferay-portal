@@ -487,7 +487,7 @@ public class EmptyModelManagerImplTest {
 	}
 
 	@Test
-	public void testSolveEmptyModeInDifferentExportImportProcess()
+	public void testSolveEmptyModelInDifferentExportImportProcess()
 		throws Exception {
 
 		try (MockedStatic<ExportImportThreadLocal>
@@ -511,7 +511,9 @@ public class EmptyModelManagerImplTest {
 	}
 
 	@Test
-	public void testSolveEmptyModeInSameExportImportProcess() throws Exception {
+	public void testSolveEmptyModelInSameExportImportProcess()
+		throws Exception {
+
 		try (MockedStatic<ExportImportThreadLocal>
 				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
 					ExportImportThreadLocal.class)) {

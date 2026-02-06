@@ -174,8 +174,11 @@ function handleResult(interaction, reload, text, toastData, url) {
 
 function openResultToast({message, title, type}, text) {
 	import(
-		Liferay.ThemeDisplay.getPathContext() +
-			'/o/frontend-js-components-web/__liferay__/index.js'
+		Liferay.FrontendESM.buildURL(
+			import.meta.url,
+			'frontend-js-components-web',
+			'index'
+		)
 	).then(({openToast}) =>
 		openToast({
 			message: escapeHTML(text || message),

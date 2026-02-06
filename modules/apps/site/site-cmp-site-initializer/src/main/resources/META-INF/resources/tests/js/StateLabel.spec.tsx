@@ -34,13 +34,15 @@ describe('StateLabel', () => {
 		expect(getByText(state.name)).toBeInTheDocument();
 	});
 
-	it('renders nothing if no state is provided', () => {
+	it('does not render anything if a state is not provided', () => {
 		const {container} = render(<StateLabel />);
 
 		expect(container).toBeEmptyDOMElement();
 	});
 
-	it('renders the overdue label when the due date has passed', () => {
+	// Test Overdue Label
+
+	it('renders the overdue label when the due date is before the current date', () => {
 		const state = {
 			key: 'inProgress',
 			name: 'In Progress',
@@ -54,6 +56,18 @@ describe('StateLabel', () => {
 		expect(getByText('overdue')).toBeInTheDocument();
 	});
 
+	it('does not render the overdue label if the due date is not provided', () => {
+		const state = {
+			key: 'inProgress',
+			name: 'In Progress',
+		};
+
+		const {getByText, queryByText} = render(<StateLabel state={state} />);
+
+		expect(getByText(state.name)).toBeInTheDocument();
+		expect(queryByText('overdue')).not.toBeInTheDocument();
+	});
+
 	it('does not render the overdue label if the state is "done"', () => {
 		const state = {
 			key: 'done',
@@ -63,18 +77,6 @@ describe('StateLabel', () => {
 		const {getByText, queryByText} = render(
 			<StateLabel dueDate={dueDate} state={state} />
 		);
-
-		expect(getByText(state.name)).toBeInTheDocument();
-		expect(queryByText('overdue')).not.toBeInTheDocument();
-	});
-
-	it('does not render the overdue label if no due date is provided', () => {
-		const state = {
-			key: 'inProgress',
-			name: 'In Progress',
-		};
-
-		const {getByText, queryByText} = render(<StateLabel state={state} />);
 
 		expect(getByText(state.name)).toBeInTheDocument();
 		expect(queryByText('overdue')).not.toBeInTheDocument();

@@ -7,7 +7,6 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -20,8 +19,6 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Rodrigo Guedes de Souza
@@ -36,10 +33,6 @@ public class SearchSolrQueryAssemblerImplTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_searchSolrQueryAssemblerImpl = new SearchSolrQueryAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_searchSolrQueryAssemblerImpl, "_baseSolrQueryAssembler",
-			Mockito.mock(BaseSolrQueryAssembler.class));
 	}
 
 	@Test

@@ -264,8 +264,8 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 		}
 	}
 
-	@Reference
-	private BaseSolrQueryAssembler _baseSolrQueryAssembler;
+	private final BaseSolrQueryAssembler _baseSolrQueryAssembler =
+		new BaseSolrQueryAssembler();
 
 	@Reference
 	private GroupByRequestFactory _groupByRequestFactory;

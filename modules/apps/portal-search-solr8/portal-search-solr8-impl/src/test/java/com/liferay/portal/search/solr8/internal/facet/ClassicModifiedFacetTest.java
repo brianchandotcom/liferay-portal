@@ -7,7 +7,7 @@ package com.liferay.portal.search.solr8.internal.facet;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
-import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.BaseSolrQueryAssemblerImpl;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.BaseSolrQueryAssembler;
 import com.liferay.portal.search.test.util.facet.BaseClassicModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -30,14 +30,14 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_defaultFacetProcessor = ReflectionTestUtil.getAndSetFieldValue(
-			BaseSolrQueryAssemblerImpl.class, "_defaultFacetProcessor",
+			BaseSolrQueryAssembler.class, "_defaultFacetProcessor",
 			RangeFacetProcessor.INSTANCE);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
-			BaseSolrQueryAssemblerImpl.class, "_defaultFacetProcessor",
+			BaseSolrQueryAssembler.class, "_defaultFacetProcessor",
 			_defaultFacetProcessor);
 	}
 

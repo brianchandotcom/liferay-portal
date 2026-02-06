@@ -88,6 +88,8 @@ public class JavaScriptFrontendResourceRequestHandlerTest
 			(Answer<Locale>)invocationOnMock -> new Locale(
 				invocationOnMock.getArgument(0))
 		);
+
+		resetFrontendJsWebUtil();
 	}
 
 	@After

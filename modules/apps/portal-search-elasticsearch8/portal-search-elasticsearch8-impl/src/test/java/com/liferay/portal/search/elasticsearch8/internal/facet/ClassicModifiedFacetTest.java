@@ -29,14 +29,14 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 	@BeforeClass
 	public static void setUpClass() {
 		_defaultFacetProcessor = ReflectionTestUtil.getAndSetFieldValue(
-			DefaultFacetTranslator.class, "_defaultFacetProcessor",
+			FacetTranslator.class, "_defaultFacetProcessor",
 			RangeFacetProcessor.INSTANCE);
 	}
 
 	@AfterClass
 	public static void tearDownClass() {
 		ReflectionTestUtil.setFieldValue(
-			DefaultFacetTranslator.class, "_defaultFacetProcessor",
+			FacetTranslator.class, "_defaultFacetProcessor",
 			_defaultFacetProcessor);
 	}
 

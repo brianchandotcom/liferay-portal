@@ -151,9 +151,9 @@ test(
 
 		// Add a Single Select field and select it
 
-		await structureBuilderPage.addField('Single Select');
+		await structureBuilderPage.addField('Select from List');
 
-		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
 
 		// Put empty name
 
@@ -177,7 +177,7 @@ test(
 
 		await clickAndExpectToBeVisible({
 			target: page.locator('.breadcrumb-link', {
-				hasText: 'Single Select',
+				hasText: 'Select from List',
 			}),
 			trigger: structureBuilderPage.saveButton,
 		});
@@ -194,7 +194,7 @@ test(
 
 		await structureBuilderPage.selectFields([{label: 'Text'}]);
 
-		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
 
 		await expect(page.getByText(picklist.name)).toBeVisible();
 
@@ -253,9 +253,9 @@ test(
 
 		// Add a Single Select field and check for blur error
 
-		await structureBuilderPage.addField('Single Select');
+		await structureBuilderPage.addField('Select from List');
 
-		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
 
 		const picklistPicker = page.getByLabel('Picklist');
 
@@ -272,20 +272,6 @@ test(
 		});
 
 		await expect(errorMessage).not.toBeAttached();
-
-		// Add a Multiselect field and check for outside click error
-
-		await structureBuilderPage.addField('Multiselect');
-
-		await structureBuilderPage.selectFields([{label: 'Multiselect'}]);
-
-		await expect(errorMessage).not.toBeAttached();
-
-		await picklistPicker.click();
-
-		await page.getByText('Content Structure Fields').click();
-
-		await expect(errorMessage).toBeAttached();
 
 		// Delete picklist
 

@@ -126,7 +126,7 @@ test(
 		for (const type of FIELD_TYPES) {
 			await structureBuilderPage.addField(type);
 
-			if (type === 'Single Select' || type === 'Multiselect') {
+			if (type === 'Select from List') {
 				await structureBuilderPage.changeFieldSettings({
 					picklist: picklist.name,
 				});
@@ -287,9 +287,9 @@ test(
 
 		// Add a Single Select field and select it
 
-		await structureBuilderPage.addField('Single Select');
+		await structureBuilderPage.addField('Select from List');
 
-		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
 
 		// Create new picklist from the button "New Picklist"
 

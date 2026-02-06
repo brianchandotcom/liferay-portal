@@ -272,7 +272,7 @@ public class InfoRequestFieldValuesProviderHelper {
 
 			relatedInfoFieldValues.put(
 				new RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier(
-					(String)tuple.getObject(1), (String)tuple.getObject(0)),
+					(String)tuple.getObject(0), (String)tuple.getObject(1)),
 				initialInfoFieldValue);
 
 			infoFieldValues.put(

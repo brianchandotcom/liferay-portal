@@ -109,7 +109,7 @@ public class LayoutBranchLocalServiceImpl
 			layoutRevision.isPrivateLayout(), layoutRevision.getName(),
 			layoutRevision.getTitle(), layoutRevision.getDescription(),
 			layoutRevision.getKeywords(), layoutRevision.getRobots(),
-			layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
+			layoutRevision.getTypeSettings(), layoutRevision.hasIconImage(),
 			layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
 			layoutRevision.getColorSchemeId(), layoutRevision.getCss(),
 			serviceContext);

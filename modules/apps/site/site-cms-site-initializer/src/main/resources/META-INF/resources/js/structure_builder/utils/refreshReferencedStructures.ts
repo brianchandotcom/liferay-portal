@@ -122,7 +122,11 @@ export default function refreshReferencedStructures({
 				(objectField) => objectField.name === child.name
 			);
 
-			if (objectDefinition && !objectField) {
+			if (
+				objectDefinition &&
+				!objectField &&
+				child.type !== 'related-content'
+			) {
 				continue;
 			}
 

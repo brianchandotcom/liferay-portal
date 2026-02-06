@@ -1,0 +1,69 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Jessyca Ferreira
+ */
+public class LPD_58603 {
+
+	public void method(
+		long userId, long groupId, long originalFragmentEntryLinkId,
+		long fragmentEntryId, long segmentsExperienceId, long plid, String css,
+		String htmlUtil, String js, String configuration, String editableValues,
+		String namespace, int position, String rendererKey, int type,
+		ServiceContext serviceContext) {
+
+		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			123, groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext)
+		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			userId, groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			userId, groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
+	}
+
+	public void method(
+		long groupId, long originalFragmentEntryLinkId, long fragmentEntryId,
+		long segmentsExperienceId, long plid, String css, String htmlUtil,
+		String js, String configuration, String editableValues,
+		String namespace, int position, String rendererKey, int type,
+		ServiceContext serviceContext) {
+
+		FragmentEntryLinkServiceUtil.addFragmentEntryLink(
+			123, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext)
+		FragmentEntryLinkServiceUtil.addFragmentEntryLink(
+			groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
+		_fragmentEntryLinkService.addFragmentEntryLink(
+			groupId, originalFragmentEntryLinkId, fragmentEntryId,
+			segmentsExperienceId, plid, css, htmlUtil, js, configuration,
+			editableValues, namespace, position, rendererKey, type,
+			serviceContext);
+	}
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLinkService _fragmentEntryLinkService;
+
+}

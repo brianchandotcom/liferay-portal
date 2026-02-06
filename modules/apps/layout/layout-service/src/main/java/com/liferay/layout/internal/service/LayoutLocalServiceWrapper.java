@@ -56,7 +56,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -1234,9 +1233,6 @@ public class LayoutLocalServiceWrapper
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;
 
 	@Reference
-	private ImageLocalService _imageLocalService;
-
-	@Reference
 	private LayoutClassedModelUsageLocalService
 		_layoutClassedModelUsageLocalService;
 
@@ -1348,8 +1344,7 @@ public class LayoutLocalServiceWrapper
 			_copyLayoutClientExtensions(
 				_sourceLayout, _targetLayout, _user.getUserId());
 
-			Image image = _imageLocalService.getImage(
-				_sourceLayout.getIconImageId());
+			Image image = _sourceLayout.getIconImage();
 
 			byte[] imageBytes = null;
 

@@ -212,12 +212,12 @@ public class LayoutLocalServiceStagingAdvice {
 			layoutFriendlyURLMap.get(LocaleUtil.getSiteDefault()));
 
 		if (!hasIconImage) {
-			layout.setIconImageId(0);
+			layout.setIconImageERC(null);
 			layoutRevision.setIconImageId(0);
 		}
 		else {
-			_portal.updateImageId(
-				layout, hasIconImage, iconBytes, "iconImageId", 0, 0, 0);
+			_portal.updateImageERC(
+				layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0);
 		}
 
 		layout.setPortletLayoutPageTemplateEntryLinkEnabled(

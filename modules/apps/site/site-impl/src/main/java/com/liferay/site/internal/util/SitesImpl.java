@@ -52,7 +52,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
@@ -126,8 +125,7 @@ public class SitesImpl implements Sites {
 		byte[] iconBytes = null;
 
 		if (layoutPrototypeLayout.hasIconImage()) {
-			Image image = _imageLocalService.getImage(
-				layoutPrototypeLayout.getIconImageId());
+			Image image = layoutPrototypeLayout.getIconImage();
 
 			iconBytes = image.getTextObj();
 		}
@@ -1443,9 +1441,6 @@ public class SitesImpl implements Sites {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

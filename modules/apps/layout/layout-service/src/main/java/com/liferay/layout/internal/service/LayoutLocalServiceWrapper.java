@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.PortletPreferencesIds;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -55,7 +56,6 @@ import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -71,6 +71,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -531,16 +532,12 @@ public class LayoutLocalServiceWrapper
 			String sourceResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
 				sourceLayout.getPlid(), portletId);
 
-			Map<Long, Set<String>> sourceRoleIdsToActionIds =
-				_resourcePermissionLocalService.
-					getAvailableResourcePermissionActionIds(
-						targetLayout.getCompanyId(), resourceName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						sourceResourcePrimKey,
-						ResourceActionsUtil.getPortletResourceActions(
-							resourceName));
+			List<ResourcePermission> sourceResourcePermissions =
+				_resourcePermissionLocalService.getResourcePermissions(
+					sourceLayout.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL, sourceResourcePrimKey);
 
-			if (sourceRoleIdsToActionIds.isEmpty()) {
+			if (sourceResourcePermissions.isEmpty()) {
 				continue;
 			}
 
@@ -552,27 +549,50 @@ public class LayoutLocalServiceWrapper
 						RoleConstants.ADMINISTRATOR, role.getName())),
 				Role::getRoleId);
 
-			Map<Long, String[]> targetRoleIdsToActionIds = new HashMap<>();
+			String targetResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+				targetLayout.getPlid(), portletId);
 
-			for (Map.Entry<Long, Set<String>> entry :
-					sourceRoleIdsToActionIds.entrySet()) {
+			for (ResourcePermission sourceResourcePermission :
+					sourceResourcePermissions) {
 
-				Long roleId = entry.getKey();
+				long roleId = sourceResourcePermission.getRoleId();
 
-				if (roleIds.contains(roleId)) {
-					Set<String> sourceActionIds = entry.getValue();
-
-					targetRoleIdsToActionIds.put(
-						roleId, sourceActionIds.toArray(new String[0]));
+				if (!roleIds.contains(roleId)) {
+					continue;
 				}
-			}
 
-			_resourcePermissionLocalService.setResourcePermissions(
-				targetLayout.getCompanyId(), resourceName,
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				PortletPermissionUtil.getPrimaryKey(
-					targetLayout.getPlid(), portletId),
-				targetRoleIdsToActionIds);
+				ResourcePermission targetResourcePermission =
+					_resourcePermissionLocalService.fetchResourcePermission(
+						targetLayout.getCompanyId(), resourceName,
+						ResourceConstants.SCOPE_INDIVIDUAL,
+						targetResourcePrimKey, roleId);
+
+				if (targetResourcePermission == null) {
+					targetResourcePermission =
+						_resourcePermissionLocalService.
+							createResourcePermission(
+								_counterLocalService.increment(
+									ResourcePermission.class.getName()));
+
+					targetResourcePermission.setCompanyId(
+						targetLayout.getCompanyId());
+					targetResourcePermission.setName(resourceName);
+					targetResourcePermission.setScope(
+						ResourceConstants.SCOPE_INDIVIDUAL);
+					targetResourcePermission.setPrimKey(targetResourcePrimKey);
+					targetResourcePermission.setPrimKeyId(
+						GetterUtil.getLong(targetResourcePrimKey));
+					targetResourcePermission.setRoleId(roleId);
+				}
+
+				targetResourcePermission.setActionIds(
+					sourceResourcePermission.getActionIds());
+				targetResourcePermission.setViewActionId(
+					sourceResourcePermission.isViewActionId());
+
+				_resourcePermissionLocalService.updateResourcePermission(
+					targetResourcePermission);
+			}
 		}
 	}
 

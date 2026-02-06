@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourcePermission;
@@ -38,6 +39,7 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataC
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -48,6 +50,7 @@ import java.sql.Connection;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -303,6 +306,167 @@ public class DDMDataCleanupPreupgradeProcessTest
 		_groupLocalService.deleteGroup(group);
 	}
 
+	@Test
+	public void testUpgradeWithOrphanNonancestorDDMStructureFrom70to73()
+		throws Exception {
+
+		connection = _connection;
+
+		long companyId = _getNonexistentCompanyId();
+
+		long childGroupId = RandomTestUtil.nextLong();
+		long globalGroupId = RandomTestUtil.nextLong();
+		long orphanGroupId = RandomTestUtil.nextLong();
+		long otherGroupId = RandomTestUtil.nextLong();
+		long parentGroupId = RandomTestUtil.nextLong();
+
+		String globalStructureKey = RandomTestUtil.randomString();
+		String orphanStructureKey = RandomTestUtil.randomString();
+		String parentStructureKey = RandomTestUtil.randomString();
+
+		try {
+			alterTableAddColumn(
+				"JournalArticle", "DDMStructureKey", "VARCHAR(75) null");
+
+			_test(
+				DDMDataCleanupPreupgradeProcess.class.getName(),
+				() -> {
+					runSQL(
+						StringBundler.concat(
+							"insert into Group_ (mvccVersion, ctCollectionId, ",
+							"friendlyURL, groupId, companyId, parentGroupId, ",
+							"name, groupKey, uuid_, classPK, ",
+							"externalReferenceCode) values (0, 0, '/global', ",
+							globalGroupId, ", ", companyId, ", 0, 'global', ",
+							"'global', '", RandomTestUtil.randomString(), "', ",
+							globalGroupId, ", '", RandomTestUtil.randomString(),
+							"')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into Group_ (mvccVersion, ctCollectionId, ",
+							"friendlyURL, groupId, companyId, parentGroupId, ",
+							"name, groupKey, uuid_, classPK, ",
+							"externalReferenceCode) values (0, 0, '/parent', ",
+							parentGroupId, ", ", companyId, ", 0, 'parent', ",
+							"'parent', '", RandomTestUtil.randomString(), "', ",
+							parentGroupId, ", '", RandomTestUtil.randomString(),
+							"')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into Group_ (mvccVersion, ctCollectionId, ",
+							"friendlyURL, groupId, companyId, parentGroupId, ",
+							"name, groupKey, uuid_, classPK, ",
+							"externalReferenceCode) values (0, 0, '/child', ",
+							childGroupId, ", ", companyId, ", ", parentGroupId,
+							", 'child', 'child', '",
+							RandomTestUtil.randomString(), "', ", childGroupId,
+							", '", RandomTestUtil.randomString(), "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into Group_ (mvccVersion, ctCollectionId, ",
+							"friendlyURL, groupId, companyId, parentGroupId, ",
+							"name, groupKey, uuid_, classPK, ",
+							"externalReferenceCode) values (0, 0, '/other', ",
+							otherGroupId, ", ", companyId, ", 0, 'other', ",
+							"'other', '", RandomTestUtil.randomString(), "', ",
+							otherGroupId, ", '", RandomTestUtil.randomString(),
+							"')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into DDMStructure (mvccVersion, ",
+							"ctCollectionId, uuid_, structureId, groupId, ",
+							"companyId, structureKey) values (0, 0, '",
+							RandomTestUtil.randomString(), "', ",
+							RandomTestUtil.nextLong(), ", ", parentGroupId,
+							", ", companyId, ", '", parentStructureKey, "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into DDMStructure (mvccVersion, ",
+							"ctCollectionId, uuid_, structureId, groupId, ",
+							"companyId, structureKey) values (0, 0, '",
+							RandomTestUtil.randomString(), "', ",
+							RandomTestUtil.nextLong(), ", ", globalGroupId,
+							", ", companyId, ", '", globalStructureKey, "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into DDMStructure (mvccVersion, ",
+							"ctCollectionId, uuid_, structureId, groupId, ",
+							"companyId, structureKey) values (0, 0, '",
+							RandomTestUtil.randomString(), "', ",
+							RandomTestUtil.nextLong(), ", ", orphanGroupId,
+							", ", companyId, ", '", orphanStructureKey, "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into JournalArticle (mvccVersion, ",
+							"ctCollectionId, id_, groupId, companyId, ",
+							"articleId, version, DDMStructureKey, uuid_, ",
+							"externalReferenceCode, urlTitle) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ", childGroupId, ", ",
+							companyId, ", '", RandomTestUtil.randomString(),
+							"', 1.0, '", parentStructureKey, "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into JournalArticle (mvccVersion, ",
+							"ctCollectionId, id_, groupId, companyId, ",
+							"articleId, version, DDMStructureKey, uuid_, ",
+							"externalReferenceCode, urlTitle) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ", otherGroupId, ", ",
+							companyId, ", '", RandomTestUtil.randomString(),
+							"', 1.0, '", globalStructureKey, "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "')"));
+					runSQL(
+						StringBundler.concat(
+							"insert into JournalArticle (mvccVersion, ",
+							"ctCollectionId, id_, groupId, companyId, ",
+							"articleId, version, DDMStructureKey, uuid_, ",
+							"externalReferenceCode, urlTitle) values (0, 0, ",
+							RandomTestUtil.nextLong(), ", ", otherGroupId, ", ",
+							companyId, ", '", RandomTestUtil.randomString(),
+							"', 1.0, '", orphanStructureKey, "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "', '",
+							RandomTestUtil.randomString(), "')"));
+				},
+				messages -> {
+					Assert.assertFalse(
+						messages.toString(
+						).contains(
+							globalStructureKey
+						));
+					Assert.assertFalse(
+						messages.toString(
+						).contains(
+							parentStructureKey
+						));
+
+					Assert.assertTrue(
+						messages.contains(
+							StringBundler.concat(
+								"Table ",
+								_dbInspector.normalizeName("JournalArticle"),
+								", 1 row deleted because ",
+								_dbInspector.normalizeName("DDMStructureKey"),
+								StringPool.SPACE, orphanStructureKey,
+								" was not found in ",
+								_dbInspector.normalizeName("groupId"),
+								StringPool.SPACE, otherGroupId,
+								" or its ancestors")));
+				});
+		}
+		finally {
+			alterTableDropColumn("JournalArticle", "DDMStructureKey");
+
+			runSQL("delete from DDMStructure where companyId = " + companyId);
+			runSQL("delete from Group_ where companyId = " + companyId);
+			runSQL("delete from JournalArticle where companyId = " + companyId);
+		}
+	}
+
 	private String _getExpectedMessage(
 			long count, String sourceColumnName, String sourceTableName,
 			String targetColumnName, String targetTableName, Object targetValue)
@@ -317,14 +481,27 @@ public class DDMDataCleanupPreupgradeProcessTest
 			_dbInspector.normalizeName(targetTableName));
 	}
 
+	private long _getNonexistentCompanyId() throws Exception {
+		Set<Long> companyIds = SetUtil.fromArray(
+			PortalInstancePool.getCompanyIds());
+
+		while (true) {
+			long nonexistentCompanyId = RandomTestUtil.randomLong();
+
+			if (!companyIds.contains(nonexistentCompanyId)) {
+				return nonexistentCompanyId;
+			}
+		}
+	}
+
 	private void _test(
+			String loggerName,
 			UnsafeRunnable<Exception> preupgradeUnsafeRunnable,
 			UnsafeConsumer<List<String>, Exception> verifyUnsafeConsumer)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				OrphanReferencesDataCleanupUtil.class.getName(),
-				LoggerTestUtil.INFO)) {
+				loggerName, LoggerTestUtil.INFO)) {
 
 			preupgradeUnsafeRunnable.run();
 
@@ -332,6 +509,16 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 			verifyUnsafeConsumer.accept(logCapture.getMessages());
 		}
+	}
+
+	private void _test(
+			UnsafeRunnable<Exception> preupgradeUnsafeRunnable,
+			UnsafeConsumer<List<String>, Exception> verifyUnsafeConsumer)
+		throws Exception {
+
+		_test(
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			preupgradeUnsafeRunnable, verifyUnsafeConsumer);
 	}
 
 	private static List<ClassName> _classNames;

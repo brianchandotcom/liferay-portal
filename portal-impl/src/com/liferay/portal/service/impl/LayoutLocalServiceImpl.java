@@ -821,7 +821,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layout.getParentLayoutId(), nameMap, layout.getTitleMap(),
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), type, false, layout.getFriendlyURLMap(),
-			layout.isIconImage(), null, layout.getStyleBookEntryERC(),
+			layout.hasIconImage(), null, layout.getStyleBookEntryERC(),
 			layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			masterLayoutPageTemplateEntryERC, serviceContext);

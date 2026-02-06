@@ -228,7 +228,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 				layout.isPrivateLayout(), layout.getName(), layout.getTitle(),
 				layout.getDescription(), layout.getKeywords(),
 				layout.getRobots(), layout.getTypeSettings(),
-				layout.getIconImage(), layout.getIconImageId(),
+				layout.hasIconImage(), layout.getIconImageId(),
 				layout.getThemeId(), layout.getColorSchemeId(), layout.getCss(),
 				serviceContext);
 		}

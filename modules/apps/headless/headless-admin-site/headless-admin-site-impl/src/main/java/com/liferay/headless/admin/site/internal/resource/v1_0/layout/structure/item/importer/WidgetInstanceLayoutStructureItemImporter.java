@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PortletUtil;
@@ -23,6 +24,7 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -116,6 +118,17 @@ public class WidgetInstanceLayoutStructureItemImporter
 					LayoutStructureUtil.getParentExternalReferenceCode(
 						pageElement, layoutStructure),
 					pageElement.getPosition());
+
+		JSONObject backgroundImageValueJSONObject =
+			ImageValueUtil.toBackgroundImageValueJSONObject(
+				widgetInstancePageElementDefinition.getBackgroundImageValue(),
+				layoutStructureItemImporterContext);
+
+		if (backgroundImageValueJSONObject != null) {
+			fragmentStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"backgroundImage", backgroundImageValueJSONObject));
+		}
 
 		fragmentStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(

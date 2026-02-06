@@ -22,6 +22,7 @@ import com.liferay.headless.admin.site.dto.v1_0.SuccessFormContainerSubmissionRe
 import com.liferay.headless.admin.site.dto.v1_0.SuccessNotificationMessage;
 import com.liferay.headless.admin.site.dto.v1_0.URLFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
@@ -78,6 +79,17 @@ public class FormContainerLayoutStructureItemImporter
 
 		if (formContainerPageElementDefinition == null) {
 			return formStyledLayoutStructureItem;
+		}
+
+		JSONObject backgroundImageValueJSONObject =
+			ImageValueUtil.toBackgroundImageValueJSONObject(
+				formContainerPageElementDefinition.getBackgroundImageValue(),
+				layoutStructureItemImporterContext);
+
+		if (backgroundImageValueJSONObject != null) {
+			formStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"backgroundImage", backgroundImageValueJSONObject));
 		}
 
 		formStyledLayoutStructureItem.setCssClasses(

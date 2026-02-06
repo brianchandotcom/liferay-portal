@@ -9,6 +9,12 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 
+const SERVLET_CONTEXT_NAMES = [
+	'com.liferay.amazon.rankings.web',
+	'com.liferay.chat.service',
+	'com.liferay.document.library.file.rank.service',
+];
+
 export const test = mergeTests(
 	loginTest(),
 	applicationsMenuPageTest,
@@ -171,7 +177,7 @@ async function executeCleanupActions(page, panelName: string) {
 			hasText: 'Your request completed successfully.',
 		});
 
-		await expect(successMessage).toBeVisible({ timeout: 120000 });
+		await expect(successMessage).toBeVisible({timeout: 120000});
 	}
 
 	if (panelName === 'Module Cleanup Actions') {
@@ -186,9 +192,3 @@ async function executeCleanupActions(page, panelName: string) {
 		}
 	}
 }
-
-const SERVLET_CONTEXT_NAMES = [
-	'com.liferay.amazon.rankings.web',
-	'com.liferay.chat.service',
-	'com.liferay.document.library.file.rank.service',
-];

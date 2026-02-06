@@ -214,6 +214,10 @@ function hasCircularDependency(
 	}
 
 	for (const relationship of objectDefinition.objectRelationships) {
+		if (relationship.deletionType !== 'cascade') {
+			continue;
+		}
+
 		if (
 			relationship.objectDefinitionExternalReferenceCode2 ===
 			mainStructureERC

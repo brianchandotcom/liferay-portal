@@ -196,7 +196,7 @@ export default function refreshReferencedStructures({
 
 				children.set(repeatableGroup.uuid, repeatableGroup);
 			}
-			else {
+			else if (objectRelationship.deletionType === 'cascade') {
 				const referencedStructure = buildReferencedStructure({
 					ancestors,
 					erc: objectRelationship.objectDefinitionExternalReferenceCode2,

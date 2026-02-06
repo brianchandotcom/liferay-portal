@@ -11,4 +11,4 @@
 	portletName="<%= ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_BANNER %>"
 />
 
-<aui:script src="https://storage.googleapis.com/liferaycloud-cdn-product-experience-manager-assets-nonprd/self-hosted-script/product-analytics-script.umd.min.js" type="text/javascript"></aui:script>
+<aui:script src="https://storage.googleapis.com/liferaycloud-cdn-product-experience-manager-assets-prd/self-hosted-script/product-analytics-script.umd.min.js" type="text/javascript"></aui:script>

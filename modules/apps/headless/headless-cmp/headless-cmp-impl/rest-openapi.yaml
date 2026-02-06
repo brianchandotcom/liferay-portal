@@ -5,10 +5,10 @@ components:
                 externalReferenceCode:
                     readOnly: true
                     type: string
-                image:
+                name:
                     readOnly: true
                     type: string
-                name:
+                portrait:
                     readOnly: true
                     type: string
                 type:

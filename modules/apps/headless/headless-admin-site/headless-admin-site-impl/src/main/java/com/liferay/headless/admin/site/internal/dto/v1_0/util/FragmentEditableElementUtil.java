@@ -13,7 +13,6 @@ import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.BackgroundImageFragmentEditableElementValue;
-import com.liferay.headless.admin.site.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentEditableElementValue;
@@ -30,11 +29,7 @@ import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.HTMLFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.ImageFragmentEditableElementValue;
-import com.liferay.headless.admin.site.dto.v1_0.ImageValue;
-import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.ItemImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.LinkFragmentEditableElementValue;
-import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.NoneActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.NotificationActionInteraction;
 import com.liferay.headless.admin.site.dto.v1_0.PageActionInteraction;
@@ -43,13 +38,11 @@ import com.liferay.headless.admin.site.dto.v1_0.TextFragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.dto.v1_0.URLActionInteraction;
-import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -272,7 +265,7 @@ public class FragmentEditableElementUtil {
 									fragmentEditableElement.
 										getFragmentEditableElementValue();
 
-						return _toFragmentImageValueJSONObject(
+						return ImageValueUtil.toFragmentImageValueJSONObject(
 							backgroundImageFragmentEditableElementValue.
 								getBackgroundFragmentImageValue(),
 							layoutStructureItemImporterContext);
@@ -674,97 +667,9 @@ public class FragmentEditableElementUtil {
 									fragmentImage.getLazyLoading());
 							}
 						)))),
-			_toFragmentImageValueJSONObject(
+			ImageValueUtil.toFragmentImageValueJSONObject(
 				fragmentImage.getFragmentImageValue(),
 				layoutStructureItemImporterContext));
-	}
-
-	private static ImageValue _getImageValue(
-			long companyId, long scopeGroupId, Object value)
-		throws Exception {
-
-		JSONObject jsonObject = null;
-
-		if (value instanceof JSONObject) {
-			jsonObject = (JSONObject)value;
-		}
-		else {
-			String valueString = GetterUtil.getString(value);
-
-			if (Validator.isNull(valueString)) {
-				return null;
-			}
-
-			jsonObject = JSONFactoryUtil.safeCreateJSONObject(
-				valueString, true);
-
-			if (jsonObject == null) {
-				return _getURLImageValue(valueString);
-			}
-		}
-
-		if (JSONUtil.isEmpty(jsonObject)) {
-			return null;
-		}
-
-		if (FileEntryUtil.isItemImageValue(jsonObject)) {
-			ItemExternalReference itemExternalReference =
-				FileEntryUtil.getFileEntryItemExternalReference(
-					companyId, jsonObject, scopeGroupId);
-
-			if (itemExternalReference == null) {
-				return null;
-			}
-
-			ItemImageValue itemImageValue = new ItemImageValue();
-
-			itemImageValue.setItemExternalReference(
-				() -> itemExternalReference);
-			itemImageValue.setType(ImageValue.Type.ITEM);
-
-			return itemImageValue;
-		}
-
-		return _getURLImageValue(jsonObject.getString("url"));
-	}
-
-	private static JSONObject _getImageValueJSONObject(
-			ImageValue imageValue,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
-		throws PortalException {
-
-		if (imageValue == null) {
-			return null;
-		}
-
-		if (Objects.equals(imageValue.getType(), ImageValue.Type.ITEM)) {
-			ItemImageValue itemImageValue = (ItemImageValue)imageValue;
-
-			ItemExternalReference itemExternalReference =
-				itemImageValue.getItemExternalReference();
-
-			if ((itemExternalReference == null) ||
-				Validator.isNull(
-					itemExternalReference.getExternalReferenceCode())) {
-
-				return null;
-			}
-
-			return FileEntryUtil.getFileEntryJSONObject(
-				layoutStructureItemImporterContext.getCompanyId(),
-				itemExternalReference.getExternalReferenceCode(),
-				itemExternalReference.getScope(),
-				layoutStructureItemImporterContext.getGroupId());
-		}
-
-		URLImageValue urlImageValue = (URLImageValue)imageValue;
-
-		if (Validator.isNull(urlImageValue.getUrl())) {
-			return null;
-		}
-
-		return JSONUtil.put("url", urlImageValue.getUrl());
 	}
 
 	private static JSONObject _getJSONObject(
@@ -807,19 +712,6 @@ public class FragmentEditableElementUtil {
 		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
 			companyId, textFragmentMappedValue.getFragmentMappedValue(),
 			infoItemServiceRegistry, scopeGroupId);
-	}
-
-	private static URLImageValue _getURLImageValue(String url) {
-		if (Validator.isNull(url)) {
-			return null;
-		}
-
-		URLImageValue urlImageValue = new URLImageValue();
-
-		urlImageValue.setType(URLImageValue.Type.URL);
-		urlImageValue.setUrl(() -> url);
-
-		return urlImageValue;
 	}
 
 	private static ActionFragmentEditableElementValue
@@ -928,8 +820,9 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		FragmentImageValue backgroundFragmentImageValue = _toFragmentImageValue(
-			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		FragmentImageValue backgroundFragmentImageValue =
+			ImageValueUtil.toFragmentImageValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 
 		if (backgroundFragmentImageValue == null) {
 			return null;
@@ -1098,8 +991,9 @@ public class FragmentEditableElementUtil {
 			return null;
 		}
 
-		FragmentImageValue fragmentImageValue = _toFragmentImageValue(
-			companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+		FragmentImageValue fragmentImageValue =
+			ImageValueUtil.toFragmentImageValue(
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 
 		JSONObject configJSONObject = jsonObject.getJSONObject("config");
 
@@ -1168,84 +1062,6 @@ public class FragmentEditableElementUtil {
 			});
 
 		return fragmentImage;
-	}
-
-	private static FragmentImageValue _toFragmentImageValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId)
-		throws Exception {
-
-		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
-			FragmentMappedValue fragmentMappedValue =
-				FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject,
-					scopeGroupId);
-
-			if (fragmentMappedValue == null) {
-				return null;
-			}
-
-			MappedFragmentImageValue mappedFragmentImageValue =
-				new MappedFragmentImageValue();
-
-			mappedFragmentImageValue.setFragmentMappedValue(
-				() -> fragmentMappedValue);
-			mappedFragmentImageValue.setType(FragmentImageValue.Type.MAPPED);
-
-			return mappedFragmentImageValue;
-		}
-
-		Map<String, ImageValue> imageValueMap =
-			LocalizedValueUtil.toLocalizedValues(
-				jsonObject,
-				key -> _getImageValue(
-					companyId, scopeGroupId, jsonObject.get(key)));
-
-		if (MapUtil.isEmpty(imageValueMap)) {
-			return null;
-		}
-
-		DirectFragmentImageValue directFragmentImageValue =
-			new DirectFragmentImageValue();
-
-		directFragmentImageValue.setValue_i18n(() -> imageValueMap);
-		directFragmentImageValue.setType(FragmentImageValue.Type.DIRECT);
-
-		return directFragmentImageValue;
-	}
-
-	private static JSONObject _toFragmentImageValueJSONObject(
-			FragmentImageValue fragmentImageValue,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
-		throws Exception {
-
-		if (fragmentImageValue == null) {
-			return null;
-		}
-
-		if (fragmentImageValue instanceof DirectFragmentImageValue) {
-			DirectFragmentImageValue directFragmentImageValue =
-				(DirectFragmentImageValue)fragmentImageValue;
-
-			return LocalizedValueUtil.toJSONObject(
-				directFragmentImageValue.getValue_i18n(),
-				imageValue -> _getImageValueJSONObject(
-					imageValue, layoutStructureItemImporterContext));
-		}
-
-		if (!(fragmentImageValue instanceof MappedFragmentImageValue)) {
-			return null;
-		}
-
-		MappedFragmentImageValue mappedFragmentImageValue =
-			(MappedFragmentImageValue)fragmentImageValue;
-
-		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
-			layoutStructureItemImporterContext.getCompanyId(),
-			mappedFragmentImageValue.getFragmentMappedValue(),
-			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
-			layoutStructureItemImporterContext.getGroupId());
 	}
 
 	private static FragmentLinkTextValue _toFragmentLinkTextValue(

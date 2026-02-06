@@ -299,7 +299,7 @@ public class LayoutLocalServiceTest {
 				layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getType(), false,
-				layout.getFriendlyURLMap(), layout.isIconImage(), null,
+				layout.getFriendlyURLMap(), layout.hasIconImage(), null,
 				layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
 				layout.getFaviconFileEntryScopeERC(),
 				layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
@@ -401,7 +401,7 @@ public class LayoutLocalServiceTest {
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			layout.isHidden(), friendlyURLMap, layout.isIconImage(), null,
+			layout.isHidden(), friendlyURLMap, layout.hasIconImage(), null,
 			layout.getStyleBookEntryERC(), layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layout.getMasterLayoutPageTemplateEntryERC(), _serviceContext);
@@ -833,7 +833,7 @@ public class LayoutLocalServiceTest {
 			layout.getParentLayoutId(), layout.getNameMap(),
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
-			layout.isHidden(), friendlyURLMap, layout.getIconImage(), null,
+			layout.isHidden(), friendlyURLMap, layout.hasIconImage(), null,
 			null, null, null, null, serviceContext);
 
 		Assert.assertEquals(
@@ -891,7 +891,7 @@ public class LayoutLocalServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, layout.getStyleBookEntryERC(),
+			layout.hasIconImage(), null, layout.getStyleBookEntryERC(),
 			layout.getFaviconFileEntryERC(),
 			layout.getFaviconFileEntryScopeERC(),
 			layoutPageTemplateEntry.getExternalReferenceCode(),
@@ -1083,7 +1083,7 @@ public class LayoutLocalServiceTest {
 			layout.getTitleMap(), layout.getDescriptionMap(),
 			layout.getKeywordsMap(), layout.getRobotsMap(), layout.getType(),
 			layout.isHidden(), layout.getFriendlyURLMap(),
-			layout.getIconImage(), null, null, null, null, null,
+			layout.hasIconImage(), null, null, null, null, null,
 			serviceContext);
 
 		Layout updatedLayout = _layoutLocalService.getLayout(layout.getPlid());

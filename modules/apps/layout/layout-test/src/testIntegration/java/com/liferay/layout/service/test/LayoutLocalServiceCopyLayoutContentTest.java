@@ -839,8 +839,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		Layout targetLayout = LayoutTestUtil.addTypePortletLayout(
 			_group.getGroupId(), StringPool.BLANK);
 
-		Assert.assertTrue(sourceLayout.isIconImage());
-		Assert.assertFalse(targetLayout.isIconImage());
+		Assert.assertTrue(sourceLayout.hasIconImage());
+		Assert.assertFalse(targetLayout.hasIconImage());
 
 		Assert.assertNotEquals(
 			sourceLayout.getIconImageId(), targetLayout.getIconImageId());
@@ -848,8 +848,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 		targetLayout = _layoutLocalService.copyLayoutContent(
 			sourceLayout, targetLayout);
 
-		Assert.assertTrue(sourceLayout.isIconImage());
-		Assert.assertTrue(targetLayout.isIconImage());
+		Assert.assertTrue(sourceLayout.hasIconImage());
+		Assert.assertTrue(targetLayout.hasIconImage());
 
 		Image sourceImage = _imageLocalService.getImage(
 			sourceLayout.getIconImageId());

@@ -172,8 +172,7 @@ public class RenderLayoutStructureDisplayContext {
 			linkJSONObject = localizedJSONObject;
 		}
 
-		String value = _getFieldValue(
-			_getInfoItemReference(linkJSONObject), linkJSONObject);
+		String value = _getFieldValue(linkJSONObject);
 
 		if (Validator.isNotNull(value)) {
 			return value;
@@ -604,9 +603,6 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
 
-		InfoItemReference infoItemReference = _getInfoItemReference(
-			backgroundImageJSONObject);
-
 		long fileEntryId = _getFileEntryId(backgroundImageJSONObject);
 
 		if (fileEntryId != 0) {
@@ -616,7 +612,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		String backgroundImageURL = _getBackgroundImage(
-			infoItemReference, backgroundImageJSONObject);
+			backgroundImageJSONObject);
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			sb.append("--lfr-background-image-");
@@ -741,14 +737,12 @@ public class RenderLayoutStructureDisplayContext {
 		return false;
 	}
 
-	private String _getBackgroundImage(
-		InfoItemReference infoItemReference, JSONObject jsonObject) {
-
+	private String _getBackgroundImage(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
 
-		String value = _getFieldValue(infoItemReference, jsonObject);
+		String value = _getFieldValue(jsonObject);
 
 		if (Validator.isNotNull(value)) {
 			return value;
@@ -763,9 +757,7 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private String _getFieldValue(
-		InfoItemReference infoItemReference, JSONObject jsonObject) {
-
+	private String _getFieldValue(JSONObject jsonObject) {
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
@@ -796,7 +788,7 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			return _getValue(fieldId, infoItemReference);
+			return _getValue(fieldId, _getInfoItemReference(jsonObject));
 		}
 
 		return StringPool.BLANK;

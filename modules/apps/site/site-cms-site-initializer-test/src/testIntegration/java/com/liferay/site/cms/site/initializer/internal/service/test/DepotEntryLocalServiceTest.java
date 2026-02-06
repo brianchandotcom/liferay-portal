@@ -91,32 +91,22 @@ public class DepotEntryLocalServiceTest {
 
 		_assertObjectEntryFolders(_addDepotEntry(DepotConstants.TYPE_SPACE), 2);
 
-		Group group = GroupTestUtil.addGroup();
-
-		group.setType(GroupConstants.TYPE_DEPOT);
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			group.getTypeSettingsProperties();
-
-		typeSettingsUnicodeProperties.put(
-			"depotEntryType", String.valueOf(DepotConstants.TYPE_SPACE));
-
-		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
-
-		group = _groupLocalService.updateGroup(group);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		serviceContext.setAttribute("staging", Boolean.TRUE);
+		_assertObjectEntryFolders(
+			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
 
 		_assertObjectEntryFolders(
-			_depotEntryLocalService.addDepotEntry(group, serviceContext), 2);
+			_addStagedDepotEntry(DepotConstants.TYPE_SPACE), 2);
 
 		_assertCMSDefaultPermissions(
 			_addDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY));
 
 		_assertCMSDefaultPermissions(_addDepotEntry(DepotConstants.TYPE_SPACE));
+
+		_assertCMSDefaultPermissions(
+			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY));
+
+		_assertCMSDefaultPermissions(
+			_addStagedDepotEntry(DepotConstants.TYPE_SPACE));
 	}
 
 	@Test
@@ -153,6 +143,29 @@ public class DepotEntryLocalServiceTest {
 		_depotEntries.add(depotEntry);
 
 		return depotEntry;
+	}
+
+	private DepotEntry _addStagedDepotEntry(int depotType) throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		group.setType(GroupConstants.TYPE_DEPOT);
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			group.getTypeSettingsProperties();
+
+		typeSettingsUnicodeProperties.put(
+			"depotEntryType", String.valueOf(depotType));
+
+		group.setTypeSettingsProperties(typeSettingsUnicodeProperties);
+
+		group = _groupLocalService.updateGroup(group);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAttribute("staging", Boolean.TRUE);
+
+		return _depotEntryLocalService.addDepotEntry(group, serviceContext);
 	}
 
 	private void _assertCMSDefaultPermissions(DepotEntry depotEntry)

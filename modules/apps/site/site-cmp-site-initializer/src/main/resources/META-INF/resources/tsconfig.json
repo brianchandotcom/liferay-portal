@@ -1,5 +1,5 @@
 {
-	"@generated": "014474a66b9be11774585c735eb4ccbd12481a62",
+	"@generated": "c7b8a112d751f6e26dafc1d2cd5b5aa3d96d5ba6",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -49,6 +49,12 @@
 			],
 			"document-library-video": [
 				"../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"dynamic-data-mapping-form-field-type": [
+				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/index.ts"
+			],
+			"dynamic-data-mapping-form-field-type/api": [
+				"../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/js/api/api.ts"
 			],
 			"frontend-editor-ckeditor-web": [
 				"../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"
@@ -117,6 +123,9 @@
 		},
 		{
 			"path": "../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../dynamic-data-mapping/dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/tsconfig.json"

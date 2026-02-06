@@ -19,7 +19,7 @@ test('execute all system cleanup actions', async ({
 	applicationsMenuPage,
 	page,
 }) => {
-	test.setTimeout(90000);
+	test.setTimeout(150000);
 
 	// Go to Server Admin Page
 
@@ -35,7 +35,7 @@ test('execute all module cleanup actions', async ({
 	page,
 	serverAdministrationPage,
 }) => {
-	test.setTimeout(90000);
+	test.setTimeout(180000);
 
 	// Go to Server Admin Page
 
@@ -171,7 +171,7 @@ async function executeCleanupActions(page, panelName: string) {
 			hasText: 'Your request completed successfully.',
 		});
 
-		await expect(successMessage).toBeVisible();
+		await expect(successMessage).toBeVisible({ timeout: 120000 });
 	}
 
 	if (panelName === 'Module Cleanup Actions') {

@@ -6,6 +6,7 @@
 package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 
 import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributor;
+import com.liferay.frontend.js.web.internal.resource.handler.JavaScriptFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringPool;
@@ -48,31 +49,59 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
 		writer.write(StringPool.QUOTE);
 
-		if (_hashedFilesRegistry.getCachingStrategy(httpServletRequest) ==
-				CachingStrategy.DO_NOT_USE_HASHES) {
+		CachingStrategy cachingStrategy =
+			_hashedFilesRegistry.getCachingStrategy(httpServletRequest);
 
-			return;
+		if (cachingStrategy == CachingStrategy.USE_ONE_HASH_PER_FILE) {
+			_hashedFilesRegistry.forEachHashedFileURI(
+				(unhashedFileURI, hashedFileURI) -> {
+					if (!unhashedFileURI.endsWith(".js")) {
+						return;
+					}
+
+					try {
+						writer.write(", \"");
+						writer.write(baseURL);
+						writer.write(unhashedFileURI);
+						writer.write("\": \"");
+						writer.write(baseURL);
+						writer.write(hashedFileURI);
+						writer.write(StringPool.QUOTE);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				});
 		}
+		else if (cachingStrategy ==
+					CachingStrategy.USE_ONE_HASH_PER_WEB_CONTEXT) {
 
-		_hashedFilesRegistry.forEach(
-			(unhashedFileURI, hashedFileURI) -> {
-				if (!unhashedFileURI.endsWith(".js")) {
-					return;
-				}
-
-				try {
-					writer.write(", \"");
-					writer.write(baseURL);
-					writer.write(unhashedFileURI);
-					writer.write("\": \"");
-					writer.write(baseURL);
-					writer.write(hashedFileURI);
-					writer.write(StringPool.QUOTE);
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
-			});
+			_hashedFilesRegistry.forEachServletContextHash(
+				(servletContextName, hash) -> {
+					try {
+						writer.write(", \"");
+						writer.write(baseURL);
+						writer.write(
+							JavaScriptFrontendResourceRequestHandler.
+								getBundleHashedFileURIPrefix(_portal));
+						writer.write(servletContextName);
+						writer.write(StringPool.SLASH);
+						writer.write("\": \"");
+						writer.write(baseURL);
+						writer.write(
+							JavaScriptFrontendResourceRequestHandler.
+								getBundleHashedFileURIPrefix(_portal));
+						writer.write(servletContextName);
+						writer.write(StringPool.OPEN_PARENTHESIS);
+						writer.write(hash);
+						writer.write(")/");
+						writer.write(StringPool.QUOTE);
+					}
+					catch (Exception exception) {
+						throw new RuntimeException(exception);
+					}
+				});
+		}
 	}
 
 	@Override

@@ -5,11 +5,14 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.facet;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.facet.BaseClassicModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
@@ -23,12 +26,25 @@ public class ClassicModifiedFacetTest extends BaseClassicModifiedFacetTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() {
+		_defaultFacetProcessor = ReflectionTestUtil.getAndSetFieldValue(
+			DefaultFacetTranslator.class, "_defaultFacetProcessor",
+			RangeFacetProcessor.INSTANCE);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		ReflectionTestUtil.setFieldValue(
+			DefaultFacetTranslator.class, "_defaultFacetProcessor",
+			_defaultFacetProcessor);
+	}
+
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return LiferayElasticsearchIndexingFixtureFactory.builder(
-		).facetProcessor(
-			new RangeFacetProcessor()
-		).build();
+		return LiferayElasticsearchIndexingFixtureFactory.getInstance();
 	}
+
+	private static Object _defaultFacetProcessor;
 
 }

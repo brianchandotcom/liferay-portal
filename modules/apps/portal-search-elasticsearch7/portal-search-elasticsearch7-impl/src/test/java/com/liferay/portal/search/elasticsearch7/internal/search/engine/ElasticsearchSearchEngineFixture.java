@@ -96,8 +96,6 @@ public class ElasticsearchSearchEngineFixture implements SearchEngineFixture {
 	public void tearDown() throws Exception {
 		_elasticsearchConnectionFixture.destroyNode();
 
-		_elasticsearchEngineAdapterFixture.tearDown();
-
 		if (_indexFactory != null) {
 			_indexFactory.close();
 

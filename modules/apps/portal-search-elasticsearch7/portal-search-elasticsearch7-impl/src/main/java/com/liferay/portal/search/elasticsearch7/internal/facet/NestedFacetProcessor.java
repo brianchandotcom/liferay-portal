@@ -27,18 +27,15 @@ import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBu
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jorge Díaz
  * @author Petteri Karttunen
  */
-@Component(
-	property = "class.name=com.liferay.portal.search.internal.facet.NestedFacetImpl",
-	service = FacetProcessor.class
-)
 public class NestedFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
+
+	public static final NestedFacetProcessor INSTANCE =
+		new NestedFacetProcessor();
 
 	@Override
 	public AggregationBuilder processFacet(Facet facet) {

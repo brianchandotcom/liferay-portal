@@ -19,23 +19,16 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
  * @author Tibor Lipusz
  */
-@Component(
-	property = {
-		"class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
-		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
-		"class.name=com.liferay.portal.search.internal.facet.RangeFacetImpl"
-	},
-	service = FacetProcessor.class
-)
 public class RangeFacetProcessor
 	implements FacetProcessor<SearchRequestBuilder> {
+
+	public static final RangeFacetProcessor INSTANCE =
+		new RangeFacetProcessor();
 
 	@Override
 	public AggregationBuilder processFacet(Facet facet) {

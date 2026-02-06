@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Session} from '../legacy/session';
 import DefaultEventHandler from './DefaultEventHandler.es';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
 import DynamicSelect from './DynamicSelect';
@@ -21,6 +20,7 @@ import {
 } from './component.es';
 import debounce, {cancelDebounce} from './debounce/debounce.es';
 import delegate from './delegate/delegate.es';
+import {Session} from './session';
 
 import './dom_task_runner';
 
@@ -127,6 +127,8 @@ import {loadModule} from './utils/client_extensions/loadModule';
 import './workflow';
 import zIndex from './zIndex';
 
+const SCRIPT_URL = document.currentScript.src;
+
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {BREAKPOINTS} from 'frontend-js-web'`
  */
@@ -197,23 +199,23 @@ Liferay.Util.addParams = addParams;
  * Utils added to global namespace to be consumed by portal-web
  */
 Liferay.Util.AutoSize = AutoSize;
+Liferay.Util.checkAll = (...args) => {
+	import(
+		Liferay.FrontendESM.buildURL(SCRIPT_URL, 'frontend-js-web', 'legacy')
+	).then(({checkAll}) => {
+		checkAll(...args);
+	});
+};
+Liferay.Util.checkAllBox = (...args) => {
+	import(
+		Liferay.FrontendESM.buildURL(SCRIPT_URL, 'frontend-js-web', 'legacy')
+	).then(({checkAllBox}) => {
+		checkAllBox(...args);
+	});
+};
 Liferay.Util.debounce = debounce;
 Liferay.Util.delegate = delegate;
 Liferay.Util.DynamicInlineScroll = DynamicInlineScroll;
-Liferay.Util.checkAll = (...args) => {
-	import('frontend-js-web/legacy')
-		.then(({checkAll}) => {
-			checkAll(...args);
-		})
-		.catch(() => {});
-};
-Liferay.Util.checkAllBox = (...args) => {
-	import('frontend-js-web/legacy')
-		.then(({checkAllBox}) => {
-			checkAllBox(...args);
-		})
-		.catch(() => {});
-};
 Liferay.Util.runScriptsInElement = runScriptsInElement;
 
 /**
@@ -368,24 +370,6 @@ Liferay.Util.unescape = (string) => {
 
 Liferay.Util.unescapeHTML = unescapeHTML;
 
-Liferay.Util.checkAll = (...args) => {
-	import(
-		themeDisplay.getCDNHost() +
-			themeDisplay.getPathContext() +
-			'/o/frontend-js-web/__liferay__/legacy.js'
-	).then(({checkAll}) => {
-		checkAll(...args);
-	});
-};
-Liferay.Util.checkAllBox = (...args) => {
-	import(
-		themeDisplay.getCDNHost() +
-			themeDisplay.getPathContext() +
-			'/o/frontend-js-web/__liferay__/legacy.js'
-	).then(({checkAllBox}) => {
-		checkAllBox(...args);
-	});
-};
 Liferay.Util.Cookie = Cookie;
 
 Liferay.Util.LocalStorage = localStorage;

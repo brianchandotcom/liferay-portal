@@ -7,6 +7,8 @@ import EventEmitter from './events/EventEmitter';
 import throttle from './throttle.es';
 import fetch from './util/fetch.es';
 
+const SCRIPT_URL = document.currentScript.src;
+
 /**
  * Options
  *
@@ -812,9 +814,11 @@ SideNavigation.prototype = {
 		const instance = this;
 
 		import(
-			themeDisplay.getCDNHost() +
-				themeDisplay.getPathContext() +
-				'/o/accessibility-settings-state-web/__liferay__/index.js'
+			Liferay.FrontendESM.buildURL(
+				SCRIPT_URL,
+				'accessibility-settings-state-web',
+				'index'
+			)
 		).then(({isReducedMotion}) => {
 			instance.isReducedMotion = isReducedMotion;
 		});

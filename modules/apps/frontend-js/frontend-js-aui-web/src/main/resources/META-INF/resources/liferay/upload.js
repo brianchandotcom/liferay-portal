@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const SCRIPT_URL = document.currentScript.src;
+
 AUI.add(
 	'liferay-upload',
 	(A) => {
@@ -590,8 +592,11 @@ AUI.add(
 					const instance = this;
 
 					import(
-						themeDisplay.getPathContext() +
-							'/o/frontend-js-web/__liferay__/legacy.js'
+						Liferay.FrontendESM.buildURL(
+							SCRIPT_URL,
+							'frontend-js-web',
+							'legacy'
+						)
 					).then(({checkAll}) => {
 						checkAll(
 							instance._fileListSelector,
@@ -793,8 +798,11 @@ AUI.add(
 
 					if (instance.get('multipleFiles')) {
 						import(
-							themeDisplay.getPathContext() +
-								'/o/frontend-js-web/__liferay__/legacy.js'
+							Liferay.FrontendESM.buildURL(
+								SCRIPT_URL,
+								'frontend-js-web',
+								'legacy'
+							)
 						).then(({checkAll}) => {
 							checkAll(
 								instance._fileListSelector,

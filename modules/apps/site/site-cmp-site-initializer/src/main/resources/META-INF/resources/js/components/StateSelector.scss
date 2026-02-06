@@ -1,11 +1,5 @@
 .lfr-cmp__state-selector {
 	&--small {
-		display: inline-flex;
-		max-width: 12.5rem;
-		min-height: unset !important;
-		transition: opacity 0.2s;
-		width: 11vw;
-
 		.label:not(.label-item) {
 			height: 16px;
 			margin: 0;

@@ -58,4 +58,14 @@
 			width: 11vw;
 		}
 	}
+
+	.lfr-cmp__state-selector {
+		&--small {
+			display: inline-flex;
+			max-width: 12.5rem;
+			min-height: unset !important;
+			transition: opacity 0.2s;
+			width: 11vw;
+		}
+	}
 }

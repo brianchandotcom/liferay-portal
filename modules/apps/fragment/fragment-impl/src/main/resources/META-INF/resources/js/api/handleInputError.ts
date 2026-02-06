@@ -20,14 +20,16 @@ export function handleInputLengthError({
 	input,
 	lengthInfoContainer,
 }: {
-	currentLength: HTMLElement;
+	currentLength?: HTMLElement;
 	event: KeyboardEvent;
 	input: {attributes: {maxLength: number}};
 	lengthInfoContainer: HTMLParagraphElement;
 } & ErrorArgs) {
 	const length = (event.target as HTMLInputElement).value.length;
 
-	currentLength.innerText = String(length);
+	if (currentLength) {
+		currentLength.innerText = String(length);
+	}
 
 	const params = {
 		additionalMessage: `: ${length} / ${input.attributes.maxLength}`,

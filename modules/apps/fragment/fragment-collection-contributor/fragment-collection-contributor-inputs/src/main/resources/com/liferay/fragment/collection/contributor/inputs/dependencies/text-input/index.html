@@ -15,9 +15,11 @@
 			[/#if]
 		</div>
 
-		<p class="mt-1 text-secondary[#if !configuration.showCharactersCount] d-none[/#if]" id="${fragmentElementId}-length-info">
-			<span id="${fragmentElementId}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
-		</p>
+		[#if configuration.showCharactersCount]
+			<p class="mt-1 text-secondary" id="${fragmentElementId}-length-info">
+				<span id="${fragmentElementId}-current-length">0</span> / [#if input.attributes.maxLength??]${input.attributes.maxLength}[/#if]
+			</p>
+		[/#if]
 
 		<p class="font-weight-semi-bold mt-1 text-danger[#if !input.errorMessage?has_content] sr-only[/#if]" id="${fragmentElementId}-text-input-error">
 			[@clay["icon"] symbol="info-circle" /]

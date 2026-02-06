@@ -28,7 +28,9 @@ function main() {
 					focusInput(inputElement);
 				}
 
-				currentLength.innerText = inputElement.value.length;
+				if (currentLength) {
+					currentLength.innerText = inputElement.value.length;
+				}
 
 				if (
 					!hasError &&

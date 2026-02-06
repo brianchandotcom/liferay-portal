@@ -28,7 +28,9 @@ function main() {
 					focusInput(textarea);
 				}
 
-				currentLength.innerText = textarea.value.length;
+				if (currentLength) {
+					currentLength.innerText = textarea.value.length;
+				}
 
 				if (
 					!hasError &&

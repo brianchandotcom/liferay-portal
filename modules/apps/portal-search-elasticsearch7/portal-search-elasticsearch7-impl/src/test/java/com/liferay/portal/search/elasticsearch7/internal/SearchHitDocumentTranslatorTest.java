@@ -40,10 +40,7 @@ public class SearchHitDocumentTranslatorTest {
 				).build()
 			).build());
 
-		SearchHitDocumentTranslator searchHitDocumentTranslator =
-			new SearchHitDocumentTranslatorImpl();
-
-		searchHitDocumentTranslator.translate(searchHit);
+		SearchHitDocumentTranslator.INSTANCE.translate(searchHit);
 	}
 
 }

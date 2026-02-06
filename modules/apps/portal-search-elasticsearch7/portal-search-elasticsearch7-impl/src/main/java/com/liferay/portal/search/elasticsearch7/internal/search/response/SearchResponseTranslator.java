@@ -59,12 +59,10 @@ public class SearchResponseTranslator {
 
 	public SearchResponseTranslator(
 		GroupByResponseFactory groupByResponseFactory,
-		SearchHitDocumentTranslator searchHitDocumentTranslator,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsResultsTranslator statsResultsTranslator) {
 
 		_groupByResponseFactory = groupByResponseFactory;
-		_searchHitDocumentTranslator = searchHitDocumentTranslator;
 		_statsRequestBuilderFactory = statsRequestBuilderFactory;
 		_statsResultsTranslator = statsResultsTranslator;
 	}
@@ -180,7 +178,8 @@ public class SearchResponseTranslator {
 	private Document _processSearchHit(
 		SearchHit searchHit, String alternateUidFieldName) {
 
-		Document document = _searchHitDocumentTranslator.translate(searchHit);
+		Document document = SearchHitDocumentTranslator.INSTANCE.translate(
+			searchHit);
 
 		_populateUID(document, alternateUidFieldName);
 
@@ -333,7 +332,6 @@ public class SearchResponseTranslator {
 	}
 
 	private final GroupByResponseFactory _groupByResponseFactory;
-	private final SearchHitDocumentTranslator _searchHitDocumentTranslator;
 	private final StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private final StatsResultsTranslator _statsResultsTranslator;
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

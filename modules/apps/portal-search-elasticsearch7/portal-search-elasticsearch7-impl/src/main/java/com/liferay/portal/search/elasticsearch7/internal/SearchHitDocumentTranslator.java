@@ -6,14 +6,163 @@
 package com.liferay.portal.search.elasticsearch7.internal;
 
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+
+import org.elasticsearch.common.document.DocumentField;
 import org.elasticsearch.search.SearchHit;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface SearchHitDocumentTranslator {
+public class SearchHitDocumentTranslator {
 
-	public Document translate(SearchHit searchHit);
+	public static final SearchHitDocumentTranslator INSTANCE =
+		new SearchHitDocumentTranslator();
+
+	public Document translate(SearchHit searchHit) {
+		Document document = new DocumentImpl();
+
+		Map<String, Object> documentSourceMap = searchHit.getSourceAsMap();
+
+		if (MapUtil.isNotEmpty(documentSourceMap)) {
+			for (String fieldName : documentSourceMap.keySet()) {
+				_addFieldFromSource(document, fieldName, documentSourceMap);
+			}
+		}
+
+		Map<String, DocumentField> documentFields = searchHit.getFields();
+
+		if (MapUtil.isNotEmpty(documentFields)) {
+			for (String fieldName : documentFields.keySet()) {
+				if (document.getField(fieldName) == null) {
+					_addField(document, fieldName, documentFields);
+				}
+			}
+		}
+
+		return document;
+	}
+
+	protected Field translate(DocumentField documentField) {
+		return translate(documentField.getName(), documentField.getValues());
+	}
+
+	protected Field translate(String fieldName, Object value) {
+		if (value instanceof Collection) {
+			Collection<Object> values = (Collection)value;
+
+			return new Field(
+				fieldName,
+				ArrayUtil.toStringArray(values.toArray(new Object[0])));
+		}
+
+		return new Field(fieldName, String.valueOf(value));
+	}
+
+	private SearchHitDocumentTranslator() {
+	}
+
+	private void _addField(
+		Document document, String fieldName,
+		Map<String, DocumentField> documentFields) {
+
+		Field field = _getField(fieldName, documentFields);
+
+		if (field != null) {
+			document.add(field);
+		}
+	}
+
+	private void _addFieldFromSource(
+		Document document, String fieldName,
+		Map<String, Object> documentSourceMap) {
+
+		Field field = _getFieldFromSource(fieldName, documentSourceMap);
+
+		if (field != null) {
+			document.add(field);
+		}
+	}
+
+	private Field _getField(
+		String fieldName, Map<String, DocumentField> documentFields) {
+
+		if (_isInvalidFieldName(fieldName)) {
+			return null;
+		}
+
+		DocumentField documentField = documentFields.get(fieldName);
+
+		if (documentFields.containsKey(fieldName.concat(".geopoint"))) {
+			return _translateGeoPoint(documentField);
+		}
+
+		return translate(documentField);
+	}
+
+	private Field _getFieldFromSource(
+		String fieldName, Map<String, Object> documentSourceMap) {
+
+		if (_isInvalidFieldName(fieldName)) {
+			return null;
+		}
+
+		Object value = documentSourceMap.get(fieldName);
+
+		if (documentSourceMap.containsKey(fieldName.concat(".geopoint"))) {
+			return _translateGeoPoint(fieldName, value);
+		}
+
+		return translate(fieldName, value);
+	}
+
+	private GeoLocationPoint _getGeoLocationPoint(Object value) {
+		if (value instanceof Map) {
+			Map<String, Object> map = (Map<String, Object>)value;
+
+			if (MapUtil.isEmpty(map) || !map.containsKey("coordinates")) {
+				return null;
+			}
+
+			List<Double> list = (List<Double>)map.get("coordinates");
+
+			return new GeoLocationPoint(list.get(1), list.get(0));
+		}
+
+		String[] values = StringUtil.split(String.valueOf(value));
+
+		return new GeoLocationPoint(
+			Double.valueOf(values[0]), Double.valueOf(values[1]));
+	}
+
+	private boolean _isInvalidFieldName(String fieldName) {
+		if (fieldName.endsWith(".geopoint") || fieldName.equals("_ignored")) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private Field _translateGeoPoint(DocumentField documentField) {
+		return _translateGeoPoint(
+			documentField.getName(), documentField.getValue());
+	}
+
+	private Field _translateGeoPoint(String fieldName, Object value) {
+		Field field = new Field(fieldName);
+
+		field.setGeoLocationPoint(_getGeoLocationPoint(value));
+
+		return field;
+	}
 
 }

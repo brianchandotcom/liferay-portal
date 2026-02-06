@@ -13,7 +13,6 @@ import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
-import com.liferay.portal.search.elasticsearch7.internal.SearchHitDocumentTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultsTranslator;
@@ -104,8 +103,8 @@ public class SearchSearchResponseAssemblerImpl
 	@Activate
 	protected void activate() {
 		_searchResponseTranslator = new SearchResponseTranslator(
-			_groupByResponseFactory, _searchHitDocumentTranslator,
-			_statsRequestBuilderFactory, _statsResultsTranslator);
+			_groupByResponseFactory, _statsRequestBuilderFactory,
+			_statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -215,9 +214,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private SearchHitBuilderFactory _searchHitBuilderFactory;
-
-	@Reference
-	private SearchHitDocumentTranslator _searchHitDocumentTranslator;
 
 	@Reference
 	private SearchHitsBuilderFactory _searchHitsBuilderFactory;

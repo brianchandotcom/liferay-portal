@@ -166,7 +166,7 @@ public class OpenIdConnectTokenRequestUtilTest {
 			OpenIdConnectTokenRequestUtil.request(
 				_authenticationSuccessResponse, _codeVerifier, _nonce,
 				_oidcClientInformation, _oidcProviderMetadata,
-				URI.create("http://localhost:63636"),
+				URI.create("http://localhost:63636"), 1000,
 				_TOKEN_REQUEST_PARAMETERS);
 
 			Assert.fail();
@@ -179,7 +179,7 @@ public class OpenIdConnectTokenRequestUtilTest {
 			_oidcTokens,
 			OpenIdConnectTokenRequestUtil.request(
 				_oidcClientInformation, _oidcProviderMetadata, _refreshToken,
-				_TOKEN_REQUEST_PARAMETERS));
+				1000, _TOKEN_REQUEST_PARAMETERS));
 	}
 
 	private HTTPRequest _setUpHttpRequest() throws Exception {

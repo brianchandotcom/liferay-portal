@@ -113,6 +113,9 @@ public class DepotEntryLocalServiceTest {
 		_assertObjectEntryFolders(
 			_depotEntryLocalService.addDepotEntry(group, serviceContext), 2);
 
+		_assertCMSDefaultPermissions(
+			_addDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY));
+
 		_assertCMSDefaultPermissions(_addDepotEntry(DepotConstants.TYPE_SPACE));
 	}
 
@@ -161,6 +164,13 @@ public class DepotEntryLocalServiceTest {
 			depotEntry.getCompanyId(), depotEntry.getUserId(),
 			group.getExternalReferenceCode(), depotEntry.getModelClassName(),
 			_filterFactory);
+
+		if (depotEntry.getType() == DepotConstants.TYPE_ASSET_LIBRARY) {
+			Assert.assertTrue(
+				jsonObject1.toString(), JSONUtil.isEmpty(jsonObject1));
+
+			return;
+		}
 
 		JSONObject jsonObject2 = jsonObject1.getJSONObject(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS);

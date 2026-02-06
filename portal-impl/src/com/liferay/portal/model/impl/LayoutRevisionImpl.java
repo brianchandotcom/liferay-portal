@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutBranch;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
@@ -132,12 +134,18 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
-	public boolean getIconImage() {
-		if (getIconImageId() > 0) {
-			return true;
+	public Image getIconImage() {
+		Image iconImage = null;
+
+		if (hasIconImage()) {
+			iconImage = ImageLocalServiceUtil.fetchImage(getIconImageId());
+
+			if ((iconImage == null) && _log.isWarnEnabled()) {
+				_log.warn("Unable to get image with ID " + getIconImageId());
+			}
 		}
 
-		return false;
+		return iconImage;
 	}
 
 	@Override
@@ -278,6 +286,15 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
+	public boolean hasIconImage() {
+		if (getIconImageId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isContentDisplayPage() {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			getTypeSettingsProperties();
@@ -307,11 +324,6 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			(LayoutTypePortlet)layout.getLayoutType();
 
 		return layoutTypePortlet.isCustomizable();
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return getIconImage();
 	}
 
 	@Override

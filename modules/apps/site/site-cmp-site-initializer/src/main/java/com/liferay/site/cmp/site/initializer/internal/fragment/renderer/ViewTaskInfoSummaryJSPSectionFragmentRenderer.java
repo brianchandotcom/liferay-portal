@@ -6,18 +6,14 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.info.constants.InfoDisplayWebKeys;
-import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectStateFlowLocalService;
-import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.display.context.ViewTaskInfoSummarySectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -40,19 +36,17 @@ public class ViewTaskInfoSummaryJSPSectionFragmentRenderer
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
-		if (!(object instanceof ObjectEntry)) {
+		if (objectEntry == null) {
 			return null;
 		}
 
 		return new ViewTaskInfoSummarySectionDisplayContext(
 			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE),
-			_listTypeEntryLocalService, (ObjectEntry)object,
-			_objectFieldLocalService, _objectStateFlowLocalService,
-			_objectStateLocalService,
+			objectEntry,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -68,18 +62,6 @@ public class ViewTaskInfoSummaryJSPSectionFragmentRenderer
 	}
 
 	@Reference
-	private ListTypeEntryLocalService _listTypeEntryLocalService;
-
-	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
-
-	@Reference
-	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private ObjectStateFlowLocalService _objectStateFlowLocalService;
-
-	@Reference
-	private ObjectStateLocalService _objectStateLocalService;
 
 }

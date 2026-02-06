@@ -141,8 +141,6 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 		_deleteIndex();
 
 		_documentFixture.tearDown();
-
-		_searchRequestExecutorFixture.tearDown();
 	}
 
 	@Test

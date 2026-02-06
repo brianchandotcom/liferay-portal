@@ -128,7 +128,7 @@ function GeneralTab({
 
 				<Picker
 					aria-describedby={feedbackId}
-					disabled={disabled}
+					disabled={isPublished || disabled}
 					id={pickerId}
 					items={getItems(objectDefinitions, mainStructureERC)}
 					messages={{
@@ -164,7 +164,7 @@ function GeneralTab({
 			<ClayForm.Group className="mb-3">
 				<ClayCheckbox
 					checked={relatedContent.multiselection}
-					disabled={disabled || isPublished}
+					disabled={isPublished || disabled}
 					label={Liferay.Language.get('multiselection')}
 					onChange={(event) => {
 						dispatch({

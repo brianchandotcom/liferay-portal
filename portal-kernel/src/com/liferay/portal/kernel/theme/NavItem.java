@@ -335,7 +335,7 @@ public class NavItem implements Serializable {
 	}
 
 	public String iconURL() throws Exception {
-		if ((_layout == null) || !_layout.hasIconImage()) {
+		if ((_layout == null) || (_layout.getIconImage() == null)) {
 			return StringPool.BLANK;
 		}
 

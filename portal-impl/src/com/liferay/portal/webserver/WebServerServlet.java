@@ -505,8 +505,9 @@ public class WebServerServlet extends HttpServlet {
 				httpServletRequest.getPathInfo());
 
 			if (path.startsWith("/layout_icon") || path.startsWith("/logo")) {
-				Layout layout = LayoutLocalServiceUtil.fetchLayoutByIconImageId(
-					true, imageId);
+				Layout layout =
+					LayoutLocalServiceUtil.fetchLayoutByIconImageERC(
+						true, image.getExternalReferenceCode());
 
 				if (layout != null) {
 					PermissionChecker permissionChecker = _getPermissionChecker(

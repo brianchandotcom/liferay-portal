@@ -77,8 +77,7 @@
 											"fragmentFields": [
 											],
 											"fragmentStyle": {
-												"marginBottom": "5",
-												"marginLeft": "-16px"
+												"marginBottom": "5"
 											},
 											"indexed": true
 										},

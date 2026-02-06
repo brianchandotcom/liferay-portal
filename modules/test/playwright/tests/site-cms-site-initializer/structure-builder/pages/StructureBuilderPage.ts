@@ -18,8 +18,7 @@ export const FIELD_TYPES = [
 	'Long Text',
 	'Rich Text',
 	'Decimal',
-	'Single Select',
-	'Multiselect',
+	'Select from List',
 	'Numeric',
 	'Date',
 	'Date and Time',
@@ -181,6 +180,7 @@ export class StructureBuilderPage {
 		label,
 		localizable,
 		mandatory,
+		multiselection,
 		name,
 		picklist,
 		requestFile,
@@ -189,6 +189,7 @@ export class StructureBuilderPage {
 		label?: string;
 		localizable?: boolean;
 		mandatory?: boolean;
+		multiselection?: boolean;
 		name?: string;
 		picklist?: string;
 		requestFile?: 'computer' | 'document-library';
@@ -241,6 +242,17 @@ export class StructureBuilderPage {
 
 		if (mandatory !== undefined && !(await mandatoryToggle.isChecked())) {
 			await mandatoryToggle.click();
+		}
+
+		const multiselectionToggle = this.page.getByRole('checkbox', {
+			name: 'Multiselection',
+		});
+
+		if (
+			multiselection !== undefined &&
+			!(await multiselectionToggle.isChecked())
+		) {
+			await multiselectionToggle.click();
 		}
 
 		if (requestFile !== undefined) {

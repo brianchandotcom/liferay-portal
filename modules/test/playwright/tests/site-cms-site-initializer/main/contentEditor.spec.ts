@@ -1528,10 +1528,11 @@ test(
 
 		// Add multiselect field
 
-		await structureBuilderPage.addField('Multiselect');
+		await structureBuilderPage.addField('Select from List');
 
 		await structureBuilderPage.changeFieldSettings({
-			label: 'Multiselect',
+			label: 'Select from List',
+			multiselection: true,
 			picklist: picklistName,
 		});
 

@@ -99,12 +99,15 @@ test(
 
 		// Add a Single Select field and Multiselect fields
 
-		await structureBuilderPage.addField('Single Select');
-		await structureBuilderPage.addField('Multiselect');
+		await structureBuilderPage.addField('Select from List');
 
 		// Create new picklist from the button "New Picklist"
 
-		await structureBuilderPage.selectFields([{label: 'Single Select'}]);
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
+
+		await structureBuilderPage.changeFieldSettings({
+			label: 'Single Select',
+		});
 
 		const pagePromise = context.waitForEvent('page');
 
@@ -145,7 +148,14 @@ test(
 			trigger: picklistPicker,
 		});
 
-		await structureBuilderPage.selectFields([{label: 'Multiselect'}]);
+		await structureBuilderPage.addField('Select from List');
+
+		await structureBuilderPage.selectFields([{label: 'Select from List'}]);
+
+		await structureBuilderPage.changeFieldSettings({
+			label: 'Multiselect',
+			multiselection: true,
+		});
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -175,7 +185,17 @@ test(
 			trigger: page.locator('.select-from-list'),
 		});
 
-		await page.getByLabel('Blue').check();
+		const input = page
+			.locator('.multiselector-dropdown')
+			.getByRole('combobox');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.multiselector-dropdown__dropdown-menu')
+				.getByRole('option', {name: 'Blue'}),
+			trigger: input,
+		});
 
 		// Switch to spanish and change values
 
@@ -187,7 +207,13 @@ test(
 			trigger: page.locator('.select-from-list'),
 		});
 
-		await page.getByLabel('Yellow').check();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.multiselector-dropdown__dropdown-menu')
+				.getByRole('option', {name: 'Yellow'}),
+			trigger: input,
+		});
 
 		// Save content, edit it again and check values were persisted
 
@@ -195,7 +221,7 @@ test(
 
 		await contentsPage.editContent(contentTitle);
 
-		await expect(page.getByLabel('Blue')).toBeChecked();
+		await expect(page.locator('.label').getByText('Blue')).toBeVisible();
 
 		await expect(page.getByPlaceholder('Choose an Option')).toHaveValue(
 			'Yellow'
@@ -203,8 +229,8 @@ test(
 
 		await localizationSelectPage.switchLanguage('es-ES');
 
-		await expect(page.getByLabel('Blue')).toBeChecked();
-		await expect(page.getByLabel('Yellow')).toBeChecked();
+		await expect(page.locator('.label').getByText('Blue')).toBeVisible();
+		await expect(page.locator('.label').getByText('Yellow')).toBeVisible();
 
 		await expect(page.getByLabel('Single Select')).toHaveValue('Blue');
 

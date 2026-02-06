@@ -8,7 +8,11 @@ package com.liferay.batch.engine.internal.instance.lifecycle;
 import com.liferay.batch.engine.internal.unit.MultiCompanyBatchEngineUnitProcessor;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -27,16 +31,28 @@ public class MultiCompanyBatchEngineUnitPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {
-		CompletableFuture<Void> completableFuture =
-			_multiCompanyBatchEngineUnitProcessor.processBatchEngineUnits(
-				company);
+		DB db = DBManagerUtil.getDB();
 
-		completableFuture.get();
+		if (db.getDBType() == DBType.HYPERSONIC) {
+			TransactionCommitCallbackUtil.registerCallback(
+				() -> _processBatchEngineUnits(company));
+		}
+		else {
+			_processBatchEngineUnits(company);
+		}
 	}
 
 	@Override
 	public void portalInstanceUnregistered(Company company) {
 		_multiCompanyBatchEngineUnitProcessor.unregister(company);
+	}
+
+	private Void _processBatchEngineUnits(Company company) throws Exception {
+		CompletableFuture<Void> completableFuture =
+			_multiCompanyBatchEngineUnitProcessor.processBatchEngineUnits(
+				company);
+
+		return completableFuture.get();
 	}
 
 	@Reference

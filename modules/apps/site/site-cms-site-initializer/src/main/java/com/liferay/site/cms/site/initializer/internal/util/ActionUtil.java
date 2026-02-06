@@ -213,12 +213,7 @@ public class ActionUtil {
 			formManager, "INPUTS-inline-text-input",
 			infoForm.getInfoField("ObjectField_title"), layout, layoutStructure,
 			formStyledLayoutStructureItem, false, segmentsExperienceId,
-			serviceContext,
-			JSONUtil.put(
-				"marginBottom", "5"
-			).put(
-				"marginLeft", "-16px"
-			));
+			serviceContext, JSONUtil.put("marginBottom", "5"));
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			StringPool.BLANK, fragmentEntryLinkService,

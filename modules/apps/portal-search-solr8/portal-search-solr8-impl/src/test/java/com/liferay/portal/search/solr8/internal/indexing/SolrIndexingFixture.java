@@ -25,7 +25,6 @@ import com.liferay.portal.search.solr8.internal.SolrSpellCheckIndexWriter;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.connection.TestSolrClientManager;
-import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.SolrSearchEngineAdapterFixture;
 import com.liferay.portal.search.solr8.internal.suggest.NGramHolderBuilderImpl;
 import com.liferay.portal.search.solr8.internal.suggest.NGramQueryBuilderImpl;
@@ -34,8 +33,6 @@ import com.liferay.portal.util.LocalizationImpl;
 
 import java.util.Collections;
 import java.util.Map;
-
-import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -87,17 +84,13 @@ public class SolrIndexingFixture implements IndexingFixture {
 		return SolrUnitTestRequirements.isSolrExternallyStartedByDeveloper();
 	}
 
-	public void setFacetProcessor(FacetProcessor<SolrQuery> facetProcessor) {
-		_facetProcessor = facetProcessor;
-	}
-
 	@Override
 	public void setUp() throws Exception {
 		SolrClientManager solrClientManager = new TestSolrClientManager(
 			_properties);
 
 		_solrSearchEngineAdapterFixture = createSolrSearchEngineAdapterFixture(
-			solrClientManager, _facetProcessor, _properties);
+			solrClientManager, _properties);
 
 		_solrSearchEngineAdapterFixture.setUp();
 
@@ -125,12 +118,10 @@ public class SolrIndexingFixture implements IndexingFixture {
 	protected static SolrSearchEngineAdapterFixture
 		createSolrSearchEngineAdapterFixture(
 			SolrClientManager solrClientManager,
-			FacetProcessor<SolrQuery> facetProcessor,
 			Map<String, Object> properties) {
 
 		return new SolrSearchEngineAdapterFixture() {
 			{
-				setFacetProcessor(facetProcessor);
 				setProperties(properties);
 				setSolrClientManager(solrClientManager);
 			}
@@ -247,7 +238,6 @@ public class SolrIndexingFixture implements IndexingFixture {
 		SystemBundleUtil.getBundleContext();
 	private static ServiceRegistration<NGramHolderBuilder> _serviceRegistration;
 
-	private FacetProcessor<SolrQuery> _facetProcessor;
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
 	private final Localization _localization = new LocalizationImpl();

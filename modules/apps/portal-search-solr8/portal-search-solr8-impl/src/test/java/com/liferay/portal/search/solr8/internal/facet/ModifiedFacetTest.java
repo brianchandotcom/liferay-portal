@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.solr8.internal.facet;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.test.util.facet.BaseModifiedFacetTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -41,16 +40,7 @@ public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() {
-		SolrIndexingFixture solrIndexingFixture = new SolrIndexingFixture();
-
-		solrIndexingFixture.setFacetProcessor(
-			new RangeFacetProcessor() {
-				{
-					jsonFactory = new JSONFactoryImpl();
-				}
-			});
-
-		return solrIndexingFixture;
+		return new SolrIndexingFixture();
 	}
 
 }

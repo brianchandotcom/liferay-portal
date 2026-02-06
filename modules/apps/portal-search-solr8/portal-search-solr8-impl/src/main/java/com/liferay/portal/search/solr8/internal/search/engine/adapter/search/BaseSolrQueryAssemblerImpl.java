@@ -5,27 +5,29 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.facet.DateRangeFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.solr8.internal.AggregationFilteringFacetProcessorContext;
 import com.liferay.portal.search.solr8.internal.FacetProcessorContext;
+import com.liferay.portal.search.solr8.internal.facet.DateRangeFacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.solr8.internal.facet.FacetUtil;
+import com.liferay.portal.search.solr8.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.solr8.internal.filter.FilterTranslator;
 import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
 import com.liferay.portal.search.solr8.internal.query.translator.SolrQueryTranslator;
@@ -42,10 +44,7 @@ import java.util.Set;
 
 import org.apache.solr.client.solrj.SolrQuery;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Bryan Engler
@@ -64,21 +63,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		setStatsRequests(solrQuery, baseSearchRequest);
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FacetProcessor.class,
-			"(&(class.name=*)(!(class.name=DEFAULT)))",
-			(serviceReference, emitter) -> {
-				List<String> classNames = StringUtil.asList(
-					serviceReference.getProperty("class.name"));
-
-				for (String className : classNames) {
-					emitter.emit(className);
-				}
-			});
-	}
-
 	protected void addFilterQuery(
 		List<String> filterQueries, Facet facet, String tag) {
 
@@ -93,11 +77,6 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 			StringBundler.concat(
 				"{!tag=", tag, StringPool.CLOSE_CURLY_BRACE,
 				translate(booleanClause)));
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
 	}
 
 	protected void excludeTags(
@@ -282,16 +261,13 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 		Class<?> clazz = facet.getClass();
 
 		FacetProcessor<SolrQuery> facetProcessor =
-			_serviceTrackerMap.getService(clazz.getName());
-
-		if (facetProcessor == null) {
-			facetProcessor = _defaultFacetProcessor;
-		}
+			_facetProcessors.getOrDefault(
+				clazz.getName(), _defaultFacetProcessor);
 
 		return facetProcessor.processFacet(facet);
 	}
 
-	private final FacetProcessor<SolrQuery> _defaultFacetProcessor =
+	private static final FacetProcessor<SolrQuery> _defaultFacetProcessor =
 		new FacetProcessor<SolrQuery>() {
 
 			@Override
@@ -351,11 +327,24 @@ public class BaseSolrQueryAssemblerImpl implements BaseSolrQueryAssembler {
 
 		};
 
+	private static final Map<String, FacetProcessor<SolrQuery>>
+		_facetProcessors =
+			HashMapBuilder.<String, FacetProcessor<SolrQuery>>put(
+				DateRangeFacet.class.getName(), DateRangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.DateRangeFacetImpl",
+				DateRangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
+				RangeFacetProcessor.INSTANCE
+			).put(
+				RangeFacet.class.getName(), RangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.RangeFacetImpl",
+				RangeFacetProcessor.INSTANCE
+			).build();
+
 	private final FilterTranslator _filterTranslator = new FilterTranslator();
-
-	@SuppressWarnings("rawtypes")
-	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;
-
 	private final SolrQueryTranslator _solrQueryTranslator =
 		new SolrQueryTranslator();
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

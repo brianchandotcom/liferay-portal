@@ -26,7 +26,7 @@ public class JournalImageServiceUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new ImageCompanyIdUpgradeProcess<>(
+			ImageCompanyIdUpgradeProcess.byId(
 				_journalArticleLocalService::getActionableDynamicQuery,
 				JournalArticle::getCompanyId, JournalArticle::getSmallImageId));
 	}

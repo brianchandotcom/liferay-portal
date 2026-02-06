@@ -35,7 +35,7 @@ public class AssistantHandlerUtil {
 		aiServices.streamingChatModel(
 			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).systemMessageProvider(
-			assistantHandlerContext.getSystemMessageProvider()
+			assistantHandlerContext.getSystemMessageProviderFunction()
 		).toolProvider(
 			assistantHandlerContext.getToolProvider()
 		).tools(
@@ -58,9 +58,9 @@ public class AssistantHandlerUtil {
 		}
 
 		tokenStream.onCompleteResponse(
-			assistantHandlerContext.getOnCompleteResponse()
+			assistantHandlerContext.getOnCompleteResponseConsumer()
 		).onError(
-			assistantHandlerContext.getOnError()
+			assistantHandlerContext.getOnErrorConsumer()
 		).start();
 	}
 

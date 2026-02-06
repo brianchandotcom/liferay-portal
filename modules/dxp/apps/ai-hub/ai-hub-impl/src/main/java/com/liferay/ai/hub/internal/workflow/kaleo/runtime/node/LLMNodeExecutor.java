@@ -119,13 +119,13 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 						PermissionThreadLocal.getPermissionChecker()))
 			).memoryId(
 				GetterUtil.getString(workflowContext.get("memoryId"))
-			).onCompleteResponse(
+			).onCompleteResponseConsumer(
 				response -> _completeResponse(
 					response, companyId, executionContext, currentKaleoNode,
 					kaleoNodeSettingValues, vertexAiGeminiStreamingChatModel)
-			).onError(
+			).onErrorConsumer(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
-			).systemMessageProvider(
+			).systemMessageProviderFunction(
 				memoryId -> VariablesUtil.applyInputVariables(
 					executionContext, "prompt", kaleoNodeSettingValues)
 			).toolProvider(

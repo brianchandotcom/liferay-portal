@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -55,29 +54,13 @@ public class DeleteStructureStrutsActionTest {
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
-		ObjectRelationship objectRelationship1 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition1,
-				objectDefinition2);
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition1,
+			objectDefinition2);
 
-		_objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationship1.getExternalReferenceCode(),
-			objectRelationship1.getObjectRelationshipId(),
-			objectRelationship1.getParameterObjectFieldId(),
-			objectRelationship1.getDeletionType(), true,
-			objectRelationship1.getLabelMap(), null);
-
-		ObjectRelationship objectRelationship2 =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition2,
-				objectDefinition3);
-
-		_objectRelationshipLocalService.updateObjectRelationship(
-			objectRelationship2.getExternalReferenceCode(),
-			objectRelationship2.getObjectRelationshipId(),
-			objectRelationship2.getParameterObjectFieldId(),
-			objectRelationship2.getDeletionType(), true,
-			objectRelationship2.getLabelMap(), null);
+		ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, objectDefinition2,
+			objectDefinition3);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

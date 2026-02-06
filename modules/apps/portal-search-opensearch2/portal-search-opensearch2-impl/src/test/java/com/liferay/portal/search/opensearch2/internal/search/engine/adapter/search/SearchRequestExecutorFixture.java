@@ -23,7 +23,7 @@ import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationTranslator;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslatorImpl;
+import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
@@ -62,7 +62,7 @@ public class SearchRequestExecutorFixture {
 			complexQueryBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			new FacetTranslatorImpl());
+			new FacetTranslator());
 
 		return commonSearchRequestBuilderAssembler;
 	}

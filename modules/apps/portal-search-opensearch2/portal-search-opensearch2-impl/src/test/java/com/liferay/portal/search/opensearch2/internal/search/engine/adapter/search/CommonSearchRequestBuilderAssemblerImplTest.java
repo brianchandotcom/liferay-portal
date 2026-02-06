@@ -18,7 +18,7 @@ import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryI
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslatorImpl;
+import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.index.LiferayIndexFixture;
 import com.liferay.portal.search.opensearch2.internal.query.SearchAssert;
 import com.liferay.portal.search.query.Queries;
@@ -572,7 +572,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 			createComplexQueryBuilderFactory(queries));
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			new FacetTranslatorImpl());
+			new FacetTranslator());
 
 		return commonSearchRequestBuilderAssembler;
 	}

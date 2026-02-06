@@ -541,6 +541,49 @@ public class EmptyModelManagerImplTest {
 		_testSolveEmptyModel(RandomTestUtil.randomLong(), false);
 	}
 
+	@Test
+	public void testSolveEmptyModelWithoutExportImportReportEntry()
+		throws Exception {
+
+		long companyId = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		long classNameId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_classNameLocalService.getClassNameId(User.class.getName())
+		).thenReturn(
+			classNameId
+		);
+
+		Mockito.when(
+			_exportImportReportEntryLocalService.
+				fetchEmptyExportImportReportEntryByG_C_C_C(
+					0L, companyId, externalReferenceCode, classNameId)
+		).thenReturn(
+			null
+		);
+
+		Assert.assertSame(
+			WorkflowConstants.STATUS_APPROVED,
+			_emptyModelManager.solveEmptyModel(
+				externalReferenceCode, User.class.getName(), companyId, 0L,
+				WorkflowConstants.STATUS_EMPTY,
+				() -> WorkflowConstants.STATUS_APPROVED));
+
+		Mockito.verify(
+			_classNameLocalService
+		).getClassNameId(
+			User.class.getName()
+		);
+
+		Mockito.verify(
+			_exportImportReportEntryLocalService
+		).fetchEmptyExportImportReportEntryByG_C_C_C(
+			0L, companyId, externalReferenceCode, classNameId
+		);
+	}
+
 	private void _testSolveEmptyModel(
 			long entryExportImportConfigurationId, boolean expectDelete)
 		throws Exception {

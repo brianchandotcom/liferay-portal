@@ -577,9 +577,7 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	@Reference
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 
-	@Reference
-	private FacetTranslator _facetTranslator;
-
+	private final FacetTranslator _facetTranslator = new FacetTranslator();
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

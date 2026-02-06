@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch7.internal.facet.DefaultFacetTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.index.LiferayIndexFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.SearchAssert;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -570,7 +570,7 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 			createComplexQueryBuilderFactory(queries));
 		ReflectionTestUtil.setFieldValue(
 			commonSearchSourceBuilderAssembler, "_facetTranslator",
-			new DefaultFacetTranslator());
+			new FacetTranslator());
 
 		return commonSearchSourceBuilderAssembler;
 	}

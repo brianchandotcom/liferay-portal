@@ -9,6 +9,12 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 
+const SERVLET_CONTEXT_NAMES = [
+	'com.liferay.amazon.rankings.web',
+	'com.liferay.chat.service',
+	'com.liferay.document.library.file.rank.service',
+];
+
 export const test = mergeTests(
 	loginTest(),
 	applicationsMenuPageTest,
@@ -162,33 +168,42 @@ async function executeCleanupActions(page, panelName: string) {
 
 	const executeButtons = cleanupPanel.getByRole('button', {name: 'Execute'});
 
-	// Execute buttons sequentially and check for success message
+	// Execute all data cleanup actions for System Cleanup Section
 
-	for (const button of await executeButtons.all()) {
-		await button.click();
+	const successMessage = page.locator('.alert-success', {
+		hasText: 'Your request completed successfully.',
+	});
 
-		const successMessage = page.locator('.alert-success', {
-			hasText: 'Your request completed successfully.',
-		});
+	if (panelName === 'System Cleanup Actions') {
+		for (const button of await executeButtons.all()) {
+			await button.click();
 
-		await expect(successMessage).toBeVisible({ timeout: 120000 });
+			await expect(successMessage).toBeVisible({timeout: 120000});
+		}
 	}
 
+	// Execute Clean Up All Module Data data cleanup action for Module Section
+
 	if (panelName === 'Module Cleanup Actions') {
+		const cleanupAllModuleDataRow = cleanupPanel
+			.locator('.list-group-item, tr, .row', {
+				hasText: 'Clean Up All Module Data',
+			})
+			.first();
+
+		const executeButton = cleanupAllModuleDataRow.getByRole('button', {
+			name: 'Execute',
+		});
+
+		await executeButton.click();
+
+		await expect(successMessage).toBeVisible({timeout: 120000});
+
 		const disabledButtons = cleanupPanel.getByRole('button', {
+			disabled: true,
 			name: 'Execute',
 		});
 
 		await expect(disabledButtons).toHaveCount(SERVLET_CONTEXT_NAMES.length);
-
-		for (const disabledButton of await disabledButtons.all()) {
-			await expect(disabledButton).toBeDisabled();
-		}
 	}
 }
-
-const SERVLET_CONTEXT_NAMES = [
-	'com.liferay.amazon.rankings.web',
-	'com.liferay.chat.service',
-	'com.liferay.document.library.file.rank.service',
-];

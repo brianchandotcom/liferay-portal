@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.struts;
 
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionService;
-import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -27,10 +26,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -99,7 +97,6 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 
 	private void _getObjectDefinitionIds(
 			long objectDefinitionId, List<Long> objectDefinitionIds,
-			Map<Long, ObjectRelationship> objectRelationshipsMap,
 			Set<Long> visitedObjectDefinitionIds)
 		throws Exception {
 
@@ -114,18 +111,15 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 				objectDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		for (ObjectRelationship objectRelationship : objectRelationships) {
-			if (!objectRelationship.isEdge()) {
+			if (!Objects.equals(
+					objectRelationship.getDeletionType(), "cascade")) {
+
 				continue;
 			}
 
-			objectRelationshipsMap.put(
-				objectRelationship.getObjectRelationshipId(),
-				objectRelationship);
-
 			_getObjectDefinitionIds(
 				objectRelationship.getObjectDefinitionId2(),
-				objectDefinitionIds, objectRelationshipsMap,
-				visitedObjectDefinitionIds);
+				objectDefinitionIds, visitedObjectDefinitionIds);
 		}
 
 		objectDefinitionIds.add(objectDefinitionId);
@@ -148,9 +142,6 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 	private ObjectDefinitionService _objectDefinitionService;
 
 	@Reference
-	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
 
 	private class DeleteStructuresCallable implements Callable<Void> {
@@ -158,24 +149,11 @@ public class DeleteStructureStrutsAction implements StrutsAction {
 		@Override
 		public Void call() throws Exception {
 			List<Long> objectDefinitionIds = new ArrayList<>();
-			Map<Long, ObjectRelationship> objectRelationshipsMap =
-				new HashMap<>();
 			Set<Long> visitedObjectDefinitionIds = new HashSet<>();
 
 			_getObjectDefinitionIds(
 				_objectDefinitionId, objectDefinitionIds,
-				objectRelationshipsMap, visitedObjectDefinitionIds);
-
-			for (ObjectRelationship objectRelationship :
-					objectRelationshipsMap.values()) {
-
-				_objectRelationshipLocalService.updateObjectRelationship(
-					objectRelationship.getExternalReferenceCode(),
-					objectRelationship.getObjectRelationshipId(),
-					objectRelationship.getParameterObjectFieldId(),
-					objectRelationship.getDeletionType(), false,
-					objectRelationship.getLabelMap(), null);
-			}
+				visitedObjectDefinitionIds);
 
 			for (Long objectDefinitionId : objectDefinitionIds) {
 				_objectDefinitionService.deleteObjectDefinition(

@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.bulk.rest.client.dto.v1_0.AssignStructureDefaultWorkflowBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
@@ -70,11 +71,13 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -162,6 +165,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Override
 	@Test
 	public void testPostBulkAction() throws Exception {
+		_testPostBulkActionWithTypeAssignStructureDefaultWorkflow();
 		_testPostBulkActionWithTypeCopy();
 		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
@@ -557,6 +561,48 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
 			expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
 			"FOLDER", null);
+	}
+
+	private void _testPostBulkActionWithTypeAssignStructureDefaultWorkflow()
+		throws Exception {
+
+		AssignStructureDefaultWorkflowBulkAction bulkAction =
+			new AssignStructureDefaultWorkflowBulkAction();
+
+		bulkAction.setType(
+			BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION);
+
+		bulkAction.setBulkActionItems(
+			_toBulkActionItems(_cmsBulkActionTaskObjectDefinition));
+
+		bulkAction.setWorkflow("Single Approver");
+
+		_postBulkAction(bulkAction);
+
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinks(
+				testCompany.getCompanyId(),
+				_cmsBulkActionTaskObjectDefinition.getClassName());
+
+		Assert.assertFalse(workflowDefinitionLinks.isEmpty());
+
+		WorkflowDefinitionLink workflowDefinitionLink =
+			workflowDefinitionLinks.get(0);
+
+		Assert.assertEquals(
+			"Single Approver",
+			workflowDefinitionLink.getWorkflowDefinitionName());
+
+		bulkAction.setWorkflow("");
+
+		_postBulkAction(bulkAction);
+
+		workflowDefinitionLinks =
+			WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLinks(
+				testCompany.getCompanyId(),
+				_cmsBulkActionTaskObjectDefinition.getClassName());
+
+		Assert.assertTrue(workflowDefinitionLinks.isEmpty());
 	}
 
 	private void _testPostBulkActionWithTypeCopy() throws Exception {
@@ -1727,7 +1773,18 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			objects,
 			object -> new BulkActionItem() {
 				{
-					if (object instanceof ObjectEntry) {
+					if (object instanceof ObjectDefinition) {
+						ObjectDefinition objectDefinition =
+							(ObjectDefinition)object;
+
+						setClassExternalReferenceCode(
+							objectDefinition::getExternalReferenceCode);
+
+						setClassName(ObjectDefinition.class.getName());
+						setClassPK(objectDefinition::getObjectDefinitionId);
+						setName(objectDefinition::getName);
+					}
+					else if (object instanceof ObjectEntry) {
 						ObjectEntry objectEntry = (ObjectEntry)object;
 
 						setClassExternalReferenceCode(

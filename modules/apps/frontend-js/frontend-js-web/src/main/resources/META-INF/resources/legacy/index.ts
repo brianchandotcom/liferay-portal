@@ -9,4 +9,5 @@ export {checkAllBox} from './checkAllBox';
 // @ts-ignore
 
 export {registerIcon} from './icon';
-export {Session} from './session';
+
+export const {Session} = (Liferay as any).__INTERNALS;

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const SCRIPT_URL = (document.currentScript as HTMLScriptElement).src;
+
 interface SessionConfig {
 	autoExtend: boolean;
 	redirectOnExpire: boolean;
@@ -94,9 +96,11 @@ export class Session {
 
 	async openToast(args: any) {
 		const {openToast} = await import(
-			Liferay.ThemeDisplay.getCDNHost() +
-				Liferay.ThemeDisplay.getPathContext() +
-				'/o/frontend-js-components-web/__liferay__/index.js'
+			Liferay.FrontendESM.buildURL(
+				SCRIPT_URL,
+				'frontend-js-components-web',
+				'index'
+			)
 		);
 
 		openToast(args);

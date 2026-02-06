@@ -28,6 +28,7 @@ import org.mockito.Mockito;
 import org.mockito.stubbing.Answer;
 
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author Iván Zaera Avellón
@@ -153,6 +154,14 @@ public abstract class BaseFrontendResourceRequestHandlerTestCase {
 		);
 
 		return portal;
+	}
+
+	protected void resetFrontendJsWebUtil() {
+		ReflectionTestUtils.setField(FrontendJsWebUtil.class, "_baseURL", null);
+		ReflectionTestUtils.setField(
+			FrontendJsWebUtil.class, "_portalContextPath", null);
+		ReflectionTestUtils.setField(
+			FrontendJsWebUtil.class, "_webContextPathIndex", -1);
 	}
 
 	protected static final long COMPANY_ID = 100;

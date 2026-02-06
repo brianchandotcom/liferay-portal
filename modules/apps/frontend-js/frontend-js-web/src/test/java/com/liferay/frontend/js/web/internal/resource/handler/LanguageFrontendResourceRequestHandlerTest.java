@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,6 +54,11 @@ public class LanguageFrontendResourceRequestHandlerTest
 				{0, false, "/nonsense/request/index.js"},
 				{1, false, _VALID_URL}, {2, true, _VALID_URL}
 			});
+	}
+
+	@Before
+	public void setUp() {
+		resetFrontendJsWebUtil();
 	}
 
 	@Test

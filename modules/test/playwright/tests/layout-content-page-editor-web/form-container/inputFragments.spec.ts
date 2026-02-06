@@ -778,9 +778,9 @@ test.describe('Friendly URL Fragment', () => {
 					enableLocalization: true,
 					externalReferenceCode: 'erc',
 					label: {
-						en_US: 'Test',
+						en_US: 'Mapping Field Test',
 					},
-					name: 'Test',
+					name: 'MappingFieldTest',
 					objectFields: [
 						{
 							DBType: 'String',
@@ -797,7 +797,7 @@ test.describe('Friendly URL Fragment', () => {
 						},
 					],
 					pluralLabel: {
-						en_US: 'Tests',
+						en_US: 'Mapping Field Tests',
 					},
 					scope: 'company',
 					status: {
@@ -831,7 +831,7 @@ test.describe('Friendly URL Fragment', () => {
 
 			// Map the form to the All Field object and add only the Friendly URL field
 
-			await pageEditorPage.mapFormFragment(formId, 'Test', [
+			await pageEditorPage.mapFormFragment(formId, 'Mapping Field Test', [
 				'Friendly URL',
 			]);
 
@@ -878,9 +878,9 @@ test.describe('Friendly URL Fragment', () => {
 					enableLocalization: true,
 					externalReferenceCode: 'erc',
 					label: {
-						en_US: 'Test',
+						en_US: 'Friendly Url Error Test',
 					},
-					name: 'Test',
+					name: 'FriendlyUrlErrorTest',
 					objectFields: [
 						{
 							DBType: 'String',
@@ -897,7 +897,7 @@ test.describe('Friendly URL Fragment', () => {
 						},
 					],
 					pluralLabel: {
-						en_US: 'Tests',
+						en_US: 'Friendly Url Error Tests',
 					},
 					scope: 'company',
 					status: {
@@ -963,9 +963,11 @@ test.describe('Friendly URL Fragment', () => {
 
 			// Map the form to the Test object and add only the New Friendly URL field
 
-			await pageEditorPage.mapFormFragment(formId, 'Test', [
-				'New Friendly URL',
-			]);
+			await pageEditorPage.mapFormFragment(
+				formId,
+				'Friendly Url Error Test',
+				['New Friendly URL']
+			);
 
 			await pageEditorPage.publishPage();
 
@@ -1660,7 +1662,7 @@ test.describe('URL Video Previewer Fragment', () => {
 
 			// Show characters count
 
-			await expect(page.getByText('0 / 280')).toHaveClass(/d-none/);
+			await expect(page.getByText('0 / 280')).not.toBeAttached();
 
 			await pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'Show Characters Count',
@@ -1669,7 +1671,7 @@ test.describe('URL Video Previewer Fragment', () => {
 				value: true,
 			});
 
-			await expect(page.getByText('0 / 280')).not.toHaveClass(/d-none/);
+			await expect(page.getByText('0 / 280')).toBeAttached();
 
 			// Change preview label
 

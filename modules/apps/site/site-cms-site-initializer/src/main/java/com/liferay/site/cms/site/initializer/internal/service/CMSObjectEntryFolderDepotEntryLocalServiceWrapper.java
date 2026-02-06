@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -124,13 +123,6 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 	}
 
 	private void _addCMSDefaultPermissions(Group group) throws PortalException {
-		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
-
 		ObjectDefinition cmsDefaultPermissionObjectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
@@ -192,13 +184,6 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 	private void _deleteCMSDefaultPermissions(Group group)
 		throws PortalException {
-
-		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17564")) {
-
-			return;
-		}
 
 		ObjectDefinition cmsDefaultPermissionObjectDefinition =
 			_objectDefinitionLocalService.

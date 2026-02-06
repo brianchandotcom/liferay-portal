@@ -33,7 +33,7 @@ interface IClayStickerProps extends React.HTMLAttributes<HTMLSpanElement> {
 	/**
 	 * Determines the color of the sticker.
 	 */
-	displayType?: DisplayType
+	displayType?: DisplayType;
 
 	/**
 	 * Turns the sticker inline

@@ -42,7 +42,7 @@ import org.junit.runners.Parameterized;
 @RunWith(Parameterized.class)
 public class UpgradeCatchAllCheckTest extends BaseSourceProcessorTestCase {
 
-	@Parameterized.Parameters(name = "Testcase-{index}: Testing {0}.{1}")
+	@Parameterized.Parameters(name = "Testcase-{index}: Testing {1}.{2}")
 	public static Iterable<Object[]> data() throws Exception {
 		List<Object[]> objectsArray = new ArrayList<>();
 

@@ -40,7 +40,7 @@
 					},
 					"name": "CMPProjectSubscriptionCommentAdded",
 					"objectActionExecutorKey": "notification",
-					"objectActionTriggerKey": "liferay/cmp_project_comment_added",
+					"objectActionTriggerKey": "liferay/cmp_comment_added",
 					"parameters": {
 						"notificationTemplateExternalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_COMMENT_ADDED_NOTIFICATION_TEMPLATE",
 						"type": "email",
@@ -50,7 +50,25 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "status != 3",
+					"conditionExpression": "status != 3 && oldValue(\"state\") != state && state == \"blocked\"",
+					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_STATE_BLOCKED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Project Subscription State Blocked"
+					},
+					"name": "CMPProjectSubscriptionStateBlocked",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_STATE_BLOCKED_NOTIFICATION_TEMPLATE",
+						"objectDefinitionExternalReferenceCode": "L_CMP_PROJECT",
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				},
+				{
+					"active": true,
+					"conditionExpression": "status != 3 && NOT(oldValue(\"state\") != state && state == \"blocked\")",
 					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Project Subscription Updated"
@@ -314,6 +332,7 @@
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
+			"enableObjectEntrySubscription": true,
 			"externalReferenceCode": "L_CMP_TASK",
 			"label": {
 				"en_US": "Task"
@@ -323,7 +342,7 @@
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "isEmpty(oldValue(\"title\")) == true",
+					"conditionExpression": "status != 3 && isEmpty(oldValue(\"title\")) == true",
 					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_ADDED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Task Subscription Added"
@@ -342,6 +361,68 @@
 								"value": "r_cmpProjectToCMPTasks_c_cmpProjectId"
 							}
 						],
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				},
+				{
+					"active": true,
+					"conditionExpression": "status != 3",
+					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_COMMENT_ADDED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Task Subscription Comment Added"
+					},
+					"name": "CMPTaskSubscriptionCommentAdded",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "liferay/cmp_comment_added",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_COMMENT_ADDED_NOTIFICATION_TEMPLATE",
+						"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
+						"predefinedValues": [
+							{
+								"businessType": "Relationship",
+								"inputAsValue": false,
+								"name": "parentClassPK",
+								"value": "r_cmpProjectToCMPTasks_c_cmpProjectId"
+							}
+						],
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				},
+				{
+					"active": true,
+					"conditionExpression": "status != 3 && oldValue(\"state\") != state && state == \"blocked\"",
+					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_STATE_BLOCKED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Task Subscription State Blocked"
+					},
+					"name": "CMPTaskSubscriptionStateBlocked",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_STATE_BLOCKED_NOTIFICATION_TEMPLATE",
+						"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
+						"type": "email",
+						"usePreferredLanguageForGuests": true
+					},
+					"system": true
+				},
+				{
+					"active": true,
+					"conditionExpression": "status != 3 && NOT(oldValue(\"state\") != state && state == \"blocked\")",
+					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
+					"label": {
+						"en_US": "Task Subscription Updated"
+					},
+					"name": "CMPTaskSubscriptionUpdated",
+					"objectActionExecutorKey": "notification",
+					"objectActionTriggerKey": "onAfterUpdate",
+					"parameters": {
+						"notificationTemplateExternalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_UPDATED_NOTIFICATION_TEMPLATE",
+						"objectDefinitionExternalReferenceCode": "L_CMP_TASK",
 						"type": "email",
 						"usePreferredLanguageForGuests": true
 					},

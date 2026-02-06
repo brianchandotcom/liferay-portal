@@ -82,7 +82,7 @@ public class OAuthClientASLocalMetadataUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"OAuthClientASLocalMetadata", "issuer VARCHAR(75) null",
-				"localWellKnownEnabled BOOLEAN false",
+				"localWellKnownEnabled BOOLEAN",
 				"oAuthASLocalWellKnownURI VARCHAR(256) null",
 				"oAuthASMetadataJSON TEXT null")
 		};

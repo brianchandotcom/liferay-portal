@@ -245,10 +245,24 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	public List<FDSFilter> getFDSFilters() {
 		List<FDSFilter> fdsFilters = new ArrayList<>();
 
+		long[] groupIds;
+
+		if (_assetEntry != null) {
+			groupIds = new long[] {_assetEntry.getGroupId()};
+		}
+		else {
+			groupIds = TransformUtil.transformToLongArray(
+				_depotEntryLocalService.getDepotEntries(
+					CompanyThreadLocal.getCompanyId(),
+					DepotConstants.TYPE_PROJECT),
+				DepotEntryModel::getGroupId);
+		}
+
 		fdsFilters.add(
 			new AssigneeSelectionFDSFilter(
 				_classNameLocalService, _projectObjectDefinition.getCompanyId(),
-				_getGroupIds(), _roleService, _userLocalService));
+				groupIds, _roleService, _userLocalService));
+
 		fdsFilters.add(new CreateDateFDSFilter());
 		fdsFilters.add(new DueDateRangeFDSFilter());
 
@@ -259,7 +273,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 		fdsFilters.add(new StateSelectionFDSFilter());
 		fdsFilters.add(
-			new TagSelectionFDSFilter(_assetTagLocalService, _getGroupIds()));
+			new TagSelectionFDSFilter(_assetTagLocalService, groupIds));
 
 		return fdsFilters;
 	}
@@ -275,17 +289,6 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 				return _assetEntry.getClassPK();
 			}
 		).build();
-	}
-
-	private long[] _getGroupIds() {
-		if (_assetEntry != null) {
-			return new long[] {_assetEntry.getGroupId()};
-		}
-
-		return TransformUtil.transformToLongArray(
-			_depotEntryLocalService.getDepotEntries(
-				CompanyThreadLocal.getCompanyId(), DepotConstants.TYPE_PROJECT),
-			DepotEntryModel::getGroupId);
 	}
 
 	private final AssetEntry _assetEntry;

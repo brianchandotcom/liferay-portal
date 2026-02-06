@@ -12,7 +12,6 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -25,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
-import com.liferay.subscription.service.SubscriptionLocalService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -98,7 +96,7 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-				if (_objectEntryService.hasModelResourcePermission(
+				if (objectEntryService.hasModelResourcePermission(
 						objectEntry, ActionKeys.UPDATE)) {
 
 					jsonArray.put(
@@ -117,66 +115,16 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 						));
 				}
 
-				if (_objectEntryService.hasModelResourcePermission(
-						objectEntry, ActionKeys.SUBSCRIBE)) {
+				String viewProjectURL = ActionUtil.getBaseViewProjectURL(
+					objectDefinition, themeDisplay);
 
-					String restContextPath = StringBundler.concat(
-						"/o", objectDefinition.getRESTContextPath(), "/scopes/",
-						objectEntry.getGroupId(),
-						"/by-external-reference-code/",
-						objectEntry.getExternalReferenceCode());
-					String viewProjectURL = ActionUtil.getBaseViewProjectURL(
-						objectDefinition, themeDisplay);
+				addSubscribeActionItem(
+					httpServletRequest, jsonArray, "watch-project",
+					"stop-watching-project", objectDefinition, objectEntry,
+					viewProjectURL + objectEntry.getObjectEntryId(),
+					themeDisplay, title);
 
-					if (!_subscriptionLocalService.isSubscribed(
-							objectEntry.getCompanyId(),
-							themeDisplay.getUserId(),
-							objectEntry.getModelClassName(),
-							objectEntry.getObjectEntryId())) {
-
-						jsonArray.put(
-							JSONUtil.put(
-								"href", restContextPath + "/subscribe"
-							).put(
-								"label",
-								LanguageUtil.get(
-									httpServletRequest, "watch-project")
-							).put(
-								"redirect",
-								viewProjectURL + objectEntry.getObjectEntryId()
-							).put(
-								"successMessage",
-								LanguageUtil.format(
-									httpServletRequest,
-									"you-are-successfully-watching-x",
-									StringBundler.concat(
-										"<strong>", title, "</strong>"))
-							).put(
-								"symbolLeft", "bell-on"
-							).put(
-								"target", "asyncPost"
-							));
-					}
-					else {
-						jsonArray.put(
-							JSONUtil.put(
-								"href", restContextPath + "/unsubscribe"
-							).put(
-								"label",
-								LanguageUtil.get(
-									httpServletRequest, "stop-watching-project")
-							).put(
-								"redirect",
-								viewProjectURL + objectEntry.getObjectEntryId()
-							).put(
-								"symbolLeft", "bell-off"
-							).put(
-								"target", "asyncPost"
-							));
-					}
-				}
-
-				if (_objectEntryService.hasModelResourcePermission(
+				if (objectEntryService.hasModelResourcePermission(
 						objectEntry, ActionKeys.DELETE)) {
 
 					jsonArray.put(
@@ -252,11 +200,5 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectEntryService _objectEntryService;
-
-	@Reference
-	private SubscriptionLocalService _subscriptionLocalService;
 
 }

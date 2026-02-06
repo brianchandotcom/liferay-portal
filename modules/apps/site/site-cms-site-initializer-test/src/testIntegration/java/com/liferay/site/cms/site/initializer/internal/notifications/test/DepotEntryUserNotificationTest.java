@@ -10,9 +10,14 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotPortletKeys;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
+import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -24,12 +29,17 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
@@ -39,6 +49,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Balázs Sáfrány-Kovalik
@@ -55,7 +67,7 @@ public class DepotEntryUserNotificationTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_depotEntry = _depotEntryLocalService.addDepotEntry(
+		_depotEntry1 = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
@@ -64,6 +76,15 @@ public class DepotEntryUserNotificationTest {
 			).build(),
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
+		_depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			DepotConstants.TYPE_PROJECT,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Test
@@ -71,7 +92,7 @@ public class DepotEntryUserNotificationTest {
 		User user = UserTestUtil.addUser();
 
 		_userLocalService.addGroupUser(
-			_depotEntry.getGroupId(), user.getUserId());
+			_depotEntry1.getGroupId(), user.getUserId());
 
 		_assertUserNotificationEvent(user);
 	}
@@ -81,7 +102,7 @@ public class DepotEntryUserNotificationTest {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroupLocalService.addGroupUserGroup(
-			_depotEntry.getGroupId(), userGroup);
+			_depotEntry1.getGroupId(), userGroup);
 
 		User user = UserTestUtil.addUser();
 
@@ -91,11 +112,54 @@ public class DepotEntryUserNotificationTest {
 	}
 
 	@Test
+	public void testGetLink() throws Exception {
+		UserNotificationFeedEntry userNotificationFeedEntry =
+			_getUserNotificationFeedEntry(_depotEntry1);
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"http://localhost:8080/path-friendly-url-public/cms/e/space/",
+				PortalUtil.getClassNameId(DepotEntry.class), StringPool.SLASH,
+				_depotEntry1.getDepotEntryId()),
+			userNotificationFeedEntry.getLink());
+
+		userNotificationFeedEntry = _getUserNotificationFeedEntry(_depotEntry2);
+
+		Assert.assertEquals(
+			"http://localhost:8080/path-friendly-url-public/cms/projects",
+			userNotificationFeedEntry.getLink());
+	}
+
+	@Test
+	public void testGetTitle() throws Exception {
+		Group group = _depotEntry1.getGroup();
+		UserNotificationFeedEntry userNotificationFeedEntry =
+			_getUserNotificationFeedEntry(_depotEntry1);
+
+		Assert.assertEquals(
+			LanguageUtil.format(
+				LocaleUtil.US,
+				"you-have-been-invited-to-collaborate-in-the-x-space",
+				group.getName(LocaleUtil.US)),
+			userNotificationFeedEntry.getTitle());
+
+		group = _depotEntry2.getGroup();
+		userNotificationFeedEntry = _getUserNotificationFeedEntry(_depotEntry2);
+
+		Assert.assertEquals(
+			LanguageUtil.format(
+				LocaleUtil.US,
+				"you-have-been-invited-to-collaborate-in-the-x-project",
+				group.getName(LocaleUtil.US)),
+			userNotificationFeedEntry.getTitle());
+	}
+
+	@Test
 	public void testInterpret() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroupLocalService.addGroupUserGroup(
-			_depotEntry.getGroupId(), userGroup);
+			_depotEntry1.getGroupId(), userGroup);
 
 		User user1 = UserTestUtil.addUser();
 
@@ -140,7 +204,7 @@ public class DepotEntryUserNotificationTest {
 			userNotificationEvents.size());
 
 		_userGroupLocalService.deleteGroupUserGroup(
-			_depotEntry.getGroupId(), userGroup.getUserGroupId());
+			_depotEntry1.getGroupId(), userGroup.getUserGroupId());
 
 		serviceContext.setUserId(user2.getUserId());
 
@@ -174,11 +238,54 @@ public class DepotEntryUserNotificationTest {
 		String payload = userNotificationEvent.getPayload();
 
 		Assert.assertTrue(
-			payload.contains("classPK\":" + _depotEntry.getDepotEntryId()));
+			payload.contains("classPK\":" + _depotEntry1.getDepotEntryId()));
+	}
+
+	private ServiceContext _getServiceContext(User user) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setLanguageId("en_US");
+		serviceContext.setPortalURL("http://localhost:8080");
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setPathFriendlyURLPublic("/path-friendly-url-public");
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		themeDisplay.setRequest(httpServletRequest);
+
+		serviceContext.setRequest(themeDisplay.getRequest());
+
+		serviceContext.setUserId(user.getUserId());
+
+		return serviceContext;
+	}
+
+	private UserNotificationFeedEntry _getUserNotificationFeedEntry(
+			DepotEntry depotEntry)
+		throws Exception {
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addGroupUser(
+			depotEntry.getGroupId(), user.getUserId());
+
+		List<UserNotificationEvent> userNotificationEvents =
+			_userNotificationEventLocalService.getUserNotificationEvents(
+				user.getUserId());
+
+		return _userNotificationHandler.interpret(
+			userNotificationEvents.get(0), _getServiceContext(user));
 	}
 
 	@DeleteAfterTestRun
-	private DepotEntry _depotEntry;
+	private DepotEntry _depotEntry1;
+
+	@DeleteAfterTestRun
+	private DepotEntry _depotEntry2;
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;

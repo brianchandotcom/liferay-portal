@@ -72,8 +72,13 @@ public class WorkflowTaskDisplayContextTest {
 
 	@Test
 	public void testGetTaglibEditURL() throws Exception {
-		_testGetTaglibEditURLGroup();
-		_testGetTaglibEditURLCMSGroup();
+		String taglibEditURL = _getTaglibEditURL(_cmsGroup);
+
+		Assert.assertTrue(taglibEditURL.contains("cms/edit_content_item"));
+
+		taglibEditURL = _getTaglibEditURL(_group);
+
+		Assert.assertTrue(taglibEditURL.contains("control_panel/manage"));
 	}
 
 	private MockLiferayPortletRenderRequest _getMockLiferayPortletRenderRequest(
@@ -157,18 +162,6 @@ public class WorkflowTaskDisplayContextTest {
 		return ReflectionTestUtil.invoke(
 			workflowTaskDisplayContext, "getTaglibEditURL",
 			new Class<?>[] {WorkflowTask.class}, workflowTask);
-	}
-
-	private void _testGetTaglibEditURLCMSGroup() throws Exception {
-		String taglibEditURL = _getTaglibEditURL(_cmsGroup);
-
-		Assert.assertTrue(taglibEditURL.contains("cms/edit_content_item"));
-	}
-
-	private void _testGetTaglibEditURLGroup() throws Exception {
-		String taglibEditURL = _getTaglibEditURL(_group);
-
-		Assert.assertTrue(taglibEditURL.contains("control_panel/manage"));
 	}
 
 	@Inject

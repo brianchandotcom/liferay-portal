@@ -184,19 +184,13 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "INPUTS-select-from-list"
+																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.StateSelectorComponentSectionFragmentRenderer"
 															},
 															"fragmentConfig": {
-																"inputFieldId": "ObjectField_state",
-																"inputLabel": {
-																	"en_US": "State"
-																},
-																"inputReadOnly": false
 															},
 															"fragmentFields": [
 															],
 															"fragmentStyle": {
-																"marginBottom": "3"
 															},
 															"indexed": true
 														},

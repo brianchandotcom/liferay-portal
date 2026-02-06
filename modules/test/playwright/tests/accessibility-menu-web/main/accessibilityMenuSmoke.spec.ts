@@ -7,6 +7,7 @@ import {Page, expect, mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -23,6 +24,9 @@ const test = mergeTests(
 	isolatedSiteTest,
 	siteSettingsPagesTest,
 	systemSettingsPageTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
 	virtualInstancesPagesTest,
 	loginTest()
@@ -44,9 +48,8 @@ async function expectAccessibilityMenuToBeAvailableFromUserProfileMenu(
 	const accessibilityMenuItem = page.getByRole('menuitem', {
 		name: SETTING_CONFIGURATION_NAME,
 	});
-	const accessibilityModal = page
-		.locator('.modal')
-		.getByLabel(SETTING_CONFIGURATION_NAME);
+
+	await expect(userProfileTrigger).toBeVisible();
 
 	await userProfileTrigger.click();
 
@@ -55,14 +58,22 @@ async function expectAccessibilityMenuToBeAvailableFromUserProfileMenu(
 
 		await accessibilityMenuItem.click();
 
+		const accessibilityModal = page
+			.locator('.modal')
+			.getByLabel(SETTING_CONFIGURATION_NAME);
+
+		await accessibilityModal.waitFor();
+
 		await expect(accessibilityModal).toBeVisible();
 
 		await accessibilityModal.getByLabel('Close').click();
+
+		await expect(accessibilityModal).toBeHidden();
 	}
 	else if (expectedStatus === 'hidden') {
 		await expect(accessibilityMenuItem).toBeHidden();
 
-		await userProfileTrigger.click();
+		await page.keyboard.press('Escape');
 	}
 }
 
@@ -117,49 +128,84 @@ test(
 	}
 );
 
-test(
-	'Verifies that settings can be overridden',
-	{tag: '@LPS-178192'},
-	async ({
-		accessibilityMenuPage,
-		apiHelpers,
-		browser,
-		instanceSettingsPage,
-		page,
-		siteSettingsPage,
-		systemSettingsPage,
-		virtualInstancesPage,
-	}) => {
-		let virtualInstancePage: Page;
-		let firstSite: Site;
-		let secondSite: Site;
+test.describe('Accessibility Menu Configuration Override and Inheritance', () => {
+	test.slow();
 
-		try {
-			await test.step('Create new virtual instance, new first site and new second site', async () => {
-				test.slow();
+	let firstSite: Site;
+	let secondSite: Site;
+	let virtualInstancePage: Page;
 
-				await virtualInstancesPage.addNewVirtualInstance(
-					DEFAULT_VIRTUAL_INSTANCE_NAME
-				);
+	test.beforeEach(async ({apiHelpers, browser, virtualInstancesPage}) => {
+		await test.step('Create new virtual instance, new first site and new second site', async () => {
+			await virtualInstancesPage.addNewVirtualInstance(
+				DEFAULT_VIRTUAL_INSTANCE_NAME
+			);
 
-				virtualInstancePage = await browser.newPage({
-					baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
-				});
-
-				await performLogin(
-					virtualInstancePage,
-					'test',
-					'',
-					`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
-				);
-
-				[firstSite, secondSite] = await Promise.all(
-					[FIRST_SITE_NAME, SECOND_SITE_NAME].map((name) =>
-						apiHelpers.headlessSite.createSite({name})
-					)
-				);
+			virtualInstancePage = await browser.newPage({
+				baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
 			});
 
+			await performLogin(
+				virtualInstancePage,
+				'test',
+				'',
+				`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
+			);
+
+			[firstSite, secondSite] = await Promise.all(
+				[FIRST_SITE_NAME, SECOND_SITE_NAME].map(
+					async (name) =>
+						await apiHelpers.headlessSite.createSite({name})
+				)
+			);
+		});
+	});
+
+	test.afterEach(
+		async ({
+			apiHelpers,
+			instanceSettingsPage,
+			systemSettingsPage,
+			virtualInstancesPage,
+		}) => {
+			await systemSettingsPage.goToSystemSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+			await systemSettingsPage.resetToDefaultValues();
+
+			await instanceSettingsPage.goToInstanceSetting(
+				SETTING_CATEGORY_KEY,
+				SETTING_CONFIGURATION_NAME
+			);
+			await instanceSettingsPage.resetInstanceSetting();
+
+			await Promise.all(
+				[firstSite, secondSite].map((site) =>
+					apiHelpers.headlessSite.deleteSite(site.id)
+				)
+			);
+
+			if (virtualInstancePage) {
+				await virtualInstancePage.close();
+			}
+
+			await virtualInstancesPage.deleteVirtualInstance(
+				DEFAULT_VIRTUAL_INSTANCE_NAME
+			);
+		}
+	);
+
+	test(
+		'Verifies that settings can be overridden',
+		{tag: '@LPS-178192'},
+		async ({
+			accessibilityMenuPage,
+			instanceSettingsPage,
+			page,
+			siteSettingsPage,
+			systemSettingsPage,
+		}) => {
 			await test.step('When enable Accessibility Menu on first site settings', async () => {
 				await siteSettingsPage.goToSiteSetting(
 					SETTING_CATEGORY_KEY,
@@ -264,6 +310,9 @@ test(
 			});
 
 			await test.step('And Accessibility Menu is available in the new virtual instance', async () => {
+				await virtualInstancePage.reload();
+				await virtualInstancePage.waitForLoadState('domcontentloaded');
+
 				await expectAccessibilityMenuToBeAvailableFromUserProfileMenu(
 					virtualInstancePage
 				);
@@ -287,27 +336,5 @@ test(
 				);
 			});
 		}
-		finally {
-			await Promise.all(
-				[firstSite, secondSite].map((site) => {
-					apiHelpers.headlessSite.deleteSite(site.id);
-				})
-			);
-
-			if (virtualInstancePage) {
-				await virtualInstancePage.close();
-			}
-
-			await virtualInstancesPage.deleteVirtualInstance(
-				DEFAULT_VIRTUAL_INSTANCE_NAME
-			);
-
-			await instanceSettingsPage.goToInstanceSetting(
-				'Accessibility',
-				'Accessibility Menu'
-			);
-
-			await instanceSettingsPage.resetInstanceSetting();
-		}
-	}
-);
+	);
+});

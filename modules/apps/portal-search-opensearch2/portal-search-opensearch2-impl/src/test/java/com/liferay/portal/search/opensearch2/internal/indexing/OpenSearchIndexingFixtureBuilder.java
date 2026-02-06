@@ -6,9 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.indexing;
 
 import com.liferay.portal.search.opensearch2.internal.connection.TestOpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
-
-import org.opensearch.client.opensearch.core.SearchRequest;
 
 /**
  * @author André de Oliveira
@@ -22,20 +19,11 @@ public class OpenSearchIndexingFixtureBuilder {
 
 		openSearchIndexingFixture.setTestOpenSearchConnectionManager(
 			_getTestOpenSearchConnectionManager());
-		openSearchIndexingFixture.setFacetProcessor(_facetProcessor);
 		openSearchIndexingFixture.setLiferayMappingsAddedToIndex(
 			_liferayMappingsAddedToIndex);
 		openSearchIndexingFixture.setUseLiferayMappings(_useLiferayMappings);
 
 		return openSearchIndexingFixture;
-	}
-
-	public OpenSearchIndexingFixtureBuilder facetProcessor(
-		FacetProcessor<SearchRequest.Builder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-
-		return this;
 	}
 
 	public OpenSearchIndexingFixtureBuilder liferayMappingsAddedToIndex(
@@ -72,7 +60,6 @@ public class OpenSearchIndexingFixtureBuilder {
 		return new TestOpenSearchConnectionManager();
 	}
 
-	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private boolean _liferayMappingsAddedToIndex;
 	private TestOpenSearchConnectionManager _testOpenSearchConnectionManager;
 	private boolean _useLiferayMappings;

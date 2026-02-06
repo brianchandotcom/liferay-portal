@@ -8,14 +8,11 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
-
-import org.opensearch.client.opensearch.core.SearchRequest;
 
 /**
  * @author Michael C. Han
@@ -28,16 +25,11 @@ public class OpenSearchEngineAdapterFixture {
 
 	public void setUp() {
 		_searchEngineAdapter = createSearchEngineAdapter(
-			_openSearchConnectionManager, _facetProcessor);
-	}
-
-	public void tearDown() {
-		_searchRequestExecutorFixture.tearDown();
+			_openSearchConnectionManager);
 	}
 
 	protected static SearchEngineAdapter createSearchEngineAdapter(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		FacetProcessor<?> facetProcessor) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		DocumentRequestExecutorFixture documentRequestExecutorFixture =
 			new DocumentRequestExecutorFixture() {
@@ -48,7 +40,6 @@ public class OpenSearchEngineAdapterFixture {
 
 		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
 			{
-				setFacetProcessor(facetProcessor);
 				setOpenSearchConnectionManager(openSearchConnectionManager);
 			}
 		};
@@ -85,12 +76,6 @@ public class OpenSearchEngineAdapterFixture {
 		return searchEngineAdapter;
 	}
 
-	protected void setFacetProcessor(
-		FacetProcessor<SearchRequest.Builder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-	}
-
 	protected void setOpenSearchConnectionManager(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
@@ -99,7 +84,6 @@ public class OpenSearchEngineAdapterFixture {
 
 	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
-	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 	private SearchEngineAdapter _searchEngineAdapter;
 

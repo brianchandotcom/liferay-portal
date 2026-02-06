@@ -5,15 +5,11 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search;
 
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
-import com.liferay.portal.search.internal.facet.ModifiedFacetImpl;
-import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
@@ -27,24 +23,12 @@ import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationTranslator;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslatorImpl;
-import com.liferay.portal.search.opensearch2.internal.facet.NestedFacetProcessor;
-import com.liferay.portal.search.opensearch2.internal.facet.RangeFacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.opensearch2.internal.suggest.OpenSearchSuggesterTranslator;
 import com.liferay.portal.search.query.Queries;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opensearch.client.opensearch.core.SearchRequest;
-
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Michael C. Han
@@ -59,22 +43,12 @@ public class SearchRequestExecutorFixture {
 	public void setUp() {
 		_searchRequestExecutor = _createSearchRequestExecutor(
 			createComplexQueryBuilderFactory(new QueriesImpl()),
-			_facetProcessor, _openSearchConnectionManager,
-			new StatsRequestBuilderFactoryImpl());
-	}
-
-	public void tearDown() {
-		_serviceRegistrations.forEach(
-			serviceRegistration -> serviceRegistration.unregister());
-
-		ReflectionTestUtil.invoke(
-			_facetTranslatorImpl, "deactivate", new Class<?>[0]);
+			_openSearchConnectionManager, new StatsRequestBuilderFactoryImpl());
 	}
 
 	protected static CommonSearchRequestBuilderAssembler
 		createCommonSearchRequestBuilderAssembler(
-			ComplexQueryBuilderFactory complexQueryBuilderFactory,
-			FacetProcessor<?> facetProcessor) {
+			ComplexQueryBuilderFactory complexQueryBuilderFactory) {
 
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
@@ -88,7 +62,7 @@ public class SearchRequestExecutorFixture {
 			complexQueryBuilderFactory);
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			_createFacetTranslator(facetProcessor));
+			new FacetTranslatorImpl());
 
 		return commonSearchRequestBuilderAssembler;
 	}
@@ -105,49 +79,10 @@ public class SearchRequestExecutorFixture {
 		return complexQueryBuilderFactoryImpl;
 	}
 
-	protected void setFacetProcessor(FacetProcessor<?> facetProcessor) {
-		_facetProcessor = facetProcessor;
-	}
-
 	protected void setOpenSearchConnectionManager(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		_openSearchConnectionManager = openSearchConnectionManager;
-	}
-
-	private static FacetTranslator _createFacetTranslator(
-		FacetProcessor<?> facetProcessor) {
-
-		_facetTranslatorImpl = new FacetTranslatorImpl();
-
-		ReflectionTestUtil.invoke(
-			_facetTranslatorImpl, "activate",
-			new Class<?>[] {BundleContext.class}, _bundleContext);
-
-		if (facetProcessor != null) {
-			ReflectionTestUtil.setFieldValue(
-				_facetTranslatorImpl, "_defaultFacetProcessor",
-				(FacetProcessor<SearchRequest.Builder>)facetProcessor);
-		}
-		else {
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					(Class<FacetProcessor<SearchRequest.Builder>>)
-						(Class<?>)FacetProcessor.class,
-					new RangeFacetProcessor(),
-					MapUtil.singletonDictionary(
-						"class.name", ModifiedFacetImpl.class.getName())));
-
-			_serviceRegistrations.add(
-				_bundleContext.registerService(
-					(Class<FacetProcessor<SearchRequest.Builder>>)
-						(Class<?>)FacetProcessor.class,
-					new NestedFacetProcessor(),
-					MapUtil.singletonDictionary(
-						"class.name", NestedFacetImpl.class.getName())));
-		}
-
-		return _facetTranslatorImpl;
 	}
 
 	private ClosePointInTimeRequestExecutor
@@ -222,7 +157,6 @@ public class SearchRequestExecutorFixture {
 
 	private SearchRequestExecutor _createSearchRequestExecutor(
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
-		FacetProcessor<?> facetProcessor,
 		OpenSearchConnectionManager openSearchConnectionManager,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
@@ -237,7 +171,7 @@ public class SearchRequestExecutorFixture {
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
 				createCommonSearchRequestBuilderAssembler(
-					complexQueryBuilderFactory, facetProcessor);
+					complexQueryBuilderFactory);
 
 		ReflectionTestUtil.setFieldValue(
 			searchRequestExecutor, "_countSearchRequestExecutor",
@@ -373,14 +307,6 @@ public class SearchRequestExecutorFixture {
 		return suggestSearchRequestExecutor;
 	}
 
-	private static final BundleContext _bundleContext =
-		SystemBundleUtil.getBundleContext();
-	private static FacetTranslatorImpl _facetTranslatorImpl;
-	private static final List
-		<ServiceRegistration<FacetProcessor<SearchRequest.Builder>>>
-			_serviceRegistrations = new ArrayList<>();
-
-	private FacetProcessor<?> _facetProcessor;
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 	private SearchRequestExecutor _searchRequestExecutor;
 

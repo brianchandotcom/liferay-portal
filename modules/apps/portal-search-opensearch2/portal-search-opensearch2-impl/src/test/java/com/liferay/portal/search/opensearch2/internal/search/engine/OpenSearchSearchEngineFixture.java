@@ -87,8 +87,6 @@ public class OpenSearchSearchEngineFixture implements SearchEngineFixture {
 
 	@Override
 	public void tearDown() throws Exception {
-		_openSearchEngineAdapterFixture.tearDown();
-
 		if (_indexFactory != null) {
 			_indexFactory.close();
 

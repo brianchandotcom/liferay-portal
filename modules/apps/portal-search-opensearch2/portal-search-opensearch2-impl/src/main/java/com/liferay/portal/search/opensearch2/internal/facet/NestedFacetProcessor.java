@@ -26,18 +26,15 @@ import org.opensearch.client.opensearch._types.aggregations.DateRangeExpression;
 import org.opensearch.client.opensearch._types.aggregations.TermsAggregation;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jorge Díaz
  * @author Petteri Karttunen
  */
-@Component(
-	property = "class.name=com.liferay.portal.search.internal.facet.NestedFacetImpl",
-	service = FacetProcessor.class
-)
 public class NestedFacetProcessor
 	implements FacetProcessor<SearchRequest.Builder> {
+
+	public static final NestedFacetProcessor INSTANCE =
+		new NestedFacetProcessor();
 
 	@Override
 	public ContainerBuilder processFacet(Facet facet) {

@@ -41,10 +41,7 @@ public class ModifiedFacetTest extends BaseModifiedFacetTestCase {
 
 	@Override
 	protected IndexingFixture createIndexingFixture() throws Exception {
-		return LiferayOpenSearchIndexingFixtureFactory.builder(
-		).facetProcessor(
-			new RangeFacetProcessor()
-		).build();
+		return LiferayOpenSearchIndexingFixtureFactory.getInstance();
 	}
 
 }

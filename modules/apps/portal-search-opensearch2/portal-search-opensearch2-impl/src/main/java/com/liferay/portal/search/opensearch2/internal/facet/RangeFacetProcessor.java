@@ -18,24 +18,17 @@ import org.opensearch.client.opensearch._types.aggregations.AggregationRange;
 import org.opensearch.client.opensearch._types.aggregations.RangeAggregation;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Milen Dyankov
  * @author Tibor Lipusz
  * @author Petteri Karttunen
  */
-@Component(
-	property = {
-		"class.name=com.liferay.portal.kernel.search.facet.RangeFacet",
-		"class.name=com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
-		"class.name=com.liferay.portal.search.internal.facet.RangeFacetImpl"
-	},
-	service = FacetProcessor.class
-)
 public class RangeFacetProcessor
 	implements FacetProcessor<SearchRequest.Builder> {
+
+	public static final RangeFacetProcessor INSTANCE =
+		new RangeFacetProcessor();
 
 	@Override
 	public Aggregation.Builder.ContainerBuilder processFacet(Facet facet) {

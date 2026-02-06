@@ -5,19 +5,18 @@
 
 package com.liferay.portal.search.opensearch2.internal.facet;
 
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.facet.DateRangeFacet;
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.facet.RangeFacet;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
 
 import java.util.ArrayList;
@@ -34,10 +33,7 @@ import org.opensearch.client.opensearch._types.query_dsl.BoolQuery;
 import org.opensearch.client.opensearch._types.query_dsl.QueryBuilders;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Michael C. Han
@@ -113,26 +109,6 @@ public class FacetTranslatorImpl implements FacetTranslator {
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FacetProcessor.class,
-			"(&(class.name=*)(!(class.name=DEFAULT)))",
-			(serviceReference, emitter) -> {
-				List<String> classNames = StringUtil.asList(
-					serviceReference.getProperty("class.name"));
-
-				for (String className : classNames) {
-					emitter.emit(className);
-				}
-			});
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_serviceTrackerMap.close();
-	}
-
 	protected Aggregation.Builder.ContainerBuilder postProcessAggregation(
 		Aggregation.Builder.ContainerBuilder containerBuilder,
 		FacetProcessorContext facetProcessorContext, String facetName) {
@@ -192,17 +168,14 @@ public class FacetTranslatorImpl implements FacetTranslator {
 		Class<?> clazz = facet.getClass();
 
 		FacetProcessor<SearchRequest.Builder> facetProcessor =
-			_serviceTrackerMap.getService(clazz.getName());
-
-		if (facetProcessor == null) {
-			facetProcessor = _defaultFacetProcessor;
-		}
+			_facetProcessors.getOrDefault(
+				clazz.getName(), _defaultFacetProcessor);
 
 		return facetProcessor.processFacet(facet);
 	}
 
-	private final FacetProcessor<SearchRequest.Builder> _defaultFacetProcessor =
-		new FacetProcessor<SearchRequest.Builder>() {
+	private static final FacetProcessor<SearchRequest.Builder>
+		_defaultFacetProcessor = new FacetProcessor<SearchRequest.Builder>() {
 
 			@Override
 			public Aggregation.Builder.ContainerBuilder processFacet(
@@ -251,7 +224,24 @@ public class FacetTranslatorImpl implements FacetTranslator {
 
 		};
 
-	@SuppressWarnings("rawtypes")
-	private ServiceTrackerMap<String, FacetProcessor> _serviceTrackerMap;
+	private static final Map<String, FacetProcessor<SearchRequest.Builder>>
+		_facetProcessors =
+			HashMapBuilder.<String, FacetProcessor<SearchRequest.Builder>>put(
+				DateRangeFacet.class.getName(), DateRangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.DateRangeFacetImpl",
+				DateRangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
+				RangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.NestedFacetImpl",
+				NestedFacetProcessor.INSTANCE
+			).put(
+				RangeFacet.class.getName(), RangeFacetProcessor.INSTANCE
+			).put(
+				"com.liferay.portal.search.internal.facet.RangeFacetImpl",
+				RangeFacetProcessor.INSTANCE
+			).build();
 
 }

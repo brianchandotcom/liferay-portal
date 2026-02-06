@@ -20,21 +20,15 @@ import org.opensearch.client.opensearch._types.aggregations.DateRangeExpression;
 import org.opensearch.client.opensearch._types.aggregations.FieldDateMath;
 import org.opensearch.client.opensearch.core.SearchRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(
-	property = {
-		"class.name=com.liferay.portal.kernel.search.facet.DateRangeFacet",
-		"class.name=com.liferay.portal.search.internal.facet.DateRangeFacetImpl"
-	},
-	service = FacetProcessor.class
-)
 public class DateRangeFacetProcessor
 	implements FacetProcessor<SearchRequest.Builder> {
+
+	public static final DateRangeFacetProcessor INSTANCE =
+		new DateRangeFacetProcessor();
 
 	@Override
 	public Aggregation.Builder.ContainerBuilder processFacet(Facet facet) {

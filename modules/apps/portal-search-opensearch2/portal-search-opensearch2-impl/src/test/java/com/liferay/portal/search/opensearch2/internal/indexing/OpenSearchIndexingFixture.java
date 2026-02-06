@@ -32,7 +32,6 @@ import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.TestOpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.connection.helper.IndexCreationHelper;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetProcessor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.OpenSearchEngineAdapterFixture;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.util.LocalizationImpl;
@@ -45,7 +44,6 @@ import java.util.Map;
 import org.mockito.Mockito;
 
 import org.opensearch.client.opensearch.OpenSearchClient;
-import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.indices.DeleteIndexRequest;
 import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
 
@@ -103,7 +101,7 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	public void setUp() throws Exception {
 		OpenSearchEngineAdapterFixture openSearchEngineAdapterFixture =
 			_createOpenSearchEngineAdapterFixture(
-				_testOpenSearchConnectionManager, _facetProcessor);
+				_testOpenSearchConnectionManager);
 
 		openSearchEngineAdapterFixture.setUp();
 
@@ -156,12 +154,6 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 				}
 			}
 		};
-	}
-
-	protected void setFacetProcessor(
-		FacetProcessor<SearchRequest.Builder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
 	}
 
 	protected void setLiferayMappingsAddedToIndex(
@@ -271,12 +263,10 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 
 	private OpenSearchEngineAdapterFixture
 		_createOpenSearchEngineAdapterFixture(
-			OpenSearchConnectionManager openSearchConnectionManager,
-			FacetProcessor<SearchRequest.Builder> facetProcessor) {
+			OpenSearchConnectionManager openSearchConnectionManager) {
 
 		return new OpenSearchEngineAdapterFixture() {
 			{
-				setFacetProcessor(facetProcessor);
 				setOpenSearchConnectionManager(openSearchConnectionManager);
 			}
 		};
@@ -360,7 +350,6 @@ public class OpenSearchIndexingFixture implements IndexingFixture {
 	}
 
 	private final long _companyId;
-	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
 	private String _indexName;
 	private IndexNameBuilder _indexNameBuilder;

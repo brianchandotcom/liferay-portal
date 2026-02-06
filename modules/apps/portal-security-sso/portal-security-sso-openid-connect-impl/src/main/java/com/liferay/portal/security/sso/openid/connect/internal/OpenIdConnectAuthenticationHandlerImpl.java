@@ -10,6 +10,7 @@ import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
@@ -19,7 +20,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectAuthenticationHandler;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
@@ -439,6 +442,16 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		httpRequest.setAccept(
 			"text/html, image/gif, image/jpeg, */*; q=0.2, */*; q=0.2");
+
+		URI userInfoEndpointURI = oidcProviderMetadata.getUserInfoEndpointURI();
+
+		int timeout = GetterUtil.getInteger(
+			PropsUtil.get(
+				Http.class.getName() + ".timeout",
+				new Filter(userInfoEndpointURI.getHost())));
+
+		httpRequest.setConnectTimeout(timeout);
+		httpRequest.setReadTimeout(timeout);
 
 		try {
 			HTTPResponse httpResponse = httpRequest.send();

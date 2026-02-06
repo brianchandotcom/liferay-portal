@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import {ArrayHelpers, FieldArray, FormikValues, useFormikContext} from 'formik';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -12,6 +13,8 @@ import {FormikFieldText} from '../../../components/forms/FormikFields';
 import {mockPorletDataHandlerSections} from '../../../utils/mockPorletDataHandlerSections';
 
 export default function SetupStep() {
+	const {values}: {values: FormikValues} = useFormikContext();
+
 	return (
 		<>
 			<ClayLayout.Sheet>
@@ -50,16 +53,37 @@ export default function SetupStep() {
 					</div>
 				</ClayLayout.SheetHeader>
 
-				{mockPorletDataHandlerSections.map(({name, portletEntries}) => (
-					<FieldCheckbox
-						description={portletEntries
-							.map(({portletTitle}) => portletTitle)
-							.join(', ')}
-						key={name}
-						label={name}
-						name={name}
-					/>
-				))}
+				<FieldArray name="selectedSectionIds">
+					{(arrayHelper: ArrayHelpers) => {
+						return mockPorletDataHandlerSections.map(
+							({name, portletEntries}, index) => (
+								<FieldCheckbox
+									checked={values?.selectedSectionIds?.includes(
+										name
+									)}
+									description={portletEntries
+										.map(
+											(portletEntry) =>
+												portletEntry.portletTitle
+										)
+										.join(', ')}
+									key={name}
+									label={name}
+									name={`selectedSectionIds[${index}]`}
+									onChange={(checked) =>
+										checked
+											? arrayHelper.push(name)
+											: arrayHelper.remove(
+													values.selectedSectionIds.indexOf(
+														name
+													)
+												)
+									}
+								/>
+							)
+						);
+					}}
+				</FieldArray>
 			</ClayLayout.Sheet>
 		</>
 	);

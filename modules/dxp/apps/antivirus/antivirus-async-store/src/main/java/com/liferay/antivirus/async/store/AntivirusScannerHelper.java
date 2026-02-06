@@ -16,11 +16,12 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+
+import java.io.InputStream;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
-
-import java.io.InputStream;
 
 /**
  * @author Tina Tian
@@ -55,9 +56,8 @@ public class AntivirusScannerHelper {
 				return;
 			}
 
-			try (
-				InputStream inputStream = _store.getFileAsStream(
-					companyId, repositoryId, fileName, versionLabel)){
+			try (InputStream inputStream = _store.getFileAsStream(
+					companyId, repositoryId, fileName, versionLabel)) {
 
 				_antivirusScanner.scan(inputStream);
 

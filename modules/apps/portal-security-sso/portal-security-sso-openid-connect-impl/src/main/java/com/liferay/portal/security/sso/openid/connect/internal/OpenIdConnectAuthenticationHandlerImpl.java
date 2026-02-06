@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,12 +71,14 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import net.minidev.json.JSONObject;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -134,12 +137,29 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				oAuthClientEntry.getMetadataCacheInSeconds(),
 				oAuthClientEntry.getOAuthClientEntryId());
 
+		Dictionary<String, Object> properties =
+			OpenIdConnectProviderUtil.
+				getOpenIdConnectProviderConfigurationProperties(
+					oAuthClientEntry.getAuthServerWellKnownURI(),
+					oAuthClientEntry.getClientId(),
+					_portal.getCompanyId(httpServletRequest),
+					_configurationAdmin,
+					String.valueOf(oidcProviderMetadata.getIssuer()),
+					String.valueOf(oidcProviderMetadata.getTokenEndpointURI()));
+
+		int timeout = 0;
+
+		if (properties != null) {
+			timeout = GetterUtil.getInteger(
+				properties.get("tokenConnectionTimeout"));
+		}
+
 		OIDCTokens oidcTokens = OpenIdConnectTokenRequestUtil.request(
 			authenticationSuccessResponse,
 			openIdConnectAuthenticationSession.getCodeVerifier(),
 			openIdConnectAuthenticationSession.getNonce(),
 			oidcClientInformation, oidcProviderMetadata,
-			_getLoginRedirectURI(httpServletRequest),
+			_getLoginRedirectURI(httpServletRequest), timeout,
 			oAuthClientEntry.getTokenRequestParametersJSON());
 
 		String userInfoJSON = null;
@@ -492,6 +512,9 @@ public class OpenIdConnectAuthenticationHandlerImpl
 	@Reference
 	private AuthorizationServerMetadataResolver
 		_authorizationServerMetadataResolver;
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private Language _language;

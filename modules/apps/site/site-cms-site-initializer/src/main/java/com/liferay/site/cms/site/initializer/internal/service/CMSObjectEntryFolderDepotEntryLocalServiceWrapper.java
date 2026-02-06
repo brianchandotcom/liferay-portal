@@ -63,7 +63,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry, _attachmentManager);
 
-			_onAfterCreate(group);
+			_addCMSDefaultPermissions(group);
 		}
 
 		return depotEntry;
@@ -85,7 +85,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			ObjectEntryFolderUtil.addObjectEntryFolders(
 				depotEntry, _attachmentManager);
 
-			_onAfterCreate(depotEntry.getGroup());
+			_addCMSDefaultPermissions(depotEntry.getGroup());
 		}
 
 		return depotEntry;
@@ -101,7 +101,7 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		depotEntry = super.deleteDepotEntry(depotEntry);
 
-		_onAfterRemove(depotEntry.getGroup());
+		_deleteCMSDefaultPermissions(depotEntry.getGroup());
 
 		return depotEntry;
 	}
@@ -118,52 +118,12 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		depotEntry = super.deleteDepotEntry(depotEntryId);
 
-		_onAfterRemove(depotEntry.getGroup());
+		_deleteCMSDefaultPermissions(depotEntry.getGroup());
 
 		return depotEntry;
 	}
 
-	private JSONObject _getObjectEntryDefaultPermissionJSONObject(
-			long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					externalReferenceCode, companyId);
-
-		String[] actionIds = TransformUtil.transformToArray(
-			_resourceActionLocalService.getResourceActions(
-				objectDefinition.getClassName()),
-			ResourceAction::getActionId, String.class);
-
-		return JSONUtil.put(
-			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-			new String[] {
-				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
-			}
-		).put(
-			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-			new String[] {
-				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
-			}
-		).put(
-			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
-		).put(
-			RoleConstants.CMS_ADMINISTRATOR, actionIds
-		).put(
-			RoleConstants.OWNER, actionIds
-		).put(
-			RoleConstants.USER, new String[] {ActionKeys.VIEW}
-		);
-	}
-
-	private void _onAfterCreate(Group group) throws PortalException {
+	private void _addCMSDefaultPermissions(Group group) throws PortalException {
 		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
 			!FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-17564")) {
@@ -230,7 +190,9 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 			group.getGroupId(), StringPool.BLANK);
 	}
 
-	private void _onAfterRemove(Group group) throws PortalException {
+	private void _deleteCMSDefaultPermissions(Group group)
+		throws PortalException {
+
 		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
 			!FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-17564")) {
@@ -258,6 +220,46 @@ public class CMSObjectEntryFolderDepotEntryLocalServiceWrapper
 
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry.getObjectEntryId());
+	}
+
+	private JSONObject _getObjectEntryDefaultPermissionJSONObject(
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, companyId);
+
+		String[] actionIds = TransformUtil.transformToArray(
+			_resourceActionLocalService.getResourceActions(
+				objectDefinition.getClassName()),
+			ResourceAction::getActionId, String.class);
+
+		return JSONUtil.put(
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+			new String[] {
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+			}
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+			new String[] {
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+			}
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
+		).put(
+			RoleConstants.CMS_ADMINISTRATOR, actionIds
+		).put(
+			RoleConstants.OWNER, actionIds
+		).put(
+			RoleConstants.USER, new String[] {ActionKeys.VIEW}
+		);
 	}
 
 	@Reference

@@ -286,7 +286,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			testGetSiteSitePagesPage_getSiteExternalReferenceCode();
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			siteExternalReferenceCode,
+			siteExternalReferenceCode, false,
 			_getRandomSitePage(
 				testGroup.getExternalReferenceCode(), null,
 				ServiceContextTestUtil.getServiceContext(
@@ -295,7 +295,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				StringUtil.toLowerCase(RandomTestUtil.randomString())));
 
 		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null,
+			siteExternalReferenceCode, false, null, null,
 			"externalReferenceCode eq '" + sitePage.getExternalReferenceCode() +
 				"'",
 			Pagination.of(1, 10), null);
@@ -509,7 +509,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		return sitePageResource.postSiteSitePage(
-			siteExternalReferenceCode, sitePage);
+			siteExternalReferenceCode, false, sitePage);
 	}
 
 	@Override
@@ -537,7 +537,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), sitePage);
+			testGroup.getExternalReferenceCode(), false, sitePage);
 	}
 
 	private void _addFormAndPublishLayout(
@@ -1033,7 +1033,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			null,
 			() -> sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage));
+				sitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _assertSitePage(Layout layout, SitePage sitePage)
@@ -1744,7 +1744,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
+			testGroup.getExternalReferenceCode(), false, randomSitePage);
 
 		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
@@ -2017,7 +2017,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), sitePage);
+			testGroup.getExternalReferenceCode(), false, sitePage);
 
 		_assertPageSpecifications(
 			draftContentPageSpecification, publishedContentPageSpecification,
@@ -2103,7 +2103,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				null, "1_column", randomSitePage.getExternalReferenceCode()));
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
+			testGroup.getExternalReferenceCode(), false, randomSitePage);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
@@ -2391,7 +2391,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				LoggerTestUtil.WARN)) {
 
 			postSitePage = sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), sitePage);
+				testGroup.getExternalReferenceCode(), false, sitePage);
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
@@ -2456,7 +2456,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertPageElements(
 			pageElements,
 			sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), sitePage));
+				testGroup.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPostSiteSitePageWithPageSpecifications()
@@ -2506,7 +2506,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				"reference code ",
 				publishedContentPageSpecification.getExternalReferenceCode()),
 			() -> sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), sitePage));
+				testGroup.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPostSiteSitePageWithPageSpecifications(
@@ -2539,7 +2539,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertPageSpecifications(
 			draftContentPageSpecification, publishedContentPageSpecification,
 			sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), sitePage));
+				testGroup.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPostSiteSitePageWithPageSpecificationsWithCustomFields()
@@ -2577,7 +2577,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				randomSitePage.getExternalReferenceCode()));
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
+			testGroup.getExternalReferenceCode(), false, randomSitePage);
 
 		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			randomSitePage.getPageSpecifications(),
@@ -2694,7 +2694,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		assertEquals(sitePage, putSitePage);
 		assertValid(putSitePage);
@@ -2719,7 +2719,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			group.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		assertEquals(expectedSitePage, putSitePage);
 		assertValid(putSitePage);
@@ -2808,7 +2808,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 			layout = _layoutLocalService.getOrAddEmptyLayout(
 				sitePage.getExternalReferenceCode(),
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
+				TestPropsValues.getUserId(), testGroup.getGroupId(), false,
 				serviceContext);
 		}
 
@@ -2816,7 +2816,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		assertEquals(sitePage, putSitePage);
 		assertValid(putSitePage);
@@ -2945,7 +2945,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage importedSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			layout.getExternalReferenceCode(), sitePage);
+			layout.getExternalReferenceCode(), false, sitePage);
 
 		Assert.assertTrue(
 			MapUtil.isNotEmpty(importedSitePage.getFriendlyUrlPath_i18n()));
@@ -2961,7 +2961,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		importedSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			importedLayout.getExternalReferenceCode(), sitePage);
+			importedLayout.getExternalReferenceCode(), false, sitePage);
 
 		Map<String, String> friendlyUrlPathI18n =
 			importedSitePage.getFriendlyUrlPath_i18n();
@@ -2987,7 +2987,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		importedSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			importedLayout.getExternalReferenceCode(), sitePage);
+			importedLayout.getExternalReferenceCode(), false, sitePage);
 
 		Assert.assertTrue(
 			equals(
@@ -3114,7 +3114,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			randomSitePage.getExternalReferenceCode(), randomSitePage);
+			randomSitePage.getExternalReferenceCode(), false, randomSitePage);
 
 		Assert.assertTrue(
 			Objects.deepEquals(
@@ -3145,7 +3145,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), sitePage);
+			testGroup.getExternalReferenceCode(), false, sitePage);
 
 		sitePage.setDateModified(new Date());
 
@@ -3153,7 +3153,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			pageElements,
 			sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(), sitePage));
+				postSitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPutSiteSitePageWithPageExperiences() throws Exception {
@@ -3161,7 +3161,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			"pageSpecifications");
 
 		SitePage postSitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(),
+			testGroup.getExternalReferenceCode(), false,
 			_getRandomSitePage(SitePage.Type.CONTENT_PAGE));
 
 		ContentPageSpecification contentPageSpecification =
@@ -3264,7 +3264,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		pageSpecifications = putSitePage.getPageSpecifications();
 
@@ -3357,7 +3357,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			draftContentPageSpecification, publishedContentPageSpecification,
 			sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage));
+				sitePage.getExternalReferenceCode(), false, sitePage));
 
 		draftContentPageSpecification.setStatus(newDraftLayoutStatus);
 		publishedContentPageSpecification.setStatus(newPublishedLayoutStatus);
@@ -3366,7 +3366,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			draftContentPageSpecification, publishedContentPageSpecification,
 			sitePageResource.putSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage));
+				sitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _testPutSiteSitePageWithPageSpecifications(
@@ -3443,7 +3443,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage updateSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			postSitePage.getExternalReferenceCode(), putSitePage);
+			postSitePage.getExternalReferenceCode(), false, putSitePage);
 
 		PageSpecificationsTestUtil.assertCustomFields(
 			TransformUtil.transform(
@@ -3474,7 +3474,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				randomSitePage.getExternalReferenceCode()));
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
+			testGroup.getExternalReferenceCode(), false, randomSitePage);
 
 		WidgetPageSettings putWidgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
@@ -3487,7 +3487,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		PageSpecificationsTestUtil.assertWidgetPageSpecifications(
 			sitePage.getPageSpecifications(),
@@ -3510,7 +3510,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				SitePage putSitePage = sitePageResource.putSiteSitePage(
 					testGroup.getExternalReferenceCode(),
-					sitePage.getExternalReferenceCode(), sitePage);
+					sitePage.getExternalReferenceCode(), false, sitePage);
 
 				PageSettings putPageSettings = putSitePage.getPageSettings();
 
@@ -3601,7 +3601,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-			testGroup.getExternalReferenceCode(), null, null, null,
+			testGroup.getExternalReferenceCode(), false, null, null, null,
 			Pagination.of(0, 0), null);
 
 		for (SitePage sitePage : page.getItems()) {

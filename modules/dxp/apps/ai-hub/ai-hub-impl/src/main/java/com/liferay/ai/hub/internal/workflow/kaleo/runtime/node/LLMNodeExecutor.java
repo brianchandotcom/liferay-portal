@@ -126,7 +126,7 @@ public class LLMNodeExecutor extends BaseNodeExecutor {
 			).onError(
 				throwable -> vertexAiGeminiStreamingChatModel.close()
 			).systemMessageProvider(
-				object -> VariablesUtil.applyInputVariables(
+				memoryId -> VariablesUtil.applyInputVariables(
 					executionContext, "prompt", kaleoNodeSettingValues)
 			).toolProvider(
 				MCPToolProviderUtil.create(

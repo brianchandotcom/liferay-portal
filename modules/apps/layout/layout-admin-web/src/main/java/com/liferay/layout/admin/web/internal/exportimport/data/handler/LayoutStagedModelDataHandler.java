@@ -359,7 +359,7 @@ public class LayoutStagedModelDataHandler
 
 		_exportLayoutClassedModelUsages(layout, portletDataContext);
 
-		if (layout.isIconImage()) {
+		if (layout.hasIconImage()) {
 			_exportLayoutIconImage(layout, layoutElement, portletDataContext);
 		}
 
@@ -1155,7 +1155,7 @@ public class LayoutStagedModelDataHandler
 				layout.isPrivateLayout(), layout.getName(), layout.getTitle(),
 				layout.getDescription(), layout.getKeywords(),
 				layout.getRobots(), layout.getTypeSettings(),
-				layout.isIconImage(), layout.getIconImageId(),
+				layout.hasIconImage(), layout.getIconImageId(),
 				layout.getThemeId(), layout.getColorSchemeId(), layout.getCss(),
 				serviceContext);
 		}

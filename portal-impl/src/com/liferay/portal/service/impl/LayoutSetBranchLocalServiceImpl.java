@@ -210,7 +210,7 @@ public class LayoutSetBranchLocalServiceImpl
 						layout.isPrivateLayout(), layout.getName(),
 						layout.getTitle(), layout.getDescription(),
 						layout.getKeywords(), layout.getRobots(),
-						layout.getTypeSettings(), layout.isIconImage(),
+						layout.getTypeSettings(), layout.hasIconImage(),
 						layout.getIconImageId(), layout.getThemeId(),
 						layout.getColorSchemeId(), layout.getCss(),
 						serviceContext);

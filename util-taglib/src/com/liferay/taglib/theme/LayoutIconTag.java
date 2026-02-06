@@ -28,7 +28,7 @@ public class LayoutIconTag extends IncludeTag implements BodyTag {
 	public static void doTag(Layout layout, PageContext pageContext)
 		throws JspException {
 
-		if ((layout == null) || !layout.isIconImage()) {
+		if ((layout == null) || !layout.hasIconImage()) {
 			return;
 		}
 

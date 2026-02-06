@@ -63,7 +63,7 @@ public class EnableLayoutMVCActionCommand extends BaseMVCActionCommand {
 			incompleteLayoutRevision.getKeywords(),
 			incompleteLayoutRevision.getRobots(),
 			incompleteLayoutRevision.getTypeSettings(),
-			incompleteLayoutRevision.getIconImage(),
+			incompleteLayoutRevision.hasIconImage(),
 			incompleteLayoutRevision.getIconImageId(),
 			incompleteLayoutRevision.getThemeId(),
 			incompleteLayoutRevision.getColorSchemeId(),

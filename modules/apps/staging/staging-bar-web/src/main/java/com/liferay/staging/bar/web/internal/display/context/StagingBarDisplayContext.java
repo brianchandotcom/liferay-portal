@@ -89,7 +89,7 @@ public class StagingBarDisplayContext {
 					layoutRevision.getDescription(),
 					layoutRevision.getKeywords(), layoutRevision.getRobots(),
 					layoutRevision.getTypeSettings(),
-					layoutRevision.getIconImage(),
+					layoutRevision.hasIconImage(),
 					layoutRevision.getIconImageId(),
 					layoutRevision.getThemeId(),
 					layoutRevision.getColorSchemeId(), layoutRevision.getCss(),

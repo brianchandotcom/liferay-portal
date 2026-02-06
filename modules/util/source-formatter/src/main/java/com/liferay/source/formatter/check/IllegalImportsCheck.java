@@ -205,6 +205,10 @@ public class IllegalImportsCheck extends BaseFileCheck {
 		SourceFormatterArgs sourceFormatterArgs =
 			sourceProcessor.getSourceFormatterArgs();
 
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
+			return content;
+		}
+
 		String currentBranchFileDiff = GitUtil.getCurrentBranchFileDiff(
 			sourceFormatterArgs.getBaseDirName(),
 			sourceFormatterArgs.getGitWorkingBranchName(), absolutePath);

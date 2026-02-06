@@ -69,9 +69,6 @@ public class ContainerLayoutStructureItemImporter
 				ContentVisibilityConverter.convertToInternalValue(
 					contentVisibility));
 		}
-		else {
-			containerStyledLayoutStructureItem.setContentVisibility(null);
-		}
 
 		containerStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(containerPageElementDefinition.getCssClasses()));
@@ -83,9 +80,6 @@ public class ContainerLayoutStructureItemImporter
 			containerStyledLayoutStructureItem.setHtmlTag(
 				HtmlTagConverter.convertToInternalValue(
 					htmlProperties.getHtmlTagAsString()));
-		}
-		else {
-			containerStyledLayoutStructureItem.setHtmlTag(null);
 		}
 
 		containerStyledLayoutStructureItem.setIndexed(

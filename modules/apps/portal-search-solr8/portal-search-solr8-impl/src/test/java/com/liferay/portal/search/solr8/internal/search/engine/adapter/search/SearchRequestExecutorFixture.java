@@ -157,8 +157,8 @@ public class SearchRequestExecutorFixture {
 		_solrClientManager = solrClientManager;
 	}
 
-	private final BaseSolrQueryAssemblerImpl _baseSolrQueryAssemblerImpl =
-		new BaseSolrQueryAssemblerImpl();
+	private final BaseSolrQueryAssembler _baseSolrQueryAssemblerImpl =
+		new BaseSolrQueryAssembler();
 	private SearchRequestExecutor _searchRequestExecutor;
 	private SolrClientManager _solrClientManager;
 

@@ -92,8 +92,8 @@ public class CountSearchRequestExecutorImpl
 	@Reference
 	private BaseSearchResponseAssembler _baseSearchResponseAssembler;
 
-	@Reference
-	private BaseSolrQueryAssembler _baseSolrQueryAssembler;
+	private final BaseSolrQueryAssembler _baseSolrQueryAssembler =
+		new BaseSolrQueryAssembler();
 
 	@Reference
 	private SolrClientManager _solrClientManager;

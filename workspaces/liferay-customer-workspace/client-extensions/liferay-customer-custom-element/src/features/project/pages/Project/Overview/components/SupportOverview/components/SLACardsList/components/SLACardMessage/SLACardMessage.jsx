@@ -11,7 +11,7 @@ const SLACardMessage = () => (
 	<div className="bg-neutral-1 cp-sla-card-message rounded-lg">
 		<p className="m-0 px-3 py-2 text-neutral-7 text-paragraph-sm">
 			{i18n.translate(
-				"the-project's-support-level-is-displayed-here-for-projects-with-ticketing-support"
+				"the-project-s-support-level-is-displayed-here-for-projects-with-ticketing-support"
 			)}
 		</p>
 	</div>

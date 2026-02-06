@@ -1066,7 +1066,7 @@ public class LayoutUtil {
 			layout.getType(),
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("hidden"), layout.isHidden()),
-			friendlyURLMap, layout.getIconImage(), null, styleBookEntryERC,
+			friendlyURLMap, layout.hasIconImage(), null, styleBookEntryERC,
 			faviconFileEntryERC, faviconFileEntryScopeERC,
 			masterLayoutPageTemplateEntryERC, serviceContext);
 	}

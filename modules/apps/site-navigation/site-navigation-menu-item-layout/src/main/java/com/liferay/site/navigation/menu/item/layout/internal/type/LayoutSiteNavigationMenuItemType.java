@@ -419,7 +419,7 @@ public class LayoutSiteNavigationMenuItemType
 
 		Layout layout = _fetchLayout(siteNavigationMenuItem);
 
-		if ((layout == null) || !layout.isIconImage()) {
+		if ((layout == null) || !layout.hasIconImage()) {
 			return StringPool.BLANK;
 		}
 

@@ -125,7 +125,7 @@ public class SitesImpl implements Sites {
 
 		byte[] iconBytes = null;
 
-		if (layoutPrototypeLayout.isIconImage()) {
+		if (layoutPrototypeLayout.hasIconImage()) {
 			Image image = _imageLocalService.getImage(
 				layoutPrototypeLayout.getIconImageId());
 
@@ -182,7 +182,7 @@ public class SitesImpl implements Sites {
 				targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 				targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
 				targetLayout.isHidden(), targetLayout.getFriendlyURLMap(),
-				layoutPrototypeLayout.isIconImage(), iconBytes, null, null,
+				layoutPrototypeLayout.hasIconImage(), iconBytes, null, null,
 				null,
 				layoutPrototypeLayout.getMasterLayoutPageTemplateEntryERC(),
 				serviceContext);

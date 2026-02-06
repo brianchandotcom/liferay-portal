@@ -2700,7 +2700,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				SiteInitializerUtil.toMap(
 					pageJSONObject.getString("robots_i18n")),
 				type, pageJSONObject.getBoolean("hidden"),
-				layout.getFriendlyURLMap(), layout.getIconImage(), null,
+				layout.getFriendlyURLMap(), layout.hasIconImage(), null,
 				layout.getStyleBookEntryERC(),
 				pageJSONObject.getString("faviconFileEntryERC"),
 				pageJSONObject.getString("faviconFileEntryScopeERC"),

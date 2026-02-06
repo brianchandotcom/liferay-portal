@@ -73,10 +73,10 @@ public class ObjectEntryAssetRendererFactoryTest {
 			false
 		);
 
-		String baseTypeName = _objectEntryAssetRendererFactory.getTypeName(
+		String typeName1 = _objectEntryAssetRendererFactory.getTypeName(
 			LocaleUtil.getDefault());
 
-		Assert.assertFalse(baseTypeName.contains("(CMS)"));
+		Assert.assertFalse(typeName1.contains("(CMS)"));
 
 		Mockito.when(
 			_objectDefinition.isCMS()
@@ -84,10 +84,10 @@ public class ObjectEntryAssetRendererFactoryTest {
 			true
 		);
 
-		String cmsTypeName = _objectEntryAssetRendererFactory.getTypeName(
+		String typeName2 = _objectEntryAssetRendererFactory.getTypeName(
 			LocaleUtil.getDefault());
 
-		Assert.assertEquals(baseTypeName + " (CMS)", cmsTypeName);
+		Assert.assertEquals(typeName1 + " (CMS)", typeName2);
 	}
 
 	@Test

@@ -11,6 +11,7 @@ import com.liferay.frontend.js.web.internal.resource.JavaScriptFrontendResource;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
@@ -36,6 +37,7 @@ import java.net.URL;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -44,6 +46,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class JavaScriptFrontendResourceRequestHandler
 	implements FrontendResourceRequestHandler {
+
+	public static String getBundleHashedFileURIPrefix(Portal portal) {
+		return FrontendJsWebUtil.getPortalContextPath(portal) + "/o/js/-/";
+	}
 
 	public JavaScriptFrontendResourceRequestHandler(
 		ConfigurationProvider configurationProvider,
@@ -61,9 +67,17 @@ public class JavaScriptFrontendResourceRequestHandler
 	public boolean canHandleRequest(HttpServletRequest httpServletRequest) {
 		String requestURI = httpServletRequest.getRequestURI();
 
-		if (requestURI.endsWith(".js") &&
-			(_hashedFilesRegistry.getResource(requestURI) != null)) {
+		if (!requestURI.endsWith(".js")) {
+			return false;
+		}
 
+		String resourceURI = requestURI;
+
+		if (requestURI.startsWith(getBundleHashedFileURIPrefix(_portal))) {
+			resourceURI = _getBundleHashedFileResourceURI(requestURI);
+		}
+
+		if (_hashedFilesRegistry.getResource(resourceURI) != null) {
 			return true;
 		}
 
@@ -74,15 +88,34 @@ public class JavaScriptFrontendResourceRequestHandler
 	public FrontendResource handleRequest(HttpServletRequest httpServletRequest)
 		throws IOException, ServletException {
 
+		boolean requestContainsHash;
+		String resourceURI;
+
 		String requestURI = httpServletRequest.getRequestURI();
 
-		URL url = _hashedFilesRegistry.getResource(requestURI);
+		if (requestURI.startsWith(getBundleHashedFileURIPrefix(_portal))) {
+			requestContainsHash = true;
+
+			resourceURI = _getBundleHashedFileResourceURI(requestURI);
+		}
+		else {
+			requestContainsHash = HashedFilesUtil.getHash(requestURI) != null;
+
+			resourceURI = requestURI;
+		}
+
+		if (resourceURI == null) {
+			return null;
+		}
+
+		URL url = _hashedFilesRegistry.getResource(resourceURI);
 
 		if (url == null) {
 			return null;
 		}
 
-		ResourceBundle resourceBundle = _getResourceBundle(httpServletRequest);
+		ResourceBundle resourceBundle = _getResourceBundle(
+			httpServletRequest, resourceURI);
 
 		String eTag =
 			(resourceBundle == null) ? HashedFilesUtil.getHash(url.getFile()) :
@@ -90,9 +123,7 @@ public class JavaScriptFrontendResourceRequestHandler
 
 		boolean immutable = false;
 
-		if ((HashedFilesUtil.getHash(requestURI) != null) &&
-			(resourceBundle == null)) {
-
+		if (requestContainsHash && (resourceBundle == null)) {
 			immutable = true;
 		}
 
@@ -120,10 +151,50 @@ public class JavaScriptFrontendResourceRequestHandler
 			resourceBundle, sendNoCache, url);
 	}
 
-	private ResourceBundle _getResourceBundle(
-		HttpServletRequest httpServletRequest) {
+	private String _getBundleHashedFileResourceURI(String requestURI) {
+		int openParethensisIndex = requestURI.indexOf(
+			StringPool.OPEN_PARENTHESIS);
 
-		if (!_isTranslatable(httpServletRequest.getRequestURI())) {
+		if (openParethensisIndex == -1) {
+			return null;
+		}
+
+		int closeParethensisIndex = requestURI.indexOf(
+			StringPool.CLOSE_PARENTHESIS);
+
+		if (closeParethensisIndex == -1) {
+			return null;
+		}
+
+		String requestHash = requestURI.substring(
+			openParethensisIndex + 1, closeParethensisIndex);
+
+		String bundleHashedFileURIPrefix = getBundleHashedFileURIPrefix(
+			_portal);
+
+		String servletContextName = requestURI.substring(
+			bundleHashedFileURIPrefix.length(), openParethensisIndex);
+
+		if (!Objects.equals(
+				requestHash,
+				_hashedFilesRegistry.getServletContextHash(
+					servletContextName))) {
+
+			return null;
+		}
+
+		String unhashedResourceURI = StringBundler.concat(
+			FrontendJsWebUtil.getPortalContextPath(_portal), Portal.PATH_MODULE,
+			StringPool.SLASH, servletContextName,
+			requestURI.substring(closeParethensisIndex + 1));
+
+		return _hashedFilesRegistry.getHashedFileURI(unhashedResourceURI);
+	}
+
+	private ResourceBundle _getResourceBundle(
+		HttpServletRequest httpServletRequest, String resourceURI) {
+
+		if (!_isTranslatable(resourceURI)) {
 			return null;
 		}
 
@@ -176,13 +247,10 @@ public class JavaScriptFrontendResourceRequestHandler
 		};
 	}
 
-	private boolean _isTranslatable(String requestURI) {
-		if (!_translatable.containsKey(requestURI)) {
-			URL url = _hashedFilesRegistry.getResource(requestURI);
-
+	private boolean _isTranslatable(String resourceURI) {
+		if (!_translatable.containsKey(resourceURI)) {
 			try {
-
-				// Check content
+				URL url = _hashedFilesRegistry.getResource(resourceURI);
 
 				String content = StreamUtil.toString(url.openStream());
 
@@ -190,37 +258,31 @@ public class JavaScriptFrontendResourceRequestHandler
 					return false;
 				}
 
-				// Check language.json
-
-				String portalContextPath =
-					FrontendJsWebUtil.getPortalContextPath(_portal);
-
-				String prefix = requestURI.substring(
-					0,
-					requestURI.indexOf(
-						StringPool.SLASH,
-						portalContextPath.length() +
-							Portal.PATH_MODULE.length() + 1));
-
 				URL languageJsonURL = _hashedFilesRegistry.getResource(
-					prefix + "/language.json");
+					StringBundler.concat(
+						FrontendJsWebUtil.getPortalContextPath(_portal),
+						Portal.PATH_MODULE,
+						FrontendJsWebUtil.getWebContextPath(
+							_portal, resourceURI),
+						"/language.json"));
 
 				if (languageJsonURL == null) {
-					_translatable.putIfAbsent(requestURI, true);
+					_translatable.putIfAbsent(resourceURI, true);
 				}
 				else {
-					_translatable.putIfAbsent(requestURI, false);
+					_translatable.putIfAbsent(resourceURI, false);
 				}
 			}
 			catch (IOException ioException) {
 				_log.error(
-					"Unable to read translatable resource " + url, ioException);
+					"Unable to read translatable resource " + resourceURI,
+					ioException);
 
-				_translatable.putIfAbsent(requestURI, false);
+				_translatable.putIfAbsent(resourceURI, false);
 			}
 		}
 
-		return _translatable.get(requestURI);
+		return _translatable.get(resourceURI);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

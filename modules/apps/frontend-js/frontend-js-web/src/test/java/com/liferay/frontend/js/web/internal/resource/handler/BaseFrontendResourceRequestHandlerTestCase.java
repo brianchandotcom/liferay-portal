@@ -6,6 +6,7 @@
 package com.liferay.frontend.js.web.internal.resource.handler;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
@@ -43,13 +44,13 @@ public abstract class BaseFrontendResourceRequestHandlerTestCase {
 
 		if (HashedFilesUtil.containsHash(uri)) {
 			unhashedURI = HashedFilesUtil.removeHash(uri);
-		}
 
-		Mockito.when(
-			hashedFilesRegistry.getHashedFileURI(Mockito.eq(unhashedURI))
-		).thenReturn(
-			uri
-		);
+			Mockito.when(
+				hashedFilesRegistry.getHashedFileURI(Mockito.eq(unhashedURI))
+			).thenReturn(
+				uri
+			);
+		}
 
 		URL url = Mockito.mock(URL.class);
 

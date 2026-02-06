@@ -40,9 +40,33 @@ export default function pageValidationReducer(state, action) {
 							firstInvalidFieldLabel === undefined)
 					) {
 						firstInvalidFieldLabel = field.label;
-						firstInvalidFieldInput = document.querySelector(
-							`[name='${field.name}']`
-						);
+
+						if (field.type === 'rich_text') {
+							if (Liferay.FeatureFlags['LPD-11235']) {
+								const fieldWrapper = document.querySelector(
+									`[data-field-name='${field.name}']`
+								);
+
+								firstInvalidFieldInput =
+									fieldWrapper?.querySelector(
+										'.ck-editor__editable[contenteditable="true"]'
+									);
+							}
+							else {
+								const fieldInstance =
+									window.CKEDITOR?.instances[field.name];
+
+								if (fieldInstance) {
+									firstInvalidFieldInput = fieldInstance;
+								}
+							}
+						}
+						else {
+							firstInvalidFieldInput = document.querySelector(
+								`[name='${field.name}']`
+							);
+						}
+
 						firstInvalidFieldName = field.name;
 					}
 

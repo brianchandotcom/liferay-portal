@@ -5,9 +5,13 @@
 
 package com.liferay.frontend.js.web.internal.hashed.files;
 
+import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
+import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -16,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -51,6 +56,17 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		for (Map.Entry<String, String> entry : _map.entrySet()) {
 			biConsumer.accept(entry.getKey(), entry.getValue());
 		}
+	}
+
+	@Override
+	public CachingLevel getCachingLevel(HttpServletRequest httpServletRequest) {
+		FrontendCachingConfiguration frontendCachingConfiguration =
+			FrontendJsWebUtil.getFrontendCachingConfiguration(
+				_portal.getCompanyId(httpServletRequest),
+				_configurationProvider);
+
+		return CachingLevel.fromValue(
+			frontendCachingConfiguration.cachingLevel());
 	}
 
 	public String getHashedFileURI(String unhashedFileURI) {
@@ -282,6 +298,10 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 		HashedFilesRegistryImpl.class);
 
 	private BundleContext _bundleContext;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final Map<String, String> _map = new ConcurrentHashMap<>();
 
 	@Reference

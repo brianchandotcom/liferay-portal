@@ -5,7 +5,6 @@
 
 package com.liferay.portal.url.builder.internal;
 
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
@@ -29,15 +28,11 @@ public class AbsolutePortalURLBuilderFactoryImpl
 		HttpServletRequest httpServletRequest) {
 
 		return new AbsolutePortalURLBuilderImpl(
-			_cacheHelper, _configurationProvider, _hashedFilesRegistry, _portal,
-			httpServletRequest);
+			_cacheHelper, _hashedFilesRegistry, _portal, httpServletRequest);
 	}
 
 	@Reference
 	private CacheHelper _cacheHelper;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private HashedFilesRegistry _hashedFilesRegistry;

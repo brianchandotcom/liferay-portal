@@ -48,9 +48,8 @@ public class PortalMainResourceAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockConfigurationProvider(),
-			mockHashedFilesRegistry(), mockPortal(context, proxy, cdnHost),
-			mockHttpServletRequest());
+			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		_portalMainResourceAbsolutePortalURLBuilder =
 			_absolutePortalURLBuilder.forPortalMainResource("path/to/login");

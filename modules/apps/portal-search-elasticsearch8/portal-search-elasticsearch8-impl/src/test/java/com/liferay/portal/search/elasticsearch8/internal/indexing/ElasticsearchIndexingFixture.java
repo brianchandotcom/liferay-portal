@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.indexing;
 
-import co.elastic.clients.elasticsearch.core.SearchRequest;
-
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
@@ -28,7 +26,6 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexCreator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.IndexName;
 import com.liferay.portal.search.elasticsearch8.internal.connection.helper.IndexCreationHelper;
-import com.liferay.portal.search.elasticsearch8.internal.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -96,8 +93,7 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_elasticsearchFixture.setUp();
 
 		ElasticsearchEngineAdapterFixture elasticsearchEngineAdapterFixture =
-			_createElasticsearchEngineAdapterFixture(
-				_elasticsearchFixture, _facetProcessor);
+			_createElasticsearchEngineAdapterFixture(_elasticsearchFixture);
 
 		elasticsearchEngineAdapterFixture.setUp();
 
@@ -152,12 +148,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 		_elasticsearchFixture = elasticsearchFixture;
 	}
 
-	protected void setFacetProcessor(
-		FacetProcessor<SearchRequest.Builder> facetProcessor) {
-
-		_facetProcessor = facetProcessor;
-	}
-
 	protected void setLiferayMappingsAddedToIndex(
 		boolean liferayMappingsAddedToIndex) {
 
@@ -166,13 +156,11 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private ElasticsearchEngineAdapterFixture
 		_createElasticsearchEngineAdapterFixture(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			FacetProcessor<SearchRequest.Builder> facetProcessor) {
+			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		return new ElasticsearchEngineAdapterFixture() {
 			{
 				setElasticsearchClientResolver(elasticsearchClientResolver);
-				setFacetProcessor(facetProcessor);
 			}
 		};
 	}
@@ -329,7 +317,6 @@ public class ElasticsearchIndexingFixture implements IndexingFixture {
 
 	private final long _companyId;
 	private ElasticsearchFixture _elasticsearchFixture;
-	private FacetProcessor<SearchRequest.Builder> _facetProcessor;
 	private IndexCreationHelper _indexCreationHelper;
 	private String _indexName;
 	private IndexSearcher _indexSearcher;

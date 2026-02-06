@@ -26,18 +26,15 @@ import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.facet.nested.NestedFacet;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Jorge Díaz
  * @author Petteri Karttunen
  */
-@Component(
-	property = "class.name=com.liferay.portal.search.internal.facet.NestedFacetImpl",
-	service = FacetProcessor.class
-)
 public class NestedFacetProcessor
 	implements FacetProcessor<SearchRequest.Builder> {
+
+	public static final NestedFacetProcessor INSTANCE =
+		new NestedFacetProcessor();
 
 	@Override
 	public ContainerBuilder processFacet(Facet facet) {

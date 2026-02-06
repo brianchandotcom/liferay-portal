@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportStyleUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -58,6 +59,17 @@ public class RowLayoutStructureItemImporter
 
 		if (gridPageElementDefinition == null) {
 			return rowStyledLayoutStructureItem;
+		}
+
+		JSONObject backgroundImageValueJSONObject =
+			ImageValueUtil.toBackgroundImageValueJSONObject(
+				gridPageElementDefinition.getBackgroundImageValue(),
+				layoutStructureItemImporterContext);
+
+		if (backgroundImageValueJSONObject != null) {
+			rowStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"backgroundImage", backgroundImageValueJSONObject));
 		}
 
 		rowStyledLayoutStructureItem.setCssClasses(

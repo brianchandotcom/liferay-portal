@@ -22,6 +22,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryLinkU
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReference;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEntryReferenceUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -160,6 +161,17 @@ public class FragmentLayoutStructureItemImporter
 					LayoutStructureUtil.getParentExternalReferenceCode(
 						pageElement, layoutStructure),
 					pageElement.getPosition());
+
+		JSONObject backgroundImageValueJSONObject =
+			ImageValueUtil.toBackgroundImageValueJSONObject(
+				fragmentInstance.getBackgroundImageValue(),
+				layoutStructureItemImporterContext);
+
+		if (backgroundImageValueJSONObject != null) {
+			fragmentStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"backgroundImage", backgroundImageValueJSONObject));
+		}
 
 		fragmentStyledLayoutStructureItem.setCssClasses(
 			SetUtil.fromArray(fragmentInstance.getCssClasses()));

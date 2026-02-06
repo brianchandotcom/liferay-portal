@@ -8,12 +8,14 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 import com.liferay.headless.admin.site.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -49,6 +51,18 @@ public class FormStepContainerLayoutStructureItemImporter
 
 		if (formStepContainerPageElementDefinition == null) {
 			return formStepContainerStyledLayoutStructureItem;
+		}
+
+		JSONObject backgroundImageValueJSONObject =
+			ImageValueUtil.toBackgroundImageValueJSONObject(
+				formStepContainerPageElementDefinition.
+					getBackgroundImageValue(),
+				layoutStructureItemImporterContext);
+
+		if (backgroundImageValueJSONObject != null) {
+			formStepContainerStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					"backgroundImage", backgroundImageValueJSONObject));
 		}
 
 		formStepContainerStyledLayoutStructureItem.setCssClasses(

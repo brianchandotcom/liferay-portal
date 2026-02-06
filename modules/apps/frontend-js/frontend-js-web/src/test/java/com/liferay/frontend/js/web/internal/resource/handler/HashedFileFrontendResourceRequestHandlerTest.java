@@ -81,6 +81,8 @@ public class HashedFileFrontendResourceRequestHandlerTest
 		).thenReturn(
 			settings
 		);
+
+		resetFrontendJsWebUtil();
 	}
 
 	@After

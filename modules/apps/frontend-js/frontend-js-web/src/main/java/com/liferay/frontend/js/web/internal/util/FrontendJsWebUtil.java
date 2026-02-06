@@ -7,6 +7,7 @@ package com.liferay.frontend.js.web.internal.util;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +24,13 @@ import java.util.HashMap;
  */
 public class FrontendJsWebUtil {
 
+	/**
+	 * Get the base URL to use when generating URLs to be consumed by the
+	 * browser. The base URL contains the CDN path (if defined) followed by the
+	 * proxy path (if defined).
+	 *
+	 * @review
+	 */
 	public static String getBaseURL(
 		HttpServletRequest httpServletRequest, Portal portal) {
 
@@ -66,6 +74,11 @@ public class FrontendJsWebUtil {
 		}
 	}
 
+	/**
+	 * Get the portal context path (without the CDN or proxy part).
+	 *
+	 * @review
+	 */
 	public static String getPortalContextPath(Portal portal) {
 		if (_portalContextPath != null) {
 			return _portalContextPath;
@@ -80,10 +93,35 @@ public class FrontendJsWebUtil {
 		return _portalContextPath;
 	}
 
+	/**
+	 * Get the web context path associated to a request, for example:
+	 * "/frontend-js-web".
+	 *
+	 * @review
+	 */
+	public static String getWebContextPath(Portal portal, String resourceURI) {
+		if (_webContextPathIndex == -1) {
+			String portalContextPath = getPortalContextPath(portal);
+
+			_webContextPathIndex =
+				portalContextPath.length() + Portal.PATH_MODULE.length();
+		}
+
+		int endIndex = resourceURI.indexOf(
+			StringPool.SLASH, _webContextPathIndex + 1);
+
+		if (endIndex == -1) {
+			endIndex = resourceURI.length();
+		}
+
+		return resourceURI.substring(_webContextPathIndex, endIndex);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendJsWebUtil.class);
 
 	private static volatile String _baseURL;
 	private static volatile String _portalContextPath;
+	private static volatile int _webContextPathIndex = -1;
 
 }

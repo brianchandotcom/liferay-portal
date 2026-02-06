@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -67,6 +68,11 @@ public class StyleSheetFrontendResourceRequestHandlerTest
 				{16, true, true, _VALID_HASHED_URL, false},
 				{17, true, true, _VALID_HASHED_URL, true}
 			});
+	}
+
+	@Before
+	public void setUp() {
+		resetFrontendJsWebUtil();
 	}
 
 	@Test

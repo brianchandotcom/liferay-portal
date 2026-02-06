@@ -6,13 +6,26 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Luis Ortiz
@@ -27,8 +40,10 @@ public class DDMDataCleanupPreupgradeProcess
 		DataCleanupPreupgradeProcess
 			ddmStructureVersionDataCleanupPreupgradeProcess =
 				_getDDMStructureVersionDataCleanupPreupgradeProcess();
-		DataCleanupPreupgradeProcess ddmTemplateDataCleanupPreupgradeProcess =
-			_getDDMTemplateDataCleanupPreupgradeProcess();
+
+		DataCleanupPreupgradeProcess
+			journalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73 =
+				_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73();
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
 			dataCleanupPreupgradeProcessesMap =
@@ -47,17 +62,21 @@ public class DDMDataCleanupPreupgradeProcess
 						ddmStructureVersionDataCleanupPreupgradeProcess,
 						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).put(
-						ddmTemplateDataCleanupPreupgradeProcess,
+						_getDDMTemplateDataCleanupPreupgradeProcess(),
 						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).put(
 						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess62(),
-						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).put(
-						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73(),
-						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+						journalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73,
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
+						_getJournalPointingOrphanNonancestorDDMStructureCleanupPreupgradeProcess70to73(),
+						dependsOn(
+							journalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73)
 					).put(
 						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess74(),
-						dependsOn(ddmTemplateDataCleanupPreupgradeProcess)
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).build();
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
@@ -189,5 +208,167 @@ public class DDMDataCleanupPreupgradeProcess
 				null, null, "DDMStructureId", "JournalFeed", "structureId",
 				"DDMStructure"));
 	}
+
+	private DataCleanupPreupgradeProcess
+		_getJournalPointingOrphanNonancestorDDMStructureCleanupPreupgradeProcess70to73() {
+
+		return new DataCleanupPreupgradeProcess() {
+
+			@Override
+			protected void doUpgrade() throws Exception {
+				DBInspector dbInspector = new DBInspector(connection);
+
+				if (!dbInspector.hasColumn(
+						"JournalArticle", "DDMStructureKey")) {
+
+					return;
+				}
+
+				Map<Long, Long> groupParents = new HashMap<>();
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select groupId, parentGroupId from Group_");
+					ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					while (resultSet.next()) {
+						long parentGroupId = resultSet.getLong("parentGroupId");
+
+						if (parentGroupId > 0) {
+							groupParents.put(
+								resultSet.getLong("groupId"), parentGroupId);
+						}
+					}
+				}
+
+				Map<Long, Set<String>> structureKeys = new HashMap<>();
+
+				try (PreparedStatement preparedStatement =
+						connection.prepareStatement(
+							"select groupId, structureKey from DDMStructure");
+					ResultSet resultSet = preparedStatement.executeQuery()) {
+
+					while (resultSet.next()) {
+						structureKeys.computeIfAbsent(
+							resultSet.getLong("groupId"), k -> new HashSet<>()
+						).add(
+							resultSet.getString("structureKey")
+						);
+					}
+				}
+
+				String sql = null;
+
+				if ((DBManagerUtil.getDBType() == DBType.MARIADB) ||
+					(DBManagerUtil.getDBType() == DBType.MYSQL)) {
+
+					sql = StringBundler.concat(
+						"select JournalArticle.groupId, ",
+						"JournalArticle.DDMStructureKey, count(1) from ",
+						"JournalArticle left join DDMStructure DDMStructure1 ",
+						"on DDMStructure1.structureKey = ",
+						"JournalArticle.DDMStructureKey and ",
+						"DDMStructure1.groupId = JournalArticle.groupId left ",
+						"join Group_ on Group_.friendlyURL = '/global' and ",
+						"Group_.companyId = JournalArticle.companyId left ",
+						"join DDMStructure DDMStructure2 on ",
+						"DDMStructure2.structureKey = ",
+						"JournalArticle.DDMStructureKey and ",
+						"DDMStructure2.groupId = Group_.groupId where ",
+						"JournalArticle.DDMStructureKey is not null and ",
+						"DDMStructure1.structureKey is null and ",
+						"DDMStructure2.structureKey is null group by ",
+						"JournalArticle.groupId, ",
+						"JournalArticle.DDMStructureKey");
+				}
+				else {
+					sql = StringBundler.concat(
+						"select groupId, DDMStructureKey, count(1) from ",
+						"JournalArticle where DDMStructureKey is not null and ",
+						"not exists (select 1 from DDMStructure where ",
+						"DDMStructure.structureKey = ",
+						"JournalArticle.DDMStructureKey and ",
+						"(DDMStructure.groupId = JournalArticle.groupId or ",
+						"DDMStructure.groupId in (select groupId from Group_ ",
+						"where friendlyURL = '/global' and companyId = ",
+						"JournalArticle.companyId))) group by groupId, ",
+						"DDMStructureKey");
+				}
+
+				try (PreparedStatement preparedStatement1 =
+						connection.prepareStatement(sql);
+					PreparedStatement preparedStatement2 =
+						connection.prepareStatement(
+							"delete from JournalArticle where groupId = ? " +
+								"and DDMStructureKey = ?");
+					ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+					while (resultSet.next()) {
+						long groupId = resultSet.getLong("groupId");
+
+						String structureKey = resultSet.getString(
+							"DDMStructureKey");
+
+						if (_hasStructure(
+								groupId, groupParents, structureKey,
+								structureKeys)) {
+
+							continue;
+						}
+
+						if (_log.isInfoEnabled()) {
+							DataCleanupLoggingUtil.logDelete(
+								_log, resultSet.getLong(3),
+								dbInspector.normalizeName("JournalArticle"),
+								StringBundler.concat(
+									dbInspector.normalizeName(
+										"DDMStructureKey"),
+									StringPool.SPACE, structureKey,
+									" was not found in ",
+									dbInspector.normalizeName("groupId"),
+									StringPool.SPACE, groupId,
+									" or its ancestors"));
+						}
+
+						preparedStatement2.setLong(1, groupId);
+						preparedStatement2.setString(2, structureKey);
+
+						preparedStatement2.addBatch();
+					}
+
+					preparedStatement2.executeBatch();
+				}
+			}
+
+			private boolean _hasStructure(
+				long groupId, Map<Long, Long> groupParents, String structureKey,
+				Map<Long, Set<String>> structureKeys) {
+
+				while (true) {
+					Set<String> groupStructureKeys = structureKeys.get(groupId);
+
+					if ((groupStructureKeys != null) &&
+						groupStructureKeys.contains(structureKey)) {
+
+						return true;
+					}
+
+					Long parentGroupId = groupParents.get(groupId);
+
+					if (parentGroupId == null) {
+						break;
+					}
+
+					groupId = parentGroupId;
+				}
+
+				return false;
+			}
+
+		};
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMDataCleanupPreupgradeProcess.class);
 
 }

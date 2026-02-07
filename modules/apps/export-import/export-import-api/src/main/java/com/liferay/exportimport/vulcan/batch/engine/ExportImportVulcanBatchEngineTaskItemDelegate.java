@@ -28,9 +28,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return null;
 		}
 
-		public default String getKey() {
-			return getResourceClassName();
-		}
+		public String getKey();
 
 		public String getLabelLanguageKey();
 
@@ -55,8 +53,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		public default Map<String, String[]> getReferences() {
 			return null;
 		}
-
-		public String getResourceClassName();
 
 		public Scope getScope();
 

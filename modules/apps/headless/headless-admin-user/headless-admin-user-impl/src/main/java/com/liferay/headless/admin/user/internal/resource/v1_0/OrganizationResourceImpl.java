@@ -304,6 +304,11 @@ public class OrganizationResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return OrganizationResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "organizations";
 			}
@@ -333,11 +338,6 @@ public class OrganizationResourceImpl
 			@Override
 			public String getPortletId() {
 				return UsersAdminPortletKeys.ORGANIZATIONS_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return OrganizationResourceImpl.class.getName();
 			}
 
 			@Override

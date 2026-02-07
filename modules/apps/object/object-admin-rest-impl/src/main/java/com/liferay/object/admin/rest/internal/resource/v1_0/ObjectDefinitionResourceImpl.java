@@ -179,6 +179,11 @@ public class ObjectDefinitionResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return ObjectDefinitionResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "model.resource.com.liferay.object";
 			}
@@ -206,11 +211,6 @@ public class ObjectDefinitionResourceImpl
 			@Override
 			public int getRank() {
 				return 99;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return ObjectDefinitionResourceImpl.class.getName();
 			}
 
 			@Override

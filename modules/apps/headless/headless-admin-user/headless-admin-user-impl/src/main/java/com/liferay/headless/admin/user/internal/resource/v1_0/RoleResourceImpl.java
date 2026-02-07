@@ -172,6 +172,11 @@ public class RoleResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return RoleResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "roles";
 			}
@@ -184,11 +189,6 @@ public class RoleResourceImpl
 			@Override
 			public String getPortletId() {
 				return RolesAdminPortletKeys.ROLES_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return RoleResourceImpl.class.getName();
 			}
 
 			@Override

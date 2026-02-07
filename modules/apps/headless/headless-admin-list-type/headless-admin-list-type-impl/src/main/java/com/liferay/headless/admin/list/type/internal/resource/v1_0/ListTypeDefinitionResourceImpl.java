@@ -89,6 +89,11 @@ public class ListTypeDefinitionResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return ListTypeDefinitionResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "model.resource.com.liferay.list.type";
 			}
@@ -107,11 +112,6 @@ public class ListTypeDefinitionResourceImpl
 			@Override
 			public int getRank() {
 				return 98;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return ListTypeDefinitionResourceImpl.class.getName();
 			}
 
 			@Override

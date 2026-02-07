@@ -235,7 +235,6 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				).put(
 					PortletDataHandlerKeys.PERMISSIONS, new String[] {"false"}
 				).build()));
-
 	}
 
 	@Test

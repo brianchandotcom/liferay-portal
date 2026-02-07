@@ -131,10 +131,10 @@ public class DefaultSegmentsExperienceRequestProcessorTest {
 
 		User user = _userLocalService.getUser(TestPropsValues.getUserId());
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		SegmentsEntry segmentsEntry1 = _getSegmentsEntry(
 			_group.getGroupId(), user);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience1 =
 			_segmentsExperienceLocalService.appendSegmentsExperience(

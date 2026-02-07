@@ -206,15 +206,15 @@ public class DDMStructureTestUtil {
 		if (fieldValues != null) {
 			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
-			for (Map.Entry<String, String> option : fieldValues.entrySet()) {
+			for (Map.Entry<String, String> entry : fieldValues.entrySet()) {
 				ddmFormFieldOptions.addOptionLabel(
-					option.getKey(), defaultLocale, option.getValue());
+					entry.getKey(), defaultLocale, entry.getValue());
 
 				for (Locale locale : availableLocales) {
 					ddmFormFieldOptions.addOptionLabel(
-						option.getKey() + LocaleUtil.toLanguageId(locale),
+						entry.getKey() + LocaleUtil.toLanguageId(locale),
 						locale,
-						option.getValue() + LocaleUtil.toLanguageId(locale));
+						entry.getValue() + LocaleUtil.toLanguageId(locale));
 				}
 			}
 

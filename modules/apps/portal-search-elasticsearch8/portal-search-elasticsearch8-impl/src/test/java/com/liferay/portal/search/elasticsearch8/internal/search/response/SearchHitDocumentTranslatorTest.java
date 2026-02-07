@@ -29,16 +29,13 @@ public class SearchHitDocumentTranslatorTest {
 
 	@Test
 	public void testDocumentWithIgnoredField() {
-		SearchHitDocumentTranslator searchHitDocumentTranslator =
-			new SearchHitDocumentTranslatorImpl();
-
 		Hit.Builder<JsonData> builder = new Hit.Builder<>();
 
 		builder.fields("_ignored", JsonData.of("value"));
 		builder.ignored("_ignored");
 		builder.index("0");
 
-		Document document = searchHitDocumentTranslator.translate(
+		Document document = SearchHitDocumentTranslator.INSTANCE.translate(
 			builder.build());
 
 		Assert.assertEquals(StringPool.BLANK, document.get("_ignored"));

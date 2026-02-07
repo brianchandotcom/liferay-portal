@@ -193,20 +193,6 @@ public class DDMStructureTestUtil {
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
 		ddmFormField.setDataType(dataType);
-		ddmFormField.setIndexType(indexType);
-		ddmFormField.setLocalizable(true);
-		ddmFormField.setRepeatable(repeatable);
-
-		LocalizedValue label = new LocalizedValue(defaultLocale);
-
-		label.addString(
-			defaultLocale, "Field_" + LocaleUtil.toLanguageId(defaultLocale));
-
-		for (Locale locale : availableLocales) {
-			label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
-		}
-
-		ddmFormField.setLabel(label);
 
 		if (fieldValues != null) {
 			DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
@@ -225,6 +211,21 @@ public class DDMStructureTestUtil {
 
 			ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 		}
+
+		ddmFormField.setIndexType(indexType);
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setRepeatable(repeatable);
+
+		LocalizedValue label = new LocalizedValue(defaultLocale);
+
+		label.addString(
+			defaultLocale, "Field_" + LocaleUtil.toLanguageId(defaultLocale));
+
+		for (Locale locale : availableLocales) {
+			label.addString(locale, "Field_" + LocaleUtil.toLanguageId(locale));
+		}
+
+		ddmFormField.setLabel(label);
 
 		ddmForm.addDDMFormField(ddmFormField);
 

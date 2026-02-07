@@ -2389,7 +2389,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	public Layout getOrAddEmptyLayout(
 			String externalReferenceCode, long userId, long groupId,
-			ServiceContext serviceContext)
+			boolean privateLayout, ServiceContext serviceContext)
 		throws Exception {
 
 		return EmptyModelManagerUtil.getOrAddEmptyModel(
@@ -2399,7 +2399,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 					"layout.instanceable.allowed", Boolean.TRUE);
 
 				return layoutLocalService.addLayout(
-					externalReferenceCode, userId, groupId, false,
+					externalReferenceCode, userId, groupId, privateLayout,
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 					externalReferenceCode, StringPool.BLANK, null,
 					LayoutConstants.TYPE_EMPTY, true, false, null,

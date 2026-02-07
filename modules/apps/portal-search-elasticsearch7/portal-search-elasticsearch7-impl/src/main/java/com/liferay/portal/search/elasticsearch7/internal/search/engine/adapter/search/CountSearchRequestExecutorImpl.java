@@ -83,7 +83,7 @@ public class CountSearchRequestExecutorImpl
 
 		countSearchResponse.setCount(totalHits.value);
 
-		_commonSearchResponseAssembler.assemble(
+		CommonSearchResponseAssembler.INSTANCE.assemble(
 			countSearchRequest, countSearchResponse, searchRequestString,
 			searchResponse);
 
@@ -116,9 +116,6 @@ public class CountSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
-
-	@Reference
-	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
 
 	@Reference
 	private CommonSearchSourceBuilderAssembler

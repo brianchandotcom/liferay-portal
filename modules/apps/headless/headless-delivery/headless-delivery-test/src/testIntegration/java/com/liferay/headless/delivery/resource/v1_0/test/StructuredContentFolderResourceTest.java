@@ -6,6 +6,7 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.headless.delivery.client.dto.v1_0.Creator;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentFolder;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
@@ -336,15 +337,15 @@ public class StructuredContentFolderResourceTest
 
 		Assert.assertEquals(1, page.getTotalCount());
 
+		StructuredContentFolder structuredContentFolder = page.fetchFirstItem();
+
 		Assert.assertEquals(
 			postStructuredContentFolder.getId(),
-			page.fetchFirstItem(
-			).getId());
+			structuredContentFolder.getId());
 
-		Assert.assertNotNull(
-			page.fetchFirstItem(
-			).getCreator(
-			).getProfileURL());
+		Creator creator = structuredContentFolder.getCreator();
+
+		Assert.assertNotNull(creator.getProfileURL());
 
 		assertValid(page);
 	}

@@ -3156,11 +3156,12 @@ public class StructuredContentResourceTest
 										structuredContent1.getContentFields()
 											[0];
 
-									return initialContentField.
-										getContentFieldValue_i18n(
-										).get(
-											"es-ES"
-										);
+									Map<String, ContentFieldValue>
+										contentFieldValue_i18n =
+											initialContentField.
+												getContentFieldValue_i18n();
+
+									return contentFieldValue_i18n.get("es-ES");
 								}
 							).build();
 							fieldReference = "MyText";
@@ -3179,11 +3180,12 @@ public class StructuredContentResourceTest
 										structuredContent1.getContentFields()
 											[1];
 
-									return initialContentField.
-										getContentFieldValue_i18n(
-										).get(
-											"es-ES"
-										);
+									Map<String, ContentFieldValue>
+										contentFieldValue_i18n =
+											initialContentField.
+												getContentFieldValue_i18n();
+
+									return contentFieldValue_i18n.get("es-ES");
 								}
 							).build();
 							dataType = "document";
@@ -3203,11 +3205,12 @@ public class StructuredContentResourceTest
 										structuredContent1.getContentFields()
 											[2];
 
-									return initialContentField.
-										getContentFieldValue_i18n(
-										).get(
-											"es-ES"
-										);
+									Map<String, ContentFieldValue>
+										contentFieldValue_i18n =
+											initialContentField.
+												getContentFieldValue_i18n();
+
+									return contentFieldValue_i18n.get("es-ES");
 								}
 							).build();
 							dataType = "image";

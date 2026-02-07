@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -73,8 +72,7 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 		try {
 			for (Role role :
 					_roleService.getRoles(
-						CompanyThreadLocal.getCompanyId(),
-						new int[] {RoleConstants.TYPE_DEPOT})) {
+						_companyId, new int[] {RoleConstants.TYPE_DEPOT})) {
 
 				if (StringUtil.equals(
 						DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,

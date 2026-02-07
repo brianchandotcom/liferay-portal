@@ -20,7 +20,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -253,7 +252,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		else {
 			groupIds = TransformUtil.transformToLongArray(
 				_depotEntryLocalService.getDepotEntries(
-					CompanyThreadLocal.getCompanyId(),
+					_projectObjectDefinition.getCompanyId(),
 					DepotConstants.TYPE_PROJECT),
 				DepotEntryModel::getGroupId);
 		}

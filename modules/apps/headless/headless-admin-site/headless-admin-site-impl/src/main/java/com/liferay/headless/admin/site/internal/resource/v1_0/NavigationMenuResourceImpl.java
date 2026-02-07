@@ -92,6 +92,11 @@ public class NavigationMenuResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return NavigationMenuResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "navigation-menus";
 			}
@@ -104,11 +109,6 @@ public class NavigationMenuResourceImpl
 			@Override
 			public String getPortletId() {
 				return SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return NavigationMenuResourceImpl.class.getName();
 			}
 
 			@Override

@@ -145,6 +145,11 @@ public class TaxonomyVocabularyResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return TaxonomyVocabularyResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "vocabularies";
 			}
@@ -157,11 +162,6 @@ public class TaxonomyVocabularyResourceImpl
 			@Override
 			public String getPortletId() {
 				return AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return TaxonomyVocabularyResourceImpl.class.getName();
 			}
 
 			@Override

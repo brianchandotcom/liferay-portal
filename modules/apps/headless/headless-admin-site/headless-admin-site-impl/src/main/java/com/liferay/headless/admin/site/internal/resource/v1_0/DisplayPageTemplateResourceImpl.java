@@ -119,6 +119,11 @@ public class DisplayPageTemplateResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return DisplayPageTemplateResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "display-page-templates";
 			}
@@ -136,11 +141,6 @@ public class DisplayPageTemplateResourceImpl
 			@Override
 			public String getPortletId() {
 				return LayoutAdminPortletKeys.GROUP_PAGES;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return DisplayPageTemplateResourceImpl.class.getName();
 			}
 
 			@Override

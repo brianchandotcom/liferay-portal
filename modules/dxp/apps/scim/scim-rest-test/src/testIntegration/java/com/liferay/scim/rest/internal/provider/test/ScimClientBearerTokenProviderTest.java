@@ -62,6 +62,12 @@ public class ScimClientBearerTokenProviderTest {
 				null, null, null, 0, null, RandomTestUtil.randomString(), null,
 				null, false, null, false, new ServiceContext());
 
+		Assert.assertEquals(
+			600,
+			_getExpiresIn(
+				oAuth2Application.getClientId(),
+				oAuth2Application.getClientSecret()));
+
 		String scimOAuth2ApplicationName = RandomTestUtil.randomString();
 
 		String pid = ConfigurationTestUtil.createFactoryConfiguration(
@@ -82,11 +88,6 @@ public class ScimClientBearerTokenProviderTest {
 				TestPropsValues.getCompanyId(),
 				ScimClientUtil.generateScimClientId(scimOAuth2ApplicationName));
 
-		Assert.assertEquals(
-			600,
-			_getExpiresIn(
-				oAuth2Application.getClientId(),
-				oAuth2Application.getClientSecret()));
 		Assert.assertEquals(
 			TimeUnit.DAYS.toSeconds(365),
 			_getExpiresIn(

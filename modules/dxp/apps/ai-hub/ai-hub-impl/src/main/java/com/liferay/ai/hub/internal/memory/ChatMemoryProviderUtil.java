@@ -25,9 +25,6 @@ public class ChatMemoryProviderUtil {
 		).build();
 	}
 
-	private ChatMemoryProviderUtil() {
-	}
-
 	private static final InMemoryChatMemoryStore _inMemoryChatMemoryStore =
 		new InMemoryChatMemoryStore();
 

@@ -61,18 +61,22 @@ public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		return HashMapBuilder.<String, Object>put(
 			"selectedItems",
-			TransformUtil.transform(
-				_getTypeNamesMap(
-					liferayPortletRequest
-				).entrySet(),
-				entry -> {
-					if (entry.getKey() == modelClassNameId) {
-						return new SelectionFDSFilterItem(
-							entry.getValue(), String.valueOf(entry.getKey()));
-					}
+			() -> {
+				Map<Long, String> typeNamesMap = _getTypeNamesMap(
+					liferayPortletRequest);
 
-					return null;
-				})
+				return TransformUtil.transform(
+					typeNamesMap.entrySet(),
+					entry -> {
+						if (entry.getKey() == modelClassNameId) {
+							return new SelectionFDSFilterItem(
+								entry.getValue(),
+								String.valueOf(entry.getKey()));
+						}
+
+						return null;
+					});
+			}
 		).build();
 	}
 
@@ -83,10 +87,11 @@ public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		Map<Long, String> typeNamesMap = _getTypeNamesMap(
+			serviceContext.getLiferayPortletRequest());
+
 		return TransformUtil.transform(
-			_getTypeNamesMap(
-				serviceContext.getLiferayPortletRequest()
-			).entrySet(),
+			typeNamesMap.entrySet(),
 			entry -> new SelectionFDSFilterItem(
 				entry.getValue(), String.valueOf(entry.getKey())));
 	}

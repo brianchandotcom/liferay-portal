@@ -20,7 +20,6 @@ if (commerceShippingFixedOptionRel != null) {
 	commerceShippingFixedOptionRelId = commerceShippingFixedOptionRel.getCommerceShippingFixedOptionRelId();
 }
 
-long commerceShippingMethodId = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId();
 long countryId = commerceShippingFixedOptionRelsDisplayContext.getCountryId();
 long regionId = commerceShippingFixedOptionRelsDisplayContext.getRegionId();
 %>
@@ -35,7 +34,7 @@ long regionId = commerceShippingFixedOptionRelsDisplayContext.getRegionId();
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="commerceShippingFixedOptionId" type="hidden" value="<%= commerceShippingFixedOptionId %>" />
 		<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
-		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
+		<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId() %>" />
 
 		<liferay-ui:error exception="<%= CommerceShippingFixedOptionRelPriceException.class %>" message="please-enter-a-valid-price" />
 

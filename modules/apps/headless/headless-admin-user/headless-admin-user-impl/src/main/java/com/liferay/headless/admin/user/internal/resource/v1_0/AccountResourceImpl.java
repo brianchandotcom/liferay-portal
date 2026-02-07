@@ -323,6 +323,11 @@ public class AccountResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return AccountResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "accounts";
 			}
@@ -342,11 +347,6 @@ public class AccountResourceImpl
 			@Override
 			public String getPortletId() {
 				return AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return AccountResourceImpl.class.getName();
 			}
 
 			@Override

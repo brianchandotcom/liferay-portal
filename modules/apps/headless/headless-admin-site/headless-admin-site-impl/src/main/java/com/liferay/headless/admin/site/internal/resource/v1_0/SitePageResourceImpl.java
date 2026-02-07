@@ -146,6 +146,11 @@ public class SitePageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return SitePageResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "site-pages";
 			}
@@ -218,11 +223,6 @@ public class SitePageResourceImpl
 			@Override
 			public String getPortletId() {
 				return LayoutAdminPortletKeys.LAYOUT_SET_LAYOUTS;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return SitePageResourceImpl.class.getName();
 			}
 
 			@Override

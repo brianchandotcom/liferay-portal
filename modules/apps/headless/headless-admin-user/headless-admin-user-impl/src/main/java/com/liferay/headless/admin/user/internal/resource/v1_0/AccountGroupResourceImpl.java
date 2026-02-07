@@ -206,6 +206,11 @@ public class AccountGroupResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return AccountGroupResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "account-groups";
 			}
@@ -223,11 +228,6 @@ public class AccountGroupResourceImpl
 			@Override
 			public String getPortletId() {
 				return AccountPortletKeys.ACCOUNT_GROUPS_ADMIN;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return AccountGroupResourceImpl.class.getName();
 			}
 
 			@Override

@@ -3903,6 +3903,11 @@ public class BatchEnginePortletDataHandlerTest {
 			return new ExportImportDescriptor() {
 
 				@Override
+				public String getKey() {
+					return _resourceClassName;
+				}
+
+				@Override
 				public String getLabelLanguageKey() {
 					return _modelClassName;
 				}
@@ -3924,11 +3929,6 @@ public class BatchEnginePortletDataHandlerTest {
 					}
 
 					return ExportImportDescriptor.super.getRank();
-				}
-
-				@Override
-				public String getResourceClassName() {
-					return _resourceClassName;
 				}
 
 				@Override

@@ -110,6 +110,9 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 		long listTypeDefinitionId, Map<Locale, String> nameMap,
 		String optionValue) {
 
+		ListTypeEntryLocalService listTypeEntryLocalService = Mockito.mock(
+			ListTypeEntryLocalService.class);
+
 		ListTypeEntry listTypeEntry = Mockito.mock(ListTypeEntry.class);
 
 		Mockito.when(
@@ -117,9 +120,6 @@ public class DDMFormFieldTemplateContextContributorUtilTest
 		).thenReturn(
 			nameMap
 		);
-
-		ListTypeEntryLocalService listTypeEntryLocalService = Mockito.mock(
-			ListTypeEntryLocalService.class);
 
 		Mockito.when(
 			listTypeEntryLocalService.fetchListTypeEntry(

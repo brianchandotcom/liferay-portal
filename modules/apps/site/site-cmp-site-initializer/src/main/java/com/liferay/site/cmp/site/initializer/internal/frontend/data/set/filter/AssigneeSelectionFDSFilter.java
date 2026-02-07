@@ -84,8 +84,7 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 				selectionFDSFilterItems.add(
 					new SelectionFDSFilterItem(
 						role.getName(),
-						_getAssigneeKeyValue(
-							roleClassNameId, role.getRoleId())));
+						_getValue(roleClassNameId, role.getRoleId())));
 			}
 		}
 		catch (PortalException portalException) {
@@ -105,7 +104,7 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
 					user.getFullName(),
-					_getAssigneeKeyValue(userClassNameId, user.getUserId())));
+					_getValue(userClassNameId, user.getUserId())));
 		}
 
 		return selectionFDSFilterItems;
@@ -116,7 +115,7 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 		return true;
 	}
 
-	private String _getAssigneeKeyValue(long classNameId, long classPK) {
+	private String _getValue(long classNameId, long classPK) {
 		return StringBundler.concat(classNameId, StringPool.UNDERLINE, classPK);
 	}
 

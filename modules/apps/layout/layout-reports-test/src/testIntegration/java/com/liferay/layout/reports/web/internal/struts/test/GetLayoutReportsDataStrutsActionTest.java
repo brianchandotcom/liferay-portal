@@ -125,10 +125,9 @@ public class GetLayoutReportsDataStrutsActionTest {
 	public void testGetLayoutReportsDataStrutsActionWithContentLayoutAndSomeExperiences()
 		throws Exception {
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(

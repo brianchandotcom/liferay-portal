@@ -90,7 +90,6 @@ public class MessageResourceTest extends BaseMessageResourceTestCase {
 	public void testPostChatByExternalReferenceCodeMessage() throws Exception {
 		CountDownLatch countDownLatch1 = new CountDownLatch(4);
 		CountDownLatch countDownLatch2 = new CountDownLatch(6);
-
 		List<String> lines = new ArrayList<>();
 
 		String sseEventSinkKey = SseEventSourceTestUtil.open(

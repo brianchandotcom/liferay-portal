@@ -10,13 +10,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * @author Fábio Alves
@@ -49,17 +48,23 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		if (ArrayUtil.isEmpty(_groupIds)) {
-			return new ArrayList<>();
+		List<SelectionFDSFilterItem> selectionFDSFilterItems =
+			new ArrayList<>();
+
+		Set<String> assetTagNames = new HashSet<>();
+
+		for (AssetTag assetTag :
+				_assetTagLocalService.getGroupsTags(_groupIds)) {
+
+			String assetTagName = assetTag.getName();
+
+			if (assetTagNames.add(assetTagName)) {
+				selectionFDSFilterItems.add(
+					new SelectionFDSFilterItem(assetTagName, assetTagName));
+			}
 		}
 
-		return TransformUtil.transform(
-			SetUtil.fromCollection(
-				TransformUtil.transform(
-					_assetTagLocalService.getGroupsTags(_groupIds),
-					AssetTag::getName)),
-			assetTagName -> new SelectionFDSFilterItem(
-				assetTagName, assetTagName));
+		return selectionFDSFilterItems;
 	}
 
 	@Override

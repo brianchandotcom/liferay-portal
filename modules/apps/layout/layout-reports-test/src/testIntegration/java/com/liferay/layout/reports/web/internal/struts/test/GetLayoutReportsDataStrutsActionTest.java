@@ -265,12 +265,10 @@ public class GetLayoutReportsDataStrutsActionTest {
 			selectedSegmentsExperienceJSONObject.getBoolean("active"));
 		Assert.assertEquals(
 			0, selectedSegmentsExperienceJSONObject.getLong("segmentsEntryId"));
-
 		Assert.assertTrue(
 			Validator.isNull(
 				selectedSegmentsExperienceJSONObject.getString(
 					"segmentsEntryERC")));
-
 		Assert.assertTrue(
 			Validator.isNull(
 				selectedSegmentsExperienceJSONObject.getString(

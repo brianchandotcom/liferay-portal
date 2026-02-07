@@ -59,7 +59,7 @@ public class CountSearchRequestExecutorImpl
 
 		countSearchResponse.setCount(totalHits.value());
 
-		_commonSearchResponseAssembler.assemble(
+		CommonSearchResponseAssembler.INSTANCE.assemble(
 			countSearchRequest, countSearchResponse, searchRequest,
 			searchResponse);
 
@@ -96,9 +96,6 @@ public class CountSearchRequestExecutorImpl
 	@Reference
 	private CommonSearchRequestBuilderAssembler
 		_commonSearchRequestBuilderAssembler;
-
-	@Reference
-	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

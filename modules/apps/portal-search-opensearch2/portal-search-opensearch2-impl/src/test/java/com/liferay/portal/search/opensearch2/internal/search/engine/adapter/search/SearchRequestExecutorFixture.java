@@ -109,9 +109,6 @@ public class SearchRequestExecutorFixture {
 			countSearchRequestExecutor, "_commonSearchRequestBuilderAssembler",
 			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutor, "_commonSearchResponseAssembler",
-			new CommonSearchResponseAssemblerImpl());
-		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
@@ -261,9 +258,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_aggregationResults",
 			new AggregationResultsImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_commonSearchResponseAssembler",
-			new CommonSearchResponseAssemblerImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());

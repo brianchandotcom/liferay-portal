@@ -574,10 +574,6 @@ public class ObjectEntryResourceImpl
 				return references;
 			}
 
-			public String getResourceClassName() {
-				return _objectDefinition.getClassName();
-			}
-
 			@Override
 			public Scope getScope() {
 				if (StringUtil.equalsIgnoreCase(

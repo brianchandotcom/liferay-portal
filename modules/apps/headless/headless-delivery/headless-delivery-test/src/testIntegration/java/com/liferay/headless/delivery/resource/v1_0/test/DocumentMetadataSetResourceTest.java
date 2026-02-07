@@ -25,6 +25,8 @@ import com.liferay.portal.vulcan.util.GroupUtil;
 
 import java.io.InputStream;
 
+import java.util.Locale;
+
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -112,11 +114,11 @@ public class DocumentMetadataSetResourceTest
 			{
 				setActions(() -> null);
 				setAssetLibraryKey(() -> GroupUtil.getAssetLibraryKey(group));
-				setAvailableLanguages(
-					new String[] {
-						LocaleUtil.getSiteDefault(
-						).toString()
-					});
+
+				Locale locale = LocaleUtil.getSiteDefault();
+
+				setAvailableLanguages(new String[] {locale.toString()});
+
 				setDataDefinitionFields(
 					DataDefinitionFieldSerDes.toDTOs(
 						_read("test-ddm-fields.json")));
@@ -127,9 +129,7 @@ public class DocumentMetadataSetResourceTest
 				setDescription(() -> randomDescription);
 				setDescription_i18n(
 					HashMapBuilder.put(
-						LocaleUtil.getSiteDefault(
-						).toString(),
-						randomDescription
+						locale.toString(), randomDescription
 					).build());
 				setExternalReferenceCode(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()));
@@ -137,9 +137,7 @@ public class DocumentMetadataSetResourceTest
 				setName(() -> randomName);
 				setName_i18n(
 					HashMapBuilder.put(
-						LocaleUtil.getSiteDefault(
-						).toString(),
-						randomName
+						locale.toString(), randomName
 					).build());
 				setSiteId(group::getGroupId);
 			}

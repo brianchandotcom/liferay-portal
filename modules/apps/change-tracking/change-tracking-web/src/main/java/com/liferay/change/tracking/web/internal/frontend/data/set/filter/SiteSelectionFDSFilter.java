@@ -58,12 +58,13 @@ public class SiteSelectionFDSFilter extends BaseSelectionFDSFilter {
 			return null;
 		}
 
+		Map<Long, String> siteNamesMap = _getSiteNamesMap(
+			liferayPortletRequest);
+
 		return HashMapBuilder.<String, Object>put(
 			"selectedItems",
 			TransformUtil.transform(
-				_getSiteNamesMap(
-					liferayPortletRequest
-				).entrySet(),
+				siteNamesMap.entrySet(),
 				entry -> {
 					if (entry.getKey() == groupId) {
 						return new SelectionFDSFilterItem(
@@ -82,10 +83,11 @@ public class SiteSelectionFDSFilter extends BaseSelectionFDSFilter {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		Map<Long, String> siteNamesMap = _getSiteNamesMap(
+			serviceContext.getLiferayPortletRequest());
+
 		return TransformUtil.transform(
-			_getSiteNamesMap(
-				serviceContext.getLiferayPortletRequest()
-			).entrySet(),
+			siteNamesMap.entrySet(),
 			entry -> new SelectionFDSFilterItem(
 				entry.getValue(), String.valueOf(entry.getKey())));
 	}

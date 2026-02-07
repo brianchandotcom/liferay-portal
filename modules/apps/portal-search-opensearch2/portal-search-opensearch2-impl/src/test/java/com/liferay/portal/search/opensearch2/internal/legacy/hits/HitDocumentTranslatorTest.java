@@ -38,10 +38,8 @@ public class HitDocumentTranslatorTest {
 		builder.ignored("_ignored");
 		builder.index("0");
 
-		HitDocumentTranslator hitDocumentTranslator =
-			new HitDocumentTranslatorImpl();
-
-		Document document = hitDocumentTranslator.translate(builder.build());
+		Document document = HitDocumentTranslator.INSTANCE.translate(
+			builder.build());
 
 		Assert.assertEquals(StringPool.BLANK, document.get("_ignored"));
 	}

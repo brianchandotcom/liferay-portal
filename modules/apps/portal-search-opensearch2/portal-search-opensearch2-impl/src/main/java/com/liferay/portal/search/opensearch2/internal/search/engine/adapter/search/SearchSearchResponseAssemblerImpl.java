@@ -28,7 +28,6 @@ import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggr
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationResultTranslator;
 import com.liferay.portal.search.opensearch2.internal.aggregation.PipelineAggregationResultTranslatorFactory;
 import com.liferay.portal.search.opensearch2.internal.hits.HitsMetadataTranslator;
-import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslator;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
 import com.liferay.portal.search.searcher.SearchTimeValue;
@@ -103,8 +102,8 @@ public class SearchSearchResponseAssemblerImpl
 	@Activate
 	protected void activate() {
 		_searchResponseTranslator = new SearchResponseTranslator(
-			_groupByResponseFactory, _hitDocumentTranslator,
-			_statsRequestBuilderFactory, _statsResultsTranslator);
+			_groupByResponseFactory, _statsRequestBuilderFactory,
+			_statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -209,9 +208,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
-
-	@Reference
-	private HitDocumentTranslator _hitDocumentTranslator;
 
 	@Reference
 	private SearchHitBuilderFactory _searchHitBuilderFactory;

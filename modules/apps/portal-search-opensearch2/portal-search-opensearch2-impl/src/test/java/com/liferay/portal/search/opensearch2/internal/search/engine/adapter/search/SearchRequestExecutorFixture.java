@@ -25,7 +25,6 @@ import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggr
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
-import com.liferay.portal.search.opensearch2.internal.legacy.hits.HitDocumentTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.opensearch2.internal.suggest.OpenSearchSuggesterTranslator;
 import com.liferay.portal.search.query.Queries;
@@ -283,8 +282,7 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_searchResponseTranslator",
 			new SearchResponseTranslator(
-				new GroupByResponseFactoryImpl(),
-				new HitDocumentTranslatorImpl(), statsRequestBuilderFactory,
+				new GroupByResponseFactoryImpl(), statsRequestBuilderFactory,
 				new StatsResultsTranslatorImpl()));
 
 		return searchSearchResponseAssembler;

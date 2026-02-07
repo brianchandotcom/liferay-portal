@@ -63,7 +63,7 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchRequest searchSearchRequest,
 		SearchSearchResponse searchSearchResponse) {
 
-		_commonSearchResponseAssembler.assemble(
+		CommonSearchResponseAssembler.INSTANCE.assemble(
 			searchSearchRequest, searchSearchResponse, searchRequest,
 			searchResponse);
 
@@ -193,9 +193,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private AggregationResults _aggregationResults;
-
-	@Reference
-	private CommonSearchResponseAssembler _commonSearchResponseAssembler;
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;

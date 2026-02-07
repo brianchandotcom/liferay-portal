@@ -514,7 +514,7 @@ public class LayoutLocalServiceTest {
 		try {
 			_layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
+				_group.getGroupId(), false, _serviceContext);
 
 			Assert.fail();
 		}
@@ -529,7 +529,7 @@ public class LayoutLocalServiceTest {
 
 			Layout layout = _layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
+				_group.getGroupId(), false, _serviceContext);
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_EMPTY, layout.getStatus());
@@ -1103,7 +1103,7 @@ public class LayoutLocalServiceTest {
 
 			return _layoutLocalService.getOrAddEmptyLayout(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(), _serviceContext);
+				_group.getGroupId(), false, _serviceContext);
 		}
 	}
 

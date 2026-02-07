@@ -68,13 +68,12 @@ public class TypeNameSelectionFDSFilter extends BaseSelectionFDSFilter {
 				return TransformUtil.transform(
 					typeNamesMap.entrySet(),
 					entry -> {
-						if (entry.getKey() == modelClassNameId) {
-							return new SelectionFDSFilterItem(
-								entry.getValue(),
-								String.valueOf(entry.getKey()));
+						if (entry.getKey() != modelClassNameId) {
+							return null;
 						}
 
-						return null;
+						return new SelectionFDSFilterItem(
+							entry.getValue(), String.valueOf(entry.getKey()));
 					});
 			}
 		).build();

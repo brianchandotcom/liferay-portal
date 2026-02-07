@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -270,11 +269,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor,
 		String taskItemDelegateName) {
 
-		String key = exportImportDescriptor.getKey();
-
-		String fileNamePrefix = (key != null) ? key :
-			GetterUtil.get(taskItemDelegateName, batchEngineClassName);
-
 		_registrations.add(
 			new Registration() {
 
@@ -285,7 +279,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				@Override
 				public String getDeletionsFileName() {
-					return fileNamePrefix + "_deletions.json";
+					return exportImportDescriptor.getKey() + "_deletions.json";
 				}
 
 				@Override
@@ -297,7 +291,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				@Override
 				public String getFileName() {
-					return fileNamePrefix + ".json";
+					return exportImportDescriptor.getKey() + ".json";
 				}
 
 				@Override

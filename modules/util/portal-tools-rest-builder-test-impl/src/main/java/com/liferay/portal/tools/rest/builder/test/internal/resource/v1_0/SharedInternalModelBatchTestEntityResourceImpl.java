@@ -52,6 +52,12 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return SharedInternalModelBatchTestEntityResourceImpl.class.
+					getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "shared-internal-model-batch-test-entity";
 			}
@@ -66,12 +72,6 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 			public String getPortletId() {
 				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
 					"BatchTestEntityPortlet";
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return SharedInternalModelBatchTestEntityResourceImpl.class.
-					getName();
 			}
 
 			@Override

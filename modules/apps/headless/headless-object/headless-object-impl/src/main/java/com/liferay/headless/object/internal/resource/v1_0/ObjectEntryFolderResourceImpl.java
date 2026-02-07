@@ -197,6 +197,11 @@ public class ObjectEntryFolderResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return ObjectEntryFolderResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "model.resource.com.liferay.object.entry.folder";
 			}
@@ -210,11 +215,6 @@ public class ObjectEntryFolderResourceImpl
 			@Override
 			public String getPortletId() {
 				return ObjectPortletKeys.OBJECT_ENTRY_FOLDER;
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return ObjectEntryFolderResourceImpl.class.getName();
 			}
 
 			@Override

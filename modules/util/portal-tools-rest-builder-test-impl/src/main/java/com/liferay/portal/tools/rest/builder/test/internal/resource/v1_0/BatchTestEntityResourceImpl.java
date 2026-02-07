@@ -95,6 +95,11 @@ public class BatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getKey() {
+				return BatchTestEntityResourceImpl.class.getName();
+			}
+
+			@Override
 			public String getLabelLanguageKey() {
 				return "batch-test-entity";
 			}
@@ -114,11 +119,6 @@ public class BatchTestEntityResourceImpl
 			public String getPortletId() {
 				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
 					"BatchTestEntityPortlet";
-			}
-
-			@Override
-			public String getResourceClassName() {
-				return BatchTestEntityResourceImpl.class.getName();
 			}
 
 			@Override

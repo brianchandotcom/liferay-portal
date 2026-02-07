@@ -21,6 +21,8 @@ import dev.langchain4j.service.memory.ChatMemoryAccess;
 public class AssistantHandlerUtil {
 
 	public static void handle(AssistantHandlerContext assistantHandlerContext) {
+		TokenStream tokenStream = null;
+
 		AiServices<Assistant> aiServices = AiServices.builder(Assistant.class);
 
 		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
@@ -43,8 +45,6 @@ public class AssistantHandlerUtil {
 		).build();
 
 		Assistant assistant = aiServices.build();
-
-		TokenStream tokenStream = null;
 
 		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
 			tokenStream = assistant.invoke(

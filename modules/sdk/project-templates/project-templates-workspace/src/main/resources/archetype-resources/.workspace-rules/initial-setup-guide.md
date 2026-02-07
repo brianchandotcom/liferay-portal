@@ -30,7 +30,7 @@ For a first time user, follow this sequence:
 		- `blade server start -t` starts the server and automatically tails the logs (catalina.out).
 		- `blade server run` starts the server in the foreground. Closing the terminal stops the server.
 		- `blade server start -d` starts the server in debug mode (default port 8000).
-	- Do not proceed to development tasks until the user confirms two things: 
+	- Do not proceed to development tasks until the user confirms two things:
     - "Server startup in [X] ms" appears in the log.
     - The user can log in at `http://localhost:8080`.
 - Instruct the user to use `test@liferay.com` to log in with `test` as the default password.

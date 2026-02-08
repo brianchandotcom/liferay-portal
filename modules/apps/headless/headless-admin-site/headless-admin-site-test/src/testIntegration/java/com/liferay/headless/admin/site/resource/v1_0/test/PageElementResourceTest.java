@@ -19,6 +19,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentCollection;
@@ -30,6 +31,7 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
@@ -42,6 +44,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContextualMenuNavigationMenuValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DirectBackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmbeddedMessageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmptyCollectionConfig;
@@ -61,6 +64,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
@@ -69,10 +73,13 @@ import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.client.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.ListStyleDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.LocalizationConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.MappedBackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
@@ -86,10 +93,12 @@ import com.liferay.headless.admin.site.client.dto.v1_0.SuccessNotificationMessag
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLFormContainerSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
@@ -109,6 +118,8 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.StyledLayoutStructureItem;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -121,6 +132,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -132,12 +144,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -698,6 +712,91 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		}
 	}
 
+	private void _assertDirectBackgroundImageJSONObject(
+			long classPK, DirectBackgroundImageValue directBackgroundImageValue,
+			FileEntry fileEntry, JSONObject jsonObject)
+		throws Exception {
+
+		ImageValue imageValue = directBackgroundImageValue.getImageValue();
+
+		if (Objects.equals(ImageValue.Type.URL, imageValue.getType())) {
+			URLImageValue urlImageValue = (URLImageValue)imageValue;
+
+			Assert.assertEquals(
+				urlImageValue.getUrl(), jsonObject.getString("url"));
+
+			return;
+		}
+
+		ItemImageValue itemImageValue = (ItemImageValue)imageValue;
+
+		ItemExternalReference itemExternalReference =
+			itemImageValue.getItemExternalReference();
+
+		_assertItemExternalReferenceJSONObject(
+			FileEntry.class.getName(), classPK,
+			itemExternalReference.getExternalReferenceCode(), fileEntry,
+			jsonObject, itemExternalReference.getScope());
+
+		if (fileEntry == null) {
+			return;
+		}
+
+		Assert.assertEquals(
+			fileEntry.getExternalReferenceCode(),
+			jsonObject.getString("externalReferenceCode"));
+		Assert.assertEquals(
+			fileEntry.getFileEntryId(), jsonObject.getLong("fileEntryId"));
+		Assert.assertEquals(
+			fileEntry.getTitle(), jsonObject.getString("title"));
+		Assert.assertEquals(
+			_dlURLHelper.getPreviewURL(
+				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
+				false, false),
+			jsonObject.getString("url"));
+	}
+
+	private void _assertItemExternalReferenceJSONObject(
+			String className, long classPK, String externalReferenceCode,
+			GroupedModel groupedModel, JSONObject jsonObject, Scope scope)
+		throws Exception {
+
+		Assert.assertEquals(className, jsonObject.getString("className"));
+		Assert.assertEquals(
+			_portal.getClassNameId(className),
+			jsonObject.getLong("classNameId"));
+		Assert.assertEquals(classPK, jsonObject.getLong("classPK"));
+
+		Assert.assertEquals(
+			externalReferenceCode,
+			jsonObject.getString("externalReferenceCode"));
+
+		if (groupedModel != null) {
+			Assert.assertEquals(
+				GetterUtil.getString(
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						groupedModel.getGroupId(), _layout.getGroupId())),
+				jsonObject.getString("scopeExternalReferenceCode"));
+
+			return;
+		}
+
+		if (scope != null) {
+			Assert.assertEquals(
+				scope.getExternalReferenceCode(),
+				jsonObject.getString("scopeExternalReferenceCode"));
+
+			return;
+		}
+
+		String scopeExternalReferenceCode = jsonObject.getString(
+			"scopeExternalReferenceCode");
+
+		Assert.assertTrue(
+			scopeExternalReferenceCode,
+			Validator.isNull(scopeExternalReferenceCode));
+	}
+
 	private void _assertProblemException(
 			String status, String title,
 			UnsafeRunnable<Exception> unsafeRunnable)
@@ -714,6 +813,119 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			Assert.assertEquals(status, problem.getStatus());
 			Assert.assertEquals(title, problem.getTitle());
 		}
+	}
+
+	private void _assertStyledLayoutStructureItemBackgroundImage(
+			BackgroundImageValue backgroundImageValue, long classPK,
+			GroupedModel groupedModel, String itemId)
+		throws Exception {
+
+		LayoutStructure layoutStructure = _getLayoutStructure();
+
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
+		Assert.assertTrue(
+			layoutStructureItem instanceof StyledLayoutStructureItem);
+
+		StyledLayoutStructureItem styledLayoutStructureItem =
+			(StyledLayoutStructureItem)layoutStructureItem;
+
+		JSONObject backgroundImageJSONObject =
+			styledLayoutStructureItem.getBackgroundImageJSONObject();
+
+		if (backgroundImageValue == null) {
+			Assert.assertEquals(
+				backgroundImageJSONObject.toString(), 0,
+				backgroundImageJSONObject.length());
+
+			return;
+		}
+
+		if (Objects.equals(
+				BackgroundImageValue.Type.DIRECT,
+				backgroundImageValue.getType())) {
+
+			_assertDirectBackgroundImageJSONObject(
+				classPK, (DirectBackgroundImageValue)backgroundImageValue,
+				(FileEntry)groupedModel, backgroundImageJSONObject);
+
+			return;
+		}
+
+		MappedBackgroundImageValue mappedBackgroundImageValue =
+			(MappedBackgroundImageValue)backgroundImageValue;
+
+		FragmentMappedValue fragmentMappedValue =
+			mappedBackgroundImageValue.getFragmentMappedValue();
+
+		Mapping mapping = fragmentMappedValue.getMapping();
+
+		if (mapping == null) {
+			Assert.assertEquals(
+				backgroundImageJSONObject.toString(), 0,
+				backgroundImageJSONObject.length());
+
+			return;
+		}
+
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			mapping.getItemReference();
+
+		if (fragmentMappedValueItemReference == null) {
+			Assert.assertEquals(
+				backgroundImageJSONObject.toString(), 0,
+				backgroundImageJSONObject.length());
+
+			return;
+		}
+
+		String fieldKey = mapping.getFieldKey();
+
+		if (Validator.isNull(fieldKey)) {
+			Assert.assertEquals(
+				backgroundImageJSONObject.toString(), 0,
+				backgroundImageJSONObject.length());
+
+			return;
+		}
+
+		if (Objects.equals(
+				FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE,
+				fragmentMappedValueItemReference.getType())) {
+
+			FragmentMappedValueItemExternalReference
+				fragmentMappedValueItemExternalReference =
+					(FragmentMappedValueItemExternalReference)
+						fragmentMappedValueItemReference;
+
+			_assertItemExternalReferenceJSONObject(
+				fragmentMappedValueItemExternalReference.getClassName(),
+				classPK,
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode(),
+				groupedModel, backgroundImageJSONObject,
+				fragmentMappedValueItemExternalReference.getScope());
+
+			return;
+		}
+
+		String key = "collectionFieldId";
+
+		FragmentMappedValueItemContextReference
+			fragmentMappedValueItemContextReference =
+				(FragmentMappedValueItemContextReference)
+					fragmentMappedValueItemReference;
+
+		if (Objects.equals(
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM,
+				fragmentMappedValueItemContextReference.getContextSource())) {
+
+			key = "mappedField";
+		}
+
+		Assert.assertEquals(fieldKey, backgroundImageJSONObject.getString(key));
 	}
 
 	private String[] _getActionIds(String roleName) {
@@ -997,7 +1209,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getContainerPageElement(
-			String[] cssClasses, String fragmentLinkClassName,
+			BackgroundImageValue backgroundImageValue, String[] cssClasses,
+			String fragmentLinkClassName,
 			String fragmentLinkExternalReferenceCode,
 			String fragmentLinkFieldKey,
 			Map<String, String> fragmentLinkLocalizedValues, boolean indexed,
@@ -1007,6 +1220,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		ContainerPageElementDefinition containerPageElementDefinition =
 			new ContainerPageElementDefinition();
 
+		containerPageElementDefinition.setBackgroundImageValue(
+			() -> backgroundImageValue);
 		containerPageElementDefinition.setContentVisibility(
 			ContainerPageElementDefinition.ContentVisibility.AUTO);
 		containerPageElementDefinition.setCssClasses(cssClasses);
@@ -2104,14 +2319,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, null, null, "FileEntry_fileName", null, false,
+				null, null, null, null, "FileEntry_fileName", null, false,
 				RandomTestUtil.randomString()));
 
 		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, FileEntry.class.getName(),
+				null, null, FileEntry.class.getName(),
 				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
 				null, false, RandomTestUtil.randomString()));
 
@@ -2121,7 +2336,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, JournalArticle.class.getName(),
+				null, null, JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", null, false,
 				RandomTestUtil.randomString()));
@@ -2130,12 +2345,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
+				null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				Layout.class.getName(), layout.getExternalReferenceCode(), null,
 				null, true, RandomTestUtil.randomString()));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
+				null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				null, null, null,
 				HashMapBuilder.put(
@@ -2359,39 +2576,81 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, null, null, "FileEntry_fileName", null, false,
-				externalReferenceCode));
+				backgroundImageValue, null, null, null, "FileEntry_fileName",
+				null, false, externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
 
 		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
 
+		backgroundImageValue = ImageValueTestUtil.getDirectBackgroundImageValue(
+			ReferencesTestUtil.getItemExternalReference(
+				fileEntry, testGroup.getGroupId()),
+			null);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, FileEntry.class.getName(),
+				backgroundImageValue, null, FileEntry.class.getName(),
 				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
 				null, false, externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, fileEntry.getFileEntryId(), fileEntry,
+			externalReferenceCode);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			JournalArticle.class.getName(),
+			journalArticle.getExternalReferenceCode(),
+			"JournalArticle_authorProfileImage", null);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, JournalArticle.class.getName(),
+				backgroundImageValue, null, JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", null, false, externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, journalArticle.getResourcePrimKey(),
+			journalArticle, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				DISPLAY_PAGE_ITEM,
+			"JournalArticle_authorProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				Layout.class.getName(), layout.getExternalReferenceCode(), null,
 				null, true, externalReferenceCode));
 
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				null, null, null,
 				HashMapBuilder.put(
@@ -2402,6 +2661,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					"https://www.liferay.com"
 				).build(),
 				false, externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getPageElement(
 				new ContainerPageElementDefinition() {
@@ -3715,6 +3978,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLURLHelper _dlURLHelper;
 
 	private Layout _draftLayout;
 

@@ -5,12 +5,15 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
+import com.liferay.headless.admin.site.dto.v1_0.BackgroundImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.DirectBackgroundImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemImageValue;
+import com.liferay.headless.admin.site.dto.v1_0.MappedBackgroundImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
@@ -30,6 +33,48 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class ImageValueUtil {
+
+	public static BackgroundImageValue toBackgroundImageValue(
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
+
+		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
+			FragmentMappedValue fragmentMappedValue =
+				FragmentMappingUtil.toFragmentMappedValue(
+					companyId, infoItemServiceRegistry, jsonObject,
+					scopeGroupId);
+
+			if (fragmentMappedValue == null) {
+				return null;
+			}
+
+			MappedBackgroundImageValue mappedBackgroundImageValue =
+				new MappedBackgroundImageValue();
+
+			mappedBackgroundImageValue.setFragmentMappedValue(
+				() -> fragmentMappedValue);
+			mappedBackgroundImageValue.setType(
+				BackgroundImageValue.Type.MAPPED);
+
+			return mappedBackgroundImageValue;
+		}
+
+		ImageValue imageValue = _getImageValue(
+			companyId, scopeGroupId, jsonObject);
+
+		if (imageValue == null) {
+			return null;
+		}
+
+		DirectBackgroundImageValue directBackgroundImageValue =
+			new DirectBackgroundImageValue();
+
+		directBackgroundImageValue.setImageValue(() -> imageValue);
+		directBackgroundImageValue.setType(BackgroundImageValue.Type.DIRECT);
+
+		return directBackgroundImageValue;
+	}
 
 	public static FragmentImageValue toFragmentImageValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,

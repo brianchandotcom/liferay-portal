@@ -5,11 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import classNames from 'classnames';
 import React from 'react';
 
 type Status = 'loading' | 'idle';
 
 type Props = {
+	className?: string;
 	displayType?: 'primary' | 'secondary';
 	label: string;
 	onClick: () => Promise<void>;
@@ -17,6 +19,7 @@ type Props = {
 };
 
 export default function AsyncButton({
+	className,
 	displayType = 'primary',
 	label,
 	onClick,
@@ -24,7 +27,7 @@ export default function AsyncButton({
 }: Props) {
 	return (
 		<ClayButton
-			className="align-items-center c-gap-2 d-flex"
+			className={classNames('align-items-center c-gap-2', className)}
 			disabled={status === 'loading'}
 			displayType={displayType}
 			onClick={onClick}

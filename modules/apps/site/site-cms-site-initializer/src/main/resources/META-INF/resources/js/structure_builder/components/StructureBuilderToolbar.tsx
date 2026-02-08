@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {openConfirmModal} from '@liferay/layout-js-components-web';
@@ -58,7 +58,7 @@ export default function StructureBuilderToolbar() {
 				<CustomizeEditorButton />
 			</Toolbar.Item>
 
-			<Toolbar.Item>
+			<Toolbar.Item className="d-none d-sm-flex">
 				<ClayLink
 					className="btn btn-outline-borderless btn-outline-secondary btn-sm"
 					href="structures"
@@ -94,8 +94,9 @@ function CustomizeEditorButton() {
 
 	return (
 		<ClayButton
+			aria-label={`${Liferay.Language.get('customize-editor')} ${Liferay.Language.get('opens-new-window')}`}
 			borderless
-			className="font-weight-semi-bold mr-2"
+			className="font-weight-semi-bold mr-md-2"
 			displayType="primary"
 			onClick={() => {
 				if (
@@ -165,9 +166,17 @@ function CustomizeEditorButton() {
 			}}
 			size="sm"
 		>
-			{Liferay.Language.get('customize-editor')}
+			<span className="d-md-inline d-none">
+				{Liferay.Language.get('customize-editor')}
 
-			<ClayIcon className="ml-2" symbol="shortcut" />
+				<ClayIcon className="ml-2" symbol="shortcut" />
+			</span>
+
+			<ClayIcon
+				className="d-md-none lfr-tooltip-scope"
+				data-title={`${Liferay.Language.get('customize-editor')} ${Liferay.Language.get('opens-new-window')}`}
+				symbol="edit-layout"
+			/>
 		</ClayButton>
 	);
 }
@@ -189,12 +198,24 @@ function SaveButton() {
 	const {status} = state.structure;
 
 	return (
-		<AsyncButton
-			displayType="secondary"
-			label={Liferay.Language.get('save')}
-			onClick={onSave}
-			status={status === 'saving' ? 'loading' : 'idle'}
-		/>
+		<>
+			<AsyncButton
+				className="d-md-flex d-none"
+				displayType="secondary"
+				label={Liferay.Language.get('save')}
+				onClick={onSave}
+				status={status === 'saving' ? 'loading' : 'idle'}
+			/>
+
+			<ClayButtonWithIcon
+				className="d-md-none"
+				displayType="secondary"
+				onClick={onSave}
+				size="sm"
+				symbol="disk"
+				title={Liferay.Language.get('save')}
+			/>
+		</>
 	);
 }
 
@@ -219,6 +240,7 @@ function PublishButton() {
 
 	return (
 		<AsyncButton
+			className="d-flex"
 			displayType="primary"
 			label={Liferay.Language.get('publish')}
 			onClick={onPublish}

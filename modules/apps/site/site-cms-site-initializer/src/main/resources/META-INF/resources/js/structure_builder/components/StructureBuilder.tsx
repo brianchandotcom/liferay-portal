@@ -50,7 +50,7 @@ export default function StructureBuilder({
 
 					<StructureBuilderToolbar />
 
-					<div className="d-flex flex-grow-1 p-4">
+					<div className="d-flex flex-grow-1 p-2 p-md-4">
 						<Sidebar />
 
 						<Settings />

@@ -1,11 +1,25 @@
 @import 'cadmin-variables';
 
 $structureFieldsWidth: 448px;
+$structureFieldsWidthMobile: 320px;
 
 .structure-builder {
 	&__sidebar {
 		background-color: $cadmin-light-l1;
 		width: $structureFieldsWidth;
+
+		@include media-breakpoint-down(sm) {
+			bottom: 0;
+			left: 0;
+			position: fixed;
+			top: 0;
+			width: $structureFieldsWidthMobile;
+			z-index: 989;
+
+			&.hide-xs {
+				visibility: hidden;
+			}
+		}
 	}
 
 	&__title-input {
@@ -40,5 +54,11 @@ $structureFieldsWidth: 448px;
 
 	&__wrapper {
 		min-height: calc(100vh - (var(--control-menu-container-height)));
+
+		.sidebar-toggler {
+			left: -5px;
+			position: fixed;
+			z-index: 99;
+		}
 	}
 }

@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {SearchForm} from '@liferay/layout-js-components-web';
+import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
@@ -19,14 +20,52 @@ import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
 export default function () {
-	return (
-		<div className="border rounded-lg structure-builder__sidebar">
-			<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
-				{Liferay.Language.get('content-structure-fields')}
-			</h3>
+	const [open, setOpen] = useState<boolean>(false);
 
-			<Content />
-		</div>
+	return (
+		<>
+			<ClayButtonWithIcon
+				className="d-md-none sidebar-toggler"
+				displayType="secondary"
+				onClick={() => setOpen(true)}
+				size="sm"
+				symbol="angle-double-right-small"
+				title={sub(
+					Liferay.Language.get('open-x'),
+					sub(
+						Liferay.Language.get('x-panel'),
+						Liferay.Language.get('content-structure-fields')
+					)
+				)}
+			/>
+			<div
+				className={classNames(
+					'border rounded-lg structure-builder__sidebar',
+					{'hide-xs': !open}
+				)}
+			>
+				<div className="autofit-row">
+					<div className="autofit-col autofit-col-expand">
+						<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
+							{Liferay.Language.get('content-structure-fields')}
+						</h3>
+					</div>
+
+					<div className="autofit-col d-md-none mr-2 mt-3">
+						<ClayButtonWithIcon
+							borderless
+							displayType="secondary"
+							onClick={() => setOpen(false)}
+							size="sm"
+							symbol="times"
+							title={Liferay.Language.get('close')}
+						/>
+					</div>
+				</div>
+
+				<Content />
+			</div>
+		</>
 	);
 }
 

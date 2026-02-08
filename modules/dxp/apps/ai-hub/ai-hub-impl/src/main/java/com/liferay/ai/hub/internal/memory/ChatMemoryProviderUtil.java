@@ -14,12 +14,12 @@ import dev.langchain4j.store.memory.chat.InMemoryChatMemoryStore;
  */
 public class ChatMemoryProviderUtil {
 
-	public static MessageWindowChatMemory provide(Object id) {
+	public static MessageWindowChatMemory provide(Object memoryId) {
 		return MessageWindowChatMemory.builder(
 		).chatMemoryStore(
 			_inMemoryChatMemoryStore
 		).id(
-			id
+			memoryId
 		).maxMessages(
 			30
 		).build();

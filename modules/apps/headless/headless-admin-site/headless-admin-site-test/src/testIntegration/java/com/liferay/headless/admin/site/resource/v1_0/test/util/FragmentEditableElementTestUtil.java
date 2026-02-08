@@ -412,7 +412,7 @@ public class FragmentEditableElementTestUtil {
 		return new HTMLFragmentMappedValue() {
 			{
 				setFragmentMappedValue(
-					() -> _getFragmentMappedValue(
+					() -> FragmentMappedValueTestUtil.getFragmentMappedValue(
 						contextSource, "field-key",
 						fragmentMappedValueItemReferenceType));
 				setType(Type.MAPPED);
@@ -446,7 +446,7 @@ public class FragmentEditableElementTestUtil {
 		return new TextFragmentMappedValue() {
 			{
 				setFragmentMappedValue(
-					() -> _getFragmentMappedValue(
+					() -> FragmentMappedValueTestUtil.getFragmentMappedValue(
 						contextSource, "field-key",
 						fragmentMappedValueItemReferenceType));
 				setType(Type.MAPPED);

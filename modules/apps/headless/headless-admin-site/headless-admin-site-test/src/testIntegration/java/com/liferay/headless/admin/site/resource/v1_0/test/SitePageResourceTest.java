@@ -60,7 +60,7 @@ import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentImageValueSerDes;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
-import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEditableElementTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.ImageValueTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
@@ -1171,8 +1171,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		try {
 			return FragmentImageValueSerDes.toDTO(
 				objectMapper.writeValueAsString(
-					FragmentEditableElementTestUtil.getDirectFragmentImageValue(
-						null, url)));
+					ImageValueTestUtil.getDirectFragmentImageValue(null, url)));
 		}
 		catch (JsonProcessingException jsonProcessingException) {
 			throw new RuntimeException(jsonProcessingException);

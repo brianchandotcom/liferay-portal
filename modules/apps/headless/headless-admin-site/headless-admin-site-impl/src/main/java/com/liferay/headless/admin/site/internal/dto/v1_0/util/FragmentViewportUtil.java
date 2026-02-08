@@ -140,7 +140,8 @@ public class FragmentViewportUtil {
 		if (JSONUtil.isEmpty(viewportJSONObject) ||
 			(Validator.isNull(
 				viewportJSONObject.getString("customCSS", null)) &&
-			 JSONUtil.isEmpty(viewportJSONObject.getJSONObject("styles")))) {
+			 FragmentViewportStyleUtil.isViewportStyleJSONObjectEmpty(
+				 viewportJSONObject.getJSONObject("styles")))) {
 
 			return null;
 		}

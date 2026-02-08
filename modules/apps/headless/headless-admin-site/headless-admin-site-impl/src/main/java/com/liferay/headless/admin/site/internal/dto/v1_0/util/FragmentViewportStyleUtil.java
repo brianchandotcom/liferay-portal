@@ -15,10 +15,22 @@ import com.liferay.portal.kernel.util.StringUtil;
  */
 public class FragmentViewportStyleUtil {
 
+	public static boolean isViewportStyleJSONObjectEmpty(
+		JSONObject jsonObject) {
+
+		if (JSONUtil.isEmpty(jsonObject) ||
+			(jsonObject.has("backgroundImage") && (jsonObject.length() == 1))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static FragmentViewportStyle toFragmentViewportStyle(
 		JSONObject jsonObject) {
 
-		if (JSONUtil.isEmpty(jsonObject)) {
+		if (isViewportStyleJSONObjectEmpty(jsonObject)) {
 			return null;
 		}
 

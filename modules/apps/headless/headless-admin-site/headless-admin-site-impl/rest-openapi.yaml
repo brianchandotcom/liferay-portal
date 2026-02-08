@@ -441,7 +441,7 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                            $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
                                 The fragment's background image.
@@ -1093,7 +1093,7 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                            $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
                                 The fragment's background image.
@@ -1206,7 +1206,7 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                            $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
                                 The fragment's background image.
@@ -1496,7 +1496,7 @@ components:
                 A fragment instance.
             properties:
                 backgroundFragmentImage:
-                    $ref: "#/components/schemas/FragmentImage"
+                    $ref: "#/components/schemas/BackgroundImageValue"
                     # @review
                     description:
                         The fragment's background image.
@@ -1954,7 +1954,7 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                            $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
                                 The fragment's background image.
@@ -4363,7 +4363,7 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
+                            $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
                                 The fragment's background image.

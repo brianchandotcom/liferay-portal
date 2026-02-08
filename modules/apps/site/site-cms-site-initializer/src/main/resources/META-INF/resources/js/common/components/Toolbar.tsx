@@ -20,7 +20,7 @@ function Toolbar({backURL, children, className, title}: Props) {
 	return (
 		<ClayToolbar
 			className={classNames(
-				'bg-white cms-control-menu px-4 sticky-top top-bar',
+				'bg-white cms-control-menu px-md-4 sticky-top top-bar',
 				className
 			)}
 		>

@@ -2665,15 +2665,28 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, 0, null, externalReferenceCode);
 
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getPageElement(
-				new ContainerPageElementDefinition() {
-					{
-						setIndexed(false);
-						setType(Type.CONTAINER);
-					}
-				},
-				externalReferenceCode));
+		BackgroundImageValue missingItemExternalReferenceBackgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				_randomItemExternalReference(), null);
+
+		_testMissingOptionalReference(
+			1,
+			() -> _testPutSitePageSpecificationPageExperiencePageElement(
+				_getPageElement(
+					new ContainerPageElementDefinition() {
+						{
+							setBackgroundImageValue(
+								() ->
+									missingItemExternalReferenceBackgroundImageValue);
+							setIndexed(false);
+							setType(Type.CONTAINER);
+						}
+					},
+					externalReferenceCode)));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			missingItemExternalReferenceBackgroundImageValue, 0, null,
+			externalReferenceCode);
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement()

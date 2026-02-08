@@ -11,7 +11,9 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -61,6 +63,12 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 			widgetInstancePageElementDefinition =
 				new WidgetInstancePageElementDefinition();
 
+		widgetInstancePageElementDefinition.setBackgroundImageValue(
+			() -> ImageValueUtil.toBackgroundImageValue(
+				fragmentEntryLink.getCompanyId(), _infoItemServiceRegistry,
+				fragmentStyledLayoutStructureItem.
+					getBackgroundImageJSONObject(),
+				fragmentEntryLink.getGroupId()));
 		widgetInstancePageElementDefinition.setCssClasses(
 			() -> {
 				Set<String> cssClasses =
@@ -126,5 +134,8 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

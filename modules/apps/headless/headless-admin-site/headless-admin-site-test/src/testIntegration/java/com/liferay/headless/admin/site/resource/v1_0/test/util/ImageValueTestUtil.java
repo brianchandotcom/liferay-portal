@@ -5,6 +5,8 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.DirectBackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
@@ -12,6 +14,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemRe
 import com.liferay.headless.admin.site.client.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.MappedBackgroundImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -21,6 +24,20 @@ import com.liferay.portal.kernel.util.LocaleUtil;
  * @author Lourdes Fernández Besada
  */
 public class ImageValueTestUtil {
+
+	public static BackgroundImageValue getDirectBackgroundImageValue(
+		ItemExternalReference itemExternalReference, String url) {
+
+		DirectBackgroundImageValue directBackgroundImageValue =
+			new DirectBackgroundImageValue();
+
+		directBackgroundImageValue.setType(
+			() -> BackgroundImageValue.Type.DIRECT);
+		directBackgroundImageValue.setImageValue(
+			() -> _getImageValue(itemExternalReference, url));
+
+		return directBackgroundImageValue;
+	}
 
 	public static FragmentImageValue getDirectFragmentImageValue(
 		ItemExternalReference itemExternalReference, String url) {
@@ -32,27 +49,45 @@ public class ImageValueTestUtil {
 		directFragmentImageValue.setValue_i18n(
 			HashMapBuilder.put(
 				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
-				() -> {
-					if (itemExternalReference == null) {
-						URLImageValue urlImageValue = new URLImageValue();
-
-						urlImageValue.setType(() -> ImageValue.Type.URL);
-						urlImageValue.setUrl(() -> url);
-
-						return urlImageValue;
-					}
-
-					ItemImageValue itemImageValue = new ItemImageValue();
-
-					itemImageValue.setItemExternalReference(
-						() -> itemExternalReference);
-					itemImageValue.setType(() -> ImageValue.Type.ITEM);
-
-					return itemImageValue;
-				}
+				() -> _getImageValue(itemExternalReference, url)
 			).build());
 
 		return directFragmentImageValue;
+	}
+
+	public static BackgroundImageValue getMappedBackgroundImageValue(
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		String fieldKey,
+		FragmentMappedValueItemReference.Type
+			fragmentMappedValueItemReferenceType) {
+
+		MappedBackgroundImageValue mappedBackgroundImageValue =
+			new MappedBackgroundImageValue();
+
+		mappedBackgroundImageValue.setFragmentMappedValue(
+			() -> FragmentMappedValueTestUtil.getFragmentMappedValue(
+				contextSource, fieldKey, fragmentMappedValueItemReferenceType));
+		mappedBackgroundImageValue.setType(
+			() -> BackgroundImageValue.Type.MAPPED);
+
+		return mappedBackgroundImageValue;
+	}
+
+	public static BackgroundImageValue getMappedBackgroundImageValue(
+		String className, String externalReferenceCode, String fieldKey,
+		String scopeExternalReferenceCode) {
+
+		MappedBackgroundImageValue mappedBackgroundImageValue =
+			new MappedBackgroundImageValue();
+
+		mappedBackgroundImageValue.setFragmentMappedValue(
+			() -> FragmentMappedValueTestUtil.getFragmentMappedValue(
+				className, externalReferenceCode, fieldKey,
+				scopeExternalReferenceCode));
+		mappedBackgroundImageValue.setType(
+			() -> BackgroundImageValue.Type.MAPPED);
+
+		return mappedBackgroundImageValue;
 	}
 
 	public static FragmentImageValue getMappedFragmentImageValue(
@@ -86,6 +121,26 @@ public class ImageValueTestUtil {
 		mappedFragmentImageValue.setType(() -> FragmentImageValue.Type.MAPPED);
 
 		return mappedFragmentImageValue;
+	}
+
+	private static ImageValue _getImageValue(
+		ItemExternalReference itemExternalReference, String url) {
+
+		if (itemExternalReference == null) {
+			URLImageValue urlImageValue = new URLImageValue();
+
+			urlImageValue.setType(() -> ImageValue.Type.URL);
+			urlImageValue.setUrl(() -> url);
+
+			return urlImageValue;
+		}
+
+		ItemImageValue itemImageValue = new ItemImageValue();
+
+		itemImageValue.setItemExternalReference(() -> itemExternalReference);
+		itemImageValue.setType(() -> ImageValue.Type.ITEM);
+
+		return itemImageValue;
 	}
 
 }

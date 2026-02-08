@@ -8,7 +8,6 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 import com.liferay.headless.admin.site.client.dto.v1_0.ActionFragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.BackgroundImageFragmentEditableElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.DirectFragmentImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
@@ -27,12 +26,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.HTMLFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ImageFragmentEditableElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.ImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.ItemImageValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.LinkFragmentEditableElementValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.MappedFragmentImageValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.NoneActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.NotificationActionInteraction;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageActionInteraction;
@@ -41,14 +36,10 @@ import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLActionInteraction;
-import com.liferay.headless.admin.site.client.dto.v1_0.URLImageValue;
-import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 import java.util.TreeSet;
@@ -111,39 +102,6 @@ public class FragmentEditableElementTestUtil {
 		fragmentEditableElement.setId(() -> id);
 
 		return fragmentEditableElement;
-	}
-
-	public static FragmentImageValue getDirectFragmentImageValue(
-		ItemExternalReference itemExternalReference, String url) {
-
-		DirectFragmentImageValue directFragmentImageValue =
-			new DirectFragmentImageValue();
-
-		directFragmentImageValue.setType(() -> FragmentImageValue.Type.DIRECT);
-		directFragmentImageValue.setValue_i18n(
-			HashMapBuilder.put(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()),
-				() -> {
-					if (itemExternalReference == null) {
-						URLImageValue urlImageValue = new URLImageValue();
-
-						urlImageValue.setType(() -> ImageValue.Type.URL);
-						urlImageValue.setUrl(() -> url);
-
-						return urlImageValue;
-					}
-
-					ItemImageValue itemImageValue = new ItemImageValue();
-
-					itemImageValue.setItemExternalReference(
-						() -> itemExternalReference);
-					itemImageValue.setType(() -> ImageValue.Type.ITEM);
-
-					return itemImageValue;
-				}
-			).build());
-
-		return directFragmentImageValue;
 	}
 
 	public static DisplayPageActionInteraction
@@ -281,39 +239,6 @@ public class FragmentEditableElementTestUtil {
 		fragmentEditableElement.setId(() -> id);
 
 		return fragmentEditableElement;
-	}
-
-	public static FragmentImageValue getMappedFragmentImageValue(
-		FragmentMappedValueItemContextReference.ContextSource contextSource,
-		String fieldKey,
-		FragmentMappedValueItemReference.Type
-			fragmentMappedValueItemReferenceType) {
-
-		MappedFragmentImageValue mappedFragmentImageValue =
-			new MappedFragmentImageValue();
-
-		mappedFragmentImageValue.setFragmentMappedValue(
-			() -> _getFragmentMappedValue(
-				contextSource, fieldKey, fragmentMappedValueItemReferenceType));
-		mappedFragmentImageValue.setType(() -> FragmentImageValue.Type.MAPPED);
-
-		return mappedFragmentImageValue;
-	}
-
-	public static FragmentImageValue getMappedFragmentImageValue(
-		String className, String externalReferenceCode, String fieldKey,
-		String scopeExternalReferenceCode) {
-
-		MappedFragmentImageValue mappedFragmentImageValue =
-			new MappedFragmentImageValue();
-
-		mappedFragmentImageValue.setFragmentMappedValue(
-			() -> getFragmentMappedValue(
-				className, externalReferenceCode, fieldKey,
-				scopeExternalReferenceCode));
-		mappedFragmentImageValue.setType(() -> FragmentImageValue.Type.MAPPED);
-
-		return mappedFragmentImageValue;
 	}
 
 	public static NoneActionInteraction getNoneActionInteraction() {

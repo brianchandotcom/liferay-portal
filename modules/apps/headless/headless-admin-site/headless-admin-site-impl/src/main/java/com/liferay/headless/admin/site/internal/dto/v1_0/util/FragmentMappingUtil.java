@@ -205,9 +205,9 @@ public class FragmentMappingUtil {
 			return false;
 		}
 
-		if ((jsonObject.has("classNameId") && jsonObject.has("classPK")) ||
-			(jsonObject.has("externalReferenceCode") &&
-			 jsonObject.has("fieldId"))) {
+		if (((jsonObject.has("classNameId") && jsonObject.has("classPK")) ||
+			 jsonObject.has("externalReferenceCode")) &&
+			jsonObject.has("fieldId")) {
 
 			return true;
 		}

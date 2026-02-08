@@ -76,6 +76,39 @@ public class ImageValueUtil {
 		return directBackgroundImageValue;
 	}
 
+	public static JSONObject toBackgroundImageValueJSONObject(
+			BackgroundImageValue backgroundImageValue,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext)
+		throws Exception {
+
+		if (backgroundImageValue == null) {
+			return null;
+		}
+
+		if (backgroundImageValue instanceof DirectBackgroundImageValue) {
+			DirectBackgroundImageValue directBackgroundImageValue =
+				(DirectBackgroundImageValue)backgroundImageValue;
+
+			return _getImageValueJSONObject(
+				directBackgroundImageValue.getImageValue(),
+				layoutStructureItemImporterContext);
+		}
+
+		if (!(backgroundImageValue instanceof MappedBackgroundImageValue)) {
+			return null;
+		}
+
+		MappedBackgroundImageValue mappedBackgroundImageValue =
+			(MappedBackgroundImageValue)backgroundImageValue;
+
+		return FragmentMappingUtil.getFragmentMappedValueJSONObject(
+			layoutStructureItemImporterContext.getCompanyId(),
+			mappedBackgroundImageValue.getFragmentMappedValue(),
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+			layoutStructureItemImporterContext.getGroupId());
+	}
+
 	public static FragmentImageValue toFragmentImageValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, long scopeGroupId)

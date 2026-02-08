@@ -440,11 +440,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
+                        backgroundImageValue:
                             $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
-                                The fragment's background image.
+                                The background image.
                         contentVisibility:
                             # @review
                             description:
@@ -1092,11 +1092,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
+                        backgroundImageValue:
                             $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
-                                The fragment's background image.
+                                The background image.
                         cssClasses:
                             # @review
                             description:
@@ -1205,11 +1205,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
+                        backgroundImageValue:
                             $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
-                                The fragment's background image.
+                                The background image.
                         cssClasses:
                             # @review
                             description:
@@ -1495,11 +1495,11 @@ components:
             description:
                 A fragment instance.
             properties:
-                backgroundFragmentImage:
+                backgroundImageValue:
                     $ref: "#/components/schemas/BackgroundImageValue"
                     # @review
                     description:
-                        The fragment's background image.
+                        The background image.
                 configuration:
                     # @review
                     description:
@@ -1953,11 +1953,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
+                        backgroundImageValue:
                             $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
-                                The fragment's background image.
+                                The background image.
                         cssClasses:
                             # @review
                             description:
@@ -4362,11 +4362,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
+                        backgroundImageValue:
                             $ref: "#/components/schemas/BackgroundImageValue"
                             # @review
                             description:
-                                The fragment's background image.
+                                The background image.
                         cssClasses:
                             # @review
                             description:

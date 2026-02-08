@@ -10,7 +10,9 @@ import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportStyleUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,6 +29,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -50,15 +53,22 @@ public class GridPageElementDefinitionDTOConverter
 			RowStyledLayoutStructureItem rowStyledLayoutStructureItem)
 		throws Exception {
 
+		Long companyId = (Long)dtoConverterContext.getAttribute("companyId");
 		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
 			"scopeGroupId");
 
-		if (scopeGroupId == null) {
+		if ((companyId == null) || (scopeGroupId == null)) {
 			throw new UnsupportedOperationException();
 		}
 
 		return new GridPageElementDefinition() {
 			{
+				setBackgroundImageValue(
+					() -> ImageValueUtil.toBackgroundImageValue(
+						companyId, _infoItemServiceRegistry,
+						rowStyledLayoutStructureItem.
+							getBackgroundImageJSONObject(),
+						scopeGroupId));
 				setCssClasses(
 					() -> {
 						Set<String> cssClasses =
@@ -198,5 +208,8 @@ public class GridPageElementDefinitionDTOConverter
 
 		return gridViewports.toArray(new GridViewport[0]);
 	}
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

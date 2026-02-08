@@ -22,6 +22,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentEditableElementUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
@@ -238,6 +239,12 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 
 		return new FragmentInstance() {
 			{
+				setBackgroundImageValue(
+					() -> ImageValueUtil.toBackgroundImageValue(
+						companyId, _infoItemServiceRegistry,
+						fragmentStyledLayoutStructureItem.
+							getBackgroundImageJSONObject(),
+						scopeGroupId));
 				setConfiguration(fragmentEntryLink::getConfiguration);
 				setCss(fragmentEntryLink::getCss);
 				setCssClasses(

@@ -56,15 +56,15 @@ public class FragmentInstanceSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (fragmentInstance.getBackgroundFragmentImage() != null) {
+		if (fragmentInstance.getBackgroundImageValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
 			sb.append(
-				String.valueOf(fragmentInstance.getBackgroundFragmentImage()));
+				String.valueOf(fragmentInstance.getBackgroundImageValue()));
 		}
 
 		if (fragmentInstance.getConfiguration() != null) {
@@ -366,13 +366,13 @@ public class FragmentInstanceSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
-		if (fragmentInstance.getBackgroundFragmentImage() == null) {
-			map.put("backgroundFragmentImage", null);
+		if (fragmentInstance.getBackgroundImageValue() == null) {
+			map.put("backgroundImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
-				String.valueOf(fragmentInstance.getBackgroundFragmentImage()));
+				"backgroundImageValue",
+				String.valueOf(fragmentInstance.getBackgroundImageValue()));
 		}
 
 		if (fragmentInstance.getConfiguration() == null) {
@@ -542,9 +542,7 @@ public class FragmentInstanceSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "configuration")) {
@@ -618,12 +616,10 @@ public class FragmentInstanceSerDes {
 			FragmentInstance fragmentInstance, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				if (jsonParserFieldValue != null) {
-					fragmentInstance.setBackgroundFragmentImage(
-						FragmentImageSerDes.toDTO(
+					fragmentInstance.setBackgroundImageValue(
+						BackgroundImageValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

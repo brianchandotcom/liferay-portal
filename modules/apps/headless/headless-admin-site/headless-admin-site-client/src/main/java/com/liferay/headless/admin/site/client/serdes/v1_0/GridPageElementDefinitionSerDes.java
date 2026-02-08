@@ -51,16 +51,16 @@ public class GridPageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (gridPageElementDefinition.getBackgroundFragmentImage() != null) {
+		if (gridPageElementDefinition.getBackgroundImageValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
 			sb.append(
 				String.valueOf(
-					gridPageElementDefinition.getBackgroundFragmentImage()));
+					gridPageElementDefinition.getBackgroundImageValue()));
 		}
 
 		if (gridPageElementDefinition.getCssClasses() != null) {
@@ -202,14 +202,14 @@ public class GridPageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (gridPageElementDefinition.getBackgroundFragmentImage() == null) {
-			map.put("backgroundFragmentImage", null);
+		if (gridPageElementDefinition.getBackgroundImageValue() == null) {
+			map.put("backgroundImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
+				"backgroundImageValue",
 				String.valueOf(
-					gridPageElementDefinition.getBackgroundFragmentImage()));
+					gridPageElementDefinition.getBackgroundImageValue()));
 		}
 
 		if (gridPageElementDefinition.getCssClasses() == null) {
@@ -300,9 +300,7 @@ public class GridPageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
@@ -338,12 +336,10 @@ public class GridPageElementDefinitionSerDes {
 			GridPageElementDefinition gridPageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				if (jsonParserFieldValue != null) {
-					gridPageElementDefinition.setBackgroundFragmentImage(
-						FragmentImageSerDes.toDTO(
+					gridPageElementDefinition.setBackgroundImageValue(
+						BackgroundImageValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

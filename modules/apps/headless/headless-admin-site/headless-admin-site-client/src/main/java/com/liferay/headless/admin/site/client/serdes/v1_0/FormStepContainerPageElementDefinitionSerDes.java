@@ -54,19 +54,19 @@ public class FormStepContainerPageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (formStepContainerPageElementDefinition.
-				getBackgroundFragmentImage() != null) {
+		if (formStepContainerPageElementDefinition.getBackgroundImageValue() !=
+				null) {
 
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
 			sb.append(
 				String.valueOf(
 					formStepContainerPageElementDefinition.
-						getBackgroundFragmentImage()));
+						getBackgroundImageValue()));
 		}
 
 		if (formStepContainerPageElementDefinition.getCssClasses() != null) {
@@ -166,17 +166,17 @@ public class FormStepContainerPageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (formStepContainerPageElementDefinition.
-				getBackgroundFragmentImage() == null) {
+		if (formStepContainerPageElementDefinition.getBackgroundImageValue() ==
+				null) {
 
-			map.put("backgroundFragmentImage", null);
+			map.put("backgroundImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
+				"backgroundImageValue",
 				String.valueOf(
 					formStepContainerPageElementDefinition.
-						getBackgroundFragmentImage()));
+						getBackgroundImageValue()));
 		}
 
 		if (formStepContainerPageElementDefinition.getCssClasses() == null) {
@@ -232,9 +232,7 @@ public class FormStepContainerPageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
@@ -256,13 +254,11 @@ public class FormStepContainerPageElementDefinitionSerDes {
 				formStepContainerPageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				if (jsonParserFieldValue != null) {
 					formStepContainerPageElementDefinition.
-						setBackgroundFragmentImage(
-							FragmentImageSerDes.toDTO(
+						setBackgroundImageValue(
+							BackgroundImageValueSerDes.toDTO(
 								(String)jsonParserFieldValue));
 				}
 			}

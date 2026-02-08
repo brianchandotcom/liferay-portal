@@ -52,19 +52,19 @@ public class WidgetInstancePageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (widgetInstancePageElementDefinition.getBackgroundFragmentImage() !=
+		if (widgetInstancePageElementDefinition.getBackgroundImageValue() !=
 				null) {
 
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
 			sb.append(
 				String.valueOf(
 					widgetInstancePageElementDefinition.
-						getBackgroundFragmentImage()));
+						getBackgroundImageValue()));
 		}
 
 		if (widgetInstancePageElementDefinition.getCssClasses() != null) {
@@ -235,17 +235,17 @@ public class WidgetInstancePageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (widgetInstancePageElementDefinition.getBackgroundFragmentImage() ==
+		if (widgetInstancePageElementDefinition.getBackgroundImageValue() ==
 				null) {
 
-			map.put("backgroundFragmentImage", null);
+			map.put("backgroundImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
+				"backgroundImageValue",
 				String.valueOf(
 					widgetInstancePageElementDefinition.
-						getBackgroundFragmentImage()));
+						getBackgroundImageValue()));
 		}
 
 		if (widgetInstancePageElementDefinition.getCssClasses() == null) {
@@ -355,9 +355,7 @@ public class WidgetInstancePageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {
@@ -400,14 +398,11 @@ public class WidgetInstancePageElementDefinitionSerDes {
 				widgetInstancePageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				if (jsonParserFieldValue != null) {
-					widgetInstancePageElementDefinition.
-						setBackgroundFragmentImage(
-							FragmentImageSerDes.toDTO(
-								(String)jsonParserFieldValue));
+					widgetInstancePageElementDefinition.setBackgroundImageValue(
+						BackgroundImageValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "cssClasses")) {

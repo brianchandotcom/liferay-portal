@@ -51,19 +51,16 @@ public class ContainerPageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (containerPageElementDefinition.getBackgroundFragmentImage() !=
-				null) {
-
+		if (containerPageElementDefinition.getBackgroundImageValue() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
 			sb.append(
 				String.valueOf(
-					containerPageElementDefinition.
-						getBackgroundFragmentImage()));
+					containerPageElementDefinition.getBackgroundImageValue()));
 		}
 
 		if (containerPageElementDefinition.getContentVisibility() != null) {
@@ -227,17 +224,14 @@ public class ContainerPageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (containerPageElementDefinition.getBackgroundFragmentImage() ==
-				null) {
-
-			map.put("backgroundFragmentImage", null);
+		if (containerPageElementDefinition.getBackgroundImageValue() == null) {
+			map.put("backgroundImageValue", null);
 		}
 		else {
 			map.put(
-				"backgroundFragmentImage",
+				"backgroundImageValue",
 				String.valueOf(
-					containerPageElementDefinition.
-						getBackgroundFragmentImage()));
+					containerPageElementDefinition.getBackgroundImageValue()));
 		}
 
 		if (containerPageElementDefinition.getContentVisibility() == null) {
@@ -343,9 +337,7 @@ public class ContainerPageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "contentVisibility")) {
@@ -384,12 +376,10 @@ public class ContainerPageElementDefinitionSerDes {
 			ContainerPageElementDefinition containerPageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(
-					jsonParserFieldName, "backgroundFragmentImage")) {
-
+			if (Objects.equals(jsonParserFieldName, "backgroundImageValue")) {
 				if (jsonParserFieldValue != null) {
-					containerPageElementDefinition.setBackgroundFragmentImage(
-						FragmentImageSerDes.toDTO(
+					containerPageElementDefinition.setBackgroundImageValue(
+						BackgroundImageValueSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -58,35 +58,35 @@ public class ContainerPageElementDefinition
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment's background image."
+		description = "The background image."
 	)
 	@Valid
-	public FragmentImage getBackgroundFragmentImage() {
-		if (_backgroundFragmentImageSupplier != null) {
-			backgroundFragmentImage = _backgroundFragmentImageSupplier.get();
+	public BackgroundImageValue getBackgroundImageValue() {
+		if (_backgroundImageValueSupplier != null) {
+			backgroundImageValue = _backgroundImageValueSupplier.get();
 
-			_backgroundFragmentImageSupplier = null;
+			_backgroundImageValueSupplier = null;
 		}
 
-		return backgroundFragmentImage;
+		return backgroundImageValue;
 	}
 
-	public void setBackgroundFragmentImage(
-		FragmentImage backgroundFragmentImage) {
+	public void setBackgroundImageValue(
+		BackgroundImageValue backgroundImageValue) {
 
-		this.backgroundFragmentImage = backgroundFragmentImage;
+		this.backgroundImageValue = backgroundImageValue;
 
-		_backgroundFragmentImageSupplier = null;
+		_backgroundImageValueSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setBackgroundFragmentImage(
-		UnsafeSupplier<FragmentImage, Exception>
-			backgroundFragmentImageUnsafeSupplier) {
+	public void setBackgroundImageValue(
+		UnsafeSupplier<BackgroundImageValue, Exception>
+			backgroundImageValueUnsafeSupplier) {
 
-		_backgroundFragmentImageSupplier = () -> {
+		_backgroundImageValueSupplier = () -> {
 			try {
-				return backgroundFragmentImageUnsafeSupplier.get();
+				return backgroundImageValueUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -97,12 +97,12 @@ public class ContainerPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment's background image.")
+	@GraphQLField(description = "The background image.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentImage backgroundFragmentImage;
+	protected BackgroundImageValue backgroundImageValue;
 
 	@JsonIgnore
-	private Supplier<FragmentImage> _backgroundFragmentImageSupplier;
+	private Supplier<BackgroundImageValue> _backgroundImageValueSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The content visibility of the container."
@@ -501,16 +501,16 @@ public class ContainerPageElementDefinition
 
 		sb.append("{");
 
-		FragmentImage backgroundFragmentImage = getBackgroundFragmentImage();
+		BackgroundImageValue backgroundImageValue = getBackgroundImageValue();
 
-		if (backgroundFragmentImage != null) {
+		if (backgroundImageValue != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"backgroundFragmentImage\": ");
+			sb.append("\"backgroundImageValue\": ");
 
-			sb.append(String.valueOf(backgroundFragmentImage));
+			sb.append(String.valueOf(backgroundImageValue));
 		}
 
 		ContentVisibility contentVisibility = getContentVisibility();

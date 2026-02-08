@@ -85,7 +85,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
 			AgenticServices.supervisorBuilder(
 			).chatMemoryProvider(
-				id -> ChatMemoryProviderUtil.provide(
+				memoryId -> ChatMemoryProviderUtil.provide(
 					agentContext.getSseEventSinkKey())
 			).chatModel(
 				vertexAiGeminiChatModel

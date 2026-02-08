@@ -74,6 +74,22 @@ components:
             description:
                 A fragment editable element value of type background image.
             type: object
+        BackgroundImageValue:
+            # @review
+            description:
+                The background image value.
+            discriminator:
+                mapping:
+                    Direct: "#/components/schemas/DirectBackgroundImageValue"
+                    Mapped: "#/components/schemas/MappedBackgroundImageValue"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        The background image's type.
+                    enum: [Direct, Mapped]
+                    type: string
         BasicFragmentInstancePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"                               
@@ -593,6 +609,16 @@ components:
                 A reference to a default fragment (provided out-of-the-box).
             required:
                 -   defaultFragmentKey
+            type: object
+        DirectBackgroundImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/BackgroundImageValue"
+                -   properties:
+                        imageValue:
+                            $ref: "#/components/schemas/ImageValue"
+            # @review
+            description:
+                A background image value of type direct.
             type: object
         DirectFragmentImageValue:
             allOf:
@@ -2287,6 +2313,16 @@ components:
             # @review
             description:
                 The collection display's list style.
+            type: object
+        MappedBackgroundImageValue:
+            allOf:
+                -   $ref: "#/components/schemas/BackgroundImageValue"
+                -   properties:
+                        fragmentMappedValue:
+                            $ref: "#/components/schemas/FragmentMappedValue"
+            # @review
+            description:
+                A mapped background image value.
             type: object
         MappedFragmentImageValue:
             allOf:

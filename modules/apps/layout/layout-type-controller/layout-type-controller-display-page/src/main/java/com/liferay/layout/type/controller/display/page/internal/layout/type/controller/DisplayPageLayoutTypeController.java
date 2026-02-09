@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.login.AuthLoginGroupSettingsUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
+import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -35,10 +36,13 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -168,12 +172,23 @@ public class DisplayPageLayoutTypeController
 				DISPLAY_PAGE_LAYOUT_TYPE_CONTROLLER_DISPLAY_CONTEXT,
 			displayPageLayoutTypeControllerDisplayContext);
 
-		if (!displayPageLayoutTypeControllerDisplayContext.hasInfoItem() &&
-			!themeDisplay.isSignedIn() &&
-			!AuthLoginGroupSettingsUtil.isPromptEnabled(
-				layout.getGroupId())) {
+		boolean loginRequest = _isLoginRequest(
+			httpServletRequest, themeDisplay);
 
-			throw new NoSuchLayoutException();
+		if (!displayPageLayoutTypeControllerDisplayContext.hasInfoItem() &&
+			!themeDisplay.isSignedIn()) {
+
+			if (!loginRequest &&
+				AuthLoginGroupSettingsUtil.isPromptEnabled(
+					layout.getGroupId())) {
+
+				redirect = HttpComponentsUtil.setParameter(
+					themeDisplay.getURLSignIn(), "redirect",
+					themeDisplay.getURLCurrent());
+			}
+			else if (!loginRequest) {
+				throw new NoSuchLayoutException();
+			}
 		}
 
 		String page = getViewPage();
@@ -211,14 +226,15 @@ public class DisplayPageLayoutTypeController
 					httpServletResponse.setStatus(
 						HttpServletResponse.SC_FORBIDDEN);
 				}
-				else if (AuthLoginGroupSettingsUtil.isPromptEnabled(
-							layout.getGroupId())) {
+				else if (!loginRequest &&
+						 AuthLoginGroupSettingsUtil.isPromptEnabled(
+							 layout.getGroupId())) {
 
 					redirect = HttpComponentsUtil.setParameter(
 						themeDisplay.getURLSignIn(), "redirect",
 						themeDisplay.getURLCurrent());
 				}
-				else {
+				else if (!loginRequest) {
 					throw new NoSuchLayoutException();
 				}
 			}
@@ -361,6 +377,54 @@ public class DisplayPageLayoutTypeController
 			if (_log.isDebugEnabled()) {
 				_log.debug(portalException);
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isLoginRequest(
+		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay) {
+
+		if (GetterUtil.getBoolean(
+				httpServletRequest.getAttribute(WebKeys.LOGIN_REQUEST))) {
+
+			return true;
+		}
+
+		if ((themeDisplay != null) &&
+			Validator.isNotNull(themeDisplay.getPpid())) {
+
+			String loginPortletName = GetterUtil.get(
+				PropsValues.AUTH_LOGIN_PORTLET_NAME, PortletKeys.LOGIN);
+
+			String rootPortletId = PortletIdCodec.decodePortletName(
+				themeDisplay.getPpid());
+
+			if (loginPortletName.equals(rootPortletId)) {
+				return true;
+			}
+		}
+
+		String requestURI = httpServletRequest.getRequestURI();
+
+		String mainPath = _portal.getPathMain();
+
+		String proxyPath = _portal.getPathProxy();
+
+		if (Validator.isNotNull(proxyPath)) {
+			if (!requestURI.startsWith(proxyPath)) {
+				requestURI = proxyPath.concat(requestURI);
+			}
+
+			if (!mainPath.startsWith(proxyPath)) {
+				mainPath = proxyPath.concat(mainPath);
+			}
+		}
+
+		if (requestURI.startsWith(mainPath) &&
+			requestURI.startsWith("/portal/login", mainPath.length())) {
+
+			return true;
 		}
 
 		return false;

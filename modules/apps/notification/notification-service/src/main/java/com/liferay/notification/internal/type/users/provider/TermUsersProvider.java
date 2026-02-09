@@ -136,11 +136,12 @@ public class TermUsersProvider implements UsersProvider {
 	private boolean _hasViewPermission(
 		User user, NotificationContext notificationContext) {
 
-		return ModelResourcePermissionUtil.contains(
-			_permissionCheckerFactory.create(user),
-			notificationContext.getGroupId(),
-			notificationContext.getClassName(),
-			notificationContext.getClassPK(), ActionKeys.VIEW);
+		return GetterUtil.getBoolean(
+			ModelResourcePermissionUtil.contains(
+				_permissionCheckerFactory.create(user),
+				notificationContext.getGroupId(),
+				notificationContext.getClassName(),
+				notificationContext.getClassPK(), ActionKeys.VIEW));
 	}
 
 	private static final Pattern _numberPattern = Pattern.compile("\\d+");

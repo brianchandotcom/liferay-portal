@@ -51,12 +51,15 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.i
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.item.selector.criteria.VideoEmbeddableHTMLItemSelectorReturnType;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -307,11 +310,18 @@ public class FragmentConfigurationFieldValuesUtil {
 			return _getConfigurationObject(
 				fragmentConfigurationField.isLocalizable(),
 				value -> {
-					if (_isValidValue(validValuesJSONArray, value)) {
-						return value;
+					if (!_isValidValue(validValuesJSONArray, value)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Invalid configuration value \"", value,
+									"\" for field \"",
+									fragmentConfigurationField.getName(),
+									"\""));
+						}
 					}
 
-					throw new UnsupportedOperationException();
+					return value;
 				},
 				selectFragmentConfigurationFieldValue.getValue(),
 				selectFragmentConfigurationFieldValue.getValue_i18n());
@@ -900,5 +910,8 @@ public class FragmentConfigurationFieldValuesUtil {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentConfigurationFieldValuesUtil.class);
 
 }

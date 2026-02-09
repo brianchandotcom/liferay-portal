@@ -3515,6 +3515,14 @@
 	},
 	{
 		"classNames": [
+			"JournalArticle"
+		],
+		"from": "setContent(String paramName)",
+		"hasMessage": true,
+		"issueKey": "LPD-31997"
+	},
+	{
+		"classNames": [
 			"Group",
 			"LayoutSet"
 		],

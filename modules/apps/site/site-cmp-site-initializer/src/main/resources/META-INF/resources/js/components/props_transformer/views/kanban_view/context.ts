@@ -16,6 +16,7 @@ interface IKanbanContext {
 			name: string;
 		}
 	) => void;
+	currentURL: string;
 	itemsActions: IItemsActions[];
 	loadData: Function;
 }

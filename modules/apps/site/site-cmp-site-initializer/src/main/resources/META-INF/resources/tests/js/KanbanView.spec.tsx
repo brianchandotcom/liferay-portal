@@ -34,7 +34,11 @@ describe('KanbanView mapping and lifecycle', () => {
 		] as any;
 
 		const {unmount} = render(
-			<KanbanView items={items} itemsActions={[]} />
+			<KanbanView
+				currentURL=""
+				items={items}
+				itemsActions={[]}
+			/>
 		);
 
 		expect((global as any).Liferay.fire).toHaveBeenCalledWith(

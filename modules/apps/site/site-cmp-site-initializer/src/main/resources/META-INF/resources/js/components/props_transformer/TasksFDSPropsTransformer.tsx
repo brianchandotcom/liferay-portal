@@ -100,6 +100,7 @@ const WORKFLOW_TASK_MODALS: Record<
 export default function TasksFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
+	currentURL,
 	id,
 	itemsActions = [],
 	views,
@@ -108,6 +109,7 @@ export default function TasksFDSPropsTransformer({
 	additionalProps: any;
 	apiURL?: string;
 	creationMenu: any;
+	currentURL: string;
 	id: string;
 	itemsActions?: any[];
 	otherProps: any;
@@ -121,7 +123,7 @@ export default function TasksFDSPropsTransformer({
 	});
 
 	const kanbanView: IView = {
-		component: (props: any) => KanbanView({...props}),
+		component: (props: any) => KanbanView({...props, currentURL}),
 		default: false,
 		label: Liferay.Language.get('kanban'),
 		name: 'kanban',

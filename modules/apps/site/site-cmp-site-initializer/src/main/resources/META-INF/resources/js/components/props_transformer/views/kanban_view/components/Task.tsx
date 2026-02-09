@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import Card from '@clayui/card/src/Card';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import Label from '@clayui/label';
+import {DateRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
 import classNames from 'classnames';
@@ -15,7 +15,6 @@ import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
-import StateLabel from '../../../../StateLabel';
 import {
 	deleteTaskById,
 	getUserAccount,
@@ -27,6 +26,7 @@ import {
 	displayDeleteSuccessToast,
 } from '../../../../../utils/toastUtil';
 import {ITask} from '../../../../../utils/types';
+import StateLabel from '../../../../StateLabel';
 import DeleteTaskModal from '../../../../modal/DeleteTaskModal';
 import EditAssigneeModalContent from '../../../../modal/EditAssigneeModalContent';
 import {KanbanViewContext} from '../context';
@@ -35,7 +35,7 @@ import {ItemTypes} from './Column';
 import './Task.scss';
 
 export default function Task(task: ITask) {
-	const {itemsActions, loadData} = useContext(KanbanViewContext);
+	const {currentURL, itemsActions, loadData} = useContext(KanbanViewContext);
 
 	const [{isDragging}, drag] = useDrag({
 		collect: (monitor) => ({
@@ -257,7 +257,9 @@ export default function Task(task: ITask) {
 							className="lfr__kaban-task-card-row-text-content"
 							displayType="subtitle"
 						>
-							{task.embedded.cmpProjectToCMPTasks.title}
+							{!currentURL.includes('project')
+								? task.embedded.cmpProjectToCMPTasks.title
+								: DateRenderer({value: task.embedded.dueDate})}
 						</Card.Description>
 					</Card.Row>
 
@@ -267,7 +269,7 @@ export default function Task(task: ITask) {
 								dueDate={task.embedded.dueDate}
 								state={{
 									key: task.embedded.state.key,
-									name: task.embedded.state.name
+									name: task.embedded.state.name,
 								}}
 							/>
 

@@ -71,12 +71,12 @@ public class DDMDataCleanupPreupgradeProcess
 						journalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73,
 						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).put(
+						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess74(),
+						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
+					).put(
 						_getJournalPointingOrphanNonancestorDDMStructureCleanupPreupgradeProcess70to73(),
 						dependsOn(
 							journalPointingOrphanDDMStructureCleanupPreupgradeProcess70to73)
-					).put(
-						_getJournalPointingOrphanDDMStructureCleanupPreupgradeProcess74(),
-						dependsOn(ddmStructureDataCleanupPreupgradeProcess)
 					).build();
 
 		List<DataCleanupPreupgradeProcess> dataCleanupPreupgradeProcesses =
@@ -224,7 +224,7 @@ public class DDMDataCleanupPreupgradeProcess
 					return;
 				}
 
-				Map<Long, Long> groupParents = new HashMap<>();
+				Map<Long, Long> parentGroupIdMap = new HashMap<>();
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
@@ -235,13 +235,13 @@ public class DDMDataCleanupPreupgradeProcess
 						long parentGroupId = resultSet.getLong("parentGroupId");
 
 						if (parentGroupId > 0) {
-							groupParents.put(
+							parentGroupIdMap.put(
 								resultSet.getLong("groupId"), parentGroupId);
 						}
 					}
 				}
 
-				Map<Long, Set<String>> structureKeys = new HashMap<>();
+				Map<Long, Set<String>> structureKeysMap = new HashMap<>();
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
@@ -249,7 +249,7 @@ public class DDMDataCleanupPreupgradeProcess
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
-						structureKeys.computeIfAbsent(
+						structureKeysMap.computeIfAbsent(
 							resultSet.getLong("groupId"), k -> new HashSet<>()
 						).add(
 							resultSet.getString("structureKey")
@@ -310,8 +310,8 @@ public class DDMDataCleanupPreupgradeProcess
 							"DDMStructureKey");
 
 						if (_hasStructure(
-								groupId, groupParents, structureKey,
-								structureKeys)) {
+								groupId, parentGroupIdMap, structureKey,
+								structureKeysMap)) {
 
 							continue;
 						}
@@ -341,11 +341,12 @@ public class DDMDataCleanupPreupgradeProcess
 			}
 
 			private boolean _hasStructure(
-				long groupId, Map<Long, Long> groupParents, String structureKey,
-				Map<Long, Set<String>> structureKeys) {
+				long groupId, Map<Long, Long> parentGroupIdMap,
+				String structureKey, Map<Long, Set<String>> structureKeysMap) {
 
 				while (true) {
-					Set<String> groupStructureKeys = structureKeys.get(groupId);
+					Set<String> groupStructureKeys = structureKeysMap.get(
+						groupId);
 
 					if ((groupStructureKeys != null) &&
 						groupStructureKeys.contains(structureKey)) {
@@ -353,7 +354,7 @@ public class DDMDataCleanupPreupgradeProcess
 						return true;
 					}
 
-					Long parentGroupId = groupParents.get(groupId);
+					Long parentGroupId = parentGroupIdMap.get(groupId);
 
 					if (parentGroupId == null) {
 						break;

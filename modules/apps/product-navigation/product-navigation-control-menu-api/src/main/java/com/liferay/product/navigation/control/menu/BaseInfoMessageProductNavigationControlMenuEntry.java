@@ -8,6 +8,7 @@ package com.liferay.product.navigation.control.menu;
 import com.liferay.frontend.taglib.servlet.taglib.FeatureIndicatorTag;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
@@ -77,6 +78,10 @@ public abstract class BaseInfoMessageProductNavigationControlMenuEntry
 
 		if (portletDisplay == null) {
 			return false;
+		}
+
+		if (Validator.isNull(portletDisplay.getPortletName())) {
+			return Objects.equals(getPortletName(), themeDisplay.getPpid());
 		}
 
 		return Objects.equals(

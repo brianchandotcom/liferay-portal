@@ -5,32 +5,72 @@
 
 package com.liferay.portal.search.script;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface ScriptBuilder {
+public class ScriptBuilder {
 
-	public Script build();
+	public Script build() {
+		return new Script(
+			_idOrCode, _language, _scriptType, _options, _parameters);
+	}
 
-	public ScriptBuilder idOrCode(String idOrCode);
+	public ScriptBuilder idOrCode(String idOrCode) {
+		_idOrCode = idOrCode;
 
-	public ScriptBuilder language(String language);
+		return this;
+	}
 
-	public ScriptBuilder options(Map<String, String> optionsMap);
+	public ScriptBuilder language(String language) {
+		_language = language;
 
-	public ScriptBuilder parameters(Map<String, Object> parametersMap);
+		return this;
+	}
 
-	public ScriptBuilder putOption(String optionName, String optionValue);
+	public ScriptBuilder options(Map<String, String> optionsMap) {
+		_options.clear();
+
+		_options.putAll(optionsMap);
+
+		return this;
+	}
+
+	public ScriptBuilder parameters(Map<String, Object> parametersMap) {
+		_parameters.clear();
+
+		_parameters.putAll(parametersMap);
+
+		return this;
+	}
+
+	public ScriptBuilder putOption(String optionName, String optionValue) {
+		_options.put(optionName, optionValue);
+
+		return this;
+	}
 
 	public ScriptBuilder putParameter(
-		String parameterName, Object parameterValue);
+		String parameterName, Object parameterValue) {
 
-	public ScriptBuilder scriptType(ScriptType scriptType);
+		_parameters.put(parameterName, parameterValue);
+
+		return this;
+	}
+
+	public ScriptBuilder scriptType(ScriptType scriptType) {
+		_scriptType = scriptType;
+
+		return this;
+	}
+
+	private String _idOrCode;
+	private String _language;
+	private final Map<String, String> _options = new LinkedHashMap<>();
+	private final Map<String, Object> _parameters = new LinkedHashMap<>();
+	private ScriptType _scriptType;
 
 }

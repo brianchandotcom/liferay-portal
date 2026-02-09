@@ -23,7 +23,7 @@ public class ScriptsImpl implements Scripts {
 
 	@Override
 	public ScriptBuilder builder() {
-		return new Script.ScriptBuilderImpl();
+		return new ScriptBuilder();
 	}
 
 	@Override

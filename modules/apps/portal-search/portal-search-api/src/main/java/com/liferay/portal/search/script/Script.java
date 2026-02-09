@@ -6,7 +6,6 @@
 package com.liferay.portal.search.script;
 
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -34,77 +33,6 @@ public class Script {
 
 	public ScriptType getScriptType() {
 		return _scriptType;
-	}
-
-	public static final class ScriptBuilderImpl implements ScriptBuilder {
-
-		@Override
-		public Script build() {
-			return new Script(
-				_idOrCode, _language, _scriptType, _options, _parameters);
-		}
-
-		@Override
-		public ScriptBuilder idOrCode(String idOrCode) {
-			_idOrCode = idOrCode;
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder language(String language) {
-			_language = language;
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder options(Map<String, String> optionsMap) {
-			_options.clear();
-
-			_options.putAll(optionsMap);
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder parameters(Map<String, Object> parametersMap) {
-			_parameters.clear();
-
-			_parameters.putAll(parametersMap);
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder putOption(String optionName, String optionValue) {
-			_options.put(optionName, optionValue);
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder putParameter(
-			String parameterName, Object parameterValue) {
-
-			_parameters.put(parameterName, parameterValue);
-
-			return this;
-		}
-
-		@Override
-		public ScriptBuilder scriptType(ScriptType scriptType) {
-			_scriptType = scriptType;
-
-			return this;
-		}
-
-		private String _idOrCode;
-		private String _language;
-		private final Map<String, String> _options = new LinkedHashMap<>();
-		private final Map<String, Object> _parameters = new LinkedHashMap<>();
-		private ScriptType _scriptType;
-
 	}
 
 	protected Script(

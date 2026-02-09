@@ -86,17 +86,6 @@ public class DepotEntryLocalServiceTest {
 
 	@Test
 	public void testAddDepotEntry() throws Exception {
-		_assertObjectEntryFolders(
-			_addDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
-
-		_assertObjectEntryFolders(_addDepotEntry(DepotConstants.TYPE_SPACE), 2);
-
-		_assertObjectEntryFolders(
-			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
-
-		_assertObjectEntryFolders(
-			_addStagedDepotEntry(DepotConstants.TYPE_SPACE), 2);
-
 		_assertCMSDefaultPermissions(
 			_addDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY));
 
@@ -107,6 +96,17 @@ public class DepotEntryLocalServiceTest {
 
 		_assertCMSDefaultPermissions(
 			_addStagedDepotEntry(DepotConstants.TYPE_SPACE));
+
+		_assertObjectEntryFolders(
+			_addDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
+
+		_assertObjectEntryFolders(_addDepotEntry(DepotConstants.TYPE_SPACE), 2);
+
+		_assertObjectEntryFolders(
+			_addStagedDepotEntry(DepotConstants.TYPE_ASSET_LIBRARY), 0);
+
+		_assertObjectEntryFolders(
+			_addStagedDepotEntry(DepotConstants.TYPE_SPACE), 2);
 	}
 
 	@Test

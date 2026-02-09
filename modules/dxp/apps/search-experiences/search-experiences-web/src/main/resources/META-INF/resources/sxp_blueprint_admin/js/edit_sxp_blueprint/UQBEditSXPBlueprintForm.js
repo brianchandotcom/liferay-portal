@@ -473,9 +473,6 @@ function UQBEditSXPBlueprintForm({
 		const fetchAllScope = async () => {
 			const fetchScope = async (externalReferenceCode) => {
 				try {
-
-					// Enable Feature Flag LPD-41306 to use the new Headless API
-
 					const response = await fetch(
 						`/o/headless-admin-site/v1.0/sites/${externalReferenceCode}`,
 						{

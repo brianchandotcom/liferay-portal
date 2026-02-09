@@ -338,7 +338,31 @@ export default function TasksFDSPropsTransformer({
 			action: any;
 			selectedData: any;
 		}) => {
-			if (action?.data?.id === 'update-due-date') {
+			if (action?.data?.id === 'assign-task') {
+				await openCMPModal({
+					center: true,
+					contentComponent: ({
+										   closeModal,
+									   }: {
+						closeModal: () => void;
+					}) => (
+						<BulkEditAssigneeModalContent
+							apiURL={otherProps.apiURL}
+							closeModal={closeModal}
+							selectedData={selectedData}
+							value={{name: null}}
+						/>
+					),
+					size: 'md',
+				});
+			}
+			else if (action?.data?.id === 'delete') {
+				deleteAssetEntriesBulkAction({
+					apiURL: otherProps.apiURL,
+					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'update-due-date') {
 				openCMPModal({
 					center: true,
 					contentComponent: ({
@@ -368,30 +392,6 @@ export default function TasksFDSPropsTransformer({
 							selectedData,
 							states: additionalProps.states,
 						}),
-					size: 'md',
-				});
-			}
-			else if (action?.data?.id === 'delete') {
-				deleteAssetEntriesBulkAction({
-					apiURL: otherProps.apiURL,
-					selectedData,
-				});
-			}
-			else if (action?.data?.id === 'assign-task') {
-				await openCMPModal({
-					center: true,
-					contentComponent: ({
-						closeModal,
-					}: {
-						closeModal: () => void;
-					}) => (
-						<BulkEditAssigneeModalContent
-							apiURL={otherProps.apiURL}
-							closeModal={closeModal}
-							selectedData={selectedData}
-							value={{name: null}}
-						/>
-					),
 					size: 'md',
 				});
 			}

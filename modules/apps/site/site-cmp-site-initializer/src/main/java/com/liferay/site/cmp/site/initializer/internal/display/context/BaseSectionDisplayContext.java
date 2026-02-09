@@ -52,16 +52,16 @@ public abstract class BaseSectionDisplayContext {
 				LanguageUtil.get(httpServletRequest, "update-due-date"), "post",
 				"update-due-date", null),
 			new FDSActionDropdownItem(
+				"#", "user", "assign-task",
+				LanguageUtil.get(httpServletRequest, "assign-task"), null, null,
+				null),
+			new FDSActionDropdownItem(
 				null, "arrow-start", "update-state",
 				LanguageUtil.get(httpServletRequest, "update-state"), "post",
 				"update-state", null),
 			new FDSActionDropdownItem(
 				"#", "trash", "delete",
 				LanguageUtil.get(httpServletRequest, "delete"), null, null,
-				null),
-			new FDSActionDropdownItem(
-				"#", "user", "assign-task",
-				LanguageUtil.get(httpServletRequest, "assign-task"), null, null,
 				null));
 	}
 

@@ -92,7 +92,7 @@ export interface IBulkActionTaskStarterDTO<
 
 export interface IBulkActionTaskType {
 	AssignToBulkAction: {
-		clazz: string;
+		className: string;
 		externalReferenceCode: string;
 		name: string;
 	};

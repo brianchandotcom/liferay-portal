@@ -8,7 +8,7 @@ import {
 	IBulkActionTaskType,
 } from '../../../common/types/BulkActionTask';
 import {
-	BULK_ACTION_ASSIGNT_TO,
+	BULK_ACTION_ASSIGN_TO,
 	BULK_ACTION_CATEGORIES,
 	BULK_ACTION_DEFAULT_PERMISSIONS,
 	BULK_ACTION_DELETE,
@@ -33,7 +33,7 @@ type BulkActionMessage = {
 };
 
 const BULK_ACTION_MESSAGES: BulkActionMessage = {
-	[BULK_ACTION_ASSIGNT_TO]: {
+	[BULK_ACTION_ASSIGN_TO]: {
 		info: {
 			all: Liferay.Language.get(
 				'assign-to-action-started-for-all-assets'

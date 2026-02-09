@@ -456,7 +456,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).put(
 				"name", assignToBulkAction::getName
 			).put(
-				"type", assignToBulkAction::getClazz
+				"type", assignToBulkAction::getClassName
 			).build();
 		}
 		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {

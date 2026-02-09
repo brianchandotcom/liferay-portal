@@ -59,7 +59,7 @@ public class AssignToObjectBulkSelectionAction
 					(String)inputMap.get("type"),
 					Assignee.Type.ROLE.toString())) {
 
-				Role role = _roleService.fetchRoleByExternalReferenceCode(
+				Role role = _roleService.getRoleByExternalReferenceCode(
 					(String)inputMap.get("externalReferenceCode"),
 					objectObjectEntry.getCompanyId());
 
@@ -84,7 +84,7 @@ public class AssignToObjectBulkSelectionAction
 						"classPK",
 						() -> {
 							User assigneeUser =
-								_userService.fetchUserByExternalReferenceCode(
+								_userService.getUserByExternalReferenceCode(
 									(String)inputMap.get(
 										"externalReferenceCode"),
 									objectObjectEntry.getCompanyId());
@@ -94,7 +94,13 @@ public class AssignToObjectBulkSelectionAction
 					).build());
 			}
 			else {
-				throw new UnsupportedOperationException();
+				properties.put(
+					"assignTo",
+					HashMapBuilder.put(
+						"classNameId", Long.valueOf(0)
+					).put(
+						"classPK", Long.valueOf(0)
+					).build());
 			}
 
 			_objectEntryService.partialUpdateObjectEntry(

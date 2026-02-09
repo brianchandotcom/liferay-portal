@@ -48,7 +48,7 @@ export default function BulkEditAssigneeModalContent({
 		triggerAssetBulkAction({
 			apiURL,
 			keyValues: {
-				clazz: (value as AssigneeValue)?.type,
+				className: (value as AssigneeValue)?.type,
 				externalReferenceCode: (value as AssigneeValue)
 					?.externalReferenceCode,
 				name: (value as AssigneeValue)?.name,
@@ -57,6 +57,11 @@ export default function BulkEditAssigneeModalContent({
 				displayErrorToast(error as string);
 			},
 			onCreateSuccess: ({error = ''}) => {
+				if (error) {
+					displayErrorToast(error as string);
+
+					return;
+				}
 				displayAssignSuccessToast(
 					'Task',
 					(value as AssigneeValue).name

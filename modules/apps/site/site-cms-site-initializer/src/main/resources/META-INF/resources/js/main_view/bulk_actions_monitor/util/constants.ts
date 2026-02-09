@@ -9,7 +9,7 @@ import React from 'react';
 
 import {IBulkActionTaskType} from '../../../common/types/BulkActionTask';
 
-export const BULK_ACTION_ASSIGNT_TO = 'AssignToBulkAction';
+export const BULK_ACTION_ASSIGN_TO = 'AssignToBulkAction';
 export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
 export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';
 export const BULK_ACTION_DELETE = 'DeleteBulkAction';
@@ -26,7 +26,7 @@ export const INTERVAL_TASK_POLLING_MS = 5000;
 
 export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 	{
-		[BULK_ACTION_ASSIGNT_TO]: Liferay.Language.get('assign-to'),
+		[BULK_ACTION_ASSIGN_TO]: Liferay.Language.get('assign-to'),
 		[BULK_ACTION_CATEGORIES]: Liferay.Language.get('assets-categorization'),
 		[BULK_ACTION_DEFAULT_PERMISSIONS]: Liferay.Language.get(
 			'assets-permissioning'

@@ -286,6 +286,8 @@ public class MarketplaceRestController extends BaseRestController {
 			_sendOrderPurchasedNotification(order);
 		}
 
+		_sendNotification(order, json);
+
 		if ((paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
 			(paymentStatus !=
@@ -677,6 +679,137 @@ public class MarketplaceRestController extends BaseRestController {
 			MarketplaceUtil.deleteTempFile(publisherAssetArtifactFile, true);
 			MarketplaceUtil.deleteTempFile(publisherAssetFile, false);
 		}
+	}
+
+	private void _sendNotification(Order order, String json) throws Exception {
+		String paymentMethod = order.getPaymentMethod();
+		int paymentStatus = order.getPaymentStatus();
+
+		if ((Objects.equals(
+				paymentMethod,
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
+			 (paymentStatus ==
+				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) ||
+			(Objects.equals(
+				paymentMethod,
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_PAYPAL) &&
+			 (paymentStatus ==
+				 MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED))) {
+
+			_sendOrderPurchasedNotification(order);
+		}
+
+		String orderEmailDescription = "";
+		String orderTypeExternalReferenceCode =
+			order.getOrderTypeExternalReferenceCode();
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				_marketplaceService.getOrderProductId(order));
+
+		if (Objects.equals(orderTypeExternalReferenceCode, "CDP")) {
+			orderEmailDescription =
+				"<p>Your workspace is being created now!</p>" +
+					"<p>Click the button below to go to your dashboard and check the status of your environment. " +
+						"You can start using it as soon as it is ready.</p>";
+		}
+		else if (Objects.equals(orderTypeExternalReferenceCode, "DXP")) {
+			String priceModel = productSpecificationsMap.get("price-model");
+
+			if (Objects.equals(priceModel, "Free")) {
+				orderEmailDescription =
+					"<p>Your app is ready for download.</p>" +
+						"<p>To find your app download, find your Order ID and choose Manage, " +
+							"then Download LPKG.</p>";
+			}
+			else if (Objects.equals(priceModel, "Paid")) {
+				orderEmailDescription =
+					"<p>Your app is ready for download.</p>" +
+						"<p>To access your download, find your Order ID and select Manage, " +
+							"then <b>Download LPKG.</b> " +
+								"Please note that a <b>valid license is also required to activate </b> " +
+									"and use the application." + "</p>";
+			}
+		}
+
+		if (Objects.equals(
+				paymentMethod,
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_PAYPAL) &&
+			(paymentStatus ==
+				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED)) {
+
+			String orderButtonText = "Go to Dashboard";
+
+			_sendOrderConfirmationNotification(
+				order, orderEmailDescription, orderButtonText, json);
+		}
+	}
+
+	private void _sendOrderConfirmationNotification(
+			Order order, String emailDescription, String buttonText,
+			String json)
+		throws Exception {
+
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
+
+		if (orderItem == null) {
+			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Sending order confirmation notification for order " +
+					order.getId());
+		}
+
+		Product product = _marketplaceService.getProductBySkuId(
+			orderItem.getSkuId());
+
+		Catalog catalog = _marketplaceService.getCatalog(
+			product.getCatalogId());
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
+			"modelCPDefinition");
+
+		_marketplaceService.postNotificationQueueEntry(
+			order.getCreatorEmailAddress(), "MARKETPLACE-ORDER-CONFIRMATION",
+			new HashMapBuilder<String, String>().put(
+				"[%APP_NAME%]",
+				product.getName(
+				).get(
+					"en_US"
+				)
+			).put(
+				"[%CATALOG_NAME%]", catalog.getName()
+			).put(
+				"[%COMMERCEORDER_AUTHOR_EMAIL_ADDRESS%]",
+				order.getCreatorEmailAddress()
+			).put(
+				"[%ORDER_ID%]", String.valueOf(order.getId())
+			).put(
+				"[%PRODUCT_THUMBNAIL%]",
+				new URL(
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						product.getThumbnail())
+				).toString(
+				).replaceAll(
+					"(?<=accounts/)-?\\d+(?=/images)", "-1"
+				)
+			).put(
+				"[%EMAIL_DESCRIPTION%]", emailDescription
+			).put(
+				"[%BUTTON_TEXT%]", buttonText
+			).put(
+				"[%APP_PRICE%]", order.getTotalFormatted()
+			).put(
+				"[%CPDEFINITION_ID%]",
+				String.valueOf(
+					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
+			).build());
 	}
 
 	private void _sendOrderPurchasedNotification(Order order) throws Exception {

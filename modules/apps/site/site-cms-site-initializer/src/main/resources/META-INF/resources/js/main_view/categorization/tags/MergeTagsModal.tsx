@@ -242,7 +242,7 @@ export default function MergeTagsModalContent({
 					<ClayModal.Body className="merge-tags">
 						<FrontendDataSet
 							apiURL={`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
-							bulkActions={[{}]}
+							bulkActions={[]}
 							customRenderers={{
 								tableCell: [
 									{

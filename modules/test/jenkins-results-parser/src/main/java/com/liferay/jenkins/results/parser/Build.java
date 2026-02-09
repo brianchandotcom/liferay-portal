@@ -217,6 +217,8 @@ public interface Build {
 
 	public void setJenkinsMaster(JenkinsMaster jenkinsMaster);
 
+	public void setParameterValue(String name, String value);
+
 	public void setResult(String result);
 
 	public void setStatus(String status);

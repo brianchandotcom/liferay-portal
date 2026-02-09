@@ -9149,7 +9149,7 @@ paths:
         get:
             # @review
             description:
-                Retrieves the public pages of the site
+                Retrieves the private or public pages of the site
             operationId: getSiteSitePagesPage
             parameters:
                 -   in: path
@@ -9183,6 +9183,11 @@ paths:
                     name: pageSize
                     schema:
                         type: integer
+                -   in: query
+                    name: privatePages
+                    schema:
+                        default: false
+                        type: boolean
                 -   in: query
                     name: restrictFields
                     schema:
@@ -9220,6 +9225,11 @@ paths:
                     required: true
                     schema:
                         type: string
+                -   in: query
+                    name: privatePage
+                    schema:
+                        default: false
+                        type: boolean
             requestBody:
                 content:
                     application/json:
@@ -9370,6 +9380,11 @@ paths:
                     name: nestedFields
                     schema:
                         type: string
+                -   in: query
+                    name: privatePage
+                    schema:
+                        default: false
+                        type: boolean
                 -   in: query
                     name: restrictFields
                     schema:

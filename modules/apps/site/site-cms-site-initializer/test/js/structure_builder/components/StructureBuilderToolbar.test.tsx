@@ -171,7 +171,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'you-removed-one-or-more-fields-from-the-content-structure',
+					text: 'you-have-made-changes-to-the-content-structure-that-may-impact-existing-stored-data-once-published',
 				})
 			);
 		});
@@ -253,7 +253,7 @@ describe('StructureBuilderToolbar', () => {
 				require('@liferay/layout-js-components-web').openConfirmModal
 			).toBeCalledWith(
 				expect.objectContaining({
-					text: 'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure',
+					text: 'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-have-made-changes-to-the-content-structure-that-may-impact-existing-stored-data-once-published',
 				})
 			);
 		});

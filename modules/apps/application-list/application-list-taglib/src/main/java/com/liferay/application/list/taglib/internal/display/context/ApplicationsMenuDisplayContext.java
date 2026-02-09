@@ -113,16 +113,9 @@ public class ApplicationsMenuDisplayContext {
 		).put(
 			"portletId", _portletId
 		).put(
-			"visibility",
-			HashMapBuilder.<String, Object>put(
-				"hidden", _STATE_HIDDEN
-			).put(
-				"initialState", isVisible()
-			).put(
-				"stateKey", _STATE_KEY
-			).put(
-				"visible", _STATE_VISIBLE
-			).build()
+			"visible", isVisible()
+		).put(
+			"visibleSessionKey", _VISIBLE_SESSION_KEY
 		).build();
 	}
 
@@ -160,9 +153,9 @@ public class ApplicationsMenuDisplayContext {
 
 	public boolean isVisible() {
 		String state = SessionClicks.get(
-			_httpServletRequest, _STATE_KEY, _STATE_DEFAULT);
+			_httpServletRequest, _VISIBLE_SESSION_KEY, "visible");
 
-		return state.equals(_STATE_VISIBLE);
+		return state.equals("visible");
 	}
 
 	private PanelCategory _getActivePanelCategory(String parentKey) {
@@ -272,15 +265,8 @@ public class ApplicationsMenuDisplayContext {
 	private static final String _EXPANDED_KEYS_SESSION_KEY =
 		"com_liferay_application_list_taglib_ApplicationsMenuExpanded_%sKeys";
 
-	private static final String _STATE_DEFAULT =
-		ApplicationsMenuDisplayContext._STATE_VISIBLE;
-
-	private static final String _STATE_HIDDEN = "hidden";
-
-	private static final String _STATE_KEY =
+	private static final String _VISIBLE_SESSION_KEY =
 		"com_liferay_application_list_taglib_ApplicationsMenuState";
-
-	private static final String _STATE_VISIBLE = "visible";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;

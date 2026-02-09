@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {SidePanel} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
-import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 type VerticalNavItem = React.ComponentProps<typeof ClayVerticalNav>['items'][0];
@@ -19,34 +19,34 @@ interface ApplicationsMenuItem {
 }
 
 interface Props {
-	expandedKeys: {
-		initialState: Array<string>;
-		stateKey: string;
-	};
+	expandedKeys: Array<React.Key>;
+	expandedKeysSessionKey: string;
 	items: Array<ApplicationsMenuItem>;
 	label: string;
 	portletId: string;
-	visibility: {
-		hidden: string;
-		initialState: boolean;
-		stateKey: string;
-		visible: string;
-	};
+	visible: boolean;
+	visibleSessionKey: string;
 }
 
 function ApplicationsMenu({
-	expandedKeys: externalExpandedKeys,
+	expandedKeys: initialExpandedKeys,
+	expandedKeysSessionKey,
 	items,
 	label,
 	portletId,
-	visibility,
+	visible: initialVisible,
+	visibleSessionKey,
 }: Props) {
-	const visibilityRef = useRef(visibility);
+	const containerRef = useRef<HTMLElement | null>(
+		document.getElementById(
+			'com_liferay_application_list_taglib_applications_menu_container'
+		)
+	);
 
-	const [visible, setVisible] = useState(visibility.initialState);
-	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(() => {
-		return new Set(externalExpandedKeys.initialState);
-	});
+	const [visible, setVisible] = useState(initialVisible);
+	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(
+		() => new Set(initialExpandedKeys)
+	);
 
 	function buildNavigationItem(item: ApplicationsMenuItem): VerticalNavItem {
 		return {
@@ -67,31 +67,35 @@ function ApplicationsMenu({
 		};
 	}
 
-	async function updateExpandedKeys(expandedKeys: Set<React.Key>) {
-		await Liferay.Util.Session.set(
-			externalExpandedKeys.stateKey,
-			Array.from(expandedKeys).join(',')
-		);
+	const updateExpandedKeys = useCallback(
+		async (expandedKeys: Set<React.Key>) => {
+			await Liferay.Util.Session.set(
+				expandedKeysSessionKey,
+				Array.from(expandedKeys).join(',')
+			);
 
-		setExpandedKeys(expandedKeys);
-	}
+			setExpandedKeys(expandedKeys);
+		},
+		[expandedKeysSessionKey]
+	);
 
-	const updateVisibleState = useCallback(async (visible: boolean) => {
-		await Liferay.Util.Session.set(
-			visibilityRef.current.stateKey,
-			visible
-				? visibilityRef.current.visible
-				: visibilityRef.current.hidden
-		);
+	const updateVisible = useCallback(
+		async (visible: boolean) => {
+			await Liferay.Util.Session.set(
+				visibleSessionKey,
+				visible ? 'visible' : 'hidden'
+			);
 
-		setVisible(visible);
+			setVisible(visible);
 
-		Liferay.fire('applicationsMenuStateChanged', {visible});
-	}, []);
+			Liferay.fire('applicationsMenuStateChanged', {visible});
+		},
+		[visibleSessionKey]
+	);
 
 	useEffect(() => {
 		async function handleStateRequest({visible}: {visible: boolean}) {
-			await updateVisibleState(visible);
+			await updateVisible(visible);
 		}
 
 		Liferay.on('applicationsMenuStateRequested', handleStateRequest);
@@ -101,48 +105,38 @@ function ApplicationsMenu({
 				'applicationsMenuStateRequested',
 				handleStateRequest
 			);
-	}, [updateVisibleState]);
+	}, [updateVisible]);
 
 	return (
-		<div
-			className={classNames('applications-menu-sidebar-wrapper', {
-				visible,
-			})}
+		<SidePanel
+			as="section"
+			containerRef={containerRef}
+			defaultOpen={initialVisible}
+			direction="left"
+			id="com_liferay_application_list_taglib_applications_menu"
+			onOpenChange={updateVisible}
+			open={visible}
+			panelWidth={320}
+			position="fixed"
 		>
-			<div className="applications-menu-sidebar">
-				<div className="align-items-center c-px-3 c-py-4 d-flex flex-row">
-					<div>
+			<SidePanel.Header>
+				<SidePanel.Title>
+					<ClayIcon symbol="grid" />
 
-						{/* TODO: replace icon below with actual panel icon */}
+					<span className="c-px-2">{label}</span>
+				</SidePanel.Title>
+			</SidePanel.Header>
 
-						<ClayIcon symbol="grid" />
-					</div>
-
-					<div className="c-px-2 flex-grow-1 text-4 text-weight-bold">
-						{label}
-					</div>
-
-					<button
-						className="close lfr-portal-tooltip rounded-lg"
-						onClick={() => updateVisibleState(false)}
-						title={Liferay.Language.get('close-product-menu')}
-						type="button"
-					>
-						<ClayIcon symbol="times" />
-					</button>
-				</div>
-
-				<div className="applications-menu-sidebar-body">
-					<ClayVerticalNav
-						active={portletId}
-						expandedKeys={expandedKeys}
-						itemAriaCurrent={true}
-						items={items.map(buildNavigationItem)}
-						onExpandedChange={updateExpandedKeys}
-					/>
-				</div>
-			</div>
-		</div>
+			<SidePanel.Body>
+				<ClayVerticalNav
+					active={portletId}
+					expandedKeys={expandedKeys}
+					itemAriaCurrent={true}
+					items={items.map(buildNavigationItem)}
+					onExpandedChange={updateExpandedKeys}
+				/>
+			</SidePanel.Body>
+		</SidePanel>
 	);
 }
 

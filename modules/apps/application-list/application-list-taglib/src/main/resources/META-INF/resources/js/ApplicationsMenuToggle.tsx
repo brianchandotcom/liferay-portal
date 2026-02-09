@@ -30,6 +30,8 @@ function ApplicationsMenuToggle({visible: initialVisible}: Props) {
 
 	return (
 		<button
+			aria-controls="com_liferay_application_list_taglib_applications_menu"
+			aria-expanded={visible}
 			className="btn btn-monospaced btn-sm control-menu-nav-link lfr-portal-tooltip"
 			id="com_liferay_application_list_taglib_applications_menu_toggle"
 			onClick={toggle}

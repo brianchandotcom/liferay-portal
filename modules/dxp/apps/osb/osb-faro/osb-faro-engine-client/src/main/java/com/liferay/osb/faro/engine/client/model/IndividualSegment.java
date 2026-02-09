@@ -102,7 +102,6 @@ public class IndividualSegment {
 		return _scope;
 	}
 
-	@JsonProperty("activation")
 	public SegmentActivation getSegmentActivation() {
 		return _segmentActivation;
 	}

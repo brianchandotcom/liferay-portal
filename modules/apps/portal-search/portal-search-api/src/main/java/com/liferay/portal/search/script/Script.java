@@ -40,44 +40,45 @@ public class Script {
 
 		@Override
 		public Script build() {
-			return new Script(_scriptImpl);
+			return new Script(
+				_idOrCode, _language, _scriptType, _options, _parameters);
 		}
 
 		@Override
 		public ScriptBuilder idOrCode(String idOrCode) {
-			_scriptImpl._idOrCode = idOrCode;
+			_idOrCode = idOrCode;
 
 			return this;
 		}
 
 		@Override
 		public ScriptBuilder language(String language) {
-			_scriptImpl._language = language;
+			_language = language;
 
 			return this;
 		}
 
 		@Override
 		public ScriptBuilder options(Map<String, String> optionsMap) {
-			_scriptImpl._options.clear();
+			_options.clear();
 
-			_scriptImpl._options.putAll(optionsMap);
+			_options.putAll(optionsMap);
 
 			return this;
 		}
 
 		@Override
 		public ScriptBuilder parameters(Map<String, Object> parametersMap) {
-			_scriptImpl._parameters.clear();
+			_parameters.clear();
 
-			_scriptImpl._parameters.putAll(parametersMap);
+			_parameters.putAll(parametersMap);
 
 			return this;
 		}
 
 		@Override
 		public ScriptBuilder putOption(String optionName, String optionValue) {
-			_scriptImpl._options.put(optionName, optionValue);
+			_options.put(optionName, optionValue);
 
 			return this;
 		}
@@ -86,38 +87,41 @@ public class Script {
 		public ScriptBuilder putParameter(
 			String parameterName, Object parameterValue) {
 
-			_scriptImpl._parameters.put(parameterName, parameterValue);
+			_parameters.put(parameterName, parameterValue);
 
 			return this;
 		}
 
 		@Override
 		public ScriptBuilder scriptType(ScriptType scriptType) {
-			_scriptImpl._scriptType = scriptType;
+			_scriptType = scriptType;
 
 			return this;
 		}
 
-		private final Script _scriptImpl = new Script();
+		private String _idOrCode;
+		private String _language;
+		private final Map<String, String> _options = new LinkedHashMap<>();
+		private final Map<String, Object> _parameters = new LinkedHashMap<>();
+		private ScriptType _scriptType;
 
 	}
 
-	protected Script() {
+	protected Script(
+		String idOrCode, String language, ScriptType scriptType,
+		Map<String, String> options, Map<String, Object> parameters) {
+
+		_idOrCode = idOrCode;
+		_language = language;
+		_scriptType = scriptType;
+		_options = options;
+		_parameters = parameters;
 	}
 
-	protected Script(Script script) {
-		_idOrCode = script._idOrCode;
-		_language = script._language;
-		_scriptType = script._scriptType;
-
-		_options.putAll(script._options);
-		_parameters.putAll(script._parameters);
-	}
-
-	private String _idOrCode;
-	private String _language;
-	private final Map<String, String> _options = new LinkedHashMap<>();
-	private final Map<String, Object> _parameters = new LinkedHashMap<>();
-	private ScriptType _scriptType;
+	private final String _idOrCode;
+	private final String _language;
+	private final Map<String, String> _options;
+	private final Map<String, Object> _parameters;
+	private final ScriptType _scriptType;
 
 }

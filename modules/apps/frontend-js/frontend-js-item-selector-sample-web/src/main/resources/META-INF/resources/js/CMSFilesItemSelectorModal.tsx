@@ -124,7 +124,7 @@ function CMSFilesItemSelectorModal({
 				variant="stripe"
 			>
 				{Liferay.Util.sub(
-					Liferay.Language.get('there-are-x-new-items'),
+					Liferay.Language.get('x-new-items-are-not-visible-in-this-view'),
 					[newItems]
 				)}
 

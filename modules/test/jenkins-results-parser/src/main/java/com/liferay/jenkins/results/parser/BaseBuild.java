@@ -3591,7 +3591,8 @@ public abstract class BaseBuild implements Build {
 		JenkinsCohort jenkinsCohort = JenkinsCohort.getInstance(
 			invocationURLMatcher.group("cohortName"));
 
-		loadParametersFromQueryString(invocationURL);
+		loadParametersFromQueryString(
+			invocationURLMatcher.group("queryString"));
 
 		String masterId = invocationURLMatcher.group("masterId");
 

@@ -1317,7 +1317,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getFormContainerPageElement(
-			String className, String[] cssClasses,
+			BackgroundImageValue backgroundImageValue, String className,
+			String[] cssClasses,
 			boolean formContainerSubmissionResultDefaultDisplayPage,
 			String formContainerSubmissionResultType,
 			FormContainerConfig.FormContainerType formContainerType,
@@ -1329,6 +1330,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		FormContainerPageElementDefinition formContainerPageElementDefinition =
 			new FormContainerPageElementDefinition();
 
+		formContainerPageElementDefinition.setBackgroundImageValue(
+			backgroundImageValue);
 		formContainerPageElementDefinition.setCssClasses(cssClasses);
 		formContainerPageElementDefinition.setFormContainerConfig(
 			_getFormContainerConfig(
@@ -2378,7 +2381,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				null, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				true, "displayPage",
 				FormContainerConfig.FormContainerType.SIMPLE, true, 1,
@@ -2386,39 +2389,39 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				LocalizationConfig.UnlocalizedFieldsState.READ_ONLY));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(), null, false, "displayPage",
-				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
-				RandomTestUtil.randomString(), null));
+				null, objectDefinition.getClassName(), null, false,
+				"displayPage", FormContainerConfig.FormContainerType.SIMPLE,
+				false, 1, RandomTestUtil.randomString(), null));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				null,
+				null, null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "embedded", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, RandomTestUtil.randomString(),
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(), null, false, "none",
+				null, objectDefinition.getClassName(), null, false, "none",
 				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
 				RandomTestUtil.randomString(), null));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				null,
+				null, null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "page", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, RandomTestUtil.randomString(),
 				LocalizationConfig.UnlocalizedFieldsState.READ_ONLY));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				null, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "url", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, RandomTestUtil.randomString(),
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				null, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "url", FormContainerConfig.FormContainerType.MULTISTEP,
 				false, RandomTestUtil.randomInt(2, 10),
@@ -2700,63 +2703,131 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
 						"firstName")));
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				backgroundImageValue, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				true, "displayPage",
 				FormContainerConfig.FormContainerType.SIMPLE, true, 1,
 				externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.READ_ONLY));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
+
+		backgroundImageValue = ImageValueTestUtil.getDirectBackgroundImageValue(
+			ReferencesTestUtil.getItemExternalReference(
+				fileEntry, testGroup.getGroupId()),
+			null);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(), null, false, "displayPage",
-				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
-				externalReferenceCode, null));
+				backgroundImageValue, objectDefinition.getClassName(), null, false,
+				"displayPage", FormContainerConfig.FormContainerType.SIMPLE,
+				false, 1, externalReferenceCode, null));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, fileEntry.getFileEntryId(), fileEntry,
+			externalReferenceCode);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			JournalArticle.class.getName(),
+			journalArticle.getExternalReferenceCode(),
+			"JournalArticle_authorProfileImage", null);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				null,
+				backgroundImageValue, null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "embedded", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, journalArticle.getResourcePrimKey(),
+			journalArticle, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				DISPLAY_PAGE_ITEM,
+			"JournalArticle_authorProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(), null, false, "none",
-				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
-				externalReferenceCode,
+				backgroundImageValue, objectDefinition.getClassName(), null,
+				false, "none", FormContainerConfig.FormContainerType.SIMPLE,
+				false, 1, externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.READ_ONLY));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				null,
+				backgroundImageValue, null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "page", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, externalReferenceCode, null));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				null, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "url", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				objectDefinition.getClassName(),
+				null, objectDefinition.getClassName(),
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "url", FormContainerConfig.FormContainerType.MULTISTEP,
 				false, RandomTestUtil.randomInt(2, 10), externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getPageElement(
-				new FormContainerPageElementDefinition() {
-					{
-						setIndexed(true);
-						setType(Type.FORM_CONTAINER);
-					}
-				},
-				externalReferenceCode));
+
+		BackgroundImageValue missingItemExternalReferenceBackgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				_randomItemExternalReference(), null);
+
+		_testMissingOptionalReference(
+			1,
+			() -> _testPutSitePageSpecificationPageExperiencePageElement(
+				_getPageElement(
+					new FormContainerPageElementDefinition() {
+						{
+							setBackgroundImageValue(
+								() ->
+									missingItemExternalReferenceBackgroundImageValue);
+							setIndexed(true);
+							setType(Type.FORM_CONTAINER);
+						}
+					},
+					externalReferenceCode)));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			missingItemExternalReferenceBackgroundImageValue, 0, null,
+			externalReferenceCode);
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElement()

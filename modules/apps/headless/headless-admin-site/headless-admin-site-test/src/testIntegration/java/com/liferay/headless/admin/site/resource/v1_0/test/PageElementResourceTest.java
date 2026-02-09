@@ -817,6 +817,22 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	private void _assertStyledLayoutStructureItemBackgroundImage(
 			BackgroundImageValue backgroundImageValue, long classPK,
+			GroupedModel groupedModel, PageElement pageElement)
+		throws Exception {
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, classPK, groupedModel,
+			pageElement.getExternalReferenceCode());
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			_assertStyledLayoutStructureItemBackgroundImage(
+				backgroundImageValue, classPK, groupedModel,
+				childPageElement.getExternalReferenceCode());
+		}
+	}
+
+	private void _assertStyledLayoutStructureItemBackgroundImage(
+			BackgroundImageValue backgroundImageValue, long classPK,
 			GroupedModel groupedModel, String itemId)
 		throws Exception {
 
@@ -1363,7 +1379,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			PageElement[] pageElements = new PageElement[1];
 
 			pageElements[0] = _getFormStepContainerPageElement(
-				numberOfSteps, pageElementExternalReferenceCode);
+				backgroundImageValue, numberOfSteps,
+				pageElementExternalReferenceCode);
 
 			return _getPageElement(
 				formContainerPageElementDefinition,
@@ -1376,13 +1393,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getFormStepContainerPageElement(
-			int numberOfSteps, String parentExternalReferenceCode)
+			BackgroundImageValue backgroundImageValue, int numberOfSteps,
+			String parentExternalReferenceCode)
 		throws Exception {
 
 		FormStepContainerPageElementDefinition
 			formStepContainerPageElementDefinition =
 				new FormStepContainerPageElementDefinition();
 
+		formStepContainerPageElementDefinition.setBackgroundImageValue(
+			backgroundImageValue);
 		formStepContainerPageElementDefinition.setCssClasses(
 			RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)));
 		formStepContainerPageElementDefinition.setFragmentViewports(
@@ -2730,9 +2750,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
-				backgroundImageValue, objectDefinition.getClassName(), null, false,
-				"displayPage", FormContainerConfig.FormContainerType.SIMPLE,
-				false, 1, externalReferenceCode, null));
+				backgroundImageValue, objectDefinition.getClassName(), null,
+				false, "displayPage",
+				FormContainerConfig.FormContainerType.SIMPLE, false, 1,
+				externalReferenceCode, null));
 
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, fileEntry.getFileEntryId(), fileEntry,
@@ -2775,21 +2796,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_assertStyledLayoutStructureItemBackgroundImage(
 			backgroundImageValue, 0, null, externalReferenceCode);
 
-		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
-			FragmentMappedValueItemContextReference.ContextSource.
-				COLLECTION_ITEM,
-			"AssetEntry_userProfileImage",
-			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
-
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
 				backgroundImageValue, null,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, "page", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, externalReferenceCode, null));
-
-		_assertStyledLayoutStructureItemBackgroundImage(
-			backgroundImageValue, 0, null, externalReferenceCode);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFormContainerPageElement(
@@ -2798,13 +2810,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				false, "url", FormContainerConfig.FormContainerType.SIMPLE,
 				false, 1, externalReferenceCode,
 				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getFormContainerPageElement(
-				null, objectDefinition.getClassName(),
-				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				false, "url", FormContainerConfig.FormContainerType.MULTISTEP,
-				false, RandomTestUtil.randomInt(2, 10), externalReferenceCode,
-				LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
+		PageElement pageElement =
+			_testPutSitePageSpecificationPageExperiencePageElement(
+				_getFormContainerPageElement(
+					backgroundImageValue, objectDefinition.getClassName(),
+					RandomTestUtil.randomStrings(
+						RandomTestUtil.randomInt(1, 10)),
+					false, "url",
+					FormContainerConfig.FormContainerType.MULTISTEP, false,
+					RandomTestUtil.randomInt(2, 10), externalReferenceCode,
+					LocalizationConfig.UnlocalizedFieldsState.DISABLED));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, pageElement);
 
 		BackgroundImageValue missingItemExternalReferenceBackgroundImageValue =
 			ImageValueTestUtil.getDirectBackgroundImageValue(

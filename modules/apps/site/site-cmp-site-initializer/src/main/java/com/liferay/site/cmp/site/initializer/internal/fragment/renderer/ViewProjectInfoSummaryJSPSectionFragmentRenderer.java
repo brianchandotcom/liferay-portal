@@ -6,7 +6,6 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -17,6 +16,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectInfoSummarySectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -39,14 +39,12 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
-		if (!(object instanceof ObjectEntry)) {
+		if (objectEntry == null) {
 			return null;
 		}
-
-		ObjectEntry objectEntry = (ObjectEntry)object;
 
 		httpServletRequest.setAttribute(
 			"OBJECT_RELATIONSHIP",
@@ -56,9 +54,8 @@ public class ViewProjectInfoSummaryJSPSectionFragmentRenderer
 					objectEntry.getObjectDefinitionId()));
 
 		return new ViewProjectInfoSummarySectionDisplayContext(
-			_listTypeEntryLocalService, (ObjectEntry)object,
-			_objectFieldLocalService, _objectStateFlowLocalService,
-			_objectStateLocalService,
+			_listTypeEntryLocalService, objectEntry, _objectFieldLocalService,
+			_objectStateFlowLocalService, _objectStateLocalService,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}

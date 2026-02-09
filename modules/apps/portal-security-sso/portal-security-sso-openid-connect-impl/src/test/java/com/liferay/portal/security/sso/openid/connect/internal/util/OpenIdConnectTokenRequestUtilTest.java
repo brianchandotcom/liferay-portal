@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.internal.util;
 
+import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import com.nimbusds.jose.JWSAlgorithm;
@@ -41,6 +42,7 @@ import org.mockito.Mockito;
 import org.mockserver.client.server.MockServerClient;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.matchers.Times;
+import org.mockserver.model.Delay;
 import org.mockserver.model.Header;
 import org.mockserver.model.HttpRequest;
 import org.mockserver.model.HttpResponse;
@@ -180,6 +182,17 @@ public class OpenIdConnectTokenRequestUtilTest {
 			OpenIdConnectTokenRequestUtil.request(
 				_oidcClientInformation, _oidcProviderMetadata, _refreshToken,
 				1000, _TOKEN_REQUEST_PARAMETERS));
+
+		try {
+			OpenIdConnectTokenRequestUtil.request(
+				_oidcClientInformation, _oidcProviderMetadata, _refreshToken,
+				1000, _TOKEN_REQUEST_PARAMETERS);
+
+			Assert.fail();
+		}
+		catch (OpenIdConnectServiceException.TokenException tokenException) {
+			Assert.assertNotNull(tokenException);
+		}
 	}
 
 	private HTTPRequest _setUpHttpRequest() throws Exception {
@@ -187,14 +200,15 @@ public class OpenIdConnectTokenRequestUtilTest {
 
 		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
 
-		new MockServerClient(
-			"localhost", 63636
-		).when(
+		MockServerClient mockServerClient = new MockServerClient(
+			"localhost", 63636);
+
+		mockServerClient.when(
 			HttpRequest.request(
 			).withMethod(
 				"POST"
 			),
-			Times.unlimited()
+			Times.exactly(2)
 		).respond(
 			HttpResponse.response(
 			).withBody(
@@ -203,6 +217,25 @@ public class OpenIdConnectTokenRequestUtilTest {
 				new Header("Content-Type", "application/json")
 			).withStatusCode(
 				200
+			)
+		);
+
+		mockServerClient.when(
+			HttpRequest.request(
+			).withMethod(
+				"POST"
+			),
+			Times.once()
+		).respond(
+			HttpResponse.response(
+			).withBody(
+				String.valueOf(httpResponse)
+			).withHeader(
+				new Header("Content-Type", "application/json")
+			).withStatusCode(
+				200
+			).withDelay(
+				Delay.seconds(10)
 			)
 		);
 

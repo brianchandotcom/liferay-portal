@@ -86,8 +86,7 @@ public class OAuth2ApplicationModelListener
 		throws ModelListenerException {
 
 		try {
-			if (!_isAnalyticsEnabled(oAuth2Application.getCompanyId()) ||
-				!StringUtil.equals(
+			if (!StringUtil.equals(
 					originalOAuth2Application.getExternalReferenceCode(),
 					"ANALYTICS-CLOUD")) {
 

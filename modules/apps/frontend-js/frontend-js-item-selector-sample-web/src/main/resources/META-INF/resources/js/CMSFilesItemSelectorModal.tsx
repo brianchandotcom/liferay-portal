@@ -107,7 +107,7 @@ function CMSFilesItemSelectorModal({
 		setURL(getCMSChildFolderURL(folderId));
 	}
 
-	const CmsAlertComponent = ({
+	const NewItemsNotificationComponent = ({
 		context,
 	}: {
 		context: IInlineNotificationComponent['context'];
@@ -124,7 +124,9 @@ function CMSFilesItemSelectorModal({
 				variant="stripe"
 			>
 				{Liferay.Util.sub(
-					Liferay.Language.get('x-new-items-are-not-visible-in-this-view'),
+					Liferay.Language.get(
+						'x-new-items-are-not-visible-in-this-view'
+					),
 					[newItems]
 				)}
 
@@ -253,7 +255,7 @@ function CMSFilesItemSelectorModal({
 					},
 				],
 				id: `itemSelectorModal-cms-${uuidv4()}`,
-				inlineNotificationComponent: CmsAlertComponent,
+				inlineNotificationComponent: NewItemsNotificationComponent,
 				pagination: {
 					deltas: [{label: 20}, {label: 40}, {label: 60}],
 					initialDelta: 20,

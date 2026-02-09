@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -17,6 +18,12 @@ public interface UserNotificationHandler {
 	public String getPortletId();
 
 	public String getSelector();
+
+	public default boolean hasPermission(long classPK, User user)
+		throws PortalException {
+
+		return false;
+	}
 
 	public UserNotificationFeedEntry interpret(
 			UserNotificationEvent userNotificationEvent,

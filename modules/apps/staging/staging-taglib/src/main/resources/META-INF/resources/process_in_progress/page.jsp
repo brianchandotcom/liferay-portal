@@ -18,18 +18,12 @@
 		<c:choose>
 			<c:when test="<%= Objects.equals(cmd, Constants.PUBLISH_TO_REMOTE) && (percentage == 100) %>">
 				<div class="progress-current-item">
-					<strong
-						><liferay-ui:message
-							key="please-wait-as-the-publish-processes-complete-on-the-remote-site"
-					/></strong
-					>
+					<strong><liferay-ui:message key="please-wait-as-the-publish-processes-complete-on-the-remote-site" /></strong>
 				</div>
 			</c:when>
 			<c:when test="<%= Validator.isNotNull(shortenedStagedModelName) && Validator.isNotNull(localizedStagedModelType) %>">
 				<div class="progress-current-item">
-					<liferay-ui:message key="publishing" /><%=
-					StringPool.TRIPLE_PERIOD %><%= localizedStagedModelType %>
-					<em><%= HtmlUtil.escape(shortenedStagedModelName) %></em>
+					<liferay-ui:message key="publishing" /><%= StringPool.TRIPLE_PERIOD %><%= localizedStagedModelType %> <em><%= HtmlUtil.escape(shortenedStagedModelName) %></em>
 				</div>
 			</c:when>
 		</c:choose>

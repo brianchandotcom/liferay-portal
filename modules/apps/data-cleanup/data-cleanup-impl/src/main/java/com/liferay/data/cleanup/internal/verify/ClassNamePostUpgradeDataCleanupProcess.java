@@ -6,6 +6,8 @@
 package com.liferay.data.cleanup.internal.verify;
 
 import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -17,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 
@@ -40,9 +43,11 @@ public class ClassNamePostUpgradeDataCleanupProcess
 	extends BaseDBProcess implements PostUpgradeDataCleanupProcess {
 
 	public ClassNamePostUpgradeDataCleanupProcess(
-		ClassNameLocalService classNameLocalService, Connection connection) {
+		ClassNameLocalService classNameLocalService, Connection connection,
+		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		_classNameLocalService = classNameLocalService;
+		_objectDefinitionLocalService = objectDefinitionLocalService;
 
 		this.connection = connection;
 	}
@@ -97,7 +102,14 @@ public class ClassNamePostUpgradeDataCleanupProcess
 				}
 
 				if (poundIndex != -1) {
-					value = value.substring(0, poundIndex);
+					ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.
+							fetchObjectDefinitionByClassName(
+								CompanyThreadLocal.getCompanyId(), value);
+
+					if (objectDefinition != null) {
+						return;
+					}
 				}
 
 				if (models.contains(value)) {
@@ -170,5 +182,6 @@ public class ClassNamePostUpgradeDataCleanupProcess
 		ClassNamePostUpgradeDataCleanupProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
+	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

@@ -3452,6 +3452,18 @@
 	},
 	{
 		"classNames": [
+			"JournalArticle"
+		],
+		"from": "regex:(?<variableName>\\w*).setContent\\((?<contentParameter>[\\s\\S]*?)\\);",
+		"issueKey": "LPD-31997",
+		"newImports": [
+			"com.liferay.portal.kernel.exception.PortalException",
+			"com.liferay.portal.kernel.xml.SAXReaderUtil"
+		],
+		"to": "try {\n\t\t\t${variableName}.setDocument(SAXReaderUtil.read(${contentParameter}));\n\t\t} catch (Exception exception) {\n\t\t\tthrow new PortalException(exception);\n\t\t}"
+	},
+	{
+		"classNames": [
 			"Group",
 			"LayoutSet"
 		],

@@ -10,9 +10,10 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.captcha.util.CaptchaUtil;
 import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -63,9 +64,13 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			User reporterUser = themeDisplay.getUser();
+			String reporterEmailAddress = StringPool.BLANK;
 
-			String reporterEmailAddress = reporterUser.getEmailAddress();
+			if (themeDisplay.isSignedIn()) {
+				User reporterUser = themeDisplay.getUser();
+
+				reporterEmailAddress = reporterUser.getEmailAddress();
+			}
 
 			long reportedUserId = _getReportedUserId(className, classPK);
 
@@ -119,15 +124,10 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long _getReportedUserId(String className, long classPK)
-		throws NoSuchModelException {
+		throws PortalException {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
-
-		if (assetEntry == null) {
-			throw new NoSuchModelException(
-				"Unable to find an asset entry for class PK " + classPK);
-		}
 
 		return assetEntry.getUserId();
 	}

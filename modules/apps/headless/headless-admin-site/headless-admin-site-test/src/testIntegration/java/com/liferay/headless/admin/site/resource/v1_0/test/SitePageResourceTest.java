@@ -291,29 +291,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	public void testGetSiteSitePagesPage() throws Exception {
 		super.testGetSiteSitePagesPage();
 
-		String siteExternalReferenceCode =
-			testGetSiteSitePagesPage_getSiteExternalReferenceCode();
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-			siteExternalReferenceCode, false,
-			_getRandomSitePage(
-				testGroup.getExternalReferenceCode(), null,
-				ServiceContextTestUtil.getServiceContext(
-					testGroup, TestPropsValues.getUserId()),
-				SitePage.Type.CONTENT_PAGE,
-				StringUtil.toLowerCase(RandomTestUtil.randomString())));
-
-		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, false, null, null,
-			"externalReferenceCode eq '" + sitePage.getExternalReferenceCode() +
-				"'",
-			Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		List<SitePage> pages = new ArrayList<>(page.getItems());
-
-		Assert.assertEquals(sitePage, pages.get(0));
+		_testGetSitePageSitePagesPage(false);
+		_testGetSitePageSitePagesPage(true);
 	}
 
 	@Override
@@ -3721,6 +3700,34 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		return layout;
+	}
+
+	private void _testGetSitePageSitePagesPage(boolean privatePages)
+			throws Exception {
+
+		String siteExternalReferenceCode =
+				testGetSiteSitePagesPage_getSiteExternalReferenceCode();
+
+		SitePage sitePage = sitePageResource.postSiteSitePage(
+				siteExternalReferenceCode, privatePages,
+				_getRandomSitePage(
+						StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
+						ServiceContextTestUtil.getServiceContext(
+								testGroup, TestPropsValues.getUserId()),
+						SitePage.Type.CONTENT_PAGE,
+						StringUtil.toLowerCase(RandomTestUtil.randomString())));
+
+		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+				siteExternalReferenceCode, privatePages, null, null,
+				"externalReferenceCode eq '" + sitePage.getExternalReferenceCode() +
+						"'",
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		List<SitePage> pages = new ArrayList<>(page.getItems());
+
+		Assert.assertEquals(sitePage, pages.get(0));
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

@@ -646,17 +646,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			}
 
 			try {
-				Layout stagedLayout =
-					_layoutLocalService.fetchLayoutByUuidAndGroupId(
-						layout.getUuid(), portletDataContext.getSourceGroupId(),
-						!layout.isPublicLayout());
+				long sourceGroupId = portletDataContext.getSourceGroupId();
+				long targetGroupId = portletDataContext.getGroupId();
 
-				if (((stagedLayout != null) &&
-					 _exportImportHelper.isLayoutRevisionInReview(
-						 stagedLayout)) ||
-					(stagedLayout != null)) {
+				if (sourceGroupId != targetGroupId) {
+					Layout stagedLayout =
+						_layoutLocalService.fetchLayoutByUuidAndGroupId(
+							layout.getUuid(), sourceGroupId,
+							!layout.isPublicLayout());
 
-					continue;
+					if (stagedLayout != null) {
+						continue;
+					}
 				}
 
 				_layoutLocalService.deleteLayout(layout, serviceContext);

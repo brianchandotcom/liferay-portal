@@ -58,18 +58,20 @@ variable "infrastructure_helm_chart_config" {
 	default={}
 	type=object(
 		{
-			image_name=optional(string, "liferay-aws-infrastructure")
-			image_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure")
-			version=optional(string, "0.2.0")
+			chart=optional(string, "liferay-aws-infrastructure")
+			path=optional(string, null)
+			repo_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure")
+			target_revision=optional(string, "0.2.0")
 		})
 }
 variable "infrastructure_provider_helm_chart_config" {
 	default={}
 	type=object(
 		{
-			image_name=optional(string, "liferay-aws-infrastructure-provider")
-			image_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
-			version=optional(string, "0.2.0")
+			chart=optional(string, "liferay-aws-infrastructure-provider")
+			path=optional(string, null)
+			repo_url=optional(string, "oci://us-central1-docker.pkg.dev/external-assets-prd/liferay-helm-chart/liferay-aws-infrastructure-provider")
+			target_revision=optional(string, "0.2.0")
 		})
 }
 variable "liferay_git_repo_config" {
@@ -112,9 +114,13 @@ variable "liferay_git_repo_config" {
 variable "liferay_git_repo_url" {
 	type=string
 }
-variable "liferay_helm_chart_name" {
-	default="liferay-aws"
-	type=string
+variable "liferay_helm_chart_config" {
+	type=object({
+		chart=optional(string, "liferay-aws")
+		path=optional(string, null)
+		repo_url=optional(string, null)
+		target_revision=string
+	})
 	validation {
 		condition=contains(
 			[
@@ -122,12 +128,9 @@ variable "liferay_helm_chart_name" {
 				"liferay-aws",
 				"liferay-aws-marketplace",
 			],
-			var.liferay_helm_chart_name)
-		error_message="The 'liferay_helm_chart_name' value must be 'liferay-default', 'liferay-aws', or 'liferay-aws-marketplace'."
+			var.liferay_helm_chart_config.chart)
+		error_message="The 'chart' value must be 'liferay-default', 'liferay-aws', or 'liferay-aws-marketplace'."
 	}
-}
-variable "liferay_helm_chart_version" {
-	type=string
 }
 variable "region" {
 	default="us-west-2"

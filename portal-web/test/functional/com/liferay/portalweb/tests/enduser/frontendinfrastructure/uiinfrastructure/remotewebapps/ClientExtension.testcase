@@ -45,15 +45,15 @@ definition {
 		property database.types = "mysql, postgresql";
 		property portal.acceptance = "true";
 
-		task ("Given Client Extension admin page") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		task ("Create a Custom Element client extension") {
+			JSONClientExtension.addCustomElementRemoteAppEntry(
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
-		task ("When Click Add Button") {
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		task ("Given Client Extension admin page") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("Then Custom Elements admin page lists the Name and Type") {
@@ -72,13 +72,15 @@ definition {
 	@description = "LPS-182184. Verify when the user clicks on Clear button the JSON field becomes empty"
 	@priority = 4
 	test CanClearJSONFileField {
+		task ("Create a Custom Element client extension") {
+			JSONClientExtension.addCustomElementRemoteAppEntry(
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
 
 			Click(
 				key_entryName = "Vanilla Counter",
@@ -136,15 +138,15 @@ definition {
 	@description = "LPS-182184. Verify the option to export a client extension is displayed."
 	@priority = 4
 	test CanExportCustomElement {
-		task ("Given the admin page of client extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
+		task ("Create a Custom Element client extension") {
+			JSONClientExtension.addCustomElementRemoteAppEntry(
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 		}
 
-		task ("And Create a Custom Element") {
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		task ("Given the admin page of client extensions") {
+			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
 
 		task ("When the user clicks the ellipsis button of the client extension created") {
@@ -184,13 +186,15 @@ definition {
 	test CanImportClientExtension {
 		property portal.acceptance = "true";
 
+		task ("Create a Custom Element client extension") {
+			JSONClientExtension.addCustomElementRemoteAppEntry(
+				customElementHtmlName = "vanilla-counter",
+				customElementName = "Vanilla Counter",
+				customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
+		}
+
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = "vanilla-counter",
-				entryName = "Vanilla Counter",
-				entryURL = "http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
 
 			Click(
 				key_entryName = "Vanilla Counter",
@@ -343,48 +347,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-139377. Verify that remote app of type Custom Element can be displayed by portlet"
-	@priority = 5
-	test CustomElementCanBeDisplayedByPortlet {
-		property portal.acceptance = "true";
-
-		var customElementName = "Vanilla Counter";
-		var customElementHtmlName = "vanilla-counter";
-		var customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js";
-
-		task ("Add a public page with JSON") {
-			JSONLayout.addPublicLayout(
-				groupName = "Guest",
-				layoutName = "Test Page",
-				type = "content");
-		}
-
-		task ("Create Vanilla Counter as a Custom Element") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addCustomElement(
-				entryHtmlName = ${customElementHtmlName},
-				entryName = ${customElementName},
-				entryURL = ${customElementURL});
-		}
-
-		task ("Add Vanilla Counter to Test Page") {
-			ContentPagesNavigator.openEditContentPage(
-				pageName = "Test Page",
-				siteName = "Guest");
-
-			PageEditor.addWidget(portletName = "Vanilla Counter");
-
-			PageEditor.publish();
-		}
-
-		task ("Assert Vanilla Counter is displayed") {
-			Navigator.gotoPage(pageName = "Test Page");
-
-			AssertElementPresent(locator1 = "ClientExtension#VANILLA_COUNTER_REMOTE_APP");
-		}
-	}
-
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be instanceable in a Content Page"
 	@priority = 3
 	test CustomElementCanBeInstanceable {
@@ -512,152 +474,6 @@ definition {
 
 			AssertElementPresent(locator1 = "//script[contains(@src,'https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js') and contains(@type,'module')]");
 		}
-	}
-
-	@description = "LPS-154719. Validate that HTML eror is thrown if left empty."
-	@priority = 3
-	test ErrorAppearsWhenHTMLBlank {
-		task ("Given Add Custom Element Client Extensions admin page") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addType(type = "Custom Element");
-		}
-
-		task ("When required fields Name, HTML Element Name, and JS URL are blank and When attempt to save remote app") {
-			Button.clickPublish();
-		}
-
-		task ("Then error message 'HTML element name is empty'") {
-			AssertTextEquals(
-				key_alertMessage = "The HTML Element Name field is required.",
-				locator1 = "Message#ERROR_ENTER_A_VALID_VALUE",
-				value1 = "The HTML Element Name field is required.");
-		}
-
-		task ("And Then Remote App is not added") {
-			Navigator.gotoBack();
-
-			AssertElementPresent(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-		}
-	}
-
-	@description = "LPS-154718. Validate Client Extensions UI has a clear error message when all the mandatory fields are empty."
-	@priority = 4
-	test HasMandatoryFieldErrorMessagesWhenEmpty {
-		task ("Given Add IFrame Client Extensions admin page") {
-			ClientExtension.openClientExtensionsAdmin();
-
-			ClientExtensionGeneral.addType(type = "IFrame");
-		}
-
-		task ("When attempt to save remote app") {
-			Button.clickPublish();
-		}
-
-		task ("Then an error message 'field is required' appears under URL") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "Message#WARNING_FEEDBACK",
-				value1 = "The URL field is required");
-		}
-
-		task ("And then Remote App is not added") {
-			Navigator.gotoBack();
-
-			AssertTextEquals(
-				locator1 = "Message#EMPTY_STATE_INFO",
-				value1 = "No Results Found");
-		}
-	}
-
-	@description = "LPS-154719. Error thrown when HTML Element contains empty/white space."
-	@priority = 3
-	test HTMLElementConatinsInvlaidCharacters {
-		task ("Given Add Custom Element Client Extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addType(type = "Custom Element");
-		}
-
-		task ("When type 'vanilla counter' in HTML Element field and attempt to save the remote app") {
-			ClientExtensionGeneral.addApp(
-				entryHTMLElementName = "vanilla counter",
-				entryName = "RemoteApp Test Name",
-				entryURL = ${testURL});
-		}
-
-		task ("Then error message 'HTML Element name contains invalid character' with empty/white space appears under HTML Element field") {
-			AssertElementPresent(
-				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
-				text = "HTML element name contains invalid character");
-		}
-	}
-
-	@description = "LPS-154719. Error thrown when HTML Element doesn't have at least one hyphen."
-	@priority = 3
-	test HTMLElementMustHaveOneHyphen {
-		task ("Given Add Custom Element Client Extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addType(type = "Custom Element");
-		}
-
-		task ("When type 'vanilla.counter' in HTML Element Name field and attempt to save the remote app") {
-			ClientExtensionGeneral.addApp(
-				entryHTMLElementName = "vanilla.counter",
-				entryName = "RemoteApp Test",
-				entryURL = ${testURL});
-		}
-
-		task ("Then error message 'HTML element name must contain at least one hyphen' appears under HTML Element field") {
-			AssertElementPresent(
-				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
-				text = "HTML element name must contain at least one hyphen");
-		}
-	}
-
-	@description = "LPS-154719. Error thrown when HTML Element doesn't start with a lowercase letter."
-	@priority = 3
-	test HTMLElementMustStartWithLowercase {
-		task ("Given Add Custom Element Client Extensions") {
-			ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-			ClientExtensionGeneral.addType(type = "Custom Element");
-		}
-
-		task ("When type 'Vanilla counter' in HTML Element Name field") {
-			ClientExtensionGeneral.addApp(
-				entryHTMLElementName = "Vanilla counter",
-				entryName = "RemoteApp Test",
-				entryURL = ${testURL});
-		}
-
-		task ("And When attempt to save the remote app") {
-			Button.clickPublish();
-		}
-
-		task ("Then error message 'HTML element name must start with a lowercase letter' appears under HTML Element field") {
-			AssertElementPresent(
-				locator1 = "ClientExtensionEntry#REMOTE_APPS_ERROR_WITH_MESSAGE",
-				text = "HTML element name must start with a lowercase letter");
-		}
-	}
-
-	@description = "LPS-114812. Verify an iframe remote app can be created"
-	@priority = 5
-	test IFrameCanBeCreated {
-		property portal.acceptance = "true";
-
-		ClientExtensionGeneral.goToRemoteAppsPortlet();
-
-		ClientExtensionGeneral.addType(type = "IFrame");
-
-		ClientExtensionGeneral.addApp(
-			entryName = "Test Remote App",
-			entryURL = "http://www.liferay.com");
-
-		ClientExtensionGeneral.viewTableEntryName(entryName = "Test Remote App");
 	}
 
 	@description = "LPS-154725. Verify that the UI label is present when a client extension is not created through osgi"

@@ -20,8 +20,11 @@ const PORTLET_BASE_URL =
 
 export enum WaitAction {
 	ERROR,
+	INVALID_CHARACTER,
+	MISSING_HYPHEN,
 	NONE,
 	SUCCESS,
+	UPPERCASE_STARTING_LETTER,
 }
 
 export class EditClientExtensionsPage extends POM {
@@ -119,6 +122,22 @@ export class EditClientExtensionsPage extends POM {
 				);
 				break;
 
+			case WaitAction.INVALID_CHARACTER:
+				await waitForAlert(this.page, 'contains invalid character', {
+					type: 'danger',
+				});
+				break;
+
+			case WaitAction.MISSING_HYPHEN:
+				await waitForAlert(
+					this.page,
+					'must contain at least one hyphen.',
+					{
+						type: 'danger',
+					}
+				);
+				break;
+
 			case WaitAction.NONE:
 				break;
 
@@ -128,6 +147,16 @@ export class EditClientExtensionsPage extends POM {
 					'Success:Your request completed successfully.',
 					{
 						timeout: 5000,
+					}
+				);
+				break;
+
+			case WaitAction.UPPERCASE_STARTING_LETTER:
+				await waitForAlert(
+					this.page,
+					'must start with a lowercase letter.',
+					{
+						type: 'danger',
 					}
 				);
 				break;

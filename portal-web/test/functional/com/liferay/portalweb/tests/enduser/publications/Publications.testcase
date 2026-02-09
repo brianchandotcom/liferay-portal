@@ -1002,12 +1002,12 @@ definition {
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");
 
-		ClientExtensionGeneral.goToRemoteAppsPortlet();
+		JSONClientExtension.addCustomElementRemoteAppEntry(
+			customElementHtmlName = "vanilla-counter",
+			customElementName = "Vanilla Counter",
+			customElementURL = "https://liferay.github.io/liferay-frontend-projects/vanilla-counter/index.js");
 
-		ClientExtensionGeneral.addCustomElement(
-			entryHtmlName = "vanilla-counter",
-			entryName = "Vanilla Counter",
-			entryURL = " http://remote-component-test.wincent.com/packages/vanilla-counter/index.js");
+		ClientExtensionGeneral.goToRemoteAppsPortlet();
 
 		PublicationsNavigator.gotoReviewChanges(
 			gotoPublicationsAdmin = "true",

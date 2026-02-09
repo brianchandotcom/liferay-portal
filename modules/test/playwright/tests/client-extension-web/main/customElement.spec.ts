@@ -20,6 +20,7 @@ const test = mergeTests(
 	editCustomElementPageTest,
 	loginTest()
 );
+
 const testSample = mergeTests(
 	clientExtensionsPageTest,
 	editCustomElementPageTest,
@@ -199,15 +200,73 @@ test('Can cancel the creation of a Custom Element', async ({
 	).not.toBeVisible();
 });
 
-test('Check that Name field is required', async ({editCustomElementPage}) => {
-	await editCustomElementPage.goto();
-	await editCustomElementPage.fillRequiredFields();
+test(
+	'Publishing with invalid field values results in error',
+	{tag: '@LPD-75288'},
+	async ({editCustomElementPage, page}) => {
+		await test.step('Go to "Add Custom Element" page', async () => {
+			await editCustomElementPage.goto();
+		});
 
-	await test.step('Check expectations', async () => {
-		await editCustomElementPage.nameInput.clear();
-		await editCustomElementPage.publish(WaitAction.ERROR);
-	});
-});
+		await test.step('Name cannot be empty', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.nameInput.clear();
+
+			await editCustomElementPage.publish(WaitAction.ERROR);
+		});
+
+		await test.step('HTML Element Name cannot be empty', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.htmlElementNameInput.clear();
+
+			await editCustomElementPage.publish(WaitAction.NONE);
+
+			await expect(
+				page.getByText('The HTML Element Name field is required')
+			).toBeVisible();
+		});
+
+		await test.step('HTML Element Name cannot contain a space character', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.htmlElementNameInput.fill('foo bar');
+
+			await editCustomElementPage.publish(WaitAction.INVALID_CHARACTER);
+		});
+
+		await test.step('HTML Element Name must contain a hyphen', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.htmlElementNameInput.fill('foo');
+
+			await editCustomElementPage.publish(WaitAction.MISSING_HYPHEN);
+		});
+
+		await test.step('HTML Element Name must start with a lowercase letter', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.htmlElementNameInput.fill('Foo-bar');
+
+			await editCustomElementPage.publish(
+				WaitAction.UPPERCASE_STARTING_LETTER
+			);
+		});
+
+		await test.step('JavaScript URL field cannot be empty', async () => {
+			await editCustomElementPage.fillRequiredFields();
+
+			await editCustomElementPage.javaScriptURLInput.clear();
+
+			await editCustomElementPage.publish(WaitAction.NONE);
+
+			await expect(
+				page.getByText('The JavaScript URL field is required')
+			).toBeVisible();
+		});
+	}
+);
 
 test('Check that Name field can be translated', async ({
 	editCustomElementPage,
@@ -252,7 +311,7 @@ test('Check that JavaScript URL field is required', async ({
 	});
 });
 
-test('Check if custom elements can be created, edited and deleted', async ({
+test('Client extension can be created, edited and deleted', async ({
 	clientExtensionsPage,
 	editCustomElementPage,
 }) => {
@@ -261,7 +320,7 @@ test('Check if custom elements can be created, edited and deleted', async ({
 
 	await editCustomElementPage.goto();
 
-	await test.step('Create a new Custom Element', async () => {
+	await test.step('Create a new client extension', async () => {
 		await editCustomElementPage.cssURLInput.fill(getRandomString());
 		await editCustomElementPage.descriptionContentEditable.fill(
 			getRandomString()
@@ -287,7 +346,7 @@ test('Check if custom elements can be created, edited and deleted', async ({
 		).toBeVisible();
 	});
 
-	await test.step('Edit the Custom Element', async () => {
+	await test.step('Edit the client extension', async () => {
 		await clientExtensionsPage.editClientExtension(
 			clientExtensionName,
 			EditCustomElementPage
@@ -346,7 +405,7 @@ test('Check if custom elements can be created, edited and deleted', async ({
 		);
 	});
 
-	await test.step('Delete the Custom Element', async () => {
+	await test.step('Delete the client extension', async () => {
 		await clientExtensionsPage.goto();
 
 		await clientExtensionsPage.deleteClientExtension(

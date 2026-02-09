@@ -8,12 +8,9 @@ package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.site.cms.site.initializer.util.UserSelectionFDSFilterUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,10 +18,6 @@ import java.util.Locale;
  * @author José Abelenda
  */
 public class ProjectSponsorSelectionFDSFilter extends BaseSelectionFDSFilter {
-
-	public ProjectSponsorSelectionFDSFilter(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
 
 	@Override
 	public String getEntityFieldType() {
@@ -45,22 +38,10 @@ public class ProjectSponsorSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		List<SelectionFDSFilterItem> selectionFDSFilterItems =
-			new ArrayList<>();
-
-		for (User user :
-				_userLocalService.getCompanyUsers(
-					CompanyThreadLocal.getCompanyId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS)) {
-
-			selectionFDSFilterItems.add(
-				new SelectionFDSFilterItem(
-					user.getFullName(), user.getUserId()));
-		}
-
-		return selectionFDSFilterItems;
+		return TransformUtil.transform(
+			UserSelectionFDSFilterUtil.getUsers(),
+			user -> new SelectionFDSFilterItem(
+				user.getFullName(), user.getUserId()));
 	}
-
-	private final UserLocalService _userLocalService;
 
 }

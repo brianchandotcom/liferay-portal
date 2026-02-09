@@ -54,7 +54,7 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 
 		return HashMapBuilder.<String, Object>put(
 			"consentRenewalPeriod",
-			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod")
+			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod", 12)
 		).put(
 			"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
 		).put(

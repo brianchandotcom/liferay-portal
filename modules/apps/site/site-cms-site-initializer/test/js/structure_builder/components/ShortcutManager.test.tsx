@@ -202,6 +202,7 @@ describe('ShortcutManager', () => {
 
 		expect(mockDispatch).toHaveBeenCalledWith({
 			type: 'add-repeatable-group',
+			uuids: [FIELD_UUID],
 		});
 	});
 

@@ -83,7 +83,8 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static List<Long> getParentSiteNavigationMenuItemIds(
-		long siteNavigationMenuId, String typeSettingsKeyword) {
+			long siteNavigationMenuId, String typeSettingsKeyword)
+		throws PortalException {
 
 		return getService().getParentSiteNavigationMenuItemIds(
 			siteNavigationMenuId, typeSettingsKeyword);
@@ -99,7 +100,8 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
-		long siteNavigationMenuId) {
+			long siteNavigationMenuId)
+		throws PortalException {
 
 		return getService().getSiteNavigationMenuItems(siteNavigationMenuId);
 	}
@@ -113,29 +115,30 @@ public class SiteNavigationMenuItemServiceUtil {
 	}
 
 	public static List<SiteNavigationMenuItem> getSiteNavigationMenuItems(
-		long siteNavigationMenuId,
-		OrderByComparator<SiteNavigationMenuItem> orderByComparator) {
+			long siteNavigationMenuId,
+			OrderByComparator<SiteNavigationMenuItem> orderByComparator)
+		throws PortalException {
 
 		return getService().getSiteNavigationMenuItems(
 			siteNavigationMenuId, orderByComparator);
 	}
 
 	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 			int order)
 		throws PortalException {
 
 		return getService().updateSiteNavigationMenuItem(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, order);
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId, order);
 	}
 
 	public static SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long siteNavigationMenuId, String typeSettings,
+			long siteNavigationMenuItemId, String typeSettings,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateSiteNavigationMenuItem(
-			siteNavigationMenuId, typeSettings, serviceContext);
+			siteNavigationMenuItemId, typeSettings, serviceContext);
 	}
 
 	public static SiteNavigationMenuItemService getService() {

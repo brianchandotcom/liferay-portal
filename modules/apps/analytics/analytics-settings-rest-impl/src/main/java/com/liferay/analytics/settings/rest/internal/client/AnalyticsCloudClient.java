@@ -18,8 +18,12 @@ import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsChanne
 import com.liferay.analytics.settings.rest.internal.client.model.AnalyticsDataSource;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Page;
 import com.liferay.analytics.settings.rest.internal.client.pagination.Pagination;
+import com.liferay.oauth2.provider.constants.ClientProfile;
+import com.liferay.oauth2.provider.constants.GrantType;
 import com.liferay.oauth2.provider.model.OAuth2Application;
 import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
+import com.liferay.oauth2.provider.util.OAuth2SecureRandomGenerator;
+import com.liferay.oauth2.provider.util.builder.OAuth2ScopeBuilder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +37,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -41,6 +47,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -117,7 +124,7 @@ public class AnalyticsCloudClient {
 	}
 
 	public Map<String, Object> connectAnalyticsDataSource(
-			Company company, String connectionToken)
+			Company company, String connectionToken, User user)
 		throws Exception {
 
 		if (_oAuth2ApplicationLocalService == null) {
@@ -131,8 +138,24 @@ public class AnalyticsCloudClient {
 					"ANALYTICS-CLOUD", company.getCompanyId());
 
 		if (oAuth2Application == null) {
-			throw new DataSourceConnectionException(
-				"No OAuth2 application found for ANALYTICS-CLOUD");
+			oAuth2Application =
+				_oAuth2ApplicationLocalService.addOrUpdateOAuth2Application(
+					"ANALYTICS-CLOUD", user.getUserId(), user.getScreenName(),
+					new ArrayList<GrantType>() {
+						{
+							add(GrantType.CLIENT_CREDENTIALS);
+							add(GrantType.JWT_BEARER);
+						}
+					},
+					"client_secret_post", user.getUserId(),
+					OAuth2SecureRandomGenerator.generateClientId(),
+					ClientProfile.HEADLESS_SERVER.id(),
+					OAuth2SecureRandomGenerator.generateClientSecret(), null,
+					null, "https://analytics.liferay.com", 0, null,
+					"Analytics Cloud", null,
+					Collections.singletonList(
+						"https://analytics.liferay.com/oauth/receive"),
+					false, false, this::_buildScopes, new ServiceContext());
 		}
 
 		JSONObject connectionTokenJSONObject = _decodeToken(connectionToken);
@@ -481,6 +504,30 @@ public class AnalyticsCloudClient {
 		}
 	}
 
+	private void _buildAnalyticsCloudScopes(OAuth2ScopeBuilder builder) {
+		builder.forApplication(
+			"Liferay.JSON.Web.Services.Analytics",
+			"com.liferay.oauth2.provider.shortcut",
+			applicationScopeAssigner -> _scopeAliasesList.forEach(
+				applicationScopeAssigner::assignScope));
+	}
+
+	private void _buildScopes(OAuth2ScopeBuilder builder) {
+		_buildAnalyticsCloudScopes(builder);
+
+		_buildSegmentsAsahScopes(builder);
+	}
+
+	private void _buildSegmentsAsahScopes(OAuth2ScopeBuilder builder) {
+		builder.forApplication(
+			"Liferay.Segments.Asah.REST", "com.liferay.segments.asah.rest.impl",
+			applicationScopeAssigner -> applicationScopeAssigner.assignScope(
+				"DELETE", "GET", "POST"
+			).mapToScopeAlias(
+				"Liferay.Segments.Asah.REST.everything"
+			));
+	}
+
 	private JSONObject _decodeToken(String connectionToken) throws Exception {
 		try {
 			if (Validator.isBlank(connectionToken)) {
@@ -587,6 +634,8 @@ public class AnalyticsCloudClient {
 
 	private final Http _http;
 	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
+	private final List<String> _scopeAliasesList = ListUtil.fromArray(
+		"analytics.read", "analytics.write");
 
 	private static class ObjectMapperHolder {
 

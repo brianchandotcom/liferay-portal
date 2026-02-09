@@ -2087,7 +2087,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getWidgetPageElement(
-			String[] cssClasses,
+			BackgroundImageValue backgroundImageValue, String[] cssClasses,
 			String draftWidgetInstanceExternalReferenceCode, boolean indexed,
 			String name, String pageElementExternalReferenceCode,
 			Map<String, Object> widgetConfig,
@@ -2099,6 +2099,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			widgetInstancePageElementDefinition =
 				new WidgetInstancePageElementDefinition();
 
+		widgetInstancePageElementDefinition.setBackgroundImageValue(
+			backgroundImageValue);
 		widgetInstancePageElementDefinition.setCssClasses(cssClasses);
 		widgetInstancePageElementDefinition.
 			setDraftWidgetInstanceExternalReferenceCode(
@@ -2521,6 +2523,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()
 		throws Exception {
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+
 		String draftWidgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
 		String namespace = RandomTestUtil.randomString();
@@ -2528,14 +2534,21 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_addFragmentEntryLink(
 			draftWidgetInstanceExternalReferenceCode, namespace);
 
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getWidgetPageElement(
-				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				draftWidgetInstanceExternalReferenceCode, false,
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_getWidgetConfig(), RandomTestUtil.randomString(), namespace,
-				JournalContentPortletKeys.JOURNAL_CONTENT,
-				_getWidgetPermissions()));
+		PageElement pageElement =
+			_testPostSitePageSpecificationPageExperiencePageElement(
+				_getWidgetPageElement(
+					backgroundImageValue,
+					RandomTestUtil.randomStrings(
+						RandomTestUtil.randomInt(1, 10)),
+					draftWidgetInstanceExternalReferenceCode, false,
+					RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), _getWidgetConfig(),
+					RandomTestUtil.randomString(), namespace,
+					JournalContentPortletKeys.JOURNAL_CONTENT,
+					_getWidgetPermissions()));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, pageElement);
 	}
 
 	private PageElement _testPutSitePageSpecificationPageExperiencePageElement(
@@ -4177,6 +4190,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()
 		throws Exception {
 
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getMappedBackgroundImageValue(
+				JournalArticle.class.getName(),
+				journalArticle.getExternalReferenceCode(),
+				"JournalArticle_authorProfileImage", null);
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		String widgetInstanceExternalReferenceCode =
@@ -4184,6 +4207,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				null, false, RandomTestUtil.randomString(),
 				externalReferenceCode, _getWidgetConfig(),
@@ -4191,6 +4215,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomString(),
 				JournalContentPortletKeys.JOURNAL_CONTENT,
 				_getWidgetPermissions()));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, journalArticle.getResourcePrimKey(),
+			journalArticle, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				DISPLAY_PAGE_ITEM,
+			"JournalArticle_authorProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
 
 		String draftWidgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -4201,19 +4235,33 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				draftWidgetInstanceExternalReferenceCode, false,
 				RandomTestUtil.randomString(), externalReferenceCode,
 				_getWidgetConfig(), widgetInstanceExternalReferenceCode,
 				namespace, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				_getWidgetPermissions()));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
-				null, null, false, RandomTestUtil.randomString(),
-				externalReferenceCode, new HashMap<>(),
-				widgetInstanceExternalReferenceCode, namespace,
+				backgroundImageValue, null, null, false,
+				RandomTestUtil.randomString(), externalReferenceCode,
+				new HashMap<>(), widgetInstanceExternalReferenceCode, namespace,
 				AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				new WidgetPermission[0]));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
 	}
 
 	@Inject

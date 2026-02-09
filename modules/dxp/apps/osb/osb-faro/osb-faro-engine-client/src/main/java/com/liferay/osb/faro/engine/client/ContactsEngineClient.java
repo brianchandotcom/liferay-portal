@@ -541,9 +541,8 @@ public interface ContactsEngineClient {
 		String segmentType);
 
 	public SegmentActivation updateSegmentActivation(
-		FaroProject faroProject, String cronExpression,
-		SegmentActivation.FrequencyType frequencyType, Date scheduleEndDate,
-		Date scheduleStartDate, SegmentActivation.ScheduleType scheduleType,
-		String segmentId);
+		FaroProject faroProject, String cronExpression, String frequencyType,
+		Date scheduleEndDate, Date scheduleStartDate, String scheduleType,
+		Long segmentId);
 
 }

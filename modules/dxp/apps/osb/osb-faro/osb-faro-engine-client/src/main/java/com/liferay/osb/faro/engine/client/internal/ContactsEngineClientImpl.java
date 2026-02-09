@@ -2945,15 +2945,15 @@ public class ContactsEngineClientImpl
 
 	@Override
 	public SegmentActivation updateSegmentActivation(
-		FaroProject faroProject, String cronExpression,
-		SegmentActivation.FrequencyType frequencyType, Date scheduleEndDate,
-		Date scheduleStartDate, SegmentActivation.ScheduleType scheduleType,
-		String segmentId) {
+		FaroProject faroProject, String cronExpression, String frequencyType,
+		Date scheduleEndDate, Date scheduleStartDate, String scheduleType,
+		Long segmentId) {
 
 		SegmentActivation segmentActivation = new SegmentActivation();
 
 		segmentActivation.setCronExpression(cronExpression);
-		segmentActivation.setFrequencyType(frequencyType);
+		segmentActivation.setFrequencyType(
+			SegmentActivation.FrequencyType.valueOf(frequencyType));
 
 		if (scheduleEndDate != null) {
 			segmentActivation.setScheduleEndDate(scheduleEndDate);
@@ -2963,12 +2963,14 @@ public class ContactsEngineClientImpl
 			segmentActivation.setScheduleStartDate(scheduleStartDate);
 		}
 
-		segmentActivation.setScheduleType(scheduleType);
-		segmentActivation.setSegmentId(segmentId);
+		segmentActivation.setScheduleType(
+			SegmentActivation.ScheduleType.valueOf(scheduleType));
+		segmentActivation.setSegmentId(String.valueOf(segmentId));
 
 		return put(
 			faroProject, Rels.INDIVIDUAL_SEGMENT_ACTIVATION, segmentActivation,
-			SegmentActivation.class, getUriVariables(faroProject, segmentId));
+			SegmentActivation.class,
+			getUriVariables(faroProject, String.valueOf(segmentId)));
 	}
 
 	protected void addActionFilter(

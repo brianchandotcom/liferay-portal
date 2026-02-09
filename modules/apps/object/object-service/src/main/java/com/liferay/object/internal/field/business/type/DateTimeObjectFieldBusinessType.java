@@ -11,6 +11,8 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.string.StringPool;
@@ -18,14 +20,21 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
 
+import java.io.Serializable;
+
 import java.sql.Timestamp;
+
+import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -124,6 +133,40 @@ public class DateTimeObjectFieldBusinessType
 				ObjectFieldSettingUtil.getTimeZoneId(
 					objectField.getObjectFieldSettings(), user),
 				value));
+	}
+
+	@Override
+	public Serializable getDTOValue(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectField objectField, Serializable serializable)
+		throws Exception {
+
+		if (Validator.isNull(serializable)) {
+			return null;
+		}
+
+		if (serializable instanceof String) {
+			Date date = DateUtil.parseDate(
+				"yyyy-MM-dd", (String)serializable,
+				LocaleUtil.getSiteDefault());
+
+			serializable = new Timestamp(date.getTime());
+		}
+
+		String pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+		if (StringUtil.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField),
+				ObjectFieldSettingConstants.VALUE_CONVERT_TO_UTC)) {
+
+			pattern += "'Z'";
+		}
+
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+
+		return simpleDateFormat.format((Timestamp)serializable);
 	}
 
 	@Override

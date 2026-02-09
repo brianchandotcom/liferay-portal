@@ -12,8 +12,12 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.util.ListEntryUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -22,7 +26,10 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +76,48 @@ public class MultiselectPicklistObjectFieldBusinessType
 
 		return ObjectFieldBusinessType.super.getDisplayContextValue(
 			objectField, userId, values);
+	}
+
+	@Override
+	public Serializable getDTOValue(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectField objectField, Serializable serializable)
+		throws Exception {
+
+		if (objectField.getListTypeDefinitionId() == 0) {
+			return null;
+		}
+
+		if (serializable instanceof List) {
+			return serializable;
+		}
+
+		String[] keys = null;
+
+		if (serializable instanceof Object[]) {
+			keys = TransformUtil.transform(
+				(Object[])serializable,
+				object -> {
+					if (!(object instanceof Map)) {
+						return null;
+					}
+
+					return MapUtil.getString(
+						(Map<String, String>)object, "key");
+				},
+				String.class);
+		}
+		else if (serializable instanceof String) {
+			keys = StringUtil.split(
+				(String)serializable, StringPool.COMMA_AND_SPACE);
+		}
+
+		return (Serializable)TransformUtil.transformToList(
+			keys,
+			key -> ListEntryUtil.toListEntry(
+				dtoConverterContext, key,
+				objectField.getListTypeDefinitionId()));
 	}
 
 	@Override

@@ -126,7 +126,7 @@ const IndividualsList = () => {
 	return (
 		<Card>
 			<Card.Title className='card-header'>
-				{Liferay.Language.get('individuals-profiles')}
+				{Liferay.Language.get('individual-profiles')}
 			</Card.Title>
 			<Card.Body className='no-padding'>
 				<div className='individuals-dashboard-known-individuals-root'>

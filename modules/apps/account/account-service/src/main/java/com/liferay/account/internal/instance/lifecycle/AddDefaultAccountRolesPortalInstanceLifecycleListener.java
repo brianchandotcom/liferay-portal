@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 
@@ -99,12 +98,10 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 
 		User guestUser = company.getGuestUser();
 
-		String externalReferenceCode = StringUtil.toUpperCase(
-			"L_" + StringUtil.replace(roleName, ' ', '_'));
-
 		_accountRoleLocalService.addAccountRole(
-			externalReferenceCode, guestUser.getUserId(),
-			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, roleName, null,
+			RoleConstants.toSystemRoleExternalReferenceCode(roleName),
+			guestUser.getUserId(), AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			roleName, null,
 			AccountRoleConstants.roleDescriptionsMap.get(roleName));
 
 		return true;
@@ -152,11 +149,9 @@ public class AddDefaultAccountRolesPortalInstanceLifecycleListener
 		if (role == null) {
 			User guestUser = company.getGuestUser();
 
-			String externalReferenceCode = StringUtil.toUpperCase(
-				"L_" + StringUtil.replace(roleName, ' ', '_'));
-
 			_roleLocalService.addRole(
-				externalReferenceCode, guestUser.getUserId(), null, 0,
+				RoleConstants.toSystemRoleExternalReferenceCode(roleName),
+				guestUser.getUserId(), null, 0,
 				AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER, null,
 				AccountRoleConstants.roleDescriptionsMap.get(
 					AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER),

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
@@ -60,19 +59,18 @@ public class RoleUtil {
 			if (roleType == RoleConstants.TYPE_ACCOUNT) {
 				AccountRole accountRole =
 					AccountRoleLocalServiceUtil.addAccountRole(
-						null, serviceContext.getUserId(),
+						RoleConstants.toSystemRoleExternalReferenceCode(name),
+						serviceContext.getUserId(),
 						AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT, name, null,
 						descriptionMap);
 
 				role = accountRole.getRole();
 			}
 			else {
-				String externalReferenceCode = StringUtil.toUpperCase(
-					"L_" + StringUtil.replace(name, ' ', '_'));
-
 				role = RoleLocalServiceUtil.addRole(
-					externalReferenceCode, serviceContext.getUserId(), null, 0,
-					name, null, descriptionMap, roleType, null, null);
+					RoleConstants.toSystemRoleExternalReferenceCode(name),
+					serviceContext.getUserId(), null, 0, name, null,
+					descriptionMap, roleType, null, null);
 			}
 		}
 		else if (role.getType() != roleType) {

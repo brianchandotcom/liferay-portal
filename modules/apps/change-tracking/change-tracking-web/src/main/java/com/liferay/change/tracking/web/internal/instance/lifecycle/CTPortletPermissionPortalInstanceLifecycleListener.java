@@ -130,14 +130,10 @@ public class CTPortletPermissionPortalInstanceLifecycleListener
 		if (role == null) {
 			User guestUser = company.getGuestUser();
 
-			String roleName = StringUtil.replace(
-				CTRoleConstants.PUBLICATIONS_REVIEWER, ' ', '_');
-
-			String externalReferenceCode = StringUtil.toUpperCase(
-				"L_" + roleName);
-
 			role = _roleLocalService.addRole(
-				externalReferenceCode, guestUser.getUserId(), null, 0,
+				RoleConstants.toSystemRoleExternalReferenceCode(
+					CTRoleConstants.PUBLICATIONS_REVIEWER),
+				guestUser.getUserId(), null, 0,
 				CTRoleConstants.PUBLICATIONS_REVIEWER, null,
 				HashMapBuilder.put(
 					LocaleUtil.getDefault(),

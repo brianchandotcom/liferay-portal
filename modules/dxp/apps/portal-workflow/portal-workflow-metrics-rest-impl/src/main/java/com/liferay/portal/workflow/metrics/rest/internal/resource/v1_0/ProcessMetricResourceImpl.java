@@ -185,7 +185,8 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			_aggregations.bucketSelector(
-				"bucketSelector", _scripts.script("params.instanceCount > 0"));
+				"bucketSelector",
+				Scripts.INSTANCE.script("params.instanceCount > 0"));
 
 		bucketSelectorPipelineAggregation.addBucketPath(
 			"instanceCount", "instanceCount.value");
@@ -694,9 +695,6 @@ public class ProcessMetricResourceImpl extends BaseProcessMetricResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

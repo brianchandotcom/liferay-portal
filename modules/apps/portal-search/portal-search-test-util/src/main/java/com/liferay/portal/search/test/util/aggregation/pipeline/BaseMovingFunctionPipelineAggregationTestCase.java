@@ -13,6 +13,7 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregationResult;
 import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.util.aggregation.AggregationAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -37,7 +38,8 @@ public abstract class BaseMovingFunctionPipelineAggregationTestCase
 		HistogramAggregation histogramAggregation =
 			aggregationFixture.getDefaultHistogramAggregation();
 
-		Script script = scripts.script("MovingFunctions.unweightedAvg(values)");
+		Script script = Scripts.INSTANCE.script(
+			"MovingFunctions.unweightedAvg(values)");
 
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation =
 			aggregations.movingFunction("moving_fn", script, "sum", 5);

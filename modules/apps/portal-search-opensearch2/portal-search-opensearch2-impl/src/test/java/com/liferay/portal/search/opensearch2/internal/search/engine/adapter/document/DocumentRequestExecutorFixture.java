@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
 /**
@@ -151,9 +150,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor,
 			"_openSearchConnectionManager", openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_scripts",
-			new ScriptsImpl());
 
 		return updateByQueryDocumentRequestExecutor;
 	}

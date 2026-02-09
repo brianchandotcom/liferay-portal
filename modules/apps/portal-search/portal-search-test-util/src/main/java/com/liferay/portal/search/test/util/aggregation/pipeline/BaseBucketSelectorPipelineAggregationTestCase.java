@@ -11,6 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.script.Script;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -36,7 +37,7 @@ public abstract class BaseBucketSelectorPipelineAggregationTestCase
 		HistogramAggregation histogramAggregation =
 			aggregationFixture.getDefaultHistogramAggregation();
 
-		Script script = scripts.script("params.sum > 40");
+		Script script = Scripts.INSTANCE.script("params.sum > 40");
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			aggregations.bucketSelector("bucket_selector", script);

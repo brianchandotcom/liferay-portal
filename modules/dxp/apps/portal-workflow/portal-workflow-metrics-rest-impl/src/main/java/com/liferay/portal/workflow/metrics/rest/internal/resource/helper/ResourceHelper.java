@@ -190,7 +190,7 @@ public class ResourceHelper {
 	public Script createScript(Class<?> clazz, String resourceName)
 		throws IOException {
 
-		return _scripts.script(
+		return Scripts.INSTANCE.script(
 			StringUtil.read(
 				clazz.getResourceAsStream("dependencies/" + resourceName)));
 	}
@@ -521,9 +521,6 @@ public class ResourceHelper {
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

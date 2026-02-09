@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.internal.geolocation.GeoLocationPointImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.LiferayOpenSearchIndexingFixtureFactory;
@@ -167,7 +166,7 @@ public class OpenSearchSortFieldTranslatorTest
 			},
 			new double[] {1, 2, 3});
 
-		ScriptBuilder scriptBuilder = _scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		Script script = scriptBuilder.idOrCode(
 			"doc['priority'].value * 1.1"
@@ -234,7 +233,6 @@ public class OpenSearchSortFieldTranslatorTest
 			});
 	}
 
-	private static final Scripts _scripts = new ScriptsImpl();
 	private static final Sorts _sorts = new SortsImpl();
 
 }

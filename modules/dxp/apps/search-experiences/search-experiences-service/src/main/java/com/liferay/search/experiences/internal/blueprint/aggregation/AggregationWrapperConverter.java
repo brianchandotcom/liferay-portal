@@ -221,8 +221,6 @@ public class AggregationWrapperConverter {
 			).put(
 				"sum_bucket", this::_toSumBucketPipelineAggregation
 			).build());
-
-		_scripts = scriptConverter.getScripts();
 	}
 
 	public AggregationWrapper toAggregationWrapper(
@@ -1465,7 +1463,8 @@ public class AggregationWrapperConverter {
 					continue;
 				}
 
-				ScriptFieldBuilder scriptFieldBuilder = _scripts.fieldBuilder();
+				ScriptFieldBuilder scriptFieldBuilder =
+					Scripts.INSTANCE.fieldBuilder();
 
 				scriptFieldBuilder.script(script);
 
@@ -1537,7 +1536,6 @@ public class AggregationWrapperConverter {
 	private final HighlightConverter _highlightConverter;
 	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
-	private final Scripts _scripts;
 	private final SignificanceHeuristics _significanceHeuristics;
 	private final Sorts _sorts;
 

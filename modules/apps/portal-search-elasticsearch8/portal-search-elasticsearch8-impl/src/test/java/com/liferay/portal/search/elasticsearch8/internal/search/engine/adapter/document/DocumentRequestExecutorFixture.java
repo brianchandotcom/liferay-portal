@@ -10,8 +10,6 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
-import com.liferay.portal.search.script.Scripts;
 
 /**
  * @author Dylan Rebelak
@@ -150,8 +148,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutor,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor, "_scripts", _scripts);
 
 		return updateByQueryDocumentRequestExecutor;
 	}
@@ -168,8 +164,6 @@ public class DocumentRequestExecutorFixture {
 
 		return updateDocumentRequestExecutor;
 	}
-
-	private static final Scripts _scripts = new ScriptsImpl();
 
 	private DocumentRequestExecutor _documentRequestExecutor;
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

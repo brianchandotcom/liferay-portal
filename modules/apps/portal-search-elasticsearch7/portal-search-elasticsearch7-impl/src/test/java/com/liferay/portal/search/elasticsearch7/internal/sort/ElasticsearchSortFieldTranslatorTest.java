@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.internal.geolocation.GeoLocationPointImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
@@ -175,7 +174,7 @@ public class ElasticsearchSortFieldTranslatorTest
 			},
 			new double[] {1, 2, 3});
 
-		ScriptBuilder scriptBuilder = _scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		Script script = scriptBuilder.idOrCode(
 			"doc['priority'].value * 1.1"
@@ -242,7 +241,6 @@ public class ElasticsearchSortFieldTranslatorTest
 			});
 	}
 
-	private static final Scripts _scripts = new ScriptsImpl();
 	private static final Sorts _sorts = new SortsImpl();
 
 }

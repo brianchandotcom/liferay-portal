@@ -366,7 +366,7 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 			"taskName", null);
 
 		termsAggregation.setScript(
-			_scripts.script(
+			Scripts.INSTANCE.script(
 				"doc.containsKey('name') ? doc.name.value : " +
 					"doc.taskName.value"));
 
@@ -736,9 +736,6 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

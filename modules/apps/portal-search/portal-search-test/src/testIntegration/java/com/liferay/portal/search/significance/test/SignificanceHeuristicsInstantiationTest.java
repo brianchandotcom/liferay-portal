@@ -39,14 +39,12 @@ public class SignificanceHeuristicsInstantiationTest {
 			_significanceHeuristics.mutualInformation(false, false));
 		Assert.assertNotNull(_significanceHeuristics.percentageScore());
 		Assert.assertNotNull(
-			_significanceHeuristics.script(_scripts.script("script_id")));
+			_significanceHeuristics.script(
+				Scripts.INSTANCE.script("script_id")));
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	@Inject
-	private static Scripts _scripts;
 
 	@Inject
 	private static SignificanceHeuristics _significanceHeuristics;

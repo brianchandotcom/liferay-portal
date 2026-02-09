@@ -11,7 +11,6 @@ import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptField;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -33,7 +32,7 @@ public class ScriptsInstantiationTest {
 
 	@Test
 	public void testBuilder() {
-		Script script = _scripts.builder(
+		Script script = Scripts.INSTANCE.builder(
 		).idOrCode(
 			"Math.min(1, 1)"
 		).language(
@@ -45,11 +44,11 @@ public class ScriptsInstantiationTest {
 
 	@Test
 	public void testFieldBuilder() {
-		ScriptField scriptField = _scripts.fieldBuilder(
+		ScriptField scriptField = Scripts.INSTANCE.fieldBuilder(
 		).field(
 			"field"
 		).script(
-			_scripts.script("Math.min(1, 1)")
+			Scripts.INSTANCE.script("Math.min(1, 1)")
 		).build();
 
 		Assert.assertNotNull(scriptField);
@@ -57,37 +56,34 @@ public class ScriptsInstantiationTest {
 
 	@Test
 	public void testInline() {
-		Script script = _scripts.inline("painless", "Math.min(1, 1)");
+		Script script = Scripts.INSTANCE.inline("painless", "Math.min(1, 1)");
 
 		Assert.assertNotNull(script);
 	}
 
 	@Test
 	public void testScript() {
-		Script script = _scripts.script("Math.min(1, 1)");
+		Script script = Scripts.INSTANCE.script("Math.min(1, 1)");
 
 		Assert.assertNotNull(script);
 	}
 
 	@Test
 	public void testScriptField() {
-		ScriptField scriptField = _scripts.scriptField(
-			"field", _scripts.script("Math.min(1, 1)"));
+		ScriptField scriptField = Scripts.INSTANCE.scriptField(
+			"field", Scripts.INSTANCE.script("Math.min(1, 1)"));
 
 		Assert.assertNotNull(scriptField);
 	}
 
 	@Test
 	public void testStored() {
-		Script script = _scripts.stored("script_id");
+		Script script = Scripts.INSTANCE.stored("script_id");
 
 		Assert.assertNotNull(script);
 	}
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	@Inject
-	private static Scripts _scripts;
 
 }

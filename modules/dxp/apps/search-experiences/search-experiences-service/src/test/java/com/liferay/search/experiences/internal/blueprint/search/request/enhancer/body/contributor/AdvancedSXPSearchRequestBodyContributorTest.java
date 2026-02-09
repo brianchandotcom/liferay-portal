@@ -14,7 +14,6 @@ import com.liferay.portal.search.internal.collapse.CollapseBuilderFactoryImpl;
 import com.liferay.portal.search.internal.collapse.InnerHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -152,6 +151,6 @@ public class AdvancedSXPSearchRequestBodyContributorTest {
 		new SearchRequestBuilderFactoryImpl();
 	private final SortConverter _sortConverter = new SortConverter(
 		new GeoBuildersImpl(), new QueryConverter(new QueriesImpl()),
-		new ScriptConverter(new ScriptsImpl()), new SortsImpl());
+		new ScriptConverter(), new SortsImpl());
 
 }

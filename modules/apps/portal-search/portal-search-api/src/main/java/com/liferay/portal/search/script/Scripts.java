@@ -9,18 +9,55 @@ package com.liferay.portal.search.script;
  * @author Wade Cao
  * @author André de Oliveira
  */
-public interface Scripts {
+public class Scripts {
 
-	public ScriptBuilder builder();
+	public static final Scripts INSTANCE = new Scripts();
 
-	public ScriptFieldBuilder fieldBuilder();
+	public ScriptBuilder builder() {
+		return new ScriptBuilder();
+	}
 
-	public Script inline(String language, String code);
+	public ScriptFieldBuilder fieldBuilder() {
+		return new ScriptFieldBuilder();
+	}
 
-	public Script script(String idOrCode);
+	public Script inline(String language, String code) {
+		return builder(
+		).language(
+			language
+		).idOrCode(
+			code
+		).scriptType(
+			ScriptType.INLINE
+		).build();
+	}
 
-	public ScriptField scriptField(String field, Script script);
+	public Script script(String idOrCode) {
+		return builder(
+		).idOrCode(
+			idOrCode
+		).build();
+	}
 
-	public Script stored(String scriptId);
+	public ScriptField scriptField(String field, Script script) {
+		return fieldBuilder(
+		).field(
+			field
+		).script(
+			script
+		).build();
+	}
+
+	public Script stored(String scriptId) {
+		return builder(
+		).idOrCode(
+			scriptId
+		).scriptType(
+			ScriptType.STORED
+		).build();
+	}
+
+	private Scripts() {
+	}
 
 }

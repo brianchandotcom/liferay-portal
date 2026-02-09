@@ -214,7 +214,8 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			_aggregations.bucketSelector(
-				"bucketSelector", _scripts.script("params.taskCount > 0"));
+				"bucketSelector",
+				Scripts.INSTANCE.script("params.taskCount > 0"));
 
 		bucketSelectorPipelineAggregation.addBucketPath(
 			"taskCount", "countFilter>taskCount.value");
@@ -584,9 +585,6 @@ public class AssigneeMetricResourceImpl extends BaseAssigneeMetricResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

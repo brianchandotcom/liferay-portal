@@ -200,7 +200,7 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 	}
 
 	private Script _getScript(long[] cpInstanceIds) {
-		ScriptBuilder scriptBuilder = _scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		return scriptBuilder.idOrCode(
 			StringUtil.read(
@@ -254,8 +254,5 @@ public class FrequentPatternCommerceMLRecommendationManagerImpl
 
 	@Reference
 	private ScoreFunctions _scoreFunctions;
-
-	@Reference
-	private Scripts _scripts;
 
 }

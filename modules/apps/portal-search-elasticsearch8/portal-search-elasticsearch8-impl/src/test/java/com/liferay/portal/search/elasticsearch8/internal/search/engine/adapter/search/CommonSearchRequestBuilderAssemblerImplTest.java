@@ -578,7 +578,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	protected static ComplexQueryBuilderFactory
 		createComplexQueryBuilderFactory(Queries queries) {
 
-		return () -> new ComplexQueryBuilderImpl(queries, null);
+		return () -> new ComplexQueryBuilderImpl(queries);
 	}
 
 	private void _addPart(

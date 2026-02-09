@@ -3,23 +3,23 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.form.web.internal.product.navigation.control.menu;
+package com.liferay.sharing.web.internal.product.navigation.control.menu;
 
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.BaseInfoMessageProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
+import com.liferay.product.navigation.control.menu.constants.InfoMessageProductNavigationControlMenuEntryTypeConstants;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
+import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -31,14 +31,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class MaintenanceMessageNavigationControlMenuEntry
-	extends BaseJSPProductNavigationControlMenuEntry
-	implements ProductNavigationControlMenuEntry {
-
-	@Override
-	public String getIconJspPath() {
-		return "/admin/maintenance_message.jsp";
-	}
+public class MaintenanceInfoMessageProductNavigationControlMenuEntry
+	extends BaseInfoMessageProductNavigationControlMenuEntry {
 
 	@Override
 	public boolean isShow(HttpServletRequest httpServletRequest) {
@@ -52,23 +46,24 @@ public class MaintenanceMessageNavigationControlMenuEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		if (portletDisplay == null) {
-			return false;
+		if (Validator.isNull(portletDisplay.getPortletName())) {
+			return Objects.equals(
+				SharingPortletKeys.SHARED_ASSETS, themeDisplay.getPpid());
 		}
 
 		return Objects.equals(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
-			portletDisplay.getPortletName());
+			SharingPortletKeys.SHARED_ASSETS, portletDisplay.getPortletName());
 	}
 
 	@Override
-	protected ServletContext getServletContext() {
-		return _servletContext;
+	protected String getPortletName() {
+		return SharingPortletKeys.SHARED_ASSETS;
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.mapping.form.web)"
-	)
-	private ServletContext _servletContext;
+	@Override
+	protected String getType() {
+		return InfoMessageProductNavigationControlMenuEntryTypeConstants.
+			MAINTENANCE;
+	}
 
 }

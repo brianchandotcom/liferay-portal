@@ -9,7 +9,7 @@ import ClayModal from '@clayui/modal';
 import {openModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-export type DeletionActionType = 'delete-children';
+export type DeletionActionType = 'delete-children' | 'create-repeatable-group';
 
 type Data = {
 	body: string;
@@ -41,6 +41,17 @@ function getData(type: DeletionActionType): Data | undefined {
 			buttonLabel: Liferay.Language.get('delete'),
 			sessionKey: 'disableChildrenDeletionModal',
 			title: Liferay.Language.get('delete-fields'),
+		};
+	}
+
+	if (type === 'create-repeatable-group') {
+		return {
+			body: Liferay.Language.get(
+				'creating-a-repeatable-group-with-published-fields-will-permanently-delete-existing-field-data-after-publishing-the-structure'
+			),
+			buttonLabel: Liferay.Language.get('create-repeatable-group'),
+			sessionKey: 'disableRepeatableGroupCreationModal',
+			title: Liferay.Language.get('create-repeatable-group'),
 		};
 	}
 }

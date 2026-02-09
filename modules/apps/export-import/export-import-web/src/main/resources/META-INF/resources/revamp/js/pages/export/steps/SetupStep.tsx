@@ -3,8 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
-import {ArrayHelpers, FieldArray, FormikValues, useFormikContext} from 'formik';
+import {
+	ArrayHelpers,
+	FieldArray,
+	FormikContextType,
+	FormikErrors,
+	FormikTouched,
+	FormikValues,
+	useFormikContext,
+} from 'formik';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
@@ -13,7 +22,8 @@ import {FormikFieldText} from '../../../components/forms/FormikFields';
 import {mockPorletDataHandlerSections} from '../../../utils/mockPorletDataHandlerSections';
 
 export default function SetupStep() {
-	const {values}: {values: FormikValues} = useFormikContext();
+	const {errors, setFieldTouched, touched, values} =
+		useFormikContext<FormikValues>();
 
 	return (
 		<>
@@ -70,20 +80,34 @@ export default function SetupStep() {
 									key={name}
 									label={name}
 									name={`selectedSectionIds[${index}]`}
-									onChange={(checked) =>
+									onChange={(checked) => {
 										checked
 											? arrayHelper.push(name)
 											: arrayHelper.remove(
 													values.selectedSectionIds.indexOf(
 														name
 													)
-												)
-									}
+												);
+
+										setFieldTouched(
+											'selectedSectionIds',
+											true
+										);
+									}}
 								/>
 							)
 						);
 					}}
 				</FieldArray>
+
+				{touched.selectedSectionIds && errors.selectedSectionIds && (
+					<ClayAlert
+						displayType="danger"
+						title={Liferay.Language.get('error-colon')}
+					>
+						{errors.selectedSectionIds as string}
+					</ClayAlert>
+				)}
 			</ClayLayout.Sheet>
 		</>
 	);

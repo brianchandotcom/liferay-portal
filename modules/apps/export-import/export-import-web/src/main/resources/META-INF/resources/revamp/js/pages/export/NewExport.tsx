@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import {FormikValues} from 'formik';
 import React from 'react';
 
 import {Wizard, WizardStep} from '../../components/Wizard';
@@ -19,7 +20,22 @@ export function NewExport({backURL}: {backURL: string}) {
 				description={Liferay.Language.get(
 					'name-your-export-and-make-an-initial-data-selection-to-narrow-down-in-the-next-step'
 				)}
+				initialValues={{
+					filename: '',
+					selectedSectionIds: [],
+				}}
 				title={Liferay.Language.get('setup')}
+				validate={(values: FormikValues) => {
+					const errors: {[key: string]: string} = {};
+
+					if (!values?.selectedSectionIds?.length) {
+						errors.selectedSectionIds = Liferay.Language.get(
+							'please-select-at-least-one-entity-type-to-continue'
+						);
+					}
+
+					return errors;
+				}}
 			>
 				<SetupStep />
 			</WizardStep>

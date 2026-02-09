@@ -7,68 +7,69 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-const noop = () => {};
-
 export function FieldCheckbox({
-	checked = false,
+	checked,
 	description,
 	id,
 	label,
 	name,
-	onChange = noop,
+	onChange,
 	...restProps
 }: {
-	checked?: boolean;
+	checked: boolean;
 	description?: string;
 	id?: string;
 	label: string;
 	name: string;
-	onChange?: (checked: boolean) => void;
-} & Omit<React.ComponentProps<typeof ClayCheckbox>, 'checked'>) {
+	onChange: (checked: boolean) => void;
+} & React.ComponentProps<typeof ClayCheckbox>) {
 	const fieldId = id ?? name;
 	const labelId = `${fieldId}-label`;
 	const descriptionId = `${fieldId}-description`;
 
-	const toggle = () => onChange(!checked);
+	const handleChange = () => onChange(!checked);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === ' ' || event.key === 'Enter') {
-			event.preventDefault();
-			toggle();
-		}
+	const handleContainerClick = () => {
+		handleChange();
+	};
+
+	const stopPropagation = (event: React.SyntheticEvent) => {
+		event.stopPropagation();
 	};
 
 	return (
 		<div
-			aria-checked={checked}
-			aria-describedby={description ? descriptionId : undefined}
-			aria-labelledby={labelId}
 			className="border mb-2 p-3 rounded text-3"
-			onClick={toggle}
-			onKeyDown={handleKeyDown}
-			role="checkbox"
-			tabIndex={0}
+			onClick={handleContainerClick}
+			style={{cursor: 'pointer'}}
 		>
 			<ClayLayout.ContentRow padded>
 				<ClayLayout.ContentCol expand={false}>
-					<div className="pointer-events-none pt-1">
+					<div className="pt-1">
 						<ClayCheckbox
 							{...restProps}
+							aria-describedby={
+								description ? descriptionId : undefined
+							}
+							aria-labelledby={labelId}
 							checked={checked}
-							name={name}
-							tabIndex={-1}
+							id={fieldId}
+							onChange={handleChange}
+							onClick={stopPropagation}
 						/>
 					</div>
 				</ClayLayout.ContentCol>
 
 				<ClayLayout.ContentCol expand>
 					<ClayLayout.ContentSection>
-						<div
-							className="font-weight-semi-bold text-dark"
+						<label
+							className="font-weight-semi-bold mb-0 text-dark"
+							htmlFor={fieldId}
 							id={labelId}
+							onClick={stopPropagation}
 						>
 							{label}
-						</div>
+						</label>
 
 						{description && (
 							<div

@@ -84,4 +84,10 @@ public interface CommerceOrderConfiguration {
 	)
 	public boolean undoCartItemDeletionDisabled();
 
+	@Meta.AD(
+		deflt = "false", name = "user-notification-scope-enabled",
+		required = false
+	)
+	public boolean userNotificationScopeEnabled();
+
 }

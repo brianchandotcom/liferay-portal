@@ -388,19 +388,6 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			if (items.some(({uuid}) => publishedChildren.has(uuid))) {
-				showWarning({
-					text: Liferay.Language.get(
-						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'
-					),
-					title: Liferay.Language.get(
-						'repeatable-group-creation-not-allowed'
-					),
-				});
-
-				return state;
-			}
-
 			if (reasons.includes('causes-invalid-group')) {
 				showWarning({
 					text: Liferay.Language.get(

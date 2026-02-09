@@ -37,6 +37,7 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import confirmDeletionAction from '../utils/confirmDeletionAction';
+import {createRepeatableGroup} from '../utils/createRepeatableGroup';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
@@ -632,8 +633,9 @@ function getItemActions({
 		actions.push({
 			label: Liferay.Language.get('create-repeatable-group'),
 			onClick: () =>
-				dispatch({
-					type: 'add-repeatable-group',
+				createRepeatableGroup({
+					dispatch,
+					publishedChildren,
 					uuids: [item.uuid],
 				}),
 			symbolLeft: 'repeat',

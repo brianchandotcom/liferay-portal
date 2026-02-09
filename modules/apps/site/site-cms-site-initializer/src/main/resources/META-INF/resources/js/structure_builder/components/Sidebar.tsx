@@ -14,6 +14,7 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
+import {createRepeatableGroup} from '../utils/createRepeatableGroup';
 import {deleteSelection} from '../utils/deleteSelection';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
@@ -81,8 +82,9 @@ function Toolbar({
 					{
 						label: Liferay.Language.get('create-repeatable-group'),
 						onClick: () =>
-							dispatch({
-								type: 'add-repeatable-group',
+							createRepeatableGroup({
+								dispatch,
+								publishedChildren,
 								uuids: selection,
 							}),
 						symbolLeft: 'repeat',

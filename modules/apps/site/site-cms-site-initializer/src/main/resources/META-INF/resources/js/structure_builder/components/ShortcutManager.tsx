@@ -9,6 +9,7 @@ import {useEffect, useMemo} from 'react';
 import {useCache, useStaleCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
+import {createRepeatableGroup} from '../utils/createRepeatableGroup';
 import {deleteSelection} from '../utils/deleteSelection';
 import findChild from '../utils/findChild';
 import isReferenced from '../utils/isReferenced';
@@ -119,7 +120,11 @@ export default function ShortcutManager() {
 		map.set('Ctrl+G', {
 			enabled: () => Boolean(selection.length),
 			handler: () =>
-				dispatch({type: 'add-repeatable-group', uuids: selection}),
+				createRepeatableGroup({
+					dispatch,
+					publishedChildren,
+					uuids: selection,
+				}),
 		});
 
 		// Ungroup repeatable group

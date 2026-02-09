@@ -39,7 +39,7 @@ test.describe('UI Infrastructure WidgetPage Use Cases', () => {
 		});
 	}
 
-	async function assertPortletColumn({
+	async function expectPortletInColumn({
 		columnNumber,
 		page,
 		portletName,
@@ -94,7 +94,7 @@ test.describe('UI Infrastructure WidgetPage Use Cases', () => {
 		await test.step('Add portlet to the first column in the page layout', async () => {
 			await widgetPagePage.addPortlet(CLAY_PORTLET_NAME);
 
-			await assertPortletColumn({
+			await expectPortletInColumn({
 				columnNumber: 1,
 				page,
 				portletName: CLAY_PORTLET_NAME,
@@ -111,7 +111,7 @@ test.describe('UI Infrastructure WidgetPage Use Cases', () => {
 				topperSelector: '.portlet .portlet-topper',
 			});
 
-			await assertPortletColumn({
+			await expectPortletInColumn({
 				columnNumber: 2,
 				page,
 				portletName: CLAY_PORTLET_NAME,
@@ -174,7 +174,7 @@ test.describe('UI Infrastructure WidgetPage Use Cases', () => {
 				MESSAGE_BOARDS_PORTLET_NAME,
 				DOCUMENTS_AND_MEDIA_PORTLET_NAME,
 			].entries()) {
-				await assertPortletColumn({
+				await expectPortletInColumn({
 					columnNumber: index + 1,
 					page,
 					portletName: portlet,

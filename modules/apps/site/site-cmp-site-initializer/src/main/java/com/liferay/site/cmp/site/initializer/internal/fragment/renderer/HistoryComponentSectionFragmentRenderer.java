@@ -7,7 +7,6 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -15,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,7 +37,8 @@ public class HistoryComponentSectionFragmentRenderer
 
 	@Override
 	protected String getComponentName(HttpServletRequest httpServletRequest) {
-		ObjectEntry objectEntry = _getObjectEntry(httpServletRequest);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
 		if (objectEntry == null) {
 			return null;
@@ -71,7 +72,8 @@ public class HistoryComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		ObjectEntry objectEntry = _getObjectEntry(httpServletRequest);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
 		if (objectEntry == null) {
 			return null;
@@ -90,17 +92,6 @@ public class HistoryComponentSectionFragmentRenderer
 					"?fields=auditEvents&nestedFields=auditEvents");
 			}
 		).build();
-	}
-
-	private ObjectEntry _getObjectEntry(HttpServletRequest httpServletRequest) {
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
-		if (!(object instanceof ObjectEntry)) {
-			return null;
-		}
-
-		return (ObjectEntry)object;
 	}
 
 	@Reference

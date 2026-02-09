@@ -6,13 +6,13 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.display.context.ViewAssigneeSectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -35,15 +35,15 @@ public class ViewAssigneeJSPSectionFragmentRenderer
 	protected Object getDisplayContext(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
-		if (!(object instanceof ObjectEntry)) {
+		if (objectEntry == null) {
 			return null;
 		}
 
 		return new ViewAssigneeSectionDisplayContext(
-			_language, (ObjectEntry)object,
+			_language, objectEntry,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}

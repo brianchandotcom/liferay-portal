@@ -861,6 +861,28 @@ public class ObjectEntryLocalServiceTest {
 
 		_assertCount(8);
 
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", StringPool.BLANK
+			).put(
+				"emailAddressRequired", "job@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertCount(9);
+
+		_addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddress", StringPool.DOUBLE_SPACE
+			).put(
+				"emailAddressRequired", "john@liferay.com"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		_assertCount(10);
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		Group group1 = GroupTestUtil.addGroup();
@@ -1031,7 +1053,7 @@ public class ObjectEntryLocalServiceTest {
 				).getFileEntryId()
 			).build());
 
-		_assertCount(9);
+		_assertCount(11);
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.ListTypeEntry.class,

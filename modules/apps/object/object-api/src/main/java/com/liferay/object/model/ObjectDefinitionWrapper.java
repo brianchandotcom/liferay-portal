@@ -1061,6 +1061,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public boolean isCMP() {
+		return model.isCMP();
+	}
+
+	@Override
 	public boolean isCMS() {
 		return model.isCMS();
 	}

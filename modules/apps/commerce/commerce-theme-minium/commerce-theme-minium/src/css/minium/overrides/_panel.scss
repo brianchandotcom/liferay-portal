@@ -64,7 +64,7 @@
 		}
 
 		.custom-control-label-text {
-			color: #7f848d;
+			color: $color-fg;
 			font-size: 13px;
 			font-weight: 400;
 			line-height: 1.6;
@@ -82,7 +82,7 @@
 		}
 
 		.term-count {
-			color: #7f848d;
+			color: $color-fg;
 		}
 	}
 }

@@ -6,16 +6,22 @@
 package com.liferay.commerce.internal.object.deployer;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.commerce.constants.CommerceDefinitionTermConstants;
 import com.liferay.commerce.currency.model.CommerceMoneyFactory;
 import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderAccountNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderAddressNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderItemsNotificationTermEvaluator;
+import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderNoteRecipientEmailsNotificationTermEvaluator;
+import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderNoteRecipientIdsNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.CommerceOrderPaymentMethodNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.evaluator.SalesAgentNotificationTermEvaluator;
 import com.liferay.commerce.internal.notification.term.provider.CommerceOrderAccountNotificationTermProvider;
 import com.liferay.commerce.internal.notification.term.provider.CommerceOrderAddressNotificationTermProvider;
 import com.liferay.commerce.internal.notification.term.provider.CommerceOrderItemsNotificationTermProvider;
+import com.liferay.commerce.internal.notification.term.provider.CommerceOrderNoteRecipientEmailsNotificationTermProvider;
+import com.liferay.commerce.internal.notification.term.provider.CommerceOrderNoteRecipientIdsNotificationTermProvider;
 import com.liferay.commerce.internal.notification.term.provider.CommerceOrderPaymentMethodNotificationTermProvider;
 import com.liferay.commerce.internal.notification.term.provider.SalesAgentNotificationTermProvider;
 import com.liferay.commerce.internal.notification.type.ObjectDefinitionCommerceNotificationType;
@@ -30,6 +36,7 @@ import com.liferay.commerce.product.helper.CPInstanceHelper;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderNoteLocalService;
 import com.liferay.commerce.util.CommerceOrderItemQuantityFormatter;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.provider.NotificationTermProvider;
@@ -152,6 +159,44 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					).build()));
 		}
 
+		if (StringUtil.equalsIgnoreCase(
+				"CommerceOrderNote", objectDefinition.getShortName())) {
+
+			return Arrays.asList(
+				_bundleContext.registerService(
+					NotificationTermEvaluator.class,
+					new CommerceOrderNoteRecipientEmailsNotificationTermEvaluator(
+						_accountEntryUserRelLocalService,
+						_accountRoleLocalService, _commerceOrderLocalService,
+						_commerceOrderNoteLocalService, objectDefinition,
+						_roleLocalService, _userLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()),
+				_bundleContext.registerService(
+					NotificationTermProvider.class,
+					new CommerceOrderNoteRecipientEmailsNotificationTermProvider(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()),
+				_bundleContext.registerService(
+					NotificationTermEvaluator.class,
+					new CommerceOrderNoteRecipientIdsNotificationTermEvaluator(
+						_accountEntryUserRelLocalService,
+						_accountRoleLocalService, _commerceOrderLocalService,
+						_commerceOrderNoteLocalService, objectDefinition,
+						_roleLocalService, _userLocalService),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()),
+				_bundleContext.registerService(
+					NotificationTermProvider.class,
+					new CommerceOrderNoteRecipientIdsNotificationTermProvider(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"class.name", objectDefinition.getClassName()
+					).build()));
+		}
+
 		if (objectDefinition.isUnmodifiableSystemObject() ||
 			Objects.equals(
 				objectDefinition.getScope(),
@@ -238,6 +283,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private volatile ModelResourcePermission<AccountEntry>
 		_accountEntryModelResourcePermission;
 
+	@Reference
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Reference
+	private AccountRoleLocalService _accountRoleLocalService;
+
 	private BundleContext _bundleContext;
 
 	@Reference
@@ -252,6 +303,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommerceOrderNoteLocalService _commerceOrderNoteLocalService;
 
 	@Reference
 	private CommerceOrderPriceCalculation _commerceOrderPriceCalculation;

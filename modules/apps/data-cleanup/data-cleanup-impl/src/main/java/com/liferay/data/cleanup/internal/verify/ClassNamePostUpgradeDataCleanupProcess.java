@@ -112,26 +112,36 @@ public class ClassNamePostUpgradeDataCleanupProcess
 					}
 				}
 
-				if (models.contains(value)) {
-					return;
-				}
+				boolean missingClass = false;
 
-				Class<?> clazz = null;
+				for (String currentValue : value.split(StringPool.UNDERLINE)) {
+					if (models.contains(currentValue)) {
+						continue;
+					}
 
-				for (Bundle bundle : bundleContext.getBundles()) {
-					try {
-						clazz = bundle.loadClass(value);
+					Class<?> clazz = null;
+
+					for (Bundle bundle : bundleContext.getBundles()) {
+						try {
+							clazz = bundle.loadClass(currentValue);
+
+							break;
+						}
+						catch (ClassNotFoundException classNotFoundException) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(classNotFoundException);
+							}
+						}
+					}
+
+					if (clazz == null) {
+						missingClass = true;
 
 						break;
 					}
-					catch (ClassNotFoundException classNotFoundException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(classNotFoundException);
-						}
-					}
 				}
 
-				if (clazz != null) {
+				if (!missingClass) {
 					return;
 				}
 

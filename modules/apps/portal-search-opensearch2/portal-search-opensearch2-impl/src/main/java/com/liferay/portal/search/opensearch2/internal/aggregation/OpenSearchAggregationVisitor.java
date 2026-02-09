@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.ValueType;
 import com.liferay.portal.search.aggregation.bucket.ChildrenAggregation;
@@ -106,29 +105,16 @@ import org.opensearch.client.opensearch.core.search.SourceConfig;
 import org.opensearch.client.opensearch.core.search.SourceConfigBuilders;
 import org.opensearch.client.opensearch.core.search.SourceFilter;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = AggregationTranslator.class
-)
-public class OpenSearchAggregationTranslator
-	implements AggregationTranslator
-		<org.opensearch.client.opensearch._types.aggregations.Aggregation>,
-			   AggregationVisitor
-				   <org.opensearch.client.opensearch._types.aggregations.
-					   Aggregation> {
+public class OpenSearchAggregationVisitor
+	implements AggregationVisitor
+		<org.opensearch.client.opensearch._types.aggregations.Aggregation> {
 
-	@Override
-	public org.opensearch.client.opensearch._types.aggregations.Aggregation
-		translate(Aggregation aggregation) {
-
-		return aggregation.accept(this);
-	}
+	public static final OpenSearchAggregationVisitor INSTANCE =
+		new OpenSearchAggregationVisitor();
 
 	@Override
 	public org.opensearch.client.opensearch._types.aggregations.Aggregation
@@ -1587,6 +1573,9 @@ public class OpenSearchAggregationTranslator
 
 	protected final ScriptTranslator scriptTranslator = new ScriptTranslator();
 
+	private OpenSearchAggregationVisitor() {
+	}
+
 	private AggregationRange _createAggregationRange(
 		String from, String key, String to) {
 
@@ -1656,7 +1645,7 @@ public class OpenSearchAggregationTranslator
 				aggregation.getChildrenAggregations()) {
 
 			containerBuilder.aggregations(
-				childAggregation.getName(), translate(childAggregation));
+				childAggregation.getName(), childAggregation.accept(this));
 		}
 
 		for (PipelineAggregation pipelineAggregation :

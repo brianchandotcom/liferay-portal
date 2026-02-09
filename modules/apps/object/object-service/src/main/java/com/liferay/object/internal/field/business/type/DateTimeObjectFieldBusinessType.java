@@ -50,7 +50,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = ObjectFieldBusinessType.class
 )
 public class DateTimeObjectFieldBusinessType
-	extends BaseObjectFieldBusinessType {
+	extends BaseDateObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {

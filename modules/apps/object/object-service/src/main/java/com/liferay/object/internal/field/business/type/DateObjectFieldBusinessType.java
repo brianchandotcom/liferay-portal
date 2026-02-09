@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "object.field.business.type.key=" + ObjectFieldConstants.BUSINESS_TYPE_DATE,
 	service = ObjectFieldBusinessType.class
 )
-public class DateObjectFieldBusinessType extends BaseObjectFieldBusinessType {
+public class DateObjectFieldBusinessType
+	extends BaseDateObjectFieldBusinessType {
 
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {

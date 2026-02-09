@@ -5,21 +5,36 @@
 
 package com.liferay.portal.search.script;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface ScriptFieldBuilder {
+public class ScriptFieldBuilder {
 
-	public ScriptField build();
+	public ScriptField build() {
+		return new ScriptField(_field, _ignoreFailure, _script);
+	}
 
-	public ScriptFieldBuilder field(String field);
+	public ScriptFieldBuilder field(String field) {
+		_field = field;
 
-	public ScriptFieldBuilder ignoreFailure(boolean ignoreFailure);
+		return this;
+	}
 
-	public ScriptFieldBuilder script(Script script);
+	public ScriptFieldBuilder ignoreFailure(boolean ignoreFailure) {
+		_ignoreFailure = ignoreFailure;
+
+		return this;
+	}
+
+	public ScriptFieldBuilder script(Script script) {
+		_script = script;
+
+		return this;
+	}
+
+	private String _field;
+	private boolean _ignoreFailure;
+	private Script _script;
 
 }

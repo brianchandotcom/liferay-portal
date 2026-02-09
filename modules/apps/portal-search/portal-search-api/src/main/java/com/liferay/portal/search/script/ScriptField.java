@@ -24,41 +24,6 @@ public class ScriptField {
 		return _ignoreFailure;
 	}
 
-	public static final class ScriptFieldBuilderImpl
-		implements ScriptFieldBuilder {
-
-		@Override
-		public ScriptField build() {
-			return new ScriptField(_field, _ignoreFailure, _script);
-		}
-
-		@Override
-		public ScriptFieldBuilder field(String field) {
-			_field = field;
-
-			return this;
-		}
-
-		@Override
-		public ScriptFieldBuilder ignoreFailure(boolean ignoreFailure) {
-			_ignoreFailure = ignoreFailure;
-
-			return this;
-		}
-
-		@Override
-		public ScriptFieldBuilder script(Script script) {
-			_script = script;
-
-			return this;
-		}
-
-		private String _field;
-		private boolean _ignoreFailure;
-		private Script _script;
-
-	}
-
 	protected ScriptField(String field, boolean ignoreFailure, Script script) {
 		_field = field;
 		_ignoreFailure = ignoreFailure;

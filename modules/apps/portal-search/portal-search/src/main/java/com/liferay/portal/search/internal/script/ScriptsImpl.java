@@ -28,7 +28,7 @@ public class ScriptsImpl implements Scripts {
 
 	@Override
 	public ScriptFieldBuilder fieldBuilder() {
-		return new ScriptField.ScriptFieldBuilderImpl();
+		return new ScriptFieldBuilder();
 	}
 
 	@Override

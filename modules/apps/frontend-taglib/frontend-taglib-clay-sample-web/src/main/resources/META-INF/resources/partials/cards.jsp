@@ -12,9 +12,9 @@
 <%
 ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 
-java.util.Map<String, String> checkboxPropsMap = new java.util.HashMap<>();
-
-checkboxPropsMap.put("aria-label", "select card");
+Map<String, Object> checkboxProps = HashMapBuilder.<String, Object>put(
+	"aria-label", "Select Card"
+).build();
 %>
 
 <div class="h4">Image Cards</div>
@@ -222,7 +222,7 @@ checkboxPropsMap.put("aria-label", "select card");
 	>
 		<clay:image-card
 			actionDropdownItems="<%= claySampleImageCard.getActionDropdownItems() %>"
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			icon="camera"
 			labels="<%= claySampleImageCard.getLabels() %>"
 			selectable="<%= true %>"
@@ -329,7 +329,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 	>
 		<clay:file-card
 			actionDropdownItems="<%= claySampleFileCard.getActionDropdownItems() %>"
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			icon="list"
 			labels="<%= claySampleFileCard.getLabels() %>"
 			selectable="<%= true %>"
@@ -358,7 +358,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		%>
 
 		<clay:file-card
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			fileCard="<%= claySampleFileCard %>"
 		/>
 	</clay:col>
@@ -379,7 +379,7 @@ ClaySampleFileCard claySampleFileCard = new ClaySampleFileCard();
 		%>
 
 		<clay:file-card
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			fileCard="<%= claySampleFileCard %>"
 		/>
 	</clay:col>
@@ -543,7 +543,7 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 		%>
 
 		<clay:user-card
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			userCard="<%= claySampleUserCard %>"
 		/>
 	</clay:col>
@@ -560,7 +560,7 @@ ClaySampleUserCard claySampleUserCard = new ClaySampleUserCard();
 		%>
 
 		<clay:user-card
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			userCard="<%= claySampleUserCard %>"
 		/>
 	</clay:col>
@@ -662,7 +662,7 @@ ClaySampleVerticalCard claySampleVerticalCard = new ClaySampleVerticalCard();
 	>
 		<clay:vertical-card
 			actionDropdownItems="<%= claySampleVerticalCard.getActionDropdownItems() %>"
-			checkboxProps="<%= checkboxPropsMap %>"
+			checkboxProps="<%= checkboxProps %>"
 			icon="camera"
 			labels="<%= claySampleVerticalCard.getLabels() %>"
 			selectable="<%= true %>"

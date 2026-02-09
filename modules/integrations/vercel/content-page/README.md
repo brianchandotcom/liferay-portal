@@ -4,13 +4,13 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 
 ## Prerequisites
 
--   Git
--   Node.js 22+
--   Liferay Portal 2025.Q4+
+- Git
+- Node.js 22+
+- Liferay Portal 2025.Q4+
 
 ## Set Up Your Template
 
-1. Run this command: 
+1. Run this command:
 
    ```bash
    curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- content-page
@@ -41,18 +41,18 @@ Liferay provides some predefined content structures, but you can create your own
 
 1. Fill in these fields:
 
-| Name              |   Type    | Localizable |
+| Name | Type | Localizable |
 | ----------------- | :-------: | ----------: |
-| Availability      |   Text    |          No |
-| Content           |   Text    |         Yes |
-| Image             |  Upload   |          No |
-| Location Map Url  |   Text    |          No |
-| Location Name     |   Text    |          No |
-| Main Event        |  Boolean  |           - |
-| Registration Link |   Text    |          No |
-| Summary           | Long Text |         Yes |
-| Title             |   Text    |         Yes |
-| Virtual           |  Boolean  |           - |
+| Availability | Text | No |
+| Content | Text | Yes |
+| Image | Upload | No |
+| Location Map Url | Text | No |
+| Location Name | Text | No |
+| Main Event | Boolean | - |
+| Registration Link | Text | No |
+| Summary | Long Text | Yes |
+| Title | Text | Yes |
+| Virtual | Boolean | - |
 
 1. Click *Publish*.
 

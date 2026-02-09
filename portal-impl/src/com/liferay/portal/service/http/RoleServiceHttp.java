@@ -628,8 +628,7 @@ public class RoleServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portal.kernel.model.Role> getRoles(
-			HttpPrincipal httpPrincipal, long companyId, int[] types)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		HttpPrincipal httpPrincipal, long companyId, int[] types) {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -644,13 +643,6 @@ public class RoleServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
-				if (exception instanceof
-						com.liferay.portal.kernel.exception.PortalException) {
-
-					throw (com.liferay.portal.kernel.exception.PortalException)
-						exception;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}

@@ -201,9 +201,7 @@ public class RoleServiceWrapper
 	}
 
 	@Override
-	public java.util.List<Role> getRoles(long companyId, int[] types)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public java.util.List<Role> getRoles(long companyId, int[] types) {
 		return _roleService.getRoles(companyId, types);
 	}
 

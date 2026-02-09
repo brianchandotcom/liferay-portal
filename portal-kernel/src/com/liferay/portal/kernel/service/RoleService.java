@@ -155,8 +155,7 @@ public interface RoleService extends BaseService {
 	public List<Role> getRoles(int type, String subtype) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Role> getRoles(long companyId, int[] types)
-		throws PortalException;
+	public List<Role> getRoles(long companyId, int[] types);
 
 	/**
 	 * Returns all the user's roles within the user group.

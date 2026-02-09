@@ -395,7 +395,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				parentLayouts = getMissingParentLayouts(layout, targetGroupId);
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPS-199086")) {
+			if (FeatureFlagManagerUtil.isEnabled("LPS-199086") &&
+				(!FeatureFlagManagerUtil.isEnabled("LPD-35443") ||
+				 !FeatureFlagManagerUtil.isEnabled("LPD-35914"))) {
+
 				try {
 					StagingConfiguration stagingConfiguration =
 						_configurationProvider.getCompanyConfiguration(

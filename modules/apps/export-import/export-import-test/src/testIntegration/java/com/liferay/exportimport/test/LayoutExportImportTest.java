@@ -734,6 +734,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@FeatureFlag("LPS-199086")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = false, value = "LPD-35443"),
+			@FeatureFlag(enable = false, value = "LPD-35914")
+		}
+	)
 	@Test
 	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildLayoutHasParentLayout()
 		throws Exception {
@@ -797,6 +803,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@FeatureFlag("LPS-199086")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = false, value = "LPD-35443"),
+			@FeatureFlag(enable = false, value = "LPD-35914")
+		}
+	)
 	@Test
 	@TestInfo("LPD-6808: AC9-AC10")
 	public void testLayoutExportImportWithModifiedContentAndExistingParentAndChildLayoutsOnImportSide()
@@ -879,6 +891,12 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@FeatureFlag("LPS-199086")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(enable = false, value = "LPD-35443"),
+			@FeatureFlag(enable = false, value = "LPD-35914")
+		}
+	)
 	@Test
 	@TestInfo("LPD-6808: AC9-AC11")
 	public void testLayoutExportImportWithModifiedContentAndNonexistentParentAndChildLayoutsOnImportSide()
@@ -922,6 +940,57 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 				childLayout.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedChildLayout);
+	}
+
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+	)
+	@Test
+	@TestInfo(
+		"LPD-6808: Verify parents are not published when promote content FFs are enabled even if publishParentLayoutsByDefault is true"
+	)
+	public void testLayoutExportImportWithPromoteContentFeatureFlagsEnabledParentsNotPublishedEvenWithConfigurationEnabled()
+		throws Exception {
+
+		_configurationProvider.saveCompanyConfiguration(
+			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
+			HashMapDictionaryBuilder.<String, Object>put(
+				"publishParentLayoutsByDefault", true
+			).build());
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(group);
+
+		Layout childLayout = LayoutTestUtil.addTypePortletLayout(
+			group, layout.getPlid());
+
+		Map<Long, Boolean> selectedLayouts = HashMapBuilder.put(
+			LayoutConstants.DEFAULT_PLID, true
+		).put(
+			childLayout.getPlid(), false
+		).build();
+
+		Map<String, String[]> exportParameterMap = getExportParameterMap();
+
+		exportParameterMap.put(Constants.CMD, new String[] {Constants.EXPORT});
+
+		exportLayouts(
+			ExportImportHelperUtil.getLayoutIds(selectedLayouts),
+			exportParameterMap);
+
+		importLayouts(exportParameterMap, false);
+
+		Layout importedParentLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNull(importedParentLayout);
+
+		Layout importedChildLayout =
+			LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				childLayout.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotNull(importedChildLayout);
+		Assert.assertEquals(0, importedChildLayout.getParentLayoutId());
 	}
 
 	@FeatureFlag("LPS-199086")

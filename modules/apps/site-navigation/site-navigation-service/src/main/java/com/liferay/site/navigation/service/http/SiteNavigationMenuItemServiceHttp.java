@@ -259,8 +259,9 @@ public class SiteNavigationMenuItemServiceHttp {
 	}
 
 	public static java.util.List<Long> getParentSiteNavigationMenuItemIds(
-		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		String typeSettingsKeyword) {
+			HttpPrincipal httpPrincipal, long siteNavigationMenuId,
+			String typeSettingsKeyword)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -277,6 +278,13 @@ public class SiteNavigationMenuItemServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -338,8 +346,9 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static java.util.List
 		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
-			getSiteNavigationMenuItems(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuId) {
+				getSiteNavigationMenuItems(
+					HttpPrincipal httpPrincipal, long siteNavigationMenuId)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -356,6 +365,13 @@ public class SiteNavigationMenuItemServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -422,11 +438,12 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static java.util.List
 		<com.liferay.site.navigation.model.SiteNavigationMenuItem>
-			getSiteNavigationMenuItems(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-				com.liferay.portal.kernel.util.OrderByComparator
-					<com.liferay.site.navigation.model.SiteNavigationMenuItem>
-						orderByComparator) {
+				getSiteNavigationMenuItems(
+					HttpPrincipal httpPrincipal, long siteNavigationMenuId,
+					com.liferay.portal.kernel.util.OrderByComparator
+						<com.liferay.site.navigation.model.
+							SiteNavigationMenuItem> orderByComparator)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
@@ -443,6 +460,13 @@ public class SiteNavigationMenuItemServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(
 					exception);
 			}
@@ -462,7 +486,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
 			updateSiteNavigationMenuItem(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuId,
+				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId,
 				long parentSiteNavigationMenuItemId, int order)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -473,8 +497,8 @@ public class SiteNavigationMenuItemServiceHttp {
 				_updateSiteNavigationMenuItemParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteNavigationMenuId, parentSiteNavigationMenuItemId,
-				order);
+				methodKey, siteNavigationMenuItemId,
+				parentSiteNavigationMenuItemId, order);
 
 			Object returnObj = null;
 
@@ -507,7 +531,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem
 			updateSiteNavigationMenuItem(
-				HttpPrincipal httpPrincipal, long siteNavigationMenuId,
+				HttpPrincipal httpPrincipal, long siteNavigationMenuItemId,
 				String typeSettings,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -519,7 +543,8 @@ public class SiteNavigationMenuItemServiceHttp {
 				_updateSiteNavigationMenuItemParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, siteNavigationMenuId, typeSettings, serviceContext);
+				methodKey, siteNavigationMenuItemId, typeSettings,
+				serviceContext);
 
 			Object returnObj = null;
 

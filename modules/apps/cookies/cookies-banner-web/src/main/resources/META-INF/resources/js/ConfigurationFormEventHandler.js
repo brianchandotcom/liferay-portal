@@ -28,7 +28,10 @@ export default function ({namespace}) {
 					consentRenewalPeriod.removeAttribute('disabled');
 					consentRenewalPeriod.required = true;
 					explicitConsentMode.removeAttribute('disabled');
-					storeConsent.removeAttribute('disabled');
+
+					if (Liferay.FeatureFlags['LPD-75032']) {
+						storeConsent.removeAttribute('disabled');
+					}
 				}
 				else {
 					consentRenewalPeriod.required = false;
@@ -36,8 +39,11 @@ export default function ({namespace}) {
 					consentRenewalPeriod.value = 12;
 					explicitConsentMode.checked = true;
 					explicitConsentMode.setAttribute('disabled', '');
-					storeConsent.checked = false;
-					storeConsent.setAttribute('disabled', '');
+
+					if (Liferay.FeatureFlags['LPD-75032']) {
+						storeConsent.checked = false;
+						storeConsent.setAttribute('disabled', '');
+					}
 				}
 			}
 		}

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -13,9 +14,12 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 import {
 	clearConsentCookies,
 	resetConsentManagerConfiguration,
-} from './utils/consentManagerAfterEach';
+} from './utils/consentManagerAfterEach'; //
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-75032': {enabled: true},
+	}),
 	journalPagesTest,
 	loginTest(),
 	systemSettingsPageTest

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -13,7 +14,13 @@ import {
 	resetConsentManagerConfiguration,
 } from './utils/consentManagerAfterEach';
 
-export const test = mergeTests(loginTest(), systemSettingsPageTest);
+export const test = mergeTests(
+	loginTest(),
+	featureFlagsTest({
+		'LPD-75032': {enabled: true},
+	}),
+	systemSettingsPageTest
+);
 
 test.afterEach(async ({systemSettingsPage}) => {
 	await test.step('Reset Consent Manager Configuration', async () => {

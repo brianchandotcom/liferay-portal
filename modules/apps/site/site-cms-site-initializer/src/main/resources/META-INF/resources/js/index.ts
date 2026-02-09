@@ -11,13 +11,14 @@ export {default as FieldPicker} from './common/components/forms/FieldPicker';
 export {default as FieldText} from './common/components/forms/FieldText';
 export {default as FieldWrapper} from './common/components/forms/FieldWrapper';
 export {required, validate} from './common/components/forms/validations';
-export {default as ApiHelper} from './common/services/ApiHelper';
+export {default as ApiHelper, RequestResult} from './common/services/ApiHelper';
 export {IAssetObjectEntry} from './common/types/AssetType';
-export {type Space} from './common/types/Space';
 export {
 	IBulkActionFDSData,
 	IBulkActionTaskStarterDTO,
 } from './common/types/BulkActionTask';
+export {ObjectField, StateFlowValue} from './common/types/ObjectDefinition';
+export {type Space} from './common/types/Space';
 export {
 	displayCreateSuccessToast,
 	displayCreateTaskErrorToast,

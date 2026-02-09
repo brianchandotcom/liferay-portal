@@ -6,10 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col} from '@clayui/layout';
-import {
-	ObjectField,
-	StateFlowValue,
-} from '@liferay/site-cms-site-initializer/src/main/resources/META-INF/resources/js/common/types/ObjectDefinition';
+import {ObjectField, StateFlowValue} from '@liferay/site-cms-site-initializer';
 import React, {useContext, useEffect, useState} from 'react';
 import {useDrop} from 'react-dnd';
 

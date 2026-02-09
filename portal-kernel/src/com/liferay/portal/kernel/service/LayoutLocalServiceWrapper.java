@@ -1515,11 +1515,12 @@ public class LayoutLocalServiceWrapper
 	@Override
 	public Layout getOrAddEmptyLayout(
 			String externalReferenceCode, long userId, long groupId,
-			ServiceContext serviceContext)
+			boolean privateLayout, ServiceContext serviceContext)
 		throws Exception {
 
 		return _layoutLocalService.getOrAddEmptyLayout(
-			externalReferenceCode, userId, groupId, serviceContext);
+			externalReferenceCode, userId, groupId, privateLayout,
+			serviceContext);
 	}
 
 	/**

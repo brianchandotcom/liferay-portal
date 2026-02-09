@@ -252,21 +252,23 @@ public class VerticalNavTag extends BaseContainerTag {
 	private void _renderIcons(List<IconItem> iconItems, String cssClass)
 		throws Exception {
 
-		if (ListUtil.isNotEmpty(iconItems)) {
-			for (IconItem iconItem : iconItems) {
-				String symbol = (String)iconItem.get("symbol");
+		if (ListUtil.isEmpty(iconItems)) {
+			return;
+		}
 
-				if (Validator.isNull(symbol)) {
-					continue;
-				}
+		for (IconItem iconItem : iconItems) {
+			String symbol = (String)iconItem.get("symbol");
 
-				IconTag iconTag = new IconTag();
-
-				iconTag.setCssClass(cssClass);
-				iconTag.setSymbol(symbol);
-
-				iconTag.doTag(pageContext);
+			if (Validator.isNull(symbol)) {
+				continue;
 			}
+
+			IconTag iconTag = new IconTag();
+
+			iconTag.setCssClass(cssClass);
+			iconTag.setSymbol(symbol);
+
+			iconTag.doTag(pageContext);
 		}
 	}
 

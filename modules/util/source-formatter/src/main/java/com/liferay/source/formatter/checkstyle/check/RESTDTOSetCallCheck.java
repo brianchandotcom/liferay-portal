@@ -237,7 +237,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		JavaClass javaClass = null;
 
 		try {
-			javaClass = _getJavaClass(absolutePath, fullyQualifiedTypeName);
+			javaClass = JavaClassParser.parseJavaClass(
+				SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
 		}
 		catch (IOException | ParseException exception) {
 			if (_log.isDebugEnabled()) {
@@ -288,22 +289,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		return _bundleSymbolicNamesMap;
-	}
-
-	private JavaClass _getJavaClass(
-			String absolutePath, String fullyQualifiedTypeName)
-		throws IOException, ParseException {
-
-		File javaFile = JavaSourceUtil.getJavaFile(
-			fullyQualifiedTypeName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
-
-		if (javaFile == null) {
-			return null;
-		}
-
-		return JavaClassParser.parseJavaClass(
-			SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
 	}
 
 	private synchronized String _getRootDirName(String absolutePath) {

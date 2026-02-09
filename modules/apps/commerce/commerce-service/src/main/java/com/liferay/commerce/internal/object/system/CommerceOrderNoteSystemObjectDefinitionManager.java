@@ -9,6 +9,7 @@ import com.liferay.commerce.constants.CommerceOrderActionKeys;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.model.CommerceOrderNoteTable;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderNoteLocalService;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.OrderNote;
 import com.liferay.headless.commerce.admin.order.resource.v1_0.OrderNoteResource;
@@ -16,6 +17,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.system.BaseSystemObjectDefinitionManager;
 import com.liferay.object.system.JaxRsApplicationDescriptor;
@@ -23,6 +25,7 @@ import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
@@ -184,6 +187,32 @@ public class CommerceOrderNoteSystemObjectDefinitionManager
 	}
 
 	@Override
+	public Map<String, Object> getVariables(
+		String contentType, ObjectDefinition objectDefinition,
+		boolean oldValues, JSONObject payloadJSONObject) {
+
+		Map<String, Object> variables = super.getVariables(
+			contentType, objectDefinition, oldValues, payloadJSONObject);
+
+		if (variables.containsKey("commerceOrderId")) {
+			CommerceOrder commerceOrder =
+				_commerceOrderLocalService.fetchCommerceOrder(
+					GetterUtil.getLong(variables.get("commerceOrderId")));
+
+			if (commerceOrder == null) {
+				return variables;
+			}
+
+			variables.put(
+				"orderExternalReferenceCode",
+				commerceOrder.getExternalReferenceCode());
+			variables.put("orderId", commerceOrder.getCommerceOrderId());
+		}
+
+		return variables;
+	}
+
+	@Override
 	public int getVersion() {
 		return 1;
 	}
@@ -260,6 +289,9 @@ public class CommerceOrderNoteSystemObjectDefinitionManager
 			}
 		};
 	}
+
+	@Reference
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.model.CommerceOrder)"

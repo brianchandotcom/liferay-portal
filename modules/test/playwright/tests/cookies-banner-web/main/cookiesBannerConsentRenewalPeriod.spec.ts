@@ -137,6 +137,24 @@ test(
 );
 
 test(
+	'Verify Consent Manager can be saved with Enabled set to false',
+	{tag: '@LPD-78627'},
+	async ({page}) => {
+		await test.step('Disable Consent Manager and save configuration', async () => {
+			await page.getByLabel('Enabled').setChecked(false);
+
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
+
+			await waitForAlert(page);
+
+			await expect(page.getByLabel('Enabled')).not.toBeChecked();
+		});
+	}
+);
+
+test(
 	'Verify Consent Renewal Period correctly sets cookie expiration',
 	{tag: '@LPD-68505'},
 	async ({page}) => {

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.Constants;
@@ -178,7 +177,7 @@ public class FlagsTag extends IncludeTag {
 						WebKeys.THEME_DISPLAY);
 
 				return HashMapBuilder.<String, Object>put(
-					"baseData", _getDataJSONObject(themeDisplay)
+					"baseData", _getDataJSONObject()
 				).put(
 					"captchaURI", FlagsTagUtil.getCaptchaURI(httpServletRequest)
 				).put(
@@ -226,7 +225,7 @@ public class FlagsTag extends IncludeTag {
 		).build();
 	}
 
-	private JSONObject _getDataJSONObject(ThemeDisplay themeDisplay) {
+	private JSONObject _getDataJSONObject() {
 		String namespace = PortalUtil.getPortletNamespace(PortletKeys.FLAGS);
 
 		String contentURL = _contentURL;
@@ -243,19 +242,6 @@ public class FlagsTag extends IncludeTag {
 			namespace + "contentTitle", _contentTitle
 		).put(
 			namespace + "contentURL", contentURL
-		).put(
-			namespace + "reportedUserId", _reportedUserId
-		).put(
-			namespace + "reporterEmailAddress",
-			() -> {
-				if (!themeDisplay.isSignedIn()) {
-					return null;
-				}
-
-				User user = themeDisplay.getUser();
-
-				return user.getEmailAddress();
-			}
 		);
 	}
 

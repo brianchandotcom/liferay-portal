@@ -12,7 +12,7 @@ import com.liferay.flags.service.FlagsEntryService;
 import com.liferay.flags.web.internal.constants.FlagsPortletKeys;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -60,12 +60,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			String className = ParamUtil.getString(actionRequest, "className");
 			long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			User reporterUser = themeDisplay.getUser();
-
-			String reporterEmailAddress = reporterUser.getEmailAddress();
+			String reporterEmailAddress = _getReporterEmailAddress(
+				actionRequest);
 
 			long reportedUserId = _getReportedUserId(className, classPK);
 
@@ -119,17 +115,25 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private long _getReportedUserId(String className, long classPK)
-		throws NoSuchModelException {
+		throws PortalException {
 
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+		AssetEntry assetEntry = _assetEntryLocalService.getEntry(
 			className, classPK);
 
-		if (assetEntry == null) {
-			throw new NoSuchModelException(
-				"Unable to find an asset entry for class PK " + classPK);
+		return assetEntry.getUserId();
+	}
+
+	private String _getReporterEmailAddress(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (!themeDisplay.isSignedIn()) {
+			return null;
 		}
 
-		return assetEntry.getUserId();
+		User reporterUser = themeDisplay.getUser();
+
+		return reporterUser.getEmailAddress();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

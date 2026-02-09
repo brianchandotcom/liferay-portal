@@ -460,6 +460,12 @@ public class DefaultBuildUpdater extends BaseBuildUpdater {
 		for (Map.Entry<String, String> buildParameter :
 				buildParameters.entrySet()) {
 
+			String buildParameterName = buildParameter.getKey();
+
+			if (!buildParameterName.matches("[A-Z0-9_]+")) {
+				continue;
+			}
+
 			String parameterValue = build.getParameterValue(
 				buildParameter.getKey());
 

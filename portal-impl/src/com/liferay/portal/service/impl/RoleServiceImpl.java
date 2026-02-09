@@ -273,9 +273,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 	}
 
 	@Override
-	public List<Role> getRoles(long companyId, int[] types)
-		throws PortalException {
-
+	public List<Role> getRoles(long companyId, int[] types) {
 		return filterRoles(roleLocalService.getRoles(companyId, types));
 	}
 
@@ -528,7 +526,7 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		}
 	}
 
-	protected List<Role> filterRoles(List<Role> roles) throws PortalException {
+	protected List<Role> filterRoles(List<Role> roles) {
 		return TransformUtil.transform(
 			roles,
 			role -> {

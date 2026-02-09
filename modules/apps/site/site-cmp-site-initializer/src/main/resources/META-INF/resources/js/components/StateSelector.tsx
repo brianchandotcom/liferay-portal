@@ -5,12 +5,12 @@
 
 import {Option, Picker} from '@clayui/core';
 import Label from '@clayui/label';
+import {InternalDispatch, useControlledState} from '@clayui/shared';
 import classNames from 'classnames';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
-import React, {LegacyRef, useMemo, useState} from 'react';
+import React, {LegacyRef, useMemo} from 'react';
 
 import './StateSelector.scss';
-
 import {mapStateKeyToDisplayType, mapStateKeyToLabel} from '../utils/constants';
 
 export interface State {
@@ -31,74 +31,120 @@ const Trigger = React.forwardRef(
 		{
 			children,
 			className,
+			disabled,
+			onClick,
+			onKeyDown,
 			small,
 			...otherProps
 		}: {
 			children: string;
 			className?: string;
+			disabled: boolean;
+			onClick?: (event: React.MouseEvent) => void;
+			onKeyDown?: (event: React.KeyboardEvent) => void;
 			otherProps: unknown;
 			small: boolean;
 		},
 		ref: LegacyRef<HTMLDivElement>
-	) => (
-		<div
-			{...otherProps}
-			className={classNames('lfr-cmp__state-selector', className, {
-				'lfr-cmp__state-selector--small': small,
-			})}
-			ref={ref}
-			tabIndex={0}
-		>
-			<Label displayType={mapStateKeyToDisplayType[children]}>
-				{mapStateKeyToLabel[children]}
-			</Label>
-		</div>
-	)
+	) => {
+		const eventHandlers = disabled
+			? {
+					onClick: (event: React.MouseEvent) =>
+						event.preventDefault(),
+					onKeyDown: (event: React.KeyboardEvent) =>
+						event.preventDefault(),
+				}
+			: {onClick, onKeyDown};
+
+		return (
+			<div
+				{...otherProps}
+				{...eventHandlers}
+				className={classNames(
+					'lfr-cmp__state-selector',
+					{disabled},
+					className,
+					{
+						'lfr-cmp__state-selector--small': small,
+					}
+				)}
+				ref={ref}
+				tabIndex={0}
+			>
+				<Label displayType={mapStateKeyToDisplayType[children]}>
+					{mapStateKeyToLabel[children]}
+				</Label>
+			</div>
+		);
+	}
 );
 
 export default function StateSelector({
+	disabled,
 	id,
 	initialSelectedKey,
 	name,
 	onChange,
+	selectedKey: externalSelectedKey,
 	showLabel = false,
 	small,
 	states,
 }: {
+	disabled?: boolean;
 	id?: string;
-	initialSelectedKey: string;
+	initialSelectedKey?: string;
 	name?: string;
-	onChange?: (key: string) => Promise<void>;
+	onChange?: InternalDispatch<string>;
+	selectedKey?: string;
 	showLabel?: boolean;
 	small?: boolean;
 	states: State[];
 }) {
-	const [selectedKey, setSelectedKey] = useState(initialSelectedKey);
+	const [selectedKey, setSelectedKey] = useControlledState({
+		defaultName: 'initialSelectedKey',
+		defaultValue: initialSelectedKey,
+		handleName: 'onChange',
+		name: 'selectedKey',
+		onChange,
+		value: externalSelectedKey,
+	});
 
+	/**
+	 * If `initialSelectedKey` is defined, its value will always be used to
+	 * determine the filteredStates (the available items in the dropdown).
+	 * Otherwise, the current `selectedKey` will be used to determine the
+	 * available items in the dropdown.
+	 */
 	const filteredStates = useMemo(() => {
-		const currentState = states.find(({key}) => key === selectedKey);
+		const baseStateKey = initialSelectedKey
+			? initialSelectedKey
+			: selectedKey;
+
+		const currentState = states.find(({key}) => key === baseStateKey);
 
 		if (!currentState) {
 			return [];
 		}
 
+		if (!currentState.nextStates) {
+			return states;
+		}
+
 		return states
 			.filter(
 				({key}) =>
-					currentState.nextStates.includes(key) || key === selectedKey
+					currentState.nextStates.includes(key) ||
+					key === baseStateKey
 			)
 			.sort(
 				(a, b) =>
 					(mapKeyToDisplayOrder[a.key] || 0) -
 					(mapKeyToDisplayOrder[b.key] || 0)
 			);
-	}, [selectedKey, states]);
+	}, [initialSelectedKey, selectedKey, states]);
 
-	const handleSelectionChange = (key: React.Key) => {
-		const newKey = String(key);
-
-		setSelectedKey(newKey);
-		onChange?.(newKey);
+	const handleSelectionChange = (value: React.Key) => {
+		setSelectedKey(String(value));
 	};
 
 	return (
@@ -113,7 +159,7 @@ export default function StateSelector({
 			<Picker<State>
 				as={Trigger}
 				defaultSelectedKey={initialSelectedKey}
-				disabled={false}
+				disabled={disabled}
 				id={id}
 				items={filteredStates}
 				messages={{

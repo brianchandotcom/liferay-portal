@@ -267,7 +267,7 @@
 			"label": {
 				"en_US": "Time Zone"
 			},
-			"listTypeDefinitionExternalReferenceCode": "UTC_TIME_ZONES",
+			"listTypeDefinitionExternalReferenceCode": "LT_UTC_TIME_ZONES",
 			"localized": false,
 			"name": "timeZone",
 			"readOnly": "false",

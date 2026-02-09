@@ -17,7 +17,7 @@
 			"label": {
 				"en_US": "Change"
 			},
-			"listTypeDefinitionExternalReferenceCode": "C_BUSINESS_EVENT_VERSION_CHANGES",
+			"listTypeDefinitionExternalReferenceCode": "LT_BUSINESS_EVENT_VERSION_CHANGES",
 			"localized": false,
 			"name": "change",
 			"readOnly": "false",

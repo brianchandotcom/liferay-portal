@@ -286,8 +286,8 @@ public class LayoutUtil {
 	}
 
 	public static Layout addLayout(
-			String externalReferenceCode, long groupId, long parentLayoutId,
-			Map<Locale, String> nameMap, String type,
+			String externalReferenceCode, long groupId, boolean privateLayout,
+			long parentLayoutId, Map<Locale, String> nameMap, String type,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, ServiceContext serviceContext)
@@ -302,17 +302,18 @@ public class LayoutUtil {
 		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
 
 		return LayoutServiceUtil.addLayout(
-			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
-			null, null, null, null, type, typeSettings, hiddenFromNavigation,
-			friendlyURLMap, null, serviceContext);
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			nameMap, null, null, null, null, type, typeSettings,
+			hiddenFromNavigation, friendlyURLMap, null, serviceContext);
 	}
 
 	public static Layout addPortletLayout(
 			CETManager cetManager, String externalReferenceCode,
 			InfoItemServiceRegistry infoItemServiceRegistry, long groupId,
-			long parentLayoutId, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			boolean privateLayout, long parentLayoutId,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext,
@@ -328,8 +329,8 @@ public class LayoutUtil {
 		_setExpandoBridgeAttributes(widgetPageSpecification, serviceContext);
 
 		Layout layout = LayoutServiceUtil.addLayout(
-			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
-			titleMap, descriptionMap, keywordsMap, robotsMap,
+			externalReferenceCode, groupId, privateLayout, parentLayoutId,
+			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 			LayoutConstants.TYPE_PORTLET, typeSettings, hiddenFromNavigation,
 			friendlyURLMap, null, serviceContext);
 

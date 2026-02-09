@@ -1166,7 +1166,7 @@ public interface LayoutLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout getOrAddEmptyLayout(
 			String externalReferenceCode, long userId, long groupId,
-			ServiceContext serviceContext)
+			boolean privateLayout, ServiceContext serviceContext)
 		throws Exception;
 
 	/**

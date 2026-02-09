@@ -8,6 +8,8 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -46,6 +48,8 @@ public class ViewTaskInfoSummaryJSPSectionFragmentRenderer
 		}
 
 		return new ViewTaskInfoSummarySectionDisplayContext(
+			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE),
 			_listTypeEntryLocalService, (ObjectEntry)object,
 			_objectFieldLocalService, _objectStateFlowLocalService,
 			_objectStateLocalService,
@@ -65,6 +69,9 @@ public class ViewTaskInfoSummaryJSPSectionFragmentRenderer
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	@Reference
+	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

@@ -187,6 +187,10 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					</div>
 
 					<div class="col-lg-6">
+						<aui:input checked="<%= commerceChannelDisplayContext.isUserNotificationScopeEnabled() %>" helpMessage="configures-whether-the-notifications-delivery-scope-applies-only-to-users,-regardless-of-the-order-visibility-scope" label="user-notification-scope-enabled" labelOff="disabled" labelOn="enabled" name="settings--userNotificationScopeEnabled--" type="toggle-switch" />
+					</div>
+
+					<div class="col-lg-6">
 						<aui:select label="open-orders-visibility-scope" name="settings--openOrdersVisibilityScope--">
 
 							<%

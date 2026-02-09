@@ -660,6 +660,19 @@ public class CommerceChannelDisplayContext
 		return commerceOrderConfiguration.undoCartItemDeletionDisabled();
 	}
 
+	public boolean isUserNotificationScopeEnabled() throws PortalException {
+		CommerceChannel commerceChannel = getCommerceChannel();
+
+		CommerceOrderConfiguration commerceOrderConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceChannel.getGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		return commerceOrderConfiguration.userNotificationScopeEnabled();
+	}
+
 	private CommerceAccountGroupServiceConfiguration
 			_getCommerceAccountGroupServiceConfiguration()
 		throws PortalException {

@@ -60,8 +60,8 @@ liferay-default:
                                         --retry 5 \
                                         --retry-all-errors \
                                         --retry-delay 2 \
-                                        --write-out "%{http_code}") \
-                                        "https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
+                                        --write-out "%{http_code}" \
+                                        "${url}")
 
                                 if [ "${http_code}" != "200" ]
                                 then

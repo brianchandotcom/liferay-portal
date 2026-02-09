@@ -103,7 +103,10 @@ public class DXPRestController extends BaseRestController {
 			customFields.put(
 				"cloud-provisioning",
 				MarketplaceUtil.createCloudProvisioningJSONArray(
-					orderItemsPage
+					orderItemsPage.getItems(
+					).toArray(
+						new OrderItem[0]
+					)
 				).toString());
 
 			_marketplaceService.updateOrder(

@@ -8,7 +8,6 @@ package com.liferay.marketplace.util;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.SkuOption;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
-import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.marketplace.model.PublisherAssetLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -99,11 +98,11 @@ public class MarketplaceUtil {
 	}
 
 	public static JSONArray createCloudProvisioningJSONArray(
-		Page<OrderItem> orderItemsPage) {
+		OrderItem[] orderItemsPage) {
 
 		JSONArray jsonArray = new JSONArray();
 
-		for (OrderItem orderItem : orderItemsPage.getItems()) {
+		for (OrderItem orderItem : orderItemsPage) {
 			jsonArray.put(
 				new JSONObject(
 				).put(

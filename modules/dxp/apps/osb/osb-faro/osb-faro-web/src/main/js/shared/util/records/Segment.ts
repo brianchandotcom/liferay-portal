@@ -3,7 +3,7 @@ import {fromJS, Map, Record} from 'immutable';
 import {SegmentActivationDetails} from 'segment/components/SegmentActivationCard';
 
 interface ISegment {
-	activationStatus: SegmentActivationDetails;
+	activation: SegmentActivationDetails;
 	activeIndividualCount: number;
 	activitiesCount: number;
 	anonymousIndividualCount: number;
@@ -28,7 +28,7 @@ interface ISegment {
 
 export default class Segment
 	extends Record({
-		activationStatus: null,
+		activation: null,
 		activeIndividualCount: 0,
 		activitiesCount: 0,
 		anonymousIndividualCount: 0,
@@ -56,7 +56,7 @@ export default class Segment
 		userName: null
 	})
 	implements ISegment {
-	activationStatus: SegmentActivationDetails;
+	activation: SegmentActivationDetails;
 	activeIndividualCount: number;
 	activitiesCount: number;
 	anonymousIndividualCount: number;

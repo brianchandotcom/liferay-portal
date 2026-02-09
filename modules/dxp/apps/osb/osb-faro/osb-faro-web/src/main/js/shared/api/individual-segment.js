@@ -253,7 +253,7 @@ export function searchUnassigned({
 	});
 }
 
-export function updateSegmentActivationStatus({
+export function updateSegmentActivation({
 	groupId,
 	segmentActivation,
 	segmentId
@@ -262,8 +262,7 @@ export function updateSegmentActivationStatus({
 		frequencyType,
 		scheduleEndDate,
 		scheduleStartDate,
-		scheduleType,
-		segmentActivationId
+		scheduleType
 	} = segmentActivation;
 
 	const data = {
@@ -278,6 +277,6 @@ export function updateSegmentActivationStatus({
 	return sendRequest({
 		data,
 		method: 'PUT',
-		path: `contacts/${groupId}/individual_segment/${segmentId}/activation/${segmentActivationId}`
+		path: `contacts/${groupId}/individual_segment/${segmentId}/activation`
 	});
 }

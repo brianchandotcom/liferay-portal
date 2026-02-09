@@ -33,7 +33,6 @@ export type SegmentActivationDetails = {
 	scheduleEndDate?: string;
 	scheduleStartDate?: string;
 	scheduleType: SegmentActivationScheduleTypes;
-	segmentActivationId: string;
 };
 
 type IActivationFormValues = {
@@ -53,7 +52,7 @@ interface IActivationConfigurationModalProps {
 }
 
 interface ISegmentActivationCardProps {
-	segmentActivation: SegmentActivationDetails;
+	segmentActivation: any;
 	segmentType: SegmentTypes;
 }
 
@@ -98,14 +97,12 @@ export const ActivationConfigurationModal: React.FC<
 }) => {
 	const [formState, setFormState] = useState<IActivationFormValues>({
 		...initialValues,
-		scheduleEndDate: formatUTCDateFromUnix(
-			initialValues.scheduleEndDate,
-			'yyyy-MM-DD'
-		),
-		scheduleStartDate: formatUTCDateFromUnix(
-			initialValues.scheduleStartDate,
-			'yyyy-MM-DD'
-		)
+		scheduleEndDate:
+			initialValues.scheduleEndDate &&
+			formatUTCDateFromUnix(initialValues.scheduleEndDate, 'yyyy-MM-DD'),
+		scheduleStartDate:
+			initialValues.scheduleStartDate &&
+			formatUTCDateFromUnix(initialValues.scheduleStartDate, 'yyyy-MM-DD')
 	});
 	const [isSaving, setIsSaving] = useState(false);
 
@@ -306,20 +303,18 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 		frequencyType,
 		scheduleEndDate,
 		scheduleStartDate,
-		scheduleType,
-		segmentActivationId
-	} = segmentActivation;
+		scheduleType
+	} = segmentActivation.toJS();
 
 	const {observer, onOpenChange, open} = useModal();
 
 	const {groupId, id: segmentId} = useParams();
 
 	const handleSave = async (updatedValues: IActivationFormValues) =>
-		API.updateSegmentActivationStatus({
+		API.updateSegmentActivation({
 			groupId,
 			segmentActivation: {
-				...updatedValues,
-				segmentActivationId
+				...updatedValues
 			},
 			segmentId
 		}).then(() => {

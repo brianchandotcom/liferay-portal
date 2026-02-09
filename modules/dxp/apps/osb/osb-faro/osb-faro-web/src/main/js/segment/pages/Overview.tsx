@@ -22,7 +22,7 @@ const HEADER_MARGIN = 16;
 
 const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 	const {
-		activationStatus,
+		activation,
 		activeIndividualCount,
 		criteriaString,
 		id,
@@ -55,9 +55,9 @@ const Overview: React.FC<IOverviewProps> = ({channelId, groupId, segment}) => {
 	return (
 		<div className='overview-layout'>
 			<div className='overview-column-main'>
-				{activationStatus && (
+				{activation && (
 					<SegmentActivationCard
-						segmentActivation={activationStatus}
+						segmentActivation={activation}
 						segmentType={SegmentTypes.Batch}
 					/>
 				)}

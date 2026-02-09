@@ -143,12 +143,7 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 }) => {
 	const fetchMembers = params => getMembershipChanges(params);
 
-	const {
-		activationStatus,
-		criteriaString,
-		id,
-		includeAnonymousUsers
-	} = segment;
+	const {activation, criteriaString, id, includeAnonymousUsers} = segment;
 
 	const {timeZoneId} = useTimeZone();
 
@@ -271,9 +266,9 @@ const RealTimeSegmentOverview: React.FC<IOverviewProps> = ({
 				/>
 			</ReferencedObjectsProvider>
 
-			{activationStatus && (
+			{activation && (
 				<SegmentActivationCard
-					segmentActivation={activationStatus}
+					segmentActivation={activation}
 					segmentType={SegmentTypes.RealTime}
 				/>
 			)}

@@ -66,9 +66,7 @@ public class PortletLayoutDisplayContextTest {
 	public void setUp() throws Exception {
 		_company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
-
 		_group = GroupTestUtil.addGroup();
-
 		_layoutTypeController =
 			LayoutTypeControllerTracker.getLayoutTypeController(
 				LayoutConstants.TYPE_PORTLET);

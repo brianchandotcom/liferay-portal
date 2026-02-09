@@ -34,6 +34,7 @@ public class PortletLayoutDisplayContext {
 		}
 
 		Layout masterLayout = null;
+
 		long masterLayoutPlid = layout.getMasterLayoutPlid();
 
 		if (masterLayoutPlid > 0) {

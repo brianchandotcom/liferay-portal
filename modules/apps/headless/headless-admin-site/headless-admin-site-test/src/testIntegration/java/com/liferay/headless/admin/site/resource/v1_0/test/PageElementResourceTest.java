@@ -3111,24 +3111,42 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					).build(),
 					Collections.emptyMap()));
 
-		_assertProblemException(
-			"BAD_REQUEST", null,
-			() ->
-				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
-					FragmentConfigurationTestUtil.getConfiguration(
-						HashMapBuilder.<String, Map<String, Object>>put(
-							selectFieldName,
-							HashMapBuilder.<String, Object>put(
-								"defaultValue", selectValue3
-							).put(
-								"type", "select"
-							).put(
-								"typeOptions", typeOptionsJSONObject
-							).build()
-						).build()),
-					HashMapBuilder.<String, Object>put(
-						selectFieldName, RandomTestUtil.randomString()
-					).build()));
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.resource.v1_0." +
+					"layout.structure.item.importer.util." +
+						"FragmentConfigurationFieldValuesUtil",
+				LoggerTestUtil.DEBUG)) {
+
+			String invalidSelectValue = RandomTestUtil.randomString();
+
+			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
+				FragmentConfigurationTestUtil.getConfiguration(
+					HashMapBuilder.<String, Map<String, Object>>put(
+						selectFieldName,
+						HashMapBuilder.<String, Object>put(
+							"defaultValue", selectValue3
+						).put(
+							"type", "select"
+						).put(
+							"typeOptions", typeOptionsJSONObject
+						).build()
+					).build()),
+				HashMapBuilder.<String, Object>put(
+					selectFieldName, invalidSelectValue
+				).build());
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Invalid configuration value \"", invalidSelectValue,
+					"\" for field \"", selectFieldName, "\""),
+				logEntry.getMessage());
+		}
 	}
 
 	private void

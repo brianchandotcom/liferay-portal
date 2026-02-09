@@ -117,7 +117,7 @@ function CustomizeEditorButton() {
 						},
 						status: 'danger',
 						text: Liferay.Language.get(
-							'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-removed-one-or-more-fields-from-the-content-structure'
+							'to-customize-the-editor-you-need-to-publish-the-content-structure-first.-you-have-made-changes-to-the-content-structure-that-may-impact-existing-stored-data-once-published'
 						),
 						title: Liferay.Language.get(
 							'publish-to-customize-editor'

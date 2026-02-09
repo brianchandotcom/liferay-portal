@@ -79,7 +79,7 @@ export async function publishStructure({
 				center: true,
 				status: 'danger',
 				text: Liferay.Language.get(
-					'you-removed-one-or-more-fields-from-the-content-structure'
+					'you-have-made-changes-to-the-content-structure-that-may-impact-existing-stored-data-once-published'
 				),
 				title: Liferay.Language.get(
 					'publish-content-structure-changes'
@@ -97,7 +97,7 @@ export async function publishStructure({
 				center: true,
 				status: 'danger',
 				text: Liferay.Language.get(
-					'you-removed-one-or-more-fields-from-the-content-structure-and-this-content-structure-is-being-used'
+					'you-have-made-changes-to-the-content-structure-that-may-impact-existing-stored-data-once-published'
 				),
 				title: Liferay.Language.get(
 					'publish-content-structure-changes'

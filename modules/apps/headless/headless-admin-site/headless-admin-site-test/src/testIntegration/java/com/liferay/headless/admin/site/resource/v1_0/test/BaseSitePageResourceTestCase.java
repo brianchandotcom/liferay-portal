@@ -238,8 +238,8 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected SitePage testDeleteSiteSitePage_addSitePage() throws Exception {
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String testDeleteSiteSitePage_getSiteExternalReferenceCode()
@@ -269,8 +269,8 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected SitePage testGetSiteSitePage_addSitePage() throws Exception {
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String testGetSiteSitePage_getSiteExternalReferenceCode()
@@ -295,8 +295,8 @@ public abstract class BaseSitePageResourceTestCase {
 	protected SitePage testGetSiteSitePagePermissionsPage_addSitePage()
 		throws Exception {
 
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -307,8 +307,8 @@ public abstract class BaseSitePageResourceTestCase {
 			testGetSiteSitePagesPage_getIrrelevantSiteExternalReferenceCode();
 
 		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null, null, Pagination.of(1, 10),
-			null);
+			siteExternalReferenceCode, null, null, null, null,
+			Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -318,7 +318,7 @@ public abstract class BaseSitePageResourceTestCase {
 				randomIrrelevantSitePage());
 
 			page = sitePageResource.getSiteSitePagesPage(
-				irrelevantSiteExternalReferenceCode, null, null, null,
+				irrelevantSiteExternalReferenceCode, null, null, null, null,
 				Pagination.of(1, (int)totalCount + 1), null);
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -337,8 +337,8 @@ public abstract class BaseSitePageResourceTestCase {
 			siteExternalReferenceCode, randomSitePage());
 
 		page = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null, null, Pagination.of(1, 10),
-			null);
+			siteExternalReferenceCode, null, null, null, null,
+			Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -354,8 +354,8 @@ public abstract class BaseSitePageResourceTestCase {
 		}
 
 		page = permissionsSitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null, null, Pagination.of(1, 10),
-			null);
+			siteExternalReferenceCode, null, null, null, null,
+			Pagination.of(1, 10), null);
 
 		for (SitePage sitePage : page.getItems()) {
 			Assert.assertNotNull(sitePage.getPermissions());
@@ -404,7 +404,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null,
+				siteExternalReferenceCode, null, null, null,
 				getFilterString(entityField, "between", sitePage1),
 				Pagination.of(1, 2), null);
 
@@ -465,7 +465,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 		for (EntityField entityField : entityFields) {
 			Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null,
+				siteExternalReferenceCode, null, null, null,
 				getFilterString(entityField, operator, sitePage1),
 				Pagination.of(1, 2), null);
 
@@ -481,7 +481,7 @@ public abstract class BaseSitePageResourceTestCase {
 			testGetSiteSitePagesPage_getSiteExternalReferenceCode();
 
 		Page<SitePage> sitePagesPage = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null, null, null, null);
+			siteExternalReferenceCode, null, null, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(sitePagesPage.getTotalCount());
 
@@ -500,7 +500,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -511,7 +511,7 @@ public abstract class BaseSitePageResourceTestCase {
 			assertContains(sitePage1, (List<SitePage>)page1.getItems());
 
 			Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -520,7 +520,7 @@ public abstract class BaseSitePageResourceTestCase {
 			assertContains(sitePage2, (List<SitePage>)page2.getItems());
 
 			Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit),
@@ -530,7 +530,7 @@ public abstract class BaseSitePageResourceTestCase {
 		}
 		else {
 			Page<SitePage> page1 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(1, totalCount + 2), null);
 
 			List<SitePage> sitePages1 = (List<SitePage>)page1.getItems();
@@ -539,7 +539,7 @@ public abstract class BaseSitePageResourceTestCase {
 				sitePages1.toString(), totalCount + 2, sitePages1.size());
 
 			Page<SitePage> page2 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -549,7 +549,7 @@ public abstract class BaseSitePageResourceTestCase {
 			Assert.assertEquals(sitePages2.toString(), 1, sitePages2.size());
 
 			Page<SitePage> page3 = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(sitePage1, (List<SitePage>)page3.getItems());
@@ -669,11 +669,11 @@ public abstract class BaseSitePageResourceTestCase {
 			siteExternalReferenceCode, sitePage2);
 
 		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-			siteExternalReferenceCode, null, null, null, null, null);
+			siteExternalReferenceCode, null, null, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<SitePage> ascPage = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":asc");
 
@@ -681,7 +681,7 @@ public abstract class BaseSitePageResourceTestCase {
 			assertContains(sitePage2, (List<SitePage>)ascPage.getItems());
 
 			Page<SitePage> descPage = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, null, null, null,
+				siteExternalReferenceCode, null, null, null, null,
 				Pagination.of(1, (int)page.getTotalCount() + 1),
 				entityField.getName() + ":desc");
 
@@ -694,8 +694,8 @@ public abstract class BaseSitePageResourceTestCase {
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
 
-		return sitePageResource.postSiteSitePage(
-			siteExternalReferenceCode, sitePage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String testGetSiteSitePagesPage_getSiteExternalReferenceCode()
@@ -733,8 +733,8 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected SitePage testPatchSiteSitePage_addSitePage() throws Exception {
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -774,8 +774,8 @@ public abstract class BaseSitePageResourceTestCase {
 			SitePage sitePage)
 		throws Exception {
 
-		return permissionsSitePageResource.postSiteSitePage(
-			testGetSiteSitePagesPage_getSiteExternalReferenceCode(), sitePage);
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -786,7 +786,8 @@ public abstract class BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
-			postSitePage.getExternalReferenceCode(), randomSitePage);
+			postSitePage.getExternalReferenceCode(),
+			testPutSiteSitePage_getPrivatePage(), randomSitePage);
 
 		assertEquals(randomSitePage, putSitePage);
 		assertValid(putSitePage);
@@ -804,7 +805,8 @@ public abstract class BaseSitePageResourceTestCase {
 
 		putSitePage = sitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
-			postSitePage.getExternalReferenceCode(), randomPermissionsSitePage);
+			postSitePage.getExternalReferenceCode(),
+			testPutSiteSitePage_getPrivatePage(), randomPermissionsSitePage);
 
 		assertEquals(randomPermissionsSitePage, putSitePage);
 		assertValid(putSitePage);
@@ -813,20 +815,26 @@ public abstract class BaseSitePageResourceTestCase {
 
 		putSitePage = permissionsSitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
-			postSitePage.getExternalReferenceCode(), randomPermissionsSitePage);
+			postSitePage.getExternalReferenceCode(),
+			testPutSiteSitePage_getPrivatePage(), randomPermissionsSitePage);
 
 		Assert.assertNotNull(putSitePage.getPermissions());
 	}
 
 	protected SitePage testPutSiteSitePage_addSitePage() throws Exception {
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String testPutSiteSitePage_getSiteExternalReferenceCode()
 		throws Exception {
 
 		return testGroup.getExternalReferenceCode();
+	}
+
+	protected Boolean testPutSiteSitePage_getPrivatePage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -870,8 +878,8 @@ public abstract class BaseSitePageResourceTestCase {
 	protected SitePage testPutSiteSitePagePermissionsPage_addSitePage()
 		throws Exception {
 
-		return sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage());
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

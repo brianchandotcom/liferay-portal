@@ -283,7 +283,8 @@ public abstract class BaseSitePageResourceImpl
 	}
 
 	protected abstract Page<SitePage> doGetSiteSitePagesPage(
-			String siteExternalReferenceCode, String search,
+			String siteExternalReferenceCode, Boolean privatePages,
+			String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
@@ -330,6 +331,10 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePages"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -355,6 +360,10 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePages")
+			Boolean privatePages,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
 			@jakarta.ws.rs.core.Context
@@ -367,8 +376,8 @@ public abstract class BaseSitePageResourceImpl
 		throws Exception {
 
 		Page<SitePage> sitePagesPage = doGetSiteSitePagesPage(
-			siteExternalReferenceCode, search, aggregation, filter, pagination,
-			sorts);
+			siteExternalReferenceCode, privatePages, search, aggregation,
+			filter, pagination, sorts);
 
 		for (SitePage sitePage : sitePagesPage.getItems()) {
 			sitePage.setPermissions(
@@ -507,7 +516,8 @@ public abstract class BaseSitePageResourceImpl
 	}
 
 	protected abstract SitePage doPostSiteSitePage(
-			String siteExternalReferenceCode, SitePage sitePage)
+			String siteExternalReferenceCode, Boolean privatePage,
+			SitePage sitePage)
 		throws Exception;
 
 	/**
@@ -523,6 +533,10 @@ public abstract class BaseSitePageResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
 				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePage"
 			)
 		}
 	)
@@ -539,13 +553,17 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePage")
+			Boolean privatePage,
 			SitePage sitePage)
 		throws Exception {
 
 		Permission[] permissions = sitePage.getPermissions();
 
 		SitePage postSitePage = doPostSiteSitePage(
-			siteExternalReferenceCode, sitePage);
+			siteExternalReferenceCode, privatePage, sitePage);
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putSiteSitePagePermissionsPage(
@@ -580,6 +598,10 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePage"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "callbackURL"
 			)
 		}
@@ -597,6 +619,10 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePage")
+			Boolean privatePage,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -692,6 +718,10 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePages"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -727,6 +757,10 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePages")
+			Boolean privatePages,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -766,7 +800,8 @@ public abstract class BaseSitePageResourceImpl
 
 	protected abstract SitePage doPutSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, SitePage sitePage)
+			String sitePageExternalReferenceCode, Boolean privatePage,
+			SitePage sitePage)
 		throws Exception;
 
 	/**
@@ -797,6 +832,10 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePage"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			)
 		}
@@ -820,13 +859,18 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
 			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePage")
+			Boolean privatePage,
 			SitePage sitePage)
 		throws Exception {
 
 		Permission[] permissions = sitePage.getPermissions();
 
 		SitePage putSitePage = doPutSiteSitePage(
-			siteExternalReferenceCode, sitePageExternalReferenceCode, sitePage);
+			siteExternalReferenceCode, sitePageExternalReferenceCode,
+			privatePage, sitePage);
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putSiteSitePagePermissionsPage(
@@ -967,6 +1011,7 @@ public abstract class BaseSitePageResourceImpl
 			if (parameters.containsKey("siteExternalReferenceCode")) {
 				sitePageUnsafeFunction = sitePage -> postSiteSitePage(
 					(String)parameters.get("siteExternalReferenceCode"),
+					_parseBoolean((String)parameters.get("privatePage")),
 					sitePage);
 			}
 			else {
@@ -986,7 +1031,10 @@ public abstract class BaseSitePageResourceImpl
 					if (parameters.containsKey("siteExternalReferenceCode")) {
 						persistedSitePage = putSiteSitePage(
 							(String)parameters.get("siteExternalReferenceCode"),
-							sitePage.getExternalReferenceCode(), sitePage);
+							sitePage.getExternalReferenceCode(),
+							_parseBoolean(
+								(String)parameters.get("privatePage")),
+							sitePage);
 					}
 					else {
 						throw new NotSupportedException(
@@ -1088,7 +1136,8 @@ public abstract class BaseSitePageResourceImpl
 
 		if (parameters.containsKey("siteExternalReferenceCode")) {
 			return getSiteSitePagesPage(
-				(String)parameters.get("siteExternalReferenceCode"), search,
+				(String)parameters.get("siteExternalReferenceCode"),
+				_parseBoolean((String)parameters.get("privatePages")), search,
 				null, filter, pagination, sorts);
 		}
 		else {
@@ -1127,6 +1176,14 @@ public abstract class BaseSitePageResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	private Boolean _parseBoolean(String value) {
+		if (value != null) {
+			return Boolean.parseBoolean(value);
+		}
+
+		return null;
 	}
 
 	@Override

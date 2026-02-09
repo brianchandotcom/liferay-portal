@@ -27,7 +27,7 @@ locals {
 			--from-literal=password="$TOKEN" \
 			--from-literal=project=${local.liferay_appproject_name} \
 			--from-literal=type=helm \
-			--from-literal=url=${local.liferay_helm_chart_config.source_repo_url_value} \
+			--from-literal=url=${local.liferay_helm_chart_config.repo_url} \
 			--from-literal=username=AWS \
 			--namespace ${var.argocd_namespace} | kubectl apply -f -
 
@@ -82,31 +82,23 @@ locals {
 	infrastructure_git_repo_url=coalesce(var.infrastructure_git_repo_config.url, var.liferay_git_repo_url)
 	liferay_appproject_name="liferay-application"
 	liferay_helm_chart_config=merge(
-		{
-			version=var.liferay_helm_chart_version
-		},
-		var.liferay_helm_chart_name == "liferay-default" ? {
+		var.liferay_helm_chart_config,
+		var.liferay_helm_chart_config.chart == "liferay-default" ? {
 			ecr_credentials_sync_required=false
-			name="liferay-default"
 			region=var.region
-			source_chart_value="liferay-default"
-			source_repo_url_value="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-default"
+			repo_url=coalesce(var.liferay_helm_chart_config.repo_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-default")
 			values_scope_prefix=""
 		} : {},
-		var.liferay_helm_chart_name == "liferay-aws" ? {
+		var.liferay_helm_chart_config.chart == "liferay-aws" ? {
 			ecr_credentials_sync_required=false
-			name="liferay-aws"
 			region=var.region
-			source_chart_value="liferay-aws"
-			source_repo_url_value="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws"
+			repo_url=coalesce(var.liferay_helm_chart_config.repo_url, "oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws")
 			values_scope_prefix="liferay-default."
 		} : {},
-		var.liferay_helm_chart_name == "liferay-aws-marketplace" ? {
+		var.liferay_helm_chart_config.chart == "liferay-aws-marketplace" ? {
 			ecr_credentials_sync_required=true
-			name="liferay-aws-marketplace"
 			region="us-east-1"
-			source_chart_value="liferay/liferay-aws-marketplace"
-			source_repo_url_value="709825985650.dkr.ecr.us-east-1.amazonaws.com"
+			repo_url=coalesce(var.liferay_helm_chart_config.repo_url, "709825985650.dkr.ecr.us-east-1.amazonaws.com")
 			values_scope_prefix="liferay-aws.liferay-default."
 		} : {},
 	)

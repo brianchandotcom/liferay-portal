@@ -22,6 +22,7 @@ import com.liferay.osb.faro.engine.client.model.FieldMapping;
 import com.liferay.osb.faro.engine.client.model.IndividualSegment;
 import com.liferay.osb.faro.engine.client.model.IndividualSegmentMembership;
 import com.liferay.osb.faro.engine.client.model.Organization;
+import com.liferay.osb.faro.engine.client.model.SegmentActivation;
 import com.liferay.osb.faro.web.internal.constants.FaroConstants;
 import com.liferay.osb.faro.web.internal.model.display.main.FaroEntityDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
@@ -54,6 +55,14 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 		_filterString = individualSegment.getFilterString();
 		_id = individualSegment.getId();
 		_includeAnonymousUsers = individualSegment.isIncludeAnonymousUsers();
+
+		SegmentActivation segmentActivation =
+			individualSegment.getSegmentActivation();
+
+		if (segmentActivation != null) {
+			_individualSegmentActivationDisplay =
+				new IndividualSegmentActivationDisplay(segmentActivation);
+		}
 
 		Map<String, Object> embeddedResources =
 			individualSegment.getEmbeddedResources();
@@ -224,6 +233,10 @@ public class IndividualSegmentDisplay implements FaroEntityDisplay {
 	private boolean _includeAnonymousUsers;
 	private Date _individualAddedDate;
 	private long _individualCount;
+
+	@JsonProperty("activation")
+	private IndividualSegmentActivationDisplay
+		_individualSegmentActivationDisplay;
 
 	@JsonIgnore
 	private Map<String, List<Field>> _interestsFieldMap;

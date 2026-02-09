@@ -357,3 +357,64 @@ test('can send notification email via download action', async ({
 
 	expect(notificationQueueEntries.items.length).toBeTruthy();
 });
+
+test(
+	'Can add user notification actions to system objects that have a user notification handler only',
+	{tag: ['@LPD-77313']},
+	async ({apiHelpers, editObjectActionPage, page, viewObjectActionsPage}) => {
+		let notificationTemplate;
+
+		await test.step('Create an user notification template', async () => {
+			notificationTemplate =
+				await apiHelpers.notification.postNotificationTemplate({
+					editorType: 'richText',
+					name: 'Commerce Order Note Template',
+					recipientType: 'term',
+					recipients: [
+						{
+							term: '[%COMMERCEORDERNOTE_RECIPIENT_IDS%]',
+						},
+					],
+					subject: {
+						en_US: '[%COMMERCEORDERNOTE_ORDERID%]',
+					},
+					type: 'userNotification',
+				});
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+		});
+
+		await test.step('Verify that the notification template is shown for Commerce Order Note system object', async () => {
+			await viewObjectActionsPage.goto('Commerce Order Note');
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			await editObjectActionPage.openActionBuilderTab();
+			await editObjectActionPage.chooseNotificationOption();
+			await editObjectActionPage.clickInputNotificationsCombo();
+
+			await expect(
+				page.frameLocator('iframe').getByRole('option', {
+					name: `${notificationTemplate?.name} User Notification`,
+				})
+			).toBeVisible();
+		});
+
+		await test.step('Verify that the notification template is not shown for Commerce Order system object', async () => {
+			await viewObjectActionsPage.goto('Commerce Order');
+			await viewObjectActionsPage.openObjectActionSidePanel();
+
+			await editObjectActionPage.openActionBuilderTab();
+			await editObjectActionPage.chooseNotificationOption();
+			await editObjectActionPage.clickInputNotificationsCombo();
+
+			await expect(
+				page.frameLocator('iframe').getByRole('option', {
+					name: `${notificationTemplate?.name} User Notification`,
+				})
+			).toHaveCount(0);
+		});
+	}
+);

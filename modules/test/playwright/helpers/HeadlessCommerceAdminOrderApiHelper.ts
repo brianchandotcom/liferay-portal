@@ -195,22 +195,13 @@ export class HeadlessCommerceAdminOrderApiHelper {
 			...(orderNote || {}),
 		};
 
-		const postOrder = await this.apiHelpers.post(
+		return await this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/orders/${orderId}/orderNotes`,
 			{
 				data: orderNote,
 				failOnStatusCode: true,
 			}
 		);
-
-		if (this.apiHelpers instanceof DataApiHelpers) {
-			this.apiHelpers.data.push({
-				id: postOrder.id,
-				type: 'order',
-			});
-		}
-
-		return postOrder;
 	}
 
 	async postOrderRule(orderRule: TOrderRule) {

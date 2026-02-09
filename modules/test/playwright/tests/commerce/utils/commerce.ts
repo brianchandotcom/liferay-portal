@@ -178,6 +178,60 @@ export async function configureBuyerUserForSite(
 	return user;
 }
 
+export async function configureOrderManagerUserForSite(
+	account: TAccount,
+	apiHelpers: DataApiHelpers,
+	isOrderAdministrator: boolean,
+	site: Site,
+	userEmail: any
+) {
+	const user =
+		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+			userEmail
+		);
+
+	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
+		account.id
+	);
+
+	const accountRoleBuyer = rolesResponse?.items?.filter((role) => {
+		return role.name === 'Order Manager';
+	});
+
+	await apiHelpers.headlessAdminUser.assignAccountRoles(
+		account.externalReferenceCode,
+		accountRoleBuyer[0].id,
+		user.emailAddress
+	);
+
+	const siteRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteRole.id,
+		site.id,
+		user.id
+	);
+	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+		account.id,
+		[user.emailAddress]
+	);
+
+	if (isOrderAdministrator) {
+		const orderAdministratorRole =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Order Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			orderAdministratorRole.externalReferenceCode,
+			user.id
+		);
+	}
+
+	return user;
+}
+
 export async function configureOperationsManagerUserForSite(
 	account: TAccount,
 	apiHelpers: DataApiHelpers,

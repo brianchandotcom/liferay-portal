@@ -31,6 +31,7 @@ import getWidgetDefinition from '../../../layout-content-page-editor-web/main/ut
 import {
 	configureBuyerUserForSite,
 	configureOperationsManagerUserForSite,
+	configureOrderManagerUserForSite,
 	miniumSetUp,
 } from '../../utils/commerce';
 
@@ -1815,5 +1816,331 @@ test(
 				}
 			}
 		}
+	}
+);
+
+test(
+	'User notification is sent when an order note is added',
+	{tag: ['@LPD-77313', '@LPD-77315']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+		userPersonalBarPage,
+	}) => {
+		let orderId;
+		let orderNote;
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			name: getRandomString(),
+			type: 'business',
+		});
+
+		const buyerUser1 = await configureBuyerUserForSite(
+			account,
+			apiHelpers,
+			site,
+			'demo.unprivileged@liferay.com'
+		);
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const buyerUser2 = await configureBuyerUserForSite(
+			account,
+			apiHelpers,
+			site,
+			user1.emailAddress
+		);
+
+		const orderManagerUser = await configureOrderManagerUserForSite(
+			account,
+			apiHelpers,
+			true,
+			site,
+			user2.emailAddress
+		);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+			channel.name,
+			'B2B'
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Catalog_' + getRandomString(),
+			});
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		await test.step('Create an object action using a user notification template', async () => {
+			const notificationTemplate =
+				await apiHelpers.notification.postNotificationTemplate({
+					editorType: 'richText',
+					name: 'Commerce Order Note Template',
+					recipientType: 'term',
+					recipients: [
+						{
+							term: '[%COMMERCEORDERNOTE_RECIPIENT_IDS%]',
+						},
+					],
+					subject: {
+						en_US: '[%COMMERCEORDERNOTE_ORDERID%]',
+					},
+					type: 'userNotification',
+				});
+
+			apiHelpers.data.push({
+				id: notificationTemplate.id,
+				type: 'notificationTemplate',
+			});
+
+			const objectActionAPIClient =
+				await apiHelpers.buildRestClient(ObjectActionAPI);
+
+			const {body: objectAction} =
+				await objectActionAPIClient.postObjectDefinitionByExternalReferenceCodeObjectAction(
+					'L_COMMERCE_ORDER_NOTE',
+					{
+						active: true,
+						label: {
+							en_US: 'commerceOrderNoteOnAfterAdd',
+						},
+						name: 'commerceOrderNoteOnAfterAdd',
+						objectActionExecutorKey: 'notification',
+						objectActionTriggerKey: 'onAfterAdd',
+						parameters: {
+							notificationTemplateId: notificationTemplate.id,
+							type: 'userNotification',
+						},
+					}
+				);
+
+			apiHelpers.data.push({
+				id: objectAction.id,
+				type: 'objectAction',
+			});
+		});
+
+		await test.step('Create an order display page template and a default layout', async () => {
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+			const displayPageTemplateName = getRandomString();
+
+			await displayPageTemplatesPage.createTemplate({
+				contentType: 'Order',
+				name: displayPageTemplateName,
+			});
+
+			await displayPageTemplatesPage.editTemplate(
+				displayPageTemplateName
+			);
+
+			await pageEditorPage.addFragment('Basic Components', 'Heading');
+			await pageEditorPage.waitForChangesSaved();
+
+			await displayPageTemplatesPage.publishTemplate();
+			await displayPageTemplatesPage.clickMoreActions(
+				displayPageTemplateName,
+				'Mark as Default'
+			);
+
+			await expect(
+				commerceLayoutsPage.defaultDisplayPageTemplateIcon
+			).toBeVisible();
+
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Create an order', async () => {
+			const address =
+				await apiHelpers.headlessCommerceAdminAccount.postAddress(
+					account.id,
+					{phoneNumber: '12345', regionISOCode: 'AL'}
+				);
+
+			const order = await apiHelpers.headlessCommerceAdminOrder.postOrder(
+				{
+					accountId: account.id,
+					billingAddressId: address.id,
+					channelId: channel.id,
+					orderItems: [
+						{
+							decimalQuantity: 10,
+							quantity: 2,
+							skuId: sku.id,
+						},
+					],
+					orderStatus: '0',
+					paymentStatus: '0',
+					shippingAddressId: address.id,
+				}
+			);
+
+			orderId = order.id;
+		});
+
+		await test.step('Add an order note', async () => {
+			orderNote =
+				await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+					orderId,
+					{restricted: false}
+				);
+		});
+
+		await test.step('As a Buyer1, verify that the notification is delivered', async () => {
+			await performLogout(page);
+
+			await performLoginViaApi({
+				page,
+				screenName: buyerUser1.alternateName,
+			});
+
+			await userPersonalBarPage.notificationBadge.click();
+
+			await expect(page.getByText(orderId)).toHaveCount(1);
+		});
+
+		await test.step('As a Buyer2, verify that the notification is delivered', async () => {
+			userData[buyerUser2.alternateName] = {
+				name: buyerUser2.givenName,
+				password: 'test',
+				surname: buyerUser2.familyName,
+			};
+
+			await performLogout(page);
+
+			await performLoginViaApi({
+				page,
+				screenName: buyerUser2.alternateName,
+			});
+
+			await userPersonalBarPage.notificationBadge.click();
+
+			await expect(page.getByText(orderId)).toHaveCount(1);
+		});
+
+		await test.step('As a Buyer2, add an order with a note', async () => {
+			const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
+				{
+					accountId: account.id,
+					cartItems: [
+						{
+							quantity: 1,
+							skuId: sku.id,
+						},
+					],
+				},
+				channel.id
+			);
+
+			orderId = cart.id;
+
+			orderNote =
+				await apiHelpers.headlessCommerceDeliveryCart.postCartIdCartComment(
+					{restricted: false},
+					cart.id
+				);
+		});
+
+		await test.step('As an Order Manager, verify that the notification is delivered', async () => {
+			userData[orderManagerUser.alternateName] = {
+				name: orderManagerUser.givenName,
+				password: 'test',
+				surname: orderManagerUser.familyName,
+			};
+
+			await performLogout(page);
+
+			await performLoginViaApi({
+				page,
+				screenName: orderManagerUser.alternateName,
+			});
+
+			await userPersonalBarPage.notificationBadge.click();
+
+			await expect(page.getByText(orderId)).toHaveCount(1);
+		});
+
+		await test.step('As an Order Administrator, click on the notification to be redirected to control panel', async () => {
+			await page.getByText(orderId).click();
+
+			await expect(page.getByText(orderNote.content)).toHaveCount(1);
+		});
+
+		await test.step('As an Order Manager, add a restricted note to the order created by Buyer2', async () => {
+			orderNote =
+				await apiHelpers.headlessCommerceAdminOrder.postOrderIdOrderNote(
+					orderId,
+					{restricted: true}
+				);
+		});
+
+		await test.step('As a Buyer1, verify that the notification for the restricted note is not delivered', async () => {
+			await performLogout(page);
+
+			await performLoginViaApi({
+				page,
+				screenName: buyerUser1.alternateName,
+			});
+
+			await userPersonalBarPage.notificationBadge.click();
+
+			await expect(page.getByText(orderId)).toHaveCount(0);
+		});
+
+		await test.step('As a Buyer2, verify that the notification for the restricted note is delivered', async () => {
+			userData[buyerUser2.alternateName] = {
+				name: buyerUser2.givenName,
+				password: 'test',
+				surname: buyerUser2.familyName,
+			};
+
+			await performLogout(page);
+
+			await performLoginViaApi({
+				page,
+				screenName: buyerUser2.alternateName,
+			});
+
+			await userPersonalBarPage.notificationBadge.click();
+
+			await expect(page.getByText(orderId)).toHaveCount(1);
+		});
+
+		await test.step('As a Buyer2, click on the notification to be redirected to the order display page', async () => {
+			await page.getByText(orderId).click();
+
+			await expect(page.getByText('Heading Example')).toBeVisible();
+		});
 	}
 );

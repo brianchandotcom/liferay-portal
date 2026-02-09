@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import getRandomString from '../utils/getRandomString';
 import {ApiHelpers, DataApiHelpers} from './ApiHelpers';
 
 type TCart = {
@@ -18,6 +19,15 @@ type TCart = {
 	shippingAddressId?: number;
 	shippingMethod?: string;
 	shippingOption?: string;
+};
+
+type TCartComment = {
+	author?: string;
+	content?: string;
+	externalReferenceCode?: string;
+	id?: number;
+	orderId?: number;
+	restricted?: boolean;
 };
 
 type TCartItem = {
@@ -83,6 +93,26 @@ export class HeadlessCommerceDeliveryCartApiHelper {
 		);
 
 		return patchCart;
+	}
+
+	async postCartIdCartComment(
+		cartComment: TCartComment,
+		cartId: number
+	): Promise<TCartComment> {
+		cartComment = {
+			author: getRandomString(),
+			content: getRandomString(),
+			externalReferenceCode: getRandomString(),
+			...(cartComment || {}),
+		};
+
+		return await this.apiHelpers.post(
+			`${this.apiHelpers.baseUrl}${this.basePath}/carts/${cartId}/comments`,
+			{
+				data: cartComment,
+				failOnStatusCode: true,
+			}
+		);
 	}
 
 	async postCart(cart: TCart, channelId: number): Promise<TCart> {

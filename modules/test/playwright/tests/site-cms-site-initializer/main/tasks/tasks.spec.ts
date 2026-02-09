@@ -172,6 +172,131 @@ test(
 );
 
 test(
+	'Bulk update the assignee of an task',
+	{tag: ['@LPD-75299']},
+	async ({apiHelpers, page, tasksPage}) => {
+		const cmpProject = 'cmp/projects';
+		const cmpTask = 'cmp/tasks';
+
+		const tasks = [];
+		const taskNames = [
+			getRandomString(),
+			getRandomString(),
+			getRandomString(),
+		];
+
+		const assetLibrary =
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: getRandomString(),
+				settings: {},
+				type: 'Project',
+			});
+
+		const project = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				title: getRandomString(),
+			},
+			cmpProject,
+			assetLibrary.name
+		);
+
+		for (const taskName of taskNames) {
+			const task = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					r_cmpProjectToCMPTasks_c_cmpProjectId: project.id,
+					title: taskName,
+				},
+				cmpTask,
+				project.scopeKey
+			);
+			tasks.push(task);
+		}
+
+		try {
+			await test.step('Select 2 task and update its assignee using the Bulk Action', async () => {
+				await tasksPage.goto();
+
+				await tasksPage
+					.getItem(taskNames[0])
+					.locator('input[title="Select Item"]')
+					.check();
+				await tasksPage
+					.getItem(taskNames[1])
+					.locator('input[title="Select Item"]')
+					.check();
+
+				await tasksPage.execBulkItemAction('Assign Task');
+
+				await expect(tasksPage.assignTaskToDialog).toBeVisible();
+
+				await page.getByPlaceholder('Unassigned').fill('Publications Viewer');
+
+				await page.getByRole('option', {name: 'Publications Viewer'}).click();
+
+				await tasksPage.saveButton.click();
+
+				await expect(async()=>{
+
+					await tasksPage.goto();
+	
+					await expect(
+						page.getByRole('row', {name: 'Publications Viewer'})
+					).toHaveCount(2, {timeout:1000});
+
+				}).toPass({timeout:10000});
+			});
+		}
+		finally {
+			await tasksPage.goto();
+
+			if (project) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					cmpProject,
+					String(project.id)
+				);
+			}
+
+			if (tasks) {
+				for (const task of tasks) {
+					await apiHelpers.objectEntry.deleteObjectEntry(
+						cmpTask,
+						task.id
+					);
+				}
+			}
+
+			const bulkActionTaskItems = 'cms/bulk-action-task-items';
+
+			const bulkTaskItems =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTaskItems
+				);
+
+			for (const bulkTaskItem of bulkTaskItems.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTaskItems,
+					bulkTaskItem.id
+				);
+			}
+
+			const bulkActionTasks = 'cms/bulk-action-tasks';
+
+			const bulkTasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasks
+				);
+
+			for (const bulkTask of bulkTasks.items) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasks,
+					bulkTask.id
+				);
+			}
+		}
+	}
+);
+
+test(
 	'Bulk update the state of an task',
 	{tag: ['@LPD-75299']},
 	async ({apiHelpers, page, tasksPage}) => {

@@ -14,6 +14,7 @@ interface ExecItemActionArgs {
 }
 
 export class TasksPage {
+	readonly assignTaskToDialog: Locator;
 	readonly dataSetFragmentPage: DataSetPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
@@ -24,6 +25,9 @@ export class TasksPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.assignTaskToDialog = page.getByRole('dialog', {
+			name: 'Assign Tasks to',
+		});
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.updateDueDateDialog = page.getByRole('dialog', {

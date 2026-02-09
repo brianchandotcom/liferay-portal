@@ -10,11 +10,11 @@ interface Props {
 	visible: boolean;
 }
 
-function ApplicationsMenuToggle({visible: initialVisible}: Props) {
+function SideNavigationToggler({visible: initialVisible}: Props) {
 	const [visible, setVisible] = useState(initialVisible);
 
 	async function toggle() {
-		Liferay.fire('applicationsMenuStateRequested', {visible: !visible});
+		Liferay.fire('sideNavigationStateRequested', {visible: !visible});
 	}
 
 	useEffect(() => {
@@ -22,18 +22,19 @@ function ApplicationsMenuToggle({visible: initialVisible}: Props) {
 			setVisible(visible);
 		}
 
-		Liferay.on('applicationsMenuStateChanged', handleStateChanged);
+		Liferay.on('sideNavigationStateChanged', handleStateChanged);
 
 		return () =>
-			Liferay.detach('applicationsMenuStateChanged', handleStateChanged);
+			Liferay.detach('sideNavigationStateChanged', handleStateChanged);
 	}, []);
 
 	return (
 		<button
-			aria-controls="com_liferay_application_list_taglib_applications_menu"
+			aria-controls="com_liferay_application_list_taglib_side_navigation"
 			aria-expanded={visible}
 			className="btn btn-monospaced btn-sm control-menu-nav-link lfr-portal-tooltip"
-			id="com_liferay_application_list_taglib_applications_menu_toggle"
+			data-qa-id="sideNavigationToggler"
+			id="com_liferay_application_list_taglib_side_navigation_toggler"
 			onClick={toggle}
 			role="tab"
 		>
@@ -46,4 +47,4 @@ function ApplicationsMenuToggle({visible: initialVisible}: Props) {
 	);
 }
 
-export default ApplicationsMenuToggle;
+export default SideNavigationToggler;

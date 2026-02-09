@@ -8,7 +8,7 @@ package com.liferay.application.list.taglib.navigation;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
-import com.liferay.application.list.taglib.internal.display.context.ApplicationsMenuDisplayContext;
+import com.liferay.application.list.taglib.internal.display.context.SideNavigationDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.IconTag;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = ProductNavigationControlMenuEntry.class
 )
-public class ApplicationsMenuControlMenuEntry
+public class SideNavigationControlMenuEntry
 	extends BaseProductNavigationControlMenuEntry {
 
 	@Override
@@ -61,15 +61,15 @@ public class ApplicationsMenuControlMenuEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		ApplicationsMenuDisplayContext applicationsMenuDisplayContext =
-			new ApplicationsMenuDisplayContext(httpServletRequest);
+		SideNavigationDisplayContext sideNavigationDisplayContext =
+			new SideNavigationDisplayContext(httpServletRequest);
 
 		try {
 			PrintWriter printWriter = httpServletResponse.getWriter();
 
 			printWriter.write("<li class=\"control-menu-nav-item");
 
-			if (applicationsMenuDisplayContext.isVisible()) {
+			if (sideNavigationDisplayContext.isVisible()) {
 				printWriter.write(" active");
 			}
 
@@ -80,7 +80,7 @@ public class ApplicationsMenuControlMenuEntry
 					"control-menu-nav-link lfr-portal-tooltip ",
 					"product-menu-toast-toggle\">"));
 
-			if (applicationsMenuDisplayContext.isVisible()) {
+			if (sideNavigationDisplayContext.isVisible()) {
 				IconTag openIconTag = new IconTag();
 
 				openIconTag.setCssClass(
@@ -103,9 +103,9 @@ public class ApplicationsMenuControlMenuEntry
 
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
-					"{ApplicationsMenuToggle} from application-list-taglib"),
+					"{SideNavigationToggler} from application-list-taglib"),
 				HashMapBuilder.<String, Object>put(
-					"visible", applicationsMenuDisplayContext.isVisible()
+					"visible", sideNavigationDisplayContext.isVisible()
 				).build(),
 				httpServletRequest, printWriter);
 

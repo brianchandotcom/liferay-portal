@@ -15,7 +15,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.IconItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.VerticalNavItemList;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.SessionClicks;
@@ -31,11 +30,9 @@ import java.util.Map;
 /**
  * @author Thiago Buarque
  */
-public class ApplicationsMenuDisplayContext {
+public class SideNavigationDisplayContext {
 
-	public ApplicationsMenuDisplayContext(
-		HttpServletRequest httpServletRequest) {
-
+	public SideNavigationDisplayContext(HttpServletRequest httpServletRequest) {
 		_httpServletRequest = httpServletRequest;
 
 		_panelAppRegistry = (PanelAppRegistry)httpServletRequest.getAttribute(
@@ -263,10 +260,10 @@ public class ApplicationsMenuDisplayContext {
 	}
 
 	private static final String _EXPANDED_KEYS_SESSION_KEY =
-		"com_liferay_application_list_taglib_ApplicationsMenuExpanded_%sKeys";
+		"com_liferay_application_list_taglib_SideNavigationExpanded_%sKeys";
 
 	private static final String _VISIBLE_SESSION_KEY =
-		"com_liferay_application_list_taglib_ApplicationsMenuState";
+		"com_liferay_application_list_taglib_SideNavigationState";
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;

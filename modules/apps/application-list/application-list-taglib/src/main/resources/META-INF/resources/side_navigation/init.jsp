@@ -8,5 +8,5 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-util:html-top>
-	<aui:link hashedFile="<%= true %>" href="application-list-taglib/css/applications_menu.css" rel="stylesheet" type="text/css" />
+	<aui:link hashedFile="<%= true %>" href="application-list-taglib/css/side_navigation.css" rel="stylesheet" type="text/css" />
 </liferay-util:html-top>

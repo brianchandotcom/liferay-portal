@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -101,21 +100,18 @@ public class LayoutStructureUtil {
 			layoutPageTemplateStructure.getData(segmentsExperienceKey));
 	}
 
-	public static int getMissingFragmentEntryFragmentEntryLinksCount(
+	public static boolean hasMissingFragmentEntryFragmentEntryLinks(
 		String itemId, LayoutStructure layoutStructure) {
 
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(itemId);
 
 		if (layoutStructureItem == null) {
-			return 0;
+			return false;
 		}
 
-		List<FragmentEntryLink> fragmentEntryLinks =
-			_getMissingFragmentEntryFragmentEntryLinks(
-				layoutStructureItem.getChildrenItemIds(), layoutStructure);
-
-		return fragmentEntryLinks.size();
+		return _hasMissingFragmentEntryFragmentEntryLinks(
+			layoutStructureItem.getChildrenItemIds(), layoutStructure);
 	}
 
 	public static JSONObject updateLayoutPageTemplateData(
@@ -159,19 +155,19 @@ public class LayoutStructureUtil {
 				fragmentEntryLink.getFragmentEntryERC(), fragmentEntryGroupId);
 	}
 
-	private static List<FragmentEntryLink>
-		_getMissingFragmentEntryFragmentEntryLinks(
-			List<String> itemIds, LayoutStructure layoutStructure) {
-
-		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+	private static boolean _hasMissingFragmentEntryFragmentEntryLinks(
+		List<String> itemIds, LayoutStructure layoutStructure) {
 
 		for (String itemId : itemIds) {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(itemId);
 
-			fragmentEntryLinks.addAll(
-				_getMissingFragmentEntryFragmentEntryLinks(
-					layoutStructureItem.getChildrenItemIds(), layoutStructure));
+			if (_hasMissingFragmentEntryFragmentEntryLinks(
+					layoutStructureItem.getChildrenItemIds(),
+					layoutStructure)) {
+
+				return true;
+			}
 
 			if (!(layoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem)) {
@@ -200,9 +196,7 @@ public class LayoutStructureUtil {
 			}
 
 			if (Validator.isNull(fragmentEntryLink.getRendererKey())) {
-				fragmentEntryLinks.add(fragmentEntryLink);
-
-				continue;
+				return true;
 			}
 
 			FragmentRenderer fragmentRenderer =
@@ -210,11 +204,11 @@ public class LayoutStructureUtil {
 					fragmentEntryLink.getRendererKey());
 
 			if (fragmentRenderer == null) {
-				fragmentEntryLinks.add(fragmentEntryLink);
+				return true;
 			}
 		}
 
-		return fragmentEntryLinks;
+		return false;
 	}
 
 }

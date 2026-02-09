@@ -66,20 +66,20 @@ public class AddFragmentCompositionMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
-		int invalidFragmentsCount =
-			LayoutStructureUtil.getMissingFragmentEntryFragmentEntryLinksCount(
+		boolean hasMissingFragmentEntry =
+			LayoutStructureUtil.hasMissingFragmentEntryFragmentEntryLinks(
 				itemId,
 				LayoutStructureUtil.getLayoutStructure(
 					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 					segmentsExperienceId));
 
-		if (invalidFragmentsCount > 0) {
+		if (hasMissingFragmentEntry) {
 			return JSONUtil.put(
 				"fragmentComposition",
 				JSONUtil.put(
 					"type", ContentPageEditorConstants.TYPE_COMPOSITION)
 			).put(
-				"invalidFragmentsCount", invalidFragmentsCount
+				"valid", false
 			);
 		}
 
@@ -163,8 +163,6 @@ public class AddFragmentCompositionMVCActionCommand
 				"type", ContentPageEditorConstants.TYPE_COMPOSITION
 			)
 		).put(
-			"invalidFragmentsCount", invalidFragmentsCount
-		).put(
 			"url",
 			PortletURLBuilder.create(
 				_portal.getControlPanelPortletURL(
@@ -174,6 +172,8 @@ public class AddFragmentCompositionMVCActionCommand
 			).setParameter(
 				"fragmentCollectionId", fragmentCollectionId
 			).buildString()
+		).put(
+			"valid", true
 		);
 	}
 

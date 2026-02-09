@@ -40,13 +40,14 @@ public class ValidateFragmentCompositionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return JSONUtil.put(
-			"invalidFragmentsCount",
-			LayoutStructureUtil.getMissingFragmentEntryFragmentEntryLinksCount(
+		boolean hasMissingFragmentEntry =
+			LayoutStructureUtil.hasMissingFragmentEntryFragmentEntryLinks(
 				ParamUtil.getString(actionRequest, "itemId"),
 				LayoutStructureUtil.getLayoutStructure(
 					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-					ParamUtil.getLong(actionRequest, "segmentsExperienceId"))));
+					ParamUtil.getLong(actionRequest, "segmentsExperienceId")));
+
+		return JSONUtil.put("valid", !hasMissingFragmentEntry);
 	}
 
 }

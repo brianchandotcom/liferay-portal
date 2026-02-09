@@ -286,40 +286,6 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	@Test
-	public void testDisplayPageTypeControllerWithContentWithoutGuestAccessWithPromptEnabled()
-		throws Exception {
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				 new ConfigurationTemporarySwapper(
-					 _PID,
-					 HashMapDictionaryBuilder.<String, Object>put(
-						 "promptEnabled", true
-					 ).build())) {
-
-			LayoutPageTemplateEntry layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					null, _group.getGroupId(), 0, null,
-					_portal.getClassNameId(AssetCategory.class.getName()), 0,
-					RandomTestUtil.randomString(), 0,
-					WorkflowConstants.STATUS_DRAFT, _serviceContext);
-
-			Layout layout = _layoutLocalService.getLayout(
-				layoutPageTemplateEntry.getPlid());
-
-			Layout draftLayout = layout.fetchDraftLayout();
-
-			Assert.assertNotNull(draftLayout);
-
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-			Assert.assertTrue(layout.isPublished());
-
-			_assertIncludeLayoutContent(
-				HttpServletResponse.SC_OK, false, layout.getPlid(), _guestUser);
-		}
-	}
-
-	@Test
 	public void testDisplayPageTypeControllerWithInfoItem() throws Exception {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
@@ -503,7 +469,7 @@ public class DisplayPageLayoutTypeControllerTest {
 	}
 
 	@Test
-	@TestInfo("LPD-75440")
+	@TestInfo({"LPD-75440", "LPD-78223"})
 	public void testDisplayPageTypeControllerWithoutContextInfoItem()
 		throws Exception {
 
@@ -836,6 +802,19 @@ public class DisplayPageLayoutTypeControllerTest {
 		_assertIncludeLayoutContent(
 			HttpServletResponse.SC_OK, true, draftLayout.getClassPK(),
 			_guestUser);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					_PID,
+					HashMapDictionaryBuilder.<String, Object>put(
+						"promptEnabled", true
+					).build())) {
+
+			_assertIncludeLayoutContent(
+				HttpServletResponse.SC_FOUND, false, draftLayout.getClassPK(),
+				_guestUser);
+		}
+
 		_assertIncludeLayoutContent(
 			HttpServletResponse.SC_OK, true, draftLayout.getPlid(), _guestUser);
 		_assertIncludeLayoutContent(

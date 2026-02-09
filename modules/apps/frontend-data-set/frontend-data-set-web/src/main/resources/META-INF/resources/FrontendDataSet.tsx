@@ -1534,7 +1534,7 @@ const FrontendDataSetContent = ({
 			<div
 				className={classNames(
 					'container-fluid align-items-center inline-notification-bar',
-					style === 'fluid' && 'px-0'
+					style === 'fluid' && 'px-0 pb-1'
 				)}
 			>
 				<InlineNotification

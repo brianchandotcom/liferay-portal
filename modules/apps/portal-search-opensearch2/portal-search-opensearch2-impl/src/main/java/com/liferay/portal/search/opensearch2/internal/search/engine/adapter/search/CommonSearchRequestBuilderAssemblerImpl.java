@@ -9,10 +9,10 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
+import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationVisitor;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationVisitor;
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.filter.OpenSearchFilterVisitor;
@@ -311,7 +311,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		MapUtil.isNotEmptyForEach(
 			baseSearchRequest.getAggregationsMap(),
 			(key, aggregation) -> searchRequestBuilder.aggregations(
-				key, _aggregationTranslator.translate(aggregation)));
+				key,
+				aggregation.accept(OpenSearchAggregationVisitor.INSTANCE)));
 	}
 
 	private void _setExplain(
@@ -607,11 +608,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			com.liferay.portal.search.opensearch2.internal.query.
 				OpenSearchQueryVisitor.INSTANCE.translate(query));
 	}
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private AggregationTranslator
-		<org.opensearch.client.opensearch._types.aggregations.Aggregation>
-			_aggregationTranslator;
 
 	@Reference
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;

@@ -6,6 +6,11 @@
 package com.liferay.dynamic.data.mapping.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.counter.kernel.service.CounterLocalService;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.mapping.constants.DDMStructureConstants;
+import com.liferay.dynamic.data.mapping.model.DDMField;
+import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
@@ -15,23 +20,33 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMFieldLocalServiceWrapper;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
+import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -42,6 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -50,6 +66,11 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Preston Crary
@@ -74,6 +95,104 @@ public class DDMFieldLocalServiceTest {
 	@After
 	public void tearDown() throws Exception {
 		_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
+	}
+
+	@Test
+	public void testDeleteDDMFormValuesModelListeners() throws Exception {
+		_createDDMField();
+
+		AtomicInteger ddmFieldAttributeInvokedModelListeners =
+			new AtomicInteger(0);
+		AtomicInteger ddmFieldInvokedModelListeners = new AtomicInteger(0);
+
+		Bundle bundle = FrameworkUtil.getBundle(DDMFieldLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration1 = null;
+		ServiceRegistration<?> serviceRegistration2 = null;
+
+		try {
+			serviceRegistration1 = bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<DDMFieldAttribute>() {
+
+					@Override
+					public void onBeforeRemove(
+							DDMFieldAttribute ddmFieldAttribute)
+						throws ModelListenerException {
+
+						ddmFieldAttributeInvokedModelListeners.
+							incrementAndGet();
+					}
+
+				},
+				null);
+
+			serviceRegistration2 = bundleContext.registerService(
+				ModelListener.class,
+				new BaseModelListener<DDMField>() {
+
+					@Override
+					public void onBeforeRemove(DDMField ddmField)
+						throws ModelListenerException {
+
+						ddmFieldInvokedModelListeners.incrementAndGet();
+					}
+
+				},
+				null);
+
+			_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
+
+			Assert.assertEquals(
+				2, ddmFieldAttributeInvokedModelListeners.get());
+			Assert.assertEquals(1, ddmFieldInvokedModelListeners.get());
+		}
+		finally {
+			if (serviceRegistration1 != null) {
+				serviceRegistration1.unregister();
+			}
+
+			if (serviceRegistration2 != null) {
+				serviceRegistration2.unregister();
+			}
+		}
+	}
+
+	@Test
+	public void testDeleteDDMFormValuesWrappers() throws Exception {
+		_createDDMField();
+
+		AtomicInteger invkedServiceWrappers = new AtomicInteger(0);
+
+		Bundle bundle = FrameworkUtil.getBundle(DDMFieldLocalServiceTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<?> serviceRegistration =
+			bundleContext.registerService(
+				(Class<ServiceWrapper<?>>)(Class<?>)ServiceWrapper.class,
+				new DDMFieldLocalServiceWrapper() {
+
+					@Override
+					public DDMField deleteDDMField(DDMField ddmField) {
+						invkedServiceWrappers.incrementAndGet();
+
+						return ddmField;
+					}
+
+				},
+				null);
+
+		try {
+			_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
+
+			Assert.assertEquals(1, invkedServiceWrappers.get());
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
 	}
 
 	@Test
@@ -589,6 +708,32 @@ public class DDMFieldLocalServiceTest {
 		}
 	}
 
+	private void _createDDMField() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			RandomTestUtil.randomString());
+
+		DDMStructure ddmStructure = _ddmStructureLocalService.addStructure(
+			null, _group.getCreatorUserId(), _group.getGroupId(), 0,
+			PortalUtil.getClassNameId(DDLRecordSet.class.getName()),
+			"CUSTOM-META-TAGS", RandomTestUtil.randomLocaleStringMap(), null,
+			ddmForm, _ddm.getDefaultDDMFormLayout(ddmForm),
+			StorageType.DEFAULT.toString(), DDMStructureConstants.TYPE_DEFAULT,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
+
+		ddmFormValues.setDefaultLocale(LocaleUtil.ENGLISH);
+		ddmFormValues.setAvailableLocales(
+			Collections.singleton(LocaleUtil.ENGLISH));
+		ddmFormValues.setDDMFormFieldValues(
+			Collections.singletonList(
+				_createDDMFormFieldValue(
+					LocaleUtil.ENGLISH, "field1", "value1")));
+
+		_ddmFieldLocalService.updateDDMFormValues(
+			ddmStructure.getStructureId(), _STORAGE_ID, ddmFormValues);
+	}
+
 	private DDMFormField _createDDMFormField(
 		Locale locale, DDMForm ddmForm, String name, String type,
 		String dataType, String fieldNamespace,
@@ -668,7 +813,19 @@ public class DDMFieldLocalServiceTest {
 	@Inject
 	private static JSONFactory _jsonFactory;
 
+	@Inject
+	private CounterLocalService _counterLocalService;
+
+	@Inject
+	private DDM _ddm;
+
+	@Inject
+	private DDMStructureLocalService _ddmStructureLocalService;
+
 	private DDMStructureTestHelper _ddmStructureTestHelper;
+
+	@Inject
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

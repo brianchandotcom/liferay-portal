@@ -15,12 +15,12 @@ import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
 import {useDrag} from 'react-dnd';
 
+import StateLabel from '../../../../StateLabel';
 import {
 	deleteTaskById,
 	getUserAccount,
 	patchTaskById,
 } from '../../../../../utils/api';
-import {mapStateKeyToDisplayType} from '../../../../../utils/constants';
 import {openCMPModal} from '../../../../../utils/openCMPModal';
 import {
 	displayAssignSuccessToast,
@@ -263,15 +263,13 @@ export default function Task(task: ITask) {
 
 					<Card.Row>
 						<div className="lfr__kaban-task-card-row">
-							<Label
-								displayType={
-									mapStateKeyToDisplayType[
-										task.embedded.state.key
-									]
-								}
-							>
-								{task.embedded.state.name}
-							</Label>
+							<StateLabel
+								dueDate={task.embedded.dueDate}
+								state={{
+									key: task.embedded.state.key,
+									name: task.embedded.state.name
+								}}
+							/>
 
 							<div className="lfr__kaban-task-card-assignee">
 								<AssigneeAvatar

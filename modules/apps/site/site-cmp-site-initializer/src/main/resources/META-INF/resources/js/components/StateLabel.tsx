@@ -43,7 +43,7 @@ function StateLabel({dueDate, state}: StateLabelProps) {
 		dueDate && state.key !== 'done' && Date.parse(dueDate) < Date.now();
 
 	return (
-		<>
+		<div>
 			<Label displayType={mapKeyToNameDisplayType[state.key]}>
 				{state.name}
 			</Label>
@@ -53,7 +53,7 @@ function StateLabel({dueDate, state}: StateLabelProps) {
 					{Liferay.Language.get('overdue')}
 				</Label>
 			)}
-		</>
+		</div>
 	);
 }
 

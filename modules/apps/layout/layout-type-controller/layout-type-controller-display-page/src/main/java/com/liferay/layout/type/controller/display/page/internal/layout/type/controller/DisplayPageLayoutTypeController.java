@@ -222,13 +222,9 @@ public class DisplayPageLayoutTypeController
 				httpServletResponse.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			}
 			else if (!hasViewPermission) {
-				if (themeDisplay.isSignedIn()) {
-					httpServletResponse.setStatus(
-						HttpServletResponse.SC_FORBIDDEN);
-				}
-				else if (!loginRequest &&
-						 AuthLoginGroupSettingsUtil.isPromptEnabled(
-							 layout.getGroupId())) {
+				if (!loginRequest &&
+					AuthLoginGroupSettingsUtil.isPromptEnabled(
+						layout.getGroupId())) {
 
 					redirect = HttpComponentsUtil.setParameter(
 						themeDisplay.getURLSignIn(), "redirect",

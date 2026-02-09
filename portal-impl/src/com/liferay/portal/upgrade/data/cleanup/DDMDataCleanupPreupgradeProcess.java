@@ -228,16 +228,14 @@ public class DDMDataCleanupPreupgradeProcess
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							"select groupId, parentGroupId from Group_");
+							"select groupId, parentGroupId from Group_ where " +
+								"parentGroupId != 0");
 					ResultSet resultSet = preparedStatement.executeQuery()) {
 
 					while (resultSet.next()) {
-						long parentGroupId = resultSet.getLong("parentGroupId");
-
-						if (parentGroupId > 0) {
-							parentGroupIdMap.put(
-								resultSet.getLong("groupId"), parentGroupId);
-						}
+						parentGroupIdMap.put(
+							resultSet.getLong("groupId"),
+							resultSet.getLong("parentGroupId"));
 					}
 				}
 

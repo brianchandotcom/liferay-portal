@@ -85,6 +85,8 @@ public interface ObjectDefinition
 
 	public boolean isApproved();
 
+	public boolean isCMP();
+
 	public boolean isCMS();
 
 	public boolean isDefaultStorageType();

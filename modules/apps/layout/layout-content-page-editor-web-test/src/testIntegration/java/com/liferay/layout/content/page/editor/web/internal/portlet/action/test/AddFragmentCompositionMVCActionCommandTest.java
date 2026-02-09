@@ -305,7 +305,7 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_fragmentCompositionLocalService.getFragmentCompositionsCount(
 				fragmentCollection.getFragmentCollectionId()));
 
-		Assert.assertEquals(1, jsonObject.getInt("invalidFragmentsCount"));
+		Assert.assertFalse(jsonObject.getBoolean("valid"));
 	}
 
 	@Test

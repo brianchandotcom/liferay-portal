@@ -111,7 +111,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			fragmentEntryLink, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		_testValidateFragmentComposition(1, containerItemId);
+		_testValidateFragmentComposition(containerItemId, false);
 	}
 
 	@Test
@@ -127,11 +127,10 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			StringPool.BLANK, _draftLayout, containerItemId, 0,
 			_segmentsExperienceId);
 
-		_testValidateFragmentComposition(0, containerItemId);
+		_testValidateFragmentComposition(containerItemId, true);
 	}
 
-	private void _testValidateFragmentComposition(
-			int expectedCount, String itemId)
+	private void _testValidateFragmentComposition(String itemId, boolean valid)
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -153,8 +152,7 @@ public class ValidateFragmentCompositionMVCActionCommandTest {
 			mockLiferayPortletActionRequest,
 			new MockLiferayPortletActionResponse());
 
-		Assert.assertEquals(
-			expectedCount, jsonObject.getInt("invalidFragmentsCount"));
+		Assert.assertEquals(valid, jsonObject.getBoolean("valid"));
 	}
 
 	private Company _company;

@@ -7,7 +7,7 @@ import Label from '@clayui/label';
 import {DateRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {patchTaskById} from '../../utils/api';
 import {
@@ -40,6 +40,9 @@ export default function TaskInfoSummary({
 	taskId,
 	title,
 }: TaskInfoSummaryProps) {
+	const [selectedStateKey, setSelectedStateKey] = useState(initialState);
+	const [stateSelectorDisabled, setStateSelectorDisabled] = useState(false);
+
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -48,14 +51,18 @@ export default function TaskInfoSummary({
 					label: 'State',
 					value: (
 						<StateSelector
-							initialSelectedKey={initialState}
+							disabled={stateSelectorDisabled}
 							onChange={async (key: string) => {
+								setStateSelectorDisabled(true);
+
 								const {error} = await patchTaskById({
 									body: {state: key},
 									taskId,
 								});
 
 								if (!error) {
+									setSelectedStateKey(key);
+
 									displayStateSuccessToast();
 
 									Liferay.fire(UPDATE_HISTORY);
@@ -63,7 +70,10 @@ export default function TaskInfoSummary({
 								else {
 									displayErrorToast(error);
 								}
+
+								setStateSelectorDisabled(false);
 							}}
+							selectedKey={selectedStateKey}
 							small
 							states={states}
 						/>

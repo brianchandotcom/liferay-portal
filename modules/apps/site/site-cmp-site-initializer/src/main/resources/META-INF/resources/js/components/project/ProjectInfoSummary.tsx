@@ -6,7 +6,7 @@
 import Label from '@clayui/label';
 import {DateRenderer} from '@liferay/frontend-data-set-web';
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
-import React from 'react';
+import React, {useState} from 'react';
 
 import {patchProjectById} from '../../utils/api';
 import {displayStateSuccessToast} from '../../utils/toastUtil';
@@ -34,6 +34,9 @@ export default function ProjectInfoSummary({
 	states,
 	tags,
 }: ProjectInfoSummaryProps) {
+	const [selectedStateKey, setSelectedStateKey] = useState(initialState);
+	const [stateSelectorDisabled, setStateSelectorDisabled] = useState(false);
+
 	return (
 		<InfoSummary
 			defaultOpen={true}
@@ -42,14 +45,18 @@ export default function ProjectInfoSummary({
 					label: 'State',
 					value: (
 						<StateSelector
-							initialSelectedKey={initialState}
+							disabled={stateSelectorDisabled}
 							onChange={async (key: string) => {
+								setStateSelectorDisabled(true);
+
 								const {error} = await patchProjectById({
 									body: {state: key},
 									projectId,
 								});
 
 								if (!error) {
+									setSelectedStateKey(key);
+
 									displayStateSuccessToast();
 
 									Liferay.fire(UPDATE_HISTORY);
@@ -57,7 +64,10 @@ export default function ProjectInfoSummary({
 								else {
 									displayErrorToast(error);
 								}
+
+								setStateSelectorDisabled(false);
 							}}
+							selectedKey={selectedStateKey}
 							small
 							states={states}
 						/>

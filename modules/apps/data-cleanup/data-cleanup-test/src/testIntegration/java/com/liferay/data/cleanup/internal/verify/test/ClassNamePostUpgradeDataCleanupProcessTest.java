@@ -6,6 +6,8 @@
 package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.message.boards.util.MBUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -124,6 +126,34 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 
 				objectDefinitionAtomicReference.set(objectDefinition);
 			});
+	}
+
+	@Test
+	public void testFoundSubscriptionClassNameIsNotDeleted() throws Exception {
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue = MBUtil.getSubscriptionClassName(
+			BlogsEntry.class.getName());
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(messages.toString(), messages.isEmpty());
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
 	}
 
 	@Test
@@ -284,6 +314,90 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 		String classNameValue =
 			ObjectDefinition.class.getName() + StringPool.POUND +
 				RandomTestUtil.randomString();
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Class name ", classNameValue,
+							" is not defined in any deployed module but is ",
+							"referenced in the next tables: ",
+							dbInspector.normalizeName(_TABLE_NAME))));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+
+				_deleteFromDatabase(addressId, connection);
+			},
+			() -> {
+				ClassName className = _classNameLocalService.addClassName(
+					classNameValue);
+
+				classNameAtomicReference.set(className);
+
+				_insertIntoDatabase(
+					addressId, className.getClassNameId(), connection);
+			});
+	}
+
+	@Test
+	public void testNotFoundSubscriptionClassNameUnusedIsDeleted()
+		throws Exception {
+
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue = MBUtil.getSubscriptionClassName(
+			"com.liferay.test." + RandomTestUtil.randomString());
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Table ", dbInspector.normalizeName("ClassName_"),
+							", 1 row deleted because \"", classNameValue,
+							"\" is not defined in any deployed module and is ",
+							"not in use")));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(StringPool.BLANK, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
+	}
+
+	@Test
+	public void testNotFoundSubscriptionClassNameUsedIsNotDeleted()
+		throws Exception {
+
+		long addressId = RandomTestUtil.nextLong();
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue = MBUtil.getSubscriptionClassName(
+			"com.liferay.test." + RandomTestUtil.randomString());
 
 		test(
 			logCapture -> {

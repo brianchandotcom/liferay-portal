@@ -12,10 +12,6 @@ import {
 
 jest.unmock('react-dom');
 
-const mockData = {
-	segmentActivationId: '1'
-};
-
 const WrapperComponent: React.FC<{children: React.ReactNode}> = ({
 	children
 }) => (
@@ -44,8 +40,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={{
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.Batch,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.Batch
 					}}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -61,8 +56,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={{
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.RealTime,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.RealTime
 					}}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -79,8 +73,7 @@ describe('SegmentActivationCard', () => {
 						frequencyType: SegmentActivationFrequencyTypes.Between,
 						scheduleEndDate: '1757818800000',
 						scheduleStartDate: '1756004400000',
-						scheduleType: SegmentActivationScheduleTypes.Batch,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.Batch
 					}}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -96,8 +89,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={{
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.Batch,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.Batch
 					}}
 					segmentType={SegmentTypes.Batch}
 				/>
@@ -121,8 +113,7 @@ describe('SegmentActivationCard', () => {
 					segmentActivation={{
 						frequencyType:
 							SegmentActivationFrequencyTypes.Indefinitely,
-						scheduleType: SegmentActivationScheduleTypes.RealTime,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.RealTime
 					}}
 					segmentType={SegmentTypes.RealTime}
 				/>
@@ -150,8 +141,7 @@ describe('SegmentActivationCard', () => {
 						frequencyType: SegmentActivationFrequencyTypes.Between,
 						scheduleEndDate: '1757818800000',
 						scheduleStartDate: '1756004400000',
-						scheduleType: SegmentActivationScheduleTypes.RealTime,
-						...mockData
+						scheduleType: SegmentActivationScheduleTypes.RealTime
 					}}
 					segmentType={SegmentTypes.RealTime}
 				/>

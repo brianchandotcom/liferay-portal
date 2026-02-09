@@ -10,10 +10,10 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 type VerticalNavItem = React.ComponentProps<typeof ClayVerticalNav>['items'][0];
 
-interface ApplicationsMenuItem {
+interface SideNavigationItem {
 	href?: string;
 	id: string;
-	items?: Array<ApplicationsMenuItem>;
+	items?: Array<SideNavigationItem>;
 	label: string;
 	leadingIcon?: string;
 }
@@ -21,14 +21,14 @@ interface ApplicationsMenuItem {
 interface Props {
 	expandedKeys: Array<React.Key>;
 	expandedKeysSessionKey: string;
-	items: Array<ApplicationsMenuItem>;
+	items: Array<SideNavigationItem>;
 	label: string;
 	portletId: string;
 	visible: boolean;
 	visibleSessionKey: string;
 }
 
-function ApplicationsMenu({
+function SideNavigation({
 	expandedKeys: initialExpandedKeys,
 	expandedKeysSessionKey,
 	items,
@@ -39,7 +39,7 @@ function ApplicationsMenu({
 }: Props) {
 	const containerRef = useRef<HTMLElement | null>(
 		document.getElementById(
-			'com_liferay_application_list_taglib_applications_menu_container'
+			'com_liferay_application_list_taglib_side_navigation_container'
 		)
 	);
 
@@ -48,11 +48,11 @@ function ApplicationsMenu({
 		() => new Set(initialExpandedKeys)
 	);
 
-	function buildNavigationItem(item: ApplicationsMenuItem): VerticalNavItem {
+	function buildVerticalNavItem(item: SideNavigationItem): VerticalNavItem {
 		return {
 			...item,
 			...(item.items && {
-				items: item.items.map((child) => buildNavigationItem(child)),
+				items: item.items.map((child) => buildVerticalNavItem(child)),
 			}),
 			...(item.leadingIcon && {
 				label: (
@@ -88,7 +88,7 @@ function ApplicationsMenu({
 
 			setVisible(visible);
 
-			Liferay.fire('applicationsMenuStateChanged', {visible});
+			Liferay.fire('sideNavigationStateChanged', {visible});
 		},
 		[visibleSessionKey]
 	);
@@ -98,32 +98,32 @@ function ApplicationsMenu({
 			await updateVisible(visible);
 		}
 
-		Liferay.on('applicationsMenuStateRequested', handleStateRequest);
+		Liferay.on('sideNavigationStateRequested', handleStateRequest);
 
 		return () =>
-			Liferay.detach(
-				'applicationsMenuStateRequested',
-				handleStateRequest
-			);
+			Liferay.detach('sideNavigationStateRequested', handleStateRequest);
 	}, [updateVisible]);
 
 	return (
 		<SidePanel
 			as="section"
 			containerRef={containerRef}
+			data-qa-id="sideNavigation"
 			defaultOpen={initialVisible}
 			direction="left"
-			id="com_liferay_application_list_taglib_applications_menu"
+			id="com_liferay_application_list_taglib_side_navigation"
 			onOpenChange={updateVisible}
 			open={visible}
 			panelWidth={320}
 			position="fixed"
 		>
-			<SidePanel.Header>
+			<SidePanel.Header data-qa-id="sideNavigationHeader">
 				<SidePanel.Title>
 					<ClayIcon symbol="grid" />
 
-					<span className="c-px-2">{label}</span>
+					<span className="c-px-2" data-qa-id="sideNavigationLabel">
+						{label}
+					</span>
 				</SidePanel.Title>
 			</SidePanel.Header>
 
@@ -132,7 +132,7 @@ function ApplicationsMenu({
 					active={portletId}
 					expandedKeys={expandedKeys}
 					itemAriaCurrent={true}
-					items={items.map(buildNavigationItem)}
+					items={items.map(buildVerticalNavItem)}
 					onExpandedChange={updateExpandedKeys}
 				/>
 			</SidePanel.Body>
@@ -140,4 +140,4 @@ function ApplicationsMenu({
 	);
 }
 
-export default ApplicationsMenu;
+export default SideNavigation;

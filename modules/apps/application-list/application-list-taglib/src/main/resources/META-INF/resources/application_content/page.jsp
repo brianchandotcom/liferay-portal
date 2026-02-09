@@ -14,12 +14,12 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry);
 
-boolean applicationsMenuEnabled = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-36105") && panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), "applications_menu");
+boolean sideNavigationEnabled = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-36105") && panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), "applications_menu");
 %>
 
-<c:if test="<%= applicationsMenuEnabled %>">
+<c:if test="<%= sideNavigationEnabled %>">
 	<div class="d-flex">
-		<%@ include file="/applications_menu/page.jsp" %>
+		<%@ include file="/side_navigation/page.jsp" %>
 
 		<div class="flex-grow-1">
 </c:if>
@@ -39,7 +39,7 @@ boolean applicationsMenuEnabled = FeatureFlagManagerUtil.isEnabled(themeDisplay.
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= applicationsMenuEnabled %>">
+<c:if test="<%= sideNavigationEnabled %>">
 		</div>
 	</div>
 </c:if>

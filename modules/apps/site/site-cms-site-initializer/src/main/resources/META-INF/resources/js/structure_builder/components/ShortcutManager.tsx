@@ -118,7 +118,8 @@ export default function ShortcutManager() {
 
 		map.set('Ctrl+G', {
 			enabled: () => Boolean(selection.length),
-			handler: () => dispatch({type: 'add-repeatable-group'}),
+			handler: () =>
+				dispatch({type: 'add-repeatable-group', uuids: selection}),
 		});
 
 		// Ungroup repeatable group

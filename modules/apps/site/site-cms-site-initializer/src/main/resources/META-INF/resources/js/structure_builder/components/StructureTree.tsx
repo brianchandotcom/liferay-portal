@@ -634,7 +634,7 @@ function getItemActions({
 			onClick: () =>
 				dispatch({
 					type: 'add-repeatable-group',
-					uuid: item.uuid,
+					uuids: [item.uuid],
 				}),
 			symbolLeft: 'repeat',
 		});

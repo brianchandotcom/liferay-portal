@@ -80,7 +80,11 @@ function Toolbar({
 				items={[
 					{
 						label: Liferay.Language.get('create-repeatable-group'),
-						onClick: () => dispatch({type: 'add-repeatable-group'}),
+						onClick: () =>
+							dispatch({
+								type: 'add-repeatable-group',
+								uuids: selection,
+							}),
 						symbolLeft: 'repeat',
 					},
 					{type: 'divider'},

@@ -115,7 +115,7 @@ type AddRelatedContentAction = {
 
 type AddRepeatableGroupAction = {
 	type: 'add-repeatable-group';
-	uuid?: Uuid;
+	uuids: Uuid[];
 };
 
 type AddErrorAction = {
@@ -350,11 +350,9 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'add-repeatable-group': {
-			const {publishedChildren, selection, structure} = state;
+			const {structure} = state;
 
-			const {uuid} = action;
-
-			const uuids = uuid ? [uuid] : selection;
+			const {uuids} = action;
 
 			const items = uuids.map(
 				(uuid) => findChild({root: structure, uuid})!

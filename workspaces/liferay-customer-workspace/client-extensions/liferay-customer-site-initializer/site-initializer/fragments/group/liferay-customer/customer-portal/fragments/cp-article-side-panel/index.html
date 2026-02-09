@@ -58,7 +58,7 @@
 
 		[#if configuration.showArticles]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${category.id}&flatten=true&page=1&pageSize=200") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${category.id}&flatten=true&page=1&pageSize=300&sort=datePublished:desc") /]
 
 				[#if articles?has_content && articles.items?has_content]
 					[#list articles.items as article]
@@ -169,7 +169,7 @@
 
 		[#if articleFetchCategoryId?has_content]
 			[#attempt]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=200") /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&flatten=true&search=${articleFetchCategoryId}&page=1&pageSize=300&sort=datePublished:desc") /]
 
 				[#if articles.items?has_content]
 					[#list articles.items as article]

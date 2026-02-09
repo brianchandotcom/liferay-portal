@@ -61,7 +61,7 @@
 					[#assign listItems = [] /]
 
 					[#if configuration.showArticles]
-						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${childCategory.id}&flatten=true&page=1&pageSize=200").items![] /]
+						[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${childCategory.id}&flatten=true&page=1&pageSize=300&sort=datePublished:desc").items![] /]
 
 						[#if articles?has_content]
 							[#list articles as article]
@@ -129,7 +129,7 @@
 			/]
 
 			[#if configuration.showArticles]
-				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${categoryId}&flatten=true&page=1&pageSize=200").items![] /]
+				[#assign articles = restClient.get("/headless-delivery/v1.0/sites/${themeDisplay.getScopeGroupId()}/structured-contents?filter=contentStructureId eq ${contentStructureId}&search=${categoryId}&flatten=true&page=1&pageSize=300&sort=datePublished:desc").items![] /]
 
 				[#if articles?has_content]
 					[#list articles as article]

@@ -9,30 +9,59 @@ import ClayModal from '@clayui/modal';
 import {openModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-export default async function confirmChildrenDeletion() {
-	if (await isModalDisabled()) {
+export type DeletionActionType = 'delete-children';
+
+type Data = {
+	body: string;
+	buttonLabel: string;
+	sessionKey: string;
+	title: string;
+};
+
+export default async function confirmDeletionAction(type: DeletionActionType) {
+	const data = getData(type);
+
+	if (!data) {
+		return false;
+	}
+
+	if (await isModalDisabled(data.sessionKey)) {
 		return true;
 	}
 
-	return openDeletionModal();
+	return openDeletionModal(data);
 }
 
-async function isModalDisabled() {
-	const value = await Liferay.Util.Session.get(`disableDeletionModal`);
+function getData(type: DeletionActionType): Data | undefined {
+	if (type === 'delete-children') {
+		return {
+			body: Liferay.Language.get(
+				'deleting-fields-may-impact-existing-stored-data-after-publishing-the-structure'
+			),
+			buttonLabel: Liferay.Language.get('delete'),
+			sessionKey: 'disableChildrenDeletionModal',
+			title: Liferay.Language.get('delete-fields'),
+		};
+	}
+}
+
+async function isModalDisabled(key: string) {
+	const value = await Liferay.Util.Session.get(key);
 
 	return value === 'true';
 }
 
-function disableModal() {
-	Liferay.Util.Session.set(`disableDeletionModal`, 'true');
+function disableModal(key: string) {
+	Liferay.Util.Session.set(key, 'true');
 }
 
-function openDeletionModal() {
+function openDeletionModal(data: Data) {
 	return new Promise((resolve) => {
 		openModal({
 			center: true,
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				ModalContent({
+					...data,
 					onCancel: () => {
 						closeModal();
 
@@ -50,26 +79,28 @@ function openDeletionModal() {
 }
 
 function ModalContent({
+	body,
+	buttonLabel,
 	onCancel,
 	onConfirm,
+	sessionKey,
+	title,
 }: {
+	body: string;
+	buttonLabel: string;
 	onCancel: () => void;
 	onConfirm: () => void;
+	sessionKey: string;
+	title: string;
 }) {
 	const [disable, setDisable] = useState(false);
 
 	return (
 		<>
-			<ClayModal.Header>
-				{Liferay.Language.get('delete-fields')}
-			</ClayModal.Header>
+			<ClayModal.Header>{title}</ClayModal.Header>
 
 			<ClayModal.Body>
-				<p className="mb-0">
-					{Liferay.Language.get(
-						'deleting-fields-may-impact-existing-stored-data-after-publishing-the-structure'
-					)}
-				</p>
+				<p className="mb-0">{body}</p>
 			</ClayModal.Body>
 
 			<ClayModal.Footer
@@ -90,7 +121,7 @@ function ModalContent({
 								onCancel();
 
 								if (disable) {
-									disableModal();
+									disableModal(sessionKey);
 								}
 							}}
 						>
@@ -103,11 +134,11 @@ function ModalContent({
 								onConfirm();
 
 								if (disable) {
-									disableModal();
+									disableModal(sessionKey);
 								}
 							}}
 						>
-							{Liferay.Language.get('delete')}
+							{buttonLabel}
 						</ClayButton>
 					</ClayButton.Group>
 				}

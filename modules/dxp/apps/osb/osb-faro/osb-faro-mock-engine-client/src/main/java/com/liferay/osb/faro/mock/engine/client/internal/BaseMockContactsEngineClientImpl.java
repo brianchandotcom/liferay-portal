@@ -42,6 +42,7 @@ import com.liferay.osb.faro.engine.client.model.PageVisited;
 import com.liferay.osb.faro.engine.client.model.Provider;
 import com.liferay.osb.faro.engine.client.model.RealTimeMembershipMetric;
 import com.liferay.osb.faro.engine.client.model.Results;
+import com.liferay.osb.faro.engine.client.model.SegmentActivation;
 import com.liferay.osb.faro.engine.client.model.provider.LiferayProvider;
 import com.liferay.osb.faro.engine.client.util.FilterBuilder;
 import com.liferay.osb.faro.engine.client.util.OrderByField;
@@ -1112,15 +1113,13 @@ public abstract class BaseMockContactsEngineClientImpl
 
 	@Override
 	public SegmentActivation updateSegmentActivation(
-			FaroProject faroProject, String cronExpression,
-			SegmentActivation.FrequencyType frequencyType, Date scheduleEndDate,
-			Date scheduleStartDate, SegmentActivation.ScheduleType scheduleType,
-			String segmentId){
+		FaroProject faroProject, String cronExpression, String frequencyType,
+		Date scheduleEndDate, Date scheduleStartDate, String scheduleType,
+		Long segmentId) {
 
 		return contactsEngineClient.updateSegmentActivation(
-				faroProject, cronExpression,
-				frequencyType, scheduleEndDate, scheduleStartDate, scheduleType,
-				segmentId);
+			faroProject, cronExpression, frequencyType, scheduleEndDate,
+			scheduleStartDate, scheduleType, segmentId);
 	}
 
 	@Reference(

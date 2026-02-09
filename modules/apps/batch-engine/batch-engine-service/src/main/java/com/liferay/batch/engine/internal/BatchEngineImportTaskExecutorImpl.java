@@ -34,6 +34,7 @@ import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.UnsafeFunction;
@@ -554,7 +555,9 @@ public class BatchEngineImportTaskExecutorImpl
 		InputStream inputStream = ZipInputStreamUtil.asZipInputStream(
 			zipInputStream);
 
-		if (_batchEngineFileProcessors.isEmpty()) {
+		if (_batchEngineFileProcessors.isEmpty() ||
+			!ExportImportThreadLocal.isImportInProcess()) {
+
 			return inputStream;
 		}
 

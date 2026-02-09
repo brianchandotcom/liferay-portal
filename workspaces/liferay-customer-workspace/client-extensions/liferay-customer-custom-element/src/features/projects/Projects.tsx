@@ -112,9 +112,6 @@ const Projects = () => {
 
 			<ClayLayout.ContainerFluid
 				className="cp-projects-wrapper"
-				onPointerEnterCapture={() => {}}
-				onPointerLeaveCapture={() => {}}
-				placeholder=""
 				size={hasManyProjects ? 'md' : 'xl'}
 			>
 				<ClayLayout.Row>

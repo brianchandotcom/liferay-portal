@@ -11,7 +11,7 @@ import useJiraIssue, {IJiraIssue} from '../../hooks/useJiraIssue';
 
 import './SecurityVulnerabilitiesItem.css';
 
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useMemo} from 'react';
 import {SVWaves} from '~/assets/SVWaves';
 import {

@@ -489,6 +489,26 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected SitePage testDeleteSiteSitePage_addSitePage() throws Exception {
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
+	}
+
+	@Override
+	protected SitePage testGetSiteSitePage_addSitePage() throws Exception {
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
+	}
+
+	@Override
+	protected SitePage testGetSiteSitePagePermissionsPage_addSitePage()
+		throws Exception {
+
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
+	}
+
+	@Override
 	protected SitePage testGetSiteSitePagesPage_addSitePage(
 			String siteExternalReferenceCode, SitePage sitePage)
 		throws Exception {
@@ -518,11 +538,41 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	@Override
+	protected SitePage testPatchSiteSitePage_addSitePage() throws Exception {
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
+	}
+
+	@Override
+	protected SitePage testPostSiteSitePage_addPermissionsSitePage(
+			SitePage sitePage)
+		throws Exception {
+
+		return permissionsSitePageResource.postSiteSitePage(
+			testGetSiteSitePagesPage_getSiteExternalReferenceCode(), false,
+			sitePage);
+	}
+
+	@Override
 	protected SitePage testPostSiteSitePage_addSitePage(SitePage sitePage)
 		throws Exception {
 
 		return sitePageResource.postSiteSitePage(
 			testGroup.getExternalReferenceCode(), false, sitePage);
+	}
+
+	@Override
+	protected SitePage testPutSiteSitePage_addSitePage() throws Exception {
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
+	}
+
+	@Override
+	protected SitePage testPutSiteSitePagePermissionsPage_addSitePage()
+		throws Exception {
+
+		return sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), false, randomSitePage());
 	}
 
 	private void _addFormAndPublishLayout(

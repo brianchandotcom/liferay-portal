@@ -9,7 +9,7 @@ import {SearchForm} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedChildren from '../selectors/selectPublishedChildren';
@@ -23,12 +23,22 @@ import StructureTree from './StructureTree';
 export default function () {
 	const [open, setOpen] = useState<boolean>(false);
 
+	const openButtonRef = useRef<HTMLButtonElement>(null);
+	const panelRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<>
 			<ClayButtonWithIcon
 				className="d-md-none sidebar-toggler"
 				displayType="secondary"
-				onClick={() => setOpen(true)}
+				onClick={() => {
+					setOpen(true);
+
+					requestAnimationFrame(() => {
+						panelRef.current?.focus();
+					});
+				}}
+				ref={openButtonRef}
 				size="sm"
 				symbol="angle-double-right-small"
 				title={sub(
@@ -40,10 +50,16 @@ export default function () {
 				)}
 			/>
 			<div
+				aria-label={sub(
+					Liferay.Language.get('x-panel'),
+					Liferay.Language.get('content-structure-fields')
+				)}
 				className={classNames(
 					'border rounded-lg structure-builder__sidebar',
 					{'hide-xs': !open}
 				)}
+				ref={panelRef}
+				tabIndex={-1}
 			>
 				<div className="autofit-row">
 					<div className="autofit-col autofit-col-expand">
@@ -56,7 +72,13 @@ export default function () {
 						<ClayButtonWithIcon
 							borderless
 							displayType="secondary"
-							onClick={() => setOpen(false)}
+							onClick={() => {
+								setOpen(false);
+
+								requestAnimationFrame(() => {
+									openButtonRef.current?.focus();
+								});
+							}}
 							size="sm"
 							symbol="times"
 							title={Liferay.Language.get('close')}

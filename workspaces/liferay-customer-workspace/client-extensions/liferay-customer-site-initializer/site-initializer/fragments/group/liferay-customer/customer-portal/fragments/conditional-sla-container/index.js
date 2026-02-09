@@ -13,9 +13,9 @@ const validSLAs = [
 	'Strategic 24/7 Support',
 ];
 
-const loading = fragmentElement.querySelector('.loading-container');
-const form = fragmentElement.querySelector('.callback-form-container');
 const error = fragmentElement.querySelector('.error-container');
+const form = fragmentElement.querySelector('.callback-form-container');
+const loading = fragmentElement.querySelector('.loading-container');
 
 const updateState = (state) => {
 	if (layoutMode === 'edit') {
@@ -36,7 +36,7 @@ const updateState = (state) => {
 		return;
 	}
 
-	[loading, form, error].forEach((element) => {
+	[error, form, loading].forEach((element) => {
 		if (element) {
 			element.classList.add('d-none');
 			element.classList.remove('d-flex');
@@ -67,6 +67,7 @@ const checkPermission = async () => {
 		updateState('loading');
 
 		const userId = Liferay.ThemeDisplay.getUserId();
+
 		const userAccountResponse = await Liferay.Util.fetch(
 			`/o/headless-admin-user/v1.0/user-accounts/${userId}`
 		);
@@ -78,6 +79,7 @@ const checkPermission = async () => {
 		}
 
 		const userAccount = await userAccountResponse.json();
+
 		const accountBriefs = userAccount.accountBriefs || [];
 
 		if (!accountBriefs.length) {
@@ -113,6 +115,7 @@ const checkPermission = async () => {
 		});
 
 		const results = await Promise.all(permissionChecks);
+
 		const hasPermission = results.some((permission) => permission);
 
 		updateState(hasPermission ? 'form' : 'error');

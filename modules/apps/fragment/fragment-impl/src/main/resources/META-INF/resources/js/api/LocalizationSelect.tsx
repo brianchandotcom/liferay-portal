@@ -71,7 +71,7 @@ export function LocalizationSelect({
 	const [form, setForm] = useState<HTMLFormElement>();
 
 	const [selectedLocaleId, setSelectedLocaleId] = useState(
-		Liferay.ThemeDisplay.getDefaultLanguageId()
+		Liferay.ThemeDisplay.getLanguageId()
 	);
 
 	const [selectedLocaleIds, setSelectedLocaleIds] =

@@ -15,11 +15,14 @@ import com.liferay.object.exception.ObjectFieldSettingValueException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectState;
 import com.liferay.object.model.ObjectStateFlow;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
+import com.liferay.object.rest.dto.v1_0.util.ListEntryUtil;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -31,7 +34,10 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.extension.PropertyDefinition;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -86,6 +92,34 @@ public class PicklistObjectFieldBusinessType
 		}
 
 		return super.getDisplayContextValue(objectField, userId, values);
+	}
+
+	@Override
+	public Serializable getDTOValue(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectField objectField, Serializable serializable)
+		throws Exception {
+
+		if (objectField.getListTypeDefinitionId() == 0) {
+			return null;
+		}
+
+		if (serializable instanceof ListEntry) {
+			return serializable;
+		}
+
+		String key = null;
+
+		if (serializable instanceof Map) {
+			key = MapUtil.getString((Map<String, String>)serializable, "key");
+		}
+		else if (serializable instanceof String) {
+			key = (String)serializable;
+		}
+
+		return ListEntryUtil.toListEntry(
+			dtoConverterContext, key, objectField.getListTypeDefinitionId());
 	}
 
 	@Override

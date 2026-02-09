@@ -61,7 +61,7 @@ public class DataSourceResourceImpl extends BaseDataSourceResourceImpl {
 		Map<String, Object> properties =
 			_analyticsCloudClient.connectAnalyticsDataSource(
 				_companyLocalService.getCompany(contextUser.getCompanyId()),
-				dataSourceToken.getToken());
+				dataSourceToken.getToken(), contextUser);
 
 		properties.put("token", dataSourceToken.getToken());
 

@@ -10,7 +10,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
-import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,7 +42,7 @@ public class AddTaskStrutsAction implements StrutsAction {
 		throws Exception {
 
 		ObjectDefinition objectDefinition =
-			_objectDefinitionService.getObjectDefinition(
+			_objectDefinitionLocalService.getObjectDefinition(
 				ParamUtil.getLong(httpServletRequest, "objectDefinitionId"));
 
 		if (!StringUtil.equals(
@@ -107,7 +107,7 @@ public class AddTaskStrutsAction implements StrutsAction {
 	}
 
 	@Reference
-	private ObjectDefinitionService _objectDefinitionService;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

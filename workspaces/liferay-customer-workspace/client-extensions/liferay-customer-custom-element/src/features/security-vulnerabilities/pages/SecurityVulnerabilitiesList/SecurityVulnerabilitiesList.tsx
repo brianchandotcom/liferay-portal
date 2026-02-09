@@ -12,7 +12,7 @@ import SVTable from '../../components/SVTable';
 
 import './SecurityVulnerabilitiesList.css';
 
-import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
+import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {useMemo} from 'react';
 import {SVWaves} from '~/assets/SVWaves';
 import {FILTER_OPTIONS} from '~/features/security-vulnerabilities/utils/constants/filterOptions';

@@ -65,9 +65,6 @@ const FilterNavigation: React.FC<IProps> = ({
 								aria-label={header}
 								className="component-action dropdown-item-indicator-start text-neutral-2"
 								onClick={onBack}
-								onPointerEnterCapture={undefined}
-								onPointerLeaveCapture={undefined}
-								placeholder={undefined}
 								symbol="angle-left-small"
 							/>
 

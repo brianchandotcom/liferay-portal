@@ -6,7 +6,11 @@
 package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
@@ -15,12 +19,14 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -72,11 +78,8 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 	public void testFoundLiferayClassNameWithPoundIsNotDeleted()
 		throws Exception {
 
-		AtomicReference<ClassName> classNameAtomicReference =
+		AtomicReference<ObjectDefinition> objectDefinitionAtomicReference =
 			new AtomicReference<>();
-		String classNameValue =
-			ObjectDefinition.class.getName() + StringPool.POUND +
-				RandomTestUtil.randomString(4);
 
 		test(
 			logCapture -> {
@@ -84,19 +87,43 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 
 				Assert.assertTrue(messages.toString(), messages.isEmpty());
 
-				ClassName className = _classNameLocalService.fetchClassName(
-					classNameValue);
+				ObjectDefinition objectDefinition =
+					objectDefinitionAtomicReference.get();
 
-				Assert.assertEquals(classNameValue, className.getValue());
+				ClassName className = _classNameLocalService.fetchClassName(
+					objectDefinition.getClassName());
+
+				Assert.assertEquals(
+					objectDefinition.getClassName(), className.getValue());
 			},
 			() -> {
-				if (classNameAtomicReference.get() != null) {
+				ObjectDefinition objectDefinition =
+					objectDefinitionAtomicReference.get();
+
+				if (objectDefinition != null) {
 					_classNameLocalService.deleteClassName(
-						classNameAtomicReference.get());
+						_classNameLocalService.getClassNameId(
+							objectDefinition.getClassName()));
+
+					_objectDefinitionLocalService.deleteObjectDefinition(
+						objectDefinition);
 				}
 			},
-			() -> classNameAtomicReference.set(
-				_classNameLocalService.addClassName(classNameValue)));
+			() -> {
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionTestUtil.addCustomObjectDefinition(
+						Collections.singletonList(
+							ObjectFieldUtil.createObjectField(
+								ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+								ObjectFieldConstants.DB_TYPE_STRING, true, true,
+								null, "First Name", "firstName", true)));
+
+				_objectDefinitionLocalService.publishCustomObjectDefinition(
+					TestPropsValues.getUserId(),
+					objectDefinition.getObjectDefinitionId());
+
+				objectDefinitionAtomicReference.set(objectDefinition);
+			});
 	}
 
 	@Test
@@ -183,7 +210,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 							"Class name ", classNameValue,
 							" is not defined in any deployed module but is ",
 							"referenced in the next tables: ",
-							dbInspector.normalizeName("Address"))));
+							dbInspector.normalizeName(_TABLE_NAME))));
 
 				ClassName className = _classNameLocalService.fetchClassName(
 					classNameValue);
@@ -196,13 +223,7 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 						classNameAtomicReference.get());
 				}
 
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"delete from Address where addressId = ?")) {
-
-					preparedStatement.setLong(1, addressId);
-					preparedStatement.executeUpdate();
-				}
+				_deleteFromDatabase(addressId, connection);
 			},
 			() -> {
 				ClassName className = _classNameLocalService.addClassName(
@@ -210,17 +231,94 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 
 				classNameAtomicReference.set(className);
 
-				try (PreparedStatement preparedStatement =
-						connection.prepareStatement(
-							"insert into Address (mvccVersion, " +
-								"ctCollectionId, addressId, classNameId) " +
-									"values (0, 0, ?, ?)")) {
+				_insertIntoDatabase(
+					addressId, className.getClassNameId(), connection);
+			});
+	}
 
-					preparedStatement.setLong(1, addressId);
-					preparedStatement.setLong(2, className.getClassNameId());
+	@Test
+	public void testNotFoundLiferayClassNameWithPoundUnusedIsDeleted()
+		throws Exception {
 
-					preparedStatement.executeUpdate();
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			ObjectDefinition.class.getName() + StringPool.POUND +
+				RandomTestUtil.randomString(4);
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Table ", dbInspector.normalizeName("ClassName_"),
+							", 1 row deleted because \"", classNameValue,
+							"\" is not defined in any deployed module and is ",
+							"not in use")));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(StringPool.BLANK, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
 				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
+	}
+
+	@Test
+	public void testNotFoundLiferayClassNameWithPoundUsedIsNotDeleted()
+		throws Exception {
+
+		long addressId = RandomTestUtil.nextLong();
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			ObjectDefinition.class.getName() + StringPool.POUND +
+				RandomTestUtil.randomString();
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Class name ", classNameValue,
+							" is not defined in any deployed module but is ",
+							"referenced in the next tables: ",
+							dbInspector.normalizeName(_TABLE_NAME))));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+
+				_deleteFromDatabase(addressId, connection);
+			},
+			() -> {
+				ClassName className = _classNameLocalService.addClassName(
+					classNameValue);
+
+				classNameAtomicReference.set(className);
+
+				_insertIntoDatabase(
+					addressId, className.getClassNameId(), connection);
 			});
 	}
 
@@ -254,12 +352,17 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 
 	@Override
 	protected Object[] getPostUpgradeDataCleanupProcessArguments() {
-		return new Object[] {_classNameLocalService, connection};
+		return new Object[] {
+			_classNameLocalService, connection, _objectDefinitionLocalService
+		};
 	}
 
 	@Override
 	protected Class<?>[] getPostUpgradeDataCleanupProcessArgumentTypes() {
-		return new Class<?>[] {ClassNameLocalService.class, Connection.class};
+		return new Class<?>[] {
+			ClassNameLocalService.class, Connection.class,
+			ObjectDefinitionLocalService.class
+		};
 	}
 
 	@Override
@@ -288,7 +391,38 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 		}
 	}
 
+	private void _deleteFromDatabase(long addressId, Connection connection)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"delete from " + _TABLE_NAME + "  where addressId = ?")) {
+
+			preparedStatement.setLong(1, addressId);
+			preparedStatement.executeUpdate();
+		}
+	}
+
+	private void _insertIntoDatabase(
+			long addressId, long classNameId, Connection connection)
+		throws Exception {
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"insert into Address (mvccVersion, ctCollectionId, " +
+					"addressId, classNameId) values (0, 0, ?, ?)")) {
+
+			preparedStatement.setLong(1, addressId);
+			preparedStatement.setLong(2, classNameId);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
+	private static final String _TABLE_NAME = "Address";
+
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

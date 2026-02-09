@@ -1357,9 +1357,7 @@ public class CustomFDSSerializer
 		}
 
 		@Override
-		public int compare(
-			ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
-
+		public int compare(ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
 			String erc1 = objectEntry1.getExternalReferenceCode();
 			String erc2 = objectEntry2.getExternalReferenceCode();
 

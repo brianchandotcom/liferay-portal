@@ -10,6 +10,8 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.layout.util.LayoutServiceContextHelperUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -72,10 +74,20 @@ public class FragmentEntryLinkUtil {
 							FragmentEntryLinkConstants.EDIT,
 							fragmentEntryLink.getGroupId()));
 			}
+			catch (Throwable throwable) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(throwable);
+				}
+
+				return fragmentEntryLink.getHtml();
+			}
 			finally {
 				fragmentEntryLink.setEditableValues(editableValues);
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FragmentEntryLinkUtil.class);
 
 }

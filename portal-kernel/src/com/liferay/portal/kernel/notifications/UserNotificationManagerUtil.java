@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
@@ -75,6 +76,27 @@ public class UserNotificationManagerUtil {
 		getUserNotificationHandlers() {
 
 		return Collections.unmodifiableMap(_userNotificationHandlers);
+	}
+
+	public static boolean hasPermission(
+			long classPK, String portletId, String selector, User user)
+		throws PortalException {
+
+		Map<String, UserNotificationHandler> userNotificationHandlers =
+			_userNotificationHandlers.get(selector);
+
+		if (userNotificationHandlers == null) {
+			return false;
+		}
+
+		UserNotificationHandler userNotificationHandler =
+			userNotificationHandlers.get(portletId);
+
+		if (userNotificationHandler == null) {
+			return false;
+		}
+
+		return userNotificationHandler.hasPermission(classPK, user);
 	}
 
 	public static UserNotificationFeedEntry interpret(

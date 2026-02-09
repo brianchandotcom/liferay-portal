@@ -16,6 +16,7 @@ export class FormBuilderSidePanelPage {
 	readonly advancedTab: Locator;
 	readonly allowGuestUsersToggle: Locator;
 	readonly backButton: Locator;
+	readonly basicTab: Locator;
 	readonly collapsibleToggleSwitch: Locator;
 	readonly fieldReference: Locator;
 	readonly helpText: Locator;
@@ -55,6 +56,9 @@ export class FormBuilderSidePanelPage {
 			'Allow Guest Users to Send Files'
 		);
 		this.backButton = page.getByRole('button', {name: 'Back'});
+		this.basicTab = page.getByRole('tab', {
+			name: 'Basic',
+		});
 		this.collapsibleToggleSwitch = page.getByRole('switch', {
 			name: 'Collapsible',
 		});
@@ -104,6 +108,10 @@ export class FormBuilderSidePanelPage {
 
 	async clickBackButton() {
 		await this.backButton.click();
+	}
+
+	async clickBasicTab() {
+		await this.basicTab.click();
 	}
 
 	async dragAndDropField(sourceFieldName: string, target: string | number) {

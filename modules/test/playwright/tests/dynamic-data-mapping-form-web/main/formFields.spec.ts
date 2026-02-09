@@ -137,6 +137,65 @@ test.describe('Manage fields through Form Preview page', () => {
 		).toHaveCount(2);
 	});
 
+	test('Duplicating fieldset with required fields only takes one click', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+		page,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.requiredFieldToggleSwitch.click();
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		const textFieldReference1 =
+			await formBuilderSidePanelPage.getFieldReference();
+
+		await formBuilderSidePanelPage.backButton.click();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.requiredFieldToggleSwitch.click();
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		const textFieldReference2 =
+			await formBuilderSidePanelPage.getFieldReference();
+
+		await formBuilderSidePanelPage.dragAndDropField(
+			textFieldReference2,
+			textFieldReference1
+		);
+
+		await page
+			.locator('label.text-uppercase', {hasText: 'Fields Group'})
+			.click();
+
+		await formBuilderSidePanelPage.clickBasicTab();
+
+		await formBuilderSidePanelPage.repeatableFieldToggleSwitch.click();
+
+		const newTabPage = await formBuilderPage.openPreviewForm();
+
+		await newTabPage.getByRole('textbox').last().click();
+
+		await newTabPage
+			.getByRole('button', {
+				name: 'Add Duplicate Field Fields Group',
+			})
+			.click();
+
+		await expect(
+			newTabPage.getByText('This field is required.')
+		).toBeVisible();
+
+		await expect(
+			newTabPage.getByLabel('Fields Group', {exact: true})
+		).toHaveCount(2);
+	});
+
 	test(
 		'HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types',
 		{tag: ['@LPD-12824']},

@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.layout.page.template.service.persistence.LayoutPageTemplateCollectionPersistence;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.validator.LayoutValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -481,7 +482,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		long groupId, long classNameId, long classTypeId) {
 
 		return layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
-			groupId, classNameId, classTypeId, true, null);
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			true, null);
 	}
 
 	@Override
@@ -755,7 +759,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
 				layoutPageTemplateEntry.getGroupId(),
 				layoutPageTemplateEntry.getClassNameId(),
-				layoutPageTemplateEntry.getClassTypeId(), true, null);
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					layoutPageTemplateEntry.getClassNameId(),
+					layoutPageTemplateEntry.getClassTypeId(),
+					layoutPageTemplateEntry.getGroupId()),
+				true, null);
 
 		if (defaultTemplate && (defaultLayoutPageTemplateEntry != null) &&
 			(defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() !=

@@ -15,6 +15,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntryTable;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryServiceBaseImpl;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -265,7 +266,10 @@ public class LayoutPageTemplateEntryServiceImpl
 		long groupId, long classNameId, long classTypeId) {
 
 		return layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
-			groupId, classNameId, classTypeId, true, null);
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			true, null);
 	}
 
 	@Override
@@ -567,11 +571,17 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
-				groupId, classNameId, classTypeId, type);
+				groupId, classNameId,
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					classNameId, classTypeId, groupId),
+				type);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T_S(
-			groupId, classNameId, classTypeId, type, status);
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			type, status);
 	}
 
 	@Override
@@ -582,13 +592,17 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T(
-				groupId, classNameId, classTypeId, type, start, end,
-				orderByComparator);
+				groupId, classNameId,
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					classNameId, classTypeId, groupId),
+				type, start, end, orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_T_S(
-			groupId, classNameId, classTypeId, type, status, start, end,
-			orderByComparator);
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			type, status, start, end, orderByComparator);
 	}
 
 	@Override
@@ -609,13 +623,17 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterFindByG_C_C_LikeN_T(
-				groupId, classNameId, classTypeId,
+				groupId, classNameId,
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					classNameId, classTypeId, groupId),
 				_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 				type, start, end, orderByComparator);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterFindByG_C_C_LikeN_T_S(
-			groupId, classNameId, classTypeId,
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], type,
 			status, start, end, orderByComparator);
 	}
@@ -788,11 +806,17 @@ public class LayoutPageTemplateEntryServiceImpl
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.filterCountByG_C_C_T(
-				groupId, classNameId, classTypeId, type);
+				groupId, classNameId,
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					classNameId, classTypeId, groupId),
+				type);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_T_S(
-			groupId, classNameId, classTypeId, type, status);
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			type, status);
 	}
 
 	@Override
@@ -813,13 +837,17 @@ public class LayoutPageTemplateEntryServiceImpl
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return layoutPageTemplateEntryPersistence.
 				filterCountByG_C_C_LikeN_T(
-					groupId, classNameId, classTypeId,
+					groupId, classNameId,
+					LayoutPageTemplateEntryUtil.getClassTypeKey(
+						classNameId, classTypeId, groupId),
 					_customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 					type);
 		}
 
 		return layoutPageTemplateEntryPersistence.filterCountByG_C_C_LikeN_T_S(
-			groupId, classNameId, classTypeId,
+			groupId, classNameId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
 			_customSQL.keywords(name, false, WildcardMode.SURROUND)[0], type,
 			status);
 	}

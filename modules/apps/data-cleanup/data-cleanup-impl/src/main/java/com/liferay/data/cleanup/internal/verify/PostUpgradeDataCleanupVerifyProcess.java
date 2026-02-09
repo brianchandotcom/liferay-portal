@@ -5,6 +5,7 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.dependency.manager.DependencyManagerSyncUtil;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -65,7 +66,8 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 		return ListUtil.fromArray(
 			new ClassNamePostUpgradeDataCleanupProcess(
-				_classNameLocalService, connection),
+				_classNameLocalService, connection,
+				_objectDefinitionLocalService),
 			new ResourceActionPostUpgradeDataCleanupProcess(
 				connection, _resourceActionLocalService),
 			new SearchIndexPostUpgradeDataCleanupProcess(
@@ -85,6 +87,9 @@ public class PostUpgradeDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;

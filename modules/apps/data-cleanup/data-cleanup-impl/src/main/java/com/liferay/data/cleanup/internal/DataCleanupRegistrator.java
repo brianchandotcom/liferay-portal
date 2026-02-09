@@ -69,6 +69,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
@@ -402,7 +403,8 @@ public class DataCleanupRegistrator {
 						PostUpgradeDataCleanupProcess
 							postUpgradeDataCleanupProcess =
 								new ClassNamePostUpgradeDataCleanupProcess(
-									_classNameLocalService, connection);
+									_classNameLocalService, connection,
+									_objectDefinitionLocalService);
 
 						postUpgradeDataCleanupProcess.cleanUp();
 					}
@@ -627,6 +629,9 @@ public class DataCleanupRegistrator {
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
 	private Portal _portal;

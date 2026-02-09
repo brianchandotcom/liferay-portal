@@ -370,7 +370,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			_aggregations.bucketSelector(
-				"bucketSelector", _scripts.script("params.taskCount > 0"));
+				"bucketSelector",
+				Scripts.INSTANCE.script("params.taskCount > 0"));
 
 		bucketSelectorPipelineAggregation.addBucketPath(
 			"taskCount", "taskCount.value");
@@ -595,7 +596,8 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 			"instanceIdTaskId", null);
 
 		termsAggregation.setScript(
-			_scripts.script("doc['instanceId'].value + doc['taskId'].value"));
+			Scripts.INSTANCE.script(
+				"doc['instanceId'].value + doc['taskId'].value"));
 
 		FilterAggregation indexFilterAggregation = _aggregations.filter(
 			"index",
@@ -742,9 +744,6 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

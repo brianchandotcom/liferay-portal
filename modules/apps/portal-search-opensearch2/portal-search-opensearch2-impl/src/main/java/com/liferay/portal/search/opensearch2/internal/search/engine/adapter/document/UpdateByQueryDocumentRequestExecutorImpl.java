@@ -99,7 +99,7 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 		JSONObject scriptJSONObject =
 			updateByQueryDocumentRequest.getScriptJSONObject();
 
-		ScriptBuilder scriptBuilder = _scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		if (scriptJSONObject.has("idOrCode")) {
 			scriptBuilder.idOrCode(scriptJSONObject.getString("idOrCode"));
@@ -146,9 +146,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private Scripts _scripts;
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 

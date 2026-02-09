@@ -84,7 +84,7 @@ public class ScoreFunctionsInstantiationTest {
 	@Test
 	public void testScript() {
 		Assert.assertNotNull(
-			_scoreFunctions.script(_scripts.script("script_id")));
+			_scoreFunctions.script(Scripts.INSTANCE.script("script_id")));
 	}
 
 	@Test
@@ -97,8 +97,5 @@ public class ScoreFunctionsInstantiationTest {
 
 	@Inject
 	private static ScoreFunctions _scoreFunctions;
-
-	@Inject
-	private static Scripts _scripts;
 
 }

@@ -71,7 +71,8 @@ public class UserModelListener extends BaseModelListener<User> {
 							_queries.term(
 								"tasks.assigneeType", User.class.getName()));
 
-						ScriptBuilder scriptBuilder = _scripts.builder();
+						ScriptBuilder scriptBuilder =
+							Scripts.INSTANCE.builder();
 
 						searchEngineAdapter.execute(
 							new UpdateByQueryDocumentRequest(
@@ -110,9 +111,6 @@ public class UserModelListener extends BaseModelListener<User> {
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

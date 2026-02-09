@@ -67,6 +67,9 @@ public class ScriptBuilder {
 		return this;
 	}
 
+	protected ScriptBuilder() {
+	}
+
 	private String _idOrCode;
 	private String _language;
 	private final Map<String, String> _options = new LinkedHashMap<>();

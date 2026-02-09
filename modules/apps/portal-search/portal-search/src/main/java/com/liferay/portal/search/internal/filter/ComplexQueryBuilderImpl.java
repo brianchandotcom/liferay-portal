@@ -34,9 +34,8 @@ import java.util.Objects;
  */
 public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 
-	public ComplexQueryBuilderImpl(Queries queries, Scripts scripts) {
+	public ComplexQueryBuilderImpl(Queries queries) {
 		_queries = queries;
-		_scripts = scripts;
 	}
 
 	@Override
@@ -94,7 +93,6 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 	private BooleanQuery _booleanQuery;
 	private final List<ComplexQueryPart> _complexQueryParts = new ArrayList<>();
 	private final Queries _queries;
-	private final Scripts _scripts;
 
 	private class Build {
 
@@ -273,7 +271,7 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 					return null;
 				}
 
-				return _queries.script(_scripts.script(value));
+				return _queries.script(Scripts.INSTANCE.script(value));
 			}
 
 			if (Objects.equals(type, "simple_query_string")) {

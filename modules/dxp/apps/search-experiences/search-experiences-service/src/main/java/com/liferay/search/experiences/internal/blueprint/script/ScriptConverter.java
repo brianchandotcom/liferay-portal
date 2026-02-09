@@ -16,14 +16,6 @@ import com.liferay.portal.search.script.Scripts;
  */
 public class ScriptConverter {
 
-	public ScriptConverter(Scripts scripts) {
-		_scripts = scripts;
-	}
-
-	public Scripts getScripts() {
-		return _scripts;
-	}
-
 	public Script toScript(Object object) {
 		if (object instanceof JSONObject) {
 			return _toScript((JSONObject)object);
@@ -56,7 +48,7 @@ public class ScriptConverter {
 	}
 
 	private Script _toScript(JSONObject jsonObject) {
-		ScriptBuilder scriptBuilder = _scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		if (jsonObject.has("id")) {
 			scriptBuilder.idOrCode(
@@ -85,7 +77,7 @@ public class ScriptConverter {
 	}
 
 	private Script _toScript(String string) {
-		return _scripts.builder(
+		return Scripts.INSTANCE.builder(
 		).idOrCode(
 			string
 		).language(
@@ -94,7 +86,5 @@ public class ScriptConverter {
 			ScriptType.INLINE
 		).build();
 	}
-
-	private final Scripts _scripts;
 
 }

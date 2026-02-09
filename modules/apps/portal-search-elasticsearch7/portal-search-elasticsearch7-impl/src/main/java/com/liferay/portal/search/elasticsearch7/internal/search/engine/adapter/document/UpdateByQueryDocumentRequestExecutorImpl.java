@@ -86,7 +86,7 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 					updateByQueryDocumentRequest.getScript()));
 		}
 		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
-			ScriptBuilder scriptBuilder = _scripts.builder();
+			ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 			JSONObject scriptJSONObject =
 				updateByQueryDocumentRequest.getScriptJSONObject();
@@ -141,9 +141,6 @@ public class UpdateByQueryDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private Scripts _scripts;
 
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 

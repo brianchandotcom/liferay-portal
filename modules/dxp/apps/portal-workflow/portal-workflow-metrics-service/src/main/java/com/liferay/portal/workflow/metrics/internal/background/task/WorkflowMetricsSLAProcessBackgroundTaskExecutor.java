@@ -610,7 +610,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 						workflowMetricsSLATaskResult));
 			}
 
-			ScriptBuilder scriptBuilder = _scripts.builder();
+			ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 			bulkDocumentRequest.addBulkableDocumentRequest(
 				new UpdateDocumentRequest(
@@ -699,7 +699,7 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 			new UpdateByQueryDocumentRequest(
 				_queries.rangeTerm(
 					"instanceId", true, true, startInstanceId, endInstanceId),
-				_scripts.script(
+				Scripts.INSTANCE.script(
 					StringBundler.concat(
 						"if (!ctx._source.containsKey('slaDefinitionIds')) ",
 						"ctx._source['slaDefinitionIds'] = [];",
@@ -728,9 +728,6 @@ public class WorkflowMetricsSLAProcessBackgroundTaskExecutor
 
 	@Reference
 	private Queries _queries;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchCapabilities _searchCapabilities;

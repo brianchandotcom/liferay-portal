@@ -29,7 +29,6 @@ import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImp
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.internal.rescore.RescoreBuilderFactoryImpl;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.internal.searcher.SearchRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.query.TermQuery;
@@ -126,9 +125,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl, "_rescoreBuilderFactory",
 			new RescoreBuilderFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSearchRequestEnhancerImpl, "_scripts",
-			new ScriptsImpl());
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl, "_sorts", new SortsImpl());
 

@@ -20,6 +20,7 @@ import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddTaskRequest;
@@ -153,7 +154,7 @@ public class TaskWorkflowMetricsIndexerImpl
 					return;
 				}
 
-				ScriptBuilder scriptBuilder = scripts.builder();
+				ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(
@@ -367,7 +368,7 @@ public class TaskWorkflowMetricsIndexerImpl
 					).build(),
 					booleanQuery);
 
-				ScriptBuilder scriptBuilder = scripts.builder();
+				ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 				scriptBuilder.idOrCode(
 					StringUtil.read(
@@ -419,7 +420,7 @@ public class TaskWorkflowMetricsIndexerImpl
 			return;
 		}
 
-		ScriptBuilder scriptBuilder = scripts.builder();
+		ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 		searchEngineAdapter.execute(
 			new UpdateByQueryDocumentRequest(

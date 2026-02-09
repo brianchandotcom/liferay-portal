@@ -11,11 +11,9 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
-import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.Assert;
@@ -67,8 +65,6 @@ public class UpdateByQueryDocumentRequestExecutorTest
 		ReflectionTestUtil.setFieldValue(
 			updateByQueryDocumentRequestExecutorImpl,
 			"_openSearchConnectionManager", openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_scripts", _scripts);
 
 		UpdateByQueryRequest updateByQueryRequest =
 			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(
@@ -89,7 +85,5 @@ public class UpdateByQueryDocumentRequestExecutorTest
 	}
 
 	private static final String _FIELD_NAME = "testField";
-
-	private static final Scripts _scripts = new ScriptsImpl();
 
 }

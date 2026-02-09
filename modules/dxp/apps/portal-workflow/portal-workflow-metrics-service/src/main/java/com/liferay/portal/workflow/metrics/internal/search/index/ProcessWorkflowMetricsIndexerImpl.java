@@ -16,6 +16,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.script.ScriptBuilder;
 import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 import com.liferay.portal.workflow.metrics.model.AddProcessRequest;
@@ -201,7 +202,7 @@ public class ProcessWorkflowMetricsIndexerImpl
 			() -> {
 				updateDocument(document);
 
-				ScriptBuilder scriptBuilder = scripts.builder();
+				ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
 
 				UpdateDocumentRequest updateDocumentRequest =
 					new UpdateDocumentRequest(

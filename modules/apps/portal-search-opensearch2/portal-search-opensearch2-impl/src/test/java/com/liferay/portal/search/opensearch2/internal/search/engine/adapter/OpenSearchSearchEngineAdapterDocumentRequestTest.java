@@ -33,7 +33,6 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -562,7 +561,7 @@ public class OpenSearchSearchEngineAdapterDocumentRequestTest
 
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(
-				_scripts.script(
+				Scripts.INSTANCE.script(
 					StringBundler.concat(
 						"ctx._source.", _FIELD_NAME, "=\"false\" ")),
 				false, id);
@@ -584,7 +583,7 @@ public class OpenSearchSearchEngineAdapterDocumentRequestTest
 		String id = "1";
 
 		_updateDocumentWithAdapter(
-			_scripts.script(
+			Scripts.INSTANCE.script(
 				StringBundler.concat(
 					"ctx._source.", _FIELD_NAME, "=\"true\" ")),
 			true, id);
@@ -733,8 +732,6 @@ public class OpenSearchSearchEngineAdapterDocumentRequestTest
 	}
 
 	private static final String _FIELD_NAME = "matchDocument";
-
-	private static final Scripts _scripts = new ScriptsImpl();
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private OpenSearchClient _openSearchClient;

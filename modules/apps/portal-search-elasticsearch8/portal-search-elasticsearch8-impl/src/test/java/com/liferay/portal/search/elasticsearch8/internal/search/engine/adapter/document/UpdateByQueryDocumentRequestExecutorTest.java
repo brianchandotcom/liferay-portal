@@ -15,8 +15,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
-import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -76,9 +74,6 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 			updateByQueryDocumentRequestExecutorImpl,
 			"_elasticsearchClientResolver", _elasticsearchFixture);
 
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl, "_scripts", _scripts);
-
 		UpdateByQueryRequest updateByQueryRequest =
 			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(
 				updateByQueryDocumentRequest);
@@ -100,8 +95,6 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 	private static final String _FIELD_NAME = "testField";
 
 	private static final String _INDEX_NAME = "test_request_index";
-
-	private static final Scripts _scripts = new ScriptsImpl();
 
 	private ElasticsearchFixture _elasticsearchFixture;
 

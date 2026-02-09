@@ -50,7 +50,6 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
-import com.liferay.portal.search.internal.script.ScriptsImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
@@ -598,7 +597,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		UpdateDocumentResponse updateDocumentResponse =
 			_updateDocumentWithAdapter(
 				id,
-				_scripts.script(
+				Scripts.INSTANCE.script(
 					StringBundler.concat(
 						"ctx._source.", _FIELD_NAME, "=\"false\" ")),
 				false);
@@ -619,7 +618,7 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 
 		_updateDocumentWithAdapter(
 			id,
-			_scripts.script(
+			Scripts.INSTANCE.script(
 				StringBundler.concat(
 					"ctx._source.", _FIELD_NAME, "=\"true\" ")),
 			true);
@@ -784,7 +783,6 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 	private static final String _INDEX_NAME = "test_request_index";
 
 	private static ElasticsearchFixture _elasticsearchFixture;
-	private static final Scripts _scripts = new ScriptsImpl();
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchClient _elasticsearchClient;

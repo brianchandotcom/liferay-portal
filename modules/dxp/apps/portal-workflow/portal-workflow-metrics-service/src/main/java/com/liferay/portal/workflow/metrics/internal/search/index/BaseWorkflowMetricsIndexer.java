@@ -27,7 +27,6 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
-import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.workflow.metrics.internal.petra.executor.WorkflowMetricsPortalExecutor;
 import com.liferay.portal.workflow.metrics.internal.search.index.util.WorkflowMetricsIndexerUtil;
 
@@ -204,9 +203,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 	@Reference
 	protected Queries queries;
-
-	@Reference
-	protected Scripts scripts;
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;

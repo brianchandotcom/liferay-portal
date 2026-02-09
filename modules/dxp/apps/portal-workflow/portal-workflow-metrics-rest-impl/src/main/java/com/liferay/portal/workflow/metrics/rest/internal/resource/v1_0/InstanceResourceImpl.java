@@ -778,7 +778,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation =
 			_aggregations.bucketSelector(
-				"bucketSelector", _scripts.script("params.nodeCount > 0"));
+				"bucketSelector",
+				Scripts.INSTANCE.script("params.nodeCount > 0"));
 
 		bucketSelectorPipelineAggregation.addBucketPath(
 			"nodeCount", "countFilter>nodeCount.value");
@@ -1218,9 +1219,6 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 
 	@Reference
 	private ResourceHelper _resourceHelper;
-
-	@Reference
-	private Scripts _scripts;
 
 	@Reference
 	private SearchRequestExecutor _searchRequestExecutor;

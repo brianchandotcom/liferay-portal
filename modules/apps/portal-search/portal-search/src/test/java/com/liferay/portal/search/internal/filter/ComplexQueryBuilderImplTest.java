@@ -17,7 +17,6 @@ import com.liferay.portal.search.query.NestedQuery;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.RangeTermQuery;
-import com.liferay.portal.search.script.Scripts;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -27,8 +26,6 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.mockito.Mockito;
 
 /**
  * @author Wade Cao
@@ -43,7 +40,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterDateRangeTermQuery() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		Query query = _getQuery(
 			complexQueryBuilderImpl, "date_range", "[now/d now+1d/d[");
@@ -54,7 +51,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterDateRangeTermQueryInvalidValue() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		List<Query> queries = _getQueries(
 			complexQueryBuilderImpl, "date_range", "now/d now+1d/d[");
@@ -65,7 +62,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterFuzzyQuery() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		Query query = _getQuery(
 			complexQueryBuilderImpl, "fuzzy", "it is fuzzyyyyy");
@@ -76,7 +73,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterMatchQuery() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		Query query = _getQuery(complexQueryBuilderImpl, "match", "match-me");
 
@@ -86,7 +83,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterNestedQuery() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		Query query = _getQuery(complexQueryBuilderImpl, "nested", "path");
 
@@ -100,7 +97,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterRangeTermQuery() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		Query query = _getQuery(complexQueryBuilderImpl, "range", "]10 20]");
 
@@ -110,7 +107,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testFilterRangeTermQueryInvalidValue() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		List<Query> queries = _getQueries(
 			complexQueryBuilderImpl, "range", "10 20]");
@@ -121,7 +118,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testInvalidType() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		List<Query> queries = _getQueries(
 			complexQueryBuilderImpl, "whatever", "[now/d now+1d/d[");
@@ -132,7 +129,7 @@ public class ComplexQueryBuilderImplTest {
 	@Test
 	public void testInvalidType2() {
 		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries, _scripts);
+			new ComplexQueryBuilderImpl(_queries);
 
 		List<Query> queries = _getQueries(
 			complexQueryBuilderImpl, "whatever", "]10 20]");
@@ -191,6 +188,5 @@ public class ComplexQueryBuilderImplTest {
 		_complexQueryPartBuilderFactory =
 			new ComplexQueryPartBuilderFactoryImpl();
 	private final Queries _queries = new QueriesImpl();
-	private final Scripts _scripts = Mockito.mock(Scripts.class);
 
 }

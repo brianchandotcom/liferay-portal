@@ -54,16 +54,8 @@ if (notificationUnread) {
 			</c:when>
 			<c:otherwise>
 				<portlet:actionURL name="markNotificationAsRead" var="markNotificationAsReadURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="userNotificationEventId" value="<%= String.valueOf(userNotificationEvent.getUserNotificationEventId()) %>" />
-
-					<c:choose>
-						<c:when test="<%= Validator.isNotNull(userNotificationFeedEntry.getLink()) %>">
-							<portlet:param name="redirect" value="<%= PortalUtil.addPreservedParameters(themeDisplay, userNotificationFeedEntry.getLink(), false, true) %>" />
-						</c:when>
-						<c:otherwise>
-							<portlet:param name="redirect" value="<%= currentURL %>" />
-						</c:otherwise>
-					</c:choose>
 				</portlet:actionURL>
 
 				<liferay-ui:search-container-column-text

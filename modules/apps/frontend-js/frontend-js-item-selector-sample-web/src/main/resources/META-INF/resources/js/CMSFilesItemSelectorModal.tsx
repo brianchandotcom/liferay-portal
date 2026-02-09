@@ -19,6 +19,7 @@ import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
+import {FileUploaderComponentExample} from './FilesUploaderComponentExample';
 import useBrowserTabVisibility from './utils/useBrowserTabVisibility';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
@@ -347,6 +348,7 @@ function CMSFilesItemSelectorModal({
 					},
 				] as IView[],
 			}}
+			filesUploaderComponent={FileUploaderComponentExample}
 			itemTypeLabel={Liferay.Language.get('files')}
 			locator={{
 				id: 'embedded.id',

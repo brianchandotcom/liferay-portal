@@ -5,19 +5,11 @@
 
 package com.liferay.sharing.web.internal.product.navigation.control.menu;
 
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseInfoMessageProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.InfoMessageProductNavigationControlMenuEntryTypeConstants;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
-
-import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,27 +25,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class MaintenanceInfoMessageProductNavigationControlMenuEntry
 	extends BaseInfoMessageProductNavigationControlMenuEntry {
-
-	@Override
-	public boolean isShow(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (themeDisplay == null) {
-			return false;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if (Validator.isNull(portletDisplay.getPortletName())) {
-			return Objects.equals(
-				SharingPortletKeys.SHARED_ASSETS, themeDisplay.getPpid());
-		}
-
-		return Objects.equals(
-			SharingPortletKeys.SHARED_ASSETS, portletDisplay.getPortletName());
-	}
 
 	@Override
 	protected String getPortletName() {

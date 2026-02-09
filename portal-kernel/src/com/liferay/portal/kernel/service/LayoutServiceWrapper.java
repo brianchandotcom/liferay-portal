@@ -721,12 +721,12 @@ public class LayoutServiceWrapper
 
 	@Override
 	public Layout getOrAddEmptyLayout(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		return _layoutService.getOrAddEmptyLayout(
-			externalReferenceCode, groupId, serviceContext);
+			externalReferenceCode, groupId, privateLayout, serviceContext);
 	}
 
 	/**

@@ -674,12 +674,12 @@ public class LayoutServiceUtil {
 	}
 
 	public static Layout getOrAddEmptyLayout(
-			String externalReferenceCode, long groupId,
+			String externalReferenceCode, long groupId, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		return getService().getOrAddEmptyLayout(
-			externalReferenceCode, groupId, serviceContext);
+			externalReferenceCode, groupId, privateLayout, serviceContext);
 	}
 
 	/**

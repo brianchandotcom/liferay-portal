@@ -40,6 +40,7 @@ describe('The ActionBuilder component should', () => {
 			<ActionBuilder
 				disableGroovyAction={true}
 				errors={{}}
+				hasUserNotificationHandler={false}
 				isApproved={false}
 				objectActionCodeEditorElements={[]}
 				objectActionExecutors={[]}

@@ -21,6 +21,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 		HashMapBuilder.<String, Object>put(
 			"allowScriptContentToBeExecutedOrIncluded", objectDefinitionsActionsDisplayContext.isAllowScriptContentToBeExecutedOrIncluded()
 		).put(
+			"hasUserNotificationHandler", objectDefinitionsActionsDisplayContext.hasUserNotificationHandler(objectDefinition.getClassName())
+		).put(
 			"isApproved", objectDefinition.isApproved()
 		).put(
 			"objectAction", objectDefinitionsActionsDisplayContext.getObjectActionJSONObject(objectAction)

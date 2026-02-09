@@ -25,6 +25,7 @@ import './ActionBuilder.scss';
 interface ActionBuilderProps {
 	disableGroovyAction: boolean;
 	errors: ActionError;
+	hasUserNotificationHandler: boolean;
 	isApproved: boolean;
 	objectActionCodeEditorElements: SidebarCategory[];
 	objectActionExecutors: ObjectActionTriggerExecutorItem[];
@@ -59,6 +60,7 @@ const triggerKeys = [
 export default function ActionBuilder({
 	disableGroovyAction,
 	errors,
+	hasUserNotificationHandler,
 	isApproved,
 	objectActionCodeEditorElements,
 	objectActionExecutors,
@@ -345,6 +347,7 @@ export default function ActionBuilder({
 				currentObjectDefinitionFields={currentObjectDefinitionFields}
 				disableGroovyAction={disableGroovyAction}
 				errors={errors}
+				hasUserNotificationHandler={hasUserNotificationHandler}
 				newObjectActionExecutors={newObjectActionExecutors}
 				objectActionCodeEditorElements={objectActionCodeEditorElements}
 				objectActionExecutors={objectActionExecutors}

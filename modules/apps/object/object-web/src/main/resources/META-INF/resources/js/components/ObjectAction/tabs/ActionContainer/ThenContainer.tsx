@@ -24,6 +24,7 @@ import './ThenContainer.scss';
 interface ThenContainerProps {
 	disabled: boolean;
 	errors: ActionError;
+	hasUserNotificationHandler: boolean;
 	isValidField: (
 		{businessType, name, objectFieldSettings, system}: ObjectField,
 		isObjectActionSystem?: boolean
@@ -52,6 +53,7 @@ export type NotificationTemplateAction = {
 export function ThenContainer({
 	disabled,
 	errors,
+	hasUserNotificationHandler,
 	isValidField,
 	newObjectActionExecutors,
 	objectActionExecutors,
@@ -98,7 +100,7 @@ export function ThenContainer({
 				let notificationArray: NotificationTemplate[] =
 					NotificationTemplatesResponse;
 
-				if (systemObject) {
+				if (systemObject && !hasUserNotificationHandler) {
 					notificationArray = NotificationTemplatesResponse.filter(
 						(notificationTemplate) =>
 							notificationTemplate.type !== 'userNotification'

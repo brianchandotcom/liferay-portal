@@ -33,6 +33,7 @@ const TABS = [
 interface ObjectActionContainerProps {
 	allowScriptContentToBeExecutedOrIncluded: boolean;
 	editingObjectAction?: boolean;
+	hasUserNotificationHandler: boolean;
 	isApproved?: boolean;
 	objectAction: Partial<ObjectAction>;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -61,6 +62,7 @@ export type ActionError = FormError<ObjectAction & ObjectActionParameters> & {
 export function ObjectActionContainer({
 	allowScriptContentToBeExecutedOrIncluded,
 	editingObjectAction = false,
+	hasUserNotificationHandler,
 	isApproved,
 	objectAction: initialValues,
 	objectActionCodeEditorElements,
@@ -185,6 +187,7 @@ export function ObjectActionContainer({
 						errors={
 							Object.keys(errors).length ? errors : backEndErrors
 						}
+						hasUserNotificationHandler={hasUserNotificationHandler}
 						isApproved={isApproved!}
 						objectActionCodeEditorElements={
 							objectActionCodeEditorElements

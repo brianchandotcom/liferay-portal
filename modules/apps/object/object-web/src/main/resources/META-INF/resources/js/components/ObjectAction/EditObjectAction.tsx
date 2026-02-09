@@ -10,6 +10,7 @@ import {ObjectActionContainer} from './ObjectActionContainer';
 
 interface EditObjectActionProps {
 	allowScriptContentToBeExecutedOrIncluded: boolean;
+	hasUserNotificationHandler: boolean;
 	isApproved: boolean;
 	objectAction: ObjectAction;
 	objectActionCodeEditorElements: SidebarCategory[];
@@ -27,6 +28,7 @@ interface EditObjectActionProps {
 
 export default function EditObjectAction({
 	allowScriptContentToBeExecutedOrIncluded,
+	hasUserNotificationHandler,
 	isApproved,
 	objectAction: {id, ...values},
 	objectActionCodeEditorElements,
@@ -47,6 +49,7 @@ export default function EditObjectAction({
 				allowScriptContentToBeExecutedOrIncluded
 			}
 			editingObjectAction
+			hasUserNotificationHandler={hasUserNotificationHandler}
 			isApproved={isApproved}
 			objectAction={values}
 			objectActionCodeEditorElements={objectActionCodeEditorElements}

@@ -7,7 +7,6 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -15,6 +14,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -55,14 +55,12 @@ public class TasksOverviewComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		ObjectEntry projectObjectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
-		if (!(object instanceof ObjectEntry)) {
+		if (projectObjectEntry == null) {
 			return null;
 		}
-
-		ObjectEntry projectObjectEntry = (ObjectEntry)object;
 
 		return HashMapBuilder.<String, Object>put(
 			"projectId", projectObjectEntry.getObjectEntryId()

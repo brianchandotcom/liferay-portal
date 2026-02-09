@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -18,6 +17,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -58,14 +58,12 @@ public class TagsComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
-		Object object = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
+		ObjectEntry objectEntry = ObjectEntryUtil.getObjectEntry(
+			httpServletRequest);
 
-		if (!(object instanceof ObjectEntry)) {
+		if (objectEntry == null) {
 			return null;
 		}
-
-		ObjectEntry objectEntry = (ObjectEntry)object;
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(

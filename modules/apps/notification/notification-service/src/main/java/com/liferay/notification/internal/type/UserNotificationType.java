@@ -22,6 +22,7 @@ import com.liferay.notification.model.NotificationRecipientSettingModel;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.type.BaseNotificationType;
 import com.liferay.notification.type.NotificationType;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -144,9 +146,24 @@ public class UserNotificationType extends BaseNotificationType {
 				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 				UserNotificationDeliveryConstants.TYPE_WEBSITE);
 
-			if (!deliver ||
-				!_objectEntryService.hasModelResourcePermission(
-					user, notificationContext.getClassPK(), ActionKeys.VIEW)) {
+			if (!deliver) {
+				continue;
+			}
+
+			boolean objectDefinitionClassName = StringUtil.startsWith(
+				notificationContext.getClassName(),
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
+
+			if ((objectDefinitionClassName &&
+				 !_objectEntryService.hasModelResourcePermission(
+					 user, notificationContext.getClassPK(),
+					 ActionKeys.VIEW)) ||
+				(!objectDefinitionClassName &&
+				 !UserNotificationManagerUtil.hasPermission(
+					 notificationContext.getClassPK(),
+					 notificationContext.getPortletId(), StringPool.BLANK,
+					 user))) {
 
 				continue;
 			}

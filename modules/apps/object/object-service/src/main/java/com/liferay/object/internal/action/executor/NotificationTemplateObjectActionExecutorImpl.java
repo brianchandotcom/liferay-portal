@@ -20,7 +20,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -106,8 +105,7 @@ public class NotificationTemplateObjectActionExecutorImpl
 			).parentClassPK(
 				GetterUtil.getLong(targetValues.get("parentClassPK"))
 			).portletId(
-				sourceObjectDefinition.isUnmodifiableSystemObject() ?
-					StringPool.BLANK : sourceObjectDefinition.getPortletId()
+				sourceObjectDefinition.getPortletId()
 			).preferredLanguageId(
 				payloadJSONObject.getString("preferredLanguageId")
 			).usePreferredLanguageForGuests(

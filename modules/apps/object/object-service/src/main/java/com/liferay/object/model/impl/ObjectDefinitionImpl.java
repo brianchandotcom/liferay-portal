@@ -146,10 +146,6 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public String getPortletId() {
-		if (isUnmodifiableSystemObject()) {
-			throw new UnsupportedOperationException();
-		}
-
 		return ObjectDefinitionUtil.getPortletId(getClassName());
 	}
 

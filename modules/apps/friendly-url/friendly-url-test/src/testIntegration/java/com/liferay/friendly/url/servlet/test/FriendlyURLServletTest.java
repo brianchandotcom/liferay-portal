@@ -392,11 +392,6 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testGetRedirectOnGuestViewableUtilityPage() throws Throwable {
-		_testGetRedirectUtilityPage(true);
-	}
-
-	@Test
 	public void testGetRedirectOnHiddenLayout() throws Throwable {
 		Group group = GroupTestUtil.addGroup();
 
@@ -468,10 +463,15 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testGetRedirectOnNonguestViewableUtilityPage()
+	public void testGetRedirectOnUtilityPageGuestViewable() throws Throwable {
+		_testGetRedirectOnUtilityPage(true);
+	}
+
+	@Test
+	public void testGetRedirectOnUtilityPageNonguestViewable()
 		throws Throwable {
 
-		_testGetRedirectUtilityPage(false);
+		_testGetRedirectOnUtilityPage(false);
 	}
 
 	@Test
@@ -1142,7 +1142,7 @@ public class FriendlyURLServletTest {
 		}
 	}
 
-	private void _testGetRedirectUtilityPage(boolean guestViewable)
+	private void _testGetRedirectOnUtilityPage(boolean guestViewable)
 		throws Throwable {
 
 		Group group = GroupTestUtil.addGroup();

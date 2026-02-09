@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharing.constants.SharingPortletKeys;
 import com.liferay.sharing.model.SharingEntry;
+import com.liferay.sharing.security.permission.SharingEntryAction;
 import com.liferay.sharing.service.SharingEntryLocalService;
 
 import org.osgi.service.component.annotations.Component;
@@ -86,6 +87,7 @@ public class SharingUserNotificationHandler
 			assetRendererFactory.getAssetRenderer(sharingEntry.getClassPK());
 
 		String viewInContextURL = assetRenderer.getURLSharingNotification(
+			sharingEntry.hasSharingPermission(SharingEntryAction.UPDATE),
 			themeDisplay);
 
 		if (Validator.isBlank(viewInContextURL)) {

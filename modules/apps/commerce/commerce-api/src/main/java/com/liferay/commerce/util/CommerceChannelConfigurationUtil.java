@@ -22,14 +22,22 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 public class CommerceChannelConfigurationUtil {
 
 	public static String getOpenCommerceOrderVisibilityScope(long groupId) {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		return getOpenCommerceOrderVisibilityScope(groupId, false);
+	}
 
-		if (permissionChecker.isCompanyAdmin(
-				permissionChecker.getCompanyId()) ||
-			permissionChecker.isGroupAdmin(groupId)) {
+	public static String getOpenCommerceOrderVisibilityScope(
+		long groupId, boolean skipAdminPermissionCheck) {
 
-			return StringPool.BLANK;
+		if (!skipAdminPermissionCheck) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker.isCompanyAdmin(
+					permissionChecker.getCompanyId()) ||
+				permissionChecker.isGroupAdmin(groupId)) {
+
+				return StringPool.BLANK;
+			}
 		}
 
 		try {
@@ -52,14 +60,22 @@ public class CommerceChannelConfigurationUtil {
 	}
 
 	public static String getPlacedCommerceOrderVisibilityScope(long groupId) {
-		PermissionChecker permissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
+		return getPlacedCommerceOrderVisibilityScope(groupId, false);
+	}
 
-		if (permissionChecker.isCompanyAdmin(
-				permissionChecker.getCompanyId()) ||
-			permissionChecker.isGroupAdmin(groupId)) {
+	public static String getPlacedCommerceOrderVisibilityScope(
+		long groupId, boolean skipAdminPermissionCheck) {
 
-			return StringPool.BLANK;
+		if (!skipAdminPermissionCheck) {
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (permissionChecker.isCompanyAdmin(
+					permissionChecker.getCompanyId()) ||
+				permissionChecker.isGroupAdmin(groupId)) {
+
+				return StringPool.BLANK;
+			}
 		}
 
 		try {
@@ -79,6 +95,26 @@ public class CommerceChannelConfigurationUtil {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	public static boolean isUserNotificationScopeEnabled(long groupId) {
+		try {
+			CommerceOrderConfiguration commerceOrderConfiguration =
+				ConfigurationProviderUtil.getConfiguration(
+					CommerceOrderConfiguration.class,
+					new GroupServiceSettingsLocator(
+						groupId,
+						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			return commerceOrderConfiguration.userNotificationScopeEnabled();
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

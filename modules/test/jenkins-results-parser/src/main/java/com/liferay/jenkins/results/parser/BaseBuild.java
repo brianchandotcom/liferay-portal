@@ -1710,6 +1710,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public void setParameterValue(String name, String value) {
+		_parameters.put(name, value);
+	}
+
+	@Override
 	public void setResult(String result) {
 		_result = result;
 	}

@@ -31,6 +31,16 @@ test(
 	{tag: '@LPD-36752'},
 	async ({page, picklistBuilderPage, structureBuilderPage}) => {
 
+		// Create another structure first
+
+		const usedName = `Name${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: usedName,
+			name: usedName,
+			page: structureBuilderPage,
+		});
+
 		// Add a picklist
 
 		const picklist = await picklistBuilderPage.createPicklist();
@@ -82,7 +92,11 @@ test(
 		).toBeVisible();
 
 		await structureBuilderPage.changeStructureSettings({
-			name: 'CMSBasicDocument',
+			name: `Name${getRandomInt()}`,
+		});
+
+		await structureBuilderPage.changeStructureSettings({
+			name: usedName,
 		});
 
 		await expect(
@@ -212,14 +226,14 @@ test(
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
-				'You removed one or more fields from the content structure'
+				'You have made changes to the content structure that may impact existing stored data once published'
 			),
 			trigger: structureBuilderPage.publishButton,
 		});
 
 		await clickAndExpectToBeHidden({
 			target: page.getByText(
-				'You removed one or more fields from the content structure'
+				'You have made changes to the content structure that may impact existing stored data once published'
 			),
 			trigger: page.locator('.btn-danger'),
 		});

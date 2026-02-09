@@ -107,7 +107,7 @@ test(
 
 		await expect(
 			page.getByText(
-				'To customize the editor you need to publish the content structure first. You removed one or more fields from the content structure.'
+				'To customize the editor you need to publish the content structure first. You have made changes to the content structure that may impact existing stored data once published.'
 			)
 		).toBeAttached();
 

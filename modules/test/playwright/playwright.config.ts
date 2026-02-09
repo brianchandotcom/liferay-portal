@@ -68,6 +68,7 @@ import {config as expandoWebConfig} from './tests/expando-web/main/config';
 import {config as exportImportServiceConfig} from './tests/export-import-service/main/config';
 import {config as exportImportWebConfig} from './tests/export-import-web/main/config';
 import {config as exportImportWebRevampConfig} from './tests/export-import-web/revamp/config';
+import {config as facebookLinkConfig} from './tests/facebook-link/main/config';
 import {config as featureFlagWebConfig} from './tests/feature-flag-web/main/config';
 import {config as fragmentWebConfig} from './tests/fragment-web/main/config';
 import {config as friendlyURLConfig} from './tests/friendly-url-web/main/config';
@@ -260,6 +261,7 @@ export default defineConfig({
 		exportImportServiceConfig,
 		exportImportWebConfig,
 		exportImportWebRevampConfig,
+		facebookLinkConfig,
 		featureFlagWebConfig,
 		fragmentWebConfig,
 		friendlyURLConfig,

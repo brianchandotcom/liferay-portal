@@ -28,7 +28,7 @@ export class SystemSettingsPage {
 	}
 
 	async goToSystemSetting(categoryKey: string, configurationName: string) {
-		await this.goto();
+		await this.applicationsMenuPage.goToSystemSettings();
 		await this.page
 			.getByRole('link', {
 				exact: true,

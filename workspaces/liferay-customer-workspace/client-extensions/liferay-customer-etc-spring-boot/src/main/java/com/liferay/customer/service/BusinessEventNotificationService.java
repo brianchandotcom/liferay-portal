@@ -6,6 +6,7 @@
 package com.liferay.customer.service;
 
 import com.liferay.customer.constants.NotificationSubscriptionConstants;
+import com.liferay.customer.constants.NotificationTemplateConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -171,7 +172,9 @@ public class BusinessEventNotificationService extends BaseNotificationService {
 			);
 
 			sendNotifications(
-				subscriptionsJSONArray, "UPDATED-BUSINESS-EVENTS",
+				subscriptionsJSONArray,
+				NotificationTemplateConstants.
+					EXTERNAL_REFERENCE_CODE_UPDATED_BUSINESS_EVENTS,
 				templatePayloadJSONObject);
 		}
 

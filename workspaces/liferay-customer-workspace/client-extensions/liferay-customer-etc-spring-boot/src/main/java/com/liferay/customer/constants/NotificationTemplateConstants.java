@@ -10,17 +10,6 @@ package com.liferay.customer.constants;
  */
 public class NotificationTemplateConstants {
 
-	public static final String
-		EXTERNAL_REFERENCE_CODE_CANCELED_BUSINESS_EVENTS =
-			"CANCELED-BUSINESS-EVENTS";
-
-	public static final String
-		EXTERNAL_REFERENCE_CODE_COMPLETED_BUSINESS_EVENTS =
-			"COMPLETED-BUSINESS-EVENTS";
-
-	public static final String EXTERNAL_REFERENCE_CODE_CREATED_BUSINESS_EVENTS =
-		"CREATED-BUSINESS-EVENTS";
-
 	public static final String EXTERNAL_REFERENCE_CODE_OVERDUE_BUSINESS_EVENTS =
 		"OVERDUE-BUSINESS-EVENTS";
 

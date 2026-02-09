@@ -2,6 +2,7 @@
 
 <suppressions>
 	<source-check>
+		<suppress checks="JavaFeatureFlagManagerUtilCheck" files="client-extension-type-impl/src/main/java/com/liferay/client/extension/type/internal/factory/CETFactoryImpl\.java" />
 		<suppress checks="JavaJSImportMapsContributorCheck" files="client-extension-web/src/main/java/com/liferay/client/extension/web/internal/frontend/js/importmaps/extender/ClientExtensionJSImportMapsContributor\.java" />
 	</source-check>
 </suppressions>

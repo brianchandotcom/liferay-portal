@@ -1545,27 +1545,28 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getGridPageElement(
-			String[] cssClasses, boolean gutters, boolean indexed,
-			Integer numberOfModules)
+			BackgroundImageValue backgroundImageValue, String[] cssClasses,
+			boolean gutters, boolean indexed, Integer numberOfModules)
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		return _getGridPageElement(
-			cssClasses, gutters, indexed, numberOfModules,
+			backgroundImageValue, cssClasses, gutters, indexed, numberOfModules,
 			externalReferenceCode,
 			_getModulePageElements(externalReferenceCode, numberOfModules));
 	}
 
 	private PageElement _getGridPageElement(
-			String[] cssClasses, boolean gutters, boolean indexed,
-			Integer numberOfModules, String pageElementExternalReferenceCode,
-			PageElement[] pageElements)
+			BackgroundImageValue backgroundImageValue, String[] cssClasses,
+			boolean gutters, boolean indexed, Integer numberOfModules,
+			String pageElementExternalReferenceCode, PageElement[] pageElements)
 		throws Exception {
 
 		GridPageElementDefinition gridPageElementDefinition =
 			new GridPageElementDefinition();
 
+		gridPageElementDefinition.setBackgroundImageValue(backgroundImageValue);
 		gridPageElementDefinition.setCssClasses(cssClasses);
 		gridPageElementDefinition.setGridViewports(this::_getGridViewports);
 		gridPageElementDefinition.setGutters(gutters);
@@ -2467,16 +2468,54 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithGridPageElement()
 		throws Exception {
 
-		_testPostSitePageSpecificationPageExperiencePageElement(
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+
+		PageElement pageElement =
+			_testPostSitePageSpecificationPageExperiencePageElement(
+				_getGridPageElement(
+					backgroundImageValue,
+					RandomTestUtil.randomStrings(
+						RandomTestUtil.randomInt(1, 10)),
+					false, false, 6));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null,
+			pageElement.getExternalReferenceCode());
+
+		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
+
+		backgroundImageValue = ImageValueTestUtil.getDirectBackgroundImageValue(
+			ReferencesTestUtil.getItemExternalReference(
+				fileEntry, testGroup.getGroupId()),
+			null);
+
+		pageElement = _testPostSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElement(backgroundImageValue, null, true, true, 3));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, fileEntry.getFileEntryId(), fileEntry,
+			pageElement.getExternalReferenceCode());
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			JournalArticle.class.getName(),
+			journalArticle.getExternalReferenceCode(),
+			"JournalArticle_authorProfileImage", null);
+
+		pageElement = _testPostSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				false, false, 6));
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getGridPageElement(null, true, true, 3));
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getGridPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, false, 12));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, journalArticle.getResourcePrimKey(),
+			journalArticle, pageElement.getExternalReferenceCode());
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement()
@@ -4104,22 +4143,51 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()
 		throws Exception {
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getMappedBackgroundImageValue(
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM,
+				"JournalArticle_authorProfileImage",
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
+				backgroundImageValue,
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				false, false, 6, externalReferenceCode,
 				_getModulePageElements(externalReferenceCode, 6)));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				null, true, true, 3, externalReferenceCode,
+				backgroundImageValue, null, true, true, 3,
+				externalReferenceCode,
 				_getModulePageElements(externalReferenceCode, 3)));
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getGridPageElement(
-				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				false, false, 12, externalReferenceCode,
-				_getModulePageElements(externalReferenceCode, 12)));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		_testMissingOptionalReference(
+			1,
+			() -> _testPutSitePageSpecificationPageExperiencePageElement(
+				_getGridPageElement(
+					ImageValueTestUtil.getDirectBackgroundImageValue(
+						_randomItemExternalReference(), null),
+					RandomTestUtil.randomStrings(
+						RandomTestUtil.randomInt(1, 10)),
+					false, false, 12, externalReferenceCode,
+					_getModulePageElements(externalReferenceCode, 12))));
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElementDefaultValues(externalReferenceCode));
 	}

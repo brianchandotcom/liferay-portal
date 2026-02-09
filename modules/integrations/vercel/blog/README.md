@@ -10,7 +10,7 @@ This [Next.js](https://nextjs.org) template consumes [Liferay's](https://www.lif
 
 ## Clone the Template
 
-1. Run this command: 
+1. Run this command:
 
     ```bash
     curl -sL https://raw.githubusercontent.com/liferay/liferay-portal/master/modules/integrations/vercel/clone_template.sh | bash -s -- blog
@@ -81,7 +81,6 @@ Once the API is exposed via policy, you must ensure unauthenticated users ([Gues
 
    !!! note
        You can retrieve your Space ID in the Space settings. See [Configuring Spaces](https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system/spaces/configuring-spaces) to learn more.
-
 
 1. (Optional) Add a sample Blog content to your Space for testing. See [creating content](https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system/assets/creating-assets-and-folders).
 

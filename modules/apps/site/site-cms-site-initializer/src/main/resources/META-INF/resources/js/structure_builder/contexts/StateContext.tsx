@@ -350,7 +350,7 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'add-repeatable-group': {
-			const {structure} = state;
+			const {history, publishedChildren, structure} = state;
 
 			const {uuids} = action;
 
@@ -433,8 +433,24 @@ function reducer(state: State, action: Action): State {
 				root: structure,
 			});
 
+			const deletedChildrenUuids = new Set<Uuid>();
+
+			for (const item of items) {
+				if (publishedChildren.has(item.uuid)) {
+					deletedChildrenUuids.add(item.uuid);
+				}
+			}
+
 			return {
 				...state,
+				history: deletedChildrenUuids.size
+					? getHistory({
+							deletedChildrenUuids,
+							initialHistory: history,
+							publishedChildren,
+							structure,
+						})
+					: history,
 				selection: [groupUuid],
 				structure: {...structure, children},
 			};

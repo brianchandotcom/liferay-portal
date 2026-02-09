@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -307,7 +307,7 @@ public class CETFactoryImpl implements CETFactory {
 			String key = FEATURE_FLAG_KEYS.get(type);
 
 			if ((key == null) ||
-				FeatureFlagManagerUtil.isEnabled(companyId, key)) {
+				_featureFlagManager.isEnabled(companyId, key)) {
 
 				return cetImplFactory;
 			}
@@ -396,6 +396,9 @@ public class CETFactoryImpl implements CETFactory {
 	}
 
 	private Map<String, CETImplFactory> _cetImplFactories;
+
+	@Reference
+	private FeatureFlagManager _featureFlagManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

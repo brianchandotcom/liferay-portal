@@ -10,8 +10,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
@@ -39,7 +39,6 @@ import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.builder.PointInTimeBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -292,12 +291,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 			Collection<Aggregation> aggregations = aggregationsMap.values();
 
 			aggregations.forEach(
-				aggregation -> {
-					AggregationBuilder aggregationBuilder =
-						_aggregationTranslator.translate(aggregation);
-
-					searchSourceBuilder.aggregation(aggregationBuilder);
-				});
+				aggregation -> searchSourceBuilder.aggregation(
+					aggregation.accept(
+						ElasticsearchAggregationVisitor.INSTANCE)));
 		}
 	}
 
@@ -570,9 +566,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 		return null;
 	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private AggregationTranslator<AggregationBuilder> _aggregationTranslator;
 
 	@Reference
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;

@@ -5,11 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.DateRangeAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
 
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
 
@@ -19,14 +17,13 @@ import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBu
 public class DateRangeAggregationTranslator extends RangeAggregationTranslator {
 
 	public DateRangeAggregationBuilder translate(
-		DateRangeAggregation dateRangeAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		DateRangeAggregation dateRangeAggregation) {
 
 		DateRangeAggregationBuilder dateRangeAggregationBuilder =
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.dateRange(
 					baseMetricsAggregation.getName()),
-				dateRangeAggregation, aggregationTranslator);
+				dateRangeAggregation);
 
 		populateRangeAggregationBuilder(
 			dateRangeAggregation, dateRangeAggregationBuilder);

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseFieldAggregationTranslator;
@@ -17,7 +16,6 @@ import java.util.List;
 
 import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
 
@@ -27,8 +25,7 @@ import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregation
 public class GeoDistanceAggregationTranslator {
 
 	public GeoDistanceAggregationBuilder translate(
-		GeoDistanceAggregation geoDistanceAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		GeoDistanceAggregation geoDistanceAggregation) {
 
 		GeoPoint geoPoint = GeoLocationPointTranslator.translate(
 			geoDistanceAggregation.getGeoLocationPoint());
@@ -37,7 +34,7 @@ public class GeoDistanceAggregationTranslator {
 			_baseFieldAggregationTranslator.translate(
 				baseMetricsAggregation -> AggregationBuilders.geoDistance(
 					baseMetricsAggregation.getName(), geoPoint),
-				geoDistanceAggregation, aggregationTranslator);
+				geoDistanceAggregation);
 
 		if (geoDistanceAggregation.getDistanceUnit() != null) {
 			geoDistanceAggregationBuilder.unit(

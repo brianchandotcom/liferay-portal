@@ -6,13 +6,11 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.significance.SignificanceHeuristicTranslator;
 
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
 
@@ -22,8 +20,7 @@ import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggrega
 public class SignificantTextAggregationTranslator {
 
 	public SignificantTextAggregationBuilder translate(
-		SignificantTextAggregation significantTextAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		SignificantTextAggregation significantTextAggregation) {
 
 		SignificantTextAggregationBuilder significantTextAggregationBuilder =
 			AggregationBuilders.significantText(
@@ -82,8 +79,7 @@ public class SignificantTextAggregationTranslator {
 		}
 
 		_baseAggregationTranslator.translate(
-			significantTextAggregationBuilder, significantTextAggregation,
-			aggregationTranslator);
+			significantTextAggregationBuilder, significantTextAggregation);
 
 		return significantTextAggregationBuilder;
 	}

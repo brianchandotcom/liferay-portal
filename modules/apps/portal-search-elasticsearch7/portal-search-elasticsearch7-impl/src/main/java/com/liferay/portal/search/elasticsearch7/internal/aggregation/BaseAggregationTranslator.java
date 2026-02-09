@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
 import com.liferay.portal.search.aggregation.Aggregation;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationVisitor;
 
@@ -18,14 +17,14 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 public class BaseAggregationTranslator {
 
 	public AggregationBuilder translate(
-		AggregationBuilder aggregationBuilder, Aggregation aggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		AggregationBuilder aggregationBuilder, Aggregation aggregation) {
 
 		for (Aggregation childAggregation :
 				aggregation.getChildrenAggregations()) {
 
 			aggregationBuilder.subAggregation(
-				aggregationTranslator.translate(childAggregation));
+				childAggregation.accept(
+					ElasticsearchAggregationVisitor.INSTANCE));
 		}
 
 		for (PipelineAggregation pipelineAggregation :

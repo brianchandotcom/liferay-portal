@@ -3,14 +3,22 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
-import {EConfigInURLBehavior, IView} from '@liferay/frontend-data-set-web';
+import {
+	EConfigInURLBehavior,
+	IInlineNotificationComponent,
+	IView,
+} from '@liferay/frontend-data-set-web';
 import {
 	IItemSelectorModalProps,
 	ItemSelectorModal,
 } from '@liferay/frontend-js-item-selector-web';
+import {fetch} from 'frontend-js-web';
 import React, {useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
+
+import useBrowserTabVisibility from './utils/useBrowserTabVisibility';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -35,6 +43,18 @@ function getCMSChildFolderURL(folderId: string) {
 	}).toString()}`;
 }
 
+async function checkNewCMSFiles(lastRequestTime: string) {
+	const response = await fetch(
+		`${CMS_ROOT_FILES_URL} and dateCreated gt ${lastRequestTime}`
+	);
+
+	if (!response.ok) {
+		return;
+	}
+
+	return await response.json();
+}
+
 type CMSFile = {
 	id: number;
 	title: string;
@@ -52,7 +72,25 @@ function CMSFilesItemSelectorModal({
 	const [folderStructure, setFolderStructure] = useState<
 		{folderId: string; folderName: string}[]
 	>([]);
+	const [newItems, setNewItems] = useState(0);
+	const [showInlineNotification, setShowInlineNotification] = useState(false);
 	const [url, setURL] = useState(CMS_ROOT_FILES_URL);
+
+	const isBrowserTabVisible = useBrowserTabVisibility();
+	const lastRequestTimeRef = React.useRef(new Date().toISOString());
+
+	if (isBrowserTabVisible && otherProps.open) {
+
+		// eslint-disable-next-line react-compiler/react-compiler
+		checkNewCMSFiles(lastRequestTimeRef.current).then((response) => {
+			if (response.totalCount > 0) {
+				setNewItems(response.totalCount);
+				setShowInlineNotification(true);
+
+				lastRequestTimeRef.current = new Date().toISOString();
+			}
+		});
+	}
 
 	function onChildFolderClick({
 		folderId,
@@ -68,6 +106,74 @@ function CMSFilesItemSelectorModal({
 
 		setURL(getCMSChildFolderURL(folderId));
 	}
+
+	const CmsAlertComponent = ({
+		context,
+	}: {
+		context: IInlineNotificationComponent['context'];
+	}) => {
+		if (!showInlineNotification) {
+			return null;
+		}
+
+		return (
+			<ClayAlert
+				displayType="info"
+				onClose={() => setShowInlineNotification(false)}
+				title={Liferay.Language.get('info')}
+				variant="stripe"
+			>
+				{Liferay.Util.sub(
+					Liferay.Language.get('there-are-x-new-items'),
+					[newItems]
+				)}
+
+				<ClayButton.Group className="pl-3" spaced>
+					<ClayButton
+						displayType="info"
+						onClick={() => {
+							const newSort = {
+								active: true,
+								direction: 'desc' as const,
+								key: 'dateCreated',
+								label: Liferay.Language.get('by-creation-date'),
+							};
+
+							let updatedSorts: Array<any> = [];
+
+							updatedSorts = updatedSorts
+								.concat(
+									context?.sorts?.map((sort) => {
+										sort.active = false;
+
+										return sort;
+									})
+								)
+								.filter((sort) => sort.key !== 'dateCreated');
+
+							updatedSorts.push(newSort);
+
+							context && context.onClearResultsBar();
+							context && context.forceSortsUpdate(updatedSorts);
+
+							setShowInlineNotification(false);
+						}}
+						size="sm"
+					>
+						{Liferay.Language.get('reload')}
+					</ClayButton>
+
+					<ClayButton
+						alert
+						onClick={() => setShowInlineNotification(false)}
+						size="sm"
+					>
+						{Liferay.Language.get('dismiss')}
+					</ClayButton>
+				</ClayButton.Group>
+			</ClayAlert>
+		);
+	};
 
 	return (
 		<ItemSelectorModal
@@ -103,10 +209,6 @@ function CMSFilesItemSelectorModal({
 					: undefined
 			}
 			fdsProps={{
-				pagination: {
-					deltas: [{label: 20}, {label: 40}, {label: 60}],
-					initialDelta: 20,
-				},
 				configInURLBehavior: EConfigInURLBehavior.OFF,
 				...fdsProps,
 				customRenderers: {
@@ -151,6 +253,11 @@ function CMSFilesItemSelectorModal({
 					},
 				],
 				id: `itemSelectorModal-cms-${uuidv4()}`,
+				inlineNotificationComponent: CmsAlertComponent,
+				pagination: {
+					deltas: [{label: 20}, {label: 40}, {label: 60}],
+					initialDelta: 20,
+				},
 				views: [
 					{
 						contentRenderer: 'cards',

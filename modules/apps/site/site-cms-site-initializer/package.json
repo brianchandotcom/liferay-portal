@@ -25,6 +25,7 @@
 		"@clayui/navigation-bar": "*",
 		"@clayui/pagination-bar": "*",
 		"@clayui/panel": "*",
+		"@clayui/shared": "*",
 		"@clayui/sticker": "*",
 		"@clayui/table": "*",
 		"@clayui/tabs": "*",

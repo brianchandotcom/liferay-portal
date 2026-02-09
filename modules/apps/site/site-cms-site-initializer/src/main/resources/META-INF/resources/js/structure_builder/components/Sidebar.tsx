@@ -4,7 +4,9 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {FocusTrap} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
+import {useIsMobileDevice} from '@clayui/shared';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
 import {ManagementToolbar} from 'frontend-js-components-web';
@@ -24,6 +26,8 @@ export default function () {
 
 	const openButtonRef = useRef<HTMLButtonElement>(null);
 	const panelRef = useRef<HTMLDivElement>(null);
+
+	const isMobile = useIsMobileDevice();
 
 	return (
 		<>
@@ -48,45 +52,50 @@ export default function () {
 					)
 				)}
 			/>
-			<div
-				aria-label={sub(
-					Liferay.Language.get('x-panel'),
-					Liferay.Language.get('content-structure-fields')
-				)}
-				className={classNames(
-					'border rounded-lg structure-builder__sidebar',
-					{'hide-xs': !open}
-				)}
-				ref={panelRef}
-				tabIndex={-1}
-			>
-				<div className="autofit-row">
-					<div className="autofit-col autofit-col-expand">
-						<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
-							{Liferay.Language.get('content-structure-fields')}
-						</h3>
+
+			<FocusTrap active={isMobile && open}>
+				<div
+					aria-label={sub(
+						Liferay.Language.get('x-panel'),
+						Liferay.Language.get('content-structure-fields')
+					)}
+					className={classNames(
+						'border rounded-lg structure-builder__sidebar',
+						{'hide-xs': !open}
+					)}
+					ref={panelRef}
+					tabIndex={-1}
+				>
+					<div className="autofit-row">
+						<div className="autofit-col autofit-col-expand">
+							<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
+								{Liferay.Language.get(
+									'content-structure-fields'
+								)}
+							</h3>
+						</div>
+
+						<div className="autofit-col d-md-none mr-2 mt-3">
+							<ClayButtonWithIcon
+								borderless
+								displayType="secondary"
+								onClick={() => {
+									setOpen(false);
+
+									requestAnimationFrame(() => {
+										openButtonRef.current?.focus();
+									});
+								}}
+								size="sm"
+								symbol="times"
+								title={Liferay.Language.get('close')}
+							/>
+						</div>
 					</div>
 
-					<div className="autofit-col d-md-none mr-2 mt-3">
-						<ClayButtonWithIcon
-							borderless
-							displayType="secondary"
-							onClick={() => {
-								setOpen(false);
-
-								requestAnimationFrame(() => {
-									openButtonRef.current?.focus();
-								});
-							}}
-							size="sm"
-							symbol="times"
-							title={Liferay.Language.get('close')}
-						/>
-					</div>
+					<Content />
 				</div>
-
-				<Content />
-			</div>
+			</FocusTrap>
 		</>
 	);
 }

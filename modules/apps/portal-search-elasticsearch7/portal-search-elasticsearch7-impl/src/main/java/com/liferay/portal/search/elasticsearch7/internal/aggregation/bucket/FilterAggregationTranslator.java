@@ -5,13 +5,11 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.bucket;
 
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.bucket.FilterAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.BaseAggregationTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.query.ElasticsearchQueryVisitor;
 
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
@@ -21,8 +19,7 @@ import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuil
 public class FilterAggregationTranslator {
 
 	public FilterAggregationBuilder translate(
-		FilterAggregation filterAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		FilterAggregation filterAggregation) {
 
 		QueryBuilder filterQueryBuilder =
 			ElasticsearchQueryVisitor.INSTANCE.translate(
@@ -33,7 +30,7 @@ public class FilterAggregationTranslator {
 				filterAggregation.getName(), filterQueryBuilder);
 
 		_baseAggregationTranslator.translate(
-			filterAggregationBuilder, filterAggregation, aggregationTranslator);
+			filterAggregationBuilder, filterAggregation);
 
 		return filterAggregationBuilder;
 	}

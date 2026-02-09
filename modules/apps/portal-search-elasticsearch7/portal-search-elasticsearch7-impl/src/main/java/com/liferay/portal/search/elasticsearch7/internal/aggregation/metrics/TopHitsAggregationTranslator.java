@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch7.internal.aggregation.metrics;
 
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.script.Script;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.metrics.TopHitsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -32,8 +30,7 @@ import org.elasticsearch.search.sort.SortBuilder;
 public class TopHitsAggregationTranslator {
 
 	public TopHitsAggregationBuilder translate(
-		TopHitsAggregation topHitsAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		TopHitsAggregation topHitsAggregation) {
 
 		TopHitsAggregationBuilder topHitsAggregationBuilder =
 			AggregationBuilders.topHits(topHitsAggregation.getName());

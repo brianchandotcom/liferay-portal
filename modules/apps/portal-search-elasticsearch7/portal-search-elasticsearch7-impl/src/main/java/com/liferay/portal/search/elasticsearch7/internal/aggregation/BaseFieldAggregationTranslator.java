@@ -5,12 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.aggregation;
 
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 
 import org.elasticsearch.script.Script;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 /**
@@ -21,8 +19,7 @@ public class BaseFieldAggregationTranslator {
 	public <T extends ValuesSourceAggregationBuilder> T translate(
 		ValuesSourceAggregationBuilderFactory<T>
 			valuesSourceAggregationBuilderFactory,
-		FieldAggregation baseFieldAggregation,
-		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
+		FieldAggregation baseFieldAggregation) {
 
 		T valuesSourceAggregationBuilder =
 			valuesSourceAggregationBuilderFactory.create(baseFieldAggregation);
@@ -32,8 +29,7 @@ public class BaseFieldAggregationTranslator {
 		_setScript(valuesSourceAggregationBuilder, baseFieldAggregation);
 
 		_baseAggregationTranslator.translate(
-			valuesSourceAggregationBuilder, baseFieldAggregation,
-			aggregationTranslator);
+			valuesSourceAggregationBuilder, baseFieldAggregation);
 
 		return valuesSourceAggregationBuilder;
 	}

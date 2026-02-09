@@ -29,46 +29,44 @@ public class ScriptField {
 
 		@Override
 		public ScriptField build() {
-			return new ScriptField(_scriptFieldImpl);
+			return new ScriptField(_field, _ignoreFailure, _script);
 		}
 
 		@Override
 		public ScriptFieldBuilder field(String field) {
-			_scriptFieldImpl._field = field;
+			_field = field;
 
 			return this;
 		}
 
 		@Override
 		public ScriptFieldBuilder ignoreFailure(boolean ignoreFailure) {
-			_scriptFieldImpl._ignoreFailure = ignoreFailure;
+			_ignoreFailure = ignoreFailure;
 
 			return this;
 		}
 
 		@Override
 		public ScriptFieldBuilder script(Script script) {
-			_scriptFieldImpl._script = script;
+			_script = script;
 
 			return this;
 		}
 
-		private final ScriptField _scriptFieldImpl = new ScriptField();
+		private String _field;
+		private boolean _ignoreFailure;
+		private Script _script;
 
 	}
 
-	protected ScriptField() {
-		_ignoreFailure = true;
+	protected ScriptField(String field, boolean ignoreFailure, Script script) {
+		_field = field;
+		_ignoreFailure = ignoreFailure;
+		_script = script;
 	}
 
-	protected ScriptField(ScriptField scriptField) {
-		_field = scriptField._field;
-		_ignoreFailure = scriptField._ignoreFailure;
-		_script = scriptField._script;
-	}
-
-	private String _field;
-	private boolean _ignoreFailure;
-	private Script _script;
+	private final String _field;
+	private final boolean _ignoreFailure;
+	private final Script _script;
 
 }

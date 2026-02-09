@@ -452,7 +452,7 @@ public class UtilityPageResourceImpl
 		Layout layout = LayoutUtil.addContentLayout(
 			_cetManager, _fragmentEntryProcessorRegistry, groupId,
 			_infoItemServiceRegistry, utilityPage.getPageSpecifications(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, nameMap, titleMap,
+			false, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, titleMap,
 			descriptionMap, null, null, LayoutConstants.TYPE_UTILITY, null,
 			true, true,
 			LocalizedMapUtil.getLocalizedMap(

@@ -590,9 +590,9 @@ public class DisplayPageTemplateResourceImpl
 		Layout layout = LayoutUtil.addContentLayout(
 			_cetManager, _fragmentEntryProcessorRegistry, groupId,
 			_infoItemServiceRegistry,
-			displayPageTemplate.getPageSpecifications(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, nameMap, null,
-			null, null, _getRobotsMap(displayPageTemplateSettings),
+			displayPageTemplate.getPageSpecifications(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
+			_getRobotsMap(displayPageTemplateSettings),
 			LayoutConstants.TYPE_ASSET_DISPLAY,
 			_getUnicodeProperties(displayPageTemplateSettings), true, true,
 			LocalizedMapUtil.getLocalizedMap(

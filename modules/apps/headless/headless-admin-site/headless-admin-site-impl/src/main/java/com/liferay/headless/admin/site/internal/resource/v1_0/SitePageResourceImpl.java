@@ -526,12 +526,13 @@ public class SitePageResourceImpl
 			layout = LayoutUtil.addContentLayout(
 				_cetManager, _fragmentEntryProcessorRegistry, groupId,
 				_infoItemServiceRegistry, sitePage.getPageSpecifications(),
+				privateLayout,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
 					privateLayout, serviceContext),
-				privateLayout, nameMap, titleMap, descriptionMap, keywordsMap,
-				robotsMap, SitePageTypeUtil.toInternalType(sitePage.getType()),
+				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+				SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				false,

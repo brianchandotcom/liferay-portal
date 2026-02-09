@@ -6,13 +6,17 @@
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryValuesUtil;
+
+import java.io.Serializable;
 
 import java.util.Map;
 
@@ -23,6 +27,7 @@ public class ViewTaskInfoSummarySectionDisplayContext
 	extends BaseInfoSummarySectionDisplayContext {
 
 	public ViewTaskInfoSummarySectionDisplayContext(
+		ObjectFieldBusinessType assigneeObjectFieldBusinessType,
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ObjectEntry objectEntry,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -33,19 +38,34 @@ public class ViewTaskInfoSummarySectionDisplayContext
 		super(
 			listTypeEntryLocalService, objectEntry, objectFieldLocalService,
 			objectStateFlowLocalService, objectStateLocalService, themeDisplay);
+
+		_assigneeObjectFieldBusinessType = assigneeObjectFieldBusinessType;
 	}
 
 	@Override
 	public Map<String, Object> getProperties() throws Exception {
 		return HashMapBuilder.<String, Object>put(
 			"assignTo",
-			ObjectEntryValuesUtil.getAssigneeFieldValue(
-				objectEntry, themeDisplay)
+			() -> {
+				Map<String, Serializable> values = objectEntry.getValues();
+
+				Assignee assignee =
+					(Assignee)_assigneeObjectFieldBusinessType.getDTOValue(
+						null, null, null, null, values.get("assignTo"));
+
+				if (assignee == null) {
+					return null;
+				}
+
+				return JSONFactoryUtil.createJSONObject(assignee.toString());
+			}
 		).put(
 			"taskId", objectEntry.getObjectEntryId()
 		).putAll(
 			super.getProperties()
 		).build();
 	}
+
+	private final ObjectFieldBusinessType _assigneeObjectFieldBusinessType;
 
 }

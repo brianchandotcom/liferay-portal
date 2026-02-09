@@ -325,6 +325,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup, TestPropsValues.getUserId());
 
+		_testPostSiteParentSitePage(false, serviceContext);
+		_testPostSiteParentSitePage(true, serviceContext);
+
 		_testPostSiteSitePage(
 			_getRandomSitePage(serviceContext, SitePage.Type.CONTENT_PAGE));
 		_testPostSiteSitePage(
@@ -1747,6 +1750,34 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	}
 
+	private void _testGetSitePageSitePagesPage(boolean privatePages)
+		throws Exception {
+
+		String siteExternalReferenceCode =
+			testGetSiteSitePagesPage_getSiteExternalReferenceCode();
+
+		SitePage sitePage = sitePageResource.postSiteSitePage(
+			siteExternalReferenceCode, privatePages,
+			_getRandomSitePage(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
+				ServiceContextTestUtil.getServiceContext(
+					testGroup, TestPropsValues.getUserId()),
+				SitePage.Type.CONTENT_PAGE,
+				StringUtil.toLowerCase(RandomTestUtil.randomString())));
+
+		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
+			siteExternalReferenceCode, privatePages, null, null,
+			"externalReferenceCode eq '" + sitePage.getExternalReferenceCode() +
+				"'",
+			Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		List<SitePage> pages = new ArrayList<>(page.getItems());
+
+		Assert.assertEquals(sitePage, pages.get(0));
+	}
+
 	private void _testGetSiteSitePage(Layout layout) throws Exception {
 		SitePage sitePage = sitePageResource.getSiteSitePage(
 			testGroup.getExternalReferenceCode(),
@@ -2402,6 +2433,32 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				postPageSpecifications,
 				(WidgetPageSpecification)pageSpecifications[0]);
 		}
+	}
+
+	private void _testPostSiteParentSitePage(
+			boolean privatePage, ServiceContext serviceContext)
+		throws Exception {
+
+		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(
+			testGroup, privatePage);
+
+		sitePageResource.postSiteSitePage(
+			testGroup.getExternalReferenceCode(), privatePage,
+			_getRandomSitePage(
+				StringUtil.toLowerCase(RandomTestUtil.randomString()),
+				parentLayout.getExternalReferenceCode(), serviceContext,
+				SitePage.Type.CONTENT_PAGE,
+				StringUtil.toLowerCase(RandomTestUtil.randomString())));
+
+		_assertProblemException(
+			null,
+			() -> sitePageResource.postSiteSitePage(
+				testGroup.getExternalReferenceCode(), !privatePage,
+				_getRandomSitePage(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					parentLayout.getExternalReferenceCode(), serviceContext,
+					SitePage.Type.CONTENT_PAGE,
+					StringUtil.toLowerCase(RandomTestUtil.randomString()))));
 	}
 
 	private void _testPostSiteSitePage(SitePage sitePage) throws Exception {
@@ -3691,34 +3748,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		return layout;
-	}
-
-	private void _testGetSitePageSitePagesPage(boolean privatePages)
-			throws Exception {
-
-		String siteExternalReferenceCode =
-				testGetSiteSitePagesPage_getSiteExternalReferenceCode();
-
-		SitePage sitePage = sitePageResource.postSiteSitePage(
-				siteExternalReferenceCode, privatePages,
-				_getRandomSitePage(
-						StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
-						ServiceContextTestUtil.getServiceContext(
-								testGroup, TestPropsValues.getUserId()),
-						SitePage.Type.CONTENT_PAGE,
-						StringUtil.toLowerCase(RandomTestUtil.randomString())));
-
-		Page<SitePage> page = sitePageResource.getSiteSitePagesPage(
-				siteExternalReferenceCode, privatePages, null, null,
-				"externalReferenceCode eq '" + sitePage.getExternalReferenceCode() +
-						"'",
-				Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		List<SitePage> pages = new ArrayList<>(page.getItems());
-
-		Assert.assertEquals(sitePage, pages.get(0));
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

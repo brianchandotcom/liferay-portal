@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -174,7 +175,8 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
-	public String getURLSharingNotification(ThemeDisplay themeDisplay)
+	public String getURLSharingNotification(
+			boolean editable, ThemeDisplay themeDisplay)
 		throws Exception {
 
 		if (themeDisplay == null) {
@@ -190,12 +192,25 @@ public class ObjectEntryAssetRenderer
 			return getURLViewInContext(themeDisplay, StringPool.BLANK);
 		}
 
+		String mode = Constants.READ;
+
+		if (editable) {
+			mode = Constants.EDIT;
+		}
+
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
 			GroupConstants.CMS_FRIENDLY_URL,
 			"/edit_content_item?objectEntryId=",
-			_objectEntry.getObjectEntryId(), "&p_l_mode=read&redirect=",
+			_objectEntry.getObjectEntryId(), "&p_l_mode=", mode, "&redirect=",
 			HtmlUtil.escapeURL(themeDisplay.getURLCurrent()));
+	}
+
+	@Override
+	public String getURLSharingNotification(ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return getURLSharingNotification(false, themeDisplay);
 	}
 
 	@Override

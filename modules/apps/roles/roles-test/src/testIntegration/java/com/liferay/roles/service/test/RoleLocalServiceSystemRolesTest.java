@@ -7,6 +7,7 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -24,10 +25,13 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.security.audit.storage.service.AuditEventService;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -109,7 +113,7 @@ public class RoleLocalServiceSystemRolesTest {
 	}
 
 	@Test
-	public void testCheckSystemnRole() throws Exception {
+	public void testCheckSystemRole() throws Exception {
 		long companyId = TestPropsValues.getCompanyId();
 		long groupId = TestPropsValues.getGroupId();
 		_user = UserTestUtil.addUser();
@@ -148,6 +152,22 @@ public class RoleLocalServiceSystemRolesTest {
 					String.valueOf(powerUserRole.getRoleId()),
 					userRole.getRoleId(), new String[] {ActionKeys.VIEW});
 			}
+		}
+
+		Company company = CompanyTestUtil.addCompany();
+
+		_roleLocalService.checkSystemRoles(company.getCompanyId());
+
+		for (String name :
+				ArrayUtil.append(
+					PortalUtil.getSystemOrganizationRoles(),
+					PortalUtil.getSystemRoles(),
+					PortalUtil.getSystemSiteRoles())) {
+
+			Assert.assertNotNull(
+				_roleLocalService.fetchRoleByExternalReferenceCode(
+					RoleConstants.toSystemRoleExternalReferenceCode(name),
+					company.getCompanyId()));
 		}
 	}
 

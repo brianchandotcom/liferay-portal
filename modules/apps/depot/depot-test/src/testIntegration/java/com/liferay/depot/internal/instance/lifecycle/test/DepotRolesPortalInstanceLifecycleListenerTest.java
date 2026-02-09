@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -85,6 +86,9 @@ public class DepotRolesPortalInstanceLifecycleListenerTest {
 		try {
 			Role role = _roleLocalService.getRole(companyId, name);
 
+			Assert.assertEquals(
+				RoleConstants.toSystemRoleExternalReferenceCode(name),
+				role.getExternalReferenceCode());
 			Assert.assertEquals(
 				1,
 				_resourcePermissionLocalService.getResourcePermissionsCount(

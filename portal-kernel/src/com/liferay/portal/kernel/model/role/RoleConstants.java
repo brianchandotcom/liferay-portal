@@ -184,10 +184,11 @@ public class RoleConstants {
 	}
 
 	public static String toSystemRoleExternalReferenceCode(String roleName) {
-		return
-			RoleConstants.EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_ROLE +
-			StringUtil.toUpperCase(StringUtil.replace(
-					roleName, CharPool.SPACE, CharPool.UNDERLINE));
+		roleName = StringUtil.toUpperCase(
+			StringUtil.replace(roleName, CharPool.SPACE, CharPool.UNDERLINE));
+
+		return RoleConstants.EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_ROLE +
+			roleName;
 	}
 
 }

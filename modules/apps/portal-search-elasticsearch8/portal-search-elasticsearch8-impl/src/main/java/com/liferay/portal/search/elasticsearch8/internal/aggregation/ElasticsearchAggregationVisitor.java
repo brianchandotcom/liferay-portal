@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.ValueType;
 import com.liferay.portal.search.aggregation.bucket.ChildrenAggregation;
@@ -109,28 +108,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = AggregationTranslator.class
-)
-public class ElasticsearchAggregationTranslator
-	implements AggregationTranslator
-		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>,
-			   AggregationVisitor
-				   <co.elastic.clients.elasticsearch._types.aggregations.
-					   Aggregation> {
+public class ElasticsearchAggregationVisitor
+	implements AggregationVisitor
+		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation> {
 
-	@Override
-	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
-		translate(Aggregation aggregation) {
-
-		return aggregation.accept(this);
-	}
+	public static final ElasticsearchAggregationVisitor INSTANCE =
+		new ElasticsearchAggregationVisitor();
 
 	@Override
 	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
@@ -1593,6 +1579,9 @@ public class ElasticsearchAggregationTranslator
 
 	protected final ScriptTranslator scriptTranslator = new ScriptTranslator();
 
+	private ElasticsearchAggregationVisitor() {
+	}
+
 	private AggregationRange _createAggregationRange(
 		Double from, String key, Double to) {
 
@@ -1652,7 +1641,7 @@ public class ElasticsearchAggregationTranslator
 				aggregation.getChildrenAggregations()) {
 
 			containerBuilder.aggregations(
-				childAggregation.getName(), translate(childAggregation));
+				childAggregation.getName(), childAggregation.accept(this));
 		}
 
 		for (PipelineAggregation pipelineAggregation :

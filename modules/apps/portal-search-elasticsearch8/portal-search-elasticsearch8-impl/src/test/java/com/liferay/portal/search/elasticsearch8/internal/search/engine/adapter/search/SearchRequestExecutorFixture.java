@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
@@ -51,9 +50,6 @@ public class SearchRequestExecutorFixture {
 			commonSearchRequestBuilderAssembler =
 				new CommonSearchRequestBuilderAssemblerImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_aggregationTranslator",
-			new ElasticsearchAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
 			complexQueryBuilderFactory);

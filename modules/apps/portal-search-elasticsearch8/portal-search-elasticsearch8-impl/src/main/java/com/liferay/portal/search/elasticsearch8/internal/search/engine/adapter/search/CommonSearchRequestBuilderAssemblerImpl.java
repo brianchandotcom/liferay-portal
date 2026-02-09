@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 
 import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch._types.TimeUnit;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
@@ -21,7 +20,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.search.aggregation.AggregationTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
@@ -313,7 +312,8 @@ public class CommonSearchRequestBuilderAssemblerImpl
 		MapUtil.isNotEmptyForEach(
 			baseSearchRequest.getAggregationsMap(),
 			(key, aggregation) -> searchRequestBuilder.aggregations(
-				key, _aggregationTranslator.translate(aggregation)));
+				key,
+				aggregation.accept(ElasticsearchAggregationVisitor.INSTANCE)));
 	}
 
 	private void _setExplain(
@@ -614,9 +614,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			com.liferay.portal.search.elasticsearch8.internal.query.
 				ElasticsearchQueryVisitor.INSTANCE.translate(query));
 	}
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private AggregationTranslator<Aggregation> _aggregationTranslator;
 
 	@Reference
 	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;

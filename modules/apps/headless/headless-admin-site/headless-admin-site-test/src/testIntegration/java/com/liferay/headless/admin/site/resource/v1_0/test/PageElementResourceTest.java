@@ -2862,24 +2862,52 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_randomPageElement(
 				PageElementDefinition.Type.BASIC_FRAGMENT, StringPool.BLANK));
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
+
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), "BASIC_COMPONENT-button",
-						testGroup.getGroupId()),
+						backgroundImageValue, Collections.emptyMap(),
+						"BASIC_COMPONENT-button", testGroup.getGroupId()),
 				externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
+
+		backgroundImageValue = ImageValueTestUtil.getDirectBackgroundImageValue(
+			ReferencesTestUtil.getItemExternalReference(
+				fileEntry, testGroup.getGroupId()),
+			null);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(),
+						backgroundImageValue, Collections.emptyMap(),
 						"com.liferay.fragment.internal.renderer." +
 							"ContentObjectFragmentRenderer",
 						testGroup.getGroupId()),
 				externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, fileEntry.getFileEntryId(), fileEntry,
+			externalReferenceCode);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			JournalArticle.class.getName(),
+			journalArticle.getExternalReferenceCode(),
+			"JournalArticle_authorProfileImage", null);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
@@ -2888,29 +2916,56 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), new FragmentEditableElement[0],
+						backgroundImageValue, Collections.emptyMap(),
+						new FragmentEditableElement[0],
 						_addFragmentEntry(
 							null, irrelevantGroup.getGroupId(), serviceContext),
 						testGroup.getGroupId()),
 				externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, journalArticle.getResourcePrimKey(),
+			journalArticle, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				DISPLAY_PAGE_ITEM,
+			"JournalArticle_authorProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), new FragmentEditableElement[0],
+						backgroundImageValue, Collections.emptyMap(),
+						new FragmentEditableElement[0],
 						_addFragmentEntry(
 							null, testGroup.getGroupId(), serviceContext),
 						testGroup.getGroupId()),
 				externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
+
+		backgroundImageValue = ImageValueTestUtil.getMappedBackgroundImageValue(
+			FragmentMappedValueItemContextReference.ContextSource.
+				COLLECTION_ITEM,
+			"AssetEntry_userProfileImage",
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), new FragmentEditableElement[0],
+						backgroundImageValue, Collections.emptyMap(),
+						new FragmentEditableElement[0],
 						_addFragmentEntry(
 							null, testGroup.getGroupId(), serviceContext),
 						testGroup.getGroupId()),
 				externalReferenceCode));
+
+		_assertStyledLayoutStructureItemBackgroundImage(
+			backgroundImageValue, 0, null, externalReferenceCode);
 
 		externalReferenceCode = RandomTestUtil.randomString();
 
@@ -2927,9 +2982,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), new FragmentEditableElement[0],
-						fragmentEntry, fragmentInstanceExternalReferenceCode,
-						namespace, testGroup.getGroupId(), uuid,
+						null, Collections.emptyMap(),
+						new FragmentEditableElement[0], fragmentEntry,
+						fragmentInstanceExternalReferenceCode, namespace,
+						testGroup.getGroupId(), uuid,
 						new WidgetInstance[] {
 							_getWidgetInstance(
 								_getWidgetConfig(), namespace,
@@ -2941,9 +2997,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				PageElementsTestUtil.
 					getBasicFragmentInstancePageElementDefinition(
-						Collections.emptyMap(), new FragmentEditableElement[0],
-						fragmentEntry, fragmentInstanceExternalReferenceCode,
-						namespace, testGroup.getGroupId(), uuid,
+						null, Collections.emptyMap(),
+						new FragmentEditableElement[0], fragmentEntry,
+						fragmentInstanceExternalReferenceCode, namespace,
+						testGroup.getGroupId(), uuid,
 						new WidgetInstance[] {
 							_getWidgetInstance(
 								new HashMap<>(), namespace,
@@ -2959,28 +3016,40 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			externalReferenceCode,
 			_randomFragmentEntry(
 				RandomTestUtil.randomLong(), StringPool.BLANK,
-				irrelevantGroup.getGroupId()));
+				irrelevantGroup.getGroupId()),
+			_randomItemExternalReference());
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
 			externalReferenceCode,
 			_randomFragmentEntry(
 				RandomTestUtil.randomLong(), StringPool.BLANK,
+				testGroup.getGroupId()),
+			ReferencesTestUtil.getItemExternalReference(
+				HashMapBuilder.put(
+					"className", FileEntry.class.getName()
+				).put(
+					"externalReferenceCode", RandomTestUtil.randomString()
+				).build(),
 				testGroup.getGroupId()));
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
 			externalReferenceCode,
-			_randomFragmentRenderer(RandomTestUtil.randomString()));
+			_randomFragmentRenderer(RandomTestUtil.randomString()),
+			_randomItemExternalReference());
 	}
 
 	private void
 			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
-				String externalReferenceCode, FragmentEntry fragmentEntry)
+				String externalReferenceCode, FragmentEntry fragmentEntry,
+				ItemExternalReference itemExternalReference)
 		throws Exception {
 
 		_testMissingOptionalReference(
-			1,
+			2,
 			() -> _testPutSitePageSpecificationPageExperiencePageElement(
 				_getFragmentInstancePageElement(
 					PageElementsTestUtil.
 						getBasicFragmentInstancePageElementDefinition(
+							ImageValueTestUtil.getDirectBackgroundImageValue(
+								itemExternalReference, null),
 							Collections.emptyMap(),
 							new FragmentEditableElement[0], fragmentEntry,
 							testGroup.getGroupId()),
@@ -2989,15 +3058,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	private void
 			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
-				String externalReferenceCode, FragmentRenderer fragmentRenderer)
+				String externalReferenceCode, FragmentRenderer fragmentRenderer,
+				ItemExternalReference itemExternalReference)
 		throws Exception {
 
 		_testMissingOptionalReference(
-			1,
+			2,
 			() -> _testPutSitePageSpecificationPageExperiencePageElement(
 				_getFragmentInstancePageElement(
 					PageElementsTestUtil.
 						getBasicFragmentInstancePageElementDefinition(
+							ImageValueTestUtil.getDirectBackgroundImageValue(
+								itemExternalReference, null),
 							Collections.emptyMap(),
 							new FragmentEditableElement[0], fragmentRenderer,
 							testGroup.getGroupId()),
@@ -3524,7 +3596,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					PageElementsTestUtil.
 						getBasicFragmentInstancePageElementDefinition(
-							configurationValuesMap,
+							null, configurationValuesMap,
 							new FragmentEditableElement[0], fragmentEntry,
 							testGroup.getGroupId()),
 					externalReferenceCode));
@@ -4000,7 +4072,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getFragmentInstancePageElement(
 					PageElementsTestUtil.
 						getBasicFragmentInstancePageElementDefinition(
-							null, fragmentEditableElements, fragmentEntry,
+							null, null, fragmentEditableElements, fragmentEntry,
 							testGroup.getGroupId()),
 					externalReferenceCode));
 

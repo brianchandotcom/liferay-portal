@@ -4,6 +4,7 @@
  */
 
 export {default as Breadcrumb} from './common/components/Breadcrumb';
+export {default as SpaceSelector} from './common/components/SpaceSelector';
 export {default as SpaceSticker} from './common/components/SpaceSticker';
 export {default as Toolbar} from './common/components/Toolbar';
 export {default as FieldPicker} from './common/components/forms/FieldPicker';
@@ -12,6 +13,7 @@ export {default as FieldWrapper} from './common/components/forms/FieldWrapper';
 export {required, validate} from './common/components/forms/validations';
 export {default as ApiHelper} from './common/services/ApiHelper';
 export {IAssetObjectEntry} from './common/types/AssetType';
+export {type Space} from './common/types/Space';
 export {
 	IBulkActionFDSData,
 	IBulkActionTaskStarterDTO,

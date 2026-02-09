@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 
 import java.util.Objects;
 
+import com.liferay.site.cms.site.initializer.util.PermissionUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -55,7 +56,7 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 		}
 
 		try {
-			Role role = _getOrAddCMSAdministratorRoleAndPermissions(
+			Role role = PermissionUtil.getOrAddCMSAdministratorRole(
 				objectDefinition.getCompanyId(), objectDefinition.getUserId());
 
 			_resourcePermissionLocalService.addResourcePermission(
@@ -84,23 +85,6 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 		}
 
 		return objectDefinition;
-	}
-
-	private Role _getOrAddCMSAdministratorRoleAndPermissions(
-			long companyId, long userId)
-		throws Exception {
-
-		String name = RoleConstants.CMS_ADMINISTRATOR;
-
-		Role role = _roleLocalService.fetchRole(companyId, name);
-
-		if (role != null) {
-			return role;
-		}
-
-		return _roleLocalService.addRole(
-			null, userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR,
-			null, null);
 	}
 
 	private void _setResourcePermissions(

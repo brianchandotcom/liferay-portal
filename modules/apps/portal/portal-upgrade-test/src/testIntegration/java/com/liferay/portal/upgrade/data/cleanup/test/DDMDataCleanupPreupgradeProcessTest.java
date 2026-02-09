@@ -165,22 +165,10 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 			_test(
 				() -> {
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalArticle (",
-							"mvccVersion, ctCollectionId, id_, groupId, ",
-							"structureId) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ",
-							RandomTestUtil.nextLong(), ", '", structureId,
-							"')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalFeed (",
-							"mvccVersion, ctCollectionId, id_, groupId, ",
-							"structureId) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ",
-							RandomTestUtil.nextLong(), ", '", structureId,
-							"')"));
+					_insertJournalArticle(
+						0, 0, "structureId", "'" + structureId + "'");
+					_insertJournalFeed(
+						0, 0, "structureId", "'" + structureId + "'");
 				},
 				messages -> {
 					Assert.assertTrue(
@@ -215,22 +203,10 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 			_test(
 				() -> {
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalArticle (",
-							"mvccVersion, ctCollectionId, id_, groupId, ",
-							"DDMStructureKey) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ",
-							RandomTestUtil.nextLong(), ", '", structureId,
-							"')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalFeed (",
-							"mvccVersion, ctCollectionId, id_, groupId, ",
-							"DDMStructureKey) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ",
-							RandomTestUtil.nextLong(), ", '", structureId,
-							"')"));
+					_insertJournalArticle(
+						0, 0, "DDMStructureKey", "'" + structureId + "'");
+					_insertJournalFeed(
+						0, 0, "DDMStructureKey", "'" + structureId + "'");
 				},
 				messages -> {
 					Assert.assertTrue(
@@ -246,8 +222,8 @@ public class DDMDataCleanupPreupgradeProcessTest
 				});
 		}
 		finally {
-			alterTableDropColumn("JournalArticle", "structureId");
-			alterTableDropColumn("JournalFeed", "structureId");
+			alterTableDropColumn("JournalArticle", "DDMStructureKey");
+			alterTableDropColumn("JournalFeed", "DDMStructureKey");
 		}
 	}
 
@@ -257,20 +233,10 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 		_test(
 			() -> {
-				runSQL(
-					StringBundler.concat(
-						"insert into JournalArticle (",
-						"mvccVersion, ctCollectionId, id_, groupId, ",
-						"DDMStructureId) values (0, 0, ",
-						RandomTestUtil.nextLong(), ", ",
-						RandomTestUtil.nextLong(), ", ", structureId, ")"));
-				runSQL(
-					StringBundler.concat(
-						"insert into JournalFeed (",
-						"mvccVersion, ctCollectionId, id_, groupId, ",
-						"DDMStructureId) values (0, 0, ",
-						RandomTestUtil.nextLong(), ", ",
-						RandomTestUtil.nextLong(), ", ", structureId, ")"));
+				_insertJournalArticle(
+					0, 0, "DDMStructureId", String.valueOf(structureId));
+				_insertJournalFeed(
+					0, 0, "DDMStructureId", String.valueOf(structureId));
 			},
 			messages -> {
 				Assert.assertTrue(
@@ -331,106 +297,31 @@ public class DDMDataCleanupPreupgradeProcessTest
 			_test(
 				DDMDataCleanupPreupgradeProcess.class.getName(),
 				() -> {
-					runSQL(
-						StringBundler.concat(
-							"insert into Group_ (mvccVersion, ctCollectionId, ",
-							"friendlyURL, groupId, companyId, parentGroupId, ",
-							"name, groupKey, uuid_, classPK, ",
-							"externalReferenceCode) values (0, 0, '/global', ",
-							globalGroupId, ", ", companyId, ", 0, 'global', ",
-							"'global', '", RandomTestUtil.randomString(), "', ",
-							globalGroupId, ", '", RandomTestUtil.randomString(),
-							"')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into Group_ (mvccVersion, ctCollectionId, ",
-							"friendlyURL, groupId, companyId, parentGroupId, ",
-							"name, groupKey, uuid_, classPK, ",
-							"externalReferenceCode) values (0, 0, '/parent', ",
-							parentGroupId, ", ", companyId, ", 0, 'parent', ",
-							"'parent', '", RandomTestUtil.randomString(), "', ",
-							parentGroupId, ", '", RandomTestUtil.randomString(),
-							"')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into Group_ (mvccVersion, ctCollectionId, ",
-							"friendlyURL, groupId, companyId, parentGroupId, ",
-							"name, groupKey, uuid_, classPK, ",
-							"externalReferenceCode) values (0, 0, '/child', ",
-							childGroupId, ", ", companyId, ", ", parentGroupId,
-							", 'child', 'child', '",
-							RandomTestUtil.randomString(), "', ", childGroupId,
-							", '", RandomTestUtil.randomString(), "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into Group_ (mvccVersion, ctCollectionId, ",
-							"friendlyURL, groupId, companyId, parentGroupId, ",
-							"name, groupKey, uuid_, classPK, ",
-							"externalReferenceCode) values (0, 0, '/other', ",
-							otherGroupId, ", ", companyId, ", 0, 'other', ",
-							"'other', '", RandomTestUtil.randomString(), "', ",
-							otherGroupId, ", '", RandomTestUtil.randomString(),
-							"')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into DDMStructure (mvccVersion, ",
-							"ctCollectionId, uuid_, structureId, groupId, ",
-							"companyId, structureKey) values (0, 0, '",
-							RandomTestUtil.randomString(), "', ",
-							RandomTestUtil.nextLong(), ", ", parentGroupId,
-							", ", companyId, ", '", parentStructureKey, "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into DDMStructure (mvccVersion, ",
-							"ctCollectionId, uuid_, structureId, groupId, ",
-							"companyId, structureKey) values (0, 0, '",
-							RandomTestUtil.randomString(), "', ",
-							RandomTestUtil.nextLong(), ", ", globalGroupId,
-							", ", companyId, ", '", globalStructureKey, "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into DDMStructure (mvccVersion, ",
-							"ctCollectionId, uuid_, structureId, groupId, ",
-							"companyId, structureKey) values (0, 0, '",
-							RandomTestUtil.randomString(), "', ",
-							RandomTestUtil.nextLong(), ", ", orphanGroupId,
-							", ", companyId, ", '", orphanStructureKey, "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalArticle (mvccVersion, ",
-							"ctCollectionId, id_, groupId, companyId, ",
-							"articleId, version, DDMStructureKey, uuid_, ",
-							"externalReferenceCode, urlTitle) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ", childGroupId, ", ",
-							companyId, ", '", RandomTestUtil.randomString(),
-							"', 1.0, '", parentStructureKey, "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalArticle (mvccVersion, ",
-							"ctCollectionId, id_, groupId, companyId, ",
-							"articleId, version, DDMStructureKey, uuid_, ",
-							"externalReferenceCode, urlTitle) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ", otherGroupId, ", ",
-							companyId, ", '", RandomTestUtil.randomString(),
-							"', 1.0, '", globalStructureKey, "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "')"));
-					runSQL(
-						StringBundler.concat(
-							"insert into JournalArticle (mvccVersion, ",
-							"ctCollectionId, id_, groupId, companyId, ",
-							"articleId, version, DDMStructureKey, uuid_, ",
-							"externalReferenceCode, urlTitle) values (0, 0, ",
-							RandomTestUtil.nextLong(), ", ", otherGroupId, ", ",
-							companyId, ", '", RandomTestUtil.randomString(),
-							"', 1.0, '", orphanStructureKey, "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "', '",
-							RandomTestUtil.randomString(), "')"));
+					_insertGroup(
+						companyId, "/global", globalGroupId, "global", 0);
+					_insertGroup(
+						companyId, "/parent", parentGroupId, "parent", 0);
+					_insertGroup(
+						companyId, "/child", childGroupId, "child",
+						parentGroupId);
+					_insertGroup(companyId, "/other", otherGroupId, "other", 0);
+
+					_insertDDMStructure(
+						companyId, parentGroupId, parentStructureKey);
+					_insertDDMStructure(
+						companyId, globalGroupId, globalStructureKey);
+					_insertDDMStructure(
+						companyId, orphanGroupId, orphanStructureKey);
+
+					_insertJournalArticle(
+						companyId, childGroupId, "DDMStructureKey",
+						"'" + parentStructureKey + "'");
+					_insertJournalArticle(
+						companyId, otherGroupId, "DDMStructureKey",
+						"'" + globalStructureKey + "'");
+					_insertJournalArticle(
+						companyId, otherGroupId, "DDMStructureKey",
+						"'" + orphanStructureKey + "'");
 				},
 				messages -> {
 					Assert.assertFalse(
@@ -492,6 +383,68 @@ public class DDMDataCleanupPreupgradeProcessTest
 				return nonexistentCompanyId;
 			}
 		}
+	}
+
+	private void _insertDDMStructure(
+			long companyId, long groupId, String structureKey)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"insert into DDMStructure (mvccVersion, ctCollectionId, ",
+				"uuid_, structureId, companyId, groupId, structureKey) values ",
+				"(0, 0, '", RandomTestUtil.randomString(), "', ",
+				RandomTestUtil.nextLong(), ", ", companyId, ", ", groupId,
+				", '", structureKey, "')"));
+	}
+
+	private void _insertGroup(
+			long companyId, String friendlyURL, long groupId, String groupKey,
+			long parentGroupId)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"insert into Group_ (mvccVersion, ctCollectionId, uuid_, ",
+				"groupId, classPK, companyId, externalReferenceCode, ",
+				"friendlyURL, groupKey, name, parentGroupId) values (0, 0, '",
+				RandomTestUtil.randomString(), "', ", groupId, ", ",
+				RandomTestUtil.nextLong(), ", ", companyId, ", '",
+				RandomTestUtil.randomString(), "', '", friendlyURL, "', '",
+				groupKey, "', '", groupKey, "', ", parentGroupId, ")"));
+	}
+
+	private void _insertJournalArticle(
+			long companyId, long groupId, String structureColumnName,
+			String structureColumnValue)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"insert into JournalArticle (mvccVersion, ctCollectionId, ",
+				"uuid_, id_, articleId, companyId, ", structureColumnName,
+				", externalReferenceCode, groupId, urlTitle, version) values ",
+				"(0, 0, '", RandomTestUtil.randomString(), "', ",
+				RandomTestUtil.nextLong(), ", '", RandomTestUtil.randomString(),
+				"', ", companyId, ", ", structureColumnValue, ", '",
+				RandomTestUtil.randomString(), "', ",
+				(groupId > 0) ? groupId : RandomTestUtil.nextLong(), ", '",
+				RandomTestUtil.randomString(), "', 1.0)"));
+	}
+
+	private void _insertJournalFeed(
+			long companyId, long groupId, String structureColumnName,
+			String structureColumnValue)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"insert into JournalFeed (mvccVersion, ctCollectionId, uuid_, ",
+				"id_, companyId, ", structureColumnName, ", groupId) values ",
+				"(0, 0, '", RandomTestUtil.randomString(), "', ",
+				RandomTestUtil.nextLong(), ", ", companyId, ", ",
+				structureColumnValue, ", ",
+				(groupId > 0) ? groupId : RandomTestUtil.nextLong(), ")"));
 	}
 
 	private void _test(

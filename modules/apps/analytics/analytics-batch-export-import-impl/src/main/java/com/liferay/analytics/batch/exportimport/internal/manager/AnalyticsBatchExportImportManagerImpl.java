@@ -11,6 +11,7 @@ import com.liferay.analytics.batch.exportimport.manager.AnalyticsBatchExportImpo
 import com.liferay.analytics.message.storage.service.AnalyticsMessageLocalService;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
+import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
@@ -21,6 +22,8 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
+import com.liferay.oauth2.provider.model.OAuth2Application;
+import com.liferay.oauth2.provider.service.OAuth2ApplicationLocalService;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
@@ -42,6 +45,7 @@ import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsDescriptor;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -72,6 +76,7 @@ import java.nio.file.Files;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -415,6 +420,7 @@ public class AnalyticsBatchExportImportManagerImpl
 				companyId);
 
 		_checkEndpoints(analyticsConfiguration, companyId);
+		_checkOAuth2Application(analyticsConfiguration, companyId);
 
 		HttpUriRequest httpUriRequest = _buildHttpUriRequest(
 			null, analyticsConfiguration.liferayAnalyticsDataSourceId(),
@@ -558,6 +564,56 @@ public class AnalyticsBatchExportImportManagerImpl
 				AnalyticsConfiguration.class, companyId,
 				configurationProperties);
 		}
+	}
+
+	private void _checkOAuth2Application(
+			AnalyticsConfiguration analyticsConfiguration, long companyId)
+		throws Exception {
+
+		if (StringUtil.equals(
+				analyticsConfiguration.liferayAnalyticsCredentialType(),
+				"OAuth 2 Authentication")) {
+
+			return;
+		}
+
+		OAuth2Application oAuth2Application =
+			_oAuth2ApplicationLocalService.
+				fetchOAuth2ApplicationByExternalReferenceCode(
+					"ANALYTICS-CLOUD", companyId);
+
+		if (oAuth2Application == null) {
+			throw new Exception(
+				"No OAuth 2 application found for ANALYTICS-CLOUD");
+		}
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			new String(Base64.decode(analyticsConfiguration.token())));
+
+		Http.Options options = new Http.Options();
+
+		options.addPart("oAuthClientId", oAuth2Application.getClientId());
+		options.addPart(
+			"oAuthClientSecret", oAuth2Application.getClientSecret());
+		options.setLocation(
+			StringUtil.replace(
+				jsonObject.getString("url"), "data_source/connect",
+				"data_source/" +
+					analyticsConfiguration.liferayAnalyticsDataSourceId()));
+		options.setPost(true);
+
+		_http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		if (response.getResponseCode() != HttpURLConnection.HTTP_OK) {
+			throw new Exception("Unable to update analytics data source");
+		}
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			companyId,
+			Collections.singletonMap(
+				"liferayAnalyticsCredentialType", "OAuth 2 Authentication"));
 	}
 
 	private File _download(
@@ -935,6 +991,9 @@ public class AnalyticsBatchExportImportManagerImpl
 	private AnalyticsMessageLocalService _analyticsMessageLocalService;
 
 	@Reference
+	private AnalyticsSettingsManager _analyticsSettingsManager;
+
+	@Reference
 	private BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
 
 	@Reference
@@ -965,6 +1024,9 @@ public class AnalyticsBatchExportImportManagerImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private OAuth2ApplicationLocalService _oAuth2ApplicationLocalService;
 
 	@Reference
 	private SettingsLocatorHelper _settingsLocatorHelper;

@@ -43,6 +43,9 @@ public interface AnalyticsConfiguration {
 	public String liferayAnalyticsConnectionType();
 
 	@Meta.AD(required = false)
+	public String liferayAnalyticsCredentialType();
+
+	@Meta.AD(required = false)
 	public String liferayAnalyticsDataSourceId();
 
 	@Meta.AD(required = false)

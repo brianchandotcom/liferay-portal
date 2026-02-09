@@ -186,6 +186,8 @@ public class DataSourceController extends BaseFaroController {
 		faroProject = faroProjectLocalService.updateFaroProject(faroProject);
 
 		return HashMapBuilder.<String, Object>put(
+			"liferayAnalyticsCredentialType", "OAuth 2 Authentication"
+		).put(
 			"liferayAnalyticsDataSourceId", dataSource.getId()
 		).put(
 			"liferayAnalyticsEndpointURL",

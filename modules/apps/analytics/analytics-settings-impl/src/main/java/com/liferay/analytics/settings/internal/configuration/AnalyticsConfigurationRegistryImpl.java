@@ -237,6 +237,7 @@ public class AnalyticsConfigurationRegistryImpl
 			companyId,
 			new String[] {
 				"liferayAnalyticsConnectionType",
+				"liferayAnalyticsCredentialType",
 				"liferayAnalyticsDataSourceId", "liferayAnalyticsEndpointURL",
 				"liferayAnalyticsFaroBackendSecuritySignature",
 				"liferayAnalyticsFaroBackendURL", "liferayAnalyticsGroupIds",

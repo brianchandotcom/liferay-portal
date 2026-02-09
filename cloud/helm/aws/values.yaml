@@ -42,7 +42,15 @@ liferay-default:
                             set -e
 
                             function download_module {
+                                {{- if eq .image.tag "latest" }}
+                                local product_version="nightly"
+
+                                local url="https://releases.liferay.com/opensearch2/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
+                                {{- else }}
                                 local product_version="{{ .image.tag }}"
+
+                                local url="https://releases.liferay.com/opensearch2/dxp/${product_version}/com.liferay.portal.search.opensearch2.${1}.jar"
+                                {{- end }}
 
                                 local http_code=$( \
                                     curl \

@@ -34,9 +34,19 @@ public class LayoutTableReferenceDefinition
 			childTableReferenceInfoBuilder) {
 
 		childTableReferenceInfoBuilder.singleColumnReference(
-			LayoutTable.INSTANCE.iconImageId, ImageTable.INSTANCE.imageId
-		).singleColumnReference(
 			LayoutTable.INSTANCE.plid, LayoutFriendlyURLTable.INSTANCE.plid
+		).referenceInnerJoin(
+			fromStep -> fromStep.from(
+				ImageTable.INSTANCE
+			).innerJoinON(
+				LayoutTable.INSTANCE,
+				LayoutTable.INSTANCE.iconImageERC.eq(
+					ImageTable.INSTANCE.externalReferenceCode
+				).and(
+					LayoutTable.INSTANCE.companyId.eq(
+						ImageTable.INSTANCE.companyId)
+				)
+			)
 		).referenceInnerJoin(
 			fromStep -> fromStep.from(
 				GroupTable.INSTANCE

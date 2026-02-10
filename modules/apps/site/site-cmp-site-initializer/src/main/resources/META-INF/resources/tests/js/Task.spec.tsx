@@ -5,64 +5,116 @@
 
 import '@testing-library/jest-dom';
 import {fireEvent, render, waitFor} from '@testing-library/react';
-import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import Task from '../../js/components/props_transformer/views/kanban_view/components/Task';
 import {KanbanViewContext} from '../../js/components/props_transformer/views/kanban_view/context';
 import {mockNavigate} from '../../tests/js/__mocks__/frontend-js-web';
 
-const mockDisplayAssignSuccessToast = jest.fn();
-const mockDisplayErrorToast = jest.fn();
 const mockGetUserAccount = jest.fn();
-const mockLoadData = jest.fn();
 const mockPatchTaskById = jest.fn();
+const mockDeleteTaskById = jest.fn();
+const mockDisplayAssignSuccessToast = jest.fn();
+const mockDisplayDeleteSuccessToast = jest.fn();
+const mockDisplayErrorToast = jest.fn();
+const mockDisplayRequestSuccessToast = jest.fn();
+const mockLoadData = jest.fn();
+const mockPostSubscribeTaskByExternalReferenceCode = jest.fn();
+const mockPostUnsubscribeTaskByExternalReferenceCode = jest.fn();
 
-jest.mock('@liferay/site-cms-site-initializer', () => ({
-	displayErrorToast: (...args: any[]) => mockDisplayErrorToast(...args),
+jest.mock('react-dnd', () => ({
+	useDrag: () => [{isDragging: false}, jest.fn()],
 }));
 
-jest.mock('frontend-js-components-web', () => ({
-	openModal: jest.fn(),
-	openToast: jest.fn(),
+jest.mock('@clayui/drop-down', () => ({
+	ClayDropDownWithItems: ({items}: any) => (
+		<div>
+			{items.map((item: any, index: number) =>
+				item.type === 'divider' ? null : (
+					<button key={index} onClick={item.onClick}>
+						{item.label}
+					</button>
+				)
+			)}
+		</div>
+	),
+}));
+
+jest.mock('@liferay/frontend-data-set-web', () => ({
+	...((jest.requireActual('@liferay/frontend-data-set-web') ?? {}) as any),
+	DateRenderer: ({value}: {value: string}) => (
+		<span>Formatted Date: {value}</span>
+	),
 }));
 
 jest.mock('../../js/utils/api', () => ({
+	deleteTaskById: (...args: any[]) => mockDeleteTaskById(...args),
 	getUserAccount: (...args: any[]) => mockGetUserAccount(...args),
 	patchTaskById: (...args: any[]) => mockPatchTaskById(...args),
+	postSubscribeTaskByExternalReferenceCode: (...args: any[]) =>
+		mockPostSubscribeTaskByExternalReferenceCode(...args),
+	postUnsubscribeTaskByExternalReferenceCode: (...args: any[]) =>
+		mockPostUnsubscribeTaskByExternalReferenceCode(...args),
+}));
+
+const mockOpenCMPModal = jest.fn();
+
+jest.mock('../../js/utils/openCMPModal', () => ({
+	openCMPModal: (...args: any[]) => mockOpenCMPModal(...args),
 }));
 
 jest.mock('../../js/utils/toastUtil', () => ({
 	displayAssignSuccessToast: (...args: any[]) =>
 		mockDisplayAssignSuccessToast(...args),
+	displayDeleteSuccessToast: (...args: any[]) =>
+		mockDisplayDeleteSuccessToast(...args),
 }));
 
-describe('Kanban Task actions', () => {
-	const baseProps = {
+jest.mock('@liferay/site-cms-site-initializer', () => ({
+	displayErrorToast: (...args: any[]) => mockDisplayErrorToast(...args),
+	displayRequestSuccessToast: (...args: any[]) =>
+		mockDisplayRequestSuccessToast(...args),
+}));
+
+afterEach(() => {
+	jest.clearAllMocks();
+});
+
+describe('Kanban Task', () => {
+	const task = {
+		actions: {
+			subscribe: true,
+		},
 		embedded: {
 			assignTo: {name: 'Alice', portrait: 'p.jpg'},
 			cmpProjectToCMPTasks: {title: 'Project A'},
+			externalReferenceCode: 'erc-1',
 			id: 42,
+			scopeKey: 1,
 			state: {key: 'in-progress', name: 'In Progress'},
 			title: 'Task title',
 		},
 	} as any;
 
-	const renderTask = (itemsActions = []) =>
+	const renderTask = (
+		itemsActions: any[] = [],
+		currentURL = 'http://localhost/tasks'
+	) =>
 		render(
 			<KanbanViewContext.Provider
 				value={{
 					boardData: {},
-					changeTaskStatus: () => {},
+					changeTaskStatus: jest.fn(),
+					currentURL,
 					itemsActions,
 					loadData: mockLoadData,
 				}}
 			>
-				<Task {...baseProps} />
+				<Task {...task} />
 			</KanbanViewContext.Provider>
 		);
 
-	it('assigns to current user when assign-to-me selected', async () => {
+	it('assigns task to current user successfully', async () => {
 		mockGetUserAccount.mockResolvedValue({
 			externalReferenceCode: 'u1',
 			name: 'Current User',
@@ -73,11 +125,8 @@ describe('Kanban Task actions', () => {
 
 		fireEvent.click(getByText('assign-to-me'));
 
-		await waitFor(() => expect(mockGetUserAccount).toHaveBeenCalled());
-
-		await waitFor(() => expect(mockPatchTaskById).toHaveBeenCalled());
-
 		await waitFor(() => {
+			expect(mockPatchTaskById).toHaveBeenCalled();
 			expect(mockLoadData).toHaveBeenCalled();
 			expect(mockDisplayAssignSuccessToast).toHaveBeenCalledWith(
 				'Task title',
@@ -86,37 +135,72 @@ describe('Kanban Task actions', () => {
 		});
 	});
 
-	it('call openModal modal when assign-to-... is clicked', async () => {
-		const {getByText} = renderTask();
-
-		fireEvent.click(getByText('assign-to-...'));
-
-		expect(openModal).toHaveBeenCalledTimes(1);
-	});
-
-	it('navigates when edit/view actions are clicked', async () => {
+	it('navigates when edit and view actions are clicked', async () => {
 		const itemsActions = [
 			{data: {id: 'edit'}, href: '/edit/{embedded.id}'},
 			{data: {id: 'actionLink'}, href: '/view/{embedded.id}'},
 		];
 
-		const {getByText} = renderTask(itemsActions as any);
+		const {getByText} = renderTask(itemsActions);
 
-		const editButton = getByText('edit');
+		fireEvent.click(getByText('edit'));
+		expect(mockNavigate).toHaveBeenCalledWith('/edit/42');
 
-		fireEvent.click(editButton);
+		fireEvent.click(getByText('view'));
+		expect(mockNavigate).toHaveBeenCalledWith('/view/42');
+	});
 
-		await waitFor(() => {
-			expect(mockNavigate).toHaveBeenCalledWith('/edit/42');
-		});
+	it('opens assign-to modal', () => {
+		const {getByText} = renderTask();
 
-		const viewButton = getByText('view');
+		fireEvent.click(getByText('assign-to-...'));
 
-		fireEvent.click(viewButton);
+		expect(mockOpenCMPModal).toHaveBeenCalledTimes(1);
+	});
 
-		await waitFor(() => {
-			expect(mockNavigate).toHaveBeenCalledWith('/view/42');
-		});
+	it('opens delete modal', () => {
+		const {getByText} = renderTask();
+
+		fireEvent.click(getByText('delete'));
+
+		expect(mockOpenCMPModal).toHaveBeenCalledTimes(1);
+	});
+
+	it('renders due date when currentURL contains "project"', () => {
+		const taskWithDueDate = {
+			...task,
+			embedded: {
+				...task.embedded,
+				dueDate: '2023-12-25T14:00:00Z',
+			},
+		};
+
+		const {getByText, queryByText} = render(
+			<KanbanViewContext.Provider
+				value={{
+					boardData: {},
+					changeTaskStatus: jest.fn(),
+					currentURL: 'http://localhost/project/123',
+					itemsActions: [],
+					loadData: mockLoadData,
+				}}
+			>
+				<Task {...taskWithDueDate} />
+			</KanbanViewContext.Provider>
+		);
+
+		expect(
+			getByText('Formatted Date: 2023-12-25T14:00:00Z')
+		).toBeInTheDocument();
+		expect(queryByText('Project A')).not.toBeInTheDocument();
+	});
+
+	it('renders project title when the currentURL does not contain "project"', () => {
+		const {getByText} = renderTask();
+
+		expect(getByText('Task title')).toBeInTheDocument();
+		expect(getByText('Project A')).toBeInTheDocument();
+		expect(getByText('In Progress')).toBeInTheDocument();
 	});
 
 	it('shows error toast when assign-to-me fails', async () => {
@@ -130,8 +214,113 @@ describe('Kanban Task actions', () => {
 
 		fireEvent.click(getByText('assign-to-me'));
 
-		await waitFor(() => expect(mockPatchTaskById).toHaveBeenCalled());
+		await waitFor(() => {
+			expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+		});
+	});
 
-		expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+	describe('watch-task', () => {
+		it('watches a task successfully', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: null,
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
+
+			await waitFor(() => {
+				expect(
+					mockPostSubscribeTaskByExternalReferenceCode
+				).toHaveBeenCalledWith({
+					externalReferenceCode: 'erc-1',
+					scopeKey: 1,
+				});
+				expect(mockLoadData).toHaveBeenCalled();
+				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
+			});
+		});
+
+		it('shows an error toast when watch task fails', async () => {
+			mockPostSubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: 'error',
+			});
+
+			const {getByText} = renderTask();
+
+			fireEvent.click(getByText('watch-task'));
+
+			await waitFor(() => {
+				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+			});
+		});
+	});
+
+	describe('stop-watching-task', () => {
+		const taskWithSubscription = {
+			...task,
+			actions: {
+				subscribe: false,
+			},
+		};
+
+		it('stops watching a task successfully', async () => {
+			mockPostUnsubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: null,
+			});
+
+			const {getByText} = render(
+				<KanbanViewContext.Provider
+					value={{
+						boardData: {},
+						changeTaskStatus: jest.fn(),
+						currentURL: '',
+						itemsActions: [],
+						loadData: mockLoadData,
+					}}
+				>
+					<Task {...taskWithSubscription} />
+				</KanbanViewContext.Provider>
+			);
+
+			fireEvent.click(getByText('stop-watching-task'));
+
+			await waitFor(() => {
+				expect(
+					mockPostUnsubscribeTaskByExternalReferenceCode
+				).toHaveBeenCalledWith({
+					externalReferenceCode: 'erc-1',
+					scopeKey: 1,
+				});
+				expect(mockLoadData).toHaveBeenCalled();
+				expect(mockDisplayRequestSuccessToast).toHaveBeenCalled();
+			});
+		});
+
+		it('shows an error toast when stop watching task fails', async () => {
+			mockPostUnsubscribeTaskByExternalReferenceCode.mockResolvedValue({
+				error: 'error',
+			});
+
+			const {getByText} = render(
+				<KanbanViewContext.Provider
+					value={{
+						boardData: {},
+						changeTaskStatus: jest.fn(),
+						currentURL: '',
+						itemsActions: [],
+						loadData: mockLoadData,
+					}}
+				>
+					<Task {...taskWithSubscription} />
+				</KanbanViewContext.Provider>
+			);
+
+			fireEvent.click(getByText('stop-watching-task'));
+
+			await waitFor(() => {
+				expect(mockDisplayErrorToast).toHaveBeenCalledWith('error');
+			});
+		});
 	});
 });

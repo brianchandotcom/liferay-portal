@@ -9,6 +9,14 @@ import React from 'react';
 
 import KanbanView from '../../js/components/props_transformer/views/kanban_view/KanbanView';
 
+jest.mock('react-dnd', () => ({
+	DndProvider: ({children}: any) => <>{children}</>,
+	useDrag: () => [{}, jest.fn()],
+	useDrop: () => {
+		return [{}, jest.fn()];
+	},
+}));
+
 describe('KanbanView mapping and lifecycle', () => {
 	beforeEach(() => {
 		(global as any).Liferay = (global as any).Liferay || {};
@@ -34,11 +42,7 @@ describe('KanbanView mapping and lifecycle', () => {
 		] as any;
 
 		const {unmount} = render(
-			<KanbanView
-				currentURL=""
-				items={items}
-				itemsActions={[]}
-			/>
+			<KanbanView currentURL="" items={items} itemsActions={[]} />
 		);
 
 		expect((global as any).Liferay.fire).toHaveBeenCalledWith(

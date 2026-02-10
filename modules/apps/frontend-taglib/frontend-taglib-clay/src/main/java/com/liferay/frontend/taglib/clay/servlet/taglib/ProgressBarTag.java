@@ -116,9 +116,6 @@ public class ProgressBarTag extends BaseContainerTag {
 	}
 
 	private String _getAriaLabel() {
-
-		// Prioritize warning state over progress values for accessibility
-
 		if (_warn) {
 			return LanguageUtil.format(
 				TagResourceBundleUtil.getResourceBundle(pageContext),
@@ -127,16 +124,12 @@ public class ProgressBarTag extends BaseContainerTag {
 				_value);
 		}
 
-		// Complete state
-
 		if (_isComplete()) {
 			return LanguageUtil.format(
 				TagResourceBundleUtil.getResourceBundle(pageContext),
 				_messages.getOrDefault("ariaLabelComplete", "complete"),
 				_value);
 		}
-
-		// Default: In progress state
 
 		return LanguageUtil.format(
 			TagResourceBundleUtil.getResourceBundle(pageContext),

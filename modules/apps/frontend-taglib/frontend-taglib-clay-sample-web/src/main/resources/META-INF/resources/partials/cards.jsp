@@ -10,11 +10,10 @@
 <h3>Image Cards</h3>
 
 <%
-ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
-
 Map<String, Object> checkboxProps = HashMapBuilder.<String, Object>put(
 	"aria-label", "Select Card"
 ).build();
+ClaySampleImageCard claySampleImageCard = new ClaySampleImageCard();
 %>
 
 <div class="h4">Image Cards</div>

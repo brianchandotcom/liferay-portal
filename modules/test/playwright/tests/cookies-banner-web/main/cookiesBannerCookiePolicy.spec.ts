@@ -156,6 +156,9 @@ test(
 	'Consent Manager Adjustments',
 	{tag: '@LPD-60002'},
 	async ({browser, page, systemSettingsPage}) => {
+		const saveButton = page.getByRole('button', {name: 'Save'});
+		const updateButton = page.getByRole('button', {name: 'Update'});
+
 		await test.step('Enable Preference Handling Cookies if needed', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
@@ -168,9 +171,12 @@ test(
 
 			await enabledButton.check();
 
-			await page
-				.getByRole('button', {name: 'Save'})
-				.dispatchEvent('click');
+			if (await saveButton.isVisible()) {
+				await saveButton.dispatchEvent('click');
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.dispatchEvent('click');
+			}
 
 			await waitForAlert(page);
 		});
@@ -211,7 +217,12 @@ test(
 
 			await cookiePolicyLink.fill('http://www.liferay.com');
 
-			await page.getByRole('button', {name: 'Save'}).click();
+			if (await saveButton.isVisible()) {
+				await saveButton.dispatchEvent('click');
+			}
+			else if (await updateButton.isVisible()) {
+				await updateButton.dispatchEvent('click');
+			}
 
 			await waitForAlert(page);
 

@@ -735,6 +735,11 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(39, 0, 0),
+			UpgradeProcessFactory.addColumns(
+				"Layout", "iconImageERC VARCHAR(75) null"));
 	}
 
 }

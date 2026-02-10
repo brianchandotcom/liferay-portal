@@ -64,7 +64,9 @@ export default function SpacePicker({
 	const [spaces, setSpaces] = useState<Space[]>([]);
 	const [loading, setLoading] = useState(false);
 
-	const selectedSpace = spaces.find((space) => String(space.id) === value);
+	const selectedSpace = spaces.find(
+		(space) => String(space.externalReferenceCode) === value
+	);
 
 	useEffect(() => {
 		setLoading(true);
@@ -97,7 +99,10 @@ export default function SpacePicker({
 				space={selectedSpace}
 			>
 				{(space) => (
-					<Option key={space.id} textValue={space.name}>
+					<Option
+						key={space.externalReferenceCode}
+						textValue={space.name}
+					>
 						<div className="align-items-center c-gap-2 d-flex">
 							<div aria-hidden="true">
 								<SpaceSticker

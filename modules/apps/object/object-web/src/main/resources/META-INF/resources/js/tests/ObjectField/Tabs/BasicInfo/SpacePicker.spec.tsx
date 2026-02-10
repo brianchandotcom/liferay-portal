@@ -32,12 +32,12 @@ jest.mock(
 const mockSpacesResponse = {
 	items: [
 		{
-			id: 1,
+			externalReferenceCode: 1,
 			name: 'Marketing Space',
 			settings: {logoColor: 'red'},
 		},
 		{
-			id: 2,
+			externalReferenceCode: 2,
 			name: 'Engineering Space',
 			settings: {logoColor: 'blue'},
 		},

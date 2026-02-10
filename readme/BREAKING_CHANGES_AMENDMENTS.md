@@ -649,3 +649,27 @@ Vocabulary Ids were replaced by a External Reference Codes in Category Facet Por
 
 Vocabulary ids to all vocabularies related to the returned categories are available through the AssetCategoriesSearchFacetDisplayContext: use `assetCategoriesSearchFacetDisplayContext.getVocabularyIds()`.
 ```
+
+----
+
+# 971a14cc0a58eb64a36fc88863a50141b0f09022
+
+This commit is missing a breaking change message. The correct message is:
+
+```
+LPD-77861 Semantic versioning (gw baseline)
+
+# breaking
+
+## What modules/apps/frontend-taglib/frontend-taglib-clay/src/main/java/com/liferay/frontend/taglib/clay/servlet/taglib/VerticalNavTag.java
+
+It adds new attributes to the VerticalNavTag in the Clay Taglib. More specifically, it adds the `collapse`, `displayType`, and `size` properties.
+
+## Why
+
+These attributes were added so we can have more flexibility while using Clay components, enabling developers to configure different aspects of the VerticalNavTag element independently. Before, we have internal conditionals to produce these attributes automatically (e.g., `collapse` used to depend of the `displayType`), but it wasn't enough to meet the component requirements.
+
+## Alternatives
+
+The `displayType` attribute shouldn't be an issue, since it defaults to "transparent". The `size` attribute is being used as a replacement to the `large` flag. This flag is deprecated. If `size` isn't provided, the component uses `large` as a fallback, so it should still work as before. `collapse` is a new control and it is disabled by default. If this previous behavior is missing, please, provide `collapse` with true.
+```

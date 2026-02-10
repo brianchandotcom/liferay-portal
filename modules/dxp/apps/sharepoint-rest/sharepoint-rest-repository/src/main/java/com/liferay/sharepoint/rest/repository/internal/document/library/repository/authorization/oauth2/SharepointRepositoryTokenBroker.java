@@ -21,10 +21,12 @@ import com.microsoft.aad.msal4j.SilentParameters;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -45,7 +47,7 @@ public class SharepointRepositoryTokenBroker {
 		ConfidentialClientApplication confidentialClientApplication =
 			_getConfidentialClientApplication();
 
-		return confidentialClientApplication.getAuthorizationRequestUrl(
+		URL url = confidentialClientApplication.getAuthorizationRequestUrl(
 			AuthorizationRequestUrlParameters.builder(
 				redirectUri,
 				Collections.singleton(
@@ -58,8 +60,9 @@ public class SharepointRepositoryTokenBroker {
 				state
 			).nonce(
 				nonce
-			).build()
-		).toString();
+			).build());
+
+		return url.toString();
 	}
 
 	public SharepointRepositoryAuthenticationResult requestAccessToken(
@@ -130,8 +133,10 @@ public class SharepointRepositoryTokenBroker {
 			ConfidentialClientApplication confidentialClientApplication)
 		throws ExecutionException, InterruptedException {
 
-		Set<IAccount> iAccounts = confidentialClientApplication.getAccounts(
-		).get();
+		CompletableFuture<Set<IAccount>> accounts =
+			confidentialClientApplication.getAccounts();
+
+		Set<IAccount> iAccounts = accounts.get();
 
 		Iterator<IAccount> iterator = iAccounts.iterator();
 

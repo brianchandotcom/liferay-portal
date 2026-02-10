@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import com.microsoft.aad.msal4j.IAuthenticationResult;
 
+import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
 import java.text.ParseException;
@@ -43,10 +44,12 @@ public class SharepointRepositoryAuthenticationResult {
 		}
 
 		try {
-			Map<String, Object> claims = SignedJWT.parse(
-				_iAuthenticationResult.idToken()
-			).getJWTClaimsSet(
-			).getClaims();
+			SignedJWT signedJWT = SignedJWT.parse(
+				_iAuthenticationResult.idToken());
+
+			JWTClaimsSet jwtClaimsSet = signedJWT.getJWTClaimsSet();
+
+			Map<String, Object> claims = jwtClaimsSet.getClaims();
 
 			return (String)claims.get("nonce");
 		}

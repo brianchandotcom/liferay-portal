@@ -177,6 +177,7 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
+				_themeDisplay.getCompanyId(),
 				InfoSearchClassMapperRegistryUtil.getClassName(
 					listObjectReference.getItemType()));
 	}

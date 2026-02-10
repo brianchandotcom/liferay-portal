@@ -22,6 +22,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -140,7 +141,8 @@ public class DisplayPageTypeContext {
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {
 		return _layoutDisplayPageProviderRegistry.
-			getLayoutDisplayPageProviderByClassName(_className);
+			getLayoutDisplayPageProviderByClassName(
+				CompanyThreadLocal.getCompanyId(), _className);
 	}
 
 	public boolean isAvailable() {

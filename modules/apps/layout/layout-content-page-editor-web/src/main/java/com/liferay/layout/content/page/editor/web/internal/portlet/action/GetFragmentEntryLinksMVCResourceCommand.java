@@ -212,7 +212,9 @@ public class GetFragmentEntryLinksMVCResourceCommand
 
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				_layoutDisplayPageProviderRegistry.
-					getLayoutDisplayPageProviderByClassName(itemClassName);
+					getLayoutDisplayPageProviderByClassName(
+						_portal.getCompanyId(httpServletRequest),
+						itemClassName);
 
 			if (layoutDisplayPageProvider != null) {
 				httpServletRequest.setAttribute(

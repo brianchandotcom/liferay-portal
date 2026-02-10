@@ -443,7 +443,7 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					CPDefinition.class.getName());
+					cpDefinition.getCompanyId(), CPDefinition.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(
 			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId());

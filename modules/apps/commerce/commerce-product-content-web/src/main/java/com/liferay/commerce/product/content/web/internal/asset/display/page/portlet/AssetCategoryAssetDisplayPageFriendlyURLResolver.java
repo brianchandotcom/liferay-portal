@@ -316,6 +316,7 @@ public class AssetCategoryAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					assetCategory.getCompanyId(),
 					AssetCategory.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(

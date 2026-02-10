@@ -140,7 +140,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(className, infoItemIdentifier);
+			_getLayoutDisplayPageObjectProvider(
+				themeDisplay.getCompanyId(), className, infoItemIdentifier);
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return _jsonFactory.createJSONArray();
@@ -178,7 +179,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			_getLayoutDisplayPageObjectProvider(className, infoItemIdentifier);
+			_getLayoutDisplayPageObjectProvider(
+				themeDisplay.getCompanyId(), className, infoItemIdentifier);
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return StringPool.BLANK;
@@ -217,12 +219,13 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private LayoutDisplayPageObjectProvider _getLayoutDisplayPageObjectProvider(
-			String className, InfoItemIdentifier infoItemIdentifier)
+			long companyId, String className,
+			InfoItemIdentifier infoItemIdentifier)
 		throws Exception {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
+				getLayoutDisplayPageProviderByClassName(companyId, className);
 
 		if (layoutDisplayPageProvider == null) {
 			return null;

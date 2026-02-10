@@ -112,6 +112,7 @@ public class ObjectFieldInfoFieldConverterTest {
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				_layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByClassName(
+						_objectDefinition.getCompanyId(),
 						_objectDefinition.getClassName());
 
 			ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(

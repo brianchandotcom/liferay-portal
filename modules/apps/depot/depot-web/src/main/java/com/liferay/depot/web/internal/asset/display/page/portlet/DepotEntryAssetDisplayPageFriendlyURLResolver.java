@@ -75,7 +75,8 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolver
 		}
 
 		return layoutDisplayPageProviderRegistry.
-			getLayoutDisplayPageProviderByClassName(DepotEntry.class.getName());
+			getLayoutDisplayPageProviderByClassName(
+				companyId, DepotEntry.class.getName());
 	}
 
 	private DepotEntry _fetchDepotEntry(long classPK) {

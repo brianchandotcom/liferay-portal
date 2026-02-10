@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -168,7 +169,8 @@ public class FragmentConfigurationField {
 
 				LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 					layoutDisplayPageProviderRegistry.
-						getLayoutDisplayPageProviderByClassName(className);
+						getLayoutDisplayPageProviderByClassName(
+							CompanyThreadLocal.getCompanyId(), className);
 
 				if (layoutDisplayPageProvider == null) {
 					return _defaultValue;

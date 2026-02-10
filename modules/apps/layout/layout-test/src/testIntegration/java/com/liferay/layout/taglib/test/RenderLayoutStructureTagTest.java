@@ -547,6 +547,7 @@ public class RenderLayoutStructureTagTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName());
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -775,6 +776,7 @@ public class RenderLayoutStructureTagTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName());
 
 		MockHttpServletRequest mockHttpServletRequest =

@@ -294,6 +294,7 @@ public class SelectAssetDisplayPageDisplayContext {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					PortalUtil.getCompanyId(_httpServletRequest),
 					PortalUtil.getClassName(_classNameId));
 
 		boolean inheritableDisplayPageTemplate = false;
@@ -346,6 +347,7 @@ public class SelectAssetDisplayPageDisplayContext {
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByClassName(
+						PortalUtil.getCompanyId(_httpServletRequest),
 						PortalUtil.getClassName(_classNameId));
 
 			if (layoutDisplayPageProvider == null) {

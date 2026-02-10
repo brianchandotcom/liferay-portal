@@ -473,6 +473,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 					objectEntry.getObjectEntryId(),
 					_layoutDisplayPageProviderRegistry.
 						getLayoutDisplayPageProviderByClassName(
+							_childObjectDefinition.getCompanyId(),
 							_childObjectDefinition.getClassName())));
 
 			_assertOptionInfoFieldTypes(

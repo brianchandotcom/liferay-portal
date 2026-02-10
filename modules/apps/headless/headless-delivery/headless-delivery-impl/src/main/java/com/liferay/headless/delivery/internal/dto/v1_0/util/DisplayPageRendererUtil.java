@@ -154,7 +154,7 @@ public class DisplayPageRendererUtil {
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
 			_getLayoutDisplayPageObjectProvider(
-				infoItemDetails.getInfoItemReference(),
+				layout.getCompanyId(), infoItemDetails.getInfoItemReference(),
 				layoutDisplayPageProviderRegistry));
 
 		httpServletRequest.setAttribute(
@@ -183,14 +183,14 @@ public class DisplayPageRendererUtil {
 
 	private static LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(
-			InfoItemReference infoItemReference,
+			long companyId, InfoItemReference infoItemReference,
 			LayoutDisplayPageProviderRegistry
 				layoutDisplayPageProviderRegistry) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					infoItemReference.getClassName());
+					companyId, infoItemReference.getClassName());
 
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
 			infoItemReference);

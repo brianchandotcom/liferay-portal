@@ -131,6 +131,7 @@ public class ViewJournalArticleContentDashboardItemAction
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					journalArticle.getCompanyId(),
 					JournalArticle.class.getName());
 
 		if (layoutDisplayPageProvider == null) {

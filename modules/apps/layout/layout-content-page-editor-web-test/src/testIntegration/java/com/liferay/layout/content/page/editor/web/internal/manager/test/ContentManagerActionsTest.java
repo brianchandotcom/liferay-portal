@@ -103,6 +103,7 @@ public class ContentManagerActionsTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					_layout.getCompanyId(),
 					_layoutClassedModelUsage.getClassName());
 
 		_layoutDisplayPageObjectProvider =

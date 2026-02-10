@@ -115,7 +115,7 @@ public class BlogsEntryAnalyticsReportsInfoItem
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					BlogsEntry.class.getName());
+					blogsEntry.getCompanyId(), BlogsEntry.class.getName());
 
 		if (layoutDisplayPageProvider == null) {
 			return null;

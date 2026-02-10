@@ -141,6 +141,7 @@ public class CommerceOrderAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					commerceOrder.getCompanyId(),
 					CommerceOrder.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(

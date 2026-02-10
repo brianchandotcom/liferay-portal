@@ -196,7 +196,7 @@ public class JournalArticleAssetRendererTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					JournalArticle.class.getName());
+					article.getCompanyId(), JournalArticle.class.getName());
 
 		String viewInContextURL = _getURLViewInContext(
 			article.getResourcePrimKey(), themeDisplay);

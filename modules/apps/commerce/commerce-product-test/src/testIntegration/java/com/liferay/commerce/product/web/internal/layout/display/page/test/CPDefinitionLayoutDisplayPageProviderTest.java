@@ -79,7 +79,7 @@ public class CPDefinitionLayoutDisplayPageProviderTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					CPDefinition.class.getName());
+					_cpDefinition.getCompanyId(), CPDefinition.class.getName());
 
 		Assert.assertEquals(
 			CPDefinition.class.getName(),

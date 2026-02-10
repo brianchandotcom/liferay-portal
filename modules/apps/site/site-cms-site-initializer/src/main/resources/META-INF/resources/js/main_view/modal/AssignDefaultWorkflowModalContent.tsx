@@ -6,16 +6,16 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClaySelectWithOption} from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useId, useState} from 'react';
 
-import StructureService from '../../common/services/StructureService';
 import {getWorkflowDefinitions} from '../../common/services/WorkflowService';
 
 interface WorkflowOption {
 	label: string;
 	value: string;
+	disabled: boolean;
+	hidden: boolean;
 }
 
 export interface StructureWorkflowItem {
@@ -27,56 +27,21 @@ export interface StructureWorkflowItem {
 export default function AssignDefaultWorkflowModalContent({
 	closeModal,
 	structureWorkflows,
+	submitModal,
 }: {
 	closeModal: () => void;
+	submitModal?: (workflow: string) => void;
 	structureWorkflows: StructureWorkflowItem[];
 }) {
 	const [selectedWorkflow, setSelectedWorkflow] = useState<string>('');
 
 	const [workflows, setWorkflows] = useState<WorkflowOption[]>([]);
 
-	const onAssignWorkflowButtonClick = async () => {
-		const {error} = await StructureService.updateStructureWorkflow({
-			structureIds: structureWorkflows.map((item) => item.id),
-			workflow: selectedWorkflow,
-		});
+	const [isDisabled, setIsDisabled] = useState<boolean>(true);
 
-		if (error) {
-			openToast({
-				message: Liferay.Language.get('an-error-occurred'),
-				title: Liferay.Language.get('error'),
-				type: 'danger',
-			});
-		}
-		else {
-			let toastMessage;
-
-			if (structureWorkflows.length === 1) {
-				toastMessage = sub(
-					Liferay.Language.get(
-						'x-workflow-was-successfully-assigned-to-x'
-					),
-					[
-						selectedWorkflow || Liferay.Language.get('no-workflow'),
-						structureWorkflows[0].name,
-					]
-				);
-			}
-			else {
-				toastMessage = sub(
-					Liferay.Language.get(
-						'x-workflow-was-successfully-assigned-to-multiple-content-structure'
-					),
-					[selectedWorkflow || Liferay.Language.get('no-workflow')]
-				);
-			}
-
-			openToast({
-				message: toastMessage,
-				title: Liferay.Language.get('success'),
-				type: 'success',
-			});
-		}
+	const onAssignWorkflowButtonClick = () => {
+		submitModal?.(selectedWorkflow);
+		closeModal();
 	};
 
 	useEffect(() => {
@@ -84,10 +49,17 @@ export default function AssignDefaultWorkflowModalContent({
 			const data = await getWorkflowDefinitions();
 
 			const options = [
-				{label: Liferay.Language.get('no-workflow'), value: ''},
+				{
+					label: Liferay.Language.get('no-workflow'),
+					value: '',
+					disabled: false,
+					hidden: false,
+				},
 				...data.map((workflow) => ({
 					label: workflow.name,
 					value: workflow.name,
+					disabled: false,
+					hidden: false,
 				})),
 			];
 
@@ -103,6 +75,18 @@ export default function AssignDefaultWorkflowModalContent({
 				const sameValue = workflowValues.every(
 					(value) => value === workflowValues[0]
 				);
+
+				if (!sameValue) {
+					setWorkflows([
+						{
+							label: Liferay.Language.get('mixed-workflows'),
+							value: Liferay.Language.get('mixed-workflows'),
+							disabled: true,
+							hidden: true,
+						},
+						...options,
+					]);
+				}
 
 				setSelectedWorkflow(
 					sameValue
@@ -151,9 +135,10 @@ export default function AssignDefaultWorkflowModalContent({
 
 						<ClaySelectWithOption
 							id={selectId}
-							onChange={(event) =>
-								setSelectedWorkflow(event.target.value)
-							}
+							onChange={(event) => {
+								setSelectedWorkflow(event.target.value);
+								setIsDisabled(false);
+							}}
 							options={workflows}
 							value={selectedWorkflow}
 						/>
@@ -173,6 +158,7 @@ export default function AssignDefaultWorkflowModalContent({
 						</ClayButton>
 
 						<ClayButton
+							disabled={isDisabled}
 							displayType="primary"
 							onClick={onAssignWorkflowButtonClick}
 						>

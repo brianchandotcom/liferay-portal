@@ -15,6 +15,7 @@ import {config as analyticsReportsJsComponentsWeb} from './tests/analytics-repor
 import {config as analyticsSettingsWebConfig} from './tests/analytics-settings-web/main/config';
 import {config as analyticsWebConfig} from './tests/analytics-web/main/config';
 import {config as announcementsWebConfig} from './tests/announcements-web/main/config';
+import {config as applicationListTaglibConfig} from './tests/application-list-taglib/main/config';
 import {config as assetCategoriesAdminWebConfig} from './tests/asset-categories-admin-web/main/config';
 import {config as assetPublisherWebConfig} from './tests/asset-publisher-web/main/config';
 import {config as assetTagsAdminWebConfig} from './tests/asset-tags-admin-web/main/config';
@@ -207,6 +208,7 @@ export default defineConfig({
 		analyticsSettingsWebConfig,
 		analyticsWebConfig,
 		announcementsWebConfig,
+		applicationListTaglibConfig,
 		assetCategoriesAdminWebConfig,
 		assetPublisherWebConfig,
 		assetTagsAdminWebConfig,

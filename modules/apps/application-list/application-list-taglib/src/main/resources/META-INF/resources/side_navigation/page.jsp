@@ -20,7 +20,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 						<div class="autofit-col autofit-col-expand">
 							<span class="component-title" id="com_liferay_application_list_taglib_side_navigation_label">
 								<%-- TODO: replace the icon below with the panel icon --%>
-								<clay:icon symbol="grid" /><span class="c-px-2"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
+								<clay:icon symbol="grid" /><span class="c-px-2" data-qa-id="sideNavigationLabel"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
 							</span>
 						</div>
 

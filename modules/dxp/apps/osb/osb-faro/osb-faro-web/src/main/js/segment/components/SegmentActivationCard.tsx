@@ -310,7 +310,7 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 		scheduleEndDate,
 		scheduleStartDate,
 		scheduleType
-	} = segmentActivation.toJS();
+	} = localActivation.toJS();
 
 	const {observer, onOpenChange, open} = useModal();
 

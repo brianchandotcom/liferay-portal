@@ -17,18 +17,7 @@ public class LineStringShape extends Shape {
 		return shapeTranslator.translate(this);
 	}
 
-	public static class LineStringShapeBuilderImpl
-		extends ShapeBuilder<LineStringShapeBuilder>
-		implements LineStringShapeBuilder {
-
-		@Override
-		public LineStringShape build() {
-			return new LineStringShape(coordinates);
-		}
-
-	}
-
-	private LineStringShape(List<Coordinate> coordinates) {
+	protected LineStringShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

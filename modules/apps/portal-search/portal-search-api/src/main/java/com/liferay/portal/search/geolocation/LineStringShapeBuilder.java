@@ -5,22 +5,14 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface LineStringShapeBuilder {
+public class LineStringShapeBuilder
+	extends ShapeBuilder<LineStringShapeBuilder> {
 
-	public LineStringShapeBuilder addCoordinate(Coordinate coordinate);
-
-	public LineStringShape build();
-
-	public LineStringShapeBuilder coordinates(Coordinate... coordinates);
-
-	public LineStringShapeBuilder coordinates(List<Coordinate> coordinates);
+	public LineStringShape build() {
+		return new LineStringShape(coordinates);
+	}
 
 }

@@ -25,36 +25,7 @@ public class EnvelopeShape extends Shape {
 		return _topLeftCoordinate;
 	}
 
-	public static class EnvelopeShapeBuilderImpl
-		extends ShapeBuilder<EnvelopeShapeBuilder>
-		implements EnvelopeShapeBuilder {
-
-		@Override
-		public EnvelopeShapeBuilder bottomRight(Coordinate coordinate) {
-			_bottomRightCoordinate = coordinate;
-
-			return this;
-		}
-
-		@Override
-		public EnvelopeShape build() {
-			return new EnvelopeShape(
-				coordinates, _bottomRightCoordinate, _topLeftCoordinate);
-		}
-
-		@Override
-		public EnvelopeShapeBuilder topLeft(Coordinate coordinate) {
-			_topLeftCoordinate = coordinate;
-
-			return this;
-		}
-
-		private Coordinate _bottomRightCoordinate;
-		private Coordinate _topLeftCoordinate;
-
-	}
-
-	private EnvelopeShape(
+	protected EnvelopeShape(
 		List<Coordinate> coordinates, Coordinate bottomRightCoordinate,
 		Coordinate topLeftCoordinate) {
 

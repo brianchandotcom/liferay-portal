@@ -93,6 +93,9 @@ export interface IBulkActionTaskStarterDTO<
 }
 
 export interface IBulkActionTaskType {
+	AssignStructureDefaultWorkflowBulkAction: {
+		workflow?: string;
+	};
 	AssignToBulkAction: {
 		className: string;
 		externalReferenceCode: string;

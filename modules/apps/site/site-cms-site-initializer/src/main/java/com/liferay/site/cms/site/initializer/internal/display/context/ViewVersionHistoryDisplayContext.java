@@ -70,6 +70,17 @@ public class ViewVersionHistoryDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "expire")
 			).build(
 				"expire"
+			),
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"trash"
+			).setLabel(
+				LanguageUtil.get(_httpServletRequest, "delete")
+			).build(
+				"delete"
 			));
 	}
 
@@ -124,6 +135,10 @@ public class ViewVersionHistoryDisplayContext {
 	public Map<String, Object> getProps() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
+		).put(
+			"entryClassName", _objectDefinition.getClassName()
+		).put(
+			"objectEntryCurrentVersion", _objectEntry.getVersion()
 		).put(
 			"objectEntryTitle",
 			_objectEntry.getTitleValue(_themeDisplay.getLanguageId())

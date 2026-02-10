@@ -3819,10 +3819,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, _group.getType());
 		Assert.assertTrue(_group.isManualMembership());
 
-		Assert.assertEquals(
-			2,
+		String[] accessToControlMenuRoleIds =
 			_menuAccessConfigurationManager.getAccessToControlMenuRoleIds(
-				_group.getGroupId()).length);
+				_group.getGroupId());
+
+		Assert.assertEquals(
+			Arrays.toString(accessToControlMenuRoleIds), 2,
+			accessToControlMenuRoleIds.length);
+
 		Assert.assertTrue(
 			_menuAccessConfigurationManager.isShowControlMenuByRole(
 				_group.getGroupId()));
@@ -3835,10 +3839,14 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, _group.getType());
 		Assert.assertTrue(_group.isManualMembership());
 
-		Assert.assertEquals(
-			0,
+		String[] accessToControlMenuRoleIds =
 			_menuAccessConfigurationManager.getAccessToControlMenuRoleIds(
-				_group.getGroupId()).length);
+				_group.getGroupId());
+
+		Assert.assertEquals(
+			Arrays.toString(accessToControlMenuRoleIds), 0,
+			accessToControlMenuRoleIds.length);
+
 		Assert.assertTrue(
 			_menuAccessConfigurationManager.isShowControlMenuByRole(
 				_group.getGroupId()));

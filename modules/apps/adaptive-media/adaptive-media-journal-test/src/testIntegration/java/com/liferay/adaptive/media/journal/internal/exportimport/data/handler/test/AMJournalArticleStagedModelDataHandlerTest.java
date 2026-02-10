@@ -250,7 +250,7 @@ public class AMJournalArticleStagedModelDataHandlerTest
 			"content", "string", "text", true,
 			DDMFormFieldTypeConstants.RICH_TEXT,
 			new Locale[] {LocaleUtil.getSiteDefault()},
-			LocaleUtil.getSiteDefault());
+			LocaleUtil.getSiteDefault(), null);
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			stagingGroup.getGroupId(), JournalArticle.class.getName(), 0,

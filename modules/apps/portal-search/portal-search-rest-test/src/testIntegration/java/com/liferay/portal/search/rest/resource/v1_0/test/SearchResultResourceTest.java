@@ -568,7 +568,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 			testGroup.getGroupId(), clazz.getName(),
 			DDMStructureTestUtil.getSampleDDMForm(
 				"name", "string", "keyword", true, "text",
-				new Locale[] {locale}, locale),
+				new Locale[] {locale}, locale, null),
 			locale);
 	}
 

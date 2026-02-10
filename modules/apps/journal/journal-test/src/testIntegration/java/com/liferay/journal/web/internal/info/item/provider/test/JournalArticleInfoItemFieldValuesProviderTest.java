@@ -185,7 +185,7 @@ public class JournalArticleInfoItemFieldValuesProviderTest {
 			fieldName1, "string", "text", true,
 			DDMFormFieldTypeConstants.RICH_TEXT,
 			new Locale[] {LocaleUtil.getSiteDefault()},
-			LocaleUtil.getSiteDefault());
+			LocaleUtil.getSiteDefault(), null);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());

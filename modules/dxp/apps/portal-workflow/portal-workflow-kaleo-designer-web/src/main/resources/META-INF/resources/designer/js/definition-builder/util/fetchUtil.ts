@@ -19,16 +19,21 @@ export const HEADERS = new Headers({
 
 export async function publishDefinitionRequest(
 	requestBody: WorkflowDefinition,
+	groupExternalReferenceCode?: string,
 	scope?: string
 ) {
 	const isFeatureFlagActive =
 		Liferay.FeatureFlags && Liferay.FeatureFlags['LPD-62272'];
 
-	let body: WorkflowDefinition | (WorkflowDefinition & {scope: string}) =
-		requestBody;
+	let body:
+		| WorkflowDefinition
+		| (WorkflowDefinition & {
+				groupExternalReferenceCode: string;
+				scope: string;
+		  }) = requestBody;
 
-	if (scope === 'ai' && isFeatureFlagActive) {
-		body = {...requestBody, scope};
+	if (scope === 'ai' && isFeatureFlagActive && groupExternalReferenceCode) {
+		body = {...requestBody, groupExternalReferenceCode, scope};
 	}
 
 	return await fetch(`${workflowBaseURL}/workflow-definitions/deploy`, {
@@ -102,16 +107,21 @@ export function retrieveUsersBy(filterType: string, keywords: string[]) {
 
 export async function saveDefinitionRequest(
 	requestBody: WorkflowDefinition,
+	groupExternalReferenceCode?: string,
 	scope?: string
 ) {
 	const isFeatureFlagActive =
 		Liferay.FeatureFlags && Liferay.FeatureFlags['LPD-62272'];
 
-	let body: WorkflowDefinition | (WorkflowDefinition & {scope: string}) =
-		requestBody;
+	let body:
+		| WorkflowDefinition
+		| (WorkflowDefinition & {
+				groupExternalReferenceCode: string;
+				scope: string;
+		  }) = requestBody;
 
-	if (scope === 'ai' && isFeatureFlagActive) {
-		body = {...requestBody, scope};
+	if (scope === 'ai' && isFeatureFlagActive && groupExternalReferenceCode) {
+		body = {...requestBody, groupExternalReferenceCode, scope};
 	}
 
 	return await fetch(`${workflowBaseURL}/workflow-definitions/save`, {

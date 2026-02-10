@@ -5,12 +5,14 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.ai.hub.web.internal.constants.AIHubWebConstants;
 import com.liferay.ai.hub.web.internal.display.context.TaskDefinitionDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -73,7 +75,9 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher("/view.jsp");
 
 			TaskDefinitionDisplayContext taskDefinitionDisplayContext =
-				new TaskDefinitionDisplayContext(httpServletRequest, _portal);
+				new TaskDefinitionDisplayContext(
+					_accountEntryLocalService, _classNameLocalService,
+					_groupLocalService, httpServletRequest, _portal);
 
 			Class<?> clazz = taskDefinitionDisplayContext.getClass();
 
@@ -89,6 +93,12 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 			throw new IOException(exception);
 		}
 	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

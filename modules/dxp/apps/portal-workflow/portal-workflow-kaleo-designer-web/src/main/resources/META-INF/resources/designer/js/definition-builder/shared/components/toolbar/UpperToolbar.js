@@ -31,6 +31,7 @@ import {GroovyScriptWarningModal} from './GroovyScriptWarningModal';
 
 export default function UpperToolbar({
 	displayNames,
+	groupExternalReferenceCode,
 	isView,
 	languageIds,
 	portletNamespace,
@@ -228,6 +229,7 @@ export default function UpperToolbar({
 					title_i18n: definitionTitleTranslations,
 					version,
 				},
+				groupExternalReferenceCode ? groupExternalReferenceCode : {},
 				scope ? scope : {}
 			);
 

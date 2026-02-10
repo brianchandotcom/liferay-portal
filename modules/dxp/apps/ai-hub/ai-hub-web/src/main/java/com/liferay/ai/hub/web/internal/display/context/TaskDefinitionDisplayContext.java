@@ -5,18 +5,27 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
@@ -34,8 +43,14 @@ import java.util.List;
 public class TaskDefinitionDisplayContext {
 
 	public TaskDefinitionDisplayContext(
+		AccountEntryLocalService accountEntryLocalService,
+		ClassNameLocalService classNameLocalService,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Portal portal) {
 
+		_accountEntryLocalService = accountEntryLocalService;
+		_classNameLocalService = classNameLocalService;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_portal = portal;
 
@@ -102,6 +117,27 @@ public class TaskDefinitionDisplayContext {
 			GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
 			PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				_themeDisplay.getUserId(),
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		String groupExternalReferenceCode = StringPool.BLANK;
+
+		if (!accountEntries.isEmpty()) {
+			AccountEntry accountEntry = accountEntries.get(0);
+
+			Group group = _groupLocalService.fetchGroup(
+				_themeDisplay.getCompanyId(),
+				_classNameLocalService.getClassNameId(AccountEntry.class),
+				accountEntry.getAccountEntryId());
+
+			groupExternalReferenceCode = group.getExternalReferenceCode();
+		}
+
 		return HttpComponentsUtil.addParameters(
 			url, "p_p_id", WorkflowPortletKeys.KALEO_DESIGNER, "p_p_lifecycle",
 			"0", "p_p_state", WindowState.MAXIMIZED.toString(), "p_p_mode",
@@ -110,9 +146,14 @@ public class TaskDefinitionDisplayContext {
 			_portal.getPortalURL(_httpServletRequest) +
 				_portal.getCurrentURL(_httpServletRequest),
 			namespace + "clearSessionMessage", true, namespace + "scope",
-			WorkflowDefinitionConstants.SCOPE_AI);
+			WorkflowDefinitionConstants.SCOPE_AI,
+			namespace + "groupExternalReferenceCode",
+			groupExternalReferenceCode);
 	}
 
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final ClassNameLocalService _classNameLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;

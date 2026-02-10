@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,es_ES" default-locale="en_US">
+	<dynamic-element index-type="text" instance-id="dqqn" name="image" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				{
+					"alt": "alt text",
+					"groupId": "$GROUP_ID",
+					"uuid": "$UUID"
+				}
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

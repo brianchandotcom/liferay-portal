@@ -98,8 +98,6 @@
 		<div class="form-group" id="stagingConfigurationControls">
 
 			<%
-			Set<String> portletDataHandlerNames = new HashSet<String>();
-
 			List<Portlet> dataSiteLevelPortlets = ExportImportHelperUtil.getDataSiteLevelPortlets(company.getCompanyId(), true);
 
 			dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
@@ -108,15 +106,6 @@
 				PortletDataHandler portletDataHandler = curPortlet.getPortletDataHandlerInstance();
 
 				if (!portletDataHandler.isConfigurationEnabled() || !portletDataHandler.isEnabled(company.getCompanyId()) || portletDataHandler.isHidden() || !GroupCapabilityUtil.isSupportsPortlet(liveGroup, curPortlet)) {
-					continue;
-				}
-
-				String portletDataHandlerName = portletDataHandler.getName(locale);
-
-				if (!portletDataHandlerNames.contains(portletDataHandlerName)) {
-					portletDataHandlerNames.add(portletDataHandlerName);
-				}
-				else {
 					continue;
 				}
 

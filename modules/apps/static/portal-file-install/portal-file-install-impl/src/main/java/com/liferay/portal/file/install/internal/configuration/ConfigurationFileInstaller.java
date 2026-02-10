@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -286,24 +287,25 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		ExtendedObjectClassDefinition.Scope scope,
 		Dictionary<String, Object> dictionary, String fileName) {
 
+		if (dictionary == null) {
+			return 0L;
+		}
+
+		if (scope == ExtendedObjectClassDefinition.Scope.GROUP) {
+			return _getGroupCompanyId(dictionary, fileName);
+		}
+
 		if (!PropsValues.DATABASE_PARTITION_ENABLED ||
-			(scope != ExtendedObjectClassDefinition.Scope.COMPANY) ||
-			(dictionary == null)) {
+			(scope != ExtendedObjectClassDefinition.Scope.COMPANY)) {
 
 			return 0L;
 		}
 
-		Long companyId = (Long)dictionary.get(scope.getPropertyKey());
+		long companyId = GetterUtil.getLong(
+			dictionary.get(scope.getPropertyKey()));
 
-		if (companyId != null) {
-			if (!ArrayUtil.contains(
-					PortalInstancePool.getCompanyIds(), companyId)) {
-
-				throw new IllegalArgumentException(
-					StringBundler.concat(
-						"Unable to process ", fileName, " because company ID ",
-						companyId, " does not exist"));
-			}
+		if (companyId != 0) {
+			_validateCompanyId(companyId, fileName);
 
 			return companyId;
 		}
@@ -345,39 +347,101 @@ public class ConfigurationFileInstaller implements FileInstaller {
 		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
+	private long _getGroupCompanyId(
+		Dictionary<String, Object> dictionary, String fileName) {
+
+		long companyId = 0;
+
+		ExtendedObjectClassDefinition.Scope scope =
+			ExtendedObjectClassDefinition.Scope.GROUP;
+
+		long groupId = GetterUtil.getLong(
+			dictionary.get(scope.getPropertyKey()));
+
+		if (groupId != 0) {
+			companyId = GetterUtil.getLong(
+				dictionary.get(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey()));
+
+			if (companyId == 0L) {
+				throw new IllegalArgumentException(
+					StringBundler.concat(
+						"Unable to process group scoped configuration ",
+						fileName,
+						" because required property \"companyId\" is missing"));
+			}
+
+			_validateCompanyId(companyId, fileName);
+		}
+
+		String groupKey = (String)dictionary.get(
+			scope.getPortablePropertyKey());
+
+		if (groupKey != null) {
+			String[] parts = StringUtil.split(groupKey, _SEPARATOR);
+
+			String webId = parts[0];
+
+			companyId = PortalInstancePool.getCompanyId(webId);
+		}
+
+		if (PropsValues.DATABASE_PARTITION_ENABLED && (companyId != 0)) {
+			return companyId;
+		}
+		else if (companyId != 0) {
+			return 0L;
+		}
+
+		throw new IllegalArgumentException(
+			"Unable to process group scoped configuration " + fileName);
+	}
+
 	private ExtendedObjectClassDefinition.Scope _getScope(
 		Dictionary<String, Object> dictionary) {
 
-		if (!PropsValues.DATABASE_PARTITION_ENABLED) {
+		if (_hasDictionaryValue(
+				dictionary, ExtendedObjectClassDefinition.Scope.COMPANY)) {
+
+			if (PropsValues.DATABASE_PARTITION_ENABLED) {
+				return ExtendedObjectClassDefinition.Scope.COMPANY;
+			}
+
 			return null;
 		}
 
-		for (ExtendedObjectClassDefinition.Scope scope :
-				ExtendedObjectClassDefinition.Scope.values()) {
+		if (_hasDictionaryValue(
+				dictionary, ExtendedObjectClassDefinition.Scope.GROUP)) {
 
-			for (String key :
-					new String[] {
-						scope.getPropertyKey(), scope.getPortablePropertyKey()
-					}) {
-
-				if ((key != null) && (dictionary.get(key) != null)) {
-					if (!scope.equals(
-							ExtendedObjectClassDefinition.Scope.COMPANY)) {
-
-						throw new UnsupportedOperationException(
-							StringBundler.concat(
-								StringUtil.upperCaseFirstLetter(
-									scope.getValue()),
-								" scoped configuration files do not support ",
-								"database partitioning"));
-					}
-
-					return scope;
-				}
-			}
+			return ExtendedObjectClassDefinition.Scope.GROUP;
 		}
 
-		return ExtendedObjectClassDefinition.Scope.SYSTEM;
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			throw new UnsupportedOperationException(
+				"Only company and group configurations support database " +
+					"partitioning");
+		}
+
+		return null;
+	}
+
+	private boolean _hasDictionaryValue(
+		Dictionary<String, Object> dictionary,
+		ExtendedObjectClassDefinition.Scope scope) {
+
+		String key = scope.getPropertyKey();
+
+		if ((key != null) && (dictionary.get(key) != null)) {
+			return true;
+		}
+
+		key = scope.getPortablePropertyKey();
+
+		if ((key != null) && (dictionary.get(key) != null)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private String[] _parsePid(String path) {
@@ -403,6 +467,19 @@ public class ConfigurationFileInstaller implements FileInstaller {
 
 		return new String[] {pid, null};
 	}
+
+	private void _validateCompanyId(long companyId, String fileName) {
+		if (!ArrayUtil.contains(
+				PortalInstancePool.getCompanyIds(), companyId)) {
+
+			throw new IllegalArgumentException(
+				StringBundler.concat(
+					"Unable to process ", fileName, " because company ID ",
+					companyId, " does not exist"));
+		}
+	}
+
+	private static final String _SEPARATOR = "--";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationFileInstaller.class);

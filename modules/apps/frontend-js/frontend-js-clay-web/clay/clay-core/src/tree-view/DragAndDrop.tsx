@@ -153,6 +153,109 @@ export function isDescendantOfDraggedItems({
 	return false;
 }
 
+function validateTarget<T>({
+	currentDrag,
+	currentDragKeys,
+	items,
+	layout,
+	mode,
+	nestedKey,
+	onItemHover,
+	position,
+	targetKey,
+}: {
+	currentDrag: State['currentDrag'];
+	currentDragKeys: State['currentDragKeys'];
+	items?: Record<string, T>[];
+	layout: Layout;
+	mode: 'single' | 'multiple';
+	nestedKey: string;
+	onItemHover?: (
+		item: T | Set<React.Key>,
+		parentItem: T,
+		index: MoveItemIndex,
+		position: Position
+	) => boolean;
+	position: Position;
+	targetKey: React.Key;
+}) {
+	if (!onItemHover || !currentDrag) {
+		return true;
+	}
+
+	const targetItem = layout.layoutKeys.current.get(targetKey);
+	const dragItem = layout.layoutKeys.current.get(currentDrag);
+
+	if (!targetItem || !dragItem) {
+		return false;
+	}
+
+	const targetIndexes = getNewItemPath(targetItem.loc, position);
+
+	const tree = createImmutableTree(items as any, nestedKey!);
+	const dragNode = tree.nodeByPath(dragItem.loc);
+	const parentNode = tree.nodeByPath(targetIndexes).parent;
+
+	if (!parentNode) {
+		return false;
+	}
+
+	return onItemHover(
+		mode === 'multiple'
+			? currentDragKeys
+			: (dragNode.item as Record<any, any>),
+		parentNode as Record<any, any>,
+		{
+			next: targetIndexes[targetIndexes.length - 1]!,
+			previous: dragNode.index,
+		},
+		position
+	);
+}
+
+function getNextCursor({
+	direction,
+	index,
+	position,
+}: {
+	direction: 'up' | 'down';
+	index: number;
+	position: Position;
+}): {index: number; position: Position} | null {
+	if (direction === 'down') {
+		if (position === 'top') {
+			return {index, position: 'middle'};
+		}
+
+		if (position === 'middle') {
+			return {index, position: 'bottom'};
+		}
+
+		if (position === 'bottom') {
+			return {
+				index: index + 1,
+				position: 'middle',
+			};
+		}
+	}
+
+	if (direction === 'up') {
+		if (position === 'bottom') {
+			return {index, position: 'middle'};
+		}
+
+		if (position === 'middle') {
+			return {index, position: 'top'};
+		}
+
+		if (position === 'top') {
+			return {index: index - 1, position: 'middle'};
+		}
+	}
+
+	return null;
+}
+
 function getNextTarget<T>({
 	direction,
 	items,
@@ -187,59 +290,19 @@ function getNextTarget<T>({
 		(element) => getElementKey(element) === state.currentTarget
 	);
 
-	let index = currentIndex;
-	let position = state.position || 'bottom';
-
-	// Function to find next position depending on direction
-
-	const advance = () => {
-		if (direction === 'down') {
-			if (position === 'top') {
-				position = 'middle';
-
-				return;
-			}
-
-			if (position === 'middle') {
-				position = 'bottom';
-
-				return;
-			}
-
-			if (position === 'bottom') {
-				position = 'middle';
-				index = index + 1;
-
-				return;
-			}
-		}
-
-		if (direction === 'up') {
-			if (position === 'bottom') {
-				position = 'middle';
-
-				return;
-			}
-
-			if (position === 'middle') {
-				position = 'top';
-
-				return;
-			}
-
-			if (position === 'top') {
-				position = 'middle';
-				index = index - 1;
-
-				return;
-			}
-		}
+	let cursor: {index: number; position: Position} | null = {
+		index: currentIndex,
+		position: state.position || 'bottom',
 	};
 
 	while (true) {
-		advance();
+		cursor = getNextCursor({...cursor!, direction});
 
-		// Stop if we reach top or bottom limits
+		if (!cursor) {
+			continue;
+		}
+
+		const {index, position} = cursor;
 
 		if (index < 0 || index >= elements.length) {
 			return null;
@@ -247,13 +310,8 @@ function getNextTarget<T>({
 
 		const targetElement = elements[index];
 
-		if (!targetElement) {
-			continue;
-		}
-
-		// Skip if target element is descendant of any dragged item
-
 		if (
+			!targetElement ||
 			isDescendantOfDraggedItems({
 				dragKeys: state.currentDragKeys,
 				element: targetElement,
@@ -270,44 +328,21 @@ function getNextTarget<T>({
 			position,
 		};
 
-		// If onItemHover was passed, validate target using it
+		const isValid = validateTarget({
+			currentDrag: state.currentDrag,
+			currentDragKeys: state.currentDragKeys,
+			items,
+			layout,
+			mode,
+			nestedKey,
+			onItemHover,
+			position,
+			targetKey,
+		});
 
-		if (onItemHover) {
-			const targetItem = layout.layoutKeys.current.get(targetKey);
-			const dragItem = layout.layoutKeys.current.get(state.currentDrag!);
-
-			if (!targetItem || !dragItem) {
-				continue;
-			}
-
-			const targetIndexes = getNewItemPath(targetItem.loc, position);
-
-			const tree = createImmutableTree(items as any, nestedKey!);
-			const dragNode = tree.nodeByPath(dragItem.loc);
-			const parentNode = tree.nodeByPath(targetIndexes).parent;
-
-			if (!parentNode) {
-				continue;
-			}
-
-			const isValid = onItemHover(
-				mode === 'multiple'
-					? state.currentDragKeys
-					: (dragNode.item as Record<any, any>),
-				parentNode as Record<any, any>,
-				{
-					next: targetIndexes[targetIndexes.length - 1]!,
-					previous: dragNode.index,
-				},
-				position
-			);
-
-			if (!isValid) {
-				continue;
-			}
+		if (!isValid) {
+			continue;
 		}
-
-		// Return next target
 
 		return nextTarget;
 	}

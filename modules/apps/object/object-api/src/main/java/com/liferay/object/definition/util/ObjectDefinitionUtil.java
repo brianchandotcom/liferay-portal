@@ -119,6 +119,8 @@ public class ObjectDefinitionUtil {
 
 	private static final Map<String, String>
 		_allowedModifiableSystemObjectDefinitionNames = HashMapBuilder.put(
+			"AgentDefinition", "/ai-hub/agent-definitions"
+		).put(
 			"APIApplication", "/headless-builder/applications"
 		).put(
 			"APIEndpoint", "/headless-builder/endpoints"

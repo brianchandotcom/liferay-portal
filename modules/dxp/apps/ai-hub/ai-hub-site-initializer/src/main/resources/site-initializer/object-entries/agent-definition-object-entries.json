@@ -1,0 +1,77 @@
+{
+	"object-entries": [
+		{
+			"active": true,
+			"description": "This writing agent adapts a given text to fit any tone you specify as input.",
+			"externalReferenceCode": "L_CHANGE_TONE",
+			"inputVariables": "text,tone",
+			"name": "Change Tone",
+			"outputVariable": "rewrittenText",
+			"title_i18n": {
+				"en_US": "Change Tone"
+			},
+			"workflowDefinitionName": "Change Tone"
+		},
+		{
+			"active": true,
+			"description": "This writing agent acts as an expert linguistic editor, correcting grammar and spelling errors while strictly preserving your original tone and style.",
+			"externalReferenceCode": "L_FIX_SPELLING_AND_GRAMMAR",
+			"inputVariables": "text",
+			"name": "Fix Spelling and Grammar",
+			"outputVariable": "rewrittenText",
+			"title_i18n": {
+				"en_US": "Fix Spelling and Grammar"
+			},
+			"workflowDefinitionName": "Fix Spelling and Grammar"
+		},
+		{
+			"active": true,
+			"description": "This writing agent improves text eliminating wordiness and passive voice to deliver a clear, direct message.",
+			"externalReferenceCode": "L_IMPROVE_WRITING",
+			"inputVariables": "text",
+			"name": "Improve Writing",
+			"outputVariable": "rewrittenText",
+			"title_i18n": {
+				"en_US": "Improve Writing"
+			},
+			"workflowDefinitionName": "Improve Writing"
+		},
+		{
+			"active": true,
+			"description": "This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.",
+			"externalReferenceCode": "L_LIFERAY_SEARCH",
+			"inputVariables": "request",
+			"name": "Liferay Search",
+			"outputVariable": "response",
+			"title_i18n": {
+				"en_US": "Liferay Search"
+			},
+			"workflowDefinitionName": "Liferay Search"
+		},
+		{
+			"active": true,
+			"description": "This writing agent takes a given text and expands it into a longer, more detailed version.",
+			"externalReferenceCode": "L_MAKE_LONGER",
+			"inputVariables": "text",
+			"name": "Make Longer",
+			"outputVariable": "rewrittenText",
+			"title_i18n": {
+				"en_US": "Make Longer"
+			},
+			"workflowDefinitionName": "Make Longer"
+		},
+		{
+			"active": true,
+			"description": "This writing agent takes your text and rewrites it to be briefer and easier to read.",
+			"externalReferenceCode": "L_MAKE_SHORTER",
+			"inputVariables": "text",
+			"name": "Make Shorter",
+			"outputVariable": "rewrittenText",
+			"title_i18n": {
+				"en_US": "Make Shorter"
+			},
+			"workflowDefinitionName": "Make Shorter"
+		}
+	],
+	"objectDefinitionName": "AgentDefinition"
+}

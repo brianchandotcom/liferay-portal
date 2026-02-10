@@ -274,9 +274,13 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 
 		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
+		String fieldId = jsonObject.getString("fieldId");
 		long fileEntryId = jsonObject.getLong("fileEntryId");
 
-		if (Validator.isNull(externalReferenceCode) && (fileEntryId <= 0)) {
+		if ((Validator.isNull(externalReferenceCode) ||
+			 Validator.isNotNull(fieldId)) &&
+			(fileEntryId <= 0)) {
+
 			return null;
 		}
 

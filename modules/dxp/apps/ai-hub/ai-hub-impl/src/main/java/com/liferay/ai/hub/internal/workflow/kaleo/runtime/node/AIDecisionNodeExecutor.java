@@ -122,13 +122,12 @@ public class AIDecisionNodeExecutor extends BaseNodeExecutor {
 				kaleoNodeSetting.getName(), kaleoNodeSetting.getValue());
 		}
 
-		ServiceContext serviceContext = executionContext.getServiceContext();
-
 		String prompt = VariablesUtil.applyInputVariables(
 			executionContext, "prompt", kaleoNodeSettingValues);
-
 		String userMessage = VariablesUtil.applyInputVariables(
 			executionContext, "userMessage", kaleoNodeSettingValues);
+
+		ServiceContext serviceContext = executionContext.getServiceContext();
 
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(

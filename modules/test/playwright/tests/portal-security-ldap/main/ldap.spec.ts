@@ -231,6 +231,58 @@ test.beforeEach(async ({browser}) => {
 	});
 });
 
+test(
+	'Ensure Connection field uses Virtual Instance scope while others use System Scope',
+	{tag: '@LDP-73121'},
+	async ({page, systemSettingsPage}) => {
+		await systemSettingsPage.goToSystemSetting(
+			'LDAP',
+			'Connection',
+			'Virtual Instance Scope'
+		);
+
+		await expect(
+			await page.getByText('Connection').count()
+		).toBeGreaterThan(1);
+
+		await systemSettingsPage.goToSystemSetting(
+			'LDAP',
+			'Export',
+			'System Scope'
+		);
+
+		await expect(await page.getByText('Export').count()).toBeGreaterThan(1);
+
+		await systemSettingsPage.goToSystemSetting(
+			'LDAP',
+			'General',
+			'System Scope'
+		);
+
+		await expect(await page.getByText('General').count()).toBeGreaterThan(
+			1
+		);
+
+		await systemSettingsPage.goToSystemSetting(
+			'LDAP',
+			'Import',
+			'System Scope'
+		);
+
+		await expect(await page.getByText('Import').count()).toBeGreaterThan(1);
+
+		await systemSettingsPage.goToSystemSetting(
+			'LDAP',
+			'Servers',
+			'System Scope'
+		);
+
+		await expect(await page.getByText('Servers').count()).toBeGreaterThan(
+			1
+		);
+	}
+);
+
 test('LPD-47223 AC1 TC1: Verify LDAP import via authentication imports user attributes and user groups, but only for the user being authenticated', async ({
 	browser,
 	editUserPage,

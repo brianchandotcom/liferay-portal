@@ -171,7 +171,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public PointShapeBuilder pointShapeBuilder() {
-		return new PointShapeImpl.PointShapeBuilderImpl();
+		return new PointShape.PointShapeBuilderImpl();
 	}
 
 	@Override

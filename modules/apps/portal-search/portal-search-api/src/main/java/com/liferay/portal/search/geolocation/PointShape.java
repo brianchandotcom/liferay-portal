@@ -7,15 +7,27 @@ package com.liferay.portal.search.geolocation;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class PointShape extends Shape {
+public class PointShape extends Shape {
 
-	protected PointShape(List<Coordinate> coordinates) {
+	@Override
+	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
+		return shapeTranslator.translate(this);
+	}
+
+	public static class PointShapeBuilderImpl
+		extends ShapeBuilder<PointShapeBuilder> implements PointShapeBuilder {
+
+		@Override
+		public PointShape build() {
+			return new PointShape(coordinates);
+		}
+
+	}
+
+	private PointShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

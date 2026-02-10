@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
@@ -105,13 +106,13 @@ public class MBMessageModelListenerTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
+		User user = TestPropsValues.getUser();
+
 		_commentManager.addComment(
 			null, TestPropsValues.getUserId(), projectObjectEntry.getGroupId(),
 			projectObjectEntry.getModelClassName(),
-			projectObjectEntry.getObjectEntryId(),
-			TestPropsValues.getUser(
-			).getFullName(),
-			null, RandomTestUtil.randomString(),
+			projectObjectEntry.getObjectEntryId(), user.getFullName(), null,
+			RandomTestUtil.randomString(),
 			new IdentityServiceContextFunction(
 				ServiceContextTestUtil.getServiceContext()));
 

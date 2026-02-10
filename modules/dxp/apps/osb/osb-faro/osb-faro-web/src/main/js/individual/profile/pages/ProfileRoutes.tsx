@@ -12,6 +12,7 @@ import {CSVType} from 'shared/components/download-report/utils';
 import {ENABLE_CDP} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
 import {Switch, withRouter} from 'react-router-dom';
+import {Text} from '@clayui/core';
 import {useDataSource} from 'shared/hooks/useDataSource';
 
 const AssociatedSegments = lazy(
@@ -62,6 +63,23 @@ const NAV_ITEMS = [
 	}
 ];
 
+const buildHeaderSubtitle = (individual: {
+	accountNames: string;
+	lastSessionCountry: string;
+	properties: {toJS: () => any};
+}) => {
+	const {email} = individual.properties.toJS();
+	const {accountNames, lastSessionCountry} = individual;
+
+	return (
+		<Text color='secondary' size={4}>
+			{[email, accountNames, lastSessionCountry]
+				.filter(Boolean)
+				.join(' | ')}
+		</Text>
+	);
+};
+
 export const IndividualProfileRoutes = ({
 	channelId,
 	className,
@@ -102,7 +120,10 @@ export const IndividualProfileRoutes = ({
 				]}
 				groupId={groupId}
 			>
-				<BasePage.Header.TitleSection title={entityName} />
+				<BasePage.Header.TitleSection
+					subtitle={buildHeaderSubtitle(individual)}
+					title={entityName}
+				/>
 
 				<BasePage.Header.NavBar
 					items={NAV_ITEMS}

@@ -5,20 +5,67 @@
 
 package com.liferay.portal.search.geolocation;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface GeoLocationPoint {
+public class GeoLocationPoint {
 
-	public String getGeoHash();
+	public static GeoLocationPoint fromGeoHash(String geoHash) {
+		GeoLocationPoint geoLocationPoint = new GeoLocationPoint();
 
-	public Long getGeoHashLong();
+		geoLocationPoint._geoHash = geoHash;
 
-	public Double getLatitude();
+		return geoLocationPoint;
+	}
 
-	public Double getLongitude();
+	public static GeoLocationPoint fromGeoHashLong(long geoHashLong) {
+		GeoLocationPoint geoLocationPoint = new GeoLocationPoint();
+
+		geoLocationPoint._geoHashLong = geoHashLong;
+
+		return geoLocationPoint;
+	}
+
+	public static GeoLocationPoint fromLatitudeLongitude(
+		double latitude, double longitude) {
+
+		GeoLocationPoint geoLocationPoint = new GeoLocationPoint();
+
+		geoLocationPoint._latitude = latitude;
+		geoLocationPoint._longitude = longitude;
+
+		return geoLocationPoint;
+	}
+
+	public String getGeoHash() {
+		return _geoHash;
+	}
+
+	public Long getGeoHashLong() {
+		return _geoHashLong;
+	}
+
+	public Double getLatitude() {
+		return _latitude;
+	}
+
+	public Double getLongitude() {
+		return _longitude;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			CharPool.OPEN_PARENTHESIS, _latitude, CharPool.COMMA, _longitude,
+			CharPool.CLOSE_PARENTHESIS);
+	}
+
+	private String _geoHash;
+	private Long _geoHashLong;
+	private Double _latitude;
+	private Double _longitude;
 
 }

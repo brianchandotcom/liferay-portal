@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.internal.geolocation.GeoLocationPointImpl;
 import com.liferay.portal.search.internal.sort.SortsImpl;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.script.ScriptBuilder;
@@ -129,7 +128,7 @@ public class ElasticsearchSortFieldTranslatorTest
 			DocumentCreationHelpers.singleGeoLocation(fieldName, 90.0, 98.0));
 
 		GeoLocationPoint geoLocationPoint =
-			GeoLocationPointImpl.fromLatitudeLongitude(1.0, 2.0);
+			GeoLocationPoint.fromLatitudeLongitude(1.0, 2.0);
 
 		GeoDistanceSort geoDistanceSort = _sorts.geoDistance(fieldName);
 

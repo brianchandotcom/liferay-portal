@@ -97,17 +97,17 @@ public class GeoBuildersImpl implements GeoBuilders {
 	public GeoLocationPoint geoLocationPoint(
 		double latitude, double longitude) {
 
-		return GeoLocationPointImpl.fromLatitudeLongitude(latitude, longitude);
+		return GeoLocationPoint.fromLatitudeLongitude(latitude, longitude);
 	}
 
 	@Override
 	public GeoLocationPoint geoLocationPoint(long geoHash) {
-		return GeoLocationPointImpl.fromGeoHashLong(geoHash);
+		return GeoLocationPoint.fromGeoHashLong(geoHash);
 	}
 
 	@Override
 	public GeoLocationPoint geoLocationPoint(String geoHash) {
-		return GeoLocationPointImpl.fromGeoHash(geoHash);
+		return GeoLocationPoint.fromGeoHash(geoHash);
 	}
 
 	@Override

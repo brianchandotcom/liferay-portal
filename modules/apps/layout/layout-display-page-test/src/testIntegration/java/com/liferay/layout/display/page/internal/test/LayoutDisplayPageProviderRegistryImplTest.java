@@ -48,7 +48,7 @@ public class LayoutDisplayPageProviderRegistryImplTest {
 			Assert.assertNotNull(
 				_layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByURLSeparator(
-						"/url-separator/"));
+						0, "/url-separator/"));
 		}
 		finally {
 			if (serviceRegistration != null) {
@@ -68,7 +68,7 @@ public class LayoutDisplayPageProviderRegistryImplTest {
 			Assert.assertNotNull(
 				_layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByURLSeparator(
-						"/default-url-separator/"));
+						0, "/default-url-separator/"));
 		}
 		finally {
 			if (serviceRegistration != null) {

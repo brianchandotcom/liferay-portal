@@ -494,7 +494,8 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByURLSeparator(urlSeparator);
+				getLayoutDisplayPageProviderByURLSeparator(
+					companyId, urlSeparator);
 
 		if (layoutDisplayPageProvider == null) {
 			throw new PortalException(

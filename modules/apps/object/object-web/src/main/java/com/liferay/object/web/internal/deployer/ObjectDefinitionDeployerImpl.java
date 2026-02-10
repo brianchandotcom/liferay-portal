@@ -500,6 +500,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						objectDefinition.getStorageType()),
 					_objectRelationshipLocalService, _userLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
+					"company.id", objectDefinition.getCompanyId()
+				).put(
 					"item.class.name", objectDefinition.getClassName()
 				).build()),
 			_bundleContext.registerService(

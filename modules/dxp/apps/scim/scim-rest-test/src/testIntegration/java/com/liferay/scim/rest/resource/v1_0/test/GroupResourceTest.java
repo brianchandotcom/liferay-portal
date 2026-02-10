@@ -271,10 +271,10 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Assert.assertEquals(1, ArrayUtil.getLength(getGroup.getMembers()));
 
 		getGroup = _getGroupByListResponse(
-			groupResource.getV2Groups(
-				5, "members", 0,
-				"displayName eq \"" + group4.getDisplayName() + "\""
-			).toString());
+			String.valueOf(
+				groupResource.getV2Groups(
+					5, "members", 0,
+					"displayName eq \"" + group4.getDisplayName() + "\"")));
 
 		assertValid(getGroup);
 		Assert.assertNull(getGroup.getMembers());

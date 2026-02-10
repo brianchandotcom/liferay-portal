@@ -1,0 +1,151 @@
+{
+	"className": "com.liferay.object.model.ObjectDefinition#P8M2",
+	"enableFormContainer": false,
+	"enableIndexSearch": true,
+	"externalReferenceCode": "L_AGENT_DEFINITION",
+	"friendlyURLSeparator": "l",
+	"label": {
+		"en_US": "Agent Definition"
+	},
+	"modifiable": true,
+	"name": "AgentDefinition",
+	"objectActions": [
+	],
+	"objectDefinitionSettings": [
+	],
+	"objectFields": [
+		{
+			"DBType": "Boolean",
+			"businessType": "Boolean",
+			"defaultValue": true,
+			"externalReferenceCode": "ACTIVE",
+			"indexed": true,
+			"label": {
+				"en_US": "Active"
+			},
+			"name": "active",
+			"system": true,
+			"type": "Boolean"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "DESCRIPTION",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Description"
+			},
+			"name": "description",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"readOnlyConditionExpression": "",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "INPUT_VARIABLES",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Input Variables"
+			},
+			"name": "inputVariables",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "NAME",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Name"
+			},
+			"name": "name",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "OUTPUT_VARIABLE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Output Variable"
+			},
+			"name": "outputVariable",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "TITLE",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Title"
+			},
+			"localized": true,
+			"name": "title",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		},
+		{
+			"DBType": "String",
+			"businessType": "Text",
+			"defaultValue": "null",
+			"externalReferenceCode": "WORKFLOW_DEFINITION_NAME",
+			"indexed": true,
+			"indexedLanguageId": "en_US",
+			"label": {
+				"en_US": "Workflow Definition Name"
+			},
+			"name": "workflowDefinitionName",
+			"objectFieldSettings": [
+			],
+			"readOnly": "false",
+			"system": true,
+			"type": "String"
+		}
+	],
+	"objectFolderExternalReferenceCode": "default",
+	"objectLayouts": [
+	],
+	"objectRelationships": [
+	],
+	"objectValidationRules": [
+	],
+	"objectViews": [
+	],
+	"panelCategoryKey": "",
+	"pluralLabel": {
+		"en_US": "Agent Definitions"
+	},
+	"scope": "company",
+	"system": true,
+	"titleObjectFieldName": "name"
+}

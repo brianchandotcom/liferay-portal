@@ -21,6 +21,7 @@ import {
 	getProductSpecification,
 } from '../../utils/productUtils';
 import ProductPurchaseOutlet from './ProductPurchaseOutlet';
+import ProductPurchaseAccountSelection from './pages/AccountSelection';
 import AppAccountSelection from './pages/App/AccountSelection';
 import {InsuficientResources} from './pages/App/InsuficientResources';
 import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
@@ -28,11 +29,10 @@ import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm'
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
 import OrderSummary from './pages/LiferayService/OrderSummary';
+import ProjectSelection from './pages/LiferayService/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
-import ProjectSelection from './pages/LiferayService/Project';
 import CDPProvisioning from './pages/Solution/CDPProvisioningForm';
-import ProductPurchaseAccountSelection from './pages/AccountSelection';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -80,7 +80,7 @@ export const productTypeRoutes = {
 			tinyStepsDisplay: true,
 			useCart: true,
 		},
-		routes: (product: DeliveryProduct) => [
+		routes: () => [
 			{
 				element: ProductPurchaseAccountSelection,
 				index: true,

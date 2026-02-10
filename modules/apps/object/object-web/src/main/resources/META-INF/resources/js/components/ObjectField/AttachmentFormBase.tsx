@@ -23,6 +23,14 @@ interface IAttachmentFormBaseProps {
 	values: Partial<ObjectField>;
 }
 
+const depotTooltip = Liferay.Language.get(
+	'when-activated-users-can-define-a-folder-within-cms-files-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
+);
+
+const dmTooltip = Liferay.Language.get(
+	'when-activated-users-can-define-a-folder-within-documents-and-media-to-display-the-files-leave-it-unchecked-for-files-to-be-stored-individually-per-entry'
+);
+
 export function AttachmentFormBase({
 	disabled,
 	error,
@@ -82,8 +90,7 @@ export function AttachmentFormBase({
 		settings.fileSource === 'userComputerToDepotFiles';
 
 	const allowsLibraryStorage =
-		Liferay.FeatureFlags['LPD-74813'] &&
-		(isUserComputerDMUpload || isUserComputerDepotUpload);
+		isUserComputerDMUpload || isUserComputerDepotUpload;
 
 	const attachmentSource = attachmentSources.find(
 		({value}) => value === settings.fileSource
@@ -195,6 +202,9 @@ export function AttachmentFormBase({
 						}}
 						onToggle={toggleShowFilesInLibrary}
 						toggled={!!settings.showFilesInLibrary}
+						tooltip={
+							isUserComputerDMUpload ? dmTooltip : depotTooltip
+						}
 						tooltipAlign="top"
 					/>
 				</ClayForm.Group>

@@ -382,11 +382,15 @@ export function DragAndDropProvider<T>({
 
 				const [first] = [...dragKeys];
 
+				if (!first) {
+					return;
+				}
+
 				setState((state) => ({
 					...state,
 					currentDrag: dragKey,
 					currentDragKeys: dragKeys,
-					currentTarget: first!,
+					currentTarget: first,
 					position: 'top',
 					source: 'keyboard',
 					status: null,

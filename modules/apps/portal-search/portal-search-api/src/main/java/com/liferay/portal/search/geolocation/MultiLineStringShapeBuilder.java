@@ -5,32 +5,48 @@
 
 package com.liferay.portal.search.geolocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface MultiLineStringShapeBuilder {
-
-	public MultiLineStringShapeBuilder addCoordinate(Coordinate coordinate);
+public class MultiLineStringShapeBuilder
+	extends ShapeBuilder<MultiLineStringShapeBuilder> {
 
 	public MultiLineStringShapeBuilder addLineStringShape(
-		LineStringShape lineStringShape);
+		LineStringShape lineStringShape) {
 
-	public MultiLineStringShape build();
+		_lineStringShapes.add(lineStringShape);
 
-	public MultiLineStringShapeBuilder coordinates(Coordinate... coordinates);
+		return this;
+	}
 
-	public MultiLineStringShapeBuilder coordinates(
-		List<Coordinate> coordinates);
+	public MultiLineStringShape build() {
+		return new MultiLineStringShape(coordinates, _lineStringShapes);
+	}
 
 	public MultiLineStringShapeBuilder lineStringShapes(
-		LineStringShape... lineStringShapes);
+		LineStringShape... lineStringShapes) {
+
+		_lineStringShapes.clear();
+
+		Collections.addAll(_lineStringShapes, lineStringShapes);
+
+		return this;
+	}
 
 	public MultiLineStringShapeBuilder lineStringShapes(
-		List<LineStringShape> lineStringShapes);
+		List<LineStringShape> lineStringShapes) {
+
+		_lineStringShapes.clear();
+
+		_lineStringShapes.addAll(lineStringShapes);
+
+		return this;
+	}
+
+	private final List<LineStringShape> _lineStringShapes = new ArrayList<>();
 
 }

@@ -5,7 +5,7 @@
 
 import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
@@ -38,6 +38,7 @@ import {useDispatch, useSelector} from '../contexts/StoreContext';
 import {useGetWidgets} from '../contexts/WidgetsContext';
 import selectCanManageFragmentEntries from '../selectors/selectCanManageFragmentEntries';
 import selectCanUpdatePageStructure from '../selectors/selectCanUpdatePageStructure';
+import selectSegmentsExperienceId from '../selectors/selectSegmentsExperienceId';
 import deleteItem from '../thunks/deleteItem';
 import duplicateItem from '../thunks/duplicateItem';
 import pasteItems from '../thunks/pasteItems';
@@ -49,9 +50,9 @@ import canBeRenamed from '../utils/canBeRenamed';
 import canBeSaved from '../utils/canBeSaved';
 import isCuttable from '../utils/isCuttable';
 import {isMovementValid} from '../utils/isMovementValid';
+import openFragmentCompositionModal from '../utils/openFragmentCompositionModal';
 import toMovementItem from '../utils/toMovementItem';
 import updateItemStyle from '../utils/updateItemStyle';
-import SaveFragmentCompositionModal from './SaveFragmentCompositionModal';
 import ShortcutModal from './ShortcutModal';
 import useUndoRedoActions from './undo/useUndoRedoActions';
 
@@ -73,11 +74,13 @@ export default function ShortcutManager() {
 
 	const {onRedo, onUndo} = useUndoRedoActions();
 
+	const fragments = useSelector((state) => state.fragments);
 	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const masterLayoutData = useSelector(
 		(state) => state.masterLayout?.masterLayoutData
@@ -86,8 +89,6 @@ export default function ShortcutManager() {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
-
-	const [openSaveModal, setOpenSaveModal] = useState(false);
 
 	const getParentItemId = () => {
 		const rootItem = layoutData.items[layoutData.rootItems.main];
@@ -291,7 +292,13 @@ export default function ShortcutManager() {
 				event.code === R_KEY_CODE,
 		},
 		save: {
-			action: () => setOpenSaveModal(true),
+			action: () =>
+				openFragmentCompositionModal({
+					dispatch,
+					fragments,
+					itemId: activeItemIds[0],
+					segmentsExperienceId,
+				}),
 			canBeExecuted: () =>
 				canManageFragments &&
 				!multiSelection &&
@@ -368,12 +375,6 @@ export default function ShortcutManager() {
 
 	return (
 		<>
-			{openSaveModal && (
-				<SaveFragmentCompositionModal
-					onCloseModal={() => setOpenSaveModal(false)}
-				/>
-			)}
-
 			{openShortcutModal && (
 				<ShortcutModal
 					onCloseModal={() => setOpenShortcutModal(false)}

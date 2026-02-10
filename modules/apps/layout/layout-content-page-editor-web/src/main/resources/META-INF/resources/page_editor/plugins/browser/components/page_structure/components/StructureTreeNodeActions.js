@@ -13,7 +13,6 @@ import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
 import {v4 as uuidv4} from 'uuid';
 
-import SaveFragmentCompositionModal from '../../../../../app/components/SaveFragmentCompositionModal';
 import hasDropZoneChild from '../../../../../app/components/layout_data_items/hasDropZoneChild';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
@@ -33,6 +32,7 @@ import {
 	useSelector,
 } from '../../../../../app/contexts/StoreContext';
 import {useGetWidgets} from '../../../../../app/contexts/WidgetsContext';
+import selectSegmentsExperienceId from '../../../../../app/selectors/selectSegmentsExperienceId';
 import deleteItem from '../../../../../app/thunks/deleteItem';
 import duplicateItem from '../../../../../app/thunks/duplicateItem';
 import pasteItems from '../../../../../app/thunks/pasteItems';
@@ -49,6 +49,7 @@ import isCuttable from '../../../../../app/utils/isCuttable';
 import isInputFragment from '../../../../../app/utils/isInputFragment';
 import {isMovementValid} from '../../../../../app/utils/isMovementValid';
 import isStepper from '../../../../../app/utils/isStepper';
+import openFragmentCompositionModal from '../../../../../app/utils/openFragmentCompositionModal';
 import openSwapFragmentModal from '../../../../../app/utils/openSwapFragmentModal';
 import removeFormStep from '../../../../../app/utils/removeFormStep';
 import toMovementItem from '../../../../../app/utils/toMovementItem';
@@ -57,8 +58,6 @@ import useHasRequiredChild from '../../../../../app/utils/useHasRequiredChild';
 
 export default function StructureTreeNodeActions({disabled, item, visible}) {
 	const [active, setActive] = useState(false);
-
-	const [openSaveModal, setOpenSaveModal] = useState(false);
 
 	const alignElementRef = useRef();
 	const dropdownRef = useRef();
@@ -128,26 +127,13 @@ export default function StructureTreeNodeActions({disabled, item, visible}) {
 				onActiveChange={updateActive}
 				ref={dropdownRef}
 			>
-				{active && (
-					<ActionList
-						item={item}
-						setActive={updateActive}
-						setOpenSaveModal={setOpenSaveModal}
-					/>
-				)}
+				{active && <ActionList item={item} setActive={updateActive} />}
 			</ClayDropDown.Menu>
-
-			{openSaveModal && (
-				<SaveFragmentCompositionModal
-					itemId={item.id}
-					onCloseModal={() => setOpenSaveModal(false)}
-				/>
-			)}
 		</>
 	);
 }
 
-const ActionList = ({item, setActive, setOpenSaveModal}) => {
+const ActionList = ({item, setActive}) => {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.id);
 	const {openRulesModal} = useRulesModal();
@@ -162,9 +148,10 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 	const selectItems = selectMultipleItems;
 
-	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
-		(state) => state
-	);
+	const {fragmentEntryLinks, fragments, layoutData, selectedViewportSize} =
+		useSelector((state) => state);
+
+	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
 
 	const layoutDataItem = useSelector(
 		(state) => state.layoutData.items[item.id]
@@ -257,7 +244,13 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		if (canBeSaved(layoutDataItem, layoutData)) {
 			items.push({
-				action: () => setOpenSaveModal(true),
+				action: () =>
+					openFragmentCompositionModal({
+						dispatch,
+						fragments,
+						itemId: item.id,
+						segmentsExperienceId,
+					}),
 				icon: 'disk',
 				label: Liferay.Language.get('save-composition'),
 			});
@@ -419,23 +412,24 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 
 		return items;
 	}, [
-		clipboard,
-		dispatch,
+		layoutDataItem,
+		layoutData,
+		item,
 		fragmentEntryLinks,
 		getWidgets,
-		hasRequiredChild,
-		item,
-		layoutData,
-		layoutDataItem,
 		openRulesModal,
-		selectedViewportSize,
-		selectItem,
-		setClipboard,
-		setEditedNodeId,
-		setOpenSaveModal,
-		setText,
 		isHidden,
+		dispatch,
+		selectedViewportSize,
+		hasRequiredChild,
+		selectItem,
+		setText,
+		fragments,
+		segmentsExperienceId,
+		setClipboard,
 		selectItems,
+		clipboard,
+		setEditedNodeId,
 	]);
 
 	return (

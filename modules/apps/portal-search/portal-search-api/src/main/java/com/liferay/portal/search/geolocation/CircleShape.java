@@ -25,35 +25,7 @@ public class CircleShape extends Shape {
 		return _radiusGeoDistance;
 	}
 
-	public static class CircleShapeBuilderImpl
-		extends ShapeBuilder<CircleShapeBuilder> implements CircleShapeBuilder {
-
-		@Override
-		public CircleShape build() {
-			return new CircleShape(
-				coordinates, _centerCoordinate, _radiusGeoDistance);
-		}
-
-		@Override
-		public CircleShapeBuilder center(Coordinate coordinate) {
-			_centerCoordinate = coordinate;
-
-			return this;
-		}
-
-		@Override
-		public CircleShapeBuilder radius(GeoDistance geoDistance) {
-			_radiusGeoDistance = geoDistance;
-
-			return this;
-		}
-
-		private Coordinate _centerCoordinate;
-		private GeoDistance _radiusGeoDistance;
-
-	}
-
-	private CircleShape(
+	protected CircleShape(
 		List<Coordinate> coordinates, Coordinate centerCoordinate,
 		GeoDistance radiusGeoDistance) {
 

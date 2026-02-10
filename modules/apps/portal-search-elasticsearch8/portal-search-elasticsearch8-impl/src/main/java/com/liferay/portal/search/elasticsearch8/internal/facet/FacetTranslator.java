@@ -226,7 +226,7 @@ public class FacetTranslator {
 				DateRangeFacetProcessor.INSTANCE
 			).put(
 				"com.liferay.portal.search.internal.facet.ModifiedFacetImpl",
-				RangeFacetProcessor.INSTANCE
+				DateRangeFacetProcessor.INSTANCE
 			).put(
 				"com.liferay.portal.search.internal.facet.NestedFacetImpl",
 				NestedFacetProcessor.INSTANCE

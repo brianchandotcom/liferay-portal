@@ -189,7 +189,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 							DDMFieldAttributeTable.INSTANCE.fieldId)
 					);
 
-					List<Runnable> parentWiringRunnables = new ArrayList<>();
+					List<Runnable> runnables = new ArrayList<>();
 
 					for (Object[] values :
 							ddmFieldPersistence.<List<Object[]>>dslQuery(
@@ -223,7 +223,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 										return localDDMFieldInfo;
 									}
 
-									parentWiringRunnables.add(
+									runnables.add(
 										() -> {
 											DDMFieldInfo parentDDMFieldInfo =
 												ddmFieldInfosMap.get(
@@ -264,10 +264,8 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 								languageId));
 					}
 
-					for (Runnable parentWiringRunnable :
-							parentWiringRunnables) {
-
-						parentWiringRunnable.run();
+					for (Runnable runnable : runnables) {
+						runnable.run();
 					}
 
 					return localDDMFieldInfosMaps;
@@ -286,8 +284,8 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				ddmFields, ddmForm);
 		}
 
-		Map<Long, DDMFieldInfo> ddmFieldInfosMap = ddmFieldInfosMaps.getOrDefault(
-			storageId, Collections.emptyMap());
+		Map<Long, DDMFieldInfo> ddmFieldInfosMap =
+			ddmFieldInfosMaps.getOrDefault(storageId, Collections.emptyMap());
 
 		Collection<DDMFieldInfo> ddmFieldInfos = ddmFieldInfosMap.values();
 

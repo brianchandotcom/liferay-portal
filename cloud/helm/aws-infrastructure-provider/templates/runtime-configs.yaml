@@ -42,6 +42,43 @@ kind: DeploymentRuntimeConfig
 metadata:
     annotations:
         argocd.argoproj.io/sync-wave: "-90"
+    name: aws-backup-config
+spec:
+    deploymentTemplate:
+        spec:
+            selector:
+                matchLabels:
+                    pkg.crossplane.io/provider: provider-aws-backup
+            template:
+                metadata:
+                    annotations:
+                        instrumentation.opentelemetry.io/inject-dotnet: "false"
+                        instrumentation.opentelemetry.io/inject-java: "false"
+                        instrumentation.opentelemetry.io/inject-nodejs: "false"
+                        instrumentation.opentelemetry.io/inject-python: "false"
+                        sidecar.opentelemetry.io/inject: "false"
+                    labels:
+                        pkg.crossplane.io/provider: provider-aws-backup
+                spec:
+                    containers:
+                        -   name: package-runtime
+                            resources:
+                                limits:
+                                    memory: 512Mi
+                                requests:
+                                    memory: 128Mi
+                    serviceAccountName: provider-aws-backup
+    serviceAccountTemplate:
+        metadata:
+            annotations:
+                eks.amazonaws.com/role-arn: arn:aws:iam::{{ $accountId }}:role/{{ $cluster }}-provider-aws-backup-role
+            name: provider-aws-backup
+---
+apiVersion: pkg.crossplane.io/v1beta1
+kind: DeploymentRuntimeConfig
+metadata:
+    annotations:
+        argocd.argoproj.io/sync-wave: "-90"
     name: aws-ec2-config
 spec:
     deploymentTemplate:

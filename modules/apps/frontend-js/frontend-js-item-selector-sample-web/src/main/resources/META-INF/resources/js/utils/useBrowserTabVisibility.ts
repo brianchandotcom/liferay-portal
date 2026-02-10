@@ -19,8 +19,6 @@ const getVisibilityChangeEventSnapshot = () => {
 
 export function useBrowserTabVisibility() {
 	const visibilityState = useSyncExternalStore(
-
-		// eslint-disable-next-line react-compiler/react-compiler
 		subscribeVisibilityChangeEvent,
 		getVisibilityChangeEventSnapshot
 	);

@@ -49,7 +49,7 @@ public class SideNavigationDisplayContext {
 	public List<String> getExpandedKeys() {
 		List<String> expandedKeys = new ArrayList<>();
 
-		PanelCategory panelCategory = getPanelCategory();
+		PanelCategory panelCategory = _getPanelCategory();
 
 		PanelCategory childPanelCategory = _getActivePanelCategory(
 			panelCategory.getKey());
@@ -59,7 +59,8 @@ public class SideNavigationDisplayContext {
 		}
 
 		String storedExpandedKeysAsString = SessionClicks.get(
-			_httpServletRequest, getExpandedKeysSessionKey(), StringPool.BLANK);
+			_httpServletRequest, _getExpandedKeysSessionKey(),
+			StringPool.BLANK);
 
 		Collections.addAll(
 			expandedKeys, storedExpandedKeysAsString.split(StringPool.COMMA));
@@ -67,19 +68,8 @@ public class SideNavigationDisplayContext {
 		return expandedKeys;
 	}
 
-	public String getExpandedKeysSessionKey() {
-		PanelCategory panelCategory = getPanelCategory();
-
-		return String.format(
-			_EXPANDED_KEYS_SESSION_KEY, panelCategory.getKey());
-	}
-
-	public PanelCategory getPanelCategory() {
-		return _getActivePanelCategory(PanelCategoryKeys.APPLICATIONS_MENU);
-	}
-
 	public String getPanelCategoryLabel() {
-		PanelCategory panelCategory = getPanelCategory();
+		PanelCategory panelCategory = _getPanelCategory();
 
 		if (panelCategory == null) {
 			return null;
@@ -93,7 +83,7 @@ public class SideNavigationDisplayContext {
 	}
 
 	public Map<String, Object> getProps() throws Exception {
-		PanelCategory panelCategory = getPanelCategory();
+		PanelCategory panelCategory = _getPanelCategory();
 
 		if (panelCategory == null) {
 			return Collections.emptyMap();
@@ -102,7 +92,7 @@ public class SideNavigationDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"expandedKeys", getExpandedKeys()
 		).put(
-			"expandedKeysSessionKey", getExpandedKeysSessionKey()
+			"expandedKeysSessionKey", _getExpandedKeysSessionKey()
 		).put(
 			"items", _getPropsItems()
 		).put(
@@ -119,7 +109,7 @@ public class SideNavigationDisplayContext {
 	public List<VerticalNavItem> getVerticalNavItems() throws Exception {
 		List<VerticalNavItem> verticalNavItems = new ArrayList<>();
 
-		PanelCategory panelCategory = getPanelCategory();
+		PanelCategory panelCategory = _getPanelCategory();
 
 		for (PanelCategory childPanelCategory :
 				_panelCategoryHelper.getChildPanelCategories(
@@ -170,10 +160,28 @@ public class SideNavigationDisplayContext {
 		return null;
 	}
 
+	private String _getExpandedKeysSessionKey() {
+		PanelCategory panelCategory = _getPanelCategory();
+
+		return String.format(
+			_EXPANDED_KEYS_SESSION_KEY, panelCategory.getKey());
+	}
+
+	private PanelCategory _getPanelCategory() {
+		if (_panelCategory != null) {
+			return _panelCategory;
+		}
+
+		_panelCategory = _getActivePanelCategory(
+			PanelCategoryKeys.APPLICATIONS_MENU);
+
+		return _panelCategory;
+	}
+
 	private List<Map<String, Object>> _getPropsItems() throws Exception {
 		List<Map<String, Object>> propsItems = new ArrayList<>();
 
-		PanelCategory panelCategory = getPanelCategory();
+		PanelCategory panelCategory = _getPanelCategory();
 
 		for (PanelCategory childPanelCategory :
 				_panelCategoryHelper.getChildPanelCategories(
@@ -244,8 +252,6 @@ public class SideNavigationDisplayContext {
 
 			VerticalNavItem verticalNavItem = new VerticalNavItem();
 
-			// TODO: use leadingIcon when it gets merged
-
 			verticalNavItem.addIcon(IconItem.of("books", null));
 			verticalNavItem.setId(panelApp.getPortletId());
 			verticalNavItem.setLabel(
@@ -267,6 +273,7 @@ public class SideNavigationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
+	private PanelCategory _panelCategory;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final String _portletId;
 	private final ThemeDisplay _themeDisplay;

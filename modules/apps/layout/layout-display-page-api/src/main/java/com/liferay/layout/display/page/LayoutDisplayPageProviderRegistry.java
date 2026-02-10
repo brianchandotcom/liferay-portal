@@ -13,10 +13,10 @@ import java.util.List;
 public interface LayoutDisplayPageProviderRegistry {
 
 	public <T> LayoutDisplayPageProvider<T>
-		getLayoutDisplayPageProviderByClassName(String className);
+		getLayoutDisplayPageProviderByClassName(long companyId, String className);
 
 	public LayoutDisplayPageProvider<?>
-		getLayoutDisplayPageProviderByURLSeparator(String urlSeparator);
+		getLayoutDisplayPageProviderByURLSeparator(long companyId, String urlSeparator);
 
 	public List<LayoutDisplayPageProvider<?>> getLayoutDisplayPageProviders();
 

@@ -245,7 +245,7 @@ function DisplayPageItemContextualSidebar({
 							onChange={() => {}}
 							onClick={openChooseItemModal}
 							type="text"
-							value={selectedItem.title}
+							value={selectedItem?.title || ''}
 						/>
 					</ClayInput.GroupItem>
 
@@ -325,12 +325,14 @@ function DisplayPageItemContextualSidebar({
 					</ClayForm.Group>
 				))}
 
-			<FormValues
-				localizedNames={translations}
-				namespace={namespace}
-				selectedItem={selectedItem}
-				useCustomName={customNameEnabled}
-			/>
+			{selectedItem && (
+				<FormValues
+					localizedNames={translations}
+					namespace={namespace}
+					selectedItem={selectedItem}
+					useCustomName={customNameEnabled}
+				/>
+			)}
 		</>
 	);
 }

@@ -5,28 +5,34 @@
 
 package com.liferay.portal.search.geolocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface GeometryCollectionShapeBuilder {
+public class GeometryCollectionShapeBuilder
+	extends ShapeBuilder<GeometryCollectionShapeBuilder> {
 
-	public GeometryCollectionShapeBuilder addCoordinate(Coordinate coordinate);
+	public GeometryCollectionShapeBuilder addShape(Shape shape) {
+		_shapes.add(shape);
 
-	public GeometryCollectionShapeBuilder addShape(Shape shape);
+		return this;
+	}
 
-	public GeometryCollectionShape build();
+	public GeometryCollectionShape build() {
+		return new GeometryCollectionShape(coordinates, _shapes);
+	}
 
-	public GeometryCollectionShapeBuilder coordinates(
-		Coordinate... coordinates);
+	public GeometryCollectionShapeBuilder shapes(Shape... shapes) {
+		_shapes.clear();
 
-	public GeometryCollectionShapeBuilder coordinates(
-		List<Coordinate> coordinates);
+		Collections.addAll(_shapes, shapes);
 
-	public GeometryCollectionShapeBuilder shapes(Shape... shapes);
+		return this;
+	}
+
+	private final List<Shape> _shapes = new ArrayList<>();
 
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,52 +22,7 @@ public class MultiLineStringShape extends Shape {
 		return _lineStringShapes;
 	}
 
-	public static class MultiLineStringShapeBuilderImpl
-		extends ShapeBuilder<MultiLineStringShapeBuilder>
-		implements MultiLineStringShapeBuilder {
-
-		@Override
-		public MultiLineStringShapeBuilder addLineStringShape(
-			LineStringShape lineStringShape) {
-
-			_lineStringShapes.add(lineStringShape);
-
-			return this;
-		}
-
-		@Override
-		public MultiLineStringShape build() {
-			return new MultiLineStringShape(coordinates, _lineStringShapes);
-		}
-
-		@Override
-		public MultiLineStringShapeBuilder lineStringShapes(
-			LineStringShape... lineStringShapes) {
-
-			_lineStringShapes.clear();
-
-			Collections.addAll(_lineStringShapes, lineStringShapes);
-
-			return this;
-		}
-
-		@Override
-		public MultiLineStringShapeBuilder lineStringShapes(
-			List<LineStringShape> lineStringShapes) {
-
-			_lineStringShapes.clear();
-
-			_lineStringShapes.addAll(lineStringShapes);
-
-			return this;
-		}
-
-		private final List<LineStringShape> _lineStringShapes =
-			new ArrayList<>();
-
-	}
-
-	private MultiLineStringShape(
+	protected MultiLineStringShape(
 		List<Coordinate> coordinates, List<LineStringShape> lineStringShapes) {
 
 		super(coordinates);

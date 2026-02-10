@@ -3075,6 +3075,12 @@ public class ObjectDefinitionLocalServiceImpl
 			boolean modifiable, boolean system)
 		throws PortalException {
 
+		if (Validator.isNull(className) && modifiable && system) {
+			_handleException(
+				new ObjectDefinitionClassNameException.MustNotBeNull(),
+				"className", className);
+		}
+
 		if (Validator.isNull(className) ||
 			_isUnmodifiableSystemObject(modifiable, system)) {
 

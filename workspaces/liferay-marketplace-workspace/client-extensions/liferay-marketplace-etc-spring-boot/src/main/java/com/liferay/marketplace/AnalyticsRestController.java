@@ -274,7 +274,9 @@ public class AnalyticsRestController extends BaseRestController {
 				retrySignal -> {
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Retry attempt " + retrySignal.totalRetries() + 1);
+							StringBundler.concat(
+								"Retrying ", clientRequest.url(), " attempt: ",
+								retrySignal.totalRetries() + 1));
 					}
 				}
 			)

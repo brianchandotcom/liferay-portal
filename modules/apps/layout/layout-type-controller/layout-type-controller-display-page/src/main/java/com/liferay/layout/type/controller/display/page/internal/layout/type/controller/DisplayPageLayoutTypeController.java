@@ -401,11 +401,9 @@ public class DisplayPageLayoutTypeController
 			}
 		}
 
-		String requestURI = httpServletRequest.getRequestURI();
-
 		String mainPath = _portal.getPathMain();
-
 		String proxyPath = _portal.getPathProxy();
+		String requestURI = httpServletRequest.getRequestURI();
 
 		if (Validator.isNotNull(proxyPath)) {
 			if (!requestURI.startsWith(proxyPath)) {

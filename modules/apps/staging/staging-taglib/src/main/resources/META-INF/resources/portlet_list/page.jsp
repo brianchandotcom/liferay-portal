@@ -33,18 +33,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 			continue;
 		}
 
-		String portletDataHandlerName = portletDataHandler.getName(locale);
+		String portletTitle = portletDataHandler.getTitle(locale);
 
-		if (portletDataHandlerNames.contains(portletDataHandlerName)) {
-			continue;
-		}
-
-		portletDataHandlerNames.add(portletDataHandlerName);
-
-		String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
-
-		if (portletDataHandler.isBatch()) {
-			portletTitle = portletDataHandlerName;
+		if (portletTitle == null) {
+			portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 		}
 
 		PortletDataHandlerControl[] exportMetadataPortletDataHandlerControls = portletDataHandler.getExportMetadataPortletDataHandlerControls();

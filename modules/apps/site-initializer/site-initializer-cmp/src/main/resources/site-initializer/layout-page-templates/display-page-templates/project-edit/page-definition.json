@@ -114,20 +114,10 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "INPUTS-select-from-list"
-															},
-															"fragmentConfig": {
-																"inputFieldId": "ObjectField_r_userToCMPProjectManager_userId",
-																"inputLabel": {
-																	"en_US": "Manager"
-																},
-																"inputReadOnly": false
+																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectManagerAssigneeJSPSectionFragmentRenderer"
 															},
 															"fragmentFields": [
 															],
-															"fragmentStyle": {
-																"marginBottom": "3"
-															},
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -161,20 +151,10 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "INPUTS-select-from-list"
-															},
-															"fragmentConfig": {
-																"inputFieldId": "ObjectField_r_userToCMPProjectSponsor_userId",
-																"inputLabel": {
-																	"en_US": "Sponsor"
-																},
-																"inputReadOnly": false
+																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ViewProjectSponsorAssigneeJSPSectionFragmentRenderer"
 															},
 															"fragmentFields": [
 															],
-															"fragmentStyle": {
-																"marginBottom": "3"
-															},
 															"indexed": true
 														},
 														"type": "Fragment"

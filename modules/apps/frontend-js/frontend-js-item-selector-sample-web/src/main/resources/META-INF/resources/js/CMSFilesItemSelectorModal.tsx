@@ -9,6 +9,7 @@ import {
 	EConfigInURLBehavior,
 	IInlineNotificationComponent,
 	IView,
+	TSort,
 } from '@liferay/frontend-data-set-web';
 import {
 	IItemSelectorModalProps,
@@ -137,26 +138,20 @@ function CMSFilesItemSelectorModal({
 					<ClayButton
 						displayType="info"
 						onClick={() => {
-							const newSort = {
+							const updatedSorts: TSort[] = (context?.sorts || [])
+								.filter((sort) => sort.key !== 'dateCreated')
+								.map((sort) => {
+									sort.active = false;
+
+									return sort;
+								});
+
+							updatedSorts.push({
 								active: true,
-								direction: 'desc' as const,
+								direction: 'desc',
 								key: 'dateCreated',
 								label: Liferay.Language.get('by-creation-date'),
-							};
-
-							let updatedSorts: Array<any> = [];
-
-							updatedSorts = updatedSorts
-								.concat(
-									context?.sorts?.map((sort) => {
-										sort.active = false;
-
-										return sort;
-									})
-								)
-								.filter((sort) => sort.key !== 'dateCreated');
-
-							updatedSorts.push(newSort);
+							});
 
 							context && context.onClearResultsBar();
 							context && context.forceSortsUpdate(updatedSorts);

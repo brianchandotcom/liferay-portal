@@ -6,16 +6,12 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
-function getImage(filename: string) {
-	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/frontend-js-components-web/images/${filename}`;
-}
-
 export default function DragZoneBackground() {
 	return (
 		<div className="text-center text-secondary">
 			<img
-				alt={Liferay.Language.get('drag-and-drop-your-files-or')}
-				src={getImage('drag_drop_image.svg')}
+				alt=""
+				src={`${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathContext()}/o/frontend-js-components-web/images/drag_drop_image.svg`}
 			/>
 
 			<p className="my-2 text-weight-semi-bold">

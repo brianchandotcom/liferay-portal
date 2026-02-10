@@ -742,6 +742,24 @@ public class MarketplaceRestController extends BaseRestController {
 			_sendOrderConfirmationNotification(
 				order, orderEmailDescription, orderButtonText, json);
 		}
+
+		if (Objects.equals(
+				paymentMethod,
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
+			(paymentStatus ==
+				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED)) {
+
+			String paymentEmailDescription =
+				"<p>You are all set 🚀 You <b>can start using all the premium features </b> " +
+					"of your Customer Data Platform right away. " +
+						"Click the button below to access your CDP and enjoy the full experience." +
+							"</p>";
+
+			String paymentButtonText = "Launch LDP";
+
+			_sendPaymentApprovedNotification(
+				order, paymentEmailDescription, paymentButtonText, json);
+		}
 	}
 
 	private void _sendOrderConfirmationNotification(
@@ -923,6 +941,78 @@ public class MarketplaceRestController extends BaseRestController {
 				"[%VAT_FORMATTED%]", order.getTaxAmountFormatted()
 			).put(
 				"[%VAT_NUMBER%]", account.getTaxId()
+			).build());
+	}
+
+	private void _sendPaymentApprovedNotification(
+			Order order, String emailDescription, String buttonText,
+			String json)
+		throws Exception {
+
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
+
+		if (orderItem == null) {
+			return;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Sending payment approved notification for order " +
+					order.getId());
+		}
+
+		Product product = _marketplaceService.getProductBySkuId(
+			orderItem.getSkuId());
+
+		Catalog catalog = _marketplaceService.getCatalog(
+			product.getCatalogId());
+
+		JSONObject jsonObject = new JSONObject(json);
+
+		JSONObject modelCPDefinitionJSONObject = jsonObject.getJSONObject(
+			"modelCPDefinition");
+
+		_marketplaceService.postNotificationQueueEntry(
+			null, "MARKETPLACE-PAYMENT-APPROVED",
+			new HashMapBuilder<String, String>().put(
+				"[%APP_NAME%]",
+				product.getName(
+				).get(
+					"en_US"
+				)
+			).put(
+				"[%CATALOG_NAME%]", catalog.getName()
+			).put(
+				"[%COMMERCEORDER_AUTHOR_EMAIL_ADDRESS%]",
+				order.getCreatorEmailAddress()
+			).put(
+				"[%APP_NET_PRICE%]", order.getSubtotalFormatted()
+			).put(
+				"[%ORDER_ID%]", String.valueOf(order.getId())
+			).put(
+				"[%PRODUCT_THUMBNAIL%]",
+				new URL(
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						product.getThumbnail())
+				).toString(
+				).replaceAll(
+					"(?<=accounts/)-?\\d+(?=/images)", "-1"
+				)
+			).put(
+				"[%EMAIL_DESCRIPTION%]", emailDescription
+			).put(
+				"[%BUTTON_TEXT%]", buttonText
+			).put(
+				"[%APP_TOTAL_PRICE%]", order.getTotalFormatted()
+			).put(
+				"[%APP_VAT%]", order.getTaxAmountFormatted()
+			).put(
+				"[%CPDEFINITION_ID%]",
+				String.valueOf(
+					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
 			).build());
 	}
 

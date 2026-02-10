@@ -153,7 +153,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 	@Override
 	public DDMFormValues getDDMFormValues(DDMForm ddmForm, long storageId) {
-		Map<Long, Map<Long, DDMFieldInfo>> ddmFieldInfoMaps =
+		Map<Long, Map<Long, DDMFieldInfo>> ddmFieldInfosMaps =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
 				() -> ddmFieldPersistence.dslQueryCount(
 					DSLQueryFactoryUtil.count(
@@ -167,7 +167,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 						return Collections.emptyMap();
 					}
 
-					Map<Long, Map<Long, DDMFieldInfo>> localDDMFieldInfoMaps =
+					Map<Long, Map<Long, DDMFieldInfo>> localDDMFieldInfosMaps =
 						new HashMap<>();
 
 					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -206,12 +206,12 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 						String largeAttributeValue = GetterUtil.getString(
 							values[8]);
 
-						Map<Long, DDMFieldInfo> ddmFieldInfoMap =
-							localDDMFieldInfoMaps.computeIfAbsent(
+						Map<Long, DDMFieldInfo> ddmFieldInfosMap =
+							localDDMFieldInfosMaps.computeIfAbsent(
 								localStorageId, key -> new HashMap<>());
 
 						DDMFieldInfo ddmFieldInfo =
-							ddmFieldInfoMap.computeIfAbsent(
+							ddmFieldInfosMap.computeIfAbsent(
 								fieldId,
 								key -> {
 									DDMFieldInfo localDDMFieldInfo =
@@ -226,7 +226,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 									parentWiringRunnables.add(
 										() -> {
 											DDMFieldInfo parentDDMFieldInfo =
-												ddmFieldInfoMap.get(
+												ddmFieldInfosMap.get(
 													parentFieldId);
 
 											if (parentDDMFieldInfo != null) {
@@ -270,10 +270,10 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 						parentWiringRunnable.run();
 					}
 
-					return localDDMFieldInfoMaps;
+					return localDDMFieldInfosMaps;
 				});
 
-		if (ddmFieldInfoMaps == null) {
+		if (ddmFieldInfosMaps == null) {
 			List<DDMField> ddmFields = ddmFieldPersistence.findByStorageId(
 				storageId);
 
@@ -286,10 +286,10 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				ddmFields, ddmForm);
 		}
 
-		Map<Long, DDMFieldInfo> ddmFieldInfoMap = ddmFieldInfoMaps.getOrDefault(
+		Map<Long, DDMFieldInfo> ddmFieldInfosMap = ddmFieldInfosMaps.getOrDefault(
 			storageId, Collections.emptyMap());
 
-		Collection<DDMFieldInfo> ddmFieldInfos = ddmFieldInfoMap.values();
+		Collection<DDMFieldInfo> ddmFieldInfos = ddmFieldInfosMap.values();
 
 		if (ddmFieldInfos.isEmpty()) {
 			return null;
@@ -480,7 +480,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		DDMFieldInfo rootDDMFieldInfo = new DDMFieldInfo(
 			StringPool.BLANK, StringPool.BLANK, false, null);
 
-		Map<String, DDMFieldInfo> ddmFieldInfoMap = LinkedHashMapBuilder.put(
+		Map<String, DDMFieldInfo> ddmFieldInfosMap = LinkedHashMapBuilder.put(
 			StringPool.BLANK, rootDDMFieldInfo
 		).build();
 
@@ -499,11 +499,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 					rootDDMFieldInfo, StringPool.BLANK)));
 
 		_collectDDMFieldInfos(
-			ddmFieldInfoMap, ddmFormFieldsMap,
+			ddmFieldInfosMap, ddmFormFieldsMap,
 			ddmFormValues.getDDMFormFieldValues(), null);
 
 		DDMFormUpdateContext ddmFormUpdateContext = _getDDMFormUpdateContext(
-			ddmFieldInfoMap, ddmFormFieldsMap, storageId);
+			ddmFieldInfosMap, ddmFormFieldsMap, storageId);
 
 		long batchCounter = 0;
 
@@ -632,7 +632,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	}
 
 	private void _collectDDMFieldInfos(
-		Map<String, DDMFieldInfo> ddmFieldInfoMap,
+		Map<String, DDMFieldInfo> ddmFieldInfosMap,
 		Map<String, DDMFormField> ddmFormFieldMap,
 		List<DDMFormFieldValue> ddmFormValues, String parentInstanceId) {
 
@@ -646,7 +646,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 			String instanceId = ddmFormFieldValue.getInstanceId();
 
-			while (ddmFieldInfoMap.containsKey(instanceId)) {
+			while (ddmFieldInfosMap.containsKey(instanceId)) {
 				instanceId =
 					com.liferay.portal.kernel.util.StringUtil.randomString();
 			}
@@ -655,7 +655,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				ddmFormFieldValue.getName(), instanceId,
 				ddmFormField.isLocalizable(), parentInstanceId);
 
-			ddmFieldInfoMap.put(instanceId, ddmFieldInfo);
+			ddmFieldInfosMap.put(instanceId, ddmFieldInfo);
 
 			Value value = ddmFormFieldValue.getValue();
 
@@ -673,7 +673,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			}
 
 			_collectDDMFieldInfos(
-				ddmFieldInfoMap, ddmFormFieldMap,
+				ddmFieldInfosMap, ddmFormFieldMap,
 				ddmFormFieldValue.getNestedDDMFormFieldValues(), instanceId);
 		}
 	}
@@ -766,7 +766,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 	}
 
 	private DDMFormUpdateContext _getDDMFormUpdateContext(
-		Map<String, DDMFieldInfo> ddmFieldInfoMap,
+		Map<String, DDMFieldInfo> ddmFieldInfosMap,
 		Map<String, DDMFormField> ddmFormFieldsMap, long storageId) {
 
 		List<Map.Entry<DDMField, DDMFieldInfo>> ddmFieldEntries =
@@ -782,7 +782,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 				_getKey(ddmField.getFieldName(), ddmField.getInstanceId()),
 				ddmField));
 
-		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfoMap.values()) {
+		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfosMap.values()) {
 			String key = _getKey(
 				ddmFieldInfo._fieldName, ddmFieldInfo._instanceId);
 
@@ -867,7 +867,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			DDMField ddmField = ddmFieldEntry.getKey();
 
 			if (_persistReadOnlyValues(
-					ddmField, ddmFieldAttributeEntries, ddmFieldInfoMap,
+					ddmField, ddmFieldAttributeEntries, ddmFieldInfosMap,
 					ddmFieldsAttributesMap, ddmFormFieldsMap)) {
 
 				continue;
@@ -937,18 +937,18 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		List<DDMFieldAttribute> ddmFieldAttributes, List<DDMField> ddmFields,
 		DDMForm ddmForm) {
 
-		Map<Long, DDMFieldInfo> ddmFieldInfoMap = new LinkedHashMap<>();
+		Map<Long, DDMFieldInfo> ddmFieldInfosMap = new LinkedHashMap<>();
 
 		for (DDMField ddmField : ddmFields) {
 			if (ddmField.getParentFieldId() == 0) {
-				ddmFieldInfoMap.put(
+				ddmFieldInfosMap.put(
 					ddmField.getFieldId(),
 					new DDMFieldInfo(
 						ddmField.getFieldName(), ddmField.getInstanceId(),
 						ddmField.isLocalizable(), null));
 			}
 			else {
-				DDMFieldInfo parentDDMFieldInfo = ddmFieldInfoMap.get(
+				DDMFieldInfo parentDDMFieldInfo = ddmFieldInfosMap.get(
 					ddmField.getParentFieldId());
 
 				DDMFieldInfo ddmFieldInfo = new DDMFieldInfo(
@@ -957,12 +957,12 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 				parentDDMFieldInfo._childDDMFieldInfos.add(ddmFieldInfo);
 
-				ddmFieldInfoMap.put(ddmField.getFieldId(), ddmFieldInfo);
+				ddmFieldInfosMap.put(ddmField.getFieldId(), ddmFieldInfo);
 			}
 		}
 
 		for (DDMFieldAttribute ddmFieldAttribute : ddmFieldAttributes) {
-			DDMFieldInfo ddmFieldInfo = ddmFieldInfoMap.get(
+			DDMFieldInfo ddmFieldInfo = ddmFieldInfosMap.get(
 				ddmFieldAttribute.getFieldId());
 
 			List<DDMFieldAttributeInfo> ddmFieldAttributeInfos =
@@ -995,7 +995,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			rootDDMField = ddmFields.get(0);
 		}
 
-		DDMFieldInfo rootDDMFieldInfo = ddmFieldInfoMap.remove(
+		DDMFieldInfo rootDDMFieldInfo = ddmFieldInfosMap.remove(
 			rootDDMField.getFieldId());
 
 		for (DDMFieldAttributeInfo ddmFieldAttributeInfo :
@@ -1020,7 +1020,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 			}
 		}
 
-		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfoMap.values()) {
+		for (DDMFieldInfo ddmFieldInfo : ddmFieldInfosMap.values()) {
 			if (ddmFieldInfo._parentInstanceId == null) {
 				ddmFormValues.addDDMFormFieldValue(
 					_getDDMFormFieldValue(
@@ -1098,7 +1098,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 		DDMField ddmField,
 		List<Map.Entry<DDMFieldAttribute, DDMFieldAttributeInfo>>
 			ddmFieldAttributeEntries,
-		Map<String, DDMFieldInfo> ddmFieldInfoMap,
+		Map<String, DDMFieldInfo> ddmFieldInfosMap,
 		Map<Long, Map<String, DDMFieldAttribute>> ddmFieldsAttributesMap,
 		Map<String, DDMFormField> ddmFormFieldsMap) {
 
@@ -1130,7 +1130,7 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 					new DDMFieldAttributeInfo(
 						ddmFieldAttribute.getAttributeName(),
 						ddmFieldAttribute.getAttributeValue(),
-						ddmFieldInfoMap.get(ddmField.getInstanceId()),
+						ddmFieldInfosMap.get(ddmField.getInstanceId()),
 						ddmFieldAttribute.getLanguageId())));
 		}
 

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
+import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.MultiPolygonShape;
 import com.liferay.portal.search.geolocation.MultiPolygonShapeBuilder;
 import com.liferay.portal.search.geolocation.Orientation;
@@ -20,8 +21,7 @@ import java.util.List;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class MultiPolygonShapeImpl
-	extends BaseShapeImpl implements MultiPolygonShape {
+public class MultiPolygonShapeImpl extends MultiPolygonShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -35,7 +35,7 @@ public class MultiPolygonShapeImpl
 
 	@Override
 	public List<PolygonShape> getPolygonShapes() {
-		return Collections.unmodifiableList(_polygonShapes);
+		return _polygonShapes;
 	}
 
 	public static class MultiPolygonShapeBuilderImpl
@@ -46,21 +46,20 @@ public class MultiPolygonShapeImpl
 		public MultiPolygonShapeBuilder addPolygonShape(
 			PolygonShape polygonShape) {
 
-			_multiPolygonShapeImpl._polygonShapes.add(polygonShape);
+			_polygonShapes.add(polygonShape);
 
 			return this;
 		}
 
 		@Override
 		public MultiPolygonShape build() {
-			_multiPolygonShapeImpl.setCoordinates(coordinates);
-
-			return new MultiPolygonShapeImpl(_multiPolygonShapeImpl);
+			return new MultiPolygonShapeImpl(
+				coordinates, _orientation, _polygonShapes);
 		}
 
 		@Override
 		public MultiPolygonShapeBuilder orientation(Orientation orientation) {
-			_multiPolygonShapeImpl._orientation = orientation;
+			_orientation = orientation;
 
 			return this;
 		}
@@ -69,33 +68,29 @@ public class MultiPolygonShapeImpl
 		public MultiPolygonShapeBuilder polygonShapes(
 			PolygonShape... polygonShapes) {
 
-			_multiPolygonShapeImpl._polygonShapes.clear();
+			_polygonShapes.clear();
 
-			Collections.addAll(
-				_multiPolygonShapeImpl._polygonShapes, polygonShapes);
+			Collections.addAll(_polygonShapes, polygonShapes);
 
 			return this;
 		}
 
-		private final MultiPolygonShapeImpl _multiPolygonShapeImpl =
-			new MultiPolygonShapeImpl();
+		private Orientation _orientation;
+		private final List<PolygonShape> _polygonShapes = new ArrayList<>();
 
 	}
 
-	protected MultiPolygonShapeImpl() {
+	private MultiPolygonShapeImpl(
+		List<Coordinate> coordinates, Orientation orientation,
+		List<PolygonShape> polygonShapes) {
+
+		super(coordinates);
+
+		_orientation = orientation;
+		_polygonShapes = Collections.unmodifiableList(polygonShapes);
 	}
 
-	protected MultiPolygonShapeImpl(
-		MultiPolygonShapeImpl multiPolygonShapeImpl) {
-
-		_orientation = multiPolygonShapeImpl._orientation;
-
-		_polygonShapes.addAll(multiPolygonShapeImpl._polygonShapes);
-
-		setCoordinates(multiPolygonShapeImpl.getCoordinates());
-	}
-
-	private Orientation _orientation;
-	private final List<PolygonShape> _polygonShapes = new ArrayList<>();
+	private final Orientation _orientation;
+	private final List<PolygonShape> _polygonShapes;
 
 }

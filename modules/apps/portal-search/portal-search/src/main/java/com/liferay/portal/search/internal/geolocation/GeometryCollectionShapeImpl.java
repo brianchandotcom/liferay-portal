@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
+import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.GeometryCollectionShape;
 import com.liferay.portal.search.geolocation.GeometryCollectionShapeBuilder;
 import com.liferay.portal.search.geolocation.Shape;
@@ -19,8 +20,7 @@ import java.util.List;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class GeometryCollectionShapeImpl
-	extends BaseShapeImpl implements GeometryCollectionShape {
+public class GeometryCollectionShapeImpl extends GeometryCollectionShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -29,7 +29,7 @@ public class GeometryCollectionShapeImpl
 
 	@Override
 	public List<Shape> getShapes() {
-		return Collections.unmodifiableList(_shapes);
+		return _shapes;
 	}
 
 	public static class GeometryCollectionShapeBuilderImpl
@@ -38,44 +38,37 @@ public class GeometryCollectionShapeImpl
 
 		@Override
 		public GeometryCollectionShapeBuilder addShape(Shape shape) {
-			_geometryCollectionShapeImpl._shapes.add(shape);
+			_shapes.add(shape);
 
 			return this;
 		}
 
 		@Override
 		public GeometryCollectionShape build() {
-			_geometryCollectionShapeImpl.setCoordinates(coordinates);
-
-			return new GeometryCollectionShapeImpl(
-				_geometryCollectionShapeImpl);
+			return new GeometryCollectionShapeImpl(coordinates, _shapes);
 		}
 
 		@Override
 		public GeometryCollectionShapeBuilder shapes(Shape... shapes) {
-			_geometryCollectionShapeImpl._shapes.clear();
+			_shapes.clear();
 
-			Collections.addAll(_geometryCollectionShapeImpl._shapes, shapes);
+			Collections.addAll(_shapes, shapes);
 
 			return this;
 		}
 
-		private final GeometryCollectionShapeImpl _geometryCollectionShapeImpl =
-			new GeometryCollectionShapeImpl();
+		private final List<Shape> _shapes = new ArrayList<>();
 
 	}
 
-	protected GeometryCollectionShapeImpl() {
+	private GeometryCollectionShapeImpl(
+		List<Coordinate> coordinates, List<Shape> shapes) {
+
+		super(coordinates);
+
+		_shapes = Collections.unmodifiableList(shapes);
 	}
 
-	protected GeometryCollectionShapeImpl(
-		GeometryCollectionShapeImpl geometryCollectionShapeImpl) {
-
-		_shapes.addAll(geometryCollectionShapeImpl._shapes);
-
-		setCoordinates(geometryCollectionShapeImpl.getCoordinates());
-	}
-
-	private final List<Shape> _shapes = new ArrayList<>();
+	private final List<Shape> _shapes;
 
 }

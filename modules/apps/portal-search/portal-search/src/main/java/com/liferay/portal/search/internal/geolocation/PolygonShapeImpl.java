@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
+import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.Orientation;
 import com.liferay.portal.search.geolocation.PolygonShape;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class PolygonShapeImpl extends BaseShapeImpl implements PolygonShape {
+public class PolygonShapeImpl extends PolygonShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -29,7 +30,7 @@ public class PolygonShapeImpl extends BaseShapeImpl implements PolygonShape {
 
 	@Override
 	public List<LineStringShape> getHoles() {
-		return Collections.unmodifiableList(_holeLineStringShapes);
+		return _holeLineStringShapes;
 	}
 
 	@Override
@@ -48,62 +49,62 @@ public class PolygonShapeImpl extends BaseShapeImpl implements PolygonShape {
 
 		@Override
 		public PolygonShapeBuilder addHole(LineStringShape lineStringShape) {
-			_polygonShapeImpl._holeLineStringShapes.add(lineStringShape);
+			_holeLineStringShapes.add(lineStringShape);
 
 			return this;
 		}
 
 		@Override
 		public PolygonShape build() {
-			_polygonShapeImpl.setCoordinates(coordinates);
-
-			return new PolygonShapeImpl(_polygonShapeImpl);
+			return new PolygonShapeImpl(
+				coordinates, _holeLineStringShapes, _orientation, _shell);
 		}
 
 		@Override
 		public PolygonShapeBuilder holes(LineStringShape... lineStringShapes) {
-			_polygonShapeImpl._holeLineStringShapes.clear();
+			_holeLineStringShapes.clear();
 
-			Collections.addAll(
-				_polygonShapeImpl._holeLineStringShapes, lineStringShapes);
+			Collections.addAll(_holeLineStringShapes, lineStringShapes);
 
 			return this;
 		}
 
 		@Override
 		public PolygonShapeBuilder orientation(Orientation orientation) {
-			_polygonShapeImpl._orientation = orientation;
+			_orientation = orientation;
 
 			return this;
 		}
 
 		@Override
 		public PolygonShapeBuilder shell(LineStringShape shell) {
-			_polygonShapeImpl._shell = shell;
+			_shell = shell;
 
 			return this;
 		}
 
-		private final PolygonShapeImpl _polygonShapeImpl =
-			new PolygonShapeImpl();
+		private final List<LineStringShape> _holeLineStringShapes =
+			new ArrayList<>();
+		private Orientation _orientation;
+		private LineStringShape _shell;
 
 	}
 
-	protected PolygonShapeImpl() {
+	private PolygonShapeImpl(
+		List<Coordinate> coordinates,
+		List<LineStringShape> holeLineStringShapes, Orientation orientation,
+		LineStringShape shell) {
+
+		super(coordinates);
+
+		_holeLineStringShapes = Collections.unmodifiableList(
+			holeLineStringShapes);
+		_orientation = orientation;
+		_shell = shell;
 	}
 
-	protected PolygonShapeImpl(PolygonShapeImpl polygonShapeImpl) {
-		_orientation = polygonShapeImpl._orientation;
-		_shell = polygonShapeImpl._shell;
-
-		_holeLineStringShapes.addAll(polygonShapeImpl._holeLineStringShapes);
-
-		setCoordinates(polygonShapeImpl.getCoordinates());
-	}
-
-	private final List<LineStringShape> _holeLineStringShapes =
-		new ArrayList<>();
-	private Orientation _orientation;
-	private LineStringShape _shell;
+	private final List<LineStringShape> _holeLineStringShapes;
+	private final Orientation _orientation;
+	private final LineStringShape _shell;
 
 }

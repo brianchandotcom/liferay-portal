@@ -11,11 +11,13 @@ import com.liferay.portal.search.geolocation.EnvelopeShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
 
+import java.util.List;
+
 /**
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class EnvelopeShapeImpl extends BaseShapeImpl implements EnvelopeShape {
+public class EnvelopeShapeImpl extends EnvelopeShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -38,41 +40,40 @@ public class EnvelopeShapeImpl extends BaseShapeImpl implements EnvelopeShape {
 
 		@Override
 		public EnvelopeShapeBuilder bottomRight(Coordinate coordinate) {
-			_envelopeShapeImpl._bottomRightCoordinate = coordinate;
+			_bottomRightCoordinate = coordinate;
 
 			return this;
 		}
 
 		@Override
 		public EnvelopeShape build() {
-			_envelopeShapeImpl.setCoordinates(coordinates);
-
-			return new EnvelopeShapeImpl(_envelopeShapeImpl);
+			return new EnvelopeShapeImpl(
+				coordinates, _bottomRightCoordinate, _topLeftCoordinate);
 		}
 
 		@Override
 		public EnvelopeShapeBuilder topLeft(Coordinate coordinate) {
-			_envelopeShapeImpl._topLeftCoordinate = coordinate;
+			_topLeftCoordinate = coordinate;
 
 			return this;
 		}
 
-		private final EnvelopeShapeImpl _envelopeShapeImpl =
-			new EnvelopeShapeImpl();
+		private Coordinate _bottomRightCoordinate;
+		private Coordinate _topLeftCoordinate;
 
 	}
 
-	protected EnvelopeShapeImpl() {
+	private EnvelopeShapeImpl(
+		List<Coordinate> coordinates, Coordinate bottomRightCoordinate,
+		Coordinate topLeftCoordinate) {
+
+		super(coordinates);
+
+		_bottomRightCoordinate = bottomRightCoordinate;
+		_topLeftCoordinate = topLeftCoordinate;
 	}
 
-	protected EnvelopeShapeImpl(EnvelopeShapeImpl envelopeShapeImpl) {
-		_bottomRightCoordinate = envelopeShapeImpl._bottomRightCoordinate;
-		_topLeftCoordinate = envelopeShapeImpl._topLeftCoordinate;
-
-		setCoordinates(envelopeShapeImpl.getCoordinates());
-	}
-
-	private Coordinate _bottomRightCoordinate;
-	private Coordinate _topLeftCoordinate;
+	private final Coordinate _bottomRightCoordinate;
+	private final Coordinate _topLeftCoordinate;
 
 }

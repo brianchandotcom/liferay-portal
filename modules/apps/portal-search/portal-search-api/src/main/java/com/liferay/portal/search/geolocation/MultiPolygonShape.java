@@ -13,10 +13,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MultiPolygonShape extends Shape {
+public abstract class MultiPolygonShape extends Shape {
 
-	public Orientation getOrientation();
+	public abstract Orientation getOrientation();
 
-	public List<PolygonShape> getPolygonShapes();
+	public abstract List<PolygonShape> getPolygonShapes();
+
+	protected MultiPolygonShape(List<Coordinate> coordinates) {
+		super(coordinates);
+	}
 
 }

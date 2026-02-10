@@ -13,8 +13,12 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeometryCollectionShape extends Shape {
+public abstract class GeometryCollectionShape extends Shape {
 
-	public List<Shape> getShapes();
+	public abstract List<Shape> getShapes();
+
+	protected GeometryCollectionShape(List<Coordinate> coordinates) {
+		super(coordinates);
+	}
 
 }

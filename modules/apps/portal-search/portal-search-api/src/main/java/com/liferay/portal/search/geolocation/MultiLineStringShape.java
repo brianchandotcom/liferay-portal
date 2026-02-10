@@ -13,8 +13,12 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MultiLineStringShape extends Shape {
+public abstract class MultiLineStringShape extends Shape {
 
-	public List<LineStringShape> getLineStringShapes();
+	public abstract List<LineStringShape> getLineStringShapes();
+
+	protected MultiLineStringShape(List<Coordinate> coordinates) {
+		super(coordinates);
+	}
 
 }

@@ -12,10 +12,12 @@ import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
 
+import java.util.List;
+
 /**
  * @author Michael C. Han
  */
-public class CircleShapeImpl extends BaseShapeImpl implements CircleShape {
+public class CircleShapeImpl extends CircleShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -37,40 +39,40 @@ public class CircleShapeImpl extends BaseShapeImpl implements CircleShape {
 
 		@Override
 		public CircleShape build() {
-			_circleShapeImpl.setCoordinates(coordinates);
-
-			return new CircleShapeImpl(_circleShapeImpl);
+			return new CircleShapeImpl(
+				coordinates, _centerCoordinate, _radiusGeoDistance);
 		}
 
 		@Override
 		public CircleShapeBuilder center(Coordinate coordinate) {
-			_circleShapeImpl._centerCoordinate = coordinate;
+			_centerCoordinate = coordinate;
 
 			return this;
 		}
 
 		@Override
 		public CircleShapeBuilder radius(GeoDistance geoDistance) {
-			_circleShapeImpl._radiusGeoDistance = geoDistance;
+			_radiusGeoDistance = geoDistance;
 
 			return this;
 		}
 
-		private final CircleShapeImpl _circleShapeImpl = new CircleShapeImpl();
+		private Coordinate _centerCoordinate;
+		private GeoDistance _radiusGeoDistance;
 
 	}
 
-	protected CircleShapeImpl() {
+	private CircleShapeImpl(
+		List<Coordinate> coordinates, Coordinate centerCoordinate,
+		GeoDistance radiusGeoDistance) {
+
+		super(coordinates);
+
+		_centerCoordinate = centerCoordinate;
+		_radiusGeoDistance = radiusGeoDistance;
 	}
 
-	protected CircleShapeImpl(CircleShapeImpl circleShapeImpl) {
-		_centerCoordinate = circleShapeImpl._centerCoordinate;
-		_radiusGeoDistance = circleShapeImpl._radiusGeoDistance;
-
-		setCoordinates(circleShapeImpl.getCoordinates());
-	}
-
-	private Coordinate _centerCoordinate;
-	private GeoDistance _radiusGeoDistance;
+	private final Coordinate _centerCoordinate;
+	private final GeoDistance _radiusGeoDistance;
 
 }

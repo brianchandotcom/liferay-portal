@@ -13,12 +13,16 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface PolygonShape extends Shape {
+public abstract class PolygonShape extends Shape {
 
-	public List<LineStringShape> getHoles();
+	public abstract List<LineStringShape> getHoles();
 
-	public Orientation getOrientation();
+	public abstract Orientation getOrientation();
 
-	public LineStringShape getShell();
+	public abstract LineStringShape getShell();
+
+	protected PolygonShape(List<Coordinate> coordinates) {
+		super(coordinates);
+	}
 
 }

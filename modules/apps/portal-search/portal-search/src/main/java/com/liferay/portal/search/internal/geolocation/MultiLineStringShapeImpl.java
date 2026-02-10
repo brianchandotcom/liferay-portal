@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
+import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.MultiLineStringShape;
 import com.liferay.portal.search.geolocation.MultiLineStringShapeBuilder;
@@ -19,8 +20,7 @@ import java.util.List;
  * @author Michael C. Han
  * @author André de Oliveira
  */
-public class MultiLineStringShapeImpl
-	extends BaseShapeImpl implements MultiLineStringShape {
+public class MultiLineStringShapeImpl extends MultiLineStringShape {
 
 	@Override
 	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
@@ -29,7 +29,7 @@ public class MultiLineStringShapeImpl
 
 	@Override
 	public List<LineStringShape> getLineStringShapes() {
-		return Collections.unmodifiableList(_lineStringShapes);
+		return _lineStringShapes;
 	}
 
 	public static class MultiLineStringShapeBuilderImpl
@@ -40,26 +40,23 @@ public class MultiLineStringShapeImpl
 		public MultiLineStringShapeBuilder addLineStringShape(
 			LineStringShape lineStringShape) {
 
-			_multiLineStringShapeImpl._lineStringShapes.add(lineStringShape);
+			_lineStringShapes.add(lineStringShape);
 
 			return this;
 		}
 
 		@Override
 		public MultiLineStringShape build() {
-			_multiLineStringShapeImpl.setCoordinates(coordinates);
-
-			return new MultiLineStringShapeImpl(_multiLineStringShapeImpl);
+			return new MultiLineStringShapeImpl(coordinates, _lineStringShapes);
 		}
 
 		@Override
 		public MultiLineStringShapeBuilder lineStringShapes(
 			LineStringShape... lineStringShapes) {
 
-			_multiLineStringShapeImpl._lineStringShapes.clear();
+			_lineStringShapes.clear();
 
-			Collections.addAll(
-				_multiLineStringShapeImpl._lineStringShapes, lineStringShapes);
+			Collections.addAll(_lineStringShapes, lineStringShapes);
 
 			return this;
 		}
@@ -68,30 +65,26 @@ public class MultiLineStringShapeImpl
 		public MultiLineStringShapeBuilder lineStringShapes(
 			List<LineStringShape> lineStringShapes) {
 
-			_multiLineStringShapeImpl._lineStringShapes.clear();
+			_lineStringShapes.clear();
 
-			_multiLineStringShapeImpl._lineStringShapes.addAll(
-				lineStringShapes);
+			_lineStringShapes.addAll(lineStringShapes);
 
 			return this;
 		}
 
-		private final MultiLineStringShapeImpl _multiLineStringShapeImpl =
-			new MultiLineStringShapeImpl();
+		private final List<LineStringShape> _lineStringShapes =
+			new ArrayList<>();
 
 	}
 
-	protected MultiLineStringShapeImpl() {
+	private MultiLineStringShapeImpl(
+		List<Coordinate> coordinates, List<LineStringShape> lineStringShapes) {
+
+		super(coordinates);
+
+		_lineStringShapes = Collections.unmodifiableList(lineStringShapes);
 	}
 
-	protected MultiLineStringShapeImpl(
-		MultiLineStringShapeImpl multiLineStringShapeImpl) {
-
-		_lineStringShapes.addAll(multiLineStringShapeImpl._lineStringShapes);
-
-		setCoordinates(multiLineStringShapeImpl.getCoordinates());
-	}
-
-	private final List<LineStringShape> _lineStringShapes = new ArrayList<>();
+	private final List<LineStringShape> _lineStringShapes;
 
 }

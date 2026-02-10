@@ -85,6 +85,7 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByURLSeparator(
+					objectDefinition2.getCompanyId(),
 					FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY);
 
 		Assert.assertEquals(

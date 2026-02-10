@@ -163,7 +163,7 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 				layoutDisplayPageObjectProvider);
 			httpServletRequest.setAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,
-				_getLayoutDisplayPageProvider(friendlyURL));
+				_getLayoutDisplayPageProvider(companyId, friendlyURL));
 
 			AssetEntry assetEntry = _getAssetEntry(
 				layoutDisplayPageObjectProvider);
@@ -453,14 +453,15 @@ public class CPDefinitionAssetDisplayPageFriendlyURLResolver
 	}
 
 	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws PortalException {
 
 		String urlSeparator = _getURLSeparator(friendlyURL);
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByURLSeparator(urlSeparator);
+				getLayoutDisplayPageProviderByURLSeparator(
+					companyId, urlSeparator);
 
 		if (layoutDisplayPageProvider == null) {
 			throw new PortalException(

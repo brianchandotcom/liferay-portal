@@ -5,9 +5,16 @@
 
 package com.liferay.ai.hub.web.internal.display.context;
 
+import com.liferay.account.constants.AccountConstants;
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -15,6 +22,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.constants.WorkflowPortletKeys;
 
@@ -23,7 +31,9 @@ import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Davyson Melo
@@ -31,8 +41,12 @@ import java.util.Map;
 public class EditAgentDefinitionDisplayContext {
 
 	public EditAgentDefinitionDisplayContext(
+		AccountEntryLocalService accountEntryLocalService,
+		GroupLocalService groupLocalService,
 		HttpServletRequest httpServletRequest, Portal portal) {
 
+		_accountEntryLocalService = accountEntryLocalService;
+		_groupLocalService = groupLocalService;
 		_httpServletRequest = httpServletRequest;
 		_portal = portal;
 
@@ -46,9 +60,6 @@ public class EditAgentDefinitionDisplayContext {
 		String portalURL = company.getPortalURL(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
-		String workflowDefinitionName = _httpServletRequest.getParameter(
-			"workflowDefinitionName");
-
 		return HashMapBuilder.<String, Object>put(
 			"backURL", portalURL + "/web/ai-hub/agents"
 		).put(
@@ -57,6 +68,9 @@ public class EditAgentDefinitionDisplayContext {
 		).put(
 			"readonly",
 			() -> {
+				String workflowDefinitionName =
+					_httpServletRequest.getParameter("workflowDefinitionName");
+
 				if ((workflowDefinitionName != null) &&
 					ArrayUtil.contains(
 						WorkflowDefinitionConstants.
@@ -74,22 +88,19 @@ public class EditAgentDefinitionDisplayContext {
 				String namespace = _portal.getPortletNamespace(
 					WorkflowPortletKeys.KALEO_DESIGNER);
 
-				String url = StringBundler.concat(
-					portalURL,
-					PropsValues.
-						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
-					GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
-					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
-
-				if (workflowDefinitionName != null) {
-					url = HttpComponentsUtil.addParameter(
-						url, namespace + "name", workflowDefinitionName);
-				}
+				String url = _addGroupExternalReferenceCodeParameter(
+					namespace,
+					StringBundler.concat(
+						portalURL,
+						PropsValues.
+							LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+						GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
+						PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
 
 				return HttpComponentsUtil.addParameters(
-					url, "p_p_id", WorkflowPortletKeys.KALEO_DESIGNER,
-					"p_p_lifecycle", "0", "p_p_state",
-					WindowState.MAXIMIZED.toString(), "p_p_mode",
+					_addNameParameter(namespace, url), "p_p_id",
+					WorkflowPortletKeys.KALEO_DESIGNER, "p_p_lifecycle", "0",
+					"p_p_state", WindowState.MAXIMIZED.toString(), "p_p_mode",
 					PortletMode.VIEW.toString(), namespace + "mvcPath",
 					"/designer/edit_workflow_definition.jsp",
 					namespace + "redirect",
@@ -101,6 +112,60 @@ public class EditAgentDefinitionDisplayContext {
 		).build();
 	}
 
+	private String _addGroupExternalReferenceCodeParameter(
+			String namespace, String url)
+		throws PortalException {
+
+		List<AccountEntry> accountEntries =
+			_accountEntryLocalService.getUserAccountEntries(
+				_themeDisplay.getUserId(),
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT, null,
+				AccountConstants.ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES,
+				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		if (accountEntries.isEmpty()) {
+			return url;
+		}
+
+		AccountEntry accountEntry = null;
+
+		for (AccountEntry tempAccountEntry : accountEntries) {
+			if (!Objects.equals(
+					tempAccountEntry.getExternalReferenceCode(), "L_AI_HUB")) {
+
+				accountEntry = tempAccountEntry;
+
+				break;
+			}
+		}
+
+		if (accountEntry == null) {
+			return url;
+		}
+
+		Group group = _groupLocalService.getGroup(
+			accountEntry.getAccountEntryGroupId());
+
+		return HttpComponentsUtil.addParameter(
+			url, namespace + "groupExternalReferenceCode",
+			group.getExternalReferenceCode());
+	}
+
+	private String _addNameParameter(String namespace, String url) {
+		String workflowDefinitionName = _httpServletRequest.getParameter(
+			"workflowDefinitionName");
+
+		if (workflowDefinitionName == null) {
+			return url;
+		}
+
+		return HttpComponentsUtil.addParameter(
+			url, namespace + "name", workflowDefinitionName);
+	}
+
+	private final AccountEntryLocalService _accountEntryLocalService;
+	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Portal _portal;
 	private final ThemeDisplay _themeDisplay;

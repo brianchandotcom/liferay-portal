@@ -142,6 +142,12 @@ public class KaleoDesignerDisplayContext {
 			_actionExecutorManager.getFunctionActionExecutorKeys());
 	}
 
+	public String getGroupExternalReferenceCode(RenderRequest renderRequest) {
+		RenderParameters renderParameters = renderRequest.getRenderParameters();
+
+		return renderParameters.getValue("groupExternalReferenceCode");
+	}
+
 	public KaleoDefinition getKaleoDefinition(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 

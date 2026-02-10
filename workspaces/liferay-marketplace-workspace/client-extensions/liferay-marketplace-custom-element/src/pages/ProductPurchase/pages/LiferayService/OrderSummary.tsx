@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
-import ProductPurchaseCDP from '../../services/ProductPurchaseCDP';
-import i18n from '../../../../i18n';
-import {Section} from '../../../../components/Section/Section';
-import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 import ProductPurchase from '../../../../components/ProductPurchase';
-import {formatCurrency} from '../../../../utils/currencies';
+import {Section} from '../../../../components/Section/Section';
+import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../schema/zod';
+import {formatCurrency} from '../../../../utils/currencies';
+import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
+import ProductPurchaseCDP from '../../services/ProductPurchaseCDP';
+import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 
 const OrderSummary = () => {
 	const {

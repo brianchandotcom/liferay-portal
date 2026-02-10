@@ -4,7 +4,6 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
@@ -18,10 +17,10 @@ import Loading from '../../../../components/Loading';
 import ProductPurchase from '../../../../components/ProductPurchase';
 import Select from '../../../../components/Select/Select';
 import useListTypeDefinition from '../../../../hooks/useListTypeDefinition';
+import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
-import i18n from '../../../../i18n';
 
 type MultiSelectValue = {
 	key: string;
@@ -113,35 +112,29 @@ const CDPProvisioning = () => {
 		useState('');
 
 	const {
+		actions: {nextStep},
 		product,
 		productPurchaseCart,
 		selectedAccount,
 		setForm,
-		actions: {nextStep},
 	} = useProductPurchaseOutletContext();
 
-	const {data: acRegionsResponse} = useListTypeDefinition('AC-REGIONS');
+	const {data: acRegionsResponse, isLoading} =
+		useListTypeDefinition('AC-REGIONS');
 
 	const acRegions = acRegionsResponse?.listTypeEntries ?? [];
 
 	const accountKey = selectedAccount.externalReferenceCode;
 
-	const error = {info: {error: null}};
-	const isLoading = false;
-
 	const {formState, handleSubmit, register, setValue, watch} = useForm<
 		z.infer<typeof zodSchema.cdpProvisioning>
 	>({
 		defaultValues: {
-			_refAllowedEmailDomains: [],
 			_refIncidentReportContacts: [],
 			acceptTerms: false,
-			allowedEmailDomains: [],
 			dataCenterLocation: acRegions[0]?.externalReferenceCode,
 			friendlyWorkspaceURL: '',
 			incidentReportContacts: [],
-			productName: 'Basic Plan',
-			timezone: 'utc',
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},
 		mode: 'all',
@@ -158,43 +151,8 @@ const CDPProvisioning = () => {
 		nextStep();
 	};
 
-	const emptyState = useMemo(() => {
-		const errorInfo = error.info;
-
-		if (!error || !errorInfo?.error) {
-			return null;
-		}
-
-		return error
-			? emptyStateMessages[
-					errorInfo?.error as keyof typeof emptyStateMessages
-				] || emptyStateMessages.UNABLE_TO_PROVISION
-			: null;
-	}, [error]);
-
 	if (isLoading || !accountKey) {
 		return <Loading />;
-	}
-
-	if (emptyState) {
-		return (
-			<div
-				className="align-items-center d-flex flex-column justify-content-center px-2 text-center"
-				id="analytics-form-empty-state"
-			>
-				<div className="analytics-form-alert">
-					<ClayIcon
-						color="#0B5FFF"
-						fontSize={32}
-						symbol="warning-full"
-					/>
-				</div>
-
-				<h3 className="mb-4">{emptyState.title}</h3>
-
-				<small>{emptyState.description}</small>
-			</div>
-		);
 	}
 
 	return (
@@ -231,32 +189,11 @@ const CDPProvisioning = () => {
 				boldLabel
 				helpText={`Select a server to store your data. This could have implications to your organization's policy on user data storage.`}
 				label="Data Center Location"
-				options={[{key: 'internal', name: 'Internal'}]}
+				options={acRegions.map(({externalReferenceCode, name}) => ({
+					key: externalReferenceCode,
+					name,
+				}))}
 				required
-			/>
-
-			<Select
-				{...register('timezone')}
-				boldLabel
-				helpText={`Select a server to store your data. This could have implications to your organization's policy on user data storage.`}
-				label="Timezone"
-				options={[{key: 'utc', name: 'UTC'}]}
-				required
-			/>
-
-			<Input
-				{...register('friendlyWorkspaceURL')}
-				helpMessage={`You can only set your friendly workspace URL once.
-https://analytics-stg.liferay.com/workspace`}
-				label="Set a Friendly Workspace URL"
-				prependGroupItemSymbol="/"
-			/>
-
-			<Input
-				{...register('allowedEmailDomains')}
-				helpMessage="Anyone with an email address at these domains can request access to your workspace"
-				label="Allowed Email Domains"
-				prependGroupItemSymbol="@"
 			/>
 
 			<h3 className="mt-4 sheet-subtitle">Security</h3>

@@ -46,12 +46,12 @@ export type ProductPurchaseOutletContext = {
 		nextStep: () => void;
 		previousStep: () => void;
 	};
+	form: Record<string, unknown>;
 	handlePurchase: (
 		ProductPurchase: ProductPurchaseService | typeof ProductPurchaseService,
 		cart?: Cart | undefined,
 		cartOptions?: any
 	) => Promise<void>;
-	form: Record<string, unknown>;
 	isSingleAccount: boolean;
 	marketplaceDeliveryProduct: MarketplaceDeliveryProduct;
 	product: DeliveryProduct;

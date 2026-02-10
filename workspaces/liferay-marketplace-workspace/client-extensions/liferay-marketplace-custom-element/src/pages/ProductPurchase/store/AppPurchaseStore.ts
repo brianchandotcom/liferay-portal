@@ -23,7 +23,7 @@ export const productPurchaseStore = createStore({
 		account: {
 			taxId: '',
 		},
-		koroneikiProject: null as unknown as KoroneikiChildAccounts,
+		koroneikiProject: null as KoroneikiChildAccounts | null,
 		licenseType: null as unknown as LicenseType,
 		payment: {
 			billingAddress: {
@@ -71,7 +71,7 @@ export const productPurchaseStore = createStore({
 			}),
 		},
 
-		setKoreoneikiProject: {
+		setKoroneikiProject: {
 			koroneikiProject: (
 				_,
 				event: {koroneikiProject: KoroneikiChildAccounts}

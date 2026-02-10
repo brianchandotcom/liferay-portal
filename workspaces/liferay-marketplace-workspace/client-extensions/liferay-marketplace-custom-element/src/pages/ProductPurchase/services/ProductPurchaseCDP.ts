@@ -36,7 +36,7 @@ export default class ProductPurchaseCDP extends ProductPurchase {
 			customFields: {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
-					cdpForm: {
+					provisioning: {
 						corpProjectName: this.form?.workspaceName,
 						corpProjectUuid: this.account.externalReferenceCode,
 						emailAddressDomains: this.form?.allowedEmailDomains,

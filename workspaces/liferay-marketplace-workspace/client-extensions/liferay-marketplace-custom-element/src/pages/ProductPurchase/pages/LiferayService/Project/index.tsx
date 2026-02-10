@@ -5,19 +5,19 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useSelector} from '@xstate/store/react';
-import {useContext, useMemo} from 'react';
+import {useContext} from 'react';
+import useSWR from 'swr';
 
 import ProductPurchase from '../../../../../components/ProductPurchase';
+import RadioCardList from '../../../../../components/RadioCardList/RadioCardList';
 import {MarketplaceContext} from '../../../../../context/MarketplaceContext';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
+import koroneikiOAuth2 from '../../../../../services/oauth/Koroneiki';
+import {KoroneikiChildAccounts} from '../../../../../services/oauth/types';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';
 import NoProjectAvailable from './NoProjectAvailable';
-import koroneikiOAuth2 from '../../../../../services/oauth/Koroneiki';
-import useSWR from 'swr';
-import {KoroneikiChildAccounts} from '../../../../../services/oauth/types';
-import RadioCardList from '../../../../../components/RadioCardList/RadioCardList';
 
 const ProjectSelection = () => {
 	const {properties} = useContext(MarketplaceContext);
@@ -39,7 +39,7 @@ const ProjectSelection = () => {
 		() => koroneikiOAuth2.getChildAccounts(accountERC)
 	);
 
-	const noChildAccount = childAccounts.length === 0;
+	const noChildAccount = !childAccounts.length;
 
 	if (isLoading) {
 		return <ClayLoadingIndicator />;
@@ -93,7 +93,7 @@ const ProjectSelection = () => {
 				onSelect={(radioOption: RadioOption<KoroneikiChildAccounts>) =>
 					productPurchaseStore.send({
 						koroneikiProject: radioOption.value,
-						type: 'setKoreoneikiProject',
+						type: 'setKoroneikiProject',
 					})
 				}
 			/>

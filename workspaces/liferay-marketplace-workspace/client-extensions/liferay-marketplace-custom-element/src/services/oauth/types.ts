@@ -123,3 +123,59 @@ export type Properties2 = {
 	sizing: string;
 	version: string;
 };
+
+export type KoroneikiChildAccounts = {
+	assignedTeams: null;
+	code: string;
+	contactEmailAddress: string;
+	contacts: null;
+	customerContacts: null;
+	dataRegion: string;
+	dateCreated: string; // ISO date string
+	dateModified: string; // ISO date string
+	description: string;
+	entitlements: Entitlement[];
+	externalLinks: ExternalLink[];
+	faxNumber: string;
+	internal: boolean;
+	key: string;
+	language: string;
+	logoId: number;
+	name: string;
+	parentAccountKey: string;
+	phoneNumber: string;
+	postalAddresses: PostalAddress[];
+	productPurchases: null;
+	profileEmailAddress: string;
+	properties: AccountProperties;
+	region: string;
+	status: string;
+	tier: string;
+	website: string;
+	workerContacts: null;
+};
+
+export type Entitlement = {
+	entitlementDefinitionKey: string;
+	name: string;
+};
+
+export type PostalAddress = {
+	addressCountry: string;
+	addressLocality: string;
+	addressRegion: string;
+	addressType: string;
+	id: number;
+	mailing: boolean;
+	postalCode: string;
+	primary: boolean;
+	streetAddressLine1: string;
+	streetAddressLine2: string;
+	streetAddressLine3: string;
+};
+
+export type AccountProperties = {
+	allowComplimentary: string; // kept as string because source is "true"/"false"
+	allowPermanentLicenses: string;
+	allowSelfProvisioning: string;
+};

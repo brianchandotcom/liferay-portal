@@ -126,7 +126,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public LineStringShapeBuilder lineStringShapeBuilder() {
-		return new LineStringShapeImpl.LineStringShapeBuilderImpl();
+		return new LineStringShape.LineStringShapeBuilderImpl();
 	}
 
 	@Override

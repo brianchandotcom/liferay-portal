@@ -5,29 +5,43 @@
 
 package com.liferay.portal.search.geolocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface MultiPolygonShapeBuilder {
+public class MultiPolygonShapeBuilder
+	extends ShapeBuilder<MultiPolygonShapeBuilder> {
 
-	public MultiPolygonShapeBuilder addCoordinate(Coordinate coordinate);
+	public MultiPolygonShapeBuilder addPolygonShape(PolygonShape polygonShape) {
+		_polygonShapes.add(polygonShape);
 
-	public MultiPolygonShapeBuilder addPolygonShape(PolygonShape polygonShape);
+		return this;
+	}
 
-	public MultiPolygonShape build();
+	public MultiPolygonShape build() {
+		return new MultiPolygonShape(coordinates, _orientation, _polygonShapes);
+	}
 
-	public MultiPolygonShapeBuilder coordinates(Coordinate... coordinates);
+	public MultiPolygonShapeBuilder orientation(Orientation orientation) {
+		_orientation = orientation;
 
-	public MultiPolygonShapeBuilder coordinates(List<Coordinate> coordinates);
-
-	public MultiPolygonShapeBuilder orientation(Orientation orientation);
+		return this;
+	}
 
 	public MultiPolygonShapeBuilder polygonShapes(
-		PolygonShape... polygonShapeBuilders);
+		PolygonShape... polygonShapes) {
+
+		_polygonShapes.clear();
+
+		Collections.addAll(_polygonShapes, polygonShapes);
+
+		return this;
+	}
+
+	private Orientation _orientation;
+	private final List<PolygonShape> _polygonShapes = new ArrayList<>();
 
 }

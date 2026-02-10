@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,49 +26,7 @@ public class MultiPolygonShape extends Shape {
 		return _polygonShapes;
 	}
 
-	public static class MultiPolygonShapeBuilderImpl
-		extends ShapeBuilder<MultiPolygonShapeBuilder>
-		implements MultiPolygonShapeBuilder {
-
-		@Override
-		public MultiPolygonShapeBuilder addPolygonShape(
-			PolygonShape polygonShape) {
-
-			_polygonShapes.add(polygonShape);
-
-			return this;
-		}
-
-		@Override
-		public MultiPolygonShape build() {
-			return new MultiPolygonShape(
-				coordinates, _orientation, _polygonShapes);
-		}
-
-		@Override
-		public MultiPolygonShapeBuilder orientation(Orientation orientation) {
-			_orientation = orientation;
-
-			return this;
-		}
-
-		@Override
-		public MultiPolygonShapeBuilder polygonShapes(
-			PolygonShape... polygonShapes) {
-
-			_polygonShapes.clear();
-
-			Collections.addAll(_polygonShapes, polygonShapes);
-
-			return this;
-		}
-
-		private Orientation _orientation;
-		private final List<PolygonShape> _polygonShapes = new ArrayList<>();
-
-	}
-
-	private MultiPolygonShape(
+	protected MultiPolygonShape(
 		List<Coordinate> coordinates, Orientation orientation,
 		List<PolygonShape> polygonShapes) {
 

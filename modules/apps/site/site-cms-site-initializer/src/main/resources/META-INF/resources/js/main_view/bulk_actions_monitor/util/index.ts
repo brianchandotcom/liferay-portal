@@ -62,6 +62,8 @@ export function composeCreateTaskDTO(
 	return {
 		bulkActionItems: items.map(
 			({
+				className,
+				id,
 				embedded: {
 					externalReferenceCode: embeddedExternalReferenceCode,
 					file,
@@ -74,8 +76,11 @@ export function composeCreateTaskDTO(
 				const itemsTransformed = {
 					classExternalReferenceCode:
 						externalReferenceCode || embeddedExternalReferenceCode,
-					className: entryClassName || OBJECT_ENTRY_FOLDER_CLASS_NAME,
-					classPK,
+					className:
+						entryClassName ||
+						className ||
+						OBJECT_ENTRY_FOLDER_CLASS_NAME,
+					classPK: classPK || id,
 					name,
 				} as IBulkActionFDSDataItemTransformed;
 

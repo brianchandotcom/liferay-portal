@@ -5,23 +5,17 @@
 
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import SaveFragmentCompositionModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/SaveFragmentCompositionModal';
-import {useActiveItemIds} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext';
-import {
-	useDispatch,
-	useSelector,
-} from '../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import FragmentService from '../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService';
 import addFragmentComposition from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/addFragmentComposition';
-import validateFragmentComposition from '../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/validateFragmentComposition';
+import openFragmentCompositionModal from '../../../../src/main/resources/META-INF/resources/page_editor/app/utils/openFragmentCompositionModal';
 
-jest.mock('@liferay/frontend-js-react-web', () => ({
-	useIsMounted: () => () => true,
+jest.mock('frontend-js-components-web', () => ({
+	openModal: jest.fn(),
 }));
-jest.mock('@clayui/icon', () => {
-	return ({symbol}) => <span data-testid={`icon-${symbol}`} />;
-});
+
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
@@ -32,24 +26,15 @@ jest.mock(
 		},
 	})
 );
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/common/components/InvisibleFieldset',
-	() => {
-		return ({children}) => <div>{children}</div>;
-	}
-);
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/ControlsContext'
-);
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext'
-);
+
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/addFragmentComposition'
 );
+
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/validateFragmentComposition'
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/FragmentService'
 );
+
 jest.mock(
 	'../../../../src/main/resources/META-INF/resources/page_editor/common/openImageSelector',
 	() => ({
@@ -58,52 +43,64 @@ jest.mock(
 );
 
 global.Liferay = {
+	Browser: {
+		isFirefox: () => false,
+	},
 	Language: {
 		get: (key) => key,
 	},
 };
 
-describe('SaveFragmentCompositionModal', () => {
-	const mockDispatch = jest.fn((action) => {
-		if (typeof action === 'function') {
-			return action(jest.fn(), () => ({}));
-		}
+const MOCK_FRAGMENTS = [
+	{fragmentCollectionId: '1', name: 'Collection A'},
+	{fragmentCollectionId: '2', name: 'Collection B'},
+];
 
-		return Promise.resolve(action);
+const MOCK_DISPATCH = jest.fn((action) => {
+	if (typeof action === 'function') {
+		return action(jest.fn(), () => ({}));
+	}
+
+	return Promise.resolve(action);
+});
+
+const MOCK_ON_CLOSE = jest.fn();
+
+const openAndRenderModal = async (
+	{dispatch, fragments, itemId, segmentsExperienceId} = {
+		dispatch: MOCK_DISPATCH,
+		fragments: MOCK_FRAGMENTS,
+		itemId: 'item-1',
+		segmentsExperienceId: 'experience-1',
+	}
+) => {
+	await openFragmentCompositionModal({
+		dispatch,
+		fragments,
+		itemId,
+		segmentsExperienceId,
 	});
-	const mockOnCloseModal = jest.fn();
-	const mockCollections = [
-		{fragmentCollectionId: '1', name: 'Collection A'},
-		{fragmentCollectionId: '2', name: 'Collection B'},
-	];
 
-	const renderComponent = () =>
-		render(
-			<SaveFragmentCompositionModal
-				itemId="item-1"
-				onCloseModal={mockOnCloseModal}
-			/>
-		);
+	const modalConfig = openModal.mock.calls[0][0];
+	const {contentComponent: ContentComponent} = modalConfig;
 
+	render(<ContentComponent closeModal={MOCK_ON_CLOSE} />);
+
+	return modalConfig;
+};
+
+describe('openFragmentCompositionModal', () => {
 	beforeEach(() => {
 		jest.clearAllMocks();
 
-		useDispatch.mockReturnValue(mockDispatch);
-		useActiveItemIds.mockReturnValue(['active-item-1']);
-		useSelector.mockImplementation((selector) =>
-			selector({
-				collections: mockCollections,
-			})
-		);
-
+		FragmentService.validateFragmentComposition.mockResolvedValue({
+			valid: true,
+		});
 		addFragmentComposition.mockReturnValue(async () => Promise.resolve({}));
-		validateFragmentComposition.mockReturnValue(async () =>
-			Promise.resolve({invalidFragmentsCount: 0})
-		);
 	});
 
-	it('renders the form view when validation returns 0 errors', async () => {
-		renderComponent();
+	it('renders the form view when validation is successful', async () => {
+		await openAndRenderModal();
 
 		const nameInput = await screen.findByPlaceholderText(/name/i);
 		expect(nameInput).toBeInTheDocument();
@@ -115,36 +112,32 @@ describe('SaveFragmentCompositionModal', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('renders the error view when validation returns > 0 errors', async () => {
-		const user = userEvent.setup();
-
-		validateFragmentComposition.mockReturnValue(async () =>
-			Promise.resolve({invalidFragmentsCount: 5})
-		);
-
-		renderComponent();
-
-		const errorMsg = await screen.findByText(
-			/the-composition-cannot-be-created-because-some-fragment-references-are-missing-reimport-the-fragments-and-try-again/i
-		);
-		expect(errorMsg).toBeInTheDocument();
-
-		expect(
-			screen.queryByRole('button', {name: /save/i})
-		).not.toBeInTheDocument();
-
-		const doneButton = screen.getByRole('button', {name: /done/i});
-		await user.click(doneButton);
-
-		await waitFor(() => {
-			expect(mockOnCloseModal).toHaveBeenCalled();
+	it('shows a blocked modal when validation fails', async () => {
+		FragmentService.validateFragmentComposition.mockResolvedValue({
+			valid: false,
 		});
+
+		await openFragmentCompositionModal({
+			dispatch: MOCK_DISPATCH,
+			fragments: MOCK_FRAGMENTS,
+			itemId: 'item-1',
+			segmentsExperienceId: 'experience-1',
+		});
+
+		expect(openModal).toHaveBeenCalledWith(
+			expect.objectContaining({
+				bodyHTML: Liferay.Language.get(
+					'the-composition-cannot-be-created-because-some-fragment-references-are-missing-reimport-the-fragments-and-try-again'
+				),
+				status: 'danger',
+			})
+		);
 	});
 
 	it('submits the form when valid and data is entered', async () => {
 		const user = userEvent.setup();
 
-		renderComponent();
+		await openAndRenderModal();
 
 		const nameInput = await screen.findByPlaceholderText(/name/i);
 		await user.type(nameInput, 'My Composition');
@@ -169,14 +162,14 @@ describe('SaveFragmentCompositionModal', () => {
 		});
 
 		await waitFor(() => {
-			expect(mockOnCloseModal).toHaveBeenCalled();
+			expect(MOCK_ON_CLOSE).toHaveBeenCalled();
 		});
 	});
 
 	it('shows validation error if name is empty on submit', async () => {
 		const user = userEvent.setup();
 
-		renderComponent();
+		await openAndRenderModal();
 
 		const saveButton = await screen.findByRole('button', {name: /save/i});
 		await user.click(saveButton);
@@ -184,13 +177,14 @@ describe('SaveFragmentCompositionModal', () => {
 		expect(addFragmentComposition).not.toHaveBeenCalled();
 
 		const errorMsg = await screen.findByText(/this-field-is-required/i);
+
 		expect(errorMsg).toBeInTheDocument();
 	});
 
 	it('updates configuration checkboxes and collection selection', async () => {
 		const user = userEvent.setup();
 
-		renderComponent();
+		await openAndRenderModal();
 
 		const nameInput = await screen.findByPlaceholderText(/name/i);
 		await user.type(nameInput, 'Test');
@@ -236,7 +230,7 @@ describe('SaveFragmentCompositionModal', () => {
 			});
 		});
 
-		renderComponent();
+		await openAndRenderModal();
 
 		const nameInput = await screen.findByPlaceholderText(/name/i);
 		await user.type(nameInput, 'Test');

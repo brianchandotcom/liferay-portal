@@ -35,7 +35,6 @@ describe('useUndo', () => {
 
 	const noUndoActions = [
 		Actions.ADD_FRAGMENT_COMPOSITION,
-		Actions.VALIDATE_FRAGMENT_COMPOSITION,
 		Actions.ADD_FRAGMENT_ENTRY_LINK_COMMENT,
 		Actions.ADD_MAPPED_INFO_ITEM,
 		Actions.ADD_MAPPING_FIELDS,

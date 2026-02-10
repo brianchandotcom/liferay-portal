@@ -5,26 +5,29 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface EnvelopeShapeBuilder {
+public class EnvelopeShapeBuilder extends ShapeBuilder<EnvelopeShapeBuilder> {
 
-	public EnvelopeShapeBuilder addCoordinate(Coordinate coordinate);
+	public EnvelopeShapeBuilder bottomRight(Coordinate coordinate) {
+		_bottomRightCoordinate = coordinate;
 
-	public EnvelopeShapeBuilder bottomRight(Coordinate coordinate);
+		return this;
+	}
 
-	public EnvelopeShape build();
+	public EnvelopeShape build() {
+		return new EnvelopeShape(
+			coordinates, _bottomRightCoordinate, _topLeftCoordinate);
+	}
 
-	public EnvelopeShapeBuilder coordinates(Coordinate... coordinates);
+	public EnvelopeShapeBuilder topLeft(Coordinate coordinate) {
+		_topLeftCoordinate = coordinate;
 
-	public EnvelopeShapeBuilder coordinates(List<Coordinate> coordinates);
+		return this;
+	}
 
-	public EnvelopeShapeBuilder topLeft(Coordinate coordinate);
+	private Coordinate _bottomRightCoordinate;
+	private Coordinate _topLeftCoordinate;
 
 }

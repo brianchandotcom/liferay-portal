@@ -82,7 +82,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public EnvelopeShapeBuilder envelopeShapeBuilder() {
-		return new EnvelopeShape.EnvelopeShapeBuilderImpl();
+		return new EnvelopeShapeBuilder();
 	}
 
 	@Override

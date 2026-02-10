@@ -10,13 +10,18 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,12 +32,14 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -45,7 +52,9 @@ import jakarta.portlet.PortletURL;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
@@ -57,18 +66,23 @@ public class ObjectEntryAssetRenderer
 			AssetDisplayPageFriendlyURLProvider
 				assetDisplayPageFriendlyURLProvider,
 			DepotEntryLocalService depotEntryLocalService,
+			DLAppLocalService dlAppLocalService, DLURLHelper dlURLHelper,
 			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 			ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
-			ObjectEntryService objectEntryService)
+			ObjectEntryService objectEntryService,
+			ObjectFieldLocalService objectFieldLocalService)
 		throws PortalException {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_depotEntryLocalService = depotEntryLocalService;
+		_dlAppLocalService = dlAppLocalService;
+		_dlURLHelper = dlURLHelper;
 		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
 		_objectEntryDisplayContextFactory = objectEntryDisplayContextFactory;
 		_objectEntryService = objectEntryService;
+		_objectFieldLocalService = objectFieldLocalService;
 	}
 
 	@Override
@@ -146,6 +160,42 @@ public class ObjectEntryAssetRenderer
 	@Override
 	public String getType() {
 		return _objectDefinition.getName();
+	}
+
+	@Override
+	public String getURLDownload(ThemeDisplay themeDisplay) {
+		if (_objectDefinition.isCMS()) {
+			List<ObjectField> objectFields =
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId());
+
+			for (ObjectField objectField : objectFields) {
+				if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+					try {
+						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+							GetterUtil.getLong(
+								_objectEntry.getValues(
+								).get(
+									objectField.getName()
+								)));
+
+						return _dlURLHelper.getDownloadURL(
+							fileEntry, fileEntry.getFileVersion(), themeDisplay,
+							StringPool.BLANK);
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(portalException);
+						}
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 
 	@Override
@@ -342,10 +392,13 @@ public class ObjectEntryAssetRenderer
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private final DLAppLocalService _dlAppLocalService;
+	private final DLURLHelper _dlURLHelper;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntry _objectEntry;
 	private final ObjectEntryDisplayContextFactory
 		_objectEntryDisplayContextFactory;
 	private final ObjectEntryService _objectEntryService;
+	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

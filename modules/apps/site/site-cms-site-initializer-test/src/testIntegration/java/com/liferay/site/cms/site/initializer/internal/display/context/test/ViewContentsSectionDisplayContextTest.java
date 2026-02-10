@@ -10,10 +10,12 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -60,53 +62,59 @@ public class ViewContentsSectionDisplayContextTest
 
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0), "view", "actionLinkFolder",
-			"view-folder", "get", "item");
+			"view-folder", "get", "item",
+			HashMapBuilder.<String, Object>put(
+				"entryClassName", ObjectEntryFolder.class.getName()
+			).build());
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1), "info-circle-open", "show-details",
-			"show-details", null, "item");
+			"show-details", null, "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), "pencil", "editFolder", "edit",
-			"get", "item");
+			"get", "item",
+			HashMapBuilder.<String, Object>put(
+				"entryClassName", ObjectEntryFolder.class.getName()
+			).build());
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(3), "pencil", "actionLink", "edit",
-			"get", "item");
+			"get", "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), "share", "share", "share", "get",
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), "automatic-translate", "translate",
-			"translate", "get", "item");
+			"translate", "get", "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(6), "time", "expire", "expire", "post",
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(7), "view", "view-content", "view", null,
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(8), "view", "view-file", "view", null,
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(9), "date-time", "version-history",
-			"view-history", "get", "item");
+			"view-history", "get", "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(10), "upload", "export-for-translation",
-			"export-for-translation", null, "item");
+			"export-for-translation", null, "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(11), "download", "import-translation",
-			"import-translation", null, "item");
+			"import-translation", null, "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(12), "copy", "copy", "copy-to", null,
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(13), "move-folder", "move", "move", null,
-			"item");
+			"item", null);
 
 		FDSActionDropdownItem permissionsFDSActionDropdownItem =
 			fdsActionDropdownItems.get(14);
 
 		assertFDSActionDropdownItem(
 			permissionsFDSActionDropdownItem, "password-policies",
-			"permissions-menu", "permissions", null, "contextual");
+			"permissions-menu", "permissions", null, "contextual", null);
 
 		List<FDSActionDropdownItem> permissionsFDSActionDropdownItems =
 			(List<FDSActionDropdownItem>)permissionsFDSActionDropdownItem.get(
@@ -118,22 +126,28 @@ public class ViewContentsSectionDisplayContextTest
 
 		assertFDSActionDropdownItem(
 			permissionsFDSActionDropdownItems.get(0), "password-policies",
-			"permissions", "permissions", "get", "item");
+			"permissions", "permissions", "get", "item", null);
 		assertFDSActionDropdownItem(
 			permissionsFDSActionDropdownItems.get(1), "password-policies",
-			"default-permissions", "default-permissions", null, "item");
+			"default-permissions", "default-permissions", null, "item",
+			HashMapBuilder.<String, Object>put(
+				"entryClassName", ObjectEntryFolder.class.getName()
+			).build());
 		assertFDSActionDropdownItem(
 			permissionsFDSActionDropdownItems.get(2), "password-policies",
 			"edit-and-propagate-default-permissions",
-			"edit-and-propagate-default-permissions", null, "item");
+			"edit-and-propagate-default-permissions", null, "item",
+			HashMapBuilder.<String, Object>put(
+				"entryClassName", ObjectEntryFolder.class.getName()
+			).build());
 		assertFDSActionDropdownItem(
 			permissionsFDSActionDropdownItems.get(3), "password-policies",
 			"reset-to-default-permissions", "reset-to-default-permissions",
-			null, "item");
+			null, "item", null);
 
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(15), "trash", "delete", "delete", null,
-			"item");
+			"item", null);
 	}
 
 	@Override

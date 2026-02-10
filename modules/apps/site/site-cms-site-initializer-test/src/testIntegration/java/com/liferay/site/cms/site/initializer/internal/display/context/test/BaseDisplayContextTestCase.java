@@ -132,12 +132,13 @@ public abstract class BaseDisplayContextTestCase {
 
 	protected void assertFDSActionDropdownItem(
 		FDSActionDropdownItem fdsActionDropdownItem, String icon, String id,
-		String label, String method, String type) {
+		String label, String method, String type,
+		Map<String, Object> visibilityFilters) {
 
 		Assert.assertNotNull(fdsActionDropdownItem);
 
-		Map<String, String> data =
-			(Map<String, String>)fdsActionDropdownItem.get("data");
+		Map<String, Object> data =
+			(Map<String, Object>)fdsActionDropdownItem.get("data");
 
 		Assert.assertEquals(id, data.get("id"));
 		Assert.assertEquals(method, data.get("method"));
@@ -147,6 +148,7 @@ public abstract class BaseDisplayContextTestCase {
 			language.get(LocaleUtil.getDefault(), label),
 			fdsActionDropdownItem.get("label"));
 		Assert.assertEquals(type, fdsActionDropdownItem.get("type"));
+		Assert.assertEquals(visibilityFilters, data.get("visibilityFilters"));
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest()

@@ -180,20 +180,20 @@ public class ViewRelatedAssetsSectionDisplayContextTest
 
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0), "pencil", "actionLink", "Edit",
-			"get", "item");
+			"get", "item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1), "view", "view-content", "View", null,
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(2), "view", "view-file", "View", null,
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(3), "share", "share", "Share", "get",
-			"item");
+			"item", null);
 		assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), "chain-broken", "unlink-asset",
 			"Remove from " + _objectDefinition.getLabel(LocaleUtil.US), null,
-			"item");
+			"item", null);
 	}
 
 	private void _assertDropdownItem(

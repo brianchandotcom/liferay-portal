@@ -97,7 +97,7 @@ public class AsahSegmentsEntryResourceImpl
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to process individuals " + userIds, portalException);
+				"Unable to process user IDs " + userIds, portalException);
 		}
 	}
 

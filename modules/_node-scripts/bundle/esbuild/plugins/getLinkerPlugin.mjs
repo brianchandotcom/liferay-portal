@@ -207,9 +207,15 @@ export default function getLinkerPlugin(
 			// build operations.
 			//
 
+			const pathRegExp =
+				`${path.sep}${WORK_IMPORT_PATH}${path.sep}`.replaceAll(
+					'\\',
+					'\\\\'
+				);
+
 			build.onLoad(
 				{
-					filter: new RegExp(`.*/${WORK_IMPORT_PATH}/.*`),
+					filter: new RegExp(`.*${pathRegExp}.*`),
 				},
 				async (info) => {
 					const {path: filePath} = info;

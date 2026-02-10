@@ -15,7 +15,7 @@ import {
 	ItemSelectorModal,
 } from '@liferay/frontend-js-item-selector-web';
 import {fetch} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import useBrowserTabVisibility from './utils/useBrowserTabVisibility';
@@ -62,6 +62,7 @@ type CMSFile = {
 
 function CMSFilesItemSelectorModal({
 	fdsProps,
+	open,
 	...otherProps
 }: Omit<
 	IItemSelectorModalProps<CMSFile>,
@@ -72,25 +73,27 @@ function CMSFilesItemSelectorModal({
 	const [folderStructure, setFolderStructure] = useState<
 		{folderId: string; folderName: string}[]
 	>([]);
-	const [newItems, setNewItems] = useState(0);
+	const [newItemsCount, setNewItemsCount] = useState(0);
 	const [showInlineNotification, setShowInlineNotification] = useState(false);
 	const [url, setURL] = useState(CMS_ROOT_FILES_URL);
 
 	const isBrowserTabVisible = useBrowserTabVisibility();
 	const lastRequestTimeRef = React.useRef(new Date().toISOString());
 
-	if (isBrowserTabVisible && otherProps.open) {
+	useEffect(() => {
+		if (isBrowserTabVisible && open) {
 
-		// eslint-disable-next-line react-compiler/react-compiler
-		checkNewCMSFiles(lastRequestTimeRef.current).then((response) => {
-			if (response.totalCount > 0) {
-				setNewItems(response.totalCount);
-				setShowInlineNotification(true);
+			// eslint-disable-next-line react-compiler/react-compiler
+			checkNewCMSFiles(lastRequestTimeRef.current).then((response) => {
+				if (response.totalCount > 0) {
+					setNewItemsCount(response.totalCount);
+					setShowInlineNotification(true);
 
-				lastRequestTimeRef.current = new Date().toISOString();
-			}
-		});
-	}
+					lastRequestTimeRef.current = new Date().toISOString();
+				}
+			});
+		}
+	}, [isBrowserTabVisible, open]);
 
 	function onChildFolderClick({
 		folderId,
@@ -127,7 +130,7 @@ function CMSFilesItemSelectorModal({
 					Liferay.Language.get(
 						'x-new-items-are-not-visible-in-this-view'
 					),
-					[newItems]
+					[newItemsCount]
 				)}
 
 				<ClayButton.Group className="pl-3" spaced>
@@ -357,6 +360,7 @@ function CMSFilesItemSelectorModal({
 				label: 'embedded.title',
 				value: 'embedded.id',
 			}}
+			open={open}
 		/>
 	);
 }

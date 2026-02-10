@@ -14,6 +14,7 @@ import com.liferay.portal.search.geolocation.EnvelopeShapeBuilder;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
+import com.liferay.portal.search.geolocation.GeometryCollectionShape;
 import com.liferay.portal.search.geolocation.GeometryCollectionShapeBuilder;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.LineStringShapeBuilder;
@@ -112,8 +113,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public GeometryCollectionShapeBuilder geometryCollectionShapeBuilder() {
-		return new GeometryCollectionShapeImpl.
-			GeometryCollectionShapeBuilderImpl();
+		return new GeometryCollectionShape.GeometryCollectionShapeBuilderImpl();
 	}
 
 	@Override

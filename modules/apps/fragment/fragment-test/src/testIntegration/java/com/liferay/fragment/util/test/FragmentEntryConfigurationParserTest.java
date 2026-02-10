@@ -195,9 +195,7 @@ public class FragmentEntryConfigurationParserTest {
 
 	@Test
 	@TestInfo("LPD-77079")
-	public void testGetFieldValueLocalizableFieldsWithoutLocale()
-		throws Exception {
-
+	public void testGetFieldValueWithLocalizableFields() {
 		Map<String, Object[]> fieldTypeValues =
 			LinkedHashMapBuilder.<String, Object[]>put(
 				"text",
@@ -213,9 +211,8 @@ public class FragmentEntryConfigurationParserTest {
 			).build();
 
 		for (Map.Entry<String, Object[]> entry : fieldTypeValues.entrySet()) {
-			String fieldType = entry.getKey();
-			Object englishValue = entry.getValue()[0];
-			Object spanishValue = entry.getValue()[1];
+			Object expectedEnglishValue = entry.getValue()[0];
+			Object expectedSpanishValue = entry.getValue()[1];
 
 			String fieldName = RandomTestUtil.randomString();
 
@@ -226,7 +223,7 @@ public class FragmentEntryConfigurationParserTest {
 						"fields",
 						JSONUtil.put(
 							JSONUtil.put(
-								"defaultValue", englishValue
+								"defaultValue", expectedEnglishValue
 							).put(
 								"label", fieldName
 							).put(
@@ -234,31 +231,44 @@ public class FragmentEntryConfigurationParserTest {
 							).put(
 								"name", fieldName
 							).put(
-								"type", fieldType
+								"type", entry.getKey()
 							)))));
 
-			JSONObject editableValuesJSONObject = JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					fieldName,
+			JSONObject valueJSONObject =
+				(JSONObject)_fragmentEntryConfigurationParser.getFieldValue(
+					configurationJSONObject,
 					JSONUtil.put(
-						LocaleUtil.toLanguageId(LocaleUtil.US), englishValue
-					).put(
-						LocaleUtil.toLanguageId(LocaleUtil.SPAIN), spanishValue
-					)));
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							fieldName,
+							JSONUtil.put(
+								LocaleUtil.toLanguageId(LocaleUtil.US),
+								expectedEnglishValue
+							).put(
+								LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+								expectedSpanishValue
+							))),
+					fieldName);
 
-			Object value = _fragmentEntryConfigurationParser.getFieldValue(
-				configurationJSONObject, editableValuesJSONObject, fieldName);
+			Object englishValue = null;
+			Object spanishValue = null;
 
-			if (englishValue instanceof Boolean) {
-				_assertLocalizableValue(
-					value, englishValue, spanishValue, true);
+			if (expectedEnglishValue instanceof Boolean) {
+				englishValue = valueJSONObject.getBoolean(
+					LocaleUtil.toLanguageId(LocaleUtil.US));
+				spanishValue = valueJSONObject.getBoolean(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 			}
 			else {
-				_assertLocalizableValue(
-					value, englishValue, spanishValue, false);
+				englishValue = valueJSONObject.getString(
+					LocaleUtil.toLanguageId(LocaleUtil.US));
+				spanishValue = valueJSONObject.getString(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
 			}
+
+			Assert.assertEquals(expectedEnglishValue, englishValue);
+			Assert.assertEquals(expectedSpanishValue, spanishValue);
 		}
 	}
 
@@ -270,34 +280,6 @@ public class FragmentEntryConfigurationParserTest {
 	@Test
 	public void testTranslateConfigurationEs() throws Exception {
 		_testTranslateConfiguration("es");
-	}
-
-	private void _assertLocalizableValue(
-		Object value, Object englishValue, Object spanishValue,
-		boolean booleanValue) {
-
-		Assert.assertTrue(value instanceof JSONObject);
-
-		JSONObject valueJSONObject = (JSONObject)value;
-
-		Object expectedEnglishValue;
-		Object expectedSpanishValue;
-
-		if (booleanValue) {
-			expectedEnglishValue = valueJSONObject.getBoolean(
-				LocaleUtil.toLanguageId(LocaleUtil.US));
-			expectedSpanishValue = valueJSONObject.getBoolean(
-				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
-		}
-		else {
-			expectedEnglishValue = valueJSONObject.getString(
-				LocaleUtil.toLanguageId(LocaleUtil.US));
-			expectedSpanishValue = valueJSONObject.getString(
-				LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
-		}
-
-		Assert.assertEquals(expectedEnglishValue, englishValue);
-		Assert.assertEquals(expectedSpanishValue, spanishValue);
 	}
 
 	private ResourceBundle _getResourceBundle(String language) {

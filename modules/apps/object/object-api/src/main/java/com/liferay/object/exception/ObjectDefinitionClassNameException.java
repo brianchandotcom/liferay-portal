@@ -22,6 +22,15 @@ public class ObjectDefinitionClassNameException extends PortalException {
 
 	}
 
+	public static class MustNotBeNull
+		extends ObjectDefinitionClassNameException {
+
+		public MustNotBeNull() {
+			super("Class name is null");
+		}
+
+	}
+
 	public static class MustStartWithPrefix
 		extends ObjectDefinitionClassNameException {
 

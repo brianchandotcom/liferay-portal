@@ -107,6 +107,7 @@ export interface ISearchAssetObjectEntry {
 	embedded: IAssetObjectEntry;
 	entryClassName: string;
 	score: number;
+	systemProperties?: IAssetObjectDefinitionBrief & IAssetScope & IAssetVersion;
 	title: string;
 }
 

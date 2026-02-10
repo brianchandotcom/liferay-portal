@@ -5,8 +5,11 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.util.JavaConstants;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -165,12 +168,6 @@ public interface PortletDataHandler {
 	public PortletDataHandlerControl[] getImportPortletDataHandlerControls()
 		throws PortletDataException;
 
-	public default String getName(Locale locale) {
-		Class<? extends PortletDataHandler> clazz = getClass();
-
-		return clazz.getName();
-	}
-
 	public default String getNamespace() {
 		return StringPool.BLANK;
 	}
@@ -243,6 +240,15 @@ public interface PortletDataHandler {
 
 	public default String getTag(Locale locale) {
 		return null;
+	}
+
+	public default String getTitle(Locale locale) {
+		return LanguageUtil.get(
+			locale,
+			StringBundler.concat(
+				JavaConstants.JAKARTA_PORTLET_TITLE, StringPool.PERIOD,
+				getPortletId()),
+			null);
 	}
 
 	/**

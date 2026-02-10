@@ -22,13 +22,13 @@ import java.util.Locale;
 public class MissingPortlet extends PortletWrapper {
 
 	public MissingPortlet(
-		String name, Portlet portlet, String portletDataHandlerKey,
-		String portletId) {
+		Portlet portlet, String portletDataHandlerKey, String portletId,
+		String title) {
 
 		super(portlet);
 
 		_portletDataHandler = new MissingPortletDataHandler(
-			name, portletDataHandlerKey, portletId);
+			portletDataHandlerKey, portletId, title);
 	}
 
 	@Override
@@ -40,14 +40,14 @@ public class MissingPortlet extends PortletWrapper {
 		extends BasePortletDataHandler {
 
 		public MissingPortletDataHandler(
-			String name, String portletDataHandlerKey, String portletId) {
+			String portletDataHandlerKey, String portletId, String title) {
 
 			setEmptyControlsAllowed(true);
 			setPublishToLiveByDefault(true);
 
-			_name = name;
 			_portletDataHandlerKey = portletDataHandlerKey;
 			_portletId = portletId;
+			_title = title;
 		}
 
 		@Override
@@ -58,8 +58,8 @@ public class MissingPortlet extends PortletWrapper {
 		}
 
 		@Override
-		public String getName(Locale locale) {
-			return _name;
+		public String getTitle(Locale locale) {
+			return _title;
 		}
 
 		@Override
@@ -81,9 +81,9 @@ public class MissingPortlet extends PortletWrapper {
 				});
 		}
 
-		private final String _name;
 		private final String _portletDataHandlerKey;
 		private final String _portletId;
+		private final String _title;
 
 	}
 

@@ -67,9 +67,7 @@ page import="com.liferay.portal.kernel.util.comparator.PortletTitleComparator" %
 page import="com.liferay.site.display.context.GroupDisplayContextHelper" %><%@
 page import="com.liferay.trash.service.TrashEntryLocalServiceUtil" %>
 
-<%@ page import="java.util.HashSet" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Set" %>
+<%@ page import="java.util.List" %>
 
 <liferay-frontend:defineObjects />
 

@@ -39,17 +39,11 @@ const DEFAULT_MESSAGES: UploadMessages = {
 
 interface MultipleFileUploaderProps {
 	buttonLabel?: string;
-
 	description?: string;
-
 	filesToUpload?: FileData[];
-
 	formValidation: () => Promise<boolean>;
-
 	messages?: Partial<UploadMessages>;
-
 	onModalClose: () => void;
-
 	onUploadComplete: ({
 		failedFiles,
 		successFiles,
@@ -57,11 +51,8 @@ interface MultipleFileUploaderProps {
 		failedFiles: string[];
 		successFiles: string[];
 	}) => void;
-
 	scopeSelectorElement?: JSX.Element;
-
 	uploadRequest: UploadRequestCallback;
-
 	validExtensions?: string;
 }
 

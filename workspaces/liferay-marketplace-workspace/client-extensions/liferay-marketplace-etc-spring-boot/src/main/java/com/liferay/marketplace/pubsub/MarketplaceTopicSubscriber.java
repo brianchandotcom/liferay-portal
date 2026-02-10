@@ -15,12 +15,12 @@ import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
 import com.google.pubsub.v1.Subscription;
+import com.google.pubsub.v1.SubscriptionName;
 import com.google.pubsub.v1.TopicName;
 
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
-import com.liferay.petra.string.StringBundler;
 
 import java.io.ByteArrayInputStream;
 
@@ -97,9 +97,9 @@ public class MarketplaceTopicSubscriber {
 			CredentialsProvider credentialsProvider, String topicName)
 		throws Exception {
 
-		String subscriptionName = StringBundler.concat(
-			"projects/", _projectId, "/subscriptions/marketplace_", topicName,
-			"-subscription");
+		String subscriptionName = SubscriptionName.of(
+			_projectId, "marketplace_" + topicName + "-subscription"
+		).toString();
 
 		try {
 			_subscriptionAdminClient.getSubscription(subscriptionName);

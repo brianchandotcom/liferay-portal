@@ -158,7 +158,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public MultiPolygonShapeBuilder multiPolygonShapeBuilder() {
-		return new MultiPolygonShapeImpl.MultiPolygonShapeBuilderImpl();
+		return new MultiPolygonShape.MultiPolygonShapeBuilderImpl();
 	}
 
 	@Override

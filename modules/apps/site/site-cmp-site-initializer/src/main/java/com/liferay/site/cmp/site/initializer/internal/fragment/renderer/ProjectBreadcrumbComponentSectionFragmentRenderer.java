@@ -181,6 +181,8 @@ public class ProjectBreadcrumbComponentSectionFragmentRenderer
 
 					jsonArray.put(
 						JSONUtil.put(
+							"className", "text-danger"
+						).put(
 							"confirmationMessage",
 							LanguageUtil.format(
 								httpServletRequest,

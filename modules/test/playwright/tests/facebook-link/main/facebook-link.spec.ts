@@ -38,7 +38,7 @@ test.afterEach(
 	async ({facebookInstanceSettingsPage, page, utilityPagesPage}) => {
 		await page.goto(liferayConfig.environment.baseUrl);
 
-		if (page.getByRole('button', {name: 'Sign In'}).isVisible) {
+		if (await page.getByRole('button', {name: 'Sign In'}).isVisible) {
 			await performLoginViaApi({page, screenName: 'test'});
 		}
 

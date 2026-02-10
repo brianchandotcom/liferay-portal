@@ -10,8 +10,8 @@ import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsP
 
 export class FacebookInstanceSettingsPage {
 	readonly enabledCheckbox: Locator;
-	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly facebookConnectMenuItem: Locator;
+	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
 

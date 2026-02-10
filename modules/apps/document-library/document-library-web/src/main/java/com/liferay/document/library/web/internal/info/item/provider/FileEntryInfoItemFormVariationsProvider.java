@@ -186,6 +186,11 @@ public class FileEntryInfoItemFormVariationsProvider
 		return infoItemFormVariations;
 	}
 
+	@Override
+	public String getSubtypeClassName() {
+		return DLFileEntryType.class.getName();
+	}
+
 	private InfoItemFormVariation _getBasicDocumentInfoItemFormVariation() {
 		DLFileEntryType basicDocumentDLFileEntryType =
 			_dlFileEntryTypeLocalService.fetchDLFileEntryType(

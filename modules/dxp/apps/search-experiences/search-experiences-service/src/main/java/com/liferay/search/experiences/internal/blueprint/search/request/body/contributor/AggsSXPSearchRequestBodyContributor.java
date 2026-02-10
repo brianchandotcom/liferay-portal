@@ -8,7 +8,6 @@ package com.liferay.search.experiences.internal.blueprint.search.request.body.co
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.Aggregations;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.significance.SignificanceHeuristics;
 import com.liferay.portal.search.sort.Sorts;
@@ -30,14 +29,13 @@ public class AggsSXPSearchRequestBodyContributor
 	implements SXPSearchRequestBodyContributor {
 
 	public AggsSXPSearchRequestBodyContributor(
-		Aggregations aggregations, GeoBuilders geoBuilders,
-		HighlightConverter highlightConverter, QueryConverter queryConverter,
-		ScriptConverter scriptConverter,
+		Aggregations aggregations, HighlightConverter highlightConverter,
+		QueryConverter queryConverter, ScriptConverter scriptConverter,
 		SignificanceHeuristics significanceHeuristics, Sorts sorts) {
 
 		_aggregationWrapperConverter = new AggregationWrapperConverter(
-			aggregations, geoBuilders, highlightConverter, queryConverter,
-			scriptConverter, significanceHeuristics, sorts);
+			aggregations, highlightConverter, queryConverter, scriptConverter,
+			significanceHeuristics, sorts);
 	}
 
 	@Override

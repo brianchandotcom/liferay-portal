@@ -32,10 +32,9 @@ import java.util.Objects;
 public class SortConverter {
 
 	public SortConverter(
-		GeoBuilders geoBuilders, QueryConverter queryConverter,
-		ScriptConverter scriptConverter, Sorts sorts) {
+		QueryConverter queryConverter, ScriptConverter scriptConverter,
+		Sorts sorts) {
 
-		_geoBuilders = geoBuilders;
 		_queryConverter = queryConverter;
 		_scriptConverter = scriptConverter;
 		_sorts = sorts;
@@ -49,7 +48,7 @@ public class SortConverter {
 		GeoDistanceSort geoDistanceSort, JSONArray jsonArray) {
 
 		geoDistanceSort.addGeoLocationPoints(
-			_geoBuilders.geoLocationPoint(
+			GeoBuilders.INSTANCE.geoLocationPoint(
 				jsonArray.getDouble(0), jsonArray.getDouble(1)));
 	}
 
@@ -80,7 +79,7 @@ public class SortConverter {
 			JSONObject jsonObject = (JSONObject)object;
 
 			geoDistanceSort.addGeoLocationPoints(
-				_geoBuilders.geoLocationPoint(
+				GeoBuilders.INSTANCE.geoLocationPoint(
 					jsonObject.getInt("lat"), jsonObject.getInt("lon")));
 		}
 		else if (object instanceof JSONArray) {
@@ -100,7 +99,7 @@ public class SortConverter {
 		}
 		else if (object instanceof String) {
 			geoDistanceSort.addGeoLocationPoints(
-				_geoBuilders.geoLocationPoint((String)object));
+				GeoBuilders.INSTANCE.geoLocationPoint((String)object));
 		}
 		else {
 			throw new IllegalArgumentException();
@@ -246,7 +245,6 @@ public class SortConverter {
 		return SortOrder.valueOf(StringUtil.toUpperCase(string));
 	}
 
-	private final GeoBuilders _geoBuilders;
 	private final QueryConverter _queryConverter;
 	private final ScriptConverter _scriptConverter;
 	private final Sorts _sorts;

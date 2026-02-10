@@ -33,7 +33,7 @@ public class DocumentFieldsTranslatorTest {
 	@Test
 	public void testDocumentSourceMapWithMultiValueField() {
 		DocumentFieldsTranslator documentFieldsTranslator =
-			new DocumentFieldsTranslator(null);
+			new DocumentFieldsTranslator();
 
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 

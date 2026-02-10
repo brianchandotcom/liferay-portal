@@ -15,7 +15,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultT
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -84,11 +83,10 @@ public class SearchSearchResponseAssemblerImpl
 		Aggregate aggregate) {
 
 		return new OpenSearchAggregationResultTranslator(
-			aggregate, _aggregationResults, _geoBuilders,
+			aggregate, _aggregationResults,
 			new HitsMetadataTranslator(
-				_documentBuilderFactory, _geoBuilders,
-				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
-				_searchHitsBuilderFactory));
+				_documentBuilderFactory, _highlightFieldBuilderFactory,
+				_searchHitBuilderFactory, _searchHitsBuilderFactory));
 	}
 
 	@Override
@@ -166,9 +164,8 @@ public class SearchSearchResponseAssemblerImpl
 
 		HitsMetadataTranslator hitsMetadataTranslator =
 			new HitsMetadataTranslator(
-				_documentBuilderFactory, _geoBuilders,
-				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
-				_searchHitsBuilderFactory);
+				_documentBuilderFactory, _highlightFieldBuilderFactory,
+				_searchHitBuilderFactory, _searchHitsBuilderFactory);
 
 		searchSearchResponse.setSearchHits(
 			hitsMetadataTranslator.translate(
@@ -196,9 +193,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private GeoBuilders _geoBuilders;
 
 	@Reference
 	private GroupByResponseFactory _groupByResponseFactory;

@@ -35,13 +35,11 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
-import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.searcher.SearchRequestBuilderImpl;
@@ -318,7 +316,6 @@ public abstract class BaseIndexingTestCase {
 			new ComplexQueryPartBuilderFactoryImpl();
 	protected final FieldConfigBuilderFactory fieldConfigBuilderFactory =
 		new FieldConfigBuilderFactoryImpl();
-	protected final GeoBuilders geoBuilders = new GeoBuildersImpl();
 	protected final HighlightBuilderFactory highlightBuilderFactory =
 		new HighlightBuilderFactoryImpl();
 	protected final Queries queries = new QueriesImpl();

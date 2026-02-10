@@ -127,12 +127,11 @@ public class ElasticsearchAggregationResultTranslator
 		org.elasticsearch.search.aggregations.Aggregation
 			elasticsearchAggregation,
 		AggregationResults aggregationResults,
-		SearchHitsTranslator searchHitsTranslator, GeoBuilders geoBuilders) {
+		SearchHitsTranslator searchHitsTranslator) {
 
 		_elasticsearchAggregation = elasticsearchAggregation;
 		_aggregationResults = aggregationResults;
 		_searchHitsTranslator = searchHitsTranslator;
-		_geoBuilders = geoBuilders;
 	}
 
 	@Override
@@ -142,7 +141,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return new ElasticsearchAggregationResultTranslator(
 			elasticsearchAggregation, _aggregationResults,
-			_searchHitsTranslator, _geoBuilders);
+			_searchHitsTranslator);
 	}
 
 	@Override
@@ -597,14 +596,13 @@ public class ElasticsearchAggregationResultTranslator
 			return null;
 		}
 
-		return _geoBuilders.geoLocationPoint(
+		return GeoBuilders.INSTANCE.geoLocationPoint(
 			geoPoint.getLat(), geoPoint.getLon());
 	}
 
 	private final AggregationResults _aggregationResults;
 	private final org.elasticsearch.search.aggregations.Aggregation
 		_elasticsearchAggregation;
-	private final GeoBuilders _geoBuilders;
 	private final SearchHitsTranslator _searchHitsTranslator;
 
 }

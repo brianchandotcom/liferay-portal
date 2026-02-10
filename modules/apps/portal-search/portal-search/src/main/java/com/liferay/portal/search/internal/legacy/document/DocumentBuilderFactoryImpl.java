@@ -17,7 +17,6 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Wade Cao
@@ -44,7 +43,7 @@ public class DocumentBuilderFactoryImpl implements DocumentBuilderFactory {
 		if (geoLocationPoint != null) {
 			documentBuilder.setGeoLocationPoint(
 				key,
-				_geoBuilders.geoLocationPoint(
+				GeoBuilders.INSTANCE.geoLocationPoint(
 					geoLocationPoint.getLatitude(),
 					geoLocationPoint.getLongitude()));
 
@@ -53,8 +52,5 @@ public class DocumentBuilderFactoryImpl implements DocumentBuilderFactory {
 
 		documentBuilder.setValues(key, Arrays.asList(field.getValues()));
 	}
-
-	@Reference
-	private GeoBuilders _geoBuilders;
 
 }

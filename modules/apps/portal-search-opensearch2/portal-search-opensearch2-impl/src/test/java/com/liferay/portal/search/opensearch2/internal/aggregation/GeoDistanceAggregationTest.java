@@ -10,6 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregation;
 import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregationResult;
 import com.liferay.portal.search.aggregation.bucket.Range;
+import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.LiferayOpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.aggregation.bucket.BaseGeoDistanceAggregationTestCase;
@@ -63,7 +64,7 @@ public class GeoDistanceAggregationTest
 		GeoDistanceAggregation geoDistanceAggregation =
 			aggregations.geoDistance(
 				"geo_distance", Field.GEO_LOCATION,
-				geoBuilders.geoLocationPoint(52.3760, 4.894));
+				GeoBuilders.INSTANCE.geoLocationPoint(52.3760, 4.894));
 
 		// LPD-17346
 

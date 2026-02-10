@@ -23,7 +23,6 @@ import com.liferay.portal.search.asset.AssetSubtypeIdentifierBuilder;
 import com.liferay.portal.search.collapse.CollapseBuilderFactory;
 import com.liferay.portal.search.collapse.InnerHitBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.FieldConfigBuilderFactory;
 import com.liferay.portal.search.highlight.HighlightBuilderFactory;
 import com.liferay.portal.search.query.Queries;
@@ -118,14 +117,14 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 		ScriptConverter scriptConverter = new ScriptConverter();
 
 		SortConverter sortConverter = new SortConverter(
-			_geoBuilders, queryConverter, scriptConverter, _sorts);
+			queryConverter, scriptConverter, _sorts);
 
 		_sxpSearchRequestBodyContributors = Arrays.asList(
 			new AdvancedSXPSearchRequestBodyContributor(
 				_collapseBuilderFactory, _innerHitBuilderFactory,
 				sortConverter),
 			new AggsSXPSearchRequestBodyContributor(
-				_aggregations, _geoBuilders, highlightConverter, queryConverter,
+				_aggregations, highlightConverter, queryConverter,
 				scriptConverter, _significanceHeuristics, _sorts),
 			new GeneralSXPSearchRequestBodyContributor(
 				_assetSubtypeIdentifierBuilder, _complexQueryPartBuilderFactory,
@@ -543,9 +542,6 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 
 	@Reference
 	private FieldConfigBuilderFactory _fieldConfigBuilderFactory;
-
-	@Reference
-	private GeoBuilders _geoBuilders;
 
 	@Reference
 	private HighlightBuilderFactory _highlightBuilderFactory;

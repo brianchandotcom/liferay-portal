@@ -24,7 +24,6 @@ import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.internal.aggregation.AggregationsImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
-import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.highlight.FieldConfigBuilderFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
@@ -110,9 +109,6 @@ public class SXPBlueprintSearchRequestEnhancerImplTest {
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl,
 			"_fieldConfigBuilderFactory", new FieldConfigBuilderFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			_sxpBlueprintSearchRequestEnhancerImpl, "_geoBuilders",
-			new GeoBuildersImpl());
 		ReflectionTestUtil.setFieldValue(
 			_sxpBlueprintSearchRequestEnhancerImpl, "_highlightBuilderFactory",
 			new HighlightBuilderFactoryImpl());

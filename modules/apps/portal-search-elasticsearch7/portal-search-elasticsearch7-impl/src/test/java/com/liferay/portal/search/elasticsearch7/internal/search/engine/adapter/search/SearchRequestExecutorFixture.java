@@ -15,7 +15,6 @@ import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
-import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
@@ -248,9 +247,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_geoBuilders",
-			new GeoBuildersImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_highlightFieldBuilderFactory",
 			new HighlightFieldBuilderFactoryImpl());

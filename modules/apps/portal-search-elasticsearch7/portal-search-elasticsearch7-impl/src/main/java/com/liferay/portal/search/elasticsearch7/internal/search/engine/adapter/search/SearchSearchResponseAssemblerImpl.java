@@ -22,7 +22,6 @@ import com.liferay.portal.search.elasticsearch7.internal.hits.SearchHitsTranslat
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -85,9 +84,7 @@ public class SearchSearchResponseAssemblerImpl
 			elasticsearchAggregation, _aggregationResults,
 			new SearchHitsTranslator(
 				_searchHitBuilderFactory, _searchHitsBuilderFactory,
-				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_geoBuilders),
-			_geoBuilders);
+				_documentBuilderFactory, _highlightFieldBuilderFactory));
 	}
 
 	@Override
@@ -167,8 +164,7 @@ public class SearchSearchResponseAssemblerImpl
 
 		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator(
 			_searchHitBuilderFactory, _searchHitsBuilderFactory,
-			_documentBuilderFactory, _highlightFieldBuilderFactory,
-			_geoBuilders);
+			_documentBuilderFactory, _highlightFieldBuilderFactory);
 
 		SearchHits searchHits = searchResponse.getHits();
 
@@ -199,9 +195,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private GeoBuilders _geoBuilders;
 
 	@Reference
 	private GroupByResponseFactory _groupByResponseFactory;

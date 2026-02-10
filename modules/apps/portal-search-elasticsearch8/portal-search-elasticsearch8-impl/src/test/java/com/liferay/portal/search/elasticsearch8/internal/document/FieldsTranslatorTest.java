@@ -34,7 +34,7 @@ public class FieldsTranslatorTest {
 
 	@Test
 	public void testDocumentSourceMapWithMultiValueField() {
-		FieldsTranslator fieldsTranslator = new FieldsTranslator(null);
+		FieldsTranslator fieldsTranslator = new FieldsTranslator();
 
 		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
 

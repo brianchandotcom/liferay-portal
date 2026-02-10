@@ -146,12 +146,10 @@ public class ElasticsearchAggregationResultTranslator
 
 	public ElasticsearchAggregationResultTranslator(
 		Aggregate aggregate, AggregationResults aggregationResults,
-		GeoBuilders geoBuilders,
 		HitsMetadataTranslator hitsMetadataTranslator) {
 
 		_aggregate = aggregate;
 		_aggregationResults = aggregationResults;
-		_geoBuilders = geoBuilders;
 		_hitsMetadataTranslator = hitsMetadataTranslator;
 	}
 
@@ -160,8 +158,7 @@ public class ElasticsearchAggregationResultTranslator
 		Aggregate aggregate) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			aggregate, _aggregationResults, _geoBuilders,
-			_hitsMetadataTranslator);
+			aggregate, _aggregationResults, _hitsMetadataTranslator);
 	}
 
 	@Override
@@ -788,7 +785,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		LatLonGeoLocation latLonGeoLocation = geoLocation.latlon();
 
-		return _geoBuilders.geoLocationPoint(
+		return GeoBuilders.INSTANCE.geoLocationPoint(
 			latLonGeoLocation.lat(), latLonGeoLocation.lon());
 	}
 
@@ -888,7 +885,6 @@ public class ElasticsearchAggregationResultTranslator
 
 	private final Aggregate _aggregate;
 	private final AggregationResults _aggregationResults;
-	private final GeoBuilders _geoBuilders;
 	private final HitsMetadataTranslator _hitsMetadataTranslator;
 
 }

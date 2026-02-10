@@ -25,10 +25,6 @@ import org.elasticsearch.common.geo.GeoPoint;
  */
 public class DocumentFieldsTranslator {
 
-	public DocumentFieldsTranslator(GeoBuilders geoBuilders) {
-		_geoBuilders = geoBuilders;
-	}
-
 	public void populateAlternateUID(
 		Map<String, DocumentField> documentFieldsMap,
 		DocumentBuilder documentBuilder, String alternateUidFieldName) {
@@ -93,7 +89,7 @@ public class DocumentFieldsTranslator {
 
 		if (name.endsWith(_GEOPOINT_SUFFIX)) {
 			documentBuilder.setGeoLocationPoint(
-				name, _geoBuilders.geoLocationPoint((String)value));
+				name, GeoBuilders.INSTANCE.geoLocationPoint((String)value));
 		}
 		else {
 			if (value instanceof Collection) {
@@ -119,7 +115,7 @@ public class DocumentFieldsTranslator {
 
 		GeoPoint geoPoint = GeoPoint.fromGeohash(value2);
 
-		return _geoBuilders.geoLocationPoint(
+		return GeoBuilders.INSTANCE.geoLocationPoint(
 			geoPoint.getLat(), geoPoint.getLon());
 	}
 
@@ -130,7 +126,7 @@ public class DocumentFieldsTranslator {
 
 		List<Double> list = (List<Double>)map.get("coordinates");
 
-		return _geoBuilders.geoLocationPoint(list.get(1), list.get(0));
+		return GeoBuilders.INSTANCE.geoLocationPoint(list.get(1), list.get(0));
 	}
 
 	private boolean _translateGeoLocationPoint(
@@ -160,7 +156,5 @@ public class DocumentFieldsTranslator {
 	private static final String _GEOPOINT_SUFFIX = ".geopoint";
 
 	private static final String _UID_FIELD_NAME = "uid";
-
-	private final GeoBuilders _geoBuilders;
 
 }

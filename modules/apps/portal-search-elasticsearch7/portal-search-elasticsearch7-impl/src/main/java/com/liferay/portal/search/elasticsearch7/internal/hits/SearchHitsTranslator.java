@@ -11,7 +11,6 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch7.internal.document.DocumentFieldsTranslator;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHit;
@@ -39,14 +38,12 @@ public class SearchHitsTranslator {
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory,
 		DocumentBuilderFactory documentBuilderFactory,
-		HighlightFieldBuilderFactory highlightFieldBuilderFactory,
-		GeoBuilders geoBuilders) {
+		HighlightFieldBuilderFactory highlightFieldBuilderFactory) {
 
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
 		_documentBuilderFactory = documentBuilderFactory;
 		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
-		_geoBuilders = geoBuilders;
 	}
 
 	public SearchHits translate(
@@ -131,7 +128,7 @@ public class SearchHitsTranslator {
 		String alternateUidFieldName) {
 
 		DocumentFieldsTranslator documentFieldsTranslator =
-			new DocumentFieldsTranslator(_geoBuilders);
+			new DocumentFieldsTranslator();
 
 		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
 
@@ -185,7 +182,6 @@ public class SearchHitsTranslator {
 	}
 
 	private final DocumentBuilderFactory _documentBuilderFactory;
-	private final GeoBuilders _geoBuilders;
 	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;

@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
-import com.liferay.portal.search.internal.geolocation.GeoBuildersImpl;
 
 /**
  * @author Dylan Rebelak
@@ -118,8 +117,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_documentBuilderFactory",
 			new DocumentBuilderFactoryImpl());
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_geoBuilders", new GeoBuildersImpl());
 
 		return getDocumentRequestExecutor;
 	}

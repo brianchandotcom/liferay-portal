@@ -114,8 +114,8 @@ public class JournalArticleExpandoGeolocationSearchTest {
 				).query(
 					queries.geoDistance(
 						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
-						geoBuilders.geoLocationPoint(34.01, -117.42),
-						geoBuilders.geoDistance(1000))
+						GeoBuilders.INSTANCE.geoLocationPoint(34.01, -117.42),
+						GeoBuilders.INSTANCE.geoDistance(1000))
 				).build()
 			).emptySearchEnabled(
 				true
@@ -129,8 +129,8 @@ public class JournalArticleExpandoGeolocationSearchTest {
 				).query(
 					queries.geoDistance(
 						_EXPANDO_COLUMN_GEOLOCATION_FULL_NAME,
-						geoBuilders.geoLocationPoint(34.01, -117.42),
-						geoBuilders.geoDistance(100))
+						GeoBuilders.INSTANCE.geoLocationPoint(34.01, -117.42),
+						GeoBuilders.INSTANCE.geoDistance(100))
 				).build()
 			).emptySearchEnabled(
 				true
@@ -324,9 +324,6 @@ public class JournalArticleExpandoGeolocationSearchTest {
 
 	@Inject
 	protected ExpandoTableLocalService expandoTableLocalService;
-
-	@Inject
-	protected GeoBuilders geoBuilders;
 
 	@Inject
 	protected JournalArticleLocalService journalArticleLocalService;

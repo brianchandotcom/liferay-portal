@@ -36,10 +36,6 @@ import java.util.Map;
  */
 public class FieldsTranslator {
 
-	public FieldsTranslator(GeoBuilders geoBuilders) {
-		_geoBuilders = geoBuilders;
-	}
-
 	public void populateAlternateUID(
 		String alternateUidFieldName, DocumentBuilder documentBuilder,
 		Map<String, JsonData> jsonDatas) {
@@ -115,7 +111,8 @@ public class FieldsTranslator {
 
 		if (fieldName.endsWith(_GEOPOINT_SUFFIX)) {
 			documentBuilder.setGeoLocationPoint(
-				fieldName, _geoBuilders.geoLocationPoint(jsonValue.toString()));
+				fieldName,
+				GeoBuilders.INSTANCE.geoLocationPoint(jsonValue.toString()));
 		}
 		else {
 			JsonValue.ValueType valueType = jsonValue.getValueType();
@@ -143,7 +140,7 @@ public class FieldsTranslator {
 			JsonNumber latitudeJsonNumber = jsonArray.getJsonNumber(1);
 			JsonNumber longitudeJsonNumber = jsonArray.getJsonNumber(0);
 
-			return _geoBuilders.geoLocationPoint(
+			return GeoBuilders.INSTANCE.geoLocationPoint(
 				latitudeJsonNumber.doubleValue(),
 				longitudeJsonNumber.doubleValue());
 		}
@@ -152,7 +149,7 @@ public class FieldsTranslator {
 
 		String[] coordinatesParts = coordinates.split(",");
 
-		return _geoBuilders.geoLocationPoint(
+		return GeoBuilders.INSTANCE.geoLocationPoint(
 			Double.valueOf(coordinatesParts[0]),
 			Double.valueOf(coordinatesParts[1]));
 	}
@@ -231,7 +228,5 @@ public class FieldsTranslator {
 	private static final String _GEOPOINT_SUFFIX = ".geopoint";
 
 	private static final String _UID_FIELD_NAME = "uid";
-
-	private final GeoBuilders _geoBuilders;
 
 }

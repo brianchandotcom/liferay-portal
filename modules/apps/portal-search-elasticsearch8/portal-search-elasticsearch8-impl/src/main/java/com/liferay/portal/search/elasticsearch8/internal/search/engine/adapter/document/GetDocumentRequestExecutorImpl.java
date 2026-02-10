@@ -16,7 +16,6 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.document.FieldsTranslator;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
-import com.liferay.portal.search.geolocation.GeoBuilders;
 
 import java.io.IOException;
 
@@ -48,7 +47,7 @@ public class GetDocumentRequestExecutorImpl
 
 		JsonData jsonData = getResponse.source();
 
-		FieldsTranslator fieldsTranslator = new FieldsTranslator(_geoBuilders);
+		FieldsTranslator fieldsTranslator = new FieldsTranslator();
 
 		fieldsTranslator.translateSource(documentBuilder, jsonData);
 
@@ -80,8 +79,5 @@ public class GetDocumentRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private GeoBuilders _geoBuilders;
 
 }

@@ -7,62 +7,142 @@ package com.liferay.portal.search.geolocation;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface GeoBuilders {
+public class GeoBuilders {
+
+	public static final GeoBuilders INSTANCE = new GeoBuilders();
 
 	public CircleShape circleShape(
-		Coordinate centerCoordinate, GeoDistance radiusGeoDistance);
+		Coordinate centerCoordinate, GeoDistance radiusGeoDistance) {
 
-	public CircleShapeBuilder circleShapeBuilder();
+		return circleShapeBuilder(
+		).center(
+			centerCoordinate
+		).radius(
+			radiusGeoDistance
+		).build();
+	}
 
-	public Coordinate coordinate(double x, double y);
+	public CircleShapeBuilder circleShapeBuilder() {
+		return new CircleShapeBuilder();
+	}
 
-	public Coordinate coordinate(double x, double y, double z);
+	public Coordinate coordinate(double x, double y) {
+		return new Coordinate(x, y);
+	}
+
+	public Coordinate coordinate(double x, double y, double z) {
+		return new Coordinate(x, y, z);
+	}
 
 	public EnvelopeShape envelopeShape(
-		Coordinate topLeftCoordinate, Coordinate bottomRightCoordinate);
+		Coordinate topLeftCoordinate, Coordinate bottomRightCoordinate) {
 
-	public EnvelopeShapeBuilder envelopeShapeBuilder();
+		return envelopeShapeBuilder(
+		).topLeft(
+			topLeftCoordinate
+		).bottomRight(
+			bottomRightCoordinate
+		).build();
+	}
 
-	public GeoDistance geoDistance(double distance);
+	public EnvelopeShapeBuilder envelopeShapeBuilder() {
+		return new EnvelopeShapeBuilder();
+	}
 
-	public GeoDistance geoDistance(double distance, DistanceUnit distanceUnit);
+	public GeoDistance geoDistance(double distance) {
+		return new GeoDistance(distance);
+	}
 
-	public GeoLocationPoint geoLocationPoint(double latitude, double longitude);
+	public GeoDistance geoDistance(double distance, DistanceUnit distanceUnit) {
+		return new GeoDistance(distance, distanceUnit);
+	}
 
-	public GeoLocationPoint geoLocationPoint(long geoHash);
+	public GeoLocationPoint geoLocationPoint(
+		double latitude, double longitude) {
 
-	public GeoLocationPoint geoLocationPoint(String geoHash);
+		return GeoLocationPoint.fromLatitudeLongitude(latitude, longitude);
+	}
 
-	public GeometryCollectionShapeBuilder geometryCollectionShapeBuilder();
+	public GeoLocationPoint geoLocationPoint(long geoHash) {
+		return GeoLocationPoint.fromGeoHashLong(geoHash);
+	}
 
-	public LineStringShape lineStringShape(List<Coordinate> coordinates);
+	public GeoLocationPoint geoLocationPoint(String geoHash) {
+		return GeoLocationPoint.fromGeoHash(geoHash);
+	}
 
-	public LineStringShapeBuilder lineStringShapeBuilder();
+	public GeometryCollectionShapeBuilder geometryCollectionShapeBuilder() {
+		return new GeometryCollectionShapeBuilder();
+	}
 
-	public MultiLineStringShapeBuilder multiLineStringShapeBuilder();
+	public LineStringShape lineStringShape(List<Coordinate> coordinates) {
+		return lineStringShapeBuilder(
+		).coordinates(
+			coordinates
+		).build();
+	}
 
-	public MultiPointShape multiPointShape(List<Coordinate> coordinates);
+	public LineStringShapeBuilder lineStringShapeBuilder() {
+		return new LineStringShapeBuilder();
+	}
 
-	public MultiPointShapeBuilder multiPointShapeBuilder();
+	public MultiLineStringShapeBuilder multiLineStringShapeBuilder() {
+		return new MultiLineStringShapeBuilder();
+	}
 
-	public MultiPolygonShape multiPolygonShape(Orientation orientation);
+	public MultiPointShape multiPointShape(List<Coordinate> coordinates) {
+		return multiPointShapeBuilder(
+		).coordinates(
+			coordinates
+		).build();
+	}
 
-	public MultiPolygonShapeBuilder multiPolygonShapeBuilder();
+	public MultiPointShapeBuilder multiPointShapeBuilder() {
+		return new MultiPointShapeBuilder();
+	}
 
-	public PointShape pointShape(Coordinate coordinate);
+	public MultiPolygonShape multiPolygonShape(Orientation orientation) {
+		return multiPolygonShapeBuilder(
+		).orientation(
+			orientation
+		).build();
+	}
 
-	public PointShapeBuilder pointShapeBuilder();
+	public MultiPolygonShapeBuilder multiPolygonShapeBuilder() {
+		return new MultiPolygonShapeBuilder();
+	}
+
+	public PointShape pointShape(Coordinate coordinate) {
+		return pointShapeBuilder(
+		).addCoordinate(
+			coordinate
+		).build();
+	}
+
+	public PointShapeBuilder pointShapeBuilder() {
+		return new PointShapeBuilder();
+	}
 
 	public PolygonShape polygonShape(
-		LineStringShape shellLineStringShape, Orientation orientation);
+		LineStringShape shellLineStringShape, Orientation orientation) {
 
-	public PolygonShapeBuilder polygonShapeBuilder();
+		return polygonShapeBuilder(
+		).shell(
+			shellLineStringShape
+		).orientation(
+			orientation
+		).build();
+	}
+
+	public PolygonShapeBuilder polygonShapeBuilder() {
+		return new PolygonShapeBuilder();
+	}
+
+	private GeoBuilders() {
+	}
 
 }

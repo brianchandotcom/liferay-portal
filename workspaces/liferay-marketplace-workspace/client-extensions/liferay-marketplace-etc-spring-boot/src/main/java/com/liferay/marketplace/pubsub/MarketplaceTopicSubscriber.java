@@ -63,14 +63,22 @@ public class MarketplaceTopicSubscriber {
 
 	@PostConstruct
 	protected void activate() throws Exception {
-		GoogleCredentials googleCredentials =
-			ServiceAccountCredentials.fromStream(
+		GoogleCredentials googleCredentials;
+
+		try {
+			googleCredentials = ServiceAccountCredentials.fromStream(
 				new ByteArrayInputStream(
 					_serviceAccountKey.getBytes(StandardCharsets.UTF_8))
 			).createScoped(
 				Collections.singletonList(
 					"https://www.googleapis.com/auth/cloud-platform")
 			);
+		}
+		catch (Exception exception) {
+			_log.error("Unable to retrieve Google Credentials", exception);
+
+			return;
+		}
 
 		CredentialsProvider credentialsProvider =
 			FixedCredentialsProvider.create(googleCredentials);

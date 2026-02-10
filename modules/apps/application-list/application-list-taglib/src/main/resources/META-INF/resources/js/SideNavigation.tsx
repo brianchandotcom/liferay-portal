@@ -127,7 +127,7 @@ function SideNavigation({
 				</SidePanel.Title>
 			</SidePanel.Header>
 
-			<SidePanel.Body>
+			<SidePanel.Body className="c-px-0">
 				<ClayVerticalNav
 					active={portletId}
 					expandedKeys={expandedKeys}

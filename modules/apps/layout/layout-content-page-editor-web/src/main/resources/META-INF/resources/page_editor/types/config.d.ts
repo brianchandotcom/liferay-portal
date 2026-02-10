@@ -5,11 +5,9 @@
 
 import type {LayoutType} from '../app/config/constants/layoutTypes';
 import type {SidebarPanel} from './SidebarPanel';
-
 export interface Config {
 	actionableInfoItemSelectorURL: string;
 	addFragmentCompositionURL: string;
-	validateFragmentCompositionURL: string;
 	addFragmentEntryLinkCommentURL: string;
 	addFragmentEntryLinkURL: string;
 	addFragmentEntryLinksURL: string;
@@ -127,6 +125,8 @@ export interface Config {
 		subtypes: Array<{label: string; value: string}>;
 		value: string;
 	}>;
+	fragmentCompositionDescriptionMaxLength: number;
+	fragmentCompositionNameMaxLength: number;
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
 	frontendTokens: {
@@ -250,6 +250,7 @@ export interface Config {
 	updateSegmentsExperiencePriorityURL: string;
 	updateSegmentsExperienceURL: string;
 	validateExpressionURL: string;
+	validateFragmentCompositionURL: string;
 	videoItemSelectorURL: string;
 	workflowEnabled: boolean;
 }

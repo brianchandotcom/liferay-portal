@@ -8,6 +8,7 @@ import {
 	IBulkActionTaskType,
 } from '../../../common/types/BulkActionTask';
 import {
+	BULK_ACTION_ASSIGN_DEFAULT_WORKFLOW,
 	BULK_ACTION_ASSIGN_TO,
 	BULK_ACTION_CATEGORIES,
 	BULK_ACTION_DEFAULT_PERMISSIONS,
@@ -34,6 +35,19 @@ type BulkActionMessage = {
 };
 
 const BULK_ACTION_MESSAGES: BulkActionMessage = {
+	[BULK_ACTION_ASSIGN_DEFAULT_WORKFLOW]: {
+		info: {
+			all: Liferay.Language.get(
+				'assign-default-workflow-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'assign-default-workflow-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'assign-default-workflow-action-started-for-one-asset'
+			),
+		},
+	},
 	[BULK_ACTION_ASSIGN_TO]: {
 		info: {
 			all: Liferay.Language.get(

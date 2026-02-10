@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.segments.asah.connector.cache.AsahSegmentsEntryCache;
+import com.liferay.segments.asah.connector.internal.cache.AsahSegmentsEntryCacheImpl;
 import com.liferay.segments.asah.connector.internal.context.contributor.SegmentsAsahRequestContextContributor;
 import com.liferay.segments.context.Context;
 import com.liferay.segments.model.SegmentsEntryRel;
@@ -42,7 +42,7 @@ public class AsahSegmentsEntryProviderTest {
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryProvider, "_asahSegmentsEntryCache",
-			_asahSegmentsEntryCache);
+			_asahSegmentsEntryCacheImpl);
 		ReflectionTestUtil.setFieldValue(
 			_asahSegmentsEntryProvider, "_segmentsEntryRelLocalService",
 			_segmentsEntryRelLocalService);
@@ -103,7 +103,7 @@ public class AsahSegmentsEntryProviderTest {
 		};
 
 		Mockito.when(
-			_asahSegmentsEntryCache.getSegmentsEntryIds(userId)
+			_asahSegmentsEntryCacheImpl.getSegmentsEntryIds(userId)
 		).thenReturn(
 			segmentsEntryIds
 		);
@@ -175,8 +175,8 @@ public class AsahSegmentsEntryProviderTest {
 		return segmentsEntryRel;
 	}
 
-	private final AsahSegmentsEntryCache _asahSegmentsEntryCache = Mockito.mock(
-		AsahSegmentsEntryCache.class);
+	private final AsahSegmentsEntryCacheImpl _asahSegmentsEntryCacheImpl =
+		Mockito.mock(AsahSegmentsEntryCacheImpl.class);
 	private final AsahSegmentsEntryProvider _asahSegmentsEntryProvider =
 		new AsahSegmentsEntryProvider();
 	private final SegmentsEntryRelLocalService _segmentsEntryRelLocalService =

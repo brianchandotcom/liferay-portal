@@ -32,9 +32,9 @@ public class AsahSegmentsEntryCacheTest {
 	@Before
 	public void setUp() {
 		ReflectionTestUtil.setFieldValue(
-			_asahSegmentsEntryCache, "_portalCache", _portalCache);
+			_asahSegmentsEntryCacheImpl, "_portalCache", _portalCache);
 		ReflectionTestUtil.setFieldValue(
-			_asahSegmentsEntryCache, "_segmentsAsahConfigurationProvider",
+			_asahSegmentsEntryCacheImpl, "_segmentsAsahConfigurationProvider",
 			new SegmentsAsahConfigurationProvider() {
 
 				public int getAnonymousUserSegmentsCacheExpirationTime(
@@ -64,7 +64,7 @@ public class AsahSegmentsEntryCacheTest {
 
 		Assert.assertArrayEquals(
 			segmentsEntryIds,
-			_asahSegmentsEntryCache.getSegmentsEntryIds(userId));
+			_asahSegmentsEntryCacheImpl.getSegmentsEntryIds(userId));
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
@@ -83,7 +83,8 @@ public class AsahSegmentsEntryCacheTest {
 
 		String cacheKey = _generateCacheKey(userId);
 
-		_asahSegmentsEntryCache.putSegmentsEntryIds(userId, segmentsEntryIds);
+		_asahSegmentsEntryCacheImpl.putSegmentsEntryIds(
+			userId, segmentsEntryIds);
 
 		Mockito.verify(
 			_portalCache, Mockito.times(1)
@@ -96,8 +97,8 @@ public class AsahSegmentsEntryCacheTest {
 		return "segments-" + userId;
 	}
 
-	private final AsahSegmentsEntryCache _asahSegmentsEntryCache =
-		new AsahSegmentsEntryCache();
+	private final AsahSegmentsEntryCacheImpl _asahSegmentsEntryCacheImpl =
+		new AsahSegmentsEntryCacheImpl();
 	private final PortalCache<String, long[]> _portalCache = Mockito.mock(
 		PortalCache.class);
 

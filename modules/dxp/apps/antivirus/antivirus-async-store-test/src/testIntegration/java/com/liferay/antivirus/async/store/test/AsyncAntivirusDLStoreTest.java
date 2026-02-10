@@ -37,8 +37,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -338,7 +338,6 @@ public class AsyncAntivirusDLStoreTest {
 				Assert.assertNull(
 					_dlFileEntryLocalService.fetchDLFileEntry(
 						dlFileEntry.getFileEntryId()));
-
 				Assert.assertTrue(
 					ArrayUtil.isEmpty(
 						_store.getFileVersions(

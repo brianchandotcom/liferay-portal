@@ -144,8 +144,8 @@ public class AntivirusScannerHelper {
 						_store.deleteFile(
 							companyId, repositoryId, fileName, versionLabel);
 
-						long userId = message.getLong("userId");
 						String userEmailAddress = StringPool.BLANK;
+						long userId = message.getLong("userId");
 						String userName = StringPool.BLANK;
 
 						if (userId != 0) {

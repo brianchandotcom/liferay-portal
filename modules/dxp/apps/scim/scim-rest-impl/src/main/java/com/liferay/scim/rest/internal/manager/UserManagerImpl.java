@@ -913,6 +913,11 @@ public class UserManagerImpl implements UserManager {
 			ReflectionUtil.throwException(exception);
 		}
 
+		ScimClientOAuth2ApplicationConfiguration
+			scimClientOAuth2ApplicationConfiguration =
+				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+					serviceContext.getCompanyId(), _configurationAdmin);
+
 		Predicate predicate = ExpandoValueTable.INSTANCE.columnId.eq(
 			expandoColumn.getColumnId()
 		).and(
@@ -920,9 +925,8 @@ public class UserManagerImpl implements UserManager {
 				ExpandoValueTable.INSTANCE.data
 			).eq(
 				ScimClientUtil.generateScimClientId(
-					ScimUtil.getScimClientOAuth2ApplicationConfiguration(
-						serviceContext.getCompanyId(), _configurationAdmin
-					).oAuth2ApplicationName())
+					scimClientOAuth2ApplicationConfiguration.
+						oAuth2ApplicationName())
 			)
 		);
 

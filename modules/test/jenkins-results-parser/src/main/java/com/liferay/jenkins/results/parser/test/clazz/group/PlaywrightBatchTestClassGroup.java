@@ -179,12 +179,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		playwrightJobProperties.removeAll(Collections.singleton(null));
 
 		for (JobProperty jobProperty : playwrightJobProperties) {
-			Collections.addAll(
-				_projectNames,
-				jobProperty.getValue(
-				).split(
-					","
-				));
+			String jobPropertyValue = jobProperty.getValue();
+
+			Collections.addAll(_projectNames, jobPropertyValue.split(","));
 		}
 
 		JobProperty excludesJobProperty =

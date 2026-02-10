@@ -10,11 +10,11 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {SystemSettingsPage} from '../configuration-admin-web/SystemSettingsPage';
 
 export class FacebookSystemSettingsPage {
-	readonly page: Page;
-	readonly systemSettingsPage: SystemSettingsPage;
-	readonly facebookConnectMenuItem: Locator;
 	readonly enabledCheckbox: Locator;
+	readonly facebookConnectMenuItem: Locator;
+	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly systemSettingsPage: SystemSettingsPage;
 
 	constructor(page: Page) {
 		this.page = page;

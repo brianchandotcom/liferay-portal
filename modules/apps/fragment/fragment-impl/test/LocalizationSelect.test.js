@@ -40,20 +40,27 @@ describe('LocalizationSelect', () => {
 	});
 
 	it('renders with current language', () => {
-		window.Liferay.ThemeDisplay = {
-			getLanguageId: jest.fn(() => 'es_ES'),
-		};
+		const themeDisplay = window.Liferay.ThemeDisplay;
 
-		render(
-			<LocalizationSelect
-				defaultLanguageId="en_US"
-				editMode={false}
-				hideLanguageLabel={false}
-				locales={locales}
-			/>
-		);
+		try {
+			window.Liferay.ThemeDisplay = {
+				getLanguageId: jest.fn(() => 'es_ES'),
+			};
 
-		expect(screen.getByText('es-ES')).toBeInTheDocument();
+			render(
+				<LocalizationSelect
+					defaultLanguageId="en_US"
+					editMode={false}
+					hideLanguageLabel={false}
+					locales={locales}
+				/>
+			);
+
+			expect(screen.getByText('es-ES')).toBeInTheDocument();
+		}
+		finally {
+			window.Liferay.ThemeDisplay = themeDisplay;
+		}
 	});
 
 	it('changes selected locale when clicking an option', () => {
@@ -67,7 +74,7 @@ describe('LocalizationSelect', () => {
 		);
 
 		fireEvent.click(screen.getByRole('combobox'));
-		fireEvent.click(document.getElementById('es_ES'));
+		fireEvent.click(screen.getByText('es-ES'));
 
 		expect(window.Liferay.fire).toHaveBeenCalledWith(
 			'localizationSelect:localeChanged',

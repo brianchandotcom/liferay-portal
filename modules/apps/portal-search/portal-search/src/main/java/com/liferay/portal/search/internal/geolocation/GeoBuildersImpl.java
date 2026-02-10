@@ -58,12 +58,12 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public Coordinate coordinate(double x, double y) {
-		return new CoordinateImpl(x, y);
+		return new Coordinate(x, y);
 	}
 
 	@Override
 	public Coordinate coordinate(double x, double y, double z) {
-		return new CoordinateImpl(x, y, z);
+		return new Coordinate(x, y, z);
 	}
 
 	@Override

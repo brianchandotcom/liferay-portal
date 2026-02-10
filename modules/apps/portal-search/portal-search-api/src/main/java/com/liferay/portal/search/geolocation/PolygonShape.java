@@ -5,24 +5,94 @@
 
 package com.liferay.portal.search.geolocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class PolygonShape extends Shape {
+public class PolygonShape extends Shape {
 
-	public abstract List<LineStringShape> getHoles();
-
-	public abstract Orientation getOrientation();
-
-	public abstract LineStringShape getShell();
-
-	protected PolygonShape(List<Coordinate> coordinates) {
-		super(coordinates);
+	@Override
+	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
+		return shapeTranslator.translate(this);
 	}
+
+	public List<LineStringShape> getHoles() {
+		return _holeLineStringShapes;
+	}
+
+	public Orientation getOrientation() {
+		return _orientation;
+	}
+
+	public LineStringShape getShell() {
+		return _shell;
+	}
+
+	public static class PolygonShapeBuilderImpl
+		extends ShapeBuilder<PolygonShapeBuilder>
+		implements PolygonShapeBuilder {
+
+		@Override
+		public PolygonShapeBuilder addHole(LineStringShape lineStringShape) {
+			_holeLineStringShapes.add(lineStringShape);
+
+			return this;
+		}
+
+		@Override
+		public PolygonShape build() {
+			return new PolygonShape(
+				coordinates, _holeLineStringShapes, _orientation, _shell);
+		}
+
+		@Override
+		public PolygonShapeBuilder holes(LineStringShape... lineStringShapes) {
+			_holeLineStringShapes.clear();
+
+			Collections.addAll(_holeLineStringShapes, lineStringShapes);
+
+			return this;
+		}
+
+		@Override
+		public PolygonShapeBuilder orientation(Orientation orientation) {
+			_orientation = orientation;
+
+			return this;
+		}
+
+		@Override
+		public PolygonShapeBuilder shell(LineStringShape shell) {
+			_shell = shell;
+
+			return this;
+		}
+
+		private final List<LineStringShape> _holeLineStringShapes =
+			new ArrayList<>();
+		private Orientation _orientation;
+		private LineStringShape _shell;
+
+	}
+
+	private PolygonShape(
+		List<Coordinate> coordinates,
+		List<LineStringShape> holeLineStringShapes, Orientation orientation,
+		LineStringShape shell) {
+
+		super(coordinates);
+
+		_holeLineStringShapes = Collections.unmodifiableList(
+			holeLineStringShapes);
+		_orientation = orientation;
+		_shell = shell;
+	}
+
+	private final List<LineStringShape> _holeLineStringShapes;
+	private final Orientation _orientation;
+	private final LineStringShape _shell;
 
 }

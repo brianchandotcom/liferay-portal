@@ -5,20 +5,21 @@
 
 package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.site.cms.site.initializer.util.UserSelectionFDSFilterUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -30,14 +31,11 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	public AssigneeSelectionFDSFilter(
 		ClassNameLocalService classNameLocalService, long companyId,
-		long[] groupIds, RoleService roleService,
-		UserLocalService userLocalService) {
+		RoleService roleService) {
 
 		_classNameLocalService = classNameLocalService;
 		_companyId = companyId;
-		_groupIds = groupIds;
 		_roleService = roleService;
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -68,13 +66,21 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 			TransformUtil.transform(
 				_roleService.getRoles(
 					_companyId, new int[] {RoleConstants.TYPE_DEPOT}),
-				role -> new SelectionFDSFilterItem(
-					role.getName(),
-					_getValue(roleClassNameId, role.getRoleId()))),
+				role -> {
+					if (StringUtil.equals(
+							DepotRolesConstants.
+								ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+							role.getName())) {
+
+						return null;
+					}
+
+					return new SelectionFDSFilterItem(
+						role.getName(),
+						_getValue(roleClassNameId, role.getRoleId()));
+				}),
 			TransformUtil.transform(
-				_userLocalService.searchBySocial(
-					_companyId, _groupIds, null, null, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS),
+				UserSelectionFDSFilterUtil.getUsers(),
 				user -> new SelectionFDSFilterItem(
 					user.getFullName(),
 					_getValue(userClassNameId, user.getUserId()))));
@@ -91,8 +97,6 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	private final ClassNameLocalService _classNameLocalService;
 	private final long _companyId;
-	private final long[] _groupIds;
 	private final RoleService _roleService;
-	private final UserLocalService _userLocalService;
 
 }

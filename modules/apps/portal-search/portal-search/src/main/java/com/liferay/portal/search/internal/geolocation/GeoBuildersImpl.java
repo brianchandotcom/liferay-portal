@@ -18,6 +18,7 @@ import com.liferay.portal.search.geolocation.GeometryCollectionShape;
 import com.liferay.portal.search.geolocation.GeometryCollectionShapeBuilder;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.LineStringShapeBuilder;
+import com.liferay.portal.search.geolocation.MultiLineStringShape;
 import com.liferay.portal.search.geolocation.MultiLineStringShapeBuilder;
 import com.liferay.portal.search.geolocation.MultiPointShape;
 import com.liferay.portal.search.geolocation.MultiPointShapeBuilder;
@@ -131,7 +132,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public MultiLineStringShapeBuilder multiLineStringShapeBuilder() {
-		return new MultiLineStringShapeImpl.MultiLineStringShapeBuilderImpl();
+		return new MultiLineStringShape.MultiLineStringShapeBuilderImpl();
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {StructureWorkflowItem} from '../modal/AssignDefaultWorkflowModalContent';
+import assignStructureDefaultWorkflowBulkAction from './actions/AssignStructureDefaultWorkflowBulkAction';
 import defaultWorkflowStructureAction from './actions/defaultWorkflowStructureAction';
 import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
@@ -131,7 +132,11 @@ export default function StructuresFDSPropsTransformer({
 					})
 				);
 
-				defaultWorkflowStructureAction(structureWorkflows);
+				assignStructureDefaultWorkflowBulkAction({
+					apiURL: otherProps.apiURL,
+					selectedData,
+					structureWorkflows,
+				});
 			}
 		},
 	};

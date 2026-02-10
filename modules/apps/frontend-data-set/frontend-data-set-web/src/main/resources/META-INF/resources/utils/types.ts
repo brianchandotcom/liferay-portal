@@ -108,8 +108,8 @@ export interface IBaseActions {
 
 interface IBulkActionItem {
 	href?: string;
-	icon: string;
-	label: string;
+	icon?: string;
+	label?: string;
 	method?: string;
 	target?: 'modal' | 'sidePanel';
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,36 +22,7 @@ public class GeometryCollectionShape extends Shape {
 		return _shapes;
 	}
 
-	public static class GeometryCollectionShapeBuilderImpl
-		extends ShapeBuilder<GeometryCollectionShapeBuilder>
-		implements GeometryCollectionShapeBuilder {
-
-		@Override
-		public GeometryCollectionShapeBuilder addShape(Shape shape) {
-			_shapes.add(shape);
-
-			return this;
-		}
-
-		@Override
-		public GeometryCollectionShape build() {
-			return new GeometryCollectionShape(coordinates, _shapes);
-		}
-
-		@Override
-		public GeometryCollectionShapeBuilder shapes(Shape... shapes) {
-			_shapes.clear();
-
-			Collections.addAll(_shapes, shapes);
-
-			return this;
-		}
-
-		private final List<Shape> _shapes = new ArrayList<>();
-
-	}
-
-	private GeometryCollectionShape(
+	protected GeometryCollectionShape(
 		List<Coordinate> coordinates, List<Shape> shapes) {
 
 		super(coordinates);

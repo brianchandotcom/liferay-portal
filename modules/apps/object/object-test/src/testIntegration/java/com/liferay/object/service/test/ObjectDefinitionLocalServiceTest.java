@@ -782,6 +782,21 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	@Test
+	public void testAddModifiableObjectDefinitionWithNullClassName() {
+		AssertUtils.assertFailure(
+			ObjectDefinitionClassNameException.MustNotBeNull.class,
+			"Class name is null",
+			() -> _objectDefinitionLocalService.addSystemObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, null, false, true,
+				false, true, false, false, false, false, false, null,
+				RandomTestUtil.randomLocaleStringMap(), true, "Test", null,
+				null, null, null, RandomTestUtil.randomLocaleStringMap(), false,
+				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
+				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
+				Collections.emptyList(), Collections.emptyList()));
+	}
+
+	@Test
 	public void testAddObjectDefinition() throws Exception {
 		AssertUtils.assertFailure(
 			ObjectDefinitionModifiableException.MustBeModifiable.class,

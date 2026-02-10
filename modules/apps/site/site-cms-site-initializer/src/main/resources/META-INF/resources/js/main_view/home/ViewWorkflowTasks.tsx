@@ -16,7 +16,6 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import AssignToModalContent from '../home/modal/AssignToModalContent';
-import TransitionWorkflowStateModalContent from '../home/modal/TransitionWorkflowStateModalContent';
 import UpdateDueDateModalContent from '../home/modal/UpdateDueDateModalContent';
 
 import '../../../css/home/Home.scss';
@@ -147,84 +146,6 @@ export default function ViewWorkflowTasks({
 		itemsActions:
 			selectedItem.value === 'assigned-to-me'
 				? [
-						{
-							data: {
-								id: 'approve',
-							},
-							isVisible: (itemData: any) =>
-								itemData.name === 'review',
-							label: Liferay.Language.get('approve'),
-							onClick: ({itemData}: any) => {
-								openCMSModal({
-									contentComponent: ({
-										closeModal,
-									}: {
-										closeModal: () => void;
-									}) =>
-										TransitionWorkflowStateModalContent({
-											closeModal,
-											loadData: getWorkflowTasks,
-											transitionName: 'approve',
-											workflowTaskId: Number(itemData.id),
-										}),
-									size: 'md',
-								});
-							},
-						},
-						{
-							data: {
-								id: 'reject',
-							},
-							isVisible: (itemData: any) =>
-								itemData.name === 'review',
-							label: Liferay.Language.get('reject'),
-							onClick: ({itemData}: any) => {
-								openCMSModal({
-									contentComponent: ({
-										closeModal,
-									}: {
-										closeModal: () => void;
-									}) =>
-										TransitionWorkflowStateModalContent({
-											closeModal,
-											loadData: () =>
-												new Promise<void>((resolve) =>
-													setTimeout(() => {
-														getWorkflowTasks();
-														resolve();
-													}, 1000)
-												),
-											transitionName: 'reject',
-											workflowTaskId: Number(itemData.id),
-										}),
-									size: 'md',
-								});
-							},
-						},
-						{
-							data: {
-								id: 'resubmit',
-							},
-							isVisible: (itemData: any) =>
-								itemData.name === 'update',
-							label: Liferay.Language.get('resubmit'),
-							onClick: ({itemData}: any) => {
-								openCMSModal({
-									contentComponent: ({
-										closeModal,
-									}: {
-										closeModal: () => void;
-									}) =>
-										TransitionWorkflowStateModalContent({
-											closeModal,
-											loadData: getWorkflowTasks,
-											transitionName: 'resubmit',
-											workflowTaskId: Number(itemData.id),
-										}),
-									size: 'md',
-								});
-							},
-						},
 						{
 							data: {
 								id: 'assignTo',

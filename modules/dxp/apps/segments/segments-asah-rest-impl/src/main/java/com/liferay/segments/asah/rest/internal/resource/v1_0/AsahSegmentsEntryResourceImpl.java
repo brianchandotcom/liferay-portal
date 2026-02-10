@@ -134,8 +134,7 @@ public class AsahSegmentsEntryResourceImpl
 				ArrayUtil.toLongArray(userIds));
 		}
 		catch (PortalException portalException) {
-			_log.error(
-				"Unable to remove individuals " + userIds, portalException);
+			_log.error("Unable to remove user IDs " + userIds, portalException);
 		}
 	}
 

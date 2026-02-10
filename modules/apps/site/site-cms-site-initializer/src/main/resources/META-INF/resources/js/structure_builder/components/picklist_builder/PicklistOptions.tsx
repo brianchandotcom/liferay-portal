@@ -54,7 +54,12 @@ export default function PicklistOptions() {
 			>
 				<FrontendDataSet
 					bulkActions={[
-						{icon: 'trash', label: Liferay.Language.get('delete')},
+						{
+							href: '',
+							icon: 'trash',
+							label: Liferay.Language.get('delete'),
+							target: 'modal',
+						},
 					]}
 					creationMenu={{
 						primaryItems: [

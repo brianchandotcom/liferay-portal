@@ -141,22 +141,22 @@ public class SiteNavigationMenuItemServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 			int order)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, order);
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId, order);
 	}
 
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long siteNavigationMenuId, String typeSettings,
+			long siteNavigationMenuItemId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
-			getUserId(), siteNavigationMenuId, typeSettings, serviceContext);
+			getUserId(), siteNavigationMenuItemId, typeSettings, serviceContext);
 	}
 
 	@Reference(

@@ -133,6 +133,7 @@ public class CustomAssetDisplayPageFriendlyURLResolverTest {
 			_friendlyURLResolver,
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getClassName()),
 			RandomTestUtil.randomLong(), friendlyURL, params);
 	}

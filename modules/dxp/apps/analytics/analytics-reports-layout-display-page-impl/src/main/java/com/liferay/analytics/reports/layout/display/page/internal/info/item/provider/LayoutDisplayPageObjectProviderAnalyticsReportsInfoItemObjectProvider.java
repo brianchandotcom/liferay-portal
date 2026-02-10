@@ -11,6 +11,7 @@ import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,6 +40,7 @@ public class
 			LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 				_layoutDisplayPageProviderRegistry.
 					getLayoutDisplayPageProviderByClassName(
+						CompanyThreadLocal.getCompanyId(),
 						classNameClassPKInfoItemIdentifier.getClassName());
 
 			return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(

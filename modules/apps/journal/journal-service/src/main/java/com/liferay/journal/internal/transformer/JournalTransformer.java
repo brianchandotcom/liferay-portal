@@ -644,7 +644,7 @@ public class JournalTransformer {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					JournalArticle.class.getName());
+					article.getCompanyId(), JournalArticle.class.getName());
 
 		if (layoutDisplayPageProvider == null) {
 			return friendlyURLMap;

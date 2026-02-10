@@ -78,7 +78,7 @@ public class ObjectEntryFolderDisplayPageFriendlyURLResolver
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				ObjectEntryFolder.class.getName());
+				companyId, ObjectEntryFolder.class.getName());
 	}
 
 	@Reference

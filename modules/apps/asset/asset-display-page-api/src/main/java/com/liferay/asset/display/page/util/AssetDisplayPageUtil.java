@@ -17,6 +17,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
@@ -35,6 +36,7 @@ public class AssetDisplayPageUtil {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					CompanyThreadLocal.getCompanyId(),
 					infoItemReference.getClassName());
 
 		if (layoutDisplayPageProvider == null) {
@@ -78,6 +80,7 @@ public class AssetDisplayPageUtil {
 			groupId, classNameId, classPK, defaultLayoutPageTemplateEntry,
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					CompanyThreadLocal.getCompanyId(),
 					PortalUtil.getClassName(classNameId)));
 	}
 
@@ -106,6 +109,7 @@ public class AssetDisplayPageUtil {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					CompanyThreadLocal.getCompanyId(),
 					infoItemReference.getClassName());
 
 		if (layoutDisplayPageProvider == null) {

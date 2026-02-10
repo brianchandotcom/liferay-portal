@@ -495,7 +495,8 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
+				getLayoutDisplayPageProviderByClassName(
+					_group.getCompanyId(), className);
 
 		return HashMapBuilder.<String, Object>put(
 			InfoDisplayWebKeys.INFO_ITEM, infoItem

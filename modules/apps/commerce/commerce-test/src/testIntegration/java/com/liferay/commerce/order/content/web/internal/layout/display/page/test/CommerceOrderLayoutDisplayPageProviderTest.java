@@ -93,6 +93,7 @@ public class CommerceOrderLayoutDisplayPageProviderTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					_commerceOrder.getCompanyId(),
 					CommerceOrder.class.getName());
 
 		Assert.assertEquals(

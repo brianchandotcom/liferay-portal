@@ -150,14 +150,16 @@ public class CustomAssetDisplayPageFriendlyURLResolverTest {
 
 		Mockito.when(
 			layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(Mockito.anyString())
+				getLayoutDisplayPageProviderByClassName(
+					Mockito.anyLong(), Mockito.anyString())
 		).thenReturn(
 			layoutDisplayPageProvider
 		);
 
 		Mockito.when(
 			layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(null)
+				getLayoutDisplayPageProviderByClassName(
+					Mockito.anyLong(), Mockito.isNull())
 		).thenReturn(
 			layoutDisplayPageProvider
 		);

@@ -63,7 +63,7 @@ public class AssetInfoDisplayRequestAttributesContributor
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					assetEntry.getClassName());
+					assetEntry.getCompanyId(), assetEntry.getClassName());
 
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_PROVIDER,

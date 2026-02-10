@@ -60,6 +60,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		LayoutDisplayPageProvider<T> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					themeDisplay.getCompanyId(),
 					_infoSearchClassMapperRegistry.getClassName(
 						infoItemReference.getClassName()));
 
@@ -102,6 +103,7 @@ public class AssetDisplayPageFriendlyURLProviderImpl
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					themeDisplay.getCompanyId(),
 					_infoSearchClassMapperRegistry.getClassName(
 						infoItemReference.getClassName()));
 

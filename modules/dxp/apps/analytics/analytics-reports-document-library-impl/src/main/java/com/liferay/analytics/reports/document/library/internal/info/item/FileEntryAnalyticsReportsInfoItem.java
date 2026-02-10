@@ -121,7 +121,7 @@ public class FileEntryAnalyticsReportsInfoItem
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
-					FileEntry.class.getName());
+					fileEntry.getCompanyId(), FileEntry.class.getName());
 
 		if (layoutDisplayPageProvider == null) {
 			return null;

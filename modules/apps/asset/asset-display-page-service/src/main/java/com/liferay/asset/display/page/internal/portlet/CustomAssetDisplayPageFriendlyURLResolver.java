@@ -135,7 +135,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 		return layoutDisplayPageProviderRegistry.
 			getLayoutDisplayPageProviderByClassName(
-				portal.getClassName(GetterUtil.getLong(parts[1])));
+				companyId, portal.getClassName(GetterUtil.getLong(parts[1])));
 	}
 
 	@Override

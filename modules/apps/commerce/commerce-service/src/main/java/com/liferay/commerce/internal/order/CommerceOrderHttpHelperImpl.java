@@ -1018,6 +1018,7 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					commerceOrder.getCompanyId(),
 					CommerceOrder.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(

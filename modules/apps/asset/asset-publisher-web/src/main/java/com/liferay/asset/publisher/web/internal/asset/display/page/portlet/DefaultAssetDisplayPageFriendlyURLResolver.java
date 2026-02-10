@@ -514,6 +514,7 @@ public class DefaultAssetDisplayPageFriendlyURLResolver
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					journalArticle.getCompanyId(),
 					JournalArticle.class.getName());
 
 		InfoItemReference infoItemReference = new InfoItemReference(

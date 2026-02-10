@@ -224,6 +224,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName());
 
 		httpServletRequest.setAttribute(
@@ -859,6 +860,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getClassName());
 
 		httpServletRequest.setAttribute(
@@ -898,7 +900,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
+				getLayoutDisplayPageProviderByClassName(
+					themeDisplay.getCompanyId(), className);
 
 		httpServletRequest.setAttribute(
 			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,

@@ -22,6 +22,48 @@ spec:
                     properties:
                         spec:
                             properties:
+                                backup:
+                                    properties:
+                                        enabled:
+                                            default: false
+                                            type: boolean
+                                        planName:
+                                            type: string
+                                        region:
+                                            type: string
+                                        rules:
+                                            items:
+                                                properties:
+                                                    retentionDays:
+                                                        type: integer
+                                                    ruleName:
+                                                        type: string
+                                                    schedule:
+                                                        type: string
+                                                    startWindow:
+                                                        type: integer
+                                                required:
+                                                    -   retentionDays
+                                                    -   ruleName
+                                                    -   schedule
+                                                    -   startWindow
+                                                type: object
+                                            minItems: 1
+                                            type: array
+                                        selectionName:
+                                            type: string
+                                        serviceRoleName:
+                                            type: string
+                                        vaultName:
+                                            type: string
+                                    required:
+                                        -   planName
+                                        -   region
+                                        -   rules
+                                        -   selectionName
+                                        -   serviceRoleName
+                                        -   vaultName
+                                    type: object
                                 commonTags:
                                     additionalProperties: true
                                     default: {}

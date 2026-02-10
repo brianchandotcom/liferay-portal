@@ -41,6 +41,7 @@ metadata:
 rules:
     -   apiGroups:
             -   "aws.m.upbound.io"
+            -   "backup.aws.m.upbound.io"
             -   "ec2.aws.m.upbound.io"
             -   "iam.aws.m.upbound.io"
             -   "opensearch.aws.m.upbound.io"
@@ -60,6 +61,9 @@ roleRef:
     kind: ClusterRole
     name: crossplane-provider-aws
 subjects:
+    -   kind: ServiceAccount
+        name: provider-aws-backup
+        namespace: crossplane-system
     -   kind: ServiceAccount
         name: provider-aws-ec2
         namespace: crossplane-system

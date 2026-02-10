@@ -59,6 +59,30 @@ export async function patchTaskById({
 	return await ApiHelper.patch<ITask>(body, `/o/cmp/tasks/${taskId}`);
 }
 
+export async function postSubscribeTaskByExternalReferenceCode({
+	externalReferenceCode,
+	scopeKey,
+}: {
+	externalReferenceCode: string;
+	scopeKey: string;
+}) {
+	return await ApiHelper.post(
+		`/o/cmp/tasks/scopes/${scopeKey}/by-external-reference-code/${externalReferenceCode}/subscribe`
+	);
+}
+
+export async function postUnsubscribeTaskByExternalReferenceCode({
+	externalReferenceCode,
+	scopeKey,
+}: {
+	externalReferenceCode: string;
+	scopeKey: string;
+}) {
+	return await ApiHelper.post(
+		`/o/cmp/tasks/scopes/${scopeKey}/by-external-reference-code/${externalReferenceCode}/unsubscribe`
+	);
+}
+
 export async function postTaskByScope({
 	body,
 	scopeKey,

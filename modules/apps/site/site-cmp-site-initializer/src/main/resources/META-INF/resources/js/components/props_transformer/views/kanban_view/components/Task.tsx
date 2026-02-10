@@ -9,7 +9,10 @@ import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {DateRenderer} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
-import {displayErrorToast} from '@liferay/site-cms-site-initializer';
+import {
+	displayErrorToast,
+	displayRequestSuccessToast,
+} from '@liferay/site-cms-site-initializer';
 import classNames from 'classnames';
 import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
@@ -19,6 +22,8 @@ import {
 	deleteTaskById,
 	getUserAccount,
 	patchTaskById,
+	postSubscribeTaskByExternalReferenceCode,
+	postUnsubscribeTaskByExternalReferenceCode,
 } from '../../../../../utils/api';
 import {openCMPModal} from '../../../../../utils/openCMPModal';
 import {
@@ -104,6 +109,77 @@ export default function Task(task: ITask) {
 									{
 										type: 'divider',
 									},
+									task.actions.subscribe
+										? {
+												label: Liferay.Language.get(
+													'watch-task'
+												),
+												onClick: async () => {
+													const {error} =
+														await postSubscribeTaskByExternalReferenceCode(
+															{
+																externalReferenceCode:
+																	task
+																		.embedded
+																		.externalReferenceCode,
+																scopeKey:
+																	task
+																		.embedded
+																		.scopeKey,
+															}
+														);
+
+													if (!error) {
+														Liferay.fire(
+															FDS_EVENT.UPDATE_DISPLAY,
+															{id: dataSetId}
+														);
+
+														displayRequestSuccessToast();
+													}
+													else {
+														displayErrorToast(
+															error
+														);
+													}
+												},
+												symbolLeft: 'bell-on',
+											}
+										: {
+												label: Liferay.Language.get(
+													'stop-watching-task'
+												),
+												onClick: async () => {
+													const {error} =
+														await postUnsubscribeTaskByExternalReferenceCode(
+															{
+																externalReferenceCode:
+																	task
+																		.embedded
+																		.externalReferenceCode,
+																scopeKey:
+																	task
+																		.embedded
+																		.scopeKey,
+															}
+														);
+
+													if (!error) {
+														Liferay.fire(
+															FDS_EVENT.UPDATE_DISPLAY,
+															{id: dataSetId}
+														);
+
+														displayRequestSuccessToast();
+													}
+													else {
+														displayErrorToast(
+															error
+														);
+													}
+												},
+												symbolLeft: 'bell-off',
+											},
 									{
 										label: Liferay.Language.get(
 											'assign-to-me'

@@ -3273,6 +3273,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 					"C_" + jsonObject.getString("objectDefinitionName"));
 
 			if (objectDefinition == null) {
+				objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						serviceContext.getCompanyId(),
+						jsonObject.getString("objectDefinitionName"));
+			}
+
+			if (objectDefinition == null) {
 				continue;
 			}
 
@@ -3321,6 +3328,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					_objectEntryLocalService.getObjectEntry(
 						objectEntry.getId());
 
+				String objectDefinitionName = objectDefinition.getName();
+
 				siteNavigationMenuItemSettingsBuilder.put(
 					objectEntrySiteInitializerKey,
 					new SiteNavigationMenuItemSetting() {
@@ -3331,7 +3340,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 								serviceBuilderObjectEntry.
 									getExternalReferenceCode();
 							title = StringBundler.concat(
-								objectDefinition.getName(), StringPool.SPACE,
+								objectDefinitionName, StringPool.SPACE,
 								serviceBuilderObjectEntry.getObjectEntryId());
 						}
 					});

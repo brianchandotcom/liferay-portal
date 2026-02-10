@@ -376,6 +376,9 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 		title,
 	} = props;
 
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const [tableSections, setTableSections] =
 		useState<Array<IDataSetTableSection> | null>(null);
 	const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
@@ -423,7 +426,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 				storedFDSFields,
 				tableSectionsOrder,
 				false,
-				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				orderByERC
 			) as IDataSetTableSection[]
 		);
 	};
@@ -576,7 +579,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 					tableSections,
 					storedFDSFieldsOrder,
 					false,
-					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+					orderByERC
 				) as IDataSetTableSection[]
 			);
 
@@ -764,9 +767,7 @@ function Table(props: IDataSetSectionProps & {title?: string}) {
 						tableSectionsOrder: order,
 					});
 				}}
-				orderByERC={
-					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
-				}
+				orderByERC={orderByERC}
 				title={title}
 			/>
 		</ClayLayout.ContentCol>

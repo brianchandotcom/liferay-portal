@@ -92,6 +92,9 @@ interface IAction extends IOrderable {
 }
 
 const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const [actions, setActions] = useState<Array<IAction>>([]);
 	const [activeSection, setActiveSection] = useState(SECTIONS.ITEM_ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
@@ -206,7 +209,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 				storedActions,
 				actionsOrder,
 				false,
-				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				orderByERC
 			) as IAction[]
 		);
 
@@ -309,7 +312,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 					actions,
 					storedActionsOrder,
 					false,
-					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+					orderByERC
 				) as IAction[]
 			);
 
@@ -424,11 +427,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-item-action'
 										)}
-										orderByERC={
-											!!Liferay.FeatureFlags?.[
-												FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
-											]
-										}
+										orderByERC={orderByERC}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}
@@ -456,11 +455,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-creation-action'
 										)}
-										orderByERC={
-											!!Liferay.FeatureFlags?.[
-												FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
-											]
-										}
+										orderByERC={orderByERC}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}

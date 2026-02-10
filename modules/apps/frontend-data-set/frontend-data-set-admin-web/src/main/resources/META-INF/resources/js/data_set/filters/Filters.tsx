@@ -194,6 +194,9 @@ function Filters({
 	resolvedRESTSchemas,
 	restApplications,
 }: IDataSetSectionProps) {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
 	const [activeFilterType, setActiveFilterType] =
 		useState<EFilterType | null>(null);
@@ -243,7 +246,7 @@ function Filters({
 				filtersOrdered,
 				responseJSON.filtersOrder,
 				true,
-				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				orderByERC
 			) as FilterCollection;
 
 			setFilters(
@@ -298,7 +301,7 @@ function Filters({
 					filters,
 					storedFiltersOrder,
 					true,
-					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+					orderByERC
 				) as FilterCollection
 			);
 

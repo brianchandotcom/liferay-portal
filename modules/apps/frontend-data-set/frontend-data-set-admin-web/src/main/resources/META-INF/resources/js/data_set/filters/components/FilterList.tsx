@@ -38,6 +38,9 @@ const FilterList = ({
 	updateActive: (item: IFilter) => Promise<void>;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	return (
 		<OrderableTable
 			actions={[
@@ -97,9 +100,7 @@ const FilterList = ({
 			onOrderChange={({order}: {order: string}) => {
 				updateFiltersOrder({filtersOrder: order});
 			}}
-			orderByERC={
-				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
-			}
+			orderByERC={orderByERC}
 			title={Liferay.Language.get('filters')}
 		/>
 	);

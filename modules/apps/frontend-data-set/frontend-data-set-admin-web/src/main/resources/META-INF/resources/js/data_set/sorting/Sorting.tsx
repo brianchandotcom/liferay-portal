@@ -488,6 +488,9 @@ const Sorting = ({
 	namespace,
 	saveDataSetSortURL,
 }: IDataSetSectionProps) => {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IDataSetSort>>([]);
 	const [loading, setLoading] = useState(true);
@@ -523,12 +526,12 @@ const Sorting = ({
 				storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORTS]
 					?.sortsOrder as string,
 				false,
-				!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+				orderByERC
 			) as IDataSetSort[]
 		);
 
 		setLoading(false);
-	}, [dataSet]);
+	}, [dataSet.externalReferenceCode, orderByERC]);
 
 	useEffect(() => {
 		fetchDataSetSorts();
@@ -656,7 +659,7 @@ const Sorting = ({
 					fdsSorts,
 					storedSortsOrder,
 					false,
-					!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]
+					orderByERC
 				) as IDataSetSort[]
 			);
 
@@ -789,11 +792,7 @@ const Sorting = ({
 						onOrderChange={({order}: {order: string}) => {
 							updateSortsOrder({sortsOrder: order});
 						}}
-						orderByERC={
-							!!Liferay.FeatureFlags?.[
-								FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY
-							]
-						}
+						orderByERC={orderByERC}
 						title={Liferay.Language.get('sorting')}
 					/>
 				</>

@@ -494,6 +494,10 @@ public class SectionDisplayContextHelper {
 					LanguageUtil.get(httpServletRequest, "default-permissions")
 				).setPermissionKey(
 					"permissions"
+				).setVisibilityFilters(
+					HashMapBuilder.<String, Object>put(
+						"entryClassName", ObjectEntryFolder.class.getName()
+					).build()
 				).build(
 					"default-permissions"
 				),
@@ -507,6 +511,10 @@ public class SectionDisplayContextHelper {
 						"edit-and-propagate-default-permissions")
 				).setPermissionKey(
 					"permissions"
+				).setVisibilityFilters(
+					HashMapBuilder.<String, Object>put(
+						"entryClassName", ObjectEntryFolder.class.getName()
+					).build()
 				).build(
 					"edit-and-propagate-default-permissions"
 				),

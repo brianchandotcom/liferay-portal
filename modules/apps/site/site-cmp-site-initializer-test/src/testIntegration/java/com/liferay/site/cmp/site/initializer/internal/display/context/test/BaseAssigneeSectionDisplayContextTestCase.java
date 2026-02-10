@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
@@ -48,19 +49,24 @@ public abstract class BaseAssigneeSectionDisplayContextTestCase {
 			BaseAssigneeSectionDisplayContextTestCase.class);
 
 		httpServletRequest = new MockHttpServletRequest();
+
+		projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
+
+		httpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, projectObjectEntry);
+
 		themeDisplay = new ThemeDisplay() {
 			{
 				setCompany(
 					_companyLocalService.fetchCompany(
 						TestPropsValues.getCompanyId()));
 				setLocale(LocaleUtil.US);
+				setPathImage(_portal.getPathImage());
 				setScopeGroupId(TestPropsValues.getGroupId());
 			}
 		};
 
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
-
-		projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
 	}
 
 	protected User addUserWithPortraitId() throws Exception {
@@ -124,6 +130,9 @@ public abstract class BaseAssigneeSectionDisplayContextTestCase {
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private UserLocalService _userLocalService;

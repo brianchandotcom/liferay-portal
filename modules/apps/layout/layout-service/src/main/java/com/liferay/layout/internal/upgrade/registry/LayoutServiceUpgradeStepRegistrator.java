@@ -158,6 +158,11 @@ public class LayoutServiceUpgradeStepRegistrator
 			"5.0.0", "6.0.0",
 			new com.liferay.layout.internal.upgrade.v6_0_0.
 				LayoutUpgradeProcess());
+
+		registry.register(
+			"6.0.0", "7.0.0",
+			new com.liferay.layout.internal.upgrade.v7_0_0.
+				LayoutUpgradeProcess());
 	}
 
 	@Reference

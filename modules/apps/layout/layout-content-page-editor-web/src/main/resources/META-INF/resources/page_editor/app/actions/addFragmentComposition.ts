@@ -12,7 +12,6 @@ export interface FragmentComposition {
 	groupId: string;
 	icon: string;
 	imagePreviewURL: string;
-	invalidFragmentsCount: string;
 	name: string;
 	type: 'composition';
 }

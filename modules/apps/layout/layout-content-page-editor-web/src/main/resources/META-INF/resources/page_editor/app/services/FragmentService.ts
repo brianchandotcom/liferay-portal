@@ -59,19 +59,20 @@ export default {
 		saveMappingConfiguration,
 		segmentsExperienceId,
 	}: {
-		description: string;
-		fileEntryId?: string;
-		fragmentCollectionId: string;
+		description?: string;
+		fileEntryId?: number | string;
+		fragmentCollectionId?: string;
 		itemId: string;
 		name: string;
 		onNetworkStatus: OnNetworkStatus;
-		saveInlineContent: boolean;
-		saveMappingConfiguration: boolean;
+		saveInlineContent?: boolean;
+		saveMappingConfiguration?: boolean;
 		segmentsExperienceId: string;
 	}) {
 		return draftServiceFetch<{
-			fragmentComposition: FragmentComposition;
+			fragmentComposition: FragmentComposition | null;
 			url: string;
+			valid: boolean;
 		}>(
 			config.addFragmentCompositionURL,
 			{

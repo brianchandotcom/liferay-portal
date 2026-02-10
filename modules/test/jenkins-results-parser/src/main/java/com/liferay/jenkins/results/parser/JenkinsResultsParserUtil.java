@@ -3775,49 +3775,85 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static JSONObject invokeJenkinsBuild(
+	public static long invokeJenkinsBuild(
 		JenkinsMaster jenkinsMaster, String jenkinsJobName,
 		Map<String, String> buildParameters) {
 
-		Class<?> clazz = JenkinsResultsParserUtil.class;
-
-		String script;
-
-		try {
-			script = readInputStream(
-				clazz.getResourceAsStream(
-					"dependencies/invoke-jenkins-build.groovy"));
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to load groovy script", ioException);
-		}
-
-		script = script.replace("${jenkinsJobName}", jenkinsJobName);
-
 		StringBuilder sb = new StringBuilder();
+
+		if (isCloudCINode()) {
+			sb.append(jenkinsMaster.getRemoteURL());
+		}
+		else {
+			sb.append(jenkinsMaster.getURL());
+		}
+
+		sb.append("job/");
+		sb.append(jenkinsJobName);
+		sb.append("/buildWithParameters?");
 
 		for (Map.Entry<String, String> buildParameter :
 				buildParameters.entrySet()) {
 
-			sb.append("parameters.put(\"");
-			sb.append(buildParameter.getKey());
-			sb.append("\", \"");
-			sb.append(buildParameter.getValue());
-			sb.append("\");\n");
-		}
+			String value = buildParameter.getValue();
 
-		script = script.replace("${parameters}", sb.toString());
+			if (isNullOrEmpty(value)) {
+				continue;
+			}
+
+			sb.append(buildParameter.getKey());
+			sb.append("=");
+			sb.append(value);
+			sb.append("&");
+		}
 
 		try {
-			String response = executeJenkinsScript(
-				jenkinsMaster.getName(), script, true);
+			sb.append("token=");
+			sb.append(getBuildProperty("jenkins.authentication.token"));
 
-			return new JSONObject(response);
+			URL urlObject = new URL(fixURL(sb.toString()));
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)urlObject.openConnection();
+
+			HTTPAuthorization httpAuthorization =
+				_getJenkinsHTTPAuthorization();
+
+			httpURLConnection.setRequestProperty(
+				"Authorization", httpAuthorization.toString());
+
+			httpURLConnection.connect();
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			System.out.println(
+				combine(
+					"Response from ", urlObject.toString(), ": ",
+					String.valueOf(responseCode), " ",
+					httpURLConnection.getResponseMessage()));
+
+			if (responseCode >= 400) {
+				return 0;
+			}
+
+			String location = httpURLConnection.getHeaderField("Location");
+
+			if (isNullOrEmpty(location)) {
+				return 0L;
+			}
+
+			Matcher jenkinsBuildQueueURLMatcher =
+				_jenkinsBuildQueueURLPattern.matcher(location);
+
+			if (!jenkinsBuildQueueURLMatcher.find()) {
+				return 0L;
+			}
+
+			return Long.parseLong(jenkinsBuildQueueURLMatcher.group("queueId"));
 		}
-		catch (Exception exception) {
+		catch (IOException ioException) {
 			throw new RuntimeException(
-				"Unable to invoke jenkins job", exception);
+				"Unable to invoke a Jenkins job", ioException);
 		}
 	}
 
@@ -7333,6 +7369,8 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _javaVersionPattern = Pattern.compile(
 		"(\\d+\\.\\d+)");
 	private static final Properties _jenkinsBuildProperties = new Properties();
+	private static final Pattern _jenkinsBuildQueueURLPattern = Pattern.compile(
+		"https?://test-\\d+-\\d+(.liferay.com)?/queue/item/(?<queueId>\\d+)/?");
 	private static final Pattern _jenkinsMasterPattern = Pattern.compile(
 		"(?<cohortName>test-\\d+)-\\d+");
 	private static Hashtable<?, ?> _jenkinsProperties;

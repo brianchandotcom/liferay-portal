@@ -7,15 +7,28 @@ package com.liferay.portal.search.geolocation;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class LineStringShape extends Shape {
+public class LineStringShape extends Shape {
 
-	protected LineStringShape(List<Coordinate> coordinates) {
+	@Override
+	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
+		return shapeTranslator.translate(this);
+	}
+
+	public static class LineStringShapeBuilderImpl
+		extends ShapeBuilder<LineStringShapeBuilder>
+		implements LineStringShapeBuilder {
+
+		@Override
+		public LineStringShape build() {
+			return new LineStringShape(coordinates);
+		}
+
+	}
+
+	private LineStringShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

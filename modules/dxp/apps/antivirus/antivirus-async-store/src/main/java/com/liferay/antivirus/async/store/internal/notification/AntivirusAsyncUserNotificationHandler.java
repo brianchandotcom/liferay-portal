@@ -53,10 +53,11 @@ public class AntivirusAsyncUserNotificationHandler
 
 		return _language.format(
 			serviceContext.getLocale(),
-			"the-file-x-was-deleted-due-to-the-detection-of-virus-x-during-" +
-				"an-asynchronous-scan",
+			"the-file-x-version-x-was-deleted-due-to-the-detection-of-virus-" +
+				"x-during-an-asynchronous-scan",
 			new Object[] {
 				jsonObject.getString("fileName"),
+				jsonObject.getString("version"),
 				jsonObject.getString("virusName")
 			},
 			false);

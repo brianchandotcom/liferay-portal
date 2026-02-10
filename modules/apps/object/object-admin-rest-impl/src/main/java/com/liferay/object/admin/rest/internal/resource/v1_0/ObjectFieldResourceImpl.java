@@ -141,6 +141,7 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				ObjectFieldSettingUtil.toObjectFieldSettings(
+					groupLocalService,
 					ObjectFieldUtil.addListTypeDefinition(
 						contextUser.getCompanyId(),
 						_listTypeDefinitionLocalService,
@@ -186,8 +187,8 @@ public class ObjectFieldResourceImpl extends BaseObjectFieldResourceImpl {
 				objectField.getRequired(),
 				GetterUtil.getBoolean(objectField.getState()),
 				ObjectFieldSettingUtil.toObjectFieldSettings(
-					objectField.getListTypeDefinitionId(), objectField,
-					_objectFieldSettingLocalService,
+					groupLocalService, objectField.getListTypeDefinitionId(),
+					objectField, _objectFieldSettingLocalService,
 					_objectFilterLocalService)));
 	}
 

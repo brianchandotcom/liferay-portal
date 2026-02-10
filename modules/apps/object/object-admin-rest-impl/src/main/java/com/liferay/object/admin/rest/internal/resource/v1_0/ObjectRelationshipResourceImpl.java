@@ -226,7 +226,7 @@ public class ObjectRelationshipResourceImpl
 				objectRelationship.getTypeAsString(),
 				ObjectFieldUtil.toObjectField(
 					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-					_listTypeDefinitionLocalService,
+					groupLocalService, _listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,
 					_objectFilterLocalService)));
@@ -277,7 +277,7 @@ public class ObjectRelationshipResourceImpl
 					objectRelationship.getLabel()),
 				ObjectFieldUtil.toObjectField(
 					LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()),
-					_listTypeDefinitionLocalService,
+					groupLocalService, _listTypeDefinitionLocalService,
 					objectRelationship.getObjectField(),
 					_objectFieldLocalService, _objectFieldSettingLocalService,
 					_objectFilterLocalService)));

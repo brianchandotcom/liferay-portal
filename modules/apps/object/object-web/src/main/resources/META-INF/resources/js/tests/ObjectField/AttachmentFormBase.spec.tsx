@@ -95,9 +95,9 @@ describe('The AttachmentFormBase component', () => {
 		});
 	});
 
-	it('does not render library toggle only for depotFile file source', () => {
+	it('does not render library toggle for depotFile file source', () => {
 		renderComponent({
-			objectFieldSettings: [{name: 'fileSource', value: 'depotFile'}],
+			objectFieldSettings: [{name: 'fileSource', value: 'depotFiles'}],
 		});
 
 		expect(
@@ -105,9 +105,9 @@ describe('The AttachmentFormBase component', () => {
 		).not.toBeInTheDocument();
 	});
 
-	it('does not render library toggle only for userComputer file source', () => {
+	it('does not render library toggle for documentsAndMedia file source', () => {
 		renderComponent({
-			objectFieldSettings: [{name: 'fileSource', value: 'userComputer'}],
+			objectFieldSettings: [{name: 'fileSource', value: 'documentsAndMedia'}],
 		});
 
 		expect(
@@ -127,10 +127,10 @@ describe('The AttachmentFormBase component', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders library toggle for userComputerToDepot file source', () => {
+	it('renders library toggle for userComputerToDepotFiles file source', () => {
 		renderComponent({
 			objectFieldSettings: [
-				{name: 'fileSource', value: 'userComputerToDepot'},
+				{name: 'fileSource', value: 'userComputerToDepotFiles'},
 			],
 		});
 

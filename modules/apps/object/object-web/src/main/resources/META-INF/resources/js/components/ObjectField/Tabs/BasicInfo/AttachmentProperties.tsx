@@ -34,7 +34,7 @@ export function AttachmentProperties({
 
 	const usesDepotStorage =
 		settings.showFilesInLibrary &&
-		settings.fileSource === 'userComputerToDepot';
+		settings.fileSource === 'userComputerToDepotFiles';
 
 	const usesDocumentsAndMediaStorage =
 		settings.showFilesInLibrary &&

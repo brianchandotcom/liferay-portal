@@ -208,7 +208,8 @@ export function useObjectFieldForm({
 			}
 			else if (
 				settings.showFilesInLibrary &&
-				settings.fileSource === 'userComputerToDepot'
+				(settings.fileSource === 'userComputerToDepotFiles' ||
+					settings.fileSource === 'userComputerToDocumentsAndMedia')
 			) {
 				if (
 					invalidateRequired(
@@ -217,7 +218,18 @@ export function useObjectFieldForm({
 				) {
 					errors.storageLibraryPath = constantsUtils.REQUIRED_MSG;
 				}
-				else if (
+				else {
+					const sourceFolderError = getSourceFolderError(
+						settings.storageLibraryPath as string
+					);
+
+					if (sourceFolderError !== null) {
+						errors.storageLibraryPath = sourceFolderError;
+					}
+				}
+
+				if (
+					settings.fileSource === 'userComputerToDepotFiles' &&
 					invalidateRequired(
 						settings.storageDepot as string | undefined
 					)

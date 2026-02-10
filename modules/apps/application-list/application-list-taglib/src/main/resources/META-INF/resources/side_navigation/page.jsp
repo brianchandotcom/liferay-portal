@@ -34,7 +34,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 					</div>
 				</div>
 
-				<div class="sidebar-body">
+				<div class="c-px-0 sidebar-body">
 					<clay:vertical-nav
 						active="<%= sideNavigationDisplayContext.getPortletId() %>"
 						defaultExpandedKeys="<%= sideNavigationDisplayContext.getExpandedKeys() %>"

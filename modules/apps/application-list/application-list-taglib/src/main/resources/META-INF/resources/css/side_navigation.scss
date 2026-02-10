@@ -1,11 +1,6 @@
 .side-navigation-container {
 	height: 100vh;
 
-	& .sidebar-body {
-		padding-left: 0;
-		padding-right: 0;
-	}
-
 	& .menubar .nav-link[aria-expanded] {
 		font-size: 0.75rem;
 		font-weight: 600;

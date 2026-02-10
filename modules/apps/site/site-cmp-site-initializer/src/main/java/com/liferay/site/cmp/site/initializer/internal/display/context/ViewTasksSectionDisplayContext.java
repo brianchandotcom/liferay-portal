@@ -244,7 +244,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 	public List<FDSFilter> getFDSFilters() {
 		List<FDSFilter> fdsFilters = new ArrayList<>();
 
-		long[] groupIds;
+		long[] groupIds = null;
 
 		if (_assetEntry != null) {
 			groupIds = new long[] {_assetEntry.getGroupId()};

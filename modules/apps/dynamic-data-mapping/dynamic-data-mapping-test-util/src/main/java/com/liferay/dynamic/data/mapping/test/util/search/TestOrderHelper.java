@@ -175,7 +175,7 @@ public abstract class TestOrderHelper {
 	protected DDMStructure addDDMStructure() throws Exception {
 		DDMForm ddmForm = DDMStructureTestUtil.getSampleDDMForm(
 			"name", _dataType, _indexType, _repeatable, _type,
-			new Locale[] {LocaleUtil.US}, LocaleUtil.US);
+			new Locale[] {LocaleUtil.US}, LocaleUtil.US, null);
 
 		setDDMFormFieldOptions(ddmForm);
 

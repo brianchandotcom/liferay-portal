@@ -157,7 +157,7 @@ public class TranslateMVCRenderCommandTest {
 			DDMStructureTestUtil.getSampleDDMForm(
 				"text", "string", "text", true, DDMFormFieldTypeConstants.TEXT,
 				new Locale[] {LocaleUtil.getSiteDefault()},
-				LocaleUtil.getSiteDefault()),
+				LocaleUtil.getSiteDefault(), null),
 			LocaleUtil.getSiteDefault(), serviceContext);
 
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(

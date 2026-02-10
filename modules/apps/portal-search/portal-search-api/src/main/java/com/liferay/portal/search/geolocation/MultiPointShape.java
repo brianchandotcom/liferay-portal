@@ -17,18 +17,7 @@ public class MultiPointShape extends Shape {
 		return shapeTranslator.translate(this);
 	}
 
-	public static class MultiPointShapeBuilderImpl
-		extends ShapeBuilder<MultiPointShapeBuilder>
-		implements MultiPointShapeBuilder {
-
-		@Override
-		public MultiPointShape build() {
-			return new MultiPointShape(coordinates);
-		}
-
-	}
-
-	private MultiPointShape(List<Coordinate> coordinates) {
+	protected MultiPointShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

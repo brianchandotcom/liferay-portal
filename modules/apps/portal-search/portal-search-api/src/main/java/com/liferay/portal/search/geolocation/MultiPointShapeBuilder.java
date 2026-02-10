@@ -5,22 +5,14 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface MultiPointShapeBuilder {
+public class MultiPointShapeBuilder
+	extends ShapeBuilder<MultiPointShapeBuilder> {
 
-	public MultiPointShapeBuilder addCoordinate(Coordinate coordinate);
-
-	public MultiPointShape build();
-
-	public MultiPointShapeBuilder coordinates(Coordinate... coordinates);
-
-	public MultiPointShapeBuilder coordinates(List<Coordinate> coordinates);
+	public MultiPointShape build() {
+		return new MultiPointShape(coordinates);
+	}
 
 }

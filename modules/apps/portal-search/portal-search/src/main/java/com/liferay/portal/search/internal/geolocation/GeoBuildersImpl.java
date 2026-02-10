@@ -143,7 +143,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public MultiPointShapeBuilder multiPointShapeBuilder() {
-		return new MultiPointShape.MultiPointShapeBuilderImpl();
+		return new MultiPointShapeBuilder();
 	}
 
 	@Override

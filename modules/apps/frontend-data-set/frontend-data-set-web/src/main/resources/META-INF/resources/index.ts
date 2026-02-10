@@ -51,5 +51,6 @@ export {
 	ISelectionFilterState,
 	IView,
 	TOnFileDrop,
+	TSort,
 } from './utils/types';
 export {Card} from './views/cards/Cards';

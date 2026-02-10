@@ -102,20 +102,17 @@ public class MarketplaceTopicSubscriber {
 	}
 
 	private void _subscribe(
-			CredentialsProvider credentialsProvider, String topicName)
-		throws Exception {
+		CredentialsProvider credentialsProvider, String topicName) {
 
 		String subscriptionName = SubscriptionName.of(
-			_projectId, "marketplace_" + topicName + "-subscription"
+			_projectId, _topicPrefix + topicName + "-subscription"
 		).toString();
 
 		try {
 			_subscriptionAdminClient.getSubscription(subscriptionName);
 		}
 		catch (NotFoundException notFoundException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(notFoundException);
-			}
+            _log.error(notFoundException);
 
 			_subscriptionAdminClient.createSubscription(
 				Subscription.newBuilder(
@@ -166,5 +163,8 @@ public class MarketplaceTopicSubscriber {
 
 	private final List<Subscriber> _subscribers = new ArrayList<>();
 	private SubscriptionAdminClient _subscriptionAdminClient;
+
+	@Value("${liferay.marketplace.pubsub.topic.prefix}")
+	private String _topicPrefix;
 
 }

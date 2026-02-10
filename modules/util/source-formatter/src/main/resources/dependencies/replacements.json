@@ -5540,6 +5540,23 @@
 		"issueKey": "LPD-76458"
 	},
 	{
+		"classNames": [
+			"DLFileEntryLocalServiceWrapper"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-78192",
+		"methodsToFormat": [
+			{
+				"from": "@Override\n\tpublic DLFileEntry addFileEntry(\n\t\t\tlong userId, long groupId, long repositoryId, long folderId,\n\t\t\tString sourceFileName, String mimeType, String title,\n\t\t\tString description, String changeLog, long fileEntryTypeId,\n\t\t\tMap<String, DDMFormValues> ddmFormValuesMap, File file,\n\t\t\tInputStream inputStream, long size, ServiceContext serviceContext)\n\t\tthrows PortalException",
+				"to": "@Override\n\tpublic DLFileEntry addFileEntry(\n\t\t\tString externalReferenceCode, long userId, long groupId,\n\t\t\tlong repositoryId, long folderId, String sourceFileName,\n\t\t\tString mimeType, String title, String urlTitle, String description,\n\t\t\tString changeLog, long fileEntryTypeId,\n\t\t\tMap<String, DDMFormValues> ddmFormValuesMap, File file,\n\t\t\tInputStream inputStream, long size, java.util.Date displayDate,\n\t\t\tjava.util.Date expirationDate, java.util.Date reviewDate,\n\t\t\tServiceContext serviceContext)\n\t\tthrows PortalException"
+			},
+			{
+				"from": "@Override\n\tpublic DLFileEntry updateFileEntry(\n\t\t\tlong userId, long fileEntryId, String sourceFileName,\n\t\t\tString mimeType, String title, String description, String changeLog,\n\t\t\tDLVersionNumberIncrease dlVersionNumberIncrease,\n\t\t\tlong fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,\n\t\t\tFile file, InputStream inputStream, long size,\n\t\t\tServiceContext serviceContext)\n\t\tthrows PortalException",
+				"to": "@Override\n\tpublic DLFileEntry updateFileEntry(\n\t\t\tlong userId, long fileEntryId, String sourceFileName,\n\t\t\tString mimeType, String title, String urlTitle, String description,\n\t\t\tString changeLog, DLVersionNumberIncrease dlVersionNumberIncrease,\n\t\t\tlong fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,\n\t\t\tFile file, InputStream inputStream, long size,\n\t\t\tjava.util.Date displayDate, java.util.Date expirationDate,\n\t\t\tjava.util.Date reviewDate, ServiceContext serviceContext)\n\t\tthrows PortalException"
+			}
+		]
+	},
+	{
 		"from": "regex:MultiVMPoolUtil\\s*.\\s*getPortalCache\\(\\s*(?<prefixMethodName>[\\s\\S]*?)\\)",
 		"issueKey": "LPS-153962",
 		"newImports": [

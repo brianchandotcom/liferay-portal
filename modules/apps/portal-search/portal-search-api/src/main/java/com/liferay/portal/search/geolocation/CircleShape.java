@@ -7,20 +7,63 @@ package com.liferay.portal.search.geolocation;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class CircleShape extends Shape {
+public class CircleShape extends Shape {
 
-	public abstract Coordinate getCenter();
-
-	public abstract GeoDistance getRadius();
-
-	protected CircleShape(List<Coordinate> coordinates) {
-		super(coordinates);
+	@Override
+	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
+		return shapeTranslator.translate(this);
 	}
+
+	public Coordinate getCenter() {
+		return _centerCoordinate;
+	}
+
+	public GeoDistance getRadius() {
+		return _radiusGeoDistance;
+	}
+
+	public static class CircleShapeBuilderImpl
+		extends ShapeBuilder<CircleShapeBuilder> implements CircleShapeBuilder {
+
+		@Override
+		public CircleShape build() {
+			return new CircleShape(
+				coordinates, _centerCoordinate, _radiusGeoDistance);
+		}
+
+		@Override
+		public CircleShapeBuilder center(Coordinate coordinate) {
+			_centerCoordinate = coordinate;
+
+			return this;
+		}
+
+		@Override
+		public CircleShapeBuilder radius(GeoDistance geoDistance) {
+			_radiusGeoDistance = geoDistance;
+
+			return this;
+		}
+
+		private Coordinate _centerCoordinate;
+		private GeoDistance _radiusGeoDistance;
+
+	}
+
+	private CircleShape(
+		List<Coordinate> coordinates, Coordinate centerCoordinate,
+		GeoDistance radiusGeoDistance) {
+
+		super(coordinates);
+
+		_centerCoordinate = centerCoordinate;
+		_radiusGeoDistance = radiusGeoDistance;
+	}
+
+	private final Coordinate _centerCoordinate;
+	private final GeoDistance _radiusGeoDistance;
 
 }

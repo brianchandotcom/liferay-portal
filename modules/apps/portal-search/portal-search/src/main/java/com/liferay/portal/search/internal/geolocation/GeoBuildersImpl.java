@@ -53,7 +53,7 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public CircleShapeBuilder circleShapeBuilder() {
-		return new CircleShapeImpl.CircleShapeBuilderImpl();
+		return new CircleShape.CircleShapeBuilderImpl();
 	}
 
 	@Override

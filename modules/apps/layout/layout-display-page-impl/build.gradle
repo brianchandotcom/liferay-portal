@@ -4,4 +4,5 @@ dependencies {
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly project(":apps:layout:layout-display-page-api")
 	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-string")
 }

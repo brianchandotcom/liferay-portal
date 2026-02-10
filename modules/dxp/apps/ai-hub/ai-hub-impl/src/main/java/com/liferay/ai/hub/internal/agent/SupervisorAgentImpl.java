@@ -6,23 +6,30 @@
 package com.liferay.ai.hub.internal.agent;
 
 import com.liferay.ai.hub.agent.AgentContext;
-import com.liferay.ai.hub.agent.AgentsFactory;
 import com.liferay.ai.hub.agent.SupervisorAgent;
 import com.liferay.ai.hub.internal.memory.ChatMemoryProviderUtil;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.concurrent.NoticeableExecutorService;
 import com.liferay.petra.executor.PortalExecutorManager;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyInheritableThreadLocalCallable;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import dev.langchain4j.agentic.AgenticServices;
+import dev.langchain4j.agentic.internal.InternalAgent;
 import dev.langchain4j.agentic.supervisor.SupervisorContextStrategy;
 import dev.langchain4j.agentic.supervisor.SupervisorResponseStrategy;
 import dev.langchain4j.model.vertexai.gemini.VertexAiGeminiChatModel;
 
-import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -37,7 +44,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 
 	@Override
 	public void invoke(AgentContext agentContext) {
-		Object[] agents = _agentsFactory.create(agentContext);
+		InternalAgent[] internalAgents = _createInternalAgents(agentContext);
 
 		_noticeableExecutorService.submit(
 			new CompanyInheritableThreadLocalCallable<>(
@@ -52,7 +59,9 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 								"ai-hub-liferay"
 							).build()) {
 
-						_invoke(agentContext, agents, vertexAiGeminiChatModel);
+						_invoke(
+							agentContext, internalAgents,
+							vertexAiGeminiChatModel);
 					}
 					catch (Exception exception) {
 						_log.error(exception);
@@ -68,7 +77,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected void activate() {
 		_noticeableExecutorService = _portalExecutorManager.getPortalExecutor(
 			SupervisorAgentImpl.class.getName());
 	}
@@ -78,8 +87,35 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 		_noticeableExecutorService.shutdown();
 	}
 
+	private InternalAgent[] _createInternalAgents(AgentContext agentContext) {
+		try {
+			Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
+				agentContext.getCompanyId(),
+				_objectDefinitionLocalService.getObjectDefinition(
+					agentContext.getCompanyId(), "AgentDefinition"),
+				null, null, agentContext.getDTOConverterContext(),
+				"(active eq true)", Pagination.of(1, 20), null, null);
+
+			InternalAgentFactory internalAgentFactory =
+				new InternalAgentFactory(
+					agentContext, _workflowDefinitionManager,
+					_workflowInstanceManager);
+
+			return TransformUtil.transformToArray(
+				page.getItems(), internalAgentFactory::create,
+				InternalAgent.class);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return new InternalAgent[0];
+	}
+
 	private void _invoke(
-		AgentContext agentContext, Object[] agents,
+		AgentContext agentContext, InternalAgent[] internalAgents,
 		VertexAiGeminiChatModel vertexAiGeminiChatModel) {
 
 		dev.langchain4j.agentic.supervisor.SupervisorAgent supervisorAgent =
@@ -94,7 +130,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			).maxAgentsInvocations(
 				5
 			).subAgents(
-				agents
+				(Object[])internalAgents
 			).responseStrategy(
 				SupervisorResponseStrategy.SUMMARY
 			).build();
@@ -108,12 +144,21 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SupervisorAgentImpl.class);
 
-	@Reference
-	private AgentsFactory _agentsFactory;
-
 	private NoticeableExecutorService _noticeableExecutorService;
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference(target = "(object.entry.manager.storage.type=default)")
+	private ObjectEntryManager _objectEntryManager;
+
+	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	@Reference
+	private WorkflowDefinitionManager _workflowDefinitionManager;
+
+	@Reference
+	private WorkflowInstanceManager _workflowInstanceManager;
 
 }

@@ -5,30 +5,49 @@
 
 package com.liferay.portal.search.geolocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface PolygonShapeBuilder {
+public class PolygonShapeBuilder extends ShapeBuilder<PolygonShapeBuilder> {
 
-	public PolygonShapeBuilder addCoordinate(Coordinate coordinate);
+	public PolygonShapeBuilder addHole(LineStringShape lineStringShape) {
+		_holeLineStringShapes.add(lineStringShape);
 
-	public PolygonShapeBuilder addHole(LineStringShape lineStringShape);
+		return this;
+	}
 
-	public PolygonShape build();
+	public PolygonShape build() {
+		return new PolygonShape(
+			coordinates, _holeLineStringShapes, _orientation, _shell);
+	}
 
-	public PolygonShapeBuilder coordinates(Coordinate... coordinates);
+	public PolygonShapeBuilder holes(LineStringShape... lineStringShapes) {
+		_holeLineStringShapes.clear();
 
-	public PolygonShapeBuilder coordinates(List<Coordinate> coordinates);
+		Collections.addAll(_holeLineStringShapes, lineStringShapes);
 
-	public PolygonShapeBuilder holes(LineStringShape... lineStringShapes);
+		return this;
+	}
 
-	public PolygonShapeBuilder orientation(Orientation orientation);
+	public PolygonShapeBuilder orientation(Orientation orientation) {
+		_orientation = orientation;
 
-	public PolygonShapeBuilder shell(LineStringShape shell);
+		return this;
+	}
+
+	public PolygonShapeBuilder shell(LineStringShape shell) {
+		_shell = shell;
+
+		return this;
+	}
+
+	private final List<LineStringShape> _holeLineStringShapes =
+		new ArrayList<>();
+	private Orientation _orientation;
+	private LineStringShape _shell;
 
 }

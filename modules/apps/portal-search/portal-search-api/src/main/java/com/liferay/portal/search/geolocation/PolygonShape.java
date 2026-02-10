@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.geolocation;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,54 +30,7 @@ public class PolygonShape extends Shape {
 		return _shell;
 	}
 
-	public static class PolygonShapeBuilderImpl
-		extends ShapeBuilder<PolygonShapeBuilder>
-		implements PolygonShapeBuilder {
-
-		@Override
-		public PolygonShapeBuilder addHole(LineStringShape lineStringShape) {
-			_holeLineStringShapes.add(lineStringShape);
-
-			return this;
-		}
-
-		@Override
-		public PolygonShape build() {
-			return new PolygonShape(
-				coordinates, _holeLineStringShapes, _orientation, _shell);
-		}
-
-		@Override
-		public PolygonShapeBuilder holes(LineStringShape... lineStringShapes) {
-			_holeLineStringShapes.clear();
-
-			Collections.addAll(_holeLineStringShapes, lineStringShapes);
-
-			return this;
-		}
-
-		@Override
-		public PolygonShapeBuilder orientation(Orientation orientation) {
-			_orientation = orientation;
-
-			return this;
-		}
-
-		@Override
-		public PolygonShapeBuilder shell(LineStringShape shell) {
-			_shell = shell;
-
-			return this;
-		}
-
-		private final List<LineStringShape> _holeLineStringShapes =
-			new ArrayList<>();
-		private Orientation _orientation;
-		private LineStringShape _shell;
-
-	}
-
-	private PolygonShape(
+	protected PolygonShape(
 		List<Coordinate> coordinates,
 		List<LineStringShape> holeLineStringShapes, Orientation orientation,
 		LineStringShape shell) {

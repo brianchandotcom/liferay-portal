@@ -41,7 +41,7 @@ interface MultipleFileUploaderProps {
 	buttonLabel?: string;
 	description?: string;
 	filesToUpload?: FileData[];
-	formValidation: () => Promise<boolean>;
+	formValidation?: () => Promise<boolean>;
 	messages?: Partial<UploadMessages>;
 	onModalClose: () => void;
 	onUploadComplete: ({
@@ -114,7 +114,7 @@ export default function MultipleFileUploader({
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		const isValid = await formValidation();
+		const isValid = formValidation ? await formValidation() : true;
 
 		if (!isValid) {
 			return;

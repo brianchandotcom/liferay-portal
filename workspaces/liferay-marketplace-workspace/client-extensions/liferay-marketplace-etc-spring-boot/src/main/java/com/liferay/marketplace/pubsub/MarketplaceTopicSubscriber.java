@@ -112,7 +112,7 @@ public class MarketplaceTopicSubscriber {
 			_subscriptionAdminClient.getSubscription(subscriptionName);
 		}
 		catch (NotFoundException notFoundException) {
-            _log.error(notFoundException);
+			_log.error(notFoundException);
 
 			_subscriptionAdminClient.createSubscription(
 				Subscription.newBuilder(

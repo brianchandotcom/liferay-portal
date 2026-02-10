@@ -1704,8 +1704,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					(portletDataHandlerKey != null)) {
 
 					MissingPortlet missingPortlet = new MissingPortlet(
-						element.attributeValue("display-name"), portlet,
-						portletDataHandlerKey, portletId);
+						portlet, portletDataHandlerKey, portletId,
+						element.attributeValue("display-name"));
 
 					_manifestSummary.addDataPortlet(
 						missingPortlet, configurationPortletOptions);

@@ -57,7 +57,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -178,21 +177,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	public String getName(Locale locale) {
-		String labelLanguageKey = _getSoleProperty(
-			ExportImportVulcanBatchEngineTaskItemDelegate.
-				ExportImportDescriptor::getLabelLanguageKey);
-
-		if (labelLanguageKey == null) {
-			labelLanguageKey =
-				JavaConstants.JAKARTA_PORTLET_TITLE + StringPool.PERIOD +
-					getPortletId();
-		}
-
-		return LanguageUtil.get(locale, labelLanguageKey);
-	}
-
-	@Override
 	public int getRank() {
 		if (_registrations.isEmpty()) {
 			return super.getRank();
@@ -222,6 +206,19 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	public String getTag(Locale locale) {
 		return _getSoleProperty(
 			exportImportDescriptor -> exportImportDescriptor.getTag(locale));
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		String labelLanguageKey = _getSoleProperty(
+			ExportImportVulcanBatchEngineTaskItemDelegate.
+				ExportImportDescriptor::getLabelLanguageKey);
+
+		if (labelLanguageKey == null) {
+			return super.getTitle(locale);
+		}
+
+		return LanguageUtil.get(locale, labelLanguageKey);
 	}
 
 	@Override

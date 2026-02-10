@@ -357,6 +357,8 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 					"BUILD_PRIORITY", reinvokeBuildPriority);
 
 				reinvoke(reinvokeBuildParameters);
+
+				return;
 			}
 		}
 

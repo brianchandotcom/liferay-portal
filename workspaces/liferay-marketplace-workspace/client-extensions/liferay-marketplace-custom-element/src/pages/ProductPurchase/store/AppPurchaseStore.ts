@@ -5,7 +5,10 @@
 
 import {createStore} from '@xstate/store';
 
-import {ConsoleUserProject} from '../../../services/oauth/types';
+import {
+	ConsoleUserProject,
+	KoroneikiChildAccounts,
+} from '../../../services/oauth/types';
 import {PaymentMethodType} from '../types';
 
 export type LicenseType = 'TRIAL' | 'PAID';
@@ -20,6 +23,7 @@ export const productPurchaseStore = createStore({
 		account: {
 			taxId: '',
 		},
+		koroneikiProject: null as unknown as KoroneikiChildAccounts,
 		licenseType: null as unknown as LicenseType,
 		payment: {
 			billingAddress: {
@@ -65,6 +69,13 @@ export const productPurchaseStore = createStore({
 				...context.payment,
 				invoice: event.invoice,
 			}),
+		},
+
+		setKoreoneikiProject: {
+			koroneikiProject: (
+				_,
+				event: {koroneikiProject: KoroneikiChildAccounts}
+			) => event.koroneikiProject,
 		},
 
 		setLicenseType: {

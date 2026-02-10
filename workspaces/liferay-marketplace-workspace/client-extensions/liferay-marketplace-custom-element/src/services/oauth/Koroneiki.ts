@@ -4,11 +4,16 @@
  */
 
 import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
-import {SubscriptionsType} from './types';
+import {KoroneikiChildAccounts, SubscriptionsType} from './types';
 
 class KoroneikiOAuth2 extends MarketplaceSpringBootOAuth2 {
 	async getSubscriptions(orderId: number) {
 		return this.get<SubscriptionsType[]>(`/subscriptions/${orderId}`);
+	}
+	async getChildAccounts(accountKey: string) {
+		return this.get<KoroneikiChildAccounts[]>(
+			`/account/${accountKey}/child-accounts`
+		);
 	}
 
 	async syncProduct(productId: number | string) {

@@ -51,12 +51,14 @@ export type ProductPurchaseOutletContext = {
 		cart?: Cart | undefined,
 		cartOptions?: any
 	) => Promise<void>;
+	form: Record<string, unknown>;
 	isSingleAccount: boolean;
 	marketplaceDeliveryProduct: MarketplaceDeliveryProduct;
 	product: DeliveryProduct;
 	productPurchaseCart: ReturnType<typeof useProductPurchaseCart>;
 	productTypeRoute: ProductPurchaseOutletProps['productTypeRoute'];
 	setAlert: React.Dispatch<ReactNode>;
+	setForm: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
 	solutionTypeSpecificationValue: SolutionTypes;
 } & Omit<ReturnType<typeof useAccounts>, 'myUserAccount'>;
 
@@ -66,6 +68,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	solutionTypeSpecificationValue,
 }) => {
 	const [alert, setAlert] = useState('');
+	const [form, setForm] = useState<Record<string, unknown>>({});
 	const [isSubmitting, setSubmitting] = useState(false);
 	const {accounts, selectedAccount, setSelectedAccount} = useAccounts();
 
@@ -167,6 +170,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			nextStep: () => stepNavigate(1),
 			previousStep: () => stepNavigate(-1),
 		},
+		form,
 		handlePurchase,
 		isSingleAccount,
 		marketplaceDeliveryProduct,
@@ -175,6 +179,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		routes: steps,
 		selectedAccount,
 		setAlert,
+		setForm,
 		setSelectedAccount,
 		solutionTypeSpecificationValue,
 	};

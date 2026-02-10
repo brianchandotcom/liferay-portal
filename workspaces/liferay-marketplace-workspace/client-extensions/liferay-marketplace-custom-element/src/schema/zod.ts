@@ -198,6 +198,33 @@ const zodSchema = {
 			.min(3, {message: 'Request Description is required'}),
 	}),
 	billingAddress,
+	cdpProvisioning: z.object({
+		_refAllowedEmailDomains: z.array(z.any()),
+		_refIncidentReportContacts: z.array(z.any()),
+		acceptTerms: z.boolean().refine((value) => value, {
+			message: 'You must agree with the terms',
+		}),
+		allowedEmailDomains: z
+			.array(z.string())
+			.optional()
+			.default([])
+			.refine(
+				(values) =>
+					values.length
+						? values.every((value) => domainRegex.test(value))
+						: true,
+				'One of the chosen domains is invalid.'
+			),
+		dataCenterLocation: z.string(),
+		friendlyWorkspaceURL: z.string().optional(),
+		incidentReportContacts: z.array(z.string().email()).min(1),
+		productKey: z.string().optional(),
+		productName: z.string(),
+		productPurchaseKey: z.string().optional(),
+		timezone: z.string(),
+		workspaceName: z.string().min(3),
+		workspaceOwnerEmail: z.string().email(),
+	}),
 	contactSales: z.object({
 		accountName: z
 			.string()

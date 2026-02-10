@@ -110,6 +110,7 @@ export enum ProductType {
 
 export enum ProductTypeVocabulary {
 	APP = 'App',
+	LIFERAY_SERVICE = 'Liferay Service',
 	SOLUTION = 'Solution',
 }
 
@@ -149,6 +150,7 @@ export enum SkuOptions {
 
 export enum SolutionTypes {
 	ANALYTICS = 'analytics',
+	CONTENT_DATA_PLATFORM = 'content-data-platform',
 	PRE_BUILT_TRIAL = 'pre-built-trial',
 }
 

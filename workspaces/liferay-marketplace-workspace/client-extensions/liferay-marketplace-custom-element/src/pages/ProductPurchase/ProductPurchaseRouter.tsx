@@ -27,9 +27,12 @@ import ContactSalesPage from './pages/App/InsuficientResources/ContactSales';
 import ContactSalesForm from './pages/App/InsuficientResources/ContactSalesForm';
 import License from './pages/App/License';
 import PaymentMethod from './pages/App/PaymentMethod';
-import OrderSummary from './pages/App/PaymentMethod/OrderSummary/OrderSummary';
+import OrderSummary from './pages/LiferayService/OrderSummary';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
+import ProjectSelection from './pages/LiferayService/Project';
+import CDPProvisioning from './pages/Solution/CDPProvisioningForm';
+import ProductPurchaseAccountSelection from './pages/AccountSelection';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -71,6 +74,36 @@ export const productTypeRoutes = {
 				return !route.isPaidOnly;
 			});
 		},
+	},
+	[ProductTypeVocabulary.LIFERAY_SERVICE]: {
+		metadata: {
+			tinyStepsDisplay: true,
+			useCart: true,
+		},
+		routes: (product: DeliveryProduct) => [
+			{
+				element: ProductPurchaseAccountSelection,
+				index: true,
+				title: i18n.translate('account'),
+			},
+
+			{
+				element: ProjectSelection,
+				path: 'project',
+				title: i18n.translate('project'),
+			},
+
+			{
+				element: CDPProvisioning,
+				path: 'provisioning',
+				title: i18n.translate('provisioning'),
+			},
+			{
+				element: OrderSummary,
+				path: 'summary',
+				title: i18n.translate('summary'),
+			},
+		],
 	},
 	[ProductTypeVocabulary.SOLUTION]: {
 		metadata: {

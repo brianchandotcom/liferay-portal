@@ -7,15 +7,28 @@ package com.liferay.portal.search.geolocation;
 
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class MultiPointShape extends Shape {
+public class MultiPointShape extends Shape {
 
-	protected MultiPointShape(List<Coordinate> coordinates) {
+	@Override
+	public <T> T accept(ShapeTranslator<T> shapeTranslator) {
+		return shapeTranslator.translate(this);
+	}
+
+	public static class MultiPointShapeBuilderImpl
+		extends ShapeBuilder<MultiPointShapeBuilder>
+		implements MultiPointShapeBuilder {
+
+		@Override
+		public MultiPointShape build() {
+			return new MultiPointShape(coordinates);
+		}
+
+	}
+
+	private MultiPointShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

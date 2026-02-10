@@ -5,7 +5,6 @@
 
 import ClayProgressBar from '@clayui/progress-bar';
 import {DateRenderer, IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {
 	AdditionalProps,
 	SimpleActionLinkRenderer,
@@ -14,10 +13,10 @@ import {
 	manageMembersAction,
 } from '@liferay/site-cms-site-initializer';
 import {fetch} from 'frontend-js-web';
-import React from 'react';
 
 import StateLabel from '../StateLabel';
 import ACTIONS from './actions/creationMenuActions';
+import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
 
 type Action = {
 	href: string;
@@ -108,20 +107,11 @@ export default function ProjectsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => {
-						return (
-							<span className="align-items-center d-flex">
-								<div className="c-mr-2">
-									<AssigneeAvatar
-										image={value?.image}
-										name={value?.name}
-									/>
-								</div>
-
-								{value?.name}
-							</span>
-						);
-					},
+					component: ({value}) =>
+						AssigneeRenderer({
+							image: value?.image,
+							name: value?.name,
+						}),
 					name: 'userRelationshipTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

@@ -3031,11 +3031,7 @@ public class DefaultObjectEntryManagerImpl
 				fileEntry.getName(), folderExternalReferenceCode, folderGroupId,
 				objectField.getObjectFieldId(), serviceContext);
 		}
-		else if (StringUtil.equals(
-					fileSource,
-					ObjectFieldSettingConstants.
-						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
-
+		else {
 			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(
 				objectField.getCompanyId(),
 				fileEntry.getExternalReferenceCode(), fileContent,

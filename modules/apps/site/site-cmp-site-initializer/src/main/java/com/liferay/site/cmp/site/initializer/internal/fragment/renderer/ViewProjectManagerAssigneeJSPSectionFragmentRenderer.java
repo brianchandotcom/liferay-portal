@@ -6,15 +6,13 @@
 package com.liferay.site.cmp.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.site.cmp.site.initializer.internal.display.context.ViewAssigneeSectionDisplayContext;
+import com.liferay.site.cmp.site.initializer.internal.display.context.ViewProjectManagerAssigneeSectionDisplayContext;
 import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,15 +21,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Igor Franca
+ * @author Pedro Leite
  */
 @Component(service = FragmentRenderer.class)
-public class ViewAssigneeJSPSectionFragmentRenderer
+public class ViewProjectManagerAssigneeJSPSectionFragmentRenderer
 	extends BaseJSPSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "assignee";
+		return "project-manager-assignee";
 	}
 
 	@Override
@@ -45,9 +43,7 @@ public class ViewAssigneeJSPSectionFragmentRenderer
 			return null;
 		}
 
-		return new ViewAssigneeSectionDisplayContext(
-			_objectFieldBusinessTypeRegistry.getObjectFieldBusinessType(
-				ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE),
+		return new ViewProjectManagerAssigneeSectionDisplayContext(
 			_language, objectEntry,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY),
@@ -56,19 +52,16 @@ public class ViewAssigneeJSPSectionFragmentRenderer
 
 	@Override
 	protected String getJSPPath() {
-		return "/view_assignee.jsp";
+		return "/view_project_manager_assignee.jsp";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "assignee";
+		return "project-manager-assignee";
 	}
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;
 
 	@Reference
 	private UserLocalService _userLocalService;

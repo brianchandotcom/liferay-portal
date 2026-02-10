@@ -6,8 +6,20 @@
 import {openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
+import {State} from '../../types/State';
 import addFragmentCompositionAction from '../actions/addFragmentComposition';
+import updateNetwork from '../actions/updateNetwork';
 import FragmentService from '../services/FragmentService';
+
+type Props = {
+	description?: string;
+	fileEntryId?: number | string;
+	fragmentCollectionId: string;
+	itemId: string;
+	name: string;
+	saveInlineContent?: boolean;
+	saveMappingConfiguration?: boolean;
+};
 
 export default function addFragmentComposition({
 	description,
@@ -17,8 +29,15 @@ export default function addFragmentComposition({
 	name,
 	saveInlineContent,
 	saveMappingConfiguration,
-}) {
-	return (dispatch, getState) => {
+}: Props) {
+	return (
+		dispatch: (
+			action: ReturnType<
+				typeof updateNetwork | typeof addFragmentCompositionAction
+			>
+		) => void,
+		getState: () => State
+	) => {
 		return FragmentService.addFragmentComposition({
 			description,
 			fileEntryId,
@@ -29,37 +48,35 @@ export default function addFragmentComposition({
 			saveInlineContent,
 			saveMappingConfiguration,
 			segmentsExperienceId: getState().segmentsExperienceId,
-		}).then(({fragmentComposition, invalidFragmentsCount, url}) => {
-			if (invalidFragmentsCount > 0) {
+		}).then(({fragmentComposition, url, valid}) => {
+			if (!valid || !fragmentComposition) {
 				openToast({
 					message: Liferay.Language.get(
 						'the-composition-cannot-be-created-because-some-fragment-references-are-missing-reimport-the-fragments-and-try-again'
 					),
 					title: Liferay.Language.get('error'),
-					type: 'error',
+					type: 'danger',
 				});
 
-				throw new Error('Invalid fragment composition');
+				return;
 			}
-			else {
-				dispatch(
-					addFragmentCompositionAction({
-						fragmentCollectionId,
-						fragmentComposition,
-						invalidFragmentsCount,
-					})
-				);
 
-				openToast({
-					message: sub(
-						Liferay.Language.get(
-							'the-fragment-was-created-successfully.-you-can-view-it-in-x'
-						),
-						`<a href="${url}">${Liferay.Language.get('fragments')}</a>`
+			dispatch(
+				addFragmentCompositionAction({
+					fragmentCollectionId,
+					fragmentComposition,
+				})
+			);
+
+			openToast({
+				message: sub(
+					Liferay.Language.get(
+						'the-fragment-was-created-successfully.-you-can-view-it-in-x'
 					),
-					type: 'success',
-				});
-			}
+					`<a href="${url}">${Liferay.Language.get('fragments')}</a>`
+				),
+				type: 'success',
+			});
 		});
 	};
 }

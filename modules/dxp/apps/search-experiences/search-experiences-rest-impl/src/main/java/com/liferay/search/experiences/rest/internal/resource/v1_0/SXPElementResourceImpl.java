@@ -438,16 +438,14 @@ public class SXPElementResourceImpl extends BaseSXPElementResourceImpl {
 	private void _validateTitleI18n(Map<String, String> titleI18n)
 		throws Exception {
 
-		if (!titleI18n.containsKey(
-				LocaleUtil.getDefault(
-				).toString()) &&
-			!titleI18n.containsKey(
-				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault()))) {
+		Locale locale = LocaleUtil.getDefault();
+
+		if (!titleI18n.containsKey(locale.toString()) &&
+			!titleI18n.containsKey(LocaleUtil.toBCP47LanguageId(locale))) {
 
 			throw new SXPElementTitleException(
 				"The title for the default locale " +
-					LocaleUtil.toLanguageId(LocaleUtil.getDefault()) +
-						" cannot be blank");
+					LocaleUtil.toLanguageId(locale) + " cannot be blank");
 		}
 	}
 

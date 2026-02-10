@@ -92,7 +92,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 			Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
 				agentContext.getCompanyId(),
 				_objectDefinitionLocalService.getObjectDefinition(
-					agentContext.getCompanyId(), "AgentDefinition"),
+					agentContext.getCompanyId(), "AIHubAgentDefinition"),
 				null, null, agentContext.getDTOConverterContext(),
 				"(active eq true)", Pagination.of(1, 20), null, null);
 

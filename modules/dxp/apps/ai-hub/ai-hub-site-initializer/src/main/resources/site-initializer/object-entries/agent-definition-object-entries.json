@@ -73,5 +73,5 @@
 			"workflowDefinitionName": "Make Shorter"
 		}
 	],
-	"objectDefinitionName": "AgentDefinition"
+	"objectDefinitionName": "AIHubAgentDefinition"
 }

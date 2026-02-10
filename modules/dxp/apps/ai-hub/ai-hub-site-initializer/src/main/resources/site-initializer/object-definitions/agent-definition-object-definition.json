@@ -8,7 +8,7 @@
 		"en_US": "Agent Definition"
 	},
 	"modifiable": true,
-	"name": "AgentDefinition",
+	"name": "AIHubAgentDefinition",
 	"objectActions": [
 	],
 	"objectDefinitionSettings": [

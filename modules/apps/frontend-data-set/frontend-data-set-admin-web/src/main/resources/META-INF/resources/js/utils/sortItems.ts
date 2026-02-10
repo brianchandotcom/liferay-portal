@@ -25,38 +25,25 @@ export default function sortItems(
 ): IOrderable[] {
 	const itemsOrderArray = itemsOrder?.split(',') || ([] as string[]);
 
-	let included: IOrderable[] = [];
-	let notIncluded: IOrderable[] = [];
+	const getItemKey = (item: IOrderable) =>
+		orderByERC
+			? String(item.externalReferenceCode ?? '')
+			: String(Number(item.id));
 
-	if (orderByERC) {
-		included = itemsOrderArray
-			.map((erc) =>
-				items.find(
-					(item) =>
-						String(item.externalReferenceCode ?? '') ===
-						String(erc ?? '')
-				)
-			)
-			.filter(Boolean) as IOrderable[];
+	const getOrderKey = (orderKey: string) =>
+		orderByERC ? String(orderKey ?? '') : String(Number(orderKey));
 
-		notIncluded = items.filter(
-			(item) =>
-				!itemsOrderArray.includes(
-					String(item.externalReferenceCode ?? '')
-				)
-		);
-	}
-	else {
-		included = itemsOrderArray
-			.map((itemId) =>
-				items.find((item) => Number(item.id) === Number(itemId))
-			)
-			.filter(Boolean) as IOrderable[];
+	const orderKeysSet = new Set(itemsOrderArray.map(getOrderKey));
 
-		notIncluded = items.filter(
-			(item) => !itemsOrderArray.includes(String(item.id))
-		);
-	}
+	const included = itemsOrderArray
+		.map((orderKey) =>
+			items.find((item) => getItemKey(item) === getOrderKey(orderKey))
+		)
+		.filter(Boolean) as IOrderable[];
+
+	let notIncluded = items.filter(
+		(item) => !orderKeysSet.has(getItemKey(item))
+	);
 
 	if (useCreationDate) {
 		const creationDates = {} as {[key: number]: number};

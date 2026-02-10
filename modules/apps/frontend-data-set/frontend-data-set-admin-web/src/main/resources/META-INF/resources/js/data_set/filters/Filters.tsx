@@ -262,7 +262,7 @@ function Filters({
 		};
 
 		getFilters();
-	}, [dataSet]);
+	}, [dataSet, orderByERC]);
 
 	const updateFiltersOrder = async ({
 		filtersOrder,

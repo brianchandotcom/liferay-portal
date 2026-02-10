@@ -8,9 +8,11 @@
 		"@storybook/manager-webpack5": "^6.5.10",
 		"@storybook/preset-scss": "^1.0.3",
 		"@storybook/react": "^6.5.10",
+		"@testing-library/user-event-13-2-1": "npm:@testing-library/user-event@13.2.1",
 		"@types/storybook__addon-a11y": "5.1.2",
 		"@types/storybook__addon-knobs": "^5.2.1",
 		"@types/storybook__react": "^5.2.1",
+		"raf": "^3.4.1",
 		"sass-loader": "^7.1.0",
 		"storybook": "^8.5.8",
 		"svg4everybody": "^2.1.9"

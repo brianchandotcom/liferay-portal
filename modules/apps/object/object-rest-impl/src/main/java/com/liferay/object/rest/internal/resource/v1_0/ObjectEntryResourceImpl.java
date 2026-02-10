@@ -605,11 +605,6 @@ public class ObjectEntryResourceImpl
 				return true;
 			}
 
-			@Override
-			public boolean isStagingSupported() {
-				return false;
-			}
-
 		};
 	}
 

@@ -21,46 +21,42 @@ export default function PreviewButton({
 	const lockRef = useRef(null);
 
 	useEffect(() => {
-		if (Liferay.FeatureFlags['LPD-11228']) {
-			const updateArticleId = ({articleId}) => {
-				setArticleId(articleId);
+		const updateArticleId = ({articleId}) => {
+			setArticleId(articleId);
 
-				document.getElementById(
-					`${namespace}jakarta-portlet-action`
-				).value = '/journal/update_article';
-			};
+			document.getElementById(
+				`${namespace}jakarta-portlet-action`
+			).value = '/journal/update_article';
+		};
 
-			Liferay.on('asyncFormSubmission', updateArticleId);
+		Liferay.on('asyncFormSubmission', updateArticleId);
 
-			Liferay.componentReady(`${namespace}publishing`).then(
-				(publishLock) => {
-					lockRef.current = publishLock;
-				}
-			);
+		Liferay.componentReady(`${namespace}publishing`).then(
+			(publishLock) => {
+				lockRef.current = publishLock;
+			}
+		);
 
-			return () => {
-				Liferay.detach('asyncFormSubmission', updateArticleId);
-			};
-		}
+		return () => {
+			Liferay.detach('asyncFormSubmission', updateArticleId);
+		};
 	}, [namespace]);
 
-	const disableInAutosave = Liferay.FeatureFlags['LPD-11228'] && !articleId;
+	const enableDraft = !!articleId;
 
 	return (
 		<ClayButton
 			aria-label={Liferay.Language.get(
 				'a-draft-will-be-saved-before-displaying-the-preview'
 			)}
-			disabled={disabled || disableInAutosave}
+			disabled={disabled || !enableDraft}
 			displayType="secondary"
 			onClick={() => {
-				if (Liferay.FeatureFlags['LPD-11228']) {
-					if (lockRef.current?.isLocked()) {
-						return;
-					}
-
-					lockRef.current?.lock();
+				if (lockRef.current?.isLocked()) {
+					return;
 				}
+
+				lockRef.current?.lock();
 
 				const futureDate = new Date(new Date().getTime() + 1000);
 
@@ -144,9 +140,7 @@ export default function PreviewButton({
 						});
 					})
 					.finally(() => {
-						if (Liferay.FeatureFlags['LPD-11228']) {
-							lockRef.current?.unlock();
-						}
+						lockRef.current?.unlock();
 					});
 			}}
 			title={

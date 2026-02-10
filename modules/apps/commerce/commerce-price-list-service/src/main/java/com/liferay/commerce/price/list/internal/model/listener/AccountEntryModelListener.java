@@ -27,20 +27,18 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 
 	@Override
 	public void onBeforeRemove(AccountEntry accountEntry) {
-		List<Long> commercePriceListAccountRelIds =
-			_commercePriceListAccountRelLocalService.dslQuery(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommercePriceListAccountRelTable.INSTANCE.
-						commercePriceListAccountRelId
-				).from(
-					CommercePriceListAccountRelTable.INSTANCE
-				).where(
-					CommercePriceListAccountRelTable.INSTANCE.commerceAccountId.
-						eq(accountEntry.getAccountEntryId())
-				));
-
 		for (Long commercePriceListAccountRelId :
-				commercePriceListAccountRelIds) {
+				(List<Long>)_commercePriceListAccountRelLocalService.dslQuery(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommercePriceListAccountRelTable.INSTANCE.
+							commercePriceListAccountRelId
+					).from(
+						CommercePriceListAccountRelTable.INSTANCE
+					).where(
+						CommercePriceListAccountRelTable.INSTANCE.
+							commerceAccountId.eq(
+								accountEntry.getAccountEntryId())
+					))) {
 
 			try {
 				_commercePriceListAccountRelLocalService.

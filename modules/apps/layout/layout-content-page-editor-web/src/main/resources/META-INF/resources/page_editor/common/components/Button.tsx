@@ -4,12 +4,15 @@
  */
 
 import ClayButton from '@clayui/button';
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import Loader from './Loader';
 
-export default function Button({children, loading = false, ...props}) {
+type Props = React.ComponentProps<typeof ClayButton> & {
+	loading?: boolean;
+};
+
+export default function Button({children, loading = false, ...props}: Props) {
 	return (
 		<ClayButton {...props}>
 			<span className="d-inline-flex page-editor__button">
@@ -20,8 +23,3 @@ export default function Button({children, loading = false, ...props}) {
 		</ClayButton>
 	);
 }
-
-Button.propTypes = {
-	children: PropTypes.node.isRequired,
-	loading: PropTypes.bool,
-};

@@ -759,7 +759,7 @@ spec:
                                                 "Resource": "arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*"
                                             }
                                         ],
-                                        "Version": "2012-10-17",
+                                        "Version": "2012-10-17"
                                     }
                                 domainName: {{ $searchName }}
                                 region: {{ $searchSpec.region }}

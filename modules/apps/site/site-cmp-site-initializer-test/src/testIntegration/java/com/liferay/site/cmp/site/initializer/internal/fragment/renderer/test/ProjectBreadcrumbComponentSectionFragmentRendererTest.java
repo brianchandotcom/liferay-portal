@@ -112,6 +112,8 @@ public class ProjectBreadcrumbComponentSectionFragmentRendererTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"className", "text-danger"
+			).put(
 				"confirmationMessage",
 				_language.format(
 					mockHttpServletRequest, "delete-project-confirmation-body",

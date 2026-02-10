@@ -122,6 +122,8 @@ public class TaskBreadcrumbComponentSectionFragmentRendererTest
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(
+				"className", "text-danger"
+			).put(
 				"confirmationMessage",
 				_language.format(
 					mockHttpServletRequest, "delete-task-confirmation-body",

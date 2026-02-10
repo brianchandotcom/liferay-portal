@@ -101,7 +101,7 @@ public class FacebookConnectNavigationPreJSPDynamicIncludeTest {
 				mockHttpServletRequest, new MockHttpServletResponse(),
 				RandomTestUtil.randomString());
 
-			Assert.assertNull(
+			Assert.assertNotNull(
 				mockHttpServletRequest.getAttribute(
 					FacebookConnectWebKeys.FACEBOOK_AUTH_URL));
 		}

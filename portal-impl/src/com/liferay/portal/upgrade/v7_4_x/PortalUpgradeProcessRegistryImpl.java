@@ -740,6 +740,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(38, 1, 1),
 			UpgradeModulesFactory.create(
 				new String[] {"com.liferay.frontend.data.set.impl"}, null));
+
+		upgradeVersionTreeMap.put(
+			new Version(39, 0, 0),
+			UpgradeProcessFactory.addColumns(
+				"Layout", "iconImageERC VARCHAR(75) null"));
 	}
 
 }

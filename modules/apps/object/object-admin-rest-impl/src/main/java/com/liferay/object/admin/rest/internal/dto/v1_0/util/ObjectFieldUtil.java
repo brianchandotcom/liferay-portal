@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -218,7 +219,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static com.liferay.object.model.ObjectField toObjectField(
-		String defaultLanguageId,
+		String defaultLanguageId, GroupLocalService groupLocalService,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectField objectField,
 		ObjectFieldLocalService objectFieldLocalService,
@@ -277,7 +278,7 @@ public class ObjectFieldUtil {
 		serviceBuilderObjectField.setName(objectField.getName());
 		serviceBuilderObjectField.setObjectFieldSettings(
 			ObjectFieldSettingUtil.toObjectFieldSettings(
-				listTypeDefinitionId, objectField,
+				groupLocalService, listTypeDefinitionId, objectField,
 				objectFieldSettingLocalService, objectFilterLocalService));
 		serviceBuilderObjectField.setReadOnly(
 			objectField.getReadOnlyAsString());
@@ -297,7 +298,7 @@ public class ObjectFieldUtil {
 	}
 
 	public static List<com.liferay.object.model.ObjectField> toObjectFields(
-		String defaultLanguageId,
+		String defaultLanguageId, GroupLocalService groupLocalService,
 		ListTypeDefinitionLocalService listTypeDefinitionLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectField[] objectFields,
@@ -313,9 +314,9 @@ public class ObjectFieldUtil {
 			objectField -> {
 				com.liferay.object.model.ObjectField serviceBuilderObjectField =
 					toObjectField(
-						defaultLanguageId, listTypeDefinitionLocalService,
-						objectField, objectFieldLocalService,
-						objectFieldSettingLocalService,
+						defaultLanguageId, groupLocalService,
+						listTypeDefinitionLocalService, objectField,
+						objectFieldLocalService, objectFieldSettingLocalService,
 						objectFilterLocalService);
 
 				serviceBuilderObjectField.setObjectFieldId(

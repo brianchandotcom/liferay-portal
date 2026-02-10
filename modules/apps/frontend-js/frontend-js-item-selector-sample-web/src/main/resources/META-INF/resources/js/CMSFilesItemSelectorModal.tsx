@@ -83,8 +83,6 @@ function CMSFilesItemSelectorModal({
 
 	useEffect(() => {
 		if (isBrowserTabVisible && open) {
-
-			// eslint-disable-next-line react-compiler/react-compiler
 			checkNewCMSFiles(lastRequestTimeRef.current).then((response) => {
 				if (response.totalCount > 0) {
 					setNewItemsCount(response.totalCount);

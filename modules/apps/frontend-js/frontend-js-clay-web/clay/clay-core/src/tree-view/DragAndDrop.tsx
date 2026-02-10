@@ -67,13 +67,11 @@ type ContextProps = {
 	dragDropDescribedBy: string;
 	messages: DragAndDropMessages;
 	onCancel: () => void;
+	onClearPosition: () => void;
 	onDragStart: (source: 'keyboard' | 'mouse', target: React.Key) => void;
 	onDrop: () => void;
 	onEnd: () => void;
-	onPositionChange: (
-		key: React.Key | null,
-		position: Position | null
-	) => void;
+	onPositionChange: (key: React.Key, position: Position) => void;
 	position: Position | null;
 	source: 'keyboard' | 'mouse' | null;
 };
@@ -411,7 +409,7 @@ export function DragAndDropProvider<T>({
 	}, []);
 
 	const onPositionChange = useCallback(
-		(key: React.Key | null, position: Position | null) => {
+		(key: React.Key, position: Position) => {
 			setState((state) => ({
 				...state,
 				currentTarget: key,
@@ -420,6 +418,14 @@ export function DragAndDropProvider<T>({
 		},
 		[]
 	);
+
+	const onClearPosition = useCallback(() => {
+		setState((state) => ({
+			...state,
+			currentTarget: null,
+			position: null,
+		}));
+	}, []);
 
 	const onCancel = useCallback(() => {
 		announcerRef.current?.announce(messages.dropCanceled);
@@ -592,6 +598,7 @@ export function DragAndDropProvider<T>({
 				dragDropDescribedBy,
 				messages,
 				onCancel,
+				onClearPosition,
 				onDragStart,
 				onDrop,
 				onEnd,

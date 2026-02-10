@@ -52,7 +52,7 @@ exports[`IndividualProfileRoutes should render 1`] = `
           </ol>
         </div>
         <div
-          class="header-section title-section"
+          class="header-section title-section subtitle"
         >
           <span
             class="align-items-center d-flex"
@@ -69,6 +69,13 @@ exports[`IndividualProfileRoutes should render 1`] = `
               </span>
             </h1>
           </span>
+          <div
+            class="subtitle"
+          >
+            <span
+              class="text-4 text-secondary"
+            />
+          </div>
         </div>
         <div
           class="row"

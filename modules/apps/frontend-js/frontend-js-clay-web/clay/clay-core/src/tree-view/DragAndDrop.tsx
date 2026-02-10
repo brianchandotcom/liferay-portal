@@ -80,7 +80,7 @@ type ContextProps = {
 
 type State = Pick<
 	ContextProps,
-	'currentTarget' | 'currentDrag' | 'currentDragKeys' | 'position' | 'source'
+	'currentDrag' | 'currentDragKeys' | 'currentTarget' | 'position' | 'source'
 > & {
 	lastItem: React.Key | null;
 	status: 'complete' | 'canceled' | null;

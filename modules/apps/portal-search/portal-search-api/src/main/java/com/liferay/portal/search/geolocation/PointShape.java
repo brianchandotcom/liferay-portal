@@ -17,17 +17,7 @@ public class PointShape extends Shape {
 		return shapeTranslator.translate(this);
 	}
 
-	public static class PointShapeBuilderImpl
-		extends ShapeBuilder<PointShapeBuilder> implements PointShapeBuilder {
-
-		@Override
-		public PointShape build() {
-			return new PointShape(coordinates);
-		}
-
-	}
-
-	private PointShape(List<Coordinate> coordinates) {
+	protected PointShape(List<Coordinate> coordinates) {
 		super(coordinates);
 	}
 

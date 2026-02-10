@@ -1,0 +1,152 @@
+{
+	"availableLanguageIds": [
+		"en_US"
+	],
+	"defaultLanguageId": "en_US",
+	"definitionSchemaVersion": "2.0",
+	"fields": [
+		{
+			"dataType": "string",
+			"displayStyle": "singleline",
+			"fieldReference": "DDM_Text",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Text"
+			},
+			"localizable": true,
+			"name": "DDM_Text",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": true,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldReference": "boolean",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Boolean"
+			},
+			"localizable": false,
+			"name": "boolean",
+			"options": [
+				{
+					"label": {
+						"en_US": "Option"
+					},
+					"value": "Option"
+				}
+			],
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "checkbox_multiple"
+		},
+		{
+			"dataType": "image",
+			"fieldNamespace": "ddm",
+			"fieldReference": "image",
+			"indexType": "text",
+			"label": {
+				"en_US": "Image"
+			},
+			"localizable": true,
+			"name": "image",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "image"
+		},
+		{
+			"dataType": "integer",
+			"fieldNamespace": "ddm",
+			"fieldReference": "integer",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "Integer"
+			},
+			"localizable": true,
+			"name": "integer",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "numeric"
+		},
+		{
+			"dataType": "string",
+			"displayStyle": "multiline",
+			"fieldReference": "TextBox",
+			"indexType": "text",
+			"label": {
+				"en_US": "Text Box"
+			},
+			"localizable": true,
+			"name": "TextBox",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "text"
+		},
+		{
+			"dataType": "string",
+			"fieldNamespace": "ddm",
+			"fieldReference": "HTML",
+			"indexType": "text",
+			"label": {
+				"en_US": "HTML"
+			},
+			"localizable": true,
+			"name": "HTML",
+			"predefinedValue": {
+				"en_US": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": ""
+			},
+			"type": "rich_text"
+		}
+	],
+	"successPage": {
+		"body": {
+		},
+		"enabled": false,
+		"title": {
+		}
+	}
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US,es_ES" default-locale="en_US">
+	<dynamic-element index-type="keyword" instance-id="kfce" name="DDM_Text" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Some text]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Un poco de texto]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="kfce" name="DDM_Text" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[Some more text]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Un poco más de texto]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="itet" name="boolean" type="boolean">
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="dqqn" name="image" type="image">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				{
+					"alt": "alt text",
+					"groupId": "$GROUP_ID",
+					"uuid": "$UUID"
+				}
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="keyword" instance-id="bajz" name="integer" type="ddm-integer">
+		<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="vuoo" name="TextBox" type="text_box">
+		<dynamic-content language-id="en_US"><![CDATA[A lot of text]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element index-type="text" instance-id="yhzp" name="HTML" type="text_area">
+		<dynamic-content language-id="en_US"><![CDATA[<p><strong>Bold text</strong></p>]]></dynamic-content>
+	</dynamic-element>
+</root>

@@ -8,9 +8,8 @@ package com.liferay.portal.search.internal.geolocation;
 import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.EnvelopeShape;
 import com.liferay.portal.search.geolocation.EnvelopeShapeBuilder;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -34,14 +33,8 @@ public class EnvelopeShapeImpl extends BaseShapeImpl implements EnvelopeShape {
 	}
 
 	public static class EnvelopeShapeBuilderImpl
+		extends ShapeBuilder<EnvelopeShapeBuilder>
 		implements EnvelopeShapeBuilder {
-
-		@Override
-		public EnvelopeShapeBuilder addCoordinate(Coordinate coordinate) {
-			_envelopeShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
 
 		@Override
 		public EnvelopeShapeBuilder bottomRight(Coordinate coordinate) {
@@ -52,21 +45,9 @@ public class EnvelopeShapeImpl extends BaseShapeImpl implements EnvelopeShape {
 
 		@Override
 		public EnvelopeShape build() {
+			_envelopeShapeImpl.setCoordinates(coordinates);
+
 			return new EnvelopeShapeImpl(_envelopeShapeImpl);
-		}
-
-		@Override
-		public EnvelopeShapeBuilder coordinates(Coordinate... coordinates) {
-			_envelopeShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public EnvelopeShapeBuilder coordinates(List<Coordinate> coordinates) {
-			_envelopeShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		@Override

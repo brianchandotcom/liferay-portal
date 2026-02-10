@@ -5,12 +5,10 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.LineStringShapeBuilder;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -25,34 +23,14 @@ public class LineStringShapeImpl
 	}
 
 	public static class LineStringShapeBuilderImpl
+		extends ShapeBuilder<LineStringShapeBuilder>
 		implements LineStringShapeBuilder {
 
 		@Override
-		public LineStringShapeBuilder addCoordinate(Coordinate coordinate) {
-			_lineStringShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
-
-		@Override
 		public LineStringShape build() {
+			_lineStringShapeImpl.setCoordinates(coordinates);
+
 			return new LineStringShapeImpl(_lineStringShapeImpl);
-		}
-
-		@Override
-		public LineStringShapeBuilder coordinates(Coordinate... coordinates) {
-			_lineStringShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public LineStringShapeBuilder coordinates(
-			List<Coordinate> coordinates) {
-
-			_lineStringShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		private final LineStringShapeImpl _lineStringShapeImpl =

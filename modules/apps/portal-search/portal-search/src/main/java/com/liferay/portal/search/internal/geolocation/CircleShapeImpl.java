@@ -9,9 +9,8 @@ import com.liferay.portal.search.geolocation.CircleShape;
 import com.liferay.portal.search.geolocation.CircleShapeBuilder;
 import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.GeoDistance;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -33,37 +32,19 @@ public class CircleShapeImpl extends BaseShapeImpl implements CircleShape {
 		return _radiusGeoDistance;
 	}
 
-	public static class CircleShapeBuilderImpl implements CircleShapeBuilder {
-
-		@Override
-		public CircleShapeBuilder addCoordinate(Coordinate coordinate) {
-			_circleShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
+	public static class CircleShapeBuilderImpl
+		extends ShapeBuilder<CircleShapeBuilder> implements CircleShapeBuilder {
 
 		@Override
 		public CircleShape build() {
+			_circleShapeImpl.setCoordinates(coordinates);
+
 			return new CircleShapeImpl(_circleShapeImpl);
 		}
 
 		@Override
 		public CircleShapeBuilder center(Coordinate coordinate) {
 			_circleShapeImpl._centerCoordinate = coordinate;
-
-			return this;
-		}
-
-		@Override
-		public CircleShapeBuilder coordinates(Coordinate... coordinates) {
-			_circleShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public CircleShapeBuilder coordinates(List<Coordinate> coordinates) {
-			_circleShapeImpl.setCoordinates(coordinates);
 
 			return this;
 		}

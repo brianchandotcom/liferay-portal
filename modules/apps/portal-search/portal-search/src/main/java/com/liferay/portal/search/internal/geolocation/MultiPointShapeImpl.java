@@ -5,12 +5,10 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.MultiPointShape;
 import com.liferay.portal.search.geolocation.MultiPointShapeBuilder;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -25,34 +23,14 @@ public class MultiPointShapeImpl
 	}
 
 	public static class MultiPointShapeBuilderImpl
+		extends ShapeBuilder<MultiPointShapeBuilder>
 		implements MultiPointShapeBuilder {
 
 		@Override
-		public MultiPointShapeBuilder addCoordinate(Coordinate coordinate) {
-			_multiPointShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
-
-		@Override
 		public MultiPointShape build() {
+			_multiPointShapeImpl.setCoordinates(coordinates);
+
 			return new MultiPointShapeImpl(_multiPointShapeImpl);
-		}
-
-		@Override
-		public MultiPointShapeBuilder coordinates(Coordinate... coordinates) {
-			_multiPointShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public MultiPointShapeBuilder coordinates(
-			List<Coordinate> coordinates) {
-
-			_multiPointShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		private final MultiPointShapeImpl _multiPointShapeImpl =

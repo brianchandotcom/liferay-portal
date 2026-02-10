@@ -5,12 +5,10 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.PointShape;
 import com.liferay.portal.search.geolocation.PointShapeBuilder;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
-
-import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -23,32 +21,14 @@ public class PointShapeImpl extends BaseShapeImpl implements PointShape {
 		return shapeTranslator.translate(this);
 	}
 
-	public static class PointShapeBuilderImpl implements PointShapeBuilder {
-
-		@Override
-		public PointShapeBuilder addCoordinate(Coordinate coordinate) {
-			_pointShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
+	public static class PointShapeBuilderImpl
+		extends ShapeBuilder<PointShapeBuilder> implements PointShapeBuilder {
 
 		@Override
 		public PointShape build() {
+			_pointShapeImpl.setCoordinates(coordinates);
+
 			return new PointShapeImpl(_pointShapeImpl);
-		}
-
-		@Override
-		public PointShapeBuilder coordinates(Coordinate... coordinates) {
-			_pointShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public PointShapeBuilder coordinates(List<Coordinate> coordinates) {
-			_pointShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		private final PointShapeImpl _pointShapeImpl = new PointShapeImpl();

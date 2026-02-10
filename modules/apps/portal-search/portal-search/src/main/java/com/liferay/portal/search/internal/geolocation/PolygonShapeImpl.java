@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.LineStringShape;
 import com.liferay.portal.search.geolocation.Orientation;
 import com.liferay.portal.search.geolocation.PolygonShape;
 import com.liferay.portal.search.geolocation.PolygonShapeBuilder;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
 
 import java.util.ArrayList;
@@ -42,14 +42,9 @@ public class PolygonShapeImpl extends BaseShapeImpl implements PolygonShape {
 		return _shell;
 	}
 
-	public static class PolygonShapeBuilderImpl implements PolygonShapeBuilder {
-
-		@Override
-		public PolygonShapeBuilder addCoordinate(Coordinate coordinate) {
-			_polygonShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
+	public static class PolygonShapeBuilderImpl
+		extends ShapeBuilder<PolygonShapeBuilder>
+		implements PolygonShapeBuilder {
 
 		@Override
 		public PolygonShapeBuilder addHole(LineStringShape lineStringShape) {
@@ -60,21 +55,9 @@ public class PolygonShapeImpl extends BaseShapeImpl implements PolygonShape {
 
 		@Override
 		public PolygonShape build() {
+			_polygonShapeImpl.setCoordinates(coordinates);
+
 			return new PolygonShapeImpl(_polygonShapeImpl);
-		}
-
-		@Override
-		public PolygonShapeBuilder coordinates(Coordinate... coordinates) {
-			_polygonShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public PolygonShapeBuilder coordinates(List<Coordinate> coordinates) {
-			_polygonShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		@Override

@@ -5,11 +5,11 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.MultiPolygonShape;
 import com.liferay.portal.search.geolocation.MultiPolygonShapeBuilder;
 import com.liferay.portal.search.geolocation.Orientation;
 import com.liferay.portal.search.geolocation.PolygonShape;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
 
 import java.util.ArrayList;
@@ -39,14 +39,8 @@ public class MultiPolygonShapeImpl
 	}
 
 	public static class MultiPolygonShapeBuilderImpl
+		extends ShapeBuilder<MultiPolygonShapeBuilder>
 		implements MultiPolygonShapeBuilder {
-
-		@Override
-		public MultiPolygonShapeBuilder addCoordinate(Coordinate coordinate) {
-			_multiPolygonShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
 
 		@Override
 		public MultiPolygonShapeBuilder addPolygonShape(
@@ -59,23 +53,9 @@ public class MultiPolygonShapeImpl
 
 		@Override
 		public MultiPolygonShape build() {
+			_multiPolygonShapeImpl.setCoordinates(coordinates);
+
 			return new MultiPolygonShapeImpl(_multiPolygonShapeImpl);
-		}
-
-		@Override
-		public MultiPolygonShapeBuilder coordinates(Coordinate... coordinates) {
-			_multiPolygonShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public MultiPolygonShapeBuilder coordinates(
-			List<Coordinate> coordinates) {
-
-			_multiPolygonShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		@Override

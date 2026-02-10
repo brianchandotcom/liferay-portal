@@ -5,10 +5,10 @@
 
 package com.liferay.portal.search.internal.geolocation;
 
-import com.liferay.portal.search.geolocation.Coordinate;
 import com.liferay.portal.search.geolocation.GeometryCollectionShape;
 import com.liferay.portal.search.geolocation.GeometryCollectionShapeBuilder;
 import com.liferay.portal.search.geolocation.Shape;
+import com.liferay.portal.search.geolocation.ShapeBuilder;
 import com.liferay.portal.search.geolocation.ShapeTranslator;
 
 import java.util.ArrayList;
@@ -33,16 +33,8 @@ public class GeometryCollectionShapeImpl
 	}
 
 	public static class GeometryCollectionShapeBuilderImpl
+		extends ShapeBuilder<GeometryCollectionShapeBuilder>
 		implements GeometryCollectionShapeBuilder {
-
-		@Override
-		public GeometryCollectionShapeBuilder addCoordinate(
-			Coordinate coordinate) {
-
-			_geometryCollectionShapeImpl.addCoordinate(coordinate);
-
-			return this;
-		}
 
 		@Override
 		public GeometryCollectionShapeBuilder addShape(Shape shape) {
@@ -53,26 +45,10 @@ public class GeometryCollectionShapeImpl
 
 		@Override
 		public GeometryCollectionShape build() {
+			_geometryCollectionShapeImpl.setCoordinates(coordinates);
+
 			return new GeometryCollectionShapeImpl(
 				_geometryCollectionShapeImpl);
-		}
-
-		@Override
-		public GeometryCollectionShapeBuilder coordinates(
-			Coordinate... coordinates) {
-
-			_geometryCollectionShapeImpl.setCoordinates(coordinates);
-
-			return this;
-		}
-
-		@Override
-		public GeometryCollectionShapeBuilder coordinates(
-			List<Coordinate> coordinates) {
-
-			_geometryCollectionShapeImpl.setCoordinates(coordinates);
-
-			return this;
 		}
 
 		@Override

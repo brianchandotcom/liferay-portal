@@ -213,7 +213,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 											<%
 											Set<String> displayedControls = new HashSet<String>();
-											Set<String> portletDataHandlerNames = new HashSet<String>();
 
 											for (Portlet portlet : dataPortlets) {
 												PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
@@ -222,19 +221,10 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 													continue;
 												}
 
-												String portletDataHandlerName = portletDataHandler.getName(locale);
+												String portletTitle = portletDataHandler.getTitle(locale);
 
-												if (!portletDataHandlerNames.contains(portletDataHandlerName)) {
-													portletDataHandlerNames.add(portletDataHandlerName);
-												}
-												else {
-													continue;
-												}
-
-												String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
-
-												if (portletDataHandler.isBatch()) {
-													portletTitle = portletDataHandlerName;
+												if (portletTitle == null) {
+													portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 												}
 
 												long importModelCount = portletDataHandler.getExportModelCount(manifestSummary);

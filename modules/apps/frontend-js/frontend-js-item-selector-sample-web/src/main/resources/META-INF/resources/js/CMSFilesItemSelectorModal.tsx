@@ -49,10 +49,10 @@ async function checkNewCMSFiles(lastRequestTime: string) {
 	);
 
 	if (!response.ok) {
-		return;
+		return {totalCount: 0};
 	}
 
-	return await response.json();
+	return (await response.json()) as {totalCount: number};
 }
 
 type CMSFile = {

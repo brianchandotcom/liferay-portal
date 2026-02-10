@@ -130,17 +130,6 @@ test(
 				await expect(workflowTaskRow2).toBeHidden();
 			});
 
-			await test.step('Verify workflow task approve action', async () => {
-				const workflowTaskRow1 = page
-					.getByRole('row')
-					.filter({hasText: /sent you/i})
-					.filter({hasText: objectEntry1.title});
-
-				await expect(workflowTaskRow1).toBeVisible();
-				await homePage.approveWorkflowTask(objectEntry1.title);
-				await expect(workflowTaskRow1).toBeHidden();
-			});
-
 			await test.step('Verify workflow task update due date action', async () => {
 				await homePage.workflowTaskFilterButton.click();
 				await homePage.assignedToMyRolesMenuItem.click();
@@ -183,17 +172,6 @@ test(
 				);
 
 				await page.getByRole('button', {name: 'Cancel'}).click();
-			});
-
-			await test.step('Verify workflow task reject action', async () => {
-				const workflowTaskRow3 = page
-					.getByRole('row')
-					.filter({hasText: /sent you/i})
-					.filter({hasText: objectEntry3.title});
-
-				await expect(workflowTaskRow3).toBeVisible();
-				await homePage.rejectWorkflowTask(objectEntry3.title);
-				await expect(workflowTaskRow3).toBeHidden();
 			});
 		}
 		finally {

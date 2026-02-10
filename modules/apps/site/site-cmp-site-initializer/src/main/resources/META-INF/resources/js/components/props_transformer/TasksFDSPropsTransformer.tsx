@@ -273,6 +273,7 @@ export default function TasksFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		id,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'delete') {

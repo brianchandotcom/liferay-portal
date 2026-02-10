@@ -5,7 +5,7 @@
 
 import {useSyncExternalStore} from 'react';
 
-const useVisibilityChangeEventSubscribe = (callback: () => void) => {
+const subscribeVisibilityChangeEvent = (callback: () => void) => {
 	document.addEventListener('visibilitychange', callback);
 
 	return () => {
@@ -21,7 +21,7 @@ export function useBrowserTabVisibility() {
 	const visibilityState = useSyncExternalStore(
 
 		// eslint-disable-next-line react-compiler/react-compiler
-		useVisibilityChangeEventSubscribe,
+		subscribeVisibilityChangeEvent,
 		getVisibilityChangeEventSnapshot
 	);
 

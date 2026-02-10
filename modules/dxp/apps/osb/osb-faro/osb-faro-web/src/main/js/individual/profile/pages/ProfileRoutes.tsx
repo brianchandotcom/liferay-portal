@@ -40,10 +40,14 @@ const OverviewCDP = lazy(
 	() => import(/* webpackChunkName: "IndividualOverview" */ './OverviewCDP')
 );
 
+const overviewTabName = ENABLE_CDP
+	? Liferay.Language.get('activities')
+	: Liferay.Language.get('overview');
+
 const NAV_ITEMS = [
 	{
 		exact: true,
-		label: Liferay.Language.get('overview'),
+		label: overviewTabName,
 		route: Routes.CONTACTS_INDIVIDUAL
 	},
 	{

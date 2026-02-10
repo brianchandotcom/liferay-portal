@@ -7,20 +7,43 @@ import {openSelectionModal} from 'frontend-js-components-web';
 
 import {config} from '../app/config/index';
 
-export function openImageSelector(callback, destroyedCallback = null) {
-	openSelectionModal({
+export type SelectedImage = {
+	classNameId?: number | string;
+	classPK?: number | string;
+	fileEntryId?: number | string;
+	title?: string;
+	url?: string;
+};
+
+type SelectedItem = {
+	returnType: string;
+	value: string;
+};
+
+type FileEntry = {
+	classNameId: number | string;
+	fileEntryId: number | string;
+	title: string;
+	url: string;
+};
+
+export function openImageSelector(
+	callback: (image: SelectedImage) => void,
+	destroyedCallback?: () => void
+) {
+	openSelectionModal<SelectedItem>({
 		onClose: destroyedCallback,
 		onSelect: (selectedItem) => {
 			const {returnType, value} = selectedItem;
 
-			const selectedImage = {};
+			const selectedImage: SelectedImage = {};
 
 			if (returnType === 'URL') {
 				selectedImage.title = '';
 				selectedImage.url = value;
 			}
 			else {
-				const fileEntry = JSON.parse(value);
+				const fileEntry = JSON.parse(value) as FileEntry;
 
 				selectedImage.classNameId = fileEntry.classNameId;
 				selectedImage.classPK = fileEntry.fileEntryId;

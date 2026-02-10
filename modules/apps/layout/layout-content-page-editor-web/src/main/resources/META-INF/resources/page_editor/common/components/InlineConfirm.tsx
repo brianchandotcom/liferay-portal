@@ -5,10 +5,17 @@
 
 import ClayButton from '@clayui/button';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 
 import Button from './Button';
+
+type Props = {
+	cancelButtonLabel: string;
+	confirmButtonLabel: string;
+	message: string;
+	onCancelButtonClick: () => void;
+	onConfirmButtonClick: () => Promise<void>;
+};
 
 export default function InlineConfirm({
 	cancelButtonLabel,
@@ -16,12 +23,12 @@ export default function InlineConfirm({
 	message,
 	onCancelButtonClick,
 	onConfirmButtonClick,
-}) {
+}: Props) {
 	const [performingAction, setPerformingAction] = useState(false);
-	const wrapperRef = useRef(null);
+	const wrapperRef = useRef<HTMLDivElement | null>(null);
 	const isMounted = useIsMounted();
 
-	const _handleConfirmButtonClick = () => {
+	const handleConfirmButtonClick = () => {
 		if (wrapperRef.current) {
 			wrapperRef.current.focus();
 		}
@@ -47,12 +54,12 @@ export default function InlineConfirm({
 				'page-editor__inline-confirm-button'
 			);
 
-			if (confirmButton) {
+			if (confirmButton instanceof HTMLElement) {
 				confirmButton.focus();
 			}
 		}
 
-		const _handleDocumentFocusOut = () => {
+		const handleDocumentFocusOut = () => {
 			requestAnimationFrame(() => {
 				if (wrapperRef.current && !performingAction) {
 					if (
@@ -65,12 +72,12 @@ export default function InlineConfirm({
 			});
 		};
 
-		document.addEventListener('focusout', _handleDocumentFocusOut, true);
+		document.addEventListener('focusout', handleDocumentFocusOut, true);
 
 		return () =>
 			window.removeEventListener(
 				'focusout',
-				_handleDocumentFocusOut,
+				handleDocumentFocusOut,
 				true
 			);
 	}, [performingAction, onCancelButtonClick]);
@@ -78,12 +85,12 @@ export default function InlineConfirm({
 	return (
 		<div
 			className="page-editor__inline-confirm"
-			onKeyDown={(event) =>
+			onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) =>
 				event.key === 'Escape' && onCancelButtonClick()
 			}
 			ref={wrapperRef}
 			role="alertdialog"
-			tabIndex="-1"
+			tabIndex={-1}
 		>
 			<p className="text-center text-secondary">
 				<strong>{message}</strong>
@@ -95,7 +102,7 @@ export default function InlineConfirm({
 					disabled={performingAction}
 					displayType="primary"
 					loading={performingAction}
-					onClick={_handleConfirmButtonClick}
+					onClick={handleConfirmButtonClick}
 					size="sm"
 				>
 					{confirmButtonLabel}
@@ -114,11 +121,3 @@ export default function InlineConfirm({
 		</div>
 	);
 }
-
-InlineConfirm.propTypes = {
-	cancelButtonLabel: PropTypes.string,
-	confirmButtonLabel: PropTypes.string,
-	message: PropTypes.string,
-	onCancelButtonClick: PropTypes.func,
-	onConfirmButtonClick: PropTypes.func,
-};

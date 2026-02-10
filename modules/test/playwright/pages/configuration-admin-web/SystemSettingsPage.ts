@@ -27,7 +27,11 @@ export class SystemSettingsPage {
 		await this.applicationsMenuPage.goToSystemSettings();
 	}
 
-	async goToSystemSetting(categoryKey: string, configurationName: string) {
+	async goToSystemSetting(
+		categoryKey: string,
+		configurationName: string,
+		sectionName?: string
+	) {
 		await this.goto();
 		await this.page
 			.getByRole('link', {
@@ -35,7 +39,18 @@ export class SystemSettingsPage {
 				name: categoryKey,
 			})
 			.click();
-		await this.page
+
+		let parent: Locator | Page = this.page;
+
+		if (sectionName) {
+			parent = this.page
+				.locator('div')
+				.filter({hasText: sectionName})
+				.locator('+ div')
+				.getByRole('menubar');
+		}
+
+		await parent
 			.getByRole('menuitem', {
 				exact: true,
 				name: configurationName,

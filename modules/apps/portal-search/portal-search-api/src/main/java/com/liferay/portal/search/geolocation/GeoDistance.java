@@ -5,19 +5,34 @@
 
 package com.liferay.portal.search.geolocation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface GeoDistance {
+public class GeoDistance {
 
-	public double getDistance();
+	public GeoDistance(double distance) {
+		this(distance, DistanceUnit.METERS);
+	}
 
-	public DistanceUnit getDistanceUnit();
+	public GeoDistance(double distance, DistanceUnit distanceUnit) {
+		_distance = distance;
+		_distanceUnit = distanceUnit;
+	}
+
+	public double getDistance() {
+		return _distance;
+	}
+
+	public DistanceUnit getDistanceUnit() {
+		return _distanceUnit;
+	}
 
 	@Override
-	public String toString();
+	public String toString() {
+		return _distance + _distanceUnit.getUnit();
+	}
+
+	private final double _distance;
+	private final DistanceUnit _distanceUnit;
 
 }

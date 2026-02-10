@@ -85,12 +85,12 @@ public class GeoBuildersImpl implements GeoBuilders {
 
 	@Override
 	public GeoDistance geoDistance(double distance) {
-		return new GeoDistanceImpl(distance);
+		return new GeoDistance(distance);
 	}
 
 	@Override
 	public GeoDistance geoDistance(double distance, DistanceUnit distanceUnit) {
-		return new GeoDistanceImpl(distance, distanceUnit);
+		return new GeoDistance(distance, distanceUnit);
 	}
 
 	@Override

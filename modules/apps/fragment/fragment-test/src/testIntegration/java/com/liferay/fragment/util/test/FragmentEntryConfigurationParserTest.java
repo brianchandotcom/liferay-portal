@@ -194,6 +194,7 @@ public class FragmentEntryConfigurationParserTest {
 	}
 
 	@Test
+	@TestInfo("LPD-77079")
 	public void testGetFieldValueLocalizableFieldsWithoutLocale()
 		throws Exception {
 

@@ -23,6 +23,7 @@ components:
                 mapping:
                     AssignToBulkAction: "#/components/schemas/AssignToBulkAction"
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
+                    DeleteAssetVersionBulkAction: "#/components/schemas/DeleteAssetVersionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
                     DueDateBulkAction: "#/components/schemas/DueDateBulkAction"
                     ExpireBulkAction: "#/components/schemas/ExpireBulkAction"
@@ -44,6 +45,7 @@ components:
                     enum:
                         -   AssignToBulkAction
                         -   DefaultPermissionBulkAction
+                        -   DeleteAssetVersionBulkAction
                         -   DeleteBulkAction
                         -   DueDateBulkAction
                         -   ExpireBulkAction
@@ -105,6 +107,14 @@ components:
                             type: string
                         treePath:
                             type: string
+        DeleteAssetVersionBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        versions:
+                            items:
+                                type: integer
+                            type: array
         DeleteBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"

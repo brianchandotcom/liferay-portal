@@ -115,6 +115,10 @@ public class WidgetPageWidgetInstanceDTOConverter
 					_portletPreferencesPortletConfigurationExporter.
 						getPortletConfiguration(layout.getPlid(), portletId);
 
+				if (MapUtil.isEmpty(portletConfigurationMap)) {
+					return null;
+				}
+
 				Map<String, Object> widgetConfig = new HashMap<>();
 
 				for (Map.Entry<String, Object> entry :

@@ -44,11 +44,20 @@ export default function EditorToolbar({
 			setFormId(form.id);
 
 			const handlePublishShortcut = (event: KeyboardEvent) => {
-				if (
-					event.altKey &&
+				const isShortcut =
 					event.key === 'Enter' &&
-					isCtrlOrMeta(event)
+					event.altKey &&
+					isCtrlOrMeta(event);
+
+				if (
+					event.key === 'Enter' &&
+					(event.target as HTMLElement).tagName === 'INPUT' &&
+					!isShortcut
 				) {
+					event.preventDefault();
+				}
+
+				if (isShortcut) {
 					(form as HTMLFormElement).submit();
 				}
 			};

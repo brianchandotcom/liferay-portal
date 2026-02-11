@@ -10,6 +10,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.site.cms.site.initializer.internal.constants.SiteCMSConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -75,7 +76,7 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 
 		return HashMapBuilder.<String, Object>put(
 			"enterpriseDetailsActionLink",
-			"https://www.liferay.com/en/contact-sales"
+			SiteCMSConstants.ENTERPRISE_DETAILS_ACTION_LINK
 		).build();
 	}
 

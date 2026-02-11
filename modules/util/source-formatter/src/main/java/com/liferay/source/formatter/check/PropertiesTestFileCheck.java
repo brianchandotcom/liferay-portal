@@ -264,15 +264,16 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 		List<String> testrayAllTeamsComponentNames =
 			_getTestrayAllTeamsComponentNames();
 
-		if (!testrayAllTeamsComponentNames.contains(testrayMainComponentName)) {
-			addMessage(
-				fileName,
-				StringBundler.concat(
-					"Property value \"", testrayMainComponentName,
-					"\" does not exist in \"testray.team.*.component.names\" ",
-					"in ", SourceUtil.getRootDirName(absolutePath),
-					"/test.properties"));
+		if (testrayAllTeamsComponentNames.contains(testrayMainComponentName)) {
+			return;
 		}
+
+		addMessage(
+			fileName,
+			StringBundler.concat(
+				"Property value \"", testrayMainComponentName, "\" does not ",
+				"exist in \"testray.team.*.component.names\" in ",
+				SourceUtil.getRootDirName(absolutePath), "/test.properties"));
 	}
 
 	private int _compareTo(String sqlClause, String nextSQLClause) {
@@ -374,13 +375,15 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 				sqlClauses = sqlClauses + "\n";
 			}
 
-			if (!sqlClauses.equals(originalSqlClauses)) {
-				String replacement = StringUtil.replaceFirst(
-					matcher.group(), matcher.group(3), sqlClauses);
-
-				matcher.appendReplacement(
-					sb, Matcher.quoteReplacement(replacement));
+			if (sqlClauses.equals(originalSqlClauses)) {
+				continue;
 			}
+
+			String replacement = StringUtil.replaceFirst(
+				matcher.group(), matcher.group(3), sqlClauses);
+
+			matcher.appendReplacement(
+				sb, Matcher.quoteReplacement(replacement));
 		}
 
 		if (sb.length() > 0) {
@@ -623,15 +626,17 @@ public class PropertiesTestFileCheck extends BaseFileCheck {
 
 			String sqlClause = matcher.group(1);
 
-			if (_compareTo(sqlClause, nextSQLClause) > 0) {
-				sqlClauses = StringUtil.replaceFirst(
-					sqlClauses, nextSQLClause, sqlClause,
-					getLineStartPos(sqlClauses, lineNumber + 1));
-
-				return StringUtil.replaceFirst(
-					sqlClauses, sqlClause, nextSQLClause,
-					getLineStartPos(sqlClauses, lineNumber));
+			if (_compareTo(sqlClause, nextSQLClause) <= 0) {
+				continue;
 			}
+
+			sqlClauses = StringUtil.replaceFirst(
+				sqlClauses, nextSQLClause, sqlClause,
+				getLineStartPos(sqlClauses, lineNumber + 1));
+
+			return StringUtil.replaceFirst(
+				sqlClauses, sqlClause, nextSQLClause,
+				getLineStartPos(sqlClauses, lineNumber));
 		}
 
 		return sqlClauses;

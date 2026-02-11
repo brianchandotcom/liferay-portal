@@ -37,6 +37,13 @@ public class AssetVocabularyGroupRelServiceUtil {
 	}
 
 	public static List<AssetVocabularyGroupRel>
+			getAssetVocabularyGroupRelByGroupIds(long[] groupIds)
+		throws PortalException {
+
+		return getService().getAssetVocabularyGroupRelByGroupIds(groupIds);
+	}
+
+	public static List<AssetVocabularyGroupRel>
 			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
 		throws PortalException {
 

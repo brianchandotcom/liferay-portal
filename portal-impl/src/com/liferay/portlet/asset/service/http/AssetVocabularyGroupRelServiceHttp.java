@@ -86,6 +86,51 @@ public class AssetVocabularyGroupRelServiceHttp {
 
 	public static java.util.List
 		<com.liferay.asset.kernel.model.AssetVocabularyGroupRel>
+				getAssetVocabularyGroupRelByGroupIds(
+					HttpPrincipal httpPrincipal, long[] groupIds)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				AssetVocabularyGroupRelServiceUtil.class,
+				"getAssetVocabularyGroupRelByGroupIds",
+				_getAssetVocabularyGroupRelByGroupIdsParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupIds);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (java.util.List
+				<com.liferay.asset.kernel.model.AssetVocabularyGroupRel>)
+					returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static java.util.List
+		<com.liferay.asset.kernel.model.AssetVocabularyGroupRel>
 				getAssetVocabularyGroupRelsByVocabularyId(
 					HttpPrincipal httpPrincipal, long vocabularyId)
 			throws com.liferay.portal.kernel.exception.PortalException {
@@ -94,7 +139,7 @@ public class AssetVocabularyGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyGroupRelServiceUtil.class,
 				"getAssetVocabularyGroupRelsByVocabularyId",
-				_getAssetVocabularyGroupRelsByVocabularyIdParameterTypes1);
+				_getAssetVocabularyGroupRelsByVocabularyIdParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId);
@@ -137,7 +182,7 @@ public class AssetVocabularyGroupRelServiceHttp {
 			MethodKey methodKey = new MethodKey(
 				AssetVocabularyGroupRelServiceUtil.class,
 				"setAssetVocabularyGroupRels",
-				_setAssetVocabularyGroupRelsParameterTypes2);
+				_setAssetVocabularyGroupRelsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, vocabularyId, groupIds);
@@ -172,10 +217,14 @@ public class AssetVocabularyGroupRelServiceHttp {
 	private static final Class<?>[] _addAssetVocabularyGroupRelParameterTypes0 =
 		new Class[] {long.class, long.class};
 	private static final Class<?>[]
-		_getAssetVocabularyGroupRelsByVocabularyIdParameterTypes1 =
+		_getAssetVocabularyGroupRelByGroupIdsParameterTypes1 = new Class[] {
+			long[].class
+		};
+	private static final Class<?>[]
+		_getAssetVocabularyGroupRelsByVocabularyIdParameterTypes2 =
 			new Class[] {long.class};
 	private static final Class<?>[]
-		_setAssetVocabularyGroupRelsParameterTypes2 = new Class[] {
+		_setAssetVocabularyGroupRelsParameterTypes3 = new Class[] {
 			long.class, long[].class
 		};
 

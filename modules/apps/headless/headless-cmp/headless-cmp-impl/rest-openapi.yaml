@@ -75,6 +75,11 @@ paths:
                     name: search
                     schema:
                         type: string
+                -   in: query
+                    name: type
+                    schema:
+                        enum: [Role, User]
+                        type: string
             responses:
                 200:
                     content:

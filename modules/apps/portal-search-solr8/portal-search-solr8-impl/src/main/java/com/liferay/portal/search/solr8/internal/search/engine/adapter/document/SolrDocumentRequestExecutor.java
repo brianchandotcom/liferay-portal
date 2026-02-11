@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -20,14 +21,21 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
+import com.liferay.portal.search.solr8.configuration.SolrConfiguration;
+import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.solr8.configuration.SolrConfiguration",
 	property = "search.engine.impl=Solr",
 	service = DocumentRequestExecutor.class
 )
@@ -84,11 +92,24 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 		return _updateDocumentRequestExecutor.execute(updateDocumentRequest);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		SolrConfiguration solrConfiguration =
+			ConfigurableUtil.createConfigurable(
+				SolrConfiguration.class, properties);
+
+		String defaultCollection = solrConfiguration.defaultCollection();
+
+		_deleteByQueryDocumentRequestExecutor =
+			new DeleteByQueryDocumentRequestExecutor(
+				defaultCollection, _solrClientManager);
+	}
+
 	@Reference
 	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 
-	@Reference
-	private DeleteByQueryDocumentRequestExecutor
+	private volatile DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 
 	@Reference
@@ -99,6 +120,9 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 
 	@Reference
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
+
+	@Reference
+	private SolrClientManager _solrClientManager;
 
 	@Reference
 	private UpdateByQueryDocumentRequestExecutor

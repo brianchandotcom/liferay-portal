@@ -20,7 +20,9 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,10 +87,16 @@ public class OpenSearchDocumentRequestExecutor
 		return _updateDocumentRequestExecutor.execute(updateDocumentRequest);
 	}
 
+	@Activate
+	protected void activate() {
+		_deleteByQueryDocumentRequestExecutor =
+			new DeleteByQueryDocumentRequestExecutor(
+				_openSearchConnectionManager);
+	}
+
 	@Reference
 	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 
-	@Reference
 	private DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 
@@ -100,6 +108,9 @@ public class OpenSearchDocumentRequestExecutor
 
 	@Reference
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
+
+	@Reference
+	private OpenSearchConnectionManager _openSearchConnectionManager;
 
 	@Reference
 	private UpdateByQueryDocumentRequestExecutor

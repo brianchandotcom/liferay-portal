@@ -42,21 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutor;
 	}
 
-	private DeleteByQueryDocumentRequestExecutor
-		_createDeleteByQueryDocumentRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		DeleteByQueryDocumentRequestExecutor
-			deleteByQueryDocumentRequestExecutor =
-				new DeleteByQueryDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor,
-			"_elasticsearchClientResolver", elasticsearchClientResolver);
-
-		return deleteByQueryDocumentRequestExecutor;
-	}
-
 	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -73,35 +58,41 @@ public class DocumentRequestExecutorFixture {
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		DocumentRequestExecutor documentRequestExecutor =
-			new ElasticsearchDocumentRequestExecutor();
+		ElasticsearchDocumentRequestExecutor
+			elasticsearchDocumentRequestExecutor =
+				new ElasticsearchDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_bulkDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor,
+			"_elasticsearchClientResolver", elasticsearchClientResolver);
+		ReflectionTestUtil.setFieldValue(
+			elasticsearchDocumentRequestExecutor,
+			"_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(elasticsearchClientResolver));
-
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_deleteByQueryDocumentRequestExecutor",
-			_createDeleteByQueryDocumentRequestExecutor(
-				elasticsearchClientResolver));
-		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_deleteDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor,
+			"_deleteDocumentRequestExecutor",
 			_createDeleteDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_getDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_indexDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor,
+			"_indexDocumentRequestExecutor",
 			_createIndexDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_updateByQueryDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor,
+			"_updateByQueryDocumentRequestExecutor",
 			_createUpdateByQueryDocumentRequestExecutor(
 				elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_updateDocumentRequestExecutor",
+			elasticsearchDocumentRequestExecutor,
+			"_updateDocumentRequestExecutor",
 			_createUpdateDocumentRequestExecutor(elasticsearchClientResolver));
 
-		return documentRequestExecutor;
+		elasticsearchDocumentRequestExecutor.activate();
+
+		return elasticsearchDocumentRequestExecutor;
 	}
 
 	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(

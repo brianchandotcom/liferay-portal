@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -21,6 +22,7 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -85,15 +87,24 @@ public class ElasticsearchDocumentRequestExecutor
 		return _updateDocumentRequestExecutor.execute(updateDocumentRequest);
 	}
 
+	@Activate
+	protected void activate() {
+		_deleteByQueryDocumentRequestExecutor =
+			new DeleteByQueryDocumentRequestExecutor(
+				_elasticsearchClientResolver);
+	}
+
 	@Reference
 	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 
-	@Reference
 	private DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 
 	@Reference
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
+
+	@Reference
+	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 	@Reference
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;

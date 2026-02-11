@@ -8,6 +8,7 @@ package com.liferay.data.cleanup.internal.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.message.boards.util.MBUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -273,8 +274,9 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 		AtomicReference<ClassName> classNameAtomicReference =
 			new AtomicReference<>();
 		String classNameValue =
-			ObjectDefinition.class.getName() + StringPool.POUND +
-				RandomTestUtil.randomString(4);
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString(4);
 
 		test(
 			logCapture -> {
@@ -312,8 +314,9 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 		AtomicReference<ClassName> classNameAtomicReference =
 			new AtomicReference<>();
 		String classNameValue =
-			ObjectDefinition.class.getName() + StringPool.POUND +
-				RandomTestUtil.randomString();
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomString();
 
 		test(
 			logCapture -> {

@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
+	property browser.chrome.version = "139.0";
 	property custom.properties = "LPD-23840=true";
 	property database.types = "db2,mariadb,mysql,oracle,sqlserver";
 	property portal.release = "true";

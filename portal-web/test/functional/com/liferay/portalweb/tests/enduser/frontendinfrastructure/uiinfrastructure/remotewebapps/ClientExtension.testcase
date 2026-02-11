@@ -40,6 +40,7 @@ definition {
 	@description = "LPS-153716. Add Client Extension with DB Partitioning enabled."
 	@priority = 5
 	test CanBeDisplayedWithDBPartitioning {
+		property browser.chrome.version = "139.0";
 		property database.partition.enabled = "true";
 		property database.types = "mysql, postgresql";
 		property portal.acceptance = "true";

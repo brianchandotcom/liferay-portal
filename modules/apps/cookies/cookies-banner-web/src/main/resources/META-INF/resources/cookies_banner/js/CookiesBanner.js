@@ -54,7 +54,7 @@ export default function ({
 			);
 		}
 
-		const cookieManager = document.getElementById(
+		const consentManager = document.getElementById(
 			'_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm'
 		);
 		const productAnalyticsBanner = document.querySelector(
@@ -62,7 +62,7 @@ export default function ({
 		);
 
 		if (
-			cookieManager ||
+			consentManager ||
 			(productAnalyticsBanner &&
 				productAnalyticsBanner.style.display === 'block')
 		) {

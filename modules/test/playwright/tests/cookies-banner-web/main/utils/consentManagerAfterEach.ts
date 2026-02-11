@@ -14,8 +14,8 @@ export async function clearConsentCookies(systemSettingsPage) {
 		.clearCookies({name: /^USER_CONSENT_CONFIGURED/});
 }
 
-export async function resetAllCookieManagerConfigurations(systemSettingsPage) {
-	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+export async function resetAllConsentManagerConfigurations(systemSettingsPage) {
+	await systemSettingsPage.goToSystemSetting('Privacy', 'Consent Manager');
 
 	const menuItems = await systemSettingsPage.page.getByRole('menuitem').all();
 
@@ -31,7 +31,7 @@ export async function resetAllCookieManagerConfigurations(systemSettingsPage) {
 		if (await menuItem.getByText('Product Analytics').isVisible()) {
 			continue;
 		}
-		else if (await menuItem.getByText('Cookie Manager').isVisible()) {
+		else if (await menuItem.getByText('Consent Manager').isVisible()) {
 			dialog = true;
 		}
 
@@ -63,8 +63,8 @@ async function resetConfiguration(dialog = false, systemSettingsPage) {
 	}
 }
 
-export async function resetCookieManagerConfiguration(systemSettingsPage) {
-	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+export async function resetConsentManagerConfiguration(systemSettingsPage) {
+	await systemSettingsPage.goToSystemSetting('Privacy', 'Consent Manager');
 
 	await systemSettingsPage.page.waitForTimeout(1000);
 

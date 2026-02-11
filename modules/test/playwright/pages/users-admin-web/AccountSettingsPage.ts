@@ -10,7 +10,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 
 export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
-	readonly cookieManagerMenuItem: Locator;
+	readonly consentManagerMenuItem: Locator;
 	readonly currentPasswordInput: Locator;
 	private readonly dataAndPrivacyNavigationItem: Locator;
 	private readonly displayMenuItem: Locator;
@@ -37,8 +37,8 @@ export class AccountSettingsPage {
 		this.accountSettingsMenuItem = page.getByRole('menuitem', {
 			name: 'Account Settings',
 		});
-		this.cookieManagerMenuItem = page.getByRole('link', {
-			name: 'Cookie Manager',
+		this.consentManagerMenuItem = page.getByRole('link', {
+			name: 'Consent Manager',
 		});
 		this.currentPasswordInput = page.getByLabel('Current Password');
 		this.dataAndPrivacyNavigationItem = page.locator('.nav-link', {

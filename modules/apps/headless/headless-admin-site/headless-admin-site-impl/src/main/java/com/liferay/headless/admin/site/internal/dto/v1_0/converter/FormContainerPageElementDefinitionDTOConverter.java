@@ -85,7 +85,6 @@ public class FormContainerPageElementDefinitionDTOConverter
 				companyId, _infoItemServiceRegistry,
 				formStyledLayoutStructureItem.getBackgroundImageJSONObject(),
 				scopeGroupId));
-
 		formContainerPageElementDefinition.setCssClasses(
 			() -> {
 				if (SetUtil.isEmpty(

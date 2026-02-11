@@ -2649,11 +2649,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithContainerPageElement()
 		throws Exception {
 
-		String externalReferenceCode = RandomTestUtil.randomString();
-
 		BackgroundImageValue backgroundImageValue =
 			ImageValueTestUtil.getDirectBackgroundImageValue(
 				null, RandomTestUtil.randomString());
+		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
@@ -2767,6 +2766,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement()
 		throws Exception {
 
+		BackgroundImageValue backgroundImageValue =
+			ImageValueTestUtil.getDirectBackgroundImageValue(
+				null, RandomTestUtil.randomString());
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -2774,11 +2776,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
 						"firstName")));
-
-		BackgroundImageValue backgroundImageValue =
-			ImageValueTestUtil.getDirectBackgroundImageValue(
-				null, RandomTestUtil.randomString());
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -2917,7 +2914,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		BackgroundImageValue backgroundImageValue =
 			ImageValueTestUtil.getDirectBackgroundImageValue(
 				null, RandomTestUtil.randomString());
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -4162,7 +4158,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					DISPLAY_PAGE_ITEM,
 				"JournalArticle_authorProfileImage",
 				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -4219,7 +4214,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				"JournalArticle_authorProfileImage", null);
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-
 		String widgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
 

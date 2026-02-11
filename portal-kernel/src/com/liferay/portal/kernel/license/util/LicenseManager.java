@@ -50,7 +50,7 @@ public interface LicenseManager {
 
 	public Set<String> getMacAddresses();
 
-	public boolean isPortalFreeTier();
+	public boolean isFreeTier();
 
 	public void registerLicense(JSONObject jsonObject) throws Exception;
 

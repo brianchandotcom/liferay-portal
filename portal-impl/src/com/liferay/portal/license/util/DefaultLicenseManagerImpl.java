@@ -149,7 +149,7 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 	}
 
 	@Override
-	public boolean isPortalFreeTier() {
+	public boolean isFreeTier() {
 		return false;
 	}
 

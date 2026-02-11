@@ -6,14 +6,12 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.asset.kernel.NoSuchClassTypeException;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -127,29 +125,16 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "masterLayoutPlid");
 
 		try {
-			String classTypeKey = null;
-
-			if (classTypeId > 0) {
-				InfoItemFormVariationsProvider<?>
-					infoItemFormVariationsProvider =
-						_infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFormVariationsProvider.class,
-							_portal.getClassName(classNameId));
-
-				InfoItemFormVariation infoItemFormVariation =
-					infoItemFormVariationsProvider.getInfoItemFormVariation(
-						serviceContext.getScopeGroupId(),
-						String.valueOf(classTypeId));
-
-				classTypeKey = infoItemFormVariation.getExternalReferenceCode();
-			}
-
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					null, serviceContext.getScopeGroupId(),
 					layoutPageTemplateCollectionId, null, classNameId,
-					classTypeId, classTypeKey, name, masterLayoutPlid,
-					WorkflowConstants.STATUS_DRAFT, serviceContext);
+					classTypeId,
+					LayoutPageTemplateEntryUtil.getClassTypeKey(
+						classNameId, classTypeId,
+						serviceContext.getScopeGroupId()),
+					name, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
+					serviceContext);
 
 			return JSONUtil.put(
 				"redirectURL",
@@ -184,9 +169,6 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 
 		return JSONUtil.put("error", errorJSONObject);
 	}
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -85,6 +85,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.util.CheckUnlockedLayoutThreadLocal;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
@@ -447,25 +448,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				ServiceContextThreadLocal.getServiceContext());
 		}
 
-		String classTypeKey = null;
-
-		if (classTypeId > 0) {
-			InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-				_infoItemServiceRegistry.getFirstInfoItemService(
-					InfoItemFormVariationsProvider.class,
-					_portal.getClassName(classNameId));
-
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					groupId, String.valueOf(classTypeId));
-
-			classTypeKey = infoItemFormVariation.getExternalReferenceCode();
-		}
-
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			null, groupId, layoutPageTemplateCollectionId, null, classNameId,
-			classTypeId, classTypeKey, name, 0,
-			WorkflowConstants.STATUS_APPROVED,
+			classTypeId,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				classNameId, classTypeId, groupId),
+			name, 0, WorkflowConstants.STATUS_APPROVED,
 			ServiceContextThreadLocal.getServiceContext());
 	}
 

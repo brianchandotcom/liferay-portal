@@ -6,16 +6,15 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action;
 
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.admin.constants.LayoutPageTemplateAdminPortletKeys;
 import com.liferay.layout.page.template.admin.web.internal.handler.LayoutPageTemplateEntryExceptionRequestHandlerUtil;
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -78,26 +77,11 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
-			String classTypeKey = null;
-
-			if (classTypeId > 0) {
-				InfoItemFormVariationsProvider<?>
-					infoItemFormVariationsProvider =
-						_infoItemServiceRegistry.getFirstInfoItemService(
-							InfoItemFormVariationsProvider.class,
-							_portal.getClassName(classNameId));
-
-				InfoItemFormVariation infoItemFormVariation =
-					infoItemFormVariationsProvider.getInfoItemFormVariation(
-						themeDisplay.getScopeGroupId(),
-						String.valueOf(classTypeId));
-
-				classTypeKey = infoItemFormVariation.getExternalReferenceCode();
-			}
-
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				classNameId, classTypeId, classTypeKey);
+				classNameId, classTypeId,
+				LayoutPageTemplateEntryUtil.getClassTypeKey(
+					classNameId, classTypeId, themeDisplay.getScopeGroupId()));
 
 			hideDefaultSuccessMessage(actionRequest);
 

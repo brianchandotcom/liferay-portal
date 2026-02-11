@@ -230,7 +230,21 @@ export default function TasksFDSPropsTransformer({
 							itemData.entryClassName ===
 							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 						) {
-							return '-';
+							return StateLabel({
+								state: itemData.embedded?.completed
+									? {
+											key: 'completed',
+											name: Liferay.Language.get(
+												'completed'
+											),
+										}
+									: {
+											key: 'pending',
+											name: Liferay.Language.get(
+												'pending'
+											),
+										},
+							});
 						}
 
 						return StateLabel({

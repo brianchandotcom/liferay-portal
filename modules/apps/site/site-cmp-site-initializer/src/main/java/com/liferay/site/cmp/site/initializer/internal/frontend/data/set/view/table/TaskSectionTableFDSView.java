@@ -51,7 +51,7 @@ public class TaskSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dueDateTableCellRenderer")
 		).add(
-			"state", "state",
+			"state", "state-status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"stateTableCellRenderer")
 		).build();

@@ -33,7 +33,8 @@ public class OpenSearchIndexRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_openSearchIndexRequestExecutor = new OpenSearchIndexRequestExecutor();
+		_openSearchIndexRequestExecutor = new OpenSearchIndexRequestExecutor(
+			null);
 
 		ReflectionTestUtil.setFieldValue(
 			_openSearchIndexRequestExecutor,

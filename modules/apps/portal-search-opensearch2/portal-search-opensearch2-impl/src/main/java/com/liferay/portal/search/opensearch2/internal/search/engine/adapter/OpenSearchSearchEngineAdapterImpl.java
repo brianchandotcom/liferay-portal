@@ -29,6 +29,7 @@ import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConne
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.ccr.OpenSearchCCRRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.OpenSearchClusterRequestExecutor;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.OpenSearchIndexRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
@@ -133,6 +134,8 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 		_ccrRequestExecutor = new OpenSearchCCRRequestExecutor();
 		_clusterRequestExecutor = new OpenSearchClusterRequestExecutor(
 			_openSearchConnectionManager);
+		_indexRequestExecutor = new OpenSearchIndexRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
@@ -174,7 +177,6 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private DocumentRequestExecutor _documentRequestExecutor;
 
-	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private IndexRequestExecutor _indexRequestExecutor;
 
 	@Reference

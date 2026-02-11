@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.CloseIndexRequest;
@@ -37,19 +36,46 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Dylan Rebelak
  * @author Petteri Karttunen
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = IndexRequestExecutor.class
-)
 public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
+
+	public OpenSearchIndexRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
+			openSearchConnectionManager);
+		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
+			openSearchConnectionManager);
+		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
+			openSearchConnectionManager);
+		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
+			openSearchConnectionManager);
+		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
+			openSearchConnectionManager);
+		_getFieldMappingIndexRequestExecutor =
+			new GetFieldMappingIndexRequestExecutor(
+				openSearchConnectionManager);
+		_getIndexIndexRequestExecutor = new GetIndexIndexRequestExecutor(
+			openSearchConnectionManager);
+		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
+			openSearchConnectionManager);
+		_indicesExistsIndexRequestExecutor =
+			new IndicesExistsIndexRequestExecutor(openSearchConnectionManager);
+		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
+			openSearchConnectionManager);
+		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor(
+			openSearchConnectionManager);
+		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
+			openSearchConnectionManager);
+		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
+			openSearchConnectionManager);
+		_updateIndexSettingsIndexRequestExecutor =
+			new UpdateIndexSettingsIndexRequestExecutor(
+				openSearchConnectionManager);
+	}
 
 	@Override
 	public AnalyzeIndexResponse executeIndexRequest(
@@ -152,64 +178,24 @@ public class OpenSearchIndexRequestExecutor implements IndexRequestExecutor {
 			updateIndexSettingsIndexRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
-			_jsonFactory, _openSearchConnectionManager);
-		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_getFieldMappingIndexRequestExecutor =
-			new GetFieldMappingIndexRequestExecutor(
-				_jsonFactory, _openSearchConnectionManager);
-		_getIndexIndexRequestExecutor = new GetIndexIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_indicesExistsIndexRequestExecutor =
-			new IndicesExistsIndexRequestExecutor(_openSearchConnectionManager);
-		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor(
-			_jsonFactory, _openSearchConnectionManager);
-		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
-			_openSearchConnectionManager);
-		_updateIndexSettingsIndexRequestExecutor =
-			new UpdateIndexSettingsIndexRequestExecutor(
-				_openSearchConnectionManager);
-	}
-
-	private AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
-	private CloseIndexRequestExecutor _closeIndexRequestExecutor;
-	private CreateIndexRequestExecutor _createIndexRequestExecutor;
-	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
-	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
-	private GetFieldMappingIndexRequestExecutor
+	private final AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
+	private final CloseIndexRequestExecutor _closeIndexRequestExecutor;
+	private final CreateIndexRequestExecutor _createIndexRequestExecutor;
+	private final DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
+	private final FlushIndexRequestExecutor _flushIndexRequestExecutor;
+	private final GetFieldMappingIndexRequestExecutor
 		_getFieldMappingIndexRequestExecutor;
-	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
-	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
-	private IndicesExistsIndexRequestExecutor
+	private final GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
+	private final GetMappingIndexRequestExecutor
+		_getMappingIndexRequestExecutor;
+	private final IndicesExistsIndexRequestExecutor
 		_indicesExistsIndexRequestExecutor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	private OpenIndexRequestExecutor _openIndexRequestExecutor;
-
-	@Reference
-	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	private PutMappingIndexRequestExecutor _putMappingIndexRequestExecutor;
-	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
-	private StatsIndexRequestExecutor _statsIndexRequestExecutor;
-	private UpdateIndexSettingsIndexRequestExecutor
+	private final OpenIndexRequestExecutor _openIndexRequestExecutor;
+	private final PutMappingIndexRequestExecutor
+		_putMappingIndexRequestExecutor;
+	private final RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
+	private final StatsIndexRequestExecutor _statsIndexRequestExecutor;
+	private final UpdateIndexSettingsIndexRequestExecutor
 		_updateIndexSettingsIndexRequestExecutor;
 
 }

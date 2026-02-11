@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
@@ -46,8 +45,7 @@ public class PutMappingIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 				).toString());
 
 		PutMappingIndexRequestExecutor putMappingIndexRequestExecutor =
-			new PutMappingIndexRequestExecutor(
-				new JSONFactoryImpl(), openSearchConnectionManager);
+			new PutMappingIndexRequestExecutor(openSearchConnectionManager);
 
 		PutMappingRequest putMappingRequest =
 			putMappingIndexRequestExecutor.createPutMappingRequest(

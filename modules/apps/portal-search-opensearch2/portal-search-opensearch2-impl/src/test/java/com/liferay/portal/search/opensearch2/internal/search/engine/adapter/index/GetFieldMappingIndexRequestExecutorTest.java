@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -41,7 +40,7 @@ public class GetFieldMappingIndexRequestExecutorTest
 		GetFieldMappingIndexRequestExecutor
 			getFieldMappingIndexRequestExecutor =
 				new GetFieldMappingIndexRequestExecutor(
-					new JSONFactoryImpl(), openSearchConnectionManager);
+					openSearchConnectionManager);
 
 		GetFieldMappingRequest getFieldMappingRequest =
 			getFieldMappingIndexRequestExecutor.createGetFieldMappingRequest(

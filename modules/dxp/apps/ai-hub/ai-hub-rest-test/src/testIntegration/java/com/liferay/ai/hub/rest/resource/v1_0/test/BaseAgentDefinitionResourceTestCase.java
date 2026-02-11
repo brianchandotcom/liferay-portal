@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -13,12 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.TaskDefinition;
+import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.pagination.Pagination;
-import com.liferay.ai.hub.rest.client.resource.v1_0.TaskDefinitionResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskDefinitionSerDes;
+import com.liferay.ai.hub.rest.client.resource.v1_0.AgentDefinitionResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentDefinitionSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
@@ -80,7 +80,7 @@ import org.junit.Test;
  * @generated
  */
 @Generated("")
-public abstract class BaseTaskDefinitionResourceTestCase {
+public abstract class BaseAgentDefinitionResourceTestCase {
 
 	@ClassRule
 	@Rule
@@ -101,12 +101,12 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
-		_taskDefinitionResource.setContextCompany(testCompany);
+		_agentDefinitionResource.setContextCompany(testCompany);
 
 		_testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
-		taskDefinitionResource = TaskDefinitionResource.builder(
+		agentDefinitionResource = AgentDefinitionResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -137,23 +137,23 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	public void testClientSerDesToDTO() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		TaskDefinition taskDefinition1 = randomTaskDefinition();
+		AgentDefinition agentDefinition1 = randomAgentDefinition();
 
-		String json = objectMapper.writeValueAsString(taskDefinition1);
+		String json = objectMapper.writeValueAsString(agentDefinition1);
 
-		TaskDefinition taskDefinition2 = TaskDefinitionSerDes.toDTO(json);
+		AgentDefinition agentDefinition2 = AgentDefinitionSerDes.toDTO(json);
 
-		Assert.assertTrue(equals(taskDefinition1, taskDefinition2));
+		Assert.assertTrue(equals(agentDefinition1, agentDefinition2));
 	}
 
 	@Test
 	public void testClientSerDesToJSON() throws Exception {
 		ObjectMapper objectMapper = getClientSerDesObjectMapper();
 
-		TaskDefinition taskDefinition = randomTaskDefinition();
+		AgentDefinition agentDefinition = randomAgentDefinition();
 
-		String json1 = objectMapper.writeValueAsString(taskDefinition);
-		String json2 = TaskDefinitionSerDes.toJSON(taskDefinition);
+		String json1 = objectMapper.writeValueAsString(agentDefinition);
+		String json2 = AgentDefinitionSerDes.toJSON(agentDefinition);
 
 		Assert.assertEquals(
 			objectMapper.readTree(json1), objectMapper.readTree(json2));
@@ -181,38 +181,44 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	public void testEscapeRegexInStringFields() throws Exception {
 		String regex = "^[0-9]+(\\.[0-9]{1,2})\"?";
 
-		TaskDefinition taskDefinition = randomTaskDefinition();
+		AgentDefinition agentDefinition = randomAgentDefinition();
 
-		taskDefinition.setDescription(regex);
-		taskDefinition.setExternalReferenceCode(regex);
-		taskDefinition.setName(regex);
-		taskDefinition.setTitle(regex);
+		agentDefinition.setDescription(regex);
+		agentDefinition.setExternalReferenceCode(regex);
+		agentDefinition.setName(regex);
+		agentDefinition.setTitle(regex);
+		agentDefinition.setWorkflowDefinitionName(regex);
 
-		String json = TaskDefinitionSerDes.toJSON(taskDefinition);
+		String json = AgentDefinitionSerDes.toJSON(agentDefinition);
 
 		Assert.assertFalse(json.contains(regex));
 
-		taskDefinition = TaskDefinitionSerDes.toDTO(json);
+		agentDefinition = AgentDefinitionSerDes.toDTO(json);
 
-		Assert.assertEquals(regex, taskDefinition.getDescription());
-		Assert.assertEquals(regex, taskDefinition.getExternalReferenceCode());
-		Assert.assertEquals(regex, taskDefinition.getName());
-		Assert.assertEquals(regex, taskDefinition.getTitle());
+		Assert.assertEquals(regex, agentDefinition.getDescription());
+		Assert.assertEquals(regex, agentDefinition.getExternalReferenceCode());
+		Assert.assertEquals(regex, agentDefinition.getName());
+		Assert.assertEquals(regex, agentDefinition.getTitle());
+		Assert.assertEquals(regex, agentDefinition.getWorkflowDefinitionName());
 	}
 
 	@Test
-	public void testDeleteTaskDefinition() throws Exception {
+	public void testDeleteAgentDefinitionByExternalReferenceCode()
+		throws Exception {
+
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaskDefinition taskDefinition =
-			testDeleteTaskDefinition_addTaskDefinition();
+		AgentDefinition agentDefinition =
+			testDeleteAgentDefinitionByExternalReferenceCode_addAgentDefinition();
 
 		assertHttpResponseStatusCode(
 			204,
-			taskDefinitionResource.deleteTaskDefinitionHttpResponse(
-				taskDefinition.getId()));
+			agentDefinitionResource.
+				deleteAgentDefinitionByExternalReferenceCodeHttpResponse(
+					agentDefinition.getExternalReferenceCode()));
 	}
 
-	protected TaskDefinition testDeleteTaskDefinition_addTaskDefinition()
+	protected AgentDefinition
+			testDeleteAgentDefinitionByExternalReferenceCode_addAgentDefinition()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -220,73 +226,35 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteTaskDefinitionBatch() throws Exception {
-		TaskDefinition taskDefinition1 =
-			testDeleteTaskDefinitionBatch_addTaskDefinition();
-
-		testDeleteTaskDefinitionBatch_deleteTaskDefinition(
-			202, null, taskDefinition1.getId());
-	}
-
-	protected TaskDefinition testDeleteTaskDefinitionBatch_addTaskDefinition()
-		throws Exception {
-
-		return testDeleteTaskDefinition_addTaskDefinition();
-	}
-
-	protected void testDeleteTaskDefinitionBatch_deleteTaskDefinition(
-			int expectedStatusCode, String externalReferenceCode, Long id)
-		throws Exception {
-
-		HttpInvoker.HttpResponse httpResponse =
-			taskDefinitionResource.deleteTaskDefinitionBatchHttpResponse(
-				null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
-
-		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
-
-		waitForFinish(
-			"COMPLETED",
-			JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-	}
-
-	@Test
-	public void testGetTaskDefinitionsPage() throws Exception {
-		Page<TaskDefinition> page =
-			taskDefinitionResource.getTaskDefinitionsPage(
+	public void testGetAgentDefinitionsPage() throws Exception {
+		Page<AgentDefinition> page =
+			agentDefinitionResource.getAgentDefinitionsPage(
 				null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
-		TaskDefinition taskDefinition1 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition1 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
-		TaskDefinition taskDefinition2 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition2 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
-		page = taskDefinitionResource.getTaskDefinitionsPage(
+		page = agentDefinitionResource.getAgentDefinitionsPage(
 			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
-		assertContains(taskDefinition1, (List<TaskDefinition>)page.getItems());
-		assertContains(taskDefinition2, (List<TaskDefinition>)page.getItems());
-		assertValid(page, testGetTaskDefinitionsPage_getExpectedActions());
-
-		taskDefinitionResource.deleteTaskDefinition(taskDefinition1.getId());
-
-		taskDefinitionResource.deleteTaskDefinition(taskDefinition2.getId());
+		assertContains(
+			agentDefinition1, (List<AgentDefinition>)page.getItems());
+		assertContains(
+			agentDefinition2, (List<AgentDefinition>)page.getItems());
+		assertValid(page, testGetAgentDefinitionsPage_getExpectedActions());
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetTaskDefinitionsPage_getExpectedActions()
+			testGetAgentDefinitionsPage_getExpectedActions()
 		throws Exception {
 
 		Map<String, Map<String, String>> expectedActions = new HashMap<>();
@@ -295,7 +263,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithFilterDateTimeEquals()
+	public void testGetAgentDefinitionsPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -305,55 +273,55 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			return;
 		}
 
-		TaskDefinition taskDefinition1 = randomTaskDefinition();
+		AgentDefinition agentDefinition1 = randomAgentDefinition();
 
-		taskDefinition1 = testGetTaskDefinitionsPage_addTaskDefinition(
-			taskDefinition1);
+		agentDefinition1 = testGetAgentDefinitionsPage_addAgentDefinition(
+			agentDefinition1);
 
 		for (EntityField entityField : entityFields) {
-			Page<TaskDefinition> page =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null,
-					getFilterString(entityField, "between", taskDefinition1),
+					getFilterString(entityField, "between", agentDefinition1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(taskDefinition1),
-				(List<TaskDefinition>)page.getItems());
+				Collections.singletonList(agentDefinition1),
+				(List<AgentDefinition>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithFilterDoubleEquals()
+	public void testGetAgentDefinitionsPageWithFilterDoubleEquals()
 		throws Exception {
 
-		testGetTaskDefinitionsPageWithFilter("eq", EntityField.Type.DOUBLE);
+		testGetAgentDefinitionsPageWithFilter("eq", EntityField.Type.DOUBLE);
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithFilterStringContains()
+	public void testGetAgentDefinitionsPageWithFilterStringContains()
 		throws Exception {
 
-		testGetTaskDefinitionsPageWithFilter(
+		testGetAgentDefinitionsPageWithFilter(
 			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithFilterStringEquals()
+	public void testGetAgentDefinitionsPageWithFilterStringEquals()
 		throws Exception {
 
-		testGetTaskDefinitionsPageWithFilter("eq", EntityField.Type.STRING);
+		testGetAgentDefinitionsPageWithFilter("eq", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithFilterStringStartsWith()
+	public void testGetAgentDefinitionsPageWithFilterStringStartsWith()
 		throws Exception {
 
-		testGetTaskDefinitionsPageWithFilter(
+		testGetAgentDefinitionsPageWithFilter(
 			"startswith", EntityField.Type.STRING);
 	}
 
-	protected void testGetTaskDefinitionsPageWithFilter(
+	protected void testGetAgentDefinitionsPageWithFilter(
 			String operator, EntityField.Type type)
 		throws Exception {
 
@@ -363,56 +331,56 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			return;
 		}
 
-		TaskDefinition taskDefinition1 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition1 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
-		TaskDefinition taskDefinition2 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition2 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
 		for (EntityField entityField : entityFields) {
-			Page<TaskDefinition> page =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null,
-					getFilterString(entityField, operator, taskDefinition1),
+					getFilterString(entityField, operator, agentDefinition1),
 					Pagination.of(1, 2), null);
 
 			assertEquals(
-				Collections.singletonList(taskDefinition1),
-				(List<TaskDefinition>)page.getItems());
+				Collections.singletonList(agentDefinition1),
+				(List<AgentDefinition>)page.getItems());
 		}
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithPagination() throws Exception {
-		Page<TaskDefinition> taskDefinitionsPage =
-			taskDefinitionResource.getTaskDefinitionsPage(
+	public void testGetAgentDefinitionsPageWithPagination() throws Exception {
+		Page<AgentDefinition> agentDefinitionsPage =
+			agentDefinitionResource.getAgentDefinitionsPage(
 				null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
-			taskDefinitionsPage.getTotalCount());
+			agentDefinitionsPage.getTotalCount());
 
-		TaskDefinition taskDefinition1 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition1 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
-		TaskDefinition taskDefinition2 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition2 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
-		TaskDefinition taskDefinition3 =
-			testGetTaskDefinitionsPage_addTaskDefinition(
-				randomTaskDefinition());
+		AgentDefinition agentDefinition3 =
+			testGetAgentDefinitionsPage_addAgentDefinition(
+				randomAgentDefinition());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
 
 		int pageSizeLimit = 500;
 
 		if (totalCount >= (pageSizeLimit - 2)) {
-			Page<TaskDefinition> page1 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page1 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
@@ -422,10 +390,10 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
 
 			assertContains(
-				taskDefinition1, (List<TaskDefinition>)page1.getItems());
+				agentDefinition1, (List<AgentDefinition>)page1.getItems());
 
-			Page<TaskDefinition> page2 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page2 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
@@ -433,10 +401,10 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 					null);
 
 			assertContains(
-				taskDefinition2, (List<TaskDefinition>)page2.getItems());
+				agentDefinition2, (List<AgentDefinition>)page2.getItems());
 
-			Page<TaskDefinition> page3 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page3 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
@@ -444,86 +412,86 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 					null);
 
 			assertContains(
-				taskDefinition3, (List<TaskDefinition>)page3.getItems());
+				agentDefinition3, (List<AgentDefinition>)page3.getItems());
 		}
 		else {
-			Page<TaskDefinition> page1 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page1 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null, Pagination.of(1, totalCount + 2), null);
 
-			List<TaskDefinition> taskDefinitions1 =
-				(List<TaskDefinition>)page1.getItems();
+			List<AgentDefinition> agentDefinitions1 =
+				(List<AgentDefinition>)page1.getItems();
 
 			Assert.assertEquals(
-				taskDefinitions1.toString(), totalCount + 2,
-				taskDefinitions1.size());
+				agentDefinitions1.toString(), totalCount + 2,
+				agentDefinitions1.size());
 
-			Page<TaskDefinition> page2 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page2 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
-			List<TaskDefinition> taskDefinitions2 =
-				(List<TaskDefinition>)page2.getItems();
+			List<AgentDefinition> agentDefinitions2 =
+				(List<AgentDefinition>)page2.getItems();
 
 			Assert.assertEquals(
-				taskDefinitions2.toString(), 1, taskDefinitions2.size());
+				agentDefinitions2.toString(), 1, agentDefinitions2.size());
 
-			Page<TaskDefinition> page3 =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> page3 =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
-				taskDefinition1, (List<TaskDefinition>)page3.getItems());
+				agentDefinition1, (List<AgentDefinition>)page3.getItems());
 			assertContains(
-				taskDefinition2, (List<TaskDefinition>)page3.getItems());
+				agentDefinition2, (List<AgentDefinition>)page3.getItems());
 			assertContains(
-				taskDefinition3, (List<TaskDefinition>)page3.getItems());
+				agentDefinition3, (List<AgentDefinition>)page3.getItems());
 		}
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithSortDateTime() throws Exception {
-		testGetTaskDefinitionsPageWithSort(
+	public void testGetAgentDefinitionsPageWithSortDateTime() throws Exception {
+		testGetAgentDefinitionsPageWithSort(
 			EntityField.Type.DATE_TIME,
-			(entityField, taskDefinition1, taskDefinition2) -> {
+			(entityField, agentDefinition1, agentDefinition2) -> {
 				BeanTestUtil.setProperty(
-					taskDefinition1, entityField.getName(),
+					agentDefinition1, entityField.getName(),
 					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
 			});
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithSortDouble() throws Exception {
-		testGetTaskDefinitionsPageWithSort(
+	public void testGetAgentDefinitionsPageWithSortDouble() throws Exception {
+		testGetAgentDefinitionsPageWithSort(
 			EntityField.Type.DOUBLE,
-			(entityField, taskDefinition1, taskDefinition2) -> {
+			(entityField, agentDefinition1, agentDefinition2) -> {
 				BeanTestUtil.setProperty(
-					taskDefinition1, entityField.getName(), 0.1);
+					agentDefinition1, entityField.getName(), 0.1);
 				BeanTestUtil.setProperty(
-					taskDefinition2, entityField.getName(), 0.5);
+					agentDefinition2, entityField.getName(), 0.5);
 			});
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithSortInteger() throws Exception {
-		testGetTaskDefinitionsPageWithSort(
+	public void testGetAgentDefinitionsPageWithSortInteger() throws Exception {
+		testGetAgentDefinitionsPageWithSort(
 			EntityField.Type.INTEGER,
-			(entityField, taskDefinition1, taskDefinition2) -> {
+			(entityField, agentDefinition1, agentDefinition2) -> {
 				BeanTestUtil.setProperty(
-					taskDefinition1, entityField.getName(), 0);
+					agentDefinition1, entityField.getName(), 0);
 				BeanTestUtil.setProperty(
-					taskDefinition2, entityField.getName(), 1);
+					agentDefinition2, entityField.getName(), 1);
 			});
 	}
 
 	@Test
-	public void testGetTaskDefinitionsPageWithSortString() throws Exception {
-		testGetTaskDefinitionsPageWithSort(
+	public void testGetAgentDefinitionsPageWithSortString() throws Exception {
+		testGetAgentDefinitionsPageWithSort(
 			EntityField.Type.STRING,
-			(entityField, taskDefinition1, taskDefinition2) -> {
-				Class<?> clazz = taskDefinition1.getClass();
+			(entityField, agentDefinition1, agentDefinition2) -> {
+				Class<?> clazz = agentDefinition1.getClass();
 
 				String entityFieldName = entityField.getName();
 
@@ -534,21 +502,21 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 				if (returnType.isAssignableFrom(Map.class)) {
 					BeanTestUtil.setProperty(
-						taskDefinition1, entityFieldName,
+						agentDefinition1, entityFieldName,
 						Collections.singletonMap("Aaa", "Aaa"));
 					BeanTestUtil.setProperty(
-						taskDefinition2, entityFieldName,
+						agentDefinition2, entityFieldName,
 						Collections.singletonMap("Bbb", "Bbb"));
 				}
 				else if (entityFieldName.contains("email")) {
 					BeanTestUtil.setProperty(
-						taskDefinition1, entityFieldName,
+						agentDefinition1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
 									"@liferay.com");
 					BeanTestUtil.setProperty(
-						taskDefinition2, entityFieldName,
+						agentDefinition2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()) +
@@ -556,12 +524,12 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 				}
 				else {
 					BeanTestUtil.setProperty(
-						taskDefinition1, entityFieldName,
+						agentDefinition1, entityFieldName,
 						"aaa" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
 					BeanTestUtil.setProperty(
-						taskDefinition2, entityFieldName,
+						agentDefinition2, entityFieldName,
 						"bbb" +
 							StringUtil.toLowerCase(
 								RandomTestUtil.randomString()));
@@ -569,10 +537,10 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			});
 	}
 
-	protected void testGetTaskDefinitionsPageWithSort(
+	protected void testGetAgentDefinitionsPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer
-				<EntityField, TaskDefinition, TaskDefinition, Exception>
+				<EntityField, AgentDefinition, AgentDefinition, Exception>
 					unsafeTriConsumer)
 		throws Exception {
 
@@ -582,49 +550,49 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			return;
 		}
 
-		TaskDefinition taskDefinition1 = randomTaskDefinition();
-		TaskDefinition taskDefinition2 = randomTaskDefinition();
+		AgentDefinition agentDefinition1 = randomAgentDefinition();
+		AgentDefinition agentDefinition2 = randomAgentDefinition();
 
 		for (EntityField entityField : entityFields) {
 			unsafeTriConsumer.accept(
-				entityField, taskDefinition1, taskDefinition2);
+				entityField, agentDefinition1, agentDefinition2);
 		}
 
-		taskDefinition1 = testGetTaskDefinitionsPage_addTaskDefinition(
-			taskDefinition1);
+		agentDefinition1 = testGetAgentDefinitionsPage_addAgentDefinition(
+			agentDefinition1);
 
-		taskDefinition2 = testGetTaskDefinitionsPage_addTaskDefinition(
-			taskDefinition2);
+		agentDefinition2 = testGetAgentDefinitionsPage_addAgentDefinition(
+			agentDefinition2);
 
-		Page<TaskDefinition> page =
-			taskDefinitionResource.getTaskDefinitionsPage(
+		Page<AgentDefinition> page =
+			agentDefinitionResource.getAgentDefinitionsPage(
 				null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
-			Page<TaskDefinition> ascPage =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> ascPage =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
 			assertContains(
-				taskDefinition1, (List<TaskDefinition>)ascPage.getItems());
+				agentDefinition1, (List<AgentDefinition>)ascPage.getItems());
 			assertContains(
-				taskDefinition2, (List<TaskDefinition>)ascPage.getItems());
+				agentDefinition2, (List<AgentDefinition>)ascPage.getItems());
 
-			Page<TaskDefinition> descPage =
-				taskDefinitionResource.getTaskDefinitionsPage(
+			Page<AgentDefinition> descPage =
+				agentDefinitionResource.getAgentDefinitionsPage(
 					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
 			assertContains(
-				taskDefinition2, (List<TaskDefinition>)descPage.getItems());
+				agentDefinition2, (List<AgentDefinition>)descPage.getItems());
 			assertContains(
-				taskDefinition1, (List<TaskDefinition>)descPage.getItems());
+				agentDefinition1, (List<AgentDefinition>)descPage.getItems());
 		}
 	}
 
-	protected TaskDefinition testGetTaskDefinitionsPage_addTaskDefinition(
-			TaskDefinition taskDefinition)
+	protected AgentDefinition testGetAgentDefinitionsPage_addAgentDefinition(
+			AgentDefinition agentDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -632,23 +600,29 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	@Test
-	public void testPatchTaskDefinitionUpdateActive() throws Exception {
+	public void testPatchAgentDefinitionByExternalReferenceCodeUpdateActive()
+		throws Exception {
+
 		Assert.assertTrue(false);
 	}
 
 	@Test
-	public void testPostTaskDefinitionCopy() throws Exception {
-		TaskDefinition randomTaskDefinition = randomTaskDefinition();
+	public void testPostAgentDefinitionByExternalReferenceCodeCopy()
+		throws Exception {
 
-		TaskDefinition postTaskDefinition =
-			testPostTaskDefinitionCopy_addTaskDefinition(randomTaskDefinition);
+		AgentDefinition randomAgentDefinition = randomAgentDefinition();
 
-		assertEquals(randomTaskDefinition, postTaskDefinition);
-		assertValid(postTaskDefinition);
+		AgentDefinition postAgentDefinition =
+			testPostAgentDefinitionByExternalReferenceCodeCopy_addAgentDefinition(
+				randomAgentDefinition);
+
+		assertEquals(randomAgentDefinition, postAgentDefinition);
+		assertValid(postAgentDefinition);
 	}
 
-	protected TaskDefinition testPostTaskDefinitionCopy_addTaskDefinition(
-			TaskDefinition taskDefinition)
+	protected AgentDefinition
+			testPostAgentDefinitionByExternalReferenceCodeCopy_addAgentDefinition(
+				AgentDefinition agentDefinition)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -657,21 +631,23 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		TaskDefinition taskDefinition1 =
-			testBatchEngineDeleteImportTask_addTaskDefinition();
+		AgentDefinition agentDefinition1 =
+			testBatchEngineDeleteImportTask_addAgentDefinition();
 
-		testBatchEngineDeleteImportTask_deleteTaskDefinition(
-			200, null, taskDefinition1.getId());
+		testBatchEngineDeleteImportTask_deleteAgentDefinition(
+			200, agentDefinition1.getExternalReferenceCode());
 	}
 
-	protected TaskDefinition testBatchEngineDeleteImportTask_addTaskDefinition()
+	protected AgentDefinition
+			testBatchEngineDeleteImportTask_addAgentDefinition()
 		throws Exception {
 
-		return testDeleteTaskDefinition_addTaskDefinition();
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
-	protected void testBatchEngineDeleteImportTask_deleteTaskDefinition(
-			int expectedStatusCode, String externalReferenceCode, Long id,
+	protected void testBatchEngineDeleteImportTask_deleteAgentDefinition(
+			int expectedStatusCode, String externalReferenceCode,
 			String... parameters)
 		throws Exception {
 
@@ -687,14 +663,11 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 		HttpResponse httpResponse =
 			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition", null, null,
+				"com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition", null, null,
 				null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
+						"externalReferenceCode", () -> externalReferenceCode)));
 
 		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
@@ -709,12 +682,13 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
 	protected void assertContains(
-		TaskDefinition taskDefinition, List<TaskDefinition> taskDefinitions) {
+		AgentDefinition agentDefinition,
+		List<AgentDefinition> agentDefinitions) {
 
 		boolean contains = false;
 
-		for (TaskDefinition item : taskDefinitions) {
-			if (equals(taskDefinition, item)) {
+		for (AgentDefinition item : agentDefinitions) {
+			if (equals(agentDefinition, item)) {
 				contains = true;
 
 				break;
@@ -722,7 +696,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		}
 
 		Assert.assertTrue(
-			taskDefinitions + " does not contain " + taskDefinition, contains);
+			agentDefinitions + " does not contain " + agentDefinition,
+			contains);
 	}
 
 	protected void assertHttpResponseStatusCode(
@@ -734,38 +709,38 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	protected void assertEquals(
-		TaskDefinition taskDefinition1, TaskDefinition taskDefinition2) {
+		AgentDefinition agentDefinition1, AgentDefinition agentDefinition2) {
 
 		Assert.assertTrue(
-			taskDefinition1 + " does not equal " + taskDefinition2,
-			equals(taskDefinition1, taskDefinition2));
+			agentDefinition1 + " does not equal " + agentDefinition2,
+			equals(agentDefinition1, agentDefinition2));
 	}
 
 	protected void assertEquals(
-		List<TaskDefinition> taskDefinitions1,
-		List<TaskDefinition> taskDefinitions2) {
+		List<AgentDefinition> agentDefinitions1,
+		List<AgentDefinition> agentDefinitions2) {
 
-		Assert.assertEquals(taskDefinitions1.size(), taskDefinitions2.size());
+		Assert.assertEquals(agentDefinitions1.size(), agentDefinitions2.size());
 
-		for (int i = 0; i < taskDefinitions1.size(); i++) {
-			TaskDefinition taskDefinition1 = taskDefinitions1.get(i);
-			TaskDefinition taskDefinition2 = taskDefinitions2.get(i);
+		for (int i = 0; i < agentDefinitions1.size(); i++) {
+			AgentDefinition agentDefinition1 = agentDefinitions1.get(i);
+			AgentDefinition agentDefinition2 = agentDefinitions2.get(i);
 
-			assertEquals(taskDefinition1, taskDefinition2);
+			assertEquals(agentDefinition1, agentDefinition2);
 		}
 	}
 
 	protected void assertEqualsIgnoringOrder(
-		List<TaskDefinition> taskDefinitions1,
-		List<TaskDefinition> taskDefinitions2) {
+		List<AgentDefinition> agentDefinitions1,
+		List<AgentDefinition> agentDefinitions2) {
 
-		Assert.assertEquals(taskDefinitions1.size(), taskDefinitions2.size());
+		Assert.assertEquals(agentDefinitions1.size(), agentDefinitions2.size());
 
-		for (TaskDefinition taskDefinition1 : taskDefinitions1) {
+		for (AgentDefinition agentDefinition1 : agentDefinitions1) {
 			boolean contains = false;
 
-			for (TaskDefinition taskDefinition2 : taskDefinitions2) {
-				if (equals(taskDefinition1, taskDefinition2)) {
+			for (AgentDefinition agentDefinition2 : agentDefinitions2) {
+				if (equals(agentDefinition1, agentDefinition2)) {
 					contains = true;
 
 					break;
@@ -773,15 +748,17 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			Assert.assertTrue(
-				taskDefinitions2 + " does not contain " + taskDefinition1,
+				agentDefinitions2 + " does not contain " + agentDefinition1,
 				contains);
 		}
 	}
 
-	protected void assertValid(TaskDefinition taskDefinition) throws Exception {
+	protected void assertValid(AgentDefinition agentDefinition)
+		throws Exception {
+
 		boolean valid = true;
 
-		if (taskDefinition.getId() == null) {
+		if (agentDefinition.getId() == null) {
 			valid = false;
 		}
 
@@ -789,7 +766,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 				getAdditionalAssertFieldNames()) {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
-				if (taskDefinition.getActions() == null) {
+				if (agentDefinition.getActions() == null) {
 					valid = false;
 				}
 
@@ -797,7 +774,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
-				if (taskDefinition.getActive() == null) {
+				if (agentDefinition.getActive() == null) {
 					valid = false;
 				}
 
@@ -805,7 +782,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
-				if (taskDefinition.getDescription() == null) {
+				if (agentDefinition.getDescription() == null) {
 					valid = false;
 				}
 
@@ -815,7 +792,15 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
-				if (taskDefinition.getExternalReferenceCode() == null) {
+				if (agentDefinition.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("inputVariables", additionalAssertFieldName)) {
+				if (agentDefinition.getInputVariables() == null) {
 					valid = false;
 				}
 
@@ -823,7 +808,15 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (taskDefinition.getName() == null) {
+				if (agentDefinition.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("outputVariable", additionalAssertFieldName)) {
+				if (agentDefinition.getOutputVariable() == null) {
 					valid = false;
 				}
 
@@ -831,7 +824,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
-				if (taskDefinition.getTitle() == null) {
+				if (agentDefinition.getTitle() == null) {
 					valid = false;
 				}
 
@@ -839,7 +832,17 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			}
 
 			if (Objects.equals("version", additionalAssertFieldName)) {
-				if (taskDefinition.getVersion() == null) {
+				if (agentDefinition.getVersion() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowDefinitionName", additionalAssertFieldName)) {
+
+				if (agentDefinition.getWorkflowDefinitionName() == null) {
 					valid = false;
 				}
 
@@ -854,19 +857,20 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		Assert.assertTrue(valid);
 	}
 
-	protected void assertValid(Page<TaskDefinition> page) {
+	protected void assertValid(Page<AgentDefinition> page) {
 		assertValid(page, Collections.emptyMap());
 	}
 
 	protected void assertValid(
-		Page<TaskDefinition> page,
+		Page<AgentDefinition> page,
 		Map<String, Map<String, String>> expectedActions) {
 
 		boolean valid = false;
 
-		java.util.Collection<TaskDefinition> taskDefinitions = page.getItems();
+		java.util.Collection<AgentDefinition> agentDefinitions =
+			page.getItems();
 
-		int size = taskDefinitions.size();
+		int size = agentDefinitions.size();
 
 		if ((page.getLastPage() > 0) && (page.getPage() > 0) &&
 			(page.getPageSize() > 0) && (page.getTotalCount() > 0) &&
@@ -910,7 +914,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition.class)) {
+					com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -959,9 +963,9 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	protected boolean equals(
-		TaskDefinition taskDefinition1, TaskDefinition taskDefinition2) {
+		AgentDefinition agentDefinition1, AgentDefinition agentDefinition2) {
 
-		if (taskDefinition1 == taskDefinition2) {
+		if (agentDefinition1 == agentDefinition2) {
 			return true;
 		}
 
@@ -970,8 +974,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (!equals(
-						(Map)taskDefinition1.getActions(),
-						(Map)taskDefinition2.getActions())) {
+						(Map)agentDefinition1.getActions(),
+						(Map)agentDefinition2.getActions())) {
 
 					return false;
 				}
@@ -981,8 +985,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("active", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getActive(),
-						taskDefinition2.getActive())) {
+						agentDefinition1.getActive(),
+						agentDefinition2.getActive())) {
 
 					return false;
 				}
@@ -992,8 +996,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getDescription(),
-						taskDefinition2.getDescription())) {
+						agentDefinition1.getDescription(),
+						agentDefinition2.getDescription())) {
 
 					return false;
 				}
@@ -1005,8 +1009,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 					"externalReferenceCode", additionalAssertFieldName)) {
 
 				if (!Objects.deepEquals(
-						taskDefinition1.getExternalReferenceCode(),
-						taskDefinition2.getExternalReferenceCode())) {
+						agentDefinition1.getExternalReferenceCode(),
+						agentDefinition2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1016,7 +1020,18 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("id", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getId(), taskDefinition2.getId())) {
+						agentDefinition1.getId(), agentDefinition2.getId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("inputVariables", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						agentDefinition1.getInputVariables(),
+						agentDefinition2.getInputVariables())) {
 
 					return false;
 				}
@@ -1026,7 +1041,19 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("name", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getName(), taskDefinition2.getName())) {
+						agentDefinition1.getName(),
+						agentDefinition2.getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("outputVariable", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						agentDefinition1.getOutputVariable(),
+						agentDefinition2.getOutputVariable())) {
 
 					return false;
 				}
@@ -1036,8 +1063,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getTitle(),
-						taskDefinition2.getTitle())) {
+						agentDefinition1.getTitle(),
+						agentDefinition2.getTitle())) {
 
 					return false;
 				}
@@ -1047,8 +1074,21 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 			if (Objects.equals("version", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
-						taskDefinition1.getVersion(),
-						taskDefinition2.getVersion())) {
+						agentDefinition1.getVersion(),
+						agentDefinition2.getVersion())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"workflowDefinitionName", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						agentDefinition1.getWorkflowDefinitionName(),
+						agentDefinition2.getWorkflowDefinitionName())) {
 
 					return false;
 				}
@@ -1112,13 +1152,13 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	protected java.util.Collection<EntityField> getEntityFields()
 		throws Exception {
 
-		if (!(_taskDefinitionResource instanceof EntityModelResource)) {
+		if (!(_agentDefinitionResource instanceof EntityModelResource)) {
 			throw new UnsupportedOperationException(
 				"Resource is not an instance of EntityModelResource");
 		}
 
 		EntityModelResource entityModelResource =
-			(EntityModelResource)_taskDefinitionResource;
+			(EntityModelResource)_agentDefinitionResource;
 
 		EntityModel entityModel = entityModelResource.getEntityModel(
 			new MultivaluedHashMap());
@@ -1152,7 +1192,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 
 	protected String getFilterString(
 		EntityField entityField, String operator,
-		TaskDefinition taskDefinition) {
+		AgentDefinition agentDefinition) {
 
 		StringBundler sb = new StringBundler();
 
@@ -1175,7 +1215,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("description")) {
-			Object object = taskDefinition.getDescription();
+			Object object = agentDefinition.getDescription();
 
 			String value = String.valueOf(object);
 
@@ -1221,7 +1261,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
-			Object object = taskDefinition.getExternalReferenceCode();
+			Object object = agentDefinition.getExternalReferenceCode();
 
 			String value = String.valueOf(object);
 
@@ -1271,8 +1311,13 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("inputVariables")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
-			Object object = taskDefinition.getName();
+			Object object = agentDefinition.getName();
 
 			String value = String.valueOf(object);
 
@@ -1317,8 +1362,13 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("outputVariable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("title")) {
-			Object object = taskDefinition.getTitle();
+			Object object = agentDefinition.getTitle();
 
 			String value = String.valueOf(object);
 
@@ -1364,7 +1414,53 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("version")) {
-			sb.append(String.valueOf(taskDefinition.getVersion()));
+			sb.append(String.valueOf(agentDefinition.getVersion()));
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("workflowDefinitionName")) {
+			Object object = agentDefinition.getWorkflowDefinitionName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
 
 			return sb.toString();
 		}
@@ -1411,8 +1507,8 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 			invoke(queryGraphQLField.toString()));
 	}
 
-	protected TaskDefinition randomTaskDefinition() throws Exception {
-		return new TaskDefinition() {
+	protected AgentDefinition randomAgentDefinition() throws Exception {
+		return new AgentDefinition() {
 			{
 				active = RandomTestUtil.randomBoolean();
 				description = StringUtil.toLowerCase(
@@ -1423,18 +1519,23 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				version = RandomTestUtil.randomInt();
+				workflowDefinitionName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 			}
 		};
 	}
 
-	protected TaskDefinition randomIrrelevantTaskDefinition() throws Exception {
-		TaskDefinition randomIrrelevantTaskDefinition = randomTaskDefinition();
+	protected AgentDefinition randomIrrelevantAgentDefinition()
+		throws Exception {
 
-		return randomIrrelevantTaskDefinition;
+		AgentDefinition randomIrrelevantAgentDefinition =
+			randomAgentDefinition();
+
+		return randomIrrelevantAgentDefinition;
 	}
 
-	protected TaskDefinition randomPatchTaskDefinition() throws Exception {
-		return randomTaskDefinition();
+	protected AgentDefinition randomPatchAgentDefinition() throws Exception {
+		return randomAgentDefinition();
 	}
 
 	protected final JSONObject waitForFinish(
@@ -1459,7 +1560,7 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 		}
 	}
 
-	protected TaskDefinitionResource taskDefinitionResource;
+	protected AgentDefinitionResource agentDefinitionResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
@@ -1659,14 +1760,14 @@ public abstract class BaseTaskDefinitionResourceTestCase {
 	}
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTaskDefinitionResourceTestCase.class);
+		LogFactoryUtil.getLog(BaseAgentDefinitionResourceTestCase.class);
 
 	private static Format _format;
 
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource
-		_taskDefinitionResource;
+	private com.liferay.ai.hub.rest.resource.v1_0.AgentDefinitionResource
+		_agentDefinitionResource;
 
 }

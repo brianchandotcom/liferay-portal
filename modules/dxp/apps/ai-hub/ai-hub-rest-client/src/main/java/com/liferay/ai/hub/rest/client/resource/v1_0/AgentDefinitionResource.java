@@ -1,16 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.client.resource.v1_0;
 
-import com.liferay.ai.hub.rest.client.dto.v1_0.TaskDefinition;
+import com.liferay.ai.hub.rest.client.dto.v1_0.AgentDefinition;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.pagination.Page;
 import com.liferay.ai.hub.rest.client.pagination.Pagination;
 import com.liferay.ai.hub.rest.client.problem.Problem;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskDefinitionSerDes;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -28,57 +28,57 @@ import java.util.logging.Logger;
  * @generated
  */
 @Generated("")
-public interface TaskDefinitionResource {
+public interface AgentDefinitionResource {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public void deleteTaskDefinition(Long taskDefinitionId) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteTaskDefinitionHttpResponse(
-			Long taskDefinitionId)
+	public void deleteAgentDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
-	public void deleteTaskDefinitionBatch(String callbackURL, Object object)
+	public HttpInvoker.HttpResponse
+			deleteAgentDefinitionByExternalReferenceCodeHttpResponse(
+				String externalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteTaskDefinitionBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<TaskDefinition> getTaskDefinitionsPage(
+	public Page<AgentDefinition> getAgentDefinitionsPage(
 			String search, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getTaskDefinitionsPageHttpResponse(
+	public HttpInvoker.HttpResponse getAgentDefinitionsPageHttpResponse(
 			String search, String filterString, Pagination pagination,
 			String sortString)
 		throws Exception;
 
-	public TaskDefinition patchTaskDefinitionUpdateActive(
-			Long taskDefinitionId, Boolean active)
+	public AgentDefinition
+			patchAgentDefinitionByExternalReferenceCodeUpdateActive(
+				String externalReferenceCode, Boolean active)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse patchTaskDefinitionUpdateActiveHttpResponse(
-			Long taskDefinitionId, Boolean active)
+	public HttpInvoker.HttpResponse
+			patchAgentDefinitionByExternalReferenceCodeUpdateActiveHttpResponse(
+				String externalReferenceCode, Boolean active)
 		throws Exception;
 
-	public TaskDefinition postTaskDefinitionCopy(Long taskDefinitionId)
+	public AgentDefinition postAgentDefinitionByExternalReferenceCodeCopy(
+			String externalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse postTaskDefinitionCopyHttpResponse(
-			Long taskDefinitionId)
+	public HttpInvoker.HttpResponse
+			postAgentDefinitionByExternalReferenceCodeCopyHttpResponse(
+				String externalReferenceCode)
 		throws Exception;
 
-	public void postTaskDefinitionsPageExportBatch(
+	public void postAgentDefinitionsPageExportBatch(
 			String search, String filterString, String sortString,
 			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
-			postTaskDefinitionsPageExportBatchHttpResponse(
+			postAgentDefinitionsPageExportBatchHttpResponse(
 				String search, String filterString, String sortString,
 				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
@@ -96,8 +96,8 @@ public interface TaskDefinitionResource {
 			return header("Authorization", "Bearer " + token);
 		}
 
-		public TaskDefinitionResource build() {
-			return new TaskDefinitionResourceImpl(this);
+		public AgentDefinitionResource build() {
+			return new AgentDefinitionResourceImpl(this);
 		}
 
 		public Builder contextPath(String contextPath) {
@@ -189,14 +189,16 @@ public interface TaskDefinitionResource {
 
 	}
 
-	public static class TaskDefinitionResourceImpl
-		implements TaskDefinitionResource {
+	public static class AgentDefinitionResourceImpl
+		implements AgentDefinitionResource {
 
-		public void deleteTaskDefinition(Long taskDefinitionId)
+		public void deleteAgentDefinitionByExternalReferenceCode(
+				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteTaskDefinitionHttpResponse(taskDefinitionId);
+				deleteAgentDefinitionByExternalReferenceCodeHttpResponse(
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -257,8 +259,9 @@ public interface TaskDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteTaskDefinitionHttpResponse(
-				Long taskDefinitionId)
+		public HttpInvoker.HttpResponse
+				deleteAgentDefinitionByExternalReferenceCodeHttpResponse(
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -285,108 +288,9 @@ public interface TaskDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}");
+						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}");
 
-			httpInvoker.path("taskDefinitionId", taskDefinitionId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteTaskDefinitionBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteTaskDefinitionBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteTaskDefinitionBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions/batch");
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -396,13 +300,13 @@ public interface TaskDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<TaskDefinition> getTaskDefinitionsPage(
+		public Page<AgentDefinition> getAgentDefinitionsPage(
 				String search, String filterString, Pagination pagination,
 				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTaskDefinitionsPageHttpResponse(
+				getAgentDefinitionsPageHttpResponse(
 					search, filterString, pagination, sortString);
 
 			String content = httpResponse.getContent();
@@ -453,7 +357,7 @@ public interface TaskDefinitionResource {
 			}
 
 			try {
-				return Page.of(content, TaskDefinitionSerDes::toDTO);
+				return Page.of(content, AgentDefinitionSerDes::toDTO);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -464,7 +368,7 @@ public interface TaskDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getTaskDefinitionsPageHttpResponse(
+		public HttpInvoker.HttpResponse getAgentDefinitionsPageHttpResponse(
 				String search, String filterString, Pagination pagination,
 				String sortString)
 			throws Exception {
@@ -512,7 +416,7 @@ public interface TaskDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions");
+						"/o/ai-hub/v1.0/agent-definitions");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -522,13 +426,14 @@ public interface TaskDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaskDefinition patchTaskDefinitionUpdateActive(
-				Long taskDefinitionId, Boolean active)
+		public AgentDefinition
+				patchAgentDefinitionByExternalReferenceCodeUpdateActive(
+					String externalReferenceCode, Boolean active)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				patchTaskDefinitionUpdateActiveHttpResponse(
-					taskDefinitionId, active);
+				patchAgentDefinitionByExternalReferenceCodeUpdateActiveHttpResponse(
+					externalReferenceCode, active);
 
 			String content = httpResponse.getContent();
 
@@ -578,7 +483,7 @@ public interface TaskDefinitionResource {
 			}
 
 			try {
-				return TaskDefinitionSerDes.toDTO(content);
+				return AgentDefinitionSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -590,8 +495,8 @@ public interface TaskDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				patchTaskDefinitionUpdateActiveHttpResponse(
-					Long taskDefinitionId, Boolean active)
+				patchAgentDefinitionByExternalReferenceCodeUpdateActiveHttpResponse(
+					String externalReferenceCode, Boolean active)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -624,9 +529,9 @@ public interface TaskDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}/update-active");
+						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/update-active");
 
-			httpInvoker.path("taskDefinitionId", taskDefinitionId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -636,11 +541,13 @@ public interface TaskDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public TaskDefinition postTaskDefinitionCopy(Long taskDefinitionId)
+		public AgentDefinition postAgentDefinitionByExternalReferenceCodeCopy(
+				String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTaskDefinitionCopyHttpResponse(taskDefinitionId);
+				postAgentDefinitionByExternalReferenceCodeCopyHttpResponse(
+					externalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -690,7 +597,7 @@ public interface TaskDefinitionResource {
 			}
 
 			try {
-				return TaskDefinitionSerDes.toDTO(content);
+				return AgentDefinitionSerDes.toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(
@@ -701,8 +608,9 @@ public interface TaskDefinitionResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse postTaskDefinitionCopyHttpResponse(
-				Long taskDefinitionId)
+		public HttpInvoker.HttpResponse
+				postAgentDefinitionByExternalReferenceCodeCopyHttpResponse(
+					String externalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -731,9 +639,9 @@ public interface TaskDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}/copy");
+						"/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/copy");
 
-			httpInvoker.path("taskDefinitionId", taskDefinitionId);
+			httpInvoker.path("externalReferenceCode", externalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -743,13 +651,13 @@ public interface TaskDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		public void postTaskDefinitionsPageExportBatch(
+		public void postAgentDefinitionsPageExportBatch(
 				String search, String filterString, String sortString,
 				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postTaskDefinitionsPageExportBatchHttpResponse(
+				postAgentDefinitionsPageExportBatchHttpResponse(
 					search, filterString, sortString, callbackURL, contentType,
 					fieldNames);
 
@@ -802,7 +710,7 @@ public interface TaskDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				postTaskDefinitionsPageExportBatchHttpResponse(
+				postAgentDefinitionsPageExportBatchHttpResponse(
 					String search, String filterString, String sortString,
 					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
@@ -859,7 +767,7 @@ public interface TaskDefinitionResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/ai-hub/v1.0/task-definitions/export-batch");
+						"/o/ai-hub/v1.0/agent-definitions/export-batch");
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -869,12 +777,12 @@ public interface TaskDefinitionResource {
 			return httpInvoker.invoke();
 		}
 
-		private TaskDefinitionResourceImpl(Builder builder) {
+		private AgentDefinitionResourceImpl(Builder builder) {
 			_builder = builder;
 		}
 
 		private static final Logger _logger = Logger.getLogger(
-			TaskDefinitionResource.class.getName());
+			AgentDefinitionResource.class.getName());
 
 		private Builder _builder;
 

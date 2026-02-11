@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.client.dto.v1_0;
 
 import com.liferay.ai.hub.rest.client.function.UnsafeSupplier;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskDefinitionSerDes;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.AgentDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -20,10 +20,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class TaskDefinition implements Cloneable, Serializable {
+public class AgentDefinition implements Cloneable, Serializable {
 
-	public static TaskDefinition toDTO(String json) {
-		return TaskDefinitionSerDes.toDTO(json);
+	public static AgentDefinition toDTO(String json) {
+		return AgentDefinitionSerDes.toDTO(json);
 	}
 
 	public Map<String, Map<String, String>> getActions() {
@@ -130,6 +130,27 @@ public class TaskDefinition implements Cloneable, Serializable {
 
 	protected Long id;
 
+	public Variable[] getInputVariables() {
+		return inputVariables;
+	}
+
+	public void setInputVariables(Variable[] inputVariables) {
+		this.inputVariables = inputVariables;
+	}
+
+	public void setInputVariables(
+		UnsafeSupplier<Variable[], Exception> inputVariablesUnsafeSupplier) {
+
+		try {
+			inputVariables = inputVariablesUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Variable[] inputVariables;
+
 	public String getName() {
 		return name;
 	}
@@ -148,6 +169,27 @@ public class TaskDefinition implements Cloneable, Serializable {
 	}
 
 	protected String name;
+
+	public Variable getOutputVariable() {
+		return outputVariable;
+	}
+
+	public void setOutputVariable(Variable outputVariable) {
+		this.outputVariable = outputVariable;
+	}
+
+	public void setOutputVariable(
+		UnsafeSupplier<Variable, Exception> outputVariableUnsafeSupplier) {
+
+		try {
+			outputVariable = outputVariableUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Variable outputVariable;
 
 	public String getTitle() {
 		return title;
@@ -191,9 +233,31 @@ public class TaskDefinition implements Cloneable, Serializable {
 
 	protected Integer version;
 
+	public String getWorkflowDefinitionName() {
+		return workflowDefinitionName;
+	}
+
+	public void setWorkflowDefinitionName(String workflowDefinitionName) {
+		this.workflowDefinitionName = workflowDefinitionName;
+	}
+
+	public void setWorkflowDefinitionName(
+		UnsafeSupplier<String, Exception>
+			workflowDefinitionNameUnsafeSupplier) {
+
+		try {
+			workflowDefinitionName = workflowDefinitionNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String workflowDefinitionName;
+
 	@Override
-	public TaskDefinition clone() throws CloneNotSupportedException {
-		return (TaskDefinition)super.clone();
+	public AgentDefinition clone() throws CloneNotSupportedException {
+		return (AgentDefinition)super.clone();
 	}
 
 	@Override
@@ -202,13 +266,13 @@ public class TaskDefinition implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof TaskDefinition)) {
+		if (!(object instanceof AgentDefinition)) {
 			return false;
 		}
 
-		TaskDefinition taskDefinition = (TaskDefinition)object;
+		AgentDefinition agentDefinition = (AgentDefinition)object;
 
-		return Objects.equals(toString(), taskDefinition.toString());
+		return Objects.equals(toString(), agentDefinition.toString());
 	}
 
 	@Override
@@ -219,7 +283,7 @@ public class TaskDefinition implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return TaskDefinitionSerDes.toJSON(this);
+		return AgentDefinitionSerDes.toJSON(this);
 	}
 
 }

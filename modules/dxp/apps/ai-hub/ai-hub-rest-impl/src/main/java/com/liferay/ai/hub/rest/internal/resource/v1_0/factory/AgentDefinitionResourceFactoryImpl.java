@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0.factory;
 
 import com.liferay.ai.hub.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
+import com.liferay.ai.hub.rest.resource.v1_0.AgentDefinitionResource;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -55,29 +55,29 @@ import org.osgi.service.component.annotations.ReferenceScope;
  * @generated
  */
 @Component(
-	property = "resource.locator.key=/ai-hub/v1.0/TaskDefinition",
-	service = TaskDefinitionResource.Factory.class
+	property = "resource.locator.key=/ai-hub/v1.0/AgentDefinition",
+	service = AgentDefinitionResource.Factory.class
 )
 @Generated("")
-public class TaskDefinitionResourceFactoryImpl
-	implements TaskDefinitionResource.Factory {
+public class AgentDefinitionResourceFactoryImpl
+	implements AgentDefinitionResource.Factory {
 
 	@Override
-	public TaskDefinitionResource.Builder create() {
-		return new TaskDefinitionResource.Builder() {
+	public AgentDefinitionResource.Builder create() {
+		return new AgentDefinitionResource.Builder() {
 
 			@Override
-			public TaskDefinitionResource build() {
+			public AgentDefinitionResource build() {
 				if (_user == null) {
 					throw new IllegalArgumentException("User is not set");
 				}
 
-				Function<InvocationHandler, TaskDefinitionResource>
-					taskDefinitionResourceProxyProviderFunction =
+				Function<InvocationHandler, AgentDefinitionResource>
+					agentDefinitionResourceProxyProviderFunction =
 						ResourceProxyProviderFunctionHolder.
-							_taskDefinitionResourceProxyProviderFunction;
+							_agentDefinitionResourceProxyProviderFunction;
 
-				return taskDefinitionResourceProxyProviderFunction.apply(
+				return agentDefinitionResourceProxyProviderFunction.apply(
 					(proxy, method, arguments) -> _invoke(
 						method, arguments, _checkPermissions,
 						_httpServletRequest, _httpServletResponse,
@@ -85,7 +85,7 @@ public class TaskDefinitionResourceFactoryImpl
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder checkPermissions(
+			public AgentDefinitionResource.Builder checkPermissions(
 				boolean checkPermissions) {
 
 				_checkPermissions = checkPermissions;
@@ -94,7 +94,7 @@ public class TaskDefinitionResourceFactoryImpl
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder httpServletRequest(
+			public AgentDefinitionResource.Builder httpServletRequest(
 				HttpServletRequest httpServletRequest) {
 
 				_httpServletRequest = httpServletRequest;
@@ -103,7 +103,7 @@ public class TaskDefinitionResourceFactoryImpl
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder httpServletResponse(
+			public AgentDefinitionResource.Builder httpServletResponse(
 				HttpServletResponse httpServletResponse) {
 
 				_httpServletResponse = httpServletResponse;
@@ -112,7 +112,7 @@ public class TaskDefinitionResourceFactoryImpl
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder preferredLocale(
+			public AgentDefinitionResource.Builder preferredLocale(
 				Locale preferredLocale) {
 
 				_preferredLocale = preferredLocale;
@@ -121,14 +121,14 @@ public class TaskDefinitionResourceFactoryImpl
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder uriInfo(UriInfo uriInfo) {
+			public AgentDefinitionResource.Builder uriInfo(UriInfo uriInfo) {
 				_uriInfo = uriInfo;
 
 				return this;
 			}
 
 			@Override
-			public TaskDefinitionResource.Builder user(User user) {
+			public AgentDefinitionResource.Builder user(User user) {
 				_user = user;
 
 				return this;
@@ -144,16 +144,16 @@ public class TaskDefinitionResourceFactoryImpl
 		};
 	}
 
-	private static Function<InvocationHandler, TaskDefinitionResource>
+	private static Function<InvocationHandler, AgentDefinitionResource>
 		_getProxyProviderFunction() {
 
 		Class<?> proxyClass = ProxyUtil.getProxyClass(
-			TaskDefinitionResource.class.getClassLoader(),
-			TaskDefinitionResource.class);
+			AgentDefinitionResource.class.getClassLoader(),
+			AgentDefinitionResource.class);
 
 		try {
-			Constructor<TaskDefinitionResource> constructor =
-				(Constructor<TaskDefinitionResource>)proxyClass.getConstructor(
+			Constructor<AgentDefinitionResource> constructor =
+				(Constructor<AgentDefinitionResource>)proxyClass.getConstructor(
 					InvocationHandler.class);
 
 			return invocationHandler -> {
@@ -195,39 +195,40 @@ public class TaskDefinitionResourceFactoryImpl
 				new LiberalPermissionChecker(user));
 		}
 
-		TaskDefinitionResource taskDefinitionResource =
+		AgentDefinitionResource agentDefinitionResource =
 			_componentServiceObjects.getService();
 
-		taskDefinitionResource.setContextAcceptLanguage(
+		agentDefinitionResource.setContextAcceptLanguage(
 			new AcceptLanguageImpl(httpServletRequest, preferredLocale, user));
 
 		Company company = _companyLocalService.getCompany(user.getCompanyId());
 
-		taskDefinitionResource.setContextCompany(company);
+		agentDefinitionResource.setContextCompany(company);
 
-		taskDefinitionResource.setContextHttpServletRequest(httpServletRequest);
-		taskDefinitionResource.setContextHttpServletResponse(
+		agentDefinitionResource.setContextHttpServletRequest(
+			httpServletRequest);
+		agentDefinitionResource.setContextHttpServletResponse(
 			httpServletResponse);
-		taskDefinitionResource.setContextUriInfo(uriInfo);
-		taskDefinitionResource.setContextUser(user);
-		taskDefinitionResource.setExpressionConvert(_expressionConvert);
-		taskDefinitionResource.setFilterParserProvider(_filterParserProvider);
-		taskDefinitionResource.setGroupLocalService(_groupLocalService);
-		taskDefinitionResource.setResourceActionLocalService(
+		agentDefinitionResource.setContextUriInfo(uriInfo);
+		agentDefinitionResource.setContextUser(user);
+		agentDefinitionResource.setExpressionConvert(_expressionConvert);
+		agentDefinitionResource.setFilterParserProvider(_filterParserProvider);
+		agentDefinitionResource.setGroupLocalService(_groupLocalService);
+		agentDefinitionResource.setResourceActionLocalService(
 			_resourceActionLocalService);
-		taskDefinitionResource.setResourcePermissionLocalService(
+		agentDefinitionResource.setResourcePermissionLocalService(
 			_resourcePermissionLocalService);
-		taskDefinitionResource.setRoleLocalService(_roleLocalService);
-		taskDefinitionResource.setSortParserProvider(_sortParserProvider);
+		agentDefinitionResource.setRoleLocalService(_roleLocalService);
+		agentDefinitionResource.setSortParserProvider(_sortParserProvider);
 
 		try {
-			return method.invoke(taskDefinitionResource, arguments);
+			return method.invoke(agentDefinitionResource, arguments);
 		}
 		catch (InvocationTargetException invocationTargetException) {
 			throw invocationTargetException.getTargetException();
 		}
 		finally {
-			_componentServiceObjects.ungetService(taskDefinitionResource);
+			_componentServiceObjects.ungetService(agentDefinitionResource);
 
 			PrincipalThreadLocal.setName(name);
 
@@ -239,7 +240,7 @@ public class TaskDefinitionResourceFactoryImpl
 	private CompanyLocalService _companyLocalService;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
-	private ComponentServiceObjects<TaskDefinitionResource>
+	private ComponentServiceObjects<AgentDefinitionResource>
 		_componentServiceObjects;
 
 	@Reference
@@ -273,9 +274,10 @@ public class TaskDefinitionResourceFactoryImpl
 
 	private static class ResourceProxyProviderFunctionHolder {
 
-		private static final Function<InvocationHandler, TaskDefinitionResource>
-			_taskDefinitionResourceProxyProviderFunction =
-				_getProxyProviderFunction();
+		private static final Function
+			<InvocationHandler, AgentDefinitionResource>
+				_agentDefinitionResourceProxyProviderFunction =
+					_getProxyProviderFunction();
 
 	}
 

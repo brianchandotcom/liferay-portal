@@ -1,1 +1,13 @@
+backup:
+    enabled: false
+    planName: liferay-backup-plan
+    region: us-west-2
+    rules:
+        -   retentionDays: 30
+            ruleName: daily-backups
+            schedule: cron(0 5 * * ? *)
+            startWindow: 60
+    selectionName: by-tags
+    serviceRoleName: liferay-backup-restore
+    vaultName: liferay-backup-vault
 enabled: true

@@ -62,8 +62,10 @@ export function FormikFieldText(props: FieldTextProps) {
 }
 
 interface FormikFieldMultiCheckboxProps {
-	name: string;
-	options: Array<{
+	'aria-describedby'?: string;
+	'aria-labelledby'?: string;
+	'name': string;
+	'options': Array<{
 		description?: string;
 		label: string;
 		value: string;
@@ -71,6 +73,8 @@ interface FormikFieldMultiCheckboxProps {
 }
 
 export function FormikFieldMultiCheckbox({
+	'aria-describedby': ariaDescribedby,
+	'aria-labelledby': ariaLabelledby,
 	name,
 	options,
 }: FormikFieldMultiCheckboxProps) {
@@ -78,10 +82,17 @@ export function FormikFieldMultiCheckbox({
 		useFormikContext<FormikValues>();
 
 	const fieldErrors = errors[name] as string | undefined;
-	const fieldTouched = touched[name] as boolean | undefined;
+	const isInvalid = touched[name] && fieldErrors;
 
 	return (
-		<>
+		<div
+			aria-describedby={`${ariaDescribedby ? ariaDescribedby + ' ' : ''}${
+				isInvalid ? `${name}-error-message` : ''
+			}`}
+			aria-invalid={isInvalid ? true : undefined}
+			aria-labelledby={ariaLabelledby}
+			role="group"
+		>
 			<FieldArray name={name}>
 				{(arrayHelper: ArrayHelpers) => {
 					const selectedValues: string[] =
@@ -100,7 +111,7 @@ export function FormikFieldMultiCheckbox({
 								checked
 									? arrayHelper.push(value)
 									: arrayHelper.remove(
-											currentSelectedValues.indexOf(value)
+											selectedValues.indexOf(value)
 										);
 
 								setFieldTouched(name, true);
@@ -110,14 +121,15 @@ export function FormikFieldMultiCheckbox({
 				}}
 			</FieldArray>
 
-			{fieldTouched && fieldErrors && (
+			{isInvalid && (
 				<ClayAlert
 					displayType="danger"
+					id={`${name}-error-message`}
 					title={Liferay.Language.get('error-colon')}
 				>
 					{fieldErrors}
 				</ClayAlert>
 			)}
-		</>
+		</div>
 	);
 }

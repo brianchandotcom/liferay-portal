@@ -41,11 +41,17 @@ export default function SetupStep() {
 
 			<ClayLayout.Sheet>
 				<ClayLayout.SheetHeader className="mb-0">
-					<div className="mb-2 sheet-title">
+					<div
+						className="mb-2 sheet-title"
+						id="selectedSectionIds-label"
+					>
 						{Liferay.Language.get('what-would-you-like-to-export')}
 					</div>
 
-					<div className="sheet-text text-3">
+					<div
+						className="sheet-text text-3"
+						id="selectedSectionIds-description"
+					>
 						{Liferay.Language.get(
 							'select-all-the-entity-types-that-you-want-to-export.-please-select-at-least-one-to-continue'
 						)}
@@ -53,6 +59,8 @@ export default function SetupStep() {
 				</ClayLayout.SheetHeader>
 
 				<FormikFieldMultiCheckbox
+					aria-describedby="selectedSectionIds-description"
+					aria-labelledby="selectedSectionIds-label"
 					name="selectedSectionIds"
 					options={mockPorletDataHandlerSections.map(
 						({name, portletEntries}) => ({

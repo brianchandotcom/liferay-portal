@@ -8,7 +8,6 @@ import Card from '@clayui/card/src/Card';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import Label from '@clayui/label';
-import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {AssigneeAvatar} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {displayErrorToast} from '@liferay/site-cms-site-initializer';
 import {navigate} from 'frontend-js-web';
@@ -33,7 +32,7 @@ import {KanbanViewContext} from '../context';
 import './Task.scss';
 
 export default function Task(props: ITask) {
-	const {dataSetId, itemsActions} = useContext(KanbanViewContext);
+	const {itemsActions, loadData} = useContext(KanbanViewContext);
 
 	return (
 		<Card>
@@ -111,10 +110,7 @@ export default function Task(props: ITask) {
 										});
 
 										if (!error) {
-											Liferay.fire(
-												FDS_EVENT.UPDATE_DISPLAY,
-												{id: dataSetId}
-											);
+											loadData();
 
 											displayAssignSuccessToast(
 												props.embedded.title,
@@ -140,12 +136,7 @@ export default function Task(props: ITask) {
 											}) => (
 												<EditAssigneeModalContent
 													closeModal={closeModal}
-													loadData={() =>
-														Liferay.fire(
-															FDS_EVENT.UPDATE_DISPLAY,
-															{id: dataSetId}
-														)
-													}
+													loadData={loadData}
 													taskId={String(
 														props.embedded.id
 													)}
@@ -193,10 +184,7 @@ export default function Task(props: ITask) {
 															);
 
 														if (!error) {
-															Liferay.fire(
-																FDS_EVENT.UPDATE_DISPLAY,
-																{id: dataSetId}
-															);
+															loadData();
 
 															displayDeleteSuccessToast(
 																props.embedded

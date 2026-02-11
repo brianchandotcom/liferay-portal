@@ -16,6 +16,7 @@ const mockGetUserAccount = jest.fn();
 const mockPatchTaskById = jest.fn();
 const mockDisplayAssignSuccessToast = jest.fn();
 const mockDisplayErrorToast = jest.fn();
+const mockLoadData = jest.fn();
 
 jest.mock('../../js/utils/api', () => ({
 	getUserAccount: (...args: any[]) => mockGetUserAccount(...args),
@@ -53,8 +54,8 @@ describe('Kanban Task actions', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: () => {},
-					dataSetId: 'dataSetId',
 					itemsActions,
+					loadData: mockLoadData,
 				}}
 			>
 				<Task {...baseProps} />
@@ -77,7 +78,7 @@ describe('Kanban Task actions', () => {
 		await waitFor(() => expect(mockPatchTaskById).toHaveBeenCalled());
 
 		await waitFor(() => {
-			expect((global as any).Liferay.fire).toHaveBeenCalled();
+			expect(mockLoadData).toHaveBeenCalled();
 			expect(mockDisplayAssignSuccessToast).toHaveBeenCalledWith(
 				'Task title',
 				'Current User'

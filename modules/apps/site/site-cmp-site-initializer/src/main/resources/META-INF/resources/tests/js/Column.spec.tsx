@@ -36,8 +36,8 @@ describe('Kanban Column', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: () => {},
-					dataSetId: 'dataSetId',
 					itemsActions: [],
+					loadData: () => {},
 				}}
 			>
 				<Column column={column} />
@@ -65,8 +65,8 @@ describe('Kanban Column', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: () => {},
-					dataSetId: 'dataSetId',
 					itemsActions: [],
+					loadData: () => {},
 				}}
 			>
 				<Column column={column} />

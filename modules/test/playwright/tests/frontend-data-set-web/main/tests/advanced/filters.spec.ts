@@ -177,6 +177,7 @@ test(
 				await expect(group3.getByRole('menuitem')).toHaveText([
 					'Status',
 					'Title',
+					'Creator',
 				]);
 			});
 

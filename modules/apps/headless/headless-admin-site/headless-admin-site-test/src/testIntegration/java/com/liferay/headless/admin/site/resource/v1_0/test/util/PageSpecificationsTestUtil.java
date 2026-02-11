@@ -43,6 +43,7 @@ import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -587,6 +588,11 @@ public class PageSpecificationsTestUtil {
 			columns.add("column-1");
 			columns.add("column-2");
 			columns.add("column-3");
+		}
+		else {
+			for (int i = 1; i <= 100; i++) {
+				columns.add(LayoutTypePortletConstants.COLUMN_PREFIX + i);
+			}
 		}
 
 		return TransformUtil.transformToArray(

@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class IdsQueryImpl extends BaseQueryImpl implements IdsQuery {
+public class IdsQueryImpl extends IdsQuery {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

@@ -15,97 +15,98 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MoreLikeThisQuery extends Query {
+public abstract class MoreLikeThisQuery extends Query {
 
-	public void addDocumentIdentifier(DocumentIdentifier documentIdentifier);
+	public abstract void addDocumentIdentifier(
+		DocumentIdentifier documentIdentifier);
 
-	public void addDocumentIdentifiers(
+	public abstract void addDocumentIdentifiers(
 		Collection<DocumentIdentifier> documentIdentifiers);
 
-	public void addDocumentIdentifiers(
+	public abstract void addDocumentIdentifiers(
 		DocumentIdentifier... documentIdentifiers);
 
-	public void addField(String field);
+	public abstract void addField(String field);
 
-	public void addFields(Collection<String> fields);
+	public abstract void addFields(Collection<String> fields);
 
-	public void addFields(String... fields);
+	public abstract void addFields(String... fields);
 
-	public void addLikeText(String likeText);
+	public abstract void addLikeText(String likeText);
 
-	public void addLikeTexts(Collection<String> likeTexts);
+	public abstract void addLikeTexts(Collection<String> likeTexts);
 
-	public void addLikeTexts(String... likeTexts);
+	public abstract void addLikeTexts(String... likeTexts);
 
-	public void addStopWord(String stopWord);
+	public abstract void addStopWord(String stopWord);
 
-	public void addStopWords(Collection<String> stopWords);
+	public abstract void addStopWords(Collection<String> stopWords);
 
-	public void addStopWords(String... stopWords);
+	public abstract void addStopWords(String... stopWords);
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Set<DocumentIdentifier> getDocumentIdentifiers();
+	public abstract Set<DocumentIdentifier> getDocumentIdentifiers();
 
-	public List<String> getFields();
+	public abstract List<String> getFields();
 
-	public List<String> getLikeTexts();
+	public abstract List<String> getLikeTexts();
 
-	public Integer getMaxDocFrequency();
+	public abstract Integer getMaxDocFrequency();
 
-	public Integer getMaxQueryTerms();
+	public abstract Integer getMaxQueryTerms();
 
-	public Integer getMaxWordLength();
+	public abstract Integer getMaxWordLength();
 
-	public Integer getMinDocFrequency();
+	public abstract Integer getMinDocFrequency();
 
-	public String getMinShouldMatch();
+	public abstract String getMinShouldMatch();
 
-	public Integer getMinTermFrequency();
+	public abstract Integer getMinTermFrequency();
 
-	public Integer getMinWordLength();
+	public abstract Integer getMinWordLength();
 
-	public Set<String> getStopWords();
+	public abstract Set<String> getStopWords();
 
-	public Float getTermBoost();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public String getType();
-
-	public boolean isDocumentUIDsEmpty();
-
-	public boolean isFieldsEmpty();
-
-	public Boolean isIncludeInput();
-
-	public void setAnalyzer(String analyzer);
-
-	public void setIncludeInput(Boolean includeInput);
-
-	public void setMaxDocFrequency(Integer maxDocFrequency);
-
-	public void setMaxQueryTerms(Integer maxQueryTerms);
-
-	public void setMaxWordLength(Integer maxWordLength);
-
-	public void setMinDocFrequency(Integer minDocFrequency);
-
-	public void setMinShouldMatch(String minShouldMatch);
-
-	public void setMinTermFrequency(Integer minTermFrequency);
-
-	public void setMinWordLength(Integer minWordLength);
-
-	public void setTermBoost(Float termBoost);
+	public abstract Float getTermBoost();
 
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */
 	@Deprecated
-	public void setType(String type);
+	public abstract String getType();
+
+	public abstract boolean isDocumentUIDsEmpty();
+
+	public abstract boolean isFieldsEmpty();
+
+	public abstract Boolean isIncludeInput();
+
+	public abstract void setAnalyzer(String analyzer);
+
+	public abstract void setIncludeInput(Boolean includeInput);
+
+	public abstract void setMaxDocFrequency(Integer maxDocFrequency);
+
+	public abstract void setMaxQueryTerms(Integer maxQueryTerms);
+
+	public abstract void setMaxWordLength(Integer maxWordLength);
+
+	public abstract void setMinDocFrequency(Integer minDocFrequency);
+
+	public abstract void setMinShouldMatch(String minShouldMatch);
+
+	public abstract void setMinTermFrequency(Integer minTermFrequency);
+
+	public abstract void setMinWordLength(Integer minWordLength);
+
+	public abstract void setTermBoost(Float termBoost);
+
+	/**
+	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
+	 */
+	@Deprecated
+	public abstract void setType(String type);
 
 	public interface DocumentIdentifier {
 

@@ -11,34 +11,34 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface FuzzyQuery extends Query {
+public abstract class FuzzyQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public Float getFuzziness();
+	public abstract Float getFuzziness();
 
-	public Integer getMaxEdits();
+	public abstract Integer getMaxEdits();
 
-	public Integer getMaxExpansions();
+	public abstract Integer getMaxExpansions();
 
-	public Integer getPrefixLength();
+	public abstract Integer getPrefixLength();
 
-	public String getRewrite();
+	public abstract String getRewrite();
 
-	public Boolean getTranspositions();
+	public abstract Boolean getTranspositions();
 
-	public String getValue();
+	public abstract String getValue();
 
-	public void setFuzziness(Float fuzziness);
+	public abstract void setFuzziness(Float fuzziness);
 
-	public void setMaxEdits(Integer maxEdits);
+	public abstract void setMaxEdits(Integer maxEdits);
 
-	public void setMaxExpansions(Integer maxExpansions);
+	public abstract void setMaxExpansions(Integer maxExpansions);
 
-	public void setPrefixLength(Integer prefixLength);
+	public abstract void setPrefixLength(Integer prefixLength);
 
-	public void setRewrite(String rewrite);
+	public abstract void setRewrite(String rewrite);
 
-	public void setTranspositions(Boolean transpositions);
+	public abstract void setTranspositions(Boolean transpositions);
 
 }

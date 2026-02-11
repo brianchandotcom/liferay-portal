@@ -13,7 +13,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class NestedQueryImpl extends BaseQueryImpl implements NestedQuery {
+public class NestedQueryImpl extends NestedQuery {
 
 	public NestedQueryImpl(String path, Query query) {
 		_path = path;

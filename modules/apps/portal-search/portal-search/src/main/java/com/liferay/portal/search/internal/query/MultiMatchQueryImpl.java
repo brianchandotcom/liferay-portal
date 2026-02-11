@@ -18,8 +18,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class MultiMatchQueryImpl
-	extends BaseQueryImpl implements MultiMatchQuery {
+public class MultiMatchQueryImpl extends MultiMatchQuery {
 
 	public MultiMatchQueryImpl(Object value, Map<String, Float> fieldsBoosts) {
 		_value = value;

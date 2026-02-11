@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class FuzzyQueryImpl extends BaseQueryImpl implements FuzzyQuery {
+public class FuzzyQueryImpl extends FuzzyQuery {
 
 	public FuzzyQueryImpl(String field, String value) {
 		_field = field;

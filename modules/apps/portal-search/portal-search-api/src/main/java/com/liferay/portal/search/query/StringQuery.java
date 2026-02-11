@@ -23,112 +23,113 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Petteri Karttunen
  */
 @ProviderType
-public interface StringQuery extends Query {
+public abstract class StringQuery extends Query {
 
-	public void addField(String field);
+	public abstract void addField(String field);
 
-	public void addField(String field, Float boost);
+	public abstract void addField(String field, Float boost);
 
-	public Boolean getAllowLeadingWildcard();
+	public abstract Boolean getAllowLeadingWildcard();
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Boolean getAnalyzeWildcard();
+	public abstract Boolean getAnalyzeWildcard();
 
-	public Boolean getAutoGenerateSynonymsPhraseQuery();
+	public abstract Boolean getAutoGenerateSynonymsPhraseQuery();
 
-	public String getDefaultField();
+	public abstract String getDefaultField();
 
-	public Operator getDefaultOperator();
+	public abstract Operator getDefaultOperator();
 
-	public Boolean getEnablePositionIncrements();
+	public abstract Boolean getEnablePositionIncrements();
 
-	public Boolean getEscape();
+	public abstract Boolean getEscape();
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getFieldsBoosts}
 	 */
 	@Deprecated
-	public default Map<String, Float> getFields() {
+	public Map<String, Float> getFields() {
 		return getFieldsBoosts();
 	}
 
-	public Map<String, Float> getFieldsBoosts();
+	public abstract Map<String, Float> getFieldsBoosts();
 
-	public Float getFuzziness();
+	public abstract Float getFuzziness();
 
-	public Integer getFuzzyMaxExpansions();
+	public abstract Integer getFuzzyMaxExpansions();
 
-	public Integer getFuzzyPrefixLength();
+	public abstract Integer getFuzzyPrefixLength();
 
-	public String getFuzzyRewrite();
+	public abstract String getFuzzyRewrite();
 
-	public Boolean getFuzzyTranspositions();
+	public abstract Boolean getFuzzyTranspositions();
 
-	public Boolean getLenient();
+	public abstract Boolean getLenient();
 
-	public Integer getMaxDeterminedStates();
+	public abstract Integer getMaxDeterminedStates();
 
-	public String getMinimumShouldMatch();
+	public abstract String getMinimumShouldMatch();
 
-	public Integer getPhraseSlop();
+	public abstract Integer getPhraseSlop();
 
-	public String getQuery();
+	public abstract String getQuery();
 
-	public String getQuoteAnalyzer();
+	public abstract String getQuoteAnalyzer();
 
-	public String getQuoteFieldSuffix();
+	public abstract String getQuoteFieldSuffix();
 
-	public String getRewrite();
+	public abstract String getRewrite();
 
-	public Float getTieBreaker();
+	public abstract Float getTieBreaker();
 
-	public String getTimeZone();
+	public abstract String getTimeZone();
 
-	public void setAllowLeadingWildcard(Boolean allowLeadingWildcard);
+	public abstract void setAllowLeadingWildcard(Boolean allowLeadingWildcard);
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setAnalyzeWildcard(Boolean analyzeWildcard);
+	public abstract void setAnalyzeWildcard(Boolean analyzeWildcard);
 
-	public void setAutoGenerateSynonymsPhraseQuery(
+	public abstract void setAutoGenerateSynonymsPhraseQuery(
 		Boolean autoGenerateSynonymsPhraseQuery);
 
-	public void setDefaultField(String defaultField);
+	public abstract void setDefaultField(String defaultField);
 
-	public void setDefaultOperator(Operator defaultOperator);
+	public abstract void setDefaultOperator(Operator defaultOperator);
 
-	public void setEnablePositionIncrements(Boolean enablePositionIncrements);
+	public abstract void setEnablePositionIncrements(
+		Boolean enablePositionIncrements);
 
-	public void setEscape(boolean escape);
+	public abstract void setEscape(boolean escape);
 
-	public void setFuzziness(Float fuzziness);
+	public abstract void setFuzziness(Float fuzziness);
 
-	public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions);
+	public abstract void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions);
 
-	public void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
+	public abstract void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
 
-	public void setFuzzyRewrite(String fuzzyRewrite);
+	public abstract void setFuzzyRewrite(String fuzzyRewrite);
 
-	public void setFuzzyTranspositions(Boolean fuzzyTranspositions);
+	public abstract void setFuzzyTranspositions(Boolean fuzzyTranspositions);
 
-	public void setLenient(Boolean lenient);
+	public abstract void setLenient(Boolean lenient);
 
-	public void setMaxDeterminedStates(Integer maxDeterminedStates);
+	public abstract void setMaxDeterminedStates(Integer maxDeterminedStates);
 
-	public void setMinimumShouldMatch(String minimumShouldMatch);
+	public abstract void setMinimumShouldMatch(String minimumShouldMatch);
 
-	public void setPhraseSlop(Integer phraseSlop);
+	public abstract void setPhraseSlop(Integer phraseSlop);
 
-	public void setQuoteAnalyzer(String quoteAnalyzer);
+	public abstract void setQuoteAnalyzer(String quoteAnalyzer);
 
-	public void setQuoteFieldSuffix(String quoteFieldSuffix);
+	public abstract void setQuoteFieldSuffix(String quoteFieldSuffix);
 
-	public void setRewrite(String rewrite);
+	public abstract void setRewrite(String rewrite);
 
-	public void setTieBreaker(float tieBreaker);
+	public abstract void setTieBreaker(float tieBreaker);
 
-	public void setTimeZone(String timeZone);
+	public abstract void setTimeZone(String timeZone);
 
 }

@@ -14,7 +14,7 @@ import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 /**
  * @author Michael C. Han
  */
-public class GeoShapeQueryImpl extends BaseQueryImpl implements GeoShapeQuery {
+public class GeoShapeQueryImpl extends GeoShapeQuery {
 
 	public GeoShapeQueryImpl(String field, Shape shape) {
 		_field = field;

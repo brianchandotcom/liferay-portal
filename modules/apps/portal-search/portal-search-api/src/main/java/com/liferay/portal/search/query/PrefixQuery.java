@@ -11,14 +11,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface PrefixQuery extends Query {
+public abstract class PrefixQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public String getPrefix();
+	public abstract String getPrefix();
 
-	public String getRewrite();
+	public abstract String getRewrite();
 
-	public void setRewrite(String rewrite);
+	public abstract void setRewrite(String rewrite);
 
 }

@@ -26,7 +26,7 @@ import java.util.Map;
  * @author Bruno Farache
  * @author Petteri Karttunen
  */
-public class StringQueryImpl extends BaseQueryImpl implements StringQuery {
+public class StringQueryImpl extends StringQuery {
 
 	public StringQueryImpl(String query) {
 		_query = query;

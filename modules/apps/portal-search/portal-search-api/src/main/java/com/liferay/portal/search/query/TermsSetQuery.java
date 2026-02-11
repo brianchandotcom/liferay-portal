@@ -15,22 +15,24 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface TermsSetQuery extends Query {
+public abstract class TermsSetQuery extends Query {
 
-	public String getFieldName();
+	public abstract String getFieldName();
 
-	public String getMinimumShouldMatchField();
+	public abstract String getMinimumShouldMatchField();
 
-	public Script getMinimumShouldMatchScript();
+	public abstract Script getMinimumShouldMatchScript();
 
-	public List<Object> getValues();
+	public abstract List<Object> getValues();
 
-	public Boolean isCached();
+	public abstract Boolean isCached();
 
-	public void setCached(Boolean cached);
+	public abstract void setCached(Boolean cached);
 
-	public void setMinimumShouldMatchField(String minimumShouldMatchField);
+	public abstract void setMinimumShouldMatchField(
+		String minimumShouldMatchField);
 
-	public void setMinimumShouldMatchScript(Script minimumShouldMatchScript);
+	public abstract void setMinimumShouldMatchScript(
+		Script minimumShouldMatchScript);
 
 }

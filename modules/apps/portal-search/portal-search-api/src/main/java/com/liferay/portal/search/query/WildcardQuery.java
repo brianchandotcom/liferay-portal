@@ -11,14 +11,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface WildcardQuery extends Query {
+public abstract class WildcardQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public String getRewrite();
+	public abstract String getRewrite();
 
-	public String getValue();
+	public abstract String getValue();
 
-	public void setRewrite(String rewrite);
+	public abstract void setRewrite(String rewrite);
 
 }

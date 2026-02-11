@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class ExistsQueryImpl extends BaseQueryImpl implements ExistsQuery {
+public class ExistsQueryImpl extends ExistsQuery {
 
 	public ExistsQueryImpl(String field) {
 		_field = field;

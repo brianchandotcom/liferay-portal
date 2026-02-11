@@ -18,8 +18,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
-public class FunctionScoreQueryImpl
-	extends BaseQueryImpl implements FunctionScoreQuery {
+public class FunctionScoreQueryImpl extends FunctionScoreQuery {
 
 	public FunctionScoreQueryImpl(Query query) {
 		_query = query;

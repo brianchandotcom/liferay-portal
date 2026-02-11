@@ -13,14 +13,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface DisMaxQuery extends Query {
+public abstract class DisMaxQuery extends Query {
 
-	public void addQuery(Query query);
+	public abstract void addQuery(Query query);
 
-	public Set<Query> getQueries();
+	public abstract Set<Query> getQueries();
 
-	public Float getTieBreaker();
+	public abstract Float getTieBreaker();
 
-	public void setTieBreaker(Float tieBreaker);
+	public abstract void setTieBreaker(Float tieBreaker);
 
 }

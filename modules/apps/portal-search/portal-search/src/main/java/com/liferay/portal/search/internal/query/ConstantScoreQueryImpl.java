@@ -12,8 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class ConstantScoreQueryImpl
-	extends BaseQueryImpl implements ConstantScoreQuery {
+public class ConstantScoreQueryImpl extends ConstantScoreQuery {
 
 	public ConstantScoreQueryImpl(Query query) {
 		_query = query;

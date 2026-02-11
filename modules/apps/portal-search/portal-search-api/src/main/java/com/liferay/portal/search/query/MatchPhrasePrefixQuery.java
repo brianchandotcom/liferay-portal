@@ -11,22 +11,22 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MatchPhrasePrefixQuery extends Query {
+public abstract class MatchPhrasePrefixQuery extends Query {
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public String getField();
+	public abstract String getField();
 
-	public Integer getMaxExpansions();
+	public abstract Integer getMaxExpansions();
 
-	public Integer getSlop();
+	public abstract Integer getSlop();
 
-	public Object getValue();
+	public abstract Object getValue();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setMaxExpansions(Integer maxExpansions);
+	public abstract void setMaxExpansions(Integer maxExpansions);
 
-	public void setSlop(Integer slop);
+	public abstract void setSlop(Integer slop);
 
 }

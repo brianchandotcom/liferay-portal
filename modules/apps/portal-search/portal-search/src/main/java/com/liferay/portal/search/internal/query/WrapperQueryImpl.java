@@ -13,7 +13,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author Michael C. Han
  */
-public class WrapperQueryImpl extends BaseQueryImpl implements WrapperQuery {
+public class WrapperQueryImpl extends WrapperQuery {
 
 	public WrapperQueryImpl(byte[] source) {
 		_source = source;

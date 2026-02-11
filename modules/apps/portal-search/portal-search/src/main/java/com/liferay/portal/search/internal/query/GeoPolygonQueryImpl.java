@@ -17,8 +17,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class GeoPolygonQueryImpl
-	extends BaseQueryImpl implements GeoPolygonQuery {
+public class GeoPolygonQueryImpl extends GeoPolygonQuery {
 
 	public GeoPolygonQueryImpl(String field) {
 		_field = field;

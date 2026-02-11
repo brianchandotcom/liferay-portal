@@ -12,8 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class CommonTermsQueryImpl
-	extends BaseQueryImpl implements CommonTermsQuery {
+public class CommonTermsQueryImpl extends CommonTermsQuery {
 
 	public CommonTermsQueryImpl(String field, String text) {
 		_field = field;

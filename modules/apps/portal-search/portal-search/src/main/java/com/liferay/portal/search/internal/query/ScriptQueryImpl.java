@@ -12,7 +12,7 @@ import com.liferay.portal.search.script.Script;
 /**
  * @author Michael C. Han
  */
-public class ScriptQueryImpl extends BaseQueryImpl implements ScriptQuery {
+public class ScriptQueryImpl extends ScriptQuery {
 
 	public ScriptQueryImpl(Script script) {
 		_script = script;

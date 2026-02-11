@@ -13,27 +13,27 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface RangeTermQuery extends Query {
+public abstract class RangeTermQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public Object getLowerBound();
+	public abstract Object getLowerBound();
 
-	public Operator getLowerBoundOperator();
+	public abstract Operator getLowerBoundOperator();
 
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
-	public Object getUpperBound();
+	public abstract Object getUpperBound();
 
-	public Operator getUpperBoundOperator();
+	public abstract Operator getUpperBoundOperator();
 
-	public boolean isIncludesLower();
+	public abstract boolean isIncludesLower();
 
-	public boolean isIncludesUpper();
+	public abstract boolean isIncludesUpper();
 
-	public void setLowerBound(Object lowerBound);
+	public abstract void setLowerBound(Object lowerBound);
 
-	public void setUpperBound(Object upperBound);
+	public abstract void setUpperBound(Object upperBound);
 
 	public enum Operator {
 

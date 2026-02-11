@@ -11,63 +11,64 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MatchQuery extends Query {
+public abstract class MatchQuery extends Query {
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Float getCutOffFrequency();
+	public abstract Float getCutOffFrequency();
 
-	public String getField();
+	public abstract String getField();
 
-	public Float getFuzziness();
+	public abstract Float getFuzziness();
 
-	public RewriteMethod getFuzzyRewriteMethod();
+	public abstract RewriteMethod getFuzzyRewriteMethod();
 
-	public Integer getMaxExpansions();
+	public abstract Integer getMaxExpansions();
 
-	public String getMinShouldMatch();
+	public abstract String getMinShouldMatch();
 
-	public Operator getOperator();
+	public abstract Operator getOperator();
 
-	public Integer getPrefixLength();
+	public abstract Integer getPrefixLength();
 
-	public Integer getSlop();
+	public abstract Integer getSlop();
 
-	public Type getType();
+	public abstract Type getType();
 
-	public Object getValue();
+	public abstract Object getValue();
 
-	public ZeroTermsQuery getZeroTermsQuery();
+	public abstract ZeroTermsQuery getZeroTermsQuery();
 
-	public Boolean isFuzzyTranspositions();
+	public abstract Boolean isFuzzyTranspositions();
 
-	public Boolean isLenient();
+	public abstract Boolean isLenient();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setCutOffFrequency(Float cutOffFrequency);
+	public abstract void setCutOffFrequency(Float cutOffFrequency);
 
-	public void setFuzziness(Float fuzziness);
+	public abstract void setFuzziness(Float fuzziness);
 
-	public void setFuzzyRewriteMethod(RewriteMethod fuzzyRewriteMethod);
+	public abstract void setFuzzyRewriteMethod(
+		RewriteMethod fuzzyRewriteMethod);
 
-	public void setFuzzyTranspositions(Boolean fuzzyTranspositions);
+	public abstract void setFuzzyTranspositions(Boolean fuzzyTranspositions);
 
-	public void setLenient(Boolean lenient);
+	public abstract void setLenient(Boolean lenient);
 
-	public void setMaxExpansions(Integer maxExpansions);
+	public abstract void setMaxExpansions(Integer maxExpansions);
 
-	public void setMinShouldMatch(String minShouldMatch);
+	public abstract void setMinShouldMatch(String minShouldMatch);
 
-	public void setOperator(Operator operator);
+	public abstract void setOperator(Operator operator);
 
-	public void setPrefixLength(Integer prefixLength);
+	public abstract void setPrefixLength(Integer prefixLength);
 
-	public void setSlop(Integer slop);
+	public abstract void setSlop(Integer slop);
 
-	public void setType(Type type);
+	public abstract void setType(Type type);
 
-	public void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery);
+	public abstract void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery);
 
 	public enum RewriteMethod {
 

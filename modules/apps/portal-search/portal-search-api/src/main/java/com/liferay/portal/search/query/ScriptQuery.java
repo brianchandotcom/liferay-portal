@@ -13,8 +13,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface ScriptQuery extends Query {
+public abstract class ScriptQuery extends Query {
 
-	public Script getScript();
+	public abstract Script getScript();
 
 }

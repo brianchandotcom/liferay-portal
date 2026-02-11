@@ -11,8 +11,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Adam Brandizzi
  */
 @ProviderType
-public interface WrapperQuery extends Query {
+public abstract class WrapperQuery extends Query {
 
-	public byte[] getSource();
+	public abstract byte[] getSource();
 
 }

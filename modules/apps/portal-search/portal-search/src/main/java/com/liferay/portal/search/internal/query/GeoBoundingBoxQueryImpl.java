@@ -14,8 +14,7 @@ import com.liferay.portal.search.query.geolocation.GeoValidationMethod;
 /**
  * @author Michael C. Han
  */
-public class GeoBoundingBoxQueryImpl
-	extends BaseQueryImpl implements GeoBoundingBoxQuery {
+public class GeoBoundingBoxQueryImpl extends GeoBoundingBoxQuery {
 
 	public GeoBoundingBoxQueryImpl(
 		String field, GeoLocationPoint topLeftGeoLocationPoint,

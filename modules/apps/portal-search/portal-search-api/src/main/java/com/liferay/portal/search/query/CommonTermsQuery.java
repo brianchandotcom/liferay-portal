@@ -11,35 +11,36 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface CommonTermsQuery extends Query {
+public abstract class CommonTermsQuery extends Query {
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Float getCutoffFrequency();
+	public abstract Float getCutoffFrequency();
 
-	public String getField();
+	public abstract String getField();
 
-	public String getHighFreqMinimumShouldMatch();
+	public abstract String getHighFreqMinimumShouldMatch();
 
-	public Operator getHighFreqOperator();
+	public abstract Operator getHighFreqOperator();
 
-	public String getLowFreqMinimumShouldMatch();
+	public abstract String getLowFreqMinimumShouldMatch();
 
-	public Operator getLowFreqOperator();
+	public abstract Operator getLowFreqOperator();
 
-	public String getText();
+	public abstract String getText();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setCutoffFrequency(Float cutoffFrequency);
+	public abstract void setCutoffFrequency(Float cutoffFrequency);
 
-	public void setHighFreqMinimumShouldMatch(
+	public abstract void setHighFreqMinimumShouldMatch(
 		String highFreqMinimumShouldMatch);
 
-	public void setHighFreqOperator(Operator highFreqOperator);
+	public abstract void setHighFreqOperator(Operator highFreqOperator);
 
-	public void setLowFreqMinimumShouldMatch(String lowFreqMinimumShouldMatch);
+	public abstract void setLowFreqMinimumShouldMatch(
+		String lowFreqMinimumShouldMatch);
 
-	public void setLowFreqOperator(Operator lowFreqOperator);
+	public abstract void setLowFreqOperator(Operator lowFreqOperator);
 
 }

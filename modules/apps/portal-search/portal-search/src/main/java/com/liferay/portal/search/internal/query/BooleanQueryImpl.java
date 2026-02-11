@@ -19,7 +19,7 @@ import java.util.List;
  * @author Michael C. Han
  * @author Hugo Huijser
  */
-public class BooleanQueryImpl extends BaseQueryImpl implements BooleanQuery {
+public class BooleanQueryImpl extends BooleanQuery {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

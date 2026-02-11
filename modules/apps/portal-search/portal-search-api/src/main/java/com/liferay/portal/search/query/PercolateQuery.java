@@ -22,10 +22,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface PercolateQuery extends Query {
+public abstract class PercolateQuery extends Query {
 
-	public List<String> getDocumentJSONs();
+	public abstract List<String> getDocumentJSONs();
 
-	public String getField();
+	public abstract String getField();
 
 }

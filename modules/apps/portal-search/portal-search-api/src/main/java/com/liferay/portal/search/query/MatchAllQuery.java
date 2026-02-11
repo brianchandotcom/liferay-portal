@@ -11,5 +11,5 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MatchAllQuery extends Query {
+public abstract class MatchAllQuery extends Query {
 }

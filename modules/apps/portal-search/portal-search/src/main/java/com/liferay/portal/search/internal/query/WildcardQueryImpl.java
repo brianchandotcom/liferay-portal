@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.WildcardQuery;
 /**
  * @author Michael C. Han
  */
-public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
+public class WildcardQueryImpl extends WildcardQuery {
 
 	public WildcardQueryImpl(String field, String value) {
 		_field = field;

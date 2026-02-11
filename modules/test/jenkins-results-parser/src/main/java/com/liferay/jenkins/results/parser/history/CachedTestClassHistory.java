@@ -5,6 +5,11 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
@@ -40,6 +45,22 @@ public class CachedTestClassHistory extends BaseTestClassHistory {
 	@Override
 	public long getTestCount() {
 		return _jsonObject.optInt("testCount");
+	}
+
+	@Override
+	public URL getTestrayCaseURL() {
+		String testrayCaseURL = _jsonObject.optString("testrayCaseURL");
+
+		if (!JenkinsResultsParserUtil.isURL(testrayCaseURL)) {
+			return null;
+		}
+
+		try {
+			return new URL(testrayCaseURL);
+		}
+		catch (MalformedURLException malformedURLException) {
+			return null;
+		}
 	}
 
 	@Override

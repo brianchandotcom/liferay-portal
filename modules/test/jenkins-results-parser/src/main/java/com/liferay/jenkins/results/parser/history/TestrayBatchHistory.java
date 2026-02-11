@@ -152,6 +152,16 @@ public class TestrayBatchHistory extends BaseBatchHistory {
 		return batchJSONObject;
 	}
 
+	public TestrayJobHistory getTestrayJobHistory() {
+		JobHistory jobHistory = getJobHistory();
+
+		if (jobHistory instanceof TestrayJobHistory) {
+			return (TestrayJobHistory)jobHistory;
+		}
+
+		return null;
+	}
+
 	protected TestrayBatchHistory(String batchName, JobHistory jobHistory) {
 		super(batchName, jobHistory);
 	}

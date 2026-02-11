@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
 import com.liferay.jenkins.results.parser.testray.TestrayBuild;
+import com.liferay.jenkins.results.parser.testray.TestrayProject;
 import com.liferay.jenkins.results.parser.testray.TestrayRoutine;
 import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
@@ -47,6 +48,16 @@ public class TestrayJobHistory extends BaseJobHistory {
 		);
 
 		return jsonObject;
+	}
+
+	public TestrayProject getTestrayProject() {
+		if (_testrayRoutines.isEmpty()) {
+			return null;
+		}
+
+		TestrayRoutine testrayRoutine = _testrayRoutines.get(0);
+
+		return testrayRoutine.getTestrayProject();
 	}
 
 	@Override

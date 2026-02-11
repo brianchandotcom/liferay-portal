@@ -8,8 +8,14 @@ package com.liferay.jenkins.results.parser.history;
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
+import com.liferay.jenkins.results.parser.testray.TestrayCase;
+import com.liferay.jenkins.results.parser.testray.TestrayProject;
+import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
 import java.io.IOException;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,6 +136,8 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 		).put(
 			"testName", getTestClassName()
 		).put(
+			"testrayCaseURL", getTestrayCaseURL()
+		).put(
 			"testTaskName", getTestTaskName()
 		);
 
@@ -172,6 +180,50 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 	@Override
 	public long getTestCount() {
 		return _testClassReports.size();
+	}
+
+	@Override
+	public URL getTestrayCaseURL() {
+		if (_testrayCaseURLString != null) {
+			if (!JenkinsResultsParserUtil.isURL(_testrayCaseURLString)) {
+				return null;
+			}
+
+			try {
+				return new URL(_testrayCaseURLString);
+			}
+			catch (MalformedURLException malformedURLException) {
+				return null;
+			}
+		}
+
+		TestrayProject testrayProject = _getTestrayProject();
+
+		if (testrayProject != null) {
+			TestrayCase testrayCase = testrayProject.getTestrayCaseByName(
+				getTestClassName());
+			TestrayServer testrayServer = testrayProject.getTestrayServer();
+
+			if ((testrayCase != null) && (testrayServer != null)) {
+				_testrayCaseURLString = JenkinsResultsParserUtil.combine(
+					String.valueOf(testrayServer.getURL()), "/#/project/",
+					String.valueOf(testrayProject.getID()), "/cases/",
+					String.valueOf(testrayCase.getID()));
+			}
+		}
+
+		if (!JenkinsResultsParserUtil.isURL(_testrayCaseURLString)) {
+			_testrayCaseURLString = "";
+
+			return null;
+		}
+
+		try {
+			return new URL(_testrayCaseURLString);
+		}
+		catch (MalformedURLException malformedURLException) {
+			throw new RuntimeException(malformedURLException);
+		}
 	}
 
 	@Override
@@ -319,6 +371,36 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 		}
 	}
 
+	private TestrayBatchHistory _getTestrayBatchHistory() {
+		BatchHistory batchHistory = getBatchHistory();
+
+		if (batchHistory instanceof TestrayBatchHistory) {
+			return (TestrayBatchHistory)batchHistory;
+		}
+
+		return null;
+	}
+
+	private TestrayJobHistory _getTestrayJobHistory() {
+		TestrayBatchHistory testrayBatchHistory = _getTestrayBatchHistory();
+
+		if (testrayBatchHistory == null) {
+			return null;
+		}
+
+		return testrayBatchHistory.getTestrayJobHistory();
+	}
+
+	private TestrayProject _getTestrayProject() {
+		TestrayJobHistory testrayJobHistory = _getTestrayJobHistory();
+
+		if (testrayJobHistory == null) {
+			return null;
+		}
+
+		return testrayJobHistory.getTestrayProject();
+	}
+
 	private static final long _MAXIMUM_TEST_DURATION = 2 * 60 * 60 * 1000;
 
 	private static final long _MAXIMUM_TEST_OVERHEAD_DURATION =
@@ -331,5 +413,6 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 	private final BatchHistory _batchHistory;
 	private final String _testClassName;
 	private final List<TestClassReport> _testClassReports = new ArrayList<>();
+	private String _testrayCaseURLString;
 
 }

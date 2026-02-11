@@ -14,7 +14,7 @@ PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(Appli
 
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry);
 
-boolean sideNavigationEnabled = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-36105") && panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), "applications_menu");
+boolean sideNavigationEnabled = FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-36105") && panelCategoryHelper.containsPortlet(themeDisplay.getPpid(), "applications_menu") && !LiferayWindowState.isPopUp(request);
 %>
 
 <c:if test="<%= sideNavigationEnabled %>">

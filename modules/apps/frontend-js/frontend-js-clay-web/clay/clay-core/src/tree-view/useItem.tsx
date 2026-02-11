@@ -14,6 +14,7 @@ import {
 	TARGET_POSITION,
 	getNewItemPath,
 	isDescendantOfDraggedItems,
+	removeDescendants,
 	useDnD,
 } from './DragAndDrop';
 import {useTreeViewContext} from './context';
@@ -201,13 +202,14 @@ export function ItemContextProvider({children, value}: Props) {
 			}
 
 			const indexes = getNewItemPath(item.indexes, currentPosition!);
+			const dragKeys = removeDescendants(currentDragKeys, layout);
 
 			if (onItemMove) {
 				const tree = createImmutableTree(items as any, nestedKey!);
 
 				const isMoved = onItemMove(
 					dragAndDropMode === 'multiple'
-						? currentDragKeys
+						? dragKeys
 						: removeItemInternalProps(dragItem.item),
 					tree.nodeByPath(indexes).parent!,
 					{
@@ -296,10 +298,11 @@ export function ItemContextProvider({children, value}: Props) {
 			if (onItemHover) {
 				const tree = createImmutableTree(items as any, nestedKey!);
 				const indexes = getNewItemPath(item.indexes, currentPosition);
+				const dragKeys = removeDescendants(currentDragKeys, layout);
 
 				const isHovered = onItemHover(
 					dragAndDropMode === 'multiple'
-						? currentDragKeys
+						? dragKeys
 						: removeItemInternalProps(
 								(dragItem as unknown as Value)['item']
 							),

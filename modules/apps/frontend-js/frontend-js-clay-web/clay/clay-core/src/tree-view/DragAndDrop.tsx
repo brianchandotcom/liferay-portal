@@ -125,6 +125,30 @@ function getElementKey(element: Element): React.Key {
 	return type === 'number' ? Number(key) : key!;
 }
 
+export function removeDescendants(
+	currentDragKeys: Set<React.Key>,
+	layout: Layout
+): Set<React.Key> {
+	const layoutKeys = layout.layoutKeys.current;
+
+	const isParentSelected = (key: React.Key): boolean => {
+		let parentKey = layoutKeys.get(key)?.parentKey;
+
+		while (parentKey) {
+			if (currentDragKeys.has(parentKey)) {
+				return true;
+			}
+			parentKey = layoutKeys.get(parentKey)?.parentKey;
+		}
+
+		return false;
+	};
+
+	return new Set(
+		Array.from(currentDragKeys).filter((key) => !isParentSelected(key))
+	);
+}
+
 export function isDescendantOfDraggedItems({
 	dragKeys,
 	element,
@@ -191,6 +215,7 @@ function validateTarget<T>({
 	}
 
 	const targetIndexes = getNewItemPath(targetItem.loc, position);
+	const dragKeys = removeDescendants(currentDragKeys, layout);
 
 	const tree = createImmutableTree(items as any, nestedKey!);
 	const dragNode = tree.nodeByPath(dragItem.loc);
@@ -201,9 +226,7 @@ function validateTarget<T>({
 	}
 
 	return onItemHover(
-		mode === 'multiple'
-			? currentDragKeys
-			: (dragNode.item as Record<any, any>),
+		mode === 'multiple' ? dragKeys : (dragNode.item as Record<any, any>),
 		parentNode as Record<any, any>,
 		{
 			next: targetIndexes[targetIndexes.length - 1]!,
@@ -483,6 +506,7 @@ export function DragAndDropProvider<T>({
 		const {currentDrag, currentTarget, position} = state;
 		const dropLayoutItem = layout.layoutKeys.current.get(currentTarget!);
 		const dragLayoutItem = layout.layoutKeys.current.get(currentDrag!);
+		const dragKeys = removeDescendants(state.currentDragKeys, layout);
 
 		const indexes = getNewItemPath(dropLayoutItem!.loc, position!);
 
@@ -493,7 +517,7 @@ export function DragAndDropProvider<T>({
 
 			const isMoved = onItemMove(
 				mode === 'multiple'
-					? state.currentDragKeys
+					? dragKeys
 					: (dragNode.item as Record<any, any>),
 				tree.nodeByPath(indexes).parent as Record<any, any>,
 				{

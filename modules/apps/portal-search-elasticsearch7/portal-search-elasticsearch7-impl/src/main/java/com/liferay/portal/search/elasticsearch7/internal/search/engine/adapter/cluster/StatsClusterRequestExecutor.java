@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -30,11 +30,9 @@ import org.elasticsearch.client.RestHighLevelClient;
 public class StatsClusterRequestExecutor {
 
 	public StatsClusterRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public StatsClusterResponse execute(
@@ -63,7 +61,7 @@ public class StatsClusterRequestExecutor {
 
 			String responseBody = EntityUtils.toString(response.getEntity());
 
-			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
 				responseBody);
 
 			JSONObject nodesJSONObject = responseJSONObject.getJSONObject(
@@ -94,6 +92,5 @@ public class StatsClusterRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

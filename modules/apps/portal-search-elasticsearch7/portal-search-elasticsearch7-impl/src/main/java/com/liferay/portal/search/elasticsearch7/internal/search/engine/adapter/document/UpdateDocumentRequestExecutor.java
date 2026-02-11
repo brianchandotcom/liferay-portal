@@ -5,15 +5,62 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
 
 /**
  * @author Dylan Rebelak
  */
-public interface UpdateDocumentRequestExecutor {
+public class UpdateDocumentRequestExecutor {
+
+	public UpdateDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public UpdateDocumentResponse execute(
-		UpdateDocumentRequest updateDocumentRequest);
+		UpdateDocumentRequest updateDocumentRequest) {
+
+		UpdateRequest updateRequest =
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
+				updateDocumentRequest);
+
+		UpdateResponse updateResponse = _getUpdateResponse(
+			updateRequest, updateDocumentRequest);
+
+		RestStatus restStatus = updateResponse.status();
+
+		return new UpdateDocumentResponse(restStatus.getStatus());
+	}
+
+	private UpdateResponse _getUpdateResponse(
+		UpdateRequest updateRequest,
+		UpdateDocumentRequest updateDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				updateDocumentRequest.getConnectionId(),
+				updateDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.update(
+				updateRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

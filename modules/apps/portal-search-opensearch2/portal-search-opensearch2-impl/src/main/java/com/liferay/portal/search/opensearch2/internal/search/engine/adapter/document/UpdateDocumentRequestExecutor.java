@@ -7,13 +7,59 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.doc
 
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
+
+import java.io.IOException;
+
+import org.opensearch.client.json.JsonData;
+import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.Result;
+import org.opensearch.client.opensearch.core.UpdateRequest;
+import org.opensearch.client.opensearch.core.UpdateResponse;
 
 /**
  * @author Dylan Rebelak
  */
-public interface UpdateDocumentRequestExecutor {
+public class UpdateDocumentRequestExecutor {
+
+	public UpdateDocumentRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_openSearchConnectionManager = openSearchConnectionManager;
+	}
 
 	public UpdateDocumentResponse execute(
-		UpdateDocumentRequest updateDocumentRequest);
+		UpdateDocumentRequest updateDocumentRequest) {
+
+		UpdateResponse<JsonData> updateResponse = _getUpdateResponse(
+			updateDocumentRequest,
+			OpenSearchDocumentRequestTranslatorUtil.translate(
+				updateDocumentRequest));
+
+		Result result = updateResponse.result();
+
+		return new UpdateDocumentResponse(
+			ConversionUtil.toHttpStatusCode(result), result.jsonValue());
+	}
+
+	private UpdateResponse<JsonData> _getUpdateResponse(
+		UpdateDocumentRequest updateDocumentRequest,
+		UpdateRequest<JsonData, JsonData> updateRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				updateDocumentRequest.getConnectionId(),
+				updateDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return openSearchClient.update(updateRequest, JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

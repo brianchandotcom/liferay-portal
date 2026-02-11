@@ -11,8 +11,6 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
@@ -64,10 +62,6 @@ public class RequestExecutorFixture {
 		return _getDocumentRequestExecutor;
 	}
 
-	public UpdateDocumentRequestExecutor getUpdateDocumentRequestExecutor() {
-		return _updateDocumentRequestExecutor;
-	}
-
 	public void setUp() {
 		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
 			_elasticsearchClientResolver);
@@ -80,19 +74,11 @@ public class RequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			_getDocumentRequestExecutor, "_elasticsearchClientResolver",
 			_elasticsearchClientResolver);
-
-		_updateDocumentRequestExecutor =
-			new UpdateDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_updateDocumentRequestExecutor, "_elasticsearchClientResolver",
-			_elasticsearchClientResolver);
 	}
 
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

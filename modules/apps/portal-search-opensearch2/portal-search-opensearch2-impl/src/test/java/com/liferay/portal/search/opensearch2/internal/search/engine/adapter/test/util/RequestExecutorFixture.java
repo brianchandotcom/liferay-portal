@@ -16,8 +16,6 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 
@@ -66,17 +64,12 @@ public class RequestExecutorFixture {
 		return _getDocumentRequestExecutor;
 	}
 
-	public UpdateDocumentRequestExecutor getUpdateDocumentRequestExecutor() {
-		return _updateDocumentRequestExecutor;
-	}
-
 	public void setUp() {
 		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
 			new JSONFactoryImpl(), _openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor();
-		_updateDocumentRequestExecutor = _createUpdateDocumentRequestExecutor();
 	}
 
 	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor() {
@@ -90,23 +83,9 @@ public class RequestExecutorFixture {
 		return getDocumentRequestExecutor;
 	}
 
-	private UpdateDocumentRequestExecutor
-		_createUpdateDocumentRequestExecutor() {
-
-		UpdateDocumentRequestExecutor updateDocumentRequestExecutor =
-			new UpdateDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateDocumentRequestExecutor, "_openSearchConnectionManager",
-			_openSearchConnectionManager);
-
-		return updateDocumentRequestExecutor;
-	}
-
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
-	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

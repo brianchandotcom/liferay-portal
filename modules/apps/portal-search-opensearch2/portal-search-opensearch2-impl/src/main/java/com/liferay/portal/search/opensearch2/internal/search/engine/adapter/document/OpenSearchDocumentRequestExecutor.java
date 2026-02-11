@@ -104,6 +104,8 @@ public class OpenSearchDocumentRequestExecutor
 			_openSearchConnectionManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_openSearchConnectionManager);
+		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	@Modified
@@ -136,7 +138,6 @@ public class OpenSearchDocumentRequestExecutor
 	private UpdateByQueryDocumentRequestExecutor
 		_updateByQueryDocumentRequestExecutor;
 
-	@Reference
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

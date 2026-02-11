@@ -54,8 +54,8 @@ public class UpdateDocumentRequestExecutorTest {
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_elasticsearchFixture);
 
-		_updateDocumentRequestExecutor =
-			_requestExecutorFixture.getUpdateDocumentRequestExecutor();
+		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
+			_elasticsearchFixture);
 
 		_requestExecutorFixture.createIndex(_INDEX_NAME);
 	}

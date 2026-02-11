@@ -51,8 +51,8 @@ public class UpdateDocumentRequestExecutorLegacyTest
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			openSearchConnectionManager);
 
-		_updateDocumentRequestExecutor =
-			_requestExecutorFixture.getUpdateDocumentRequestExecutor();
+		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
+			openSearchConnectionManager);
 
 		_requestExecutorFixture.createIndex(TEST_INDEX_NAME);
 	}

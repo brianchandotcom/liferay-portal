@@ -217,16 +217,28 @@ public class DLReferencesExportImportContentProcessor
 
 				ExportImportReportEntry exportImportReportEntry =
 					_exportImportReportEntryLocalService.
-						addEmptyExportImportReportEntry(
+						fetchEmptyExportImportReportEntryByG_C_C_C(
 							companyGroup ? 0L : groupId,
 							portletDataContext.getCompanyId(),
 							documentLibraryReference.getExternalReferenceCode(),
 							_classNameLocalService.getClassNameId(
-								FileEntry.class),
-							GetterUtil.getLong(
-								ExportImportThreadLocal.
-									getExportImportConfigurationId()),
-							FileEntry.class.getName());
+								FileEntry.class));
+
+				if (exportImportReportEntry == null) {
+					exportImportReportEntry =
+						_exportImportReportEntryLocalService.
+							addEmptyExportImportReportEntry(
+								companyGroup ? 0L : groupId,
+								portletDataContext.getCompanyId(),
+								documentLibraryReference.
+									getExternalReferenceCode(),
+								_classNameLocalService.getClassNameId(
+									FileEntry.class),
+								GetterUtil.getLong(
+									ExportImportThreadLocal.
+										getExportImportConfigurationId()),
+								FileEntry.class.getName());
+				}
 
 				_exportImportProcessCallbackRegistry.registerCallback(
 					portletDataContext.getExportImportProcessId(),

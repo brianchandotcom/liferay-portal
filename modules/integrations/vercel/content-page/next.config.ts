@@ -5,6 +5,14 @@
 
 import type {NextConfig} from 'next';
 
-const nextConfig: NextConfig = {};
+const imageDomain = process.env.LIFERAY_HOST
+	? new URL(process.env.LIFERAY_HOST).hostname
+	: '';
+
+const nextConfig: NextConfig = {
+	images: {
+		domains: [imageDomain],
+	},
+};
 
 export default nextConfig;

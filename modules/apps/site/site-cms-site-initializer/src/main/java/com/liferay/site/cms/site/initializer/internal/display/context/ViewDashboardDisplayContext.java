@@ -5,11 +5,10 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.learn.LearnMessageUtil;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -61,11 +60,6 @@ public class ViewDashboardDisplayContext {
 
 	public Map<String, Object> getReactData() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
-
-			// Will be properly filled in LPD-77107
-
-			"enterpriseDetailsActionLink", "/my-temp-url"
-		).put(
 			"constants", getConstants()
 		).put(
 			"dashboard",
@@ -74,30 +68,16 @@ public class ViewDashboardDisplayContext {
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
 		).put(
+			"enterpriseDetailsActionLink",
+			"https://www.liferay.com/en/contact-sales"
+		).put(
 			"freeTier",
 			FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-74377")
 		).put(
-			"learnResources", _getLearnResourcesJSONObject()
+			"learnResources",
+			LearnMessageUtil.getReactDataJSONObject("site-cms-site-initializer")
 		).build();
-	}
-
-	// Mocked value for learnResources,
-	// We should use LearnMessageUtil.getReactDataJSONObject
-	// when learn link is available
-
-	private JSONObject _getLearnResourcesJSONObject() {
-		return JSONUtil.put(
-			"site-cms-site-initializer",
-			JSONUtil.put(
-				"dashboard",
-				JSONUtil.put(
-					"en_US",
-					JSONUtil.put(
-						"message", "Learn more about Dashboard capabilities."
-					).put(
-						"url", "#"
-					))));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -853,22 +853,23 @@ public class CustomFDSSerializer
 			externalReferenceCode, httpServletRequest, predicate,
 			relationshipNames);
 
-		String orderValue = MapUtil.getString(
-			objectEntry.getProperties(), propertyKey);
+		if (FeatureFlagManagerUtil.isEnabled(
+				PortalUtil.getCompanyId(httpServletRequest),
+				FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY)) {
 
-		boolean orderByERC = FeatureFlagManagerUtil.isEnabled(
-			PortalUtil.getCompanyId(httpServletRequest),
-			FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY);
-
-		if (orderByERC) {
 			List<String> ercs = ListUtil.fromString(
-				orderValue, StringPool.COMMA);
+				MapUtil.getString(
+						objectEntry.getProperties(), propertyKey), 
+				StringPool.COMMA);
 
 			objectEntries.sort(new ObjectEntryERCComparator(ercs));
 		}
 		else {
 			List<Long> ids = ListUtil.toList(
-				ListUtil.fromString(orderValue, StringPool.COMMA),
+				List<String> ercs = ListUtil.fromString(
+					MapUtil.getString(
+							objectEntry.getProperties(), propertyKey), 
+					StringPool.COMMA);,
 				GetterUtil::getLong);
 
 			objectEntries.sort(new ObjectEntryIdComparator(ids));

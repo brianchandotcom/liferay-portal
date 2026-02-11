@@ -239,8 +239,11 @@ public class ApplicationsMenuPanelAppsMVCResourceCommandTest {
 	public void testPanelCategories() {
 		JSONArray panelCategoriesJSONArray = ReflectionTestUtil.invoke(
 			_mvcResourceCommand, "_getPanelCategoriesJSONArray",
-			new Class<?>[] {HttpServletRequest.class, ThemeDisplay.class},
-			_mockHttpServletRequest, _themeDisplay);
+			new Class<?>[] {
+				HttpServletRequest.class, ResourceRequest.class,
+				ThemeDisplay.class
+			},
+			_mockHttpServletRequest, _mockPortletRequest, _themeDisplay);
 
 		Assert.assertTrue(
 			_containsPortletId(

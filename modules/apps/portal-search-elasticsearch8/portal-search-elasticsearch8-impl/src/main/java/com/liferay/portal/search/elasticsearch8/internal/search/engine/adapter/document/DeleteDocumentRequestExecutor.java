@@ -5,15 +5,60 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Result;
+import co.elastic.clients.elasticsearch.core.DeleteRequest;
+import co.elastic.clients.elasticsearch.core.DeleteResponse;
+
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
+
+import java.io.IOException;
 
 /**
  * @author Dylan Rebelak
  */
-public interface DeleteDocumentRequestExecutor {
+public class DeleteDocumentRequestExecutor {
+
+	public DeleteDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public DeleteDocumentResponse execute(
-		DeleteDocumentRequest deleteDocumentRequest);
+		DeleteDocumentRequest deleteDocumentRequest) {
+
+		DeleteResponse deleteResponse = _getDeleteResponse(
+			deleteDocumentRequest,
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
+				deleteDocumentRequest));
+
+		Result result = deleteResponse.result();
+
+		return new DeleteDocumentResponse(
+			ConversionUtil.toHttpStatusCode(result), result.jsonValue());
+	}
+
+	private DeleteResponse _getDeleteResponse(
+		DeleteDocumentRequest deleteDocumentRequest,
+		DeleteRequest deleteRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				deleteDocumentRequest.getConnectionId(),
+				deleteDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return elasticsearchClient.delete(deleteRequest);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

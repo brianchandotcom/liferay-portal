@@ -42,20 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutorImpl;
 	}
 
-	protected static DeleteDocumentRequestExecutor
-		createDeleteDocumentRequestExecutor(
-			SolrClientManager solrClientManager) {
-
-		DeleteDocumentRequestExecutorImpl deleteDocumentRequestExecutorImpl =
-			new DeleteDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteDocumentRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return deleteDocumentRequestExecutorImpl;
-	}
-
 	protected static DocumentRequestExecutor createDocumentRequestExecutor(
 		SolrClientManager solrClientManager) {
 
@@ -69,9 +55,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
 			createBulkDocumentRequestExecutor(solrClientManager));
-		ReflectionTestUtil.setFieldValue(
-			solrDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
-			createDeleteDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			createGetDocumentRequestExecutor(solrClientManager));

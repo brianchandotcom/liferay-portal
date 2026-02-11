@@ -42,19 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutor;
 	}
 
-	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		DeleteDocumentRequestExecutor deleteDocumentRequestExecutor =
-			new DeleteDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteDocumentRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return deleteDocumentRequestExecutor;
-	}
-
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -69,10 +56,6 @@ public class DocumentRequestExecutorFixture {
 			elasticsearchDocumentRequestExecutor,
 			"_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(elasticsearchClientResolver));
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchDocumentRequestExecutor,
-			"_deleteDocumentRequestExecutor",
-			_createDeleteDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(elasticsearchClientResolver));

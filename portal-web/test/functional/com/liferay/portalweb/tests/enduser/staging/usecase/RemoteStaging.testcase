@@ -906,7 +906,6 @@ definition {
 	@description = "This is a use case for LPS-81953. Web contents can be published with manually chosen ID."
 	@priority = 3
 	test StagingRemoteLiveWebContentWithManualChosenID {
-		property browser.chrome.version = "139.0";
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";
 

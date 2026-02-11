@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "feature.flag.COMMERCE-8087=true${line.separator}feature.flag.LPS-173135=true";
 	property portal.acceptance = "quarantine";
 	property portal.release = "true";

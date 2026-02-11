@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "include-and-override=portal-liferay-online.properties";
 	property portal.release = "true";
 	property portal.upstream = "true";

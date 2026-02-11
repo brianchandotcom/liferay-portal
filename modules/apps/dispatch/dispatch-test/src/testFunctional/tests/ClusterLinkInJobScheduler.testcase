@@ -1,6 +1,7 @@
 @component-name = "portal-headless"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "cluster.link.enabled=true";
 	property osgi.modules.includes = "dispatch-executor-sample";
 	property portal.release = "true";

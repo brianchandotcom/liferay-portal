@@ -55,15 +55,17 @@ public class ClassNameLocalServiceImplTest {
 
 	@Test
 	public void testGetClassNameIdsSupplier() {
+		Supplier<long[]> classNameIdsSupplier1 =
+			_classNameLocalServiceImpl.getClassNameIdsSupplier(
+				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2});
+
 		Assert.assertArrayEquals(
 			new long[] {_CLASS_NAME_ID_1, _CLASS_NAME_ID_2},
-			_classNameLocalServiceImpl.getClassNameIdsSupplier(
-				new String[] {_CLASS_NAME_VALUE1, _CLASS_NAME_VALUE2}
-			).get());
+			classNameIdsSupplier1.get());
 
 		_assertSupplier(
 			() -> {
-				Supplier<long[]> classNameIdsSupplier =
+				Supplier<long[]> classNameIdsSupplier2 =
 					_classNameLocalServiceImpl.getClassNameIdsSupplier(
 						new String[] {RandomTestUtil.randomString()});
 
@@ -73,21 +75,21 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				classNameIdsSupplier.get();
+				classNameIdsSupplier2.get();
 			});
 	}
 
 	@Test
 	public void testGetClassNameIdSupplier() {
-		Assert.assertEquals(
-			_CLASS_NAME_ID_1,
+		Supplier<Long> classNameIdSupplier1 =
 			_classNameLocalServiceImpl.getClassNameIdSupplier(
-				_CLASS_NAME_VALUE1
-			).get());
+				_CLASS_NAME_VALUE1);
+
+		Assert.assertEquals(_CLASS_NAME_ID_1, classNameIdSupplier1.get());
 
 		_assertSupplier(
 			() -> {
-				Supplier<Long> classNameIdSupplier =
+				Supplier<Long> classNameIdSupplier2 =
 					_classNameLocalServiceImpl.getClassNameIdSupplier(
 						RandomTestUtil.randomString());
 
@@ -97,7 +99,7 @@ public class ClassNameLocalServiceImplTest {
 					Mockito.anyLong()
 				);
 
-				classNameIdSupplier.get();
+				classNameIdSupplier2.get();
 			});
 	}
 

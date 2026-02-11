@@ -39,9 +39,11 @@ export function FilesCard() {
 					/>
 				</>
 			}
+			ariaLevel={3}
 			description={Liferay.Language.get(
 				'this-metric-calculates-the-total-amount-of-files-created-in-your-spaces'
 			)}
+			role="heading"
 			title={Liferay.Language.get('files')}
 		>
 			<ContentAndFilesCard

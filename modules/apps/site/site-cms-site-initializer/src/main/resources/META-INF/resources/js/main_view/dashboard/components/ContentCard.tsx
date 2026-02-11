@@ -39,9 +39,11 @@ export function ContentCard() {
 					/>
 				</>
 			}
+			ariaLevel={3}
 			description={Liferay.Language.get(
 				'this-metric-calculates-the-total-amount-of-content-assets-created-in-your-spaces'
 			)}
+			role="heading"
 			title={Liferay.Language.get('content')}
 		>
 			<ContentAndFilesCard

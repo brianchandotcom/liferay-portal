@@ -252,10 +252,12 @@ function ExpiredAssetsCard() {
 
 	return (
 		<BaseCard
+			ariaLevel={3}
 			contentClassName="mx-n3"
 			description={Liferay.Language.get(
 				'this-report-provides-a-list-of-assets-that-have-reached-their-expiration-date'
 			)}
+			role="heading"
 			title={Liferay.Language.get('expired-assets')}
 		>
 			<Table borderless striped={true}>

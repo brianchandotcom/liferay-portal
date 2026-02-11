@@ -48,7 +48,9 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 						<ClayLayout.Row className="mb-2">
 							<ClayLayout.Col size={12}>
 								<SectionHeader
+									ariaLevel={2}
 									icon="plus-squares"
+									role="heading"
 									title={Liferay.Language.get('what-is-new')}
 								/>
 							</ClayLayout.Col>
@@ -67,7 +69,9 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 						<ClayLayout.Row className="mb-2">
 							<ClayLayout.Col size={12}>
 								<SectionHeader
+									ariaLevel={2}
 									icon="diagram"
+									role="heading"
 									title={Liferay.Language.get(
 										'assets-distributions'
 									)}
@@ -84,7 +88,9 @@ const ViewDashboard: React.FC<IViewDashboard> = ({constants}) => {
 						<ClayLayout.Row className="mb-2">
 							<ClayLayout.Col size={12}>
 								<SectionHeader
+									ariaLevel={2}
 									icon="order-form-pencil"
+									role="heading"
 									title={Liferay.Language.get(
 										'health-and-usage'
 									)}

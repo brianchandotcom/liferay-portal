@@ -36,17 +36,15 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Solr", service = IndexRequestExecutor.class
-)
 public class SolrIndexRequestExecutor implements IndexRequestExecutor {
+
+	public SolrIndexRequestExecutor(SolrClientManager solrClientManager) {
+		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
+			solrClientManager);
+	}
 
 	@Override
 	public AnalyzeIndexResponse executeIndexRequest(
@@ -149,12 +147,6 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 			updateIndexSettingsIndexRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
-			_solrClientManager);
-	}
-
 	private final AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor =
 		new AnalyzeIndexRequestExecutor();
 	private final CloseIndexRequestExecutor _closeIndexRequestExecutor =
@@ -179,11 +171,7 @@ public class SolrIndexRequestExecutor implements IndexRequestExecutor {
 		new OpenIndexRequestExecutor();
 	private final PutMappingIndexRequestExecutor
 		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor();
-	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
-
-	@Reference
-	private SolrClientManager _solrClientManager;
-
+	private final RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
 	private final StatsIndexRequestExecutor _statsIndexRequestExecutor =
 		new StatsIndexRequestExecutor();
 	private final UpdateIndexSettingsIndexRequestExecutor

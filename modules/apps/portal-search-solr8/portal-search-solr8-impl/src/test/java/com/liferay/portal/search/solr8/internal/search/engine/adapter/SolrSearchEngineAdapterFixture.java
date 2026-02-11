@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.solr8.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 
 import java.util.Map;
@@ -64,15 +63,17 @@ public class SolrSearchEngineAdapterFixture {
 			};
 
 		ReflectionTestUtil.setFieldValue(
+			solrSearchEngineAdapterImpl, "_solrClientManager",
+			solrClientManager);
+
+		ReflectionTestUtil.setFieldValue(
 			solrSearchEngineAdapterImpl, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
-			solrSearchEngineAdapterImpl, "_indexRequestExecutor",
-			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
-				solrClientManager));
-		ReflectionTestUtil.setFieldValue(
 			solrSearchEngineAdapterImpl, "_searchRequestExecutor",
 			_searchRequestExecutorFixture.getSearchRequestExecutor());
+
+		solrSearchEngineAdapterImpl.activate();
 
 		return solrSearchEngineAdapterImpl;
 	}

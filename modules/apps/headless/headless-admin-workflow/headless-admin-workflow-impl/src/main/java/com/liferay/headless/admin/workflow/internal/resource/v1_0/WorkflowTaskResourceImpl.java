@@ -15,9 +15,11 @@ import com.liferay.headless.admin.workflow.resource.v1_0.WorkflowTaskResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -40,6 +42,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -516,6 +519,19 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	}
 
 	private WorkflowTask _toWorkflowTask(
+			Map<String, Map<String, String>> actions,
+			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
+		throws Exception {
+
+		return _workflowTaskDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				contextAcceptLanguage.isAcceptAllLanguages(), actions, null,
+				contextHttpServletRequest, workflowTask.getWorkflowTaskId(),
+				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
+				contextUser));
+	}
+
+	private WorkflowTask _toWorkflowTask(
 			com.liferay.portal.kernel.workflow.WorkflowTask workflowTask)
 		throws Exception {
 
@@ -558,6 +574,16 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 					_kaleoTaskInstanceTokenModelResourcePermission)
 			).build();
 
+		User assignedUser = _userLocalService.fetchUser(
+			workflowTask.getAssigneeUserId());
+
+		if ((assignedUser == null) ||
+			!Objects.equals(
+				assignedUser.getUserId(), contextUser.getUserId())) {
+
+			return _toWorkflowTask(actions, workflowTask);
+		}
+
 		for (WorkflowTransition workflowTransition :
 				_workflowTaskManager.getNextWorkflowTransitions(
 					workflowTask.getWorkflowTaskId())) {
@@ -578,12 +604,7 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 				).build());
 		}
 
-		return _workflowTaskDTOConverter.toDTO(
-			new DefaultDTOConverterContext(
-				contextAcceptLanguage.isAcceptAllLanguages(), actions, null,
-				contextHttpServletRequest, workflowTask.getWorkflowTaskId(),
-				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
-				contextUser));
+		return _toWorkflowTask(actions, workflowTask);
 	}
 
 	@Reference(
@@ -591,6 +612,9 @@ public class WorkflowTaskResourceImpl extends BaseWorkflowTaskResourceImpl {
 	)
 	private ModelResourcePermission<?>
 		_kaleoTaskInstanceTokenModelResourcePermission;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private WorkflowComparatorFactory _workflowComparatorFactory;

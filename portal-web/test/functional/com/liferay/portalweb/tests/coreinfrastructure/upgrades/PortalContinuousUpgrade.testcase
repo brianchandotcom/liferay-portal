@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
+	property browser.chrome.version = "139.0";
 	property database.bare.enabled = "true";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property minimum.slave.ram = "24";

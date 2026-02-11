@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "tomcat";
+	property browser.chrome.version = "139.0";
 	property custom.system.properties = "liferay.mode=test";
 	property database.auto.upgrade.enabled = "true";
 	property database.types = "mysql";

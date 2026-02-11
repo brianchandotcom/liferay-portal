@@ -19,7 +19,11 @@ export default function EnterpriseProductMenuBanner({
 		<div className="p-3">
 			<div className="bg-white border p-2 rounded-lg">
 				<div className="p-1 pb-2">
-					<EnterpriseFeatureIndicator />
+					<EnterpriseFeatureIndicator
+						enterpriseDetailsActionLink={
+							enterpriseDetailsActionLink
+						}
+					/>
 
 					<div className="mt-3 text-2 text-secondary">
 						<p className="mb-1 text-3 text-dark text-weight-semi-bold">

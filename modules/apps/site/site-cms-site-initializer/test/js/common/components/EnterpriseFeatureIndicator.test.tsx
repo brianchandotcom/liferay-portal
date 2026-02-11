@@ -19,7 +19,9 @@ describe('EnterpriseFeatureIndicator', () => {
 	};
 
 	it('renders the component without a tooltip', () => {
-		render(<EnterpriseFeatureIndicator />);
+		render(
+			<EnterpriseFeatureIndicator enterpriseDetailsActionLink="/my-temp-link" />
+		);
 
 		assertBaseComponent();
 
@@ -29,7 +31,12 @@ describe('EnterpriseFeatureIndicator', () => {
 	});
 
 	it('renders the component with a tooltip', async () => {
-		render(<EnterpriseFeatureIndicator showTooltip />);
+		render(
+			<EnterpriseFeatureIndicator
+				enterpriseDetailsActionLink="/my-temp-link"
+				showTooltip
+			/>
+		);
 
 		assertBaseComponent();
 
@@ -44,7 +51,12 @@ describe('EnterpriseFeatureIndicator', () => {
 				'this-feature-is-only-available-on-the-enterprise-plan'
 			)
 		).toBeInTheDocument();
-		expect(screen.getByText('get-enterprise-details')).toBeInTheDocument();
+
+		const detailsLink = screen.getByRole('link', {
+			name: 'x-opens-new-window',
+		});
+		expect(detailsLink).toBeInTheDocument();
+		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
 
 		await userEvent.unhover(screen.getByText('enterprise'), {delay: null});
 

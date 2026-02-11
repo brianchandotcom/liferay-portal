@@ -5,15 +5,82 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
+
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeResponse;
+
+import java.io.IOException;
+
+import java.util.Arrays;
 
 /**
  * @author Bryan Engler
  */
-public interface OpenPointInTimeRequestExecutor {
+public class OpenPointInTimeRequestExecutor {
+
+	public OpenPointInTimeRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public OpenPointInTimeResponse execute(
-		OpenPointInTimeRequest openPointInTimeRequest);
+		OpenPointInTimeRequest openPointInTimeRequest) {
+
+		co.elastic.clients.elasticsearch.core.OpenPointInTimeResponse
+			openPointInTimeResponse = _getOpenPointInTimeResponse(
+				_createOpenPointInTimeRequest(openPointInTimeRequest),
+				openPointInTimeRequest);
+
+		return new OpenPointInTimeResponse(openPointInTimeResponse.id());
+	}
+
+	private co.elastic.clients.elasticsearch.core.OpenPointInTimeRequest
+		_createOpenPointInTimeRequest(
+			OpenPointInTimeRequest openPointInTimeRequest) {
+
+		co.elastic.clients.elasticsearch.core.OpenPointInTimeRequest.Builder
+			builder =
+				new co.elastic.clients.elasticsearch.core.
+					OpenPointInTimeRequest.Builder();
+
+		builder.keepAlive(
+			Time.of(
+				time -> time.time(
+					openPointInTimeRequest.getKeepAliveMinutes() +
+						TimeUnit.Minutes.jsonValue())));
+
+		if (openPointInTimeRequest.getIndices() != null) {
+			builder.index(Arrays.asList(openPointInTimeRequest.getIndices()));
+		}
+
+		return builder.build();
+	}
+
+	private co.elastic.clients.elasticsearch.core.OpenPointInTimeResponse
+		_getOpenPointInTimeResponse(
+			co.elastic.clients.elasticsearch.core.OpenPointInTimeRequest
+				elasticsearchOpenPointInTimeRequest,
+			OpenPointInTimeRequest openPointInTimeRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				openPointInTimeRequest.getConnectionId(),
+				openPointInTimeRequest.isPreferLocalCluster());
+
+		try {
+			return elasticsearchClient.openPointInTime(
+				elasticsearchOpenPointInTimeRequest);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

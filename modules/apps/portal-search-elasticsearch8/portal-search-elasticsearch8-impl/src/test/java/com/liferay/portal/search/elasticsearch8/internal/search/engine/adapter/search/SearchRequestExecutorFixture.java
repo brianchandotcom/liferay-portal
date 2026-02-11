@@ -115,20 +115,6 @@ public class SearchRequestExecutorFixture {
 		return multisearchSearchRequestExecutor;
 	}
 
-	private OpenPointInTimeRequestExecutor
-		_createOpenPointInTimeRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		OpenPointInTimeRequestExecutor openPointInTimeRequestExecutor =
-			new OpenPointInTimeRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openPointInTimeRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return openPointInTimeRequestExecutor;
-	}
-
 	private SearchRequestExecutor _createSearchRequestExecutor(
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		ElasticsearchClientResolver elasticsearchClientResolver,
@@ -168,14 +154,11 @@ public class SearchRequestExecutorFixture {
 				searchSearchResponseAssembler));
 
 		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchRequestExecutor,
-			"_openPointInTimeRequestExecutor",
-			_createOpenPointInTimeRequestExecutor(elasticsearchClientResolver));
-		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_searchSearchRequestExecutor",
 			_createSearchSearchRequestExecutor(
 				elasticsearchClientResolver, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
+
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_suggestSearchRequestExecutor",
 			_createSuggestSearchRequestExecutor(elasticsearchClientResolver));

@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster.ClusterRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterHealthStatus;
 import com.liferay.portal.search.engine.adapter.cluster.HealthClusterRequest;
@@ -127,15 +126,17 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		SearchEngineAdapter searchEngineAdapter =
-			new ElasticsearchSearchEngineAdapterImpl();
+		ElasticsearchSearchEngineAdapterImpl
+			elasticsearchSearchEngineAdapterImpl =
+				new ElasticsearchSearchEngineAdapterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchEngineAdapter, "_clusterRequestExecutor",
-			ClusterRequestExecutorTestUtil.createClusterRequestExecutor(
-				elasticsearchClientResolver));
+			elasticsearchSearchEngineAdapterImpl,
+			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
-		return searchEngineAdapter;
+		elasticsearchSearchEngineAdapterImpl.activate();
+
+		return elasticsearchSearchEngineAdapterImpl;
 	}
 
 	protected JSONObject createJSONObject(String message) {

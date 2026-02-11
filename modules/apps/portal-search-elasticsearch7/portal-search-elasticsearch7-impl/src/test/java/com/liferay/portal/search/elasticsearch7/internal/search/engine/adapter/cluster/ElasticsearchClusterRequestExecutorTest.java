@@ -32,7 +32,7 @@ public class ElasticsearchClusterRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor();
+		_clusterRequestExecutor = new ElasticsearchClusterRequestExecutor(null);
 
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_healthClusterRequestExecutor",

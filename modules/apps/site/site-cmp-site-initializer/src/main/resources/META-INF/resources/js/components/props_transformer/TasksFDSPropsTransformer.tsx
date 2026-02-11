@@ -24,8 +24,8 @@ import StateLabel from '../StateLabel';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
 import {cmpTasksFDSAtom} from './atoms';
-import KanbanView from './views/kanban_view/KanbanView';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
+import KanbanView from './views/kanban_view/KanbanView';
 
 const _CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN =
 	'com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken';

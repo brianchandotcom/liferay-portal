@@ -12,6 +12,7 @@ import com.liferay.jenkins.results.parser.test.clazz.group.AxisTestClassGroup;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,12 +73,21 @@ public abstract class BaseTestClassResult implements TestClassResult {
 		TestClassHistory testClassHistory = getTestClassHistory();
 
 		if (testClassHistory != null) {
-			summaryElement.addText(
-				JenkinsResultsParserUtil.combine(
-					" - Failed ",
-					String.valueOf(testClassHistory.getFailureCount()),
-					" of last ",
-					String.valueOf(testClassHistory.getTestCount())));
+			URL testrayCaseURL = testClassHistory.getTestrayCaseURL();
+
+			String summaryContent = JenkinsResultsParserUtil.combine(
+				"Failed ", String.valueOf(testClassHistory.getFailureCount()),
+				" of last ", String.valueOf(testClassHistory.getTestCount()));
+
+			if (testrayCaseURL != null) {
+				Dom4JUtil.addToElement(
+					downstreamBuildListItemElement, " - ",
+					Dom4JUtil.getNewAnchorElement(
+						String.valueOf(testrayCaseURL), summaryContent));
+			}
+			else {
+				downstreamBuildListItemElement.addText(" - " + summaryContent);
+			}
 		}
 
 		List<Element> failureElements = new ArrayList<>();

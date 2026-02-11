@@ -5,6 +5,7 @@
 
 package com.liferay.sharing.web.internal.display.context;
 
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.ManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -42,6 +43,7 @@ import com.liferay.sharing.util.comparator.SharingEntryModifiedDateComparator;
 import com.liferay.sharing.web.internal.constants.SharingPortletKeys;
 import com.liferay.sharing.web.internal.filter.SharedAssetsFilterItemRegistry;
 import com.liferay.sharing.web.internal.servlet.taglib.ui.SharingEntryDropdownItemContributorRegistry;
+import com.liferay.sharing.web.internal.util.AssetRendererSharingUtil;
 
 import jakarta.portlet.PortletURL;
 
@@ -245,14 +247,14 @@ public class ViewSharedAssetsDisplayContext {
 		).build();
 	}
 
-	public PortletURL getSharingEntryRowPortletURL(SharingEntry sharingEntry)
-		throws PortalException {
+	public String getSharingEntryRowPortletURL(SharingEntry sharingEntry)
+		throws Exception {
 
 		if (!isSharingEntryVisible(sharingEntry)) {
-			return null;
+			return StringPool.BLANK;
 		}
 
-		return PortletURLBuilder.createRenderURL(
+		String sharingEntryRowPortletURL = PortletURLBuilder.createRenderURL(
 			_liferayPortletResponse
 		).setMVCRenderCommandName(
 			"/sharing/view_sharing_entry"
@@ -260,7 +262,25 @@ public class ViewSharedAssetsDisplayContext {
 			_currentURLObj
 		).setParameter(
 			"sharingEntryId", sharingEntry.getSharingEntryId()
-		).buildRenderURL();
+		).buildString();
+
+		AssetRenderer<?> assetRenderer =
+			AssetRendererSharingUtil.getAssetRenderer(sharingEntry);
+
+		if (assetRenderer == null) {
+			return sharingEntryRowPortletURL;
+		}
+
+		String entryRowPortletURL = assetRenderer.getSharingEntryRowPortletURL(
+			_hasEditPermission(
+				sharingEntry.getClassNameId(), sharingEntry.getClassPK()),
+			_themeDisplay);
+
+		if (Validator.isBlank(entryRowPortletURL)) {
+			return sharingEntryRowPortletURL;
+		}
+
+		return entryRowPortletURL;
 	}
 
 	public String getSharingEntryTitle(SharingEntry sharingEntry) {

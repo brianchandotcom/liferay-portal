@@ -204,6 +204,9 @@ public class SitePageResourceImpl
 											"'")),
 							")");
 					}
+				).put(
+					"privatePages",
+					String.valueOf(portletDataContext.isPrivateLayout())
 				).build();
 			}
 
@@ -224,13 +227,7 @@ public class SitePageResourceImpl
 
 			@Override
 			public boolean isActive(PortletDataContext portletDataContext) {
-				if (!portletDataContext.isPrivateLayout() &&
-					FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-
-					return true;
-				}
-
-				return false;
+				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
 			}
 
 			@Override

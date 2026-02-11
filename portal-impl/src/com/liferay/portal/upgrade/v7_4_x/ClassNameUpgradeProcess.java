@@ -75,6 +75,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 			if (newCount == 0) {
 				_deleteDDMStructure(newCtCollectionId, newStructureId);
+
 				_updateDDMStructureClassNameId(
 					newClassNameId, oldCtCollectionId, oldStructureId);
 
@@ -84,12 +85,15 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 			if (newCount >= oldCount) {
 				_updateDDMStructureRelatedTables(
 					newStructureId, oldStructureId);
+
 				_deleteDDMStructure(oldCtCollectionId, oldStructureId);
 			}
 			else {
 				_updateDDMStructureRelatedTables(
 					oldStructureId, newStructureId);
+
 				_deleteDDMStructure(newCtCollectionId, newStructureId);
+
 				_updateDDMStructureClassNameId(
 					newClassNameId, oldCtCollectionId, oldStructureId);
 			}

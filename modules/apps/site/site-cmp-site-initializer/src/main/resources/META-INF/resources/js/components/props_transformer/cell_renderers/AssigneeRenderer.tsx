@@ -10,7 +10,7 @@ const AssigneeRenderer = ({image, name}: {image: string; name: string}) => {
 	return (
 		<span className="align-items-center d-flex">
 			<div className="c-mr-2">
-				<AssigneeAvatar image={image} name={name} />
+				<AssigneeAvatar name={name} portrait={image} />
 			</div>
 
 			{name}

@@ -117,6 +117,7 @@ html#{$cadmin-selector} {
 
 		.product-menu-toast-toggle {
 			align-items: center;
+			cursor: e-resize;
 			display: inline-flex;
 			height: 2em;
 			justify-content: center;
@@ -269,6 +270,8 @@ html#{$cadmin-selector} {
 
 	body.product-menu-open .cadmin {
 		.product-menu-toast-toggle {
+			cursor: w-resize;
+
 			.icon-product-menu-open {
 				display: block;
 			}

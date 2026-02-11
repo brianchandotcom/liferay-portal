@@ -103,11 +103,11 @@ test('Item Selector Modal with single selection', async ({
 		await expect(
 			itemSelectorSamplePage.selectUserModalHeader
 		).toBeVisible();
-
-		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
 	});
 
 	await test.step('Check that a single item can be selected in the Cards visualization mode', async () => {
+		waitForFDS({page, visualizationMode: EFDSVisualizationMode.CARDS});
+
 		await expect(itemSelectorSamplePage.modal.selectButton).toBeDisabled();
 
 		const items = itemSelectorSamplePage.page.locator(

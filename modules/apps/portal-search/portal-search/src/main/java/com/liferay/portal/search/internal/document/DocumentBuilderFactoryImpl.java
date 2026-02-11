@@ -22,12 +22,12 @@ public class DocumentBuilderFactoryImpl implements DocumentBuilderFactory {
 
 	@Override
 	public DocumentBuilder builder() {
-		return new DocumentBuilderImpl();
+		return new DocumentBuilder();
 	}
 
 	@Override
 	public DocumentBuilder builder(Document document) {
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		DocumentBuilder documentBuilder = new DocumentBuilder();
 
 		Map<String, Field> map = document.getFields();
 

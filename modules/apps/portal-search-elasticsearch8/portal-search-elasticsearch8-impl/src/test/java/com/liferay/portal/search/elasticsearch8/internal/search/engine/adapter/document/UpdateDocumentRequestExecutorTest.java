@@ -12,7 +12,7 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.test.util.RequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
-import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
+import com.liferay.portal.search.internal.document.DocumentBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;
@@ -153,7 +153,7 @@ public class UpdateDocumentRequestExecutorTest {
 	}
 
 	protected Document buildDocument(String fieldName, String... fieldValue) {
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		DocumentBuilder documentBuilder = new DocumentBuilder();
 
 		return documentBuilder.setStrings(
 			fieldName, fieldValue
@@ -163,7 +163,7 @@ public class UpdateDocumentRequestExecutorTest {
 	protected Document buildDocument(
 		String uid, String fieldName, String fieldValue) {
 
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		DocumentBuilder documentBuilder = new DocumentBuilder();
 
 		return documentBuilder.setString(
 			fieldName, fieldValue
@@ -173,7 +173,7 @@ public class UpdateDocumentRequestExecutorTest {
 	}
 
 	protected Document buildDocumentWithUnsetField(String fieldName) {
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		DocumentBuilder documentBuilder = new DocumentBuilder();
 
 		return documentBuilder.unsetValue(
 			fieldName

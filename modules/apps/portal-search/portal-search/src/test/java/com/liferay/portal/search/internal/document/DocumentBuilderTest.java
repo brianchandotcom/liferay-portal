@@ -125,7 +125,7 @@ public class DocumentBuilderTest {
 			));
 	}
 
-	protected DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+	protected DocumentBuilder documentBuilder = new DocumentBuilder();
 
 	private void _assertDocument(
 		String expected, DocumentBuilder documentBuilder) {

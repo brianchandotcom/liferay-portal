@@ -9,55 +9,147 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.Collection;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface DocumentBuilder {
+public class DocumentBuilder {
 
-	public Document build();
+	public Document build() {
+		return new Document(_document);
+	}
 
-	public DocumentBuilder setBoolean(String name, Boolean value);
+	public DocumentBuilder setBoolean(String name, Boolean value) {
+		if (value == Boolean.TRUE) {
+			setFieldValue(name, value);
+		}
+		else {
+			unsetValue(name);
+		}
 
-	public DocumentBuilder setBooleans(String name, Boolean... value);
+		return this;
+	}
 
-	public DocumentBuilder setDate(String name, String value);
+	public DocumentBuilder setBooleans(String name, Boolean... values) {
+		setFieldValues(name, values);
 
-	public DocumentBuilder setDates(String name, String... values);
+		return this;
+	}
 
-	public DocumentBuilder setDouble(String name, Double value);
+	public DocumentBuilder setDate(String name, String value) {
+		setFieldValue(name, value);
 
-	public DocumentBuilder setDoubles(String name, Double... values);
+		return this;
+	}
 
-	public DocumentBuilder setFloat(String name, Float value);
+	public DocumentBuilder setDates(String name, String... values) {
+		setFieldValues(name, values);
 
-	public DocumentBuilder setFloats(String name, Float... values);
+		return this;
+	}
+
+	public DocumentBuilder setDouble(String name, Double value) {
+		setFieldValue(name, value);
+
+		return this;
+	}
+
+	public DocumentBuilder setDoubles(String name, Double... values) {
+		setFieldValues(name, values);
+
+		return this;
+	}
+
+	public DocumentBuilder setFloat(String name, Float value) {
+		setFieldValue(name, value);
+
+		return this;
+	}
+
+	public DocumentBuilder setFloats(String name, Float... values) {
+		setFieldValues(name, values);
+
+		return this;
+	}
 
 	public DocumentBuilder setGeoLocationPoint(
-		String name, GeoLocationPoint values);
+		String name, GeoLocationPoint value) {
+
+		setFieldValue(name, value);
+
+		return this;
+	}
 
 	public DocumentBuilder setGeoLocationPoints(
-		String name, GeoLocationPoint... values);
+		String name, GeoLocationPoint... values) {
 
-	public DocumentBuilder setInteger(String name, Integer value);
+		setFieldValues(name, values);
 
-	public DocumentBuilder setIntegers(String name, Integer... values);
+		return this;
+	}
 
-	public DocumentBuilder setLong(String name, Long value);
+	public DocumentBuilder setInteger(String name, Integer value) {
+		setFieldValue(name, value);
 
-	public DocumentBuilder setLongs(String name, Long... values);
+		return this;
+	}
 
-	public DocumentBuilder setString(String name, String value);
+	public DocumentBuilder setIntegers(String name, Integer... values) {
+		setFieldValues(name, values);
 
-	public DocumentBuilder setStrings(String name, String... value);
+		return this;
+	}
 
-	public DocumentBuilder setValue(String name, Object value);
+	public DocumentBuilder setLong(String name, Long value) {
+		setFieldValue(name, value);
 
-	public DocumentBuilder setValues(String name, Collection<Object> values);
+		return this;
+	}
 
-	public DocumentBuilder unsetValue(String name);
+	public DocumentBuilder setLongs(String name, Long... values) {
+		setFieldValues(name, values);
+
+		return this;
+	}
+
+	public DocumentBuilder setString(String name, String value) {
+		setFieldValue(name, value);
+
+		return this;
+	}
+
+	public DocumentBuilder setStrings(String name, String... values) {
+		setFieldValues(name, values);
+
+		return this;
+	}
+
+	public DocumentBuilder setValue(String name, Object value) {
+		setFieldValue(name, value);
+
+		return this;
+	}
+
+	public DocumentBuilder setValues(String name, Collection<Object> values) {
+		_document.setFieldValues(name, values);
+
+		return this;
+	}
+
+	public DocumentBuilder unsetValue(String name) {
+		_document.unsetField(name);
+
+		return this;
+	}
+
+	protected void setFieldValue(String name, Object value) {
+		_document.setFieldValue(name, value);
+	}
+
+	protected void setFieldValues(String name, Object[] values) {
+		_document.setFieldValues(name, values);
+	}
+
+	private final Document _document = new Document();
 
 }

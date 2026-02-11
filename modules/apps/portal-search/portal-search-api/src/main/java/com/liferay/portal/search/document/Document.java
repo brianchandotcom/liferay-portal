@@ -134,15 +134,6 @@ public class Document {
 		return TransformUtil.transform(getValues(name), function::apply);
 	}
 
-	public void setFieldValue(String name, Object value) {
-		if (_isEmpty(value)) {
-			_removeField(name);
-		}
-		else {
-			_putField(name, Collections.singleton(value));
-		}
-	}
-
 	public void setFieldValues(String name, Collection<Object> values) {
 		if ((values == null) || values.isEmpty()) {
 			_removeField(name);
@@ -152,10 +143,6 @@ public class Document {
 		}
 	}
 
-	public void setFieldValues(String name, Object[] values) {
-		setFieldValues(name, _toCollection(values));
-	}
-
 	@Override
 	public String toString() {
 		return _fields.toString();
@@ -163,6 +150,19 @@ public class Document {
 
 	public void unsetField(String name) {
 		_removeField(name);
+	}
+
+	protected void setFieldValue(String name, Object value) {
+		if (_isEmpty(value)) {
+			_removeField(name);
+		}
+		else {
+			_putField(name, Collections.singleton(value));
+		}
+	}
+
+	protected void setFieldValues(String name, Object[] values) {
+		setFieldValues(name, _toCollection(values));
 	}
 
 	private boolean _isEmpty(Object value) {

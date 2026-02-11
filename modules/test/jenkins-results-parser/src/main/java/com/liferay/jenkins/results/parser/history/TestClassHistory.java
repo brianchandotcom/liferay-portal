@@ -5,6 +5,8 @@
 
 package com.liferay.jenkins.results.parser.history;
 
+import java.net.URL;
+
 import org.json.JSONObject;
 
 /**
@@ -31,6 +33,8 @@ public interface TestClassHistory {
 	public String getTestClassName();
 
 	public long getTestCount();
+
+	public URL getTestrayCaseURL();
 
 	public TestTaskHistory getTestTaskHistory();
 

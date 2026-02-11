@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -343,6 +344,13 @@ public class TestrayProject {
 			return;
 		}
 
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Gathering test cases for project ", getName(), " at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
 		_testrayCases = new HashMap<>();
 
 		String filter = JenkinsResultsParserUtil.combine(
@@ -350,7 +358,7 @@ public class TestrayProject {
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES, filter, null);
+				"cases", TestrayCase.FIELD_NAMES, filter, null, 0, 50);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				TestrayCase testrayCase = TestrayFactory.newTestrayCase(
@@ -361,6 +369,15 @@ public class TestrayProject {
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
+		}
+		finally {
+			long duration =
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Gathered test cases for project ", getName(), " in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
 		}
 	}
 

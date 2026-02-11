@@ -53,6 +53,7 @@ export function ItemContextProvider({children, value}: Props) {
 		layout,
 		nestedKey,
 		onItemHover,
+		onItemInvalidMove,
 		onItemMove,
 		open,
 		reorder,
@@ -181,6 +182,10 @@ export function ItemContextProvider({children, value}: Props) {
 				dragItem.item.key === item.key ||
 				!isValidDropRef.current
 			) {
+				if (onItemInvalidMove) {
+					onItemInvalidMove();
+				}
+
 				return;
 			}
 

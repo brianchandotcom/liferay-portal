@@ -104,6 +104,11 @@ interface ITreeViewProps<T extends Record<string, any>>
 	) => boolean;
 
 	/**
+	 * Callback is called when an item move is rejected.
+	 */
+	onItemInvalidMove?: () => void;
+
+	/**
 	 * Callback is called when an item is about to be moved elsewhere in the tree.
 	 */
 	onItemMove?: (
@@ -179,6 +184,7 @@ export function TreeView<T extends Record<string, any>>({
 	nestedKey = 'children',
 	onExpandedChange,
 	onItemHover,
+	onItemInvalidMove,
 	onItemMove,
 	onItemsChange,
 	onLoadMore,
@@ -228,6 +234,7 @@ export function TreeView<T extends Record<string, any>>({
 		itemNameKey,
 		nestedKey,
 		onItemHover,
+		onItemInvalidMove,
 		onItemMove,
 		onLoadMore,
 		onRenameItem,

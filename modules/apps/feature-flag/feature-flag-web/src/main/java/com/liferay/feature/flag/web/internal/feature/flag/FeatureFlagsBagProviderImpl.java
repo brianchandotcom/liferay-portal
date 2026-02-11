@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiServiceUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -110,14 +111,17 @@ public class FeatureFlagsBagProviderImpl
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
-		_setEnabled(companyId, key, enabled);
+		String osgiServiceIdentifier = getOSGiServiceIdentifier();
+
+		_setEnabled(companyId, key, enabled, osgiServiceIdentifier);
 
 		if (!_clusterExecutor.isEnabled()) {
 			return;
 		}
 
 		MethodHandler methodHandler = new MethodHandler(
-			_setEnabledMethodKey, companyId, key, enabled);
+			_setEnabledMethodKey, companyId, key, enabled,
+			osgiServiceIdentifier);
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
@@ -158,9 +162,16 @@ public class FeatureFlagsBagProviderImpl
 	}
 
 	private static void _setEnabled(
-		long companyId, String key, boolean enabled) {
+		long companyId, String key, boolean enabled,
+		String osgiServiceIdentifier) {
 
-		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
+		FeatureFlagsBagProviderImpl featureFlagsBagProviderImpl =
+			(FeatureFlagsBagProviderImpl)
+				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
+					osgiServiceIdentifier);
+
+		FeatureFlagsBag featureFlagsBag =
+			featureFlagsBagProviderImpl._featureFlagsBags.get(companyId);
 
 		if (featureFlagsBag == null) {
 			return;
@@ -385,13 +396,11 @@ public class FeatureFlagsBagProviderImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);
 
-	private static final Map<Long, FeatureFlagsBag> _featureFlagsBags =
-		new ConcurrentHashMap<>();
 	private static ServiceTrackerMap<String, List<FeatureFlagListener>>
 		_serviceTrackerMap;
 	private static final MethodKey _setEnabledMethodKey = new MethodKey(
 		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
-		String.class, boolean.class);
+		String.class, boolean.class, String.class);
 
 	@Reference
 	private ClusterExecutor _clusterExecutor;
@@ -406,6 +415,8 @@ public class FeatureFlagsBagProviderImpl
 		FeatureFlagConstants.PORTAL_PROPERTY_KEY_FEATURE_FLAG +
 			StringPool.PERIOD,
 		true);
+	private final Map<Long, FeatureFlagsBag> _featureFlagsBags =
+		new ConcurrentHashMap<>();
 
 	@Reference
 	private Language _language;

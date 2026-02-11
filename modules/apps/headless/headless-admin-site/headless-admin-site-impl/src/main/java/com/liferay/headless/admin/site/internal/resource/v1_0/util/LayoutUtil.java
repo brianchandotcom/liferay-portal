@@ -1251,6 +1251,21 @@ public class LayoutUtil {
 		boolean layoutCustomizable = GetterUtil.getBoolean(
 			unicodeProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
 
+		List<String> nestedColumnIds =
+			com.liferay.petra.string.StringUtil.split(
+				layout.getTypeSettingsProperty(
+					com.liferay.layout.admin.kernel.model.
+						LayoutTypePortletConstants.NESTED_COLUMN_IDS));
+
+		for (String column : columns) {
+			if (nestedColumnIds.contains(column)) {
+				unicodeProperties.remove(column);
+			}
+			else {
+				unicodeProperties.put(column, StringPool.BLANK);
+			}
+		}
+
 		try (SafeCloseable safeCloseable =
 				UpdateLayoutModifiedDateThreadLocal.
 					setUpdateLayoutModifiedDateWithSafeCloseable(false)) {

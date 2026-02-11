@@ -30,6 +30,8 @@ public @interface ExtendedAttributeDefinition {
 	public static final String XML_NAMESPACE =
 		"http://www.liferay.com/xsd/liferay-configuration-admin_1_0_0.xsd";
 
+	public String argumentsDelimiter() default StringPool.COMMA;
+
 	public String[] descriptionArguments() default {};
 
 	public String featureFlagKey() default StringPool.BLANK;

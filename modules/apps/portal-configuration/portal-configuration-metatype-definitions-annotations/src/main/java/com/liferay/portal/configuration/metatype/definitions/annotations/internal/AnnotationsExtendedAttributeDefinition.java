@@ -144,16 +144,21 @@ public class AnnotationsExtendedAttributeDefinition
 				_extensionAttributes.put(
 					ExtendedAttributeDefinition.XML_NAMESPACE,
 					HashMapBuilder.put(
+						"arguments-delimiter",
+						extendedAttributeDefinition.argumentsDelimiter()
+					).put(
 						"description-arguments",
 						StringUtil.merge(
-							extendedAttributeDefinition.descriptionArguments())
+							extendedAttributeDefinition.descriptionArguments(),
+							extendedAttributeDefinition.argumentsDelimiter())
 					).put(
 						"feature.flag.key",
 						extendedAttributeDefinition.featureFlagKey()
 					).put(
 						"name-arguments",
 						StringUtil.merge(
-							extendedAttributeDefinition.nameArguments())
+							extendedAttributeDefinition.nameArguments(),
+							extendedAttributeDefinition.argumentsDelimiter())
 					).put(
 						"required-input",
 						String.valueOf(

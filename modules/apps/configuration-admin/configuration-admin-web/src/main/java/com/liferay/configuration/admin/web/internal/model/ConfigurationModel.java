@@ -145,8 +145,9 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public String[] getDescriptionArguments() {
-		return StringUtil.split(
-			_extensionAttributes.get("description-arguments"));
+		return _split(
+			_extensionAttributes.get("description-arguments"),
+			_extensionAttributes.get("arguments-delimiter"));
 	}
 
 	public ExtendedAttributeDefinition getExtendedAttributeDefinition(
@@ -248,7 +249,9 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 	}
 
 	public String[] getNameArguments() {
-		return StringUtil.split(_extensionAttributes.get("name-arguments"));
+		return _split(
+			_extensionAttributes.get("name-arguments"),
+			_extensionAttributes.get("arguments-delimiter"));
 	}
 
 	public String getScope() {
@@ -408,6 +411,14 @@ public class ConfigurationModel implements ExtendedObjectClassDefinition {
 
 	private boolean _isScope(Scope scope) {
 		return scope.equals(getScope());
+	}
+
+	private String[] _split(String argument, String delimiter) {
+		if (Validator.isBlank(delimiter)) {
+			return new String[] {argument};
+		}
+
+		return StringUtil.split(argument, delimiter);
 	}
 
 	private final String _bundleLocation;

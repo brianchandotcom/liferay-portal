@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.site.cms.site.initializer.util.UserSelectionFDSFilterUtil;
+import com.liferay.site.cms.site.initializer.util.CMSUserUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -80,7 +80,7 @@ public class AssigneeSelectionFDSFilter extends BaseSelectionFDSFilter {
 						_getValue(roleClassNameId, role.getRoleId()));
 				}),
 			TransformUtil.transform(
-				UserSelectionFDSFilterUtil.getUsers(),
+				CMSUserUtil.getUsers(),
 				user -> new SelectionFDSFilterItem(
 					user.getFullName(),
 					_getValue(userClassNameId, user.getUserId()))));

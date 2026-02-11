@@ -38,6 +38,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 					<clay:vertical-nav
 						active="<%= sideNavigationDisplayContext.getPortletId() %>"
 						defaultExpandedKeys="<%= sideNavigationDisplayContext.getExpandedKeys() %>"
+						displayType="primary"
 						verticalNavItems="<%= sideNavigationDisplayContext.getVerticalNavItems() %>"
 					/>
 				</div>

@@ -8,8 +8,6 @@ import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-type VerticalNavItem = React.ComponentProps<typeof ClayVerticalNav>['items'][0];
-
 interface SideNavigationItem {
 	href?: string;
 	id: string;
@@ -47,25 +45,6 @@ function SideNavigation({
 	const [expandedKeys, setExpandedKeys] = useState<Set<React.Key>>(
 		() => new Set(initialExpandedKeys)
 	);
-
-	function buildVerticalNavItem(item: SideNavigationItem): VerticalNavItem {
-		return {
-			...item,
-			...(item.items && {
-				items: item.items.map((child) => buildVerticalNavItem(child)),
-			}),
-			...(item.leadingIcon && {
-				label: (
-					<div className="align-items-center d-flex flex-row">
-						<ClayIcon symbol={item.leadingIcon} />
-
-						<span className="c-px-2">{item.label}</span>
-					</div>
-				),
-			}),
-			textValue: item.label,
-		};
-	}
 
 	const updateExpandedKeys = useCallback(
 		async (expandedKeys: Set<React.Key>) => {
@@ -130,11 +109,37 @@ function SideNavigation({
 			<SidePanel.Body className="c-px-0">
 				<ClayVerticalNav
 					active={portletId}
+					displayType="primary"
 					expandedKeys={expandedKeys}
 					itemAriaCurrent={true}
-					items={items.map(buildVerticalNavItem)}
+					items={items}
 					onExpandedChange={updateExpandedKeys}
-				/>
+				>
+					{(item) => {
+						if (typeof item === 'string') {
+							return <span>{item}</span>;
+						}
+
+						return (
+							<ClayVerticalNav.Item
+								href={item.href}
+								items={item.items}
+								key={item.id}
+								textValue={item.label}
+							>
+								{item.leadingIcon && (
+									<ClayIcon
+										className="c-mr-2"
+										key={item.leadingIcon}
+										symbol={item.leadingIcon}
+									/>
+								)}
+
+								{item.label}
+							</ClayVerticalNav.Item>
+						);
+					}}
+				</ClayVerticalNav>
 			</SidePanel.Body>
 		</SidePanel>
 	);

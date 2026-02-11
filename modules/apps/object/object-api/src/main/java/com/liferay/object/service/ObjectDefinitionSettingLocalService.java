@@ -119,6 +119,10 @@ public interface ObjectDefinitionSettingLocalService
 	public ObjectDefinitionSetting deleteObjectDefinitionSetting(
 		ObjectDefinitionSetting objectDefinitionSetting);
 
+	public void deleteObjectDefinitionSettingByObjectDefinitionId(
+			long objectDefinitionId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */

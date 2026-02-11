@@ -2813,3 +2813,32 @@ baseTest(
 		);
 	}
 );
+
+baseTest(
+	'Display Page Preview button is disabled when draft does not exist',
+	{
+		tag: '@LPD-77694',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.content.waitFor();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await journalEditArticlePage.content.waitFor();
+
+		await journalEditArticlePage.openFieldSet(
+			'Display Page', 'displayPage');
+
+		await journalEditArticlePage.previewButton.waitFor();
+
+		await journalEditArticlePage.previewButton.scrollIntoViewIfNeeded();
+
+		await expect(journalEditArticlePage.previewButton).toBeDisabled();
+	}
+);

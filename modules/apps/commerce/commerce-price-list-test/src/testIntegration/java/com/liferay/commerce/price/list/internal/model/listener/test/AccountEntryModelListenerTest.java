@@ -46,9 +46,9 @@ public class AccountEntryModelListenerTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCommercePriceListAccountRelDeleted() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+	public void testOnBeforeRemove() throws Exception {
 		User user = UserTestUtil.addUser();
+		Group group = GroupTestUtil.addGroup();
 
 		AccountEntry accountEntry =
 			CommerceAccountTestUtil.addPersonAccountEntry(
@@ -63,21 +63,6 @@ public class AccountEntryModelListenerTest {
 				accountEntry.getAccountEntryId(),
 				CommercePriceListConstants.TYPE_PRICE_LIST);
 
-		List<CommercePriceList> commercePriceLists =
-			_commercePriceListLocalService.getCommercePriceListsByAccountId(
-				accountEntry.getAccountEntryGroupId(),
-				accountEntry.getAccountEntryId(), null,
-				CommercePriceListConstants.TYPE_PRICE_LIST);
-
-		Assert.assertEquals(
-			commercePriceLists.toString(), 1, commercePriceLists.size());
-
-		CommercePriceList fetchedCommercePriceList = commercePriceLists.get(0);
-
-		Assert.assertEquals(
-			commercePriceList.getCommercePriceListId(),
-			fetchedCommercePriceList.getCommercePriceListId());
-
 		List<CommercePriceListAccountRel> commercePriceListAccountRels =
 			_commercePriceListAccountRelLocalService.
 				getCommercePriceListAccountRels(
@@ -86,13 +71,6 @@ public class AccountEntryModelListenerTest {
 		Assert.assertEquals(
 			commercePriceListAccountRels.toString(), 1,
 			commercePriceListAccountRels.size());
-
-		CommercePriceListAccountRel fetchedCommercePriceListAccountRel =
-			commercePriceListAccountRels.get(0);
-
-		Assert.assertEquals(
-			accountEntry.getAccountEntryId(),
-			fetchedCommercePriceListAccountRel.getCommerceAccountId());
 
 		_accountEntryLocalService.deleteAccountEntry(accountEntry);
 

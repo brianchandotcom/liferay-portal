@@ -13,7 +13,9 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
+import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ccr.ElasticsearchCCRRequestExecutor;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
@@ -38,6 +40,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -210,6 +213,12 @@ public class ElasticsearchSearchEngineAdapterImpl
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		_ccrRequestExecutor = new ElasticsearchCCRRequestExecutor(
+			_elasticsearchClientResolver);
+	}
+
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
 		_throwOriginalExceptions = throwOriginalExceptions;
 	}
@@ -249,7 +258,6 @@ public class ElasticsearchSearchEngineAdapterImpl
 			ElasticsearchSearchEngineAdapterImpl.class.getName() +
 				"._bulkDocumentRequest");
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private CCRRequestExecutor _ccrRequestExecutor;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
@@ -257,6 +265,9 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private DocumentRequestExecutor _documentRequestExecutor;
+
+	@Reference
+	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private IndexRequestExecutor _indexRequestExecutor;

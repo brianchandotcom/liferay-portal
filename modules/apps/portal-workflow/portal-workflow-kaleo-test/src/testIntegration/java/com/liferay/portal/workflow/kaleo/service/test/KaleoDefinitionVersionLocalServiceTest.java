@@ -9,9 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionVersionException;
@@ -37,7 +35,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 
 	@Test
 	public void testAddKaleoDefinitionShouldCreateVersion() throws Exception {
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition(null);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
@@ -51,7 +49,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 	public void testDeleteKaleoDefinitionShouldDeleteVersion()
 		throws Exception {
 
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition(null);
 
 		deactivateKaleoDefinition(kaleoDefinition);
 
@@ -65,9 +63,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 	@Ignore
 	@Test
 	public void testGetLatestKaleoDefinitionVersions() throws Exception {
-		KaleoDefinition kaleoDefinition1 = addKaleoDefinition(
-			StringUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		KaleoDefinition kaleoDefinition1 = addKaleoDefinition(null);
 
 		KaleoDefinitionVersion kaleoDefinition1LatestKaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
@@ -76,9 +72,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				"KaleoDefinitionVersionDescription1",
 				kaleoDefinition1.getContent(), "2.0", serviceContext);
 
-		KaleoDefinition kaleoDefinition2 = addKaleoDefinition(
-			StringUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+		KaleoDefinition kaleoDefinition2 = addKaleoDefinition(null);
 
 		KaleoDefinitionVersion kaleoDefinition2LatestKaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
@@ -87,9 +81,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 				kaleoDefinition2.getDescription(),
 				kaleoDefinition2.getContent(), "2.0", serviceContext);
 
-		KaleoDefinition kaleoDefinition3 = addKaleoDefinition(
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), RandomTestUtil.randomString());
+		KaleoDefinition kaleoDefinition3 = addKaleoDefinition(null);
 
 		KaleoDefinitionVersion kaleoDefinition3LatestKaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
@@ -152,7 +144,7 @@ public class KaleoDefinitionVersionLocalServiceTest
 	public void testUpdateKaleoDefinitionShouldIncrementVersion1()
 		throws Exception {
 
-		KaleoDefinition kaleoDefinition = addKaleoDefinition();
+		KaleoDefinition kaleoDefinition = addKaleoDefinition(null);
 
 		kaleoDefinition = updateKaleoDefinition(kaleoDefinition);
 

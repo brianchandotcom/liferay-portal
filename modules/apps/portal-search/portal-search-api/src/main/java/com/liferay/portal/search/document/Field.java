@@ -5,21 +5,53 @@
 
 package com.liferay.portal.search.document;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  * @author André de Oliveira
  */
-@ProviderType
-public interface Field {
+public class Field {
 
-	public String getName();
+	public Field(Field field) {
+		_name = field._name;
+		_values = new ArrayList(field._values);
+	}
 
-	public Object getValue();
+	public Field(String name, Collection<Object> values) {
+		_name = name;
+		_values = new ArrayList(values);
+	}
 
-	public List<Object> getValues();
+	public String getName() {
+		return _name;
+	}
+
+	public Object getValue() {
+		if (_values.isEmpty()) {
+			return null;
+		}
+
+		return _values.get(0);
+	}
+
+	public List<Object> getValues() {
+		return Collections.unmodifiableList(_values);
+	}
+
+	@Override
+	public String toString() {
+		if (_values.size() == 1) {
+			return String.valueOf(_values.get(0));
+		}
+
+		return String.valueOf(_values);
+	}
+
+	private final String _name;
+	private final List<Object> _values;
 
 }

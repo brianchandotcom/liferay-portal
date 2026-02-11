@@ -203,7 +203,7 @@ public class DocumentImpl implements Document {
 	}
 
 	private Field _putField(String name, Collection<Object> values) {
-		return _fields.put(name, new FieldImpl(name, values));
+		return _fields.put(name, new Field(name, values));
 	}
 
 	private Field _removeField(String name) {

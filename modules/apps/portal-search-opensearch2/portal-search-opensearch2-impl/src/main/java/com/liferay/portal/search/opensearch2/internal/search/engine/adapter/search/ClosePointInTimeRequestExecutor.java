@@ -7,13 +7,67 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.ClosePointInTimeResponse;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+
+import java.io.IOException;
+
+import java.util.Arrays;
+import java.util.List;
+
+import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch.core.pit.DeletePitRecord;
+import org.opensearch.client.opensearch.core.pit.DeletePitRequest;
+import org.opensearch.client.opensearch.core.pit.DeletePitResponse;
 
 /**
  * @author Bryan Engler
  */
-public interface ClosePointInTimeRequestExecutor {
+public class ClosePointInTimeRequestExecutor {
+
+	public ClosePointInTimeRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_openSearchConnectionManager = openSearchConnectionManager;
+	}
 
 	public ClosePointInTimeResponse execute(
-		ClosePointInTimeRequest closePointInTimeRequest);
+		ClosePointInTimeRequest closePointInTimeRequest) {
+
+		DeletePitResponse deletePitResponse = getDeletePitResponse(
+			closePointInTimeRequest,
+			createDeletePitRequest(closePointInTimeRequest));
+
+		List<DeletePitRecord> deletePitRecords = deletePitResponse.pits();
+
+		return new ClosePointInTimeResponse(deletePitRecords.size());
+	}
+
+	protected DeletePitRequest createDeletePitRequest(
+		ClosePointInTimeRequest closePointInTimeSearchRequest) {
+
+		return DeletePitRequest.of(
+			deletePitRequest -> deletePitRequest.pitId(
+				Arrays.asList(
+					closePointInTimeSearchRequest.getPointInTimeId())));
+	}
+
+	protected DeletePitResponse getDeletePitResponse(
+		ClosePointInTimeRequest closePointInTimeRequest,
+		DeletePitRequest deletePitRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				closePointInTimeRequest.getConnectionId(),
+				closePointInTimeRequest.isPreferLocalCluster());
+
+		try {
+			return openSearchClient.deletePit(deletePitRequest);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

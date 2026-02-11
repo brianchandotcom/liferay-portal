@@ -90,11 +90,11 @@ public class OpenSearchSearchRequestExecutor implements SearchRequestExecutor {
 	protected void activate() {
 		_clearScrollRequestExecutor = new ClearScrollRequestExecutor(
 			_openSearchConnectionManager);
+		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
-
-	@Reference
 	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;
 
 	@Reference

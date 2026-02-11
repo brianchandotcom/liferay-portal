@@ -87,6 +87,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -2443,6 +2444,17 @@ public class ObjectDefinitionLocalServiceTest {
 			_classNameLocalService.fetchByClassNameId(
 				className.getClassNameId()));
 
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		Assert.assertNotNull(
+			_objectDefinitionSettingLocalService.getObjectDefinitionSetting(
+				objectDefinition.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS));
+
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
 			objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
@@ -2474,6 +2486,14 @@ public class ObjectDefinitionLocalServiceTest {
 
 		Assert.assertNull(
 			_messageBus.getDestination(objectDefinition.getDestinationName()));
+
+		// Object definition settings
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_objectDefinitionSettingLocalService.
+					getObjectDefinitionSettings(
+						objectDefinition.getObjectDefinitionId())));
 
 		// Resources
 
@@ -4724,6 +4744,10 @@ public class ObjectDefinitionLocalServiceTest {
 		filter = "component.name=com.liferay.object.internal.model.listener.ObjectDefinitionModelListener"
 	)
 	private ModelListener<ObjectDefinition> _objectDefinitionModelListener;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	private ObjectDefinitionTreeFactory _objectDefinitionTreeFactory;
 

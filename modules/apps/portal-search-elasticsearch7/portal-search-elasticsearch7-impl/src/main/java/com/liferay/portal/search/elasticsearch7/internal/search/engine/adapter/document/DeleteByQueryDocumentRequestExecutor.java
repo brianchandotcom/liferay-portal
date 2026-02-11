@@ -5,15 +5,95 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentResponse;
+
+import java.io.IOException;
+
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 
 /**
  * @author Dylan Rebelak
  */
-public interface DeleteByQueryDocumentRequestExecutor {
+public class DeleteByQueryDocumentRequestExecutor {
+
+	public DeleteByQueryDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public DeleteByQueryDocumentResponse execute(
-		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest);
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest) {
+
+		DeleteByQueryRequest deleteByQueryRequest = createDeleteByQueryRequest(
+			deleteByQueryDocumentRequest);
+
+		BulkByScrollResponse bulkByScrollResponse = getBulkByScrollResponse(
+			deleteByQueryRequest, deleteByQueryDocumentRequest);
+
+		TimeValue timeValue = bulkByScrollResponse.getTook();
+
+		return new DeleteByQueryDocumentResponse(
+			bulkByScrollResponse.getDeleted(), timeValue.getMillis());
+	}
+
+	protected DeleteByQueryRequest createDeleteByQueryRequest(
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest) {
+
+		DeleteByQueryRequest deleteByQueryRequest = new DeleteByQueryRequest();
+
+		deleteByQueryRequest.indices(
+			deleteByQueryDocumentRequest.getIndexNames());
+
+		if (deleteByQueryDocumentRequest.getPortalSearchQuery() != null) {
+			QueryBuilder queryBuilder =
+				com.liferay.portal.search.elasticsearch7.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						deleteByQueryDocumentRequest.getPortalSearchQuery());
+
+			deleteByQueryRequest.setQuery(queryBuilder);
+		}
+		else {
+			@SuppressWarnings("deprecation")
+			QueryBuilder queryBuilder =
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					deleteByQueryDocumentRequest.getQuery());
+
+			deleteByQueryRequest.setQuery(queryBuilder);
+		}
+
+		deleteByQueryRequest.setRefresh(
+			deleteByQueryDocumentRequest.isRefresh());
+
+		return deleteByQueryRequest;
+	}
+
+	protected BulkByScrollResponse getBulkByScrollResponse(
+		DeleteByQueryRequest deleteByQueryRequest,
+		DeleteByQueryDocumentRequest deleteByQueryDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				deleteByQueryDocumentRequest.getConnectionId(),
+				deleteByQueryDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.deleteByQuery(
+				deleteByQueryRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

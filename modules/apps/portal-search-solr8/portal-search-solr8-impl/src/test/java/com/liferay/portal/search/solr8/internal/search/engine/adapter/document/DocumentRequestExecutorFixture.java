@@ -42,25 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutorImpl;
 	}
 
-	protected static DeleteByQueryDocumentRequestExecutor
-		createDeleteByQueryDocumentRequestExecutor(
-			SolrClientManager solrClientManager) {
-
-		DeleteByQueryDocumentRequestExecutorImpl
-			deleteByQueryDocumentRequestExecutorImpl =
-				new DeleteByQueryDocumentRequestExecutorImpl() {
-					{
-						activate(_properties);
-					}
-				};
-
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return deleteByQueryDocumentRequestExecutorImpl;
-	}
-
 	protected static DeleteDocumentRequestExecutor
 		createDeleteDocumentRequestExecutor(
 			SolrClientManager solrClientManager) {
@@ -82,13 +63,12 @@ public class DocumentRequestExecutorFixture {
 			new SolrDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
+			solrDocumentRequestExecutor, "_solrClientManager",
+			solrClientManager);
+
+		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
 			createBulkDocumentRequestExecutor(solrClientManager));
-		ReflectionTestUtil.setFieldValue(
-			solrDocumentRequestExecutor,
-			"_deleteByQueryDocumentRequestExecutor",
-			createDeleteByQueryDocumentRequestExecutor(solrClientManager));
-
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
 			createDeleteDocumentRequestExecutor(solrClientManager));
@@ -98,7 +78,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_indexDocumentRequestExecutor",
 			createIndexDocumentRequestExecutor(solrClientManager));
-
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor,
 			"_updateByQueryDocumentRequestExecutor",
@@ -106,6 +85,8 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_updateDocumentRequestExecutor",
 			createUpdateDocumentRequestExecutor(solrClientManager));
+
+		solrDocumentRequestExecutor.activate(_properties);
 
 		return solrDocumentRequestExecutor;
 	}

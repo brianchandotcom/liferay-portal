@@ -42,21 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutor;
 	}
 
-	private DeleteByQueryDocumentRequestExecutor
-		_createDeleteByQueryDocumentRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		DeleteByQueryDocumentRequestExecutor
-			deleteByQueryDocumentRequestExecutor =
-				new DeleteByQueryDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteByQueryDocumentRequestExecutor,
-			"_openSearchConnectionManager", openSearchConnectionManager);
-
-		return deleteByQueryDocumentRequestExecutor;
-	}
-
 	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
@@ -73,37 +58,36 @@ public class DocumentRequestExecutorFixture {
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		DocumentRequestExecutor documentRequestExecutor =
+		OpenSearchDocumentRequestExecutor openSearchDocumentRequestExecutor =
 			new OpenSearchDocumentRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_bulkDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor, "_openSearchConnectionManager",
+			openSearchConnectionManager);
+		ReflectionTestUtil.setFieldValue(
+			openSearchDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(openSearchConnectionManager));
-
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_deleteByQueryDocumentRequestExecutor",
-			_createDeleteByQueryDocumentRequestExecutor(
-				openSearchConnectionManager));
-
-		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_deleteDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
 			_createDeleteDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_getDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_indexDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor, "_indexDocumentRequestExecutor",
 			_createIndexDocumentRequestExecutor(openSearchConnectionManager));
-
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_updateByQueryDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor,
+			"_updateByQueryDocumentRequestExecutor",
 			_createUpdateByQueryDocumentRequestExecutor(
 				openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
-			documentRequestExecutor, "_updateDocumentRequestExecutor",
+			openSearchDocumentRequestExecutor, "_updateDocumentRequestExecutor",
 			_createUpdateDocumentRequestExecutor(openSearchConnectionManager));
 
-		return documentRequestExecutor;
+		openSearchDocumentRequestExecutor.activate();
+
+		return openSearchDocumentRequestExecutor;
 	}
 
 	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(

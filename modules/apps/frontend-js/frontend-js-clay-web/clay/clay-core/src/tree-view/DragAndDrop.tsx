@@ -236,47 +236,38 @@ function validateTarget<T>({
 	);
 }
 
+type Cursor = {index: number; position: Position};
+type Direction = 'up' | 'down';
+
+const cursorTransactions = {
+	down: {bottom: 'next', middle: 'bottom', top: 'middle'},
+	up: {bottom: 'middle', middle: 'top', top: 'prev'},
+} as const;
+
 function getNextCursor({
 	direction,
 	index,
 	position,
 }: {
-	direction: 'up' | 'down';
+	direction: Direction;
 	index: number;
 	position: Position;
-}): {index: number; position: Position} | null {
-	if (direction === 'down') {
-		if (position === 'top') {
-			return {index, position: 'middle'};
-		}
+}): Cursor | null {
+	const next = cursorTransactions[direction]?.[position];
 
-		if (position === 'middle') {
-			return {index, position: 'bottom'};
-		}
-
-		if (position === 'bottom') {
-			return {
-				index: index + 1,
-				position: 'middle',
-			};
-		}
+	if (!next) {
+		return null;
 	}
 
-	if (direction === 'up') {
-		if (position === 'bottom') {
-			return {index, position: 'middle'};
-		}
-
-		if (position === 'middle') {
-			return {index, position: 'top'};
-		}
-
-		if (position === 'top') {
-			return {index: index - 1, position: 'middle'};
-		}
+	if (next === 'next') {
+		return {index: index + 1, position: 'middle'};
 	}
 
-	return null;
+	if (next === 'prev') {
+		return {index: index - 1, position: 'middle'};
+	}
+
+	return {index, position: next};
 }
 
 function getNextTarget<T>({
@@ -289,7 +280,7 @@ function getNextTarget<T>({
 	rootRef,
 	state,
 }: {
-	direction: 'up' | 'down';
+	direction: Direction;
 	items?: Record<string, T>[];
 	layout: Layout;
 	mode: 'single' | 'multiple';

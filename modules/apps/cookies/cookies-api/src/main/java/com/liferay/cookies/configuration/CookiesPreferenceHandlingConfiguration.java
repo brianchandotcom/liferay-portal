@@ -43,6 +43,12 @@ public interface CookiesPreferenceHandlingConfiguration {
 	)
 	public boolean explicitConsentMode();
 
+	@Meta.AD(
+		deflt = "true", description = "floating-icon-enabled-help",
+		name = "floating-icon-enabled", required = false
+	)
+	public boolean floatingIconEnabled();
+
 	@Meta.AD(deflt = "0", name = "modified-date", required = false)
 	public long modifiedDate();
 

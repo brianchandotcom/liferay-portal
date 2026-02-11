@@ -26,11 +26,13 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.ccr.OpenSearchCCRRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -124,6 +126,11 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 		}
 	}
 
+	@Activate
+	protected void activate() {
+		_ccrRequestExecutor = new OpenSearchCCRRequestExecutor();
+	}
+
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
 		_throwOriginalExceptions = throwOriginalExceptions;
 	}
@@ -157,7 +164,6 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 		return runtimeException1;
 	}
 
-	@Reference(target = "(search.engine.impl=OpenSearch)")
 	private CCRRequestExecutor _ccrRequestExecutor;
 
 	@Reference(target = "(search.engine.impl=OpenSearch)")

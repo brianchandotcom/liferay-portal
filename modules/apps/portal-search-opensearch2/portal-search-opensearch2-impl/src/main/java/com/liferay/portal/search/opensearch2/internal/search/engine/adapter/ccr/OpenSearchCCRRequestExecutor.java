@@ -15,15 +15,9 @@ import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRResponse;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = CCRRequestExecutor.class
-)
 public class OpenSearchCCRRequestExecutor implements CCRRequestExecutor {
 
 	@Override

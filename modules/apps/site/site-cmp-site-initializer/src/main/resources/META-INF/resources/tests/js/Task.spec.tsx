@@ -12,15 +12,14 @@ import Task from '../../js/components/props_transformer/views/kanban_view/compon
 import {KanbanViewContext} from '../../js/components/props_transformer/views/kanban_view/context';
 import {mockNavigate} from '../../tests/js/__mocks__/frontend-js-web';
 
-const mockGetUserAccount = jest.fn();
-const mockPatchTaskById = jest.fn();
 const mockDisplayAssignSuccessToast = jest.fn();
 const mockDisplayErrorToast = jest.fn();
+const mockGetUserAccount = jest.fn();
 const mockLoadData = jest.fn();
+const mockPatchTaskById = jest.fn();
 
-jest.mock('../../js/utils/api', () => ({
-	getUserAccount: (...args: any[]) => mockGetUserAccount(...args),
-	patchTaskById: (...args: any[]) => mockPatchTaskById(...args),
+jest.mock('@liferay/site-cms-site-initializer', () => ({
+	displayErrorToast: (...args: any[]) => mockDisplayErrorToast(...args),
 }));
 
 jest.mock('frontend-js-components-web', () => ({
@@ -28,13 +27,14 @@ jest.mock('frontend-js-components-web', () => ({
 	openToast: jest.fn(),
 }));
 
+jest.mock('../../js/utils/api', () => ({
+	getUserAccount: (...args: any[]) => mockGetUserAccount(...args),
+	patchTaskById: (...args: any[]) => mockPatchTaskById(...args),
+}));
+
 jest.mock('../../js/utils/toastUtil', () => ({
 	displayAssignSuccessToast: (...args: any[]) =>
 		mockDisplayAssignSuccessToast(...args),
-}));
-
-jest.mock('@liferay/site-cms-site-initializer', () => ({
-	displayErrorToast: (...args: any[]) => mockDisplayErrorToast(...args),
 }));
 
 describe('Kanban Task actions', () => {

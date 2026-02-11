@@ -236,6 +236,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-78718")
 	public void testGetSiteSitePage() throws Exception {
 		SitePage postSitePage = testGetSiteSitePagesPage_addSitePage(
 			testGroup.getExternalReferenceCode(), randomSitePage());
@@ -275,6 +276,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 					LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID, "1_column"
 				).buildString(),
 				serviceContext));
+
+		_testGetSiteSitePage(
+			LayoutTestUtil.addTypePortletLayout(
+				testGroup.getGroupId(),
+				UnicodePropertiesBuilder.put(
+					LayoutTypePortletConstants.COLUMN_PREFIX + "1",
+					RandomTestUtil.randomString()
+				).buildString()));
 	}
 
 	@Override

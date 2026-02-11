@@ -37,6 +37,11 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			isCookiesPreferenceHandlingExplicitConsentMode(_scope, _scopePK);
 	}
 
+	public boolean getCookiesPreferenceHandlingFloatingIconEnabled() {
+		return _cookiesConfigurationProvider.
+			isCookiesPreferenceHandlingFloatingIconEnabled(_scope, _scopePK);
+	}
+
 	public boolean getCookiesPreferenceHandlingStoreConsent() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingStoreConsent(_scope, _scopePK);

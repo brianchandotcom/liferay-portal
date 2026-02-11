@@ -51,9 +51,10 @@ public class UpdateDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() {
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			_elasticsearchFixture);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_elasticsearchFixture);
-
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
 			_elasticsearchFixture);
 
@@ -154,7 +155,7 @@ public class UpdateDocumentRequestExecutorTest {
 		String uid, String fieldName, String expectedFieldValue) {
 
 		Document document = _requestExecutorFixture.getDocumentById(
-			_INDEX_NAME, uid);
+			_getDocumentRequestExecutor, _INDEX_NAME, uid);
 
 		Assert.assertEquals(expectedFieldValue, document.getString(fieldName));
 	}
@@ -214,6 +215,7 @@ public class UpdateDocumentRequestExecutorTest {
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 

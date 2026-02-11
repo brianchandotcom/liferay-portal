@@ -46,9 +46,10 @@ public class UpdateDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	@Before
 	public void setUp() {
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			openSearchConnectionManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			openSearchConnectionManager);
-
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
 			openSearchConnectionManager);
 
@@ -154,7 +155,7 @@ public class UpdateDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 		String expectedFieldValue, String fieldName, String uid) {
 
 		Document document = _requestExecutorFixture.getDocumentById(
-			TEST_INDEX_NAME, uid);
+			_getDocumentRequestExecutor, TEST_INDEX_NAME, uid);
 
 		Assert.assertEquals(expectedFieldValue, document.getString(fieldName));
 	}
@@ -212,6 +213,7 @@ public class UpdateDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 

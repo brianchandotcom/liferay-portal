@@ -5,14 +5,75 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.GetRequest;
+import co.elastic.clients.elasticsearch.core.GetResponse;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch8.internal.document.FieldsTranslator;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
+
+import java.io.IOException;
 
 /**
  * @author Bryan Engler
  */
-public interface GetDocumentRequestExecutor {
+public class GetDocumentRequestExecutor {
 
-	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest);
+	public GetDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
+		GetResponse<JsonData> getResponse = _getGetResponse(
+			getDocumentRequest,
+			ElasticsearchDocumentRequestTranslatorUtil.translate(
+				getDocumentRequest));
+
+		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
+			getResponse.found());
+
+		if (!getResponse.found()) {
+			return getDocumentResponse;
+		}
+
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
+
+		JsonData jsonData = getResponse.source();
+
+		FieldsTranslator fieldsTranslator = new FieldsTranslator();
+
+		fieldsTranslator.translateSource(documentBuilder, jsonData);
+
+		getDocumentResponse.setDocument(documentBuilder.build());
+		getDocumentResponse.setSource(jsonData.toString());
+		getDocumentResponse.setVersion(getResponse.version());
+
+		return getDocumentResponse;
+	}
+
+	private GetResponse<JsonData> _getGetResponse(
+		GetDocumentRequest getDocumentRequest, GetRequest getRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				getDocumentRequest.getConnectionId(),
+				getDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return elasticsearchClient.get(getRequest, JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

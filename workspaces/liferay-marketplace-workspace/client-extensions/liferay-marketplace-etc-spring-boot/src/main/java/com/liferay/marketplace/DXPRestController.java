@@ -15,6 +15,7 @@ import com.liferay.marketplace.service.ConsoleService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
@@ -100,13 +101,12 @@ public class DXPRestController extends BaseRestController {
 			Map<String, String> customFields =
 				(Map<String, String>)order.getCustomFields();
 
+			Collection<OrderItem> orderItems = orderItemsPage.getItems();
+
 			customFields.put(
 				"cloud-provisioning",
 				MarketplaceUtil.createCloudProvisioningJSONArray(
-					orderItemsPage.getItems(
-					).toArray(
-						new OrderItem[0]
-					)
+					orderItems.toArray(new OrderItem[0])
 				).toString());
 
 			_marketplaceService.updateOrder(

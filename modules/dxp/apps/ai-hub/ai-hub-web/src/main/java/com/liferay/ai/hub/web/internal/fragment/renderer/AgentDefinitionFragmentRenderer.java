@@ -6,7 +6,7 @@
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
 import com.liferay.ai.hub.web.internal.constants.AIHubWebConstants;
-import com.liferay.ai.hub.web.internal.display.context.TaskDefinitionDisplayContext;
+import com.liferay.ai.hub.web.internal.display.context.AgentDefinitionDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Alves
  */
 @Component(service = FragmentRenderer.class)
-public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
+public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -72,13 +72,13 @@ public class TaskDefinitionFragmentRenderer implements FragmentRenderer {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/view.jsp");
 
-			TaskDefinitionDisplayContext taskDefinitionDisplayContext =
-				new TaskDefinitionDisplayContext(httpServletRequest, _portal);
+			AgentDefinitionDisplayContext agentDefinitionDisplayContext =
+				new AgentDefinitionDisplayContext(httpServletRequest, _portal);
 
-			Class<?> clazz = taskDefinitionDisplayContext.getClass();
+			Class<?> clazz = agentDefinitionDisplayContext.getClass();
 
 			httpServletRequest.setAttribute(
-				clazz.getName(), taskDefinitionDisplayContext);
+				clazz.getName(), agentDefinitionDisplayContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

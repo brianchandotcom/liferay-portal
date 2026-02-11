@@ -10,7 +10,7 @@ package com.liferay.ai.hub.web.internal.constants;
  */
 public class AIHubFDSNames {
 
-	public static final String TASK_DEFINITIONS =
-		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-taskDefinitions";
+	public static final String AGENT_DEFINITIONS =
+		AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + "-agentDefinitions";
 
 }

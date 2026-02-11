@@ -19,10 +19,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Davyson Melo
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.TASK_DEFINITIONS,
+	property = "frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
 	service = FDSFilter.class
 )
-public class TaskDefinitionStatusSelectionFDSFilter
+public class AgentDefinitionStatusSelectionFDSFilter
 	extends BaseSelectionFDSFilter {
 
 	@Override
@@ -40,8 +40,8 @@ public class TaskDefinitionStatusSelectionFDSFilter
 		Locale locale) {
 
 		return List.of(
-			new SelectionFDSFilterItem("active", 1),
-			new SelectionFDSFilterItem("inactive", 0));
+			new SelectionFDSFilterItem("active", true),
+			new SelectionFDSFilterItem("inactive", false));
 	}
 
 	@Override

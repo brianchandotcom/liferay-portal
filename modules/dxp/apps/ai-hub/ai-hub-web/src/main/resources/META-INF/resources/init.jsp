@@ -15,7 +15,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.ai.hub.web.internal.constants.AIHubFDSNames" %><%@
-page import="com.liferay.ai.hub.web.internal.display.context.TaskDefinitionDisplayContext" %>
+page import="com.liferay.ai.hub.web.internal.display.context.AgentDefinitionDisplayContext" %>
 
 <liferay-frontend:defineObjects />
 

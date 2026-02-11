@@ -5,9 +5,9 @@
 
 package com.liferay.ai.hub.rest.internal.odata.entity.v1_0;
 
+import com.liferay.portal.odata.entity.BooleanEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.entity.IntegerEntityField;
 
 import java.util.Map;
 
@@ -18,10 +18,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Davyson Melo
  */
 @Component(
-	property = "entity.model.name=" + TaskDefinitionEntityModel.NAME,
+	property = "entity.model.name=" + AgentDefinitionEntityModel.NAME,
 	service = EntityModel.class
 )
-public class TaskDefinitionEntityModel implements EntityModel {
+public class AgentDefinitionEntityModel implements EntityModel {
 
 	public static final String NAME = "TaskDefinition";
 
@@ -38,7 +38,7 @@ public class TaskDefinitionEntityModel implements EntityModel {
 	@Activate
 	protected void activate() {
 		_entityFieldMap = EntityModel.toEntityFieldsMap(
-			new IntegerEntityField("active", locale -> "active"));
+			new BooleanEntityField("active", locale -> "active"));
 	}
 
 	private Map<String, EntityField> _entityFieldMap;

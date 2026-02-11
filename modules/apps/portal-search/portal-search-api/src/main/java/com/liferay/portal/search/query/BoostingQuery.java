@@ -11,14 +11,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface BoostingQuery extends Query {
+public abstract class BoostingQuery extends Query {
 
-	public Float getNegativeBoost();
+	public abstract Float getNegativeBoost();
 
-	public Query getNegativeQuery();
+	public abstract Query getNegativeQuery();
 
-	public Query getPositiveQuery();
+	public abstract Query getPositiveQuery();
 
-	public void setNegativeBoost(Float negativeBoost);
+	public abstract void setNegativeBoost(Float negativeBoost);
 
 }

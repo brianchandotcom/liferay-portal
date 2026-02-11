@@ -14,80 +14,81 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MultiMatchQuery extends Query {
+public abstract class MultiMatchQuery extends Query {
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Float getCutOffFrequency();
+	public abstract Float getCutOffFrequency();
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #getFieldsBoosts()}
 	 */
 	@Deprecated
-	public Set<String> getFields();
+	public abstract Set<String> getFields();
 
-	public Map<String, Float> getFieldsBoosts();
+	public abstract Map<String, Float> getFieldsBoosts();
 
-	public String getFuzziness();
+	public abstract String getFuzziness();
 
-	public MatchQuery.RewriteMethod getFuzzyRewriteMethod();
+	public abstract MatchQuery.RewriteMethod getFuzzyRewriteMethod();
 
-	public Integer getMaxExpansions();
+	public abstract Integer getMaxExpansions();
 
-	public String getMinShouldMatch();
+	public abstract String getMinShouldMatch();
 
-	public Operator getOperator();
+	public abstract Operator getOperator();
 
-	public Integer getPrefixLength();
+	public abstract Integer getPrefixLength();
 
-	public Integer getSlop();
+	public abstract Integer getSlop();
 
-	public Float getTieBreaker();
+	public abstract Float getTieBreaker();
 
-	public Type getType();
+	public abstract Type getType();
 
-	public Object getValue();
+	public abstract Object getValue();
 
-	public MatchQuery.ZeroTermsQuery getZeroTermsQuery();
+	public abstract MatchQuery.ZeroTermsQuery getZeroTermsQuery();
 
-	public boolean isFieldBoostsEmpty();
+	public abstract boolean isFieldBoostsEmpty();
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *             #isFieldBoostsEmpty()}
 	 */
 	@Deprecated
-	public boolean isFieldsEmpty();
+	public abstract boolean isFieldsEmpty();
 
-	public Boolean isLenient();
+	public abstract Boolean isLenient();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setCutOffFrequency(Float cutOffFrequency);
+	public abstract void setCutOffFrequency(Float cutOffFrequency);
 
-	public void setFuzziness(String fuzziness);
+	public abstract void setFuzziness(String fuzziness);
 
-	public void setFuzzyRewriteMethod(
+	public abstract void setFuzzyRewriteMethod(
 		MatchQuery.RewriteMethod fuzzyRewriteMethod);
 
-	public void setLenient(Boolean lenient);
+	public abstract void setLenient(Boolean lenient);
 
-	public void setMaxExpansions(Integer maxExpansions);
+	public abstract void setMaxExpansions(Integer maxExpansions);
 
-	public void setMinShouldMatch(String minShouldMatch);
+	public abstract void setMinShouldMatch(String minShouldMatch);
 
-	public void setOperator(Operator operator);
+	public abstract void setOperator(Operator operator);
 
-	public void setPrefixLength(Integer prefixLength);
+	public abstract void setPrefixLength(Integer prefixLength);
 
-	public void setSlop(Integer slop);
+	public abstract void setSlop(Integer slop);
 
-	public void setTieBreaker(Float tieBreaker);
+	public abstract void setTieBreaker(Float tieBreaker);
 
-	public void setType(Type type);
+	public abstract void setType(Type type);
 
-	public void setZeroTermsQuery(MatchQuery.ZeroTermsQuery zeroTermsQuery);
+	public abstract void setZeroTermsQuery(
+		MatchQuery.ZeroTermsQuery zeroTermsQuery);
 
 	public enum Type {
 

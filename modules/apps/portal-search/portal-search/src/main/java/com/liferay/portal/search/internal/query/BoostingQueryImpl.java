@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class BoostingQueryImpl extends BaseQueryImpl implements BoostingQuery {
+public class BoostingQueryImpl extends BoostingQuery {
 
 	public BoostingQueryImpl(Query positiveQuery, Query negativeQuery) {
 		_positiveQuery = positiveQuery;

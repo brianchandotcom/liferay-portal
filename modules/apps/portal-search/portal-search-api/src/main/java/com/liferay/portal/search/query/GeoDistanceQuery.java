@@ -15,22 +15,23 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeoDistanceQuery extends Query {
+public abstract class GeoDistanceQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public GeoDistance getGeoDistance();
+	public abstract GeoDistance getGeoDistance();
 
-	public GeoValidationMethod getGeoValidationMethod();
+	public abstract GeoValidationMethod getGeoValidationMethod();
 
-	public Boolean getIgnoreUnmapped();
+	public abstract Boolean getIgnoreUnmapped();
 
-	public GeoLocationPoint getPinGeoLocationPoint();
+	public abstract GeoLocationPoint getPinGeoLocationPoint();
 
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
-	public void setGeoValidationMethod(GeoValidationMethod geoValidationMethod);
+	public abstract void setGeoValidationMethod(
+		GeoValidationMethod geoValidationMethod);
 
-	public void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
 
 }

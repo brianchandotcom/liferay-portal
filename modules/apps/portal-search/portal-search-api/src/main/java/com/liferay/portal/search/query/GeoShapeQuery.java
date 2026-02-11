@@ -15,38 +15,38 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeoShapeQuery extends Query {
+public abstract class GeoShapeQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public Boolean getIgnoreUnmapped();
+	public abstract Boolean getIgnoreUnmapped();
 
-	public String getIndexedShapeId();
+	public abstract String getIndexedShapeId();
 
-	public String getIndexedShapeIndex();
+	public abstract String getIndexedShapeIndex();
 
-	public String getIndexedShapePath();
+	public abstract String getIndexedShapePath();
 
-	public String getIndexedShapeRouting();
+	public abstract String getIndexedShapeRouting();
 
-	public String getIndexedShapeType();
+	public abstract String getIndexedShapeType();
 
-	public Shape getShape();
+	public abstract Shape getShape();
 
-	public ShapeRelation getShapeRelation();
+	public abstract ShapeRelation getShapeRelation();
 
-	public SpatialStrategy getSpatialStrategy();
+	public abstract SpatialStrategy getSpatialStrategy();
 
-	public void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
 
-	public void setIndexedShapeIndex(String indexedShapeIndex);
+	public abstract void setIndexedShapeIndex(String indexedShapeIndex);
 
-	public void setIndexedShapePath(String indexedShapePath);
+	public abstract void setIndexedShapePath(String indexedShapePath);
 
-	public void setIndexedShapeRouting(String indexedShapeRouting);
+	public abstract void setIndexedShapeRouting(String indexedShapeRouting);
 
-	public void setShapeRelation(ShapeRelation shapeRelation);
+	public abstract void setShapeRelation(ShapeRelation shapeRelation);
 
-	public void setSpatialStrategy(SpatialStrategy spatialStrategy);
+	public abstract void setSpatialStrategy(SpatialStrategy spatialStrategy);
 
 }

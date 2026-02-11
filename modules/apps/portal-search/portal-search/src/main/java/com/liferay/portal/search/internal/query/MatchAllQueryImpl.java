@@ -11,7 +11,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class MatchAllQueryImpl extends BaseQueryImpl implements MatchAllQuery {
+public class MatchAllQueryImpl extends MatchAllQuery {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

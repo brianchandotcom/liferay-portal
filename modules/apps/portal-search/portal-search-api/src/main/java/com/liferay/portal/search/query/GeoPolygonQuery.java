@@ -16,22 +16,23 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeoPolygonQuery extends Query {
+public abstract class GeoPolygonQuery extends Query {
 
-	public void addGeoLocationPoint(GeoLocationPoint geoLocationPoint);
+	public abstract void addGeoLocationPoint(GeoLocationPoint geoLocationPoint);
 
-	public String getField();
+	public abstract String getField();
 
-	public Set<GeoLocationPoint> getGeoLocationPoints();
+	public abstract Set<GeoLocationPoint> getGeoLocationPoints();
 
-	public GeoValidationMethod getGeoValidationMethod();
+	public abstract GeoValidationMethod getGeoValidationMethod();
 
-	public Boolean getIgnoreUnmapped();
+	public abstract Boolean getIgnoreUnmapped();
 
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
-	public void setGeoValidationMethod(GeoValidationMethod geoValidationMethod);
+	public abstract void setGeoValidationMethod(
+		GeoValidationMethod geoValidationMethod);
 
-	public void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
 
 }

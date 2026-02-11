@@ -20,8 +20,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class MoreLikeThisQueryImpl
-	extends BaseQueryImpl implements MoreLikeThisQuery {
+public class MoreLikeThisQueryImpl extends MoreLikeThisQuery {
 
 	public MoreLikeThisQueryImpl(List<String> fields, String... likeTexts) {
 		_fields.addAll(fields);

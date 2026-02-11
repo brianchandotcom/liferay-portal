@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * @author Michael C. Han
  */
-public class TermsSetQueryImpl extends BaseQueryImpl implements TermsSetQuery {
+public class TermsSetQueryImpl extends TermsSetQuery {
 
 	public TermsSetQueryImpl(String fieldName, List<Object> values) {
 		_fieldName = fieldName;

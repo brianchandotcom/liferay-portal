@@ -22,51 +22,51 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface SimpleStringQuery extends Query {
+public abstract class SimpleStringQuery extends Query {
 
-	public void addField(String field, float boost);
+	public abstract void addField(String field, float boost);
 
-	public void addFields(String... fields);
+	public abstract void addFields(String... fields);
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public Boolean getAnalyzeWildcard();
+	public abstract Boolean getAnalyzeWildcard();
 
-	public Boolean getAutoGenerateSynonymsPhraseQuery();
+	public abstract Boolean getAutoGenerateSynonymsPhraseQuery();
 
-	public Operator getDefaultOperator();
+	public abstract Operator getDefaultOperator();
 
-	public Map<String, Float> getFieldBoostMap();
+	public abstract Map<String, Float> getFieldBoostMap();
 
-	public Integer getFuzzyMaxExpansions();
+	public abstract Integer getFuzzyMaxExpansions();
 
-	public Integer getFuzzyPrefixLength();
+	public abstract Integer getFuzzyPrefixLength();
 
-	public Boolean getFuzzyTranspositions();
+	public abstract Boolean getFuzzyTranspositions();
 
-	public Boolean getLenient();
+	public abstract Boolean getLenient();
 
-	public String getQuery();
+	public abstract String getQuery();
 
-	public String getQuoteFieldSuffix();
+	public abstract String getQuoteFieldSuffix();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setAnalyzeWildcard(Boolean analyzeWildcard);
+	public abstract void setAnalyzeWildcard(Boolean analyzeWildcard);
 
-	public void setAutoGenerateSynonymsPhraseQuery(
+	public abstract void setAutoGenerateSynonymsPhraseQuery(
 		Boolean autoGenerateSynonymsPhraseQuery);
 
-	public void setDefaultOperator(Operator defaultOperator);
+	public abstract void setDefaultOperator(Operator defaultOperator);
 
-	public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions);
+	public abstract void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions);
 
-	public void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
+	public abstract void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
 
-	public void setFuzzyTranspositions(Boolean fuzzyTranspositions);
+	public abstract void setFuzzyTranspositions(Boolean fuzzyTranspositions);
 
-	public void setLenient(Boolean lenient);
+	public abstract void setLenient(Boolean lenient);
 
-	public void setQuoteFieldSuffix(String quoteFieldSuffix);
+	public abstract void setQuoteFieldSuffix(String quoteFieldSuffix);
 
 }

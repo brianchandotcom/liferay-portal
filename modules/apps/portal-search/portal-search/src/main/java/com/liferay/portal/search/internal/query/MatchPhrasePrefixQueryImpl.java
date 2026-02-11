@@ -11,8 +11,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class MatchPhrasePrefixQueryImpl
-	extends BaseQueryImpl implements MatchPhrasePrefixQuery {
+public class MatchPhrasePrefixQueryImpl extends MatchPhrasePrefixQuery {
 
 	public MatchPhrasePrefixQueryImpl(String field, Object value) {
 		_field = field;

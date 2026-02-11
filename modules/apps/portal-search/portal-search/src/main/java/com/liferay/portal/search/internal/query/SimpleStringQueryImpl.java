@@ -26,8 +26,7 @@ import java.util.Map;
  *
  * @author Michael C. Han
  */
-public class SimpleStringQueryImpl
-	extends BaseQueryImpl implements SimpleStringQuery {
+public class SimpleStringQueryImpl extends SimpleStringQuery {
 
 	public SimpleStringQueryImpl(String query) {
 		_query = query;

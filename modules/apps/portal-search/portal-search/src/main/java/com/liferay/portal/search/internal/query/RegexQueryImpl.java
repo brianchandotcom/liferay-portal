@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.RegexQuery;
 /**
  * @author Michael C. Han
  */
-public class RegexQueryImpl extends BaseQueryImpl implements RegexQuery {
+public class RegexQueryImpl extends RegexQuery {
 
 	public RegexQueryImpl(String field, String regex) {
 		_field = field;

@@ -25,8 +25,7 @@ import java.util.List;
  *
  * @author Michael C. Han
  */
-public class PercolateQueryImpl
-	extends BaseQueryImpl implements PercolateQuery {
+public class PercolateQueryImpl extends PercolateQuery {
 
 	public PercolateQueryImpl(String field, List<String> documentJSONs) {
 		_field = field;

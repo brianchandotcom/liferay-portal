@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class PrefixQueryImpl extends BaseQueryImpl implements PrefixQuery {
+public class PrefixQueryImpl extends PrefixQuery {
 
 	public PrefixQueryImpl(String field, String prefix) {
 		_field = field;

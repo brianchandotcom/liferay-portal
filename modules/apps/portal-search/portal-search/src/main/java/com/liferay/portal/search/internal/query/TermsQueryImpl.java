@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class TermsQueryImpl extends BaseQueryImpl implements TermsQuery {
+public class TermsQueryImpl extends TermsQuery {
 
 	public TermsQueryImpl(String field) {
 		_field = field;

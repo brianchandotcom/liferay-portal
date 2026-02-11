@@ -12,8 +12,7 @@ import com.liferay.portal.search.query.RangeTermQuery;
 /**
  * @author Michael C. Han
  */
-public class RangeTermQueryImpl
-	extends BaseQueryImpl implements RangeTermQuery {
+public class RangeTermQueryImpl extends RangeTermQuery {
 
 	public RangeTermQueryImpl(
 		String field, boolean includesLower, boolean includesUpper) {

@@ -11,16 +11,16 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface TermsQuery extends Query {
+public abstract class TermsQuery extends Query {
 
-	public void addValue(Object value);
+	public abstract void addValue(Object value);
 
-	public void addValues(Object... values);
+	public abstract void addValues(Object... values);
 
-	public String getField();
+	public abstract String getField();
 
-	public String[] getValues();
+	public abstract String[] getValues();
 
-	public boolean isEmpty();
+	public abstract boolean isEmpty();
 
 }

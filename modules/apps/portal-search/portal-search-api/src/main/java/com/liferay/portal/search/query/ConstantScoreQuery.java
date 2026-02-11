@@ -11,8 +11,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface ConstantScoreQuery extends Query {
+public abstract class ConstantScoreQuery extends Query {
 
-	public Query getQuery();
+	public abstract Query getQuery();
 
 }

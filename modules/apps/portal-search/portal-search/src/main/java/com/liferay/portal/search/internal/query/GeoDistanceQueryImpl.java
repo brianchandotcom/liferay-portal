@@ -14,8 +14,7 @@ import com.liferay.portal.search.query.geolocation.GeoValidationMethod;
 /**
  * @author Michael C. Han
  */
-public class GeoDistanceQueryImpl
-	extends BaseQueryImpl implements GeoDistanceQuery {
+public class GeoDistanceQueryImpl extends GeoDistanceQuery {
 
 	public GeoDistanceQueryImpl(
 		String field, GeoLocationPoint pinGeoLocationPoint,

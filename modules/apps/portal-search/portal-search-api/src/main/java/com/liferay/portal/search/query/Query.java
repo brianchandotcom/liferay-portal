@@ -13,16 +13,29 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface Query extends Serializable {
+public abstract class Query implements Serializable {
 
-	public <T> T accept(QueryVisitor<T> queryVisitor);
+	public abstract <T> T accept(QueryVisitor<T> queryVisitor);
 
-	public Float getBoost();
+	public Float getBoost() {
+		return _boost;
+	}
 
-	public String getQueryName();
+	public String getQueryName() {
+		return _queryName;
+	}
 
-	public void setBoost(Float boost);
+	public void setBoost(Float boost) {
+		_boost = boost;
+	}
 
-	public void setQueryName(String queryName);
+	public void setQueryName(String queryName) {
+		_queryName = queryName;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private Float _boost;
+	private String _queryName;
 
 }

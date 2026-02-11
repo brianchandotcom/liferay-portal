@@ -11,7 +11,7 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface RegexQuery extends Query {
+public abstract class RegexQuery extends Query {
 
 	public static final int ALL_SYNTAX_FLAG = 0xffff;
 
@@ -29,21 +29,21 @@ public interface RegexQuery extends Query {
 
 	public static final int NONE_SYNTAX_FLAG = 0;
 
-	public String getField();
+	public abstract String getField();
 
-	public Integer getMaxDeterminedStates();
+	public abstract Integer getMaxDeterminedStates();
 
-	public String getRegex();
+	public abstract String getRegex();
 
-	public Integer getRegexFlags();
+	public abstract Integer getRegexFlags();
 
-	public String getRewrite();
+	public abstract String getRewrite();
 
-	public void setMaxDeterminedStates(Integer maxDeterminedStates);
+	public abstract void setMaxDeterminedStates(Integer maxDeterminedStates);
 
-	public void setRegexFlags(RegexFlag... regexFlags);
+	public abstract void setRegexFlags(RegexFlag... regexFlags);
 
-	public void setRewrite(String rewrite);
+	public abstract void setRewrite(String rewrite);
 
 	public enum RegexFlag {
 

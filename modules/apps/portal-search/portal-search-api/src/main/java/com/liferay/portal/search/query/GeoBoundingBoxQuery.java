@@ -15,26 +15,27 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeoBoundingBoxQuery extends Query {
+public abstract class GeoBoundingBoxQuery extends Query {
 
-	public GeoLocationPoint getBottomRightGeoLocationPoint();
+	public abstract GeoLocationPoint getBottomRightGeoLocationPoint();
 
-	public String getField();
+	public abstract String getField();
 
-	public GeoExecType getGeoExecType();
+	public abstract GeoExecType getGeoExecType();
 
-	public GeoValidationMethod getGeoValidationMethod();
+	public abstract GeoValidationMethod getGeoValidationMethod();
 
-	public Boolean getIgnoreUnmapped();
+	public abstract Boolean getIgnoreUnmapped();
 
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
-	public GeoLocationPoint getTopLeftGeoLocationPoint();
+	public abstract GeoLocationPoint getTopLeftGeoLocationPoint();
 
-	public void setGeoExecType(GeoExecType geoExecType);
+	public abstract void setGeoExecType(GeoExecType geoExecType);
 
-	public void setGeoValidationMethod(GeoValidationMethod geoValidationMethod);
+	public abstract void setGeoValidationMethod(
+		GeoValidationMethod geoValidationMethod);
 
-	public void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
 
 }

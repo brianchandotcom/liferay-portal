@@ -11,10 +11,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface NestedQuery extends Query {
+public abstract class NestedQuery extends Query {
 
-	public String getPath();
+	public abstract String getPath();
 
-	public Query getQuery();
+	public abstract Query getQuery();
 
 }

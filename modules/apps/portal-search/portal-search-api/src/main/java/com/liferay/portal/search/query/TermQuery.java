@@ -11,10 +11,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public interface TermQuery extends Query {
+public abstract class TermQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public Object getValue();
+	public abstract Object getValue();
 
 }

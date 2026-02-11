@@ -13,7 +13,7 @@ import com.liferay.portal.search.query.QueryVisitor;
 /**
  * @author Michael C. Han
  */
-public class MatchQueryImpl extends BaseQueryImpl implements MatchQuery {
+public class MatchQueryImpl extends MatchQuery {
 
 	public MatchQueryImpl(String field, Object value) {
 		_field = field;

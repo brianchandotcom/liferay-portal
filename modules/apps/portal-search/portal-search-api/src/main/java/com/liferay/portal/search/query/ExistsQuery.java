@@ -11,10 +11,10 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface ExistsQuery extends Query {
+public abstract class ExistsQuery extends Query {
 
-	public String getField();
+	public abstract String getField();
 
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
 }

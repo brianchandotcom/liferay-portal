@@ -13,14 +13,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface IdsQuery extends Query {
+public abstract class IdsQuery extends Query {
 
-	public void addIds(String... ids);
+	public abstract void addIds(String... ids);
 
-	public void addTypes(String... types);
+	public abstract void addTypes(String... types);
 
-	public Set<String> getIds();
+	public abstract Set<String> getIds();
 
-	public Set<String> getTypes();
+	public abstract Set<String> getTypes();
 
 }

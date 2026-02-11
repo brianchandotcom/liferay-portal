@@ -14,35 +14,32 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Hugo Huijser
  */
 @ProviderType
-public interface BooleanQuery extends Query {
+public abstract class BooleanQuery extends Query {
 
-	public BooleanQuery addFilterQueryClauses(Query... clauses);
+	public abstract BooleanQuery addFilterQueryClauses(Query... clauses);
 
-	public BooleanQuery addMustNotQueryClauses(Query... clauses);
+	public abstract BooleanQuery addMustNotQueryClauses(Query... clauses);
 
-	public BooleanQuery addMustQueryClauses(Query... clauses);
+	public abstract BooleanQuery addMustQueryClauses(Query... clauses);
 
-	public BooleanQuery addShouldQueryClauses(Query... clauses);
+	public abstract BooleanQuery addShouldQueryClauses(Query... clauses);
 
-	public Boolean getAdjustPureNegative();
+	public abstract Boolean getAdjustPureNegative();
 
-	public List<Query> getFilterQueryClauses();
+	public abstract List<Query> getFilterQueryClauses();
 
-	public Integer getMinimumShouldMatch();
+	public abstract Integer getMinimumShouldMatch();
 
-	public List<Query> getMustNotQueryClauses();
+	public abstract List<Query> getMustNotQueryClauses();
 
-	public List<Query> getMustQueryClauses();
+	public abstract List<Query> getMustQueryClauses();
 
-	public List<Query> getShouldQueryClauses();
+	public abstract List<Query> getShouldQueryClauses();
 
-	public boolean hasClauses();
+	public abstract boolean hasClauses();
 
-	public void setAdjustPureNegative(Boolean adjustPureNegative);
+	public abstract void setAdjustPureNegative(Boolean adjustPureNegative);
 
-	public void setMinimumShouldMatch(Integer minimumShouldMatch);
-
-	@Override
-	public String toString();
+	public abstract void setMinimumShouldMatch(Integer minimumShouldMatch);
 
 }

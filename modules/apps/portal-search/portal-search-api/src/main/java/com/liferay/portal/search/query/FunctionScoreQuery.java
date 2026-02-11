@@ -16,31 +16,31 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface FunctionScoreQuery extends Query {
+public abstract class FunctionScoreQuery extends Query {
 
-	public void addFilterQueryScoreFunctionHolder(
+	public abstract void addFilterQueryScoreFunctionHolder(
 		Query filterQuery, ScoreFunction scoreFunction);
 
-	public CombineFunction getCombineFunction();
+	public abstract CombineFunction getCombineFunction();
 
-	public List<FilterQueryScoreFunctionHolder>
+	public abstract List<FilterQueryScoreFunctionHolder>
 		getFilterQueryScoreFunctionHolders();
 
-	public Float getMaxBoost();
+	public abstract Float getMaxBoost();
 
-	public Float getMinScore();
+	public abstract Float getMinScore();
 
-	public Query getQuery();
+	public abstract Query getQuery();
 
-	public ScoreMode getScoreMode();
+	public abstract ScoreMode getScoreMode();
 
-	public void setCombineFunction(CombineFunction combineFunction);
+	public abstract void setCombineFunction(CombineFunction combineFunction);
 
-	public void setMaxBoost(Float maxBoost);
+	public abstract void setMaxBoost(Float maxBoost);
 
-	public void setMinScore(Float minScore);
+	public abstract void setMinScore(Float minScore);
 
-	public void setScoreMode(ScoreMode scoreMode);
+	public abstract void setScoreMode(ScoreMode scoreMode);
 
 	public interface FilterQueryScoreFunctionHolder {
 

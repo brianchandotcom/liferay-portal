@@ -11,18 +11,18 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface MatchPhraseQuery extends Query {
+public abstract class MatchPhraseQuery extends Query {
 
-	public String getAnalyzer();
+	public abstract String getAnalyzer();
 
-	public String getField();
+	public abstract String getField();
 
-	public Integer getSlop();
+	public abstract Integer getSlop();
 
-	public Object getValue();
+	public abstract Object getValue();
 
-	public void setAnalyzer(String analyzer);
+	public abstract void setAnalyzer(String analyzer);
 
-	public void setSlop(Integer slop);
+	public abstract void setSlop(Integer slop);
 
 }

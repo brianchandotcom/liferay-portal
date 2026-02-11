@@ -12,7 +12,7 @@ import com.liferay.portal.search.query.TermQuery;
 /**
  * @author Brian Wing Shun Chan
  */
-public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
+public class TermQueryImpl extends TermQuery {
 
 	public TermQueryImpl(String field, Object value) {
 		_field = field;

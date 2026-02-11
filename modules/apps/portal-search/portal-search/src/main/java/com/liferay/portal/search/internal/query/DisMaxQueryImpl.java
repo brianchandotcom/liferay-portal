@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * @author Michael C. Han
  */
-public class DisMaxQueryImpl extends BaseQueryImpl implements DisMaxQuery {
+public class DisMaxQueryImpl extends DisMaxQuery {
 
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {

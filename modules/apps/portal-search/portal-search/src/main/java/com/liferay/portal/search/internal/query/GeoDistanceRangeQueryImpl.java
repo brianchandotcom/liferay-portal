@@ -5,24 +5,30 @@
 
 package com.liferay.portal.search.internal.query;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.GeoDistanceRangeQuery;
 import com.liferay.portal.search.query.QueryVisitor;
+import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 
 /**
  * @author Michael C. Han
  */
 public class GeoDistanceRangeQueryImpl
-	extends RangeTermQueryImpl implements GeoDistanceRangeQuery {
+	extends GeoDistanceRangeQuery {
 
 	public GeoDistanceRangeQueryImpl(
 		String field, boolean includesLower, boolean includesUpper,
 		GeoDistance lowerBoundGeoDistance, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance upperBoundGeoDistance) {
 
-		super(field, includesLower, includesUpper);
+		_field = field;
+		_includesLower = includesLower;
+		_includesUpper = includesUpper;
+
+		_setOperators(includesLower, includesUpper);
 
 		_lowerBoundGeoDistance = lowerBoundGeoDistance;
 		_pinGeoLocationPoint = pinGeoLocationPoint;
@@ -70,5 +76,80 @@ public class GeoDistanceRangeQueryImpl
 	private final GeoLocationPoint _pinGeoLocationPoint;
 	private ShapeRelation _shapeRelation;
 	private final GeoDistance _upperBoundGeoDistance;
+
+	@Override
+	public String getField() {
+		return _field;
+	}
+
+	@Override
+	public Object getLowerBound() {
+		return _lowerBound;
+	}
+
+	@Override
+	public RangeTermQuery.Operator getLowerBoundOperator() {
+		return _lowerBoundOperator;
+	}
+
+	@Override
+	public Object getUpperBound() {
+		return _upperBound;
+	}
+
+	@Override
+	public Operator getUpperBoundOperator() {
+		return _upperBoundOperator;
+	}
+
+	@Override
+	public boolean isIncludesLower() {
+		return _includesLower;
+	}
+
+	@Override
+	public boolean isIncludesUpper() {
+		return _includesUpper;
+	}
+
+	@Override
+	public void setLowerBound(Object lowerBound) {
+		_lowerBound = lowerBound;
+	}
+
+	@Override
+	public void setUpperBound(Object upperBound) {
+		_upperBound = upperBound;
+	}
+
+	private String _toString() {
+		return StringBundler.concat(
+			"{(", _lowerBound, _lowerBoundOperator, _field, _upperBoundOperator,
+			_upperBound, "), ", super.toString(), "}");
+	}
+
+	private void _setOperators(boolean includesLower, boolean includesUpper) {
+		if (includesLower) {
+			_lowerBoundOperator = Operator.GTE;
+		}
+		else {
+			_lowerBoundOperator = Operator.GT;
+		}
+
+		if (includesUpper) {
+			_upperBoundOperator = Operator.LTE;
+		}
+		else {
+			_upperBoundOperator = Operator.LT;
+		}
+	}
+
+	private final String _field;
+	private final boolean _includesLower;
+	private final boolean _includesUpper;
+	private Object _lowerBound;
+	private Operator _lowerBoundOperator;
+	private Object _upperBound;
+	private Operator _upperBoundOperator;
 
 }

@@ -15,19 +15,18 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface GeoDistanceRangeQuery extends RangeTermQuery {
+public abstract class GeoDistanceRangeQuery extends RangeTermQuery {
 
-	public GeoDistance getLowerBoundGeoDistance();
+	public abstract GeoDistance getLowerBoundGeoDistance();
 
-	public GeoLocationPoint getPinGeoLocationPoint();
+	public abstract GeoLocationPoint getPinGeoLocationPoint();
 
-	public ShapeRelation getShapeRelation();
+	public abstract ShapeRelation getShapeRelation();
 
-	@Override
-	public int getSortOrder();
+	public abstract int getSortOrder();
 
-	public GeoDistance getUpperBoundGeoDistance();
+	public abstract GeoDistance getUpperBoundGeoDistance();
 
-	public void setShapeRelation(ShapeRelation shapeRelation);
+	public abstract void setShapeRelation(ShapeRelation shapeRelation);
 
 }

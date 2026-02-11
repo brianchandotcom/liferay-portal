@@ -78,20 +78,6 @@ public class SearchRequestExecutorFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	private ClosePointInTimeRequestExecutor
-		_createClosePointInTimeRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		ClosePointInTimeRequestExecutor closePointInTimeRequestExecutor =
-			new ClosePointInTimeRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			closePointInTimeRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return closePointInTimeRequestExecutor;
-	}
-
 	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
 		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
 		OpenSearchConnectionManager openSearchConnectionManager) {
@@ -150,13 +136,12 @@ public class SearchRequestExecutorFixture {
 		OpenSearchConnectionManager openSearchConnectionManager,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
-		SearchRequestExecutor searchRequestExecutor =
+		OpenSearchSearchRequestExecutor openSearchSearchRequestExecutor =
 			new OpenSearchSearchRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_closePointInTimeRequestExecutor",
-			_createClosePointInTimeRequestExecutor(
-				openSearchConnectionManager));
+			openSearchSearchRequestExecutor, "_openSearchConnectionManager",
+			openSearchConnectionManager);
 
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
@@ -164,7 +149,7 @@ public class SearchRequestExecutorFixture {
 					complexQueryBuilderFactory);
 
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_countSearchRequestExecutor",
+			openSearchSearchRequestExecutor, "_countSearchRequestExecutor",
 			_createCountSearchRequestExecutor(
 				commonSearchRequestBuilderAssembler,
 				openSearchConnectionManager));
@@ -178,24 +163,27 @@ public class SearchRequestExecutorFixture {
 			_createSearchSearchResponseAssembler(statsRequestBuilderFactory);
 
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_multisearchSearchRequestExecutor",
+			openSearchSearchRequestExecutor,
+			"_multisearchSearchRequestExecutor",
 			_createMultisearchSearchRequestExecutor(
 				openSearchConnectionManager, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
 
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_openPointInTimeRequestExecutor",
+			openSearchSearchRequestExecutor, "_openPointInTimeRequestExecutor",
 			_createOpenPointInTimeRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_searchSearchRequestExecutor",
+			openSearchSearchRequestExecutor, "_searchSearchRequestExecutor",
 			_createSearchSearchRequestExecutor(
 				openSearchConnectionManager, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
 		ReflectionTestUtil.setFieldValue(
-			searchRequestExecutor, "_suggestSearchRequestExecutor",
+			openSearchSearchRequestExecutor, "_suggestSearchRequestExecutor",
 			_createSuggestSearchRequestExecutor(openSearchConnectionManager));
 
-		return searchRequestExecutor;
+		openSearchSearchRequestExecutor.activate();
+
+		return openSearchSearchRequestExecutor;
 	}
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(

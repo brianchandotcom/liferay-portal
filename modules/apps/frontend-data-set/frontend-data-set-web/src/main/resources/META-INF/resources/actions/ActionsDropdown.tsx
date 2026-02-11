@@ -17,7 +17,11 @@ import FrontendDataSetContext, {
 } from '../FrontendDataSetContext';
 import formatActionURL from '../utils/actionItems/formatActionURL';
 import isLink from '../utils/isLink';
-import {IActionsDropdown, IItemsActions} from '../utils/types';
+import {
+	EItemActionsType,
+	IActionsDropdown,
+	IItemsActions,
+} from '../utils/types';
 
 type TClayDropDownItem = NonNullable<
 	React.ComponentProps<typeof ClayDropDownWithItems>['items']
@@ -181,9 +185,22 @@ function ActionsDropdown({
 	if (
 		!inlineEditingAlwaysOn &&
 		!uniformActionsDisplay &&
-		actions.length === 1
+		actions.length === 1 &&
+		(actions[0].type === EItemActionsType.ITEM ||
+			((actions[0].type === EItemActionsType.CONTEXTUAL ||
+				actions[0].type === EItemActionsType.GROUP) &&
+				actions[0].items?.length === 1))
 	) {
-		const [action] = actions;
+		let [action] = actions;
+
+		if (
+			action.type === EItemActionsType.CONTEXTUAL ||
+			action.type === EItemActionsType.GROUP
+		) {
+			if (action?.items && action?.items[0]) {
+				action = action.items[0];
+			}
+		}
 
 		if (loading) {
 			return <ClayLoadingIndicator className="mb-2 mt-2" />;

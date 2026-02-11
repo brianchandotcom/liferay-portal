@@ -212,7 +212,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -2264,24 +2263,13 @@ public class ObjectDefinitionLocalServiceImpl
 		}
 
 		while (true) {
-			StringBuilder sb = new StringBuilder();
+			String randomClassName =
+				ObjectDefinitionUtil.generateRandomClassName();
 
-			sb.append(
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
-			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
-
-			ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
-
-			sb.append(threadLocalRandom.nextInt(10));
-
-			sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
-			sb.append(threadLocalRandom.nextInt(10));
-
-			int count = _getObjectDefinitionsCountByClassName(sb.toString());
+			int count = _getObjectDefinitionsCountByClassName(randomClassName);
 
 			if (count == 0) {
-				return sb.toString();
+				return randomClassName;
 			}
 		}
 	}

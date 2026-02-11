@@ -19,11 +19,30 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalInstances;
 
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Alejandro Tardín
  */
 public class ObjectDefinitionUtil {
+
+	public static String generateRandomClassName() {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
+		sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+
+		ThreadLocalRandom threadLocalRandom = ThreadLocalRandom.current();
+
+		sb.append(threadLocalRandom.nextInt(10));
+
+		sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
+		sb.append(threadLocalRandom.nextInt(10));
+
+		return sb.toString();
+	}
 
 	public static String getModifiableSystemObjectDefinitionRESTContextPath(
 		String name) {

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -95,12 +96,6 @@ public class ClassNamePostUpgradeDataCleanupProcess
 					return;
 				}
 
-				int dashIndex = value.indexOf(StringPool.DASH);
-
-				if (dashIndex != -1) {
-					value = value.substring(0, dashIndex);
-				}
-
 				if (StringUtil.startsWith(
 						value,
 						ObjectDefinitionConstants.
@@ -116,9 +111,17 @@ public class ClassNamePostUpgradeDataCleanupProcess
 					}
 				}
 
+				int dashIndex = value.indexOf(StringPool.DASH);
+
+				if ((dashIndex != -1) &&
+					StringUtil.startsWith(value, Layout.class.getName())) {
+
+					value = value.substring(0, dashIndex);
+				}
+
 				boolean missingClass = false;
 
-				for (String currentValue : value.split(StringPool.UNDERLINE)) {
+				for (String currentValue : value.split("[-_]")) {
 					if (models.contains(currentValue)) {
 						continue;
 					}

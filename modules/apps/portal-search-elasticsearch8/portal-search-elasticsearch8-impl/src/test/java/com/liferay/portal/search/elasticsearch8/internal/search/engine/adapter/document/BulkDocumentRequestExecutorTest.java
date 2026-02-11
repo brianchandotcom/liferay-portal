@@ -12,7 +12,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
@@ -44,12 +43,8 @@ public class BulkDocumentRequestExecutorTest {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
 			getClass());
 
-		_bulkDocumentRequestExecutorImpl =
-			new BulkDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_bulkDocumentRequestExecutorImpl, "_elasticsearchClientResolver",
-			elasticsearchFixture);
+		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutor(
+			elasticsearchFixture, 0, 0);
 
 		_elasticsearchFixture = elasticsearchFixture;
 
@@ -97,8 +92,7 @@ public class BulkDocumentRequestExecutorTest {
 		bulkDocumentRequest.addBulkableDocumentRequest(updateDocumentRequest);
 
 		BulkRequest bulkRequest =
-			_bulkDocumentRequestExecutorImpl.createBulkRequest(
-				bulkDocumentRequest);
+			_bulkDocumentRequestExecutor.createBulkRequest(bulkDocumentRequest);
 
 		List<BulkOperation> bulkOperations = bulkRequest.operations();
 
@@ -116,7 +110,7 @@ public class BulkDocumentRequestExecutorTest {
 
 	private static final String _MAPPING_NAME = "testMapping";
 
-	private BulkDocumentRequestExecutorImpl _bulkDocumentRequestExecutorImpl;
+	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 	private ElasticsearchFixture _elasticsearchFixture;
 

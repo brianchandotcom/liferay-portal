@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
-import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.BulkDocumentRequestExecutorImpl;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.document.BulkDocumentRequestExecutor;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -46,7 +46,7 @@ public class SolrIndexWriterLoggingTest extends BaseIndexingTestCase {
 	}
 
 	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
+		expectedClass = BulkDocumentRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.INFO,
 		expectedLog = "response={responseHeader={status=0"
 	)

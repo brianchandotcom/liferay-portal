@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 
+import java.util.Collections;
+
 /**
  * @author Dylan Rebelak
  */
@@ -29,19 +31,6 @@ public class DocumentRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private BulkDocumentRequestExecutor _createBulkDocumentRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		BulkDocumentRequestExecutor bulkDocumentRequestExecutor =
-			new BulkDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			bulkDocumentRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return bulkDocumentRequestExecutor;
-	}
-
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -52,10 +41,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchDocumentRequestExecutor,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchDocumentRequestExecutor,
-			"_bulkDocumentRequestExecutor",
-			_createBulkDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(elasticsearchClientResolver));
@@ -69,7 +54,7 @@ public class DocumentRequestExecutorFixture {
 			"_updateDocumentRequestExecutor",
 			_createUpdateDocumentRequestExecutor(elasticsearchClientResolver));
 
-		elasticsearchDocumentRequestExecutor.activate();
+		elasticsearchDocumentRequestExecutor.activate(Collections.emptyMap());
 
 		return elasticsearchDocumentRequestExecutor;
 	}

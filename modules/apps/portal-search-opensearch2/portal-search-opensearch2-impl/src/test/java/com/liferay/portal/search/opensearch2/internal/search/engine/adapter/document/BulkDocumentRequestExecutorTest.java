@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -45,12 +44,8 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_bulkDocumentRequestExecutorImpl =
-			new BulkDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_bulkDocumentRequestExecutorImpl, "_openSearchConnectionManager",
-			openSearchConnectionManager);
+		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutor(
+			0, openSearchConnectionManager, 0);
 
 		_documentFixture.setUp();
 	}
@@ -88,8 +83,7 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 		bulkDocumentRequest.addBulkableDocumentRequest(updateDocumentRequest);
 
 		BulkRequest bulkRequest =
-			_bulkDocumentRequestExecutorImpl.createBulkRequest(
-				bulkDocumentRequest);
+			_bulkDocumentRequestExecutor.createBulkRequest(bulkDocumentRequest);
 
 		List<BulkOperation> bulkOperations = bulkRequest.operations();
 
@@ -105,7 +99,7 @@ public class BulkDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	private static final String _MAPPING_NAME = "testMapping";
 
-	private BulkDocumentRequestExecutorImpl _bulkDocumentRequestExecutorImpl;
+	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 
 }

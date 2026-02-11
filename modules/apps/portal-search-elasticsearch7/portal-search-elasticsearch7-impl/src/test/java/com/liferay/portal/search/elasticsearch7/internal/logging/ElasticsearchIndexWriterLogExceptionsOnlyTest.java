@@ -18,7 +18,7 @@ import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexWrite
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchConnectionFixture;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.BulkDocumentRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.BulkDocumentRequestExecutor;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -86,7 +86,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
+		expectedClass = BulkDocumentRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.WARNING,
 		expectedLog = "failed to parse field [expirationDate] of type [date]"
 	)
@@ -202,7 +202,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
+		expectedClass = BulkDocumentRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.WARNING, expectedLog = "no such index"
 	)
 	@Test
@@ -316,7 +316,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
+		expectedClass = BulkDocumentRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.WARNING,
 		expectedLog = "failed to parse field [expirationDate] of type [date]"
 	)
@@ -368,7 +368,7 @@ public class ElasticsearchIndexWriterLogExceptionsOnlyTest
 	}
 
 	@ExpectedLog(
-		expectedClass = BulkDocumentRequestExecutorImpl.class,
+		expectedClass = BulkDocumentRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.WARNING,
 		expectedLog = "failed to parse field [expirationDate] of type [date]"
 	)

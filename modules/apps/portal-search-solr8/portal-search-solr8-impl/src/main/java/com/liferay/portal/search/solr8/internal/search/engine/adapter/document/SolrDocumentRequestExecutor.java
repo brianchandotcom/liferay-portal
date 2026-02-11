@@ -113,11 +113,11 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 		_deleteByQueryDocumentRequestExecutor =
 			new DeleteByQueryDocumentRequestExecutor(
 				defaultCollection, _solrClientManager);
+		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutor(
+			defaultCollection, _solrClientManager);
 	}
 
-	@Reference
-	private BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
-
+	private volatile BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
 	private volatile DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;

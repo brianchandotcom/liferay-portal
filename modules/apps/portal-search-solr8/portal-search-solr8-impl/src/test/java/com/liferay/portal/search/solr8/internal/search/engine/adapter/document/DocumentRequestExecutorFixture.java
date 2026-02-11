@@ -25,23 +25,6 @@ public class DocumentRequestExecutorFixture {
 			_solrClientManager);
 	}
 
-	protected static BulkDocumentRequestExecutor
-		createBulkDocumentRequestExecutor(SolrClientManager solrClientManager) {
-
-		BulkDocumentRequestExecutorImpl bulkDocumentRequestExecutorImpl =
-			new BulkDocumentRequestExecutorImpl() {
-				{
-					activate(_properties);
-				}
-			};
-
-		ReflectionTestUtil.setFieldValue(
-			bulkDocumentRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return bulkDocumentRequestExecutorImpl;
-	}
-
 	protected static DocumentRequestExecutor createDocumentRequestExecutor(
 		SolrClientManager solrClientManager) {
 
@@ -52,9 +35,6 @@ public class DocumentRequestExecutorFixture {
 			solrDocumentRequestExecutor, "_solrClientManager",
 			solrClientManager);
 
-		ReflectionTestUtil.setFieldValue(
-			solrDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
-			createBulkDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			createGetDocumentRequestExecutor(solrClientManager));

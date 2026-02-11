@@ -9,6 +9,8 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
+import java.util.Collections;
+
 /**
  * @author Dylan Rebelak
  */
@@ -29,19 +31,6 @@ public class DocumentRequestExecutorFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	private BulkDocumentRequestExecutor _createBulkDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		BulkDocumentRequestExecutor bulkDocumentRequestExecutor =
-			new BulkDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			bulkDocumentRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return bulkDocumentRequestExecutor;
-	}
-
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
@@ -51,9 +40,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
-			_createBulkDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(openSearchConnectionManager));
@@ -66,7 +52,7 @@ public class DocumentRequestExecutorFixture {
 			openSearchDocumentRequestExecutor, "_updateDocumentRequestExecutor",
 			_createUpdateDocumentRequestExecutor(openSearchConnectionManager));
 
-		openSearchDocumentRequestExecutor.activate();
+		openSearchDocumentRequestExecutor.activate(Collections.emptyMap());
 
 		return openSearchDocumentRequestExecutor;
 	}

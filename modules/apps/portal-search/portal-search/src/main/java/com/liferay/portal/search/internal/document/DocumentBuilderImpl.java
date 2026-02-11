@@ -18,7 +18,7 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 
 	@Override
 	public Document build() {
-		return new DocumentImpl(_documentImpl);
+		return new Document(_document);
 	}
 
 	@Override
@@ -151,26 +151,26 @@ public class DocumentBuilderImpl implements DocumentBuilder {
 
 	@Override
 	public DocumentBuilder setValues(String name, Collection<Object> values) {
-		_documentImpl.setFieldValues(name, values);
+		_document.setFieldValues(name, values);
 
 		return this;
 	}
 
 	@Override
 	public DocumentBuilder unsetValue(String name) {
-		_documentImpl.unsetField(name);
+		_document.unsetField(name);
 
 		return this;
 	}
 
 	protected void setFieldValue(String name, Object value) {
-		_documentImpl.setFieldValue(name, value);
+		_document.setFieldValue(name, value);
 	}
 
 	protected void setFieldValues(String name, Object[] values) {
-		_documentImpl.setFieldValues(name, values);
+		_document.setFieldValues(name, values);
 	}
 
-	private final DocumentImpl _documentImpl = new DocumentImpl();
+	private final Document _document = new Document();
 
 }

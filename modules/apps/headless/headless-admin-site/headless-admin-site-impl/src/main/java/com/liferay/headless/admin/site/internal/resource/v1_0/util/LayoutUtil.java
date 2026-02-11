@@ -1000,8 +1000,6 @@ public class LayoutUtil {
 
 		_updateClientExtensions(cetManager, layout, settings, serviceContext);
 
-		layout = _updateLookAndFeel(layout, settings);
-
 		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
 
 		String faviconFileEntryERC = null;
@@ -1029,7 +1027,7 @@ public class LayoutUtil {
 			}
 		}
 
-		return _updateLayout(
+		layout = _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 			_getStyleBookEntryERC(
 				layout.getCompanyId(), layout.getGroupId(), settings),
@@ -1037,6 +1035,8 @@ public class LayoutUtil {
 			_getMasterLayoutPageTemplateEntryERC(
 				serviceContext.getScopeGroupId(), layout, settings),
 			friendlyURLMap, serviceContext);
+
+		return _updateLookAndFeel(layout, settings);
 	}
 
 	private static Layout _updateLayout(

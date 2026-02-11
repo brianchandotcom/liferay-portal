@@ -17,14 +17,27 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 			<div class="c-focus-trap">
 				<div class="sidebar-header">
 					<div class="autofit-row">
-						<div class="autofit-col autofit-col-expand">
-							<span class="component-title" id="com_liferay_application_list_taglib_side_navigation_label">
-								<%-- TODO: replace the icon below with the panel icon --%>
-								<clay:icon symbol="grid" /><span class="c-px-2" data-qa-id="sideNavigationLabel"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
+						<div class="align-items-center autofit-col autofit-col-expand d-flex flex-row">
+							<clay:icon
+								symbol="grid"
+							/>
+
+							<span class="c-px-2 component-title flex-grow-1" id="com_liferay_application_list_taglib_side_navigation_label">
+								<span data-qa-id="sideNavigationLabel"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
 							</span>
+
+							<clay:button
+								aria-label='<%= LanguageUtil.get(request, "go-to-other-site") %>'
+								borderless="<%= true %>"
+								displayType="secondary"
+								icon="sites"
+								monospaced="<%= true %>"
+								small="<%= true %>"
+								title='<%= LanguageUtil.get(request, "go-to-other-site") %>'
+							/>
 						</div>
 
-						<div class="autofit-col">
+						<div class="align-items-center autofit-col d-flex flex-row">
 							<button aria-controls="com_liferay_application_list_taglib_side_navigation" class="close lfr-portal-tooltip" title="<%= LanguageUtil.get(request, "close-product-menu") %>" type="button">
 								<clay:icon
 									symbol="times"

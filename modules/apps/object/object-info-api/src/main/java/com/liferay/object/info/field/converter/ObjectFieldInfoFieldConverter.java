@@ -47,7 +47,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -559,11 +558,10 @@ public class ObjectFieldInfoFieldConverter {
 		if ((group != null) && group.isCMS()) {
 			return StringBundler.concat(
 				_portal.getPortalURL(serviceContext.getRequest()),
-				"/o/search/v1.0/search?",
-				"emptySearch=true&nestedFields=embedded&filter=status in (0) ",
+				"/o/search/v1.0/search?emptySearch=true&filter=status in (0) ",
 				"and objectDefinitionId in (",
 				relatedObjectDefinition.getObjectDefinitionId(),
-				CharPool.CLOSE_PARENTHESIS);
+				")&nestedFields=embedded");
 		}
 
 		RESTContextPathResolver restContextPathResolver =

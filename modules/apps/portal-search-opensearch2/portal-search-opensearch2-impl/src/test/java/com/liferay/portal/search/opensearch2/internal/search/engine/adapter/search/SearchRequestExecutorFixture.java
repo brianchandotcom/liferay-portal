@@ -23,7 +23,6 @@ import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConne
 import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
-import com.liferay.portal.search.opensearch2.internal.suggest.OpenSearchSuggesterTranslator;
 import com.liferay.portal.search.query.Queries;
 
 /**
@@ -161,10 +160,6 @@ public class SearchRequestExecutorFixture {
 				openSearchConnectionManager, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
 
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchRequestExecutor, "_suggestSearchRequestExecutor",
-			_createSuggestSearchRequestExecutor(openSearchConnectionManager));
-
 		openSearchSearchRequestExecutor.activate();
 
 		return openSearchSearchRequestExecutor;
@@ -240,23 +235,6 @@ public class SearchRequestExecutorFixture {
 				new StatsResultsTranslatorImpl()));
 
 		return searchSearchResponseAssembler;
-	}
-
-	private SuggestSearchRequestExecutor _createSuggestSearchRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		SuggestSearchRequestExecutor suggestSearchRequestExecutor =
-			new SuggestSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			suggestSearchRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		ReflectionTestUtil.setFieldValue(
-			suggestSearchRequestExecutor, "_suggesterTranslator",
-			new OpenSearchSuggesterTranslator());
-
-		return suggestSearchRequestExecutor;
 	}
 
 	private OpenSearchConnectionManager _openSearchConnectionManager;

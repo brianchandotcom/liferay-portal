@@ -94,6 +94,8 @@ public class OpenSearchSearchRequestExecutor implements SearchRequestExecutor {
 			_openSearchConnectionManager);
 		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
 			_openSearchConnectionManager);
+		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
@@ -113,7 +115,6 @@ public class OpenSearchSearchRequestExecutor implements SearchRequestExecutor {
 	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
 
-	@Reference
 	private SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
 
 }

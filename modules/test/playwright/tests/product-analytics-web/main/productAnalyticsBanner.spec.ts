@@ -62,11 +62,14 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 
 	await test.step('Reset Cookies System Settings if needed', async () => {
-		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
 
 		await systemSettingsPage.page
 			.getByRole('heading', {
-				name: 'Cookie Manager',
+				name: 'Consent Manager',
 			})
 			.waitFor();
 
@@ -261,7 +264,7 @@ test(
 		await test.step('Enable Preference Handling Cookies', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
-				'Cookie Manager'
+				'Consent Manager'
 			);
 
 			await systemSettingsPage.page.waitForTimeout(1000);
@@ -329,7 +332,7 @@ test(
 		await test.step('Enable Preference Handling Cookies', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
-				'Cookie Manager'
+				'Consent Manager'
 			);
 
 			await systemSettingsPage.page.waitForTimeout(1000);
@@ -392,7 +395,7 @@ test(
 );
 
 test(
-	'Verify Data Privacy center is not present when both Cookie Manager and Product Analytics are disabled',
+	'Verify Data Privacy center is not present when both Consent Manager and Product Analytics are disabled',
 	{tag: '@LPD-72749'},
 	async ({accountSettingsPage, page, systemSettingsPage}) => {
 		await test.step('Disable Product Analytics', async () => {
@@ -427,15 +430,15 @@ test(
 			await expect(enabledButton).not.toBeChecked();
 		});
 
-		await test.step('Disable Cookie Manager', async () => {
+		await test.step('Disable Consent Manager', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
-				'Cookie Manager'
+				'Consent Manager'
 			);
 
 			await page
 				.getByRole('heading', {
-					name: 'Cookie Manager',
+					name: 'Consent Manager',
 				})
 				.waitFor();
 

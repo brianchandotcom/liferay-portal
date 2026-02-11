@@ -11,8 +11,8 @@ import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
-	resetAllCookieManagerConfigurations,
-} from './utils/cookieManagerAfterEach';
+	resetAllConsentManagerConfigurations,
+} from './utils/consentManagerAfterEach';
 
 const hideableCookieTypes = [
 	'Functional Cookies',
@@ -29,8 +29,8 @@ export const test = mergeTests(
 );
 
 test.afterEach(async ({systemSettingsPage}) => {
-	await test.step('Reset All Cookie Manager Configurations', async () => {
-		await resetAllCookieManagerConfigurations(systemSettingsPage);
+	await test.step('Reset All Consent Manager Configurations', async () => {
+		await resetAllConsentManagerConfigurations(systemSettingsPage);
 	});
 
 	await test.step('Clear Consent Cookies if present', async () => {
@@ -43,7 +43,10 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 	systemSettingsPage,
 }) => {
 	await test.step('Enable Preference Handling Cookies', async () => {
-		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');
+		await systemSettingsPage.goToSystemSetting(
+			'Privacy',
+			'Consent Manager'
+		);
 
 		const enabledButton = page.getByLabel('Enabled');
 
@@ -150,13 +153,13 @@ test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
 });
 
 test(
-	'Cookie Manager Adjustments',
+	'Consent Manager Adjustments',
 	{tag: '@LPD-60002'},
 	async ({browser, page, systemSettingsPage}) => {
 		await test.step('Enable Preference Handling Cookies if needed', async () => {
 			await systemSettingsPage.goToSystemSetting(
 				'Privacy',
-				'Cookie Manager'
+				'Consent Manager'
 			);
 
 			const enabledButton = await page.getByLabel('Enabled');

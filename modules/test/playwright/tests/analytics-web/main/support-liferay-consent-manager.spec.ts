@@ -134,7 +134,7 @@ async function checkAnalyticsInstance(page: Page) {
 }
 
 test.describe(
-	'LPD-6540 Support Liferay Cookie Manager',
+	'LPD-6540 Support Liferay Consent Manager',
 	{
 		tag: '@LPD-6540',
 	},

@@ -110,34 +110,7 @@ public class FeatureFlagsBagProviderImpl
 			_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 		}
 
-		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
-
-		if (featureFlagsBag == null) {
-			return;
-		}
-
-		featureFlagsBag.setEnabled(key, enabled);
-
-		List<FeatureFlagListener> featureFlagListeners =
-			_serviceTrackerMap.getService(key);
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
-
-		featureFlagListeners = _serviceTrackerMap.getService("*");
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
+		_setEnabled(companyId, key, enabled);
 	}
 
 	@Override
@@ -363,6 +336,37 @@ public class FeatureFlagsBagProviderImpl
 					new DependencyAwareFeatureFlag(
 						featureFlag,
 						dependencyFeatureFlags.toArray(new FeatureFlag[0])));
+			}
+		}
+	}
+
+	private void _setEnabled(long companyId, String key, boolean enabled) {
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
+
+		if (featureFlagsBag == null) {
+			return;
+		}
+
+		featureFlagsBag.setEnabled(key, enabled);
+
+		List<FeatureFlagListener> featureFlagListeners =
+			_serviceTrackerMap.getService(key);
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
+
+		featureFlagListeners = _serviceTrackerMap.getService("*");
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
 			}
 		}
 	}

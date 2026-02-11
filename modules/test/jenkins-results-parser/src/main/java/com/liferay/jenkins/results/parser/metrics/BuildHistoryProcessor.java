@@ -598,8 +598,24 @@ public class BuildHistoryProcessor {
 					return TestBatchType.MINIMAL.toString();
 				}
 
+				if (jobVariant.contains("modules-compile")) {
+					return TestBatchType.MODULES_COMPILE.toString();
+				}
+
 				if (jobVariant.contains("playwright")) {
 					return TestBatchType.PLAYWRIGHT.toString();
+				}
+
+				if (jobVariant.contains("rest-builder")) {
+					return TestBatchType.REST_BUILDER.toString();
+				}
+
+				if (jobVariant.contains("semantic-versioning")) {
+					return TestBatchType.SEMANTIC_VERSIONING.toString();
+				}
+
+				if (jobVariant.contains("service-builder")) {
+					return TestBatchType.SERVICE_BUILDER.toString();
 				}
 
 				if ((jobVariant.startsWith("modules-unit") ||
@@ -616,8 +632,12 @@ public class BuildHistoryProcessor {
 		private enum TestBatchType {
 
 			INTEGRATION("Integration"), MAINTENANCE("Maintenance"),
-			MINIMAL("Minimal"), OTHER("Other"), PLAYWRIGHT("Playwright"),
+			MINIMAL("Minimal"), MODULES_COMPILE("Modules Compile"),
+			OTHER("Other"), PLAYWRIGHT("Playwright"),
 			PORTAL_BUNDLE_BUILD("Portal Bundle Build"), POSHI("Poshi"),
+			REST_BUILDER("Rest Builder"),
+			SEMANTIC_VERSIONING("Semantic Versioning"),
+			SERVICE_BUILDER("Service Builder"),
 			TOP_LEVEL_BUILD("Top Level Build"), UNIT("Unit");
 
 			@Override

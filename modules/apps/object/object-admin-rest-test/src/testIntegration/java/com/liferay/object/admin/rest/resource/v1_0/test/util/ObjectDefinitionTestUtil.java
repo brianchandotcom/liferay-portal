@@ -6,6 +6,7 @@
 package com.liferay.object.admin.rest.resource.v1_0.test.util;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -56,8 +57,9 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 			"L_" + StringUtil.toLowerCase(RandomTestUtil.randomString()),
-			TestPropsValues.getUserId(), 0, null, null, false, true, false,
-			false, false, false, false, false, false, null,
+			TestPropsValues.getUserId(), 0,
+			ObjectDefinitionUtil.generateRandomClassName(), null, false, true,
+			false, false, false, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(value), true, "Test", null, null,
 			null, null, LocalizedMapUtil.getLocalizedMap(value), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY, null, 1, 0,

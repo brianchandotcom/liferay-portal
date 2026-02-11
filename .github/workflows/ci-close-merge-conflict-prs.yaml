@@ -1,0 +1,54 @@
+name: Close PRs with merge conflicts
+on:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch:   # Allows you to run it manually from the Actions tab
+
+jobs:
+  close-conflicts:
+    if: github.repository == 'pyoo47/liferay-portal'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      issues: write
+
+    steps:
+      - name: Close PRs with merge conflicts
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pullRequests } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+            });
+
+            console.log(`Checking ${pullRequests.length} open pull requests...`);
+
+            for (const pr of pullRequests) {
+              const { data: details } = await github.rest.pulls.get({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+              });
+
+              if (details.mergeable_state === 'dirty') {
+                console.log(`[ACTION] Closing PR #${pr.number} due to conflicts.`);
+                
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: pr.number,
+                  body: "⚠️ **Auto-notice:** This PR has merge conflicts and has been closed to keep the fork queue clean. Please resolve conflicts locally and re-open."
+                });
+
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: pr.number,
+                  state: 'closed',
+                });
+              } else {
+                console.log(`[SKIP] PR #${pr.number} in ${context.repo.owner}/${context.repo.repo}: NO CONFLICT (State: ${details.mergeable_state})`);
+              }
+            }

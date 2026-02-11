@@ -5,15 +5,62 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
 
 /**
  * @author Dylan Rebelak
  */
-public interface DeleteDocumentRequestExecutor {
+public class DeleteDocumentRequestExecutor {
+
+	public DeleteDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public DeleteDocumentResponse execute(
-		DeleteDocumentRequest deleteDocumentRequest);
+		DeleteDocumentRequest deleteDocumentRequest) {
+
+		DeleteRequest deleteRequest =
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
+				deleteDocumentRequest);
+
+		DeleteResponse deleteResponse = _getDeleteResponse(
+			deleteRequest, deleteDocumentRequest);
+
+		RestStatus restStatus = deleteResponse.status();
+
+		return new DeleteDocumentResponse(restStatus.getStatus());
+	}
+
+	private DeleteResponse _getDeleteResponse(
+		DeleteRequest deleteRequest,
+		DeleteDocumentRequest deleteDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				deleteDocumentRequest.getConnectionId(),
+				deleteDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.delete(
+				deleteRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

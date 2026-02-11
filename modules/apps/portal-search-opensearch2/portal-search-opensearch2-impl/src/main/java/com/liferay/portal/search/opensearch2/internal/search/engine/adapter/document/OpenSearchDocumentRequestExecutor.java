@@ -92,6 +92,8 @@ public class OpenSearchDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor =
 			new DeleteByQueryDocumentRequestExecutor(
 				_openSearchConnectionManager);
+		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	@Reference
@@ -99,8 +101,6 @@ public class OpenSearchDocumentRequestExecutor
 
 	private DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
-
-	@Reference
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
 
 	@Reference

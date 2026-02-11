@@ -42,19 +42,6 @@ public class DocumentRequestExecutorFixture {
 		return bulkDocumentRequestExecutor;
 	}
 
-	private DeleteDocumentRequestExecutor _createDeleteDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		DeleteDocumentRequestExecutor deleteDocumentRequestExecutor =
-			new DeleteDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			deleteDocumentRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return deleteDocumentRequestExecutor;
-	}
-
 	private DocumentRequestExecutor _createDocumentRequestExecutor(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
@@ -67,9 +54,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor, "_bulkDocumentRequestExecutor",
 			_createBulkDocumentRequestExecutor(openSearchConnectionManager));
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestExecutor, "_deleteDocumentRequestExecutor",
-			_createDeleteDocumentRequestExecutor(openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			_createGetDocumentRequestExecutor(openSearchConnectionManager));

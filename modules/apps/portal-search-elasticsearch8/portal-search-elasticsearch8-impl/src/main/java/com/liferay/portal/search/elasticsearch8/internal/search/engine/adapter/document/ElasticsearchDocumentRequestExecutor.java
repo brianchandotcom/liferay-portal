@@ -92,6 +92,8 @@ public class ElasticsearchDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor =
 			new DeleteByQueryDocumentRequestExecutor(
 				_elasticsearchClientResolver);
+		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
+			_elasticsearchClientResolver);
 	}
 
 	@Reference
@@ -99,8 +101,6 @@ public class ElasticsearchDocumentRequestExecutor
 
 	private DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
-
-	@Reference
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
 
 	@Reference

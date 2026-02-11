@@ -93,8 +93,15 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
+		modified(properties);
+
+		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
+			_solrClientManager);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
 		SolrConfiguration solrConfiguration =
 			ConfigurableUtil.createConfigurable(
 				SolrConfiguration.class, properties);
@@ -111,8 +118,6 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 
 	private volatile DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
-
-	@Reference
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
 
 	@Reference

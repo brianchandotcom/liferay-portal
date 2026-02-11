@@ -132,7 +132,7 @@ const IndividualsOverviewEmptyState: React.FC<IIndividualsOverviewEmptyStateProp
 	dataSourceLoading,
 	groupId
 }) => {
-	if (dataSourceLoading || isNil(dataSourceData?.total)) {
+	if (dataSourceLoading) {
 		return (
 			<NoResultsDisplay>
 				<Loading key='LOADING' />
@@ -140,7 +140,7 @@ const IndividualsOverviewEmptyState: React.FC<IIndividualsOverviewEmptyStateProp
 		);
 	}
 
-	if (dataSourceData?.total === 0) {
+	if (isNil(dataSourceData?.total) || dataSourceData?.total === 0) {
 		return (
 			<Card pageDisplay>
 				<NoResultsDisplay
@@ -250,48 +250,57 @@ const IndividualsOverviewCDP = () => {
 					groupId={groupId}
 				/>
 
-				<div className='d-flex flex-row justify-content-between'>
-					{loading && <Loading key='LOADING' />}
+				{dataSourceData?.total > 0 && (
+					<div className='d-flex flex-row justify-content-between'>
+						{loading && <Loading key='LOADING' />}
 
-					<Card className='w-100'>
-						<IndividualsMetricsCard
-							data={
-								data?.individualMetric?.totalIndividualsMetric
-							}
-							description={Liferay.Language.get(
-								'this-is-the-total-number-of-individuals,-including-both-known-individuals-and-anonymous-individuals'
-							)}
-							title={Liferay.Language.get('total-individuals')}
-						/>
-					</Card>
+						<Card className='w-100'>
+							<IndividualsMetricsCard
+								data={
+									data?.individualMetric
+										?.totalIndividualsMetric
+								}
+								description={Liferay.Language.get(
+									'this-is-the-total-number-of-individuals,-including-both-known-individuals-and-anonymous-individuals'
+								)}
+								title={Liferay.Language.get(
+									'total-individuals'
+								)}
+							/>
+						</Card>
 
-					<Card className='mx-3 w-100'>
-						<IndividualsMetricsCard
-							data={
-								data?.individualMetric?.knownIndividualsMetric
-							}
-							description={Liferay.Language.get(
-								'this-is-the-total-number-of-known-individuals.-an-individual-is-considered-known-if-we-have-any-identifiable-information-about-the-individual'
-							)}
-							title={Liferay.Language.get('known-individuals')}
-						/>
-					</Card>
+						<Card className='mx-3 w-100'>
+							<IndividualsMetricsCard
+								data={
+									data?.individualMetric
+										?.knownIndividualsMetric
+								}
+								description={Liferay.Language.get(
+									'this-is-the-total-number-of-known-individuals.-an-individual-is-considered-known-if-we-have-any-identifiable-information-about-the-individual'
+								)}
+								title={Liferay.Language.get(
+									'known-individuals'
+								)}
+							/>
+						</Card>
 
-					<Card className='w-100'>
-						<IndividualsMetricsCard
-							data={
-								data?.individualMetric
-									?.anonymousIndividualsMetric
-							}
-							description={Liferay.Language.get(
-								'this-is-the-total-number-of-anonymous-individuals.-anonymous-individuals-are-removed-after-30-days-of-inactivity'
-							)}
-							title={Liferay.Language.get(
-								'anonymous-individuals'
-							)}
-						/>
-					</Card>
-				</div>
+						<Card className='w-100'>
+							<IndividualsMetricsCard
+								data={
+									data?.individualMetric
+										?.anonymousIndividualsMetric
+								}
+								description={Liferay.Language.get(
+									'this-is-the-total-number-of-anonymous-individuals.-anonymous-individuals-are-removed-after-30-days-of-inactivity'
+								)}
+								title={Liferay.Language.get(
+									'anonymous-individuals'
+								)}
+							/>
+						</Card>
+					</div>
+				)}
+
 				<IndividualsList />
 			</BasePage.Body>
 		</>

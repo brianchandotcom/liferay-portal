@@ -117,6 +117,7 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 			{
 				setExternalReferenceCode(
 					() -> document.getString("externalReferenceCode"));
+				setId(() -> document.getLong(Field.ENTRY_CLASS_PK));
 				setName(() -> assigneeName);
 				setPortrait(
 					() -> {

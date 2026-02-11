@@ -123,6 +123,7 @@ export default async function ArticlePage({
 
 							<span className="flex gap-2 items-center">
 								⏰{' '}
+
 								{new Date(
 									article.dateCreated
 								).toLocaleTimeString(lang, {

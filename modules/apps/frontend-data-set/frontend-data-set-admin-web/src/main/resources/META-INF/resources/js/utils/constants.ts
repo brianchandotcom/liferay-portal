@@ -59,7 +59,7 @@ const DEFAULT_VISUALIZATION_MODES: Array<IBaseVisualizationMode<any>> = [
 
 const ALLOWED_ENDPOINTS_PARAMETERS = ['scopeKey', 'siteId', 'userId'];
 
-const FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY = 'LPD-76633';
+const FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY = 'LPD-76632';
 
 const PAGE_SIZE = '100';
 

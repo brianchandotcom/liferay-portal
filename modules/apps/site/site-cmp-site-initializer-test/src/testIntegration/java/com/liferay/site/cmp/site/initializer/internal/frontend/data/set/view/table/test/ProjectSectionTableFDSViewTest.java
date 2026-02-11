@@ -43,10 +43,10 @@ public class ProjectSectionTableFDSViewTest
 			null, "dueDateTableCellRenderer", "due-date", "embedded.dueDate");
 		assertFDSTableSchemaField(
 			null, "userRelationshipTableCellRenderer", "manager",
-			"embedded.r_userToCMPProjectManager_userERC");
+			"embedded.r_userToCMPProjectManager_user");
 		assertFDSTableSchemaField(
 			null, "userRelationshipTableCellRenderer", "sponsor",
-			"embedded.r_userToCMPProjectSponsor_userERC");
+			"embedded.r_userToCMPProjectSponsor_user");
 		assertFDSTableSchemaField(
 			null, "stateTableCellRenderer", "state", "embedded.state");
 		assertFDSTableSchemaField(

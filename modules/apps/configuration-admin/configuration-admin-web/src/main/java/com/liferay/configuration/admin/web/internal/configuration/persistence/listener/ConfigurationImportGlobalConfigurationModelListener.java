@@ -6,8 +6,12 @@
 package com.liferay.configuration.admin.web.internal.configuration.persistence.listener;
 
 import com.liferay.configuration.admin.exportimport.ConfigurationExportImportProcessor;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Dictionary;
 
@@ -37,7 +41,24 @@ public class ConfigurationImportGlobalConfigurationModelListener
 				ConfigurationImportGlobalConfigurationModelListener.class,
 				properties);
 		}
+
+		Object companyId = properties.get(
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
+
+		Object groupId = properties.get(
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey());
+
+		if ((companyId == null) && (groupId != null)) {
+			_log.error(
+				StringBundler.concat(
+					"Configuration ", pid,
+					" will not work properly because it is missing the ",
+					"required property \"companyId\""));
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ConfigurationImportGlobalConfigurationModelListener.class);
 
 	@Reference
 	private ConfigurationExportImportProcessor

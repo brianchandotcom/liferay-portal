@@ -25,6 +25,7 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.cluster.SolrClusterRequestExecutor;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -137,8 +138,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 		return runtimeException1;
 	}
 
-	@Reference(target = "(search.engine.impl=Solr)")
-	private ClusterRequestExecutor _clusterRequestExecutor;
+	private final ClusterRequestExecutor _clusterRequestExecutor =
+		new SolrClusterRequestExecutor();
 
 	@Reference(target = "(search.engine.impl=Solr)")
 	private DocumentRequestExecutor _documentRequestExecutor;

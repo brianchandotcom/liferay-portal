@@ -8,12 +8,9 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.cluster;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.StatsClusterResponse;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Bryan Engler
  */
-@Component(service = StatsClusterRequestExecutor.class)
 public class StatsClusterRequestExecutorImpl
 	implements StatsClusterRequestExecutor {
 

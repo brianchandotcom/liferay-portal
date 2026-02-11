@@ -99,6 +99,19 @@ const WORKFLOW_TASK_MODALS: Record<
 	),
 };
 
+const styleActions = (actions: any[]): any[] =>
+	actions.map((action) => {
+		if (action?.data?.id === 'delete') {
+			action.className = 'text-danger';
+		}
+
+		if (action.items) {
+			action.items = styleActions(action.items);
+		}
+
+		return action;
+	});
+
 export default function TasksFDSPropsTransformer({
 	additionalProps,
 	creationMenu,
@@ -274,16 +287,7 @@ export default function TasksFDSPropsTransformer({
 			],
 		},
 		id,
-		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'delete') {
-				return {
-					...action,
-					className: 'text-danger',
-				};
-			}
-
-			return action;
-		}),
+		itemsActions: styleActions(itemsActions),
 		async onActionDropdownItemClick({
 			action,
 			itemData,

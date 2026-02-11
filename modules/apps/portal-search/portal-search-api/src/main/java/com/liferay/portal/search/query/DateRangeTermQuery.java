@@ -13,14 +13,14 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface DateRangeTermQuery extends RangeTermQuery {
+public abstract class DateRangeTermQuery extends RangeTermQuery {
 
-	public String getDateFormat();
+	public abstract String getDateFormat();
 
-	public TimeZone getTimeZone();
+	public abstract TimeZone getTimeZone();
 
-	public void setDateFormat(String dateFormat);
+	public abstract void setDateFormat(String dateFormat);
 
-	public void setTimeZone(TimeZone timeZone);
+	public abstract void setTimeZone(TimeZone timeZone);
 
 }

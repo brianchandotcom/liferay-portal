@@ -136,7 +136,7 @@ const addWorkflowActions = (
 
 	return actions.flatMap((action) => {
 		if (action.target !== ACTION_ITEM_TARGETS.MODAL_WORKFLOW_TRANSITION) {
-			return action;
+			return [action];
 		}
 
 		return [
@@ -145,7 +145,7 @@ const addWorkflowActions = (
 				.sort((a, b) => a.localeCompare(b))
 				.map((workflowKey) => {
 					const workflowAction = itemActions[workflowKey];
-					
+
 					return {
 						data: {
 							requestBody: JSON.stringify({
@@ -187,7 +187,7 @@ const filterItemActions = ({
 		);
 
 	return actions
-		? addWorkflowActions(actions, itemData)
+		? (addWorkflowActions(actions, itemData)
 				.filter((action: IItemsActions) =>
 					isVisible(action, itemData, selectable)
 				)
@@ -204,21 +204,28 @@ const filterItemActions = ({
 							action.type === EItemActionsType.GROUP) &&
 						action.items
 					) {
+						const childrenActions = filterItemActions({
+							actions: action.items,
+							infoPanelOpen,
+							itemData,
+							selectable,
+							selectedItemsKey,
+							selectedItemsValue,
+						});
+
+						if (!childrenActions.length) {
+							return null;
+						}
+
 						return {
 							...transformedAction,
-							items: filterItemActions({
-								actions: action.items,
-								infoPanelOpen,
-								itemData,
-								selectable,
-								selectedItemsKey,
-								selectedItemsValue,
-							}),
+							items: childrenActions,
 						};
 					}
 
 					return transformedAction;
 				})
+				.filter(Boolean) as Array<IItemsActions>)
 		: [];
 };
 

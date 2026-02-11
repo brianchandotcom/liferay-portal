@@ -1,5 +1,5 @@
 {
-	"@generated": "21acde61a97ff864cdee517a4f66937268cea48f",
+	"@generated": "1a6c3097af3f2779a271ea4c6fe8574ed33618a8",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -56,10 +56,10 @@
 			"path": "../../../../../../../site/site-cms-site-initializer/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
-			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
+			"path": "../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
-			"path": "../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
 		}
 	]
 }

@@ -43,13 +43,8 @@ public class PreupgradeVerifyDatabaseCharacterSet
 			return;
 		}
 
-		Set<String> tableNames =
-			DBResourceUtil.getServiceComponentModuleTableNames(connection);
-
-		tableNames.addAll(
-			DBResourceUtil.getServiceComponentPortalTableNames(connection));
-		tableNames.addAll(DBResourceUtil.getModuleTableNames(connection));
-		tableNames.addAll(DBResourceUtil.getPortalTableNames(connection));
+		Set<String> tableNames = DBResourceUtil.getLiferayTableNames(
+			connection);
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {

@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +49,22 @@ import org.osgi.framework.BundleContext;
  * @author Mariano Álvaro Sáiz
  */
 public class DBResourceUtil {
+
+	public static Set<String> getLiferayTableNames(Connection connection)
+		throws Exception {
+
+		Set<String> liferayTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		liferayTableNames.addAll(
+			getServiceComponentModuleTableNames(connection));
+		liferayTableNames.addAll(
+			getServiceComponentPortalTableNames(connection));
+		liferayTableNames.addAll(getModuleTableNames(connection));
+		liferayTableNames.addAll(getPortalTableNames(connection));
+
+		return liferayTableNames;
+	}
 
 	public static String getModuleIndexesSQL(Bundle bundle) {
 		return _read(bundle, "/META-INF/sql/indexes.sql");

@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * @author Jorge Avalos
@@ -47,16 +46,8 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			return;
 		}
 
-		Set<String> expectedTableNames = new TreeSet<>();
-
-		expectedTableNames.addAll(
-			DBResourceUtil.getModuleTableNames(connection));
-		expectedTableNames.addAll(
-			DBResourceUtil.getPortalTableNames(connection));
-		expectedTableNames.addAll(
-			DBResourceUtil.getServiceComponentModuleTableNames(connection));
-		expectedTableNames.addAll(
-			DBResourceUtil.getServiceComponentPortalTableNames(connection));
+		Set<String> expectedTableNames = DBResourceUtil.getLiferayTableNames(
+			connection);
 
 		CompanyLocalServiceUtil.forEachCompanyId(
 			companyId -> {

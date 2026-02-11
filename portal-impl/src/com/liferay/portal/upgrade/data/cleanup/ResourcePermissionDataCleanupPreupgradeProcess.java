@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,8 +38,8 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 			return;
 		}
 
-		Set<String> liferayTableNames =
-			DataCleanupPreupgradeProcessUtil.getLiferayTableNames(connection);
+		Set<String> liferayTableNames = DBResourceUtil.getLiferayTableNames(
+			connection);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select distinct name from ResourcePermission where name " +

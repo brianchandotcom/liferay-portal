@@ -5,7 +5,6 @@
 
 package com.liferay.portal.upgrade.data.cleanup;
 
-import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -21,30 +20,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * @author Luis Ortiz
  */
 public class DataCleanupPreupgradeProcessUtil {
-
-	public static Set<String> getLiferayTableNames(Connection connection)
-		throws Exception {
-
-		Set<String> liferayTableNames = new TreeSet<>(
-			String.CASE_INSENSITIVE_ORDER);
-
-		liferayTableNames.addAll(
-			DBResourceUtil.getServiceComponentModuleTableNames(connection));
-		liferayTableNames.addAll(
-			DBResourceUtil.getServiceComponentPortalTableNames(connection));
-		liferayTableNames.addAll(
-			DBResourceUtil.getModuleTableNames(connection));
-		liferayTableNames.addAll(
-			DBResourceUtil.getPortalTableNames(connection));
-
-		return liferayTableNames;
-	}
 
 	public static String getPrimaryKeyColumnName(
 			Connection connection, DBInspector dbInspector, String tableName)

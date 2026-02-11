@@ -1202,7 +1202,8 @@ public class FriendlyURLServletTest {
 			getPath(group, layoutUtilityPageEntryLayout),
 			_redirectConstructor1.newInstance(expectedURL));
 
-		Assert.assertEquals(expectedStatus, mockHttpServletResponse.getStatus());
+		Assert.assertEquals(
+			expectedStatus, mockHttpServletResponse.getStatus());
 	}
 
 	private void _testServiceRedirectWithRedirectEntry(

@@ -102,6 +102,8 @@ public class ElasticsearchDocumentRequestExecutor
 				_elasticsearchClientResolver);
 		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
 			_elasticsearchClientResolver);
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			_elasticsearchClientResolver);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_elasticsearchClientResolver);
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
@@ -129,9 +131,7 @@ public class ElasticsearchDocumentRequestExecutor
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 	@Reference

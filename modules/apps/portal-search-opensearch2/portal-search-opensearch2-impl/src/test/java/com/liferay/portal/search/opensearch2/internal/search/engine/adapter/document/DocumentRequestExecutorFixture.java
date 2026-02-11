@@ -41,9 +41,6 @@ public class DocumentRequestExecutorFixture {
 			openSearchDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestExecutor, "_getDocumentRequestExecutor",
-			_createGetDocumentRequestExecutor(openSearchConnectionManager));
-		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor,
 			"_updateByQueryDocumentRequestExecutor",
 			_createUpdateByQueryDocumentRequestExecutor(
@@ -52,19 +49,6 @@ public class DocumentRequestExecutorFixture {
 		openSearchDocumentRequestExecutor.activate(Collections.emptyMap());
 
 		return openSearchDocumentRequestExecutor;
-	}
-
-	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		GetDocumentRequestExecutor getDocumentRequestExecutor =
-			new GetDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return getDocumentRequestExecutor;
 	}
 
 	private UpdateByQueryDocumentRequestExecutor

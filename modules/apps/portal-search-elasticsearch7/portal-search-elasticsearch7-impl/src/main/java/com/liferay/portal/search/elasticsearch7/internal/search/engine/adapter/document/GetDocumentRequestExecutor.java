@@ -5,14 +5,78 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.document.DocumentFieldsTranslator;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Bryan Engler
  */
-public interface GetDocumentRequestExecutor {
+public class GetDocumentRequestExecutor {
 
-	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest);
+	public GetDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
+		GetRequest getRequest =
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
+				getDocumentRequest);
+
+		GetResponse getResponse = _getGetResponse(
+			getRequest, getDocumentRequest);
+
+		GetDocumentResponse getDocumentResponse = new GetDocumentResponse(
+			getResponse.isExists());
+
+		if (!getResponse.isExists()) {
+			return getDocumentResponse;
+		}
+
+		getDocumentResponse.setSource(getResponse.getSourceAsString());
+		getDocumentResponse.setVersion(getResponse.getVersion());
+
+		DocumentFieldsTranslator documentFieldsTranslator =
+			new DocumentFieldsTranslator();
+
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
+
+		documentFieldsTranslator.translate(
+			documentBuilder, getResponse.getSourceAsMap());
+
+		getDocumentResponse.setDocument(documentBuilder.build());
+
+		return getDocumentResponse;
+	}
+
+	private GetResponse _getGetResponse(
+		GetRequest getRequest, GetDocumentRequest getDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				getDocumentRequest.getConnectionId(),
+				getDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

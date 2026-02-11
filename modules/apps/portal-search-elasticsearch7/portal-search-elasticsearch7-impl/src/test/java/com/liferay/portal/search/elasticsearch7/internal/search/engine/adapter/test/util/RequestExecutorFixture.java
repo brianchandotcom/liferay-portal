@@ -6,11 +6,9 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.test.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
@@ -45,7 +43,10 @@ public class RequestExecutorFixture {
 		return _deleteIndexRequestExecutor;
 	}
 
-	public Document getDocumentById(String indexName, String uid) {
+	public Document getDocumentById(
+		GetDocumentRequestExecutor getDocumentRequestExecutor, String indexName,
+		String uid) {
+
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
 			indexName, uid);
 
@@ -53,13 +54,9 @@ public class RequestExecutorFixture {
 		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
 
 		GetDocumentResponse getDocumentResponse =
-			_getDocumentRequestExecutor.execute(getDocumentRequest);
+			getDocumentRequestExecutor.execute(getDocumentRequest);
 
 		return getDocumentResponse.getDocument();
-	}
-
-	public GetDocumentRequestExecutor getGetDocumentRequestExecutor() {
-		return _getDocumentRequestExecutor;
 	}
 
 	public void setUp() {
@@ -68,17 +65,10 @@ public class RequestExecutorFixture {
 
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_elasticsearchClientResolver);
-
-		_getDocumentRequestExecutor = new GetDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_getDocumentRequestExecutor, "_elasticsearchClientResolver",
-			_elasticsearchClientResolver);
 	}
 
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 
 }

@@ -98,6 +98,8 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 
 		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
 			_solrClientManager);
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			_solrClientManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_solrClientManager);
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
@@ -123,10 +125,7 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 	private volatile DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
 	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
-
-	@Reference
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 	@Reference

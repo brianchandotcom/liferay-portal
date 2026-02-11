@@ -7,7 +7,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.tes
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
@@ -15,7 +14,6 @@ import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 
@@ -47,7 +45,10 @@ public class RequestExecutorFixture {
 		return _deleteIndexRequestExecutor;
 	}
 
-	public Document getDocumentById(String indexName, String uid) {
+	public Document getDocumentById(
+		GetDocumentRequestExecutor getDocumentRequestExecutor, String indexName,
+		String uid) {
+
 		GetDocumentRequest getDocumentRequest = new GetDocumentRequest(
 			indexName, uid);
 
@@ -55,13 +56,9 @@ public class RequestExecutorFixture {
 		getDocumentRequest.setFetchSourceInclude(StringPool.STAR);
 
 		GetDocumentResponse getDocumentResponse =
-			_getDocumentRequestExecutor.execute(getDocumentRequest);
+			getDocumentRequestExecutor.execute(getDocumentRequest);
 
 		return getDocumentResponse.getDocument();
-	}
-
-	public GetDocumentRequestExecutor getGetDocumentRequestExecutor() {
-		return _getDocumentRequestExecutor;
 	}
 
 	public void setUp() {
@@ -69,23 +66,10 @@ public class RequestExecutorFixture {
 			new JSONFactoryImpl(), _openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
-		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor();
-	}
-
-	private GetDocumentRequestExecutor _createGetDocumentRequestExecutor() {
-		GetDocumentRequestExecutor getDocumentRequestExecutor =
-			new GetDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_openSearchConnectionManager",
-			_openSearchConnectionManager);
-
-		return getDocumentRequestExecutor;
 	}
 
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
-	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

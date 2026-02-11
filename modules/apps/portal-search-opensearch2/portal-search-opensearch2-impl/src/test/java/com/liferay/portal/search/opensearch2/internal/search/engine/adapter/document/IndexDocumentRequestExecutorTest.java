@@ -44,6 +44,8 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	@Before
 	public void setUp() {
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			openSearchConnectionManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			openSearchConnectionManager);
 
@@ -94,7 +96,8 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 		_assertFieldEquals(
 			_requestExecutorFixture.getDocumentById(
-				TEST_INDEX_NAME, indexDocumentResponse.getUid()),
+				_getDocumentRequestExecutor, TEST_INDEX_NAME,
+				indexDocumentResponse.getUid()),
 			document, _FIELD_NAME);
 	}
 
@@ -102,6 +105,7 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 }

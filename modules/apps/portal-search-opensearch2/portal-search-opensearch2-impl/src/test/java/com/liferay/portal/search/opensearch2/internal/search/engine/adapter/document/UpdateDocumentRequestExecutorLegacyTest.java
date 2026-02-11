@@ -48,6 +48,8 @@ public class UpdateDocumentRequestExecutorLegacyTest
 
 	@Before
 	public void setUp() {
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			openSearchConnectionManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			openSearchConnectionManager);
 
@@ -156,7 +158,8 @@ public class UpdateDocumentRequestExecutorLegacyTest
 		String expectedFieldValue, String fieldName, String uid) {
 
 		com.liferay.portal.search.document.Document document =
-			_requestExecutorFixture.getDocumentById(TEST_INDEX_NAME, uid);
+			_requestExecutorFixture.getDocumentById(
+				_getDocumentRequestExecutor, TEST_INDEX_NAME, uid);
 
 		Assert.assertEquals(expectedFieldValue, document.getString(fieldName));
 	}
@@ -213,6 +216,7 @@ public class UpdateDocumentRequestExecutorLegacyTest
 
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 

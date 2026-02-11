@@ -49,6 +49,8 @@ public class IndexDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() {
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			_elasticsearchFixture);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_elasticsearchFixture);
 
@@ -100,7 +102,8 @@ public class IndexDocumentRequestExecutorTest {
 		_assertFieldEquals(
 			_FIELD_NAME, document,
 			_requestExecutorFixture.getDocumentById(
-				_INDEX_NAME, indexDocumentResponse.getUid()));
+				_getDocumentRequestExecutor, _INDEX_NAME,
+				indexDocumentResponse.getUid()));
 	}
 
 	private static final String _FIELD_NAME = "testField";
@@ -110,6 +113,7 @@ public class IndexDocumentRequestExecutorTest {
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 }

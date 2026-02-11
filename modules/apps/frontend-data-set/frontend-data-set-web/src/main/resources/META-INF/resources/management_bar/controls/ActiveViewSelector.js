@@ -27,12 +27,8 @@ const ActiveViewSelectorTrigger = React.forwardRef(
 );
 
 function ActiveViewSelector({views}) {
-	const {updateView} = useContext(FrontendDataSetContext);
-	const [{activeView}, viewsDispatch] = useContext(ViewsContext);
-
-	const handleSelectionChange = (value) => {
-		viewsDispatch(updateView(value));
-	};
+	const {onViewChange} = useContext(FrontendDataSetContext);
+	const [{activeView}] = useContext(ViewsContext);
 
 	return (
 		<Picker
@@ -47,7 +43,7 @@ function ActiveViewSelector({views}) {
 					Liferay.Language.get('scroll-to-bottom'),
 				scrollToTopAriaLabel: Liferay.Language.get('scroll-to-top'),
 			}}
-			onSelectionChange={handleSelectionChange}
+			onSelectionChange={onViewChange}
 			selectedKey={activeView.name}
 			symbol={activeView.thumbnail}
 			title={sub(

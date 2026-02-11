@@ -1613,7 +1613,10 @@ const FrontendDataSetContent = ({
 		);
 
 	const paginationComponent =
-		showPagination && pagination && items?.length && total ? (
+		(activeView.showPagination ?? showPagination) &&
+		pagination &&
+		items?.length &&
+		total ? (
 			<div className="data-set-pagination-wrapper">
 				<ClayPaginationBarWithBasicItems
 					active={pageNumber}
@@ -2045,6 +2048,30 @@ const FrontendDataSetContent = ({
 					});
 				},
 				onSnapshotChange: handleSnapshotChange,
+				onViewChange: (viewName: string) => {
+					const view = views.find(({name}) => name === viewName);
+
+					if (!view) {
+						return;
+					}
+
+					const updates: Record<string, any> = {
+						[EConfigInURLKeys.VIEW_NAME]: viewName,
+					};
+
+					if (view.initialPaginationDelta) {
+						updates[EConfigInURLKeys.DELTA] =
+							view.initialPaginationDelta;
+						updates[EConfigInURLKeys.PAGE_NUMBER] = 1;
+					}
+
+					updateConfigInURL(updates);
+
+					viewsDispatch({
+						type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
+						value: viewName,
+					});
+				},
 				openModal,
 				openSidePanel,
 				portletId,

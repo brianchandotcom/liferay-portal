@@ -124,13 +124,13 @@ public class SideNavigationDisplayContext {
 
 			VerticalNavItem verticalNavItem = new VerticalNavItem();
 
-			verticalNavItem.setId(childPanelCategory.getKey());
-			verticalNavItem.setLabel(
-				childPanelCategory.getLabel(_themeDisplay.getLocale()));
-			verticalNavItem.setItems(childrenVerticalNavItems);
 			verticalNavItem.setExpanded(
 				_panelCategoryHelper.containsPortlet(
 					_portletId, childPanelCategory.getKey()));
+			verticalNavItem.setId(childPanelCategory.getKey());
+			verticalNavItem.setItems(childrenVerticalNavItems);
+			verticalNavItem.setLabel(
+				childPanelCategory.getLabel(_themeDisplay.getLocale()));
 
 			verticalNavItems.add(verticalNavItem);
 		}

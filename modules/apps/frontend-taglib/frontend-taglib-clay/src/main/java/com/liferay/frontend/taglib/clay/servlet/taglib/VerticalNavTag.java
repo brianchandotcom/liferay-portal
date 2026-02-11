@@ -363,7 +363,7 @@ public class VerticalNavTag extends BaseContainerTag {
 				"leadingIcon");
 
 			if (leadingIconItem != null) {
-				_renderIcons(List.of(leadingIconItem), "c-ml-2 c-mr-2");
+				_renderIcons(List.of(leadingIconItem), "c-mr-2");
 			}
 
 			jspWriter.write(

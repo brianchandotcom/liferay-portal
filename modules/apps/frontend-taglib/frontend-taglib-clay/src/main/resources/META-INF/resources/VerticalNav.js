@@ -53,7 +53,7 @@ export default function VerticalNav({
 				>
 					{item.leadingIcon?.symbol && (
 						<ClayIcon
-							className="c-ml-2 c-mr-2"
+							className="c-mr-2"
 							key={item.leadingIcon.symbol}
 							symbol={item.leadingIcon.symbol}
 							title={item.leadingIcon.title}

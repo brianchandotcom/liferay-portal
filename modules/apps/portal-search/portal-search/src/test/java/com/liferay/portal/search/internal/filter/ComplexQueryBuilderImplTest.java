@@ -7,7 +7,6 @@ package com.liferay.portal.search.internal.filter;
 
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.DateRangeTermQuery;
@@ -142,7 +141,7 @@ public class ComplexQueryBuilderImplTest {
 		String value) {
 
 		BooleanQuery booleanQuery = (BooleanQuery)complexQueryBuilderImpl.root(
-			new BooleanQueryImpl()
+			new BooleanQuery()
 		).addParts(
 			new ArrayList<ComplexQueryPart>() {
 

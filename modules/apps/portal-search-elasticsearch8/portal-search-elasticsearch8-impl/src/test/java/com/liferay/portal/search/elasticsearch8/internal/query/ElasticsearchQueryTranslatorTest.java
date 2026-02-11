@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
-import com.liferay.portal.search.internal.query.BooleanQueryImpl;
 import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
 import com.liferay.portal.search.internal.query.FuzzyQueryImpl;
 import com.liferay.portal.search.internal.query.MatchAllQueryImpl;
@@ -77,7 +76,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Test
 	public void testTranslateInnerBoostBooleanQuery() {
-		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		BooleanQuery booleanQuery = new BooleanQuery();
 
 		Query query = new MatchAllQueryImpl();
 

@@ -61,7 +61,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public BooleanQuery booleanQuery() {
-		return new BooleanQueryImpl();
+		return new BooleanQuery();
 	}
 
 	@Override

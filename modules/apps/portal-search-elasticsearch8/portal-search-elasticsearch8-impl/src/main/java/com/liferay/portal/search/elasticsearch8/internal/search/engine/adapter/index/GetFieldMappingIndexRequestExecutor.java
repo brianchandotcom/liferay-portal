@@ -14,7 +14,7 @@ import co.elastic.clients.elasticsearch.indices.GetFieldMappingResponse;
 import co.elastic.clients.elasticsearch.indices.get_field_mapping.TypeFieldMappings;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -34,11 +34,9 @@ import java.util.Map;
 public class GetFieldMappingIndexRequestExecutor {
 
 	public GetFieldMappingIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public GetFieldMappingIndexResponse execute(
@@ -79,7 +77,7 @@ public class GetFieldMappingIndexRequestExecutor {
 	}
 
 	private String _getFieldMappings(Map<String, FieldMapping> mappings) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (Map.Entry<String, FieldMapping> entry1 : mappings.entrySet()) {
 			FieldMapping fieldMapping = entry1.getValue();
@@ -94,7 +92,7 @@ public class GetFieldMappingIndexRequestExecutor {
 						entry1.getKey(),
 						JSONUtil.put(
 							entry2.getKey(),
-							_jsonFactory.createJSONObject(
+							JSONFactoryUtil.createJSONObject(
 								JsonpUtil.toString(property))));
 				}
 				catch (JSONException jsonException) {
@@ -128,6 +126,5 @@ public class GetFieldMappingIndexRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

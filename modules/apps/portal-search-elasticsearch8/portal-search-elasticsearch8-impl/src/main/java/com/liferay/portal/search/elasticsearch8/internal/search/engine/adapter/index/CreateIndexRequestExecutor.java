@@ -12,7 +12,7 @@ import co.elastic.clients.elasticsearch.indices.IndexSettings;
 import co.elastic.clients.json.JsonpMapper;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,11 +36,9 @@ import java.nio.charset.StandardCharsets;
 public class CreateIndexRequestExecutor {
 
 	public CreateIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public CreateIndexResponse execute(CreateIndexRequest createIndexRequest) {
@@ -154,7 +152,7 @@ public class CreateIndexRequestExecutor {
 		JSONObject jsonObject;
 
 		try {
-			jsonObject = _jsonFactory.createJSONObject(source);
+			jsonObject = JSONFactoryUtil.createJSONObject(source);
 		}
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
@@ -177,6 +175,5 @@ public class CreateIndexRequestExecutor {
 		CreateIndexRequestExecutor.class);
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

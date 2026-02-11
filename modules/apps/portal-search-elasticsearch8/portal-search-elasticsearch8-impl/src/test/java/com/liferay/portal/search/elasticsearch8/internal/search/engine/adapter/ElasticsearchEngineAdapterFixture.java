@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -60,10 +59,6 @@ public class ElasticsearchEngineAdapterFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngineAdapterImpl, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchEngineAdapterImpl, "_indexRequestExecutor",
-			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
-				elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngineAdapterImpl, "_searchRequestExecutor",
 			_searchRequestExecutorFixture.getSearchRequestExecutor());

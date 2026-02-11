@@ -14,7 +14,7 @@ import co.elastic.clients.elasticsearch.indices.PutMappingResponse;
 import co.elastic.clients.util.NamedValue;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
@@ -33,11 +33,9 @@ import java.util.Map;
 public class PutMappingIndexRequestExecutor {
 
 	public PutMappingIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public PutMappingIndexResponse execute(
@@ -56,7 +54,7 @@ public class PutMappingIndexRequestExecutor {
 		PutMappingRequest.Builder builder = new PutMappingRequest.Builder();
 
 		try {
-			JSONObject mappingJSONObject = _jsonFactory.createJSONObject(
+			JSONObject mappingJSONObject = JSONFactoryUtil.createJSONObject(
 				putMappingIndexRequest.getMapping());
 
 			List<NamedValue<DynamicTemplate>> dynamicTemplates =
@@ -104,6 +102,5 @@ public class PutMappingIndexRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

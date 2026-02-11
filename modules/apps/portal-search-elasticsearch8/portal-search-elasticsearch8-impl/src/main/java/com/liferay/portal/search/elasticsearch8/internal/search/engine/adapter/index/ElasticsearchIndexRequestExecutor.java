@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexResponse;
@@ -37,18 +36,45 @@ import com.liferay.portal.search.engine.adapter.index.StatsIndexResponse;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexResponse;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = IndexRequestExecutor.class
-)
 public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
+
+	public ElasticsearchIndexRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_getFieldMappingIndexRequestExecutor =
+			new GetFieldMappingIndexRequestExecutor(
+				elasticsearchClientResolver);
+		_getIndexIndexRequestExecutor = new GetIndexIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_indicesExistsIndexRequestExecutor =
+			new IndicesExistsIndexRequestExecutor(elasticsearchClientResolver);
+		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
+			elasticsearchClientResolver);
+		_updateIndexSettingsIndexRequestExecutor =
+			new UpdateIndexSettingsIndexRequestExecutor(
+				elasticsearchClientResolver);
+	}
 
 	@Override
 	public AnalyzeIndexResponse executeIndexRequest(
@@ -151,64 +177,24 @@ public class ElasticsearchIndexRequestExecutor implements IndexRequestExecutor {
 			updateIndexSettingsIndexRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_analyzeIndexRequestExecutor = new AnalyzeIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_closeIndexRequestExecutor = new CloseIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
-			_elasticsearchClientResolver, _jsonFactory);
-		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_flushIndexRequestExecutor = new FlushIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_getFieldMappingIndexRequestExecutor =
-			new GetFieldMappingIndexRequestExecutor(
-				_elasticsearchClientResolver, _jsonFactory);
-		_getIndexIndexRequestExecutor = new GetIndexIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_getMappingIndexRequestExecutor = new GetMappingIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_indicesExistsIndexRequestExecutor =
-			new IndicesExistsIndexRequestExecutor(_elasticsearchClientResolver);
-		_openIndexRequestExecutor = new OpenIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_putMappingIndexRequestExecutor = new PutMappingIndexRequestExecutor(
-			_elasticsearchClientResolver, _jsonFactory);
-		_refreshIndexRequestExecutor = new RefreshIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_statsIndexRequestExecutor = new StatsIndexRequestExecutor(
-			_elasticsearchClientResolver);
-		_updateIndexSettingsIndexRequestExecutor =
-			new UpdateIndexSettingsIndexRequestExecutor(
-				_elasticsearchClientResolver);
-	}
-
-	private AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
-	private CloseIndexRequestExecutor _closeIndexRequestExecutor;
-	private CreateIndexRequestExecutor _createIndexRequestExecutor;
-	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
-
-	@Reference
-	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	private FlushIndexRequestExecutor _flushIndexRequestExecutor;
-	private GetFieldMappingIndexRequestExecutor
+	private final AnalyzeIndexRequestExecutor _analyzeIndexRequestExecutor;
+	private final CloseIndexRequestExecutor _closeIndexRequestExecutor;
+	private final CreateIndexRequestExecutor _createIndexRequestExecutor;
+	private final DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
+	private final FlushIndexRequestExecutor _flushIndexRequestExecutor;
+	private final GetFieldMappingIndexRequestExecutor
 		_getFieldMappingIndexRequestExecutor;
-	private GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
-	private GetMappingIndexRequestExecutor _getMappingIndexRequestExecutor;
-	private IndicesExistsIndexRequestExecutor
+	private final GetIndexIndexRequestExecutor _getIndexIndexRequestExecutor;
+	private final GetMappingIndexRequestExecutor
+		_getMappingIndexRequestExecutor;
+	private final IndicesExistsIndexRequestExecutor
 		_indicesExistsIndexRequestExecutor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	private OpenIndexRequestExecutor _openIndexRequestExecutor;
-	private PutMappingIndexRequestExecutor _putMappingIndexRequestExecutor;
-	private RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
-	private StatsIndexRequestExecutor _statsIndexRequestExecutor;
-	private UpdateIndexSettingsIndexRequestExecutor
+	private final OpenIndexRequestExecutor _openIndexRequestExecutor;
+	private final PutMappingIndexRequestExecutor
+		_putMappingIndexRequestExecutor;
+	private final RefreshIndexRequestExecutor _refreshIndexRequestExecutor;
+	private final StatsIndexRequestExecutor _statsIndexRequestExecutor;
+	private final UpdateIndexSettingsIndexRequestExecutor
 		_updateIndexSettingsIndexRequestExecutor;
 
 }

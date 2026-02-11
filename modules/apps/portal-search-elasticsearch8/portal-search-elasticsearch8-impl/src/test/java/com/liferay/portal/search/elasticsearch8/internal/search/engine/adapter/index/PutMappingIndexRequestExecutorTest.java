@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 import co.elastic.clients.elasticsearch._types.mapping.Property;
 import co.elastic.clients.elasticsearch.indices.PutMappingRequest;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
@@ -52,8 +51,7 @@ public class PutMappingIndexRequestExecutorTest {
 			new PutMappingIndexRequest(new String[] {_INDEX_NAME}, _FIELD_NAME);
 
 		PutMappingIndexRequestExecutor putMappingIndexRequestExecutor =
-			new PutMappingIndexRequestExecutor(
-				_elasticsearchFixture, new JSONFactoryImpl());
+			new PutMappingIndexRequestExecutor(_elasticsearchFixture);
 
 		PutMappingRequest putMappingRequest =
 			putMappingIndexRequestExecutor.createPutMappingRequest(

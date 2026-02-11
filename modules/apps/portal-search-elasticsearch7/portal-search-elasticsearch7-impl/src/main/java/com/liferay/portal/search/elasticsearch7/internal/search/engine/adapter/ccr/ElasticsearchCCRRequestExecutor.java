@@ -16,18 +16,23 @@ import com.liferay.portal.search.engine.adapter.ccr.PutFollowCCRResponse;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.UnfollowCCRResponse;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = CCRRequestExecutor.class
-)
 public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
+
+	public ElasticsearchCCRRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_followInfoCCRRequestExecutor = new FollowInfoCCRRequestExecutor(
+			elasticsearchClientResolver);
+		_pauseFollowCCRRequestExecutor = new PauseFollowCCRRequestExecutor(
+			elasticsearchClientResolver);
+		_putFollowCCRRequestExecutor = new PutFollowCCRRequestExecutor(
+			elasticsearchClientResolver);
+		_unfollowCCRRequestExecutor = new UnfollowCCRRequestExecutor(
+			elasticsearchClientResolver);
+	}
 
 	@Override
 	public FollowInfoCCRResponse executeCCRRequest(
@@ -57,24 +62,9 @@ public class ElasticsearchCCRRequestExecutor implements CCRRequestExecutor {
 		return _unfollowCCRRequestExecutor.execute(unfollowCCRRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_followInfoCCRRequestExecutor = new FollowInfoCCRRequestExecutor(
-			_elasticsearchClientResolver);
-		_pauseFollowCCRRequestExecutor = new PauseFollowCCRRequestExecutor(
-			_elasticsearchClientResolver);
-		_putFollowCCRRequestExecutor = new PutFollowCCRRequestExecutor(
-			_elasticsearchClientResolver);
-		_unfollowCCRRequestExecutor = new UnfollowCCRRequestExecutor(
-			_elasticsearchClientResolver);
-	}
-
-	@Reference
-	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	private FollowInfoCCRRequestExecutor _followInfoCCRRequestExecutor;
-	private PauseFollowCCRRequestExecutor _pauseFollowCCRRequestExecutor;
-	private PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor;
-	private UnfollowCCRRequestExecutor _unfollowCCRRequestExecutor;
+	private final FollowInfoCCRRequestExecutor _followInfoCCRRequestExecutor;
+	private final PauseFollowCCRRequestExecutor _pauseFollowCCRRequestExecutor;
+	private final PutFollowCCRRequestExecutor _putFollowCCRRequestExecutor;
+	private final UnfollowCCRRequestExecutor _unfollowCCRRequestExecutor;
 
 }

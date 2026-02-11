@@ -11,10 +11,12 @@ import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 type EnterpriseFeatureIndicatorProps = {
+	enterpriseDetailsActionLink: string;
 	showTooltip?: boolean;
 };
 
 export default function EnterpriseFeatureIndicator({
+	enterpriseDetailsActionLink,
 	showTooltip,
 }: EnterpriseFeatureIndicatorProps) {
 	const [show, setShow] = useState(false);
@@ -92,7 +94,7 @@ export default function EnterpriseFeatureIndicator({
 							Liferay.Language.get('get-enterprise-details')
 						)}
 						className="ml-1 text-decoration-underline"
-						href="#" // TODO: Waiting for link
+						href={enterpriseDetailsActionLink}
 						rel="noopener noreferrer"
 						target="_blank"
 					>

@@ -42,6 +42,7 @@ const ViewDashboard: React.FC<IViewDashboard> = ({
 		<>
 			<Breadcrumb
 				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
+				enterpriseDetailsActionLink={enterpriseDetailsActionLink}
 				freeTier={freeTier}
 				hideSpace
 			/>

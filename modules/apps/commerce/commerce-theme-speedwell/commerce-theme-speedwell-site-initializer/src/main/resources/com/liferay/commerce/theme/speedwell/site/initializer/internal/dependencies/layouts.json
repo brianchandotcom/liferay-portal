@@ -114,7 +114,7 @@
 					{
 						"layoutColumnId": "column-3",
 						"layoutColumnPos": 0,
-						"portletName": "com_liferay_portal__search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell",
+						"portletName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet_INSTANCE_speedwell",
 						"portletPreferences": {
 							"preferenceDisplayStyle": "list"
 						}

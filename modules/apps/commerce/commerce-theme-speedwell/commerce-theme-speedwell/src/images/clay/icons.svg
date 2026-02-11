@@ -1231,9 +1231,8 @@
 		<path class="lexicon-icon-outline lx-product-menu-closed-right" d="M464,512H144c-26.5,0-48-21.5-48-48v-416c0-26.4,21.5-48,48-48h320c26.5,0,48,21.5,48,48v416C512,490.4,490.4,512,464,512L464,512z M160,448h288V64H160V448z" />
 		<path class="lexicon-icon-outline lx-product-menu-closed-left" d="M31,0C13.9,0,0,13.9,0,31V481c0,17.1,13.9,31,31,31s31-13.9,31-31V31C62.1,13.9,48.2,0,31,0C31,0,31,0,31,0z" />
 	</symbol>
-	<symbol id="product-menu-open" viewBox="0 0 512 512">
-		<path class="lexicon-icon-body" d="M465.5,5.8H46.5C20.9,5.8,0,26.7,0,52.3v407.3c0,25.7,20.9,46.5,46.5,46.5h418.9c25.7,0,46.5-20.9,46.5-46.5V52.4C512,26.7,491.1,5.8,465.5,5.8L465.5,5.8L465.5,5.8z" fill="none" />
-		<path class="lexicon-icon-outline" d="M465.5,5.8H46.5C20.9,5.8,0,26.7,0,52.3v407.3c0,25.7,20.9,46.5,46.5,46.5h418.9c25.7,0,46.5-20.9,46.5-46.5V52.4C512,26.7,491.1,5.8,465.5,5.8L465.5,5.8L465.5,5.8z M448,448H256V64h192V448z" />
+	<symbol id="product-menu-open" viewBox="0 0 16 16">
+		<path class="lexicon-icon-outline" d="M14.5 0A1.5 1.5 0 0 1 16 1.5v13c0 .825-.675 1.5-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13C0 .675.672 0 1.5 0h13ZM6 14h8V2H6v12Z" />
 	</symbol>
 	<symbol id="product-menu" viewBox="0 0 512 512">
 		<path class="lexicon-icon-outline lx-product-menu-left-bg" d="M176,512H48c-26.5,0-48-21.5-48-48V48C0,21.5,21.5,0,48,0h128c26.5,0,48,21.5,48,48v416C224,490.5,202.5,512,176,512L176,512z" fill="none" />

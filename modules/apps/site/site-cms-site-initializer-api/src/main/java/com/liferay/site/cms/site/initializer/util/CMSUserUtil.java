@@ -29,9 +29,13 @@ import java.util.TreeSet;
 /**
  * @author Pedro Leite
  */
-public class UserSelectionFDSFilterUtil {
+public class CMSUserUtil {
 
 	public static Set<User> getUsers() {
+		return getUsers(null);
+	}
+
+	public static Set<User> getUsers(String keywords) {
 		List<Long> depotEntryGroupIds = TransformUtil.transform(
 			DepotEntryLocalServiceUtil.getDepotEntryGroupIds(
 				CompanyThreadLocal.getCompanyId(), DepotConstants.TYPE_SPACE),
@@ -53,7 +57,7 @@ public class UserSelectionFDSFilterUtil {
 		users.addAll(
 			UserLocalServiceUtil.searchBySocial(
 				CompanyThreadLocal.getCompanyId(),
-				ArrayUtil.toLongArray(depotEntryGroupIds), null, null,
+				ArrayUtil.toLongArray(depotEntryGroupIds), null, keywords,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
 		long[] userGroupIds = _getUserGroupIds(depotEntryGroupIds);

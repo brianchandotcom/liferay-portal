@@ -11,7 +11,7 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
-import com.liferay.site.cms.site.initializer.util.UserSelectionFDSFilterUtil;
+import com.liferay.site.cms.site.initializer.util.CMSUserUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +56,7 @@ public class AuthorSelectionFDSFilter extends BaseSelectionFDSFilter {
 		Locale locale) {
 
 		return TransformUtil.transform(
-			UserSelectionFDSFilterUtil.getUsers(),
+			CMSUserUtil.getUsers(),
 			user -> new SelectionFDSFilterItem(
 				user.getFullName(), user.getUserId()));
 	}

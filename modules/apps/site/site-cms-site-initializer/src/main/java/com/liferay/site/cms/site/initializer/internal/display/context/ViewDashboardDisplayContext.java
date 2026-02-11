@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.site.cms.site.initializer.internal.constants.SiteCMSConstants;
 
 import java.util.Map;
 
@@ -69,7 +70,7 @@ public class ViewDashboardDisplayContext {
 				_themeDisplay)
 		).put(
 			"enterpriseDetailsActionLink",
-			"https://www.liferay.com/en/contact-sales"
+			SiteCMSConstants.ENTERPRISE_DETAILS_ACTION_LINK
 		).put(
 			"freeTier",
 			FeatureFlagManagerUtil.isEnabled(

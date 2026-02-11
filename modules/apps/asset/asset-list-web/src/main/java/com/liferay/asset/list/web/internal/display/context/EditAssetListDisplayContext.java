@@ -11,11 +11,13 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeField;
 import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.asset.list.constants.AssetListPortletKeys;
 import com.liferay.asset.list.model.AssetListEntry;
@@ -30,6 +32,7 @@ import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorCriterion;
 import com.liferay.asset.tags.item.selector.AssetTagsItemSelectorReturnType;
 import com.liferay.asset.util.AssetRendererFactoryClassProvider;
 import com.liferay.asset.util.comparator.AssetRendererFactoryTypeNameComparator;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
@@ -1003,10 +1006,46 @@ public class EditAssetListDisplayContext {
 	}
 
 	public List<Long> getVocabularyIds() throws PortalException {
-		List<AssetVocabulary> assetVocabularies = ListUtil.filter(
+		List<AssetVocabulary> cmsSpaceVocabularies = new ArrayList<>();
+
+		List<Group> spaceGroups = ListUtil.filter(
+			getSelectedGroups(),
+			group -> {
+				String depotEntryType = group.getTypeSettingsProperty(
+					"depotEntryType");
+
+				return (depotEntryType != null) &&
+					   (GetterUtil.getInteger(depotEntryType) ==
+						   DepotConstants.TYPE_SPACE);
+			});
+
+		if (ListUtil.isNotEmpty(spaceGroups)) {
+			List<Long> groupIds = ListUtil.toList(
+				spaceGroups, Group.GROUP_ID_ACCESSOR);
+
+			groupIds.add(_GROUP_ID_ALL);
+
+			List<AssetVocabularyGroupRel> assetVocabularyGroupRelList =
+				AssetVocabularyGroupRelServiceUtil.
+					getAssetVocabularyGroupRelByGroupIds(
+						ArrayUtil.toLongArray(groupIds));
+
+			for (AssetVocabularyGroupRel assetVocabularyGroupRel :
+					assetVocabularyGroupRelList) {
+
+				cmsSpaceVocabularies.add(
+					AssetVocabularyServiceUtil.getVocabulary(
+						assetVocabularyGroupRel.getVocabularyId()));
+			}
+		}
+
+		List<AssetVocabulary> groupVocabularies = new ArrayList<>(
 			AssetVocabularyServiceUtil.getGroupsVocabularies(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					getReferencedModelsGroupIds())),
+					getReferencedModelsGroupIds())));
+
+		List<AssetVocabulary> assetVocabularies = ListUtil.filter(
+			ListUtil.concat(cmsSpaceVocabularies, groupVocabularies),
 			vocabulary -> {
 				long[] classNameIds = vocabulary.getSelectedClassNameIds();
 
@@ -1469,6 +1508,8 @@ public class EditAssetListDisplayContext {
 	}
 
 	private static final long _DEFAULT_SUBTYPE_SELECTION_ID = -1;
+
+	private static final long _GROUP_ID_ALL = -1;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditAssetListDisplayContext.class);

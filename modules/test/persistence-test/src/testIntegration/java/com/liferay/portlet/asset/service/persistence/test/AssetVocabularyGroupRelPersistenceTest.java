@@ -195,6 +195,11 @@ public class AssetVocabularyGroupRelPersistenceTest {
 	}
 
 	@Test
+	public void testCountByGroupIdArrayable() throws Exception {
+		_persistence.countByGroupId(new long[] {RandomTestUtil.nextLong(), 0L});
+	}
+
+	@Test
 	public void testCountByVocabularyId() throws Exception {
 		_persistence.countByVocabularyId(RandomTestUtil.nextLong());
 

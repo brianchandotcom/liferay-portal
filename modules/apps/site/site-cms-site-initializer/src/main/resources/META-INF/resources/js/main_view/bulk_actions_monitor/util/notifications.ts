@@ -81,10 +81,10 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_DUE_DATE]: {
 		info: {
 			all: Liferay.Language.get(
-				'due-date-update-action-started-for-all-task'
+				'due-date-update-action-started-for-all-tasks'
 			),
 			plural: Liferay.Language.get(
-				'due-date-update-action-started-for-x-task'
+				'due-date-update-action-started-for-x-tasks'
 			),
 			singular: Liferay.Language.get(
 				'due-date-update-action-started-for-one-task'
@@ -136,10 +136,10 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_STATUS]: {
 		info: {
 			all: Liferay.Language.get(
-				'state-update-action-started-for-all-task'
+				'state-update-action-started-for-all-tasks'
 			),
 			plural: Liferay.Language.get(
-				'state-update-action-started-for-x-task'
+				'state-update-action-started-for-x-tasks'
 			),
 			singular: Liferay.Language.get(
 				'state-update-action-started-for-one-task'

@@ -512,8 +512,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		portletDataContext.getExportDataGroupElement(Layout.class);
 
-		if (!portletDataContext.isPrivateLayout() &&
-			FeatureFlagManagerUtil.isEnabled("LPD-35443") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35443") &&
 			FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 
 			return;

@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
@@ -28,11 +28,9 @@ import org.elasticsearch.client.indices.GetFieldMappingsResponse;
 public class GetFieldMappingIndexRequestExecutor {
 
 	public GetFieldMappingIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public GetFieldMappingIndexResponse execute(
@@ -54,7 +52,7 @@ public class GetFieldMappingIndexRequestExecutor {
 			Map<String, GetFieldMappingsResponse.FieldMappingMetadata> map =
 				mappings.get(indexName);
 
-			JSONObject jsonObject = _jsonFactory.createJSONObject();
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			for (String fieldName : getFieldMappingIndexRequest.getFields()) {
 				GetFieldMappingsResponse.FieldMappingMetadata
@@ -105,6 +103,5 @@ public class GetFieldMappingIndexRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

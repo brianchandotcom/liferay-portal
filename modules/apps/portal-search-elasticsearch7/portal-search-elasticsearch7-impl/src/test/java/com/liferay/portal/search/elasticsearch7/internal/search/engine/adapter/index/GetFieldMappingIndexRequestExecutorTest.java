@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.engine.adapter.index.GetFieldMappingIndexRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -48,8 +47,7 @@ public class GetFieldMappingIndexRequestExecutorTest {
 
 		GetFieldMappingIndexRequestExecutor
 			getFieldMappingIndexRequestExecutor =
-				new GetFieldMappingIndexRequestExecutor(
-					_elasticsearchFixture, new JSONFactoryImpl());
+				new GetFieldMappingIndexRequestExecutor(_elasticsearchFixture);
 
 		GetFieldMappingsRequest getFieldMappingsRequest =
 			getFieldMappingIndexRequestExecutor.createGetFieldMappingsRequest(

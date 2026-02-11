@@ -31,7 +31,7 @@ public class ElasticsearchIndexRequestExecutorTest {
 	@Before
 	public void setUp() throws Exception {
 		_elasticsearchIndexRequestExecutor =
-			new ElasticsearchIndexRequestExecutor();
+			new ElasticsearchIndexRequestExecutor(null);
 
 		ReflectionTestUtil.setFieldValue(
 			_elasticsearchIndexRequestExecutor,

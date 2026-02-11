@@ -292,6 +292,10 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 	protected void assertValid(TaskAssignee taskAssignee) throws Exception {
 		boolean valid = true;
 
+		if (taskAssignee.getId() == null) {
+			valid = false;
+		}
+
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
@@ -389,6 +393,8 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 
 		graphQLFields.add(new GraphQLField("externalReferenceCode"));
 
+		graphQLFields.add(new GraphQLField("id"));
+
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
 					com.liferay.headless.cmp.dto.v1_0.TaskAssignee.class)) {
@@ -455,6 +461,16 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 				if (!Objects.deepEquals(
 						taskAssignee1.getExternalReferenceCode(),
 						taskAssignee2.getExternalReferenceCode())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("id", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						taskAssignee1.getId(), taskAssignee2.getId())) {
 
 					return false;
 				}
@@ -646,6 +662,11 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("id")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("name")) {
 			Object object = taskAssignee.getName();
 
@@ -831,6 +852,7 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 			{
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
+				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				portrait = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());

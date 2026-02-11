@@ -60,6 +60,16 @@ public class TaskAssigneeSerDes {
 			sb.append("\"");
 		}
 
+		if (taskAssignee.getId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
+
+			sb.append(taskAssignee.getId());
+		}
+
 		if (taskAssignee.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -130,6 +140,13 @@ public class TaskAssigneeSerDes {
 				String.valueOf(taskAssignee.getExternalReferenceCode()));
 		}
 
+		if (taskAssignee.getId() == null) {
+			map.put("id", null);
+		}
+		else {
+			map.put("id", String.valueOf(taskAssignee.getId()));
+		}
+
 		if (taskAssignee.getName() == null) {
 			map.put("name", null);
 		}
@@ -172,6 +189,9 @@ public class TaskAssigneeSerDes {
 			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -194,6 +214,12 @@ public class TaskAssigneeSerDes {
 				if (jsonParserFieldValue != null) {
 					taskAssignee.setExternalReferenceCode(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "id")) {
+				if (jsonParserFieldValue != null) {
+					taskAssignee.setId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

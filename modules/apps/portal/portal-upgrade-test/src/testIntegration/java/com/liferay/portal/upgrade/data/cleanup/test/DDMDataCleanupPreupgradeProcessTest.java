@@ -278,17 +278,15 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 		connection = _connection;
 
-		long companyId = _getNonexistentCompanyId();
-
+		String globalStructureKey = RandomTestUtil.randomString();
+		String orphanStructureKey = RandomTestUtil.randomString();
+		String parentStructureKey = RandomTestUtil.randomString();
 		long childGroupId = RandomTestUtil.nextLong();
+		long companyId = _getNonexistentCompanyId();
 		long globalGroupId = RandomTestUtil.nextLong();
 		long orphanGroupId = RandomTestUtil.nextLong();
 		long otherGroupId = RandomTestUtil.nextLong();
 		long parentGroupId = RandomTestUtil.nextLong();
-
-		String globalStructureKey = RandomTestUtil.randomString();
-		String orphanStructureKey = RandomTestUtil.randomString();
-		String parentStructureKey = RandomTestUtil.randomString();
 
 		try {
 			alterTableAddColumn(

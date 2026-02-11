@@ -223,7 +223,7 @@ export function ItemContextProvider({children, value}: Props) {
 				}
 			}
 
-			reorder(dragItem.item.cursor, item.cursor, currentPosition!);
+			reorder(dragKeys, item.cursor, currentPosition!);
 		},
 		hover(dragItem, monitor) {
 			if (!monitor.canDrop() || isDragging) {

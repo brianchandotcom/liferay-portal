@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
@@ -72,8 +73,9 @@ public class ObjectEntryLocalServiceTest {
 		ObjectDefinition systemObjectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(),
-				objectFolder.getObjectFolderId(), null, null, false, true,
-				false, true, false, false, false, false, false, null,
+				objectFolder.getObjectFolderId(),
+				ObjectDefinitionUtil.generateRandomClassName(), null, false,
+				true, false, true, false, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, "Test", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

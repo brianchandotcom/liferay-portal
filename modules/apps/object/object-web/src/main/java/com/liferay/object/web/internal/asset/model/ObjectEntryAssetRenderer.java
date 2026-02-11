@@ -110,6 +110,18 @@ public class ObjectEntryAssetRenderer
 	}
 
 	@Override
+	public String getSharingEntryRowPortletURL(
+			boolean editable, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if (_objectDefinition.isCMS()) {
+			return getURLSharingNotification(editable, themeDisplay);
+		}
+
+		return null;
+	}
+
+	@Override
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 

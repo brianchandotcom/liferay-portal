@@ -8,12 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
-
 String authorizationEndpoint = (String)request.getAttribute("authorization_endpoint");
 String jwksUri = (String)request.getAttribute("jwks_uri");
+String redirect = ParamUtil.getString(request, "redirect");
 String supportedGrantTypes = (String)request.getAttribute("supported-grant-types");
 String supportedScopes = (String)request.getAttribute("supported-scopes");
 String supportedSubjectTypes = (String)request.getAttribute("supported_subject_types");
@@ -22,6 +19,8 @@ String userinfoEndpoint = (String)request.getAttribute("userinfo_endpoint");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
+
+OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
 
 renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(request, "new-oauth-client-as-local-metadata") : LanguageUtil.get(request, "edit-oauth-client-as-local-metadata"));
 
@@ -53,9 +52,11 @@ JSONObject metadataJSONObject = JSONUtil.put(
 			<aui:fieldset>
 				<liferay-ui:error exception="<%= DuplicateOAuthClientASLocalMetadataException.class %>" message="oauth-client-as-local-metadata-duplicate-as-local-metadata" />
 
-				<liferay-ui:error exception="<%= DuplicateOAuthClientASIssuerException.class %>" message="oauth-client-as-local-metadata-invalid-local-well-known-uri" />
+				<liferay-ui:error exception="<%= DuplicateOAuthClientEntryException.class %>" message="oauth-client-as-local-metadata-duplicate-as-issuer" />
 
-				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.class %>" message="oauth-client-as-local-metadata-invalid-local-well-known-uri" />
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.class %>">
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-issuer-uri-x" />
+				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataMetadataJSONException.class %>">
 					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataMetadataJSONException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-metadata-json-x" />
@@ -127,10 +128,6 @@ JSONObject metadataJSONObject = JSONUtil.put(
 	<portlet:namespace />init();
 
 	function <portlet:namespace />doSubmit() {
-		var form = document.getElementById(
-			'<portlet:namespace />oauth-client-as-fm'
-		);
-
 		var oAuthASMetadataJSON = document.getElementById(
 			'<portlet:namespace />oAuthASMetadataJSON'
 		).value;
@@ -165,26 +162,30 @@ JSONObject metadataJSONObject = JSONUtil.put(
 		document.getElementById('<portlet:namespace />metadataJSON').value =
 			metadataJSON;
 
+		var form = document.getElementById(
+			'<portlet:namespace />oauth-client-as-fm'
+		);
+
 		submitForm(form);
 	}
 
 	function <portlet:namespace />init() {
-		var oAuthASMetadataJSON = document.getElementById(
-			'<portlet:namespace />oAuthASMetadataJSON'
-		);
-
-		oAuthASMetadataJSON.value = JSON.stringify(
-			JSON.parse(oAuthASMetadataJSON.value),
-			null,
-			4
-		);
-
 		var metadataJSON = document.getElementById(
 			'<portlet:namespace />metadataJSON'
 		);
 
 		metadataJSON.value = JSON.stringify(
 			JSON.parse(metadataJSON.value),
+			null,
+			4
+		);
+
+		var oAuthASMetadataJSON = document.getElementById(
+			'<portlet:namespace />oAuthASMetadataJSON'
+		);
+
+		oAuthASMetadataJSON.value = JSON.stringify(
+			JSON.parse(oAuthASMetadataJSON.value),
 			null,
 			4
 		);

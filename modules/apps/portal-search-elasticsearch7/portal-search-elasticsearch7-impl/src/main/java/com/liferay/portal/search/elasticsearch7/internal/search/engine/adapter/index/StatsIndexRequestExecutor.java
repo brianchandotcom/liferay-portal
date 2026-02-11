@@ -6,7 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -30,11 +30,9 @@ import org.elasticsearch.client.RestHighLevelClient;
 public class StatsIndexRequestExecutor {
 
 	public StatsIndexRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		JSONFactory jsonFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
-		_jsonFactory = jsonFactory;
 	}
 
 	public StatsIndexResponse execute(StatsIndexRequest statsIndexRequest) {
@@ -50,7 +48,7 @@ public class StatsIndexRequestExecutor {
 		try {
 			Response response = restClient.performRequest(request);
 
-			JSONObject responseJSONObject = _jsonFactory.createJSONObject(
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
 				EntityUtils.toString(response.getEntity()));
 
 			JSONObject indicesJSONObject = responseJSONObject.getJSONObject(
@@ -100,6 +98,5 @@ public class StatsIndexRequestExecutor {
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final JSONFactory _jsonFactory;
 
 }

@@ -45,7 +45,7 @@ public class StatsIndexRequestExecutorTest {
 			"liferay-1", "liferay-2", "liferay-3");
 
 		StatsIndexRequestExecutor statsIndexRequestExecutor =
-			new StatsIndexRequestExecutor(null, null);
+			new StatsIndexRequestExecutor(null);
 
 		Request request =
 			statsIndexRequestExecutor.getElasticsearchIndexRequest(
@@ -61,7 +61,7 @@ public class StatsIndexRequestExecutorTest {
 			"liferay-1");
 
 		StatsIndexRequestExecutor statsIndexRequestExecutor =
-			new StatsIndexRequestExecutor(null, null);
+			new StatsIndexRequestExecutor(null);
 
 		Request request =
 			statsIndexRequestExecutor.getElasticsearchIndexRequest(
@@ -75,7 +75,7 @@ public class StatsIndexRequestExecutorTest {
 		StatsIndexRequest statsIndexRequest = new StatsIndexRequest();
 
 		StatsIndexRequestExecutor statsIndexRequestExecutor =
-			new StatsIndexRequestExecutor(null, null);
+			new StatsIndexRequestExecutor(null);
 
 		Request request =
 			statsIndexRequestExecutor.getElasticsearchIndexRequest(

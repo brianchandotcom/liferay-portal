@@ -1,0 +1,85 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.bulk.rest.client.dto.v1_0;
+
+import com.liferay.bulk.rest.client.function.UnsafeSupplier;
+import com.liferay.bulk.rest.client.serdes.v1_0.DeleteAssetVersionBulkActionSerDes;
+
+import jakarta.annotation.Generated;
+
+import java.io.Serializable;
+
+import java.util.Objects;
+
+/**
+ * @author Alejandro Tardín
+ * @generated
+ */
+@Generated("")
+public class DeleteAssetVersionBulkAction
+	extends BulkAction implements Cloneable, Serializable {
+
+	public static DeleteAssetVersionBulkAction toDTO(String json) {
+		return DeleteAssetVersionBulkActionSerDes.toDTO(json);
+	}
+
+	public Integer[] getVersions() {
+		return versions;
+	}
+
+	public void setVersions(Integer[] versions) {
+		this.versions = versions;
+	}
+
+	public void setVersions(
+		UnsafeSupplier<Integer[], Exception> versionsUnsafeSupplier) {
+
+		try {
+			versions = versionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer[] versions;
+
+	@Override
+	public DeleteAssetVersionBulkAction clone()
+		throws CloneNotSupportedException {
+
+		return (DeleteAssetVersionBulkAction)super.clone();
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof DeleteAssetVersionBulkAction)) {
+			return false;
+		}
+
+		DeleteAssetVersionBulkAction deleteAssetVersionBulkAction =
+			(DeleteAssetVersionBulkAction)object;
+
+		return Objects.equals(
+			toString(), deleteAssetVersionBulkAction.toString());
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
+	}
+
+	public String toString() {
+		return DeleteAssetVersionBulkActionSerDes.toJSON(this);
+	}
+
+}

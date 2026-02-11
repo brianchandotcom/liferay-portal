@@ -52,6 +52,10 @@ import java.util.function.Supplier;
 			value = DefaultPermissionBulkAction.class
 		),
 		@JsonSubTypes.Type(
+			name = "DeleteAssetVersionBulkAction",
+			value = DeleteAssetVersionBulkAction.class
+		),
+		@JsonSubTypes.Type(
 			name = "DeleteBulkAction", value = DeleteBulkAction.class
 		),
 		@JsonSubTypes.Type(
@@ -327,6 +331,7 @@ public abstract class BulkAction implements Serializable {
 
 		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
 		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
+		DELETE_ASSET_VERSION_BULK_ACTION("DeleteAssetVersionBulkAction"),
 		DELETE_BULK_ACTION("DeleteBulkAction"),
 		DUE_DATE_BULK_ACTION("DueDateBulkAction"),
 		EXPIRE_BULK_ACTION("ExpireBulkAction"),

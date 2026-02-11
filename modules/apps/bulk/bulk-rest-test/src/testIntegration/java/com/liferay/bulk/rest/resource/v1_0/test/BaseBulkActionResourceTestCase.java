@@ -17,6 +17,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
@@ -390,6 +391,20 @@ public abstract class BaseBulkActionResourceTestCase {
 				}
 
 				if (((DefaultPermissionBulkAction)bulkAction).getTreePath() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("versions", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof DeleteAssetVersionBulkAction)) {
+					continue;
+				}
+
+				if (((DeleteAssetVersionBulkAction)bulkAction).getVersions() ==
 						null) {
 
 					valid = false;
@@ -936,6 +951,25 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("versions", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof DeleteAssetVersionBulkAction) ||
+					!(bulkAction2 instanceof DeleteAssetVersionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((DeleteAssetVersionBulkAction)bulkAction1).
+							getVersions(),
+						((DeleteAssetVersionBulkAction)bulkAction2).
+							getVersions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("dueDate", additionalAssertFieldName)) {
 				if (!(bulkAction1 instanceof DueDateBulkAction) ||
 					!(bulkAction2 instanceof DueDateBulkAction)) {
@@ -1466,6 +1500,15 @@ public abstract class BaseBulkActionResourceTestCase {
 
 				bulkAction.setType(
 					BulkAction.Type.create("DefaultPermissionBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				DeleteAssetVersionBulkAction bulkAction =
+					new DeleteAssetVersionBulkAction();
+
+				bulkAction.setType(
+					BulkAction.Type.create("DeleteAssetVersionBulkAction"));
 
 				return bulkAction;
 			},

@@ -9,6 +9,7 @@ import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
+import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
@@ -65,6 +66,11 @@ public class BulkActionSerDes {
 			if (typeString.equals("DefaultPermissionBulkAction")) {
 				return DefaultPermissionBulkActionSerDes.toJSON(
 					(DefaultPermissionBulkAction)bulkAction);
+			}
+
+			if (typeString.equals("DeleteAssetVersionBulkAction")) {
+				return DeleteAssetVersionBulkActionSerDes.toJSON(
+					(DeleteAssetVersionBulkAction)bulkAction);
 			}
 
 			if (typeString.equals("DeleteBulkAction")) {
@@ -202,6 +208,10 @@ public class BulkActionSerDes {
 
 				if (typeString.equals("DefaultPermissionBulkAction")) {
 					return DefaultPermissionBulkAction.toDTO(json);
+				}
+
+				if (typeString.equals("DeleteAssetVersionBulkAction")) {
+					return DeleteAssetVersionBulkAction.toDTO(json);
 				}
 
 				if (typeString.equals("DeleteBulkAction")) {

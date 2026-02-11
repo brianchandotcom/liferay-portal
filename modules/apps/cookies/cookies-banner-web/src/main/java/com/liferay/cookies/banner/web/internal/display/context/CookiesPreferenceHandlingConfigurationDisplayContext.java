@@ -32,6 +32,11 @@ public class CookiesPreferenceHandlingConfigurationDisplayContext {
 			_scope, _scopePK);
 	}
 
+	public boolean getCookiesPreferenceHandlingEnableFloatingIcon() {
+		return _cookiesConfigurationProvider.
+			isCookiesPreferenceHandlingEnableFloatingIcon(_scope, _scopePK);
+	}
+
 	public boolean getCookiesPreferenceHandlingExplicitConsentMode() {
 		return _cookiesConfigurationProvider.
 			isCookiesPreferenceHandlingExplicitConsentMode(_scope, _scopePK);

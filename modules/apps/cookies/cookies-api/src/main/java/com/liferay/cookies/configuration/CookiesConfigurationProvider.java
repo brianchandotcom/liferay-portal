@@ -56,6 +56,9 @@ public interface CookiesConfigurationProvider {
 	public boolean isCookiesPreferenceHandlingEnabled(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 
+	public boolean isCookiesPreferenceHandlingEnableFloatingIcon(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK);
+
 	public boolean isCookiesPreferenceHandlingExplicitConsentMode(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK);
 

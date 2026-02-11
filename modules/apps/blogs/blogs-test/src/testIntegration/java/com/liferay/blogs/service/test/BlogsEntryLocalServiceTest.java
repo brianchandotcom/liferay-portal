@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.attachments.test.BlogsEntryAttachmentFileEntryHelperTest;
 import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntrySmallImageNameException;
 import com.liferay.blogs.exception.EntryTitleException;
@@ -45,12 +46,20 @@ import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.util.BundleUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.IdentityServiceContextFunction;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -61,26 +70,41 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
+import jakarta.portlet.PortletRequest;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.InputStream;
+import java.io.Serializable;
 
 import java.lang.reflect.Method;
 
@@ -88,7 +112,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -100,6 +126,8 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Cristina González
@@ -659,6 +687,105 @@ public class BlogsEntryLocalServiceTest {
 		Assert.assertEquals(0, updatedEntry.getSmallImageFileEntryId());
 		Assert.assertEquals(imageURL, updatedEntry.getSmallImageURL());
 		Assert.assertTrue(updatedEntry.isSmallImage());
+	}
+
+	@Test
+	public void testBlogWorkflowAndDynamicCollectionIntegration()
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/blogs/service/test/dependencies" +
+				"/workflow-definition.json");
+
+		String workflowDefinitionContent = StringUtil.read(inputStream);
+
+		_organization = OrganizationTestUtil.addOrganization();
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, _organization.getCompanyId(), _user.getUserId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			workflowDefinitionContent.getBytes());
+
+		ServiceContext serviceContextAddEntry =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), _user.getUserId());
+
+		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContextAddEntry);
+
+		ServiceContext serviceContext = _getServiceContext();
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL(
+			StringBundler.concat(
+				"http://localhost:8080/group/guest/~/control_panel",
+				"/manage?p_p_id=", BlogsPortletKeys.BLOGS_ADMIN));
+		serviceContext.setPortletId(BlogsPortletKeys.BLOGS_ADMIN);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			Map<String, Serializable> workflowContext = _getWorkflowContextMap(
+				blogsEntry, serviceContext);
+
+			List<WorkflowTask> workflowTasks =
+				WorkflowTaskManagerUtil.getWorkflowTasks(
+					_organization.getCompanyId(), false, 0, 10, null);
+
+			WorkflowTask task = workflowTasks.get(0);
+
+			WorkflowTaskManagerUtil.assignWorkflowTaskToUser(
+				_group.getGroupId(), _user.getUserId(),
+				task.getWorkflowTaskId(), _user.getUserId(), "", null,
+				new HashMap<>());
+
+			WorkflowHandler<?> workflowHandler =
+				WorkflowHandlerRegistryUtil.getWorkflowHandler(
+					GetterUtil.getString(
+						workflowContext.get(
+							WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)));
+
+			workflowHandler.contributeWorkflowContext(workflowContext);
+
+			workflowContext.put(
+				WorkflowConstants.CONTEXT_USER_ID,
+				String.valueOf(_user.getUserId()));
+
+			WorkflowTaskManagerUtil.completeWorkflowTask(
+				_group.getGroupId(), _user.getUserId(),
+				task.getWorkflowTaskId(), "approve", "", workflowContext);
+
+			HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			String layoutFullURL = GetterUtil.getString(
+				serviceContext.getAttribute("layoutFullURL"));
+
+			if (themeDisplay.getRefererPlid() == 0) {
+				Assert.assertEquals(
+					layoutFullURL, PortalUtil.getLayoutFullURL(themeDisplay));
+			}
+			else {
+				Assert.assertEquals(
+					layoutFullURL,
+					PortalUtil.getLayoutFullURL(
+						_layoutLocalService.getLayout(
+							themeDisplay.getRefererPlid()),
+						themeDisplay));
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test
@@ -1813,6 +1940,146 @@ public class BlogsEntryLocalServiceTest {
 		return assetVocabularySettingsHelper;
 	}
 
+	private String _getEntryURL(BlogsEntry entry, ServiceContext serviceContext)
+		throws PortalException {
+
+		String entryURL = GetterUtil.getString(
+			serviceContext.getAttribute("entryURL"));
+
+		if (Validator.isNotNull(entryURL)) {
+			return entryURL;
+		}
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return StringPool.BLANK;
+		}
+
+		String portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.VIEW);
+
+		if (Validator.isNotNull(portletId)) {
+			String layoutURL = PortalUtil.getLayoutFullURL(
+				entry.getGroupId(), portletId);
+
+			if (Validator.isNotNull(layoutURL)) {
+				return StringBundler.concat(
+					layoutURL, Portal.FRIENDLY_URL_SEPARATOR, "blogs/",
+					entry.getEntryId());
+			}
+		}
+
+		portletId = PortletProviderUtil.getPortletId(
+			BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
+
+		if (Validator.isNull(portletId) ||
+			(serviceContext.getThemeDisplay() == null)) {
+
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest, portletId, PortletRequest.RENDER_PHASE)
+		).setMVCRenderCommandName(
+			"/blogs/view_entry"
+		).setParameter(
+			"entryId", entry.getEntryId()
+		).buildString();
+	}
+
+	private ServiceContext _getServiceContext() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		long userId = _user.getUserId();
+		long companyId = _organization.getCompanyId();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setLanguageId(
+			LocaleUtil.toLanguageId(_user.getLocale()));
+		serviceContext.setPortalURL("http://localhost:8080");
+
+		serviceContext.setRequest(mockHttpServletRequest);
+		serviceContext.setUserId(userId);
+
+		return serviceContext;
+	}
+
+	private ThemeDisplay _getThemeDisplay() throws Exception {
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setRealUser(_user);
+		themeDisplay.setUser(_user);
+
+		long groupId = _group.getGroupId();
+
+		themeDisplay.setCompany(
+			CompanyLocalServiceUtil.getCompany(_organization.getCompanyId()));
+		themeDisplay.setPortalURL("http://localhost:8080");
+		themeDisplay.setScopeGroupId(groupId);
+		themeDisplay.setSiteGroupId(groupId);
+		themeDisplay.setURLCurrent("/web/guest/manage");
+		themeDisplay.setURLHome("http://localhost:8080/web/guest");
+
+		PermissionChecker permissionChecker =
+			PermissionCheckerFactoryUtil.create(themeDisplay.getUser());
+
+		themeDisplay.setPermissionChecker(permissionChecker);
+
+		themeDisplay.setSignedIn(true);
+		themeDisplay.setStateMaximized(true);
+
+		return themeDisplay;
+	}
+
+	private Map<String, Serializable> _getWorkflowContextMap(
+			BlogsEntry blogsEntry, ServiceContext serviceContext)
+		throws PortalException {
+
+		String userPortraitURL = _user.getPortraitURL(
+			serviceContext.getThemeDisplay());
+		String userURL = _user.getDisplayURL(serviceContext.getThemeDisplay());
+
+		return HashMapBuilder.<String, Serializable>put(
+			WorkflowConstants.CONTEXT_URL,
+			_getEntryURL(blogsEntry, serviceContext)
+		).put(
+			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL
+		).put(
+			WorkflowConstants.CONTEXT_USER_URL, userURL
+		).put(
+			"companyId", _organization.getCompanyId()
+		).put(
+			"ctCollectionId", blogsEntry.getCtCollectionId()
+		).put(
+			"entryClassName", blogsEntry.getModelClassName()
+		).put(
+			"entryClassPK", blogsEntry.getEntryId()
+		).put(
+			"entryType", "Blogs Entry"
+		).put(
+			"groupId", _group.getGroupId()
+		).put(
+			"serviceContext", serviceContext
+		).put(
+			"taskComments", ""
+		).put(
+			"userId", _user.getUserId()
+		).build();
+	}
+
 	private String _repeat(String string, int times) {
 		StringBundler sb = new StringBundler(times);
 
@@ -1862,6 +2129,9 @@ public class BlogsEntryLocalServiceTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@Inject
+	private LayoutLocalService _layoutLocalService;
+
 	@DeleteAfterTestRun
 	private Organization _organization;
 
@@ -1881,5 +2151,8 @@ public class BlogsEntryLocalServiceTest {
 			WorkflowConstants.STATUS_IN_TRASH, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	private User _user;
+
+	@Inject
+	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

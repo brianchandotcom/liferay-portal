@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
+import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -44,28 +44,29 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @Generated("")
 @ProviderType
-public interface TaskDefinitionResource {
+public interface AgentDefinitionResource {
 
-	public void deleteTaskDefinition(Long taskDefinitionId) throws Exception;
-
-	public Response deleteTaskDefinitionBatch(String callbackURL, Object object)
+	public void deleteAgentDefinitionByExternalReferenceCode(
+			String externalReferenceCode)
 		throws Exception;
 
-	public Page<TaskDefinition> getTaskDefinitionsPage(
+	public Page<AgentDefinition> getAgentDefinitionsPage(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
-	public TaskDefinition patchTaskDefinitionUpdateActive(
-			Long taskDefinitionId, Boolean active)
+	public AgentDefinition
+			patchAgentDefinitionByExternalReferenceCodeUpdateActive(
+				String externalReferenceCode, Boolean active)
 		throws Exception;
 
-	public TaskDefinition postTaskDefinitionCopy(Long taskDefinitionId)
+	public AgentDefinition postAgentDefinitionByExternalReferenceCodeCopy(
+			String externalReferenceCode)
 		throws Exception;
 
-	public Response postTaskDefinitionsPageExportBatch(
+	public Response postAgentDefinitionsPageExportBatch(
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
@@ -142,7 +143,7 @@ public interface TaskDefinitionResource {
 	@ProviderType
 	public interface Builder {
 
-		public TaskDefinitionResource build();
+		public AgentDefinitionResource build();
 
 		public Builder checkPermissions(boolean checkPermissions);
 

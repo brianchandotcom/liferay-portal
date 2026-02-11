@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -35,17 +35,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("TaskDefinition")
+@GraphQLName("AgentDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "TaskDefinition")
-public class TaskDefinition implements Serializable {
+@XmlRootElement(name = "AgentDefinition")
+public class AgentDefinition implements Serializable {
 
-	public static TaskDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(TaskDefinition.class, json);
+	public static AgentDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(AgentDefinition.class, json);
 	}
 
-	public static TaskDefinition unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(TaskDefinition.class, json);
+	public static AgentDefinition unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(AgentDefinition.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -254,6 +254,48 @@ public class TaskDefinition implements Serializable {
 	private Supplier<Long> _idSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Variable[] getInputVariables() {
+		if (_inputVariablesSupplier != null) {
+			inputVariables = _inputVariablesSupplier.get();
+
+			_inputVariablesSupplier = null;
+		}
+
+		return inputVariables;
+	}
+
+	public void setInputVariables(Variable[] inputVariables) {
+		this.inputVariables = inputVariables;
+
+		_inputVariablesSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setInputVariables(
+		UnsafeSupplier<Variable[], Exception> inputVariablesUnsafeSupplier) {
+
+		_inputVariablesSupplier = () -> {
+			try {
+				return inputVariablesUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Variable[] inputVariables;
+
+	@JsonIgnore
+	private Supplier<Variable[]> _inputVariablesSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	public String getName() {
 		if (_nameSupplier != null) {
 			name = _nameSupplier.get();
@@ -291,6 +333,48 @@ public class TaskDefinition implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _nameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Variable getOutputVariable() {
+		if (_outputVariableSupplier != null) {
+			outputVariable = _outputVariableSupplier.get();
+
+			_outputVariableSupplier = null;
+		}
+
+		return outputVariable;
+	}
+
+	public void setOutputVariable(Variable outputVariable) {
+		this.outputVariable = outputVariable;
+
+		_outputVariableSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setOutputVariable(
+		UnsafeSupplier<Variable, Exception> outputVariableUnsafeSupplier) {
+
+		_outputVariableSupplier = () -> {
+			try {
+				return outputVariableUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Variable outputVariable;
+
+	@JsonIgnore
+	private Supplier<Variable> _outputVariableSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getTitle() {
@@ -374,19 +458,61 @@ public class TaskDefinition implements Serializable {
 	@JsonIgnore
 	private Supplier<Integer> _versionSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getWorkflowDefinitionName() {
+		if (_workflowDefinitionNameSupplier != null) {
+			workflowDefinitionName = _workflowDefinitionNameSupplier.get();
+
+			_workflowDefinitionNameSupplier = null;
+		}
+
+		return workflowDefinitionName;
+	}
+
+	public void setWorkflowDefinitionName(String workflowDefinitionName) {
+		this.workflowDefinitionName = workflowDefinitionName;
+
+		_workflowDefinitionNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setWorkflowDefinitionName(
+		UnsafeSupplier<String, Exception>
+			workflowDefinitionNameUnsafeSupplier) {
+
+		_workflowDefinitionNameSupplier = () -> {
+			try {
+				return workflowDefinitionNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String workflowDefinitionName;
+
+	@JsonIgnore
+	private Supplier<String> _workflowDefinitionNameSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof TaskDefinition)) {
+		if (!(object instanceof AgentDefinition)) {
 			return false;
 		}
 
-		TaskDefinition taskDefinition = (TaskDefinition)object;
+		AgentDefinition agentDefinition = (AgentDefinition)object;
 
-		return Objects.equals(toString(), taskDefinition.toString());
+		return Objects.equals(toString(), agentDefinition.toString());
 	}
 
 	@Override
@@ -469,6 +595,28 @@ public class TaskDefinition implements Serializable {
 			sb.append(id);
 		}
 
+		Variable[] inputVariables = getInputVariables();
+
+		if (inputVariables != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"inputVariables\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < inputVariables.length; i++) {
+				sb.append(String.valueOf(inputVariables[i]));
+
+				if ((i + 1) < inputVariables.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		String name = getName();
 
 		if (name != null) {
@@ -483,6 +631,18 @@ public class TaskDefinition implements Serializable {
 			sb.append(_escape(name));
 
 			sb.append("\"");
+		}
+
+		Variable outputVariable = getOutputVariable();
+
+		if (outputVariable != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"outputVariable\": ");
+
+			sb.append(String.valueOf(outputVariable));
 		}
 
 		String title = getTitle();
@@ -513,6 +673,22 @@ public class TaskDefinition implements Serializable {
 			sb.append(version);
 		}
 
+		String workflowDefinitionName = getWorkflowDefinitionName();
+
+		if (workflowDefinitionName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"workflowDefinitionName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(workflowDefinitionName));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -520,7 +696,7 @@ public class TaskDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition",
+		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

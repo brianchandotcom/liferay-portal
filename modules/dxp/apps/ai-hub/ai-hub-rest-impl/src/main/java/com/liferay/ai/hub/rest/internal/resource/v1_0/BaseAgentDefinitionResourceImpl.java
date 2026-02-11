@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
-import com.liferay.ai.hub.rest.dto.v1_0.TaskDefinition;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskDefinitionResource;
+import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.rest.resource.v1_0.AgentDefinitionResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -62,90 +62,46 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BaseTaskDefinitionResourceImpl
-	implements EntityModelResource, TaskDefinitionResource,
-			   VulcanBatchEngineTaskItemDelegate<TaskDefinition> {
+public abstract class BaseAgentDefinitionResourceImpl
+	implements AgentDefinitionResource, EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<AgentDefinition> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "taskDefinitionId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentDefinition")
 		}
 	)
 	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/task-definitions/{taskDefinitionId}")
+	@jakarta.ws.rs.Path(
+		"/agent-definitions/by-external-reference-code/{externalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteTaskDefinition(
+	public void deleteAgentDefinitionByExternalReferenceCode(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("taskDefinitionId")
-			Long taskDefinitionId)
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
-		}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/task-definitions/batch")
-	@jakarta.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteTaskDefinitionBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				TaskDefinition.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/agent-definitions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -173,14 +129,14 @@ public abstract class BaseTaskDefinitionResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentDefinition")
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/task-definitions")
+	@jakarta.ws.rs.Path("/agent-definitions")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<TaskDefinition> getTaskDefinitionsPage(
+	public Page<AgentDefinition> getAgentDefinitionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -197,13 +153,13 @@ public abstract class BaseTaskDefinitionResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}/update-active'  -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/update-active'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "taskDefinitionId"
+				name = "externalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -213,63 +169,68 @@ public abstract class BaseTaskDefinitionResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentDefinition")
 		}
 	)
 	@jakarta.ws.rs.PATCH
-	@jakarta.ws.rs.Path("/task-definitions/{taskDefinitionId}/update-active")
+	@jakarta.ws.rs.Path(
+		"/agent-definitions/by-external-reference-code/{externalReferenceCode}/update-active"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaskDefinition patchTaskDefinitionUpdateActive(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("taskDefinitionId")
-			Long taskDefinitionId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.QueryParam("active")
-			Boolean active)
+	public AgentDefinition
+			patchAgentDefinitionByExternalReferenceCodeUpdateActive(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@jakarta.validation.constraints.NotNull
+				@jakarta.ws.rs.QueryParam("active")
+				Boolean active)
 		throws Exception {
 
-		return new TaskDefinition();
+		return new AgentDefinition();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions/{taskDefinitionId}/copy'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/agent-definitions/by-external-reference-code/{externalReferenceCode}/copy'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "taskDefinitionId"
+				name = "externalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentDefinition")
 		}
 	)
-	@jakarta.ws.rs.Path("/task-definitions/{taskDefinitionId}/copy")
+	@jakarta.ws.rs.Path(
+		"/agent-definitions/by-external-reference-code/{externalReferenceCode}/copy"
+	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaskDefinition postTaskDefinitionCopy(
+	public AgentDefinition postAgentDefinitionByExternalReferenceCodeCopy(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("taskDefinitionId")
-			Long taskDefinitionId)
+			@jakarta.ws.rs.PathParam("externalReferenceCode")
+			String externalReferenceCode)
 		throws Exception {
 
-		return new TaskDefinition();
+		return new AgentDefinition();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/task-definitions/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/agent-definitions/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -301,15 +262,15 @@ public abstract class BaseTaskDefinitionResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "TaskDefinition")
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "AgentDefinition")
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/task-definitions/export-batch")
+	@jakarta.ws.rs.Path("/agent-definitions/export-batch")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
-	public Response postTaskDefinitionsPageExportBatch(
+	public Response postAgentDefinitionsPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -343,7 +304,7 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 		return responseBuilder.entity(
 			vulcanBatchEngineExportTaskResource.postExportTask(
-				TaskDefinition.class.getName(), callbackURL, contentType,
+				AgentDefinition.class.getName(), callbackURL, contentType,
 				fieldNames)
 		).build();
 	}
@@ -351,7 +312,7 @@ public abstract class BaseTaskDefinitionResourceImpl
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<TaskDefinition> taskDefinitions,
+			Collection<AgentDefinition> agentDefinitions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -361,28 +322,34 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 	@Override
 	public void delete(
-			Collection<TaskDefinition> taskDefinitions,
+			Collection<AgentDefinition> agentDefinitions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<TaskDefinition, TaskDefinition, Exception>
-			taskDefinitionUnsafeFunction = taskDefinition -> {
-				deleteTaskDefinition(taskDefinition.getId());
+		UnsafeFunction<AgentDefinition, AgentDefinition, Exception>
+			agentDefinitionUnsafeFunction = agentDefinition -> {
+				if (agentDefinition.getExternalReferenceCode() != null) {
+					deleteAgentDefinitionByExternalReferenceCode(
+						agentDefinition.getExternalReferenceCode());
 
-				return taskDefinition;
+					return agentDefinition;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {
 			contextBatchUnsafeBiConsumer.accept(
-				taskDefinitions, taskDefinitionUnsafeFunction);
+				agentDefinitions, agentDefinitionUnsafeFunction);
 		}
 		else if (contextBatchUnsafeConsumer != null) {
 			contextBatchUnsafeConsumer.accept(
-				taskDefinitions, taskDefinitionUnsafeFunction::apply);
+				agentDefinitions, agentDefinitionUnsafeFunction::apply);
 		}
 		else {
-			for (TaskDefinition taskDefinition : taskDefinitions) {
-				taskDefinitionUnsafeFunction.apply(taskDefinition);
+			for (AgentDefinition agentDefinition : agentDefinitions) {
+				agentDefinitionUnsafeFunction.apply(agentDefinition);
 			}
 		}
 	}
@@ -404,7 +371,7 @@ public abstract class BaseTaskDefinitionResourceImpl
 	}
 
 	public String getResourceName() {
-		return "TaskDefinition";
+		return "AgentDefinition";
 	}
 
 	public String getVersion() {
@@ -412,14 +379,14 @@ public abstract class BaseTaskDefinitionResourceImpl
 	}
 
 	@Override
-	public Page<TaskDefinition> read(
+	public Page<AgentDefinition> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		return getTaskDefinitionsPage(search, filter, pagination, sorts);
+		return getAgentDefinitionsPage(search, filter, pagination, sorts);
 	}
 
 	@Override
@@ -446,7 +413,7 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 	@Override
 	public void update(
-			Collection<TaskDefinition> taskDefinitions,
+			Collection<AgentDefinition> agentDefinitions,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -467,8 +434,8 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<TaskDefinition>,
-			 UnsafeFunction<TaskDefinition, TaskDefinition, Exception>,
+			<Collection<AgentDefinition>,
+			 UnsafeFunction<AgentDefinition, AgentDefinition, Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -476,8 +443,8 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<TaskDefinition>,
-			 UnsafeConsumer<TaskDefinition, Exception>, Exception>
+			<Collection<AgentDefinition>,
+			 UnsafeConsumer<AgentDefinition, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -987,12 +954,13 @@ public abstract class BaseTaskDefinitionResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<TaskDefinition>,
-		 UnsafeFunction<TaskDefinition, TaskDefinition, Exception>, Exception>
+		<Collection<AgentDefinition>,
+		 UnsafeFunction<AgentDefinition, AgentDefinition, Exception>, Exception>
 			contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<TaskDefinition>, UnsafeConsumer<TaskDefinition, Exception>,
-		 Exception> contextBatchUnsafeConsumer;
+		<Collection<AgentDefinition>,
+		 UnsafeConsumer<AgentDefinition, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1013,6 +981,6 @@ public abstract class BaseTaskDefinitionResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BaseTaskDefinitionResourceImpl.class);
+		LogFactoryUtil.getLog(BaseAgentDefinitionResourceImpl.class);
 
 }

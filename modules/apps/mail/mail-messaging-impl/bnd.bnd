@@ -1,3 +1,11 @@
 Bundle-Name: Liferay Mail Messaging Implementation
 Bundle-SymbolicName: com.liferay.mail.messaging.impl
 Bundle-Version: 1.0.6
+Import-Package:\
+	org.eclipse.angus.mail,\
+	org.eclipse.angus.mail.imap,\
+	org.eclipse.angus.mail.pop3,\
+	org.eclipse.angus.mail.smtp,\
+	\
+	*
+-includeresource: META-INF/services/jakarta.mail.Provider=src/main/resources/META-INF/services/jakarta.mail.Provider

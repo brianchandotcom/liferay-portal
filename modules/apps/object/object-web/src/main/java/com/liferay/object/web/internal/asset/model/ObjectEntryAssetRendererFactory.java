@@ -21,11 +21,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import jakarta.servlet.ServletContext;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Feliphe Marinho
@@ -77,7 +79,12 @@ public class ObjectEntryAssetRendererFactory
 
 	@Override
 	public String getIconCssClass() {
-		return StringPool.BLANK;
+		if (!_objectDefinition.isCMS()) {
+			return StringPool.BLANK;
+		}
+
+		return _icons.getOrDefault(
+			_objectDefinition.getObjectFolderExternalReferenceCode(), "forms");
 	}
 
 	@Override
@@ -133,6 +140,22 @@ public class ObjectEntryAssetRendererFactory
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryAssetRendererFactory.class);
+
+	private static final Map<String, String> _icons = HashMapBuilder.put(
+		"L_CMS_BASIC_DOCUMENT", "documents-and-media"
+	).put(
+		"L_CMS_BASIC_WEB_CONTENT", "forms"
+	).put(
+		"L_CMS_BLOG", "blogs"
+	).put(
+		"L_CMS_EXTERNAL_VIDEO", "video"
+	).put(
+		"L_CMS_VOCABULARY", "vocabulary"
+	).put(
+		"L_CONTENTS", "web-content"
+	).put(
+		"L_FILES", "document-default"
+	).build();
 
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;

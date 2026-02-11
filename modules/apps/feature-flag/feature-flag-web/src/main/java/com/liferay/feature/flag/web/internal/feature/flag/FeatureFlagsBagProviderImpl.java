@@ -18,7 +18,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
@@ -65,9 +64,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(service = AopService.class)
+@Component(
+	service = {FeatureFlagsBagProvider.class, IdentifiableOSGiService.class}
+)
 public class FeatureFlagsBagProviderImpl
-	implements AopService, FeatureFlagsBagProvider, IdentifiableOSGiService {
+	implements FeatureFlagsBagProvider, IdentifiableOSGiService {
 
 	@Override
 	public void clearCache() {

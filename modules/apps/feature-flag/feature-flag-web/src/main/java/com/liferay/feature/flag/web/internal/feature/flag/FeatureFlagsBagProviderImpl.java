@@ -157,6 +157,39 @@ public class FeatureFlagsBagProviderImpl
 		_serviceTrackerMap.close();
 	}
 
+	private static void _setEnabled(
+		long companyId, String key, boolean enabled) {
+
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
+
+		if (featureFlagsBag == null) {
+			return;
+		}
+
+		featureFlagsBag.setEnabled(key, enabled);
+
+		List<FeatureFlagListener> featureFlagListeners =
+			_serviceTrackerMap.getService(key);
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
+
+		featureFlagListeners = _serviceTrackerMap.getService("*");
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
+	}
+
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
 		Map<String, FeatureFlag> featureFlags = new TreeMap<>();
 
@@ -349,42 +382,13 @@ public class FeatureFlagsBagProviderImpl
 		}
 	}
 
-	private void _setEnabled(long companyId, String key, boolean enabled) {
-		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
-
-		if (featureFlagsBag == null) {
-			return;
-		}
-
-		featureFlagsBag.setEnabled(key, enabled);
-
-		List<FeatureFlagListener> featureFlagListeners =
-			_serviceTrackerMap.getService(key);
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
-
-		featureFlagListeners = _serviceTrackerMap.getService("*");
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);
 
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBags =
 		new ConcurrentHashMap<>();
+	private static ServiceTrackerMap<String, List<FeatureFlagListener>>
+		_serviceTrackerMap;
 	private static final MethodKey _setEnabledMethodKey = new MethodKey(
 		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
 		String.class, boolean.class);
@@ -409,8 +413,6 @@ public class FeatureFlagsBagProviderImpl
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
-	private ServiceTrackerMap<String, List<FeatureFlagListener>>
-		_serviceTrackerMap;
 	private final Set<String> _systemFeatureFlags = new HashSet<>();
 
 	private class FeatureFlagListenerEagerServiceTrackerCustomizer

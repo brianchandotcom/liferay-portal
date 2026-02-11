@@ -30,9 +30,7 @@ export function Wizard({
 	debug = process.env.NODE_ENV === 'development',
 }: {
 	backURL: string;
-	children:
-		| React.ReactElement<WizardStepProps>
-		| React.ReactElement<WizardStepProps>[];
+	children: React.ReactElement<WizardStepProps>[];
 	debug?: boolean;
 }) {
 	const [stepNumber, setStepNumber] = useState(0);

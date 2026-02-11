@@ -71,6 +71,7 @@
 		<column name="clientId" type="String" />
 		<column name="customClaimsJSON" type="String" />
 		<column name="infoJSON" type="String" />
+		<column name="matcherField" type="String" />
 		<column name="metadataCacheTime" type="long" />
 		<column method-name="OIDCUserInfoMapperJSON" name="oidcUserInfoMapperJSON" type="String" />
 		<column name="tokenRequestParametersJSON" type="String" />

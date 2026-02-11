@@ -257,7 +257,7 @@ public class ActionUtil {
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
 			objectDefinition.getName(), false, true, segmentsExperienceId,
-			serviceContext, JSONUtil.put("marginBottom", "16px"), false);
+			serviceContext, JSONUtil.put("marginBottom", "16px"), true);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
@@ -361,7 +361,7 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
 			layoutStructure, formStyledLayoutStructureItem, name, true, false,
 			segmentsExperienceId, serviceContext,
-			JSONUtil.put("marginBottom", "24px"), true);
+			JSONUtil.put("marginBottom", "24px"), false);
 
 		FragmentEntryLink localizationSelectFragmentEntryLink =
 			_addFragmentEntryLink(
@@ -424,7 +424,7 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
 			layoutStructure, formStyledLayoutStructureItem, name, false, false,
 			segmentsExperienceId, serviceContext,
-			JSONUtil.put("marginBottom", "24px"), true);
+			JSONUtil.put("marginBottom", "24px"), false);
 
 		localizationSelectFragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.toString(
@@ -1248,7 +1248,7 @@ public class ActionUtil {
 			LayoutStructureItem layoutStructureItem,
 			String objectDefinitionName, boolean readOnly, boolean repeatable,
 			long segmentsExperienceId, ServiceContext serviceContext,
-			JSONObject stylesJSONObject, boolean translation)
+			JSONObject stylesJSONObject, boolean editMode)
 		throws Exception {
 
 		if (infoFieldSet.isRelationship()) {
@@ -1360,7 +1360,7 @@ public class ActionUtil {
 				if (RelationshipInfoFieldType.INSTANCE ==
 						infoField.getInfoFieldType()) {
 
-					if (translation) {
+					if (!editMode) {
 						continue;
 					}
 
@@ -1402,7 +1402,7 @@ public class ActionUtil {
 					layout, layoutStructure, layoutStructureItem,
 					objectDefinitionName, readOnly, repeatable,
 					segmentsExperienceId, serviceContext, stylesJSONObject,
-					translation);
+					editMode);
 			}
 		}
 

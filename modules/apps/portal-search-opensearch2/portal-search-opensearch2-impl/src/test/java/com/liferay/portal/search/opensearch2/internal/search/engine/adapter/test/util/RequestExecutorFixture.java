@@ -11,15 +11,11 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.IndexDocumentRequestExecutor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.IndexDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
@@ -70,26 +66,8 @@ public class RequestExecutorFixture {
 		return _getDocumentRequestExecutor;
 	}
 
-	public IndexDocumentRequestExecutor getIndexDocumentRequestExecutor() {
-		return _indexDocumentRequestExecutor;
-	}
-
 	public UpdateDocumentRequestExecutor getUpdateDocumentRequestExecutor() {
 		return _updateDocumentRequestExecutor;
-	}
-
-	public IndexDocumentResponse indexDocument(
-		com.liferay.portal.kernel.search.Document document, String indexName) {
-
-		return _indexDocumentRequestExecutor.execute(
-			new IndexDocumentRequest(indexName, document));
-	}
-
-	public IndexDocumentResponse indexDocument(
-		Document document, String indexName) {
-
-		return _indexDocumentRequestExecutor.execute(
-			new IndexDocumentRequest(indexName, document));
 	}
 
 	public void setUp() {
@@ -98,7 +76,6 @@ public class RequestExecutorFixture {
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
 		_getDocumentRequestExecutor = _createGetDocumentRequestExecutor();
-		_indexDocumentRequestExecutor = _createIndexDocumentRequestExecutor();
 		_updateDocumentRequestExecutor = _createUpdateDocumentRequestExecutor();
 	}
 
@@ -111,17 +88,6 @@ public class RequestExecutorFixture {
 			_openSearchConnectionManager);
 
 		return getDocumentRequestExecutor;
-	}
-
-	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor() {
-		IndexDocumentRequestExecutor indexDocumentRequestExecutor =
-			new IndexDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutor, "_openSearchConnectionManager",
-			_openSearchConnectionManager);
-
-		return indexDocumentRequestExecutor;
 	}
 
 	private UpdateDocumentRequestExecutor
@@ -140,7 +106,6 @@ public class RequestExecutorFixture {
 	private CreateIndexRequestExecutor _createIndexRequestExecutor;
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 

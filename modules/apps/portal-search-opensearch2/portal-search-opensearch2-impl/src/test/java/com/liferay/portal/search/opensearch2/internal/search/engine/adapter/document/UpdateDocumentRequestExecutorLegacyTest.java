@@ -8,6 +8,7 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.doc
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -47,6 +48,9 @@ public class UpdateDocumentRequestExecutorLegacyTest
 
 	@Before
 	public void setUp() {
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			openSearchConnectionManager);
+
 		_updateDocumentRequestExecutor =
 			_requestExecutorFixture.getUpdateDocumentRequestExecutor();
 
@@ -61,8 +65,10 @@ public class UpdateDocumentRequestExecutorLegacyTest
 	@Test
 	public void testFieldArrayWithNull() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				buildDocument(_FIELD_NAME, "example test"), TEST_INDEX_NAME);
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					TEST_INDEX_NAME,
+					buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -79,8 +85,10 @@ public class UpdateDocumentRequestExecutorLegacyTest
 	@Test
 	public void testFieldEmptyArray() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				buildDocument(_FIELD_NAME, "example test"), TEST_INDEX_NAME);
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					TEST_INDEX_NAME,
+					buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -97,8 +105,10 @@ public class UpdateDocumentRequestExecutorLegacyTest
 	@Test
 	public void testFieldNull() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				buildDocument(_FIELD_NAME, "example test"), TEST_INDEX_NAME);
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					TEST_INDEX_NAME,
+					buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -115,8 +125,10 @@ public class UpdateDocumentRequestExecutorLegacyTest
 	@Test
 	public void testUnsetValue() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				buildDocument(_FIELD_NAME, "example test"), TEST_INDEX_NAME);
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					TEST_INDEX_NAME,
+					buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -178,8 +190,10 @@ public class UpdateDocumentRequestExecutorLegacyTest
 
 	protected void doUpdateDocument(boolean refresh) {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				buildDocument(_FIELD_NAME, "example test"), TEST_INDEX_NAME);
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					TEST_INDEX_NAME,
+					buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -199,6 +213,7 @@ public class UpdateDocumentRequestExecutorLegacyTest
 
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

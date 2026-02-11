@@ -12,16 +12,12 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.IndexDocumentRequestExecutor;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.IndexDocumentRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.UpdateDocumentRequestExecutor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.UpdateDocumentRequestExecutorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.CreateIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.index.DeleteIndexRequestExecutor;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 
@@ -69,30 +65,8 @@ public class RequestExecutorFixture {
 		return _getDocumentRequestExecutor;
 	}
 
-	public IndexDocumentRequestExecutor getIndexDocumentRequestExecutor() {
-		return _indexDocumentRequestExecutor;
-	}
-
 	public UpdateDocumentRequestExecutor getUpdateDocumentRequestExecutor() {
 		return _updateDocumentRequestExecutor;
-	}
-
-	public IndexDocumentResponse indexDocument(
-		String indexName, com.liferay.portal.kernel.search.Document document) {
-
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			indexName, document);
-
-		return _indexDocumentRequestExecutor.execute(indexDocumentRequest);
-	}
-
-	public IndexDocumentResponse indexDocument(
-		String indexName, Document document) {
-
-		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
-			indexName, document);
-
-		return _indexDocumentRequestExecutor.execute(indexDocumentRequest);
 	}
 
 	public void setUp() {
@@ -108,12 +82,6 @@ public class RequestExecutorFixture {
 			_getDocumentRequestExecutor, "_elasticsearchClientResolver",
 			_elasticsearchClientResolver);
 
-		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_indexDocumentRequestExecutor, "_elasticsearchClientResolver",
-			_elasticsearchClientResolver);
-
 		_updateDocumentRequestExecutor =
 			new UpdateDocumentRequestExecutorImpl();
 
@@ -126,7 +94,6 @@ public class RequestExecutorFixture {
 	private DeleteIndexRequestExecutor _deleteIndexRequestExecutor;
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

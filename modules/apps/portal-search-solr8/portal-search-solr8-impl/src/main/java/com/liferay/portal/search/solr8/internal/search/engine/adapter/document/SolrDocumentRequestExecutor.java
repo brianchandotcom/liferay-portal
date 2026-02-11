@@ -98,6 +98,8 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 
 		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
 			_solrClientManager);
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			_solrClientManager);
 	}
 
 	@Modified
@@ -123,7 +125,6 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 	@Reference
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 
-	@Reference
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 	@Reference

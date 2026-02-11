@@ -10,6 +10,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.test.util.RequestExecutorFixture;
+import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -50,6 +51,9 @@ public class UpdateDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() {
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			_elasticsearchFixture);
+
 		_updateDocumentRequestExecutor =
 			_requestExecutorFixture.getUpdateDocumentRequestExecutor();
 
@@ -66,8 +70,9 @@ public class UpdateDocumentRequestExecutorTest {
 		String fieldName = _FIELD_NAME;
 
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				_INDEX_NAME, buildDocument(fieldName, "example test"));
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					_INDEX_NAME, buildDocument(fieldName, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -83,8 +88,9 @@ public class UpdateDocumentRequestExecutorTest {
 	@Test
 	public void testUnsetValueWithArrayWithNull() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				_INDEX_NAME, buildDocument(_FIELD_NAME, "example test"));
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					_INDEX_NAME, buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -101,8 +107,9 @@ public class UpdateDocumentRequestExecutorTest {
 	@Test
 	public void testUnsetValueWithEmptyArray() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				_INDEX_NAME, buildDocument(_FIELD_NAME, "example test"));
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					_INDEX_NAME, buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -118,8 +125,9 @@ public class UpdateDocumentRequestExecutorTest {
 	@Test
 	public void testUnsetValueWithNull() {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				_INDEX_NAME, buildDocument(_FIELD_NAME, "example test"));
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					_INDEX_NAME, buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -181,8 +189,9 @@ public class UpdateDocumentRequestExecutorTest {
 
 	protected void doUpdateDocument(boolean refresh) {
 		IndexDocumentResponse indexDocumentResponse =
-			_requestExecutorFixture.indexDocument(
-				_INDEX_NAME, buildDocument(_FIELD_NAME, "example test"));
+			_indexDocumentRequestExecutor.execute(
+				new IndexDocumentRequest(
+					_INDEX_NAME, buildDocument(_FIELD_NAME, "example test")));
 
 		String uid = indexDocumentResponse.getUid();
 
@@ -205,6 +214,7 @@ public class UpdateDocumentRequestExecutorTest {
 	private static ElasticsearchFixture _elasticsearchFixture;
 	private static RequestExecutorFixture _requestExecutorFixture;
 
+	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

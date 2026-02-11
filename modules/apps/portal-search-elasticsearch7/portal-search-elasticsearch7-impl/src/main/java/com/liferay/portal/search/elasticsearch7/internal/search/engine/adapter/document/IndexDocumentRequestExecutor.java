@@ -5,15 +5,62 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.rest.RestStatus;
 
 /**
  * @author Dylan Rebelak
  */
-public interface IndexDocumentRequestExecutor {
+public class IndexDocumentRequestExecutor {
+
+	public IndexDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public IndexDocumentResponse execute(
-		IndexDocumentRequest indexDocumentRequest);
+		IndexDocumentRequest indexDocumentRequest) {
+
+		IndexRequest indexRequest =
+			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
+				indexDocumentRequest);
+
+		IndexResponse indexResponse = _getIndexResponse(
+			indexRequest, indexDocumentRequest);
+
+		RestStatus restStatus = indexResponse.status();
+
+		return new IndexDocumentResponse(
+			restStatus.getStatus(), indexResponse.getId());
+	}
+
+	private IndexResponse _getIndexResponse(
+		IndexRequest indexRequest, IndexDocumentRequest indexDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				indexDocumentRequest.getConnectionId(),
+				indexDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.index(
+				indexRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

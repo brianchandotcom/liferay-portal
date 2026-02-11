@@ -16,17 +16,17 @@ public class RoleConstantsTest {
 	@Test
 	public void testToSystemRoleExternalReferenceCode() {
 		Assert.assertEquals(
-			"L_AA", RoleConstants.toSystemRoleExternalReferenceCode("aa"));
+			"L_AA", RoleConstants.toSystemRoleExternalReferenceCode("AA"));
 		Assert.assertEquals(
 			"L_AA", RoleConstants.toSystemRoleExternalReferenceCode("aA"));
 		Assert.assertEquals(
-			"L_AA", RoleConstants.toSystemRoleExternalReferenceCode("AA"));
-		Assert.assertEquals(
-			"L_AA_BB",
-			RoleConstants.toSystemRoleExternalReferenceCode("aa bb"));
+			"L_AA", RoleConstants.toSystemRoleExternalReferenceCode("aa"));
 		Assert.assertEquals(
 			"L_AA-BB",
 			RoleConstants.toSystemRoleExternalReferenceCode("aa-bb"));
+		Assert.assertEquals(
+			"L_AA_BB",
+			RoleConstants.toSystemRoleExternalReferenceCode("aa bb"));
 		Assert.assertEquals(
 			"L_AA_BB",
 			RoleConstants.toSystemRoleExternalReferenceCode("aa_bb"));

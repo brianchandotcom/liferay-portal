@@ -16,10 +16,12 @@ type NameDisplayType =
 
 const mapKeyToNameDisplayType: {[key: string]: NameDisplayType} = {
 	blocked: 'danger',
+	completed: 'success',
 	done: 'success',
 	inProgress: 'info',
 	notStarted: 'secondary',
 	overdue: 'warning',
+	pending: 'info',
 };
 
 type State = {

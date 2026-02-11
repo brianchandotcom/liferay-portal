@@ -414,6 +414,9 @@ public class AnalyticsSettingsManagerTest {
 				TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(StringPool.BLANK, analyticsConfiguration1.token());
+		Assert.assertEquals(
+			StringPool.BLANK,
+			analyticsConfiguration1.liferayAnalyticsCredentialType());
 
 		String token = RandomTestUtil.randomString();
 
@@ -431,6 +434,29 @@ public class AnalyticsSettingsManagerTest {
 						TestPropsValues.getCompanyId());
 
 				Assert.assertEquals(token, analyticsConfiguration2.token());
+
+				return null;
+			});
+
+		String liferayAnalyticsCredentialType = RandomTestUtil.randomString();
+
+		_analyticsSettingsManager.updateCompanyConfiguration(
+			TestPropsValues.getCompanyId(),
+			HashMapBuilder.<String, Object>put(
+				"liferayAnalyticsCredentialType", liferayAnalyticsCredentialType
+			).build());
+
+		IdempotentRetryAssert.retryAssert(
+			5, TimeUnit.SECONDS, 1, TimeUnit.SECONDS,
+			() -> {
+				AnalyticsConfiguration analyticsConfiguration2 =
+					_analyticsSettingsManager.getAnalyticsConfiguration(
+						TestPropsValues.getCompanyId());
+
+				Assert.assertEquals(token, analyticsConfiguration2.token());
+				Assert.assertEquals(
+					liferayAnalyticsCredentialType,
+					analyticsConfiguration2.liferayAnalyticsCredentialType());
 
 				return null;
 			});

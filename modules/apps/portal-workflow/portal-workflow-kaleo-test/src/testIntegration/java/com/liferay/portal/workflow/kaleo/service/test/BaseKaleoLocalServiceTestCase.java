@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,17 +95,17 @@ public abstract class BaseKaleoLocalServiceTestCase {
 			serviceContext);
 	}
 
-	protected KaleoDefinition addKaleoDefinition()
+	protected KaleoDefinition addKaleoDefinition(String scope)
 		throws IOException, PortalException {
 
 		return addKaleoDefinition(
 			StringUtil.randomString(), StringUtil.randomString(),
-			StringUtil.randomString(), StringUtil.randomString());
+			StringUtil.randomString(), scope, StringUtil.randomString());
 	}
 
 	protected KaleoDefinition addKaleoDefinition(
-			String externalReferenceCode, String name, String title,
-			String description)
+			String description, String externalReferenceCode, String name,
+			String scope, String title)
 		throws IOException, PortalException {
 
 		KaleoDefinition kaleoDefinition =
@@ -112,7 +113,8 @@ public abstract class BaseKaleoLocalServiceTestCase {
 				externalReferenceCode, name,
 				LocalizationUtil.getXml(new LocalizedValuesMap(title), "title"),
 				description, _read("legal-marketing-workflow-definition.xml"),
-				WorkflowDefinitionConstants.SCOPE_ALL, 1, serviceContext);
+				GetterUtil.get(scope, WorkflowDefinitionConstants.SCOPE_ALL), 1,
+				serviceContext);
 
 		_kaleoDefinitionLocalService.activateKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), serviceContext);

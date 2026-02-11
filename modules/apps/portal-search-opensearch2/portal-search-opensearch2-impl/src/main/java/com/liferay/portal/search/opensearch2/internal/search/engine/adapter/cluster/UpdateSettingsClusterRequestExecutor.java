@@ -5,7 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterResponse;
@@ -27,10 +27,8 @@ import org.opensearch.client.opensearch.cluster.PutClusterSettingsResponse;
 public class UpdateSettingsClusterRequestExecutor {
 
 	public UpdateSettingsClusterRequestExecutor(
-		JSONFactory jsonFactory,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		_jsonFactory = jsonFactory;
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
@@ -42,11 +40,13 @@ public class UpdateSettingsClusterRequestExecutor {
 				_createPutClusterSettingsRequest(updateSettingsClusterRequest),
 				updateSettingsClusterRequest);
 
-		JSONObject persistentSettingsJSONObject = _jsonFactory.createJSONObject(
-			putClusterSettingsResponse.persistent());
+		JSONObject persistentSettingsJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				putClusterSettingsResponse.persistent());
 
-		JSONObject transientSettingsJSONObject = _jsonFactory.createJSONObject(
-			putClusterSettingsResponse.transient_());
+		JSONObject transientSettingsJSONObject =
+			JSONFactoryUtil.createJSONObject(
+				putClusterSettingsResponse.transient_());
 
 		return new UpdateSettingsClusterResponse(
 			persistentSettingsJSONObject.toString(),
@@ -97,7 +97,6 @@ public class UpdateSettingsClusterRequestExecutor {
 		}
 	}
 
-	private final JSONFactory _jsonFactory;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

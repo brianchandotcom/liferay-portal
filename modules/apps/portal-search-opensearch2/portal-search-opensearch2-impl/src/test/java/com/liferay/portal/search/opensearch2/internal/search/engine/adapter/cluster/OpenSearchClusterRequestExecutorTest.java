@@ -35,7 +35,7 @@ public class OpenSearchClusterRequestExecutorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_clusterRequestExecutor = new OpenSearchClusterRequestExecutor();
+		_clusterRequestExecutor = new OpenSearchClusterRequestExecutor(null);
 
 		ReflectionTestUtil.setFieldValue(
 			_clusterRequestExecutor, "_healthClusterRequestExecutor",

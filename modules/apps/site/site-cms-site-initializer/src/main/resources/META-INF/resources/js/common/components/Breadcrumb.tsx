@@ -41,6 +41,7 @@ interface Props extends Pick<React.ComponentProps<typeof ClaySticker>, 'size'> {
 		ActionDropdownItemProps;
 	breadcrumbItems: BreadcrumbItem[];
 	displayType?: LogoColor;
+	enterpriseDetailsActionLink?: string;
 	freeTier?: boolean;
 	hideSpace?: boolean;
 }
@@ -182,6 +183,7 @@ export default function Breadcrumb({
 	actionItems,
 	breadcrumbItems,
 	displayType,
+	enterpriseDetailsActionLink,
 	freeTier,
 	hideSpace,
 	size,
@@ -211,7 +213,14 @@ export default function Breadcrumb({
 							{breadcrumbItems[0]?.label}
 						</h2>
 
-						{freeTier && <EnterpriseFeatureIndicator showTooltip />}
+						{freeTier && (
+							<EnterpriseFeatureIndicator
+								enterpriseDetailsActionLink={
+									enterpriseDetailsActionLink!
+								}
+								showTooltip
+							/>
+						)}
 					</div>
 				) : (
 					<ClayBreadcrumb className="p-0" items={breadcrumbItems} />

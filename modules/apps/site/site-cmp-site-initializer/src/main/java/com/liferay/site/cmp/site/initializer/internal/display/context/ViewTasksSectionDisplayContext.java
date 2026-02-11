@@ -10,6 +10,8 @@ import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemBuilder;
+import com.liferay.frontend.data.set.model.FDSActionDropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -209,6 +211,21 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return ListUtil.fromArray(
+			FDSActionDropdownItemBuilder.setFDSActionDropdownItems(
+				FDSActionDropdownItemList.of(
+					FDSActionDropdownItemBuilder.setTarget(
+						"modal-workflow-transition"
+					).build(
+						"workflow-transition"
+					)
+				)
+			).setSeparator(
+				true
+			).setType(
+				"group"
+			).build(
+				"workflow-transitions"
+			),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
 					ActionUtil.getBaseEditTaskURL(

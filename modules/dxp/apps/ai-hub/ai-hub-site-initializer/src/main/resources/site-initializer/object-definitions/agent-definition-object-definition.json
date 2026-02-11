@@ -2,7 +2,7 @@
 	"className": "com.liferay.object.model.ObjectDefinition#P8M2",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
-	"externalReferenceCode": "L_AGENT_DEFINITION",
+	"externalReferenceCode": "L_AI_HUB_AGENT_DEFINITION",
 	"friendlyURLSeparator": "l",
 	"label": {
 		"en_US": "Agent Definition"

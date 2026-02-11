@@ -73,9 +73,9 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-	return HashMapBuilder.<String, Object>put(
-			 // Will be properly filled in LPD-77107
-			"enterpriseDetailsActionLink", "/my-temp-url"
+		return HashMapBuilder.<String, Object>put(
+			"enterpriseDetailsActionLink",
+			"https://www.liferay.com/en/contact-sales"
 		).build();
 	}
 

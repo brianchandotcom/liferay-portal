@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster;
 
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequest;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterRequestExecutor;
 import com.liferay.portal.search.engine.adapter.cluster.ClusterResponse;
@@ -19,9 +18,7 @@ import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterReq
 import com.liferay.portal.search.engine.adapter.cluster.UpdateSettingsClusterResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
@@ -32,6 +29,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class OpenSearchClusterRequestExecutor
 	implements ClusterRequestExecutor {
+
+	public OpenSearchClusterRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_healthClusterRequestExecutor = new HealthClusterRequestExecutor(
+			openSearchConnectionManager);
+		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
+			openSearchConnectionManager);
+		_statsClusterRequestExecutor = new StatsClusterRequestExecutor(
+			openSearchConnectionManager);
+		_updateSettingsClusterRequestExecutor =
+			new UpdateSettingsClusterRequestExecutor(
+				openSearchConnectionManager);
+	}
 
 	@Override
 	public <T extends ClusterResponse> T execute(
@@ -69,30 +80,10 @@ public class OpenSearchClusterRequestExecutor
 			updateSettingsClusterRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_healthClusterRequestExecutor = new HealthClusterRequestExecutor(
-			_openSearchConnectionManager);
-		_stateClusterRequestExecutor = new StateClusterRequestExecutor(
-			_openSearchConnectionManager);
-		_statsClusterRequestExecutor = new StatsClusterRequestExecutor(
-			_openSearchConnectionManager);
-		_updateSettingsClusterRequestExecutor =
-			new UpdateSettingsClusterRequestExecutor(
-				_jsonFactory, _openSearchConnectionManager);
-	}
-
-	private HealthClusterRequestExecutor _healthClusterRequestExecutor;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	private StateClusterRequestExecutor _stateClusterRequestExecutor;
-	private StatsClusterRequestExecutor _statsClusterRequestExecutor;
-	private UpdateSettingsClusterRequestExecutor
+	private final HealthClusterRequestExecutor _healthClusterRequestExecutor;
+	private final StateClusterRequestExecutor _stateClusterRequestExecutor;
+	private final StatsClusterRequestExecutor _statsClusterRequestExecutor;
+	private final UpdateSettingsClusterRequestExecutor
 		_updateSettingsClusterRequestExecutor;
 
 }

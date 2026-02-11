@@ -336,7 +336,7 @@
 		<!-- Finder methods -->
 
 		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
+			<finder-column arrayable-operator="OR" name="groupId" />
 		</finder>
 		<finder name="VocabularyId" return-type="Collection">
 			<finder-column name="vocabularyId" />

@@ -70,9 +70,15 @@ export function LocalizationSelect({
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
 
-	const [selectedLocaleId, setSelectedLocaleId] = useState(
-		Liferay.ThemeDisplay.getLanguageId()
-	);
+	const [selectedLocaleId, setSelectedLocaleId] = useState(() => {
+		const currentLanguageId = Liferay.ThemeDisplay.getLanguageId();
+
+		if (locales.some(({id}) => id === currentLanguageId)) {
+			return currentLanguageId;
+		}
+
+		return defaultLanguageId;
+	});
 
 	const [selectedLocaleIds, setSelectedLocaleIds] =
 		useLiferayState(selectedLocalesAtom);

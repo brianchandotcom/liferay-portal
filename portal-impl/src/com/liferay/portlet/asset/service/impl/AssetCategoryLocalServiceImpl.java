@@ -9,9 +9,9 @@ import com.liferay.asset.kernel.exception.AssetCategoryNameException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.InvalidAssetCategoryException;
+import com.liferay.asset.kernel.exception.InvalidAssetCategoryParentCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
 import com.liferay.asset.kernel.exception.NoSuchVocabularyException;
-import com.liferay.asset.kernel.exception.VocabularyMismatchException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetVocabulary;
@@ -496,7 +496,7 @@ public class AssetCategoryLocalServiceImpl
 						AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
 					(parentVocabularyId != assetVocabulary.getVocabularyId())) {
 
-					throw new VocabularyMismatchException(
+					throw new InvalidAssetCategoryParentCategoryException(
 						"Parent category exists in a different vocabulary");
 				}
 

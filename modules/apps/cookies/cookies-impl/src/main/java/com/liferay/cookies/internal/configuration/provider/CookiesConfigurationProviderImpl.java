@@ -264,6 +264,16 @@ public class CookiesConfigurationProviderImpl
 	}
 
 	@Override
+	public boolean isCookiesPreferenceHandlingFloatingIconEnabled(
+		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
+
+		return _getScopeConfigurationAttribute(
+			scope, scopePK, this::_isCompanyFloatingIconEnabled,
+			this::_isGroupFloatingIconEnabled,
+			this::_isSystemFloatingIconEnabled);
+	}
+
+	@Override
 	public boolean isCookiesPreferenceHandlingStoreConsent(
 		ExtendedObjectClassDefinition.Scope scope, long scopePK) {
 
@@ -541,6 +551,17 @@ public class CookiesConfigurationProviderImpl
 			getCompanyStoreConsent(companyId);
 	}
 
+	private boolean _isCompanyFloatingIconEnabled(long companyId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getCompanyFloatingIconEnabled(companyId);
+	}
+
 	private boolean _isGroupCookiesPreferenceHandlingEnabled(long groupId) {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -578,6 +599,17 @@ public class CookiesConfigurationProviderImpl
 			getGroupStoreConsent(_getCompanyId(groupId), groupId);
 	}
 
+	private boolean _isGroupFloatingIconEnabled(long groupId) {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getGroupFloatingIconEnabled(_getCompanyId(groupId), groupId);
+	}
+
 	private boolean _isSystemCookiesPreferenceHandlingEnabled() {
 		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
 			_cookiesPreferenceHandlingManagedServiceFactory =
@@ -609,6 +641,17 @@ public class CookiesConfigurationProviderImpl
 
 		return _cookiesPreferenceHandlingManagedServiceFactory.
 			getSystemStoreConsent();
+	}
+
+	private boolean _isSystemFloatingIconEnabled() {
+		if (_cookiesPreferenceHandlingManagedServiceFactory == null) {
+			_cookiesPreferenceHandlingManagedServiceFactory =
+				(CookiesPreferenceHandlingManagedServiceFactory)
+					_managedServiceFactory;
+		}
+
+		return _cookiesPreferenceHandlingManagedServiceFactory.
+			getSystemFloatingIconEnabled();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -30,6 +30,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.definition.util.ObjectDefinitionValidationThreadLocal;
 import com.liferay.object.exception.DuplicateObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
@@ -1893,8 +1894,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.addSystemObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, null, false, true,
-				false, true, false, false, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0,
+				ObjectDefinitionUtil.generateRandomClassName(), null, false,
+				true, false, true, false, false, false, false, false, null,
 				RandomTestUtil.randomLocaleStringMap(), true, "Test", null,
 				null, null, null, RandomTestUtil.randomLocaleStringMap(), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
@@ -2214,8 +2216,9 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, null, false, true,
-				false, true, false, true, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0,
+				ObjectDefinitionUtil.generateRandomClassName(), null, false,
+				true, false, true, false, true, false, false, false, null,
 				RandomTestUtil.randomLocaleStringMap(), true, "Test", null,
 				null, null, null, RandomTestUtil.randomLocaleStringMap(), false,
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,

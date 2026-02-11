@@ -7,6 +7,7 @@ package com.liferay.object.test.util;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -132,8 +133,9 @@ public class ObjectDefinitionTestUtil {
 		throws Exception {
 
 		return ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
-			null, userId, 0, null, dbTableName, false, true, false, true, false,
-			false, false, false, false, null, labelMap, true, name, null, null,
+			null, userId, 0, ObjectDefinitionUtil.generateRandomClassName(),
+			dbTableName, false, true, false, true, false, false, false, false,
+			false, null, labelMap, true, name, null, null,
 			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap, false,
 			scope, titleObjectFieldName, version,
 			WorkflowConstants.STATUS_DRAFT, Collections.emptyList(),

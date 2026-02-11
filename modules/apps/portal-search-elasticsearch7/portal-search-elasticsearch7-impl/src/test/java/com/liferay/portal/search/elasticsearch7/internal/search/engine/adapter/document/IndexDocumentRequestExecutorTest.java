@@ -49,8 +49,8 @@ public class IndexDocumentRequestExecutorTest {
 
 	@Before
 	public void setUp() {
-		_indexDocumentRequestExecutor =
-			_requestExecutorFixture.getIndexDocumentRequestExecutor();
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			_elasticsearchFixture);
 
 		_requestExecutorFixture.createIndex(_INDEX_NAME);
 	}

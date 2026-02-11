@@ -62,10 +62,6 @@ public class DocumentRequestExecutorFixture {
 			_createGetDocumentRequestExecutor(elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchDocumentRequestExecutor,
-			"_indexDocumentRequestExecutor",
-			_createIndexDocumentRequestExecutor(elasticsearchClientResolver));
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchDocumentRequestExecutor,
 			"_updateByQueryDocumentRequestExecutor",
 			_createUpdateByQueryDocumentRequestExecutor(
 				elasticsearchClientResolver));
@@ -90,19 +86,6 @@ public class DocumentRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		return getDocumentRequestExecutor;
-	}
-
-	private IndexDocumentRequestExecutor _createIndexDocumentRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		IndexDocumentRequestExecutor indexDocumentRequestExecutor =
-			new IndexDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return indexDocumentRequestExecutor;
 	}
 
 	private UpdateByQueryDocumentRequestExecutor

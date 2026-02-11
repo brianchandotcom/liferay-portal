@@ -44,8 +44,8 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 
 	@Before
 	public void setUp() {
-		_indexDocumentRequestExecutor =
-			_requestExecutorFixture.getIndexDocumentRequestExecutor();
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			openSearchConnectionManager);
 
 		_requestExecutorFixture.createIndex(TEST_INDEX_NAME);
 	}

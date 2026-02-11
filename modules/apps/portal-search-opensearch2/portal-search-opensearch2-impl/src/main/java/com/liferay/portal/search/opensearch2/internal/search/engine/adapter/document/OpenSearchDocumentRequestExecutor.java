@@ -94,6 +94,8 @@ public class OpenSearchDocumentRequestExecutor
 				_openSearchConnectionManager);
 		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
 			_openSearchConnectionManager);
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			_openSearchConnectionManager);
 	}
 
 	@Reference
@@ -106,7 +108,6 @@ public class OpenSearchDocumentRequestExecutor
 	@Reference
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 
-	@Reference
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
 
 	@Reference

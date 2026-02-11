@@ -7,13 +7,47 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
+import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
+
+import org.apache.solr.client.solrj.request.UpdateRequest;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrException;
 
 /**
  * @author Bryan Engler
  */
-public interface IndexDocumentRequestExecutor {
+public class IndexDocumentRequestExecutor {
+
+	public IndexDocumentRequestExecutor(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
+	}
 
 	public IndexDocumentResponse execute(
-		IndexDocumentRequest indexDocumentRequest);
+		IndexDocumentRequest indexDocumentRequest) {
+
+		UpdateRequest request =
+			SolrBulkableDocumentRequestTranslatorUtil.translate(
+				indexDocumentRequest);
+
+		try {
+			UpdateResponse updateResponse = request.process(
+				_solrClientManager.getSolrClient(),
+				indexDocumentRequest.getIndexName());
+
+			return new IndexDocumentResponse(
+				updateResponse.getStatus(), indexDocumentRequest.getUid());
+		}
+		catch (Exception exception) {
+			if (exception instanceof SolrException) {
+				SolrException solrException = (SolrException)exception;
+
+				throw solrException;
+			}
+
+			throw new RuntimeException(exception);
+		}
+	}
+
+	private final SolrClientManager _solrClientManager;
 
 }

@@ -59,9 +59,6 @@ public class DocumentRequestExecutorFixture {
 			solrDocumentRequestExecutor, "_getDocumentRequestExecutor",
 			createGetDocumentRequestExecutor(solrClientManager));
 		ReflectionTestUtil.setFieldValue(
-			solrDocumentRequestExecutor, "_indexDocumentRequestExecutor",
-			createIndexDocumentRequestExecutor(solrClientManager));
-		ReflectionTestUtil.setFieldValue(
 			solrDocumentRequestExecutor,
 			"_updateByQueryDocumentRequestExecutor",
 			createUpdateByQueryDocumentRequestExecutor());
@@ -85,20 +82,6 @@ public class DocumentRequestExecutorFixture {
 			solrClientManager);
 
 		return getDocumentRequestExecutorImpl;
-	}
-
-	protected static IndexDocumentRequestExecutor
-		createIndexDocumentRequestExecutor(
-			SolrClientManager solrClientManager) {
-
-		IndexDocumentRequestExecutorImpl indexDocumentRequestExecutorImpl =
-			new IndexDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			indexDocumentRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return indexDocumentRequestExecutorImpl;
 	}
 
 	protected static UpdateByQueryDocumentRequestExecutor

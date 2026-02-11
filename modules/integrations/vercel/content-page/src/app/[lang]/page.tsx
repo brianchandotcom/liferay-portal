@@ -85,7 +85,6 @@ export default async function Home({
 								src={liferay.getDocument(
 									mainEvent.image.link.href
 								)}
-								unoptimized={true}
 								width={500}
 							/>
 						</div>
@@ -186,7 +185,6 @@ export default async function Home({
 										src={liferay.getDocument(
 											upcomingEvent.image.link.href
 										)}
-										unoptimized={true}
 										width={400}
 									/>
 
@@ -270,7 +268,6 @@ export default async function Home({
 										src={liferay.getDocument(
 											event.image.link.href
 										)}
-										unoptimized={true}
 										width={400}
 									/>
 

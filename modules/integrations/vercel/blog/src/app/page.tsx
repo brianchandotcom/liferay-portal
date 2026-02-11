@@ -54,7 +54,6 @@ export default async function Home({
 			{searchQuery && (
 				<div className="mb-4 text-gray-600 text-sm">
 					{`Found ${items.length} result${items.length > 1 ? 's' : ''}`}{' '}
-
 					for <b>&quot;{searchQuery}&quot;</b>
 				</div>
 			)}
@@ -95,7 +94,6 @@ export default async function Home({
 													height={90}
 													priority={index < 5}
 													src={src}
-													unoptimized={true}
 													width={160}
 												/>
 											</div>

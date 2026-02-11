@@ -79,7 +79,6 @@ export default async function BlogPost(pageProps: PageProps) {
 								height={90}
 								priority={true}
 								src={imageSrc}
-								unoptimized={true}
 								width={160}
 							/>
 						</div>

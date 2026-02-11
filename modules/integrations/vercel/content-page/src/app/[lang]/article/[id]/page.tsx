@@ -123,7 +123,6 @@ export default async function ArticlePage({
 
 							<span className="flex gap-2 items-center">
 								⏰{' '}
-
 								{new Date(
 									article.dateCreated
 								).toLocaleTimeString(lang, {
@@ -142,7 +141,6 @@ export default async function ArticlePage({
 							height={600}
 							priority={true}
 							src={liferay.getDocument(article.image.link.href)}
-							unoptimized={true}
 							width={1200}
 						/>
 					</div>

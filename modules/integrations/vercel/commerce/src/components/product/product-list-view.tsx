@@ -31,7 +31,6 @@ export default function ProductListView({product}: ProductListViewProps) {
 							onError={handleImageError}
 							quality={100}
 							src={product.urlImage}
-							unoptimized
 							width={48}
 						/>
 					</div>

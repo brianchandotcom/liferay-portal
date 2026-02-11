@@ -29,7 +29,6 @@ export default function ProductGridView({product}: ProductGridViewProps) {
 						onError={handleImageError}
 						quality={100}
 						src={product.urlImage}
-						unoptimized
 						width={48}
 					/>
 

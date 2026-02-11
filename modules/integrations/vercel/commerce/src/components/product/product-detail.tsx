@@ -52,7 +52,6 @@ const ProductDetail = ({product}: {product: Product}) => {
 									onError={handleImageError}
 									quality={500}
 									src={images[selectedImageIndex].src}
-									unoptimized
 									width={480}
 								/>
 
@@ -94,7 +93,6 @@ const ProductDetail = ({product}: {product: Product}) => {
 										onError={handleImageError}
 										quality={100}
 										src={image.src}
-										unoptimized
 										width={16}
 									/>
 								</button>

@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
+import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.petra.string.StringPool;
@@ -14,11 +15,15 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
+
+import java.net.URL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,29 +46,41 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
-				actionRequest, "oAuthClientASLocalMetadataId");
+			String authorizationEndpoint = ParamUtil.getString(
+				actionRequest, "authorization_endpoint");
+
+			_validateOptionalHttps(authorizationEndpoint);
 
 			Boolean enabledLocalWellKnown = ParamUtil.getBoolean(
 				actionRequest, "enabled");
 
-			String authorizationEndpoint = ParamUtil.getString(
-				actionRequest, "authorization_endpoint");
-
 			String issuer = ParamUtil.getString(actionRequest, "issuer");
 
+			_validateRequiredHttps(issuer);
+
 			String jwksUri = ParamUtil.getString(actionRequest, "jwks_uri");
-			String supportedScopes = ParamUtil.getString(
-				actionRequest, "supported-scopes");
+
+			_validateOptionalHttps(jwksUri);
 
 			String supportedGrantTypes = ParamUtil.getString(
 				actionRequest, "supported-grant-types");
+			String supportedScopes = ParamUtil.getString(
+				actionRequest, "supported-scopes");
 			String supportedSubjectTypes = ParamUtil.getString(
 				actionRequest, "supported_subject_types");
+
 			String tokenEndpoint = ParamUtil.getString(
 				actionRequest, "token_endpoint");
+
+			_validateOptionalHttps(tokenEndpoint);
+
 			String userInfoEndpoint = ParamUtil.getString(
 				actionRequest, "userinfo_endpoint");
+
+			_validateOptionalHttps(userInfoEndpoint);
+
+			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+				actionRequest, "oAuthClientASLocalMetadataId");
 
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 				_oAuthClientASLocalMetadataService.
@@ -108,6 +125,34 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 
 			return false;
 		}
+	}
+
+	private void _validateHttpsUrl(String url) throws PortalException {
+		try {
+			URL parsed = new URL(url);
+
+			if (!Http.HTTPS.equalsIgnoreCase(parsed.getProtocol())) {
+				throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+			}
+		}
+		catch (Exception exception) {
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
+				url, exception);
+		}
+	}
+
+	private void _validateOptionalHttps(String url) throws PortalException {
+		if (Validator.isNotNull(url)) {
+			_validateHttpsUrl(url);
+		}
+	}
+
+	private void _validateRequiredHttps(String url) throws PortalException {
+		if (Validator.isNull(url)) {
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+		}
+
+		_validateHttpsUrl(url);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

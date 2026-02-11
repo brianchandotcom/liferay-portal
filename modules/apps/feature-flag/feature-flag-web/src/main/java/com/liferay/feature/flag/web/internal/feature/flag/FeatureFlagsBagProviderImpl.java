@@ -19,8 +19,9 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
-import com.liferay.portal.kernel.cluster.Clusterable;
+import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -103,7 +106,6 @@ public class FeatureFlagsBagProviderImpl
 		return _systemFeatureFlags.contains(key);
 	}
 
-	@Clusterable
 	@Override
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		if (ClusterInvokeThreadLocal.isEnabled()) {
@@ -111,6 +113,20 @@ public class FeatureFlagsBagProviderImpl
 		}
 
 		_setEnabled(companyId, key, enabled);
+
+		if (!_clusterExecutor.isEnabled()) {
+			return;
+		}
+
+		MethodHandler methodHandler = new MethodHandler(
+			_setEnabledMethodKey, companyId, key, enabled);
+
+		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
+			methodHandler, true);
+
+		clusterRequest.setFireAndForget(true);
+
+		_clusterExecutor.execute(clusterRequest);
 	}
 
 	@Override
@@ -376,6 +392,12 @@ public class FeatureFlagsBagProviderImpl
 
 	private static final Map<Long, FeatureFlagsBag> _featureFlagsBags =
 		new ConcurrentHashMap<>();
+	private static final MethodKey _setEnabledMethodKey = new MethodKey(
+		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
+		String.class, boolean.class);
+
+	@Reference
+	private ClusterExecutor _clusterExecutor;
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

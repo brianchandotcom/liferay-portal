@@ -90,7 +90,7 @@ export default async function Home({
 						</div>
 
 						<div className="md:order-2 order-1 space-y-6">
-							<h1 className="font-bold leading-tight lg:text-6xl md:text-5xl text-4xl">
+							<h1 className="font-bold leading-tight lg:text-4xl md:text-5xl text-4xl">
 								{getLocalizedFieldValue({
 									lang,
 									value: mainEvent.title,
@@ -188,7 +188,7 @@ export default async function Home({
 										width={400}
 									/>
 
-									<span className="event-type-badge">
+									<span className="badge-product news-category-badge">
 										{upcomingEvent.virtual
 											? 'Virtual'
 											: 'In Person'}
@@ -196,16 +196,15 @@ export default async function Home({
 								</div>
 
 								<div className="p-6">
-									<a
+									<Button
 										className="font-bold group-hover:text-blue-600 mb-2 text-xl transition-colors"
 										href={`/article/${upcomingEvent.id}`}
 									>
 										{upcomingEvent.title}
-									</a>
+									</Button>
 
 									<p className="flex gap-2 items-center mb-4 text-gray-600 text-sm">
 										<span>🌐</span>{' '}
-
 										{upcomingEvent.locationName}
 									</p>
 
@@ -282,7 +281,6 @@ export default async function Home({
 									<div className="flex gap-3 items-center mb-3 text-gray-500 text-xs">
 										<span>
 											📅{' '}
-
 											{new Date(
 												event.dateCreated
 											).toLocaleDateString(lang)}
@@ -303,7 +301,7 @@ export default async function Home({
 										{event.summary}
 									</p>
 
-									<a
+									<Button
 										className="font-semibold gap-2 group/link inline-flex items-center text-sm"
 										href={`/${lang}/article/${event.id}`}
 									>
@@ -311,7 +309,7 @@ export default async function Home({
 										<span className="group-hover/link:translate-x-1 transition-transform">
 											→
 										</span>
-									</a>
+									</Button>
 								</div>
 							</article>
 						))}

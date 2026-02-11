@@ -4,23 +4,21 @@
  */
 
 import Link from 'next/link';
-import {PropsWithChildren} from 'react';
+import {ComponentProps} from 'react';
 
 export function Button(
-	props: PropsWithChildren<
-		{
-			active?: boolean;
-		} & (
-			| {onClick: () => void}
-			| {
-					external?: boolean;
-					href: string;
-			  }
-		)
-	>
+	props: ComponentProps<typeof Link> & {
+		active?: boolean;
+		external?: boolean;
+		onClick?: () => void;
+	}
 ) {
-	const {active, children} = props;
-	const className = `button ${active ? 'button--active' : ''}`;
+	const {
+		active,
+		className = `button ${active ? 'button--active' : ''}`,
+		children,
+		onClick,
+	} = props;
 
 	if ('href' in props) {
 		return (
@@ -36,7 +34,7 @@ export function Button(
 	}
 
 	return (
-		<button className={className} onClick={props.onClick}>
+		<button className={className} onClick={onClick}>
 			{children}
 		</button>
 	);

@@ -56,6 +56,10 @@ export function Wizard({
 		setStepNumber((stepNumber) => Math.min(stepNumber + 1, totalSteps - 1));
 	};
 
+	const previous = () => {
+		setStepNumber((stepNumber) => Math.max(stepNumber - 1, 0));
+	};
+
 	const handleSubmit = async (
 		values: FormikValues,
 		formikHelpers: FormikHelpers<FormikValues>
@@ -133,11 +137,7 @@ export function Wizard({
 							formik.isSubmitting ||
 							!formik.isValid
 						}
-						onPrevious={
-							stepNumber > 0
-								? () => setStepNumber(stepNumber - 1)
-								: undefined
-						}
+						onPrevious={stepNumber > 0 ? previous : undefined}
 					/>
 
 					{debug && <FormikDebug />}

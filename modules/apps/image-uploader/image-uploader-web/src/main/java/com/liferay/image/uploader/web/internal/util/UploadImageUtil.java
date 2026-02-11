@@ -53,7 +53,11 @@ public class UploadImageUtil {
 			UserFileUploadsSettings userFileUploadsSettings =
 				_userFileUploadSettingsSnapshot.get();
 
-			return userFileUploadsSettings.getImageMaxSize();
+			if (userFileUploadsSettings.getImageMaxSize() > 0) {
+				return Math.min(
+					userFileUploadsSettings.getImageMaxSize(),
+					UploadServletRequestConfigurationProviderUtil.getMaxSize());
+			}
 		}
 
 		return UploadServletRequestConfigurationProviderUtil.getMaxSize();

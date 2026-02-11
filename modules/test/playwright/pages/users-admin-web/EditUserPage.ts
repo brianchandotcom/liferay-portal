@@ -193,6 +193,7 @@ export class EditUserPage {
 	readonly tagInput: (name: string) => Locator;
 	readonly tagsFrame: FrameLocator;
 	readonly timeZoneInput: Locator;
+	readonly uploadImageFrame: FrameLocator;
 	readonly uploadImageSelectImageButton: Locator;
 	readonly uploadImageDoneButton: Locator;
 	readonly userIDInput: Locator;
@@ -767,12 +768,14 @@ export class EditUserPage {
 		this.tagInput = (name) => page.getByRole('row', {name});
 		this.tagsFrame = page.frameLocator(`iframe[title="Tags"]`);
 		this.timeZoneInput = page.getByLabel('Time Zone');
-		this.uploadImageSelectImageButton = page
-			.frameLocator('iframe[title="Upload Image"]')
-			.getByLabel('Select Image');
-		this.uploadImageDoneButton = page
-			.frameLocator('iframe[title="Upload Image"]')
-			.getByRole('button', {name: 'Done'});
+		this.uploadImageFrame = page.frameLocator(
+			'iframe[title="Upload Image"]'
+		);
+		this.uploadImageSelectImageButton =
+			this.uploadImageFrame.getByLabel('Select Image');
+		this.uploadImageDoneButton = this.uploadImageFrame.getByRole('button', {
+			name: 'Done',
+		});
 		this.userIDInput = page.getByLabel('User ID');
 		this.urlInput = page.getByLabel('Url Required');
 		this.webDAVPasswordLabel = page.locator(

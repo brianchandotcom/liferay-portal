@@ -29,6 +29,7 @@ import {SMTPMockServerPage} from '../pages/users-admin-web/SMTPMockServerPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
 import {TeamsPage} from '../pages/users-admin-web/TeamsPage';
 import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePage';
+import {UserSettingsPage} from '../pages/users-admin-web/UserSettingsPage';
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 import {DocumentLibraryPage} from '../pages/users-admin-web/document-library-web/DocumentLibraryPage';
 import {SiteMembershipsPage} from '../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
@@ -66,6 +67,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	userDocumentLibraryPage: DocumentLibraryPage;
 	userLocaleOptionsPage: UserLocaleOptionsPage;
 	userPersonalSitePage: UserPersonalSitePage;
+	userSettingsPage: UserSettingsPage;
 	usersAndOrganizationsPage: UsersAndOrganizationsPage;
 }>({
 	assignUsersPage: async ({page}, use) => {
@@ -154,6 +156,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	userPersonalSitePage: async ({page}, use) => {
 		await use(new UserPersonalSitePage(page));
+	},
+	userSettingsPage: async ({page}, use) => {
+		await use(new UserSettingsPage(page));
 	},
 	usersAndOrganizationsPage: async ({page}, use) => {
 		await use(new UsersAndOrganizationsPage(page));

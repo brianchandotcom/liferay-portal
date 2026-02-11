@@ -6,11 +6,11 @@
 package com.liferay.data.cleanup.internal.verify;
 
 import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.db.BaseDBProcess;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -95,13 +96,16 @@ public class ClassNamePostUpgradeDataCleanupProcess
 				}
 
 				int dashIndex = value.indexOf(StringPool.DASH);
-				int poundIndex = value.indexOf(StringPool.POUND);
 
 				if (dashIndex != -1) {
 					value = value.substring(0, dashIndex);
 				}
 
-				if (poundIndex != -1) {
+				if (StringUtil.startsWith(
+						value,
+						ObjectDefinitionConstants.
+							CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 					ObjectDefinition objectDefinition =
 						_objectDefinitionLocalService.
 							fetchObjectDefinitionByClassName(

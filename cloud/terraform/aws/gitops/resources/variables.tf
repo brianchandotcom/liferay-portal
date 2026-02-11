@@ -1,10 +1,8 @@
 variable "argocd_namespace" {
 	default="argocd"
-	type=string
 }
 variable "crossplane_namespace" {
 	default="crossplane-system"
-	type=string
 }
 variable "deployment_name" {
 	validation {
@@ -14,7 +12,6 @@ variable "deployment_name" {
 }
 variable "external_secrets_namespace" {
 	default="external-secrets"
-	type=string
 }
 variable "infrastructure_git_repo_config" {
 	default={

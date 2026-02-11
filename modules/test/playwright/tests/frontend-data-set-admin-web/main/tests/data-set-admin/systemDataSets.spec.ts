@@ -543,6 +543,7 @@ test(
 				],
 				['Date Range', 'date', 'Date Filter', true],
 				['Color', 'color', 'System Filter', false],
+				['Creator', 'creator.name', 'System Filter', false],
 				['Size', 'size', 'System Filter', false],
 				['Status', 'status', 'System Filter', false],
 				['Title', 'title', 'System Filter', false],

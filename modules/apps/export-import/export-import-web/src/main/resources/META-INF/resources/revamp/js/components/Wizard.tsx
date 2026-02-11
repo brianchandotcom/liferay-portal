@@ -128,7 +128,10 @@ export function Wizard({
 						actionButton={actionButton}
 						backURL={backURL}
 						continueDisabled={
-							!formik.isValid || formik.isSubmitting
+							!formik.dirty ||
+							formik.isValidating ||
+							formik.isSubmitting ||
+							!formik.isValid
 						}
 						onPrevious={
 							stepNumber > 0

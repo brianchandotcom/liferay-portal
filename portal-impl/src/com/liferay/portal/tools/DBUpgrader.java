@@ -62,6 +62,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.logging.log4j.core.Appender;
@@ -315,13 +316,13 @@ public class DBUpgrader {
 
 			};
 
+		Date buildDate = ReleaseInfo.getBuildDate();
+
 		ServiceComponentLocalServiceUtil.initServiceComponent(
 			portalServiceComponentConfiguration,
 			DBUpgrader.class.getClassLoader(),
 			ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME,
-			ReleaseInfo.getBuildNumber(),
-			ReleaseInfo.getBuildDate(
-			).getTime());
+			ReleaseInfo.getBuildNumber(), buildDate.getTime());
 	}
 
 	public static void upgradeModules() {

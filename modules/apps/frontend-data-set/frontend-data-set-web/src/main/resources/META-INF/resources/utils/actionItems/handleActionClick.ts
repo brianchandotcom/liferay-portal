@@ -7,12 +7,14 @@ import {openConfirmModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 
 import {openPermissionsModal} from '../modals/openPermissionsModal';
+import {openWorkflowTransitionModal} from '../modals/openWorkflowTransitionModal';
 import {resolveModalSize} from '../modals/resolveModalSize';
 import {IItemsActions} from '../types';
 import {ACTION_ITEM_TARGETS} from './constants';
 import formatActionURL from './formatActionURL';
 
-const {INFO_PANEL, MODAL_PERMISSIONS} = ACTION_ITEM_TARGETS;
+const {INFO_PANEL, MODAL_PERMISSIONS, MODAL_WORKFLOW_TRANSITION} =
+	ACTION_ITEM_TARGETS;
 
 const handleActionClick = ({
 	action,
@@ -79,6 +81,13 @@ const handleActionClick = ({
 
 			if (target === MODAL_PERMISSIONS) {
 				openPermissionsModal(url);
+			}
+			else if (target === MODAL_WORKFLOW_TRANSITION) {
+				openWorkflowTransitionModal({
+					action,
+					executeAsyncItemAction,
+					itemId,
+				});
 			}
 			else {
 				openModal({

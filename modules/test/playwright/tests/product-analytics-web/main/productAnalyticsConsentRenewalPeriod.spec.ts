@@ -278,6 +278,24 @@ test(
 );
 
 test(
+	'Verify Product Analytics Configuration can be saved with Enabled set to false',
+	{tag: '@LPD-79065'},
+	async ({page}) => {
+		await test.step('Disable Product Analytics and save configuration', async () => {
+			await page.getByLabel('Enabled').setChecked(false);
+
+			await page
+				.getByRole('button', {name: 'Update'})
+				.dispatchEvent('click');
+
+			await waitForAlert(page);
+
+			await expect(page.getByLabel('Enabled')).not.toBeChecked();
+		});
+	}
+);
+
+test(
 	'Verify updating Consent Renewal Period removes consent cookies',
 	{tag: '@LPD-68504'},
 	async ({page, productAnalyticsBannerPage}) => {

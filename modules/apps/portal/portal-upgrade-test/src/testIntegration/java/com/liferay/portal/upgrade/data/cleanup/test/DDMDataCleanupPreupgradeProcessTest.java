@@ -283,7 +283,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 		String parentStructureKey = RandomTestUtil.randomString();
 		long childGroupId = RandomTestUtil.nextLong();
 		long companyGroupId = RandomTestUtil.nextLong();
-		long companyId = _getNonexistentCompanyId();
+		long companyId = RandomTestUtil.randomLong();
 		long orphanGroupId = RandomTestUtil.nextLong();
 		long otherGroupId = RandomTestUtil.nextLong();
 		long parentGroupId = RandomTestUtil.nextLong();
@@ -368,19 +368,6 @@ public class DDMDataCleanupPreupgradeProcessTest
 			targetValue, " was not found in column ",
 			_dbInspector.normalizeName(targetColumnName), " from table ",
 			_dbInspector.normalizeName(targetTableName));
-	}
-
-	private long _getNonexistentCompanyId() throws Exception {
-		Set<Long> companyIds = SetUtil.fromArray(
-			PortalInstancePool.getCompanyIds());
-
-		while (true) {
-			long nonexistentCompanyId = RandomTestUtil.randomLong();
-
-			if (!companyIds.contains(nonexistentCompanyId)) {
-				return nonexistentCompanyId;
-			}
-		}
 	}
 
 	private void _insertDDMStructure(

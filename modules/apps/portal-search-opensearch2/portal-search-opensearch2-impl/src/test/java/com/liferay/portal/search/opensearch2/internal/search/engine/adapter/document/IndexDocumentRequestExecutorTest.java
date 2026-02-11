@@ -9,7 +9,7 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
-import com.liferay.portal.search.internal.document.DocumentBuilderImpl;
+import com.liferay.portal.search.internal.document.DocumentBuilder;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.test.util.RequestExecutorFixture;
@@ -67,7 +67,7 @@ public class IndexDocumentRequestExecutorTest extends BaseOpenSearchTestCase {
 	}
 
 	protected Document buildDocument(String fieldName, String fieldValue) {
-		DocumentBuilder documentBuilder = new DocumentBuilderImpl();
+		DocumentBuilder documentBuilder = new DocumentBuilder();
 
 		return documentBuilder.setString(
 			fieldName, fieldValue

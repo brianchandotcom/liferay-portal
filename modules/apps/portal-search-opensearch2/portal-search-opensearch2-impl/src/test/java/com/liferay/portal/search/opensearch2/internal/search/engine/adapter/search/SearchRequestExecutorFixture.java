@@ -117,20 +117,6 @@ public class SearchRequestExecutorFixture {
 		return multisearchSearchRequestExecutor;
 	}
 
-	private OpenPointInTimeRequestExecutor
-		_createOpenPointInTimeRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		OpenPointInTimeRequestExecutor openPointInTimeRequestExecutor =
-			new OpenPointInTimeRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			openPointInTimeRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return openPointInTimeRequestExecutor;
-	}
-
 	private SearchRequestExecutor _createSearchRequestExecutor(
 		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		OpenSearchConnectionManager openSearchConnectionManager,
@@ -170,13 +156,11 @@ public class SearchRequestExecutorFixture {
 				searchSearchResponseAssembler));
 
 		ReflectionTestUtil.setFieldValue(
-			openSearchSearchRequestExecutor, "_openPointInTimeRequestExecutor",
-			_createOpenPointInTimeRequestExecutor(openSearchConnectionManager));
-		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor, "_searchSearchRequestExecutor",
 			_createSearchSearchRequestExecutor(
 				openSearchConnectionManager, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
+
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor, "_suggestSearchRequestExecutor",
 			_createSuggestSearchRequestExecutor(openSearchConnectionManager));

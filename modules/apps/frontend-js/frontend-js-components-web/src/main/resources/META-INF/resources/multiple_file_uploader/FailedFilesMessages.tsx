@@ -9,14 +9,14 @@ import ClaySticker from '@clayui/sticker';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {FaildFile} from './types';
+import {FailedFile} from './types';
 
-export default function FailedFiles({
+export default function FailedFilesMessages({
 	errorMessage,
 	failedFiles,
 }: {
 	errorMessage: string;
-	failedFiles: FaildFile[];
+	failedFiles: FailedFile[];
 }) {
 	return (
 		<div className="has-error">

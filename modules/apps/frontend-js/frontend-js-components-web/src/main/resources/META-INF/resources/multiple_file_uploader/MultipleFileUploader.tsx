@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import {Accept, useDropzone} from 'react-dropzone';
 
 import DragZoneBackground from './DragZoneBackground';
-import FailedFiles from './FailedFiles';
+import FailedFilesMessages from './FailedFilesMessages';
 import {LoadingMessage} from './LoadingMessage';
 import {
 	FailedFile,
@@ -184,7 +184,7 @@ export default function MultipleFileUploader({
 		<form className="multiple-file-uploader" onSubmit={handleSubmit}>
 			<ClayModal.Body scrollable>
 				{failedFiles.length ? (
-					<FailedFiles
+					<FailedFilesMessages
 						errorMessage={mergedMessages.xFilesNotUploaded}
 						failedFiles={failedFiles}
 					/>

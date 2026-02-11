@@ -6,7 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.engine.adapter.index.PutMappingIndexRequest;
@@ -32,10 +32,8 @@ import org.opensearch.client.opensearch.indices.PutMappingResponse;
 public class PutMappingIndexRequestExecutor {
 
 	public PutMappingIndexRequestExecutor(
-		JSONFactory jsonFactory,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		_jsonFactory = jsonFactory;
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
@@ -55,7 +53,7 @@ public class PutMappingIndexRequestExecutor {
 		PutMappingRequest.Builder builder = new PutMappingRequest.Builder();
 
 		try {
-			JSONObject mappingJSONObject = _jsonFactory.createJSONObject(
+			JSONObject mappingJSONObject = JSONFactoryUtil.createJSONObject(
 				putMappingIndexRequest.getMapping());
 
 			List<Map<String, DynamicTemplate>> dynamicTemplates =
@@ -102,7 +100,6 @@ public class PutMappingIndexRequestExecutor {
 		}
 	}
 
-	private final JSONFactory _jsonFactory;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

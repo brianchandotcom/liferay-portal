@@ -6,7 +6,7 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,10 +36,8 @@ import org.opensearch.client.opensearch.indices.OpenSearchIndicesClient;
 public class CreateIndexRequestExecutor {
 
 	public CreateIndexRequestExecutor(
-		JSONFactory jsonFactory,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		_jsonFactory = jsonFactory;
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
@@ -153,7 +151,7 @@ public class CreateIndexRequestExecutor {
 		JSONObject jsonObject;
 
 		try {
-			jsonObject = _jsonFactory.createJSONObject(source);
+			jsonObject = JSONFactoryUtil.createJSONObject(source);
 		}
 		catch (JSONException jsonException) {
 			throw new RuntimeException(jsonException);
@@ -175,7 +173,6 @@ public class CreateIndexRequestExecutor {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CreateIndexRequestExecutor.class);
 
-	private final JSONFactory _jsonFactory;
 	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
@@ -51,8 +50,7 @@ public class CreateIndexRequestExecutorTest extends BaseOpenSearchTestCase {
 			).toString());
 
 		CreateIndexRequestExecutor createIndexRequestExecutor =
-			new CreateIndexRequestExecutor(
-				new JSONFactoryImpl(), openSearchConnectionManager);
+			new CreateIndexRequestExecutor(openSearchConnectionManager);
 
 		org.opensearch.client.opensearch.indices.CreateIndexRequest
 			openSearchCreateIndexRequest =

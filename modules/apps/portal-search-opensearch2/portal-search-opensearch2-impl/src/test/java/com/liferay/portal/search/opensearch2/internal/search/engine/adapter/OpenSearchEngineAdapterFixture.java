@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 
@@ -59,10 +58,6 @@ public class OpenSearchEngineAdapterFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngineAdapterImpl, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchEngineAdapterImpl, "_indexRequestExecutor",
-			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
-				openSearchConnectionManager));
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngineAdapterImpl, "_searchRequestExecutor",
 			_searchRequestExecutorFixture.getSearchRequestExecutor());

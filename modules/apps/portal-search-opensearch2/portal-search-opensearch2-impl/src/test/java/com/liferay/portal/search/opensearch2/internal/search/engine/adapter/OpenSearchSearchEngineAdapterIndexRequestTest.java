@@ -44,7 +44,6 @@ import com.liferay.portal.search.engine.adapter.index.UpdateIndexSettingsIndexRe
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.IndexRequestExecutorTestUtil;
 import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -571,15 +570,16 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		SearchEngineAdapter searchEngineAdapter =
+		OpenSearchSearchEngineAdapterImpl openSearchSearchEngineAdapterImpl =
 			new OpenSearchSearchEngineAdapterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchEngineAdapter, "_indexRequestExecutor",
-			IndexRequestExecutorTestUtil.createIndexRequestExecutor(
-				openSearchConnectionManager));
+			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
+			openSearchConnectionManager);
 
-		return searchEngineAdapter;
+		openSearchSearchEngineAdapterImpl.activate();
+
+		return openSearchSearchEngineAdapterImpl;
 	}
 
 	private void _assertAnalysisIndexResponseTokens(

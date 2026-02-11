@@ -6,7 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.test.util;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.GetDocumentResponse;
@@ -63,7 +62,7 @@ public class RequestExecutorFixture {
 
 	public void setUp() {
 		_createIndexRequestExecutor = new CreateIndexRequestExecutor(
-			new JSONFactoryImpl(), _openSearchConnectionManager);
+			_openSearchConnectionManager);
 		_deleteIndexRequestExecutor = new DeleteIndexRequestExecutor(
 			_openSearchConnectionManager);
 	}

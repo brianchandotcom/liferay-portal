@@ -11,9 +11,15 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -143,8 +149,34 @@ public class AssetCategoriesSummaryDisplayContext {
 		}
 
 		return AssetVocabularyServiceUtil.getGroupVocabularies(
+			_getCurrentAndAncestorSiteAndDepotGroupIds(groupId));
+	}
+
+	private long[] _getCurrentAndAncestorSiteAndDepotGroupIds(long groupId)
+		throws PortalException {
+
+		long[] currentAndAncestorSiteAndDepotGroupIds =
 			SiteConnectedGroupGroupProviderUtil.
-				getCurrentAndAncestorSiteAndDepotGroupIds(groupId));
+				getCurrentAndAncestorSiteAndDepotGroupIds(groupId);
+
+		DepotEntry depotEntry = DepotEntryLocalServiceUtil.fetchGroupDepotEntry(
+			groupId);
+
+		if ((depotEntry == null) ||
+			(depotEntry.getType() != DepotConstants.TYPE_SPACE)) {
+
+			return currentAndAncestorSiteAndDepotGroupIds;
+		}
+
+		Group cmsGroup = GroupLocalServiceUtil.fetchGroup(
+			depotEntry.getCompanyId(), GroupConstants.CMS);
+
+		if (cmsGroup == null) {
+			return currentAndAncestorSiteAndDepotGroupIds;
+		}
+
+		return ArrayUtil.append(
+			currentAndAncestorSiteAndDepotGroupIds, cmsGroup.getGroupId());
 	}
 
 	private final List<AssetCategory> _assetCategories;

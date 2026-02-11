@@ -57,13 +57,7 @@ public class FeatureFlagManagerImpl implements FeatureFlagManager {
 		return isEnabled(CompanyThreadLocal.getCompanyId(), key);
 	}
 
-	@Reference(unbind = "-")
-	protected void setFeatureFlagsBagProvider(
-		FeatureFlagsBagProvider featureFlagsBagProvider) {
-
-		_featureFlagsBagProvider = featureFlagsBagProvider.unwrapProxy();
-	}
-
+	@Reference
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;
 
 }

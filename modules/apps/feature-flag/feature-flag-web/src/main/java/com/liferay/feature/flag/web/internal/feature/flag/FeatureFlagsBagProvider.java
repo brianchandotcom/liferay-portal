@@ -18,6 +18,4 @@ public interface FeatureFlagsBagProvider {
 
 	public void setEnabled(long companyId, String key, boolean enabled);
 
-	public FeatureFlagsBagProvider unwrapProxy();
-
 }

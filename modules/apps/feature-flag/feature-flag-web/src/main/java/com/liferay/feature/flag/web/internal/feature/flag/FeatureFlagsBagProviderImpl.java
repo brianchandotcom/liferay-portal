@@ -130,11 +130,6 @@ public class FeatureFlagsBagProviderImpl
 		_clusterExecutor.execute(clusterRequest);
 	}
 
-	@Override
-	public FeatureFlagsBagProvider unwrapProxy() {
-		return this;
-	}
-
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_initSystemFeatureFlags(false);

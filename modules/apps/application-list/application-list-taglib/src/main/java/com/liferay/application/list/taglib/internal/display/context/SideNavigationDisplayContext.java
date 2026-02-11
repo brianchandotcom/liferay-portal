@@ -164,7 +164,8 @@ public class SideNavigationDisplayContext {
 		PanelCategory panelCategory = _getPanelCategory();
 
 		return String.format(
-			_EXPANDED_KEYS_SESSION_KEY, panelCategory.getKey());
+			"com_liferay_application_list_taglib_SideNavigationExpanded_%sKeys",
+			panelCategory.getKey());
 	}
 
 	private PanelCategory _getPanelCategory() {
@@ -264,9 +265,6 @@ public class SideNavigationDisplayContext {
 
 		return verticalNavItems;
 	}
-
-	private static final String _EXPANDED_KEYS_SESSION_KEY =
-		"com_liferay_application_list_taglib_SideNavigationExpanded_%sKeys";
 
 	private static final String _VISIBLE_SESSION_KEY =
 		"com_liferay_application_list_taglib_SideNavigationState";

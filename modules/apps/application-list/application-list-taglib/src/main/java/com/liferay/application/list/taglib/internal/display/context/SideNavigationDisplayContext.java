@@ -252,12 +252,12 @@ public class SideNavigationDisplayContext {
 
 			VerticalNavItem verticalNavItem = new VerticalNavItem();
 
-			verticalNavItem.setLeadingIcon(IconItem.of("home", null));
+			verticalNavItem.setHref(
+				panelApp.getPortletURL(_httpServletRequest));
 			verticalNavItem.setId(panelApp.getPortletId());
 			verticalNavItem.setLabel(
 				panelApp.getLabel(_themeDisplay.getLocale()));
-			verticalNavItem.setHref(
-				panelApp.getPortletURL(_httpServletRequest));
+			verticalNavItem.setLeadingIcon(IconItem.of("home", null));
 
 			verticalNavItems.add(verticalNavItem);
 		}

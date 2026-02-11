@@ -48,6 +48,7 @@ export interface ITreeViewContext<T extends Record<string, any>>
 		index: MoveItemIndex,
 		position: Position
 	) => boolean;
+	onItemInvalidMove?: () => void;
 	onItemMove?: (
 		items: T | Set<Key>,
 		parentItem: T,

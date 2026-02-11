@@ -77,6 +77,7 @@ export function Wizard({
 			initialValues={{...initialValues, ...formState}}
 			onSubmit={handleSubmit}
 			validate={validate}
+			validateOnMount
 		>
 			{(formik) => (
 				<Form noValidate>
@@ -126,7 +127,9 @@ export function Wizard({
 					<Footer
 						actionButton={actionButton}
 						backURL={backURL}
-						continueDisabled={formik.isSubmitting}
+						continueDisabled={
+							!formik.isValid || formik.isSubmitting
+						}
 						onPrevious={
 							stepNumber > 0
 								? () => setStepNumber(stepNumber - 1)

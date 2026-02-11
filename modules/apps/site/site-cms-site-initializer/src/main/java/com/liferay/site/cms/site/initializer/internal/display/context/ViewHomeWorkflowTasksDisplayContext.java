@@ -16,13 +16,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.product.navigation.personal.menu.util.PersonalApplicationURLUtil;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import jakarta.portlet.PortletRequest;
@@ -55,9 +54,10 @@ public class ViewHomeWorkflowTasksDisplayContext {
 	public Map<String, Object> getReactData() throws Exception {
 		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			_httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
-			LayoutLocalServiceUtil.getFriendlyURLLayout(
-				_themeDisplay.getScopeGroupId(), false,
-				PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL),
+			PersonalApplicationURLUtil.
+				getOrAddEmbeddedPersonalApplicationLayout(
+					_themeDisplay.getGuestUser(), _themeDisplay.getScopeGroup(),
+					false),
 			PortletRequest.RENDER_PHASE);
 
 		return HashMapBuilder.<String, Object>put(

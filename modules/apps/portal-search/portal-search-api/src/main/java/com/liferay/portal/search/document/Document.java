@@ -5,56 +5,200 @@
 
 package com.liferay.portal.search.document;
 
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.function.Function;
 
 /**
  * @author Michael C. Han
  * @author Wade Cao
  */
-@ProviderType
-public interface Document {
+public class Document {
 
-	public Boolean getBoolean(String string);
+	public Document() {
+		_fields = new LinkedHashMap<>();
+	}
 
-	public List<Boolean> getBooleans(String string);
+	public Document(Document document) {
+		_fields = new LinkedHashMap<>(document._fields);
+	}
 
-	public String getDate(String name);
+	public Boolean getBoolean(String name) {
+		return GetterUtil.getBoolean(getValue(name));
+	}
 
-	public List<String> getDates(String name);
+	public List<Boolean> getBooleans(String name) {
+		return getValues(name, GetterUtil::getBoolean);
+	}
 
-	public Double getDouble(String name);
+	public String getDate(String name) {
+		return getValue(name, String::valueOf);
+	}
 
-	public List<Double> getDoubles(String name);
+	public List<String> getDates(String name) {
+		return getValues(name, String::valueOf);
+	}
 
-	public Map<String, Field> getFields();
+	public Double getDouble(String name) {
+		return getValue(name, GetterUtil::getDouble);
+	}
 
-	public Float getFloat(String name);
+	public List<Double> getDoubles(String name) {
+		return getValues(name, GetterUtil::getDouble);
+	}
 
-	public List<Float> getFloats(String name);
+	public Map<String, Field> getFields() {
+		return Collections.unmodifiableMap(_fields);
+	}
 
-	public GeoLocationPoint getGeoLocationPoint(String name);
+	public Float getFloat(String name) {
+		return getValue(name, GetterUtil::getFloat);
+	}
 
-	public List<GeoLocationPoint> getGeoLocationPoints(String name);
+	public List<Float> getFloats(String name) {
+		return getValues(name, GetterUtil::getFloat);
+	}
 
-	public Integer getInteger(String name);
+	public GeoLocationPoint getGeoLocationPoint(String name) {
+		return getValue(name, value -> (GeoLocationPoint)value);
+	}
 
-	public List<Integer> getIntegers(String name);
+	public List<GeoLocationPoint> getGeoLocationPoints(String name) {
+		return getValues(name, value -> (GeoLocationPoint)value);
+	}
 
-	public Long getLong(String name);
+	public Integer getInteger(String name) {
+		return getValue(name, GetterUtil::getInteger);
+	}
 
-	public List<Long> getLongs(String name);
+	public List<Integer> getIntegers(String name) {
+		return getValues(name, GetterUtil::getInteger);
+	}
 
-	public String getString(String name);
+	public Long getLong(String name) {
+		return getValue(name, GetterUtil::getLong);
+	}
 
-	public List<String> getStrings(String name);
+	public List<Long> getLongs(String name) {
+		return getValues(name, GetterUtil::getLong);
+	}
 
-	public Object getValue(String name);
+	public String getString(String name) {
+		return getValue(name, String::valueOf);
+	}
 
-	public List<Object> getValues(String name);
+	public List<String> getStrings(String name) {
+		return getValues(name, String::valueOf);
+	}
+
+	public Object getValue(String name) {
+		Field field = _fields.get(name);
+
+		if (field == null) {
+			return null;
+		}
+
+		return field.getValue();
+	}
+
+	public <T> T getValue(String name, Function<Object, T> function) {
+		Object value = getValue(name);
+
+		if (value != null) {
+			return function.apply(value);
+		}
+
+		return null;
+	}
+
+	public List<Object> getValues(String name) {
+		Field field = _fields.get(name);
+
+		if (field == null) {
+			return Collections.emptyList();
+		}
+
+		return field.getValues();
+	}
+
+	public <T> List<T> getValues(String name, Function<Object, T> function) {
+		return TransformUtil.transform(getValues(name), function::apply);
+	}
+
+	public void setFieldValue(String name, Object value) {
+		if (_isEmpty(value)) {
+			_removeField(name);
+		}
+		else {
+			_putField(name, Collections.singleton(value));
+		}
+	}
+
+	public void setFieldValues(String name, Collection<Object> values) {
+		if ((values == null) || values.isEmpty()) {
+			_removeField(name);
+		}
+		else {
+			_putField(name, values);
+		}
+	}
+
+	public void setFieldValues(String name, Object[] values) {
+		setFieldValues(name, _toCollection(values));
+	}
+
+	@Override
+	public String toString() {
+		return _fields.toString();
+	}
+
+	public void unsetField(String name) {
+		_removeField(name);
+	}
+
+	private boolean _isEmpty(Object value) {
+		if (value == null) {
+			return true;
+		}
+
+		if (value instanceof Collection) {
+			Collection<?> collection = (Collection<?>)value;
+
+			if (collection.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private Field _putField(String name, Collection<Object> values) {
+		return _fields.put(name, new Field(name, values));
+	}
+
+	private Field _removeField(String name) {
+		return _fields.remove(name);
+	}
+
+	private Collection<Object> _toCollection(Object[] values) {
+		if (ArrayUtil.isEmpty(values) ||
+			((values.length == 1) && (values[0] == null))) {
+
+			return null;
+		}
+
+		return Arrays.asList(values);
+	}
+
+	private final Map<String, Field> _fields;
 
 }

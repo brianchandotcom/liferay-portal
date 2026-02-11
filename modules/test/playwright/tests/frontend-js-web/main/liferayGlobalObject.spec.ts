@@ -21,38 +21,51 @@ test(
 	'CORS does not stop requests when CDN is enabled',
 	{tag: '@LPD-56873'},
 	async ({instanceSettingsPage, page}) => {
-		await test.step('Check crossorigin attribute is added when CDN is enabled', async () => {
-			await instanceSettingsPage.goToInstanceSetting(
-				'Instance Configuration',
-				'General'
-			);
+		const enableCDN = () =>
+			test.step('Enable CDN', async () => {
+				await instanceSettingsPage.goToInstanceSetting(
+					'Instance Configuration',
+					'General'
+				);
 
-			await page
-				.getByLabel('CDN Host HTTP', {exact: true})
-				.fill('http://127.0.0.1');
+				await page
+					.getByLabel('CDN Host HTTP', {exact: true})
+					.fill('http://127.0.0.1');
 
-			await page.getByLabel('CDN Host HTTPS').fill('https://127.0.0.1');
+				await page
+					.getByLabel('CDN Host HTTPS')
+					.fill('https://127.0.0.1');
 
-			await page.getByRole('button', {name: 'Save'}).click();
+				await page.getByRole('button', {name: 'Save'}).click();
+			});
 
-			const crossoriginAttr = await page
-				.locator(
-					'script[src^="http://127.0.0.1/o/frontend-js-web/Liferay.("]'
-				)
-				.getAttribute('crossorigin', {timeout: 1000});
+		const disableCDN = () =>
+			test.step('Disable CDN', async () => {
+				await page.getByLabel('CDN Host HTTP', {exact: true}).clear();
 
-			await expect(crossoriginAttr).toStrictEqual('');
-		});
+				await page.getByLabel('CDN Host HTTPS').clear();
 
-		await test.step('Check crossorigin attribute is removed when CDN is disabled', async () => {
-			await page.getByLabel('CDN Host HTTP', {exact: true}).clear();
+				await page.getByRole('button', {name: 'Save'}).click();
+			});
 
-			await page.getByLabel('CDN Host HTTPS').clear();
+		await enableCDN();
 
-			await page.getByRole('button', {name: 'Save'}).click();
+		try {
+			await test.step('Check crossorigin attribute is present', async () => {
+				await expect(
+					page.locator(
+						'script[src^="http://127.0.0.1/o/frontend-js-web/Liferay."]'
+					)
+				).toHaveAttribute('crossorigin', '');
+			});
+		}
+		finally {
+			await disableCDN();
+		}
 
+		await test.step('Check crossorigin attribute is missing', async () => {
 			await expect(
-				page.locator('script[src^="/o/frontend-js-web/Liferay.("]')
+				page.locator('script[src^="/o/frontend-js-web/Liferay."]')
 			).not.toHaveAttribute('crossorigin', '');
 		});
 	}

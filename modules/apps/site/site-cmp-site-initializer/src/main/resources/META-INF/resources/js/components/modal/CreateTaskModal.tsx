@@ -6,7 +6,6 @@
 import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayModal from '@clayui/modal';
-import {FDS_EVENT} from '@liferay/frontend-data-set-web';
 import {AssigneeValue} from '@liferay/object-dynamic-data-mapping-form-field-type';
 import {DatePicker} from '@liferay/object-js-components-web';
 import {
@@ -30,13 +29,13 @@ import './../AssigneeTrigger.scss';
 
 type CreateTaskModalProps = {
 	closeModal: () => void;
-	dataSetId: string;
+	loadData: Function;
 	state: string;
 };
 
 export default function CreateTaskModal({
 	closeModal,
-	dataSetId,
+	loadData,
 	state,
 }: CreateTaskModalProps) {
 	const [states, setStates] = useState([]);
@@ -74,7 +73,7 @@ export default function CreateTaskModal({
 			if (!error) {
 				closeModal();
 
-				Liferay.fire(FDS_EVENT.UPDATE_DISPLAY, {id: dataSetId});
+				loadData();
 
 				displayCreateSuccessToast(values.title);
 			}

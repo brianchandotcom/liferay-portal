@@ -17,7 +17,7 @@ import './../AssigneeTrigger.scss';
 
 type Props = {
 	closeModal: () => void;
-	loadData: () => void;
+	loadData: Function;
 	taskId: string;
 	taskTitle: string;
 	value: AssigneeValue | {} | null;

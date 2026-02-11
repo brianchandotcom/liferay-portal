@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React, {useCallback, useEffect, useState} from 'react';
+import {FrontendDataSetContext} from '@liferay/frontend-data-set-web';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 
 import {
 	KANBAN_COLUMN_ORDER,
@@ -17,7 +18,6 @@ import Board from './components/Board';
 import {KanbanViewContext} from './context';
 
 interface KanbanViewProps {
-	dataSetId: string;
 	items: ITask[];
 	itemsActions: IItemsActions[];
 }
@@ -49,6 +49,7 @@ function mapByStateCode(items: ITask[]): {[key: string]: IColumn} {
 }
 
 function KanbanView(props: KanbanViewProps) {
+	const {loadData} = useContext(FrontendDataSetContext);
 	const [boardData] = useState(mapByStateCode(props.items));
 
 	const changeTaskStatus = useCallback(() => {}, []);
@@ -66,8 +67,8 @@ function KanbanView(props: KanbanViewProps) {
 			value={{
 				boardData,
 				changeTaskStatus,
-				dataSetId: props.dataSetId,
 				itemsActions: props.itemsActions,
+				loadData,
 			}}
 		>
 			<Board />

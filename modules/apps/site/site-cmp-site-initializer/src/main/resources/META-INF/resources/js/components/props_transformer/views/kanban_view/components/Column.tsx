@@ -24,7 +24,7 @@ interface IColumnProps {
 export default function Column({
 	column: {icon, key, name, tasks},
 }: IColumnProps) {
-	const {dataSetId} = useContext(KanbanViewContext);
+	const {loadData} = useContext(KanbanViewContext);
 
 	return (
 		<Col className="lfr__kaban-view-column">
@@ -58,7 +58,7 @@ export default function Column({
 							}) => (
 								<CreateTaskModal
 									closeModal={closeModal}
-									dataSetId={dataSetId}
+									loadData={loadData}
 									state={key}
 								/>
 							),

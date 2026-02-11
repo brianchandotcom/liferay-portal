@@ -28,6 +28,11 @@
 		"react-dropzone": "^14.3.8",
 		"uuid": "9.0.0"
 	},
+	"jest": {
+		"setupFiles": [
+			"<rootDir>/jest-setup.config.ts"
+		]
+	},
 	"main": "index.ts",
 	"name": "frontend-js-components-web",
 	"scripts": {

@@ -1,3 +1,50 @@
+resource "aws_iam_policy" "provider_aws_backup_policy" {
+	name="${local.cluster_name}-provider-aws-backup"
+	policy=jsonencode({
+		Version="2012-10-17"
+		Statement=[
+			{
+				Action="backup:*"
+				Effect="Allow"
+				Resource="*"
+			},
+			{
+				Action="backup-storage:*"
+				Effect="Allow"
+				Resource="*"
+			},
+			{
+				Action=[
+					"iam:GetRole",
+					"iam:PassRole"
+				]
+				Effect="Allow"
+				Resource="*"
+			},
+			{
+				Action="kms:CreateGrant"
+				Condition={
+					"ForAnyValue:StringEquals"={
+						"kms:EncryptionContextKeys"="aws:backup:backup-vault"
+					},
+					Bool={
+						"kms:GrantIsForAWSResource"=true
+					},
+					StringLike={
+						"kms:ViaService"="backup.*.amazonaws.com"
+					}
+				}
+				Effect="Allow"
+				Resource="*"
+			},
+			{
+				Action="kms:DescribeKey"
+				Effect="Allow"
+				Resource="*"
+			},
+		]
+	})
+}
 resource "aws_iam_policy" "provider_aws_ec2_policy" {
 	name="${local.cluster_name}-provider-aws-ec2"
 	policy=jsonencode({
@@ -38,9 +85,11 @@ resource "aws_iam_policy" "provider_aws_iam_policy" {
 					"iam:AttachUserPolicy",
 					"iam:CreateAccessKey",
 					"iam:CreatePolicy",
+					"iam:CreateRole",
 					"iam:CreateUser",
 					"iam:DeleteAccessKey",
 					"iam:DeletePolicy",
+					"iam:DeleteRole",
 					"iam:DeleteUser",
 					"iam:DeleteUserPolicy",
 					"iam:DetachRolePolicy",
@@ -48,6 +97,7 @@ resource "aws_iam_policy" "provider_aws_iam_policy" {
 					"iam:GetAccessKeyLastUsed",
 					"iam:GetPolicy",
 					"iam:GetPolicyVersion",
+					"iam:GetRole",
 					"iam:GetUser",
 					"iam:GetUserPolicy",
 					"iam:ListAccessKeys",
@@ -55,9 +105,11 @@ resource "aws_iam_policy" "provider_aws_iam_policy" {
 					"iam:ListAttachedUserPolicies",
 					"iam:ListGroupsForUser",
 					"iam:ListPolicyVersions",
+					"iam:ListRolePolicies",
 					"iam:ListUserPolicies",
 					"iam:PutUserPolicy",
 					"iam:TagPolicy",
+					"iam:TagRole",
 					"iam:TagUser",
 					"iam:UntagUser",
 					"iam:UpdateAccessKey",
@@ -168,8 +220,8 @@ resource "aws_iam_policy" "provider_aws_s3_policy" {
 					"s3:PutBucketWebsite",
 					"s3:PutEncryptionConfiguration",
 					"s3:PutLifecycleConfiguration",
-				]
-				"Effect": "Allow"
+				],
+				"Effect": "Allow",
 				"Resource": ["arn:aws:s3:::*"]
 			},
 			{
@@ -184,6 +236,30 @@ resource "aws_iam_policy" "provider_aws_s3_policy" {
 		]
 		Version="2012-10-17"
 	})
+}
+resource "aws_iam_role" "provider_aws_backup_role" {
+	assume_role_policy=jsonencode(
+		{
+			Statement=[
+				{
+					Action="sts:AssumeRoleWithWebIdentity"
+					Condition={
+						StringEquals={
+							"${local.oidc_provider}:aud"="sts.amazonaws.com"
+						}
+						StringLike={
+							"${local.oidc_provider}:sub"="system:serviceaccount:${var.crossplane_namespace}:provider-aws-backup*"
+						}
+					}
+					Effect="Allow"
+					Principal={
+						Federated="arn:aws:iam::${local.account_id}:oidc-provider/${local.oidc_provider}"
+					}
+				},
+			]
+			Version="2012-10-17"
+		})
+	name="${local.cluster_name}-provider-aws-backup-role"
 }
 resource "aws_iam_role" "provider_aws_ec2_role" {
 	assume_role_policy=jsonencode(
@@ -304,6 +380,10 @@ resource "aws_iam_role" "provider_aws_s3_role" {
 			Version="2012-10-17"
 		})
 	name="${local.cluster_name}-provider-aws-s3-role"
+}
+resource "aws_iam_role_policy_attachment" "provider_aws_backup_attachment" {
+	policy_arn=aws_iam_policy.provider_aws_backup_policy.arn
+	role=aws_iam_role.provider_aws_backup_role.name
 }
 resource "aws_iam_role_policy_attachment" "provider_aws_ec2_attachment" {
 	policy_arn=aws_iam_policy.provider_aws_ec2_policy.arn

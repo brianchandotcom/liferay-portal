@@ -43,7 +43,7 @@ public class TaskSectionTableFDSViewTest
 		assertFDSTableSchemaField(
 			null, "projectTitleTableCellRenderer", "project", "projectTitle");
 		assertFDSTableSchemaField(
-			null, "stateTableCellRenderer", "state", "state");
+			null, "stateTableCellRenderer", "state-status", "state");
 		assertFDSTableSchemaField(
 			"actionLink", "simpleActionLinkTableCellRenderer", "title",
 			"title");

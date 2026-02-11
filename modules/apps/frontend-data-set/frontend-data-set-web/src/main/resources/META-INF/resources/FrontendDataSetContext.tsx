@@ -26,7 +26,6 @@ export interface IFrontendDataSetContext {
 	customDataRenderers?: Array<any>;
 	customRenderers?: {
 		tableCell?: Array<TRenderer>;
-		views?: Array<TRenderer>;
 	};
 	executeAsyncItemAction: ({
 		errorMessage,

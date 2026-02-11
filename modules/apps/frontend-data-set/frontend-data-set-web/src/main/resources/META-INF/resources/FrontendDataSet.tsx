@@ -89,7 +89,6 @@ import {
 	ISuccessNotification,
 	ITableSchema,
 	IView,
-	TRenderer,
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
@@ -560,27 +559,8 @@ const FrontendDataSetContent = ({
 				(pagination?.initialDelta || DEFAULT_PAGINATION_DELTA),
 		};
 
-		const customInternalViews =
-			customRenderers?.views?.map((customRenderer: TRenderer) => ({
-
-				// Need to check presence of property in TRenderer Union type
-
-				component:
-					'component' in customRenderer && customRenderer.component,
-				default: 'default' in customRenderer && customRenderer?.default,
-				label: 'label' in customRenderer && customRenderer?.label,
-				name: customRenderer.name,
-				schema: 'schema' in customRenderer && customRenderer?.schema,
-				thumbnail: 'symbol' in customRenderer && customRenderer?.symbol,
-			})) || [];
-
 		let initialActiveView =
-			views.find(({default: defaultProp}) => defaultProp) ||
-			customInternalViews?.find(
-				({default: defaultProp}) => defaultProp
-			) ||
-			views[0] ||
-			(customInternalViews?.length && customInternalViews[0]);
+			views.find(({default: defaultProp}) => defaultProp) || views[0];
 
 		defaultSnapshot.activeView = {
 			component: getViewComponent(initialActiveView as IView),
@@ -656,7 +636,7 @@ const FrontendDataSetContent = ({
 			snapshots: parsedSnapshots,
 			snapshotsEnabled,
 			sorts,
-			views: [...views, ...customInternalViews],
+			views,
 			visibleFieldNames: initialVisibleFieldNames,
 		};
 	};

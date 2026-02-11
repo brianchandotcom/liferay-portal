@@ -533,7 +533,7 @@ export function DragAndDropProvider<T>({
 			}
 		}
 
-		reorder(dragLayoutItem!.cursor, dropLayoutItem!.cursor, position!);
+		reorder(dragKeys, dropLayoutItem!.cursor, position!);
 		setState({
 			currentDrag: null,
 			currentDragKeys: emptySet(),

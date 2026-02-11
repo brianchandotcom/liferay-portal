@@ -14,6 +14,7 @@ import Option from './Option';
 
 export interface AssigneeValue {
 	externalReferenceCode: string;
+	id: number;
 	name: string;
 	portrait?: string;
 	type: string;
@@ -66,6 +67,7 @@ export default function Assignee({
 		resource: {
 			items: {
 				externalReferenceCode: string;
+				id: number;
 				name: string;
 				portrait?: string;
 				type: string;
@@ -142,6 +144,7 @@ export default function Assignee({
 			>
 				{(item: {
 					externalReferenceCode: string;
+					id: number;
 					name: string;
 					portrait?: string;
 					type: string;
@@ -156,6 +159,7 @@ export default function Assignee({
 											value: {
 												externalReferenceCode:
 													item.externalReferenceCode,
+												id: item.id,
 												name: item.name,
 												type: item.type,
 											},

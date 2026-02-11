@@ -252,7 +252,7 @@ public class SideNavigationDisplayContext {
 
 			VerticalNavItem verticalNavItem = new VerticalNavItem();
 
-			verticalNavItem.addIcon(IconItem.of("books", null));
+			verticalNavItem.setLeadingIcon(IconItem.of("home", null));
 			verticalNavItem.setId(panelApp.getPortletId());
 			verticalNavItem.setLabel(
 				panelApp.getLabel(_themeDisplay.getLocale()));

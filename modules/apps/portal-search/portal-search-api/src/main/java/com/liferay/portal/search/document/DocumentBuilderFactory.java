@@ -5,17 +5,28 @@
 
 package com.liferay.portal.search.document;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Map;
 
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface DocumentBuilderFactory {
+public class DocumentBuilderFactory {
 
-	public DocumentBuilder builder();
+	public static DocumentBuilder builder() {
+		return new DocumentBuilder();
+	}
 
-	public DocumentBuilder builder(Document document);
+	public static DocumentBuilder builder(Document document) {
+		DocumentBuilder documentBuilder = new DocumentBuilder();
+
+		Map<String, Field> map = document.getFields();
+
+		map.forEach(
+			(name, field) -> documentBuilder.setValues(
+				name, field.getValues()));
+
+		return documentBuilder;
+	}
 
 }

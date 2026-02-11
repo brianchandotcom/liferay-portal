@@ -11,7 +11,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.test.util.RequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
-import com.liferay.portal.search.internal.document.DocumentBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.After;

@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -52,7 +53,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document addTask(AddTaskRequest addTaskRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		if (!searchCapabilities.isWorkflowMetricsSupported()) {
 			return documentBuilder.build();
@@ -208,7 +209,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document completeTask(CompleteTaskRequest completeTaskRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", completeTaskRequest.getCompanyId()
@@ -265,7 +266,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public void deleteTask(DeleteTaskRequest deleteTaskRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", deleteTaskRequest.getCompanyId()
@@ -301,7 +302,7 @@ public class TaskWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document updateTask(UpdateTaskRequest updateTaskRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		if (!searchCapabilities.isWorkflowMetricsSupported()) {
 			return documentBuilder.build();

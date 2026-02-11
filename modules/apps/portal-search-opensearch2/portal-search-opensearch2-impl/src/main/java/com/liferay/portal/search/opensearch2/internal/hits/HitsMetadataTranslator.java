@@ -45,12 +45,10 @@ import org.opensearch.client.opensearch.core.search.TotalHits;
 public class HitsMetadataTranslator {
 
 	public HitsMetadataTranslator(
-		DocumentBuilderFactory documentBuilderFactory,
 		HighlightFieldBuilderFactory highlightFieldBuilderFactory,
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
-		_documentBuilderFactory = documentBuilderFactory;
 		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
@@ -125,7 +123,7 @@ public class HitsMetadataTranslator {
 	private Document _translateDocument(
 		String alternateUidFieldName, Hit<JsonData> hit) {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		FieldsTranslator fieldsTranslator = new FieldsTranslator();
 
@@ -178,7 +176,6 @@ public class HitsMetadataTranslator {
 		}
 	}
 
-	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;

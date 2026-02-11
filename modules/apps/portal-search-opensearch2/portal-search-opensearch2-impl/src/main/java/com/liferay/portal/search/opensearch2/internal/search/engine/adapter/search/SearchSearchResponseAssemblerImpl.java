@@ -12,7 +12,6 @@ import com.liferay.portal.search.aggregation.AggregationResultTranslator;
 import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByResponseFactory;
@@ -85,8 +84,8 @@ public class SearchSearchResponseAssemblerImpl
 		return new OpenSearchAggregationResultTranslator(
 			aggregate, _aggregationResults,
 			new HitsMetadataTranslator(
-				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_searchHitBuilderFactory, _searchHitsBuilderFactory));
+				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
+				_searchHitsBuilderFactory));
 	}
 
 	@Override
@@ -164,8 +163,8 @@ public class SearchSearchResponseAssemblerImpl
 
 		HitsMetadataTranslator hitsMetadataTranslator =
 			new HitsMetadataTranslator(
-				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_searchHitBuilderFactory, _searchHitsBuilderFactory);
+				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
+				_searchHitsBuilderFactory);
 
 		searchSearchResponse.setSearchHits(
 			hitsMetadataTranslator.translate(
@@ -190,9 +189,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private AggregationResults _aggregationResults;
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private GroupByResponseFactory _groupByResponseFactory;

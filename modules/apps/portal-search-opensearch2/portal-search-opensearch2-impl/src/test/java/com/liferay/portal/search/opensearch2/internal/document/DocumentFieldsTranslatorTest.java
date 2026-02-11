@@ -8,7 +8,6 @@ package com.liferay.portal.search.opensearch2.internal.document;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.search.internal.document.DocumentBuilder;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.hits.FieldsTranslator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;

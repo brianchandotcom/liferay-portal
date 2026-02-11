@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DocumentResponse;
@@ -100,10 +99,6 @@ public abstract class BaseRankingsWebTestCase {
 			bundleContext.getBundle()
 		);
 
-		documentBuilderFactoryServiceRegistration =
-			bundleContext.registerService(
-				DocumentBuilderFactory.class, documentBuilderFactory, null);
-
 		searchResultInterpreterProviderServiceRegistration =
 			bundleContext.registerService(
 				SearchResultInterpreterProvider.class,
@@ -113,8 +108,6 @@ public abstract class BaseRankingsWebTestCase {
 	@AfterClass
 	public static void tearDownClass() {
 		frameworkUtilMockedStatic.close();
-
-		documentBuilderFactoryServiceRegistration.unregister();
 
 		searchResultInterpreterProviderServiceRegistration.unregister();
 	}
@@ -813,10 +806,6 @@ public abstract class BaseRankingsWebTestCase {
 		return Mockito.mock(SearchSearchResponse.class);
 	}
 
-	protected static final DocumentBuilderFactory documentBuilderFactory =
-		Mockito.mock(DocumentBuilderFactory.class);
-	protected static ServiceRegistration<DocumentBuilderFactory>
-		documentBuilderFactoryServiceRegistration;
 	protected static final MockedStatic<FrameworkUtil>
 		frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 	protected static final SearchResultInterpreterProvider

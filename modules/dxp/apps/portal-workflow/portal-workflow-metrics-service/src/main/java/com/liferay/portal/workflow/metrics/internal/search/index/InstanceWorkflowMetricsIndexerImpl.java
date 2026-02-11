@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
@@ -41,7 +42,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		Date createDate, long instanceId, Date modifiedDate, long processId,
 		String processVersion, long userId, String userName) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue(
 			"active", true
@@ -111,7 +112,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		long companyId, Date completionDate, long duration, long instanceId,
 		Date modifiedDate) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", companyId
@@ -153,7 +154,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 
 	@Override
 	public void deleteInstance(long companyId, long instanceId) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", companyId
@@ -193,7 +194,7 @@ public class InstanceWorkflowMetricsIndexerImpl
 		Map<Locale, String> assetTypeMap, long companyId, long instanceId,
 		Date modifiedDate) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue(
 			"active", active

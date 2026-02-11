@@ -7,6 +7,7 @@ package com.liferay.portal.workflow.metrics.internal.search.index;
 
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.workflow.metrics.internal.search.constants.WorkflowMetricsIndexTypeConstants;
 import com.liferay.portal.workflow.metrics.internal.sla.processor.WorkflowMetricsSLATaskResult;
@@ -40,7 +41,7 @@ public class SLATaskResultWorkflowMetricsIndexer
 	public Document createDocument(
 		WorkflowMetricsSLATaskResult workflowMetricsSLATaskResult) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue("active", true);
 

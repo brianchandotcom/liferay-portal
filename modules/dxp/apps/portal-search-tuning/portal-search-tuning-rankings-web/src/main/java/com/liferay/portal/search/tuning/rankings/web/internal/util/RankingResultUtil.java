@@ -39,10 +39,7 @@ public class RankingResultUtil {
 	public static AssetRenderer<?> getAssetRenderer(
 		String entryClassName, long entryClassPK) {
 
-		DocumentBuilderFactory documentBuilderFactory =
-			_documentBuilderFactorySnapshot.get();
-
-		Document document = documentBuilderFactory.builder(
+		Document document = DocumentBuilderFactory.builder(
 		).setString(
 			Field.ENTRY_CLASS_NAME, entryClassName
 		).setLong(
@@ -180,9 +177,6 @@ public class RankingResultUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		RankingResultUtil.class);
 
-	private static final Snapshot<DocumentBuilderFactory>
-		_documentBuilderFactorySnapshot = new Snapshot<>(
-			RankingResultUtil.class, DocumentBuilderFactory.class);
 	private static final Snapshot<SearchResultInterpreterProvider>
 		_searchResultInterpreterProviderSnapshot = new Snapshot<>(
 			RankingResultUtil.class, SearchResultInterpreterProvider.class);

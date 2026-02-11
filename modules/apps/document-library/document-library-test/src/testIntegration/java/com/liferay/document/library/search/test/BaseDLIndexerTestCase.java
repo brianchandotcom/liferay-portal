@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.util.IndexedFieldsFixture;
@@ -53,8 +52,7 @@ public abstract class BaseDLIndexerTestCase {
 
 	protected IndexedFieldsFixture createIndexedFieldsFixture() {
 		return new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 	}
 
 	protected void setGroup(Group group) {
@@ -86,10 +84,6 @@ public abstract class BaseDLIndexerTestCase {
 	protected DLFolderLocalService dlFolderLocalService;
 
 	protected DLSearchFixture dlSearchFixture;
-
-	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
-
 	protected IndexedFieldsFixture indexedFieldsFixture;
 
 	@Inject

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -94,8 +93,7 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 		_group = group;
 		_groups = groupSearchFixture.getGroups();
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 		_users = userSearchFixture.getUsers();
 	}
 
@@ -142,9 +140,6 @@ public class BookmarksEntryIndexerIndexedFieldsTest {
 
 	@Inject
 	protected BookmarksFolderService bookmarksFolderService;
-
-	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Inject(
 		filter = "indexer.class.name=com.liferay.bookmarks.model.BookmarksEntry"

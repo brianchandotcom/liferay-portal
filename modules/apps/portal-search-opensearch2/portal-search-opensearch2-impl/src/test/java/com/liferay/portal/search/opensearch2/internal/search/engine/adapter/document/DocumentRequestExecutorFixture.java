@@ -7,7 +7,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.doc
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
 /**
@@ -113,9 +112,6 @@ public class DocumentRequestExecutorFixture {
 		GetDocumentRequestExecutor getDocumentRequestExecutor =
 			new GetDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);

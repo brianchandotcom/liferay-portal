@@ -37,12 +37,10 @@ public class SearchHitsTranslator {
 	public SearchHitsTranslator(
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory,
-		DocumentBuilderFactory documentBuilderFactory,
 		HighlightFieldBuilderFactory highlightFieldBuilderFactory) {
 
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-		_documentBuilderFactory = documentBuilderFactory;
 		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 	}
 
@@ -130,7 +128,7 @@ public class SearchHitsTranslator {
 		DocumentFieldsTranslator documentFieldsTranslator =
 			new DocumentFieldsTranslator();
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		Map<String, Object> documentSourceMap =
 			elasticsearchSearchHit.getSourceAsMap();
@@ -181,7 +179,6 @@ public class SearchHitsTranslator {
 		return highlightFields;
 	}
 
-	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;

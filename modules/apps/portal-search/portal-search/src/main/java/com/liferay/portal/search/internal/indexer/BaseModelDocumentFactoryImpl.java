@@ -33,7 +33,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 	public com.liferay.portal.kernel.search.Document createDocument(
 		BaseModel<?> baseModel) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		Tuple classPKResourcePrimKeyTuple = _getClassPKResourcePrimKey(
 			baseModel);
@@ -55,9 +55,6 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 
 		return _toLegacyDocument(document);
 	}
-
-	@Reference
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Reference
 	protected UIDFactory uidFactory;

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -103,8 +102,7 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 		_userGroups = userGroupSearchFixture.getUserGroups();
 
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory,
-			_documentBuilderFactory);
+			_resourcePermissionLocalService, _searchEngineHelper, _uidFactory);
 	}
 
 	@Test
@@ -340,9 +338,6 @@ public class UserIndexerIndexedFieldsByAssociationTest {
 	}
 
 	private static final String _CT_COLLECTION_ID = "ctCollectionId";
-
-	@Inject
-	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static GroupLocalService _groupLocalService;

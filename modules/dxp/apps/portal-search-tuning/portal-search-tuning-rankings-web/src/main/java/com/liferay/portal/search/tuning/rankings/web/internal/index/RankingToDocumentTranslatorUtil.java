@@ -20,10 +20,8 @@ import java.util.List;
  */
 public class RankingToDocumentTranslatorUtil {
 
-	public static Document translate(
-		DocumentBuilderFactory documentBuilderFactory, Ranking ranking) {
-
-		return documentBuilderFactory.builder(
+	public static Document translate(Ranking ranking) {
+		return DocumentBuilderFactory.builder(
 		).setStrings(
 			RankingFields.ALIASES, ArrayUtil.toStringArray(ranking.getAliases())
 		).setStrings(

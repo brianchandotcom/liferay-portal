@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
+import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -34,7 +35,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	public Document addNode(AddNodeRequest addNodeRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		Document document = documentBuilder.setLong(
 			"companyId", addNodeRequest.getCompanyId()
@@ -73,7 +74,7 @@ public class NodeWorkflowMetricsIndexerImpl
 
 	@Override
 	public void deleteNode(DeleteNodeRequest deleteNodeRequest) {
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", deleteNodeRequest.getCompanyId()
@@ -154,7 +155,7 @@ public class NodeWorkflowMetricsIndexerImpl
 		long companyId, long processId, long nodeId, String name,
 		String processVersion) {
 
-		DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setLong(
 			"companyId", companyId

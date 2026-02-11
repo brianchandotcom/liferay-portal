@@ -54,7 +54,7 @@ public class GetDocumentRequestExecutorImpl
 			getDocumentResponse.setSource(
 				String.valueOf(solrDocument.getFieldValuesMap()));
 
-			DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+			DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 			DocumentFieldsTranslator.translate(documentBuilder, solrDocument);
 
@@ -77,9 +77,6 @@ public class GetDocumentRequestExecutorImpl
 	}
 
 	private static final String _VERSION_FIELD = "_version_";
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private SolrClientManager _solrClientManager;

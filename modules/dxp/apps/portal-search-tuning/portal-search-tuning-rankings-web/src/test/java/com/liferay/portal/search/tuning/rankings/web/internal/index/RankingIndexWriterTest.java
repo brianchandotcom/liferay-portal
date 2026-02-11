@@ -9,7 +9,6 @@ import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.name.RankingIndexName;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -34,8 +33,7 @@ public class RankingIndexWriterTest extends BaseRankingsIndexTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		_rankingIndexWriterImpl = new RankingIndexWriter(
-			new DocumentBuilderFactoryImpl(), searchEngineAdapter);
+		_rankingIndexWriterImpl = new RankingIndexWriter(searchEngineAdapter);
 	}
 
 	@Test

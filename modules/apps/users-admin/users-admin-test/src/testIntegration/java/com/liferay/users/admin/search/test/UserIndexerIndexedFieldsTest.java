@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.search.test.util.FieldValuesAssert;
@@ -211,8 +210,7 @@ public class UserIndexerIndexedFieldsTest {
 
 	protected void setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 	}
 
 	protected void setUpIndexerFixture() {
@@ -246,9 +244,6 @@ public class UserIndexerIndexedFieldsTest {
 
 		group = groupSearchFixture.addGroup(new GroupBlueprint());
 	}
-
-	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	protected Group group;
 	protected IndexedFieldsFixture indexedFieldsFixture;

@@ -9,7 +9,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.Field;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.tuning.rankings.helper.RankingHelper;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
@@ -139,8 +138,7 @@ public class RankingToDocumentTranslatorUtilTest {
 	}
 
 	protected Document translate(Ranking ranking) {
-		return RankingToDocumentTranslatorUtil.translate(
-			new DocumentBuilderFactoryImpl(), ranking);
+		return RankingToDocumentTranslatorUtil.translate(ranking);
 	}
 
 	private String _toString(List<Ranking.Pin> pins) {

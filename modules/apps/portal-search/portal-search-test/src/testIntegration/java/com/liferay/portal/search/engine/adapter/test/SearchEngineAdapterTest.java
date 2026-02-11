@@ -279,7 +279,7 @@ public class SearchEngineAdapterTest {
 			String uid, boolean refresh)
 		throws Exception {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue("uid", uid);
 		documentBuilder.setValue("field1", "bravo");
@@ -313,7 +313,7 @@ public class SearchEngineAdapterTest {
 			String uid, String field2Value, String field3value, boolean upsert)
 		throws Exception {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue("uid", uid);
 		documentBuilder.setValue("field2", field2Value);
@@ -328,9 +328,6 @@ public class SearchEngineAdapterTest {
 
 		_searchEngineAdapter.execute(updateDocumentRequest);
 	}
-
-	@Inject
-	private static DocumentBuilderFactory _documentBuilderFactory;
 
 	@Inject
 	private static SearchEngineAdapter _searchEngineAdapter;

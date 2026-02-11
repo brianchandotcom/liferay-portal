@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 
 /**
  * @author Dylan Rebelak
@@ -114,9 +113,6 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
 
 		return getDocumentRequestExecutor;
 	}

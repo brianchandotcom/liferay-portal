@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
 import com.liferay.portal.search.tuning.synonyms.web.internal.index.SynonymSet;
@@ -71,7 +70,7 @@ public class SynonymSetStorageAdapter {
 	@Activate
 	protected void activate() {
 		_synonymSetIndexWriter = new SynonymSetIndexWriter(
-			_documentBuilderFactory, _searchEngineAdapter);
+			_searchEngineAdapter);
 	}
 
 	@Reference
@@ -99,9 +98,6 @@ public class SynonymSetStorageAdapter {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SynonymSetStorageAdapter.class);
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private SearchEngineAdapter _searchEngineAdapter;

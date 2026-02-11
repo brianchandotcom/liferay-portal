@@ -13,10 +13,8 @@ import com.liferay.portal.search.document.DocumentBuilderFactory;
  */
 public class SynonymSetToDocumentTranslatorUtil {
 
-	public static Document translate(
-		DocumentBuilderFactory documentBuilderFactory, SynonymSet synonymSet) {
-
-		return documentBuilderFactory.builder(
+	public static Document translate(SynonymSet synonymSet) {
+		return DocumentBuilderFactory.builder(
 		).setString(
 			SynonymSetFields.SYNONYMS, synonymSet.getSynonyms()
 		).setString(

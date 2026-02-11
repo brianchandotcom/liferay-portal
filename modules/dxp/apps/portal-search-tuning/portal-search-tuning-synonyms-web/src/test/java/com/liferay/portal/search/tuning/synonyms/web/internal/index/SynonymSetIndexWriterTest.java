@@ -6,7 +6,6 @@
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
@@ -37,14 +36,13 @@ public class SynonymSetIndexWriterTest extends BaseSynonymsWebTestCase {
 	@Before
 	public void setUp() throws Exception {
 		_synonymSetToDocumentTranslatorUtilMockedStatic.when(
-			() -> SynonymSetToDocumentTranslatorUtil.translate(
-				Mockito.any(), Mockito.any())
+			() -> SynonymSetToDocumentTranslatorUtil.translate(Mockito.any())
 		).thenReturn(
 			Mockito.mock(Document.class)
 		);
 
 		_synonymSetIndexWriterImpl = new SynonymSetIndexWriter(
-			Mockito.mock(DocumentBuilderFactory.class), searchEngineAdapter);
+			searchEngineAdapter);
 	}
 
 	@After

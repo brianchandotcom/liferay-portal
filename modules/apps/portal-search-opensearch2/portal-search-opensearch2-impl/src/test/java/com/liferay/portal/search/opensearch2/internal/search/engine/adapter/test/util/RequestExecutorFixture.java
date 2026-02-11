@@ -15,7 +15,6 @@ import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentResponse;
 import com.liferay.portal.search.engine.adapter.index.CreateIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.GetDocumentRequestExecutorImpl;
@@ -107,9 +106,6 @@ public class RequestExecutorFixture {
 		GetDocumentRequestExecutor getDocumentRequestExecutor =
 			new GetDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutor, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutor, "_openSearchConnectionManager",
 			_openSearchConnectionManager);

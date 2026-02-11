@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.tuning.synonyms.web.internal.index;
 
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
@@ -17,11 +16,7 @@ import com.liferay.portal.search.tuning.synonyms.index.name.SynonymSetIndexName;
  */
 public class SynonymSetIndexWriter {
 
-	public SynonymSetIndexWriter(
-		DocumentBuilderFactory documentBuilderFactory,
-		SearchEngineAdapter searchEngineAdapter) {
-
-		_documentBuilderFactory = documentBuilderFactory;
+	public SynonymSetIndexWriter(SearchEngineAdapter searchEngineAdapter) {
 		_searchEngineAdapter = searchEngineAdapter;
 	}
 
@@ -30,8 +25,7 @@ public class SynonymSetIndexWriter {
 
 		IndexDocumentRequest documentRequest = new IndexDocumentRequest(
 			synonymSetIndexName.getIndexName(),
-			SynonymSetToDocumentTranslatorUtil.translate(
-				_documentBuilderFactory, synonymSet));
+			SynonymSetToDocumentTranslatorUtil.translate(synonymSet));
 
 		documentRequest.setRefresh(true);
 
@@ -56,15 +50,13 @@ public class SynonymSetIndexWriter {
 		IndexDocumentRequest indexDocumentRequest = new IndexDocumentRequest(
 			synonymSetIndexName.getIndexName(),
 			synonymSet.getSynonymSetDocumentId(),
-			SynonymSetToDocumentTranslatorUtil.translate(
-				_documentBuilderFactory, synonymSet));
+			SynonymSetToDocumentTranslatorUtil.translate(synonymSet));
 
 		indexDocumentRequest.setRefresh(true);
 
 		_searchEngineAdapter.execute(indexDocumentRequest);
 	}
 
-	private final DocumentBuilderFactory _documentBuilderFactory;
 	private final SearchEngineAdapter _searchEngineAdapter;
 
 }

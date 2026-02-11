@@ -7,7 +7,6 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.document.DocumentRequestExecutor;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
 import java.util.Map;
@@ -117,9 +116,6 @@ public class DocumentRequestExecutorFixture {
 		GetDocumentRequestExecutorImpl getDocumentRequestExecutorImpl =
 			new GetDocumentRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			getDocumentRequestExecutorImpl, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			getDocumentRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);

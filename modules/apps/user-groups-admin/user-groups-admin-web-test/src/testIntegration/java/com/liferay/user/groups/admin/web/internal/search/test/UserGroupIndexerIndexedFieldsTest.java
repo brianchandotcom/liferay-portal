@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.search.test.util.ExpandoTableSearchFixture;
@@ -154,9 +153,6 @@ public class UserGroupIndexerIndexedFieldsTest {
 	protected ClassNameLocalService classNameLocalService;
 
 	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
-
-	@Inject
 	protected ExpandoColumnLocalService expandoColumnLocalService;
 
 	@Inject
@@ -266,8 +262,7 @@ public class UserGroupIndexerIndexedFieldsTest {
 
 	private void _setUpIndexedFieldsFixture() {
 		indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 	}
 
 	@DeleteAfterTestRun

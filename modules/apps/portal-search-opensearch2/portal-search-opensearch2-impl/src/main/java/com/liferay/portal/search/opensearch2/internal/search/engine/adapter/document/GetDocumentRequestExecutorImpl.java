@@ -44,7 +44,7 @@ public class GetDocumentRequestExecutorImpl
 			return getDocumentResponse;
 		}
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		JsonData jsonData = getResponse.source();
 
@@ -74,9 +74,6 @@ public class GetDocumentRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

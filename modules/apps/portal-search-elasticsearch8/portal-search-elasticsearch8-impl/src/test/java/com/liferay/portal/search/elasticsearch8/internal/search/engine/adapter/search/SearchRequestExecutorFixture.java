@@ -13,7 +13,6 @@ import com.liferay.portal.search.elasticsearch8.internal.suggest.ElasticsearchSu
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
-import com.liferay.portal.search.internal.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
 import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
@@ -248,9 +247,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_aggregationResults",
 			new AggregationResultsImpl());
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_documentBuilderFactory",
-			new DocumentBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_highlightFieldBuilderFactory",
 			new HighlightFieldBuilderFactoryImpl());

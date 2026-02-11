@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSend
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.spi.reindexer.IndexReindexer;
@@ -119,8 +118,7 @@ public class RankingIndexReindexer implements IndexReindexer {
 
 	@Activate
 	protected void activate() {
-		_rankingIndexWriter = new RankingIndexWriter(
-			_documentBuilderFactory, _searchEngineAdapter);
+		_rankingIndexWriter = new RankingIndexWriter(_searchEngineAdapter);
 	}
 
 	@Reference
@@ -218,9 +216,6 @@ public class RankingIndexReindexer implements IndexReindexer {
 	private static final Snapshot<SyncReindexManager>
 		_syncReindexManagerSnapshot = new Snapshot<>(
 			RankingIndexReindexer.class, SyncReindexManager.class, null, true);
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	private RankingIndexWriter _rankingIndexWriter;
 

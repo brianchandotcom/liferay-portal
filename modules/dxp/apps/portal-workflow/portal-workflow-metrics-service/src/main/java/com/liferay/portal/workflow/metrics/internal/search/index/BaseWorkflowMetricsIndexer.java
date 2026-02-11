@@ -170,7 +170,7 @@ public abstract class BaseWorkflowMetricsIndexer {
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Document document = searchHit.getDocument();
-			DocumentBuilder documentBuilder = documentBuilderFactory.builder();
+			DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 			documentBuilder.setString("uid", document.getString("uid"));
 
@@ -197,9 +197,6 @@ public abstract class BaseWorkflowMetricsIndexer {
 			searchEngineAdapter.execute(bulkDocumentRequest);
 		}
 	}
-
-	@Reference
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Reference
 	protected Queries queries;

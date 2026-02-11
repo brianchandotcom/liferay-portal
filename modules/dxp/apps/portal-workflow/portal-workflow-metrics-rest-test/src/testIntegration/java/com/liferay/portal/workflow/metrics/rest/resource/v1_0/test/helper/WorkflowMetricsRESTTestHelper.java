@@ -1187,7 +1187,7 @@ public class WorkflowMetricsRESTTestHelper {
 	private Document _creatWorkflowMetricsSLAInstanceResultDocument(
 		long companyId, Instance instance, SLAResult slaResult) {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue(
 			"active", true
@@ -1242,7 +1242,7 @@ public class WorkflowMetricsRESTTestHelper {
 		long processId, long slaDefinitionId, String status, long taskId,
 		String taskName) {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentBuilder.setValue(
 			"active", true
@@ -1325,7 +1325,7 @@ public class WorkflowMetricsRESTTestHelper {
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
-			DocumentBuilder documentBuilder = _documentBuilderFactory.builder(
+			DocumentBuilder documentBuilder = DocumentBuilderFactory.builder(
 				searchHit.getDocument());
 
 			documentBuilder = documentBuilder.setValue("deleted", true);
@@ -1500,7 +1500,7 @@ public class WorkflowMetricsRESTTestHelper {
 			long companyId, Instance instance, SLAResult... slaResults)
 		throws Exception {
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		String indexName = _indexNameBuilder.getIndexName(companyId);
 
@@ -1559,9 +1559,6 @@ public class WorkflowMetricsRESTTestHelper {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		WorkflowMetricsRESTTestHelper.class);
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	private final Map<String, Object> _indexers = new HashMap<>();
 

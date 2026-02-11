@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
@@ -97,8 +96,7 @@ public class AssetTagIndexerIndexedFieldsTest {
 		_groups = groupSearchFixture.getGroups();
 
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 
 		_users = userSearchFixture.getUsers();
 	}
@@ -158,9 +156,6 @@ public class AssetTagIndexerIndexedFieldsTest {
 
 	@Inject
 	protected AssetTagLocalService assetTagLocalService;
-
-	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Inject(
 		filter = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag"

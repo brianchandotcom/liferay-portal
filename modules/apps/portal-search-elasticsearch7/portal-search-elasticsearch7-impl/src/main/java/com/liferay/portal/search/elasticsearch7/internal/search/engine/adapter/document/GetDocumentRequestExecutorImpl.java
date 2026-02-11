@@ -51,7 +51,7 @@ public class GetDocumentRequestExecutorImpl
 		DocumentFieldsTranslator documentFieldsTranslator =
 			new DocumentFieldsTranslator();
 
-		DocumentBuilder documentBuilder = _documentBuilderFactory.builder();
+		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
 		documentFieldsTranslator.translate(
 			documentBuilder, getResponse.getSourceAsMap());
@@ -76,9 +76,6 @@ public class GetDocumentRequestExecutorImpl
 			throw new RuntimeException(ioException);
 		}
 	}
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

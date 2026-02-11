@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -101,8 +100,7 @@ public class OrganizationIndexerIndexedFieldsTest {
 		_groups = groupSearchFixture.getGroups();
 
 		_indexedFieldsFixture = new IndexedFieldsFixture(
-			resourcePermissionLocalService, searchEngineHelper, uidFactory,
-			documentBuilderFactory);
+			resourcePermissionLocalService, searchEngineHelper, uidFactory);
 
 		_organizationFixture = organizationFixture;
 		_organizations = organizationFixture.getOrganizations();
@@ -168,9 +166,6 @@ public class OrganizationIndexerIndexedFieldsTest {
 
 	@Inject
 	protected CountryService countryService;
-
-	@Inject
-	protected DocumentBuilderFactory documentBuilderFactory;
 
 	@Inject
 	protected ExpandoColumnLocalService expandoColumnLocalService;

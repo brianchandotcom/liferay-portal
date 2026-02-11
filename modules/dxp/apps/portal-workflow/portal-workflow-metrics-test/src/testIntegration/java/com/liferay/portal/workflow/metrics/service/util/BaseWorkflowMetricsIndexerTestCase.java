@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Task;
@@ -490,9 +489,6 @@ public abstract class BaseWorkflowMetricsIndexerTestCase
 
 	@Inject
 	private BlogsEntryLocalService _blogsEntryLocalService;
-
-	@Inject
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	private KaleoDefinition _kaleoDefinition;
 

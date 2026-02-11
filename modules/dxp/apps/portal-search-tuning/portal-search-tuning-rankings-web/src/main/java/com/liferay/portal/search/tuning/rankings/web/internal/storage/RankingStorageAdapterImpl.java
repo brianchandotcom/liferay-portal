@@ -6,7 +6,6 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.storage;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.tuning.rankings.index.Ranking;
 import com.liferay.portal.search.tuning.rankings.index.RankingBuilderFactory;
@@ -60,8 +59,7 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 	@Activate
 	protected void activate() {
-		_rankingIndexWriter = new RankingIndexWriter(
-			_documentBuilderFactory, _searchEngineAdapter);
+		_rankingIndexWriter = new RankingIndexWriter(_searchEngineAdapter);
 	}
 
 	@Reference
@@ -69,9 +67,6 @@ public class RankingStorageAdapterImpl implements RankingStorageAdapter {
 
 	@Reference
 	protected RankingJSONStorageHelper rankingJSONStorageHelper;
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	private RankingIndexWriter _rankingIndexWriter;
 

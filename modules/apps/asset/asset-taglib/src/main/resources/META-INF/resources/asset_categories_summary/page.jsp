@@ -8,30 +8,22 @@
 <%@ include file="/asset_categories_summary/init.jsp" %>
 
 <%
-String className = (String)request.getAttribute("liferay-asset:asset-categories-summary:className");
-long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-asset:asset-categories-summary:classPK"));
-String displayStyle = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-summary:displayStyle"), "default");
-String paramName = GetterUtil.getString((String)request.getAttribute("liferay-asset:asset-categories-summary:paramName"), "categoryId");
-PortletURL portletURL = (PortletURL)request.getAttribute("liferay-asset:asset-categories-summary:portletURL");
-int[] visibleTypes = (int[])request.getAttribute("liferay-asset:asset-categories-summary:visibleTypes");
+AssetCategoriesSummaryDisplayContext assetCategoriesSummaryDisplayContext = new AssetCategoriesSummaryDisplayContext(request);
 
-List<AssetCategory> categories = (List<AssetCategory>)request.getAttribute("liferay-asset:asset-categories-summary:assetCategories");
+String paramName = assetCategoriesSummaryDisplayContext.getParamName();
+PortletURL portletURL = assetCategoriesSummaryDisplayContext.getPortletURL();
 
-if (ListUtil.isEmpty(categories)) {
-	categories = AssetCategoryServiceUtil.getCategories(className, classPK);
-}
+List<AssetCategory> categories = assetCategoriesSummaryDisplayContext.getCategories();
 
-AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
-
-List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(SiteConnectedGroupGroupProviderUtil.getCurrentAndAncestorSiteAndDepotGroupIds((assetEntry != null) ? assetEntry.getGroupId() : scopeGroupId));
+List<AssetVocabulary> vocabularies = assetCategoriesSummaryDisplayContext.getVocabularies(scopeGroupId);
 
 for (AssetVocabulary vocabulary : vocabularies) {
-	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary, visibleTypes);
+	List<AssetCategory> curCategories = assetCategoriesSummaryDisplayContext.filterCategories(categories, vocabulary);
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<c:choose>
-			<c:when test='<%= displayStyle.equals("simple-category") %>'>
+			<c:when test='<%= Objects.equals(assetCategoriesSummaryDisplayContext.getDisplayStyle(), "simple-category") %>'>
 				<span class="taglib-asset-categories-summary">
 					<c:choose>
 						<c:when test="<%= portletURL != null %>">
@@ -81,7 +73,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 								portletURL.setParameter(paramName, String.valueOf(category.getCategoryId()));
 							%>
 
-								<a class="asset-category mb-1 mr-1 pr-2 text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= _buildCategoryPath(category, themeDisplay) %></a>
+								<a class="asset-category mb-1 mr-1 pr-2 text-uppercase" href="<%= HtmlUtil.escape(portletURL.toString()) %>"><%= assetCategoriesSummaryDisplayContext.buildCategoryPath(category, themeDisplay) %></a>
 
 							<%
 							}
@@ -95,7 +87,7 @@ for (AssetVocabulary vocabulary : vocabularies) {
 							%>
 
 								<span class="asset-category mb-1 mr-1 pr-2 text-uppercase">
-									<%= _buildCategoryPath(category, themeDisplay) %>
+									<%= assetCategoriesSummaryDisplayContext.buildCategoryPath(category, themeDisplay) %>
 								</span>
 
 							<%
@@ -110,40 +102,5 @@ for (AssetVocabulary vocabulary : vocabularies) {
 	</c:if>
 
 <%
-}
-%>
-
-<%!
-private String _buildCategoryPath(AssetCategory category, ThemeDisplay themeDisplay) throws PortalException, SystemException {
-	List<AssetCategory> ancestorCategories = category.getAncestors();
-
-	if (ancestorCategories.isEmpty()) {
-		return HtmlUtil.escape(category.getTitle(themeDisplay.getLocale()));
-	}
-
-	Collections.reverse(ancestorCategories);
-
-	StringBundler sb = new StringBundler(ancestorCategories.size() * 2 + 1);
-
-	for (AssetCategory ancestorCategory : ancestorCategories) {
-		sb.append(HtmlUtil.escape(ancestorCategory.getTitle(themeDisplay.getLocale())));
-		sb.append(" &raquo; ");
-	}
-
-	sb.append(HtmlUtil.escape(category.getTitle(themeDisplay.getLocale())));
-
-	return sb.toString();
-}
-
-private List<AssetCategory> _filterCategories(List<AssetCategory> categories, AssetVocabulary vocabulary, int[] visibleTypes) {
-	List<AssetCategory> filteredCategories = new ArrayList<AssetCategory>();
-
-	for (AssetCategory category : categories) {
-		if ((category.getVocabularyId() == vocabulary.getVocabularyId()) && ArrayUtil.contains(visibleTypes, vocabulary.getVisibilityType())) {
-			filteredCategories.add(category);
-		}
-	}
-
-	return filteredCategories;
 }
 %>

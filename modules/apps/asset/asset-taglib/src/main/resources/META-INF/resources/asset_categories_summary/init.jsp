@@ -11,25 +11,13 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.asset.kernel.model.AssetCategory" %><%@
-page import="com.liferay.asset.kernel.model.AssetEntry" %><%@
 page import="com.liferay.asset.kernel.model.AssetVocabulary" %><%@
-page import="com.liferay.asset.kernel.service.AssetCategoryServiceUtil" %><%@
-page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil" %><%@
-page import="com.liferay.asset.kernel.service.AssetVocabularyServiceUtil" %><%@
-page import="com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil" %><%@
-page import="com.liferay.petra.string.StringBundler" %><%@
-page import="com.liferay.portal.kernel.exception.PortalException" %><%@
-page import="com.liferay.portal.kernel.exception.SystemException" %><%@
-page import="com.liferay.portal.kernel.theme.ThemeDisplay" %><%@
-page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %>
+page import="com.liferay.asset.taglib.internal.display.context.AssetCategoriesSummaryDisplayContext" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 
 <%@ page import="jakarta.portlet.PortletURL" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Collections" %><%@
-page import="java.util.List" %>
+<%@ page import="java.util.List" %><%@
+page import="java.util.Objects" %>
 
 <liferay-theme:defineObjects />

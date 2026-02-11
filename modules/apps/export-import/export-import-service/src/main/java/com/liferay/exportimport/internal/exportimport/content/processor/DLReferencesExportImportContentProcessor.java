@@ -215,7 +215,7 @@ public class DLReferencesExportImportContentProcessor
 					companyGroup = _stagingGroupHelper.isCompanyGroup(group);
 				}
 
-				ExportImportReportEntry exportImportReportEntry =
+				ExportImportReportEntry existingExportImportReportEntry =
 					_exportImportReportEntryLocalService.
 						fetchEmptyExportImportReportEntryByG_C_C_C(
 							companyGroup ? 0L : groupId,
@@ -224,7 +224,9 @@ public class DLReferencesExportImportContentProcessor
 							_classNameLocalService.getClassNameId(
 								FileEntry.class));
 
-				if (exportImportReportEntry == null) {
+				ExportImportReportEntry exportImportReportEntry;
+
+				if (existingExportImportReportEntry == null) {
 					exportImportReportEntry =
 						_exportImportReportEntryLocalService.
 							addEmptyExportImportReportEntry(
@@ -238,6 +240,9 @@ public class DLReferencesExportImportContentProcessor
 									ExportImportThreadLocal.
 										getExportImportConfigurationId()),
 								FileEntry.class.getName());
+				}
+				else {
+					exportImportReportEntry = existingExportImportReportEntry;
 				}
 
 				_exportImportProcessCallbackRegistry.registerCallback(

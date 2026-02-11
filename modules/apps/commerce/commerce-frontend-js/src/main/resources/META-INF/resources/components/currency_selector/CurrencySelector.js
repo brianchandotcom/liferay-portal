@@ -5,7 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import DropDown from '@clayui/drop-down';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider';

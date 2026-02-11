@@ -19,7 +19,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
@@ -109,9 +108,7 @@ public class FeatureFlagsBagProviderImpl
 
 	@Override
 	public void setEnabled(long companyId, String key, boolean enabled) {
-		if (ClusterInvokeThreadLocal.isEnabled()) {
-			_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
-		}
+		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
 		_setEnabled(companyId, key, enabled);
 

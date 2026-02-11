@@ -8,11 +8,18 @@ import ClayIcon from '@clayui/icon';
 import React from 'react';
 
 interface ISectionHeader {
+	ariaLevel?: number;
 	icon: string;
+	role?: string;
 	title: string;
 }
 
-const SectionHeader: React.FC<ISectionHeader> = ({icon, title}) => {
+const SectionHeader: React.FC<ISectionHeader> = ({
+	ariaLevel,
+	icon,
+	role,
+	title,
+}) => {
 	return (
 		<div className="cms-dashboard__section-header">
 			<span className="mr-2">
@@ -21,9 +28,11 @@ const SectionHeader: React.FC<ISectionHeader> = ({icon, title}) => {
 				</Text>
 			</span>
 
-			<Text color="secondary" size={3} weight="semi-bold">
-				{title.toUpperCase()}
-			</Text>
+			<span aria-level={ariaLevel} className="text-dark" role={role}>
+				<Text color="secondary" size={3} weight="semi-bold">
+					{title.toUpperCase()}
+				</Text>
+			</span>
 		</div>
 	);
 };

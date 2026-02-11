@@ -31,7 +31,11 @@ export default function RecycleBinToolbar({breadcrumbItems}: Props) {
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item>
 							<ClayToolbar.Section>
-								<div className="text-dark">
+								<div
+									aria-level={2}
+									className="text-dark"
+									role="heading"
+								>
 									<Text as="span" size={7} weight="semi-bold">
 										{Liferay.Language.get('recycle-bin')}
 									</Text>

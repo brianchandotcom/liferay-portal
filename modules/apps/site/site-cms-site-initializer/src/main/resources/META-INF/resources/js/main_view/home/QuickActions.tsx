@@ -46,7 +46,11 @@ export default function QuickActions({
 		<div className="quick-actions">
 			<div className="pb-2 pt-2 row w-100">
 				<div className="col">
-					<span className="font-weight-semi-bold text-4">
+					<span
+						aria-level={2}
+						className="font-weight-semi-bold text-4"
+						role="heading"
+					>
 						{Liferay.Language.get('quick-actions')}
 					</span>
 				</div>

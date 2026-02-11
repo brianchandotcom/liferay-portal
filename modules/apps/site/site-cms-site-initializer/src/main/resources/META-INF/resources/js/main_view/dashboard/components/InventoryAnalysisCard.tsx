@@ -269,9 +269,11 @@ export function InventoryAnalysisCard() {
 						))}
 					</ClayDropdown>
 				}
+				ariaLevel={3}
 				description={Liferay.Language.get(
 					'this-report-provides-a-breakdown-of-total-assets-by-categorization,-content-structure-type,-or-space'
 				)}
+				role="heading"
 				title={Liferay.Language.get('inventory-analysis')}
 			>
 				<div className="align-items-lg-center d-flex flex-column flex-lg-row">

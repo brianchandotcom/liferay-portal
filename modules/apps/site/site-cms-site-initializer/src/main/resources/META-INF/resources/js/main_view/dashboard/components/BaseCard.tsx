@@ -9,22 +9,30 @@ import React from 'react';
 
 export interface IBaseCard extends React.HTMLAttributes<HTMLElement> {
 	Preferences?: React.ReactNode;
+	ariaLevel?: number;
 	contentClassName?: string;
 	description?: string;
+	role?: string;
 	title: string;
 }
 
 const BaseCard: React.FC<IBaseCard> = ({
 	Preferences,
+	ariaLevel,
 	children,
 	contentClassName,
 	description,
+	role,
 	title,
 }) => {
 	return (
 		<div className="cms-dashboard__base-card p-3 rounded-lg sheet">
 			<div className="cms-dashboard__base-card__header d-flex">
-				<div className="align-items-center d-flex flex-grow-1">
+				<div
+					aria-level={ariaLevel}
+					className="align-items-center d-flex flex-grow-1"
+					role={role}
+				>
 					<Text size={4} weight="semi-bold">
 						{title.toUpperCase()}
 					</Text>

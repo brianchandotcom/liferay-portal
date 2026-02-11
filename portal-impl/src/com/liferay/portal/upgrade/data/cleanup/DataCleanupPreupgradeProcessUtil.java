@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 
 /**
  * @author Luis Ortiz
@@ -52,35 +55,40 @@ public class DataCleanupPreupgradeProcessUtil {
 
 		String tableName = null;
 
-		try {
-			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
-			Class<?> clazz = classLoader.loadClass(fullyQualifiedName);
+		for (Bundle bundle : bundleContext.getBundles()) {
+			try {
+				Class<?> clazz = bundle.loadClass(fullyQualifiedName);
 
-			ImplementationClassName implementationClassName =
-				clazz.getAnnotation(ImplementationClassName.class);
+				ImplementationClassName implementationClassName =
+					clazz.getAnnotation(ImplementationClassName.class);
 
-			if (implementationClassName == null) {
-				tableName = StringUtil.extractLast(fullyQualifiedName, '.');
-			}
-			else {
-				clazz = classLoader.loadClass(implementationClassName.value());
+				if (implementationClassName == null) {
+					tableName = StringUtil.extractLast(fullyQualifiedName, '.');
+
+					break;
+				}
+
+				clazz = bundle.loadClass(implementationClassName.value());
 
 				tableName = (String)clazz.getField(
 					"TABLE_NAME"
 				).get(
 					null
 				);
+
+				break;
+			}
+			catch (ClassNotFoundException classNotFoundException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(classNotFoundException);
+				}
 			}
 		}
-		catch (ClassNotFoundException classNotFoundException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(classNotFoundException);
-			}
 
-			if (applyFallback) {
-				tableName = StringUtil.extractLast(fullyQualifiedName, '.');
-			}
+		if ((tableName == null) && applyFallback) {
+			tableName = StringUtil.extractLast(fullyQualifiedName, '.');
 		}
 
 		if ((tableName == null) ||

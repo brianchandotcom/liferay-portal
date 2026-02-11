@@ -87,7 +87,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 				String tableName =
 					DataCleanupPreupgradeProcessUtil.getTableName(
-						dbInspector, counterName, _liferayTableNames);
+						true, dbInspector, counterName, _liferayTableNames);
 
 				if (tableName == null) {
 					continue;

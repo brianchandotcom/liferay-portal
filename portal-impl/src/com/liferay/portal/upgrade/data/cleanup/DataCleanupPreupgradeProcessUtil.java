@@ -66,11 +66,11 @@ public class DataCleanupPreupgradeProcessUtil {
 	}
 
 	public static String getTableName(
-			DBInspector dbInspector, String fullyQualifiedName,
-			Set<String> liferayTableNames)
+			boolean applyFallback, DBInspector dbInspector,
+			String fullyQualifiedName, Set<String> liferayTableNames)
 		throws Exception {
 
-		String tableName;
+		String tableName = null;
 
 		try {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
@@ -98,10 +98,14 @@ public class DataCleanupPreupgradeProcessUtil {
 				_log.debug(classNotFoundException);
 			}
 
-			tableName = StringUtil.extractLast(fullyQualifiedName, '.');
+			if (applyFallback) {
+				tableName = StringUtil.extractLast(fullyQualifiedName, '.');
+			}
 		}
 
-		if (!isLiferayTable(dbInspector, liferayTableNames, tableName)) {
+		if ((tableName == null) ||
+			!isLiferayTable(dbInspector, liferayTableNames, tableName)) {
+
 			return null;
 		}
 

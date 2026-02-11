@@ -71,13 +71,15 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 
 						tableName =
 							DataCleanupPreupgradeProcessUtil.getTableName(
-								dbInspector, className, liferayTableNames);
+								false, dbInspector, className,
+								liferayTableNames);
 					}
 					else {
 						for (String className : classNames) {
 							tableName =
 								DataCleanupPreupgradeProcessUtil.getTableName(
-									dbInspector, className, liferayTableNames);
+									false, dbInspector, className,
+									liferayTableNames);
 
 							if (StringUtil.startsWith(tableName, "DDM")) {
 								break;

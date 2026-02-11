@@ -26,8 +26,14 @@ public interface FrontendCachingConfiguration {
 	@Meta.AD(
 		deflt = "do-not-use-hashes", description = "caching-strategy-help",
 		name = "caching-strategy",
-		optionLabels = {"do-not-use-hashes", "use-one-hash-per-file"},
-		optionValues = {"do-not-use-hashes", "use-one-hash-per-file"},
+		optionLabels = {
+			"do-not-use-hashes", "use-one-hash-per-file",
+			"use-one-hash-per-web-context"
+		},
+		optionValues = {
+			"do-not-use-hashes", "use-one-hash-per-file",
+			"use-one-hash-per-web-context"
+		},
 		required = false
 	)
 	public String cachingStrategy();

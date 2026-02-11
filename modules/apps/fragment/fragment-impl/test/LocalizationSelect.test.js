@@ -44,6 +44,7 @@ describe('LocalizationSelect', () => {
 
 		try {
 			window.Liferay.ThemeDisplay = {
+				...window.Liferay.ThemeDisplay,
 				getLanguageId: jest.fn(() => 'es_ES'),
 			};
 

@@ -42,10 +42,7 @@ export function writeConfigInURL(
 	config: Partial<IConfigInURL>,
 	configInURLBehavior: EConfigInURLBehavior
 ) {
-	if (
-		!config ||
-		configInURLBehavior === EConfigInURLBehavior.OFF
-	) {
+	if (!config || configInURLBehavior === EConfigInURLBehavior.OFF) {
 		return;
 	}
 

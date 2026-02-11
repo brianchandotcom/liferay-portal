@@ -31,9 +31,9 @@ import java.util.List;
  * @author Feliphe Marinho
  * @author João Victor Alves
  */
-public class TaskDefinitionDisplayContext {
+public class AgentDefinitionDisplayContext {
 
-	public TaskDefinitionDisplayContext(
+	public AgentDefinitionDisplayContext(
 		HttpServletRequest httpServletRequest, Portal portal) {
 
 		_httpServletRequest = httpServletRequest;
@@ -44,7 +44,7 @@ public class TaskDefinitionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		return "/o/ai-hub/v1.0/task-definitions";
+		return "/o/ai-hub/v1.0/agent-definitions";
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -64,6 +64,9 @@ public class TaskDefinitionDisplayContext {
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
 		throws Exception {
 
+		String href =
+			getAPIURL() + "/by-external-reference-code/{externalReferenceCode}";
+
 		String namespace = _portal.getPortletNamespace(
 			WorkflowPortletKeys.KALEO_DESIGNER);
 
@@ -71,26 +74,25 @@ public class TaskDefinitionDisplayContext {
 			new FDSActionDropdownItem(
 				HttpComponentsUtil.addParameter(
 					_getBaseURL(_themeDisplay.getCompany(), namespace),
-					namespace + "name", "{name}"),
+					namespace + "name", "{workflowDefinitionName}"),
 				"view", "view", LanguageUtil.get(_httpServletRequest, "view"),
 				"get", null, null),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/copy", "copy", "copy",
+				href + "/copy", "copy", "copy",
 				LanguageUtil.get(_httpServletRequest, "duplicate"), "post",
 				"copy", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}", "trash", "delete",
+				href, "trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), "delete",
 				"delete", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/update-active?active=false", "block",
-				"deactivate",
+				href + "/update-active?active=false", "block", "deactivate",
 				LanguageUtil.get(_httpServletRequest, "deactivate"), "patch",
 				"deactivate", "async"),
 			new FDSActionDropdownItem(
-				getAPIURL() + "/{id}/update-active?active=true", "logout",
-				"activate", LanguageUtil.get(_httpServletRequest, "activate"),
-				"patch", "activate", "async"));
+				href + "/update-active?active=true", "logout", "activate",
+				LanguageUtil.get(_httpServletRequest, "activate"), "patch",
+				"activate", "async"));
 	}
 
 	private String _getBaseURL(Company company, String namespace)

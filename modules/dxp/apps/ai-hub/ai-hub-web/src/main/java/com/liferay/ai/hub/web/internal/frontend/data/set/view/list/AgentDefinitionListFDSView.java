@@ -15,10 +15,10 @@ import org.osgi.service.component.annotations.Component;
  * @author João Victor Alves
  */
 @Component(
-	property = "frontend.data.set.name=" + AIHubFDSNames.TASK_DEFINITIONS,
+	property = "frontend.data.set.name=" + AIHubFDSNames.AGENT_DEFINITIONS,
 	service = FDSView.class
 )
-public class TaskDefinitionListFDSView extends BaseListFDSView {
+public class AgentDefinitionListFDSView extends BaseListFDSView {
 
 	@Override
 	public String getDescription() {

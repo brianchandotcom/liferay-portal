@@ -3,9 +3,9 @@
 		"externalReferenceCode": "AIHUBPRIMARYNAVIGATION",
 		"menuItems": [
 			{
-				"friendlyURL": "/ai-tasks",
+				"friendlyURL": "/agents",
 				"order": 0,
-				"title": "AI Tasks",
+				"title": "Agents",
 				"type": "layout"
 			},
 			{

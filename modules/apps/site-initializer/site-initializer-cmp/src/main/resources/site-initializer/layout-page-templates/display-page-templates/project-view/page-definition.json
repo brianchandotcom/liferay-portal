@@ -16,7 +16,7 @@
 			},
 			{
 				"definition": {
-					"customCSS": ".[$FRAGMENT_CLASS$] {\n .navigation-bar .navbar-nav .nav-link {\n margin-bottom: 0px;\n border-color: #cdced9;\n }\n\n .navigation-bar .navbar-nav .nav-link.active {\n border-color: #cdced9 #cdced9 #fff;\n border-style: solid;\n border-width: 0.0625rem;\n border-radius: 0.5rem 0.5rem 0 0;\n}\n\n .navigation-bar .navbar-nav .nav-link.active::after {\n background-color: white !important;\n bottom: -0.2rem !important;}\n}",
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n .navigation-bar .navbar-nav .nav-link {\n margin-bottom: 0px;\n border-color: #cdced9;\n }\n\n .navigation-bar .navbar-nav .nav-link.active {\n border-color: #cdced9 #cdced9 #fff;\n border-style: solid;\n border-width: 0.0625rem;\n border-radius: 0.5rem 0.5rem 0 0;\n}\n\n .navigation-bar .navbar-nav .nav-link.active::after {\n background-color: white !important;\n bottom: -0.2rem !important;}\n}\n\n.navbar-collapse\n{\nmargin-left: 16px;\n}",
 					"fragment": {
 						"key": "BASIC_COMPONENT-tabs"
 					},
@@ -62,12 +62,6 @@
 							}
 						}
 					],
-					"fragmentStyle": {
-						"paddingBottom": "3",
-						"paddingLeft": "3",
-						"paddingRight": "3",
-						"paddingTop": "3"
-					},
 					"indexed": true
 				},
 				"id": "cmp-project-navigation-tabs",
@@ -539,12 +533,6 @@
 											},
 											"fragmentFields": [
 											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -576,12 +564,6 @@
 											},
 											"fragmentFields": [
 											],
-											"fragmentStyle": {
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
-											},
 											"indexed": true
 										},
 										"type": "Fragment"

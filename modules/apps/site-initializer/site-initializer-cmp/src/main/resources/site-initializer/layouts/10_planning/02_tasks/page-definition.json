@@ -10,12 +10,6 @@
 					},
 					"fragmentFields": [
 					],
-					"fragmentStyle": {
-						"paddingBottom": "3",
-						"paddingLeft": "3",
-						"paddingRight": "3",
-						"paddingTop": "3"
-					},
 					"indexed": true
 				},
 				"type": "Fragment"

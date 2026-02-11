@@ -274,6 +274,7 @@
 			},
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n .cms-related-assets-header{\n margin-left: 16px;\n}\n}",
 					"fragment": {
 						"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRelatedAssetsJSPSectionFragmentRenderer"
 					},
@@ -281,11 +282,6 @@
 					},
 					"fragmentFields": [
 					],
-					"fragmentStyle": {
-						"paddingBottom": "4",
-						"paddingLeft": "4",
-						"paddingRight": "4"
-					},
 					"indexed": true
 				},
 				"type": "Fragment"

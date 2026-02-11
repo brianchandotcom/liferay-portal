@@ -5,15 +5,141 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document;
 
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
+import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
+import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentResponse;
+import com.liferay.portal.search.script.ScriptBuilder;
+import com.liferay.portal.search.script.ScriptType;
+import com.liferay.portal.search.script.Scripts;
+
+import java.io.IOException;
+
+import java.util.Map;
+
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.reindex.BulkByScrollResponse;
+import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 
 /**
  * @author Dylan Rebelak
  */
-public interface UpdateByQueryDocumentRequestExecutor {
+public class UpdateByQueryDocumentRequestExecutor {
+
+	public UpdateByQueryDocumentRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
 
 	public UpdateByQueryDocumentResponse execute(
-		UpdateByQueryDocumentRequest updateByQueryDocumentRequest);
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
+
+		UpdateByQueryRequest updateByQueryRequest = createUpdateByQueryRequest(
+			updateByQueryDocumentRequest);
+
+		BulkByScrollResponse bulkByScrollResponse = getBulkByScrollResponse(
+			updateByQueryRequest, updateByQueryDocumentRequest);
+
+		TimeValue timeValue = bulkByScrollResponse.getTook();
+
+		return new UpdateByQueryDocumentResponse(
+			bulkByScrollResponse.getUpdated(), timeValue.getMillis());
+	}
+
+	protected UpdateByQueryRequest createUpdateByQueryRequest(
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
+
+		UpdateByQueryRequest updateByQueryRequest = new UpdateByQueryRequest();
+
+		updateByQueryRequest.indices(
+			updateByQueryDocumentRequest.getIndexNames());
+
+		if (updateByQueryDocumentRequest.getPortalSearchQuery() != null) {
+			QueryBuilder queryBuilder =
+				com.liferay.portal.search.elasticsearch7.internal.query.
+					ElasticsearchQueryVisitor.INSTANCE.translate(
+						updateByQueryDocumentRequest.getPortalSearchQuery());
+
+			updateByQueryRequest.setQuery(queryBuilder);
+		}
+		else {
+			@SuppressWarnings("deprecation")
+			QueryBuilder queryBuilder =
+				ElasticsearchQueryVisitor.INSTANCE.translate(
+					updateByQueryDocumentRequest.getQuery());
+
+			updateByQueryRequest.setQuery(queryBuilder);
+		}
+
+		updateByQueryRequest.setRefresh(
+			updateByQueryDocumentRequest.isRefresh());
+
+		if (updateByQueryDocumentRequest.getScript() != null) {
+			updateByQueryRequest.setScript(
+				_scriptTranslator.translate(
+					updateByQueryDocumentRequest.getScript()));
+		}
+		else if (updateByQueryDocumentRequest.getScriptJSONObject() != null) {
+			ScriptBuilder scriptBuilder = Scripts.INSTANCE.builder();
+
+			JSONObject scriptJSONObject =
+				updateByQueryDocumentRequest.getScriptJSONObject();
+
+			if (scriptJSONObject.has("idOrCode")) {
+				scriptBuilder.idOrCode(scriptJSONObject.getString("idOrCode"));
+			}
+
+			if (scriptJSONObject.has("language")) {
+				scriptBuilder.language(scriptJSONObject.getString("language"));
+			}
+
+			if (scriptJSONObject.has("optionsMap")) {
+				scriptBuilder.options(
+					(Map<String, String>)scriptJSONObject.get("optionsMap"));
+			}
+
+			if (scriptJSONObject.has("parametersMap")) {
+				scriptBuilder.parameters(
+					(Map<String, Object>)scriptJSONObject.get("parametersMap"));
+			}
+
+			if (scriptJSONObject.has("scriptType")) {
+				scriptBuilder.scriptType(
+					(ScriptType)scriptJSONObject.get("scriptType"));
+			}
+
+			updateByQueryRequest.setScript(
+				_scriptTranslator.translate(scriptBuilder.build()));
+		}
+
+		return updateByQueryRequest;
+	}
+
+	protected BulkByScrollResponse getBulkByScrollResponse(
+		UpdateByQueryRequest updateByQueryRequest,
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
+
+		RestHighLevelClient restHighLevelClient =
+			_elasticsearchClientResolver.getRestHighLevelClient(
+				updateByQueryDocumentRequest.getConnectionId(),
+				updateByQueryDocumentRequest.isPreferLocalCluster());
+
+		try {
+			return restHighLevelClient.updateByQuery(
+				updateByQueryRequest, RequestOptions.DEFAULT);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 
 }

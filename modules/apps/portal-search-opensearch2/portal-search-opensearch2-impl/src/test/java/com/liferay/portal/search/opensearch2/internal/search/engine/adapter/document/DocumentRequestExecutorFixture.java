@@ -40,30 +40,10 @@ public class DocumentRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchDocumentRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			openSearchDocumentRequestExecutor,
-			"_updateByQueryDocumentRequestExecutor",
-			_createUpdateByQueryDocumentRequestExecutor(
-				openSearchConnectionManager));
 
 		openSearchDocumentRequestExecutor.activate(Collections.emptyMap());
 
 		return openSearchDocumentRequestExecutor;
-	}
-
-	private UpdateByQueryDocumentRequestExecutor
-		_createUpdateByQueryDocumentRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager) {
-
-		UpdateByQueryDocumentRequestExecutor
-			updateByQueryDocumentRequestExecutor =
-				new UpdateByQueryDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutor,
-			"_openSearchConnectionManager", openSearchConnectionManager);
-
-		return updateByQueryDocumentRequestExecutor;
 	}
 
 	private DocumentRequestExecutor _documentRequestExecutor;

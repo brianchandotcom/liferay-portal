@@ -9,7 +9,6 @@ import co.elastic.clients.elasticsearch.core.UpdateByQueryRequest;
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
@@ -66,16 +65,12 @@ public class UpdateByQueryDocumentRequestExecutorTest {
 
 		updateByQueryDocumentRequest.setRefresh(refresh);
 
-		UpdateByQueryDocumentRequestExecutorImpl
-			updateByQueryDocumentRequestExecutorImpl =
-				new UpdateByQueryDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl,
-			"_elasticsearchClientResolver", _elasticsearchFixture);
+		UpdateByQueryDocumentRequestExecutor
+			updateByQueryDocumentRequestExecutor =
+				new UpdateByQueryDocumentRequestExecutor(_elasticsearchFixture);
 
 		UpdateByQueryRequest updateByQueryRequest =
-			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(
+			updateByQueryDocumentRequestExecutor.createUpdateByQueryRequest(
 				updateByQueryDocumentRequest);
 
 		Assert.assertArrayEquals(

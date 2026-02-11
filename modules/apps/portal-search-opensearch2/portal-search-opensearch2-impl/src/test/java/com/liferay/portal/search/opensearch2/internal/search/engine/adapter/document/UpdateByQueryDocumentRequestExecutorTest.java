@@ -7,7 +7,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.doc
 
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRequest;
@@ -58,16 +57,13 @@ public class UpdateByQueryDocumentRequestExecutorTest
 
 		updateByQueryDocumentRequest.setRefresh(refresh);
 
-		UpdateByQueryDocumentRequestExecutorImpl
-			updateByQueryDocumentRequestExecutorImpl =
-				new UpdateByQueryDocumentRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			updateByQueryDocumentRequestExecutorImpl,
-			"_openSearchConnectionManager", openSearchConnectionManager);
+		UpdateByQueryDocumentRequestExecutor
+			updateByQueryDocumentRequestExecutor =
+				new UpdateByQueryDocumentRequestExecutor(
+					openSearchConnectionManager);
 
 		UpdateByQueryRequest updateByQueryRequest =
-			updateByQueryDocumentRequestExecutorImpl.createUpdateByQueryRequest(
+			updateByQueryDocumentRequestExecutor.createUpdateByQueryRequest(
 				updateByQueryDocumentRequest);
 
 		Assert.assertArrayEquals(

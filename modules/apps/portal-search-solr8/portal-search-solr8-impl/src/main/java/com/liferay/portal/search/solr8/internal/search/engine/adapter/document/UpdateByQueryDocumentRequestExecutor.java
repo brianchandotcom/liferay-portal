@@ -11,9 +11,12 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 /**
  * @author Bryan Engler
  */
-public interface UpdateByQueryDocumentRequestExecutor {
+public class UpdateByQueryDocumentRequestExecutor {
 
 	public UpdateByQueryDocumentResponse execute(
-		UpdateByQueryDocumentRequest updateByQueryDocumentRequest);
+		UpdateByQueryDocumentRequest updateByQueryDocumentRequest) {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

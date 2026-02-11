@@ -102,6 +102,8 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 			_solrClientManager);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_solrClientManager);
+		_updateByQueryDocumentRequestExecutor =
+			new UpdateByQueryDocumentRequestExecutor();
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
 			_solrClientManager);
 	}
@@ -131,10 +133,8 @@ public class SolrDocumentRequestExecutor implements DocumentRequestExecutor {
 	@Reference
 	private SolrClientManager _solrClientManager;
 
-	@Reference
 	private UpdateByQueryDocumentRequestExecutor
 		_updateByQueryDocumentRequestExecutor;
-
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

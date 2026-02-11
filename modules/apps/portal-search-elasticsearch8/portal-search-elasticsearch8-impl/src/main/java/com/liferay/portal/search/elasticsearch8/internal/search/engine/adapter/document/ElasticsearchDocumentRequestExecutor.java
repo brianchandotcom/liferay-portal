@@ -106,6 +106,9 @@ public class ElasticsearchDocumentRequestExecutor
 			_elasticsearchClientResolver);
 		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
 			_elasticsearchClientResolver);
+		_updateByQueryDocumentRequestExecutor =
+			new UpdateByQueryDocumentRequestExecutor(
+				_elasticsearchClientResolver);
 		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
 			_elasticsearchClientResolver);
 	}
@@ -133,11 +136,8 @@ public class ElasticsearchDocumentRequestExecutor
 
 	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
 	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
-
-	@Reference
 	private UpdateByQueryDocumentRequestExecutor
 		_updateByQueryDocumentRequestExecutor;
-
 	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

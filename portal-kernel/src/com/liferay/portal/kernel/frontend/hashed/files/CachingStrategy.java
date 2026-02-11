@@ -11,7 +11,8 @@ package com.liferay.portal.kernel.frontend.hashed.files;
 public enum CachingStrategy {
 
 	DO_NOT_USE_HASHES("do-not-use-hashes"),
-	USE_ONE_HASH_PER_FILE("use-one-hash-per-file");
+	USE_ONE_HASH_PER_FILE("use-one-hash-per-file"),
+	USE_ONE_HASH_PER_WEB_CONTEXT("use-one-hash-per-web-context");
 
 	public static CachingStrategy fromValue(String value) {
 		for (CachingStrategy cachingStrategy : values()) {

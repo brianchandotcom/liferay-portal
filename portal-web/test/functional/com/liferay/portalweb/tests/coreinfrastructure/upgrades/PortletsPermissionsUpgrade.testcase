@@ -1,6 +1,7 @@
 @component-name = "portal-db-infrastructure"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property ci.retries.disabled = "true";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql";
 	property portal.release = "true";

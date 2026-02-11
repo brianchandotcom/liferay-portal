@@ -95,6 +95,8 @@ public class ElasticsearchSearchRequestExecutor
 			_elasticsearchClientResolver);
 		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
 			_elasticsearchClientResolver);
+		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
+			_elasticsearchClientResolver);
 	}
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
@@ -114,7 +116,6 @@ public class ElasticsearchSearchRequestExecutor
 	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
 
-	@Reference
 	private SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
 
 }

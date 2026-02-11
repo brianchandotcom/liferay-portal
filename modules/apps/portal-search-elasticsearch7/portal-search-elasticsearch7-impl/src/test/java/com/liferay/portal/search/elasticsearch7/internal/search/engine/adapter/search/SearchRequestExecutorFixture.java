@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
-import com.liferay.portal.search.elasticsearch7.internal.suggest.ElasticsearchSuggesterTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
@@ -155,10 +154,6 @@ public class SearchRequestExecutorFixture {
 				elasticsearchClientResolver, searchSearchRequestAssembler,
 				searchSearchResponseAssembler));
 
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchRequestExecutor, "_suggestSearchRequestExecutor",
-			_createSuggestSearchRequestExecutor(elasticsearchClientResolver));
-
 		elasticsearchSearchRequestExecutor.activate();
 
 		return elasticsearchSearchRequestExecutor;
@@ -233,26 +228,7 @@ public class SearchRequestExecutorFixture {
 		return searchSearchResponseAssembler;
 	}
 
-	private SuggestSearchRequestExecutor _createSuggestSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		SuggestSearchRequestExecutor suggestSearchRequestExecutor =
-			new SuggestSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			suggestSearchRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			suggestSearchRequestExecutor, "_suggesterTranslator",
-			_elasticsearchSuggesterTranslator);
-
-		return suggestSearchRequestExecutor;
-	}
-
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-	private final ElasticsearchSuggesterTranslator
-		_elasticsearchSuggesterTranslator =
-			new ElasticsearchSuggesterTranslator();
 	private SearchRequestExecutor _searchRequestExecutor;
 
 }

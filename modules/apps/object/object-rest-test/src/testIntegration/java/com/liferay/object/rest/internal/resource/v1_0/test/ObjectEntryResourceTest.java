@@ -369,6 +369,32 @@ public class ObjectEntryResourceTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"jpg, txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_DEPOT_FILES
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							String.valueOf(_MAX_FILE_SIZE_VALUE)
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
 					Arrays.asList(
@@ -845,6 +871,32 @@ public class ObjectEntryResourceTest {
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				objectDefinitionName,
 				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+						ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+						_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE,
+						_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE,
+						Arrays.asList(
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.
+									NAME_ACCEPTED_FILE_EXTENSIONS
+							).value(
+								"jpg, txt"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_FILE_SOURCE
+							).value(
+								ObjectFieldSettingConstants.VALUE_DEPOT_FILES
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								String.valueOf(_MAX_FILE_SIZE_VALUE)
+							).build()),
+						false),
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 						ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
@@ -9173,6 +9225,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, _siteScopedObjectDefinition1, true);
 	}
 
+	@FeatureFlag("LPD-74813")
 	@Test
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAttachmentObjectField()
 		throws Exception {
@@ -9219,6 +9272,7 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, _siteScopedObjectDefinition1, false);
 	}
 
+	@FeatureFlag("LPD-74813")
 	@Test
 	public void testPatchPutCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
@@ -9457,6 +9511,7 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1);
 	}
 
+	@FeatureFlag("LPD-74813")
 	@Test
 	public void testPostCustomObjectEntryWithAttachmentObjectField()
 		throws Exception {
@@ -18988,6 +19043,22 @@ public class ObjectEntryResourceTest {
 			null, objectDefinition,
 			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
 
+		// File from depot
+
+		_testPostCustomObjectEntryWithAttachmentObjectField(
+			fileEntry -> JSONUtil.put(
+				_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE,
+				_getFileEntryJSONObject(
+					_getDLFolder(objectDefinition, false), fileEntry,
+					objectDefinition,
+					_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE)),
+			_toFileEntry(
+				Base64::encode, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString() + ".txt", null, null,
+				customFileEntry1.getMimeType()),
+			null, objectDefinition,
+			_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE);
+
 		// File from documents and media
 
 		DLFolder dlFolder1 = DLTestUtil.addDLFolder(_testGroupId);
@@ -21109,6 +21180,10 @@ public class ObjectEntryResourceTest {
 
 	private static final String _OBJECT_FIELD_NAME_3 =
 		"x" + RandomTestUtil.randomString();
+
+	private static final String
+		_OBJECT_FIELD_NAME_ATTACHMENT_DEPOT_FILES_SOURCE =
+			"x" + RandomTestUtil.randomString();
 
 	private static final String
 		_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE =

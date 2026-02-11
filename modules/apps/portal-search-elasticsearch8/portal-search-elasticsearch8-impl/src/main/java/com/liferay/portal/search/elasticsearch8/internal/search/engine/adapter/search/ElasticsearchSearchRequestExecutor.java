@@ -91,11 +91,11 @@ public class ElasticsearchSearchRequestExecutor
 	protected void activate() {
 		_clearScrollRequestExecutor = new ClearScrollRequestExecutor(
 			_elasticsearchClientResolver);
+		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
+			_elasticsearchClientResolver);
 	}
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
-
-	@Reference
 	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;
 
 	@Reference

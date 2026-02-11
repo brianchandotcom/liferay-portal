@@ -1,4 +1,10 @@
 {
+	"dashboard": {
+		"en_US": {
+			"message": "Learn more about dashboard.",
+			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system/content-management-system-dashboards-and-analytics"
+		}
+	},
 	"general": {
 		"en_US": {
 			"message": "Learn more about spaces.",

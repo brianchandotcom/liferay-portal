@@ -7,6 +7,8 @@ package com.liferay.document.library.document.conversion.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,6 +24,10 @@ public interface OpenOfficeConfiguration {
 	@Meta.AD(deflt = "true", name = "cache-enabled", required = false)
 	public boolean cacheEnabled();
 
+	@ExtendedAttributeDefinition(
+		argumentsDelimiter = StringPool.BLANK,
+		descriptionArguments = "soffice --headless --accept=\"socket,host=127.0.0.1,port=8100;urp;\""
+	)
 	@Meta.AD(
 		deflt = "false", description = "openoffice-server-enabled-help",
 		name = "server-enabled", required = false

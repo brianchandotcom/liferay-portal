@@ -51,7 +51,6 @@ const ActionList = ({
 	deleteAction,
 	editAction,
 	noItemsButtonLabel,
-	orderByERC,
 	toogleActiveDisabled,
 	updateActionsOrder,
 	updateActive,
@@ -62,7 +61,6 @@ const ActionList = ({
 	deleteAction: ({item}: {item: IAction}) => void;
 	editAction: ({item}: {item: IAction}) => void;
 	noItemsButtonLabel: string;
-	orderByERC?: boolean;
 	toogleActiveDisabled: boolean;
 	updateActionsOrder: ({order}: {order: string}) => void;
 	updateActive: (item: IAction) => Promise<void>;
@@ -133,7 +131,6 @@ const ActionList = ({
 					order,
 				});
 			}}
-			orderByERC={orderByERC}
 		/>
 	);
 };

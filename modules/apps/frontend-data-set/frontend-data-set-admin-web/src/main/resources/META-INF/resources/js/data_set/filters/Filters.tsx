@@ -13,7 +13,6 @@ import React, {useEffect, useState} from 'react';
 import {visit} from '../../components/AddDataSourceFieldsModalContent';
 import {
 	DEFAULT_FETCH_HEADERS,
-	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
 import openDefaultFailureToast from '../../utils/openDefaultFailureToast';
@@ -194,9 +193,6 @@ function Filters({
 	resolvedRESTSchemas,
 	restApplications,
 }: IDataSetSectionProps) {
-	const orderByERC =
-		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
-
 	const [activeFilter, setActiveFilter] = useState<IFilter | null>(null);
 	const [activeFilterType, setActiveFilterType] =
 		useState<EFilterType | null>(null);
@@ -245,8 +241,7 @@ function Filters({
 			filtersOrdered = sortItems(
 				filtersOrdered,
 				responseJSON.filtersOrder,
-				true,
-				orderByERC
+				true
 			) as FilterCollection;
 
 			setFilters(
@@ -262,7 +257,7 @@ function Filters({
 		};
 
 		getFilters();
-	}, [dataSet, orderByERC]);
+	}, [dataSet]);
 
 	const updateFiltersOrder = async ({
 		filtersOrder,
@@ -297,12 +292,7 @@ function Filters({
 			storedFiltersOrder === filtersOrder
 		) {
 			setFilters(
-				sortItems(
-					filters,
-					storedFiltersOrder,
-					true,
-					orderByERC
-				) as FilterCollection
+				sortItems(filters, storedFiltersOrder, true) as FilterCollection
 			);
 
 			openDefaultSuccessToast();

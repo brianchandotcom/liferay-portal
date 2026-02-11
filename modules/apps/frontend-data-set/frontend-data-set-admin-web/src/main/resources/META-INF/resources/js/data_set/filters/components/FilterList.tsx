@@ -7,7 +7,6 @@ import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
 import Toggle from '../../../components/Toggle';
-import {FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY} from '../../../utils/constants';
 import {
 	EFilterType,
 	ESelectionFilterSourceType,
@@ -38,9 +37,6 @@ const FilterList = ({
 	updateActive: (item: IFilter) => Promise<void>;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
-	const orderByERC =
-		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
-
 	return (
 		<OrderableTable
 			actions={[
@@ -100,7 +96,6 @@ const FilterList = ({
 			onOrderChange={({order}: {order: string}) => {
 				updateFiltersOrder({filtersOrder: order});
 			}}
-			orderByERC={orderByERC}
 			title={Liferay.Language.get('filters')}
 		/>
 	);

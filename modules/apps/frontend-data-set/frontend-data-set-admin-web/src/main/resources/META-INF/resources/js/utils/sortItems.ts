@@ -3,26 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY} from './constants';
 import {IOrderable} from './types';
 
 /**
  * Sorts the provided items array according to the itemsOrder comma-separated list.
- * When orderByERC is false, itemsOrder is a list of ids; when true, a list of externalReferenceCodes.
+ * When the FDS_ORDER_BY_ERC feature flag is off, itemsOrder is a list of ids;
+ * when on, a list of externalReferenceCodes.
  * If array contains items not included in the list, then those are appended after.
  * Optionally, not included items can be sorted by creation date.
  *
  * @param items {IOrderable[]}
  * @param itemsOrder {string} - CSV of ids or externalReferenceCodes
  * @param useCreationDate {boolean}
- * @param orderByERC {boolean} - when true, itemsOrder is CSV of ERCs; when false, CSV of ids
  * @returns {Array}
  */
 export default function sortItems(
 	items: IOrderable[],
 	itemsOrder: string,
-	useCreationDate: boolean = false,
-	orderByERC: boolean = false
+	useCreationDate: boolean = false
 ): IOrderable[] {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const itemsOrderArray = itemsOrder?.split(',') || ([] as string[]);
 
 	const getItemKey = (item: IOrderable) =>

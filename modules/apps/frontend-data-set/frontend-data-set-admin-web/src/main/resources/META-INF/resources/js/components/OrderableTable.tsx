@@ -16,7 +16,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {FUZZY_OPTIONS} from '../utils/constants';
+import {
+	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
+	FUZZY_OPTIONS,
+} from '../utils/constants';
 import Search from './Search';
 
 import '../../css/components/OrderableTable.scss';
@@ -379,7 +382,6 @@ interface IOrderableTableProps {
 	noItemsDescription: string;
 	noItemsTitle: string;
 	onOrderChange: (args: {order: string}) => void;
-	orderByERC?: boolean;
 	title?: string;
 }
 
@@ -394,9 +396,11 @@ const OrderableTable = ({
 	noItemsDescription,
 	noItemsTitle,
 	onOrderChange,
-	orderByERC = false,
 	title,
 }: IOrderableTableProps) => {
+	const orderByERC =
+		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
+
 	const getOrderKey = (item: any) =>
 		orderByERC ? item.externalReferenceCode : item.id;
 

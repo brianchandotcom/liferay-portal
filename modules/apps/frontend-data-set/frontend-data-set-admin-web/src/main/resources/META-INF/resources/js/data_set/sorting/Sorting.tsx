@@ -20,7 +20,6 @@ import RequiredMark from '../../components/RequiredMark';
 import Toggle from '../../components/Toggle';
 import {
 	DEFAULT_FETCH_HEADERS,
-	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	FUZZY_OPTIONS,
 	OBJECT_RELATIONSHIP,
 } from '../../utils/constants';
@@ -488,9 +487,6 @@ const Sorting = ({
 	namespace,
 	saveDataSetSortURL,
 }: IDataSetSectionProps) => {
-	const orderByERC =
-		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
-
 	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IDataSetSort>>([]);
 	const [loading, setLoading] = useState(true);
@@ -525,13 +521,12 @@ const Sorting = ({
 				storedFDSSorts,
 				storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORTS]
 					?.sortsOrder as string,
-				false,
-				orderByERC
+				false
 			) as IDataSetSort[]
 		);
 
 		setLoading(false);
-	}, [dataSet.externalReferenceCode, orderByERC]);
+	}, [dataSet.externalReferenceCode]);
 
 	useEffect(() => {
 		fetchDataSetSorts();
@@ -655,12 +650,7 @@ const Sorting = ({
 
 		if (fdsSorts && storedSortsOrder && storedSortsOrder === sortsOrder) {
 			setFDSSorts(
-				sortItems(
-					fdsSorts,
-					storedSortsOrder,
-					false,
-					orderByERC
-				) as IDataSetSort[]
+				sortItems(fdsSorts, storedSortsOrder, false) as IDataSetSort[]
 			);
 
 			openDefaultSuccessToast();
@@ -792,7 +782,6 @@ const Sorting = ({
 						onOrderChange={({order}: {order: string}) => {
 							updateSortsOrder({sortsOrder: order});
 						}}
-						orderByERC={orderByERC}
 						title={Liferay.Language.get('sorting')}
 					/>
 				</>

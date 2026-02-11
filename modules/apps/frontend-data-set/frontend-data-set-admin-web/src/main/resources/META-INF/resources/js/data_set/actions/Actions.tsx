@@ -13,7 +13,6 @@ import React, {useEffect, useState} from 'react';
 
 import {
 	DEFAULT_FETCH_HEADERS,
-	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
 	OBJECT_RELATIONSHIP,
 	PAGE_SIZE,
 } from '../../utils/constants';
@@ -92,9 +91,6 @@ interface IAction extends IOrderable {
 }
 
 const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
-	const orderByERC =
-		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
-
 	const [actions, setActions] = useState<Array<IAction>>([]);
 	const [activeSection, setActiveSection] = useState(SECTIONS.ITEM_ACTIONS);
 	const [activeTab, setActiveTab] = useState(0);
@@ -204,14 +200,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 				actionTypeOrder
 			];
 
-		setActions(
-			sortItems(
-				storedActions,
-				actionsOrder,
-				false,
-				orderByERC
-			) as IAction[]
-		);
+		setActions(sortItems(storedActions, actionsOrder, false) as IAction[]);
 
 		setLoading(false);
 	};
@@ -308,12 +297,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 
 		if (actions && storedActionsOrder && storedActionsOrder === order) {
 			setActions(
-				sortItems(
-					actions,
-					storedActionsOrder,
-					false,
-					orderByERC
-				) as IAction[]
+				sortItems(actions, storedActionsOrder, false) as IAction[]
 			);
 
 			openDefaultSuccessToast();
@@ -427,7 +411,6 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-item-action'
 										)}
-										orderByERC={orderByERC}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}
@@ -455,7 +438,6 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-creation-action'
 										)}
-										orderByERC={orderByERC}
 										toogleActiveDisabled={
 											toggleActiveDisabled
 										}

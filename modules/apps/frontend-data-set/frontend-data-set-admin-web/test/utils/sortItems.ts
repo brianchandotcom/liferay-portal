@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY} from '../../src/main/resources/META-INF/resources/js/utils/constants';
 import sortItems from '../../src/main/resources/META-INF/resources/js/utils/sortItems';
 import {IOrderable} from '../../src/main/resources/META-INF/resources/js/utils/types';
 
@@ -48,20 +49,13 @@ const creationDatePartialSortCases: IOrderResult = {
 	'4,3': [4, 3, 1, 2],
 };
 
-const testCases = (
-	expected: IOrderResult,
-	useCreationDate?: boolean,
-	orderByERC?: boolean
-) =>
+const testCases = (expected: IOrderResult, useCreationDate?: boolean) =>
 	Object.keys(expected).forEach((itemsOrder) =>
 		expect(
 			JSON.stringify(
-				sortItems(
-					items,
-					itemsOrder,
-					useCreationDate ?? false,
-					orderByERC ?? false
-				).map((item) => Number(item.id))
+				sortItems(items, itemsOrder, useCreationDate ?? false).map(
+					(item) => Number(item.id)
+				)
 			)
 		).toBe(JSON.stringify(expected[itemsOrder]))
 	);
@@ -76,16 +70,29 @@ describe('sortItems', () => {
 	it('sorts over a partial order, with dates', () =>
 		testCases(creationDatePartialSortCases, true));
 
-	it('sorts by externalReferenceCode when orderByERC is true', () => {
-		const ercOrder = 'erc-3,erc-1,erc-2,erc-4';
+	it('sorts by externalReferenceCode when FDS_ORDER_BY_ERC feature flag is on', () => {
+		const previousFlags = (global as any).Liferay?.FeatureFlags;
+		if (!(global as any).Liferay) {
+			(global as any).Liferay = {};
+		}
+		(global as any).Liferay.FeatureFlags = {
+			...(global as any).Liferay.FeatureFlags,
+			[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]: true,
+		};
 
-		const result = sortItems(items, ercOrder, false, true);
+		try {
+			const ercOrder = 'erc-3,erc-1,erc-2,erc-4';
+			const result = sortItems(items, ercOrder, false);
 
-		expect(result.map((item) => item.externalReferenceCode)).toEqual([
-			'erc-3',
-			'erc-1',
-			'erc-2',
-			'erc-4',
-		]);
+			expect(result.map((item) => item.externalReferenceCode)).toEqual([
+				'erc-3',
+				'erc-1',
+				'erc-2',
+				'erc-4',
+			]);
+		}
+		finally {
+			(global as any).Liferay.FeatureFlags = previousFlags;
+		}
 	});
 });

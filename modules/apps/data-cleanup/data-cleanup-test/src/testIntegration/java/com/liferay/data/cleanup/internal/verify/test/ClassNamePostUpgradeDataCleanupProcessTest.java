@@ -7,6 +7,8 @@ package com.liferay.data.cleanup.internal.verify.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructure;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.message.boards.util.MBUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -19,6 +21,7 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -47,14 +50,45 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 	extends BasePostUpgradeDataCleanupProcessTestCase {
 
 	@Test
+	public void testFoundLayoutClassNameWithDashIsNotDeleted()
+		throws Exception {
+
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			Layout.class.getName() + StringPool.DASH +
+				RandomTestUtil.randomString();
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(messages.toString(), messages.isEmpty());
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
+	}
+
+	@Test
 	public void testFoundLiferayClassNameWithDashIsNotDeleted()
 		throws Exception {
 
 		AtomicReference<ClassName> classNameAtomicReference =
 			new AtomicReference<>();
 		String classNameValue =
-			ObjectDefinition.class.getName() + StringPool.DASH +
-				RandomTestUtil.randomString(4);
+			DDMStructure.class.getName() + StringPool.DASH +
+				JournalArticle.class.getName();
 
 		test(
 			logCapture -> {
@@ -265,6 +299,44 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 				_insertIntoDatabase(
 					addressId, className.getClassNameId(), connection);
 			});
+	}
+
+	@Test
+	public void testNotFoundLiferayClassNameWithDashIsDeleted()
+		throws Exception {
+
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			DDMStructure.class.getName() + StringPool.DASH +
+				RandomTestUtil.randomString();
+
+		test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Table ", dbInspector.normalizeName("ClassName_"),
+							", 1 row deleted because \"", classNameValue,
+							"\" is not defined in any deployed module and is ",
+							"not in use")));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(StringPool.BLANK, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+			},
+			() -> classNameAtomicReference.set(
+				_classNameLocalService.addClassName(classNameValue)));
 	}
 
 	@Test

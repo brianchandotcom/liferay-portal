@@ -120,6 +120,51 @@ const transformAction = ({
 	};
 };
 
+const addWorkflowActions = (
+	actions: Array<IItemsActions>,
+	itemData: any
+): Array<IItemsActions> => {
+	if (!actions) {
+		return [];
+	}
+
+	const itemActions = itemData?.actions;
+
+	if (!itemActions) {
+		return actions;
+	}
+
+	return actions.flatMap((action) => {
+		if (action.target !== ACTION_ITEM_TARGETS.MODAL_WORKFLOW_TRANSITION) {
+			return action;
+		}
+
+		return [
+			...Object.keys(itemActions)
+				.filter((key) => key.startsWith('workflow_'))
+				.sort((a, b) => a.localeCompare(b))
+				.map((workflowKey) => {
+					const workflowAction = itemActions[workflowKey];
+					
+					return {
+						data: {
+							requestBody: JSON.stringify({
+								transitionName: workflowAction.name,
+							}),
+							title: workflowAction.label,
+						},
+						href: workflowAction.href,
+						id: workflowKey,
+						label: workflowAction.label,
+						method: workflowAction.method,
+						target: ACTION_ITEM_TARGETS.MODAL_WORKFLOW_TRANSITION,
+						type: EItemActionsType.ITEM,
+					} as IItemsActions;
+				}),
+		];
+	});
+};
+
 const filterItemActions = ({
 	actions,
 	infoPanelOpen = false,
@@ -142,7 +187,7 @@ const filterItemActions = ({
 		);
 
 	return actions
-		? actions
+		? addWorkflowActions(actions, itemData)
 				.filter((action: IItemsActions) =>
 					isVisible(action, itemData, selectable)
 				)

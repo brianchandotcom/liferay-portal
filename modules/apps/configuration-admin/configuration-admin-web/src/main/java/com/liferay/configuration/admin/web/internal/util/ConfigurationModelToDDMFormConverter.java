@@ -21,21 +21,19 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -378,11 +376,13 @@ public class ConfigurationModelToDDMFormConverter {
 		Map<String, String> extensionAttributes = _getExtensionAttributes(
 			attributeDefinition);
 
-		List<String> nameArguments = StringUtil.split(
-			extensionAttributes.get("name-arguments"));
-
 		label.addString(
-			_locale, _translate(attributeDefinition.getName(), nameArguments));
+			_locale,
+			_translate(
+				attributeDefinition.getName(),
+				_split(
+					extensionAttributes.get("name-arguments"),
+					extensionAttributes.get("arguments-delimiter"))));
 
 		ddmFormField.setLabel(label);
 	}
@@ -454,7 +454,9 @@ public class ConfigurationModelToDDMFormConverter {
 
 		String description = _translate(
 			attributeDefinition.getDescription(),
-			StringUtil.split(extensionAttributes.get("description-arguments")));
+			_split(
+				extensionAttributes.get("description-arguments"),
+				extensionAttributes.get("arguments-delimiter")));
 
 		if (Validator.isNotNull(description)) {
 			sb.append(description);
@@ -570,23 +572,30 @@ public class ConfigurationModelToDDMFormConverter {
 		}
 	}
 
-	private String _translate(String key) {
-		return _translate(key, Collections.emptyList());
+	private String[] _split(String argument, String delimiter) {
+		if (Validator.isBlank(delimiter)) {
+			return new String[] {argument};
+		}
+
+		return StringUtil.split(argument, delimiter);
 	}
 
-	private String _translate(String key, List<String> arguments) {
+	private String _translate(String key) {
+		return _translate(key, new String[0]);
+	}
+
+	private String _translate(String key, String[] arguments) {
 		if ((_resourceBundle == null) || (key == null)) {
 			return key;
 		}
 
 		String value = null;
 
-		if (ListUtil.isEmpty(arguments)) {
+		if (ArrayUtil.isEmpty(arguments)) {
 			value = LanguageUtil.get(_resourceBundle, key);
 		}
 		else {
-			value = LanguageUtil.format(
-				_resourceBundle, key, arguments.toArray(new String[0]));
+			value = LanguageUtil.format(_resourceBundle, key, arguments);
 		}
 
 		if (value == null) {

@@ -883,9 +883,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
 	)
 	@Test
-	@TestInfo(
-		"LPD-6808: Verify parents are not published when promote content FFs are enabled even if publishParentLayoutsByDefault is true"
-	)
 	public void testLayoutExportImportWithPromoteContentFeatureFlagsEnabledParentsNotPublishedEvenWithConfigurationEnabled()
 		throws Exception {
 

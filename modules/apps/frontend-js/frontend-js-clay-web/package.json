@@ -6,7 +6,7 @@
 		"@clayui/breadcrumb": "^3.159.0",
 		"@clayui/button": "^3.159.0",
 		"@clayui/card": "^3.159.0",
-		"@clayui/charts": "^3.159.0",
+		"@clayui/charts": "3.156.0",
 		"@clayui/css": "^3.159.0",
 		"@clayui/color-picker": "^3.159.0",
 		"@clayui/core": "^3.159.0",

@@ -43,6 +43,7 @@
 	],
 	"homepage": "http://clayui.com",
 	"license": "MIT",
+	"main": "index.js",
 	"name": "@clayui/css",
 	"repository": {
 		"type": "git",

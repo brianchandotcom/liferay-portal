@@ -55,7 +55,6 @@ for (const arg of process.argv.slice(2)) {
 	switch (arg) {
 		case '--dry-run':
 			DRY_RUN = true;
-			PREVIEW_CHANGES = true;
 			break;
 		case '--preview-changes':
 			PREVIEW_CHANGES = true;
@@ -199,10 +198,10 @@ function updatePackageVersions(pkg) {
 
 			if (deps[depName] !== TARGET_VERSION) {
 				changes.push(
-					`${field}.${depName}: ${deps[depName]} -> ${TARGET_VERSION}`
+					`${field}.${depName}: ${deps[depName]} -> ^${TARGET_VERSION}`
 				);
 			}
-			deps[depName] = TARGET_VERSION;
+			deps[depName] = `^${TARGET_VERSION}`;
 		}
 	}
 
@@ -234,6 +233,17 @@ async function ensureNpmAuth() {
 async function main() {
 	if (!PREVIEW_CHANGES) {
 		await ensureNpmAuth();
+
+		console.log('Running test suite before versioning/publish steps');
+		try {
+			await run('yarn', ['test'], {cwd: ROOT_DIR, env: process.env});
+		}
+		catch (error) {
+			console.error(
+				'ERROR: Test suite failed; exiting before publish steps.'
+			);
+			throw error;
+		}
 	}
 
 	if (!SKIP_VERSION_BUMP) {
@@ -241,7 +251,11 @@ async function main() {
 			`Setting all clay-* package versions and @clayui/* deps to ${TARGET_VERSION}`
 		);
 
-		for (const dir of packageDirs) {
+		const dirs = [...packageDirs, __dirname];
+
+		for (const dir of dirs) {
+			console.log(`Updating ${path.basename(dir)}`);
+
 			const pkgPath = packageJsonPath(dir);
 			const pkg = readJson(pkgPath);
 			const changes = updatePackageVersions(pkg);
@@ -275,6 +289,7 @@ async function main() {
 
 	let publishCount = 0;
 	let skipCount = 0;
+	const publishQueue = [];
 
 	for (const dir of packageDirs) {
 		const pkgPath = packageJsonPath(dir);
@@ -303,7 +318,6 @@ async function main() {
 			{
 				allowFailure: true,
 				env,
-				stdio: 'ignore',
 			}
 		);
 
@@ -313,30 +327,47 @@ async function main() {
 			continue;
 		}
 
+		publishQueue.push({
+			dir,
+			name,
+			pkg,
+			pkgPath,
+			version,
+		});
+	}
+
+	for (const item of publishQueue) {
 		console.log('----');
-		console.log(`Publishing ${name}@${version} with tag '${NPM_TAG}'`);
+		console.log(`Building ${item.name}@${item.version}`);
 
-		writePublishPackageJson(pkgPath);
+		writePublishPackageJson(item.pkgPath);
 
-		if (pkg.scripts && pkg.scripts.build) {
-			await run('yarn', ['build'], {cwd: dir, env});
+		if (item.pkg.scripts && item.pkg.scripts.build) {
+			await run('yarn', ['build'], {cwd: item.dir, env});
 		}
 
-		if (pkg.scripts && pkg.scripts.buildTypes) {
-			await run('yarn', ['buildTypes'], {cwd: dir, env});
+		if (item.pkg.scripts && item.pkg.scripts.buildTypes) {
+			await run('yarn', ['buildTypes'], {cwd: item.dir, env});
 		}
+	}
+
+	for (const item of publishQueue) {
+		console.log('----');
+		console.log(
+			`Publishing ${item.name}@${item.version} with tag '${NPM_TAG}'`
+		);
 
 		const publishArgs = ['publish', '--access', 'public', '--tag', NPM_TAG];
 		if (DRY_RUN) {
 			publishArgs.push('--dry-run');
 		}
 
-		await run('npm', publishArgs, {cwd: dir, env});
-
-		restoreTemporaryPackageJsons();
+		await run('npm', publishArgs, {cwd: item.dir, env});
 
 		publishCount += 1;
 	}
+
+	restoreTemporaryPackageJsons();
 
 	console.log('----');
 	console.log(`Done. Published: ${publishCount}, Skipped: ${skipCount}`);

@@ -49,6 +49,50 @@ test.describe('Alerts and Search Inputs', () => {
 			await expect(page.getByText(/Questionable Text/)).toBeNull;
 		});
 	});
+
+	test('Alert does not display for custom placeholder text @LPD-77243', async ({
+		layout,
+		page,
+		searchPage,
+	}) => {
+		await test.step('Add search bar and results portlet to new page', async () => {
+			await page.goto('/web/guest' + layout.friendlyURL);
+
+			await searchPage.addPortlet('Search Bar', 'Search');
+
+			await searchPage.addPortlet('Search Results', 'Search');
+		});
+
+		await test.step('Disable suggestions and add placeholder text for search bar', async () => {
+			await searchPage.openSearchPortletConfiguration('Search Bar', 1);
+
+			await searchPage.selectPortletConfigurationsCheckbox([
+				{
+					label: 'Enable Suggestions',
+					value: false,
+				},
+			]);
+
+			await searchPage.fillPortletConfigurationsInput([
+				{
+					label: 'Placeholder Text',
+					value: 'test"><script>alert("test")</script>',
+				},
+			]);
+
+			await searchPage.savePortletConfiguration();
+		});
+
+		await test.step('Check that an alert with message does not appear', async () => {
+			page.on('dialog', async (dialog: any) => {
+				dialog.accept();
+
+				expect(dialog.message(), 'test').toBeNull();
+			});
+
+			await page.goto('/web/guest' + layout.friendlyURL);
+		});
+	});
 });
 
 test.describe('Redirect URL', () => {

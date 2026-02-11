@@ -11,9 +11,12 @@ import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 /**
  * @author Bryan Engler
  */
-public interface SuggestSearchRequestExecutor {
+public class SuggestSearchRequestExecutor {
 
 	public SuggestSearchResponse execute(
-		SuggestSearchRequest suggestSearchRequest);
+		SuggestSearchRequest suggestSearchRequest) {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

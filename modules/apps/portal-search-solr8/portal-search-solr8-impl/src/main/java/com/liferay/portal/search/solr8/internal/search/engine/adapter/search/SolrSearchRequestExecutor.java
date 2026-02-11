@@ -91,7 +91,7 @@ public class SolrSearchRequestExecutor implements SearchRequestExecutor {
 	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
 
-	@Reference
-	private SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
+	private final SuggestSearchRequestExecutor _suggestSearchRequestExecutor =
+		new SuggestSearchRequestExecutor();
 
 }

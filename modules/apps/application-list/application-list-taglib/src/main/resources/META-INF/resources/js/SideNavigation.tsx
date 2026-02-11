@@ -8,6 +8,8 @@ import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import SideNavigationSiteSelector from './SideNavigationSiteSelector';
+
 interface SideNavigationItem {
 	href?: string;
 	id: string;
@@ -22,6 +24,8 @@ interface Props {
 	items: Array<SideNavigationItem>;
 	label: string;
 	portletId: string;
+	siteAdministrationItemSelectedEventName: string;
+	siteAdministrationItemSelectorUrl: string;
 	visible: boolean;
 	visibleSessionKey: string;
 }
@@ -32,6 +36,8 @@ function SideNavigation({
 	items,
 	label,
 	portletId,
+	siteAdministrationItemSelectedEventName,
+	siteAdministrationItemSelectorUrl,
 	visible: initialVisible,
 	visibleSessionKey,
 }: Props) {
@@ -96,14 +102,25 @@ function SideNavigation({
 			panelWidth={320}
 			position="fixed"
 		>
-			<SidePanel.Header data-qa-id="sideNavigationHeader">
-				<SidePanel.Title>
+			<SidePanel.Header
+				data-qa-id="sideNavigationHeader"
+				messages={{
+					backAriaLabel: Liferay.Language.get('go-back'),
+					closeAriaLabel: Liferay.Language.get('close-product-menu'),
+				}}
+			>
+				<div className="align-items-center d-flex flex-row">
 					<ClayIcon symbol="grid" />
 
-					<span className="c-px-2" data-qa-id="sideNavigationLabel">
-						{label}
-					</span>
-				</SidePanel.Title>
+					<SidePanel.Title className="c-px-2 flex-grow-1">
+						<span data-qa-id="sideNavigationLabel">{label}</span>
+					</SidePanel.Title>
+
+					<SideNavigationSiteSelector
+						eventName={siteAdministrationItemSelectedEventName}
+						url={siteAdministrationItemSelectorUrl}
+					/>
+				</div>
 			</SidePanel.Header>
 
 			<SidePanel.Body className="c-px-0">

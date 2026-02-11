@@ -1,5 +1,5 @@
 {
-	"@generated": "0b965709cd0efef001c3c9312fb659be49cf254d",
+	"@generated": "d5ade15932a0f2105164e41afd2ba81f4fcaecd0",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"frontend-js-components-web": [
+				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			]
 		},
 		"rootDir": "../../../../../../../..",
 		"skipLibCheck": true,
@@ -28,5 +31,8 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		}
 	]
 }

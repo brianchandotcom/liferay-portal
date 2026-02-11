@@ -165,6 +165,7 @@ export interface IItemsActions {
 		| 'link'
 		| 'modal'
 		| 'modal-permissions'
+		| 'modal-workflow-transition'
 		| 'sidePanel'
 		| 'event';
 	type?: EItemActionsType | `${EItemActionsType}`;

@@ -121,10 +121,11 @@ function ClayVerticalNav({
 		'ClayVerticalNav: The `activeLabel` API has been deprecated in favor of `triggerLabel` and will be removed in the next major release.'
 	);
 
-	if (children && !displayType) {
+	if (children) {
 		return (
 			<VerticalNav
 				{...otherProps}
+				displayType={displayType}
 				triggerLabel={activeLabel ?? triggerLabel}
 			>
 				{children}
@@ -133,7 +134,11 @@ function ClayVerticalNav({
 	}
 
 	return (
-		<VerticalNav {...otherProps} triggerLabel={activeLabel ?? triggerLabel}>
+		<VerticalNav
+			{...otherProps}
+			displayType={displayType}
+			triggerLabel={activeLabel ?? triggerLabel}
+		>
 			{(item) => (
 				<VerticalNav.Item
 					active={item.active}

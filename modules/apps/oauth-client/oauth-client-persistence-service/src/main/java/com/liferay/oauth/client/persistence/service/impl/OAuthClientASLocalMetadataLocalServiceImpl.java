@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.GrantType;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -32,6 +34,7 @@ import com.nimbusds.openid.connect.sdk.SubjectType;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import java.net.URI;
+import java.net.URL;
 
 import java.security.MessageDigest;
 
@@ -84,6 +87,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String[] supportedSubjectTypes, String tokenEndpoint,
 			String userInfoEndpoint)
 		throws PortalException {
+
+		_validateUrl(issuer);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -294,38 +299,52 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String userInfoEndpoint)
 		throws PortalException {
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata1 =
 			oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 
-		String localWellKnownURI =
-			oAuthClientASLocalMetadata.getLocalWellKnownURI();
+		boolean issuerChanged = !issuer.equals(
+			oAuthClientASLocalMetadata1.getIssuer());
 
-		if (!issuer.equals(oAuthClientASLocalMetadata.getIssuer()) ||
+		String localWellKnownURI =
+			oAuthClientASLocalMetadata1.getLocalWellKnownURI();
+
+		if (issuerChanged ||
 			localWellKnownURI.contains("openid-configuration")) {
 
-			oAuthClientASLocalMetadata.setIssuer(issuer);
-			oAuthClientASLocalMetadata.setLocalWellKnownEnabled(
+			if (issuerChanged) {
+				OAuthClientASLocalMetadata oAuthClientASLocalMetadata2 =
+					oAuthClientASLocalMetadataLocalService.
+						fetchOAuthClientASLocalMetadata(
+							oAuthClientASLocalMetadata1.getCompanyId(), issuer);
+
+				if (oAuthClientASLocalMetadata2 != null) {
+					throw new DuplicateOAuthClientASLocalMetadataException();
+				}
+			}
+
+			oAuthClientASLocalMetadata1.setIssuer(issuer);
+			oAuthClientASLocalMetadata1.setLocalWellKnownEnabled(
 				localWellKnownEnabled);
-			oAuthClientASLocalMetadata.setLocalWellKnownURI(
+			oAuthClientASLocalMetadata1.setLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, tokenEndpoint, "openid-configuration"));
-			oAuthClientASLocalMetadata.setMetadataJSON(
+			oAuthClientASLocalMetadata1.setMetadataJSON(
 				_generateMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedGrantTypes,
 					supportedScopes, supportedSubjectTypes, tokenEndpoint,
 					userInfoEndpoint));
-			oAuthClientASLocalMetadata.setOAuthASLocalWellKnownURI(
+			oAuthClientASLocalMetadata1.setOAuthASLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, null, "oauth-authorization-server"));
-			oAuthClientASLocalMetadata.setOAuthASMetadataJSON(
+			oAuthClientASLocalMetadata1.setOAuthASMetadataJSON(
 				_generateAuthorizationServerMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedScopes,
 					supportedGrantTypes, tokenEndpoint));
 		}
 
 		return oAuthClientASLocalMetadataPersistence.update(
-			oAuthClientASLocalMetadata);
+			oAuthClientASLocalMetadata1);
 	}
 
 	private String _generateAuthorizationServerMetadataJSON(
@@ -457,6 +476,26 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		catch (Exception exception) {
 			throw new OAuthClientASLocalMetadataMetadataJSONException(
 				exception.getMessage(), exception);
+		}
+	}
+
+	private void _validateUrl(String url) throws PortalException {
+		if (!Validator.isUrl(url)) {
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+		}
+
+		try {
+			URL parsed = new URL(url);
+
+			if (Validator.isNull(parsed.getProtocol()) &&
+				!Http.HTTPS.equalsIgnoreCase(parsed.getProtocol())) {
+
+				throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+			}
+		}
+		catch (Exception exception) {
+			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
+				exception.getMessage());
 		}
 	}
 

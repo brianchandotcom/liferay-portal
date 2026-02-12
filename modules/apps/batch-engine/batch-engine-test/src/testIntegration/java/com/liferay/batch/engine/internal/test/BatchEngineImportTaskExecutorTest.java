@@ -8,11 +8,9 @@ package com.liferay.batch.engine.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskParametersException;
-import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTaskError;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalService;
@@ -1440,25 +1438,5 @@ public class BatchEngineImportTaskExecutorTest
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private static class TestBatchEngineImportTaskExceptionHandler
-		implements BatchEngineImportTaskExceptionHandler {
-
-		@Override
-		public void handle(
-			BatchEngineImportTask batchEngineImportTask,
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-			Exception exception, Object item) {
-
-			_batchEngineImportTask = batchEngineImportTask;
-			_exception = exception;
-			_item = item;
-		}
-
-		private BatchEngineImportTask _batchEngineImportTask;
-		private Exception _exception;
-		private Object _item;
-
-	}
 
 }

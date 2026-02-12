@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.hits;
 
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 
@@ -18,7 +19,7 @@ public class SearchHitsBuilderFactoryImpl implements SearchHitsBuilderFactory {
 
 	@Override
 	public SearchHitsBuilder getSearchHitsBuilder() {
-		return new SearchHitsImpl.Builder();
+		return new SearchHits.Builder();
 	}
 
 }

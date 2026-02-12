@@ -8,8 +8,7 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class GeoDistanceAggregationResult
-	extends BucketAggregationResult {
+public class GeoDistanceAggregationResult extends BucketAggregationResult {
 
 	public GeoDistanceAggregationResult(String name) {
 		super(name);

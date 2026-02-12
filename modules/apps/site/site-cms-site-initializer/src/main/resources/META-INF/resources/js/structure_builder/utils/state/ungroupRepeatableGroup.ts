@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {RepeatableGroup, Structure} from '../types/Structure';
-import {Uuid} from '../types/Uuid';
+import {RepeatableGroup, Structure} from '../../types/Structure';
+import {Uuid} from '../../types/Uuid';
 
-export default function ungroup({
+export default function ungroupRepeatableGroup({
 	root,
 	uuid,
 }: {
@@ -37,7 +37,7 @@ export default function ungroup({
 		else if (child.type === 'repeatable-group') {
 			const group: RepeatableGroup = {
 				...child,
-				children: ungroup({
+				children: ungroupRepeatableGroup({
 					root: child,
 					uuid,
 				}),

@@ -3,9 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
-import {Uuid} from '../types/Uuid';
-import isLocked from './isLocked';
+import {
+	RepeatableGroup,
+	Structure,
+	StructureChild,
+} from '../../types/Structure';
+import {Uuid} from '../../types/Uuid';
+import isLocked from '../isLocked';
 
 export default function deleteChildren({
 	root,

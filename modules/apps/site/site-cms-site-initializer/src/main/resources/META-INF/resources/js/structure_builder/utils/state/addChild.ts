@@ -3,11 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
-import {Uuid} from '../types/Uuid';
+import {
+	RepeatableGroup,
+	Structure,
+	StructureChild,
+} from '../../types/Structure';
+import {Uuid} from '../../types/Uuid';
 import sortChildren from './sortChildren';
 
-export default function insertChild({
+export default function addChild({
 	child,
 	parentUuid,
 	root,
@@ -27,7 +31,7 @@ export default function insertChild({
 		if (rootChild.type === 'repeatable-group') {
 			const group: RepeatableGroup = {
 				...rootChild,
-				children: insertChild({
+				children: addChild({
 					child,
 					parentUuid,
 					root: rootChild,

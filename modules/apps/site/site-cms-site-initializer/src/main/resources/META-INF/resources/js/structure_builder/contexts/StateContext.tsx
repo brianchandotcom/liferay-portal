@@ -25,25 +25,25 @@ import {
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
-import addGroup from '../utils/addGroup';
-import deleteChildren from '../utils/deleteChildren';
 import {Field, SelectFromListField, getDefaultField} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
-import getHistory from '../utils/getHistory';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
 import getUuid from '../utils/getUuid';
-import insertChild from '../utils/insertChild';
 import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
 import normalizeString from '../utils/normalizeString';
-import refreshReferencedStructures from '../utils/refreshReferencedStructures';
-import sortChildren from '../utils/sortChildren';
-import ungroup from '../utils/ungroup';
-import updateChild from '../utils/updateChild';
+import addChild from '../utils/state/addChild';
+import addRepeatableGroup from '../utils/state/addRepeatableGroup';
+import deleteChildren from '../utils/state/deleteChildren';
+import refreshReferencedStructures from '../utils/state/refreshReferencedStructures';
+import sortChildren from '../utils/state/sortChildren';
+import ungroup from '../utils/state/ungroupRepeatableGroup';
+import updateChild from '../utils/state/updateChild';
+import updateHistory from '../utils/state/updateHistory';
 import {
 	ErrorMap,
 	ValidationError,
@@ -279,7 +279,7 @@ function reducer(state: State, action: Action): State {
 				),
 			};
 
-			const children = insertChild({
+			const children = addChild({
 				child: nextField,
 				parentUuid: parent.uuid,
 				root: structure,
@@ -335,7 +335,7 @@ function reducer(state: State, action: Action): State {
 
 			const {structure} = state;
 
-			const children = insertChild({
+			const children = addChild({
 				child: relatedContent,
 				parentUuid: relatedContent.parent,
 				root: structure,
@@ -358,7 +358,7 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			const undeletables = getUndeletableItems(items, structure);
+			const undeletables = getUndeletableChildren(items, structure);
 
 			const reasons = [...undeletables.values()];
 
@@ -426,7 +426,7 @@ function reducer(state: State, action: Action): State {
 
 			const groupUuid = getUuid();
 
-			const children = addGroup({
+			const children = addRepeatableGroup({
 				groupChildren: items,
 				groupParent: parents[0].uuid,
 				groupUuid,
@@ -444,7 +444,7 @@ function reducer(state: State, action: Action): State {
 			return {
 				...state,
 				history: deletedChildrenUuids.size
-					? getHistory({
+					? updateHistory({
 							deletedChildrenUuids,
 							initialHistory: history,
 							publishedChildren,
@@ -501,7 +501,7 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			const undeletables = getUndeletableItems([child], structure);
+			const undeletables = getUndeletableChildren([child], structure);
 
 			if (undeletables.get(child.uuid) === 'causes-invalid-group') {
 				showWarning({
@@ -541,7 +541,7 @@ function reducer(state: State, action: Action): State {
 
 			nextState = {
 				...nextState,
-				history: getHistory({
+				history: updateHistory({
 					deletedChildrenUuids,
 					initialHistory: nextState.history,
 					publishedChildren: state.publishedChildren,
@@ -558,7 +558,7 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			const undeletables = getUndeletableItems(items, structure);
+			const undeletables = getUndeletableChildren(items, structure);
 
 			if (undeletables.size) {
 				showWarning({
@@ -579,7 +579,7 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				history: getHistory({
+				history: updateHistory({
 					deletedChildrenUuids,
 					initialHistory: state.history,
 					publishedChildren: state.publishedChildren,
@@ -634,7 +634,7 @@ function reducer(state: State, action: Action): State {
 
 			// Insert the copy
 
-			const children = insertChild({
+			const children = addChild({
 				child: copy,
 				parentUuid: parent.uuid,
 				root: structure,
@@ -1210,7 +1210,7 @@ function getNextName({
 	});
 }
 
-function getUndeletableItems(
+function getUndeletableChildren(
 	items: StructureChild[],
 	structure: Structure
 ): Map<Uuid, UndeletableReason> {

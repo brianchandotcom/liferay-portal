@@ -38,15 +38,11 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
-		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		CountSearchRequestExecutor countSearchRequestExecutor =
 			new CountSearchRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutor, "_commonSearchRequestBuilderAssembler",
-			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
@@ -87,20 +83,12 @@ public class SearchRequestExecutorFixture {
 			elasticsearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
 
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler =
-				new CommonSearchRequestBuilderAssemblerImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_countSearchRequestExecutor",
-			_createCountSearchRequestExecutor(
-				commonSearchRequestBuilderAssembler,
-				elasticsearchClientResolver));
+			_createCountSearchRequestExecutor(elasticsearchClientResolver));
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
-			_createSearchSearchRequestAssembler(
-				commonSearchRequestBuilderAssembler,
-				statsRequestBuilderFactory);
+			_createSearchSearchRequestAssembler(statsRequestBuilderFactory);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			_createSearchSearchResponseAssembler(statsRequestBuilderFactory);
@@ -124,16 +112,11 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
-		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			new SearchSearchRequestAssemblerImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler,
-			"_commonSearchRequestBuilderAssembler",
-			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
 			statsRequestBuilderFactory);

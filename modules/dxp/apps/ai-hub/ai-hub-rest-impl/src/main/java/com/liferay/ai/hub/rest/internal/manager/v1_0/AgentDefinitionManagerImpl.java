@@ -96,10 +96,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 		}
 
 		Page<ObjectEntry> page = _objectEntryManager.getObjectEntries(
-			companyId,
-			_objectDefinitionLocalService.getObjectDefinition(
-				companyId, "AIHubAgentDefinition"),
-			null, null, dtoConverterContext, filter, pagination, search, sorts);
+			companyId, _getObjectDefinition(companyId), null, null,
+			dtoConverterContext, filter, pagination, search, sorts);
 
 		return Page.of(
 			actions,
@@ -119,8 +117,7 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		ObjectEntry objectEntry = _objectEntryManager.partialUpdateObjectEntry(
 			companyId, dtoConverterContext, externalReferenceCode,
-			_objectDefinitionLocalService.getObjectDefinition(
-				companyId, "AIHubAgentDefinition"),
+			_getObjectDefinition(companyId),
 			new ObjectEntry() {
 				{
 					setProperties(() -> Map.of("active", active));
@@ -191,7 +188,11 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
 										"inputVariables")),
-								"name", StringUtil.randomString(),
+								"name",
+								LanguageUtil.format(
+									locale, "copy-of-x",
+									GetterUtil.getString(
+										objectEntry.getPropertyValue("name"))),
 								"outputVariable",
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(

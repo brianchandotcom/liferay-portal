@@ -30,7 +30,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByResponse;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
-import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
@@ -270,8 +269,7 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 	}
 
 	protected SearchHit toSearchHit(Document document) {
-		SearchHitBuilder searchHitBuilder =
-			_searchHitBuilderFactory.getSearchHitBuilder();
+		SearchHitBuilder searchHitBuilder = new SearchHitBuilder();
 
 		return searchHitBuilder.document(
 			_documentBuilderFactory.builder(
@@ -399,9 +397,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private SearchHitBuilderFactory _searchHitBuilderFactory;
 
 	@Reference
 	private SearchHitsBuilderFactory _searchHitsBuilderFactory;

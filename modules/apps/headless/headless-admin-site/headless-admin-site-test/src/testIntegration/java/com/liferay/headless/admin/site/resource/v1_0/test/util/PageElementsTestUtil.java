@@ -28,6 +28,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyl
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewportDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
@@ -41,6 +42,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageEleme
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
@@ -55,6 +57,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.scope.Scope;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -747,6 +750,100 @@ public class PageElementsTestUtil {
 			});
 
 		return collectionDisplayPageElement;
+	}
+
+	private static PageElement _getCollectionDisplayPageElement(
+			String fieldKey, String fragmentKey, JournalArticle journalArticle,
+			int position, long scopeGroupId)
+		throws Exception {
+
+		PageElement[] pageElements = {
+			_getBasicFragmentPageElement(
+				null,
+				FragmentMappedValueItemContextReference.ContextSource.
+					COLLECTION_ITEM,
+				null, fieldKey, fragmentKey, null, scopeGroupId)
+		};
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		AssetListEntry assetListEntry = _addAssetListEntry(
+			company.getGroupId(), journalArticle);
+
+		CollectionItemExternalReference collectionItemExternalReference =
+			new CollectionItemExternalReference();
+
+		collectionItemExternalReference.setCollectionType(
+			CollectionReference.CollectionType.COLLECTION);
+		collectionItemExternalReference.setExternalReferenceCode(
+			assetListEntry.getExternalReferenceCode());
+		collectionItemExternalReference.setScope(
+			new Scope() {
+				{
+					setExternalReferenceCode("L_GLOBAL");
+					setType(Type.SITE);
+				}
+			});
+
+		PageElement pageElement = _getPageElement(
+			_getCollectionDisplayPageElementDefinition(
+				collectionItemExternalReference, Boolean.FALSE),
+			StringPool.BLANK, position);
+
+		pageElement.setPageElements(
+			new PageElement[] {
+				_getPageElement(
+					RandomTestUtil.randomString(),
+					getPageElementDefinition(
+						Boolean.FALSE,
+						PageElementDefinition.Type.COLLECTION_ITEM,
+						scopeGroupId),
+					pageElements, pageElement.getExternalReferenceCode(), 0)
+			});
+
+		pageElement.setPosition(position);
+
+		return pageElement;
+	}
+
+	private static CollectionDisplayPageElementDefinition
+		_getCollectionDisplayPageElementDefinition(
+			CollectionReference curCollectionReference, Boolean curHidden) {
+
+		return new CollectionDisplayPageElementDefinition() {
+			{
+				setCollectionDisplayListStyle(_getCollectionDisplayListStyle());
+				setCollectionDisplayViewports(
+					new CollectionDisplayViewport[] {
+						new CollectionDisplayViewport() {
+							{
+								setCollectionDisplayViewportDefinition(
+									new CollectionDisplayViewportDefinition() {
+										{
+											setHidden(curHidden);
+											setNumberOfColumns(1);
+										}
+									});
+								setId(Id.DESKTOP);
+							}
+						}
+					});
+				setCollectionSettings(
+					new CollectionSettings() {
+						{
+							setCollectionReference(curCollectionReference);
+						}
+					});
+				setDisplayAllItems(Boolean.FALSE);
+				setDisplayAllPages(Boolean.TRUE);
+				setNumberOfItems(5);
+				setNumberOfItemsPerPage(5);
+				setNumberOfPages(20);
+				setPaginationType(PaginationType.NONE);
+				setType(Type.COLLECTION_DISPLAY);
+			}
+		};
 	}
 
 	private static String _getExternalGlobalGroupTemplateFieldKey(

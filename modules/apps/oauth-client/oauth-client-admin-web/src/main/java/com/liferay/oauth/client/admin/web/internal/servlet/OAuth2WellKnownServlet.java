@@ -7,8 +7,10 @@ package com.liferay.oauth.client.admin.web.internal.servlet;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -48,6 +50,12 @@ public class OAuth2WellKnownServlet extends HttpServlet {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
+
+			return;
+		}
 
 		httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);

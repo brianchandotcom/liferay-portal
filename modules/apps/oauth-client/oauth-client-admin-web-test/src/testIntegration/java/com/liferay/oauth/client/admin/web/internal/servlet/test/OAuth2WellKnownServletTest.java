@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -33,6 +34,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alvaro Saugar
  */
+@FeatureFlag("LPD-63415")
 @RunWith(Arquillian.class)
 public class OAuth2WellKnownServletTest {
 

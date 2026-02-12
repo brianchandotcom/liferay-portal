@@ -9,9 +9,11 @@ import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPor
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -121,6 +123,12 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 		}
 		catch (ParseException parseException) {
 			throw new RuntimeException(parseException);
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
+
+			return "/admin/update_oauth_client_as_local_metadata_old.jsp";
 		}
 
 		return "/admin/update_oauth_client_as_local_metadata.jsp";

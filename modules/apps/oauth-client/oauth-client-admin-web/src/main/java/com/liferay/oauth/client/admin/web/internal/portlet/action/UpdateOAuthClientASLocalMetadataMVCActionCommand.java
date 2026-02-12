@@ -11,9 +11,11 @@ import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -46,70 +48,79 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		try {
-			String authorizationEndpoint = ParamUtil.getString(
-				actionRequest, "authorization_endpoint");
+			if (!FeatureFlagManagerUtil.isEnabled(
+					CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
 
-			_validateOptionalHttps(authorizationEndpoint);
-
-			Boolean enabledLocalWellKnown = ParamUtil.getBoolean(
-				actionRequest, "enabled");
-
-			String issuer = ParamUtil.getString(actionRequest, "issuer");
-
-			_validateRequiredHttps(issuer);
-
-			String jwksUri = ParamUtil.getString(actionRequest, "jwks_uri");
-
-			_validateOptionalHttps(jwksUri);
-
-			String supportedGrantTypes = ParamUtil.getString(
-				actionRequest, "supported-grant-types");
-			String supportedScopes = ParamUtil.getString(
-				actionRequest, "supported-scopes");
-			String supportedSubjectTypes = ParamUtil.getString(
-				actionRequest, "supported_subject_types");
-
-			String tokenEndpoint = ParamUtil.getString(
-				actionRequest, "token_endpoint");
-
-			_validateOptionalHttps(tokenEndpoint);
-
-			String userInfoEndpoint = ParamUtil.getString(
-				actionRequest, "userinfo_endpoint");
-
-			_validateOptionalHttps(userInfoEndpoint);
-
-			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
-				actionRequest, "oAuthClientASLocalMetadataId");
-
-			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-				_oAuthClientASLocalMetadataService.
-					fetchOAuthClientASLocalMetadata(
-						oAuthClientASLocalMetadataId);
-
-			if (oAuthClientASLocalMetadata == null) {
-				_oAuthClientASLocalMetadataService.
-					addOAuthClientASLocalMetadata(
-						authorizationEndpoint, issuer, jwksUri,
-						enabledLocalWellKnown,
-						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
-						StringUtil.split(supportedScopes, StringPool.COMMA),
-						StringUtil.split(
-							supportedSubjectTypes, StringPool.COMMA),
-						tokenEndpoint, userInfoEndpoint);
+				_processActionNoOauthAuthorizationServer(actionRequest);
 			}
 			else {
-				_oAuthClientASLocalMetadataService.
-					updateOAuthClientASLocalMetadata(
-						oAuthClientASLocalMetadata.
-							getOAuthClientASLocalMetadataId(),
-						authorizationEndpoint, issuer, jwksUri,
-						enabledLocalWellKnown,
-						StringUtil.split(supportedGrantTypes, StringPool.COMMA),
-						StringUtil.split(supportedScopes, StringPool.COMMA),
-						StringUtil.split(
-							supportedSubjectTypes, StringPool.COMMA),
-						tokenEndpoint, userInfoEndpoint);
+				String authorizationEndpoint = ParamUtil.getString(
+					actionRequest, "authorization_endpoint");
+
+				_validateOptionalHttps(authorizationEndpoint);
+
+				Boolean enabledLocalWellKnown = ParamUtil.getBoolean(
+					actionRequest, "enabled");
+
+				String issuer = ParamUtil.getString(actionRequest, "issuer");
+
+				_validateRequiredHttps(issuer);
+
+				String jwksUri = ParamUtil.getString(actionRequest, "jwks_uri");
+
+				_validateOptionalHttps(jwksUri);
+
+				String supportedGrantTypes = ParamUtil.getString(
+					actionRequest, "supported-grant-types");
+				String supportedScopes = ParamUtil.getString(
+					actionRequest, "supported-scopes");
+				String supportedSubjectTypes = ParamUtil.getString(
+					actionRequest, "supported_subject_types");
+
+				String tokenEndpoint = ParamUtil.getString(
+					actionRequest, "token_endpoint");
+
+				_validateOptionalHttps(tokenEndpoint);
+
+				String userInfoEndpoint = ParamUtil.getString(
+					actionRequest, "userinfo_endpoint");
+
+				_validateOptionalHttps(userInfoEndpoint);
+
+				Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+					actionRequest, "oAuthClientASLocalMetadataId");
+
+				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+					_oAuthClientASLocalMetadataService.
+						fetchOAuthClientASLocalMetadata(
+							oAuthClientASLocalMetadataId);
+
+				if (oAuthClientASLocalMetadata == null) {
+					_oAuthClientASLocalMetadataService.
+						addOAuthClientASLocalMetadata(
+							authorizationEndpoint, issuer, jwksUri,
+							enabledLocalWellKnown,
+							StringUtil.split(
+								supportedGrantTypes, StringPool.COMMA),
+							StringUtil.split(supportedScopes, StringPool.COMMA),
+							StringUtil.split(
+								supportedSubjectTypes, StringPool.COMMA),
+							tokenEndpoint, userInfoEndpoint);
+				}
+				else {
+					_oAuthClientASLocalMetadataService.
+						updateOAuthClientASLocalMetadata(
+							oAuthClientASLocalMetadata.
+								getOAuthClientASLocalMetadataId(),
+							authorizationEndpoint, issuer, jwksUri,
+							enabledLocalWellKnown,
+							StringUtil.split(
+								supportedGrantTypes, StringPool.COMMA),
+							StringUtil.split(supportedScopes, StringPool.COMMA),
+							StringUtil.split(
+								supportedSubjectTypes, StringPool.COMMA),
+							tokenEndpoint, userInfoEndpoint);
+				}
 			}
 
 			return true;
@@ -124,6 +135,30 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 			SessionErrors.add(actionRequest, clazz.getName(), portalException);
 
 			return false;
+		}
+	}
+
+	private void _processActionNoOauthAuthorizationServer(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		String localWellKnownURI = ParamUtil.getString(
+			actionRequest, "localWellKnownURI");
+		String metadataJSON = ParamUtil.getString(
+			actionRequest, "metadataJSON");
+
+		if (Validator.isNull(localWellKnownURI)) {
+			_oAuthClientASLocalMetadataService.addOAuthClientASLocalMetadata(
+				metadataJSON, "openid-configuration");
+		}
+		else {
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				_oAuthClientASLocalMetadataService.
+					getOAuthClientASLocalMetadata(localWellKnownURI);
+
+			_oAuthClientASLocalMetadataService.updateOAuthClientASLocalMetadata(
+				oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId(),
+				metadataJSON, "openid-configuration");
 		}
 	}
 

@@ -256,9 +256,8 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			throw new RuntimeException(ioException);
 		}
 
-		String latestBundleVersion = JenkinsResultsParserUtil.getProperty(
-			buildProperties, "portal.latest.bundle.version",
-			getUpstreamBranchName());
+		String latestBundleVersion =
+			System.getenv("PORTAL_LATEST_BUNDLE_VERSION");
 
 		if (!JenkinsResultsParserUtil.isNullOrEmpty(latestBundleVersion)) {
 			testProperties.put(

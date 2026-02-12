@@ -15,7 +15,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -163,17 +162,15 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 
 		Locale locale = dtoConverterContext.getLocale();
 
-		workflowDefinition =
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				null, workflowDefinition.getCompanyId(),
-				workflowDefinition.getUserId(),
-				LanguageUtil.format(
-					locale, "copy-of-x",
-					workflowDefinition.getTitle(locale.getDisplayLanguage())),
-				StringUtil.randomString(), WorkflowDefinitionConstants.SCOPE_AI,
-				content.getBytes());
+		String workflowDefinitionName = StringUtil.randomString();
 
-		String workflowDefinitionName = workflowDefinition.getName();
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			null, companyId, dtoConverterContext.getUserId(),
+			LanguageUtil.format(
+				locale, "copy-of-x",
+				workflowDefinition.getTitle(locale.getDisplayLanguage())),
+			workflowDefinitionName, WorkflowDefinitionConstants.SCOPE_AI,
+			content.getBytes());
 
 		return _toAgentDefinition(
 			companyId, dtoConverterContext,
@@ -194,6 +191,7 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
 										"inputVariables")),
+								"name", StringUtil.randomString(),
 								"outputVariable",
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(

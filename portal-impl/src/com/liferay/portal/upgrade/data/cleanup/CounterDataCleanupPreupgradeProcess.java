@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -87,10 +88,16 @@ public class CounterDataCleanupPreupgradeProcess
 
 				String tableName =
 					DataCleanupPreupgradeProcessUtil.getTableName(
-						true, connection, dbInspector, counterName,
-						_liferayTableNames);
+						connection, dbInspector, counterName);
 
 				if (tableName == null) {
+					tableName = StringUtil.extractLast(counterName, '.');
+				}
+
+				if ((tableName == null) ||
+					!DataCleanupPreupgradeProcessUtil.isLiferayTable(
+						dbInspector, _liferayTableNames, tableName)) {
+
 					continue;
 				}
 

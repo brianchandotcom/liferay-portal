@@ -51,9 +51,8 @@ public class DataCleanupPreupgradeProcessUtil {
 	}
 
 	public static String getTableName(
-			boolean applyFallback, Connection connection,
-			DBInspector dbInspector, String fullyQualifiedName,
-			Set<String> liferayTableNames)
+			Connection connection, DBInspector dbInspector,
+			String fullyQualifiedName)
 		throws Exception {
 
 		String tableName = null;
@@ -109,16 +108,6 @@ public class DataCleanupPreupgradeProcessUtil {
 					_log.debug(classNotFoundException);
 				}
 			}
-		}
-
-		if ((tableName == null) && applyFallback) {
-			tableName = StringUtil.extractLast(fullyQualifiedName, '.');
-		}
-
-		if ((tableName == null) ||
-			!isLiferayTable(dbInspector, liferayTableNames, tableName)) {
-
-			return null;
 		}
 
 		return tableName;

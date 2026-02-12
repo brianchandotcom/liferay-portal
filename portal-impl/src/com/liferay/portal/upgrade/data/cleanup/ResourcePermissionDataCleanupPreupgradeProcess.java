@@ -63,15 +63,13 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 					if (classNames.length == 1) {
 						tableName =
 							DataCleanupPreupgradeProcessUtil.getTableName(
-								false, connection, dbInspector, classNames[0],
-								liferayTableNames);
+								connection, dbInspector, classNames[0]);
 					}
 					else {
 						for (String className : classNames) {
 							tableName =
 								DataCleanupPreupgradeProcessUtil.getTableName(
-									false, connection, dbInspector, className,
-									liferayTableNames);
+									connection, dbInspector, className);
 
 							if (StringUtil.startsWith(tableName, "DDM")) {
 								break;
@@ -81,7 +79,10 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 						}
 					}
 
-					if (tableName == null) {
+					if ((tableName == null) ||
+						!DataCleanupPreupgradeProcessUtil.isLiferayTable(
+							dbInspector, liferayTableNames, tableName)) {
+
 						continue;
 					}
 

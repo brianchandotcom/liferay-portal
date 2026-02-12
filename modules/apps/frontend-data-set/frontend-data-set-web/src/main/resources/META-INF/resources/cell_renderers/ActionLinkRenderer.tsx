@@ -12,6 +12,7 @@ import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../FrontendDataSetContext';
 import filterItemActions from '../utils/actionItems/filterItemActions';
+import findAction from '../utils/actionItems/findAction';
 import formatActionURL from '../utils/actionItems/formatActionURL';
 import {openPermissionsModal} from '../utils/modals/openPermissionsModal';
 import {EItemActionsType, IItemsActions} from '../utils/types';
@@ -36,25 +37,6 @@ function hasValue(value: any): boolean {
 
 	return typeof value === 'string' ? value.trim() !== '' : true;
 }
-
-const findAction = (
-	actions: IItemsActions[],
-	actionId: string
-): IItemsActions | undefined => {
-	for (const action of actions) {
-		if (action.data?.id === actionId) {
-			return action;
-		}
-
-		if (action.type === EItemActionsType.GROUP && action.items) {
-			const foundAction = findAction(action.items, actionId);
-
-			if (foundAction) {
-				return foundAction;
-			}
-		}
-	}
-};
 
 function ActionLinkRenderer({
 	actions,

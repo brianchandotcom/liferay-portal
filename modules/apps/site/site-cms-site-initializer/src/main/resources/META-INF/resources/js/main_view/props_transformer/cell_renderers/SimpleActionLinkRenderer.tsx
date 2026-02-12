@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
-import {replaceTokens} from '@liferay/frontend-data-set-web';
+import {findAction, replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
@@ -49,9 +49,7 @@ export default function SimpleActionLinkRenderer({
 
 	const resolvedActionId = isFolder ? `${actionId}Folder` : actionId;
 
-	const selectedAction = actions.find(
-		({data}) => data?.id === resolvedActionId
-	);
+	const selectedAction = findAction(actions, resolvedActionId);
 
 	if (!selectedAction?.href) {
 		return <>{title}</>;

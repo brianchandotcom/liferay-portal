@@ -8,17 +8,13 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilder;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.IndexName;
-import com.liferay.portal.search.opensearch2.internal.facet.FacetTranslator;
 import com.liferay.portal.search.opensearch2.internal.index.LiferayIndexFixture;
 import com.liferay.portal.search.opensearch2.internal.query.SearchAssert;
 import com.liferay.portal.search.query.Queries;
@@ -58,7 +54,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 		_liferayIndexFixture.setUp();
 
 		_commonSearchRequestBuilderAssembler =
-			createCommonSearchSourceBuilderAssembler();
+			new CommonSearchRequestBuilderAssemblerImpl();
 
 		_queries = new QueriesImpl();
 	}
@@ -558,29 +554,6 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 	@Rule
 	public TestName testName = new TestName();
-
-	protected static CommonSearchRequestBuilderAssembler
-		createCommonSearchSourceBuilderAssembler() {
-
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler =
-				new CommonSearchRequestBuilderAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
-			createComplexQueryBuilderFactory());
-		ReflectionTestUtil.setFieldValue(
-			commonSearchRequestBuilderAssembler, "_facetTranslator",
-			new FacetTranslator());
-
-		return commonSearchRequestBuilderAssembler;
-	}
-
-	protected static ComplexQueryBuilderFactory
-		createComplexQueryBuilderFactory() {
-
-		return () -> new ComplexQueryBuilder();
-	}
 
 	private void _addPart(
 		String occur, Query query, SearchSearchRequest searchSearchRequest) {

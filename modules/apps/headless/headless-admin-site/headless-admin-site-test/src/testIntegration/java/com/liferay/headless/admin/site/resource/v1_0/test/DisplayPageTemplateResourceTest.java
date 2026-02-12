@@ -29,17 +29,25 @@ import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateR
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.SettingsTestUtil;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
@@ -71,6 +79,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -838,6 +847,60 @@ public class DisplayPageTemplateResourceTest
 		).build();
 	}
 
+	private LayoutDisplayPageObjectProvider<Object>
+		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
+
+		return new LayoutDisplayPageObjectProvider<>() {
+
+			@Override
+			public long getClassNameId() {
+				return PortalUtil.getClassNameId(
+					"com.liferay.journal.model.JournalArticle");
+			}
+
+			@Override
+			public long getClassPK() {
+				return GetterUtil.getLong(journalArticle.getArticleId());
+			}
+
+			@Override
+			public long getClassTypeId() {
+				return 0;
+			}
+
+			@Override
+			public String getDescription(Locale locale) {
+				return "";
+			}
+
+			@Override
+			public Object getDisplayObject() {
+				return journalArticle;
+			}
+
+			@Override
+			public long getGroupId() {
+				return journalArticle.getGroupId();
+			}
+
+			@Override
+			public String getKeywords(Locale locale) {
+				return "";
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return "";
+			}
+
+			@Override
+			public String getURLTitle(Locale locale) {
+				return "";
+			}
+
+		};
+	}
+
 	private String _getLayoutPageTemplateCollectionExternalReferenceCode(
 			long groupId)
 		throws Exception {
@@ -864,6 +927,27 @@ public class DisplayPageTemplateResourceTest
 
 		return _getClassSubtypeReference(
 			"com.liferay.journal.model.JournalArticle");
+	}
+
+	private String _getRenderDisplayPageTemplate(
+			String externalReferenceCode, JournalArticle journalArticle)
+		throws Exception {
+
+		return ContentLayoutTestUtil.getRenderLayoutHTML(
+			HashMapBuilder.<String, Object>put(
+				InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+				new InfoItemDetails(
+					new InfoItemClassDetails(
+						"com.liferay.journal.model.JournalArticle"),
+					new InfoItemReference(
+						"com.liferay.journal.model.JournalArticle",
+						new ERCInfoItemIdentifier(
+							journalArticle.getExternalReferenceCode(),
+							"L_GLOBAL")))
+			).build(),
+			externalReferenceCode, testGroup,
+			_getLayoutDisplayPageObjectProvider(journalArticle),
+			_layoutServiceContextHelper, _layoutStructureProvider);
 	}
 
 	private boolean _isPublished(Layout layout) {
@@ -2200,6 +2284,12 @@ public class DisplayPageTemplateResourceTest
 	@Inject
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Inject
+	private LayoutServiceContextHelper _layoutServiceContextHelper;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject(
 		filter = "mvc.command.name=/layout_content_page_editor/publish_layout_page_template_entry"

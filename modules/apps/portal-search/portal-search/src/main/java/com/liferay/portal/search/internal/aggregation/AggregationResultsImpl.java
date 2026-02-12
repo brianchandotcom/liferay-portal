@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.bucket.ChildrenAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.DateHistogramAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.DiversifiedSamplerAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.FilterAggregationResultImpl;
@@ -127,7 +126,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public ChildrenAggregationResult children(String name, long docCount) {
-		return new ChildrenAggregationResultImpl(name, docCount);
+		return new ChildrenAggregationResult(name, docCount);
 	}
 
 	@Override

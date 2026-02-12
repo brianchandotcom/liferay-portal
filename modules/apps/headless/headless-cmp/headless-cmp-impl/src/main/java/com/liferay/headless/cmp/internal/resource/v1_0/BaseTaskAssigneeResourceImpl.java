@@ -54,6 +54,10 @@ public abstract class BaseTaskAssigneeResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "type"
 			)
 		}
 	)
@@ -67,7 +71,10 @@ public abstract class BaseTaskAssigneeResourceImpl
 	public Page<TaskAssignee> getTaskAssigneesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
-			String search)
+			String search,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.QueryParam("type")
+			String type)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());

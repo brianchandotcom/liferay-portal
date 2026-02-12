@@ -185,7 +185,7 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 	@Test
 	public void testGetTaskAssigneesPage() throws Exception {
 		Page<TaskAssignee> page = taskAssigneeResource.getTaskAssigneesPage(
-			null);
+			null, RandomTestUtil.randomString());
 
 		long totalCount = page.getTotalCount();
 
@@ -195,7 +195,7 @@ public abstract class BaseTaskAssigneeResourceTestCase {
 		TaskAssignee taskAssignee2 = testGetTaskAssigneesPage_addTaskAssignee(
 			randomTaskAssignee());
 
-		page = taskAssigneeResource.getTaskAssigneesPage(null);
+		page = taskAssigneeResource.getTaskAssigneesPage(null, null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 

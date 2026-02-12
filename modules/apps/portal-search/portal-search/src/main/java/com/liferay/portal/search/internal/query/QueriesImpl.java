@@ -248,7 +248,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public NestedQuery nested(String path, Query query) {
-		return new NestedQueryImpl(path, query);
+		return new NestedQuery(path, query);
 	}
 
 	@Override

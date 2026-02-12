@@ -58,7 +58,7 @@ public class MultisearchSearchRequestExecutorImpl
 				SearchSourceBuilder searchSourceBuilder =
 					new SearchSourceBuilder();
 
-				_searchSearchRequestAssembler.assemble(
+				SearchSearchRequestAssembler.INSTANCE.assemble(
 					searchSourceBuilder, searchSearchRequest, searchRequest);
 
 				SearchRequestHolder searchRequestHolder =
@@ -143,9 +143,6 @@ public class MultisearchSearchRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private SearchSearchRequestAssembler _searchSearchRequestAssembler;
 
 	@Reference
 	private SearchSearchResponseAssembler _searchSearchResponseAssembler;

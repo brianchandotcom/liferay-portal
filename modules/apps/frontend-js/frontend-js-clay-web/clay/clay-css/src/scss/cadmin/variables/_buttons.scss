@@ -208,6 +208,10 @@ $cadmin-btn-sm: map-deep-merge(
 		btn-section: (
 			font-size: $cadmin-btn-section-font-size-sm,
 		),
+
+		lexicon-icon: (
+			font-size: 16px,
+		),
 	),
 	$cadmin-btn-sm
 );

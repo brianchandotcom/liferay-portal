@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -230,6 +231,12 @@ public class DropZoneDocumentFragmentEntryProcessor
 				Element dropZoneElement = new Element("div");
 
 				for (Attribute attribute : element.attributes()) {
+					if (StringUtil.startsWith(
+							attribute.getKey(), "data-lfr-")) {
+
+						continue;
+					}
+
 					dropZoneElement.attr(
 						attribute.getKey(), attribute.getValue());
 				}

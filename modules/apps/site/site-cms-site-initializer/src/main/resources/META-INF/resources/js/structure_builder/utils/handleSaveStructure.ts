@@ -26,7 +26,11 @@ type Props = {
 	validate: () => boolean;
 };
 
-export async function saveStructure({dispatch, state, validate}: Props) {
+export default async function handleSaveStructure({
+	dispatch,
+	state,
+	validate,
+}: Props) {
 	const valid = validate();
 
 	if (!valid) {

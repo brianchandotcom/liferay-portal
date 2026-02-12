@@ -9,14 +9,14 @@ import {useEffect, useMemo} from 'react';
 import {useCache, useStaleCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
-import {createRepeatableGroup} from '../utils/createRepeatableGroup';
 import findChild from '../utils/findChild';
+import handleAddRepeatableGroup from '../utils/handleAddRepeatableGroup';
 import handleDeleteChildren from '../utils/handleDeleteChildren';
+import handlePublishStructure from '../utils/handlePublishStructure';
+import handleSaveStructure from '../utils/handleSaveStructure';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
-import {publishStructure} from '../utils/publishStructure';
-import {saveStructure} from '../utils/saveStructure';
 import {useValidate} from '../utils/validation';
 
 type Combo = string;
@@ -120,7 +120,7 @@ export default function ShortcutManager() {
 		map.set('Ctrl+G', {
 			enabled: () => Boolean(selection.length),
 			handler: () =>
-				createRepeatableGroup({
+				handleAddRepeatableGroup({
 					dispatch,
 					publishedChildren,
 					uuids: selection,
@@ -156,7 +156,7 @@ export default function ShortcutManager() {
 		map.set('Ctrl+S', {
 			enabled: () => structure.status !== 'published',
 			handler: () =>
-				saveStructure({
+				handleSaveStructure({
 					dispatch,
 					state,
 					validate,
@@ -168,7 +168,7 @@ export default function ShortcutManager() {
 		map.set('Ctrl+P', {
 			enabled: () => true,
 			handler: () =>
-				publishStructure({
+				handlePublishStructure({
 					dispatch,
 					showExperienceLink: true,
 					staleCache,

@@ -36,7 +36,7 @@ type Props = {
 	validate: () => boolean;
 };
 
-export async function publishStructure({
+export default async function handlePublishStructure({
 	dispatch,
 	showExperienceLink,
 	showWarnings = true,

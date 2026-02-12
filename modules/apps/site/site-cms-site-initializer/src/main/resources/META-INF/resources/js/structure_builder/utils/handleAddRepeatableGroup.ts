@@ -9,7 +9,7 @@ import {Action, State} from '../contexts/StateContext';
 import {Uuid} from '../types/Uuid';
 import confirmDeletionAction from './confirmDeletionAction';
 
-export async function createRepeatableGroup({
+export default async function handleAddRepeatableGroup({
 	dispatch,
 	publishedChildren,
 	uuids,

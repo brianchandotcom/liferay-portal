@@ -63,7 +63,8 @@ public class PageExperienceDTOConverter
 						true, segmentsExperience.getNameMap()));
 				setPageElements(
 					() -> _getPageElements(
-						dtoConverterContext, layoutPageTemplateStructureRel));
+						dtoConverterContext, layoutPageTemplateStructureRel,
+						layout.getPlid()));
 				setPageSpecificationExternalReferenceCode(
 					layout::getExternalReferenceCode);
 				setPriority(segmentsExperience::getPriority);
@@ -93,7 +94,8 @@ public class PageExperienceDTOConverter
 
 	private PageElement[] _getPageElements(
 		DTOConverterContext dtoConverterContext,
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel) {
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel,
+		long layoutPlid) {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructureRel.getData());
@@ -103,6 +105,7 @@ public class PageExperienceDTOConverter
 
 		dtoConverterContext.setAttribute(
 			"companyId", layoutPageTemplateStructureRel.getCompanyId());
+		dtoConverterContext.setAttribute("layoutPlid", layoutPlid);
 		dtoConverterContext.setAttribute(
 			"scopeGroupId", layoutPageTemplateStructureRel.getGroupId());
 

@@ -54,7 +54,7 @@ public class SearchSearchRequestAssemblerImpl
 		SearchSourceBuilder searchSourceBuilder,
 		SearchSearchRequest searchSearchRequest, SearchRequest searchRequest) {
 
-		_commonSearchSourceBuilderAssembler.assemble(
+		CommonSearchSourceBuilderAssembler.INSTANCE.assemble(
 			searchSourceBuilder, searchSearchRequest, searchRequest);
 
 		_setCollapse(searchSourceBuilder, searchSearchRequest);
@@ -334,10 +334,6 @@ public class SearchSearchRequestAssemblerImpl
 			searchSourceBuilder.version(searchSearchRequest.getVersion());
 		}
 	}
-
-	@Reference
-	private CommonSearchSourceBuilderAssembler
-		_commonSearchSourceBuilderAssembler;
 
 	private final GroupByTranslator _groupByTranslator =
 		new GroupByTranslator();

@@ -45,7 +45,7 @@ public class CountSearchRequestExecutorImpl
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		_commonSearchSourceBuilderAssembler.assemble(
+		CommonSearchSourceBuilderAssembler.INSTANCE.assemble(
 			searchSourceBuilder, countSearchRequest, searchRequest);
 
 		searchSourceBuilder.size(0);
@@ -116,10 +116,6 @@ public class CountSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
-
-	@Reference
-	private CommonSearchSourceBuilderAssembler
-		_commonSearchSourceBuilderAssembler;
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

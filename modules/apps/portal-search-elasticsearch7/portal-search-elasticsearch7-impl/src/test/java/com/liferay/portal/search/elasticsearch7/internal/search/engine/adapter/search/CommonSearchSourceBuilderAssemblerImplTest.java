@@ -52,9 +52,6 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 
 		_liferayIndexFixture.setUp();
 
-		_commonSearchSourceBuilderAssembler =
-			new CommonSearchSourceBuilderAssemblerImpl();
-
 		_queries = new QueriesImpl();
 	}
 
@@ -622,7 +619,7 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 
 		SearchRequest searchRequest = new SearchRequest();
 
-		_commonSearchSourceBuilderAssembler.assemble(
+		CommonSearchSourceBuilderAssembler.INSTANCE.assemble(
 			searchSourceBuilder, searchSearchRequest, searchRequest);
 
 		SearchAssert.assertSearch(
@@ -647,8 +644,6 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 			).build());
 	}
 
-	private CommonSearchSourceBuilderAssembler
-		_commonSearchSourceBuilderAssembler;
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory =
 			new ComplexQueryPartBuilderFactoryImpl();

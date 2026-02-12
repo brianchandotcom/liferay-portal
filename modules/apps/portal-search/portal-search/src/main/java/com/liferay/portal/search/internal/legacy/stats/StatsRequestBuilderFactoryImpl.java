@@ -6,7 +6,6 @@
 package com.liferay.portal.search.internal.legacy.stats;
 
 import com.liferay.portal.kernel.search.Stats;
-import com.liferay.portal.search.internal.stats.StatsRequestBuilderImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 
@@ -21,7 +20,7 @@ public class StatsRequestBuilderFactoryImpl
 
 	@Override
 	public StatsRequestBuilder getStatsRequestBuilder(Stats stats) {
-		StatsRequestBuilder statsRequestBuilder = new StatsRequestBuilderImpl();
+		StatsRequestBuilder statsRequestBuilder = new StatsRequestBuilder();
 
 		return statsRequestBuilder.count(
 			stats.isCount()

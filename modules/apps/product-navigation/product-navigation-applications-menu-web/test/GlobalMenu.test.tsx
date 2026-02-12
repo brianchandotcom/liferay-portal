@@ -29,6 +29,14 @@ const mockedData = {
 	],
 	portletNamespace: 'portletNamespace',
 	sites: {
+		mySites: [
+			{
+				key: 'Site1',
+				label: 'Site 1',
+				logoURL: 'Site1Logo',
+				url: 'site1Url',
+			},
+		],
 		recentSites: [
 			{
 				key: 'Recent1',

@@ -156,7 +156,7 @@ export default function CreateTaskModal({
 					}
 					id="r_cmpProjectToCMPTasks_c_cmpProjectId"
 					items={projects}
-					label={Liferay.Language.get('projects')}
+					label={Liferay.Language.get('project')}
 					name="r_cmpProjectToCMPTasks_c_cmpProjectId"
 					onSelectionChange={(key: string) => {
 						setFieldValue(

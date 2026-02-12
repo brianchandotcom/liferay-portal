@@ -221,10 +221,6 @@ public class ElasticsearchConfigurationWrapper
 		return _elasticsearchConfiguration.sidecarShutdownTimeout();
 	}
 
-	public boolean trackTotalHits() {
-		return _elasticsearchConfiguration.trackTotalHits();
-	}
-
 	public int trackTotalHitsLimit() {
 		return _elasticsearchConfiguration.trackTotalHitsLimit();
 	}

@@ -264,12 +264,6 @@ public interface ElasticsearchConfiguration {
 	public long sidecarShutdownTimeout();
 
 	@Meta.AD(
-		deflt = "true", description = "track-total-hits-help",
-		name = "track-total-hits", required = false
-	)
-	public boolean trackTotalHits();
-
-	@Meta.AD(
 		deflt = "2147483647", description = "track-total-hits-limit-help",
 		max = "2147483647", name = "track-total-hits-limit", required = false
 	)

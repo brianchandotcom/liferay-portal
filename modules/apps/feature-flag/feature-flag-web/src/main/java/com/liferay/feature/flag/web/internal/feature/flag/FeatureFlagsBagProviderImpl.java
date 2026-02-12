@@ -183,8 +183,11 @@ public class FeatureFlagsBagProviderImpl
 
 		featureFlagsBag.setEnabled(key, enabled);
 
+		ServiceTrackerMap<String, List<FeatureFlagListener>> serviceTrackerMap =
+			featureFlagsBagProviderImpl._serviceTrackerMap;
+
 		List<FeatureFlagListener> featureFlagListeners =
-			_serviceTrackerMap.getService(key);
+			serviceTrackerMap.getService(key);
 
 		if (featureFlagListeners != null) {
 			for (FeatureFlagListener featureFlagListener :
@@ -194,7 +197,7 @@ public class FeatureFlagsBagProviderImpl
 			}
 		}
 
-		featureFlagListeners = _serviceTrackerMap.getService("*");
+		featureFlagListeners = serviceTrackerMap.getService("*");
 
 		if (featureFlagListeners != null) {
 			for (FeatureFlagListener featureFlagListener :
@@ -400,8 +403,6 @@ public class FeatureFlagsBagProviderImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagsBagProviderImpl.class);
 
-	private static ServiceTrackerMap<String, List<FeatureFlagListener>>
-		_serviceTrackerMap;
 	private static final MethodKey _setEnabledMethodKey = new MethodKey(
 		FeatureFlagsBagProviderImpl.class, "_setEnabled", long.class,
 		String.class, boolean.class, String.class);
@@ -429,6 +430,8 @@ public class FeatureFlagsBagProviderImpl
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
 	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
+	private ServiceTrackerMap<String, List<FeatureFlagListener>>
+		_serviceTrackerMap;
 	private final Set<String> _systemFeatureFlags = new HashSet<>();
 
 	private class FeatureFlagListenerEagerServiceTrackerCustomizer

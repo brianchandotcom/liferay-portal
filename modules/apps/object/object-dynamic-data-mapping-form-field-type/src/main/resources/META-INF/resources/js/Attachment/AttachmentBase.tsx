@@ -12,7 +12,7 @@ import {
 } from 'data-engine-js-components-web';
 import {openSelectionModal} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
-import React, {ChangeEventHandler, useRef, useState} from 'react';
+import React, {ChangeEventHandler, useEffect, useRef, useState} from 'react';
 
 import FileContainer from './FileContainer';
 import CMSFilesItemSelectorModal, {
@@ -50,6 +50,10 @@ type CMSUploadResponse = {
 	id: number;
 	title: string;
 };
+
+interface Space {
+	externalReferenceCode: string;
+}
 
 export interface AttachmentBaseProps<TValue> {
 	acceptedFileExtensions: string;
@@ -106,12 +110,15 @@ export default function AttachmentBase({
 
 	const [cmsFiles, setCMSFiles] = useState<CMSFile[]>([]);
 	const [isLoading, setLoading] = useState(false);
+	const [spaces, setSpaces] = useState<Space[]>([]);
 
 	const {
 		observer: spaceItemSelectorObserver,
 		onOpenChange: spaceItemSelectorOpenChange,
 		open: spaceItemSelectorOpen,
 	} = useModal();
+
+	const DEFAULT_FOLDER_ERC = 'L_FILES';
 
 	const isDepotFiles =
 		Liferay.FeatureFlags['LPD-74813'] && fileSource === 'depotFiles';
@@ -180,48 +187,145 @@ export default function AttachmentBase({
 		}
 	};
 
+	useEffect(() => {
+		fetch(
+			"/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'"
+		)
+			.then((response) => response.json())
+			.then((data) => {
+				setSpaces(data.items ?? []);
+			});
+	}, []);
+
+	const resolveFolderId = async (
+		isVisible: boolean,
+		spaceERC: string,
+		folderName?: string
+	): Promise<{
+		objectEntryFolderExternalReferenceCode?: string;
+		objectEntryFolderId?: number;
+	}> => {
+		if (!folderName) {
+			return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
+		}
+
+		try {
+			const searchParams = new URLSearchParams({
+				nestedFields: 'embedded,scope',
+				pageSize: '30',
+				search: folderName,
+			});
+
+			const searchResponse = await fetch(
+				`/o/search/v1.0/search?${searchParams}`
+			);
+
+			if (searchResponse.ok) {
+				const {items = []} = await searchResponse.json();
+
+				const match = items.find((item: any) => {
+					const data = item.embedded ?? item;
+
+					return (
+						data.title === folderName &&
+						data.scope?.externalReferenceCode === spaceERC
+					);
+				});
+
+				const id = match?.embedded?.id ?? match?.id;
+
+				if (id) {
+					return {objectEntryFolderId: id};
+				}
+			}
+
+			const createBody: any = {
+				title: folderName,
+			};
+
+			if (isVisible) {
+				createBody.parentObjectEntryFolderExternalReferenceCode =
+					'L_FILES';
+			}
+
+			const createResponse = await fetch(
+				`/o/headless-object/v1.0/scopes/${spaceERC}/object-entry-folders`,
+				{
+					body: JSON.stringify(createBody),
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'POST',
+				}
+			);
+
+			if (createResponse.ok) {
+				const {id} = await createResponse.json();
+
+				if (id) {
+					return {objectEntryFolderId: id};
+				}
+			}
+		}
+		catch (error) {
+			console.warn('Folder resolution failed', error);
+		}
+
+		return {objectEntryFolderExternalReferenceCode: DEFAULT_FOLDER_ERC};
+	};
+
 	const uploadToCMS = async (
 		file: File,
 		storageLibraryPath: string | undefined,
 		storageDepot: string | undefined
 	): Promise<AttachmentFile & {id: string}> => {
+		const spaceERC = storageDepot || spaces[0]?.externalReferenceCode || '';
+
 		const fileBase64 = await getBase64(file);
 
+		const isVisible = !!storageDepot;
+
+		const folderName = storageLibraryPath
+			? storageLibraryPath.replace(/^\//, '')
+			: 'HIDDEN_FILES';
+
+		const folder = await resolveFolderId(
+			isVisible,
+			String(spaceERC),
+			folderName
+		);
+
+		const body = {
+			...folder,
+			file: {
+				fileBase64,
+				name: file.name,
+			},
+			title: file.name,
+		};
+
 		const response = (await makeFetch({
-			body: JSON.stringify({
-				file: {
-					fileBase64,
-					name: file.name,
-				},
-				objectEntryFolderExternalReferenceCode:
-					storageLibraryPath || 'L_FILES',
-				title: file.name,
-			}),
+			body: JSON.stringify(body),
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 			} as {Accept: string} & Record<string, string>,
 			method: 'POST',
-			url: `/o/cms/basic-documents/scopes/${storageDepot}`,
-		})) as any;
+			url: `/o/cms/basic-documents/scopes/${spaceERC}`,
+		})) as CMSUploadResponse & {status?: string; title?: string};
 
-		if (response.status && response.status !== 'OK') {
-			throw new Error(response.title);
-		}
+		const fileUrlPath = response.contentURL || response.file?.link?.href;
 
-		const validResponse = response as CMSUploadResponse;
+		const previewUrl = new URL(fileUrlPath, window.location.origin);
 
-		const contentURL = `${window.location.origin}${validResponse.file.link.href}`;
-		const previewURL = new URL(contentURL);
-
-		previewURL.searchParams.delete('download');
+		previewUrl.searchParams.delete('download');
 
 		return {
-			contentURL: String(previewURL),
-			fileEntryId: String(validResponse.file.id),
-			id: String(validResponse.id),
+			contentURL: previewUrl.toString(),
+			fileEntryId: String(response.id),
+			id: String(response.file?.id),
 			source: 'cms',
-			title: validResponse.title,
+			title: response.title,
 		};
 	};
 

@@ -18,7 +18,7 @@
 
 			<div class="input-group-inset-item input-group-inset-item-after">
 				<clay:button
-					aria-label='<%= LanguageUtil.get(request, "submit") %>'
+					aria-label='<%= LanguageUtil.get(request, "search") %>'
 					disabled="<%= fragmentCollectionFilterKeywordDisplayContext.isDisabled() %>"
 					displayType="unstyled"
 					icon="search"

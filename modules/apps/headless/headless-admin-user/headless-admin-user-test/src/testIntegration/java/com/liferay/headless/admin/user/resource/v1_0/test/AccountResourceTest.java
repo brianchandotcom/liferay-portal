@@ -1905,6 +1905,9 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		PostalAddress postalAddress = _randomPostalAddress();
 
+		postalAddress.setAddressType(
+			AccountListTypeConstants.
+				ACCOUNT_ENTRY_ADDRESS_TYPE_BILLING_AND_SHIPPING);
 		postalAddress.setPhoneNumber(RandomTestUtil.randomString());
 
 		postAccount.setPostalAddresses(new PostalAddress[] {postalAddress});
@@ -1920,7 +1923,8 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 		Assert.assertEquals(
 			postalAddress.getPhoneNumber(), address.getPhoneNumber());
 
-		postalAddress.setId(address.getAddressId());
+		postalAddress.setExternalReferenceCode(
+			address.getExternalReferenceCode());
 
 		postalAddress.setPhoneNumber(RandomTestUtil.randomString() + "1");
 
@@ -1935,9 +1939,12 @@ public class AccountResourceTest extends BaseAccountResourceTestCase {
 
 		address = addresses.get(0);
 
-		Assert.assertEquals(postAccount.getId(), patchAccount.getId());
 		Assert.assertEquals(
-			GetterUtil.getLong(postalAddress.getId()), address.getAddressId());
+			postAccount.getExternalReferenceCode(),
+			patchAccount.getExternalReferenceCode());
+		Assert.assertEquals(
+			postalAddress.getExternalReferenceCode(),
+			address.getExternalReferenceCode());
 		Assert.assertEquals(
 			postalAddress.getPhoneNumber(), address.getPhoneNumber());
 	}

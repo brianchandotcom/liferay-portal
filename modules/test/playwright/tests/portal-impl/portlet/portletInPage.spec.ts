@@ -169,17 +169,23 @@ test.describe('UI Infrastructure WidgetPage Use Cases', () => {
 		});
 
 		await test.step('Verify that all portlets are in the correct column', async () => {
-			for (const [index, portlet] of [
-				CLAY_PORTLET_NAME,
-				MESSAGE_BOARDS_PORTLET_NAME,
-				DOCUMENTS_AND_MEDIA_PORTLET_NAME,
-			].entries()) {
-				await expectPortletInColumn({
-					columnNumber: index + 1,
-					page,
-					portletName: portlet,
-				});
-			}
+			await expectPortletInColumn({
+				columnNumber: 1,
+				page,
+				portletName: CLAY_PORTLET_NAME,
+			});
+
+			await expectPortletInColumn({
+				columnNumber: 2,
+				page,
+				portletName: MESSAGE_BOARDS_PORTLET_NAME,
+			});
+
+			await expectPortletInColumn({
+				columnNumber: 3,
+				page,
+				portletName: DOCUMENTS_AND_MEDIA_PORTLET_NAME,
+			});
 		});
 	});
 });

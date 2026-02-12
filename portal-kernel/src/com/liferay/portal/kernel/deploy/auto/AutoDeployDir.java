@@ -135,6 +135,56 @@ public class AutoDeployDir {
 		return _name;
 	}
 
+	public void scanDirectory() {
+		File[] files = _deployDir.listFiles();
+
+		if (files == null) {
+			return;
+		}
+
+		Set<String> blacklistedFileNames = _blacklistFileTimestamps.keySet();
+
+		Iterator<String> iterator = blacklistedFileNames.iterator();
+
+		while (iterator.hasNext()) {
+			String blacklistedFileName = iterator.next();
+
+			boolean blacklistedFileExists = false;
+
+			for (File file : files) {
+				if (StringUtil.equalsIgnoreCase(
+						blacklistedFileName, file.getName())) {
+
+					blacklistedFileExists = true;
+				}
+			}
+
+			if (!blacklistedFileExists) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Remove blacklisted file " + blacklistedFileName +
+							" because it was deleted");
+				}
+
+				iterator.remove();
+			}
+		}
+
+		for (File file : files) {
+			String fileName = file.getName();
+
+			fileName = StringUtil.toLowerCase(fileName);
+
+			if (file.isFile() &&
+				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
+				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
+				 fileName.endsWith(".zip"))) {
+
+				processFile(file);
+			}
+		}
+	}
+
 	public void start() {
 		if ((_interval > 0) &&
 			((_autoDeployScanner == null) || !_autoDeployScanner.isAlive())) {
@@ -229,56 +279,6 @@ public class AutoDeployDir {
 		}
 
 		_blacklistFileTimestamps.put(fileName, file.lastModified());
-	}
-
-	protected void scanDirectory() {
-		File[] files = _deployDir.listFiles();
-
-		if (files == null) {
-			return;
-		}
-
-		Set<String> blacklistedFileNames = _blacklistFileTimestamps.keySet();
-
-		Iterator<String> iterator = blacklistedFileNames.iterator();
-
-		while (iterator.hasNext()) {
-			String blacklistedFileName = iterator.next();
-
-			boolean blacklistedFileExists = false;
-
-			for (File file : files) {
-				if (StringUtil.equalsIgnoreCase(
-						blacklistedFileName, file.getName())) {
-
-					blacklistedFileExists = true;
-				}
-			}
-
-			if (!blacklistedFileExists) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Remove blacklisted file " + blacklistedFileName +
-							" because it was deleted");
-				}
-
-				iterator.remove();
-			}
-		}
-
-		for (File file : files) {
-			String fileName = file.getName();
-
-			fileName = StringUtil.toLowerCase(fileName);
-
-			if (file.isFile() &&
-				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||
-				 fileName.endsWith(".war") || fileName.endsWith(".xml") ||
-				 fileName.endsWith(".zip"))) {
-
-				processFile(file);
-			}
-		}
 	}
 
 	private static boolean _isModule(File file) throws AutoDeployException {

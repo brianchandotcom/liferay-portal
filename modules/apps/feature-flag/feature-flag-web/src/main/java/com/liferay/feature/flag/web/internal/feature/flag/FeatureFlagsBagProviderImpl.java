@@ -56,6 +56,7 @@ import java.util.function.Predicate;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -64,9 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Drew Brokke
  */
-@Component(
-	service = {FeatureFlagsBagProvider.class, IdentifiableOSGiService.class}
-)
+@Component(service = FeatureFlagsBagProvider.class)
 public class FeatureFlagsBagProviderImpl
 	implements FeatureFlagsBagProvider, IdentifiableOSGiService {
 
@@ -133,6 +132,9 @@ public class FeatureFlagsBagProviderImpl
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		_serviceRegistration = bundleContext.registerService(
+			IdentifiableOSGiService.class, this, null);
+
 		_initSystemFeatureFlags(false);
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
@@ -159,6 +161,8 @@ public class FeatureFlagsBagProviderImpl
 	@Deactivate
 	protected void deactivate() {
 		_serviceTrackerMap.close();
+
+		_serviceRegistration.unregister();
 	}
 
 	private static void _setEnabled(
@@ -424,6 +428,7 @@ public class FeatureFlagsBagProviderImpl
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED)
 	private ModuleServiceLifecycle _moduleServiceLifecycle;
 
+	private ServiceRegistration<IdentifiableOSGiService> _serviceRegistration;
 	private final Set<String> _systemFeatureFlags = new HashSet<>();
 
 	private class FeatureFlagListenerEagerServiceTrackerCustomizer

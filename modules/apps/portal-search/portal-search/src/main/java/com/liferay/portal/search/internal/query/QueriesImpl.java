@@ -163,7 +163,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public IdsQuery ids() {
-		return new IdsQueryImpl();
+		return new IdsQuery();
 	}
 
 	@Override

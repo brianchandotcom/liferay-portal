@@ -10,13 +10,18 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class AvgBucketPipelineAggregationResult
-	extends AggregationResult {
+public class AvgBucketPipelineAggregationResult extends AggregationResult {
 
-	public AvgBucketPipelineAggregationResult(String name) {
+	public AvgBucketPipelineAggregationResult(String name, double value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract double getValue();
+	public double getValue() {
+		return _value;
+	}
+
+	private final double _value;
 
 }

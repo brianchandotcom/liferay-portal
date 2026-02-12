@@ -185,7 +185,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		agentDefinition.setDescription(regex);
 		agentDefinition.setExternalReferenceCode(regex);
-		agentDefinition.setName(regex);
 		agentDefinition.setTitle(regex);
 		agentDefinition.setWorkflowDefinitionName(regex);
 
@@ -197,7 +196,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 
 		Assert.assertEquals(regex, agentDefinition.getDescription());
 		Assert.assertEquals(regex, agentDefinition.getExternalReferenceCode());
-		Assert.assertEquals(regex, agentDefinition.getName());
 		Assert.assertEquals(regex, agentDefinition.getTitle());
 		Assert.assertEquals(regex, agentDefinition.getWorkflowDefinitionName());
 	}
@@ -807,14 +805,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (agentDefinition.getName() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("outputVariable", additionalAssertFieldName)) {
 				if (agentDefinition.getOutputVariable() == null) {
 					valid = false;
@@ -1032,17 +1022,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						agentDefinition1.getInputVariables(),
 						agentDefinition2.getInputVariables())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("name", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						agentDefinition1.getName(),
-						agentDefinition2.getName())) {
 
 					return false;
 				}
@@ -1316,52 +1295,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
-		if (entityFieldName.equals("name")) {
-			Object object = agentDefinition.getName();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
-		}
-
 		if (entityFieldName.equals("outputVariable")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1516,7 +1449,6 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
-				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				version = RandomTestUtil.randomInt();
 				workflowDefinitionName = StringUtil.toLowerCase(

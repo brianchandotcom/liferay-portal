@@ -128,20 +128,6 @@ public class AgentDefinitionSerDes {
 			sb.append("]");
 		}
 
-		if (agentDefinition.getName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(agentDefinition.getName()));
-
-			sb.append("\"");
-		}
-
 		if (agentDefinition.getOutputVariable() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -257,13 +243,6 @@ public class AgentDefinitionSerDes {
 				String.valueOf(agentDefinition.getInputVariables()));
 		}
 
-		if (agentDefinition.getName() == null) {
-			map.put("name", null);
-		}
-		else {
-			map.put("name", String.valueOf(agentDefinition.getName()));
-		}
-
 		if (agentDefinition.getOutputVariable() == null) {
 			map.put("outputVariable", null);
 		}
@@ -334,9 +313,6 @@ public class AgentDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "inputVariables")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "outputVariable")) {
 				return false;
 			}
@@ -405,11 +381,6 @@ public class AgentDefinitionSerDes {
 					}
 
 					agentDefinition.setInputVariables(inputVariablesArray);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "name")) {
-				if (jsonParserFieldValue != null) {
-					agentDefinition.setName((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "outputVariable")) {

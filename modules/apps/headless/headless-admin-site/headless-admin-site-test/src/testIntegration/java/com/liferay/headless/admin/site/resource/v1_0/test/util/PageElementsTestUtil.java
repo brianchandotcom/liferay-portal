@@ -554,6 +554,20 @@ public class PageElementsTestUtil {
 		return collectionDisplayPageElement;
 	}
 
+	private static String _getExternalGlobalGroupTemplateFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate__ERC__" +
+			templateEntry.getExternalReferenceCode() + "__SERC__L_GLOBAL";
+	}
+
+	private static String _getExternalScopeGroupTemplateFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate__ERC__" +
+			templateEntry.getExternalReferenceCode();
+	}
+
 	private static FragmentInstance _getFragmentInstance(
 		Map<String, Object> configurationValuesMap,
 		FragmentEditableElement[] curFragmentEditableElements,
@@ -773,6 +787,12 @@ public class PageElementsTestUtil {
 		gridViewport.setId(id);
 
 		return gridViewport;
+	}
+
+	private static String _getInternalTemplateFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate_" + templateEntry.getTemplateEntryId();
 	}
 
 	private static ModulePageElementDefinition _getModulePageElementDefinition(

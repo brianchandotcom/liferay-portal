@@ -17,6 +17,12 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class GeoDistanceRangeQuery extends RangeTermQuery {
 
+	public GeoDistanceRangeQuery(
+		String field, boolean includesLower, boolean includesUpper) {
+
+		super(field, includesLower, includesUpper);
+	}
+
 	public abstract GeoDistance getLowerBoundGeoDistance();
 
 	public abstract GeoLocationPoint getPinGeoLocationPoint();

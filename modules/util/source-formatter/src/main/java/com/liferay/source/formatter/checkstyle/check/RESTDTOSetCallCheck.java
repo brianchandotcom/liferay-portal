@@ -38,7 +38,10 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.INSTANCE_INIT};
+		return new int[] {
+			TokenTypes.INSTANCE_INIT, TokenTypes.PARAMETER_DEF,
+			TokenTypes.VARIABLE_DEF
+		};
 	}
 
 	@Override
@@ -53,61 +56,48 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
-		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
-			_checkClassDeclaration(detailAST, absolutePath);
-		}
-		else if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
+		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
 			_checkInstanceInitializer(detailAST, absolutePath);
-		}
-	}
 
-	private void _checkClassDeclaration(
-		DetailAST detailAST, String absolutePath) {
-
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST != null) {
 			return;
 		}
 
-		DetailAST objBlockDetailAST = detailAST.findFirstToken(
-			TokenTypes.OBJBLOCK);
+		String variableName = getName(detailAST);
 
-		List<DetailAST> methodCallDetailASTs = getAllChildTokens(
-			objBlockDetailAST, true, TokenTypes.METHOD_CALL);
+		String fullyQualifiedTypeName = getVariableTypeName(
+			detailAST, variableName, false, false, true);
 
-		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
-			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
-				TokenTypes.DOT);
+		if ((fullyQualifiedTypeName == null) ||
+			!fullyQualifiedTypeName.contains(".dto.v") ||
+			!fullyQualifiedTypeName.startsWith("com.liferay.")) {
 
-			if (dotDetailAST == null) {
+			return;
+		}
+
+		List<DetailAST> variableCallerDetailASTs = getVariableCallerDetailASTs(
+			detailAST, variableName);
+
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTs) {
+			DetailAST parentDetailAST = variableCallerDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.DOT) {
 				continue;
 			}
 
-			String methodName = getMethodName(methodCallDetailAST);
+			parentDetailAST = parentDetailAST.getParent();
+
+			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
+				continue;
+			}
+
+			String methodName = getMethodName(parentDetailAST);
 
 			if (!methodName.startsWith("set")) {
 				continue;
 			}
 
-			String variableName = getVariableName(methodCallDetailAST);
-
-			if (variableName == null) {
-				return;
-			}
-
-			String fullyQualifiedTypeName = getVariableTypeName(
-				methodCallDetailAST, variableName, false, false, true);
-
-			if ((fullyQualifiedTypeName == null) ||
-				!fullyQualifiedTypeName.startsWith("com.liferay.") ||
-				!fullyQualifiedTypeName.contains(".dto.v")) {
-
-				continue;
-			}
-
 			_checkSetCall(
-				absolutePath, methodCallDetailAST, methodName,
+				absolutePath, parentDetailAST, methodName,
 				fullyQualifiedTypeName);
 		}
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.internal.query;
 
+import com.liferay.portal.search.query.MultiMatchQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.HashMap;
@@ -35,10 +36,10 @@ public class MultiMatchQueryImplTest {
 
 		fieldsBoosts.put("test", null);
 
-		MultiMatchQueryImpl multiMatchQueryImpl = new MultiMatchQueryImpl(
+		MultiMatchQuery multiMatchQuery = new MultiMatchQuery(
 			value, fieldsBoosts);
 
-		Assert.assertNotNull(multiMatchQueryImpl);
+		Assert.assertNotNull(multiMatchQuery);
 	}
 
 	@Test
@@ -49,10 +50,9 @@ public class MultiMatchQueryImplTest {
 
 		fields.add("test");
 
-		MultiMatchQueryImpl multiMatchQueryImpl = new MultiMatchQueryImpl(
-			value, fields);
+		MultiMatchQuery multiMatchQuery = new MultiMatchQuery(value, fields);
 
-		Assert.assertNotNull(multiMatchQueryImpl);
+		Assert.assertNotNull(multiMatchQuery);
 	}
 
 	@Test
@@ -60,10 +60,9 @@ public class MultiMatchQueryImplTest {
 		Object value = null;
 		String[] fields = {"test"};
 
-		MultiMatchQueryImpl multiMatchQueryImpl = new MultiMatchQueryImpl(
-			value, fields);
+		MultiMatchQuery multiMatchQuery = new MultiMatchQuery(value, fields);
 
-		Assert.assertNotNull(multiMatchQueryImpl);
+		Assert.assertNotNull(multiMatchQuery);
 	}
 
 }

@@ -14,6 +14,7 @@ import handleAddRepeatableGroup from '../utils/handleAddRepeatableGroup';
 import handleDeleteChildren from '../utils/handleDeleteChildren';
 import handlePublishStructure from '../utils/handlePublishStructure';
 import handleSaveStructure from '../utils/handleSaveStructure';
+import handleUngroupRepeatableGroup from '../utils/handleUngroupRepeatableGroup';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
@@ -123,6 +124,7 @@ export default function ShortcutManager() {
 				handleAddRepeatableGroup({
 					dispatch,
 					publishedChildren,
+					structure,
 					uuids: selection,
 				}),
 		});
@@ -148,7 +150,12 @@ export default function ShortcutManager() {
 
 				return true;
 			},
-			handler: () => dispatch({type: 'ungroup', uuid: selection[0]}),
+			handler: () =>
+				handleUngroupRepeatableGroup({
+					dispatch,
+					publishedChildren,
+					uuid: selection[0],
+				}),
 		});
 
 		// Save structure

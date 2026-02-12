@@ -39,6 +39,7 @@ import {Uuid} from '../types/Uuid';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import handleAddRepeatableGroup from '../utils/handleAddRepeatableGroup';
 import handleDeleteChildren from '../utils/handleDeleteChildren';
+import handleUngroupRepeatableGroup from '../utils/handleUngroupRepeatableGroup';
 import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
@@ -640,6 +641,7 @@ function getItemActions({
 				handleAddRepeatableGroup({
 					dispatch,
 					publishedChildren,
+					structure,
 					uuids: [item.uuid],
 				}),
 			symbolLeft: 'repeat',
@@ -655,8 +657,9 @@ function getItemActions({
 			actions.push({
 				label: Liferay.Language.get('ungroup'),
 				onClick: () =>
-					dispatch({
-						type: 'ungroup',
+					handleUngroupRepeatableGroup({
+						dispatch,
+						publishedChildren,
 						uuid: item.uuid,
 					}),
 			});

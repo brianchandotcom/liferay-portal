@@ -114,6 +114,12 @@ public class FormatSourceTask extends JavaExec {
 	}
 
 	@Input
+	@Optional
+	public List<String> getSourceFormatterProperties() {
+		return _sourceFormatterArgs.getSourceFormatterProperties();
+	}
+
+	@Input
 	public boolean isAutoFix() {
 		return _sourceFormatterArgs.isAutoFix();
 	}
@@ -265,6 +271,12 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setValidateCommitMessages(validateCommitMessages);
 	}
 
+	public void sourceFormatterProperty(String key, String value) {
+		List<String> sourceFormatterProperties = getSourceFormatterProperties();
+
+		sourceFormatterProperties.add(key + "=" + value);
+	}
+
 	private List<String> _getCompleteArgs() {
 		List<String> args = new ArrayList<>(getArgs());
 
@@ -288,6 +300,9 @@ public class FormatSourceTask extends JavaExec {
 		args.add(
 			"source.file.extensions=" +
 				CollectionUtils.join(",", getFileExtensions()));
+		args.add(
+			"source.formatter.properties=" +
+				CollectionUtils.join(",", getSourceFormatterProperties()));
 		args.add("source.print.errors=" + isPrintErrors());
 		args.add("validate.commit.messages=" + isValidateCommitMessages());
 

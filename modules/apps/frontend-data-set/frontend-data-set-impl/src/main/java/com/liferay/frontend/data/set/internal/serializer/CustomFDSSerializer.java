@@ -853,13 +853,9 @@ public class CustomFDSSerializer
 			externalReferenceCode, httpServletRequest, predicate,
 			relationshipNames);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				PortalUtil.getCompanyId(httpServletRequest),
-				FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY)) {
-
+		if (FeatureFlagManagerUtil.isEnabled("LPD-76632")) {
 			List<String> ercs = ListUtil.fromString(
-				MapUtil.getString(
-					objectEntry.getProperties(), propertyKey),
+				MapUtil.getString(objectEntry.getProperties(), propertyKey),
 				StringPool.COMMA);
 
 			objectEntries.sort(new ObjectEntryERCComparator(ercs));
@@ -867,8 +863,7 @@ public class CustomFDSSerializer
 		else {
 			List<Long> ids = ListUtil.toList(
 				ListUtil.fromString(
-					MapUtil.getString(
-						objectEntry.getProperties(), propertyKey),
+					MapUtil.getString(objectEntry.getProperties(), propertyKey),
 					StringPool.COMMA),
 				GetterUtil::getLong);
 

@@ -40,26 +40,9 @@ public class SearchRequestExecutorFixture {
 			openSearchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchRequestExecutor, "_searchSearchRequestExecutor",
-			_createSearchSearchRequestExecutor(openSearchConnectionManager));
-
 		openSearchSearchRequestExecutor.activate();
 
 		return openSearchSearchRequestExecutor;
-	}
-
-	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		SearchSearchRequestExecutor searchSearchRequestExecutor =
-			new SearchSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return searchSearchRequestExecutor;
 	}
 
 	private OpenSearchConnectionManager _openSearchConnectionManager;

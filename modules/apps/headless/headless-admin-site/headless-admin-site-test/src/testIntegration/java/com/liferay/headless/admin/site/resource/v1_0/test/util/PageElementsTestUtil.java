@@ -249,6 +249,23 @@ public class PageElementsTestUtil {
 		FragmentEntry fragmentEntry =
 			FragmentCollectionContributorRegistryUtil.getFragmentEntry(key);
 
+		if (fragmentEntry == null) {
+			Company company = null;
+
+			try {
+				company = CompanyLocalServiceUtil.getCompany(
+					TestPropsValues.getCompanyId());
+			}
+			catch (Exception exception) {
+			}
+
+			if (company != null) {
+				fragmentEntry =
+					FragmentEntryLocalServiceUtil.fetchFragmentEntry(
+						company.getGroupId(), key);
+			}
+		}
+
 		if (fragmentEntry != null) {
 			return getBasicFragmentInstancePageElementDefinition(
 				backgroundImageValue, configurationValuesMap,

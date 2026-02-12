@@ -6,6 +6,7 @@
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import {RepeatableGroup, Structure} from '../types/Structure';
 import buildObjectDefinition from './buildObjectDefinition';
+
 export default function buildGroupObjectDefinitions({
 	children,
 	objectDefinitions = [],

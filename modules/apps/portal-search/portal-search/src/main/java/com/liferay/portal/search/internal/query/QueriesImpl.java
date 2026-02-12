@@ -284,7 +284,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public ScriptQuery script(Script script) {
-		return new ScriptQueryImpl(script);
+		return new ScriptQuery(script);
 	}
 
 	@Override

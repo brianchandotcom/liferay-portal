@@ -7,14 +7,26 @@ package com.liferay.portal.search.query;
 
 import com.liferay.portal.search.script.Script;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class ScriptQuery extends Query {
+public class ScriptQuery extends Query {
 
-	public abstract Script getScript();
+	public ScriptQuery(Script script) {
+		_script = script;
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public Script getScript() {
+		return _script;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final Script _script;
 
 }

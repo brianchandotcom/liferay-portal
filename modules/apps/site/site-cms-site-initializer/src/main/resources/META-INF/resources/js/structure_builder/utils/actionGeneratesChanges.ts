@@ -11,7 +11,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-referenced-structures':
 		case 'add-related-content':
 		case 'add-repeatable-group':
-		case 'delete-child':
+		case 'delete-children':
 		case 'duplicate-child':
 		case 'rename-item':
 		case 'set-workflow':
@@ -24,7 +24,6 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-error':
 		case 'clear-errors':
 		case 'create-structure':
-		case 'delete-selection':
 		case 'publish-structure':
 		case 'refresh-referenced-structures':
 		case 'set-renaming-item-uuid':

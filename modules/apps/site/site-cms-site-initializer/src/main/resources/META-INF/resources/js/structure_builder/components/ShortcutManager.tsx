@@ -10,8 +10,8 @@ import {useCache, useStaleCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import {createRepeatableGroup} from '../utils/createRepeatableGroup';
-import {deleteSelection} from '../utils/deleteSelection';
 import findChild from '../utils/findChild';
+import handleDeleteChildren from '../utils/handleDeleteChildren';
 import isReferenced from '../utils/isReferenced';
 import isRenamable from '../utils/isRenamable';
 import openReferencedStructureModal from '../utils/openReferencedStructureModal';
@@ -91,11 +91,11 @@ export default function ShortcutManager() {
 		const deleteShortcut: Shortcut = {
 			enabled: () => Boolean(selection.length),
 			handler: () =>
-				deleteSelection({
+				handleDeleteChildren({
 					dispatch,
 					publishedChildren,
-					selection,
 					structure,
+					uuids: selection,
 				}),
 		};
 

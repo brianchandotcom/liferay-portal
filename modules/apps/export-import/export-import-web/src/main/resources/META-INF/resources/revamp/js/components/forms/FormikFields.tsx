@@ -86,9 +86,11 @@ export function FormikFieldMultiCheckbox({
 
 	return (
 		<div
-			aria-describedby={`${ariaDescribedby ? ariaDescribedby + ' ' : ''}${
-				isInvalid ? `${name}-error-message` : ''
-			}`}
+			aria-describedby={
+				[ariaDescribedby, isInvalid && `${name}-error-message`]
+					.filter(Boolean)
+					.join(' ') || undefined
+			}
 			aria-invalid={isInvalid ? true : undefined}
 			aria-labelledby={ariaLabelledby}
 			role="group"

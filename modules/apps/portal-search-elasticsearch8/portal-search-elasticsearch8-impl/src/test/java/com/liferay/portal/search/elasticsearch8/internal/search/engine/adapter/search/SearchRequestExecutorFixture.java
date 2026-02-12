@@ -31,8 +31,7 @@ public class SearchRequestExecutorFixture {
 
 	private MultisearchSearchRequestExecutor
 		_createMultisearchSearchRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver,
-			SearchSearchResponseAssembler searchSearchResponseAssembler) {
+			ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		MultisearchSearchRequestExecutor multisearchSearchRequestExecutor =
 			new MultisearchSearchRequestExecutorImpl();
@@ -40,9 +39,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			multisearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			multisearchSearchRequestExecutor, "_searchSearchResponseAssembler",
-			searchSearchResponseAssembler);
 
 		return multisearchSearchRequestExecutor;
 	}
@@ -57,19 +53,16 @@ public class SearchRequestExecutorFixture {
 			elasticsearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
 
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			new SearchSearchResponseAssemblerImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor,
 			"_multisearchSearchRequestExecutor",
 			_createMultisearchSearchRequestExecutor(
-				elasticsearchClientResolver, searchSearchResponseAssembler));
+				elasticsearchClientResolver));
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_searchSearchRequestExecutor",
 			_createSearchSearchRequestExecutor(
-				elasticsearchClientResolver, searchSearchResponseAssembler));
+				elasticsearchClientResolver));
 
 		elasticsearchSearchRequestExecutor.activate();
 
@@ -77,8 +70,7 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		SearchSearchResponseAssembler searchSearchResponseAssembler) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		SearchSearchRequestExecutor searchSearchRequestExecutor =
 			new SearchSearchRequestExecutorImpl();
@@ -86,9 +78,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutor, "_searchSearchResponseAssembler",
-			searchSearchResponseAssembler);
 
 		return searchSearchRequestExecutor;
 	}

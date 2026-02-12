@@ -8,6 +8,7 @@ import {
 	IView,
 	replaceTokens,
 } from '@liferay/frontend-data-set-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import StatusLabel from '../../common/components/StatusLabel';
@@ -304,17 +305,45 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
+				const title =
+					itemData.title ||
+					itemData.embedded.title ||
+					Liferay.Language.get('untitled-asset');
+
+				const confirmationMessage =
+					itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
+						? sub(
+								Liferay.Language.get(
+									'delete-folder-confirmation-body'
+								),
+								title
+							)
+						: sub(
+								Liferay.Language.get(
+									'delete-asset-confirmation-body'
+								),
+								title
+							);
+
 				if (additionalProps.brokenLinksCheckerEnabled) {
 					openAssetUsageListModal({
 						itemsData: [itemData],
 						onDelete: async () => {
-							await deleteItemAction(itemData, loadData);
+							await deleteItemAction(
+								confirmationMessage,
+								itemData,
+								loadData
+							);
 						},
 						selectAll: false,
 					});
 				}
 				else {
-					await deleteItemAction(itemData, loadData);
+					await deleteItemAction(
+						confirmationMessage,
+						itemData,
+						loadData
+					);
 				}
 			}
 			else if (action?.data?.id === 'export-for-translation') {

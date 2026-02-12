@@ -212,6 +212,9 @@ public class InfoForm {
 			}
 
 			if (infoFieldSetEntry instanceof InfoField) {
+				_infoFieldsByExternalUniqueId.put(
+					infoFieldSetEntry.getExternalUniqueId(),
+					(InfoField<?>)infoFieldSetEntry);
 				_infoFieldsByName.put(
 					infoFieldSetEntry.getName(),
 					(InfoField<?>)infoFieldSetEntry);
@@ -225,12 +228,15 @@ public class InfoForm {
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
 			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
+				_infoFieldsByExternalUniqueId.put(infoField.getExternalUniqueId(), infoField);
 				_infoFieldsByName.put(infoField.getName(), infoField);
 				_infoFieldsByUniqueId.put(infoField.getUniqueId(), infoField);
 			}
 		}
 
 		private InfoLocalizedValue<String> _descriptionInfoLocalizedValue;
+		private final Map<String, InfoField<?>> _infoFieldsByExternalUniqueId =
+			new LinkedHashMap<>();
 		private final Map<String, InfoField<?>> _infoFieldsByName =
 			new LinkedHashMap<>();
 		private final Map<String, InfoField<?>> _infoFieldsByUniqueId =

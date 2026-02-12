@@ -8,7 +8,7 @@ package com.liferay.portal.search.aggregation.pipeline;
 /**
  * @author Michael C. Han
  */
-public abstract class MinBucketPipelineAggregationResult
+public class MinBucketPipelineAggregationResult
 	extends BucketPipelineAggregationResult {
 
 	public MinBucketPipelineAggregationResult(String name, double value) {

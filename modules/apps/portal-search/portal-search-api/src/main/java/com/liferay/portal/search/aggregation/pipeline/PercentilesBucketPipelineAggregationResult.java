@@ -10,7 +10,7 @@ import com.liferay.portal.search.aggregation.metrics.PercentilesAggregationResul
 /**
  * @author Michael C. Han
  */
-public abstract class PercentilesBucketPipelineAggregationResult
+public class PercentilesBucketPipelineAggregationResult
 	extends PercentilesAggregationResult {
 
 	public PercentilesBucketPipelineAggregationResult(String name) {

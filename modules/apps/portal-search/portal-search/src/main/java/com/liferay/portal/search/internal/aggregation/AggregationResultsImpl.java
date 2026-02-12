@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.pipeline.PercentilesBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.SerialDiffPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.StatsBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.SumBucketPipelineAggregationResultImpl;
@@ -242,7 +241,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public PercentilesBucketPipelineAggregationResult percentilesBucket(
 		String name) {
 
-		return new PercentilesBucketPipelineAggregationResultImpl(name);
+		return new PercentilesBucketPipelineAggregationResult(name);
 	}
 
 	@Override

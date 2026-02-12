@@ -23,9 +23,12 @@ public class AssistantHandlerUtil {
 	public static void handle(AssistantHandlerContext assistantHandlerContext) {
 		TokenStream tokenStream = null;
 
-		AiServices<Assistant> aiServices = AiServices.builder(Assistant.class);
+		AiServices<? extends Assistant> aiServices = AiServices.builder(
+			Assistant.class);
 
 		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
+			aiServices = AiServices.builder(ChatMemoryAccessAssistant.class);
+
 			aiServices.chatMemoryProvider(ChatMemoryProviderUtil::provide);
 		}
 
@@ -34,7 +37,7 @@ public class AssistantHandlerUtil {
 				assistantHandlerContext.getContentRetriever());
 		}
 
-		aiServices.streamingChatModel(
+		Assistant assistant = aiServices.streamingChatModel(
 			assistantHandlerContext.getVertexAiGeminiStreamingChatModel()
 		).systemMessageProvider(
 			assistantHandlerContext.getSystemMessageProviderFunction()
@@ -44,10 +47,10 @@ public class AssistantHandlerUtil {
 			assistantHandlerContext.getTools()
 		).build();
 
-		Assistant assistant = aiServices.build();
+		if (assistant instanceof
+				ChatMemoryAccessAssistant chatMemoryAccessAssistant) {
 
-		if (Validator.isNotNull(assistantHandlerContext.getMemoryId())) {
-			tokenStream = assistant.invoke(
+			tokenStream = chatMemoryAccessAssistant.invoke(
 				assistantHandlerContext.getMemoryId(),
 				assistantHandlerContext.getUserMessage());
 		}
@@ -64,11 +67,16 @@ public class AssistantHandlerUtil {
 		).start();
 	}
 
-	public interface Assistant extends ChatMemoryAccess {
+	public interface Assistant {
 
 		public TokenStream invoke(
 			InvocationParameters invocationParameters,
 			@UserMessage String userMessage);
+
+	}
+
+	public interface ChatMemoryAccessAssistant
+		extends Assistant, ChatMemoryAccess {
 
 		public TokenStream invoke(
 			@MemoryId String memoryId, @UserMessage String userMessage);

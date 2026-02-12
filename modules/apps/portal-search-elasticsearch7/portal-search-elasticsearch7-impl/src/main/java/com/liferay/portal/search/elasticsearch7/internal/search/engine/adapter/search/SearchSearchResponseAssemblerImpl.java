@@ -20,7 +20,6 @@ import com.liferay.portal.search.elasticsearch7.internal.hits.SearchHitsTranslat
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
@@ -75,8 +74,7 @@ public class SearchSearchResponseAssemblerImpl
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation,
-			new SearchHitsTranslator(_searchHitsBuilderFactory));
+			elasticsearchAggregation, new SearchHitsTranslator());
 	}
 
 	@Override
@@ -153,8 +151,7 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchResponse searchSearchResponse,
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator(
-			_searchHitsBuilderFactory);
+		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator();
 
 		SearchHits searchHits = searchResponse.getHits();
 
@@ -179,9 +176,6 @@ public class SearchSearchResponseAssemblerImpl
 
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
-
-	@Reference
-	private SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 	private SearchResponseTranslator _searchResponseTranslator;
 

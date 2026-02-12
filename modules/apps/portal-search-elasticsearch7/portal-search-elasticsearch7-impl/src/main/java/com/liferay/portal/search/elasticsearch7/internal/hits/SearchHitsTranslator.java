@@ -17,7 +17,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
-import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +32,6 @@ import org.elasticsearch.common.document.DocumentField;
  */
 public class SearchHitsTranslator {
 
-	public SearchHitsTranslator(
-		SearchHitsBuilderFactory searchHitsBuilderFactory) {
-
-		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-	}
-
 	public SearchHits translate(
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits) {
 
@@ -49,8 +42,7 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.SearchHits elasticsearchSearchHits,
 		String alternateUidFieldName) {
 
-		SearchHitsBuilder searchHitsBuilder =
-			_searchHitsBuilderFactory.getSearchHitsBuilder();
+		SearchHitsBuilder searchHitsBuilder = new SearchHitsBuilder();
 
 		TotalHits totalHits = elasticsearchSearchHits.getTotalHits();
 
@@ -172,7 +164,5 @@ public class SearchHitsTranslator {
 
 		return highlightFields;
 	}
-
-	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 }

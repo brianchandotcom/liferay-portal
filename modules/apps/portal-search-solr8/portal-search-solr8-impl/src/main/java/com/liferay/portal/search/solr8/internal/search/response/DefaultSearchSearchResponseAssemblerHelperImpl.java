@@ -32,7 +32,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
-import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.searcher.SearchTimeValue;
@@ -281,8 +280,7 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 	}
 
 	protected SearchHits toSearchHits(List<Document> documents, int totalHits) {
-		SearchHitsBuilder searchHitsBuilder =
-			_searchHitsBuilderFactory.getSearchHitsBuilder();
+		SearchHitsBuilder searchHitsBuilder = new SearchHitsBuilder();
 
 		return searchHitsBuilder.addSearchHits(
 			TransformUtil.transform(documents, this::toSearchHit)
@@ -397,9 +395,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 	@Reference
 	private StatsResultsTranslator _statsResultsTranslator;

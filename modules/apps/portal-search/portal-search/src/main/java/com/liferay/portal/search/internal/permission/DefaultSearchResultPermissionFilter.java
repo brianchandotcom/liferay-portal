@@ -47,11 +47,9 @@ import com.liferay.portal.search.facet.nested.NestedFacet;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
-import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
 import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.facet.SimpleFacetCollector;
-import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
 import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -361,11 +359,7 @@ public class DefaultSearchResultPermissionFilter
 
 		Document[] documents = hits.getDocs();
 
-		SearchHitsBuilderFactory searchHitsBuilderFactory =
-			new SearchHitsBuilderFactoryImpl();
-
-		SearchHitsBuilder searchHitsBuilder =
-			searchHitsBuilderFactory.getSearchHitsBuilder();
+		SearchHitsBuilder searchHitsBuilder = new SearchHitsBuilder();
 
 		if (documents.length == 0) {
 			searchResponseImpl.setSearchHits(searchHitsBuilder.build());

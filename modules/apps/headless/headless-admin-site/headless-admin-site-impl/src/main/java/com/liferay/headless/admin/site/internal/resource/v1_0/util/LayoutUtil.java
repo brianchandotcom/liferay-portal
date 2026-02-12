@@ -1238,6 +1238,12 @@ public class LayoutUtil {
 				layoutTypePortlet.getLayoutTemplateId(), false,
 				theme.getThemeId());
 
+		if (layoutTemplate == null) {
+			LogUtil.logOptionalReference(
+				LayoutTemplate.class, layoutTypePortlet.getLayoutTemplateId(),
+				0);
+		}
+
 		if ((layoutTemplate != null) &&
 			(widgetPageSections.length !=
 				layoutTypePortlet.getNumOfColumns())) {

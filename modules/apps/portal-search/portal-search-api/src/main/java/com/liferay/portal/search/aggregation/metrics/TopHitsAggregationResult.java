@@ -11,12 +11,18 @@ import com.liferay.portal.search.hits.SearchHits;
 /**
  * @author Michael C. Han
  */
-public abstract class TopHitsAggregationResult extends AggregationResult {
+public class TopHitsAggregationResult extends AggregationResult {
 
-	public TopHitsAggregationResult(String name) {
+	public TopHitsAggregationResult(String name, SearchHits searchHits) {
 		super(name);
+
+		_searchHits = searchHits;
 	}
 
-	public abstract SearchHits getSearchHits();
+	public SearchHits getSearchHits() {
+		return _searchHits;
+	}
+
+	private final SearchHits _searchHits;
 
 }

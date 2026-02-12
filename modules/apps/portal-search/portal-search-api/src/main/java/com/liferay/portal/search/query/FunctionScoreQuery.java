@@ -8,39 +8,72 @@ package com.liferay.portal.search.query;
 import com.liferay.portal.search.query.function.CombineFunction;
 import com.liferay.portal.search.query.function.score.ScoreFunction;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class FunctionScoreQuery extends Query {
+public class FunctionScoreQuery extends Query {
 
-	public abstract void addFilterQueryScoreFunctionHolder(
-		Query filterQuery, ScoreFunction scoreFunction);
+	public FunctionScoreQuery(Query query) {
+		_query = query;
+	}
 
-	public abstract CombineFunction getCombineFunction();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract List<FilterQueryScoreFunctionHolder>
-		getFilterQueryScoreFunctionHolders();
+	public void addFilterQueryScoreFunctionHolder(
+		Query filterQuery, ScoreFunction scoreFunction) {
 
-	public abstract Float getMaxBoost();
+		_filterQueryScoreFunctionHolders.add(
+			new FilterQueryScoreFunctionHolderImpl(filterQuery, scoreFunction));
+	}
 
-	public abstract Float getMinScore();
+	public CombineFunction getCombineFunction() {
+		return _combineFunction;
+	}
 
-	public abstract Query getQuery();
+	public List<FilterQueryScoreFunctionHolder>
+		getFilterQueryScoreFunctionHolders() {
 
-	public abstract ScoreMode getScoreMode();
+		return Collections.unmodifiableList(_filterQueryScoreFunctionHolders);
+	}
 
-	public abstract void setCombineFunction(CombineFunction combineFunction);
+	public Float getMaxBoost() {
+		return _maxBoost;
+	}
 
-	public abstract void setMaxBoost(Float maxBoost);
+	public Float getMinScore() {
+		return _minScore;
+	}
 
-	public abstract void setMinScore(Float minScore);
+	public Query getQuery() {
+		return _query;
+	}
 
-	public abstract void setScoreMode(ScoreMode scoreMode);
+	public ScoreMode getScoreMode() {
+		return _scoreMode;
+	}
+
+	public void setCombineFunction(CombineFunction combineFunction) {
+		_combineFunction = combineFunction;
+	}
+
+	public void setMaxBoost(Float maxBoost) {
+		_maxBoost = maxBoost;
+	}
+
+	public void setMinScore(Float minScore) {
+		_minScore = minScore;
+	}
+
+	public void setScoreMode(ScoreMode scoreMode) {
+		_scoreMode = scoreMode;
+	}
 
 	public interface FilterQueryScoreFunctionHolder {
 
@@ -50,10 +83,51 @@ public abstract class FunctionScoreQuery extends Query {
 
 	}
 
+	public class FilterQueryScoreFunctionHolderImpl
+		implements FilterQueryScoreFunctionHolder {
+
+		public FilterQueryScoreFunctionHolderImpl(
+			Query filterQuery, ScoreFunction scoreFunction) {
+
+			_filterQuery = filterQuery;
+			_scoreFunction = scoreFunction;
+		}
+
+		public FilterQueryScoreFunctionHolderImpl(ScoreFunction scoreFunction) {
+			_scoreFunction = scoreFunction;
+
+			_filterQuery = null;
+		}
+
+		@Override
+		public Query getFilterQuery() {
+			return _filterQuery;
+		}
+
+		@Override
+		public ScoreFunction getScoreFunction() {
+			return _scoreFunction;
+		}
+
+		private final Query _filterQuery;
+		private final ScoreFunction _scoreFunction;
+
+	}
+
 	public enum ScoreMode {
 
 		AVG, FIRST, MAX, MIN, MULTIPLY, SUM
 
 	}
+
+	private static final long serialVersionUID = 1L;
+
+	private CombineFunction _combineFunction;
+	private final List<FilterQueryScoreFunctionHolder>
+		_filterQueryScoreFunctionHolders = new ArrayList<>();
+	private Float _maxBoost;
+	private Float _minScore;
+	private final Query _query;
+	private ScoreMode _scoreMode;
 
 }

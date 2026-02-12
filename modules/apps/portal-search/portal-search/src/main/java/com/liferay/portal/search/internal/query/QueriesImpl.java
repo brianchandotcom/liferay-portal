@@ -108,7 +108,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public FunctionScoreQuery functionScore(Query query) {
-		return new FunctionScoreQueryImpl(query);
+		return new FunctionScoreQuery(query);
 	}
 
 	@Override

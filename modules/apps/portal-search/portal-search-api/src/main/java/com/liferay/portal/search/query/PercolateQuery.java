@@ -5,9 +5,11 @@
 
 package com.liferay.portal.search.query;
 
-import java.util.List;
+import com.liferay.petra.string.StringBundler;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Provides support for parsing raw, human readable query syntax. No
@@ -21,11 +23,59 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class PercolateQuery extends Query {
+public class PercolateQuery extends Query {
 
-	public abstract List<String> getDocumentJSONs();
+	public PercolateQuery(String field, List<String> documentJSONs) {
+		_field = field;
 
-	public abstract String getField();
+		_documentJSONs.addAll(documentJSONs);
+	}
+
+	public PercolateQuery(String field, String documentJSON) {
+		_field = field;
+
+		_documentJSONs.add(documentJSON);
+	}
+
+	public PercolateQuery(String field, String... documentJSONs) {
+		_field = field;
+
+		Collections.addAll(_documentJSONs, documentJSONs);
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public List<String> getDocumentJSONs() {
+		return Collections.unmodifiableList(_documentJSONs);
+	}
+
+	public String getField() {
+		return _field;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", field=");
+		sb.append(_field);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final List<String> _documentJSONs = new ArrayList<>();
+	private final String _field;
 
 }

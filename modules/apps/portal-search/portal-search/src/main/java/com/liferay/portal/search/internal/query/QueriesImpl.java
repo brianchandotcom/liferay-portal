@@ -253,7 +253,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public PercolateQuery percolate(String field, List<String> documentJSONs) {
-		return new PercolateQueryImpl(field, documentJSONs);
+		return new PercolateQuery(field, documentJSONs);
 	}
 
 	@Override

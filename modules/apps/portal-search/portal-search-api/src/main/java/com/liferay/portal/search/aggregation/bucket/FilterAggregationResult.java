@@ -10,13 +10,18 @@ import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class FilterAggregationResult
-	extends HierarchicalAggregationResult {
+public class FilterAggregationResult extends HierarchicalAggregationResult {
 
-	public FilterAggregationResult(String name) {
+	public FilterAggregationResult(String name, long docCount) {
 		super(name);
+
+		_docCount = docCount;
 	}
 
-	public abstract long getDocCount();
+	public long getDocCount() {
+		return _docCount;
+	}
+
+	private final long _docCount;
 
 }

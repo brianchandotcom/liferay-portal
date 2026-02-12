@@ -258,7 +258,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public PrefixQuery prefix(String field, String prefix) {
-		return new PrefixQueryImpl(field, prefix);
+		return new PrefixQuery(field, prefix);
 	}
 
 	@Override

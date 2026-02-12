@@ -5,20 +5,50 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class PrefixQuery extends Query {
+public class PrefixQuery extends Query {
 
-	public abstract String getField();
+	public PrefixQuery(String field, String prefix) {
+		_field = field;
+		_prefix = prefix;
+	}
 
-	public abstract String getPrefix();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getRewrite();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract void setRewrite(String rewrite);
+	public String getPrefix() {
+		return _prefix;
+	}
+
+	public String getRewrite() {
+		return _rewrite;
+	}
+
+	public void setRewrite(String rewrite) {
+		_rewrite = rewrite;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			"{(", _field, "=", _prefix, ", _rewrite=", _rewrite, "), ",
+			super.toString(), "}");
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String _field;
+	private final String _prefix;
+	private String _rewrite;
 
 }

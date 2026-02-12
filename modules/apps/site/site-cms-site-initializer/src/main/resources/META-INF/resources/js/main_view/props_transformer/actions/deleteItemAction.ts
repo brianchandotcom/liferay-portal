@@ -6,7 +6,6 @@
 import {fetch, sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
 import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {
 	displayDeleteSuccessToast,
@@ -63,6 +62,7 @@ async function showSuccessToast(
 }
 
 export default async function deleteItemAction(
+	confirmationMessage: string,
 	itemData: ItemData,
 	loadData: () => {}
 ) {
@@ -80,20 +80,7 @@ export default async function deleteItemAction(
 				Liferay.Language.get('untitled-asset');
 
 			confirmAndDeleteEntryAction({
-				bodyHTML:
-					itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
-						? sub(
-								Liferay.Language.get(
-									'delete-folder-confirmation-body'
-								),
-								title
-							)
-						: sub(
-								Liferay.Language.get(
-									'delete-asset-confirmation-body'
-								),
-								title
-							),
+				bodyHTML: confirmationMessage,
 				deleteAction: actions.delete,
 				loadData,
 				successMessage: sub(

@@ -18,6 +18,7 @@ import {
 	deleteAssetEntriesBulkAction,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 
 import {openCMPModal} from '../../utils/openCMPModal';
@@ -294,7 +295,14 @@ export default function TasksFDSPropsTransformer({
 			loadData: () => Promise<void>;
 		}) {
 			if (action?.data?.id === 'delete') {
-				await deleteItemAction(itemData, loadData);
+				await deleteItemAction(
+					sub(
+						Liferay.Language.get('delete-task-confirmation-body'),
+						itemData.embedded.title
+					),
+					itemData,
+					loadData
+				);
 			}
 			else if (action?.data?.id === 'assign-to') {
 				await openCMPModal({

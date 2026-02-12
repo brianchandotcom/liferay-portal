@@ -10,6 +10,7 @@ import {useQueryRangeSelectors} from 'shared/hooks/useQueryRangeSelectors';
 interface BaseCardIProps extends React.HTMLAttributes<HTMLElement> {
 	className?: string;
 	children: (val) => React.ReactNode;
+	description?: string;
 	Header?: React.FC<BaseCardHeaderDefaultIProps>;
 	headerProps?: {[key: string]: any};
 	label: string;
@@ -23,6 +24,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 	Header = HeaderDefault,
 	children,
 	className,
+	description = '',
 	headerProps = {},
 	id,
 	label,
@@ -61,6 +63,7 @@ const BaseCard: React.FC<BaseCardIProps> = ({
 		>
 			<Header
 				{...otherProps}
+				description={description}
 				label={label}
 				legacy={legacyDropdownRangeKey}
 				showInterval={showInterval}

@@ -1,6 +1,7 @@
 import BaseCard from 'shared/components/base-card';
 import ProfileCardWithData from '../components/ProfileCard';
 import React from 'react';
+import {ENABLE_CDP} from 'shared/util/constants';
 import {Individual} from 'shared/util/records';
 import {pickBy} from 'lodash';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
@@ -34,13 +35,20 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 	return (
 		<BaseCard
 			className='individual-profile-card-root page-display'
+			description={
+				ENABLE_CDP
+					? Liferay.Language.get(
+							'displays-a-chronological-timeline-of-events-within-the-selected-timeframe-including-session-context'
+					  )
+					: ''
+			}
 			headerProps={{
-				showRangeKey: false,
+				showRangeKey: ENABLE_CDP,
 				tabId
 			}}
 			label={Liferay.Language.get('individual-events')}
 			legacyDropdownRangeKey={false}
-			showInterval={false}
+			showInterval={ENABLE_CDP}
 		>
 			{({
 				interval,

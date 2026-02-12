@@ -7,7 +7,6 @@ package com.liferay.portal.search.internal.legacy.groupby;
 
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.search.groupby.GroupByRequest;
-import com.liferay.portal.search.internal.groupby.GroupByRequestImpl;
 import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;
 
 import org.osgi.service.component.annotations.Component;
@@ -20,8 +19,7 @@ public class GroupByRequestFactoryImpl implements GroupByRequestFactory {
 
 	@Override
 	public GroupByRequest getGroupByRequest(GroupBy groupBy) {
-		GroupByRequest groupByRequest = new GroupByRequestImpl(
-			groupBy.getField());
+		GroupByRequest groupByRequest = new GroupByRequest(groupBy.getField());
 
 		groupByRequest.setDocsSize(groupBy.getSize());
 		groupByRequest.setDocsSorts(groupBy.getSorts());

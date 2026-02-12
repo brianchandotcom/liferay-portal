@@ -7,41 +7,78 @@ package com.liferay.portal.search.groupby;
 
 import com.liferay.portal.kernel.search.Sort;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bryan Engler
  * @author Michael C. Han
  */
-@ProviderType
-public interface GroupByRequest {
+public class GroupByRequest {
 
-	public int getDocsSize();
+	public GroupByRequest(String field) {
+		_field = field;
+	}
 
-	public Sort[] getDocsSorts();
+	public int getDocsSize() {
+		return _docsSize;
+	}
 
-	public int getDocsStart();
+	public Sort[] getDocsSorts() {
+		return _docsSorts;
+	}
 
-	public String getField();
+	public int getDocsStart() {
+		return _docsStart;
+	}
 
-	public int getTermsSize();
+	public String getField() {
+		return _field;
+	}
 
-	public Sort[] getTermsSorts();
+	public int getTermsSize() {
+		return _termsSize;
+	}
 
-	public int getTermsStart();
+	public Sort[] getTermsSorts() {
+		return _termsSorts;
+	}
 
-	public void setDocsSize(int docsSize);
+	public int getTermsStart() {
+		return _termsStart;
+	}
 
-	public void setDocsSorts(Sort... docsSorts);
+	public void setDocsSize(int docsSize) {
+		_docsSize = docsSize;
+	}
 
-	public void setDocsStart(int docsStart);
+	public void setDocsSorts(Sort... docsSorts) {
+		_docsSorts = docsSorts;
+	}
 
-	public void setField(String field);
+	public void setDocsStart(int docsStart) {
+		_docsStart = docsStart;
+	}
 
-	public void setTermsSize(int termsSize);
+	public void setField(String field) {
+		_field = field;
+	}
 
-	public void setTermsSorts(Sort... termsSorts);
+	public void setTermsSize(int termsSize) {
+		_termsSize = termsSize;
+	}
 
-	public void setTermsStart(int termsStart);
+	public void setTermsSorts(Sort... termsSorts) {
+		_termsSorts = termsSorts;
+	}
+
+	public void setTermsStart(int termsStart) {
+		_termsStart = termsStart;
+	}
+
+	private int _docsSize;
+	private Sort[] _docsSorts;
+	private int _docsStart;
+	private String _field;
+	private int _termsSize;
+	private Sort[] _termsSorts;
+	private int _termsStart;
 
 }

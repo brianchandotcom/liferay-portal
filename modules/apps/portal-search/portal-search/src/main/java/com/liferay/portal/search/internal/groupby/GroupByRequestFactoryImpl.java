@@ -18,7 +18,7 @@ public class GroupByRequestFactoryImpl implements GroupByRequestFactory {
 
 	@Override
 	public GroupByRequest getGroupByRequest(String field) {
-		return new GroupByRequestImpl(field);
+		return new GroupByRequest(field);
 	}
 
 }

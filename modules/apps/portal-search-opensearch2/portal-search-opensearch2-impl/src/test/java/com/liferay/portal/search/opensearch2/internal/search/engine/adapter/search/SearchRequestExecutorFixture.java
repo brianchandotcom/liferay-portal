@@ -36,19 +36,6 @@ public class SearchRequestExecutorFixture {
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
 
-	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		CountSearchRequestExecutor countSearchRequestExecutor =
-			new CountSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutor, "_openSearchConnectionManager",
-			openSearchConnectionManager);
-
-		return countSearchRequestExecutor;
-	}
-
 	private MultisearchSearchRequestExecutor
 		_createMultisearchSearchRequestExecutor(
 			OpenSearchConnectionManager openSearchConnectionManager,
@@ -76,10 +63,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchRequestExecutor, "_countSearchRequestExecutor",
-			_createCountSearchRequestExecutor(openSearchConnectionManager));
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			_createSearchSearchResponseAssembler();

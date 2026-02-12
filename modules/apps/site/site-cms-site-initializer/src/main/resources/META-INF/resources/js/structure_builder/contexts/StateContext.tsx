@@ -31,10 +31,8 @@ import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
+import getUndeletableChildren from '../utils/getUndeletableChildren';
 import getUuid from '../utils/getUuid';
-import isField from '../utils/isField';
-import isLocked from '../utils/isLocked';
-import isReferenced from '../utils/isReferenced';
 import normalizeString from '../utils/normalizeString';
 import addChild from '../utils/state/addChild';
 import addRepeatableGroup from '../utils/state/addRepeatableGroup';
@@ -53,8 +51,6 @@ import {
 	validateRepeatableGroup,
 	validateStructure,
 } from '../utils/validation';
-
-type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
 	deletedChildren: Array<StructureChild>;
@@ -358,7 +354,7 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			const undeletables = getUndeletableChildren(items, structure);
+			const undeletables = getUndeletableChildren(uuids, structure);
 
 			const reasons = [...undeletables.values()];
 
@@ -501,7 +497,10 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
-			const undeletables = getUndeletableChildren([child], structure);
+			const undeletables = getUndeletableChildren(
+				[child.uuid],
+				structure
+			);
 
 			if (undeletables.get(child.uuid) === 'causes-invalid-group') {
 				showWarning({
@@ -554,11 +553,7 @@ function reducer(state: State, action: Action): State {
 		case 'delete-selection': {
 			const {selection, structure} = state;
 
-			const items = selection.map(
-				(uuid) => findChild({root: structure, uuid})!
-			);
-
-			const undeletables = getUndeletableChildren(items, structure);
+			const undeletables = getUndeletableChildren(uuids, structure);
 
 			if (undeletables.size) {
 				showWarning({
@@ -1208,48 +1203,6 @@ function getNextName({
 	return normalizeString(localizedLabel, {
 		style: 'status' in item ? 'pascal' : 'camel',
 	});
-}
-
-function getUndeletableChildren(
-	items: StructureChild[],
-	structure: Structure
-): Map<Uuid, UndeletableReason> {
-	const undeletables = new Map<Uuid, UndeletableReason>();
-
-	for (const item of items) {
-		if (isLocked(item)) {
-			undeletables.set(item.uuid, 'is-locked');
-		}
-
-		if (isReferenced({root: structure, uuid: item.uuid})) {
-			undeletables.set(item.uuid, 'is-referenced');
-		}
-
-		const parent = findChild({
-			root: structure,
-			uuid: item.parent,
-		});
-
-		if (parent?.type === 'repeatable-group') {
-			const groupFields = Array.from(parent.children.values()).filter(
-				(child) => isField(child)
-			);
-
-			const fields = items.filter((item) => isField(item));
-
-			if (
-				groupFields.every(({uuid}) =>
-					fields.some((field) => field.uuid === uuid)
-				)
-			) {
-				groupFields.forEach((field) => {
-					undeletables.set(field.uuid, 'causes-invalid-group');
-				});
-			}
-		}
-	}
-
-	return undeletables;
 }
 
 function showWarning({text, title}: {text: string; title: string}) {

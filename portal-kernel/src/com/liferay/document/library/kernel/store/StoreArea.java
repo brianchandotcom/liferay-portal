@@ -222,7 +222,15 @@ public enum StoreArea {
 			return storeArea._namespace + StringPool.SLASH + name;
 		}
 
-		return storeArea._namespace + name.substring(_namespace.length());
+		if (_namespace.length() > 0) {
+			name = name.substring(_namespace.length() + 1);
+		}
+
+		if (storeArea == LIVE) {
+			return name;
+		}
+
+		return storeArea._namespace + StringPool.SLASH + name;
 	}
 
 	private StoreArea(String namespace) {

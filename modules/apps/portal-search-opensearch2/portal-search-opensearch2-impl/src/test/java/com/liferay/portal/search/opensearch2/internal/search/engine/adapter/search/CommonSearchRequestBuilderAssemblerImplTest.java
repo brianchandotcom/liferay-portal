@@ -11,9 +11,9 @@ import com.liferay.portal.kernel.search.generic.MatchQuery;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
+import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.internal.filter.ComplexQueryBuilderImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
@@ -57,11 +57,10 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		_liferayIndexFixture.setUp();
 
-		Queries queries = new QueriesImpl();
-
 		_commonSearchRequestBuilderAssembler =
-			createCommonSearchSourceBuilderAssembler(queries);
-		_queries = queries;
+			createCommonSearchSourceBuilderAssembler();
+
+		_queries = new QueriesImpl();
 	}
 
 	@After
@@ -561,7 +560,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	public TestName testName = new TestName();
 
 	protected static CommonSearchRequestBuilderAssembler
-		createCommonSearchSourceBuilderAssembler(Queries queries) {
+		createCommonSearchSourceBuilderAssembler() {
 
 		CommonSearchRequestBuilderAssembler
 			commonSearchRequestBuilderAssembler =
@@ -569,7 +568,7 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_complexQueryBuilderFactory",
-			createComplexQueryBuilderFactory(queries));
+			createComplexQueryBuilderFactory());
 		ReflectionTestUtil.setFieldValue(
 			commonSearchRequestBuilderAssembler, "_facetTranslator",
 			new FacetTranslator());
@@ -578,9 +577,9 @@ public class CommonSearchRequestBuilderAssemblerImplTest {
 	}
 
 	protected static ComplexQueryBuilderFactory
-		createComplexQueryBuilderFactory(Queries queries) {
+		createComplexQueryBuilderFactory() {
 
-		return () -> new ComplexQueryBuilderImpl(queries);
+		return () -> new ComplexQueryBuilder();
 	}
 
 	private void _addPart(

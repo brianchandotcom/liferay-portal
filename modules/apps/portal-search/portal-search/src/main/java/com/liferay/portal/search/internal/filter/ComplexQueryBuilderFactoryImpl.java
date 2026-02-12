@@ -7,10 +7,8 @@ package com.liferay.portal.search.internal.filter;
 
 import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
@@ -21,10 +19,7 @@ public class ComplexQueryBuilderFactoryImpl
 
 	@Override
 	public ComplexQueryBuilder builder() {
-		return new ComplexQueryBuilderImpl(_queries);
+		return new ComplexQueryBuilder();
 	}
-
-	@Reference
-	private Queries _queries;
 
 }

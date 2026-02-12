@@ -5,15 +5,14 @@
 
 package com.liferay.portal.search.internal.filter;
 
+import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
-import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.DateRangeTermQuery;
 import com.liferay.portal.search.query.FuzzyQuery;
 import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.query.NestedQuery;
-import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -29,7 +28,7 @@ import org.junit.Test;
 /**
  * @author Wade Cao
  */
-public class ComplexQueryBuilderImplTest {
+public class ComplexQueryBuilderTest {
 
 	@ClassRule
 	@Rule
@@ -38,53 +37,35 @@ public class ComplexQueryBuilderImplTest {
 
 	@Test
 	public void testFilterDateRangeTermQuery() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		Query query = _getQuery(
-			complexQueryBuilderImpl, "date_range", "[now/d now+1d/d[");
+		Query query = _getQuery("date_range", "[now/d now+1d/d[");
 
 		Assert.assertTrue(query instanceof DateRangeTermQuery);
 	}
 
 	@Test
 	public void testFilterDateRangeTermQueryInvalidValue() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		List<Query> queries = _getQueries(
-			complexQueryBuilderImpl, "date_range", "now/d now+1d/d[");
+		List<Query> queries = _getQueries("date_range", "now/d now+1d/d[");
 
 		Assert.assertTrue(queries.isEmpty());
 	}
 
 	@Test
 	public void testFilterFuzzyQuery() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		Query query = _getQuery(
-			complexQueryBuilderImpl, "fuzzy", "it is fuzzyyyyy");
+		Query query = _getQuery("fuzzy", "it is fuzzyyyyy");
 
 		Assert.assertTrue(query instanceof FuzzyQuery);
 	}
 
 	@Test
 	public void testFilterMatchQuery() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		Query query = _getQuery(complexQueryBuilderImpl, "match", "match-me");
+		Query query = _getQuery("match", "match-me");
 
 		Assert.assertTrue(query instanceof MatchQuery);
 	}
 
 	@Test
 	public void testFilterNestedQuery() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		Query query = _getQuery(complexQueryBuilderImpl, "nested", "path");
+		Query query = _getQuery("nested", "path");
 
 		Assert.assertTrue(query instanceof NestedQuery);
 
@@ -95,52 +76,36 @@ public class ComplexQueryBuilderImplTest {
 
 	@Test
 	public void testFilterRangeTermQuery() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		Query query = _getQuery(complexQueryBuilderImpl, "range", "]10 20]");
+		Query query = _getQuery("range", "]10 20]");
 
 		Assert.assertTrue(query instanceof RangeTermQuery);
 	}
 
 	@Test
 	public void testFilterRangeTermQueryInvalidValue() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		List<Query> queries = _getQueries(
-			complexQueryBuilderImpl, "range", "10 20]");
+		List<Query> queries = _getQueries("range", "10 20]");
 
 		Assert.assertTrue(queries.isEmpty());
 	}
 
 	@Test
 	public void testInvalidType() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		List<Query> queries = _getQueries(
-			complexQueryBuilderImpl, "whatever", "[now/d now+1d/d[");
+		List<Query> queries = _getQueries("whatever", "[now/d now+1d/d[");
 
 		Assert.assertTrue(queries.isEmpty());
 	}
 
 	@Test
 	public void testInvalidType2() {
-		ComplexQueryBuilderImpl complexQueryBuilderImpl =
-			new ComplexQueryBuilderImpl(_queries);
-
-		List<Query> queries = _getQueries(
-			complexQueryBuilderImpl, "whatever", "]10 20]");
+		List<Query> queries = _getQueries("whatever", "]10 20]");
 
 		Assert.assertTrue(queries.isEmpty());
 	}
 
-	private List<Query> _getQueries(
-		ComplexQueryBuilderImpl complexQueryBuilderImpl, String type,
-		String value) {
+	private List<Query> _getQueries(String type, String value) {
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
 
-		BooleanQuery booleanQuery = (BooleanQuery)complexQueryBuilderImpl.root(
+		BooleanQuery booleanQuery = (BooleanQuery)complexQueryBuilder.root(
 			new BooleanQuery()
 		).addParts(
 			new ArrayList<ComplexQueryPart>() {
@@ -174,11 +139,8 @@ public class ComplexQueryBuilderImplTest {
 		return booleanQuery.getFilterQueryClauses();
 	}
 
-	private Query _getQuery(
-		ComplexQueryBuilderImpl complexQueryBuilderImpl, String type,
-		String value) {
-
-		List<Query> queries = _getQueries(complexQueryBuilderImpl, type, value);
+	private Query _getQuery(String type, String value) {
+		List<Query> queries = _getQueries(type, value);
 
 		return queries.get(0);
 	}
@@ -186,6 +148,5 @@ public class ComplexQueryBuilderImplTest {
 	private final ComplexQueryPartBuilderFactory
 		_complexQueryPartBuilderFactory =
 			new ComplexQueryPartBuilderFactoryImpl();
-	private final Queries _queries = new QueriesImpl();
 
 }

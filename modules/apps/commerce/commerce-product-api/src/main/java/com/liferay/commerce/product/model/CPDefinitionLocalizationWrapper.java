@@ -45,12 +45,12 @@ public class CPDefinitionLocalizationWrapper
 		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("CProductId", getCProductId());
-		attributes.put("name", getName());
-		attributes.put("shortDescription", getShortDescription());
 		attributes.put("description", getDescription());
-		attributes.put("metaTitle", getMetaTitle());
 		attributes.put("metaDescription", getMetaDescription());
 		attributes.put("metaKeywords", getMetaKeywords());
+		attributes.put("metaTitle", getMetaTitle());
+		attributes.put("name", getName());
+		attributes.put("shortDescription", getShortDescription());
 
 		return attributes;
 	}
@@ -100,28 +100,10 @@ public class CPDefinitionLocalizationWrapper
 			setCProductId(CProductId);
 		}
 
-		String name = (String)attributes.get("name");
-
-		if (name != null) {
-			setName(name);
-		}
-
-		String shortDescription = (String)attributes.get("shortDescription");
-
-		if (shortDescription != null) {
-			setShortDescription(shortDescription);
-		}
-
 		String description = (String)attributes.get("description");
 
 		if (description != null) {
 			setDescription(description);
-		}
-
-		String metaTitle = (String)attributes.get("metaTitle");
-
-		if (metaTitle != null) {
-			setMetaTitle(metaTitle);
 		}
 
 		String metaDescription = (String)attributes.get("metaDescription");
@@ -134,6 +116,24 @@ public class CPDefinitionLocalizationWrapper
 
 		if (metaKeywords != null) {
 			setMetaKeywords(metaKeywords);
+		}
+
+		String metaTitle = (String)attributes.get("metaTitle");
+
+		if (metaTitle != null) {
+			setMetaTitle(metaTitle);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String shortDescription = (String)attributes.get("shortDescription");
+
+		if (shortDescription != null) {
+			setShortDescription(shortDescription);
 		}
 	}
 

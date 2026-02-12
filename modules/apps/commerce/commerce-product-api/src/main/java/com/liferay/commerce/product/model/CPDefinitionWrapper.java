@@ -49,30 +49,14 @@ public class CPDefinitionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("CProductId", getCProductId());
 		attributes.put("CPTaxCategoryId", getCPTaxCategoryId());
-		attributes.put("productTypeName", getProductTypeName());
-		attributes.put("availableIndividually", isAvailableIndividually());
-		attributes.put("ignoreSKUCombinations", isIgnoreSKUCombinations());
-		attributes.put("shippable", isShippable());
-		attributes.put("freeShipping", isFreeShipping());
-		attributes.put("shipSeparately", isShipSeparately());
-		attributes.put("shippingExtraPrice", getShippingExtraPrice());
-		attributes.put("width", getWidth());
-		attributes.put("height", getHeight());
-		attributes.put("depth", getDepth());
-		attributes.put("weight", getWeight());
-		attributes.put("taxExempt", isTaxExempt());
-		attributes.put("telcoOrElectronics", isTelcoOrElectronics());
-		attributes.put("DDMStructureKey", getDDMStructureKey());
-		attributes.put("published", isPublished());
-		attributes.put("displayDate", getDisplayDate());
-		attributes.put("expirationDate", getExpirationDate());
-		attributes.put("lastPublishDate", getLastPublishDate());
-		attributes.put("subscriptionEnabled", isSubscriptionEnabled());
-		attributes.put("subscriptionLength", getSubscriptionLength());
-		attributes.put("subscriptionType", getSubscriptionType());
 		attributes.put(
-			"subscriptionTypeSettings", getSubscriptionTypeSettings());
-		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
+			"accountGroupFilterEnabled", isAccountGroupFilterEnabled());
+		attributes.put("availableIndividually", isAvailableIndividually());
+		attributes.put("channelFilterEnabled", isChannelFilterEnabled());
+		attributes.put("DDMStructureKey", getDDMStructureKey());
+		attributes.put(
+			"deliveryMaxSubscriptionCycles",
+			getDeliveryMaxSubscriptionCycles());
 		attributes.put(
 			"deliverySubscriptionEnabled", isDeliverySubscriptionEnabled());
 		attributes.put(
@@ -82,13 +66,29 @@ public class CPDefinitionWrapper
 		attributes.put(
 			"deliverySubscriptionTypeSettings",
 			getDeliverySubscriptionTypeSettings());
+		attributes.put("depth", getDepth());
+		attributes.put("displayDate", getDisplayDate());
+		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("freeShipping", isFreeShipping());
+		attributes.put("height", getHeight());
+		attributes.put("ignoreSKUCombinations", isIgnoreSKUCombinations());
+		attributes.put("maxSubscriptionCycles", getMaxSubscriptionCycles());
+		attributes.put("productTypeName", getProductTypeName());
+		attributes.put("published", isPublished());
+		attributes.put("shipSeparately", isShipSeparately());
+		attributes.put("shippable", isShippable());
+		attributes.put("shippingExtraPrice", getShippingExtraPrice());
+		attributes.put("subscriptionEnabled", isSubscriptionEnabled());
+		attributes.put("subscriptionLength", getSubscriptionLength());
+		attributes.put("subscriptionType", getSubscriptionType());
 		attributes.put(
-			"deliveryMaxSubscriptionCycles",
-			getDeliveryMaxSubscriptionCycles());
-		attributes.put(
-			"accountGroupFilterEnabled", isAccountGroupFilterEnabled());
-		attributes.put("channelFilterEnabled", isChannelFilterEnabled());
+			"subscriptionTypeSettings", getSubscriptionTypeSettings());
+		attributes.put("taxExempt", isTaxExempt());
+		attributes.put("telcoOrElectronics", isTelcoOrElectronics());
 		attributes.put("version", getVersion());
+		attributes.put("weight", getWeight());
+		attributes.put("width", getWidth());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -177,10 +177,11 @@ public class CPDefinitionWrapper
 			setCPTaxCategoryId(CPTaxCategoryId);
 		}
 
-		String productTypeName = (String)attributes.get("productTypeName");
+		Boolean accountGroupFilterEnabled = (Boolean)attributes.get(
+			"accountGroupFilterEnabled");
 
-		if (productTypeName != null) {
-			setProductTypeName(productTypeName);
+		if (accountGroupFilterEnabled != null) {
+			setAccountGroupFilterEnabled(accountGroupFilterEnabled);
 		}
 
 		Boolean availableIndividually = (Boolean)attributes.get(
@@ -190,73 +191,11 @@ public class CPDefinitionWrapper
 			setAvailableIndividually(availableIndividually);
 		}
 
-		Boolean ignoreSKUCombinations = (Boolean)attributes.get(
-			"ignoreSKUCombinations");
+		Boolean channelFilterEnabled = (Boolean)attributes.get(
+			"channelFilterEnabled");
 
-		if (ignoreSKUCombinations != null) {
-			setIgnoreSKUCombinations(ignoreSKUCombinations);
-		}
-
-		Boolean shippable = (Boolean)attributes.get("shippable");
-
-		if (shippable != null) {
-			setShippable(shippable);
-		}
-
-		Boolean freeShipping = (Boolean)attributes.get("freeShipping");
-
-		if (freeShipping != null) {
-			setFreeShipping(freeShipping);
-		}
-
-		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");
-
-		if (shipSeparately != null) {
-			setShipSeparately(shipSeparately);
-		}
-
-		Double shippingExtraPrice = (Double)attributes.get(
-			"shippingExtraPrice");
-
-		if (shippingExtraPrice != null) {
-			setShippingExtraPrice(shippingExtraPrice);
-		}
-
-		Double width = (Double)attributes.get("width");
-
-		if (width != null) {
-			setWidth(width);
-		}
-
-		Double height = (Double)attributes.get("height");
-
-		if (height != null) {
-			setHeight(height);
-		}
-
-		Double depth = (Double)attributes.get("depth");
-
-		if (depth != null) {
-			setDepth(depth);
-		}
-
-		Double weight = (Double)attributes.get("weight");
-
-		if (weight != null) {
-			setWeight(weight);
-		}
-
-		Boolean taxExempt = (Boolean)attributes.get("taxExempt");
-
-		if (taxExempt != null) {
-			setTaxExempt(taxExempt);
-		}
-
-		Boolean telcoOrElectronics = (Boolean)attributes.get(
-			"telcoOrElectronics");
-
-		if (telcoOrElectronics != null) {
-			setTelcoOrElectronics(telcoOrElectronics);
+		if (channelFilterEnabled != null) {
+			setChannelFilterEnabled(channelFilterEnabled);
 		}
 
 		String DDMStructureKey = (String)attributes.get("DDMStructureKey");
@@ -265,62 +204,11 @@ public class CPDefinitionWrapper
 			setDDMStructureKey(DDMStructureKey);
 		}
 
-		Boolean published = (Boolean)attributes.get("published");
+		Long deliveryMaxSubscriptionCycles = (Long)attributes.get(
+			"deliveryMaxSubscriptionCycles");
 
-		if (published != null) {
-			setPublished(published);
-		}
-
-		Date displayDate = (Date)attributes.get("displayDate");
-
-		if (displayDate != null) {
-			setDisplayDate(displayDate);
-		}
-
-		Date expirationDate = (Date)attributes.get("expirationDate");
-
-		if (expirationDate != null) {
-			setExpirationDate(expirationDate);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-
-		Boolean subscriptionEnabled = (Boolean)attributes.get(
-			"subscriptionEnabled");
-
-		if (subscriptionEnabled != null) {
-			setSubscriptionEnabled(subscriptionEnabled);
-		}
-
-		Integer subscriptionLength = (Integer)attributes.get(
-			"subscriptionLength");
-
-		if (subscriptionLength != null) {
-			setSubscriptionLength(subscriptionLength);
-		}
-
-		String subscriptionType = (String)attributes.get("subscriptionType");
-
-		if (subscriptionType != null) {
-			setSubscriptionType(subscriptionType);
-		}
-
-		String subscriptionTypeSettings = (String)attributes.get(
-			"subscriptionTypeSettings");
-
-		if (subscriptionTypeSettings != null) {
-			setSubscriptionTypeSettings(subscriptionTypeSettings);
-		}
-
-		Long maxSubscriptionCycles = (Long)attributes.get(
-			"maxSubscriptionCycles");
-
-		if (maxSubscriptionCycles != null) {
-			setMaxSubscriptionCycles(maxSubscriptionCycles);
+		if (deliveryMaxSubscriptionCycles != null) {
+			setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
 		}
 
 		Boolean deliverySubscriptionEnabled = (Boolean)attributes.get(
@@ -352,31 +240,143 @@ public class CPDefinitionWrapper
 				deliverySubscriptionTypeSettings);
 		}
 
-		Long deliveryMaxSubscriptionCycles = (Long)attributes.get(
-			"deliveryMaxSubscriptionCycles");
+		Double depth = (Double)attributes.get("depth");
 
-		if (deliveryMaxSubscriptionCycles != null) {
-			setDeliveryMaxSubscriptionCycles(deliveryMaxSubscriptionCycles);
+		if (depth != null) {
+			setDepth(depth);
 		}
 
-		Boolean accountGroupFilterEnabled = (Boolean)attributes.get(
-			"accountGroupFilterEnabled");
+		Date displayDate = (Date)attributes.get("displayDate");
 
-		if (accountGroupFilterEnabled != null) {
-			setAccountGroupFilterEnabled(accountGroupFilterEnabled);
+		if (displayDate != null) {
+			setDisplayDate(displayDate);
 		}
 
-		Boolean channelFilterEnabled = (Boolean)attributes.get(
-			"channelFilterEnabled");
+		Date expirationDate = (Date)attributes.get("expirationDate");
 
-		if (channelFilterEnabled != null) {
-			setChannelFilterEnabled(channelFilterEnabled);
+		if (expirationDate != null) {
+			setExpirationDate(expirationDate);
+		}
+
+		Boolean freeShipping = (Boolean)attributes.get("freeShipping");
+
+		if (freeShipping != null) {
+			setFreeShipping(freeShipping);
+		}
+
+		Double height = (Double)attributes.get("height");
+
+		if (height != null) {
+			setHeight(height);
+		}
+
+		Boolean ignoreSKUCombinations = (Boolean)attributes.get(
+			"ignoreSKUCombinations");
+
+		if (ignoreSKUCombinations != null) {
+			setIgnoreSKUCombinations(ignoreSKUCombinations);
+		}
+
+		Long maxSubscriptionCycles = (Long)attributes.get(
+			"maxSubscriptionCycles");
+
+		if (maxSubscriptionCycles != null) {
+			setMaxSubscriptionCycles(maxSubscriptionCycles);
+		}
+
+		String productTypeName = (String)attributes.get("productTypeName");
+
+		if (productTypeName != null) {
+			setProductTypeName(productTypeName);
+		}
+
+		Boolean published = (Boolean)attributes.get("published");
+
+		if (published != null) {
+			setPublished(published);
+		}
+
+		Boolean shipSeparately = (Boolean)attributes.get("shipSeparately");
+
+		if (shipSeparately != null) {
+			setShipSeparately(shipSeparately);
+		}
+
+		Boolean shippable = (Boolean)attributes.get("shippable");
+
+		if (shippable != null) {
+			setShippable(shippable);
+		}
+
+		Double shippingExtraPrice = (Double)attributes.get(
+			"shippingExtraPrice");
+
+		if (shippingExtraPrice != null) {
+			setShippingExtraPrice(shippingExtraPrice);
+		}
+
+		Boolean subscriptionEnabled = (Boolean)attributes.get(
+			"subscriptionEnabled");
+
+		if (subscriptionEnabled != null) {
+			setSubscriptionEnabled(subscriptionEnabled);
+		}
+
+		Integer subscriptionLength = (Integer)attributes.get(
+			"subscriptionLength");
+
+		if (subscriptionLength != null) {
+			setSubscriptionLength(subscriptionLength);
+		}
+
+		String subscriptionType = (String)attributes.get("subscriptionType");
+
+		if (subscriptionType != null) {
+			setSubscriptionType(subscriptionType);
+		}
+
+		String subscriptionTypeSettings = (String)attributes.get(
+			"subscriptionTypeSettings");
+
+		if (subscriptionTypeSettings != null) {
+			setSubscriptionTypeSettings(subscriptionTypeSettings);
+		}
+
+		Boolean taxExempt = (Boolean)attributes.get("taxExempt");
+
+		if (taxExempt != null) {
+			setTaxExempt(taxExempt);
+		}
+
+		Boolean telcoOrElectronics = (Boolean)attributes.get(
+			"telcoOrElectronics");
+
+		if (telcoOrElectronics != null) {
+			setTelcoOrElectronics(telcoOrElectronics);
 		}
 
 		Integer version = (Integer)attributes.get("version");
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Double weight = (Double)attributes.get("weight");
+
+		if (weight != null) {
+			setWeight(weight);
+		}
+
+		Double width = (Double)attributes.get("width");
+
+		if (width != null) {
+			setWidth(width);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");

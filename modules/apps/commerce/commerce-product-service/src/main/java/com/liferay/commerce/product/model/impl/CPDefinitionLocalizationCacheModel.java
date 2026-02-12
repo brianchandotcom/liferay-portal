@@ -84,18 +84,18 @@ public class CPDefinitionLocalizationCacheModel
 		sb.append(languageId);
 		sb.append(", CProductId=");
 		sb.append(CProductId);
-		sb.append(", name=");
-		sb.append(name);
-		sb.append(", shortDescription=");
-		sb.append(shortDescription);
 		sb.append(", description=");
 		sb.append(description);
-		sb.append(", metaTitle=");
-		sb.append(metaTitle);
 		sb.append(", metaDescription=");
 		sb.append(metaDescription);
 		sb.append(", metaKeywords=");
 		sb.append(metaKeywords);
+		sb.append(", metaTitle=");
+		sb.append(metaTitle);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", shortDescription=");
+		sb.append(shortDescription);
 		sb.append("}");
 
 		return sb.toString();
@@ -122,32 +122,11 @@ public class CPDefinitionLocalizationCacheModel
 
 		cpDefinitionLocalizationImpl.setCProductId(CProductId);
 
-		if (name == null) {
-			cpDefinitionLocalizationImpl.setName("");
-		}
-		else {
-			cpDefinitionLocalizationImpl.setName(name);
-		}
-
-		if (shortDescription == null) {
-			cpDefinitionLocalizationImpl.setShortDescription("");
-		}
-		else {
-			cpDefinitionLocalizationImpl.setShortDescription(shortDescription);
-		}
-
 		if (description == null) {
 			cpDefinitionLocalizationImpl.setDescription("");
 		}
 		else {
 			cpDefinitionLocalizationImpl.setDescription(description);
-		}
-
-		if (metaTitle == null) {
-			cpDefinitionLocalizationImpl.setMetaTitle("");
-		}
-		else {
-			cpDefinitionLocalizationImpl.setMetaTitle(metaTitle);
 		}
 
 		if (metaDescription == null) {
@@ -162,6 +141,27 @@ public class CPDefinitionLocalizationCacheModel
 		}
 		else {
 			cpDefinitionLocalizationImpl.setMetaKeywords(metaKeywords);
+		}
+
+		if (metaTitle == null) {
+			cpDefinitionLocalizationImpl.setMetaTitle("");
+		}
+		else {
+			cpDefinitionLocalizationImpl.setMetaTitle(metaTitle);
+		}
+
+		if (name == null) {
+			cpDefinitionLocalizationImpl.setName("");
+		}
+		else {
+			cpDefinitionLocalizationImpl.setName(name);
+		}
+
+		if (shortDescription == null) {
+			cpDefinitionLocalizationImpl.setShortDescription("");
+		}
+		else {
+			cpDefinitionLocalizationImpl.setShortDescription(shortDescription);
 		}
 
 		cpDefinitionLocalizationImpl.resetOriginalValues();
@@ -185,12 +185,12 @@ public class CPDefinitionLocalizationCacheModel
 		languageId = objectInput.readUTF();
 
 		CProductId = objectInput.readLong();
-		name = objectInput.readUTF();
-		shortDescription = objectInput.readUTF();
 		description = (String)objectInput.readObject();
-		metaTitle = objectInput.readUTF();
 		metaDescription = objectInput.readUTF();
 		metaKeywords = objectInput.readUTF();
+		metaTitle = objectInput.readUTF();
+		name = objectInput.readUTF();
+		shortDescription = objectInput.readUTF();
 	}
 
 	@Override
@@ -214,32 +214,11 @@ public class CPDefinitionLocalizationCacheModel
 
 		objectOutput.writeLong(CProductId);
 
-		if (name == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(name);
-		}
-
-		if (shortDescription == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(shortDescription);
-		}
-
 		if (description == null) {
 			objectOutput.writeObject("");
 		}
 		else {
 			objectOutput.writeObject(description);
-		}
-
-		if (metaTitle == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(metaTitle);
 		}
 
 		if (metaDescription == null) {
@@ -255,6 +234,27 @@ public class CPDefinitionLocalizationCacheModel
 		else {
 			objectOutput.writeUTF(metaKeywords);
 		}
+
+		if (metaTitle == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(metaTitle);
+		}
+
+		if (name == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (shortDescription == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(shortDescription);
+		}
 	}
 
 	public long mvccVersion;
@@ -264,11 +264,11 @@ public class CPDefinitionLocalizationCacheModel
 	public long CPDefinitionId;
 	public String languageId;
 	public long CProductId;
-	public String name;
-	public String shortDescription;
 	public String description;
-	public String metaTitle;
 	public String metaDescription;
 	public String metaKeywords;
+	public String metaTitle;
+	public String name;
+	public String shortDescription;
 
 }

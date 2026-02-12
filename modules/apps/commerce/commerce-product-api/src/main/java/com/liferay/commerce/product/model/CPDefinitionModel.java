@@ -276,19 +276,25 @@ public interface CPDefinitionModel
 	public void setCPTaxCategoryId(long CPTaxCategoryId);
 
 	/**
-	 * Returns the product type name of this cp definition.
+	 * Returns the account group filter enabled of this cp definition.
 	 *
-	 * @return the product type name of this cp definition
+	 * @return the account group filter enabled of this cp definition
 	 */
-	@AutoEscape
-	public String getProductTypeName();
+	public boolean getAccountGroupFilterEnabled();
 
 	/**
-	 * Sets the product type name of this cp definition.
+	 * Returns <code>true</code> if this cp definition is account group filter enabled.
 	 *
-	 * @param productTypeName the product type name of this cp definition
+	 * @return <code>true</code> if this cp definition is account group filter enabled; <code>false</code> otherwise
 	 */
-	public void setProductTypeName(String productTypeName);
+	public boolean isAccountGroupFilterEnabled();
+
+	/**
+	 * Sets whether this cp definition is account group filter enabled.
+	 *
+	 * @param accountGroupFilterEnabled the account group filter enabled of this cp definition
+	 */
+	public void setAccountGroupFilterEnabled(boolean accountGroupFilterEnabled);
 
 	/**
 	 * Returns the available individually of this cp definition.
@@ -312,200 +318,25 @@ public interface CPDefinitionModel
 	public void setAvailableIndividually(boolean availableIndividually);
 
 	/**
-	 * Returns the ignore sku combinations of this cp definition.
+	 * Returns the channel filter enabled of this cp definition.
 	 *
-	 * @return the ignore sku combinations of this cp definition
+	 * @return the channel filter enabled of this cp definition
 	 */
-	public boolean getIgnoreSKUCombinations();
+	public boolean getChannelFilterEnabled();
 
 	/**
-	 * Returns <code>true</code> if this cp definition is ignore sku combinations.
+	 * Returns <code>true</code> if this cp definition is channel filter enabled.
 	 *
-	 * @return <code>true</code> if this cp definition is ignore sku combinations; <code>false</code> otherwise
+	 * @return <code>true</code> if this cp definition is channel filter enabled; <code>false</code> otherwise
 	 */
-	public boolean isIgnoreSKUCombinations();
+	public boolean isChannelFilterEnabled();
 
 	/**
-	 * Sets whether this cp definition is ignore sku combinations.
+	 * Sets whether this cp definition is channel filter enabled.
 	 *
-	 * @param ignoreSKUCombinations the ignore sku combinations of this cp definition
+	 * @param channelFilterEnabled the channel filter enabled of this cp definition
 	 */
-	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations);
-
-	/**
-	 * Returns the shippable of this cp definition.
-	 *
-	 * @return the shippable of this cp definition
-	 */
-	public boolean getShippable();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is shippable.
-	 *
-	 * @return <code>true</code> if this cp definition is shippable; <code>false</code> otherwise
-	 */
-	public boolean isShippable();
-
-	/**
-	 * Sets whether this cp definition is shippable.
-	 *
-	 * @param shippable the shippable of this cp definition
-	 */
-	public void setShippable(boolean shippable);
-
-	/**
-	 * Returns the free shipping of this cp definition.
-	 *
-	 * @return the free shipping of this cp definition
-	 */
-	public boolean getFreeShipping();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is free shipping.
-	 *
-	 * @return <code>true</code> if this cp definition is free shipping; <code>false</code> otherwise
-	 */
-	public boolean isFreeShipping();
-
-	/**
-	 * Sets whether this cp definition is free shipping.
-	 *
-	 * @param freeShipping the free shipping of this cp definition
-	 */
-	public void setFreeShipping(boolean freeShipping);
-
-	/**
-	 * Returns the ship separately of this cp definition.
-	 *
-	 * @return the ship separately of this cp definition
-	 */
-	public boolean getShipSeparately();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is ship separately.
-	 *
-	 * @return <code>true</code> if this cp definition is ship separately; <code>false</code> otherwise
-	 */
-	public boolean isShipSeparately();
-
-	/**
-	 * Sets whether this cp definition is ship separately.
-	 *
-	 * @param shipSeparately the ship separately of this cp definition
-	 */
-	public void setShipSeparately(boolean shipSeparately);
-
-	/**
-	 * Returns the shipping extra price of this cp definition.
-	 *
-	 * @return the shipping extra price of this cp definition
-	 */
-	public double getShippingExtraPrice();
-
-	/**
-	 * Sets the shipping extra price of this cp definition.
-	 *
-	 * @param shippingExtraPrice the shipping extra price of this cp definition
-	 */
-	public void setShippingExtraPrice(double shippingExtraPrice);
-
-	/**
-	 * Returns the width of this cp definition.
-	 *
-	 * @return the width of this cp definition
-	 */
-	public double getWidth();
-
-	/**
-	 * Sets the width of this cp definition.
-	 *
-	 * @param width the width of this cp definition
-	 */
-	public void setWidth(double width);
-
-	/**
-	 * Returns the height of this cp definition.
-	 *
-	 * @return the height of this cp definition
-	 */
-	public double getHeight();
-
-	/**
-	 * Sets the height of this cp definition.
-	 *
-	 * @param height the height of this cp definition
-	 */
-	public void setHeight(double height);
-
-	/**
-	 * Returns the depth of this cp definition.
-	 *
-	 * @return the depth of this cp definition
-	 */
-	public double getDepth();
-
-	/**
-	 * Sets the depth of this cp definition.
-	 *
-	 * @param depth the depth of this cp definition
-	 */
-	public void setDepth(double depth);
-
-	/**
-	 * Returns the weight of this cp definition.
-	 *
-	 * @return the weight of this cp definition
-	 */
-	public double getWeight();
-
-	/**
-	 * Sets the weight of this cp definition.
-	 *
-	 * @param weight the weight of this cp definition
-	 */
-	public void setWeight(double weight);
-
-	/**
-	 * Returns the tax exempt of this cp definition.
-	 *
-	 * @return the tax exempt of this cp definition
-	 */
-	public boolean getTaxExempt();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is tax exempt.
-	 *
-	 * @return <code>true</code> if this cp definition is tax exempt; <code>false</code> otherwise
-	 */
-	public boolean isTaxExempt();
-
-	/**
-	 * Sets whether this cp definition is tax exempt.
-	 *
-	 * @param taxExempt the tax exempt of this cp definition
-	 */
-	public void setTaxExempt(boolean taxExempt);
-
-	/**
-	 * Returns the telco or electronics of this cp definition.
-	 *
-	 * @return the telco or electronics of this cp definition
-	 */
-	public boolean getTelcoOrElectronics();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is telco or electronics.
-	 *
-	 * @return <code>true</code> if this cp definition is telco or electronics; <code>false</code> otherwise
-	 */
-	public boolean isTelcoOrElectronics();
-
-	/**
-	 * Sets whether this cp definition is telco or electronics.
-	 *
-	 * @param telcoOrElectronics the telco or electronics of this cp definition
-	 */
-	public void setTelcoOrElectronics(boolean telcoOrElectronics);
+	public void setChannelFilterEnabled(boolean channelFilterEnabled);
 
 	/**
 	 * Returns the ddm structure key of this cp definition.
@@ -523,148 +354,19 @@ public interface CPDefinitionModel
 	public void setDDMStructureKey(String DDMStructureKey);
 
 	/**
-	 * Returns the published of this cp definition.
+	 * Returns the delivery max subscription cycles of this cp definition.
 	 *
-	 * @return the published of this cp definition
+	 * @return the delivery max subscription cycles of this cp definition
 	 */
-	public boolean getPublished();
+	public long getDeliveryMaxSubscriptionCycles();
 
 	/**
-	 * Returns <code>true</code> if this cp definition is published.
+	 * Sets the delivery max subscription cycles of this cp definition.
 	 *
-	 * @return <code>true</code> if this cp definition is published; <code>false</code> otherwise
+	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this cp definition
 	 */
-	public boolean isPublished();
-
-	/**
-	 * Sets whether this cp definition is published.
-	 *
-	 * @param published the published of this cp definition
-	 */
-	public void setPublished(boolean published);
-
-	/**
-	 * Returns the display date of this cp definition.
-	 *
-	 * @return the display date of this cp definition
-	 */
-	public Date getDisplayDate();
-
-	/**
-	 * Sets the display date of this cp definition.
-	 *
-	 * @param displayDate the display date of this cp definition
-	 */
-	public void setDisplayDate(Date displayDate);
-
-	/**
-	 * Returns the expiration date of this cp definition.
-	 *
-	 * @return the expiration date of this cp definition
-	 */
-	public Date getExpirationDate();
-
-	/**
-	 * Sets the expiration date of this cp definition.
-	 *
-	 * @param expirationDate the expiration date of this cp definition
-	 */
-	public void setExpirationDate(Date expirationDate);
-
-	/**
-	 * Returns the last publish date of this cp definition.
-	 *
-	 * @return the last publish date of this cp definition
-	 */
-	@Override
-	public Date getLastPublishDate();
-
-	/**
-	 * Sets the last publish date of this cp definition.
-	 *
-	 * @param lastPublishDate the last publish date of this cp definition
-	 */
-	@Override
-	public void setLastPublishDate(Date lastPublishDate);
-
-	/**
-	 * Returns the subscription enabled of this cp definition.
-	 *
-	 * @return the subscription enabled of this cp definition
-	 */
-	public boolean getSubscriptionEnabled();
-
-	/**
-	 * Returns <code>true</code> if this cp definition is subscription enabled.
-	 *
-	 * @return <code>true</code> if this cp definition is subscription enabled; <code>false</code> otherwise
-	 */
-	public boolean isSubscriptionEnabled();
-
-	/**
-	 * Sets whether this cp definition is subscription enabled.
-	 *
-	 * @param subscriptionEnabled the subscription enabled of this cp definition
-	 */
-	public void setSubscriptionEnabled(boolean subscriptionEnabled);
-
-	/**
-	 * Returns the subscription length of this cp definition.
-	 *
-	 * @return the subscription length of this cp definition
-	 */
-	public int getSubscriptionLength();
-
-	/**
-	 * Sets the subscription length of this cp definition.
-	 *
-	 * @param subscriptionLength the subscription length of this cp definition
-	 */
-	public void setSubscriptionLength(int subscriptionLength);
-
-	/**
-	 * Returns the subscription type of this cp definition.
-	 *
-	 * @return the subscription type of this cp definition
-	 */
-	@AutoEscape
-	public String getSubscriptionType();
-
-	/**
-	 * Sets the subscription type of this cp definition.
-	 *
-	 * @param subscriptionType the subscription type of this cp definition
-	 */
-	public void setSubscriptionType(String subscriptionType);
-
-	/**
-	 * Returns the subscription type settings of this cp definition.
-	 *
-	 * @return the subscription type settings of this cp definition
-	 */
-	@AutoEscape
-	public String getSubscriptionTypeSettings();
-
-	/**
-	 * Sets the subscription type settings of this cp definition.
-	 *
-	 * @param subscriptionTypeSettings the subscription type settings of this cp definition
-	 */
-	public void setSubscriptionTypeSettings(String subscriptionTypeSettings);
-
-	/**
-	 * Returns the max subscription cycles of this cp definition.
-	 *
-	 * @return the max subscription cycles of this cp definition
-	 */
-	public long getMaxSubscriptionCycles();
-
-	/**
-	 * Sets the max subscription cycles of this cp definition.
-	 *
-	 * @param maxSubscriptionCycles the max subscription cycles of this cp definition
-	 */
-	public void setMaxSubscriptionCycles(long maxSubscriptionCycles);
+	public void setDeliveryMaxSubscriptionCycles(
+		long deliveryMaxSubscriptionCycles);
 
 	/**
 	 * Returns the delivery subscription enabled of this cp definition.
@@ -734,61 +436,315 @@ public interface CPDefinitionModel
 		String deliverySubscriptionTypeSettings);
 
 	/**
-	 * Returns the delivery max subscription cycles of this cp definition.
+	 * Returns the depth of this cp definition.
 	 *
-	 * @return the delivery max subscription cycles of this cp definition
+	 * @return the depth of this cp definition
 	 */
-	public long getDeliveryMaxSubscriptionCycles();
+	public double getDepth();
 
 	/**
-	 * Sets the delivery max subscription cycles of this cp definition.
+	 * Sets the depth of this cp definition.
 	 *
-	 * @param deliveryMaxSubscriptionCycles the delivery max subscription cycles of this cp definition
+	 * @param depth the depth of this cp definition
 	 */
-	public void setDeliveryMaxSubscriptionCycles(
-		long deliveryMaxSubscriptionCycles);
+	public void setDepth(double depth);
 
 	/**
-	 * Returns the account group filter enabled of this cp definition.
+	 * Returns the display date of this cp definition.
 	 *
-	 * @return the account group filter enabled of this cp definition
+	 * @return the display date of this cp definition
 	 */
-	public boolean getAccountGroupFilterEnabled();
+	public Date getDisplayDate();
 
 	/**
-	 * Returns <code>true</code> if this cp definition is account group filter enabled.
+	 * Sets the display date of this cp definition.
 	 *
-	 * @return <code>true</code> if this cp definition is account group filter enabled; <code>false</code> otherwise
+	 * @param displayDate the display date of this cp definition
 	 */
-	public boolean isAccountGroupFilterEnabled();
+	public void setDisplayDate(Date displayDate);
 
 	/**
-	 * Sets whether this cp definition is account group filter enabled.
+	 * Returns the expiration date of this cp definition.
 	 *
-	 * @param accountGroupFilterEnabled the account group filter enabled of this cp definition
+	 * @return the expiration date of this cp definition
 	 */
-	public void setAccountGroupFilterEnabled(boolean accountGroupFilterEnabled);
+	public Date getExpirationDate();
 
 	/**
-	 * Returns the channel filter enabled of this cp definition.
+	 * Sets the expiration date of this cp definition.
 	 *
-	 * @return the channel filter enabled of this cp definition
+	 * @param expirationDate the expiration date of this cp definition
 	 */
-	public boolean getChannelFilterEnabled();
+	public void setExpirationDate(Date expirationDate);
 
 	/**
-	 * Returns <code>true</code> if this cp definition is channel filter enabled.
+	 * Returns the free shipping of this cp definition.
 	 *
-	 * @return <code>true</code> if this cp definition is channel filter enabled; <code>false</code> otherwise
+	 * @return the free shipping of this cp definition
 	 */
-	public boolean isChannelFilterEnabled();
+	public boolean getFreeShipping();
 
 	/**
-	 * Sets whether this cp definition is channel filter enabled.
+	 * Returns <code>true</code> if this cp definition is free shipping.
 	 *
-	 * @param channelFilterEnabled the channel filter enabled of this cp definition
+	 * @return <code>true</code> if this cp definition is free shipping; <code>false</code> otherwise
 	 */
-	public void setChannelFilterEnabled(boolean channelFilterEnabled);
+	public boolean isFreeShipping();
+
+	/**
+	 * Sets whether this cp definition is free shipping.
+	 *
+	 * @param freeShipping the free shipping of this cp definition
+	 */
+	public void setFreeShipping(boolean freeShipping);
+
+	/**
+	 * Returns the height of this cp definition.
+	 *
+	 * @return the height of this cp definition
+	 */
+	public double getHeight();
+
+	/**
+	 * Sets the height of this cp definition.
+	 *
+	 * @param height the height of this cp definition
+	 */
+	public void setHeight(double height);
+
+	/**
+	 * Returns the ignore sku combinations of this cp definition.
+	 *
+	 * @return the ignore sku combinations of this cp definition
+	 */
+	public boolean getIgnoreSKUCombinations();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is ignore sku combinations.
+	 *
+	 * @return <code>true</code> if this cp definition is ignore sku combinations; <code>false</code> otherwise
+	 */
+	public boolean isIgnoreSKUCombinations();
+
+	/**
+	 * Sets whether this cp definition is ignore sku combinations.
+	 *
+	 * @param ignoreSKUCombinations the ignore sku combinations of this cp definition
+	 */
+	public void setIgnoreSKUCombinations(boolean ignoreSKUCombinations);
+
+	/**
+	 * Returns the max subscription cycles of this cp definition.
+	 *
+	 * @return the max subscription cycles of this cp definition
+	 */
+	public long getMaxSubscriptionCycles();
+
+	/**
+	 * Sets the max subscription cycles of this cp definition.
+	 *
+	 * @param maxSubscriptionCycles the max subscription cycles of this cp definition
+	 */
+	public void setMaxSubscriptionCycles(long maxSubscriptionCycles);
+
+	/**
+	 * Returns the product type name of this cp definition.
+	 *
+	 * @return the product type name of this cp definition
+	 */
+	@AutoEscape
+	public String getProductTypeName();
+
+	/**
+	 * Sets the product type name of this cp definition.
+	 *
+	 * @param productTypeName the product type name of this cp definition
+	 */
+	public void setProductTypeName(String productTypeName);
+
+	/**
+	 * Returns the published of this cp definition.
+	 *
+	 * @return the published of this cp definition
+	 */
+	public boolean getPublished();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is published.
+	 *
+	 * @return <code>true</code> if this cp definition is published; <code>false</code> otherwise
+	 */
+	public boolean isPublished();
+
+	/**
+	 * Sets whether this cp definition is published.
+	 *
+	 * @param published the published of this cp definition
+	 */
+	public void setPublished(boolean published);
+
+	/**
+	 * Returns the ship separately of this cp definition.
+	 *
+	 * @return the ship separately of this cp definition
+	 */
+	public boolean getShipSeparately();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is ship separately.
+	 *
+	 * @return <code>true</code> if this cp definition is ship separately; <code>false</code> otherwise
+	 */
+	public boolean isShipSeparately();
+
+	/**
+	 * Sets whether this cp definition is ship separately.
+	 *
+	 * @param shipSeparately the ship separately of this cp definition
+	 */
+	public void setShipSeparately(boolean shipSeparately);
+
+	/**
+	 * Returns the shippable of this cp definition.
+	 *
+	 * @return the shippable of this cp definition
+	 */
+	public boolean getShippable();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is shippable.
+	 *
+	 * @return <code>true</code> if this cp definition is shippable; <code>false</code> otherwise
+	 */
+	public boolean isShippable();
+
+	/**
+	 * Sets whether this cp definition is shippable.
+	 *
+	 * @param shippable the shippable of this cp definition
+	 */
+	public void setShippable(boolean shippable);
+
+	/**
+	 * Returns the shipping extra price of this cp definition.
+	 *
+	 * @return the shipping extra price of this cp definition
+	 */
+	public double getShippingExtraPrice();
+
+	/**
+	 * Sets the shipping extra price of this cp definition.
+	 *
+	 * @param shippingExtraPrice the shipping extra price of this cp definition
+	 */
+	public void setShippingExtraPrice(double shippingExtraPrice);
+
+	/**
+	 * Returns the subscription enabled of this cp definition.
+	 *
+	 * @return the subscription enabled of this cp definition
+	 */
+	public boolean getSubscriptionEnabled();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is subscription enabled.
+	 *
+	 * @return <code>true</code> if this cp definition is subscription enabled; <code>false</code> otherwise
+	 */
+	public boolean isSubscriptionEnabled();
+
+	/**
+	 * Sets whether this cp definition is subscription enabled.
+	 *
+	 * @param subscriptionEnabled the subscription enabled of this cp definition
+	 */
+	public void setSubscriptionEnabled(boolean subscriptionEnabled);
+
+	/**
+	 * Returns the subscription length of this cp definition.
+	 *
+	 * @return the subscription length of this cp definition
+	 */
+	public int getSubscriptionLength();
+
+	/**
+	 * Sets the subscription length of this cp definition.
+	 *
+	 * @param subscriptionLength the subscription length of this cp definition
+	 */
+	public void setSubscriptionLength(int subscriptionLength);
+
+	/**
+	 * Returns the subscription type of this cp definition.
+	 *
+	 * @return the subscription type of this cp definition
+	 */
+	@AutoEscape
+	public String getSubscriptionType();
+
+	/**
+	 * Sets the subscription type of this cp definition.
+	 *
+	 * @param subscriptionType the subscription type of this cp definition
+	 */
+	public void setSubscriptionType(String subscriptionType);
+
+	/**
+	 * Returns the subscription type settings of this cp definition.
+	 *
+	 * @return the subscription type settings of this cp definition
+	 */
+	@AutoEscape
+	public String getSubscriptionTypeSettings();
+
+	/**
+	 * Sets the subscription type settings of this cp definition.
+	 *
+	 * @param subscriptionTypeSettings the subscription type settings of this cp definition
+	 */
+	public void setSubscriptionTypeSettings(String subscriptionTypeSettings);
+
+	/**
+	 * Returns the tax exempt of this cp definition.
+	 *
+	 * @return the tax exempt of this cp definition
+	 */
+	public boolean getTaxExempt();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is tax exempt.
+	 *
+	 * @return <code>true</code> if this cp definition is tax exempt; <code>false</code> otherwise
+	 */
+	public boolean isTaxExempt();
+
+	/**
+	 * Sets whether this cp definition is tax exempt.
+	 *
+	 * @param taxExempt the tax exempt of this cp definition
+	 */
+	public void setTaxExempt(boolean taxExempt);
+
+	/**
+	 * Returns the telco or electronics of this cp definition.
+	 *
+	 * @return the telco or electronics of this cp definition
+	 */
+	public boolean getTelcoOrElectronics();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is telco or electronics.
+	 *
+	 * @return <code>true</code> if this cp definition is telco or electronics; <code>false</code> otherwise
+	 */
+	public boolean isTelcoOrElectronics();
+
+	/**
+	 * Sets whether this cp definition is telco or electronics.
+	 *
+	 * @param telcoOrElectronics the telco or electronics of this cp definition
+	 */
+	public void setTelcoOrElectronics(boolean telcoOrElectronics);
 
 	/**
 	 * Returns the version of this cp definition.
@@ -803,6 +759,50 @@ public interface CPDefinitionModel
 	 * @param version the version of this cp definition
 	 */
 	public void setVersion(int version);
+
+	/**
+	 * Returns the weight of this cp definition.
+	 *
+	 * @return the weight of this cp definition
+	 */
+	public double getWeight();
+
+	/**
+	 * Sets the weight of this cp definition.
+	 *
+	 * @param weight the weight of this cp definition
+	 */
+	public void setWeight(double weight);
+
+	/**
+	 * Returns the width of this cp definition.
+	 *
+	 * @return the width of this cp definition
+	 */
+	public double getWidth();
+
+	/**
+	 * Sets the width of this cp definition.
+	 *
+	 * @param width the width of this cp definition
+	 */
+	public void setWidth(double width);
+
+	/**
+	 * Returns the last publish date of this cp definition.
+	 *
+	 * @return the last publish date of this cp definition
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this cp definition.
+	 *
+	 * @param lastPublishDate the last publish date of this cp definition
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
 	 * Returns the status of this cp definition.
@@ -887,26 +887,6 @@ public interface CPDefinitionModel
 
 	public String[] getAvailableLanguageIds();
 
-	public String getName();
-
-	public String getName(String languageId);
-
-	public String getName(String languageId, boolean useDefault);
-
-	public String getNameMapAsXML();
-
-	public Map<String, String> getLanguageIdToNameMap();
-
-	public String getShortDescription();
-
-	public String getShortDescription(String languageId);
-
-	public String getShortDescription(String languageId, boolean useDefault);
-
-	public String getShortDescriptionMapAsXML();
-
-	public Map<String, String> getLanguageIdToShortDescriptionMap();
-
 	public String getDescription();
 
 	public String getDescription(String languageId);
@@ -916,16 +896,6 @@ public interface CPDefinitionModel
 	public String getDescriptionMapAsXML();
 
 	public Map<String, String> getLanguageIdToDescriptionMap();
-
-	public String getMetaTitle();
-
-	public String getMetaTitle(String languageId);
-
-	public String getMetaTitle(String languageId, boolean useDefault);
-
-	public String getMetaTitleMapAsXML();
-
-	public Map<String, String> getLanguageIdToMetaTitleMap();
 
 	public String getMetaDescription();
 
@@ -946,6 +916,36 @@ public interface CPDefinitionModel
 	public String getMetaKeywordsMapAsXML();
 
 	public Map<String, String> getLanguageIdToMetaKeywordsMap();
+
+	public String getMetaTitle();
+
+	public String getMetaTitle(String languageId);
+
+	public String getMetaTitle(String languageId, boolean useDefault);
+
+	public String getMetaTitleMapAsXML();
+
+	public Map<String, String> getLanguageIdToMetaTitleMap();
+
+	public String getName();
+
+	public String getName(String languageId);
+
+	public String getName(String languageId, boolean useDefault);
+
+	public String getNameMapAsXML();
+
+	public Map<String, String> getLanguageIdToNameMap();
+
+	public String getShortDescription();
+
+	public String getShortDescription(String languageId);
+
+	public String getShortDescription(String languageId, boolean useDefault);
+
+	public String getShortDescriptionMapAsXML();
+
+	public Map<String, String> getLanguageIdToShortDescriptionMap();
 
 	/**
 	 * Returns <code>true</code> if this cp definition is approved.

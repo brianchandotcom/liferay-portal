@@ -169,6 +169,12 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			workflowDefinitionName, WorkflowDefinitionConstants.SCOPE_AI,
 			content.getBytes());
 
+		Map<String, String> title =
+			(Map<String, String>)objectEntry.getPropertyValue("title_i18n");
+
+		title.replaceAll(
+			(key, value) -> LanguageUtil.format(locale, "copy-of-x", value));
+
 		return _toAgentDefinition(
 			companyId, dtoConverterContext,
 			_objectEntryManager.addObjectEntry(
@@ -197,9 +203,7 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
 										"outputVariable")),
-								"title_i18n",
-								objectEntry.getPropertyValue("title_i18n"),
-								"workflowDefinitionName",
+								"title_i18n", title, "workflowDefinitionName",
 								workflowDefinitionName));
 					}
 				},

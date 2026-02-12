@@ -348,7 +348,7 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 		<div className="lfr-cmp__tasks-quick-filters-container">
 			{loading ? (
 				<ClayLoadingIndicator />
-			) : (
+			) : totalCount !== 0 ? (
 				<ClayLayout.ContainerFluid
 					className="c-pb-4 c-pt-2 c-px-4"
 					size={false}
@@ -411,7 +411,7 @@ export default function TasksQuickFilters({projectId}: {projectId?: string}) {
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.ContainerFluid>
-			)}
+			) : null}
 		</div>
 	) : null;
 }

@@ -25,6 +25,18 @@ export const test = mergeTests(
 	loginTest()
 );
 
+const testWithOrderByERC = mergeTests(
+	dataSetManagerApiHelpersTest,
+	customDataSetsPageTest,
+	featureFlagsTest({
+		'LPD-76632': {enabled: true},
+		'LPS-164563': {enabled: true},
+		'LPS-178052': {enabled: true},
+	}),
+	sortingPageTest,
+	loginTest()
+);
+
 let dataSetERC: string;
 let dataSetLabel: string;
 
@@ -39,6 +51,20 @@ test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 });
 
 test.afterEach(async ({dataSetManagerApiHelpers}) => {
+	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
+});
+
+testWithOrderByERC.beforeEach(async ({dataSetManagerApiHelpers}) => {
+	dataSetERC = getRandomString();
+	dataSetLabel = getRandomString();
+
+	await dataSetManagerApiHelpers.createDataSet({
+		erc: dataSetERC,
+		label: dataSetLabel,
+	});
+});
+
+testWithOrderByERC.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
@@ -748,6 +774,91 @@ test.describe('Sorting in Data Set Manager', () => {
 		}
 	});
 });
+
+testWithOrderByERC(
+	'Sorting options can be reordered and changes are persisted with order-by-ERC flag @LPD-9468',
+	async ({dataSetManagerApiHelpers, sortingPage}) => {
+		await test.step('Create sorting options', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'dateCreated',
+				label_i18n: {en_US: 'Date Created'},
+			});
+		});
+
+		await test.step('Navigate to Sorting section', async () => {
+			await sortingPage.goto({
+				dataSetLabel,
+			});
+		});
+
+		await test.step('Check that "Date Created" is below "Field Name"', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableColumnInnerTexts(2);
+
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Field Name',
+				'Date Created',
+			]);
+		});
+
+		await test.step('Move the "Date Created" option above "Field Name"', async () => {
+			const dateCreatedRow = sortingPage.sortingTable.getByRole('row', {
+				name: 'Date Created',
+			});
+
+			const fieldNameRow = sortingPage.sortingTable.getByRole('row', {
+				name: 'Field Name',
+			});
+
+			await dateCreatedRow.dragTo(fieldNameRow);
+		});
+
+		await test.step('Check that "Date Created" is above "Field Name"', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableColumnInnerTexts(2);
+
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Date Created',
+				'Field Name',
+			]);
+		});
+
+		await test.step('Navigate to the "Details" tab and back to "Sorting" tab', async () => {
+			await sortingPage.selectTab('Details');
+			await sortingPage.selectTab('Sorting');
+		});
+
+		await test.step('Check that the order is still the same', async () => {
+			const tableLabelCellTexts =
+				await sortingPage.getTableColumnInnerTexts(2);
+
+			expect(tableLabelCellTexts).toEqual([
+				'ID',
+				'Date Created',
+				'Field Name',
+			]);
+		});
+	}
+);
 
 export const applicationPageTest = mergeTests(
 	dataSetManagerApiHelpersTest,

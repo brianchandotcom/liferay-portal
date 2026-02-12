@@ -8,7 +8,6 @@ package com.liferay.site.cmp.site.initializer.internal.display.context;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Assignee;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -33,11 +32,6 @@ public class ViewAssigneeSectionDisplayContext
 		super(language, objectEntry, themeDisplay, userLocalService);
 
 		_assigneeObjectFieldBusinessType = assigneeObjectFieldBusinessType;
-	}
-
-	@Override
-	public String getAdditionalAPIURLParameters() {
-		return StringPool.BLANK;
 	}
 
 	@Override

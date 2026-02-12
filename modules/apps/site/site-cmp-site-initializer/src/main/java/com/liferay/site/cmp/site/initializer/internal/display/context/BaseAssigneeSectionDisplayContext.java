@@ -6,6 +6,7 @@
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -34,8 +35,6 @@ public abstract class BaseAssigneeSectionDisplayContext {
 		_userLocalService = userLocalService;
 	}
 
-	public abstract String getAdditionalAPIURLParameters();
-
 	public abstract String getLabelKey();
 
 	public abstract String getName();
@@ -47,9 +46,17 @@ public abstract class BaseAssigneeSectionDisplayContext {
 			"name", getName()
 		).put(
 			"searchURL",
-			_themeDisplay.getPortalURL() +
-				"/o/headless-cmp/v1.0/task-assignees/?" +
-					getAdditionalAPIURLParameters()
+			() -> {
+				String searchURL =
+					_themeDisplay.getPortalURL() +
+						"/o/headless-cmp/v1.0/task-assignees";
+
+				if (getUsersOnly()) {
+					return searchURL + "?type=user";
+				}
+
+				return searchURL + StringPool.SLASH;
+			}
 		).put(
 			"triggerClassName", "form-control"
 		).put(

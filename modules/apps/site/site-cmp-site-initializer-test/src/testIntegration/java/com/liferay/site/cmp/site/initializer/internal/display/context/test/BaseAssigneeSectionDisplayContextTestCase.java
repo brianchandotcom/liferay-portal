@@ -69,7 +69,7 @@ public abstract class BaseAssigneeSectionDisplayContextTestCase {
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 	}
 
-	protected User addUserWithPortraitId() throws Exception {
+	protected User addUser() throws Exception {
 		User user = UserTestUtil.addUser();
 
 		user.setPortraitId(RandomTestUtil.nextLong());

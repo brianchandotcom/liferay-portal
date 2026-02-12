@@ -25,11 +25,6 @@ public class ViewProjectManagerAssigneeSectionDisplayContext
 	}
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
-		return "type=User";
-	}
-
-	@Override
 	public String getLabelKey() {
 		return "manager";
 	}

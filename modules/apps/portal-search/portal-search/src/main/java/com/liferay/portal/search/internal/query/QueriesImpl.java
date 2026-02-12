@@ -151,14 +151,14 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public GeoShapeQuery geoShape(String field, Shape shape) {
-		return new GeoShapeQueryImpl(field, shape);
+		return new GeoShapeQuery(field, shape);
 	}
 
 	@Override
 	public GeoShapeQuery geoShape(
 		String field, String indexedShapeId, String indexedShapeType) {
 
-		return new GeoShapeQueryImpl(field, indexedShapeId, indexedShapeType);
+		return new GeoShapeQuery(field, indexedShapeId, indexedShapeType);
 	}
 
 	@Override

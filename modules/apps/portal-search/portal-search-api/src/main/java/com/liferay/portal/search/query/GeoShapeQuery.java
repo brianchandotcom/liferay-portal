@@ -9,44 +9,109 @@ import com.liferay.portal.search.geolocation.Shape;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 import com.liferay.portal.search.query.geolocation.SpatialStrategy;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class GeoShapeQuery extends Query {
+public class GeoShapeQuery extends Query {
 
-	public abstract String getField();
+	public GeoShapeQuery(String field, Shape shape) {
+		_field = field;
+		_shape = shape;
 
-	public abstract Boolean getIgnoreUnmapped();
+		_indexedShapeId = null;
+		_indexedShapeType = null;
+	}
 
-	public abstract String getIndexedShapeId();
+	public GeoShapeQuery(
+		String field, String indexedShapeId, String indexedShapeType) {
 
-	public abstract String getIndexedShapeIndex();
+		_field = field;
+		_indexedShapeId = indexedShapeId;
+		_indexedShapeType = indexedShapeType;
 
-	public abstract String getIndexedShapePath();
+		_shape = null;
+	}
 
-	public abstract String getIndexedShapeRouting();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getIndexedShapeType();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract Shape getShape();
+	public Boolean getIgnoreUnmapped() {
+		return _ignoreUnmapped;
+	}
 
-	public abstract ShapeRelation getShapeRelation();
+	public String getIndexedShapeId() {
+		return _indexedShapeId;
+	}
 
-	public abstract SpatialStrategy getSpatialStrategy();
+	public String getIndexedShapeIndex() {
+		return _indexedShapeIndex;
+	}
 
-	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public String getIndexedShapePath() {
+		return _indexedShapePath;
+	}
 
-	public abstract void setIndexedShapeIndex(String indexedShapeIndex);
+	public String getIndexedShapeRouting() {
+		return _indexedShapeRouting;
+	}
 
-	public abstract void setIndexedShapePath(String indexedShapePath);
+	public String getIndexedShapeType() {
+		return _indexedShapeType;
+	}
 
-	public abstract void setIndexedShapeRouting(String indexedShapeRouting);
+	public Shape getShape() {
+		return _shape;
+	}
 
-	public abstract void setShapeRelation(ShapeRelation shapeRelation);
+	public ShapeRelation getShapeRelation() {
+		return _shapeRelation;
+	}
 
-	public abstract void setSpatialStrategy(SpatialStrategy spatialStrategy);
+	public SpatialStrategy getSpatialStrategy() {
+		return _spatialStrategy;
+	}
+
+	public void setIgnoreUnmapped(Boolean ignoreUnmapped) {
+		_ignoreUnmapped = ignoreUnmapped;
+	}
+
+	public void setIndexedShapeIndex(String indexedShapeIndex) {
+		_indexedShapeIndex = indexedShapeIndex;
+	}
+
+	public void setIndexedShapePath(String indexedShapePath) {
+		_indexedShapePath = indexedShapePath;
+	}
+
+	public void setIndexedShapeRouting(String indexedShapeRouting) {
+		_indexedShapeRouting = indexedShapeRouting;
+	}
+
+	public void setShapeRelation(ShapeRelation shapeRelation) {
+		_shapeRelation = shapeRelation;
+	}
+
+	public void setSpatialStrategy(SpatialStrategy spatialStrategy) {
+		_spatialStrategy = spatialStrategy;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String _field;
+	private Boolean _ignoreUnmapped;
+	private final String _indexedShapeId;
+	private String _indexedShapeIndex;
+	private String _indexedShapePath;
+	private String _indexedShapeRouting;
+	private final String _indexedShapeType;
+	private final Shape _shape;
+	private ShapeRelation _shapeRelation;
+	private SpatialStrategy _spatialStrategy;
 
 }

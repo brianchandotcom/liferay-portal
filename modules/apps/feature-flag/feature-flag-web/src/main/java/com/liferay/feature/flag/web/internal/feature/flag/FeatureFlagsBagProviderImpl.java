@@ -110,9 +110,7 @@ public class FeatureFlagsBagProviderImpl
 	public void setEnabled(long companyId, String key, boolean enabled) {
 		_featureFlagPreferencesManager.setEnabled(companyId, key, enabled);
 
-		String osgiServiceIdentifier = getOSGiServiceIdentifier();
-
-		_setEnabled(companyId, key, enabled, osgiServiceIdentifier);
+		_setEnabled(companyId, key, enabled);
 
 		if (!_clusterExecutor.isEnabled()) {
 			return;
@@ -120,7 +118,7 @@ public class FeatureFlagsBagProviderImpl
 
 		MethodHandler methodHandler = new MethodHandler(
 			_setEnabledMethodKey, companyId, key, enabled,
-			osgiServiceIdentifier);
+			getOSGiServiceIdentifier());
 
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
@@ -174,38 +172,7 @@ public class FeatureFlagsBagProviderImpl
 				IdentifiableOSGiServiceUtil.getIdentifiableOSGiService(
 					osgiServiceIdentifier);
 
-		FeatureFlagsBag featureFlagsBag =
-			featureFlagsBagProviderImpl._featureFlagsBags.get(companyId);
-
-		if (featureFlagsBag == null) {
-			return;
-		}
-
-		featureFlagsBag.setEnabled(key, enabled);
-
-		ServiceTrackerMap<String, List<FeatureFlagListener>> serviceTrackerMap =
-			featureFlagsBagProviderImpl._serviceTrackerMap;
-
-		List<FeatureFlagListener> featureFlagListeners =
-			serviceTrackerMap.getService(key);
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
-
-		featureFlagListeners = serviceTrackerMap.getService("*");
-
-		if (featureFlagListeners != null) {
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(companyId, key, enabled);
-			}
-		}
+		featureFlagsBagProviderImpl._setEnabled(companyId, key, enabled);
 	}
 
 	private FeatureFlagsBag _createFeatureFlagsBag(long companyId) {
@@ -396,6 +363,37 @@ public class FeatureFlagsBagProviderImpl
 					new DependencyAwareFeatureFlag(
 						featureFlag,
 						dependencyFeatureFlags.toArray(new FeatureFlag[0])));
+			}
+		}
+	}
+
+	private void _setEnabled(long companyId, String key, boolean enabled) {
+		FeatureFlagsBag featureFlagsBag = _featureFlagsBags.get(companyId);
+
+		if (featureFlagsBag == null) {
+			return;
+		}
+
+		featureFlagsBag.setEnabled(key, enabled);
+
+		List<FeatureFlagListener> featureFlagListeners =
+			_serviceTrackerMap.getService(key);
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
+			}
+		}
+
+		featureFlagListeners = _serviceTrackerMap.getService("*");
+
+		if (featureFlagListeners != null) {
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, key, enabled);
 			}
 		}
 	}

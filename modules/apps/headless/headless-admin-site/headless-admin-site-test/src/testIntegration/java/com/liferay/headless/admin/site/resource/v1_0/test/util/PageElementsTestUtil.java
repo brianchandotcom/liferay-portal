@@ -716,6 +716,39 @@ public class PageElementsTestUtil {
 		return fragmentItemExternalReference;
 	}
 
+	private static PageElement _getBasicFragmentPageElement(
+		String className,
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		String externalReferenceCode, String fieldKey, String fragmentKey,
+		String scopeExternalReferenceCode, long scopeGroupId) {
+
+		FragmentEditableElement[] fragmentEditableElements = {
+			FragmentEditableElementTestUtil.getTextFragmentEditableElement(
+				className, contextSource, externalReferenceCode, fieldKey,
+				scopeExternalReferenceCode)
+		};
+
+		return _getPageElement(
+			RandomTestUtil.randomString(),
+			getBasicFragmentInstancePageElementDefinition(
+				null, Collections.emptyMap(), fragmentKey,
+				fragmentEditableElements, Boolean.FALSE, scopeGroupId));
+	}
+
+	private static PageElement _getBasicFragmentPageElement(
+		String fieldKey, String fragmentKey, JournalArticle journalArticle,
+		int position, long scopeGroupId) {
+
+		PageElement pageElement = _getBasicFragmentPageElement(
+			"com.liferay.journal.model.JournalArticle", null,
+			journalArticle.getExternalReferenceCode(), fieldKey, fragmentKey,
+			"L_GLOBAL", scopeGroupId);
+
+		pageElement.setPosition(position);
+
+		return pageElement;
+	}
+
 	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
 		TemplateListStyle templateListStyle = new TemplateListStyle();
 

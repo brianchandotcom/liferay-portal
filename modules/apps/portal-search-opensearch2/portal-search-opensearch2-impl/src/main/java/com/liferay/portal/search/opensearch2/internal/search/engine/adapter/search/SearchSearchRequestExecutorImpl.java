@@ -50,7 +50,7 @@ public class SearchSearchRequestExecutorImpl
 			searchSearchRequest.setStart(null);
 		}
 
-		_searchSearchRequestAssembler.assemble(
+		SearchSearchRequestAssembler.INSTANCE.assemble(
 			searchRequestBuilder, searchSearchRequest);
 
 		SearchRequest searchRequest = searchRequestBuilder.build();
@@ -140,9 +140,6 @@ public class SearchSearchRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private SearchSearchRequestAssembler _searchSearchRequestAssembler;
 
 	@Reference
 	private SearchSearchResponseAssembler _searchSearchResponseAssembler;

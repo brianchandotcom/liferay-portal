@@ -16,9 +16,7 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.groupby.GroupByRequest;
-import com.liferay.portal.search.groupby.GroupByRequestFactory;
 import com.liferay.portal.search.groupby.GroupByResponse;
-import com.liferay.portal.search.internal.groupby.GroupByRequestFactoryImpl;
 import com.liferay.portal.search.test.util.AssertUtils;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
@@ -258,9 +256,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
+						GroupByRequest groupByRequest = new GroupByRequest(
+							GROUP_FIELD);
 
 						setTermsSortsAndDocsSize(groupByRequest);
 
@@ -283,9 +280,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
+						GroupByRequest groupByRequest = new GroupByRequest(
+							GROUP_FIELD);
 
 						groupByRequest.setTermsSize(1);
 
@@ -354,9 +350,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
+						GroupByRequest groupByRequest = new GroupByRequest(
+							GROUP_FIELD);
 
 						groupByRequest.setTermsSize(11);
 
@@ -381,9 +376,8 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
+						GroupByRequest groupByRequest = new GroupByRequest(
+							GROUP_FIELD);
 
 						groupByRequest.setTermsSorts(
 							new Sort(SORT_FIELD, Sort.STRING_TYPE, true));
@@ -637,9 +631,6 @@ public abstract class BaseGroupByTestCase extends BaseIndexingTestCase {
 
 	protected static final String SORT_FIELD =
 		Field.USER_ID + StringPool.UNDERLINE + Field.SORTABLE_FIELD_SUFFIX;
-
-	protected final GroupByRequestFactory groupByRequestFactory =
-		new GroupByRequestFactoryImpl();
 
 	private boolean _shouldIgnoreSearchEngineGlitchAndRetry(
 		RuntimeException runtimeException) {

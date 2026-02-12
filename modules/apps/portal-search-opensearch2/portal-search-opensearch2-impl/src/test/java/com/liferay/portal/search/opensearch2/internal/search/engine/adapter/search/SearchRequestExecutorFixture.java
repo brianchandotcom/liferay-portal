@@ -14,7 +14,6 @@ import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
-import com.liferay.portal.search.internal.legacy.groupby.GroupByRequestFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
@@ -176,9 +175,6 @@ public class SearchRequestExecutorFixture {
 			searchSearchRequestAssembler,
 			"_commonSearchRequestBuilderAssembler",
 			commonSearchRequestBuilderAssembler);
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_groupByRequestFactory",
-			new GroupByRequestFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_highlightTranslator",
 			new HighlightTranslator());

@@ -135,6 +135,18 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		return commerceShippingFixedOptionRel;
 	}
 
+	public long getCommerceShippingFixedOptionRelId() throws PortalException {
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			getCommerceShippingFixedOptionRel();
+
+		if (commerceShippingFixedOptionRel == null) {
+			return 0;
+		}
+
+		return commerceShippingFixedOptionRel.
+			getCommerceShippingFixedOptionRelId();
+	}
+
 	public List<Country> getCountries() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -144,16 +156,14 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	}
 
 	public long getCountryId() throws PortalException {
-		long countryId = 0;
-
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
 			getCommerceShippingFixedOptionRel();
 
-		if (commerceShippingFixedOptionRel != null) {
-			countryId = commerceShippingFixedOptionRel.getCountryId();
+		if (commerceShippingFixedOptionRel == null) {
+			return 0;
 		}
 
-		return countryId;
+		return commerceShippingFixedOptionRel.getCountryId();
 	}
 
 	public String getCPMeasurementUnitName(int type) {
@@ -164,11 +174,11 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			_cpMeasurementUnitLocalService.fetchPrimaryCPMeasurementUnit(
 				themeDisplay.getCompanyId(), type);
 
-		if (cpMeasurementUnit != null) {
-			return cpMeasurementUnit.getName(themeDisplay.getLanguageId());
+		if (cpMeasurementUnit == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		return cpMeasurementUnit.getName(themeDisplay.getLanguageId());
 	}
 
 	public CreationMenu getCreationMenu() throws Exception {
@@ -188,16 +198,14 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	}
 
 	public long getRegionId() throws PortalException {
-		long regionId = 0;
-
 		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
 			getCommerceShippingFixedOptionRel();
 
-		if (commerceShippingFixedOptionRel != null) {
-			regionId = commerceShippingFixedOptionRel.getRegionId();
+		if (commerceShippingFixedOptionRel == null) {
+			return 0;
 		}
 
-		return regionId;
+		return commerceShippingFixedOptionRel.getRegionId();
 	}
 
 	public List<Region> getRegions() throws PortalException {

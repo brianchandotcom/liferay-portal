@@ -58,6 +58,7 @@ public class LayoutPageTemplateEntryVerifyProcess extends VerifyProcess {
 					InfoItemFormVariation infoItemFormVariation =
 						infoItemFormVariationsProvider.getInfoItemFormVariation(
 							layoutPageTemplateEntry.getGroupId(),
+							layoutPageTemplateEntry.getClassTypeKey(),
 							String.valueOf(
 								layoutPageTemplateEntry.getClassTypeId()));
 

@@ -304,6 +304,7 @@ public class LayoutPageTemplateEntryItemSelectorView
 			InfoItemFormVariation infoItemFormVariation =
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
 					_layoutPageTemplateEntry.getGroupId(),
+					_layoutPageTemplateEntry.getClassTypeKey(),
 					String.valueOf(_layoutPageTemplateEntry.getClassTypeId()));
 
 			if (infoItemFormVariation != null) {

@@ -2061,7 +2061,7 @@ public class DisplayPageTemplateResourceTest
 
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				testGroup.getGroupId(),
+				testGroup.getGroupId(), ddmStructure.getStructureKey(),
 				String.valueOf(ddmStructure.getStructureId()));
 
 		Assert.assertNotNull(infoItemFormVariation);

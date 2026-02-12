@@ -344,6 +344,7 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getClassTypeKey(),
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
 		if (infoItemFormVariation == null) {

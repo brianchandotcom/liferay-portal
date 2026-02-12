@@ -680,7 +680,7 @@ public class DisplayPageTemplateResourceImpl
 			return GetterUtil.getLong(infoItemFormVariation.getKey());
 		}
 
-		return -1;
+		return -2;
 	}
 
 	private String _getClassTypeKey(

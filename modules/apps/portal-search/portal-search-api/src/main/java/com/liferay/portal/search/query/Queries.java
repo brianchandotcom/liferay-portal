@@ -18,7 +18,9 @@ import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link QueriesUtil}
  */
+@Deprecated
 @ProviderType
 public interface Queries {
 

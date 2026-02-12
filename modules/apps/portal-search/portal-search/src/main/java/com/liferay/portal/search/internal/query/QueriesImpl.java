@@ -33,6 +33,7 @@ import com.liferay.portal.search.query.NestedQuery;
 import com.liferay.portal.search.query.PercolateQuery;
 import com.liferay.portal.search.query.PrefixQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.QueriesUtil;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.RangeTermQuery;
 import com.liferay.portal.search.query.RegexQuery;
@@ -46,7 +47,6 @@ import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.query.WrapperQuery;
 import com.liferay.portal.search.script.Script;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -61,22 +61,22 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public BooleanQuery booleanQuery() {
-		return new BooleanQuery();
+		return QueriesUtil.booleanQuery();
 	}
 
 	@Override
 	public BoostingQuery boosting(Query positiveQuery, Query negativeQuery) {
-		return new BoostingQuery(positiveQuery, negativeQuery);
+		return QueriesUtil.boosting(positiveQuery, negativeQuery);
 	}
 
 	@Override
 	public CommonTermsQuery commonTerms(String field, String text) {
-		return new CommonTermsQuery(field, text);
+		return QueriesUtil.commonTerms(field, text);
 	}
 
 	@Override
 	public ConstantScoreQuery constantScore(Query query) {
-		return new ConstantScoreQuery(query);
+		return QueriesUtil.constantScore(query);
 	}
 
 	@Override
@@ -84,35 +84,35 @@ public class QueriesImpl implements Queries {
 		String field, boolean includesLower, boolean includesUpper,
 		String startDate, String endDate) {
 
-		return new DateRangeTermQuery(
+		return QueriesUtil.dateRangeTerm(
 			field, includesLower, includesUpper, startDate, endDate);
 	}
 
 	@Override
 	public DisMaxQuery disMax() {
-		return new DisMaxQuery();
+		return QueriesUtil.disMax();
 	}
 
 	@Override
 	public MoreLikeThisQuery.DocumentIdentifier documentIdentifier(
 		String index, String type, String id) {
 
-		return new MoreLikeThisQuery.DocumentIdentifierImpl(index, type, id);
+		return QueriesUtil.documentIdentifier(index, type, id);
 	}
 
 	@Override
 	public ExistsQuery exists(String field) {
-		return new ExistsQuery(field);
+		return QueriesUtil.exists(field);
 	}
 
 	@Override
 	public FunctionScoreQuery functionScore(Query query) {
-		return new FunctionScoreQuery(query);
+		return QueriesUtil.functionScore(query);
 	}
 
 	@Override
 	public FuzzyQuery fuzzy(String field, String value) {
-		return new FuzzyQuery(field, value);
+		return QueriesUtil.fuzzy(field, value);
 	}
 
 	@Override
@@ -120,7 +120,7 @@ public class QueriesImpl implements Queries {
 		String field, GeoLocationPoint topLeftGeoLocationPoint,
 		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-		return new GeoBoundingBoxQuery(
+		return QueriesUtil.geoBoundingBox(
 			field, topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
 	}
 
@@ -129,7 +129,7 @@ public class QueriesImpl implements Queries {
 		String field, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance geoDistance) {
 
-		return new GeoDistanceQuery(field, pinGeoLocationPoint, geoDistance);
+		return QueriesUtil.geoDistance(field, pinGeoLocationPoint, geoDistance);
 	}
 
 	@Override
@@ -138,53 +138,53 @@ public class QueriesImpl implements Queries {
 		GeoDistance lowerBoundGeoDistance, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance upperBoundGeoDistance) {
 
-		return new GeoDistanceRangeQuery(
+		return QueriesUtil.geoDistanceRange(
 			field, includesLower, includesUpper, lowerBoundGeoDistance,
 			pinGeoLocationPoint, upperBoundGeoDistance);
 	}
 
 	@Override
 	public GeoPolygonQuery geoPolygon(String field) {
-		return new GeoPolygonQuery(field);
+		return QueriesUtil.geoPolygon(field);
 	}
 
 	@Override
 	public GeoShapeQuery geoShape(String field, Shape shape) {
-		return new GeoShapeQuery(field, shape);
+		return QueriesUtil.geoShape(field, shape);
 	}
 
 	@Override
 	public GeoShapeQuery geoShape(
 		String field, String indexedShapeId, String indexedShapeType) {
 
-		return new GeoShapeQuery(field, indexedShapeId, indexedShapeType);
+		return QueriesUtil.geoShape(field, indexedShapeId, indexedShapeType);
 	}
 
 	@Override
 	public IdsQuery ids() {
-		return new IdsQuery();
+		return QueriesUtil.ids();
 	}
 
 	@Override
 	public MatchQuery match(String field, Object value) {
-		return new MatchQuery(field, value);
+		return QueriesUtil.match(field, value);
 	}
 
 	@Override
 	public MatchAllQuery matchAll() {
-		return new MatchAllQuery();
+		return QueriesUtil.matchAll();
 	}
 
 	@Override
 	public MatchPhraseQuery matchPhrase(String field, Object value) {
-		return new MatchPhraseQuery(field, value);
+		return QueriesUtil.matchPhrase(field, value);
 	}
 
 	@Override
 	public MatchPhrasePrefixQuery matchPhrasePrefix(
 		String field, Object value) {
 
-		return new MatchPhrasePrefixQuery(field, value);
+		return QueriesUtil.matchPhrasePrefix(field, value);
 	}
 
 	/**
@@ -194,22 +194,21 @@ public class QueriesImpl implements Queries {
 	@Deprecated
 	@Override
 	public MoreLikeThisQuery moreLikeThis(List<String> likeTexts) {
-		return new MoreLikeThisQuery(
-			Collections.emptyList(), likeTexts.toArray(new String[0]));
+		return QueriesUtil.moreLikeThis(likeTexts);
 	}
 
 	@Override
 	public MoreLikeThisQuery moreLikeThis(
 		List<String> fields, String... likeTexts) {
 
-		return new MoreLikeThisQuery(fields, likeTexts);
+		return QueriesUtil.moreLikeThis(fields, likeTexts);
 	}
 
 	@Override
 	public MoreLikeThisQuery moreLikeThis(
 		Set<MoreLikeThisQuery.DocumentIdentifier> documentIdentifiers) {
 
-		return new MoreLikeThisQuery(documentIdentifiers);
+		return QueriesUtil.moreLikeThis(documentIdentifiers);
 	}
 
 	/**
@@ -219,53 +218,53 @@ public class QueriesImpl implements Queries {
 	@Deprecated
 	@Override
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts) {
-		return new MoreLikeThisQuery(Collections.emptyList(), likeTexts);
+		return QueriesUtil.moreLikeThis(likeTexts);
 	}
 
 	@Override
 	public MoreLikeThisQuery moreLikeThis(
 		String[] fields, String... likeTexts) {
 
-		return new MoreLikeThisQuery(fields, likeTexts);
+		return QueriesUtil.moreLikeThis(fields, likeTexts);
 	}
 
 	@Override
 	public MultiMatchQuery multiMatch(
 		Object value, Map<String, Float> fieldsBoosts) {
 
-		return new MultiMatchQuery(value, fieldsBoosts);
+		return QueriesUtil.multiMatch(value, fieldsBoosts);
 	}
 
 	@Override
 	public MultiMatchQuery multiMatch(Object value, Set<String> fields) {
-		return new MultiMatchQuery(value, fields);
+		return QueriesUtil.multiMatch(value, fields);
 	}
 
 	@Override
 	public MultiMatchQuery multiMatch(Object value, String... fields) {
-		return new MultiMatchQuery(value, fields);
+		return QueriesUtil.multiMatch(value, fields);
 	}
 
 	@Override
 	public NestedQuery nested(String path, Query query) {
-		return new NestedQuery(path, query);
+		return QueriesUtil.nested(path, query);
 	}
 
 	@Override
 	public PercolateQuery percolate(String field, List<String> documentJSONs) {
-		return new PercolateQuery(field, documentJSONs);
+		return QueriesUtil.percolate(field, documentJSONs);
 	}
 
 	@Override
 	public PrefixQuery prefix(String field, String prefix) {
-		return new PrefixQuery(field, prefix);
+		return QueriesUtil.prefix(field, prefix);
 	}
 
 	@Override
 	public RangeTermQuery rangeTerm(
 		String field, boolean includesLower, boolean includesUpper) {
 
-		return new RangeTermQuery(field, includesLower, includesUpper);
+		return QueriesUtil.rangeTerm(field, includesLower, includesUpper);
 	}
 
 	@Override
@@ -273,58 +272,58 @@ public class QueriesImpl implements Queries {
 		String field, boolean includesLower, boolean includesUpper,
 		Object lowerBound, Object upperBound) {
 
-		return new RangeTermQuery(
+		return QueriesUtil.rangeTerm(
 			field, includesLower, includesUpper, lowerBound, upperBound);
 	}
 
 	@Override
 	public RegexQuery regex(String field, String regex) {
-		return new RegexQuery(field, regex);
+		return QueriesUtil.regex(field, regex);
 	}
 
 	@Override
 	public ScriptQuery script(Script script) {
-		return new ScriptQuery(script);
+		return QueriesUtil.script(script);
 	}
 
 	@Override
 	public SimpleStringQuery simpleString(String query) {
-		return new SimpleStringQuery(query);
+		return QueriesUtil.simpleString(query);
 	}
 
 	@Override
 	public StringQuery string(String query) {
-		return new StringQuery(query);
+		return QueriesUtil.string(query);
 	}
 
 	@Override
 	public TermQuery term(String field, Object value) {
-		return new TermQuery(field, value);
+		return QueriesUtil.term(field, value);
 	}
 
 	@Override
 	public TermsQuery terms(String field) {
-		return new TermsQuery(field);
+		return QueriesUtil.terms(field);
 	}
 
 	@Override
 	public TermsSetQuery termsSet(String fieldName, List<Object> values) {
-		return new TermsSetQuery(fieldName, values);
+		return QueriesUtil.termsSet(fieldName, values);
 	}
 
 	@Override
 	public WildcardQuery wildcard(String field, String value) {
-		return new WildcardQuery(field, value);
+		return QueriesUtil.wildcard(field, value);
 	}
 
 	@Override
 	public WrapperQuery wrapper(byte[] source) {
-		return new WrapperQuery(source);
+		return QueriesUtil.wrapper(source);
 	}
 
 	@Override
 	public WrapperQuery wrapper(String source) {
-		return new WrapperQuery(source);
+		return QueriesUtil.wrapper(source);
 	}
 
 }

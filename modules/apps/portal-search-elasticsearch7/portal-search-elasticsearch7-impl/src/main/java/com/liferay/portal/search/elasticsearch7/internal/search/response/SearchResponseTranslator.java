@@ -29,7 +29,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.groupby.GroupByResponse;
-import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -58,11 +57,9 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 public class SearchResponseTranslator {
 
 	public SearchResponseTranslator(
-		GroupByResponseFactory groupByResponseFactory,
 		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsResultsTranslator statsResultsTranslator) {
 
-		_groupByResponseFactory = groupByResponseFactory;
 		_statsRequestBuilderFactory = statsRequestBuilderFactory;
 		_statsResultsTranslator = statsResultsTranslator;
 	}
@@ -284,8 +281,7 @@ public class SearchResponseTranslator {
 
 		List<? extends Terms.Bucket> buckets = terms.getBuckets();
 
-		GroupByResponse groupByResponse =
-			_groupByResponseFactory.getGroupByResponse(field);
+		GroupByResponse groupByResponse = new GroupByResponse(field);
 
 		searchSearchResponse.addGroupByResponse(groupByResponse);
 
@@ -331,7 +327,6 @@ public class SearchResponseTranslator {
 		}
 	}
 
-	private final GroupByResponseFactory _groupByResponseFactory;
 	private final StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private final StatsResultsTranslator _statsResultsTranslator;
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

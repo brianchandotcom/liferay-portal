@@ -14,7 +14,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
@@ -99,8 +98,7 @@ public class SearchSearchResponseAssemblerImpl
 	@Activate
 	protected void activate() {
 		_searchResponseTranslator = new SearchResponseTranslator(
-			_groupByResponseFactory, _statsRequestBuilderFactory,
-			_statsResultsTranslator);
+			_statsRequestBuilderFactory, _statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -189,9 +187,6 @@ public class SearchSearchResponseAssemblerImpl
 
 	@Reference
 	private AggregationResults _aggregationResults;
-
-	@Reference
-	private GroupByResponseFactory _groupByResponseFactory;
 
 	@Reference
 	private HighlightFieldBuilderFactory _highlightFieldBuilderFactory;

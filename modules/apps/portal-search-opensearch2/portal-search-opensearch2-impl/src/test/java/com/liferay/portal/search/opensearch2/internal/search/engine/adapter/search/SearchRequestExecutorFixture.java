@@ -10,7 +10,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
-import com.liferay.portal.search.internal.groupby.GroupByResponseFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
@@ -227,8 +226,7 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_searchResponseTranslator",
 			new SearchResponseTranslator(
-				new GroupByResponseFactoryImpl(), statsRequestBuilderFactory,
-				new StatsResultsTranslatorImpl()));
+				statsRequestBuilderFactory, new StatsResultsTranslatorImpl()));
 
 		return searchSearchResponseAssembler;
 	}

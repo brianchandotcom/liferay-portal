@@ -193,7 +193,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static PageElementDefinition getPageElementDefinition(
-		PageElementDefinition.Type type, long scopeGroupId) {
+		Boolean curHidden, PageElementDefinition.Type type, long scopeGroupId) {
 
 		if (Objects.equals(
 				type, PageElementDefinition.Type.COLLECTION_DISPLAY)) {
@@ -218,9 +218,7 @@ public class PageElementsTestUtil {
 										() ->
 											new CollectionDisplayViewportDefinition() {
 												{
-													setHidden(
-														RandomTestUtil.
-															randomBoolean());
+													setHidden(curHidden);
 													setNumberOfColumns(1);
 												}
 											});
@@ -349,6 +347,13 @@ public class PageElementsTestUtil {
 		}
 
 		return null;
+	}
+
+	public static PageElementDefinition getPageElementDefinition(
+		PageElementDefinition.Type type, long scopeGroupId) {
+
+		return getPageElementDefinition(
+			RandomTestUtil.randomBoolean(), type, scopeGroupId);
 	}
 
 	public static PageElement[] getPageElements(

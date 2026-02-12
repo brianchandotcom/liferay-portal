@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 
@@ -36,14 +35,7 @@ public class ElasticsearchEngineAdapterFixture {
 				}
 			};
 
-		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
-			{
-				setElasticsearchClientResolver(elasticsearchClientResolver);
-			}
-		};
-
 		documentRequestExecutorFixture.setUp();
-		_searchRequestExecutorFixture.setUp();
 
 		ElasticsearchSearchEngineAdapterImpl
 			elasticsearchSearchEngineAdapterImpl =
@@ -60,9 +52,6 @@ public class ElasticsearchEngineAdapterFixture {
 			elasticsearchSearchEngineAdapterImpl, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchEngineAdapterImpl, "_searchRequestExecutor",
-			_searchRequestExecutorFixture.getSearchRequestExecutor());
-		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngineAdapterImpl, "_snapshotRequestExecutor",
 			SnapshotRequestExecutorTestUtil.createSnapshotRequestExecutor(
 				elasticsearchClientResolver));
@@ -77,8 +66,6 @@ public class ElasticsearchEngineAdapterFixture {
 
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
-
-	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 	private SearchEngineAdapter _searchEngineAdapter;

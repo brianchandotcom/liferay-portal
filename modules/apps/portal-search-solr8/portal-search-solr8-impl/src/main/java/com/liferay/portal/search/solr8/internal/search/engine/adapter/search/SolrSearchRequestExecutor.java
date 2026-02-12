@@ -22,17 +22,17 @@ import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Solr", service = SearchRequestExecutor.class
-)
 public class SolrSearchRequestExecutor implements SearchRequestExecutor {
+
+	public SolrSearchRequestExecutor(SolrClientManager solrClientManager) {
+		_countSearchRequestExecutor = new CountSearchRequestExecutor(
+			solrClientManager);
+		_searchSearchRequestExecutor = new SearchSearchRequestExecutor(
+			solrClientManager);
+	}
 
 	@Override
 	public ClearScrollResponse executeSearchRequest(
@@ -84,23 +84,11 @@ public class SolrSearchRequestExecutor implements SearchRequestExecutor {
 		return _suggestSearchRequestExecutor.execute(suggestSearchRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_countSearchRequestExecutor = new CountSearchRequestExecutor(
-			_solrClientManager);
-		_searchSearchRequestExecutor = new SearchSearchRequestExecutor(
-			_solrClientManager);
-	}
-
-	private CountSearchRequestExecutor _countSearchRequestExecutor;
+	private final CountSearchRequestExecutor _countSearchRequestExecutor;
 	private final MultisearchSearchRequestExecutor
 		_multisearchSearchRequestExecutor =
 			new MultisearchSearchRequestExecutor();
-	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
-
-	@Reference
-	private SolrClientManager _solrClientManager;
-
+	private final SearchSearchRequestExecutor _searchSearchRequestExecutor;
 	private final SuggestSearchRequestExecutor _suggestSearchRequestExecutor =
 		new SuggestSearchRequestExecutor();
 

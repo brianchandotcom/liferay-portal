@@ -279,7 +279,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public RegexQuery regex(String field, String regex) {
-		return new RegexQueryImpl(field, regex);
+		return new RegexQuery(field, regex);
 	}
 
 	@Override

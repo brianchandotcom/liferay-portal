@@ -97,6 +97,11 @@ public class FragmentEntryLinkCTDisplayRender
 	}
 
 	@Override
+	public boolean showPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	protected void buildDisplay(
 		DisplayBuilder<FragmentEntryLink> displayBuilder) {
 

@@ -8,7 +8,7 @@ package com.liferay.portal.search.aggregation.pipeline;
 /**
  * @author Michael C. Han
  */
-public abstract class MaxBucketPipelineAggregationResult
+public class MaxBucketPipelineAggregationResult
 	extends BucketPipelineAggregationResult {
 
 	public MaxBucketPipelineAggregationResult(String name, double value) {

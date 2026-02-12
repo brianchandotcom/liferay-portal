@@ -8,7 +8,7 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class RangeAggregationResult extends BucketAggregationResult {
+public class RangeAggregationResult extends BucketAggregationResult {
 
 	public RangeAggregationResult(String name) {
 		super(name);

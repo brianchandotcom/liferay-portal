@@ -91,7 +91,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 			() -> ImageValueUtil.toBackgroundImageValue(
 				companyId, _infoItemServiceRegistry,
 				formStyledLayoutStructureItem.getBackgroundImageJSONObject(),
-				scopeGroupId));
+				layoutPlid, layoutStructure,
+				formStyledLayoutStructureItem.getItemId(), scopeGroupId));
 		formContainerPageElementDefinition.setCssClasses(
 			() -> {
 				if (SetUtil.isEmpty(

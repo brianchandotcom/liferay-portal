@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.bucket.DiversifiedSamplerAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.FilterAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.FiltersAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.GeoDistanceAggregationResultImpl;
@@ -152,7 +151,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public DiversifiedSamplerAggregationResult diversifiedSampler(
 		String name, long docCount) {
 
-		return new DiversifiedSamplerAggregationResultImpl(name, docCount);
+		return new DiversifiedSamplerAggregationResult(name, docCount);
 	}
 
 	@Override

@@ -5,15 +5,139 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+import com.liferay.portal.search.opensearch2.internal.util.SetterUtil;
+
+import java.io.IOException;
+
+import org.opensearch.client.json.JsonData;
+import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch._types.Time;
+import org.opensearch.client.opensearch._types.TimeUnit;
+import org.opensearch.client.opensearch.core.ScrollRequest;
+import org.opensearch.client.opensearch.core.SearchRequest;
+import org.opensearch.client.opensearch.core.SearchResponse;
 
 /**
  * @author Michael C. Han
+ * @author Petteri Karttunen
  */
-public interface SearchSearchRequestExecutor {
+public class SearchSearchRequestExecutor {
+
+	public SearchSearchRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_openSearchConnectionManager = openSearchConnectionManager;
+	}
 
 	public SearchSearchResponse execute(
-		SearchSearchRequest searchSearchRequest);
+		SearchSearchRequest searchSearchRequest) {
+
+		SearchRequest.Builder searchRequestBuilder =
+			new SearchRequest.Builder();
+
+		SetterUtil.setNotNullBoolean(
+			searchRequestBuilder::requestCache,
+			searchSearchRequest.isRequestCache());
+
+		if (searchSearchRequest.getSearchAfter() != null) {
+			searchSearchRequest.setStart(null);
+		}
+
+		SearchSearchRequestAssembler.INSTANCE.assemble(
+			searchRequestBuilder, searchSearchRequest);
+
+		SearchRequest searchRequest = searchRequestBuilder.build();
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("Search query: " + JsonpUtil.toString(searchRequest));
+		}
+
+		SearchResponse<JsonData> searchResponse = null;
+
+		if (searchSearchRequest.getScrollId() != null) {
+			searchResponse = _getScrollSearchResponse(searchSearchRequest);
+		}
+		else {
+			searchResponse = _getSearchResponse(
+				searchRequest, searchSearchRequest);
+		}
+
+		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
+
+		SearchSearchResponseAssembler.INSTANCE.assemble(
+			searchRequest, searchResponse, searchSearchRequest,
+			searchSearchResponse);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The search engine processed ",
+					searchSearchResponse.getSearchRequestString(), " in ",
+					searchSearchResponse.getExecutionTime(), " ms"));
+		}
+
+		return searchSearchResponse;
+	}
+
+	private SearchResponse<JsonData> _getScrollSearchResponse(
+		SearchSearchRequest searchSearchRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
+
+		ScrollRequest.Builder scrollRequestBuilder =
+			new ScrollRequest.Builder();
+
+		if (searchSearchRequest.getScrollKeepAliveMinutes() > 0) {
+			String scrollKeepAliveMinutes = String.valueOf(
+				searchSearchRequest.getScrollKeepAliveMinutes());
+
+			scrollRequestBuilder.scroll(
+				Time.of(
+					time -> time.time(
+						scrollKeepAliveMinutes +
+							TimeUnit.Minutes.jsonValue())));
+		}
+
+		scrollRequestBuilder.scrollId(searchSearchRequest.getScrollId());
+
+		try {
+			return openSearchClient.scroll(
+				scrollRequestBuilder.build(), JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private SearchResponse<JsonData> _getSearchResponse(
+		SearchRequest searchRequest, SearchSearchRequest searchSearchRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
+
+		try {
+			return openSearchClient.search(searchRequest, JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchSearchRequestExecutor.class);
+
+	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

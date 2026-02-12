@@ -11,7 +11,7 @@ import com.liferay.portal.search.opensearch2.internal.OpenSearchIndexSearcher;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.indexing.LiferayOpenSearchIndexingFixtureFactory;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.CountSearchRequestExecutor;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchSearchRequestExecutor;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -67,7 +67,7 @@ public class OpenSearchIndexSearcherLoggingTest extends BaseIndexingTestCase {
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINEST, expectedLog = "Search query:"
 	)
 	@Test
@@ -76,7 +76,7 @@ public class OpenSearchIndexSearcherLoggingTest extends BaseIndexingTestCase {
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "The search engine processed"
 	)

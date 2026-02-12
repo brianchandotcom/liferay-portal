@@ -27,6 +27,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -226,28 +227,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		String absolutePath, DetailAST detailAST, String methodName,
 		String fullyQualifiedTypeName) {
 
-		File javaFile = JavaSourceUtil.getJavaFile(
-			fullyQualifiedTypeName, _getRootDirName(absolutePath),
-			_getBundleSymbolicNamesMap(absolutePath));
-
-		if (javaFile == null) {
-			return;
-		}
-
-		JavaClass javaClass = null;
-
-		try {
-			javaClass = JavaClassParser.parseJavaClass(
-				SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
-		}
-		catch (IOException | ParseException exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return;
-		}
-
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST.getType() != TokenTypes.EXPR) {
@@ -256,7 +235,14 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		parentDetailAST = parentDetailAST.getParent();
 
-		if ((parentDetailAST.getType() != TokenTypes.SLIST) ||
+		if (parentDetailAST.getType() != TokenTypes.SLIST) {
+			return;
+		}
+
+		JavaClass javaClass = _getDTOJavaClass(
+			absolutePath, fullyQualifiedTypeName);
+
+		if ((javaClass == null) ||
 			!_hasReplaceableMethodSignature(methodName, javaClass)) {
 
 			return;
@@ -289,6 +275,40 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		return _bundleSymbolicNamesMap;
+	}
+
+	private JavaClass _getDTOJavaClass(
+		String absolutePath, String fullyQualifiedTypeName) {
+
+		if (_dtoJavaClasses.containsKey(fullyQualifiedTypeName)) {
+			return _dtoJavaClasses.get(fullyQualifiedTypeName);
+		}
+
+		File javaFile = JavaSourceUtil.getJavaFile(
+			fullyQualifiedTypeName, _getRootDirName(absolutePath),
+			_getBundleSymbolicNamesMap(absolutePath));
+
+		if (javaFile == null) {
+			return null;
+		}
+
+		JavaClass javaClass = null;
+
+		try {
+			javaClass = JavaClassParser.parseJavaClass(
+				SourceUtil.getAbsolutePath(javaFile), FileUtil.read(javaFile));
+
+			_dtoJavaClasses.put(fullyQualifiedTypeName, javaClass);
+
+			return javaClass;
+		}
+		catch (IOException | ParseException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			return null;
+		}
 	}
 
 	private synchronized String _getRootDirName(String absolutePath) {
@@ -342,6 +362,7 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		RESTDTOSetCallCheck.class);
 
 	private volatile Map<String, String> _bundleSymbolicNamesMap;
+	private final Map<String, JavaClass> _dtoJavaClasses = new HashMap<>();
 	private volatile String _rootDirName;
 
 }

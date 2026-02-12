@@ -21,7 +21,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -111,19 +110,6 @@ public class DataCleanupPreupgradeProcessUtil {
 		}
 
 		return tableName;
-	}
-
-	public static boolean isLiferayTable(
-		DBInspector dbInspector, Set<String> liferayTableNames,
-		String tableName) {
-
-		if (dbInspector.isObjectTable(tableName) ||
-			liferayTableNames.contains(tableName)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

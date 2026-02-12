@@ -80,8 +80,8 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 					}
 
 					if ((tableName == null) ||
-						!DataCleanupPreupgradeProcessUtil.isLiferayTable(
-							dbInspector, liferayTableNames, tableName)) {
+						(!dbInspector.isObjectTable(tableName) &&
+						 !liferayTableNames.contains(tableName))) {
 
 						continue;
 					}

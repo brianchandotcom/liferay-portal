@@ -1,12 +1,15 @@
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import EventMetricQuery, {
 	EventMetricsData,
 	EventMetricsVariables
 } from 'shared/queries/EventMetricQuery';
+import getCN from 'classnames';
 import IntervalSelector from 'shared/components/IntervalSelector';
+import Loading from 'shared/components/Loading';
 import moment from 'moment';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useState} from 'react';
@@ -27,6 +30,12 @@ import {
 	getEndDate
 } from 'shared/util/date';
 import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
+import {
+	ENABLE_CDP,
+	RangeKeyTimeRanges,
+	SessionEntityTypes,
+	Sizes
+} from 'shared/util/constants';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatSessions, getActivityLabel} from 'shared/util/activities';
 import {getSafeRangeSelectors} from 'shared/util/util';
@@ -35,7 +44,6 @@ import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
 import {isHourlyRangeKey} from 'shared/util/time';
 import {isNil} from 'lodash';
 import {mapListResultsToProps} from 'shared/util/mappers';
-import {RangeKeyTimeRanges, SessionEntityTypes} from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
 import {useQuery} from '@apollo/react-hooks';
 import {useSelectedPoint} from 'shared/hooks/useSelectedPoint';
@@ -109,6 +117,11 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 			}
 		}
 	);
+
+	const classNames = getCN({
+		h4: !ENABLE_CDP,
+		'text-4 text-secondary': ENABLE_CDP
+	});
 
 	const {
 		error,
@@ -214,6 +227,113 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		? getDateRangeLabelFromDate(intervalInitDate, interval)
 		: getDateRangeLabel(activityHistory, interval, 'intervalInitDate');
 
+	const renderNoResults = () => {
+		if (sessionsMappedResults?.loading) {
+			return (
+				<NoResultsDisplay>
+					<Loading key='LOADING' />
+				</NoResultsDisplay>
+			);
+		}
+
+		if (!sessionsMappedResults?.items?.length) {
+			if (query) {
+				return (
+					<NoResultsDisplay
+						description={Liferay.Language.get(
+							'review-your-search-and-try-again'
+						)}
+						icon={{
+							border: false,
+							size: Sizes.XXXLarge,
+							symbol: 'ac_no_results_found'
+						}}
+						spacer
+						title={Liferay.Language.get(
+							'there-are-no-results-found'
+						)}
+					>
+						<ClayButton
+							className='button-root'
+							displayType='secondary'
+							onClick={() => {
+								onQueryChange('');
+								setSearchValue('');
+							}}
+						>
+							{Liferay.Language.get('clear-search')}
+						</ClayButton>
+					</NoResultsDisplay>
+				);
+			}
+
+			if (ENABLE_CDP) {
+				return (
+					<NoResultsDisplay
+						description={
+							<>
+								<span>
+									{Liferay.Language.get(
+										'check-back-later-to-see-if-data-has-been-received-from-your-data-sources,-or-try-a-different-date-range'
+									)}
+								</span>
+
+								<ClayLink
+									className='d-block mb-3'
+									decoration='underline'
+									href={
+										URLConstants.IndividualProfilesDocument
+									}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'learn-more-about-individuals'
+									)}
+
+									<span className='inline-item inline-item-after'>
+										<ClayIcon
+											fontSize={8}
+											symbol='shortcut'
+										/>
+									</span>
+								</ClayLink>
+							</>
+						}
+						spacer
+						title={Liferay.Language.get('there-is-no-data-found')}
+					/>
+				);
+			}
+
+			return (
+				<NoResultsDisplay
+					description={
+						<>
+							<span className='mr-1'>
+								{Liferay.Language.get(
+									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+								)}
+							</span>
+
+							<ClayLink
+								href={URLConstants.IndividualProfilesDocument}
+								key='DOCUMENTATION'
+								target='_blank'
+							>
+								{Liferay.Language.get(
+									'learn-more-about-individuals'
+								)}
+							</ClayLink>
+						</>
+					}
+					spacer
+					title={Liferay.Language.get('there-are-no-events-found')}
+				/>
+			);
+		}
+	};
+
 	return (
 		<WrapSafeResults
 			className='flex-grow-1 loading-root'
@@ -228,35 +348,41 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 		>
 			<Card.Body>
 				<div className='align-items-center d-flex justify-content-end mt-3'>
-					<SearchInput
-						autoFocus
-						className='search-input mr-3'
-						onChange={setSearchValue}
-						onSubmit={handleQuery}
-						placeholder={Liferay.Language.get('search')}
-						value={searchValue}
-					/>
+					{!ENABLE_CDP && (
+						<>
+							<SearchInput
+								autoFocus
+								className='search-input mr-3'
+								onChange={setSearchValue}
+								onSubmit={handleQuery}
+								placeholder={Liferay.Language.get('search')}
+								value={searchValue}
+							/>
 
-					<IntervalSelector
-						activeInterval={interval}
-						className='mr-3'
-						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
-						onChange={(interval: Interval) => {
-							onChangeInterval(interval);
+							<IntervalSelector
+								activeInterval={interval}
+								className='mr-3'
+								disabled={isHourlyRangeKey(
+									rangeSelectors.rangeKey
+								)}
+								onChange={(interval: Interval) => {
+									onChangeInterval(interval);
 
-							handleChangeSelection(null);
-						}}
-					/>
+									handleChangeSelection(null);
+								}}
+							/>
 
-					<DropdownRangeKey
-						legacy={false}
-						onRangeSelectorChange={rangeSelectors => {
-							onRangeSelectorsChange(rangeSelectors);
+							<DropdownRangeKey
+								legacy={false}
+								onRangeSelectorChange={rangeSelectors => {
+									onRangeSelectorsChange(rangeSelectors);
 
-							handleChangeSelection(null);
-						}}
-						rangeSelectors={rangeSelectors}
-					/>
+									handleChangeSelection(null);
+								}}
+								rangeSelectors={rangeSelectors}
+							/>
+						</>
+					)}
 				</div>
 
 				<div className='individuals-activities-chart'>
@@ -272,12 +398,17 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<div className='selected-info'>
 						<div className='activities-date d-flex align-items-baseline'>
-							<div className='h4'>
+							<div className={classNames}>
 								{activityHistory?.length
 									? sub(
-											Liferay.Language.get(
-												'individuals-events-x'
-											),
+											ENABLE_CDP
+												? Liferay.Language.get(
+														'the-individual-performed-the-events-during-x'
+												  )
+												: Liferay.Language.get(
+														'individuals-events-x'
+												  ),
+
 											[date]
 									  )
 									: Liferay.Language.get(
@@ -297,16 +428,46 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 									)}
 								</ClayButton>
 							)}
-						</div>
 
-						<div className='details'>
-							{getActivityLabel(
-								(selected
-									? totalEvents
-									: activityTotal
-								)?.toLocaleString()
+							{ENABLE_CDP && (
+								<>
+									<span className='events-count-circle ml-auto'></span>
+
+									<div className='ml-2'>
+										{getActivityLabel(
+											(selected
+												? totalEvents
+												: activityTotal
+											)?.toLocaleString()
+										)}
+									</div>
+								</>
 							)}
 						</div>
+
+						{ENABLE_CDP && (
+							<div className='mt-4'>
+								<SearchInput
+									autoFocus
+									className='search-input mr-3'
+									onChange={setSearchValue}
+									onSubmit={handleQuery}
+									placeholder={Liferay.Language.get('search')}
+									value={searchValue}
+								/>
+							</div>
+						)}
+
+						{!ENABLE_CDP && (
+							<div className='details'>
+								{getActivityLabel(
+									(selected
+										? totalEvents
+										: activityTotal
+									)?.toLocaleString()
+								)}
+							</div>
+						)}
 					</div>
 				</div>
 			</Card.Body>
@@ -325,35 +486,7 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				{...sessionsMappedResults}
 				delta={delta}
 				initialExpanded={false}
-				noResultsRenderer={
-					<NoResultsDisplay
-						description={
-							<>
-								<span className='mr-1'>
-									{Liferay.Language.get(
-										'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
-									)}
-								</span>
-
-								<ClayLink
-									href={
-										URLConstants.IndividualProfilesDocument
-									}
-									key='DOCUMENTATION'
-									target='_blank'
-								>
-									{Liferay.Language.get(
-										'learn-more-about-individuals'
-									)}
-								</ClayLink>
-							</>
-						}
-						spacer
-						title={Liferay.Language.get(
-							'there-are-no-events-found'
-						)}
-					/>
-				}
+				noResultsRenderer={renderNoResults()}
 				onDeltaChange={onDeltaChange}
 				onPageChange={onPageChange}
 				page={page}

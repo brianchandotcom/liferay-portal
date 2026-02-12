@@ -55,6 +55,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.scope.Scope;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -510,6 +511,117 @@ public class PageElementsTestUtil {
 				getPageElementDefinition(
 					PageElementDefinition.Type.WIDGET, scopeGroupId),
 				StringPool.BLANK, position));
+
+		return pageElements.toArray(new PageElement[0]);
+	}
+
+	public static PageElement[] getPageElementsWithTemplateEntries(
+			String fragmentKey, JournalArticle journalArticle,
+			int layoutPageTemplateEntryType, long scopeGroupId)
+		throws Exception {
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		ServiceContext companyGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(company.getGroupId());
+
+		ServiceContext scopeGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(scopeGroupId);
+
+		int position = 0;
+
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getExternalGlobalGroupTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry1",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getExternalScopeGroupTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry1",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getInternalTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry2",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getInternalTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry2",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getExternalGlobalGroupTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry3",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getExternalScopeGroupTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry3",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getInternalTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry4",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getInternalTemplateFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry4",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+
+		if (layoutPageTemplateEntryType ==
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+
+			pageElements.add(
+				_getDisplayPageItemPageElement(
+					_getExternalGlobalGroupTemplateFieldKey(
+						_getTemplateEntry(
+							journalArticle, "companyGroupTemplateEntry5",
+							companyGroupServiceContext)),
+					fragmentKey, position++, scopeGroupId));
+			pageElements.add(
+				_getDisplayPageItemPageElement(
+					_getExternalScopeGroupTemplateFieldKey(
+						_getTemplateEntry(
+							journalArticle, "scopeGroupTemplateEntry5",
+							scopeGroupServiceContext)),
+					fragmentKey, position++, scopeGroupId));
+			pageElements.add(
+				_getDisplayPageItemPageElement(
+					_getInternalTemplateFieldKey(
+						_getTemplateEntry(
+							journalArticle, "companyGroupTemplateEntry6",
+							companyGroupServiceContext)),
+					fragmentKey, position++, scopeGroupId));
+			pageElements.add(
+				_getDisplayPageItemPageElement(
+					_getInternalTemplateFieldKey(
+						_getTemplateEntry(
+							journalArticle, "scopeGroupTemplateEntry6",
+							scopeGroupServiceContext)),
+					fragmentKey, position, scopeGroupId));
+		}
 
 		return pageElements.toArray(new PageElement[0]);
 	}

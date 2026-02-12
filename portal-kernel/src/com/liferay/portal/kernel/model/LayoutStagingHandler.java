@@ -285,7 +285,9 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		Arrays.asList(
 			"getBreadcrumb", "getColorScheme", "getColorSchemeId", "getCss",
 			"getCssText", "getDescription", "getDescriptionMap",
-			"getKeywordsMap", "getGroupId", "getHTMLTitle", "getIconImage",
+			"getFaviconFileEntryERC", "getFaviconFileEntryScopeERC",
+			"getFaviconFileEntryGroupId", "getFaviconURL", "getKeywordsMap",
+			"getGroupId", "getHTMLTitle", "getIconImage", "getIconImageERC",
 			"getIconImageId", "getKeywords", "getLayoutSet", "getModifiedDate",
 			"getName", "getNameMap", "getRobots", "getRobotsMap", "getTarget",
 			"getTheme", "getThemeId", "getThemeSetting", "getTitle",
@@ -293,9 +295,11 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			"getTypeSettingsProperty", "isContentDisplayPage", "isCustomizable",
 			"isEscapedModel", "hasIconImage", "isInheritLookAndFeel",
 			"setColorSchemeId", "setCss", "setDescription", "setDescriptionMap",
-			"setEscapedModel", "setGroupId", "setIconImage", "setIconImageId",
-			"setKeywords", "setKeywordsMap", "setModifiedDate", "setName",
-			"setNameMap", "setRobots", "setRobotsMap", "setThemeId", "setTitle",
+			"setEscapedModel", "setFaviconFileEntryERC",
+			"setFaviconFileEntryScopeERC", "setGroupId", "setIconImage",
+			"setIconImageERC", "setIconImageId", "setKeywords",
+			"setKeywordsMap", "setModifiedDate", "setName", "setNameMap",
+			"setRobots", "setRobotsMap", "setThemeId", "setTitle",
 			"setTitleMap", "setTypeSettings", "setTypeSettingsProperties"));
 
 	private final Layout _layout;

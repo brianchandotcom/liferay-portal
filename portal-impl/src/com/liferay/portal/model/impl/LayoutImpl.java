@@ -558,14 +558,18 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	public long getFaviconFileEntryGroupId() {
-		Long groupId = ScopeUtil.getItemGroupId(
+		if (_faviconFileEntryGroupId != null) {
+			return _faviconFileEntryGroupId;
+		}
+
+		_faviconFileEntryGroupId = ScopeUtil.getItemGroupId(
 			getCompanyId(), getFaviconFileEntryScopeERC(), getGroupId());
 
-		if (groupId == null) {
+		if (_faviconFileEntryGroupId == null) {
 			return 0;
 		}
 
-		return groupId;
+		return _faviconFileEntryGroupId;
 	}
 
 	@Override
@@ -766,21 +770,40 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public Image getIconImage() {
-		Image iconImage = null;
+		if (_iconImage != null) {
+			return _iconImage;
+		}
 
 		if (hasIconImage()) {
-			iconImage = ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
-				getIconImageERC(), getCompanyId());
+			_iconImage =
+				ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
+					getIconImageERC(), getCompanyId());
 
-			if ((iconImage == null) && _log.isWarnEnabled()) {
+			if ((_iconImage == null) && _log.isWarnEnabled()) {
 				_log.warn(
 					StringBundler.concat(
-						"Unable to get image with external reference code ",
+						"Unable to fetch image with external reference code ",
 						getIconImageERC(), " and company ", getCompanyId()));
 			}
 		}
 
-		return iconImage;
+		return _iconImage;
+	}
+
+	/**
+	 * Returns the icon image ID associated with the layout.
+	 *
+	 * @return the icon image ID, or <code>0</code> if the layout has no icon image
+	 */
+	@Override
+	public long getIconImageId() {
+		_iconImage = getIconImage();
+
+		if (_iconImage == null) {
+			return 0;
+		}
+
+		return _iconImage.getImageId();
 	}
 
 	@Override
@@ -1639,10 +1662,59 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public void setFaviconFileEntryScopeERC(String faviconFileEntryScopeERC) {
+		super.setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
+
+		_faviconFileEntryGroupId = null;
+	}
+
+	@Override
 	public void setGroupId(long groupId) {
 		super.setGroupId(groupId);
 
 		_layoutSet = null;
+	}
+
+	/**
+	 * Sets the icon image ERC associated with the layout.
+	 *
+	 * @param iconImageERC the icon image ERC
+	 */
+	@Override
+	public void setIconImageERC(String iconImageERC) {
+		if (Objects.equals(getIconImageERC(), iconImageERC)) {
+			return;
+		}
+
+		super.setIconImageERC(iconImageERC);
+
+		_iconImage = null;
+	}
+
+	/**
+	 * Sets the icon image ID associated with the layout.
+	 *
+	 * @param iconImageId the icon image ID
+	 */
+	@Override
+	public void setIconImageId(long iconImageId) {
+		if (iconImageId > 0) {
+			Image image = ImageLocalServiceUtil.fetchImage(iconImageId);
+
+			if (image != null) {
+				setIconImageERC(image.getExternalReferenceCode());
+			}
+			else {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to set image with ID " + iconImageId);
+				}
+
+				setIconImageERC(null);
+			}
+		}
+		else {
+			setIconImageERC(null);
+		}
 	}
 
 	@Override
@@ -1973,7 +2045,9 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	private ColorScheme _colorScheme;
+	private Long _faviconFileEntryGroupId;
 	private String _faviconURL;
+	private Image _iconImage;
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
 	private Theme _theme;

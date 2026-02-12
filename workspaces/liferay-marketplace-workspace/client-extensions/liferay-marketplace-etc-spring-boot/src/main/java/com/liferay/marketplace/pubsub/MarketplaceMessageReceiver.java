@@ -14,6 +14,7 @@ import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.admin.user.client.custom.field.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
@@ -25,11 +26,13 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -68,8 +71,15 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					MarketplaceConstants.
 						PUBSUB_TOPIC_NAME_KORONEIKI_ACCOUNT_CREATE)) {
 
-				// TODO
+				com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+					koroneikiAccount =
+						com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
+							Account.toDTO(
+								jsonObject.getJSONObject(
+									"account"
+								).toString());
 
+				_processKoroneikiAccountCreate(koroneikiAccount);
 			}
 			else if (Objects.equals(
 						_topicName,
@@ -144,6 +154,112 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 
 		return null;
+	}
+
+	private void _processKoroneikiAccountCreate(
+			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+				koroneikiAccount)
+		throws Exception {
+
+		AccountResource accountResource =
+			_marketplaceService.getAccountResource();
+
+		List<String> contactKeys = new ArrayList<>();
+
+		try {
+			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
+				<Contact> contactPage = _koroneikiService.getContactPage(
+					koroneikiAccount.getKey(),
+					com.liferay.osb.koroneiki.phloem.rest.client.pagination.
+						Pagination.of(1, -1));
+
+			for (Contact contact : contactPage.getItems()) {
+				if (contact == null) {
+					continue;
+				}
+
+				String contactKey = contact.getKey();
+				String contactEmailAddress = contact.getEmailAddress();
+
+				contactKeys.add(contactKey);
+
+				try {
+					_marketplaceService.getUserAccount(contactEmailAddress);
+
+					continue;
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
+				}
+
+				_marketplaceService.postUserAccount(
+					new UserAccount() {
+						{
+							setEmailAddress(contact::getEmailAddress);
+							setFamilyName(contact::getLastName);
+							setGivenName(contact::getFirstName);
+						}
+					});
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		UserAccount[] userAccounts = new UserAccount[contactKeys.size()];
+
+		for (int i = 0; i < contactKeys.size(); i++) {
+			String contactKey = contactKeys.get(i);
+
+			userAccounts[i] = new UserAccount() {
+				{
+					setExternalReferenceCode(() -> contactKey);
+				}
+			};
+		}
+
+		accountResource.postAccount(
+			new Account() {
+
+				private final CustomField[] _customFields = {
+					new CustomField() {
+						{
+							setCustomValue(
+								new CustomValue() {
+									{
+										setData(
+											koroneikiAccount.
+												getParentAccountKey());
+									}
+								});
+							setName("koroneiki-parent-account-key");
+						}
+					},
+					new CustomField() {
+						{
+							setCustomValue(
+								new CustomValue() {
+									{
+										setData(
+											_koroneikiService.
+												getSalesforceAccountKey(
+													koroneikiAccount));
+									}
+								});
+							setName("salesforce-account-key");
+						}
+					}
+				};
+
+				{
+					setAccountUserAccounts(() -> userAccounts);
+					setCustomFields(() -> _customFields);
+					setDescription(koroneikiAccount::getDescription);
+					setName(koroneikiAccount::getName);
+				}
+			});
 	}
 
 	private void _processKoroneikiAccountUpdate(

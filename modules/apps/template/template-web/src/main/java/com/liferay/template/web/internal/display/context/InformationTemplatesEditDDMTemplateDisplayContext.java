@@ -82,7 +82,8 @@ public class InformationTemplatesEditDDMTemplateDisplayContext
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				_themeDisplay.getScopeGroupId(),
-				templateEntry.getInfoItemFormVariationKey(), null);
+				templateEntry.getInfoItemFormVariationKey(),
+				templateEntry.getInfoItemFormVariationKey());
 
 		if (infoItemFormVariation == null) {
 			return StringPool.BLANK;

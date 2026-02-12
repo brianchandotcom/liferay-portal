@@ -2720,14 +2720,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			InfoItemFormVariation infoItemFormVariation =
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					_groupId, subtypeKey, null);
-
-			if (infoItemFormVariation == null) {
-				infoItemFormVariation =
-					infoItemFormVariationsProvider.
-						getInfoItemFormVariationByExternalReferenceCode(
-							subtypeKey, _groupId);
-			}
+					_groupId, subtypeKey, subtypeKey);
 
 			if (infoItemFormVariation != null) {
 				return GetterUtil.getLong(infoItemFormVariation.getKey());

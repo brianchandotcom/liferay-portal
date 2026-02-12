@@ -106,10 +106,10 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 					}
 
 					if (primaryKeyColumnName == null) {
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Table " + tableName +
-									" does not have a primary key");
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Skipping table " + tableName +
+									" because it does not have a primary key");
 						}
 
 						continue;

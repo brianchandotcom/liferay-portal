@@ -9,6 +9,7 @@ import com.liferay.headless.admin.user.client.custom.field.CustomField;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Entitlement;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress;
@@ -55,6 +56,16 @@ public class KoroneikiService {
 		).endpoint(
 			new URL(_koroneikiAuthURL)
 		).build();
+	}
+
+	public Page<Contact> getContactPage(
+			String accountKey, Pagination pagination)
+		throws Exception {
+
+		ContactResource contactResource = getContactResource();
+
+		return contactResource.getAccountAccountKeyContactsPage(
+			accountKey, pagination);
 	}
 
 	public ContactResource getContactResource() throws Exception {

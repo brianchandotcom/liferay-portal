@@ -1107,17 +1107,6 @@ public abstract class BaseWorkspaceGitRepository
 							"Unable to reset Git directory: " + directory,
 							executionResult.getStandardError()));
 				}
-
-				String jobVariant = System.getenv("JOB_VARIANT");
-
-				if (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-					jobVariant.contains("service-builder")) {
-
-					GitWorkingDirectory gitWorkingDirectory =
-						getGitWorkingDirectory();
-
-					gitWorkingDirectory.clean();
-				}
 			}
 
 			return;

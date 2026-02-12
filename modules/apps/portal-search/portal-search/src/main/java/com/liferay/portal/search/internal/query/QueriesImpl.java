@@ -138,7 +138,7 @@ public class QueriesImpl implements Queries {
 		GeoDistance lowerBoundGeoDistance, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance upperBoundGeoDistance) {
 
-		return new GeoDistanceRangeQueryImpl(
+		return new GeoDistanceRangeQuery(
 			field, includesLower, includesUpper, lowerBoundGeoDistance,
 			pinGeoLocationPoint, upperBoundGeoDistance);
 	}

@@ -90,7 +90,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public DisMaxQuery disMax() {
-		return new DisMaxQueryImpl();
+		return new DisMaxQuery();
 	}
 
 	@Override

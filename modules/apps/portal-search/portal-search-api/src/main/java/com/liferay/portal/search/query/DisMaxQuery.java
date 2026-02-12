@@ -5,22 +5,60 @@
 
 package com.liferay.portal.search.query;
 
-import java.util.Set;
+import com.liferay.petra.string.StringBundler;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class DisMaxQuery extends Query {
+public class DisMaxQuery extends Query {
 
-	public abstract void addQuery(Query query);
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract Set<Query> getQueries();
+	public void addQuery(Query query) {
+		_queries.add(query);
+	}
 
-	public abstract Float getTieBreaker();
+	public Set<Query> getQueries() {
+		return Collections.unmodifiableSet(_queries);
+	}
 
-	public abstract void setTieBreaker(Float tieBreaker);
+	public Float getTieBreaker() {
+		return _tieBreaker;
+	}
+
+	public void setTieBreaker(Float tieBreaker) {
+		_tieBreaker = tieBreaker;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", queries=");
+		sb.append(_queries);
+		sb.append(", tieBreaker=");
+		sb.append(_tieBreaker);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final Set<Query> _queries = new HashSet<>();
+	private Float _tieBreaker;
 
 }

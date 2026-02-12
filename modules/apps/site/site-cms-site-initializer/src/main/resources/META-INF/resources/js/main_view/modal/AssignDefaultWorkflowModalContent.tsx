@@ -12,10 +12,10 @@ import React, {useEffect, useId, useState} from 'react';
 import {getWorkflowDefinitions} from '../../common/services/WorkflowService';
 
 interface WorkflowOption {
-	label: string;
-	value: string;
 	disabled: boolean;
 	hidden: boolean;
+	label: string;
+	value: string;
 }
 
 export interface StructureWorkflowItem {
@@ -30,8 +30,8 @@ export default function AssignDefaultWorkflowModalContent({
 	submitModal,
 }: {
 	closeModal: () => void;
-	submitModal?: (workflow: string) => void;
 	structureWorkflows: StructureWorkflowItem[];
+	submitModal?: (workflow: string) => void;
 }) {
 	const [selectedWorkflow, setSelectedWorkflow] = useState<string>('');
 
@@ -50,16 +50,16 @@ export default function AssignDefaultWorkflowModalContent({
 
 			const options = [
 				{
+					disabled: false,
+					hidden: false,
 					label: Liferay.Language.get('no-workflow'),
 					value: '',
-					disabled: false,
-					hidden: false,
 				},
 				...data.map((workflow) => ({
-					label: workflow.name,
-					value: workflow.name,
 					disabled: false,
 					hidden: false,
+					label: workflow.name,
+					value: workflow.name,
 				})),
 			];
 
@@ -79,10 +79,10 @@ export default function AssignDefaultWorkflowModalContent({
 				if (!sameValue) {
 					setWorkflows([
 						{
-							label: Liferay.Language.get('mixed-workflows'),
-							value: Liferay.Language.get('mixed-workflows'),
 							disabled: true,
 							hidden: true,
+							label: Liferay.Language.get('mixed-workflows'),
+							value: Liferay.Language.get('mixed-workflows'),
 						},
 						...options,
 					]);

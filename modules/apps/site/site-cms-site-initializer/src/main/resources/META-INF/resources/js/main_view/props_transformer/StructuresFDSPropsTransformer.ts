@@ -5,6 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 
+import {IBulkActionFDSData} from '../../common/types/BulkActionTask';
 import {ObjectDefinition} from '../../common/types/ObjectDefinition';
 import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {StructureWorkflowItem} from '../modal/AssignDefaultWorkflowModalContent';
@@ -20,6 +21,7 @@ import TypeRenderer from './cell_renderers/TypeRenderer';
 export default function StructuresFDSPropsTransformer({
 	...otherProps
 }: {
+	apiURL: string;
 	otherProps: any;
 }) {
 	return {
@@ -118,7 +120,7 @@ export default function StructuresFDSPropsTransformer({
 			selectedData,
 		}: {
 			action: {data?: {id?: string}};
-			selectedData: {items: Array<ItemData>};
+			selectedData: Required<IBulkActionFDSData>;
 		}) => {
 			if (action?.data?.id === 'assign-default-workflow') {
 				const structureWorkflows = selectedData.items.map(

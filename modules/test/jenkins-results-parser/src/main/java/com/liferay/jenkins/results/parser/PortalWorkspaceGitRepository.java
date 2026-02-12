@@ -247,15 +247,6 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 				"test.company.default.locale", companyDefaultLocale);
 		}
 
-		Properties buildProperties = null;
-
-		try {
-			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-
 		String portalLatestBundleVersion = System.getenv(
 			"PORTAL_LATEST_BUNDLE_VERSION");
 
@@ -265,6 +256,15 @@ public class PortalWorkspaceGitRepository extends BaseWorkspaceGitRepository {
 			testProperties.put(
 				"test.released.release.bundle.version",
 				portalLatestBundleVersion);
+
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 
 			testProperties.put(
 				"test.released.test.portal.bundle.zip.url",

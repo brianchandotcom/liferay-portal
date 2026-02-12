@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal.highlight;
 
-import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 
@@ -21,7 +20,7 @@ public class HighlightFieldBuilderFactoryImpl
 
 	@Override
 	public HighlightFieldBuilder builder() {
-		return new HighlightField.HighlightFieldBuilderImpl();
+		return new HighlightFieldBuilder();
 	}
 
 }

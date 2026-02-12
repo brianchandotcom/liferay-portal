@@ -5,23 +5,38 @@
 
 package com.liferay.portal.search.highlight;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao
  * @author André de Oliveira
  */
-@ProviderType
-public interface HighlightFieldBuilder {
+public class HighlightFieldBuilder {
 
-	public HighlightFieldBuilder addFragment(String fragment);
+	public HighlightFieldBuilder addFragment(String fragment) {
+		_fragments.add(fragment);
 
-	public HighlightField build();
+		return this;
+	}
 
-	public HighlightFieldBuilder fragments(List<String> fragments);
+	public HighlightField build() {
+		return new HighlightField(_fragments, _name);
+	}
 
-	public HighlightFieldBuilder name(String name);
+	public HighlightFieldBuilder fragments(List<String> fragments) {
+		_fragments = fragments;
+
+		return this;
+	}
+
+	public HighlightFieldBuilder name(String name) {
+		_name = name;
+
+		return this;
+	}
+
+	private List<String> _fragments = new ArrayList<>();
+	private String _name;
 
 }

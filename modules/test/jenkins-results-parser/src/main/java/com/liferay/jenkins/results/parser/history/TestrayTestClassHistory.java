@@ -8,7 +8,6 @@ package com.liferay.jenkins.results.parser.history;
 import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TestClassReport;
-import com.liferay.jenkins.results.parser.testray.TestrayCase;
 import com.liferay.jenkins.results.parser.testray.TestrayProject;
 import com.liferay.jenkins.results.parser.testray.TestrayServer;
 
@@ -200,15 +199,15 @@ public class TestrayTestClassHistory extends BaseTestClassHistory {
 		TestrayProject testrayProject = _getTestrayProject();
 
 		if (testrayProject != null) {
-			TestrayCase testrayCase = testrayProject.getTestrayCaseByName(
+			long testrayCaseID = testrayProject.getTestrayCaseIDByName(
 				getTestClassName());
 			TestrayServer testrayServer = testrayProject.getTestrayServer();
 
-			if ((testrayCase != null) && (testrayServer != null)) {
+			if ((testrayCaseID != 0) && (testrayServer != null)) {
 				_testrayCaseURLString = JenkinsResultsParserUtil.combine(
 					String.valueOf(testrayServer.getURL()), "/#/project/",
 					String.valueOf(testrayProject.getID()), "/cases/",
-					String.valueOf(testrayCase.getID()));
+					String.valueOf(testrayCaseID));
 			}
 		}
 

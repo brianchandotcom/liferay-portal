@@ -112,6 +112,18 @@ public class TestrayProject {
 		return _testrayCases.get(testCaseName);
 	}
 
+	public long getTestrayCaseIDByName(String testCaseName) {
+		_initTestrayCaseIDs();
+
+		Long testrayCaseID = _testrayCaseIDs.get(testCaseName);
+
+		if (testrayCaseID == null) {
+			return 0L;
+		}
+
+		return testrayCaseID;
+	}
+
 	public List<TestrayCase> getTestrayCases() {
 		_initTestrayCases();
 
@@ -339,6 +351,47 @@ public class TestrayProject {
 		_jsonObject = jsonObject;
 	}
 
+	private synchronized void _initTestrayCaseIDs() {
+		if (_testrayCases != null) {
+			return;
+		}
+
+		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Gathering test case ids for project ", getName(), " at ",
+				JenkinsResultsParserUtil.toDateString(new Date(start))));
+
+		_testrayCases = new HashMap<>();
+
+		String filter = JenkinsResultsParserUtil.combine(
+			"r_projectToCases_c_projectId eq '", String.valueOf(getID()), "'");
+
+		try {
+			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
+				"cases", TestrayCase.FIELD_NAMES_CASE_IDS, filter, null, 0, 50);
+
+			for (JSONObject entityJSONObject : entityJSONObjects) {
+				_testrayCaseIDs.put(
+					entityJSONObject.getString("name"),
+					entityJSONObject.getLong("id"));
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+		finally {
+			long duration =
+				JenkinsResultsParserUtil.getCurrentTimeMillis() - start;
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Gathered test case ids for project ", getName(), " in ",
+					JenkinsResultsParserUtil.toDurationString(duration)));
+		}
+	}
+
 	private synchronized void _initTestrayCases() {
 		if (_testrayCases != null) {
 			return;
@@ -382,6 +435,7 @@ public class TestrayProject {
 	}
 
 	private final JSONObject _jsonObject;
+	private final Map<String, Long> _testrayCaseIDs = new HashMap<>();
 	private Map<String, TestrayCase> _testrayCases;
 	private List<TestrayComponent> _testrayComponents;
 	private final TestrayServer _testrayServer;

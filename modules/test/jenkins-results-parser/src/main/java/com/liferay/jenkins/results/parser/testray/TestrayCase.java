@@ -16,6 +16,10 @@ public class TestrayCase {
 		"caseTypeToCases", "dateCreated", "dateModified", "id", "name"
 	};
 
+	public static final String[] FIELD_NAMES_CASE_IDS = {
+		"dateCreated", "dateModified", "id", "name"
+	};
+
 	public String getComponent() {
 		return null;
 	}

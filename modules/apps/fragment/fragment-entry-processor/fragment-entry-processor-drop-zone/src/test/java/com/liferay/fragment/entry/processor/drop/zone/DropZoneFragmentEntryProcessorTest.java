@@ -332,17 +332,23 @@ public class DropZoneFragmentEntryProcessorTest {
 			addFragmentDropZoneLayoutStructureItems(
 				fragmentEntryLink, layoutStructure, dropZoneId1, dropZoneId2);
 
+		String disallowedAttributeName =
+			"data-lfr-" + RandomTestUtil.randomString();
+
+		Map<String, String> attributesMap = HashMapBuilder.put(
+			disallowedAttributeName, RandomTestUtil.randomString()
+		).put(
+			"class", RandomTestUtil.randomString()
+		).put(
+			"id", RandomTestUtil.randomString()
+		).put(
+			StringUtil.toLowerCase(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString()
+		).build();
+
 		Map<String, Map<String, String>> dropZoneIdsMap =
 			HashMapBuilder.<String, Map<String, String>>put(
-				dropZoneId1,
-				HashMapBuilder.put(
-					"class", RandomTestUtil.randomString()
-				).put(
-					"id", RandomTestUtil.randomString()
-				).put(
-					StringUtil.toLowerCase(RandomTestUtil.randomString()),
-					RandomTestUtil.randomString()
-				).build()
+				dropZoneId1, attributesMap
 			).put(
 				dropZoneId2,
 				HashMapBuilder.put(
@@ -355,10 +361,14 @@ public class DropZoneFragmentEntryProcessorTest {
 				).build()
 			).build();
 
+		String html = _getHTML(dropZoneIdsMap);
+
+		attributesMap.remove(disallowedAttributeName);
+
 		Assert.assertEquals(
 			_getExpectedHTML(dropZoneIdsMap),
 			_processFragmentEntryLinkHTML(
-				fragmentEntryLink, _getHTML(dropZoneIdsMap), layoutStructure,
+				fragmentEntryLink, html, layoutStructure,
 				FragmentEntryLinkConstants.VIEW));
 	}
 

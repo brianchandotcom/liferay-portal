@@ -54,7 +54,7 @@ type SiteItem = {
 	url?: string;
 };
 
-type Sites = {recentSites: Site[]; viewAllURL: string};
+type Sites = {mySites: Site[]; recentSites: Site[]; viewAllURL: string};
 
 export default function GlobalMenu({
 	panelAppsURL,
@@ -278,7 +278,12 @@ function normalizeSiteItems({
 	portletNamespace: string;
 	sites: Sites;
 }): GroupItem[] {
-	const children: SiteItem[] = [...sites.recentSites];
+	const children: SiteItem[] = [
+		...sites.recentSites,
+		...sites.mySites.filter(
+			({label}) => label === Liferay.Language.get('global')
+		),
+	];
 
 	if (sites?.viewAllURL) {
 		children.push({
@@ -302,7 +307,7 @@ function normalizeSiteItems({
 		{
 			children,
 			key: 'sites',
-			label: Liferay.Language.get('recent-sites'),
+			label: Liferay.Language.get('sites'),
 		},
 	];
 }

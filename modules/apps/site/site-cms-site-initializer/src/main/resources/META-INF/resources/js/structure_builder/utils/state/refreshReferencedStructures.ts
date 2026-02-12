@@ -6,19 +6,19 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitions,
-} from '../../common/types/ObjectDefinition';
+} from '../../../common/types/ObjectDefinition';
 import {
 	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
-} from '../types/Structure';
+} from '../../types/Structure';
 import {
 	buildField,
 	buildReferencedStructure,
 	buildRepeatableGroup,
 	getSpaces,
-} from './buildStructure';
-import isCustomObjectField from './isCustomObjectField';
+} from '../buildStructure';
+import isCustomObjectField from '../isCustomObjectField';
 
 export default function refreshReferencedStructures({
 	ancestors = [],

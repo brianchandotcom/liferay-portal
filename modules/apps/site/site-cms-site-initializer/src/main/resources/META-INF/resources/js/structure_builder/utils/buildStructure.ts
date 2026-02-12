@@ -21,7 +21,7 @@ import {Uuid} from '../types/Uuid';
 import {Field, FieldType, SelectFromListField} from './field';
 import getUuid from './getUuid';
 import isCustomObjectField from './isCustomObjectField';
-import sortChildren from './sortChildren';
+import sortChildren from './state/sortChildren';
 
 export default function buildStructure({
 	mainObjectDefinition,

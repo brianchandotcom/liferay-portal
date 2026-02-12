@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.groupby.GroupByResponse;
-import com.liferay.portal.search.groupby.GroupByResponseFactory;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -331,9 +330,8 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 		List<GroupCommand> groupCommands = groupResponse.getValues();
 
 		for (GroupCommand groupCommand : groupCommands) {
-			GroupByResponse groupByResponse =
-				_groupByResponseFactory.getGroupByResponse(
-					groupCommand.getName());
+			GroupByResponse groupByResponse = new GroupByResponse(
+				groupCommand.getName());
 
 			List<Group> groups = groupCommand.getValues();
 
@@ -401,9 +399,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private GroupByResponseFactory _groupByResponseFactory;
 
 	@Reference
 	private SearchHitBuilderFactory _searchHitBuilderFactory;

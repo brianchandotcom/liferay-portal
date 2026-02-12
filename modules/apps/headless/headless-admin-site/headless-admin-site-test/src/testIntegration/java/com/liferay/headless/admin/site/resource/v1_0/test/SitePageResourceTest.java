@@ -24,7 +24,6 @@ import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNode
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.BasicFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
@@ -3930,9 +3929,6 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Inject
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Inject
 	private GroupLocalService _groupLocalService;

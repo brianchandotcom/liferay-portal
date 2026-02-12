@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.QueryUtil;
-import com.liferay.portal.search.internal.query.CommonTermsQueryImpl;
 import com.liferay.portal.search.internal.query.FuzzyQueryImpl;
 import com.liferay.portal.search.internal.query.MatchAllQueryImpl;
 import com.liferay.portal.search.internal.query.MoreLikeThisQueryImpl;
@@ -20,6 +19,7 @@ import com.liferay.portal.search.internal.query.TermQueryImpl;
 import com.liferay.portal.search.internal.query.TermsQueryImpl;
 import com.liferay.portal.search.internal.query.WildcardQueryImpl;
 import com.liferay.portal.search.query.BooleanQuery;
+import com.liferay.portal.search.query.CommonTermsQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -45,7 +45,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Test
 	public void testTranslateBoostCommonTermsQuery() {
-		_assertBoost(new CommonTermsQueryImpl("test", "test"));
+		_assertBoost(new CommonTermsQuery("test", "test"));
 	}
 
 	@Test

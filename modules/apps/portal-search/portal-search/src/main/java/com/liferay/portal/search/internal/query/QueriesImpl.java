@@ -71,7 +71,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public CommonTermsQuery commonTerms(String field, String text) {
-		return new CommonTermsQueryImpl(field, text);
+		return new CommonTermsQuery(field, text);
 	}
 
 	@Override

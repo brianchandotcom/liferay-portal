@@ -5,42 +5,88 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class CommonTermsQuery extends Query {
+public class CommonTermsQuery extends Query {
 
-	public abstract String getAnalyzer();
+	public CommonTermsQuery(String field, String text) {
+		_field = field;
+		_text = text;
+	}
 
-	public abstract Float getCutoffFrequency();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getField();
+	public String getAnalyzer() {
+		return _analyzer;
+	}
 
-	public abstract String getHighFreqMinimumShouldMatch();
+	public Float getCutoffFrequency() {
+		return _cutoffFrequency;
+	}
 
-	public abstract Operator getHighFreqOperator();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract String getLowFreqMinimumShouldMatch();
+	public String getHighFreqMinimumShouldMatch() {
+		return _highFreqMinimumShouldMatch;
+	}
 
-	public abstract Operator getLowFreqOperator();
+	public Operator getHighFreqOperator() {
+		return _highFreqOperator;
+	}
 
-	public abstract String getText();
+	public String getLowFreqMinimumShouldMatch() {
+		return _lowFreqMinimumShouldMatch;
+	}
 
-	public abstract void setAnalyzer(String analyzer);
+	public Operator getLowFreqOperator() {
+		return _lowFreqOperator;
+	}
 
-	public abstract void setCutoffFrequency(Float cutoffFrequency);
+	public String getText() {
+		return _text;
+	}
 
-	public abstract void setHighFreqMinimumShouldMatch(
-		String highFreqMinimumShouldMatch);
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
+	}
 
-	public abstract void setHighFreqOperator(Operator highFreqOperator);
+	public void setCutoffFrequency(Float cutoffFrequency) {
+		_cutoffFrequency = cutoffFrequency;
+	}
 
-	public abstract void setLowFreqMinimumShouldMatch(
-		String lowFreqMinimumShouldMatch);
+	public void setHighFreqMinimumShouldMatch(
+		String highFreqMinimumShouldMatch) {
 
-	public abstract void setLowFreqOperator(Operator lowFreqOperator);
+		_highFreqMinimumShouldMatch = highFreqMinimumShouldMatch;
+	}
+
+	public void setHighFreqOperator(Operator highFreqOperator) {
+		_highFreqOperator = highFreqOperator;
+	}
+
+	public void setLowFreqMinimumShouldMatch(String lowFreqMinimumShouldMatch) {
+		_lowFreqMinimumShouldMatch = lowFreqMinimumShouldMatch;
+	}
+
+	public void setLowFreqOperator(Operator lowFreqOperator) {
+		_lowFreqOperator = lowFreqOperator;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private String _analyzer;
+	private Float _cutoffFrequency;
+	private final String _field;
+	private String _highFreqMinimumShouldMatch;
+	private Operator _highFreqOperator = Operator.OR;
+	private String _lowFreqMinimumShouldMatch;
+	private Operator _lowFreqOperator = Operator.OR;
+	private final String _text;
 
 }

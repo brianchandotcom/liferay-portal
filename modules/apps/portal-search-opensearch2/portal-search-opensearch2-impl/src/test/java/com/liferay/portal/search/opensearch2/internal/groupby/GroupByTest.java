@@ -177,11 +177,10 @@ public class GroupByTest extends BaseGroupByTestCase {
 			indexingTestHelper -> {
 				indexingTestHelper.defineRequest(
 					searchRequestBuilder -> {
-						GroupByRequest groupByRequest1 =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
-						GroupByRequest groupByRequest2 =
-							groupByRequestFactory.getGroupByRequest(SORT_FIELD);
+						GroupByRequest groupByRequest1 = new GroupByRequest(
+							GROUP_FIELD);
+						GroupByRequest groupByRequest2 = new GroupByRequest(
+							SORT_FIELD);
 
 						searchRequestBuilder.groupByRequests(
 							groupByRequest1, groupByRequest2);
@@ -289,9 +288,8 @@ public class GroupByTest extends BaseGroupByTestCase {
 						sorts[0] = new Sort("_count", countDesc);
 						sorts[1] = new Sort("_key", keyDesc);
 
-						GroupByRequest groupByRequest =
-							groupByRequestFactory.getGroupByRequest(
-								GROUP_FIELD);
+						GroupByRequest groupByRequest = new GroupByRequest(
+							GROUP_FIELD);
 
 						groupByRequest.setTermsSorts(sorts);
 

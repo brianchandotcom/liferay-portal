@@ -17,6 +17,7 @@ const mockStates = [
 
 const mockAssignTo = {
 	externalReferenceCode: '123',
+	id: 123,
 	name: 'Assignee Name',
 	type: 'user',
 };

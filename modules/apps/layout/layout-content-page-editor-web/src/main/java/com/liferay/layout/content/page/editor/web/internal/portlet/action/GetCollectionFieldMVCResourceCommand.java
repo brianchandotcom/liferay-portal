@@ -574,6 +574,8 @@ public class GetCollectionFieldMVCResourceCommand
 					fragmentEntryProcessorContext, infoItemFieldValues);
 
 			displayObjectJSONObject.put(
+				infoField.getExternalUniqueId(), value
+			).put(
 				infoField.getName(), value
 			).put(
 				infoField.getUniqueId(), value

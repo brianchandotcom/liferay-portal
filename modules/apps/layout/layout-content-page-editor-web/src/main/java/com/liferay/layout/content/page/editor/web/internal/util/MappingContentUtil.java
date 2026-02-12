@@ -43,6 +43,8 @@ public class MappingContentUtil {
 		InfoField<?> infoField, Locale locale) {
 
 		return JSONUtil.put(
+			"externalKey", infoField.getExternalUniqueId()
+		).put(
 			"key", infoField.getUniqueId()
 		).put(
 			"label",

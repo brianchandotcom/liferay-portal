@@ -296,45 +296,6 @@ public class AgentDefinition implements Serializable {
 	private Supplier<Variable[]> _inputVariablesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	public String getName() {
-		if (_nameSupplier != null) {
-			name = _nameSupplier.get();
-
-			_nameSupplier = null;
-		}
-
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-
-		_nameSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setName(UnsafeSupplier<String, Exception> nameUnsafeSupplier) {
-		_nameSupplier = () -> {
-			try {
-				return nameUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String name;
-
-	@JsonIgnore
-	private Supplier<String> _nameSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public Variable getOutputVariable() {
 		if (_outputVariableSupplier != null) {
@@ -615,22 +576,6 @@ public class AgentDefinition implements Serializable {
 			}
 
 			sb.append("]");
-		}
-
-		String name = getName();
-
-		if (name != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"name\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(name));
-
-			sb.append("\"");
 		}
 
 		Variable outputVariable = getOutputVariable();

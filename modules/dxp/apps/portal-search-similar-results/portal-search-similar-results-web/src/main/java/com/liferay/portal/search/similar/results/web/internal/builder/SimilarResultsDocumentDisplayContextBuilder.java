@@ -69,11 +69,9 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 	public SimilarResultsDocumentDisplayContext build() {
 		try {
-			if (_documentBuilderFactory != null) {
-				_document = _documentBuilderFactory.builder(
-					_legacyDocument
-				).build();
-			}
+			_document = DocumentBuilderFactory.builder(
+				_legacyDocument
+			).build();
 
 			String className = _getFieldValueString(Field.ENTRY_CLASS_NAME);
 
@@ -114,15 +112,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 		Document document) {
 
 		_document = document;
-
-		return this;
-	}
-
-	public SimilarResultsDocumentDisplayContextBuilder
-		setDocumentBuilderFactory(
-			DocumentBuilderFactory documentBuilderFactory) {
-
-		_documentBuilderFactory = documentBuilderFactory;
 
 		return this;
 	}
@@ -698,7 +687,6 @@ public class SimilarResultsDocumentDisplayContextBuilder {
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private Document _document;
-	private DocumentBuilderFactory _documentBuilderFactory;
 	private FastDateFormatFactory _fastDateFormatFactory;
 	private boolean _highlightEnabled;
 	private IndexerRegistry _indexerRegistry;

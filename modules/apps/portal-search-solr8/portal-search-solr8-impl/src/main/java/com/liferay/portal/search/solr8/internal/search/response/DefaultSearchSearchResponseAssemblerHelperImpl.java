@@ -59,7 +59,6 @@ import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.util.NamedList;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -271,7 +270,7 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 		SearchHitBuilder searchHitBuilder = new SearchHitBuilder();
 
 		return searchHitBuilder.document(
-			_documentBuilderFactory.builder(
+			DocumentBuilderFactory.builder(
 				document
 			).build()
 		).id(
@@ -392,9 +391,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 	}
 
 	private static final String[] _EXCLUDED_FIELDS = {"_root_", "_version_"};
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 

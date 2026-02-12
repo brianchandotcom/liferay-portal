@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.similar.results.web.internal.builder.SimilarResultsContributorsRegistry;
@@ -191,8 +190,6 @@ public class SimilarResultsPortlet extends MVCPortlet {
 			_assetEntryLocalService
 		).setDocument(
 			document
-		).setDocumentBuilderFactory(
-			_documentBuilderFactory
 		).setFastDateFormatFactory(
 			_fastDateFormatFactory
 		).setHighlightEnabled(
@@ -304,9 +301,6 @@ public class SimilarResultsPortlet extends MVCPortlet {
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
-
-	@Reference
-	private DocumentBuilderFactory _documentBuilderFactory;
 
 	@Reference
 	private FastDateFormatFactory _fastDateFormatFactory;

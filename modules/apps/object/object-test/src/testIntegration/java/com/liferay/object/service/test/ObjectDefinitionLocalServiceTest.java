@@ -2125,16 +2125,10 @@ public class ObjectDefinitionLocalServiceTest {
 			0,
 			_resourceActionLocalService.getResourceActionsCount(
 				objectDefinition.getClassName()));
-
-		try {
+		Assert.assertEquals(
+			0,
 			_resourceActionLocalService.getResourceActionsCount(
-				objectDefinition.getPortletId());
-
-			Assert.fail();
-		}
-		catch (UnsupportedOperationException unsupportedOperationException) {
-			Assert.assertNotNull(unsupportedOperationException);
-		}
+				objectDefinition.getPortletId()));
 
 		try {
 			_resourceActionLocalService.getResourceActionsCount(
@@ -3502,7 +3496,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				"Test1", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				Arrays.asList(
@@ -3586,7 +3580,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
 				TestPropsValues.getUserId(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				"Test2", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				Collections.singletonList(
@@ -3622,7 +3616,7 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertFalse(objectDefinition2.isEnableCategorization());
 		Assert.assertTrue(objectDefinition2.isEnableComments());
 		Assert.assertTrue(objectDefinition2.isEnableFormContainer());
-		Assert.assertEquals("Test", objectDefinition2.getName());
+		Assert.assertEquals("Test2", objectDefinition2.getName());
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
@@ -3633,7 +3627,7 @@ public class ObjectDefinitionLocalServiceTest {
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
 				null, TestPropsValues.getUserId(), "Test", null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				"Test2", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Collections.<ObjectField>emptyList());

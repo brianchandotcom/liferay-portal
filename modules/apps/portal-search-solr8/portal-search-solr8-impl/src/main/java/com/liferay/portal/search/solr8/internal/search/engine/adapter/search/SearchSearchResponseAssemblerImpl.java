@@ -13,7 +13,6 @@ import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.response.QueryResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -35,8 +34,8 @@ public class SearchSearchResponseAssemblerImpl
 			searchSearchResponse, queryResponse, searchSearchRequest);
 	}
 
-	@Reference
-	private SearchSearchResponseAssemblerHelper
-		_searchSearchResponseAssemblerHelper;
+	private final SearchSearchResponseAssemblerHelper
+		_searchSearchResponseAssemblerHelper =
+			new SearchSearchResponseAssemblerHelper();
 
 }

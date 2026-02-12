@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResultTranslator;
-import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.aggregation.AggregationResultTranslatorFactory;
@@ -78,7 +77,7 @@ public class SearchSearchResponseAssemblerImpl
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults,
+			elasticsearchAggregation,
 			new SearchHitsTranslator(
 				_searchHitBuilderFactory, _searchHitsBuilderFactory,
 				_highlightFieldBuilderFactory));
@@ -91,7 +90,7 @@ public class SearchSearchResponseAssemblerImpl
 				elasticsearchAggregation) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults);
+			elasticsearchAggregation);
 	}
 
 	@Activate
@@ -185,9 +184,6 @@ public class SearchSearchResponseAssemblerImpl
 
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
-
-	@Reference
-	private AggregationResults _aggregationResults;
 
 	@Reference
 	private HighlightFieldBuilderFactory _highlightFieldBuilderFactory;

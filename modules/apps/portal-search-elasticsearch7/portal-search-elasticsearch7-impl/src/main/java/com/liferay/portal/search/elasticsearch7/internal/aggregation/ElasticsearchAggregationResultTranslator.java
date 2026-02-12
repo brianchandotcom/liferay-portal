@@ -126,11 +126,9 @@ public class ElasticsearchAggregationResultTranslator
 	public ElasticsearchAggregationResultTranslator(
 		org.elasticsearch.search.aggregations.Aggregation
 			elasticsearchAggregation,
-		AggregationResults aggregationResults,
 		SearchHitsTranslator searchHitsTranslator) {
 
 		_elasticsearchAggregation = elasticsearchAggregation;
-		_aggregationResults = aggregationResults;
 		_searchHitsTranslator = searchHitsTranslator;
 	}
 
@@ -140,8 +138,7 @@ public class ElasticsearchAggregationResultTranslator
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults,
-			_searchHitsTranslator);
+			elasticsearchAggregation, _searchHitsTranslator);
 	}
 
 	@Override
@@ -151,14 +148,14 @@ public class ElasticsearchAggregationResultTranslator
 				elasticsearchAggregation) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults);
+			elasticsearchAggregation);
 	}
 
 	@Override
 	public AvgAggregationResult visit(AvgAggregation avgAggregation) {
 		Avg avg = (Avg)_elasticsearchAggregation;
 
-		return _aggregationResults.avg(avg.getName(), avg.getValue());
+		return AggregationResults.INSTANCE.avg(avg.getName(), avg.getValue());
 	}
 
 	@Override
@@ -167,7 +164,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		Cardinality cardinality = (Cardinality)_elasticsearchAggregation;
 
-		return _aggregationResults.cardinality(
+		return AggregationResults.INSTANCE.cardinality(
 			cardinality.getName(), cardinality.getValue());
 	}
 
@@ -178,7 +175,7 @@ public class ElasticsearchAggregationResultTranslator
 		Children children = (Children)_elasticsearchAggregation;
 
 		ChildrenAggregationResult childrenAggregationResult =
-			_aggregationResults.children(
+			AggregationResults.INSTANCE.children(
 				children.getName(), children.getDocCount());
 
 		childrenAggregationResult.addChildrenAggregationResults(
@@ -193,7 +190,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			(Histogram)_elasticsearchAggregation,
-			_aggregationResults.dateHistogram(
+			AggregationResults.INSTANCE.dateHistogram(
 				_elasticsearchAggregation.getName()),
 			dateHistogramAggregation);
 	}
@@ -204,7 +201,8 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			(Range)_elasticsearchAggregation,
-			_aggregationResults.range(_elasticsearchAggregation.getName()),
+			AggregationResults.INSTANCE.range(
+				_elasticsearchAggregation.getName()),
 			dateRangeAggregation);
 	}
 
@@ -216,7 +214,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		DiversifiedSamplerAggregationResult
 			diversifiedSamplerAggregationResult =
-				_aggregationResults.diversifiedSampler(
+				AggregationResults.INSTANCE.diversifiedSampler(
 					sampler.getName(), sampler.getDocCount());
 
 		diversifiedSamplerAggregationResult.addChildrenAggregationResults(
@@ -232,7 +230,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		ExtendedStats extendedStats = (ExtendedStats)_elasticsearchAggregation;
 
-		return _aggregationResults.extendedStats(
+		return AggregationResults.INSTANCE.extendedStats(
 			extendedStats.getName(), extendedStats.getAvg(),
 			extendedStats.getCount(), extendedStats.getMin(),
 			extendedStats.getMax(), extendedStats.getSum(),
@@ -245,7 +243,8 @@ public class ElasticsearchAggregationResultTranslator
 		Filter filter = (Filter)_elasticsearchAggregation;
 
 		FilterAggregationResult filterAggregationResult =
-			_aggregationResults.filter(filter.getName(), filter.getDocCount());
+			AggregationResults.INSTANCE.filter(
+				filter.getName(), filter.getDocCount());
 
 		filterAggregationResult.addChildrenAggregationResults(
 			translate(filter.getAggregations(), filterAggregation));
@@ -260,7 +259,7 @@ public class ElasticsearchAggregationResultTranslator
 		Filters filters = (Filters)_elasticsearchAggregation;
 
 		return _translateBuckets(
-			filters, _aggregationResults.filters(filters.getName()),
+			filters, AggregationResults.INSTANCE.filters(filters.getName()),
 			filtersAggregation);
 	}
 
@@ -270,7 +269,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		GeoBounds geoBounds = (GeoBounds)_elasticsearchAggregation;
 
-		return _aggregationResults.geoBounds(
+		return AggregationResults.INSTANCE.geoBounds(
 			geoBounds.getName(), _translateGeoPoint(geoBounds.topLeft()),
 			_translateGeoPoint(geoBounds.bottomRight()));
 	}
@@ -283,7 +282,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		GeoPoint geoPoint = geoCentroid.centroid();
 
-		return _aggregationResults.geoCentroid(
+		return AggregationResults.INSTANCE.geoCentroid(
 			geoCentroid.getName(), _translateGeoPoint(geoPoint),
 			geoCentroid.count());
 	}
@@ -294,7 +293,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			(Range)_elasticsearchAggregation,
-			_aggregationResults.geoDistance(
+			AggregationResults.INSTANCE.geoDistance(
 				_elasticsearchAggregation.getName()),
 			geoDistanceAggregation);
 	}
@@ -306,7 +305,7 @@ public class ElasticsearchAggregationResultTranslator
 		GeoGrid geoGrid = (GeoGrid)_elasticsearchAggregation;
 
 		return _translateBuckets(
-			geoGrid, _aggregationResults.geoHashGrid(geoGrid.getName()),
+			geoGrid, AggregationResults.INSTANCE.geoHashGrid(geoGrid.getName()),
 			geoHashGridAggregation);
 	}
 
@@ -315,7 +314,8 @@ public class ElasticsearchAggregationResultTranslator
 		Global global = (Global)_elasticsearchAggregation;
 
 		GlobalAggregationResult globalAggregationResult =
-			_aggregationResults.global(global.getName(), global.getDocCount());
+			AggregationResults.INSTANCE.global(
+				global.getName(), global.getDocCount());
 
 		globalAggregationResult.addChildrenAggregationResults(
 			translate(global.getAggregations(), globalAggregation));
@@ -329,7 +329,8 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			(Histogram)_elasticsearchAggregation,
-			_aggregationResults.histogram(_elasticsearchAggregation.getName()),
+			AggregationResults.INSTANCE.histogram(
+				_elasticsearchAggregation.getName()),
 			histogramAggregation);
 	}
 
@@ -337,14 +338,14 @@ public class ElasticsearchAggregationResultTranslator
 	public MaxAggregationResult visit(MaxAggregation maxAggregation) {
 		Max max = (Max)_elasticsearchAggregation;
 
-		return _aggregationResults.max(max.getName(), max.getValue());
+		return AggregationResults.INSTANCE.max(max.getName(), max.getValue());
 	}
 
 	@Override
 	public MinAggregationResult visit(MinAggregation minAggregation) {
 		Min min = (Min)_elasticsearchAggregation;
 
-		return _aggregationResults.min(min.getName(), min.getValue());
+		return AggregationResults.INSTANCE.min(min.getName(), min.getValue());
 	}
 
 	@Override
@@ -354,7 +355,7 @@ public class ElasticsearchAggregationResultTranslator
 		Missing missing = (Missing)_elasticsearchAggregation;
 
 		MissingAggregationResult missingAggregationResult =
-			_aggregationResults.missing(
+			AggregationResults.INSTANCE.missing(
 				missing.getName(), missing.getDocCount());
 
 		missingAggregationResult.addChildrenAggregationResults(
@@ -368,7 +369,8 @@ public class ElasticsearchAggregationResultTranslator
 		Nested nested = (Nested)_elasticsearchAggregation;
 
 		NestedAggregationResult nestedAggregationResult =
-			_aggregationResults.nested(nested.getName(), nested.getDocCount());
+			AggregationResults.INSTANCE.nested(
+				nested.getName(), nested.getDocCount());
 
 		List<AggregationResult> aggregationResults = translate(
 			nested.getAggregations(), nestedAggregation);
@@ -387,7 +389,8 @@ public class ElasticsearchAggregationResultTranslator
 			(PercentileRanks)_elasticsearchAggregation;
 
 		PercentileRanksAggregationResult percentileRanksAggregationResult =
-			_aggregationResults.percentileRanks(percentileRanks.getName());
+			AggregationResults.INSTANCE.percentileRanks(
+				percentileRanks.getName());
 
 		percentileRanks.forEach(
 			percentileRank -> percentileRanksAggregationResult.addPercentile(
@@ -403,7 +406,7 @@ public class ElasticsearchAggregationResultTranslator
 		Percentiles percentiles = (Percentiles)_elasticsearchAggregation;
 
 		PercentilesAggregationResult percentilesAggregationResult =
-			_aggregationResults.percentiles(percentiles.getName());
+			AggregationResults.INSTANCE.percentiles(percentiles.getName());
 
 		percentiles.forEach(
 			percentile -> percentilesAggregationResult.addPercentile(
@@ -416,7 +419,8 @@ public class ElasticsearchAggregationResultTranslator
 	public RangeAggregationResult visit(RangeAggregation rangeAggregation) {
 		return _translateBuckets(
 			(Range)_elasticsearchAggregation,
-			_aggregationResults.range(_elasticsearchAggregation.getName()),
+			AggregationResults.INSTANCE.range(
+				_elasticsearchAggregation.getName()),
 			rangeAggregation);
 	}
 
@@ -427,7 +431,7 @@ public class ElasticsearchAggregationResultTranslator
 		ReverseNested reverseNested = (ReverseNested)_elasticsearchAggregation;
 
 		ReverseNestedAggregationResult reverseNestedAggregationResult =
-			_aggregationResults.reverseNested(
+			AggregationResults.INSTANCE.reverseNested(
 				reverseNested.getName(), reverseNested.getDocCount());
 
 		reverseNestedAggregationResult.addChildrenAggregationResults(
@@ -444,7 +448,7 @@ public class ElasticsearchAggregationResultTranslator
 		Sampler sampler = (Sampler)_elasticsearchAggregation;
 
 		SamplerAggregationResult samplerAggregationResult =
-			_aggregationResults.sampler(
+			AggregationResults.INSTANCE.sampler(
 				sampler.getName(), sampler.getDocCount());
 
 		samplerAggregationResult.addChildrenAggregationResults(
@@ -460,7 +464,7 @@ public class ElasticsearchAggregationResultTranslator
 		ScriptedMetric scriptedMetric =
 			(ScriptedMetric)_elasticsearchAggregation;
 
-		return _aggregationResults.scriptedMetric(
+		return AggregationResults.INSTANCE.scriptedMetric(
 			scriptedMetric.getName(), scriptedMetric.aggregation());
 	}
 
@@ -472,7 +476,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			terms,
-			_aggregationResults.significantTerms(
+			AggregationResults.INSTANCE.significantTerms(
 				terms.getName(), terms.getDocCountError(),
 				terms.getSumOfOtherDocCounts()),
 			significantTermsAggregation);
@@ -486,7 +490,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			terms,
-			_aggregationResults.significantText(
+			AggregationResults.INSTANCE.significantText(
 				terms.getName(), terms.getDocCountError(),
 				terms.getSumOfOtherDocCounts()),
 			significantTextAggregation);
@@ -496,7 +500,7 @@ public class ElasticsearchAggregationResultTranslator
 	public StatsAggregationResult visit(StatsAggregation statsAggregation) {
 		Stats stats = (Stats)_elasticsearchAggregation;
 
-		return _aggregationResults.stats(
+		return AggregationResults.INSTANCE.stats(
 			stats.getName(), stats.getAvg(), stats.getCount(), stats.getMin(),
 			stats.getMax(), stats.getSum());
 	}
@@ -505,7 +509,7 @@ public class ElasticsearchAggregationResultTranslator
 	public SumAggregationResult visit(SumAggregation sumAggregation) {
 		Sum sum = (Sum)_elasticsearchAggregation;
 
-		return _aggregationResults.sum(sum.getName(), sum.getValue());
+		return AggregationResults.INSTANCE.sum(sum.getName(), sum.getValue());
 	}
 
 	@Override
@@ -514,7 +518,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return _translateBuckets(
 			terms,
-			_aggregationResults.terms(
+			AggregationResults.INSTANCE.terms(
 				terms.getName(), terms.getDocCountError(),
 				terms.getSumOfOtherDocCounts()),
 			termsAggregation);
@@ -528,7 +532,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		SearchHits searchHits = topHits.getHits();
 
-		return _aggregationResults.topHits(
+		return AggregationResults.INSTANCE.topHits(
 			topHits.getName(), _searchHitsTranslator.translate(searchHits));
 	}
 
@@ -538,7 +542,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		ValueCount valueCount = (ValueCount)_elasticsearchAggregation;
 
-		return _aggregationResults.valueCount(
+		return AggregationResults.INSTANCE.valueCount(
 			valueCount.getName(), valueCount.getValue());
 	}
 
@@ -548,7 +552,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		WeightedAvg weightedAvg = (WeightedAvg)_elasticsearchAggregation;
 
-		return _aggregationResults.weightedAvg(
+		return AggregationResults.INSTANCE.weightedAvg(
 			weightedAvg.getName(), weightedAvg.getValue());
 	}
 
@@ -600,7 +604,6 @@ public class ElasticsearchAggregationResultTranslator
 			geoPoint.getLat(), geoPoint.getLon());
 	}
 
-	private final AggregationResults _aggregationResults;
 	private final org.elasticsearch.search.aggregations.Aggregation
 		_elasticsearchAggregation;
 	private final SearchHitsTranslator _searchHitsTranslator;

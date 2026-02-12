@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResultTranslator;
-import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -80,7 +79,7 @@ public class SearchSearchResponseAssemblerImpl
 		Aggregate aggregate) {
 
 		return new OpenSearchAggregationResultTranslator(
-			aggregate, _aggregationResults,
+			aggregate,
 			new HitsMetadataTranslator(
 				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
 				_searchHitsBuilderFactory));
@@ -90,8 +89,7 @@ public class SearchSearchResponseAssemblerImpl
 	public PipelineAggregationResultTranslator
 		createPipelineAggregationResultTranslator(Aggregate aggregate) {
 
-		return new OpenSearchPipelineAggregationResultTranslator(
-			aggregate, _aggregationResults);
+		return new OpenSearchPipelineAggregationResultTranslator(aggregate);
 	}
 
 	@Activate
@@ -183,9 +181,6 @@ public class SearchSearchResponseAssemblerImpl
 
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
-
-	@Reference
-	private AggregationResults _aggregationResults;
 
 	@Reference
 	private HighlightFieldBuilderFactory _highlightFieldBuilderFactory;

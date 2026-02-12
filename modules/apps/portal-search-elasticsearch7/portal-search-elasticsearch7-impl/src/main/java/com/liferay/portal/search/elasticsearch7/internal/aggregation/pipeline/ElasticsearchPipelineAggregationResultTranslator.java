@@ -50,11 +50,9 @@ public class ElasticsearchPipelineAggregationResultTranslator
 	implements PipelineAggregationResultTranslator {
 
 	public ElasticsearchPipelineAggregationResultTranslator(
-		Aggregation elasticsearchAggregation,
-		AggregationResults aggregationResults) {
+		Aggregation elasticsearchAggregation) {
 
 		_elasticsearchAggregation = elasticsearchAggregation;
-		_aggregationResults = aggregationResults;
 	}
 
 	@Override
@@ -63,7 +61,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.avgBucket(
+		return AggregationResults.INSTANCE.avgBucket(
 			simpleValue.getName(), simpleValue.value());
 	}
 
@@ -73,7 +71,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.bucketScript(
+		return AggregationResults.INSTANCE.bucketScript(
 			simpleValue.getName(), simpleValue.value());
 	}
 
@@ -99,7 +97,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.cumulativeSum(
+		return AggregationResults.INSTANCE.cumulativeSum(
 			simpleValue.getName(), simpleValue.value());
 	}
 
@@ -110,11 +108,11 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		Derivative derivative = (Derivative)_elasticsearchAggregation;
 
 		if (derivativePipelineAggregation.getUnit() != null) {
-			return _aggregationResults.derivative(
+			return AggregationResults.INSTANCE.derivative(
 				derivative.getName(), derivative.normalizedValue());
 		}
 
-		return _aggregationResults.derivative(
+		return AggregationResults.INSTANCE.derivative(
 			derivative.getName(), derivative.value());
 	}
 
@@ -126,7 +124,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		ExtendedStatsBucket extendedStatsBucket =
 			(ExtendedStatsBucket)_elasticsearchAggregation;
 
-		return _aggregationResults.extendedStatsBucket(
+		return AggregationResults.INSTANCE.extendedStatsBucket(
 			extendedStatsBucket.getName(), extendedStatsBucket.getAvg(),
 			extendedStatsBucket.getCount(), extendedStatsBucket.getMin(),
 			extendedStatsBucket.getMax(), extendedStatsBucket.getSum(),
@@ -143,7 +141,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 			(BucketMetricValue)_elasticsearchAggregation;
 
 		MaxBucketPipelineAggregationResult maxBucketPipelineAggregationResult =
-			_aggregationResults.maxBucket(
+			AggregationResults.INSTANCE.maxBucket(
 				bucketMetricValue.getName(), bucketMetricValue.value());
 
 		maxBucketPipelineAggregationResult.setKeys(bucketMetricValue.keys());
@@ -159,7 +157,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 			(BucketMetricValue)_elasticsearchAggregation;
 
 		MinBucketPipelineAggregationResult minBucketPipelineAggregationResult =
-			_aggregationResults.minBucket(
+			AggregationResults.INSTANCE.minBucket(
 				bucketMetricValue.getName(), bucketMetricValue.value());
 
 		minBucketPipelineAggregationResult.setKeys(bucketMetricValue.keys());
@@ -173,7 +171,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.movingFunction(
+		return AggregationResults.INSTANCE.movingFunction(
 			simpleValue.getName(), simpleValue.value());
 	}
 
@@ -187,7 +185,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		PercentilesBucketPipelineAggregationResult
 			percentilesBucketPipelineAggregationResult =
-				_aggregationResults.percentilesBucket(
+				AggregationResults.INSTANCE.percentilesBucket(
 					parsedPercentilesBucket.getName());
 
 		parsedPercentilesBucket.forEach(
@@ -204,7 +202,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.serialDiff(
+		return AggregationResults.INSTANCE.serialDiff(
 			simpleValue.getName(), simpleValue.value());
 	}
 
@@ -214,7 +212,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		StatsBucket statsBucket = (StatsBucket)_elasticsearchAggregation;
 
-		return _aggregationResults.statsBucket(
+		return AggregationResults.INSTANCE.statsBucket(
 			statsBucket.getName(), statsBucket.getAvg(), statsBucket.getCount(),
 			statsBucket.getMin(), statsBucket.getMax(), statsBucket.getSum());
 	}
@@ -225,11 +223,10 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
 
-		return _aggregationResults.sumBucket(
+		return AggregationResults.INSTANCE.sumBucket(
 			simpleValue.getName(), simpleValue.value());
 	}
 
-	private final AggregationResults _aggregationResults;
 	private final Aggregation _elasticsearchAggregation;
 
 }

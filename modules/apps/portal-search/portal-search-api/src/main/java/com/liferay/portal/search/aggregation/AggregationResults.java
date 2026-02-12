@@ -55,121 +55,247 @@ import com.liferay.portal.search.hits.SearchHits;
 /**
  * @author André de Oliveira
  */
-public interface AggregationResults {
+public class AggregationResults {
 
-	public AvgAggregationResult avg(String name, double value);
+	public static final AggregationResults INSTANCE = new AggregationResults();
+
+	public AvgAggregationResult avg(String name, double value) {
+		return new AvgAggregationResult(name, value);
+	}
 
 	public AvgBucketPipelineAggregationResult avgBucket(
-		String name, double value);
+		String name, double value) {
+
+		return new AvgBucketPipelineAggregationResult(name, value);
+	}
 
 	public BucketScriptPipelineAggregationResult bucketScript(
-		String name, double value);
+		String name, double value) {
 
-	public CardinalityAggregationResult cardinality(String name, long value);
+		return new BucketScriptPipelineAggregationResult(name, value);
+	}
 
-	public ChildrenAggregationResult children(String name, long docCount);
+	public CardinalityAggregationResult cardinality(String name, long value) {
+		return new CardinalityAggregationResult(name, value);
+	}
+
+	public ChildrenAggregationResult children(String name, long docCount) {
+		return new ChildrenAggregationResult(name, docCount);
+	}
 
 	public CumulativeSumPipelineAggregationResult cumulativeSum(
-		String name, double value);
+		String name, double value) {
 
-	public DateHistogramAggregationResult dateHistogram(String name);
+		return new CumulativeSumPipelineAggregationResult(name, value);
+	}
+
+	public DateHistogramAggregationResult dateHistogram(String name) {
+		return new DateHistogramAggregationResult(name);
+	}
 
 	public DerivativePipelineAggregationResult derivative(
-		String name, double normalizedValue);
+		String name, double normalizedValue) {
+
+		return new DerivativePipelineAggregationResult(name, normalizedValue);
+	}
 
 	public DiversifiedSamplerAggregationResult diversifiedSampler(
-		String name, long docCount);
+		String name, long docCount) {
+
+		return new DiversifiedSamplerAggregationResult(name, docCount);
+	}
 
 	public ExtendedStatsAggregationResult extendedStats(
 		String name, double avg, long count, double min, double max, double sum,
-		double sumOfSquares, double variance, double stdDeviation);
+		double sumOfSquares, double variance, double stdDeviation) {
+
+		return new ExtendedStatsAggregationResult(
+			name, avg, count, min, max, sum, sumOfSquares, variance,
+			stdDeviation);
+	}
 
 	public ExtendedStatsBucketPipelineAggregationResult extendedStatsBucket(
 		String name, double avg, long count, double min, double max, double sum,
-		double sumOfSquares, double variance, double stdDeviation);
+		double sumOfSquares, double variance, double stdDeviation) {
 
-	public FilterAggregationResult filter(String name, long docCount);
+		return new ExtendedStatsBucketPipelineAggregationResult(
+			name, avg, count, min, max, sum, sumOfSquares, variance,
+			stdDeviation);
+	}
 
-	public FiltersAggregationResult filters(String name);
+	public FilterAggregationResult filter(String name, long docCount) {
+		return new FilterAggregationResult(name, docCount);
+	}
+
+	public FiltersAggregationResult filters(String name) {
+		return new FiltersAggregationResult(name);
+	}
 
 	public GeoBoundsAggregationResult geoBounds(
 		String name, GeoLocationPoint topLeftGeoLocationPoint,
-		GeoLocationPoint bottomRightGeoLocationPoint);
+		GeoLocationPoint bottomRightGeoLocationPoint) {
+
+		return new GeoBoundsAggregationResult(
+			name, topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
+	}
 
 	public GeoCentroidAggregationResult geoCentroid(
-		String name, GeoLocationPoint centroidGeoLocationPoint, long count);
+		String name, GeoLocationPoint centroidGeoLocationPoint, long count) {
 
-	public GeoDistanceAggregationResult geoDistance(String name);
+		return new GeoCentroidAggregationResult(
+			name, centroidGeoLocationPoint, count);
+	}
 
-	public GeoHashGridAggregationResult geoHashGrid(String name);
+	public GeoDistanceAggregationResult geoDistance(String name) {
+		return new GeoDistanceAggregationResult(name);
+	}
 
-	public GlobalAggregationResult global(String name, long docCount);
+	public GeoHashGridAggregationResult geoHashGrid(String name) {
+		return new GeoHashGridAggregationResult(name);
+	}
 
-	public HistogramAggregationResult histogram(String name);
+	public GlobalAggregationResult global(String name, long docCount) {
+		return new GlobalAggregationResult(name, docCount);
+	}
 
-	public MaxAggregationResult max(String name, double value);
+	public HistogramAggregationResult histogram(String name) {
+		return new HistogramAggregationResult(name);
+	}
+
+	public MaxAggregationResult max(String name, double value) {
+		return new MaxAggregationResult(name, value);
+	}
 
 	public MaxBucketPipelineAggregationResult maxBucket(
-		String name, double value);
+		String name, double value) {
 
-	public MinAggregationResult min(String name, double value);
+		return new MaxBucketPipelineAggregationResult(name, value);
+	}
+
+	public MinAggregationResult min(String name, double value) {
+		return new MinAggregationResult(name, value);
+	}
 
 	public MinBucketPipelineAggregationResult minBucket(
-		String name, double value);
+		String name, double value) {
 
-	public MissingAggregationResult missing(String name, long docCount);
+		return new MinBucketPipelineAggregationResult(name, value);
+	}
+
+	public MissingAggregationResult missing(String name, long docCount) {
+		return new MissingAggregationResult(name, docCount);
+	}
 
 	public MovingFunctionPipelineAggregationResult movingFunction(
-		String name, double value);
+		String name, double value) {
 
-	public NestedAggregationResult nested(String name, long docCount);
+		return new MovingFunctionPipelineAggregationResult(name, value);
+	}
 
-	public PercentileRanksAggregationResult percentileRanks(String name);
+	public NestedAggregationResult nested(String name, long docCount) {
+		return new NestedAggregationResult(name, docCount);
+	}
 
-	public PercentilesAggregationResult percentiles(String name);
+	public PercentileRanksAggregationResult percentileRanks(String name) {
+		return new PercentileRanksAggregationResult(name);
+	}
+
+	public PercentilesAggregationResult percentiles(String name) {
+		return new PercentilesAggregationResult(name);
+	}
 
 	public PercentilesBucketPipelineAggregationResult percentilesBucket(
-		String name);
+		String name) {
 
-	public RangeAggregationResult range(String name);
+		return new PercentilesBucketPipelineAggregationResult(name);
+	}
+
+	public RangeAggregationResult range(String name) {
+		return new RangeAggregationResult(name);
+	}
 
 	public ReverseNestedAggregationResult reverseNested(
-		String name, long docCount);
+		String name, long docCount) {
 
-	public SamplerAggregationResult sampler(String name, long docCount);
+		return new ReverseNestedAggregationResult(name, docCount);
+	}
+
+	public SamplerAggregationResult sampler(String name, long docCount) {
+		return new SamplerAggregationResult(name, docCount);
+	}
 
 	public ScriptedMetricAggregationResult scriptedMetric(
-		String name, Object value);
+		String name, Object value) {
+
+		return new ScriptedMetricAggregationResult(name, value);
+	}
 
 	public SerialDiffPipelineAggregationResult serialDiff(
-		String name, double value);
+		String name, double value) {
+
+		return new SerialDiffPipelineAggregationResult(name, value);
+	}
 
 	public SignificantTermsAggregationResult significantTerms(
-		String name, long errorDocCounts, long otherDocCounts);
+		String name, long errorDocCounts, long otherDocCounts) {
+
+		return new SignificantTermsAggregationResult(
+			name, errorDocCounts, otherDocCounts);
+	}
 
 	public SignificantTextAggregationResult significantText(
-		String name, long docCountError, long sumOfOtherDocCounts);
+		String name, long errorDocCounts, long otherDocCounts) {
+
+		return new SignificantTextAggregationResult(
+			name, errorDocCounts, otherDocCounts);
+	}
 
 	public StatsAggregationResult stats(
 		String name, double avg, long count, double min, double max,
-		double sum);
+		double sum) {
+
+		return new StatsAggregationResult(name, avg, count, min, max, sum);
+	}
 
 	public StatsBucketPipelineAggregationResult statsBucket(
 		String name, double avg, long count, double min, double max,
-		double sum);
+		double sum) {
 
-	public SumAggregationResult sum(String name, double value);
+		return new StatsBucketPipelineAggregationResult(
+			name, avg, count, min, max, sum);
+	}
+
+	public SumAggregationResult sum(String name, double value) {
+		return new SumAggregationResult(name, value);
+	}
 
 	public SumBucketPipelineAggregationResult sumBucket(
-		String name, double value);
+		String name, double value) {
+
+		return new SumBucketPipelineAggregationResult(name, value);
+	}
 
 	public TermsAggregationResult terms(
-		String name, long errorDocCounts, long otherDocCounts);
+		String name, long errorDocCounts, long otherDocCounts) {
 
-	public TopHitsAggregationResult topHits(String name, SearchHits searchHits);
+		return new TermsAggregationResult(name, errorDocCounts, otherDocCounts);
+	}
 
-	public ValueCountAggregationResult valueCount(String name, long value);
+	public TopHitsAggregationResult topHits(
+		String name, SearchHits searchHits) {
 
-	public WeightedAvgAggregationResult weightedAvg(String name, double value);
+		return new TopHitsAggregationResult(name, searchHits);
+	}
+
+	public ValueCountAggregationResult valueCount(String name, long value) {
+		return new ValueCountAggregationResult(name, value);
+	}
+
+	public WeightedAvgAggregationResult weightedAvg(String name, double value) {
+		return new WeightedAvgAggregationResult(name, value);
+	}
+
+	private AggregationResults() {
+	}
 
 }

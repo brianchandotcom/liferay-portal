@@ -56,11 +56,8 @@ import org.opensearch.client.opensearch._types.aggregations.StatsBucketAggregate
 public class OpenSearchPipelineAggregationResultTranslator
 	implements PipelineAggregationResultTranslator {
 
-	public OpenSearchPipelineAggregationResultTranslator(
-		Aggregate aggregate, AggregationResults aggregationResults) {
-
+	public OpenSearchPipelineAggregationResultTranslator(Aggregate aggregate) {
 		_aggregate = aggregate;
-		_aggregationResults = aggregationResults;
 	}
 
 	@Override
@@ -69,7 +66,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.avgBucket(
+		return AggregationResults.INSTANCE.avgBucket(
 			avgBucketPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
@@ -80,7 +77,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.bucketScript(
+		return AggregationResults.INSTANCE.bucketScript(
 			bucketScriptPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
@@ -105,7 +102,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.cumulativeSum(
+		return AggregationResults.INSTANCE.cumulativeSum(
 			cumulativeSumPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
@@ -117,12 +114,12 @@ public class OpenSearchPipelineAggregationResultTranslator
 		DerivativeAggregate derivativeAggregate = _aggregate.derivative();
 
 		if (derivativePipelineAggregation.getUnit() != null) {
-			return _aggregationResults.derivative(
+			return AggregationResults.INSTANCE.derivative(
 				derivativePipelineAggregation.getName(),
 				derivativeAggregate.normalizedValue());
 		}
 
-		return _aggregationResults.derivative(
+		return AggregationResults.INSTANCE.derivative(
 			derivativePipelineAggregation.getName(),
 			derivativeAggregate.value());
 	}
@@ -135,7 +132,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 		ExtendedStatsBucketAggregate extendedStatsBucketAggregate =
 			_aggregate.extendedStatsBucket();
 
-		return _aggregationResults.extendedStatsBucket(
+		return AggregationResults.INSTANCE.extendedStatsBucket(
 			extendedStatsBucketPipelineAggregation.getName(),
 			extendedStatsBucketAggregate.avg(),
 			extendedStatsBucketAggregate.count(),
@@ -155,7 +152,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 			_aggregate.bucketMetricValue();
 
 		MaxBucketPipelineAggregationResult maxBucketPipelineAggregationResult =
-			_aggregationResults.maxBucket(
+			AggregationResults.INSTANCE.maxBucket(
 				maxBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
 
@@ -174,7 +171,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 			_aggregate.bucketMetricValue();
 
 		MinBucketPipelineAggregationResult minBucketPipelineAggregationResult =
-			_aggregationResults.minBucket(
+			AggregationResults.INSTANCE.minBucket(
 				minBucketPipelineAggregation.getName(),
 				bucketMetricValueAggregate.value());
 
@@ -191,7 +188,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.movingFunction(
+		return AggregationResults.INSTANCE.movingFunction(
 			movingFunctionPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
@@ -206,7 +203,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		PercentilesBucketPipelineAggregationResult
 			percentilesBucketPipelineAggregationResult =
-				_aggregationResults.percentilesBucket(
+				AggregationResults.INSTANCE.percentilesBucket(
 					percentilesBucketPipelineAggregation.getName());
 
 		Percentiles percentiles = percentilesBucketAggregate.values();
@@ -236,7 +233,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.serialDiff(
+		return AggregationResults.INSTANCE.serialDiff(
 			serialDiffPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
@@ -247,7 +244,7 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		StatsBucketAggregate statsBucketAggregate = _aggregate.statsBucket();
 
-		return _aggregationResults.statsBucket(
+		return AggregationResults.INSTANCE.statsBucket(
 			statsBucketPipelineAggregation.getName(),
 			statsBucketAggregate.avg(), statsBucketAggregate.count(),
 			statsBucketAggregate.min(), statsBucketAggregate.max(),
@@ -260,12 +257,11 @@ public class OpenSearchPipelineAggregationResultTranslator
 
 		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
-		return _aggregationResults.sumBucket(
+		return AggregationResults.INSTANCE.sumBucket(
 			sumBucketPipelineAggregation.getName(),
 			simpleValueAggregate.value());
 	}
 
 	private final Aggregate _aggregate;
-	private final AggregationResults _aggregationResults;
 
 }

@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.pipeline.ExtendedStatsBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.MaxBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.MinBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.MovingFunctionPipelineAggregationResultImpl;
@@ -139,7 +138,7 @@ public class AggregationResultsImpl implements AggregationResults {
 		String name, double avg, long count, double min, double max, double sum,
 		double sumOfSquares, double variance, double stdDeviation) {
 
-		return new ExtendedStatsBucketPipelineAggregationResultImpl(
+		return new ExtendedStatsBucketPipelineAggregationResult(
 			name, avg, count, min, max, sum, sumOfSquares, variance,
 			stdDeviation);
 	}

@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,7 +26,8 @@ public class FragmentLinkUtil {
 
 	public static FragmentLink toFragmentLink(
 		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long scopeGroupId) {
+		JSONObject jsonObject, long layoutPlid, LayoutStructure layoutStructure,
+		String layoutStructureItemId, long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;
@@ -59,6 +61,7 @@ public class FragmentLinkUtil {
 				setValue(
 					() -> _toFragmentLinkValue(
 						companyId, infoItemServiceRegistry, jsonObject,
+						layoutPlid, layoutStructure, layoutStructureItemId,
 						mappedValue, scopeGroupId));
 			}
 		};
@@ -115,7 +118,9 @@ public class FragmentLinkUtil {
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId)
+			JSONObject jsonObject, long layoutPlid,
+			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long scopeGroupId)
 		throws Exception {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
@@ -133,7 +138,10 @@ public class FragmentLinkUtil {
 			() -> new Mapping() {
 				{
 					setFieldKey(
-						() -> FragmentMappingUtil.getFieldKey(jsonObject));
+						() -> FragmentMappingFieldUtil.getFieldKey(
+							infoItemServiceRegistry, jsonObject, layoutPlid,
+							layoutStructure, layoutStructureItemId,
+							scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});
@@ -145,12 +153,15 @@ public class FragmentLinkUtil {
 
 	private static FragmentLinkValue _toFragmentLinkValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, boolean mappedValue, long scopeGroupId)
+			JSONObject jsonObject, long layoutPlid,
+			LayoutStructure layoutStructure, String layoutStructureItemId,
+			boolean mappedValue, long scopeGroupId)
 		throws Exception {
 
 		if (mappedValue) {
 			return _toFragmentLinkMappedValue(
-				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
+				companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
+				layoutStructure, layoutStructureItemId, scopeGroupId);
 		}
 
 		FragmentLinkInlineValue fragmentLinkInlineValue =

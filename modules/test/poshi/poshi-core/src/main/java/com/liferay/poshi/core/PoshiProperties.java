@@ -202,6 +202,9 @@ public class PoshiProperties extends Properties {
 
 	public static final String TIMEOUT_IMPLICIT_WAIT = "timeout.implicit.wait";
 
+	public static final String TIMEOUT_PAGE_LOAD_WAIT =
+		"timeout.page.load.wait";
+
 	public static final String VALIDATION_RESOURCE_FILE_TYPES =
 		"validation.resource.file.types";
 
@@ -448,6 +451,8 @@ public class PoshiProperties extends Properties {
 		getProperty(TIMEOUT_EXPLICIT_WAIT));
 	public int timeoutImplicitWait = GetterUtil.getInteger(
 		getProperty(TIMEOUT_IMPLICIT_WAIT));
+	public int timeoutPageLoadWait = GetterUtil.getInteger(
+		getProperty(TIMEOUT_PAGE_LOAD_WAIT));
 	public String[] validationResourceFileTypes = StringUtil.split(
 		getProperty(VALIDATION_RESOURCE_FILE_TYPES));
 

@@ -91,6 +91,15 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() throws Exception {
 		return HashMapBuilder.<String, Object>put(
+			"projectId",
+			() -> {
+				if (_assetEntry == null) {
+					return null;
+				}
+
+				return _assetEntry.getClassPK();
+			}
+		).put(
 			"states",
 			() -> {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();

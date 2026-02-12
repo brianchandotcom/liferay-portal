@@ -17,6 +17,7 @@ interface KanbanViewProps {
 	currentURL: string;
 	items: ITask[];
 	itemsActions: IItemsActions[];
+	projectId: string;
 }
 
 function KanbanView(props: KanbanViewProps) {
@@ -57,9 +58,9 @@ function KanbanView(props: KanbanViewProps) {
 			value={{
 				boardData,
 				changeTaskStatus,
-				currentURL: props.currentURL,
 				itemsActions: props.itemsActions,
 				loadData,
+				projectId: props.projectId,
 			}}
 		>
 			<Board />

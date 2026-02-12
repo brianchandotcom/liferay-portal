@@ -16,9 +16,9 @@ interface IKanbanContext {
 			name: string;
 		}
 	) => void;
-	currentURL: string;
 	itemsActions: IItemsActions[];
 	loadData: Function;
+	projectId: string;
 }
 
 export const KanbanViewContext = React.createContext({} as IKanbanContext);

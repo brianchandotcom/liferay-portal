@@ -13,7 +13,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
@@ -81,8 +80,7 @@ public class SearchSearchResponseAssemblerImpl
 		return new OpenSearchAggregationResultTranslator(
 			aggregate,
 			new HitsMetadataTranslator(
-				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
-				_searchHitsBuilderFactory));
+				_searchHitBuilderFactory, _searchHitsBuilderFactory));
 	}
 
 	@Override
@@ -158,8 +156,7 @@ public class SearchSearchResponseAssemblerImpl
 
 		HitsMetadataTranslator hitsMetadataTranslator =
 			new HitsMetadataTranslator(
-				_highlightFieldBuilderFactory, _searchHitBuilderFactory,
-				_searchHitsBuilderFactory);
+				_searchHitBuilderFactory, _searchHitsBuilderFactory);
 
 		searchSearchResponse.setSearchHits(
 			hitsMetadataTranslator.translate(
@@ -181,9 +178,6 @@ public class SearchSearchResponseAssemblerImpl
 
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
-
-	@Reference
-	private HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 
 	@Reference
 	private SearchHitBuilderFactory _searchHitBuilderFactory;

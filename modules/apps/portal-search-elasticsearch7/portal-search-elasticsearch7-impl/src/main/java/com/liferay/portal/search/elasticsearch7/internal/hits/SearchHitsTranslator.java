@@ -12,7 +12,7 @@ import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.elasticsearch7.internal.document.DocumentFieldsTranslator;
 import com.liferay.portal.search.highlight.HighlightField;
-import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
+import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -36,12 +36,10 @@ public class SearchHitsTranslator {
 
 	public SearchHitsTranslator(
 		SearchHitBuilderFactory searchHitBuilderFactory,
-		SearchHitsBuilderFactory searchHitsBuilderFactory,
-		HighlightFieldBuilderFactory highlightFieldBuilderFactory) {
+		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 	}
 
 	public SearchHits translate(
@@ -150,7 +148,7 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.fetch.subphase.highlight.HighlightField
 			elasticsearchHighlightField) {
 
-		return _highlightFieldBuilderFactory.builder(
+		return new HighlightFieldBuilder(
 		).fragments(
 			TransformUtil.transformToList(
 				elasticsearchHighlightField.getFragments(),
@@ -179,7 +177,6 @@ public class SearchHitsTranslator {
 		return highlightFields;
 	}
 
-	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 

@@ -25,7 +25,7 @@ import com.liferay.portal.search.elasticsearch8.internal.document.FieldsTranslat
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.highlight.HighlightField;
-import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
+import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
@@ -46,11 +46,9 @@ import java.util.Map;
 public class HitsMetadataTranslator {
 
 	public HitsMetadataTranslator(
-		HighlightFieldBuilderFactory highlightFieldBuilderFactory,
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
-		_highlightFieldBuilderFactory = highlightFieldBuilderFactory;
 		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
 	}
@@ -147,7 +145,7 @@ public class HitsMetadataTranslator {
 
 		for (Map.Entry<String, List<String>> entry : highlight.entrySet()) {
 			highlightFields.add(
-				_highlightFieldBuilderFactory.builder(
+				new HighlightFieldBuilder(
 				).fragments(
 					entry.getValue()
 				).name(
@@ -177,7 +175,6 @@ public class HitsMetadataTranslator {
 		}
 	}
 
-	private final HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 

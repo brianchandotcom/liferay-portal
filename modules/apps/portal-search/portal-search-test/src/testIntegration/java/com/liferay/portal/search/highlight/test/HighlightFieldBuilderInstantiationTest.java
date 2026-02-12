@@ -8,9 +8,8 @@ package com.liferay.portal.search.highlight.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
+import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -33,7 +32,7 @@ public class HighlightFieldBuilderInstantiationTest {
 	@Test
 	public void testSortBuilderFactory() {
 		Assert.assertNotNull(
-			_highlightFieldBuilderFactory.builder(
+			new HighlightFieldBuilder(
 			).name(
 				RandomTestUtil.randomString()
 			).build());
@@ -41,8 +40,5 @@ public class HighlightFieldBuilderInstantiationTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	@Inject
-	private static HighlightFieldBuilderFactory _highlightFieldBuilderFactory;
 
 }

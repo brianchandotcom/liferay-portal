@@ -7,20 +7,15 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
-import com.liferay.portal.search.internal.filter.ComplexQueryBuilderFactoryImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
-import com.liferay.portal.search.internal.query.QueriesImpl;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
-import com.liferay.portal.search.query.Queries;
 
 /**
  * @author Michael C. Han
@@ -33,37 +28,7 @@ public class SearchRequestExecutorFixture {
 
 	public void setUp() {
 		_searchRequestExecutor = _createSearchRequestExecutor(
-			createComplexQueryBuilderFactory(new QueriesImpl()),
 			_elasticsearchClientResolver, new StatsRequestBuilderFactoryImpl());
-	}
-
-	protected static CommonSearchSourceBuilderAssembler
-		createCommonSearchSourceBuilderAssembler(
-			ComplexQueryBuilderFactory complexQueryBuilderFactory) {
-
-		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
-			new CommonSearchSourceBuilderAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
-			complexQueryBuilderFactory);
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_facetTranslator",
-			new FacetTranslator());
-
-		return commonSearchSourceBuilderAssembler;
-	}
-
-	protected static ComplexQueryBuilderFactory
-		createComplexQueryBuilderFactory(Queries queries) {
-
-		ComplexQueryBuilderFactoryImpl complexQueryBuilderFactoryImpl =
-			new ComplexQueryBuilderFactoryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			complexQueryBuilderFactoryImpl, "_queries", queries);
-
-		return complexQueryBuilderFactoryImpl;
 	}
 
 	protected void setElasticsearchClientResolver(
@@ -112,7 +77,6 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchRequestExecutor _createSearchRequestExecutor(
-		ComplexQueryBuilderFactory complexQueryBuilderFactory,
 		ElasticsearchClientResolver elasticsearchClientResolver,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
@@ -124,8 +88,7 @@ public class SearchRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
-			createCommonSearchSourceBuilderAssembler(
-				complexQueryBuilderFactory);
+			new CommonSearchSourceBuilderAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_countSearchRequestExecutor",

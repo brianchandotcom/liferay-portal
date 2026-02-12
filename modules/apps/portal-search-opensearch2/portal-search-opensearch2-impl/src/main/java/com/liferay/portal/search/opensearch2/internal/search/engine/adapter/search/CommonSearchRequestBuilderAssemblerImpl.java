@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
+import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationVisitor;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchPipelineAggregationVisitor;
@@ -43,7 +43,6 @@ import org.opensearch.client.opensearch.core.search.ScoreMode;
 import org.opensearch.client.opensearch.core.search.TrackHits;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -122,8 +121,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private BooleanQuery _buildComplexQuery(
 		List<ComplexQueryPart> complexQueryParts) {
 
-		return (BooleanQuery)_complexQueryBuilderFactory.builder(
-		).addParts(
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		return (BooleanQuery)complexQueryBuilder.addParts(
 			complexQueryParts
 		).build();
 	}
@@ -153,10 +153,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private org.opensearch.client.opensearch._types.query_dsl.Query _combine(
 		BoolQuery boolQuery, ComplexQueryPart complexQueryPart) {
 
-		Query query = _complexQueryBuilderFactory.builder(
-		).buildPart(
-			complexQueryPart
-		);
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		Query query = complexQueryBuilder.buildPart(complexQueryPart);
 
 		if (query == null) {
 			return boolQuery._toQuery();
@@ -608,9 +607,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			com.liferay.portal.search.opensearch2.internal.query.
 				OpenSearchQueryVisitor.INSTANCE.translate(query));
 	}
-
-	@Reference
-	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 
 	private final FacetTranslator _facetTranslator = new FacetTranslator();
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

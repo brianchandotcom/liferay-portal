@@ -18,7 +18,7 @@ import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFil
 import com.liferay.portal.search.elasticsearch7.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
+import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -46,7 +46,6 @@ import org.elasticsearch.search.rescore.QueryRescoreMode;
 import org.elasticsearch.search.rescore.QueryRescorerBuilder;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -127,8 +126,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	private BooleanQuery _buildComplexQuery(
 		List<ComplexQueryPart> complexQueryParts) {
 
-		return (BooleanQuery)_complexQueryBuilderFactory.builder(
-		).addParts(
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		return (BooleanQuery)complexQueryBuilder.addParts(
 			complexQueryParts
 		).build();
 	}
@@ -158,10 +158,9 @@ public class CommonSearchSourceBuilderAssemblerImpl
 	private void _combine(
 		BoolQueryBuilder boolQueryBuilder, ComplexQueryPart complexQueryPart) {
 
-		Query query = _complexQueryBuilderFactory.builder(
-		).buildPart(
-			complexQueryPart
-		);
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		Query query = complexQueryBuilder.buildPart(complexQueryPart);
 
 		if (query == null) {
 			return;
@@ -566,9 +565,6 @@ public class CommonSearchSourceBuilderAssemblerImpl
 
 		return null;
 	}
-
-	@Reference
-	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 
 	private final FacetTranslator _facetTranslator = new FacetTranslator();
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

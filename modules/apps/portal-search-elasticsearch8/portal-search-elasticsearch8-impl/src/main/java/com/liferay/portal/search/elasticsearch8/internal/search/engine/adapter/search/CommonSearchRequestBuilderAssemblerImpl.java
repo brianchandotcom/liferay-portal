@@ -28,7 +28,7 @@ import com.liferay.portal.search.elasticsearch8.internal.legacy.query.Elasticsea
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.BaseSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
+import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.query.BooleanQuery;
@@ -43,7 +43,6 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -121,8 +120,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private BooleanQuery _buildComplexQuery(
 		List<ComplexQueryPart> complexQueryParts) {
 
-		return (BooleanQuery)_complexQueryBuilderFactory.builder(
-		).addParts(
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		return (BooleanQuery)complexQueryBuilder.addParts(
 			complexQueryParts
 		).build();
 	}
@@ -172,10 +172,9 @@ public class CommonSearchRequestBuilderAssemblerImpl
 	private co.elastic.clients.elasticsearch._types.query_dsl.Query _combine(
 		BoolQuery boolQuery, ComplexQueryPart complexQueryPart) {
 
-		Query query = _complexQueryBuilderFactory.builder(
-		).buildPart(
-			complexQueryPart
-		);
+		ComplexQueryBuilder complexQueryBuilder = new ComplexQueryBuilder();
+
+		Query query = complexQueryBuilder.buildPart(complexQueryPart);
 
 		if (query == null) {
 			return boolQuery._toQuery();
@@ -614,9 +613,6 @@ public class CommonSearchRequestBuilderAssemblerImpl
 			com.liferay.portal.search.elasticsearch8.internal.query.
 				ElasticsearchQueryVisitor.INSTANCE.translate(query));
 	}
-
-	@Reference
-	private ComplexQueryBuilderFactory _complexQueryBuilderFactory;
 
 	private final FacetTranslator _facetTranslator = new FacetTranslator();
 	private final StatsTranslator _statsTranslator = new StatsTranslator();

@@ -8,15 +8,11 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchQuery;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.search.elasticsearch7.internal.connection.IndexName;
-import com.liferay.portal.search.elasticsearch7.internal.facet.FacetTranslator;
 import com.liferay.portal.search.elasticsearch7.internal.index.LiferayIndexFixture;
 import com.liferay.portal.search.elasticsearch7.internal.query.SearchAssert;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
-import com.liferay.portal.search.filter.ComplexQueryBuilder;
-import com.liferay.portal.search.filter.ComplexQueryBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPartBuilderFactory;
 import com.liferay.portal.search.internal.filter.ComplexQueryPartBuilderFactoryImpl;
 import com.liferay.portal.search.internal.query.QueriesImpl;
@@ -57,7 +53,7 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 		_liferayIndexFixture.setUp();
 
 		_commonSearchSourceBuilderAssembler =
-			createCommonSearchSourceBuilderAssembler();
+			new CommonSearchSourceBuilderAssemblerImpl();
 
 		_queries = new QueriesImpl();
 	}
@@ -557,28 +553,6 @@ public class CommonSearchSourceBuilderAssemblerImplTest {
 
 	@Rule
 	public TestName testName = new TestName();
-
-	protected static CommonSearchSourceBuilderAssembler
-		createCommonSearchSourceBuilderAssembler() {
-
-		CommonSearchSourceBuilderAssembler commonSearchSourceBuilderAssembler =
-			new CommonSearchSourceBuilderAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_complexQueryBuilderFactory",
-			createComplexQueryBuilderFactory());
-		ReflectionTestUtil.setFieldValue(
-			commonSearchSourceBuilderAssembler, "_facetTranslator",
-			new FacetTranslator());
-
-		return commonSearchSourceBuilderAssembler;
-	}
-
-	protected static ComplexQueryBuilderFactory
-		createComplexQueryBuilderFactory() {
-
-		return () -> new ComplexQueryBuilder();
-	}
 
 	private void _addPart(
 		String occur, Query query, SearchSearchRequest searchSearchRequest) {

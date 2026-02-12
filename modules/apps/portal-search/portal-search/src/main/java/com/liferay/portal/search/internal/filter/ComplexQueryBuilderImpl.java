@@ -13,7 +13,6 @@ import com.liferay.portal.search.filter.ComplexQueryBuilder;
 import com.liferay.portal.search.filter.ComplexQueryPart;
 import com.liferay.portal.search.internal.filter.range.RangeTermQueryValue;
 import com.liferay.portal.search.internal.filter.range.RangeTermQueryValueParser;
-import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.NestedQuery;
 import com.liferay.portal.search.query.Queries;
@@ -21,6 +20,7 @@ import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.SimpleStringQuery;
 import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.search.script.Scripts;
+import com.liferay.portal.search.util.SearchStringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;

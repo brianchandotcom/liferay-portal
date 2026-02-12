@@ -1071,16 +1071,17 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-				metaDescriptionMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, false, sku, false, 1, null, null, 0L,
+				null, user.getUserId(), groupId, cpTaxCategoryId, false, false,
+				ddmStructureKey, sku, 0, false, 1, null, null, depth,
+				descriptionMap, displayDateDay, displayDateHour,
+				displayDateMinute, displayDateMonth, displayDateYear,
+				expirationDateDay, expirationDateHour, expirationDateMinute,
+				expirationDateMonth, expirationDateYear, freeShipping, height,
+				ignoreSKUCombinations, 0L, metaDescriptionMap, metaKeywordsMap,
+				metaTitleMap, titleMap, false, productTypeName, published,
+				shipSeparately, shippable, shippingExtraPrice,
+				shortDescriptionMap, false, 1, null, null, taxExempt,
+				telcoOrElectronics, urlTitleMap, weight, width,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -1185,17 +1186,18 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-				metaDescriptionMap, productTypeName, ignoreSKUCombinations,
-				shippable, freeShipping, shipSeparately, shippingExtraPrice,
-				width, height, depth, weight, cpTaxCategoryId, taxExempt,
-				telcoOrElectronics, ddmStructureKey, published,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, false, sku, false, 1, null, null, 0L,
-				status, serviceContext);
+				null, user.getUserId(), groupId, cpTaxCategoryId, false, false,
+				ddmStructureKey, sku, 0, false, 1, null, null, depth,
+				descriptionMap, displayDateDay, displayDateHour,
+				displayDateMinute, displayDateMonth, displayDateYear,
+				expirationDateDay, expirationDateHour, expirationDateMinute,
+				expirationDateMonth, expirationDateYear, freeShipping, height,
+				ignoreSKUCombinations, 0L, metaDescriptionMap, metaKeywordsMap,
+				metaTitleMap, titleMap, false, productTypeName, published,
+				shipSeparately, shippable, shippingExtraPrice,
+				shortDescriptionMap, false, 1, null, null, taxExempt,
+				telcoOrElectronics, urlTitleMap, weight, width, status,
+				serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
@@ -1282,16 +1284,17 @@ public class CPTestUtil {
 
 		CPDefinition cpDefinition =
 			CPDefinitionLocalServiceUtil.addCPDefinition(
-				null, user.getUserId(), groupId, titleMap, shortDescriptionMap,
-				descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
-				metaDescriptionMap, productTypeName, true, shippable,
-				freeShipping, shipSeparately, shippingExtraPrice, width, height,
-				depth, weight, cpTaxCategoryId, taxExempt, telcoOrElectronics,
-				ddmStructureKey, published, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, false, sku, false, 1,
-				null, null, 0L, WorkflowConstants.STATUS_DRAFT, serviceContext);
+				null, user.getUserId(), groupId, cpTaxCategoryId, false, false,
+				ddmStructureKey, sku, 0, false, 1, null, null, depth,
+				descriptionMap, displayDateDay, displayDateHour,
+				displayDateMinute, displayDateMonth, displayDateYear,
+				expirationDateDay, expirationDateHour, expirationDateMinute,
+				expirationDateMonth, expirationDateYear, freeShipping, height,
+				true, 0L, metaDescriptionMap, metaKeywordsMap, metaTitleMap,
+				titleMap, false, productTypeName, published, shipSeparately,
+				shippable, shippingExtraPrice, shortDescriptionMap, false, 1,
+				null, null, taxExempt, telcoOrElectronics, urlTitleMap, weight,
+				width, WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		CPDefinitionInventory cpDefinitionInventory =
 			CPDefinitionInventoryLocalServiceUtil.
@@ -1401,17 +1404,17 @@ public class CPTestUtil {
 		}
 
 		return CPDefinitionLocalServiceUtil.addCPDefinition(
-			null, user.getUserId(), commerceCatalog.getGroupId(), titleMap,
-			shortDescriptionMap, descriptionMap, urlTitleMap, metaTitleMap,
-			metaKeywordsMap, metaDescriptionMap, productTypeName,
-			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
-			shippingExtraPrice, width, height, depth, weight, cpTaxCategoryId,
-			taxExempt, telcoOrElectronics, ddmStructureKey, published,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute, false,
-			sku, false, 1, null, null, 0L, WorkflowConstants.STATUS_DRAFT,
-			serviceContext);
+			null, user.getUserId(), commerceCatalog.getGroupId(),
+			cpTaxCategoryId, false, false, ddmStructureKey, sku, 0, false, 1,
+			null, null, depth, descriptionMap, displayDateDay, displayDateHour,
+			displayDateMinute, displayDateMonth, displayDateYear,
+			expirationDateDay, expirationDateHour, expirationDateMinute,
+			expirationDateMonth, expirationDateYear, freeShipping, height,
+			ignoreSKUCombinations, 0L, metaDescriptionMap, metaKeywordsMap,
+			metaTitleMap, titleMap, false, productTypeName, published,
+			shipSeparately, shippable, shippingExtraPrice, shortDescriptionMap,
+			false, 1, null, null, taxExempt, telcoOrElectronics, urlTitleMap,
+			weight, width, WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	private static CPOptionConfiguration _getCPOptionConfiguration()

@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutFriendlyURLComposite;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -71,7 +72,8 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		Assert.assertSame(
 			_friendlyURLResolver,
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(_SEPARATOR));
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				_COMPANY_ID, _SEPARATOR));
 	}
 
 	@Test
@@ -91,7 +93,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_CANONICAL_URL_SEPARATOR);
+				_COMPANY_ID, _CANONICAL_URL_SEPARATOR);
 
 		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
 			_bundleContext.registerService(
@@ -112,7 +114,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 	public void testGetFriendlyURLResolverWithLowerServiceRanking() {
 		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_CANONICAL_URL_SEPARATOR);
+				_COMPANY_ID, _CANONICAL_URL_SEPARATOR);
 
 		List<ServiceRegistration<FriendlyURLResolver>> list = new ArrayList<>();
 
@@ -156,7 +158,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		FriendlyURLResolver defaultCanonicalURLSeparatorFriendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_CANONICAL_URL_SEPARATOR);
+				_COMPANY_ID, _CANONICAL_URL_SEPARATOR);
 
 		ServiceRegistration<FriendlyURLResolver> serviceRegistration =
 			_bundleContext.registerService(
@@ -192,7 +194,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 		try {
 			Collection<FriendlyURLResolver> friendlyURLResolvers =
 				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection();
+					getFriendlyURLResolversAsCollection(_COMPANY_ID);
 
 			Assert.assertFalse(
 				friendlyURLResolvers.toString(),
@@ -201,7 +203,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			Assert.assertSame(
 				friendlyURLResolver,
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_SEPARATOR));
+					_COMPANY_ID, _SEPARATOR));
 
 			serviceRegistration2 = bundleContext.registerService(
 				FriendlyURLResolver.class, _createFriendlyURLResolver(),
@@ -210,7 +212,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			Assert.assertSame(
 				friendlyURLResolver,
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_SEPARATOR));
+					_COMPANY_ID, _SEPARATOR));
 		}
 		finally {
 			serviceRegistration1.unregister();
@@ -222,7 +224,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			Assert.assertSame(
 				_friendlyURLResolver,
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					_SEPARATOR));
+					_COMPANY_ID, _SEPARATOR));
 		}
 	}
 
@@ -231,6 +233,10 @@ public class FriendlyURLResolverRegistryUtilTest {
 			FriendlyURLResolver.class.getClassLoader(),
 			new Class<?>[] {FriendlyURLResolver.class},
 			(proxy, method, args) -> {
+				if (Objects.equals(method.getName(), "getCompanyId")) {
+					return _COMPANY_ID;
+				}
+
 				if (Objects.equals(
 						method.getName(), "getDefaultURLSeparator") ||
 					Objects.equals(method.getName(), "getURLSeparator")) {
@@ -248,7 +254,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 		FriendlyURLResolver curFriendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				_CANONICAL_URL_SEPARATOR);
+				_COMPANY_ID, _CANONICAL_URL_SEPARATOR);
 
 		Assert.assertEquals(
 			expectedFriendlyURLResolver, curFriendlyURLResolver);
@@ -258,14 +264,16 @@ public class FriendlyURLResolverRegistryUtilTest {
 
 	private void _assertGetFriendlyURLResolvers() {
 		Collection<FriendlyURLResolver> friendlyURLResolvers =
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolversAsCollection();
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolversAsCollection(
+				_COMPANY_ID);
 
 		Assert.assertFalse(
 			friendlyURLResolvers.toString(), friendlyURLResolvers.isEmpty());
 	}
 
 	private static final String _CANONICAL_URL_SEPARATOR = "/-/";
+
+	private static final Long _COMPANY_ID = RandomTestUtil.randomLong();
 
 	private static final String _SEPARATOR = "/-foo-";
 

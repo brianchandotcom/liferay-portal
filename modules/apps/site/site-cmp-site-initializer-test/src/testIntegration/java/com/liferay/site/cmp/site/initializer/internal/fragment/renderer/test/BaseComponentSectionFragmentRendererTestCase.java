@@ -91,6 +91,7 @@ public abstract class BaseComponentSectionFragmentRendererTestCase {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getClassName());
 
 		mockHttpServletRequest.setAttribute(

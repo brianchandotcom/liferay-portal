@@ -65,24 +65,26 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolverTest {
 	public void testGetLayoutDisplayPageProvider() throws Exception {
 		Assert.assertNotNull(
 			_getLayoutDisplayPageProvider(
+				_depotEntry.getCompanyId(),
 				_friendlyURLResolver.getURLSeparator() +
 					_depotEntry.getDepotEntryId()));
 		Assert.assertNotNull(
 			_getLayoutDisplayPageProvider(
+				_depotEntry.getCompanyId(),
 				_friendlyURLResolver.getURLSeparator() +
 					_depotEntry.getGroupId()));
 	}
 
 	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws Exception {
 
 		Method method = ReflectionUtil.getDeclaredMethod(
 			_friendlyURLResolver.getClass(), "getLayoutDisplayPageProvider",
-			String.class);
+			long.class, String.class);
 
 		return (LayoutDisplayPageProvider<?>)method.invoke(
-			_friendlyURLResolver, friendlyURL);
+			_friendlyURLResolver, companyId, friendlyURL);
 	}
 
 	@DeleteAfterTestRun

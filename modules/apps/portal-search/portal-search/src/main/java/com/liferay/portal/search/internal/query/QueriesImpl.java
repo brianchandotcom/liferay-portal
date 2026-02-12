@@ -84,7 +84,7 @@ public class QueriesImpl implements Queries {
 		String field, boolean includesLower, boolean includesUpper,
 		String startDate, String endDate) {
 
-		return new DateRangeTermQueryImpl(
+		return new DateRangeTermQuery(
 			field, includesLower, includesUpper, startDate, endDate);
 	}
 

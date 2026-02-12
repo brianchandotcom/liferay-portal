@@ -412,11 +412,19 @@ public class PageElementsTestUtil {
 			long fragmentCollectionId, long groupId)
 		throws PortalException {
 
+		return _addFragmentEntry(
+			fragmentCollectionId, groupId, "Fragment Entry HTML");
+	}
+
+	private static FragmentEntry _addFragmentEntry(
+			long fragmentCollectionId, long groupId, String html)
+		throws PortalException {
+
 		return FragmentEntryLocalServiceUtil.addFragmentEntry(
 			null, TestPropsValues.getUserId(), groupId, fragmentCollectionId,
-			null, RandomTestUtil.randomString(), StringPool.BLANK,
-			"Fragment Entry HTML", StringPool.BLANK, false, null, null, 0,
-			false, false, FragmentConstants.TYPE_COMPONENT, null,
+			null, RandomTestUtil.randomString(), StringPool.BLANK, html,
+			StringPool.BLANK, false, null, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(groupId));
 	}

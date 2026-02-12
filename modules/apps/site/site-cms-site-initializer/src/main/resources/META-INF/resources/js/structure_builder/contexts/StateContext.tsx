@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openConfirmModal} from '@liferay/layout-js-components-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -363,9 +363,6 @@ function reducer(state: State, action: Action): State {
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-system-fields'
 					),
-					title: Liferay.Language.get(
-						'repeatable-group-creation-not-allowed'
-					),
 				});
 
 				return state;
@@ -376,9 +373,6 @@ function reducer(state: State, action: Action): State {
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-referenced-structure-fields-are-not-allowed-in-repeatable-groups'
 					),
-					title: Liferay.Language.get(
-						'repeatable-group-creation-not-allowed'
-					),
 				});
 
 				return state;
@@ -388,9 +382,6 @@ function reducer(state: State, action: Action): State {
 				showWarning({
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-at-least-one-field-is-required'
-					),
-					title: Liferay.Language.get(
-						'repeatable-group-creation-not-allowed'
 					),
 				});
 
@@ -411,9 +402,6 @@ function reducer(state: State, action: Action): State {
 				showWarning({
 					text: Liferay.Language.get(
 						'a-repeatable-group-requires-all-selected-items-to-be-at-the-same-hierarchy-level'
-					),
-					title: Liferay.Language.get(
-						'repeatable-group-creation-not-allowed'
 					),
 				});
 
@@ -507,7 +495,6 @@ function reducer(state: State, action: Action): State {
 					text: Liferay.Language.get(
 						'you-must-keep-at-least-one-field-in-a-repeatable-group'
 					),
-					title: Liferay.Language.get('deletion-not-allowed'),
 				});
 
 				return state;
@@ -559,9 +546,6 @@ function reducer(state: State, action: Action): State {
 				showWarning({
 					text: Liferay.Language.get(
 						'one-or-more-selected-fields-are-system-or-referenced-fields'
-					),
-					title: Liferay.Language.get(
-						'some-fields-could-not-be-deleted'
 					),
 				});
 			}
@@ -766,7 +750,6 @@ function reducer(state: State, action: Action): State {
 					text: Liferay.Language.get(
 						'the-ungroup-action-cannot-be-done-because-this-repeatable-group-is-already-published'
 					),
-					title: Liferay.Language.get('ungroup-action-not-allowed'),
 				});
 
 				return state;
@@ -1205,15 +1188,8 @@ function getNextName({
 	});
 }
 
-function showWarning({text, title}: {text: string; title: string}) {
-	openConfirmModal({
-		buttonLabel: Liferay.Language.get('done'),
-		center: true,
-		hideCancel: true,
-		status: 'warning',
-		text,
-		title,
-	});
+function showWarning({text}: {text: string}) {
+	openToast({message: text, type: 'danger'});
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

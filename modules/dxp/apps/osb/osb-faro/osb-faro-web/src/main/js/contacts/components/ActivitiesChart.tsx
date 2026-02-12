@@ -21,6 +21,7 @@ import {
 } from 'recharts';
 import {CHART_COLOR_NAMES} from 'shared/util/charts';
 import {createDateKeysIMap} from 'shared/util/intervals';
+import {ENABLE_CDP} from 'shared/util/constants';
 import {
 	formatXAxisDate,
 	getBarColor,
@@ -201,6 +202,16 @@ const ActivitiesChart: React.FC<
 				<YAxis
 					allowDecimals={false}
 					axisLine={{stroke: AXIS.borderStroke}}
+					label={
+						ENABLE_CDP
+							? {
+									dy: -20,
+									position: 'top',
+									style: {fill: AXIS.textColor},
+									value: Liferay.Language.get('events')
+							  }
+							: null
+					}
 					name={Liferay.Language.get('events')}
 					stroke={AXIS.gridStroke}
 					tick={getAxisTickText('y')}

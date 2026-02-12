@@ -39,6 +39,11 @@ public class SanitizeLanguageTopLevelBuild
 	}
 
 	@Override
+	public Job.BuildProfile getBuildProfile() {
+		return Job.BuildProfile.DXP;
+	}	
+
+	@Override
 	public PortalWorkspace getPortalWorkspace() {
 		Workspace workspace = getWorkspace();
 

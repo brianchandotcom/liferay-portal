@@ -8,8 +8,7 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class GeoHashGridAggregationResult
-	extends BucketAggregationResult {
+public class GeoHashGridAggregationResult extends BucketAggregationResult {
 
 	public GeoHashGridAggregationResult(String name) {
 		super(name);

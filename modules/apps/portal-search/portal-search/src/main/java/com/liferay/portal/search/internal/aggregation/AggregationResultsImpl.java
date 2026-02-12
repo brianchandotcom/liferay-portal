@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.bucket.SignificantTextAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.TermsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.AvgAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.CardinalityAggregationResultImpl;
@@ -311,7 +310,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public SignificantTextAggregationResult significantText(
 		String name, long errorDocCounts, long otherDocCounts) {
 
-		return new SignificantTextAggregationResultImpl(
+		return new SignificantTextAggregationResult(
 			name, errorDocCounts, otherDocCounts);
 	}
 

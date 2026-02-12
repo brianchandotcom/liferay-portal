@@ -8,15 +8,26 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class SignificantTextAggregationResult
-	extends BucketAggregationResult {
+public class SignificantTextAggregationResult extends BucketAggregationResult {
 
-	public SignificantTextAggregationResult(String name) {
+	public SignificantTextAggregationResult(
+		String name, long errorDocCounts, long otherDocCounts) {
+
 		super(name);
+
+		_errorDocCounts = errorDocCounts;
+		_otherDocCounts = otherDocCounts;
 	}
 
-	public abstract long getErrorDocCounts();
+	public long getErrorDocCounts() {
+		return _errorDocCounts;
+	}
 
-	public abstract long getOtherDocCounts();
+	public long getOtherDocCounts() {
+		return _otherDocCounts;
+	}
+
+	private final long _errorDocCounts;
+	private final long _otherDocCounts;
 
 }

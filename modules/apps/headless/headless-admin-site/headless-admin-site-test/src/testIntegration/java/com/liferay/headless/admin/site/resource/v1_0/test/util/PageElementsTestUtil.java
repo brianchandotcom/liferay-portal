@@ -846,6 +846,20 @@ public class PageElementsTestUtil {
 		};
 	}
 
+	private static PageElement _getDisplayPageItemPageElement(
+		String fieldKey, String fragmentKey, int position, long scopeGroupId) {
+
+		PageElement pageElement = _getBasicFragmentPageElement(
+			null,
+			FragmentMappedValueItemContextReference.ContextSource.
+				DISPLAY_PAGE_ITEM,
+			null, fieldKey, fragmentKey, null, scopeGroupId);
+
+		pageElement.setPosition(position);
+
+		return pageElement;
+	}
+
 	private static String _getExternalGlobalGroupTemplateFieldKey(
 		TemplateEntry templateEntry) {
 

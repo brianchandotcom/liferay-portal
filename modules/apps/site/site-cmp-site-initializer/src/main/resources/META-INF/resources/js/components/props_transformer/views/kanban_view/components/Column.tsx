@@ -115,6 +115,7 @@ export function ColumnView({
 					<ClayButton
 						borderless
 						className="lfr__kaban-view-column-state-add-button"
+						displayType="secondary"
 						onClick={async () => {
 							await openCMPModal({
 								center: true,
@@ -132,6 +133,7 @@ export function ColumnView({
 								size: 'md',
 							});
 						}}
+						size="xs"
 					>
 						<ClayIcon symbol="plus" />
 

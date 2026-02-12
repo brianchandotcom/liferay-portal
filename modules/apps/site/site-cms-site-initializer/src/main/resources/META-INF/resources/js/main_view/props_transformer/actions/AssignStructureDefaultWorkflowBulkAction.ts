@@ -25,6 +25,7 @@ export default function assignStructureDefaultWorkflowBulkAction({
 			contentComponent: ({closeModal}: {closeModal: () => void}) =>
 				AssignDefaultWorkflowModalContent({
 					closeModal,
+					structureWorkflows,
 					submitModal(workflow) {
 						selectedData.items = selectedData.items?.map(
 							(item) => ({
@@ -35,14 +36,13 @@ export default function assignStructureDefaultWorkflowBulkAction({
 
 						triggerAssetBulkAction({
 							apiURL,
-							selectedData,
 							keyValues: {
 								workflow,
 							},
+							selectedData,
 							type: 'AssignStructureDefaultWorkflowBulkAction',
 						});
 					},
-					structureWorkflows,
 				}),
 			size: 'md',
 		});

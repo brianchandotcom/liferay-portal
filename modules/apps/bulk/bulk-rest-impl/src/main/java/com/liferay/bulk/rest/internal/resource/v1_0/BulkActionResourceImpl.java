@@ -400,10 +400,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkAction.Type type) {
 
 		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
-			equals(type)) {
+				equals(type)) {
 
 			return _assignStructureDefaultWorkflowBulkSelectionAction;
 		}
+
 		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
 			return _assignToObjectBulkSelectionAction;
 		}
@@ -463,11 +464,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				"bulkActionTaskId", bulkActionTask.getId());
 
 		if (BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION.
-			equals(type)) {
+				equals(type)) {
 
 			AssignStructureDefaultWorkflowBulkAction
 				assignStructureDefaultWorkflowBulkAction =
-				(AssignStructureDefaultWorkflowBulkAction) bulkAction;
+					(AssignStructureDefaultWorkflowBulkAction)bulkAction;
 
 			return hashMapWrapper.put(
 				"workflow",

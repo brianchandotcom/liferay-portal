@@ -620,6 +620,12 @@ public class MarketplaceService extends BaseService {
 			});
 	}
 
+	public void postUserAccount(UserAccount userAccount) throws Exception {
+		UserAccountResource userAccountResource = getUserAccountResource();
+
+		userAccountResource.postUserAccount(userAccount);
+	}
+
 	public void postVirtualFileEntry(File file, long productId, String version)
 		throws Exception {
 

@@ -1,3 +1,4 @@
+import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
@@ -11,9 +12,11 @@ import {compose, withIndividual} from 'shared/hoc';
 import {CSVType} from 'shared/components/download-report/utils';
 import {ENABLE_CDP} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
+import {SectionHeader} from '../components/SectionHeader';
 import {Switch, withRouter} from 'react-router-dom';
 import {Text} from '@clayui/core';
 import {useDataSource} from 'shared/hooks/useDataSource';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const AssociatedSegments = lazy(
 	() =>
@@ -101,6 +104,14 @@ export const IndividualProfileRoutes = ({
 
 	const entityName = individual.name || Liferay.Language.get('unknown');
 
+	const {data: dataSourceData} = useRequest({
+		dataSourceFn: API.dataSource.search,
+		variables: {
+			delta: 1,
+			groupId
+		}
+	});
+
 	return (
 		<BasePage
 			className={
@@ -135,21 +146,27 @@ export const IndividualProfileRoutes = ({
 				/>
 			</BasePage.Header>
 
-			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_INDIVIDUAL && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						<DownloadCSVReport
-							disabled={dataSourceStates.empty}
-							individualId={individual.id}
-							type={CSVType.Event}
-							typeLang={Liferay.Language.get('events')}
-						/>
-					</div>
-				</BasePage.SubHeader>
-			)}
+			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_INDIVIDUAL &&
+				dataSourceData?.total > 0 && (
+					<BasePage.SubHeader>
+						<div className='d-flex justify-content-end w-100'>
+							<DownloadCSVReport
+								disabled={dataSourceStates.empty}
+								individualId={individual.id}
+								type={CSVType.Event}
+								typeLang={Liferay.Language.get('events')}
+							/>
+						</div>
+					</BasePage.SubHeader>
+				)}
 
 			<BasePage.Body>
 				<Suspense fallback={<Loading />}>
+					<SectionHeader
+						icon='analytics'
+						title={Liferay.Language.get('interaction-history')}
+					/>
+
 					<Switch>
 						<BundleRouter
 							componentProps={componentProps}

@@ -18,7 +18,7 @@ import java.util.List;
 public class SearchHits implements Serializable {
 
 	public void addSearchHits(Collection<SearchHit> searchHits) {
-		searchHits.forEach(_searchHits::add);
+		_searchHits.addAll(searchHits);
 	}
 
 	public float getMaxScore() {
@@ -41,7 +41,7 @@ public class SearchHits implements Serializable {
 
 		@Override
 		public SearchHitsBuilder addSearchHit(SearchHit searchHit) {
-			_searchHits.addSearchHit(searchHit);
+			_searchHits.add(searchHit);
 
 			return this;
 		}
@@ -50,71 +50,58 @@ public class SearchHits implements Serializable {
 		public SearchHitsBuilder addSearchHits(
 			Collection<SearchHit> searchHits) {
 
-			_searchHits.addSearchHits(searchHits);
+			_searchHits.addAll(searchHits);
 
 			return this;
 		}
 
 		@Override
 		public SearchHits build() {
-			return new SearchHits(_searchHits);
+			return new SearchHits(
+				_maxScore, _searchHits, _searchTime, _totalHits);
 		}
 
 		@Override
 		public SearchHitsBuilder maxScore(float maxScore) {
-			_searchHits._setMaxScore(maxScore);
+			_maxScore = maxScore;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitsBuilder searchTime(long searchTime) {
-			_searchHits._setSearchTime(searchTime);
+			_searchTime = searchTime;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitsBuilder totalHits(long totalHits) {
-			_searchHits._setTotalHits(totalHits);
+			_totalHits = totalHits;
 
 			return this;
 		}
 
-		private final SearchHits _searchHits = new SearchHits();
+		private float _maxScore;
+		private final List<SearchHit> _searchHits = new ArrayList<>();
+		private long _searchTime;
+		private long _totalHits;
 
 	}
 
-	protected SearchHits() {
-	}
+	protected SearchHits(
+		float maxScore, List<SearchHit> searchHits, long searchTime,
+		long totalHits) {
 
-	protected SearchHits(SearchHits searchHits) {
-		_maxScore = searchHits._maxScore;
-		_searchTime = searchHits._searchTime;
-		_totalHits = searchHits._totalHits;
-
-		_searchHits.addAll(searchHits._searchHits);
-	}
-
-	protected void addSearchHit(SearchHit searchHit) {
-		_searchHits.add(searchHit);
-	}
-
-	private void _setMaxScore(float maxScore) {
 		_maxScore = maxScore;
-	}
-
-	private void _setSearchTime(long searchTime) {
+		_searchHits = searchHits;
 		_searchTime = searchTime;
-	}
-
-	private void _setTotalHits(long totalHits) {
 		_totalHits = totalHits;
 	}
 
-	private float _maxScore;
-	private final List<SearchHit> _searchHits = new ArrayList<>();
-	private long _searchTime;
-	private long _totalHits;
+	private final float _maxScore;
+	private final List<SearchHit> _searchHits;
+	private final long _searchTime;
+	private final long _totalHits;
 
 }

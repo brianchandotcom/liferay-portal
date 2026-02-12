@@ -10,12 +10,18 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class ValueCountAggregationResult extends AggregationResult {
+public class ValueCountAggregationResult extends AggregationResult {
 
-	public ValueCountAggregationResult(String name) {
+	public ValueCountAggregationResult(String name, long value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract long getValue();
+	public long getValue() {
+		return _value;
+	}
+
+	private final long _value;
 
 }

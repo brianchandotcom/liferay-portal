@@ -607,7 +607,12 @@ const FrontendDataSetContent = ({
 			: [];
 
 		const paginationDelta =
-			showPagination && (getDelta() || defaultSnapshot.paginationDelta);
+			showPagination &&
+			(getDelta() ||
+				activeView.initialPaginationDelta ||
+				DEFAULT_PAGINATION_DELTA);
+
+		defaultSnapshot.paginationDelta = paginationDelta;
 
 		const pageNumber =
 			getPageNumber() ||
@@ -2035,21 +2040,44 @@ const FrontendDataSetContent = ({
 						return;
 					}
 
-					const updates: Record<string, any> = {
+					const paginationDelta =
+						view.initialPaginationDelta ||
+						pagination?.initialDelta ||
+						DEFAULT_PAGINATION_DELTA;
+
+					const stateUpdates: Array<{
+						type: EViewsActionTypes;
+						value: IConfigInURL[keyof IConfigInURL];
+					}> = [
+						{
+							type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
+							value: viewName,
+						},
+						{
+							type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
+							value: paginationDelta,
+						},
+					];
+
+					const configInURLUpdates: Record<string, any> = {
 						[EConfigInURLKeys.VIEW_NAME]: viewName,
+						[EConfigInURLKeys.DELTA]: paginationDelta,
 					};
 
 					if (view.initialPaginationDelta) {
-						updates[EConfigInURLKeys.DELTA] =
-							view.initialPaginationDelta;
-						updates[EConfigInURLKeys.PAGE_NUMBER] = 1;
+						stateUpdates.push({
+							type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
+							value: 1,
+						});
+
+						configInURLUpdates[EConfigInURLKeys.PAGE_NUMBER] = 1;
 					}
 
-					updateConfigInURL(updates);
+					updateConfigInURL(configInURLUpdates);
 
 					viewsDispatch({
-						type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
-						value: viewName,
+						type: EViewsActionTypes.BATCH_UPDATE,
+						value: stateUpdates,
 					});
 				},
 				openModal,

@@ -141,7 +141,7 @@ const viewsActions: TViewsActions = {
 		};
 	},
 	[EViewsActionTypes.UPDATE_ACTIVE_VIEW]: (state, value) => {
-		const {pageNumber, paginationDelta, views} = state;
+		const {views} = state;
 
 		const activeView = views.find(
 			({name}: {name: string}) => name === value
@@ -154,9 +154,6 @@ const viewsActions: TViewsActions = {
 		return {
 			...state,
 			activeView,
-			pageNumber: activeView.initialPaginationDelta ? 1 : pageNumber,
-			paginationDelta:
-				activeView.initialPaginationDelta || paginationDelta,
 			snapshotUpdated: true,
 		};
 	},

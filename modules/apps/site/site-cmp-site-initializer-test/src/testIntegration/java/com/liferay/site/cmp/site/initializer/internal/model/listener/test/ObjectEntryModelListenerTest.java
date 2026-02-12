@@ -22,7 +22,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
-import com.liferay.site.cms.site.initializer.util.PermissionUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -56,7 +56,7 @@ public class ObjectEntryModelListenerTest {
 	public void testOnAfterCreate() throws Exception {
 		ObjectEntry projectObjectEntry = CMPTestUtil.addProjectObjectEntry();
 
-		Role role = PermissionUtil.getOrAddCMSAdministratorRole(
+		Role role = RoleUtil.getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		_assertResourceActions(

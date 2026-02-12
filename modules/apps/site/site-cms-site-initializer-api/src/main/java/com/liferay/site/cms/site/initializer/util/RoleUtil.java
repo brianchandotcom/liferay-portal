@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 /**
  * @author Pedro Leite
  */
-public class PermissionUtil {
+public class RoleUtil {
 
 	public static Role getOrAddCMSAdministratorRole(long companyId, long userId)
 		throws Exception {

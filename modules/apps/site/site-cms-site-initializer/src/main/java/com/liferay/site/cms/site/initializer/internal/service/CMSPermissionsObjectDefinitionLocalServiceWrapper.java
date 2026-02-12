@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.site.cms.site.initializer.util.PermissionUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 
 import java.util.Objects;
 
@@ -56,7 +56,7 @@ public class CMSPermissionsObjectDefinitionLocalServiceWrapper
 		}
 
 		try {
-			Role role = PermissionUtil.getOrAddCMSAdministratorRole(
+			Role role = RoleUtil.getOrAddCMSAdministratorRole(
 				objectDefinition.getCompanyId(), objectDefinition.getUserId());
 
 			_resourcePermissionLocalService.addResourcePermission(

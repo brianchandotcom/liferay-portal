@@ -32,7 +32,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.cmp.site.initializer.test.util.CMPTestUtil;
-import com.liferay.site.cms.site.initializer.util.PermissionUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 
 import java.util.Collections;
 import java.util.List;
@@ -95,7 +95,7 @@ public class CMPPermissionsObjectDefinitionLocalServiceWrapperTest {
 				TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId());
 
-		Role role = PermissionUtil.getOrAddCMSAdministratorRole(
+		Role role = RoleUtil.getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
 
 		Assert.assertTrue(

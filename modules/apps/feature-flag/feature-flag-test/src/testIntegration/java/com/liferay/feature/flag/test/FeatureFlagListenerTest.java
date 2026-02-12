@@ -67,6 +67,10 @@ public class FeatureFlagListenerTest {
 
 		_companyId = TestPropsValues.getCompanyId();
 
+		_companyIds.add(_companyId);
+
+		_companyIds.add(CompanyConstants.SYSTEM);
+
 		_value1 = _featureFlagTestHelper.getFeatureFlagValue(
 			_companyId, FeatureFlagTestHelper.FEATURE_FLAG_KEY_1);
 		_value2 = _featureFlagTestHelper.getFeatureFlagValue(
@@ -237,6 +241,7 @@ public class FeatureFlagListenerTest {
 	private static FeatureFlagTestHelper _featureFlagTestHelper;
 
 	private BundleContext _bundleContext;
+	private final List<Long> _companyIds = new ArrayList<>();
 	private boolean _value1;
 	private boolean _value2;
 	private boolean _valueSystem;
@@ -282,7 +287,9 @@ public class FeatureFlagListenerTest {
 		public void onValue(
 			long companyId, String featureFlagKey, boolean enabled) {
 
-			if (featureFlagKey.startsWith("FAKE-")) {
+			if (_companyIds.contains(companyId) &&
+				featureFlagKey.startsWith("FAKE-")) {
+
 				_strings.add(
 					_valuesToString(companyId, featureFlagKey, enabled));
 			}

@@ -130,8 +130,7 @@ public class QueriesImpl implements Queries {
 		String field, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance geoDistance) {
 
-		return new GeoDistanceQueryImpl(
-			field, pinGeoLocationPoint, geoDistance);
+		return new GeoDistanceQuery(field, pinGeoLocationPoint, geoDistance);
 	}
 
 	@Override

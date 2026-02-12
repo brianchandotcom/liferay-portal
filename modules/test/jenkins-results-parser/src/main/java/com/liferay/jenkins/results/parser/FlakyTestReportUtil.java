@@ -74,12 +74,13 @@ public class FlakyTestReportUtil {
 		testrayJobHistory.writeCIHistoryJSONObjectFile(
 			ciHistoryJSONObjectFilePath);
 
-		String flakyTestDataFile =
+		String flakyTestDataFilePath =
 			flakyTestReportFilePath + "/js/flaky-test-data.js";
 
-		Files.deleteIfExists(Paths.get(flakyTestDataFile));
+		Files.deleteIfExists(Paths.get(flakyTestDataFilePath));
 
-		testrayJobHistory.writeFlakyTestDataJavaScriptFile(flakyTestDataFile);
+		testrayJobHistory.writeFlakyTestDataJavaScriptFile(
+			flakyTestDataFilePath);
 
 		CloudBucketUtil.copyGCPFile(
 			CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/ci-history/" +

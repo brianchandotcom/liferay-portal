@@ -30,7 +30,9 @@ describe('NewExport', () => {
 		expect(designCheckbox).toBeInTheDocument();
 
 		const continueButton = screen.getByRole('button', {name: /continue/i});
-		expect(continueButton).toBeDisabled();
+		await waitFor(() => {
+			expect(continueButton).toBeDisabled();
+		});
 
 		await checkAccessibility({context: container});
 	});
@@ -39,7 +41,9 @@ describe('NewExport', () => {
 		renderComponent();
 
 		const continueButton = screen.getByRole('button', {name: /continue/i});
-		expect(continueButton).toBeDisabled();
+		await waitFor(() => {
+			expect(continueButton).toBeDisabled();
+		});
 
 		const fileNameInput = await screen.findByRole('textbox', {
 			name: /file-name/,

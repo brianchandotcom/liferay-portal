@@ -132,7 +132,6 @@ export function Wizard({
 						actionButton={actionButton}
 						backURL={backURL}
 						continueDisabled={
-							!formik.dirty ||
 							formik.isValidating ||
 							formik.isSubmitting ||
 							!formik.isValid

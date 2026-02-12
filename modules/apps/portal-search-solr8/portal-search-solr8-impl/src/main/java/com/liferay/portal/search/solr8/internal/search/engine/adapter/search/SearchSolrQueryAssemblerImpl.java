@@ -119,7 +119,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 
 		if (groupBy != null) {
 			_groupByTranslator.translate(
-				solrQuery, _groupByRequestFactory.getGroupByRequest(groupBy),
+				solrQuery, GroupByRequestFactory.getGroupByRequest(groupBy),
 				searchSearchRequest.getLocale(),
 				searchSearchRequest.getHighlightFieldNames(),
 				searchSearchRequest.isHighlightEnabled(),
@@ -266,10 +266,6 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 
 	private final BaseSolrQueryAssembler _baseSolrQueryAssembler =
 		new BaseSolrQueryAssembler();
-
-	@Reference
-	private GroupByRequestFactory _groupByRequestFactory;
-
 	private final GroupByTranslator _groupByTranslator =
 		new GroupByTranslator();
 	private final SolrSortFieldTranslator _sortFieldTranslator =

@@ -77,7 +77,7 @@ public class SearchSearchRequestAssemblerImpl
 	}
 
 	protected GroupByRequest translate(GroupBy groupBy) {
-		return _groupByRequestFactory.getGroupByRequest(groupBy);
+		return GroupByRequestFactory.getGroupByRequest(groupBy);
 	}
 
 	protected StatsRequest translate(Stats stats) {
@@ -338,9 +338,6 @@ public class SearchSearchRequestAssemblerImpl
 	@Reference
 	private CommonSearchSourceBuilderAssembler
 		_commonSearchSourceBuilderAssembler;
-
-	@Reference
-	private GroupByRequestFactory _groupByRequestFactory;
 
 	private final GroupByTranslator _groupByTranslator =
 		new GroupByTranslator();

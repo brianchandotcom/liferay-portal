@@ -8,13 +8,10 @@ package com.liferay.portal.search.legacy.groupby;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.search.groupby.GroupByRequest;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bryan Engler
  */
-@ProviderType
-public interface GroupByRequestFactory {
+public class GroupByRequestFactory {
 
 	/**
 	 * Provides a GroupByRequest object based off a legacy GroupBy object.
@@ -23,6 +20,14 @@ public interface GroupByRequestFactory {
 	 * @return the converted GroupByRequest object
 	 * @review
 	 */
-	public GroupByRequest getGroupByRequest(GroupBy groupBy);
+	public static GroupByRequest getGroupByRequest(GroupBy groupBy) {
+		GroupByRequest groupByRequest = new GroupByRequest(groupBy.getField());
+
+		groupByRequest.setDocsSize(groupBy.getSize());
+		groupByRequest.setDocsSorts(groupBy.getSorts());
+		groupByRequest.setDocsStart(groupBy.getStart());
+
+		return groupByRequest;
+	}
 
 }

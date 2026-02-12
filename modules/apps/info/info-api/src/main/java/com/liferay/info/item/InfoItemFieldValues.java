@@ -125,18 +125,18 @@ public class InfoItemFieldValues {
 			InfoField<?> infoField = infoFieldValue.getInfoField();
 
 			Collection<InfoFieldValue<Object>> infoFieldValues =
-				_infoFieldValuesByNameMap.computeIfAbsent(
-					infoField.getName(), key -> new ArrayList<>());
-
-			infoFieldValues.add(infoFieldValue);
-
-			infoFieldValues = _infoFieldValuesByExternalUniqueIdMap.computeIfAbsent(
-				infoField.getExternalUniqueId(), key -> new ArrayList<>());
+				_infoFieldValuesByExternalUniqueIdMap.computeIfAbsent(
+					infoField.getExternalUniqueId(), key -> new ArrayList<>());
 
 			infoFieldValues.add(infoFieldValue);
 
 			infoFieldValues = _infoFieldValuesByIdMap.computeIfAbsent(
 				infoField.getUniqueId(), key -> new ArrayList<>());
+
+			infoFieldValues.add(infoFieldValue);
+
+			infoFieldValues = _infoFieldValuesByNameMap.computeIfAbsent(
+				infoField.getName(), key -> new ArrayList<>());
 
 			infoFieldValues.add(infoFieldValue);
 

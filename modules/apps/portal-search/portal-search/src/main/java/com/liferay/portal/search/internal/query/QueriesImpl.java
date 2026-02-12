@@ -185,7 +185,7 @@ public class QueriesImpl implements Queries {
 	public MatchPhrasePrefixQuery matchPhrasePrefix(
 		String field, Object value) {
 
-		return new MatchPhrasePrefixQueryImpl(field, value);
+		return new MatchPhrasePrefixQuery(field, value);
 	}
 
 	/**

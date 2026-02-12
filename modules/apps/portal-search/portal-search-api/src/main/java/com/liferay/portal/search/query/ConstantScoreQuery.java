@@ -5,14 +5,26 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class ConstantScoreQuery extends Query {
+public class ConstantScoreQuery extends Query {
 
-	public abstract Query getQuery();
+	public ConstantScoreQuery(Query query) {
+		_query = query;
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public Query getQuery() {
+		return _query;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final Query _query;
 
 }

@@ -76,7 +76,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public ConstantScoreQuery constantScore(Query query) {
-		return new ConstantScoreQueryImpl(query);
+		return new ConstantScoreQuery(query);
 	}
 
 	@Override

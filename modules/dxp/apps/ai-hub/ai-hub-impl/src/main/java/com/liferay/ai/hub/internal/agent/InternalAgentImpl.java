@@ -97,11 +97,15 @@ public class InternalAgentImpl implements InternalAgent, InvocationHandler {
 				).build();
 
 			for (AgentArgument agentArgument : arguments()) {
+				String name = agentArgument.name();
+
+				if (workflowContext.containsKey(name)) {
+					continue;
+				}
+
 				workflowContext.put(
-					agentArgument.name(),
-					MapUtil.getString(
-						(Map<String, Object>)arguments[0],
-						agentArgument.name()));
+					name,
+					MapUtil.getString((Map<String, Object>)arguments[0], name));
 			}
 
 			WorkflowDefinition workflowDefinition =

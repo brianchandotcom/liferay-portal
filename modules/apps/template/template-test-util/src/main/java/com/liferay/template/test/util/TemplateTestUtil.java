@@ -215,8 +215,12 @@ public class TemplateTestUtil {
 	}
 
 	public static String getSampleScriptFTL(String fieldName) {
+		return getSampleScriptFTL(fieldName, StringPool.BLANK);
+	}
+
+	public static String getSampleScriptFTL(String fieldName, String text) {
 		return StringBundler.concat(
-			"<#if (", fieldName, ".getData())??>${", fieldName,
+			text, "<#if (", fieldName, ".getData())??>${", fieldName,
 			".getData()}</#if>");
 	}
 

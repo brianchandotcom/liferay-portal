@@ -11,7 +11,7 @@ import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.CountSearchRequestExecutorImpl;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.CountSearchRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.MultisearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
 import com.liferay.portal.search.test.util.logging.ExpectedLog;
@@ -36,7 +36,7 @@ public class OpenSearchSearchEngineAdapterLoggingTest
 		OpenSearchTestRule.INSTANCE;
 
 	@ExpectedLog(
-		expectedClass = CountSearchRequestExecutorImpl.class,
+		expectedClass = CountSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "The search engine processed"
 	)

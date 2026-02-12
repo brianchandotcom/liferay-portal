@@ -5,14 +5,93 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
+
+import java.io.IOException;
+
+import org.opensearch.client.json.JsonData;
+import org.opensearch.client.opensearch.OpenSearchClient;
+import org.opensearch.client.opensearch.core.SearchRequest;
+import org.opensearch.client.opensearch.core.SearchResponse;
+import org.opensearch.client.opensearch.core.search.HitsMetadata;
+import org.opensearch.client.opensearch.core.search.TotalHits;
+import org.opensearch.client.opensearch.core.search.TrackHits;
 
 /**
  * @author Michael C. Han
  */
-public interface CountSearchRequestExecutor {
+public class CountSearchRequestExecutor {
 
-	public CountSearchResponse execute(CountSearchRequest countSearchRequest);
+	public CountSearchRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_openSearchConnectionManager = openSearchConnectionManager;
+	}
+
+	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
+		SearchRequest.Builder builder = new SearchRequest.Builder();
+
+		CommonSearchRequestBuilderAssembler.INSTANCE.assemble(
+			countSearchRequest, builder);
+
+		builder.requestCache(countSearchRequest.isRequestCache());
+		builder.size(0);
+		builder.trackScores(false);
+		builder.trackTotalHits(
+			TrackHits.of(trackHits -> trackHits.enabled(true)));
+
+		CountSearchResponse countSearchResponse = new CountSearchResponse();
+
+		SearchRequest searchRequest = builder.build();
+
+		SearchResponse<JsonData> searchResponse = getSearchResponse(
+			countSearchRequest, searchRequest);
+
+		HitsMetadata<JsonData> hitsMetadata = searchResponse.hits();
+
+		TotalHits totalHits = hitsMetadata.total();
+
+		countSearchResponse.setCount(totalHits.value());
+
+		CommonSearchResponseAssembler.INSTANCE.assemble(
+			countSearchRequest, countSearchResponse, searchRequest,
+			searchResponse);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The search engine processed ",
+					countSearchResponse.getSearchRequestString(), " in ",
+					countSearchResponse.getExecutionTime(), " ms"));
+		}
+
+		return countSearchResponse;
+	}
+
+	protected SearchResponse<JsonData> getSearchResponse(
+		CountSearchRequest countSearchRequest, SearchRequest searchRequest) {
+
+		OpenSearchClient openSearchClient =
+			_openSearchConnectionManager.getOpenSearchClient(
+				countSearchRequest.getConnectionId(),
+				countSearchRequest.isPreferLocalCluster());
+
+		try {
+			return openSearchClient.search(searchRequest, JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CountSearchRequestExecutor.class);
+
+	private final OpenSearchConnectionManager _openSearchConnectionManager;
 
 }

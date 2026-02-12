@@ -92,6 +92,8 @@ public class OpenSearchSearchRequestExecutor implements SearchRequestExecutor {
 			_openSearchConnectionManager);
 		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
 			_openSearchConnectionManager);
+		_countSearchRequestExecutor = new CountSearchRequestExecutor(
+			_openSearchConnectionManager);
 		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
 			_openSearchConnectionManager);
 		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
@@ -100,8 +102,6 @@ public class OpenSearchSearchRequestExecutor implements SearchRequestExecutor {
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
 	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;
-
-	@Reference
 	private CountSearchRequestExecutor _countSearchRequestExecutor;
 
 	@Reference

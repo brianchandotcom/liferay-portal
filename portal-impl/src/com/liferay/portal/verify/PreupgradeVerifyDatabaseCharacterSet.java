@@ -8,7 +8,6 @@ package com.liferay.portal.verify;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DB;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -76,16 +75,12 @@ public class PreupgradeVerifyDatabaseCharacterSet
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				sql)) {
 
-			DBInspector dbInspector = new DBInspector(connection);
-
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 				String tableName = resultSet.getString("table_name");
 
-				if (!tableNames.contains(
-						dbInspector.normalizeName(tableName))) {
-
+				if (!tableNames.contains(tableName)) {
 					continue;
 				}
 

@@ -19,6 +19,6 @@ public interface BatchEngineImportTaskExceptionHandler {
 	public void handle(
 		BatchEngineImportTask batchEngineImportTask,
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-		Exception exception, Object item);
+		Exception exception, Object item, String message);
 
 }

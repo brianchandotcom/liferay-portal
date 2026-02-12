@@ -37,7 +37,7 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 	public void handle(
 		BatchEngineImportTask batchEngineImportTask,
 		BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-		Exception exception, Object item) {
+		Exception exception, Object item, String message) {
 
 		if (!ExportImportThreadLocal.isImportInProcess()) {
 			return;
@@ -60,7 +60,7 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			_getId(item),
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),
-			exception.getMessage(), _getErrorStackTrace(exception),
+			message, _getErrorStackTrace(exception),
 			batchEngineImportTask.getParameterValue("modelNameLanguageKey"));
 	}
 

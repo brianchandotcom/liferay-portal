@@ -221,20 +221,22 @@ public class BatchEngineImportTaskExecutorImpl
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
+					String errorMessage = ErrorMessageUtil.getErrorMessage(
+						exception, batchEngineImportTask.getUserId());
+
 					BatchEngineImportTaskErrorLocalServiceUtil.
 						addBatchEngineImportTaskError(
 							batchEngineImportTask.getCompanyId(),
 							batchEngineImportTask.getUserId(),
 							batchEngineImportTask.getBatchEngineImportTaskId(),
-							item.toString(), itemIndex,
-							ErrorMessageUtil.getErrorMessage(
-								exception, batchEngineImportTask.getUserId()));
+							item.toString(), itemIndex, errorMessage);
 
 					_batchEngineImportTaskExceptionHandlers.forEach(
 						batchEngineImportTaskExceptionHandler ->
 							batchEngineImportTaskExceptionHandler.handle(
 								batchEngineImportTask,
-								batchEngineTaskItemDelegate, exception, item));
+								batchEngineTaskItemDelegate, exception, item,
+								errorMessage));
 
 					return null;
 				});
@@ -386,7 +388,9 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineImportTaskExceptionHandler ->
 					batchEngineImportTaskExceptionHandler.handle(
 						batchEngineImportTask, batchEngineTaskItemDelegate,
-						exception2, item));
+						exception2, item,
+						ErrorMessageUtil.getErrorMessage(
+							exception2, batchEngineImportTask.getUserId())));
 		}
 
 		_batchEngineImportTaskErrorLocalService.addBatchEngineImportTaskError(

@@ -9,30 +9,58 @@ import com.liferay.portal.search.geolocation.GeoDistance;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.geolocation.ShapeRelation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class GeoDistanceRangeQuery extends RangeTermQuery {
+public class GeoDistanceRangeQuery extends RangeTermQuery {
 
 	public GeoDistanceRangeQuery(
-		String field, boolean includesLower, boolean includesUpper) {
+		String field, boolean includesLower, boolean includesUpper,
+		GeoDistance lowerBoundGeoDistance, GeoLocationPoint pinGeoLocationPoint,
+		GeoDistance upperBoundGeoDistance) {
 
 		super(field, includesLower, includesUpper);
+
+		_lowerBoundGeoDistance = lowerBoundGeoDistance;
+		_pinGeoLocationPoint = pinGeoLocationPoint;
+		_upperBoundGeoDistance = upperBoundGeoDistance;
 	}
 
-	public abstract GeoDistance getLowerBoundGeoDistance();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract GeoLocationPoint getPinGeoLocationPoint();
+	public GeoDistance getLowerBoundGeoDistance() {
+		return _lowerBoundGeoDistance;
+	}
 
-	public abstract ShapeRelation getShapeRelation();
+	public GeoLocationPoint getPinGeoLocationPoint() {
+		return _pinGeoLocationPoint;
+	}
 
-	public abstract int getSortOrder();
+	public ShapeRelation getShapeRelation() {
+		return _shapeRelation;
+	}
 
-	public abstract GeoDistance getUpperBoundGeoDistance();
+	@Override
+	public int getSortOrder() {
+		return 110;
+	}
 
-	public abstract void setShapeRelation(ShapeRelation shapeRelation);
+	public GeoDistance getUpperBoundGeoDistance() {
+		return _upperBoundGeoDistance;
+	}
+
+	public void setShapeRelation(ShapeRelation shapeRelation) {
+		_shapeRelation = shapeRelation;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final GeoDistance _lowerBoundGeoDistance;
+	private final GeoLocationPoint _pinGeoLocationPoint;
+	private ShapeRelation _shapeRelation;
+	private final GeoDistance _upperBoundGeoDistance;
 
 }

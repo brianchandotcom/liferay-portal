@@ -33,6 +33,7 @@ import com.liferay.gradle.plugins.workspace.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.workspace.internal.util.StringUtil;
 import com.liferay.gradle.plugins.workspace.task.CreateTokenTask;
 import com.liferay.gradle.plugins.workspace.task.InitBundleTask;
+import com.liferay.gradle.plugins.workspace.task.UpgradeSourceCodeTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyBundleTask;
 import com.liferay.gradle.plugins.workspace.task.VerifyProductTask;
 import com.liferay.gradle.util.ArrayUtil;
@@ -1524,7 +1525,8 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 	private FormatSourceTask _addTaskUpgradeSourceCode(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, UPGRADE_SOURCE_CODE_TASK_NAME, FormatSourceTask.class);
+			project, UPGRADE_SOURCE_CODE_TASK_NAME,
+			UpgradeSourceCodeTask.class);
 
 		formatSourceTask.onlyIf(_skipIfExecutingParentTaskSpec);
 		formatSourceTask.setCheckCategoryNames("Upgrade");

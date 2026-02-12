@@ -7,9 +7,7 @@ package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 
 /**
  * @author Michael C. Han
@@ -60,7 +58,7 @@ public class SearchRequestExecutorFixture {
 			elasticsearchClientResolver);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			_createSearchSearchResponseAssembler();
+			new SearchSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor,
@@ -92,19 +90,6 @@ public class SearchRequestExecutorFixture {
 			searchSearchResponseAssembler);
 
 		return searchSearchRequestExecutor;
-	}
-
-	private SearchSearchResponseAssembler
-		_createSearchSearchResponseAssembler() {
-
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			new SearchSearchResponseAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_searchResponseTranslator",
-			new SearchResponseTranslator(new StatsResultsTranslatorImpl()));
-
-		return searchSearchResponseAssembler;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

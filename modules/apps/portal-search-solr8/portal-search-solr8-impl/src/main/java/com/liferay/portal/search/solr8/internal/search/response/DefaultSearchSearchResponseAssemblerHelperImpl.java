@@ -171,7 +171,7 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 	}
 
 	protected StatsResults getStatsResults(StatsResponse statsResponse) {
-		return _statsResultsTranslator.translate(statsResponse);
+		return StatsResultsTranslator.INSTANCE.translate(statsResponse);
 	}
 
 	protected void populateUID(Document document, QueryConfig queryConfig) {
@@ -395,9 +395,6 @@ public class DefaultSearchSearchResponseAssemblerHelperImpl
 
 	@Reference
 	private DocumentBuilderFactory _documentBuilderFactory;
-
-	@Reference
-	private StatsResultsTranslator _statsResultsTranslator;
 
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 

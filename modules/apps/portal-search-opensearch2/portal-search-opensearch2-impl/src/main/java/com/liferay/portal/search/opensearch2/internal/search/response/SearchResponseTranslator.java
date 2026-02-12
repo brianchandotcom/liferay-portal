@@ -57,12 +57,6 @@ import org.opensearch.client.opensearch.core.search.TotalHits;
  */
 public class SearchResponseTranslator {
 
-	public SearchResponseTranslator(
-		StatsResultsTranslator statsResultsTranslator) {
-
-		_statsResultsTranslator = statsResultsTranslator;
-	}
-
 	public void populate(
 		SearchResponse<JsonData> searchResponse,
 		SearchSearchRequest searchSearchRequest,
@@ -95,7 +89,7 @@ public class SearchResponseTranslator {
 	protected StatsResults getStatsResults(
 		Map<String, Aggregate> aggregates, Stats stats) {
 
-		return _statsResultsTranslator.translate(
+		return StatsResultsTranslator.INSTANCE.translate(
 			_statsTranslator.translateResponse(aggregates, _translate(stats)));
 	}
 
@@ -311,7 +305,6 @@ public class SearchResponseTranslator {
 		}
 	}
 
-	private final StatsResultsTranslator _statsResultsTranslator;
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

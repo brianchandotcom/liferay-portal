@@ -7,9 +7,7 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.response.SearchResponseTranslator;
 
 /**
  * @author Michael C. Han
@@ -61,7 +59,7 @@ public class SearchRequestExecutorFixture {
 			openSearchConnectionManager);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			_createSearchSearchResponseAssembler();
+			new SearchSearchResponseAssemblerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor,
@@ -94,19 +92,6 @@ public class SearchRequestExecutorFixture {
 			searchSearchResponseAssembler);
 
 		return searchSearchRequestExecutor;
-	}
-
-	private SearchSearchResponseAssembler
-		_createSearchSearchResponseAssembler() {
-
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			new SearchSearchResponseAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_searchResponseTranslator",
-			new SearchResponseTranslator(new StatsResultsTranslatorImpl()));
-
-		return searchSearchResponseAssembler;
 	}
 
 	private OpenSearchConnectionManager _openSearchConnectionManager;

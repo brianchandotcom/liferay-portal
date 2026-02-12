@@ -13,7 +13,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.opensearch2.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationResultTranslator;
 import com.liferay.portal.search.opensearch2.internal.aggregation.OpenSearchAggregationResultsTranslator;
@@ -35,9 +34,7 @@ import org.opensearch.client.opensearch.core.SearchResponse;
 import org.opensearch.client.opensearch.core.search.HitsMetadata;
 import org.opensearch.client.opensearch.core.search.TotalHits;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -84,12 +81,6 @@ public class SearchSearchResponseAssemblerImpl
 		createPipelineAggregationResultTranslator(Aggregate aggregate) {
 
 		return new OpenSearchPipelineAggregationResultTranslator(aggregate);
-	}
-
-	@Activate
-	protected void activate() {
-		_searchResponseTranslator = new SearchResponseTranslator(
-			_statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -174,9 +165,7 @@ public class SearchSearchResponseAssemblerImpl
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
 
-	private SearchResponseTranslator _searchResponseTranslator;
-
-	@Reference
-	private StatsResultsTranslator _statsResultsTranslator;
+	private final SearchResponseTranslator _searchResponseTranslator =
+		new SearchResponseTranslator();
 
 }

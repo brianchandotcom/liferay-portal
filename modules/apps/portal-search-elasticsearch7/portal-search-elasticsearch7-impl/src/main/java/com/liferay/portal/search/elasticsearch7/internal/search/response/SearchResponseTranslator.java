@@ -56,12 +56,6 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
  */
 public class SearchResponseTranslator {
 
-	public SearchResponseTranslator(
-		StatsResultsTranslator statsResultsTranslator) {
-
-		_statsResultsTranslator = statsResultsTranslator;
-	}
-
 	public void populate(
 		SearchSearchResponse searchSearchResponse,
 		SearchResponse searchResponse,
@@ -96,7 +90,7 @@ public class SearchResponseTranslator {
 	protected StatsResults getStatsResults(
 		Map<String, Aggregation> aggregationsMap, Stats stats) {
 
-		return _statsResultsTranslator.translate(
+		return StatsResultsTranslator.INSTANCE.translate(
 			_statsTranslator.translateResponse(
 				aggregationsMap, _translate(stats)));
 	}
@@ -325,7 +319,6 @@ public class SearchResponseTranslator {
 		}
 	}
 
-	private final StatsResultsTranslator _statsResultsTranslator;
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

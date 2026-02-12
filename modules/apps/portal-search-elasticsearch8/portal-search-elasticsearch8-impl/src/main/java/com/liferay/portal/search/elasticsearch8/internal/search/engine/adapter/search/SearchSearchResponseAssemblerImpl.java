@@ -27,16 +27,13 @@ import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchR
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
-import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -81,12 +78,6 @@ public class SearchSearchResponseAssemblerImpl
 		createPipelineAggregationResultTranslator(Aggregate aggregate) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(aggregate);
-	}
-
-	@Activate
-	protected void activate() {
-		_searchResponseTranslator = new SearchResponseTranslator(
-			_statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -166,9 +157,7 @@ public class SearchSearchResponseAssemblerImpl
 		searchSearchResponse.setSearchTimeValue(builder.build());
 	}
 
-	private SearchResponseTranslator _searchResponseTranslator;
-
-	@Reference
-	private StatsResultsTranslator _statsResultsTranslator;
+	private final SearchResponseTranslator _searchResponseTranslator =
+		new SearchResponseTranslator();
 
 }

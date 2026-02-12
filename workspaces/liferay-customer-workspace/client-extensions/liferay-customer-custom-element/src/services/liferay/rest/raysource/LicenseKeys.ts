@@ -129,6 +129,26 @@ export async function getExportedLicenseKeys(
 	return response;
 }
 
+export async function getCloudSubscriptionLicenseKey(
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	subscriptionUuid: string
+) {
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/cloud/subscriptions/${subscriptionUuid}/license/download`,
+
+		{
+			headers: {
+				'OAuth-Token': oAuthToken,
+			},
+		}
+	);
+
+	return response;
+}
+
 export async function getExportedSelectedLicenseKeys(
 	selectedKeysIDs: string,
 	oAuthToken: string,

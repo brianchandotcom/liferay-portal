@@ -15,7 +15,7 @@ public class StatsRequestBuilderImpl implements StatsRequestBuilder {
 
 	@Override
 	public StatsRequest build() {
-		return new StatsRequestImpl(
+		return new StatsRequest(
 			_cardinality, _count, _field, _max, _mean, _min, _missing,
 			_standardDeviation, _sum, _sumOfSquares);
 	}

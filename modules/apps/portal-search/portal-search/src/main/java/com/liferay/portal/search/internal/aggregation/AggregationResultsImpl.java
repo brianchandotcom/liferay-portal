@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.metrics.MaxAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ScriptedMetricAggregationResultImpl;
@@ -206,7 +205,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public MaxAggregationResult max(String name, double value) {
-		return new MaxAggregationResultImpl(name, value);
+		return new MaxAggregationResult(name, value);
 	}
 
 	@Override

@@ -289,7 +289,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public SimpleStringQuery simpleString(String query) {
-		return new SimpleStringQueryImpl(query);
+		return new SimpleStringQuery(query);
 	}
 
 	@Override

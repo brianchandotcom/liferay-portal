@@ -5,9 +5,11 @@
 
 package com.liferay.portal.search.query;
 
-import java.util.Map;
+import com.liferay.petra.string.StringBundler;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Provides support for parsing raw, human readable query syntax. No
@@ -21,52 +23,138 @@ import org.osgi.annotation.versioning.ProviderType;
  *
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class SimpleStringQuery extends Query {
+public class SimpleStringQuery extends Query {
 
-	public abstract void addField(String field, float boost);
+	public SimpleStringQuery(String query) {
+		_query = query;
+	}
 
-	public abstract void addFields(String... fields);
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getAnalyzer();
+	public void addField(String field, float boost) {
+		_fieldBoostMap.put(field, boost);
+	}
 
-	public abstract Boolean getAnalyzeWildcard();
+	public void addFields(String... fields) {
+		for (String field : fields) {
+			_fieldBoostMap.put(field, null);
+		}
+	}
 
-	public abstract Boolean getAutoGenerateSynonymsPhraseQuery();
+	public String getAnalyzer() {
+		return _analyzer;
+	}
 
-	public abstract Operator getDefaultOperator();
+	public Boolean getAnalyzeWildcard() {
+		return _analyzeWildcard;
+	}
 
-	public abstract Map<String, Float> getFieldBoostMap();
+	public Boolean getAutoGenerateSynonymsPhraseQuery() {
+		return _autoGenerateSynonymsPhraseQuery;
+	}
 
-	public abstract Integer getFuzzyMaxExpansions();
+	public Operator getDefaultOperator() {
+		return _defaultOperator;
+	}
 
-	public abstract Integer getFuzzyPrefixLength();
+	public Map<String, Float> getFieldBoostMap() {
+		return Collections.unmodifiableMap(_fieldBoostMap);
+	}
 
-	public abstract Boolean getFuzzyTranspositions();
+	public Integer getFuzzyMaxExpansions() {
+		return _fuzzyMaxExpansions;
+	}
 
-	public abstract Boolean getLenient();
+	public Integer getFuzzyPrefixLength() {
+		return _fuzzyPrefixLength;
+	}
 
-	public abstract String getQuery();
+	public Boolean getFuzzyTranspositions() {
+		return _fuzzyTranspositions;
+	}
 
-	public abstract String getQuoteFieldSuffix();
+	public Boolean getLenient() {
+		return _lenient;
+	}
 
-	public abstract void setAnalyzer(String analyzer);
+	public String getQuery() {
+		return _query;
+	}
 
-	public abstract void setAnalyzeWildcard(Boolean analyzeWildcard);
+	public String getQuoteFieldSuffix() {
+		return _quoteFieldSuffix;
+	}
 
-	public abstract void setAutoGenerateSynonymsPhraseQuery(
-		Boolean autoGenerateSynonymsPhraseQuery);
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
+	}
 
-	public abstract void setDefaultOperator(Operator defaultOperator);
+	public void setAnalyzeWildcard(Boolean analyzeWildcard) {
+		_analyzeWildcard = analyzeWildcard;
+	}
 
-	public abstract void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions);
+	public void setAutoGenerateSynonymsPhraseQuery(
+		Boolean autoGenerateSynonymsPhraseQuery) {
 
-	public abstract void setFuzzyPrefixLength(Integer fuzzyPrefixLength);
+		_autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
+	}
 
-	public abstract void setFuzzyTranspositions(Boolean fuzzyTranspositions);
+	public void setDefaultOperator(Operator defaultOperator) {
+		_defaultOperator = defaultOperator;
+	}
 
-	public abstract void setLenient(Boolean lenient);
+	public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions) {
+		_fuzzyMaxExpansions = fuzzyMaxExpansions;
+	}
 
-	public abstract void setQuoteFieldSuffix(String quoteFieldSuffix);
+	public void setFuzzyPrefixLength(Integer fuzzyPrefixLength) {
+		_fuzzyPrefixLength = fuzzyPrefixLength;
+	}
+
+	public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
+		_fuzzyTranspositions = fuzzyTranspositions;
+	}
+
+	public void setLenient(Boolean lenient) {
+		_lenient = lenient;
+	}
+
+	public void setQuoteFieldSuffix(String quoteFieldSuffix) {
+		_quoteFieldSuffix = quoteFieldSuffix;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", query=");
+		sb.append(_query);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private String _analyzer;
+	private Boolean _analyzeWildcard;
+	private Boolean _autoGenerateSynonymsPhraseQuery;
+	private Operator _defaultOperator;
+	private final Map<String, Float> _fieldBoostMap = new HashMap<>();
+	private Integer _fuzzyMaxExpansions;
+	private Integer _fuzzyPrefixLength;
+	private Boolean _fuzzyTranspositions;
+	private Boolean _lenient;
+	private final String _query;
+	private String _quoteFieldSuffix;
 
 }

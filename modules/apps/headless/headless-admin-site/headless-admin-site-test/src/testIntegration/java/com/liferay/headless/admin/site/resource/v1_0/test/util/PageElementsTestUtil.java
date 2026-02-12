@@ -33,6 +33,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElement
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
@@ -40,19 +41,28 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentEditableElementValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkTextValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentEditableElementValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentMappedValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.TextFragmentValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
@@ -74,6 +84,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.service.TemplateEntryLocalServiceUtil;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.ArrayList;
@@ -107,6 +118,38 @@ public class PageElementsTestUtil {
 			fragmentCollection.getFragmentCollectionId(), company.getGroupId(),
 			"<div data-lfr-editable-id=\"element-text\" " +
 				"data-lfr-editable-type=\"text\">Default text</div>");
+	}
+
+	public static void assertFieldKeysWithTemplateEntries(
+			PageSpecification[] externalPageSpecifications,
+			PageSpecification[] internalPageSpecifications)
+		throws PortalException {
+
+		Assert.assertEquals(
+			Arrays.toString(externalPageSpecifications), 2,
+			externalPageSpecifications.length);
+		Assert.assertEquals(
+			Arrays.toString(internalPageSpecifications),
+			externalPageSpecifications.length,
+			internalPageSpecifications.length);
+
+		ContentPageSpecification externalPublishedPageSpecification =
+			(ContentPageSpecification)externalPageSpecifications[0];
+		ContentPageSpecification internalPublishedPageSpecification =
+			(ContentPageSpecification)internalPageSpecifications[0];
+
+		_assertFieldKeysWithTemplateEntries(
+			externalPublishedPageSpecification.getPageExperiences()[0],
+			internalPublishedPageSpecification.getPageExperiences()[0]);
+
+		ContentPageSpecification externalDraftPageSpecification =
+			(ContentPageSpecification)externalPageSpecifications[1];
+		ContentPageSpecification internalDraftPageSpecification =
+			(ContentPageSpecification)internalPageSpecifications[1];
+
+		_assertFieldKeysWithTemplateEntries(
+			externalDraftPageSpecification.getPageExperiences()[0],
+			internalDraftPageSpecification.getPageExperiences()[0]);
 	}
 
 	public static void assertRenderedLayoutHTMLWithTemplateEntries(
@@ -731,6 +774,158 @@ public class PageElementsTestUtil {
 		fragmentItemExternalReference.setScope(scope);
 
 		return fragmentItemExternalReference;
+	}
+
+	private static void _assertFieldKeysWithTemplateEntries(
+			PageElement externalPageElement, PageElement internalPageElement)
+		throws PortalException {
+
+		PageElementDefinition externalPageElementDefinition =
+			externalPageElement.getPageElementDefinition();
+
+		if (externalPageElementDefinition instanceof
+				BasicFragmentInstancePageElementDefinition) {
+
+			PageElementDefinition internalPageElementDefinition =
+				internalPageElement.getPageElementDefinition();
+
+			BasicFragmentInstancePageElementDefinition
+				externalBasicFragmentInstancePageElementDefinition =
+					(BasicFragmentInstancePageElementDefinition)
+						externalPageElementDefinition;
+			BasicFragmentInstancePageElementDefinition
+				internalBasicFragmentInstancePageElementDefinition =
+					(BasicFragmentInstancePageElementDefinition)
+						internalPageElementDefinition;
+
+			FragmentInstance externalFragmentInstance =
+				externalBasicFragmentInstancePageElementDefinition.
+					getFragmentInstance();
+			FragmentInstance internalFragmentInstance =
+				internalBasicFragmentInstancePageElementDefinition.
+					getFragmentInstance();
+
+			FragmentEditableElement[] externalFragmentEditableElements =
+				externalFragmentInstance.getFragmentEditableElements();
+			FragmentEditableElement[] internalFragmentEditableElements =
+				internalFragmentInstance.getFragmentEditableElements();
+
+			FragmentEditableElementValue externalFragmentEditableElementValue =
+				externalFragmentEditableElements[0].
+					getFragmentEditableElementValue();
+			FragmentEditableElementValue internalFragmentEditableElementValue =
+				internalFragmentEditableElements[0].
+					getFragmentEditableElementValue();
+
+			Assert.assertTrue(
+				externalFragmentEditableElementValue instanceof
+					TextFragmentEditableElementValue);
+			Assert.assertTrue(
+				internalFragmentEditableElementValue instanceof
+					TextFragmentEditableElementValue);
+
+			TextFragmentEditableElementValue
+				externalTextFragmentEditableElementValue =
+					(TextFragmentEditableElementValue)
+						externalFragmentEditableElementValue;
+			TextFragmentEditableElementValue
+				internalTextFragmentEditableElementValue =
+					(TextFragmentEditableElementValue)
+						internalFragmentEditableElementValue;
+
+			FragmentLinkTextValue externalFragmentLinkTextValue =
+				externalTextFragmentEditableElementValue.
+					getFragmentLinkTextValue();
+			FragmentLinkTextValue internalFragmentLinkTextValue =
+				internalTextFragmentEditableElementValue.
+					getFragmentLinkTextValue();
+
+			TextFragmentValue externalTextFragmentValue =
+				externalFragmentLinkTextValue.getTextFragmentValue();
+			TextFragmentValue internalTextFragmentValue =
+				internalFragmentLinkTextValue.getTextFragmentValue();
+
+			Assert.assertTrue(
+				externalTextFragmentValue instanceof TextFragmentMappedValue);
+			Assert.assertTrue(
+				internalTextFragmentValue instanceof TextFragmentMappedValue);
+
+			TextFragmentMappedValue externalTextFragmentMappedValue =
+				(TextFragmentMappedValue)externalTextFragmentValue;
+			TextFragmentMappedValue internalTextFragmentMappedValue =
+				(TextFragmentMappedValue)internalTextFragmentValue;
+
+			FragmentMappedValue externalFragmentMappedValue =
+				externalTextFragmentMappedValue.getFragmentMappedValue();
+			FragmentMappedValue internalFragmentMappedValue =
+				internalTextFragmentMappedValue.getFragmentMappedValue();
+
+			Mapping externalMapping = externalFragmentMappedValue.getMapping();
+			Mapping internalMapping = internalFragmentMappedValue.getMapping();
+
+			String externalFieldKey = externalMapping.getFieldKey();
+			String internalFieldKey = internalMapping.getFieldKey();
+
+			if (internalFieldKey.contains("__ERC__")) {
+				Assert.assertEquals(externalFieldKey, internalFieldKey);
+			}
+			else {
+				long templateEntryId = GetterUtil.getLong(
+					internalFieldKey.substring(
+						"ddmTemplate__ddmTemplate_".length()));
+
+				TemplateEntry templateEntry =
+					TemplateEntryLocalServiceUtil.getTemplateEntry(
+						templateEntryId);
+
+				Company company = CompanyLocalServiceUtil.getCompany(
+					TestPropsValues.getCompanyId());
+
+				if (templateEntry.getGroupId() == company.getGroupId()) {
+					Assert.assertEquals(
+						externalFieldKey,
+						_getExternalGlobalGroupTemplateFieldKey(templateEntry));
+				}
+				else {
+					Assert.assertEquals(
+						externalFieldKey,
+						_getExternalScopeGroupTemplateFieldKey(templateEntry));
+				}
+			}
+		}
+
+		if (externalPageElementDefinition instanceof
+				CollectionDisplayPageElementDefinition ||
+			externalPageElementDefinition instanceof
+				CollectionItemPageElementDefinition) {
+
+			_assertFieldKeysWithTemplateEntries(
+				externalPageElement.getPageElements()[0],
+				internalPageElement.getPageElements()[0]);
+		}
+	}
+
+	private static void _assertFieldKeysWithTemplateEntries(
+			PageExperience externalPageExperience,
+			PageExperience internalPageExperience)
+		throws PortalException {
+
+		PageElement[] externalPageElements =
+			externalPageExperience.getPageElements();
+		PageElement[] internalPageElements =
+			internalPageExperience.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(externalPageElements), 12,
+			externalPageElements.length);
+		Assert.assertEquals(
+			Arrays.toString(internalPageElements), externalPageElements.length,
+			internalPageElements.length);
+
+		for (int i = 0; i < internalPageElements.length; i++) {
+			_assertFieldKeysWithTemplateEntries(
+				externalPageElements[i], internalPageElements[i]);
+		}
 	}
 
 	private static PageElement _getBasicFragmentPageElement(

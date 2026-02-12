@@ -128,6 +128,38 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		return null;
 	}
 
+	private CustomField[] _getCustomFields(
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			koroneikiAccount) {
+
+		return new CustomField[] {
+			new CustomField() {
+				{
+					setCustomValue(
+						new CustomValue() {
+							{
+								setData(koroneikiAccount.getParentAccountKey());
+							}
+						});
+					setName("koroneiki-parent-account-key");
+				}
+			},
+			new CustomField() {
+				{
+					setCustomValue(
+						new CustomValue() {
+							{
+								setData(
+									_koroneikiService.getSalesforceAccountKey(
+										koroneikiAccount));
+							}
+						});
+					setName("salesforce-account-key");
+				}
+			}
+		};
+	}
+
 	private PostalAddress _getPostalAddress(
 		Account account, String streetAddressLine1) {
 
@@ -162,7 +194,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 			for (Contact contact : contactPage.getItems()) {
 				if (contact == null) {
-					continue;
+					break;
 				}
 
 				String contactKey = contact.getKey();
@@ -207,42 +239,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			};
 		}
 
+		CustomField[] customFields = _getCustomFields(koroneikiAccount);
+
 		accountResource.postAccount(
 			new Account() {
-
-				private final CustomField[] _customFields = {
-						new CustomField() {
-							{
-								setCustomValue(
-										new CustomValue() {
-											{
-												setData(
-														koroneikiAccount.
-																getParentAccountKey());
-											}
-										});
-								setName("koroneiki-parent-account-key");
-							}
-						},
-						new CustomField() {
-							{
-								setCustomValue(
-										new CustomValue() {
-											{
-												setData(
-														_koroneikiService.
-																getSalesforceAccountKey(
-																		koroneikiAccount));
-											}
-										});
-								setName("salesforce-account-key");
-							}
-						}
-				};
-
 				{
 					setAccountUserAccounts(() -> userAccounts);
-					setCustomFields(() -> _customFields);
+					setCustomFields(() -> customFields);
 					setDescription(koroneikiAccount::getDescription);
 					setName(koroneikiAccount::getName);
 				}
@@ -292,42 +295,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
+		CustomField[] customFields = _getCustomFields(koroneikiAccount);
+
 		accountResource.patchAccount(
 			account.getId(),
 			new Account() {
-
-				private final CustomField[] _customFields = {
-						new CustomField() {
-							{
-								setCustomValue(
-										new CustomValue() {
-											{
-												setData(
-														koroneikiAccount.
-																getParentAccountKey());
-											}
-										});
-								setName("koroneiki-parent-account-key");
-							}
-						},
-						new CustomField() {
-							{
-								setCustomValue(
-										new CustomValue() {
-											{
-												setData(
-														_koroneikiService.
-																getSalesforceAccountKey(
-																		koroneikiAccount));
-											}
-										});
-								setName("salesforce-account-key");
-							}
-						}
-				};
-
 				{
-					setCustomFields(() -> _customFields);
+					setCustomFields(() -> customFields);
 					setDescription(koroneikiAccount::getDescription);
 					setName(koroneikiAccount::getName);
 				}

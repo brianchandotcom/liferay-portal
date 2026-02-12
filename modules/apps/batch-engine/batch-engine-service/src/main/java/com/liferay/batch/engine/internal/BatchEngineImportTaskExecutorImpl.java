@@ -303,16 +303,19 @@ public class BatchEngineImportTaskExecutorImpl
 			fieldNameMapping = Collections.emptyMap();
 		}
 
+		BatchEngineTaskContentType batchEngineTaskContentType =
+			BatchEngineTaskContentType.valueOf(
+				batchEngineImportTask.getContentType());
+
 		return batchEngineImportTaskItemReaderBuilder.
 			batchEngineTaskContentType(
-				BatchEngineTaskContentType.valueOf(
-					batchEngineImportTask.getContentType())
+				batchEngineTaskContentType
 			).csvFileColumnDelimiter(
 				_getCSVFileColumnDelimiter(batchEngineImportTask.getCompanyId())
 			).fieldNames(
 				ListUtil.fromCollection(fieldNameMapping.keySet())
 			).inputStream(
-				_processInputStream(inputStream)
+				_processInputStream(batchEngineTaskContentType, inputStream)
 			).parameters(
 				parameters
 			).build();
@@ -549,13 +552,16 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
-	private InputStream _processInputStream(InputStream zipInputStream)
+	private InputStream _processInputStream(
+			BatchEngineTaskContentType batchEngineTaskContentType,
+			InputStream zipInputStream)
 		throws Exception {
 
 		InputStream inputStream = ZipInputStreamUtil.asZipInputStream(
 			zipInputStream);
 
 		if (_batchEngineFileProcessors.isEmpty() ||
+			(batchEngineTaskContentType != BatchEngineTaskContentType.JSON) ||
 			!ExportImportThreadLocal.isImportInProcess()) {
 
 			return inputStream;

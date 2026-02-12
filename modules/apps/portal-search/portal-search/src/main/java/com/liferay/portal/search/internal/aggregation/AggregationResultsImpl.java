@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.pipeline.SerialDiffPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.StatsBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.SumBucketPipelineAggregationResultImpl;
 
@@ -272,7 +271,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public SerialDiffPipelineAggregationResult serialDiff(
 		String name, double value) {
 
-		return new SerialDiffPipelineAggregationResultImpl(name, value);
+		return new SerialDiffPipelineAggregationResult(name, value);
 	}
 
 	@Override

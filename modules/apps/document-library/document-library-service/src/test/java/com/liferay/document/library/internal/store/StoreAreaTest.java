@@ -39,4 +39,22 @@ public class StoreAreaTest {
 			"_deleted/1/2/a/b", StoreArea.DELETED.getPath(1, 2, "a/", "/b"));
 	}
 
+	@Test
+	public void testRelocate() {
+		_testRelocate(StoreArea.DELETED);
+		_testRelocate(StoreArea.LIVE);
+		_testRelocate(StoreArea.NEW);
+	}
+
+	private void _testRelocate(StoreArea storeArea) {
+		String path = storeArea.getPath(1, 2, "test");
+
+		Assert.assertEquals(
+			"_deleted/1/2/test", storeArea.relocate(path, StoreArea.DELETED));
+		Assert.assertEquals(
+			"1/2/test", storeArea.relocate(path, StoreArea.LIVE));
+		Assert.assertEquals(
+			"_new/1/2/test", storeArea.relocate(path, StoreArea.NEW));
+	}
+
 }

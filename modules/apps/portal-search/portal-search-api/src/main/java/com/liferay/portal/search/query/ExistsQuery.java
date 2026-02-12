@@ -5,16 +5,37 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class ExistsQuery extends Query {
+public class ExistsQuery extends Query {
 
-	public abstract String getField();
+	public ExistsQuery(String field) {
+		_field = field;
+	}
 
-	public abstract int getSortOrder();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public String getField() {
+		return _field;
+	}
+
+	public int getSortOrder() {
+		return 1;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat("{(", _field, "), ", super.toString(), "}");
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String _field;
 
 }

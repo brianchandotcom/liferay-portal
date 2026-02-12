@@ -103,7 +103,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public ExistsQuery exists(String field) {
-		return new ExistsQueryImpl(field);
+		return new ExistsQuery(field);
 	}
 
 	@Override

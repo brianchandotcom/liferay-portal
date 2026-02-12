@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.bucket.HistogramAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.MissingAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.NestedAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.RangeAggregationResultImpl;
@@ -213,7 +212,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public HistogramAggregationResult histogram(String name) {
-		return new HistogramAggregationResultImpl(name);
+		return new HistogramAggregationResult(name);
 	}
 
 	@Override

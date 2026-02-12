@@ -8,8 +8,7 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class HistogramAggregationResult
-	extends BucketAggregationResult {
+public class HistogramAggregationResult extends BucketAggregationResult {
 
 	public HistogramAggregationResult(String name) {
 		super(name);

@@ -52,9 +52,7 @@ import jakarta.portlet.PortletURL;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
@@ -164,34 +162,35 @@ public class ObjectEntryAssetRenderer
 
 	@Override
 	public String getURLDownload(ThemeDisplay themeDisplay) {
-		if (_objectDefinition.isCMS()) {
-			List<ObjectField> objectFields =
-				_objectFieldLocalService.getObjectFields(
-					_objectDefinition.getObjectDefinitionId());
+		if (!_objectDefinition.isCMS()) {
+			return null;
+		}
 
-			for (ObjectField objectField : objectFields) {
-				if (Objects.equals(
-						objectField.getBusinessType(),
-						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			_objectDefinition.getObjectDefinitionId(), "file");
 
-					try {
-						FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-							GetterUtil.getLong(
-								_objectEntry.getValues(
-								).get(
-									objectField.getName()
-								)));
+		if ((objectField == null) ||
+			!objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-						return _dlURLHelper.getDownloadURL(
-							fileEntry, fileEntry.getFileVersion(), themeDisplay,
-							StringPool.BLANK);
-					}
-					catch (PortalException portalException) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(portalException);
-						}
-					}
-				}
+			return null;
+		}
+
+		try {
+			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
+				GetterUtil.getLong(
+					_objectEntry.getValues(
+					).get(
+						objectField.getName()
+					)));
+
+			return _dlURLHelper.getDownloadURL(
+				fileEntry, fileEntry.getFileVersion(), themeDisplay,
+				StringPool.BLANK);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
 		}
 

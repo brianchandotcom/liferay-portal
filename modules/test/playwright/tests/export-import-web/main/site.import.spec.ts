@@ -741,7 +741,7 @@ testWithDeprecationFFDisabled(
 
 testWithDeprecationFF(
 	'Can import the default site on a new instance twice',
-	async ({apiHelpers, exportImportPage, page}) => {
+	async ({apiHelpers, exportImportPage, featureFlags, page}) => {
 		test.slow();
 
 		await exportImportPage.goToExport();
@@ -769,6 +769,14 @@ testWithDeprecationFF(
 			page,
 			'http://www.able.com:8080'
 		);
+
+		for (const featureFlag of featureFlags) {
+			await virtualInstanceApiHelpers.featureFlag.updateFeatureFlag(
+				featureFlag.key,
+				featureFlag.enabled,
+				'http://www.able.com:8080'
+			);
+		}
 
 		const site = await virtualInstanceApiHelpers.headlessSite.createSite({
 			name: getRandomString(),

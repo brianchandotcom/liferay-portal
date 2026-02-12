@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ScriptedMetricAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationResultImpl;
@@ -217,7 +216,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public MinAggregationResult min(String name, double value) {
-		return new MinAggregationResultImpl(name, value);
+		return new MinAggregationResult(name, value);
 	}
 
 	@Override

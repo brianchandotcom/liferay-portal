@@ -93,6 +93,8 @@ public class ElasticsearchSearchRequestExecutor
 			_elasticsearchClientResolver);
 		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
 			_elasticsearchClientResolver);
+		_countSearchRequestExecutor = new CountSearchRequestExecutor(
+			_elasticsearchClientResolver);
 		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
 			_elasticsearchClientResolver);
 		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
@@ -101,8 +103,6 @@ public class ElasticsearchSearchRequestExecutor
 
 	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
 	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;
-
-	@Reference
 	private CountSearchRequestExecutor _countSearchRequestExecutor;
 
 	@Reference

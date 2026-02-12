@@ -35,19 +35,6 @@ public class SearchRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		CountSearchRequestExecutor countSearchRequestExecutor =
-			new CountSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return countSearchRequestExecutor;
-	}
-
 	private MultisearchSearchRequestExecutor
 		_createMultisearchSearchRequestExecutor(
 			ElasticsearchClientResolver elasticsearchClientResolver,
@@ -75,10 +62,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
-
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchRequestExecutor, "_countSearchRequestExecutor",
-			_createCountSearchRequestExecutor(elasticsearchClientResolver));
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			_createSearchSearchResponseAssembler();

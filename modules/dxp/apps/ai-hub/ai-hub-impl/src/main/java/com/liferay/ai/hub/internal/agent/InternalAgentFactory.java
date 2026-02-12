@@ -51,7 +51,8 @@ public class InternalAgentFactory {
 		internalAgentImpl.setName(
 			GetterUtil.getString(objectEntry.getPropertyValue("name")));
 		internalAgentImpl.setOutputKey(
-			GetterUtil.getString(objectEntry.getPropertyValue("outputKey")));
+			GetterUtil.getString(
+				objectEntry.getPropertyValue("outputVariable")));
 
 		return (InternalAgent)ProxyUtil.newProxyInstance(
 			UntypedAgent.class.getClassLoader(),

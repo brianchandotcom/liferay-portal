@@ -32,6 +32,7 @@ export default function getSelectedField({fields, mappingFieldsKey, value}) {
 	);
 
 	const selectedField =
+		flattenFields.find((field) => field.externalKey === value) ||
 		flattenFields.find((field) => field.key === value) ||
 		flattenFields.find((field) => field.name === value);
 

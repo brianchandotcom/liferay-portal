@@ -58,6 +58,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
@@ -652,12 +653,19 @@ public class DisplayPageTemplateResourceImpl
 				InfoItemFormVariationsProvider.class,
 				contentTypeReference.getClassName());
 
-		if (infoItemFormVariationsProvider == null) {
-			return 0;
-		}
-
 		ItemExternalReference itemExternalReference =
 			contentTypeReference.getSubTypeExternalReference();
+
+		if (infoItemFormVariationsProvider == null) {
+			if ((itemExternalReference == null) ||
+				Validator.isNull(
+					itemExternalReference.getExternalReferenceCode())) {
+
+				return -1;
+			}
+
+			return -2;
+		}
 
 		if (itemExternalReference == null) {
 			throw new UnsupportedOperationException();

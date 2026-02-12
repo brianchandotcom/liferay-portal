@@ -10,8 +10,8 @@ import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.internal.highlight.FieldConfigImpl;
 import com.liferay.portal.search.internal.highlight.HighlightImpl;
-import com.liferay.portal.search.internal.query.StringQueryImpl;
 import com.liferay.portal.search.query.Query;
+import com.liferay.portal.search.query.StringQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class HighlightTranslatorTest {
 
 	@Test
 	public void testHighlightQuery() {
-		_highlightPrototype._highlightQuery = new StringQueryImpl("title:test");
+		_highlightPrototype._highlightQuery = new StringQuery("title:test");
 
 		_assertTranslation(_highlightPrototype);
 	}
@@ -581,7 +581,7 @@ public class HighlightTranslatorTest {
 		Integer fragmentSize = 3;
 		String highlighterType = "highlighterType";
 		Boolean highlightFilter = true;
-		Query highlightQuery = new StringQueryImpl("title:test");
+		Query highlightQuery = new StringQuery("title:test");
 		String[] matchedFields = null;
 		Integer noMatchSize = 4;
 		Integer numFragments = 5;

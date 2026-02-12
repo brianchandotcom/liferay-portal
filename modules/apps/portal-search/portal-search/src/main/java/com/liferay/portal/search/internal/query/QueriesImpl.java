@@ -294,7 +294,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public StringQuery string(String query) {
-		return new StringQueryImpl(query);
+		return new StringQuery(query);
 	}
 
 	@Override

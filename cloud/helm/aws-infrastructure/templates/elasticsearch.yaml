@@ -1,4 +1,5 @@
 {{- $search := .Values.search -}}
+{{- if $search.enabled -}}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
@@ -68,3 +69,4 @@ spec:
                             requests:
                                 storage: {{ $search.volumeSize | default "10Gi" }}
     version: {{ $search.version | default "8.12.0" }}
+{{- end -}}

@@ -13,7 +13,7 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.HealthExpect
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.ElasticsearchEngineAdapterFixture;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.CountSearchRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.MultisearchSearchRequestExecutor;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.MultisearchSearchRequest;
@@ -116,7 +116,7 @@ public class ElasticsearchSearchEngineAdapterLoggingTest {
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "The search engine processed"
 	)

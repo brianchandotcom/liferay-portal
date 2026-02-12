@@ -10,7 +10,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.search.elasticsearch7.internal.ElasticsearchIndexSearcher;
 import com.liferay.portal.search.elasticsearch7.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.CountSearchRequestExecutor;
-import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.SearchSearchRequestExecutor;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -65,7 +65,7 @@ public class ElasticsearchIndexSearcherLoggingTest
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "The search engine processed the request in"
 	)
@@ -75,7 +75,7 @@ public class ElasticsearchIndexSearcherLoggingTest
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "Search request string for"
 	)
@@ -85,7 +85,7 @@ public class ElasticsearchIndexSearcherLoggingTest
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.INFO, expectedLog = "Stack trace for"
 	)
 	@Test

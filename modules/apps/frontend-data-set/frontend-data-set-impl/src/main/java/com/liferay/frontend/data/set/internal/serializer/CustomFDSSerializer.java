@@ -853,7 +853,9 @@ public class CustomFDSSerializer
 			externalReferenceCode, httpServletRequest, predicate,
 			relationshipNames);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-76632")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				PortalUtil.getCompanyId(httpServletRequest), "LPD-76632")) {
+
 			List<String> ercs = ListUtil.fromString(
 				MapUtil.getString(objectEntry.getProperties(), propertyKey),
 				StringPool.COMMA);

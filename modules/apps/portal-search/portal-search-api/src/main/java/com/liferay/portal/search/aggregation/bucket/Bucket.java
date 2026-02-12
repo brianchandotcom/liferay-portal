@@ -7,28 +7,59 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface Bucket {
+public class Bucket {
 
-	public void addChildAggregationResult(AggregationResult aggregationResult);
+	public Bucket(String key, long docCount) {
+		_key = key;
+		_docCount = docCount;
+	}
+
+	public void addChildAggregationResult(AggregationResult aggregationResult) {
+		_childrenAggregationResults.put(
+			aggregationResult.getName(), aggregationResult);
+	}
 
 	public void addChildrenAggregationResults(
-		List<AggregationResult> aggregationResults);
+		List<AggregationResult> aggregationResults) {
 
-	public AggregationResult getChildAggregationResult(String name);
+		aggregationResults.forEach(this::addChildAggregationResult);
+	}
 
-	public Map<String, AggregationResult> getChildrenAggregationResults();
+	public AggregationResult getChildAggregationResult(String name) {
+		return _childrenAggregationResults.get(name);
+	}
 
-	public long getDocCount();
+	public Map<String, AggregationResult> getChildrenAggregationResults() {
+		return Collections.unmodifiableMap(_childrenAggregationResults);
+	}
 
-	public String getKey();
+	public long getDocCount() {
+		return _docCount;
+	}
+
+	public String getKey() {
+		return _key;
+	}
+
+	@Override
+	public String toString() {
+
+		// Purposely same string representation as java.util.Map.Entry
+
+		return _key + "=" + _docCount;
+	}
+
+	private final Map<String, AggregationResult> _childrenAggregationResults =
+		new HashMap<>();
+	private final long _docCount;
+	private final String _key;
 
 }

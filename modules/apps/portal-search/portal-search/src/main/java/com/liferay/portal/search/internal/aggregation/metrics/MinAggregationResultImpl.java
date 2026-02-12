@@ -6,13 +6,11 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.MinAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class MinAggregationResultImpl
-	extends BaseAggregationResult implements MinAggregationResult {
+public class MinAggregationResultImpl extends MinAggregationResult {
 
 	public MinAggregationResultImpl(String name, double value) {
 		super(name);

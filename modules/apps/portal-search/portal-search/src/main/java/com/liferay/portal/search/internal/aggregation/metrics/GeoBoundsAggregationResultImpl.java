@@ -7,13 +7,11 @@ package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.GeoBoundsAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class GeoBoundsAggregationResultImpl
-	extends BaseAggregationResult implements GeoBoundsAggregationResult {
+public class GeoBoundsAggregationResultImpl extends GeoBoundsAggregationResult {
 
 	public GeoBoundsAggregationResultImpl(
 		String name, GeoLocationPoint topLeftGeoLocationPoint,

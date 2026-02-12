@@ -6,13 +6,11 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.SumAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class SumAggregationResultImpl
-	extends BaseAggregationResult implements SumAggregationResult {
+public class SumAggregationResultImpl extends SumAggregationResult {
 
 	public SumAggregationResultImpl(String name, double value) {
 		super(name);

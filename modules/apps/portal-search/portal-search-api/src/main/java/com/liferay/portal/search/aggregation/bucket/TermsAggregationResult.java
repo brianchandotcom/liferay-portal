@@ -5,16 +5,17 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface TermsAggregationResult extends BucketAggregationResult {
+public abstract class TermsAggregationResult extends BucketAggregationResult {
 
-	public long getErrorDocCounts();
+	public TermsAggregationResult(String name) {
+		super(name);
+	}
 
-	public long getOtherDocCounts();
+	public abstract long getErrorDocCounts();
+
+	public abstract long getOtherDocCounts();
 
 }

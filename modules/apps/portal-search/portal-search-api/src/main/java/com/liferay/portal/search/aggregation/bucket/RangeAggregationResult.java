@@ -5,11 +5,13 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface RangeAggregationResult extends BucketAggregationResult {
+public abstract class RangeAggregationResult extends BucketAggregationResult {
+
+	public RangeAggregationResult(String name) {
+		super(name);
+	}
+
 }

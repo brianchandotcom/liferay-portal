@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregati
  * @author Michael C. Han
  */
 public class MaxBucketPipelineAggregationResultImpl
-	extends BaseBucketPipelineAggregationResult
-	implements MaxBucketPipelineAggregationResult {
+	extends MaxBucketPipelineAggregationResult {
 
 	public MaxBucketPipelineAggregationResultImpl(String name, double value) {
 		super(name, value);

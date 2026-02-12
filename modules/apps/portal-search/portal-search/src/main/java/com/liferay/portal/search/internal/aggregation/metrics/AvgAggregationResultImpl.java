@@ -6,13 +6,11 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.AvgAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class AvgAggregationResultImpl
-	extends BaseAggregationResult implements AvgAggregationResult {
+public class AvgAggregationResultImpl extends AvgAggregationResult {
 
 	public AvgAggregationResultImpl(String name, double value) {
 		super(name);

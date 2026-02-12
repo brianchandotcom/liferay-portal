@@ -10,9 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.GlobalAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class GlobalAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements GlobalAggregationResult {
+public class GlobalAggregationResultImpl extends GlobalAggregationResult {
 
 	public GlobalAggregationResultImpl(String name, long docCount) {
 		super(name);

@@ -7,14 +7,16 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface SerialDiffPipelineAggregationResult extends AggregationResult {
+public abstract class SerialDiffPipelineAggregationResult
+	extends AggregationResult {
 
-	public double getValue();
+	public SerialDiffPipelineAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract double getValue();
 
 }

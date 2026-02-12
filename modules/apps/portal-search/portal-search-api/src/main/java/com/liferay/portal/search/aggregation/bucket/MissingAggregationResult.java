@@ -7,15 +7,16 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface MissingAggregationResult
+public abstract class MissingAggregationResult
 	extends HierarchicalAggregationResult {
 
-	public long getDocCount();
+	public MissingAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract long getDocCount();
 
 }

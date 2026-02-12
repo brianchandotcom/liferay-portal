@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class SerialDiffPipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements SerialDiffPipelineAggregationResult {
+	extends SerialDiffPipelineAggregationResult {
 
 	public SerialDiffPipelineAggregationResultImpl(String name, double value) {
 		super(name);

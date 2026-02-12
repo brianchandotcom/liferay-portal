@@ -7,12 +7,17 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.metrics.StatsAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface StatsBucketPipelineAggregationResult
+public abstract class StatsBucketPipelineAggregationResult
 	extends StatsAggregationResult {
+
+	public StatsBucketPipelineAggregationResult(
+		String name, double avg, long count, double min, double max,
+		double sum) {
+
+		super(name, avg, count, min, max, sum);
+	}
+
 }

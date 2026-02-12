@@ -7,14 +7,16 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface NestedAggregationResult extends HierarchicalAggregationResult {
+public abstract class NestedAggregationResult
+	extends HierarchicalAggregationResult {
 
-	public long getDocCount();
+	public NestedAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract long getDocCount();
 
 }

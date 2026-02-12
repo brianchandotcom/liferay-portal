@@ -65,21 +65,17 @@ import com.liferay.portal.search.internal.aggregation.bucket.MissingAggregationR
 import com.liferay.portal.search.internal.aggregation.bucket.NestedAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.RangeAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.ReverseNestedAggregationResultImpl;
-import com.liferay.portal.search.internal.aggregation.bucket.SamplerAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.SignificantTermsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.SignificantTextAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.TermsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.AvgAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.CardinalityAggregationResultImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.ExtendedStatsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.GeoBoundsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.GeoCentroidAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MaxAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationResultImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.PercentilesAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ScriptedMetricAggregationResultImpl;
-import com.liferay.portal.search.internal.aggregation.metrics.StatsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.TopHitsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ValueCountAggregationResultImpl;
@@ -166,7 +162,7 @@ public class AggregationResultsImpl implements AggregationResults {
 		String name, double avg, long count, double min, double max, double sum,
 		double sumOfSquares, double variance, double stdDeviation) {
 
-		return new ExtendedStatsAggregationResultImpl(
+		return new ExtendedStatsAggregationResult(
 			name, avg, count, min, max, sum, sumOfSquares, variance,
 			stdDeviation);
 	}
@@ -276,7 +272,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public PercentilesAggregationResult percentiles(String name) {
-		return new PercentilesAggregationResultImpl(name);
+		return new PercentilesAggregationResult(name);
 	}
 
 	@Override
@@ -300,7 +296,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public SamplerAggregationResult sampler(String name, long docCount) {
-		return new SamplerAggregationResultImpl(name, docCount);
+		return new SamplerAggregationResult(name, docCount);
 	}
 
 	@Override
@@ -338,7 +334,7 @@ public class AggregationResultsImpl implements AggregationResults {
 		String name, double avg, long count, double min, double max,
 		double sum) {
 
-		return new StatsAggregationResultImpl(name, avg, count, min, max, sum);
+		return new StatsAggregationResult(name, avg, count, min, max, sum);
 	}
 
 	@Override

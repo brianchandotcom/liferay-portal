@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.metrics.StatsAggregationResultImpl;
 
 /**
  * @author Michael C. Han
  */
 public class StatsBucketPipelineAggregationResultImpl
-	extends StatsAggregationResultImpl
-	implements StatsBucketPipelineAggregationResult {
+	extends StatsBucketPipelineAggregationResult {
 
 	public StatsBucketPipelineAggregationResultImpl(
 		String name, double avg, long count, double min, double max,

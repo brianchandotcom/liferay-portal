@@ -7,15 +7,16 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface CumulativeSumPipelineAggregationResult
+public abstract class CumulativeSumPipelineAggregationResult
 	extends AggregationResult {
 
-	public double getValue();
+	public CumulativeSumPipelineAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract double getValue();
 
 }

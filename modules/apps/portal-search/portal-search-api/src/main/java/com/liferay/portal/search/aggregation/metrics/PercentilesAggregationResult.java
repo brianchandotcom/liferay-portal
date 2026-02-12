@@ -7,18 +7,27 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface PercentilesAggregationResult extends AggregationResult {
+public class PercentilesAggregationResult extends AggregationResult {
 
-	public void addPercentile(double percent, double percentile);
+	public PercentilesAggregationResult(String name) {
+		super(name);
+	}
 
-	public Map<Double, Double> getPercentiles();
+	public void addPercentile(double percent, double percentile) {
+		_percentiles.put(percent, percentile);
+	}
+
+	public Map<Double, Double> getPercentiles() {
+		return Collections.unmodifiableMap(_percentiles);
+	}
+
+	private final Map<Double, Double> _percentiles = new HashMap<>();
 
 }

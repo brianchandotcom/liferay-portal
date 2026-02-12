@@ -7,14 +7,15 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface MinAggregationResult extends AggregationResult {
+public abstract class MinAggregationResult extends AggregationResult {
 
-	public double getValue();
+	public MinAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract double getValue();
 
 }

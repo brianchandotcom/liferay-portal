@@ -7,17 +7,25 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface SamplerAggregationResult
-	extends HierarchicalAggregationResult {
+public class SamplerAggregationResult extends HierarchicalAggregationResult {
 
-	public long getDocCount();
+	public SamplerAggregationResult(String name, long docCount) {
+		super(name);
 
-	public void setDocCount(long docCount);
+		_docCount = docCount;
+	}
+
+	public long getDocCount() {
+		return _docCount;
+	}
+
+	public void setDocCount(long docCount) {
+		_docCount = docCount;
+	}
+
+	private long _docCount;
 
 }

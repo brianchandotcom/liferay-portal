@@ -7,14 +7,15 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface ValueCountAggregationResult extends AggregationResult {
+public abstract class ValueCountAggregationResult extends AggregationResult {
 
-	public long getValue();
+	public ValueCountAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract long getValue();
 
 }

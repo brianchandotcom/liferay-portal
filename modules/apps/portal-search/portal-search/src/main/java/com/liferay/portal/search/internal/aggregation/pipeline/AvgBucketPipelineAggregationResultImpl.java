@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class AvgBucketPipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements AvgBucketPipelineAggregationResult {
+	extends AvgBucketPipelineAggregationResult {
 
 	public AvgBucketPipelineAggregationResultImpl(String name, double value) {
 		super(name);

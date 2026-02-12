@@ -7,12 +7,14 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.metrics.PercentilesAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface PercentilesBucketPipelineAggregationResult
+public abstract class PercentilesBucketPipelineAggregationResult
 	extends PercentilesAggregationResult {
+
+	public PercentilesBucketPipelineAggregationResult(String name) {
+		super(name);
+	}
+
 }

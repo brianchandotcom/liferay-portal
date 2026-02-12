@@ -6,13 +6,11 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.MaxAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class MaxAggregationResultImpl
-	extends BaseAggregationResult implements MaxAggregationResult {
+public class MaxAggregationResultImpl extends MaxAggregationResult {
 
 	public MaxAggregationResultImpl(String name, double value) {
 		super(name);

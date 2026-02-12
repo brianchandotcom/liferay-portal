@@ -10,8 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.RangeAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class RangeAggregationResultImpl
-	extends BaseBucketAggregationResult implements RangeAggregationResult {
+public class RangeAggregationResultImpl extends RangeAggregationResult {
 
 	public RangeAggregationResultImpl(String name) {
 		super(name);

@@ -6,7 +6,6 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.PercentileRanksAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -16,7 +15,7 @@ import java.util.Map;
  * @author Michael C. Han
  */
 public class PercentileRanksAggregationResultImpl
-	extends BaseAggregationResult implements PercentileRanksAggregationResult {
+	extends PercentileRanksAggregationResult {
 
 	public PercentileRanksAggregationResultImpl(String name) {
 		super(name);

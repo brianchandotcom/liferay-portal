@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class SumBucketPipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements SumBucketPipelineAggregationResult {
+	extends SumBucketPipelineAggregationResult {
 
 	public SumBucketPipelineAggregationResultImpl(String name, double value) {
 		super(name);

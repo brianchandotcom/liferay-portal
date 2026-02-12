@@ -7,22 +7,48 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface StatsAggregationResult extends AggregationResult {
+public class StatsAggregationResult extends AggregationResult {
 
-	public double getAvg();
+	public StatsAggregationResult(
+		String name, double avg, long count, double min, double max,
+		double sum) {
 
-	public long getCount();
+		super(name);
 
-	public double getMax();
+		_avg = avg;
+		_count = count;
+		_min = min;
+		_max = max;
+		_sum = sum;
+	}
 
-	public double getMin();
+	public double getAvg() {
+		return _avg;
+	}
 
-	public double getSum();
+	public long getCount() {
+		return _count;
+	}
+
+	public double getMax() {
+		return _max;
+	}
+
+	public double getMin() {
+		return _min;
+	}
+
+	public double getSum() {
+		return _sum;
+	}
+
+	private final double _avg;
+	private final long _count;
+	private final double _max;
+	private final double _min;
+	private final double _sum;
 
 }

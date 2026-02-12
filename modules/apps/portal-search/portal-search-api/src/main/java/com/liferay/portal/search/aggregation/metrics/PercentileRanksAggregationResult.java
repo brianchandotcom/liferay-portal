@@ -9,16 +9,18 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface PercentileRanksAggregationResult extends AggregationResult {
+public abstract class PercentileRanksAggregationResult
+	extends AggregationResult {
 
-	public void addPercentile(double value, double percent);
+	public PercentileRanksAggregationResult(String name) {
+		super(name);
+	}
 
-	public Map<Double, Double> getPercentiles();
+	public abstract void addPercentile(double value, double percent);
+
+	public abstract Map<Double, Double> getPercentiles();
 
 }

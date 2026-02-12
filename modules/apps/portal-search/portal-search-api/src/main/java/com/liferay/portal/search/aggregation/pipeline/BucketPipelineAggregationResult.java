@@ -7,18 +7,31 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface BucketPipelineAggregationResult extends AggregationResult {
+public abstract class BucketPipelineAggregationResult
+	extends AggregationResult {
 
-	public String[] getKeys();
+	public BucketPipelineAggregationResult(String name, double value) {
+		super(name);
 
-	public double getValue();
+		_value = value;
+	}
 
-	public void setKeys(String... keys);
+	public String[] getKeys() {
+		return _keys;
+	}
+
+	public double getValue() {
+		return _value;
+	}
+
+	public void setKeys(String... keys) {
+		_keys = keys;
+	}
+
+	private String[] _keys;
+	private final double _value;
 
 }

@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregationResu
  * @author Michael C. Han
  */
 public class ReverseNestedAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements ReverseNestedAggregationResult {
+	extends ReverseNestedAggregationResult {
 
 	public ReverseNestedAggregationResultImpl(String name, long docCount) {
 		super(name);

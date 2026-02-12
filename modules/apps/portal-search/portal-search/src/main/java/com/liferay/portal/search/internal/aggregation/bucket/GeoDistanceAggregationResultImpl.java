@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.GeoDistanceAggregationResult
  * @author Michael C. Han
  */
 public class GeoDistanceAggregationResultImpl
-	extends BaseBucketAggregationResult
-	implements GeoDistanceAggregationResult {
+	extends GeoDistanceAggregationResult {
 
 	public GeoDistanceAggregationResultImpl(String name) {
 		super(name);

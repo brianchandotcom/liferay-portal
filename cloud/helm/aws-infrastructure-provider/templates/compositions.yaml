@@ -37,6 +37,132 @@ spec:
                         {{- $namespace := $xr.metadata.namespace -}}
                         {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
 
+                        {{- $backupSpec := $xr.spec.backup | default dict -}}
+
+                        {{- if $backupSpec.enabled }}
+                        ---
+                        apiVersion: backup.aws.m.upbound.io/v1beta1
+                        kind: Plan
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.planName }}
+                            labels:
+                                app: liferay
+                                component: backup-plan
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-{{ $backupSpec.planName }}
+                        spec:
+                            forProvider:
+                                name: {{ $baseName }}-{{ $backupSpec.planName }}
+                                region: {{ $backupSpec.region }}
+                                rule:
+                                    {{- range $rule := $backupSpec.rules }}
+                                    -   lifecycle:
+                                            deleteAfter: {{ .retentionDays }}
+                                        ruleName: {{ .ruleName }}
+                                        schedule: {{ .schedule | quote }}
+                                        startWindow: {{ .startWindow }}
+                                        targetVaultNameSelector:
+                                            matchLabels:
+                                                app: liferay
+                                                component: backup-vault
+                                                environmentId: {{ $environmentId }}
+                                                projectId: {{ $projectId }}
+                                    {{- end }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: Role
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.serviceRoleName }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.serviceRoleName }}
+                            labels:
+                                app: liferay
+                                component: backup-service-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-{{ $backupSpec.serviceRoleName }}
+                        spec:
+                            forProvider:
+                                assumeRolePolicy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": "sts:AssumeRole",
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "Service": "backup.amazonaws.com"
+                                                }
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                                managedPolicyArns:
+                                    -   arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForBackup
+                                    -   arn:aws:iam::aws:policy/service-role/AWSBackupServiceRolePolicyForRestores
+                                    -   arn:aws:iam::aws:policy/AWSBackupServiceRolePolicyForS3Backup
+                                    -   arn:aws:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: backup.aws.m.upbound.io/v1beta1
+                        kind: Selection
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.selectionName }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.selectionName }}
+                            labels:
+                                app: liferay
+                                component: backup-selection
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-{{ $backupSpec.selectionName }}
+                        spec:
+                            forProvider:
+                                condition:
+                                    -   stringEquals:
+                                        -   key: aws:ResourceTag/Active
+                                            value: "true"
+                                        -   key: aws:ResourceTag/Backup
+                                            value: "true"
+                                        -   key: aws:ResourceTag/DeploymentName
+                                            value: {{ $deploymentName }}
+                                iamRoleArnSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-service-role
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                name: {{ $baseName }}-{{ $backupSpec.selectionName }}
+                                planIdSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-plan
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                region: {{ $backupSpec.region }}
+                                resources: ["*"]
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: backup.aws.m.upbound.io/v1beta1
+                        kind: Vault
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.vaultName }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.vaultName }}
+                            labels:
+                                app: liferay
+                                component: backup-vault
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-{{ $backupSpec.vaultName }}
+                        spec:
+                            forProvider:
+                                region: {{ $backupSpec.region }}
+                            managementPolicies: {{ $managementPolicies }}
+                        {{- end }}
+
                         {{- $databaseSpec := $xr.spec.database }}
                         {{- $databaseSlots := dict "blue" $databaseSpec.blue "green" $databaseSpec.green -}}
 
@@ -666,7 +792,7 @@ spec:
                                         name: liferay-search-password
                                         namespace: {{ $namespace }}
                                     stringData:
-                                        password: {{ print (randAlphaNum 16) "!#%+7QZ_b" | shuffle }}
+                                        password: {{ print (randAlphaNum 16) "!#%+7QZ_b" | shuffle | quote }}
                                     type: Opaque
                             managementPolicies: {{ $managementPoliciesNoUpdate }}
                         ---

@@ -66,7 +66,14 @@ public class InfoForm {
 	}
 
 	public InfoField<?> getInfoField(String name) {
-		InfoField<?> infoField = _builder._infoFieldsByUniqueId.get(name);
+		InfoField<?> infoField = _builder._infoFieldsByExternalUniqueId.get(
+			name);
+
+		if (infoField != null) {
+			return infoField;
+		}
+
+		infoField = _builder._infoFieldsByUniqueId.get(name);
 
 		if (infoField != null) {
 			return infoField;
@@ -228,7 +235,8 @@ public class InfoForm {
 			InfoFieldSet infoFieldSet = (InfoFieldSet)infoFieldSetEntry;
 
 			for (InfoField<?> infoField : infoFieldSet.getAllInfoFields()) {
-				_infoFieldsByExternalUniqueId.put(infoField.getExternalUniqueId(), infoField);
+				_infoFieldsByExternalUniqueId.put(
+					infoField.getExternalUniqueId(), infoField);
 				_infoFieldsByName.put(infoField.getName(), infoField);
 				_infoFieldsByUniqueId.put(infoField.getUniqueId(), infoField);
 			}

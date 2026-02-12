@@ -5,14 +5,41 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Adam Brandizzi
  */
-@ProviderType
-public abstract class WrapperQuery extends Query {
+public class WrapperQuery extends Query {
 
-	public abstract byte[] getSource();
+	public WrapperQuery(byte[] source) {
+		_source = source;
+	}
+
+	public WrapperQuery(String source) {
+		_source = source.getBytes(StandardCharsets.UTF_8);
+	}
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public byte[] getSource() {
+		return _source;
+	}
+
+	public void setSource(byte[] source) {
+		_source = source;
+	}
+
+	@Override
+	public String toString() {
+		return new String(_source);
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private byte[] _source;
 
 }

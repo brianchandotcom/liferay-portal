@@ -319,12 +319,12 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public WrapperQuery wrapper(byte[] source) {
-		return new WrapperQueryImpl(source);
+		return new WrapperQuery(source);
 	}
 
 	@Override
 	public WrapperQuery wrapper(String source) {
-		return new WrapperQueryImpl(source);
+		return new WrapperQuery(source);
 	}
 
 }

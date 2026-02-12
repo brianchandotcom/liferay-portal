@@ -20,6 +20,7 @@ import com.liferay.portal.search.query.MoreLikeThisQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.TermsQuery;
+import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Test
 	public void testTranslateBoostWildcardQuery() {
-		_assertBoost(new WildcardQueryImpl("test", "test"));
+		_assertBoost(new WildcardQuery("test", "test"));
 	}
 
 	@Test

@@ -1944,11 +1944,15 @@ artifact.url=${remote.repository.cdn.url}/com/liferay/portal/com.liferay.${proce
 		<attribute default="true" name="setupbinariescache" />
 
 		<sequential>
+			<lstopwatch action="start" name="setup.sdk" />
+
 			<antcall inheritAll="false" target="update-gradle-properties" />
 
 			<gradle-execute setupbinariescache="@{setupbinariescache}" task="setUpPortalTools">
 				<arg value="--build-file=${project.dir}/modules/util.gradle" />
 			</gradle-execute>
+
+			<lstopwatch action="total" name="setup.sdk" />
 		</sequential>
 	</macrodef>
 

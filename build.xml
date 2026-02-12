@@ -283,6 +283,8 @@ message.
 	</target>
 
 	<target name="compile">
+		<lstopwatch action="start" name="compile" />
+
 		<setup-sdk />
 
 		<setup-libs />
@@ -314,6 +316,8 @@ message.
 		<ant dir="portal-test" inheritAll="false" target="compile" />
 
 		<print-current-time />
+
+		<lstopwatch action="total" name="compile" />
 	</target>
 
 	<target name="compile-test">

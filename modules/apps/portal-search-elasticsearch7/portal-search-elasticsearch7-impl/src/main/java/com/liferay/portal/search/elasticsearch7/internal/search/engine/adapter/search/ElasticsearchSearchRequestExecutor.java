@@ -22,19 +22,30 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=Elasticsearch",
-	service = SearchRequestExecutor.class
-)
 public class ElasticsearchSearchRequestExecutor
 	implements SearchRequestExecutor {
+
+	public ElasticsearchSearchRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_clearScrollRequestExecutor = new ClearScrollRequestExecutor(
+			elasticsearchClientResolver);
+		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
+			elasticsearchClientResolver);
+		_countSearchRequestExecutor = new CountSearchRequestExecutor(
+			elasticsearchClientResolver);
+		_multisearchSearchRequestExecutor =
+			new MultisearchSearchRequestExecutor(elasticsearchClientResolver);
+		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
+			elasticsearchClientResolver);
+		_searchSearchRequestExecutor = new SearchSearchRequestExecutor(
+			elasticsearchClientResolver);
+		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
+			elasticsearchClientResolver);
+	}
 
 	@Override
 	public ClearScrollResponse executeSearchRequest(
@@ -87,34 +98,15 @@ public class ElasticsearchSearchRequestExecutor
 		return _suggestSearchRequestExecutor.execute(suggestSearchRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		_clearScrollRequestExecutor = new ClearScrollRequestExecutor(
-			_elasticsearchClientResolver);
-		_closePointInTimeRequestExecutor = new ClosePointInTimeRequestExecutor(
-			_elasticsearchClientResolver);
-		_countSearchRequestExecutor = new CountSearchRequestExecutor(
-			_elasticsearchClientResolver);
-		_multisearchSearchRequestExecutor =
-			new MultisearchSearchRequestExecutor(_elasticsearchClientResolver);
-		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
-			_elasticsearchClientResolver);
-		_searchSearchRequestExecutor = new SearchSearchRequestExecutor(
-			_elasticsearchClientResolver);
-		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
-			_elasticsearchClientResolver);
-	}
-
-	private ClearScrollRequestExecutor _clearScrollRequestExecutor;
-	private ClosePointInTimeRequestExecutor _closePointInTimeRequestExecutor;
-	private CountSearchRequestExecutor _countSearchRequestExecutor;
-
-	@Reference
-	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	private MultisearchSearchRequestExecutor _multisearchSearchRequestExecutor;
-	private OpenPointInTimeRequestExecutor _openPointInTimeRequestExecutor;
-	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
-	private SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
+	private final ClearScrollRequestExecutor _clearScrollRequestExecutor;
+	private final ClosePointInTimeRequestExecutor
+		_closePointInTimeRequestExecutor;
+	private final CountSearchRequestExecutor _countSearchRequestExecutor;
+	private final MultisearchSearchRequestExecutor
+		_multisearchSearchRequestExecutor;
+	private final OpenPointInTimeRequestExecutor
+		_openPointInTimeRequestExecutor;
+	private final SearchSearchRequestExecutor _searchSearchRequestExecutor;
+	private final SuggestSearchRequestExecutor _suggestSearchRequestExecutor;
 
 }

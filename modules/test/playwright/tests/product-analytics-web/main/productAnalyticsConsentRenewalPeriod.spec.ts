@@ -362,9 +362,7 @@ async function validateConsentRenewalPeriodValue(
 
 		page.reload();
 
-		await expect(
-			page.locator(productAnalyticsBannerPage.bannerLocator)
-		).toBeVisible();
+		await expect(productAnalyticsBannerPage.bannerLocator).toBeVisible();
 
 		await page.getByRole('button', {name: 'Accept All'}).click();
 	}

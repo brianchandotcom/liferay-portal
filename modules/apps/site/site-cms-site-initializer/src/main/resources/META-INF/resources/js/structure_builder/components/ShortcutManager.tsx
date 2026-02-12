@@ -54,7 +54,7 @@ export default function ShortcutManager() {
 				const item = findChild({root: structure, uuid})!;
 
 				if (
-					isReferenced({item, root: structure}) ||
+					isReferenced({root: structure, uuid}) ||
 					('locked' in item && item.locked)
 				) {
 					return false;
@@ -140,7 +140,7 @@ export default function ShortcutManager() {
 				const item = findChild({root: structure, uuid})!;
 
 				if (
-					isReferenced({item, root: structure}) ||
+					isReferenced({root: structure, uuid}) ||
 					item.type !== 'repeatable-group'
 				) {
 					return false;

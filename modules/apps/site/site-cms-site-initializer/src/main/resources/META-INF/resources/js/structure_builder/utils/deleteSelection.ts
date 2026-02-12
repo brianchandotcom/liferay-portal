@@ -7,7 +7,6 @@ import {Dispatch} from 'react';
 
 import {Action, State} from '../contexts/StateContext';
 import confirmDeletionAction from './confirmDeletionAction';
-import findChild from './findChild';
 import isReferenced from './isReferenced';
 
 export async function deleteSelection({
@@ -22,10 +21,8 @@ export async function deleteSelection({
 	structure: State['structure'];
 }) {
 	for (const uuid of selection) {
-		const item = findChild({root: structure, uuid})!;
-
 		if (
-			!isReferenced({item, root: structure}) &&
+			!isReferenced({root: structure, uuid}) &&
 			publishedChildren.has(uuid)
 		) {
 			const confirm = await confirmDeletionAction('delete-children');

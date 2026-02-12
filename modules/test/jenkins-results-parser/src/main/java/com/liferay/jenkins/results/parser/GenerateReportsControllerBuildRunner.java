@@ -90,6 +90,12 @@ public class GenerateReportsControllerBuildRunner
 
 		Collections.sort(reportNames);
 
+		for (String reportName : reportNames) {
+			if (reportName.startsWith("flaky-test-report")) {
+				invocationParameters.put("SLAVE_LABEL", "slave");
+			}
+		}
+
 		invocationParameters.put("REPORT_NAMES", String.join(",", reportNames));
 
 		for (Map.Entry<String, String> invocationParameter :

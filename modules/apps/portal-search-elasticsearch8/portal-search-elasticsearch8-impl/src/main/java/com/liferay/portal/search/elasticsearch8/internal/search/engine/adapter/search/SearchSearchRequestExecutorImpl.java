@@ -41,7 +41,7 @@ public class SearchSearchRequestExecutorImpl
 		SearchRequest.Builder searchRequestBuilder =
 			new SearchRequest.Builder();
 
-		_searchSearchRequestAssembler.assemble(
+		SearchSearchRequestAssembler.INSTANCE.assemble(
 			searchRequestBuilder, searchSearchRequest);
 
 		String indexNames = ArrayUtil.toString(
@@ -146,9 +146,6 @@ public class SearchSearchRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private SearchSearchRequestAssembler _searchSearchRequestAssembler;
 
 	@Reference
 	private SearchSearchResponseAssembler _searchSearchResponseAssembler;

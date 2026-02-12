@@ -63,7 +63,7 @@ public class MultisearchSearchRequestExecutorImpl
 				searchRequestBuilder.index(
 					ListUtil.fromArray(searchSearchRequest.getIndexNames()));
 
-				_searchSearchRequestAssembler.assemble(
+				SearchSearchRequestAssembler.INSTANCE.assemble(
 					searchRequestBuilder, searchSearchRequest);
 
 				SearchRequest searchRequest = searchRequestBuilder.build();
@@ -179,9 +179,6 @@ public class MultisearchSearchRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private SearchSearchRequestAssembler _searchSearchRequestAssembler;
 
 	@Reference
 	private SearchSearchResponseAssembler _searchSearchResponseAssembler;

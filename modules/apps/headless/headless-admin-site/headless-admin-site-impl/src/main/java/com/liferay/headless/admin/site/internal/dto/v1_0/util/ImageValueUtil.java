@@ -18,6 +18,7 @@ import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -36,14 +37,16 @@ public class ImageValueUtil {
 
 	public static BackgroundImageValue toBackgroundImageValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId)
+			JSONObject jsonObject, long layoutPlid,
+			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject,
-					scopeGroupId);
+					companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
+					layoutStructure, layoutStructureItemId, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;
@@ -111,14 +114,16 @@ public class ImageValueUtil {
 
 	public static FragmentImageValue toFragmentImageValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId)
+			JSONObject jsonObject, long layoutPlid,
+			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject,
-					scopeGroupId);
+					companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
+					layoutStructure, layoutStructureItemId, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;

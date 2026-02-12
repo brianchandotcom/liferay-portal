@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -201,7 +202,9 @@ public class FragmentMappingUtil {
 
 	public static FragmentMappedValue toFragmentMappedValue(
 			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId)
+			JSONObject jsonObject, long layoutPlid,
+			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long scopeGroupId)
 		throws Exception {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
@@ -218,7 +221,10 @@ public class FragmentMappingUtil {
 			() -> new Mapping() {
 				{
 					setFieldKey(
-						() -> FragmentMappingUtil.getFieldKey(jsonObject));
+						() -> FragmentMappingFieldUtil.getFieldKey(
+							infoItemServiceRegistry, jsonObject, layoutPlid,
+							layoutStructure, layoutStructureItemId,
+							scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});

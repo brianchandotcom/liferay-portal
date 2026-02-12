@@ -175,6 +175,7 @@ public class LayoutPageTemplateEntryModelListener
 			InfoItemFormVariation infoItemFormVariation =
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
 					layout.getGroupId(),
+					layoutPageTemplateEntry.getClassTypeKey(),
 					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
 			if ((infoItemFormVariation == null) ||

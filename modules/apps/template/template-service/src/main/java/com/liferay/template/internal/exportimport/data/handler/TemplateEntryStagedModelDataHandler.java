@@ -182,7 +182,7 @@ public class TemplateEntryStagedModelDataHandler
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				templateEntry.getGroupId(),
-				importedTemplateEntry.getInfoItemFormVariationKey());
+				importedTemplateEntry.getInfoItemFormVariationKey(), null);
 
 		if (infoItemFormVariation == null) {
 			return null;

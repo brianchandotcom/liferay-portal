@@ -82,6 +82,7 @@ public class DisplayPageTemplateSettingsUtil {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getClassTypeKey(),
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
 		if (infoItemFormVariation == null) {

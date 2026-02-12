@@ -155,7 +155,7 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 
 		Assert.assertNotNull(
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				_group1.getGroupId(),
+				_group1.getGroupId(), ddmStructure.getStructureKey(),
 				String.valueOf(ddmStructure.getStructureId())));
 	}
 

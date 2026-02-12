@@ -314,7 +314,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public WildcardQuery wildcard(String field, String value) {
-		return new WildcardQueryImpl(field, value);
+		return new WildcardQuery(field, value);
 	}
 
 	@Override

@@ -719,7 +719,8 @@ public abstract class BaseSitePageResourceTestCase {
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
-			null, postSitePage.getExternalReferenceCode(), randomPatchSitePage);
+			null, postSitePage.getExternalReferenceCode(),
+			testPatchSiteSitePage_getPrivatePage(), randomPatchSitePage);
 
 		SitePage expectedPatchSitePage = postSitePage.clone();
 
@@ -733,6 +734,11 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	protected SitePage testPatchSiteSitePage_addSitePage() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected Boolean testPatchSiteSitePage_getPrivatePage() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

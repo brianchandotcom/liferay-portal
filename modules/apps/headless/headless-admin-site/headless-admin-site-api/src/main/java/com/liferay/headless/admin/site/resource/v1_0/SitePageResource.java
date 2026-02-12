@@ -74,7 +74,8 @@ public interface SitePageResource {
 
 	public SitePage patchSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, SitePage sitePage)
+			String sitePageExternalReferenceCode, Boolean privatePage,
+			SitePage sitePage)
 		throws Exception;
 
 	public SitePage postSiteSitePage(

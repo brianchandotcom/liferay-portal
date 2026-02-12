@@ -297,7 +297,7 @@ public abstract class BaseSitePageResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the public pages of the site"
+		description = "Retrieves the private or public pages of the site"
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -428,6 +428,10 @@ public abstract class BaseSitePageResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "privatePage"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "restrictFields"
 			)
 		}
@@ -451,6 +455,10 @@ public abstract class BaseSitePageResourceImpl
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
 			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.ws.rs.DefaultValue("false")
+			@jakarta.ws.rs.QueryParam("privatePage")
+			Boolean privatePage,
 			SitePage sitePage)
 		throws Exception {
 
@@ -512,7 +520,7 @@ public abstract class BaseSitePageResourceImpl
 
 		return putSiteSitePage(
 			siteExternalReferenceCode, sitePageExternalReferenceCode,
-			existingSitePage);
+			privatePage, existingSitePage);
 	}
 
 	protected abstract SitePage doPostSiteSitePage(

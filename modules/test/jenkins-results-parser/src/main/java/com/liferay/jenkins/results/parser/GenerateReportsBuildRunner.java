@@ -98,7 +98,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		FLAKY_TEST_ee_6_1_x("Flaky Test ee-6.1.x"),
 		FLAKY_TEST_ee_6_2_10("Flaky Test ee-6.2.10"),
 		FLAKY_TEST_ee_6_2_x("Flaky Test ee-6.2.x"),
-		FLAKY_TEST_MASTER("Flaky Test Master"),
+		FLAKY_TEST_MASTER("Flaky Test master"),
 		PULL_REQUEST_HISTORY("Pull Request History"),
 		RELEASE_HISTORY("Release History"),
 		UPSTREAM_HISTORY("Upstream History"), UTILIZATION("Utilization");

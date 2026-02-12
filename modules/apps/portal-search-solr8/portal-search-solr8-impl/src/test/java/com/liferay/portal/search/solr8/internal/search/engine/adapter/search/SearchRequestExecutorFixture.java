@@ -8,7 +8,6 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
-import com.liferay.portal.search.solr8.internal.sort.SolrSortFieldTranslator;
 
 /**
  * @author Bryan Engler
@@ -52,35 +51,16 @@ public class SearchRequestExecutorFixture {
 			new SearchSearchRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutorImpl, "_searchSolrQueryAssembler",
-			createSearchSolrQueryAssembler());
-		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestExecutorImpl, "_solrClientManager",
 			solrClientManager);
 
 		return searchSearchRequestExecutorImpl;
 	}
 
-	protected SearchSolrQueryAssembler createSearchSolrQueryAssembler() {
-		SearchSolrQueryAssemblerImpl searchSolrQueryAssemblerImpl =
-			new SearchSolrQueryAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSolrQueryAssemblerImpl, "_baseSolrQueryAssembler",
-			_baseSolrQueryAssemblerImpl);
-		ReflectionTestUtil.setFieldValue(
-			searchSolrQueryAssemblerImpl, "_sortFieldTranslator",
-			new SolrSortFieldTranslator());
-
-		return searchSolrQueryAssemblerImpl;
-	}
-
 	protected void setSolrClientManager(SolrClientManager solrClientManager) {
 		_solrClientManager = solrClientManager;
 	}
 
-	private final BaseSolrQueryAssembler _baseSolrQueryAssemblerImpl =
-		new BaseSolrQueryAssembler();
 	private SearchRequestExecutor _searchRequestExecutor;
 	private SolrClientManager _solrClientManager;
 

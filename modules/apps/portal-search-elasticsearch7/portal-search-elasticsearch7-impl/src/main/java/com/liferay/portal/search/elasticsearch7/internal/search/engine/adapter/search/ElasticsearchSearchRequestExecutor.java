@@ -95,6 +95,8 @@ public class ElasticsearchSearchRequestExecutor
 			_elasticsearchClientResolver);
 		_countSearchRequestExecutor = new CountSearchRequestExecutor(
 			_elasticsearchClientResolver);
+		_multisearchSearchRequestExecutor =
+			new MultisearchSearchRequestExecutor(_elasticsearchClientResolver);
 		_openPointInTimeRequestExecutor = new OpenPointInTimeRequestExecutor(
 			_elasticsearchClientResolver);
 		_suggestSearchRequestExecutor = new SuggestSearchRequestExecutor(
@@ -108,9 +110,7 @@ public class ElasticsearchSearchRequestExecutor
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
 
-	@Reference
 	private MultisearchSearchRequestExecutor _multisearchSearchRequestExecutor;
-
 	private OpenPointInTimeRequestExecutor _openPointInTimeRequestExecutor;
 
 	@Reference

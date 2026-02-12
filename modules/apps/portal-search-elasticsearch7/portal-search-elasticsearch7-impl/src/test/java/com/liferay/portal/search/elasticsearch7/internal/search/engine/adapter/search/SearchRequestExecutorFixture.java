@@ -29,20 +29,6 @@ public class SearchRequestExecutorFixture {
 		_elasticsearchClientResolver = elasticsearchClientResolver;
 	}
 
-	private MultisearchSearchRequestExecutor
-		_createMultisearchSearchRequestExecutor(
-			ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		MultisearchSearchRequestExecutor multisearchSearchRequestExecutor =
-			new MultisearchSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			multisearchSearchRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return multisearchSearchRequestExecutor;
-	}
-
 	private SearchRequestExecutor _createSearchRequestExecutor(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
@@ -53,11 +39,6 @@ public class SearchRequestExecutorFixture {
 			elasticsearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
 
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchRequestExecutor,
-			"_multisearchSearchRequestExecutor",
-			_createMultisearchSearchRequestExecutor(
-				elasticsearchClientResolver));
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_searchSearchRequestExecutor",
 			_createSearchSearchRequestExecutor(elasticsearchClientResolver));

@@ -83,6 +83,14 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 						(!dbInspector.isObjectTable(tableName) &&
 						 !liferayTableNames.contains(tableName))) {
 
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Skipping class name ", name,
+									" because its associated table was not ",
+									"found"));
+						}
+
 						continue;
 					}
 

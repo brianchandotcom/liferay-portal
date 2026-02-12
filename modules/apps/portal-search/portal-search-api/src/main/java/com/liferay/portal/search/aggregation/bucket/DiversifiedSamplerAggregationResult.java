@@ -8,7 +8,7 @@ package com.liferay.portal.search.aggregation.bucket;
 /**
  * @author Michael C. Han
  */
-public abstract class DiversifiedSamplerAggregationResult
+public class DiversifiedSamplerAggregationResult
 	extends SamplerAggregationResult {
 
 	public DiversifiedSamplerAggregationResult(String name, long docCount) {

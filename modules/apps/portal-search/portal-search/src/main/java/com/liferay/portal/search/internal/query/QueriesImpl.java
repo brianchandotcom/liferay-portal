@@ -178,7 +178,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public MatchPhraseQuery matchPhrase(String field, Object value) {
-		return new MatchPhraseQueryImpl(field, value);
+		return new MatchPhraseQuery(field, value);
 	}
 
 	@Override

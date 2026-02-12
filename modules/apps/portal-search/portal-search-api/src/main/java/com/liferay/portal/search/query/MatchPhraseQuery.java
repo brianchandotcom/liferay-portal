@@ -5,24 +5,50 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class MatchPhraseQuery extends Query {
+public class MatchPhraseQuery extends Query {
 
-	public abstract String getAnalyzer();
+	public MatchPhraseQuery(String field, Object value) {
+		_field = field;
+		_value = value;
+	}
 
-	public abstract String getField();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract Integer getSlop();
+	public String getAnalyzer() {
+		return _analyzer;
+	}
 
-	public abstract Object getValue();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract void setAnalyzer(String analyzer);
+	public Integer getSlop() {
+		return _slop;
+	}
 
-	public abstract void setSlop(Integer slop);
+	public Object getValue() {
+		return _value;
+	}
+
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
+	}
+
+	public void setSlop(Integer slop) {
+		_slop = slop;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private String _analyzer;
+	private final String _field;
+	private Integer _slop;
+	private final Object _value;
 
 }

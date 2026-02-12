@@ -14,6 +14,10 @@ import java.util.Locale;
  */
 public interface InfoFieldSetEntry {
 
+	public default String getExternalUniqueId() {
+		return getUniqueId();
+	}
+
 	public String getLabel(Locale locale);
 
 	public InfoLocalizedValue<String> getLabelInfoLocalizedValue();

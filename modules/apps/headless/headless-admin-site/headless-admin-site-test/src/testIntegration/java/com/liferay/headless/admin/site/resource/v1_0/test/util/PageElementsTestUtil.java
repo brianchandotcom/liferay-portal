@@ -53,6 +53,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -72,6 +75,24 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class PageElementsTestUtil {
+
+	public static FragmentEntry addCompanyGroupFragmentEntryWithTextEditable()
+		throws PortalException {
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionLocalServiceUtil.addFragmentCollection(
+				null, TestPropsValues.getUserId(), company.getGroupId(),
+				StringUtil.randomString(), StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(company.getGroupId()));
+
+		return _addFragmentEntry(
+			fragmentCollection.getFragmentCollectionId(), company.getGroupId(),
+			"<div data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Default text</div>");
+	}
 
 	public static BasicFragmentInstancePageElementDefinition
 		getBasicFragmentInstancePageElementDefinition(

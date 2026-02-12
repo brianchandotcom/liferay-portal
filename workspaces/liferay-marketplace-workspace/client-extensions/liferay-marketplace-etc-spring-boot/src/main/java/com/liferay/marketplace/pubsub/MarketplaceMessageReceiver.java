@@ -238,6 +238,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				}
 			};
 		}
+
 		accountResource.postAccount(
 			new Account() {
 				{

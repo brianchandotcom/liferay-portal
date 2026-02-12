@@ -84,7 +84,7 @@ public class SearchSearchRequestExecutorImpl
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
-		_searchSearchResponseAssembler.assemble(
+		SearchSearchResponseAssembler.INSTANCE.assemble(
 			searchRequestString, searchResponse, searchSearchRequest,
 			searchSearchResponse);
 
@@ -146,8 +146,5 @@ public class SearchSearchRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 }

@@ -15,6 +15,13 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public abstract class DateRangeTermQuery extends RangeTermQuery {
 
+	public DateRangeTermQuery(
+		String field, boolean includesLower, boolean includesUpper,
+		Object lowerBound, Object upperBound) {
+
+		super(field, includesLower, includesUpper, lowerBound, upperBound);
+	}
+
 	public abstract String getDateFormat();
 
 	public abstract TimeZone getTimeZone();

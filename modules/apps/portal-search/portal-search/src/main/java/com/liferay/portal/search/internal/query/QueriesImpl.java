@@ -265,7 +265,7 @@ public class QueriesImpl implements Queries {
 	public RangeTermQuery rangeTerm(
 		String field, boolean includesLower, boolean includesUpper) {
 
-		return new RangeTermQueryImpl(field, includesLower, includesUpper);
+		return new RangeTermQuery(field, includesLower, includesUpper);
 	}
 
 	@Override
@@ -273,7 +273,7 @@ public class QueriesImpl implements Queries {
 		String field, boolean includesLower, boolean includesUpper,
 		Object lowerBound, Object upperBound) {
 
-		return new RangeTermQueryImpl(
+		return new RangeTermQuery(
 			field, includesLower, includesUpper, lowerBound, upperBound);
 	}
 

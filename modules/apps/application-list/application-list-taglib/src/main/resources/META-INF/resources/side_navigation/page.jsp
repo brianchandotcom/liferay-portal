@@ -29,6 +29,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 							<clay:button
 								aria-label='<%= LanguageUtil.get(request, "go-to-other-site") %>'
 								borderless="<%= true %>"
+								data-qa-id="sideNavigationSiteSelectorButton"
 								displayType="secondary"
 								icon="sites"
 								monospaced="<%= true %>"

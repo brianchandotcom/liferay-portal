@@ -9,12 +9,8 @@ import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.ExceptionMapper;
-import jakarta.ws.rs.ext.Provider;
+import com.liferay.portal.vulcan.problem.Problem;
+import com.liferay.portal.vulcan.problem.ProblemMapper;
 
 import java.util.Locale;
 
@@ -24,26 +20,40 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Lourdes Fernández Besada
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Site)",
-		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.SitePageLayoutTypeExceptionMapper"
-	},
-	service = ExceptionMapper.class
-)
-@Provider
+@Component(service = ProblemMapper.class)
 public class SitePageLayoutTypeExceptionMapper
-	extends BaseExceptionMapper<LayoutTypeException> {
+	implements ProblemMapper<LayoutTypeException> {
 
 	@Override
-	protected Problem getProblem(LayoutTypeException layoutTypeException) {
-		return new Problem(
-			Response.Status.CONFLICT,
-			_getLayoutTypeExceptionMessage(
-				layoutTypeException.getMessage(), layoutTypeException.getType(),
-				GetterUtil.getString(layoutTypeException.getLayoutType()),
-				LocaleUtil.getMostRelevantLocale()));
+	public Problem getProblem(LayoutTypeException layoutTypeException) {
+		String message = _getLayoutTypeExceptionMessage(
+			layoutTypeException.getMessage(), layoutTypeException.getType(),
+			GetterUtil.getString(layoutTypeException.getLayoutType()),
+			LocaleUtil.getMostRelevantLocale());
+
+		return new Problem() {
+
+			@Override
+			public String getDetail(Locale locale) {
+				return message;
+			}
+
+			@Override
+			public Status getStatus() {
+				return Status.CONFLICT;
+			}
+
+			@Override
+			public String getTitle(Locale locale) {
+				return message;
+			}
+
+			@Override
+			public String getType() {
+				return LayoutTypeException.class.getName();
+			}
+
+		};
 	}
 
 	private String _getLayoutTypeExceptionMessage(

@@ -93,12 +93,12 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 	@Override
 	public ESModuleAbsolutePortalURLBuilder forESModule(
-		String webContextPath, String esModulePath) {
+		String webContextName, String esModulePath) {
 
 		return new ESModuleAbsolutePortalURLBuilderImpl(
 			_getCDNHost(_httpServletRequest), esModulePath,
 			_hashedFilesRegistry, _httpServletRequest, _pathModule, _pathProxy,
-			webContextPath);
+			webContextName);
 	}
 
 	@Override
@@ -136,17 +136,17 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 
 	@Override
 	public WebContextScriptAbsolutePortalURLBuilder forWebContextScript(
-		String webContextPath, String scriptPath) {
+		String webContextName, String scriptPath) {
 
 		return new WebContextScriptAbsolutePortalURLBuilderImpl(
 			_getCDNHost(_httpServletRequest), _hashedFilesRegistry,
 			_httpServletRequest, _pathModule, _pathProxy, scriptPath,
-			webContextPath);
+			webContextName);
 	}
 
 	@Override
 	public WebContextStylesheetAbsolutePortalURLBuilder forWebContextStylesheet(
-		String webContextPath, String stylesheetPath) {
+		String webContextName, String stylesheetPath) {
 
 		if (_portal.isRightToLeft(_httpServletRequest)) {
 			int i = stylesheetPath.lastIndexOf(StringPool.PERIOD);
@@ -164,7 +164,7 @@ public class AbsolutePortalURLBuilderImpl implements AbsolutePortalURLBuilder {
 		return new WebContextStylesheetAbsolutePortalURLBuilderImpl(
 			_getCDNHost(_httpServletRequest), _hashedFilesRegistry,
 			_httpServletRequest, _pathModule, _pathProxy, stylesheetPath,
-			webContextPath);
+			webContextName);
 	}
 
 	private String _computePathProxy() {

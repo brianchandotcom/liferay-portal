@@ -74,13 +74,13 @@ public interface AbsolutePortalURLBuilder {
 	/**
 	 * Returns a URL builder for an ECMAScript module.
 	 *
-	 * @param  webContextPath the context path where the module lives
-	 * @param  esModulePath the module path (e.g. /js/index.js)
+	 * @param  webContextName the web context where the module lives (e.g. "frontend-js-web")
+	 * @param  esModulePath the module path (e.g. "/js/index.js")
 	 * @return a URL builder for ESM scripts
 	 * @review
 	 */
 	public ESModuleAbsolutePortalURLBuilder forESModule(
-		String webContextPath, String esModulePath);
+		String webContextName, String esModulePath);
 
 	/**
 	 * Returns a URL builder for portal images. Image resources live in {@code
@@ -128,24 +128,24 @@ public interface AbsolutePortalURLBuilder {
 	 * Returns a URL builder for a JavaScript file using the new caching
 	 * architecture based on hashed file names.
 	 *
-	 * @param  webContextPath the context path where the script lives
-	 * @param  scriptPath the script path (e.g. /js/main.js)
+	 * @param  webContextName the web context where the module lives (e.g. "frontend-js-web")
+	 * @param  scriptPath the script path (e.g. "/js/main.js")
 	 * @return a URL builder
 	 * @review
 	 */
 	public WebContextScriptAbsolutePortalURLBuilder forWebContextScript(
-		String webContextPath, String scriptPath);
+		String webContextName, String scriptPath);
 
 	/**
 	 * Returns a URL builder for a CSS stylesheet using the new caching
 	 * architecture based on hashed file names.
 	 *
-	 * @param  webContextPath the context path where the stylesheet lives
-	 * @param  stylesheetPath the stylesheet path (e.g. /clay_admin.css)
+	 * @param  webContextName the web context where the module lives (e.g. "frontend-js-web")
+	 * @param  stylesheetPath the stylesheet path (e.g. "/clay_admin.css")
 	 * @return a URL builder
 	 * @review
 	 */
 	public WebContextStylesheetAbsolutePortalURLBuilder forWebContextStylesheet(
-		String webContextPath, String stylesheetPath);
+		String webContextName, String stylesheetPath);
 
 }

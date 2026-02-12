@@ -5,6 +5,12 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
+import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
+import com.liferay.asset.list.model.AssetListEntry;
+import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
@@ -62,6 +68,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.segments.constants.SegmentsEntryConstants;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -503,6 +510,35 @@ public class PageElementsTestUtil {
 				StringPool.BLANK, position));
 
 		return pageElements.toArray(new PageElement[0]);
+	}
+
+	private static AssetListEntry _addAssetListEntry(
+			long groupId, JournalArticle journalArticle)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		AssetListEntry assetListEntry =
+			AssetListEntryLocalServiceUtil.addAssetListEntry(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				groupId, RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
+
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
+		AssetEntry assetEntry = assetRendererFactory.getAssetEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		AssetListEntryLocalServiceUtil.addAssetEntrySelections(
+			assetListEntry.getAssetListEntryId(),
+			new long[] {assetEntry.getEntryId()},
+			SegmentsEntryConstants.ID_DEFAULT, serviceContext);
+
+		return assetListEntry;
 	}
 
 	private static DefaultFragmentReference _addDefaultFragmentReference(

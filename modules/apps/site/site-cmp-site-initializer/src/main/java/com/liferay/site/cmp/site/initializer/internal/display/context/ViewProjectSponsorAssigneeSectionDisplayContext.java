@@ -25,11 +25,6 @@ public class ViewProjectSponsorAssigneeSectionDisplayContext
 	}
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
-		return "type=User";
-	}
-
-	@Override
 	public String getLabelKey() {
 		return "sponsor";
 	}

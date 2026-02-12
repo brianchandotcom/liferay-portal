@@ -59,12 +59,12 @@ public class ViewProjectSponsorAssigneeSectionDisplayContextTest
 			"ObjectField_r_userToCMPProjectSponsor_userId",
 			properties.get("name"));
 		Assert.assertEquals(
-			"/o/headless-cmp/v1.0/task-assignees/?type=User",
+			"/o/headless-cmp/v1.0/task-assignees?type=user",
 			properties.get("searchURL"));
 		Assert.assertTrue((Boolean)properties.get("usersOnly"));
 		Assert.assertTrue((Boolean)properties.get("visible"));
 
-		User user = addUserWithPortraitId();
+		User user = addUser();
 
 		assertAssigneeFieldValue(
 			user.getExternalReferenceCode(), user.getFullName(),

@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
@@ -58,34 +56,26 @@ public class CMSUserUtilTest {
 	public void setUp() throws Exception {
 		CMSTestUtil.getOrAddGroup(CMSDefaultPermissionUtilTest.class);
 
-		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
+		_originalName = PrincipalThreadLocal.getName();
 	}
 
 	@After
 	public void tearDown() {
-		PrincipalThreadLocal.setName(_originalName);
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
 	public void testGetUsers() throws Exception {
-		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
 		User user1 = UserTestUtil.addUser();
 
 		_setUser(user1);
 
 		Assert.assertTrue(SetUtil.isEmpty(CMSUserUtil.getUsers()));
+
+		DepotEntry depotEntry1 = _addDepotEntry();
 
 		_userLocalService.addGroupUser(
 			depotEntry1.getGroupId(), user1.getUserId());
@@ -105,16 +95,7 @@ public class CMSUserUtilTest {
 		_assertUserIds(
 			TestPropsValues.getUserId(), user1.getUserId(), user2.getUserId());
 
-		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			DepotConstants.TYPE_SPACE,
-			ServiceContextTestUtil.getServiceContext());
-
+		DepotEntry depotEntry2 = _addDepotEntry();
 		User user3 = UserTestUtil.addUser();
 
 		_userLocalService.addGroupUser(
@@ -128,6 +109,13 @@ public class CMSUserUtilTest {
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
 	}
 
+	private DepotEntry _addDepotEntry() throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+	}
+
 	private void _assertUserIds(long... expectedUserIds) {
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
@@ -139,7 +127,6 @@ public class CMSUserUtilTest {
 	private void _setUser(User user) {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
-
 		PrincipalThreadLocal.setName(user.getUserId());
 	}
 

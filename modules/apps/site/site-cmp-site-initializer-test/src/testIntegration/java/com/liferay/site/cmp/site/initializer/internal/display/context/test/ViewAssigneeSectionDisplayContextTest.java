@@ -101,7 +101,7 @@ public class ViewAssigneeSectionDisplayContextTest
 		Assert.assertEquals("Assignee", properties.get("label"));
 		Assert.assertEquals("ObjectField_assignTo", properties.get("name"));
 		Assert.assertEquals(
-			"/o/headless-cmp/v1.0/task-assignees/?",
+			"/o/headless-cmp/v1.0/task-assignees/",
 			properties.get("searchURL"));
 		Assert.assertFalse((Boolean)properties.get("usersOnly"));
 		Assert.assertTrue((Boolean)properties.get("visible"));
@@ -124,8 +124,7 @@ public class ViewAssigneeSectionDisplayContextTest
 			).build());
 
 		className = _classNameLocalService.getClassName(User.class.getName());
-
-		User user = addUserWithPortraitId();
+		User user = addUser();
 
 		assertAssigneeFieldValue(
 			user.getExternalReferenceCode(), user.getFullName(),

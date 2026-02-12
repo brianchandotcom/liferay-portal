@@ -8,12 +8,7 @@ package com.liferay.headless.cmp.internal.resource.v1_0;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.headless.cmp.dto.v1_0.TaskAssignee;
 import com.liferay.headless.cmp.resource.v1_0.TaskAssigneeResource;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -21,8 +16,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.site.cms.site.initializer.util.CMSUserUtil;
-
-import jakarta.ws.rs.BadRequestException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,77 +37,68 @@ public class TaskAssigneeResourceImpl extends BaseTaskAssigneeResourceImpl {
 	public Page<TaskAssignee> getTaskAssigneesPage(String search, String type) {
 		List<TaskAssignee> taskAssignees = new ArrayList<>();
 
-		if (Validator.isNull(type)) {
-			taskAssignees.addAll(_getRoles(search));
-			taskAssignees.addAll(_getUsers(search));
+		if (Validator.isNull(type) ||
+			StringUtil.equalsIgnoreCase(type, "Role")) {
+
+			taskAssignees.addAll(
+				transform(
+					_roleService.search(
+						contextCompany.getCompanyId(), search,
+						new Integer[] {RoleConstants.TYPE_DEPOT}, null, 0, 20,
+						null),
+					role -> {
+						if (StringUtil.equals(
+								DepotRolesConstants.
+									ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
+								role.getName())) {
+
+							return null;
+						}
+
+						return new TaskAssignee() {
+							{
+								setExternalReferenceCode(
+									role::getExternalReferenceCode);
+								setId(role::getRoleId);
+								setName(role::getName);
+								setType(() -> "Role");
+							}
+						};
+					}));
 		}
-		else if (StringUtil.equalsIgnoreCase("Role", type)) {
-			taskAssignees.addAll(_getRoles(search));
-		}
-		else if (StringUtil.equalsIgnoreCase("User", type)) {
-			taskAssignees.addAll(_getUsers(search));
-		}
-		else {
-			throw new BadRequestException("Invalid type: " + type);
+
+		if (Validator.isNull(type) ||
+			StringUtil.equalsIgnoreCase(type, "User")) {
+
+			taskAssignees.addAll(
+				transform(
+					CMSUserUtil.getUsers(search, 0, 20),
+					user -> new TaskAssignee() {
+						{
+							setExternalReferenceCode(
+								user::getExternalReferenceCode);
+							setId(user::getUserId);
+							setName(user::getFullName);
+							setPortrait(
+								() -> {
+									if (user.getPortraitId() == 0) {
+										return null;
+									}
+
+									return user.getPortraitURL(
+										new ThemeDisplay() {
+											{
+												setPathImage(
+													_portal.getPathImage());
+											}
+										});
+								});
+							setType(() -> "User");
+						}
+					}));
 		}
 
 		return Page.of(taskAssignees);
-	}
-
-	private List<TaskAssignee> _getRoles(String search) {
-		return transform(
-			_roleService.search(
-				CompanyThreadLocal.getCompanyId(), search,
-				new Integer[] {RoleConstants.TYPE_DEPOT}, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			role -> {
-				if (StringUtil.equals(
-						DepotRolesConstants.ASSET_LIBRARY_CONNECTED_SITE_MEMBER,
-						role.getName())) {
-
-					return null;
-				}
-
-				return new TaskAssignee() {
-					{
-						setExternalReferenceCode(
-							role::getExternalReferenceCode);
-						setId(role::getRoleId);
-						setName(role::getName);
-						setType(
-							() -> StringUtil.extractLast(
-								Role.class.getName(), StringPool.PERIOD));
-					}
-				};
-			});
-	}
-
-	private List<TaskAssignee> _getUsers(String search) {
-		return transform(
-			CMSUserUtil.getUsers(search),
-			user -> new TaskAssignee() {
-				{
-					setExternalReferenceCode(user::getExternalReferenceCode);
-					setId(user::getUserId);
-					setName(user::getFullName);
-					setPortrait(
-						() -> {
-							if (user.getPortraitId() == 0) {
-								return null;
-							}
-
-							return user.getPortraitURL(
-								new ThemeDisplay() {
-									{
-										setPathImage(_portal.getPathImage());
-									}
-								});
-						});
-					setType(
-						() -> StringUtil.extractLast(
-							User.class.getName(), StringPool.PERIOD));
-				}
-			});
 	}
 
 	@Reference

@@ -11,14 +11,26 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 /**
  * @author Michael C. Han
  */
-public abstract class GeoCentroidAggregationResult extends AggregationResult {
+public class GeoCentroidAggregationResult extends AggregationResult {
 
-	public GeoCentroidAggregationResult(String name) {
+	public GeoCentroidAggregationResult(
+		String name, GeoLocationPoint centroidGeoLocationPoint, long count) {
+
 		super(name);
+
+		_centroidGeoLocationPoint = centroidGeoLocationPoint;
+		_count = count;
 	}
 
-	public abstract GeoLocationPoint getCentroid();
+	public GeoLocationPoint getCentroid() {
+		return _centroidGeoLocationPoint;
+	}
 
-	public abstract long getCount();
+	public long getCount() {
+		return _count;
+	}
+
+	private final GeoLocationPoint _centroidGeoLocationPoint;
+	private final long _count;
 
 }

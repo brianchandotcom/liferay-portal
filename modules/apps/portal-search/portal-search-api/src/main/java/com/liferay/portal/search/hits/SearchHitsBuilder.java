@@ -5,26 +5,52 @@
 
 package com.liferay.portal.search.hits;
 
+import java.util.ArrayList;
 import java.util.Collection;
-
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.List;
 
 /**
  * @author Wade Cao
  */
-@ProviderType
-public interface SearchHitsBuilder {
+public class SearchHitsBuilder {
 
-	public SearchHitsBuilder addSearchHit(SearchHit searchHit);
+	public SearchHitsBuilder addSearchHit(SearchHit searchHit) {
+		_searchHits.add(searchHit);
 
-	public SearchHitsBuilder addSearchHits(Collection<SearchHit> searchHits);
+		return this;
+	}
 
-	public SearchHits build();
+	public SearchHitsBuilder addSearchHits(Collection<SearchHit> searchHits) {
+		_searchHits.addAll(searchHits);
 
-	public SearchHitsBuilder maxScore(float maxScore);
+		return this;
+	}
 
-	public SearchHitsBuilder searchTime(long searchTime);
+	public SearchHits build() {
+		return new SearchHits(_maxScore, _searchHits, _searchTime, _totalHits);
+	}
 
-	public SearchHitsBuilder totalHits(long totalHits);
+	public SearchHitsBuilder maxScore(float maxScore) {
+		_maxScore = maxScore;
+
+		return this;
+	}
+
+	public SearchHitsBuilder searchTime(long searchTime) {
+		_searchTime = searchTime;
+
+		return this;
+	}
+
+	public SearchHitsBuilder totalHits(long totalHits) {
+		_totalHits = totalHits;
+
+		return this;
+	}
+
+	private float _maxScore;
+	private final List<SearchHit> _searchHits = new ArrayList<>();
+	private long _searchTime;
+	private long _totalHits;
 
 }

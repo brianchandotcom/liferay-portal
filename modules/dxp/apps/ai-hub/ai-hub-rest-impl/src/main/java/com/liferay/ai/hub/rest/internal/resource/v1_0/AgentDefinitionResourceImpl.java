@@ -120,7 +120,7 @@ public class AgentDefinitionResourceImpl
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
-	@Reference(target = "(entity.model.name=TaskDefinition)")
+	@Reference(target = "(entity.model.name=AgentDefinition)")
 	private EntityModel _entityModel;
 
 }

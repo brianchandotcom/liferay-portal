@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AgentDefinitionEntityModel implements EntityModel {
 
-	public static final String NAME = "TaskDefinition";
+	public static final String NAME = "AgentDefinition";
 
 	@Override
 	public Map<String, EntityField> getEntityFieldsMap() {

@@ -5,19 +5,171 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search;
 
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.aggregation.Aggregation;
+import com.liferay.portal.search.aggregation.AggregationResult;
+import com.liferay.portal.search.aggregation.AggregationResultTranslator;
+import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.AggregationResultTranslatorFactory;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.ElasticsearchAggregationResultsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.PipelineAggregationResultTranslatorFactory;
+import com.liferay.portal.search.elasticsearch7.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.elasticsearch7.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.searcher.SearchTimeValue;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.lucene.search.TotalHits;
 
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.core.TimeValue;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregations;
 
 /**
  * @author Michael C. Han
  */
-public interface SearchSearchResponseAssembler {
+public class SearchSearchResponseAssembler
+	implements AggregationResultTranslatorFactory,
+			   PipelineAggregationResultTranslatorFactory {
+
+	public static final SearchSearchResponseAssembler INSTANCE =
+		new SearchSearchResponseAssembler();
 
 	public void assemble(
 		String searchRequestString, SearchResponse searchResponse,
 		SearchSearchRequest searchSearchRequest,
-		SearchSearchResponse searchSearchResponse);
+		SearchSearchResponse searchSearchResponse) {
+
+		CommonSearchResponseAssembler.INSTANCE.assemble(
+			searchSearchRequest, searchSearchResponse, searchRequestString,
+			searchResponse);
+
+		_addAggregations(
+			searchResponse, searchSearchResponse, searchSearchRequest);
+		setCount(searchResponse, searchSearchResponse);
+		_setScrollId(searchResponse, searchSearchResponse);
+		_setSearchHits(
+			searchResponse, searchSearchResponse, searchSearchRequest);
+		_setSearchTimeValue(searchResponse, searchSearchResponse);
+
+		_searchResponseTranslator.populate(
+			searchSearchResponse, searchResponse, searchSearchRequest);
+	}
+
+	@Override
+	public AggregationResultTranslator createAggregationResultTranslator(
+		org.elasticsearch.search.aggregations.Aggregation
+			elasticsearchAggregation) {
+
+		return new ElasticsearchAggregationResultTranslator(
+			elasticsearchAggregation, new SearchHitsTranslator());
+	}
+
+	@Override
+	public PipelineAggregationResultTranslator
+		createPipelineAggregationResultTranslator(
+			org.elasticsearch.search.aggregations.Aggregation
+				elasticsearchAggregation) {
+
+		return new ElasticsearchPipelineAggregationResultTranslator(
+			elasticsearchAggregation);
+	}
+
+	protected void setCount(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse) {
+
+		SearchHits searchHits = searchResponse.getHits();
+
+		TotalHits totalHits = searchHits.getTotalHits();
+
+		searchSearchResponse.setCount(totalHits.value);
+	}
+
+	private SearchSearchResponseAssembler() {
+	}
+
+	private void _addAggregations(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse,
+		SearchSearchRequest searchSearchRequest) {
+
+		Aggregations elasticsearchAggregations =
+			searchResponse.getAggregations();
+
+		if (elasticsearchAggregations == null) {
+			return;
+		}
+
+		Map<String, Aggregation> aggregationsMap =
+			searchSearchRequest.getAggregationsMap();
+
+		Map<String, PipelineAggregation> pipelineAggregationsMap =
+			searchSearchRequest.getPipelineAggregationsMap();
+
+		ElasticsearchAggregationResultsTranslator
+			elasticsearchAggregationResultsTranslator =
+				new ElasticsearchAggregationResultsTranslator(
+					this, this, aggregationsMap::get,
+					pipelineAggregationsMap::get);
+
+		List<AggregationResult> aggregationResults =
+			elasticsearchAggregationResultsTranslator.translate(
+				elasticsearchAggregations);
+
+		for (AggregationResult aggregationResult : aggregationResults) {
+			searchSearchResponse.addAggregationResult(aggregationResult);
+		}
+	}
+
+	private void _setScrollId(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse) {
+
+		if (Validator.isNotNull(searchResponse.getScrollId())) {
+			searchSearchResponse.setScrollId(searchResponse.getScrollId());
+		}
+	}
+
+	private void _setSearchHits(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse,
+		SearchSearchRequest searchSearchRequest) {
+
+		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator();
+
+		SearchHits searchHits = searchResponse.getHits();
+
+		searchSearchResponse.setSearchHits(
+			searchHitsTranslator.translate(
+				searchHits, searchSearchRequest.getAlternateUidFieldName()));
+	}
+
+	private void _setSearchTimeValue(
+		SearchResponse searchResponse,
+		SearchSearchResponse searchSearchResponse) {
+
+		TimeValue took = searchResponse.getTook();
+
+		SearchTimeValue.Builder builder = SearchTimeValue.Builder.newBuilder();
+
+		builder.duration(
+			took.duration()
+		).timeUnit(
+			took.timeUnit()
+		);
+
+		searchSearchResponse.setSearchTimeValue(builder.build());
+	}
+
+	private final SearchResponseTranslator _searchResponseTranslator =
+		new SearchResponseTranslator();
 
 }

@@ -96,7 +96,7 @@ public class MultisearchSearchRequestExecutorImpl
 			SearchSearchRequest searchSearchRequest =
 				searchRequestHolder.getSearchSearchRequest();
 
-			_searchSearchResponseAssembler.assemble(
+			SearchSearchResponseAssembler.INSTANCE.assemble(
 				DebugStringsUtil.getSearchRequestString(
 					searchRequestHolder.getSearchSourceBuilder()),
 				searchResponse, searchSearchRequest, searchSearchResponse);
@@ -143,9 +143,6 @@ public class MultisearchSearchRequestExecutorImpl
 
 	@Reference
 	private ElasticsearchClientResolver _elasticsearchClientResolver;
-
-	@Reference
-	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 	private class SearchRequestHolder {
 

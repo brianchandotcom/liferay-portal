@@ -39,7 +39,6 @@ import org.opensearch.client.opensearch.core.SearchRequest;
 import org.opensearch.client.opensearch.core.search.SourceConfig;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -79,7 +78,7 @@ public class SearchSearchRequestAssemblerImpl
 
 	protected StatsRequest translate(Stats stats) {
 		StatsRequestBuilder statsRequestBuilder =
-			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+			StatsRequestBuilderFactory.getStatsRequestBuilder(stats);
 
 		return statsRequestBuilder.build();
 	}
@@ -306,10 +305,6 @@ public class SearchSearchRequestAssemblerImpl
 	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new OpenSearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();
-
-	@Reference
-	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
-
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

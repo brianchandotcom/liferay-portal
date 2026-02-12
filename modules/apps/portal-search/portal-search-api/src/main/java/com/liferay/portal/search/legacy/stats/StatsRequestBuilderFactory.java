@@ -8,13 +8,10 @@ package com.liferay.portal.search.legacy.stats;
 import com.liferay.portal.kernel.search.Stats;
 import com.liferay.portal.search.stats.StatsRequestBuilder;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Bryan Engler
  */
-@ProviderType
-public interface StatsRequestBuilderFactory {
+public class StatsRequestBuilderFactory {
 
 	/**
 	 * Creates a new stats request builder from a legacy {@code Stats} object.
@@ -22,6 +19,28 @@ public interface StatsRequestBuilderFactory {
 	 * @param  stats the legacy {@code Stats} object to be converted
 	 * @return the converted stats request builder
 	 */
-	public StatsRequestBuilder getStatsRequestBuilder(Stats stats);
+	public static StatsRequestBuilder getStatsRequestBuilder(Stats stats) {
+		StatsRequestBuilder statsRequestBuilder = new StatsRequestBuilder();
+
+		return statsRequestBuilder.count(
+			stats.isCount()
+		).field(
+			stats.getField()
+		).max(
+			stats.isMax()
+		).mean(
+			stats.isMean()
+		).min(
+			stats.isMin()
+		).missing(
+			stats.isMissing()
+		).standardDeviation(
+			stats.isStandardDeviation()
+		).sum(
+			stats.isSum()
+		).sumOfSquares(
+			stats.isSumOfSquares()
+		);
+	}
 
 }

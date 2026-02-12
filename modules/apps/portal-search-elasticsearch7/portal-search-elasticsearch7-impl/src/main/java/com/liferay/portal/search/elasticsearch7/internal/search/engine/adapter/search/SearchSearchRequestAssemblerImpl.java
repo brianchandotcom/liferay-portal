@@ -40,7 +40,6 @@ import org.elasticsearch.search.collapse.CollapseBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -82,7 +81,7 @@ public class SearchSearchRequestAssemblerImpl
 
 	protected StatsRequest translate(Stats stats) {
 		StatsRequestBuilder statsRequestBuilder =
-			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+			StatsRequestBuilderFactory.getStatsRequestBuilder(stats);
 
 		return statsRequestBuilder.build();
 	}
@@ -344,10 +343,6 @@ public class SearchSearchRequestAssemblerImpl
 	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();
-
-	@Reference
-	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
-
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

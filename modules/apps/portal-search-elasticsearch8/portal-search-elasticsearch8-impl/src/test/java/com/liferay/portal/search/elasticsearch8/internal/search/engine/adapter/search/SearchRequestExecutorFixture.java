@@ -13,9 +13,7 @@ import com.liferay.portal.search.internal.aggregation.AggregationResultsImpl;
 import com.liferay.portal.search.internal.highlight.HighlightFieldBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
-import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
-import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 
 /**
  * @author Michael C. Han
@@ -28,7 +26,7 @@ public class SearchRequestExecutorFixture {
 
 	public void setUp() {
 		_searchRequestExecutor = _createSearchRequestExecutor(
-			_elasticsearchClientResolver, new StatsRequestBuilderFactoryImpl());
+			_elasticsearchClientResolver);
 	}
 
 	protected void setElasticsearchClientResolver(
@@ -73,8 +71,7 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchRequestExecutor _createSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver,
-		StatsRequestBuilderFactory statsRequestBuilderFactory) {
+		ElasticsearchClientResolver elasticsearchClientResolver) {
 
 		ElasticsearchSearchRequestExecutor elasticsearchSearchRequestExecutor =
 			new ElasticsearchSearchRequestExecutor();
@@ -88,10 +85,10 @@ public class SearchRequestExecutorFixture {
 			_createCountSearchRequestExecutor(elasticsearchClientResolver));
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
-			_createSearchSearchRequestAssembler(statsRequestBuilderFactory);
+			new SearchSearchRequestAssemblerImpl();
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			_createSearchSearchResponseAssembler(statsRequestBuilderFactory);
+			_createSearchSearchResponseAssembler();
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor,
@@ -109,19 +106,6 @@ public class SearchRequestExecutorFixture {
 		elasticsearchSearchRequestExecutor.activate();
 
 		return elasticsearchSearchRequestExecutor;
-	}
-
-	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
-		StatsRequestBuilderFactory statsRequestBuilderFactory) {
-
-		SearchSearchRequestAssembler searchSearchRequestAssembler =
-			new SearchSearchRequestAssemblerImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler, "_statsRequestBuilderFactory",
-			statsRequestBuilderFactory);
-
-		return searchSearchRequestAssembler;
 	}
 
 	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
@@ -145,8 +129,8 @@ public class SearchRequestExecutorFixture {
 		return searchSearchRequestExecutor;
 	}
 
-	private SearchSearchResponseAssembler _createSearchSearchResponseAssembler(
-		StatsRequestBuilderFactory statsRequestBuilderFactory) {
+	private SearchSearchResponseAssembler
+		_createSearchSearchResponseAssembler() {
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			new SearchSearchResponseAssemblerImpl();
@@ -165,8 +149,7 @@ public class SearchRequestExecutorFixture {
 			new SearchHitsBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_searchResponseTranslator",
-			new SearchResponseTranslator(
-				statsRequestBuilderFactory, new StatsResultsTranslatorImpl()));
+			new SearchResponseTranslator(new StatsResultsTranslatorImpl()));
 
 		return searchSearchResponseAssembler;
 	}

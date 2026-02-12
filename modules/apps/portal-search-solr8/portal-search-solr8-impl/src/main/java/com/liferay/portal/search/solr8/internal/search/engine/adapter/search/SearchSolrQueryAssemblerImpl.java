@@ -33,7 +33,6 @@ import java.util.Set;
 import org.apache.solr.client.solrj.SolrQuery;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bryan Engler
@@ -256,7 +255,7 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 		if (MapUtil.isNotEmpty(statsMap)) {
 			for (Stats stats : statsMap.values()) {
 				StatsRequestBuilder statsRequestBuilder =
-					_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+					StatsRequestBuilderFactory.getStatsRequestBuilder(stats);
 
 				_statsTranslator.populateRequest(
 					solrQuery, statsRequestBuilder.build());
@@ -270,10 +269,6 @@ public class SearchSolrQueryAssemblerImpl implements SearchSolrQueryAssembler {
 		new GroupByTranslator();
 	private final SolrSortFieldTranslator _sortFieldTranslator =
 		new SolrSortFieldTranslator();
-
-	@Reference
-	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
-
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 
 }

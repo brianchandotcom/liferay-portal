@@ -31,7 +31,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.highlight.HighlightFieldBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
-import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
 import com.liferay.portal.search.legacy.stats.StatsResultsTranslator;
 import com.liferay.portal.search.searcher.SearchTimeValue;
 
@@ -95,7 +94,7 @@ public class SearchSearchResponseAssemblerImpl
 	@Activate
 	protected void activate() {
 		_searchResponseTranslator = new SearchResponseTranslator(
-			_statsRequestBuilderFactory, _statsResultsTranslator);
+			_statsResultsTranslator);
 	}
 
 	protected void setCount(
@@ -190,9 +189,6 @@ public class SearchSearchResponseAssemblerImpl
 	private SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 	private SearchResponseTranslator _searchResponseTranslator;
-
-	@Reference
-	private StatsRequestBuilderFactory _statsRequestBuilderFactory;
 
 	@Reference
 	private StatsResultsTranslator _statsResultsTranslator;

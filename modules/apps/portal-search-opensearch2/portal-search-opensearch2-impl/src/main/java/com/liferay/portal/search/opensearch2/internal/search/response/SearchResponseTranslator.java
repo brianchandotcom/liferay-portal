@@ -58,10 +58,8 @@ import org.opensearch.client.opensearch.core.search.TotalHits;
 public class SearchResponseTranslator {
 
 	public SearchResponseTranslator(
-		StatsRequestBuilderFactory statsRequestBuilderFactory,
 		StatsResultsTranslator statsResultsTranslator) {
 
-		_statsRequestBuilderFactory = statsRequestBuilderFactory;
 		_statsResultsTranslator = statsResultsTranslator;
 	}
 
@@ -206,7 +204,7 @@ public class SearchResponseTranslator {
 
 	private StatsRequest _translate(Stats stats) {
 		StatsRequestBuilder statsRequestBuilder =
-			_statsRequestBuilderFactory.getStatsRequestBuilder(stats);
+			StatsRequestBuilderFactory.getStatsRequestBuilder(stats);
 
 		return statsRequestBuilder.build();
 	}
@@ -313,7 +311,6 @@ public class SearchResponseTranslator {
 		}
 	}
 
-	private final StatsRequestBuilderFactory _statsRequestBuilderFactory;
 	private final StatsResultsTranslator _statsResultsTranslator;
 	private final StatsTranslator _statsTranslator = new StatsTranslator();
 

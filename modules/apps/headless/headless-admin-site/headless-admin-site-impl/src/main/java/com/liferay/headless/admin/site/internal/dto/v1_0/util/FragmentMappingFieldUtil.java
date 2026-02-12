@@ -6,16 +6,31 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -45,7 +60,171 @@ public class FragmentMappingFieldUtil {
 		return null;
 	}
 
-	private String _toExternalUniqueId(
+	private static String _getCollectionFieldKey(
+		String collectionFieldId,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		LayoutStructure layoutStructure, String layoutStructureItemId,
+		long scopeGroupId) {
+
+		LayoutStructureItem layoutStructureItem =
+			LayoutStructureItemUtil.getAncestor(
+				layoutStructureItemId,
+				LayoutDataItemTypeConstants.TYPE_COLLECTION, layoutStructure);
+
+		if (!(layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem)) {
+
+			return collectionFieldId;
+		}
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if (collectionJSONObject == null) {
+			return collectionFieldId;
+		}
+
+		String itemType = collectionJSONObject.getString("itemType");
+
+		if (itemType == null) {
+			return collectionFieldId;
+		}
+
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, itemType);
+
+		if (infoItemFormProvider == null) {
+			return collectionFieldId;
+		}
+
+		InfoForm infoForm = null;
+
+		try {
+			infoForm = infoItemFormProvider.getInfoForm(
+				collectionJSONObject.getString("itemSubtype"), scopeGroupId);
+		}
+		catch (NoSuchFormVariationException noSuchFormVariationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchFormVariationException);
+			}
+		}
+
+		if (infoForm == null) {
+			return collectionFieldId;
+		}
+
+		InfoField<?> infoField = infoForm.getInfoField(collectionFieldId);
+
+		if (infoField == null) {
+			return collectionFieldId;
+		}
+
+		return infoField.getExternalUniqueId();
+	}
+
+	private static String _getContextFieldKey(
+		InfoItemServiceRegistry infoItemServiceRegistry, long layoutPlid,
+		long scopeGroupId, String mappedField) {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_getLayoutPageTemplateEntry(layoutPlid);
+
+		if (layoutPageTemplateEntry == null) {
+			return mappedField;
+		}
+
+		return _toExternalUniqueId(
+			layoutPageTemplateEntry.getClassName(), infoItemServiceRegistry,
+			mappedField, null, layoutPageTemplateEntry, scopeGroupId);
+	}
+
+	private static Object _getInfoItem(
+		InfoItemReference infoItemReference,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		if (infoItemReference == null) {
+			return null;
+		}
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, infoItemReference.getClassName(),
+				infoItemIdentifier.getInfoItemServiceFilter());
+
+		if (infoItemObjectProvider == null) {
+			return null;
+		}
+
+		try {
+			return infoItemObjectProvider.getInfoItem(infoItemIdentifier);
+		}
+		catch (NoSuchInfoItemException noSuchInfoItemException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchInfoItemException);
+			}
+		}
+
+		return null;
+	}
+
+	private static String _getInstanceFieldKey(
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
+
+		InfoItemReference infoItemReference = null;
+
+		int classPK = GetterUtil.getInteger(jsonObject.getString("classPK"));
+
+		if (classPK > 0) {
+			infoItemReference = new InfoItemReference(
+				jsonObject.getString("className"),
+				new ClassPKInfoItemIdentifier(classPK));
+		}
+		else {
+			infoItemReference = new InfoItemReference(
+				jsonObject.getString("className"),
+				new ERCInfoItemIdentifier(
+					jsonObject.getString("externalReferenceCode"),
+					jsonObject.getString("scopeExternalReferenceCode")));
+		}
+
+		return _toExternalUniqueId(
+			jsonObject.getString("className"), infoItemServiceRegistry,
+			jsonObject.getString("fieldId"),
+			_getInfoItem(infoItemReference, infoItemServiceRegistry), null,
+			scopeGroupId);
+	}
+
+	private static LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
+		long layoutPlid) {
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(layoutPlid);
+
+		if (layout == null) {
+			return null;
+		}
+
+		if (layout.isDraftLayout()) {
+			layout = LayoutLocalServiceUtil.fetchLayout(layout.getClassPK());
+		}
+
+		if (layout == null) {
+			return null;
+		}
+
+		return LayoutPageTemplateEntryLocalServiceUtil.
+			fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
+	}
+
+	private static String _toExternalUniqueId(
 		String className, InfoItemServiceRegistry infoItemServiceRegistry,
 		String fieldName, Object infoItem,
 		LayoutPageTemplateEntry layoutPageTemplateEntry, long scopeGroupId) {

@@ -5,70 +5,175 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class MatchQuery extends Query {
+public class MatchQuery extends Query {
 
-	public abstract String getAnalyzer();
+	public MatchQuery(String field, Object value) {
+		_field = field;
+		_value = value;
+	}
 
-	public abstract Float getCutOffFrequency();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getField();
+	public String getAnalyzer() {
+		return _analyzer;
+	}
 
-	public abstract Float getFuzziness();
+	public Float getCutOffFrequency() {
+		return _cutOffFrequency;
+	}
 
-	public abstract RewriteMethod getFuzzyRewriteMethod();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract Integer getMaxExpansions();
+	public Float getFuzziness() {
+		return _fuzziness;
+	}
 
-	public abstract String getMinShouldMatch();
+	public RewriteMethod getFuzzyRewriteMethod() {
+		return _fuzzyRewriteMethod;
+	}
 
-	public abstract Operator getOperator();
+	public Integer getMaxExpansions() {
+		return _maxExpansions;
+	}
 
-	public abstract Integer getPrefixLength();
+	public String getMinShouldMatch() {
+		return _minShouldMatch;
+	}
 
-	public abstract Integer getSlop();
+	public Operator getOperator() {
+		return _operator;
+	}
 
-	public abstract Type getType();
+	public Integer getPrefixLength() {
+		return _prefixLength;
+	}
 
-	public abstract Object getValue();
+	public Integer getSlop() {
+		return _slop;
+	}
 
-	public abstract ZeroTermsQuery getZeroTermsQuery();
+	public Type getType() {
+		return _type;
+	}
 
-	public abstract Boolean isFuzzyTranspositions();
+	public Object getValue() {
+		return _value;
+	}
 
-	public abstract Boolean isLenient();
+	public ZeroTermsQuery getZeroTermsQuery() {
+		return _zeroTermsQuery;
+	}
 
-	public abstract void setAnalyzer(String analyzer);
+	public Boolean isFuzzyTranspositions() {
+		return _fuzzyTranspositions;
+	}
 
-	public abstract void setCutOffFrequency(Float cutOffFrequency);
+	public Boolean isLenient() {
+		return _lenient;
+	}
 
-	public abstract void setFuzziness(Float fuzziness);
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
+	}
 
-	public abstract void setFuzzyRewriteMethod(
-		RewriteMethod fuzzyRewriteMethod);
+	public void setCutOffFrequency(Float cutOffFrequency) {
+		_cutOffFrequency = cutOffFrequency;
+	}
 
-	public abstract void setFuzzyTranspositions(Boolean fuzzyTranspositions);
+	public void setFuzziness(Float fuzziness) {
+		_fuzziness = fuzziness;
+	}
 
-	public abstract void setLenient(Boolean lenient);
+	public void setFuzzyRewriteMethod(RewriteMethod fuzzyRewriteMethod) {
+		_fuzzyRewriteMethod = fuzzyRewriteMethod;
+	}
 
-	public abstract void setMaxExpansions(Integer maxExpansions);
+	public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
+		_fuzzyTranspositions = fuzzyTranspositions;
+	}
 
-	public abstract void setMinShouldMatch(String minShouldMatch);
+	public void setLenient(Boolean lenient) {
+		_lenient = lenient;
+	}
 
-	public abstract void setOperator(Operator operator);
+	public void setMaxExpansions(Integer maxExpansions) {
+		_maxExpansions = maxExpansions;
+	}
 
-	public abstract void setPrefixLength(Integer prefixLength);
+	public void setMinShouldMatch(String minShouldMatch) {
+		_minShouldMatch = minShouldMatch;
+	}
 
-	public abstract void setSlop(Integer slop);
+	public void setOperator(Operator operator) {
+		_operator = operator;
+	}
 
-	public abstract void setType(Type type);
+	public void setPrefixLength(Integer prefixLength) {
+		_prefixLength = prefixLength;
+	}
 
-	public abstract void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery);
+	public void setSlop(Integer slop) {
+		_slop = slop;
+	}
+
+	public void setType(Type type) {
+		_type = type;
+	}
+
+	public void setZeroTermsQuery(ZeroTermsQuery zeroTermsQuery) {
+		_zeroTermsQuery = zeroTermsQuery;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(29);
+
+		sb.append("{analyzer=");
+		sb.append(_analyzer);
+		sb.append(", className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", cutOffFrequency=");
+		sb.append(_cutOffFrequency);
+		sb.append(", field=");
+		sb.append(_field);
+		sb.append(", fuzziness=");
+		sb.append(_fuzziness);
+		sb.append(", fuzzyTranspositions=");
+		sb.append(_fuzzyTranspositions);
+		sb.append(", lenient=");
+		sb.append(_lenient);
+		sb.append(", maxExpansions=");
+		sb.append(_maxExpansions);
+		sb.append(", minShouldMatch=");
+		sb.append(_minShouldMatch);
+		sb.append(", operator=");
+		sb.append(_operator);
+		sb.append(", prefixLength=");
+		sb.append(_prefixLength);
+		sb.append(", slop=");
+		sb.append(_slop);
+		sb.append(", type=");
+		sb.append(_type);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
+	}
 
 	public enum RewriteMethod {
 
@@ -88,5 +193,23 @@ public abstract class MatchQuery extends Query {
 		ALL, NONE
 
 	}
+
+	private static final long serialVersionUID = 1L;
+
+	private String _analyzer;
+	private Float _cutOffFrequency;
+	private final String _field;
+	private Float _fuzziness;
+	private RewriteMethod _fuzzyRewriteMethod;
+	private Boolean _fuzzyTranspositions;
+	private Boolean _lenient;
+	private Integer _maxExpansions;
+	private String _minShouldMatch;
+	private Operator _operator;
+	private Integer _prefixLength;
+	private Integer _slop;
+	private Type _type;
+	private final Object _value;
+	private ZeroTermsQuery _zeroTermsQuery;
 
 }

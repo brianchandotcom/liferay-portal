@@ -168,7 +168,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public MatchQuery match(String field, Object value) {
-		return new MatchQueryImpl(field, value);
+		return new MatchQuery(field, value);
 	}
 
 	@Override

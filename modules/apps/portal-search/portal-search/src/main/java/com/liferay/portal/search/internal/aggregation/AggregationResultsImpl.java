@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.metrics.PercentileRanksAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.ScriptedMetricAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.SumAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.TopHitsAggregationResultImpl;
@@ -245,7 +244,7 @@ public class AggregationResultsImpl implements AggregationResults {
 
 	@Override
 	public PercentileRanksAggregationResult percentileRanks(String name) {
-		return new PercentileRanksAggregationResultImpl(name);
+		return new PercentileRanksAggregationResult(name);
 	}
 
 	@Override

@@ -7,20 +7,27 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * @author Michael C. Han
  */
-public abstract class PercentileRanksAggregationResult
-	extends AggregationResult {
+public class PercentileRanksAggregationResult extends AggregationResult {
 
 	public PercentileRanksAggregationResult(String name) {
 		super(name);
 	}
 
-	public abstract void addPercentile(double value, double percent);
+	public void addPercentile(double value, double percentile) {
+		_percentiles.put(value, percentile);
+	}
 
-	public abstract Map<Double, Double> getPercentiles();
+	public Map<Double, Double> getPercentiles() {
+		return Collections.unmodifiableMap(_percentiles);
+	}
+
+	private final Map<Double, Double> _percentiles = new LinkedHashMap<>();
 
 }

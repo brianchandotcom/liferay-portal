@@ -99,6 +99,21 @@ public class PageElementsTestUtil {
 			BackgroundImageValue backgroundImageValue,
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
+			FragmentEntry fragmentEntry, Boolean hidden, long scopeGroupId) {
+
+		return getBasicFragmentInstancePageElementDefinition(
+			backgroundImageValue, configurationValuesMap,
+			fragmentEditableElements, fragmentEntry,
+			RandomTestUtil.randomString(), hidden,
+			RandomTestUtil.randomString(), scopeGroupId,
+			RandomTestUtil.randomString(), null);
+	}
+
+	public static BasicFragmentInstancePageElementDefinition
+		getBasicFragmentInstancePageElementDefinition(
+			BackgroundImageValue backgroundImageValue,
+			Map<String, Object> configurationValuesMap,
+			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry, long scopeGroupId) {
 
 		return getBasicFragmentInstancePageElementDefinition(
@@ -114,8 +129,9 @@ public class PageElementsTestUtil {
 			Map<String, Object> configurationValuesMap,
 			FragmentEditableElement[] fragmentEditableElements,
 			FragmentEntry fragmentEntry,
-			String fragmentInstanceExternalReferenceCode, String namespace,
-			long scopeGroupId, String uuid, WidgetInstance[] widgetInstances) {
+			String fragmentInstanceExternalReferenceCode, Boolean hidden,
+			String namespace, long scopeGroupId, String uuid,
+			WidgetInstance[] widgetInstances) {
 
 		return new BasicFragmentInstancePageElementDefinition() {
 			{
@@ -123,11 +139,28 @@ public class PageElementsTestUtil {
 					_getFragmentInstance(
 						configurationValuesMap, fragmentEditableElements,
 						fragmentEntry, backgroundImageValue,
-						fragmentInstanceExternalReferenceCode, namespace,
-						scopeGroupId, uuid, widgetInstances));
+						fragmentInstanceExternalReferenceCode, hidden,
+						namespace, scopeGroupId, uuid, widgetInstances));
 				setType(() -> Type.BASIC_FRAGMENT);
 			}
 		};
+	}
+
+	public static BasicFragmentInstancePageElementDefinition
+		getBasicFragmentInstancePageElementDefinition(
+			BackgroundImageValue backgroundImageValue,
+			Map<String, Object> configurationValuesMap,
+			FragmentEditableElement[] fragmentEditableElements,
+			FragmentEntry fragmentEntry,
+			String fragmentInstanceExternalReferenceCode, String namespace,
+			long scopeGroupId, String uuid, WidgetInstance[] widgetInstances) {
+
+		return getBasicFragmentInstancePageElementDefinition(
+			backgroundImageValue, configurationValuesMap,
+			fragmentEditableElements, fragmentEntry,
+			fragmentInstanceExternalReferenceCode,
+			RandomTestUtil.randomBoolean(), namespace, scopeGroupId, uuid,
+			widgetInstances);
 	}
 
 	public static BasicFragmentInstancePageElementDefinition
@@ -563,8 +596,9 @@ public class PageElementsTestUtil {
 		FragmentEditableElement[] fragmentEditableElements,
 		FragmentEntry fragmentEntry,
 		BackgroundImageValue fragmentInstanceBackgroundImageValue,
-		String fragmentInstanceExternalReferenceCode, String namespace,
-		long scopeGroupId, String uuid, WidgetInstance[] widgetInstances) {
+		String fragmentInstanceExternalReferenceCode, Boolean hidden,
+		String namespace, long scopeGroupId, String uuid,
+		WidgetInstance[] widgetInstances) {
 
 		FragmentInstance fragmentInstance = new FragmentInstance();
 
@@ -599,7 +633,7 @@ public class PageElementsTestUtil {
 						fragmentEntry.getGroupId(), scopeGroupId));
 			});
 		fragmentInstance.setFragmentViewports(
-			FragmentViewportTestUtil.getFragmentViewports());
+			FragmentViewportTestUtil.getFragmentViewports(hidden));
 		fragmentInstance.setHtml(fragmentEntry::getHtml);
 		fragmentInstance.setIndexed(RandomTestUtil::randomBoolean);
 		fragmentInstance.setJs(fragmentEntry::getJs);

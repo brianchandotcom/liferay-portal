@@ -5,14 +5,113 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.search;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.TotalHits;
+import co.elastic.clients.elasticsearch.core.search.TrackHits;
+import co.elastic.clients.json.JsonData;
+
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
+
+import java.io.IOException;
 
 /**
  * @author Michael C. Han
  */
-public interface CountSearchRequestExecutor {
+public class CountSearchRequestExecutor {
 
-	public CountSearchResponse execute(CountSearchRequest countSearchRequest);
+	public CountSearchRequestExecutor(
+		ElasticsearchClientResolver elasticsearchClientResolver) {
+
+		_elasticsearchClientResolver = elasticsearchClientResolver;
+	}
+
+	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
+		SearchRequest.Builder builder = new SearchRequest.Builder();
+
+		CommonSearchRequestBuilderAssembler.INSTANCE.assemble(
+			countSearchRequest, builder);
+
+		builder.requestCache(countSearchRequest.isRequestCache());
+		builder.size(0);
+		builder.trackScores(false);
+		builder.trackTotalHits(
+			TrackHits.of(trackHits -> trackHits.enabled(true)));
+
+		String indexNames = ArrayUtil.toString(
+			countSearchRequest.getIndexNames(), "");
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Stack trace for [", indexNames, "]: ",
+					DebugStringsUtil.getStackTraceString()));
+		}
+
+		SearchRequest searchRequest = builder.build();
+
+		String searchRequestString = DebugStringsUtil.getSearchRequestString(
+			searchRequest);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Search request string for [", indexNames, "]: ",
+					searchRequestString));
+		}
+
+		CountSearchResponse countSearchResponse = new CountSearchResponse();
+
+		SearchResponse<JsonData> searchResponse = getSearchResponse(
+			countSearchRequest, searchRequest);
+
+		HitsMetadata<JsonData> hitsMetadata = searchResponse.hits();
+
+		TotalHits totalHits = hitsMetadata.total();
+
+		countSearchResponse.setCount(totalHits.value());
+
+		CommonSearchResponseAssembler.INSTANCE.assemble(
+			countSearchRequest, countSearchResponse, searchResponse,
+			searchRequestString);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The search engine processed the request in ",
+					countSearchResponse.getExecutionTime(), " ms"));
+		}
+
+		return countSearchResponse;
+	}
+
+	protected SearchResponse<JsonData> getSearchResponse(
+		CountSearchRequest countSearchRequest, SearchRequest searchRequest) {
+
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				countSearchRequest.getConnectionId(),
+				countSearchRequest.isPreferLocalCluster());
+
+		try {
+			return elasticsearchClient.search(searchRequest, JsonData.class);
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CountSearchRequestExecutor.class);
+
+	private final ElasticsearchClientResolver _elasticsearchClientResolver;
 
 }

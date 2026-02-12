@@ -173,7 +173,7 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 			).put(
 				"externalReferenceCode", "L_LIFERAY_MCP_SERVER"
 			).put(
-				"url", "http://localhost:8080/o/mcp/sse"
+				"url", "http://localhost:8080/o/mcp"
 			).build(),
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId()));

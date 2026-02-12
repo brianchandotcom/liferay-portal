@@ -6,13 +6,24 @@
 import {Locator, Page} from '@playwright/test';
 
 import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
-import {CommerceDNDTablePage} from '../commerceDNDTablePage';
+import {
+	CommerceDNDTablePage,
+	searchTableRowByValue,
+} from '../commerceDNDTablePage';
 
 export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly backLink: Locator;
 	readonly changeLogLink: Locator;
-	readonly editCommerceInventoryTable: Locator;
+	readonly commerceInventoryTable: Locator;
+	readonly commerceInventoryTableActions: (sku: string) => Promise<Locator>;
+	readonly commerceInventoryTableRow: (
+		colPosition: number,
+		value: number | string,
+		strictEqual?: boolean
+	) => Promise<{column: Locator; row: Locator}>;
+	readonly deleteItemMenuItem: Locator;
+
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -20,12 +31,44 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 			page,
 			'#p_p_id_com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet_ .fds table'
 		);
-		this.editCommerceInventoryTable = page.locator(
-			'#p_p_id_com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet_ .fds table'
-		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.backLink = page.locator('span[title="Back"]');
 		this.changeLogLink = page.getByRole('link', {name: 'Changelog'});
+		this.commerceInventoryTable = page.locator(
+			'#p_p_id_com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet_ .fds table'
+		);
+		this.commerceInventoryTableActions = async (sku: string) => {
+			const itemsTableRow = await this.commerceInventoryTableRow(
+				0,
+				sku,
+				true
+			);
+
+			if (itemsTableRow && itemsTableRow.column) {
+				return itemsTableRow.row.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
+			}
+
+			throw new Error(`Cannot locate inventory row with value ${sku}`);
+		};
+		this.commerceInventoryTableRow = async (
+			colPosition: number,
+			value: number | string,
+			strictEqual: boolean = false
+		) => {
+			return await searchTableRowByValue(
+				this.commerceInventoryTable,
+				colPosition,
+				String(value),
+				strictEqual
+			);
+		};
+		this.deleteItemMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		});
 		this.page = page;
 	}
 

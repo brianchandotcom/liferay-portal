@@ -11,6 +11,7 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -195,5 +196,97 @@ test(
 		await commerceAdminInventoryPage.changeLogLink.click();
 
 		await expect(await page.getByText('1000')).toBeVisible();
+	}
+);
+
+test(
+	'Verify inventory for SKU with UOM is deleted',
+	{tag: ['@LPD-77826']},
+	async ({apiHelpers, commerceAdminInventoryPage, page, site}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				productConfiguration: {
+					maxOrderQuantity: 10000,
+					minOrderQuantity: 1,
+					minStockQuantity: 5,
+					multipleOrderQuantity: 1.5,
+				},
+				skus: [
+					{
+						cost: 0,
+						price: 10,
+						published: true,
+						purchasable: true,
+						sku: 'Sku' + getRandomInt(),
+					},
+				],
+			});
+
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		await apiHelpers.headlessCommerceAdminCatalog.postSkuUnitOfMeasure(
+			sku.id,
+			{
+				basePrice: 10,
+				incrementalOrderQuantity: 1.2345,
+				precision: 4,
+				priority: 0,
+			}
+		);
+
+		const warehouse =
+			await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehouses(
+				{
+					active: true,
+					latitude: getRandomInt(),
+					longitude: getRandomInt(),
+					warehouseItems: [
+						{
+							quantity: 100,
+							sku: sku.sku,
+						},
+					],
+				}
+			);
+
+		await apiHelpers.headlessCommerceAdminInventoryApiHelper.postWarehousesChannels(
+			warehouse.id,
+			channel.id
+		);
+
+		await commerceAdminInventoryPage.goto();
+
+		await expect(
+			await commerceAdminInventoryPage.tableRowLink({
+				colIndex: 0,
+				rowValue: sku.sku,
+			})
+		).toBeVisible();
+
+		await (
+			await commerceAdminInventoryPage.commerceInventoryTableActions(
+				sku.sku
+			)
+		).click();
+		await commerceAdminInventoryPage.deleteItemMenuItem.click();
+
+		await waitForAlert(page);
+
+		await expect(page.getByText('No Results Found')).toBeVisible();
 	}
 );

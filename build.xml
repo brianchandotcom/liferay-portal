@@ -569,6 +569,8 @@ message.
 	</target>
 
 	<target name="install-portal-snapshots">
+		<lstopwatch action="start" name="install.portal.snapshots" />
+
 		<ant dir="portal-impl" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-kernel" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
@@ -578,6 +580,8 @@ message.
 		<ant dir="util-java" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-slf4j" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-taglib" inheritAll="false" target="install-portal-snapshot" />
+
+		<lstopwatch action="total" name="install.portal.snapshots" />
 	</target>
 
 	<target name="jar">

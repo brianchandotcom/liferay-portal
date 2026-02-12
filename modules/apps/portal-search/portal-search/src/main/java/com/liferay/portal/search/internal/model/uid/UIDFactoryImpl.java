@@ -14,8 +14,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
-import com.liferay.portal.search.internal.util.SearchStringUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
+import com.liferay.portal.search.util.SearchStringUtil;
 
 import java.io.Serializable;
 

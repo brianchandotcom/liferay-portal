@@ -69,5 +69,6 @@ Export-Package:\
 	com.liferay.portal.search.suggest,\
 	com.liferay.portal.search.suggestions,\
 	com.liferay.portal.search.summary,\
-	com.liferay.portal.search.synonym
+	com.liferay.portal.search.synonym,\
+	com.liferay.portal.search.util
 -dsannotations-options: inherit

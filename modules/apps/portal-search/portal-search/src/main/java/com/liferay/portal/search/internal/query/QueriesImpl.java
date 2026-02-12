@@ -113,7 +113,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public FuzzyQuery fuzzy(String field, String value) {
-		return new FuzzyQueryImpl(field, value);
+		return new FuzzyQuery(field, value);
 	}
 
 	@Override

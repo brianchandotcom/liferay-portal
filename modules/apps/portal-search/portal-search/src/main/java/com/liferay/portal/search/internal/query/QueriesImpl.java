@@ -173,7 +173,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public MatchAllQuery matchAll() {
-		return new MatchAllQueryImpl();
+		return new MatchAllQuery();
 	}
 
 	@Override

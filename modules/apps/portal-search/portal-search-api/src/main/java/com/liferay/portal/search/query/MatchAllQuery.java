@@ -5,11 +5,23 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class MatchAllQuery extends Query {
+public class MatchAllQuery extends Query {
+
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	@Override
+	public String toString() {
+		Class<?> clazz = getClass();
+
+		return "{className=" + clazz.getSimpleName() + "}";
+	}
+
+	private static final long serialVersionUID = 1L;
+
 }

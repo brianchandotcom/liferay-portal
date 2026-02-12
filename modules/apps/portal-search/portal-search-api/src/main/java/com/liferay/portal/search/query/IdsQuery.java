@@ -6,10 +6,10 @@
 package com.liferay.portal.search.query;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-
 
 /**
  * @author Michael C. Han
@@ -21,7 +21,6 @@ public class IdsQuery extends Query {
 		return queryVisitor.visit(this);
 	}
 
-
 	public void addIds(String... ids) {
 		if (ArrayUtil.isEmpty(ids)) {
 			return;
@@ -29,7 +28,6 @@ public class IdsQuery extends Query {
 
 		Collections.addAll(_ids, ids);
 	}
-
 
 	public void addTypes(String... types) {
 		if (ArrayUtil.isEmpty(types)) {
@@ -39,11 +37,9 @@ public class IdsQuery extends Query {
 		Collections.addAll(_types, types);
 	}
 
-
 	public Set<String> getIds() {
 		return Collections.unmodifiableSet(_ids);
 	}
-
 
 	public Set<String> getTypes() {
 		return Collections.unmodifiableSet(_types);

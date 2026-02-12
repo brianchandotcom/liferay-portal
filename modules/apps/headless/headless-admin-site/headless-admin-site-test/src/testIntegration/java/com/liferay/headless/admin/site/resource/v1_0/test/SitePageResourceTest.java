@@ -1005,7 +1005,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			null,
 			() -> sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				sitePage.getExternalReferenceCode(), sitePage));
+				sitePage.getExternalReferenceCode(), false, sitePage));
 	}
 
 	private void _assertPostSiteSitePagePageSpecificationProblemException(
@@ -1868,7 +1868,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		assertEquals(expectedSitePage, patchSitePage);
 		assertValid(patchSitePage);
@@ -2103,7 +2103,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			draftContentPageSpecification, publishedContentPageSpecification,
 			sitePageResource.patchSiteSitePage(
 				testGroup.getExternalReferenceCode(),
-				postSitePage.getExternalReferenceCode(),
+				postSitePage.getExternalReferenceCode(), false,
 				new SitePage() {
 					{
 						setPageSpecifications(
@@ -2145,7 +2145,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			postSitePage.getExternalReferenceCode(),
+			postSitePage.getExternalReferenceCode(), false,
 			new SitePage() {
 				{
 					setExternalReferenceCode(
@@ -2190,7 +2190,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(),
+			sitePage.getExternalReferenceCode(), false,
 			new SitePage() {
 				{
 					setExternalReferenceCode(
@@ -2221,7 +2221,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 				SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 					testGroup.getExternalReferenceCode(),
-					sitePage.getExternalReferenceCode(),
+					sitePage.getExternalReferenceCode(), false,
 					new SitePage() {
 						{
 							setPageSettings(() -> curPageSettings);
@@ -3494,7 +3494,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				randomSitePage.getExternalReferenceCode()));
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), randomSitePage);
+			testGroup.getExternalReferenceCode(), false, randomSitePage);
 
 		sitePage.setPageSpecifications(
 			pageSpecificationsUnsafeFunction.apply(
@@ -3502,7 +3502,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), sitePage);
+			sitePage.getExternalReferenceCode(), false, sitePage);
 
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			putSitePage.getPageSpecifications(),

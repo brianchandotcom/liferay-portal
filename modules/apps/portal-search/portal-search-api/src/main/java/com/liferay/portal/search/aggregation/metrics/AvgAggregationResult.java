@@ -10,14 +10,22 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class AvgAggregationResult extends AggregationResult {
+public class AvgAggregationResult extends AggregationResult {
 
-	public AvgAggregationResult(String name) {
+	public AvgAggregationResult(String name, double value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract double getValue();
+	public double getValue() {
+		return _value;
+	}
 
-	public abstract void setValue(double value);
+	public void setValue(double value) {
+		_value = value;
+	}
+
+	private double _value;
 
 }

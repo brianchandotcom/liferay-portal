@@ -109,6 +109,18 @@ public class AutoDeployDir {
 		_name = name;
 		_deployDir = deployDir;
 		_interval = interval;
+
+		if (!_deployDir.exists()) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Creating missing directory " + _deployDir);
+			}
+
+			boolean created = _deployDir.mkdirs();
+
+			if (!created) {
+				_log.error("Directory " + _deployDir + " could not be created");
+			}
+		}
 	}
 
 	public File getDeployDir() {
@@ -124,18 +136,6 @@ public class AutoDeployDir {
 	}
 
 	public void start() {
-		if (!_deployDir.exists()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Creating missing directory " + _deployDir);
-			}
-
-			boolean created = _deployDir.mkdirs();
-
-			if (!created) {
-				_log.error("Directory " + _deployDir + " could not be created");
-			}
-		}
-
 		if ((_interval > 0) &&
 			((_autoDeployScanner == null) || !_autoDeployScanner.isAlive())) {
 

@@ -5,43 +5,111 @@
 
 package com.liferay.portal.search.hits;
 
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.highlight.HighlightField;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Wade Cao
  */
-@ProviderType
-public interface SearchHitBuilder {
+public class SearchHitBuilder {
 
-	public SearchHitBuilder addHighlightField(HighlightField highlightField);
+	public SearchHitBuilder addHighlightField(HighlightField highlightField) {
+		_highlightFieldsMap.put(highlightField.getName(), highlightField);
+
+		return this;
+	}
 
 	public SearchHitBuilder addHighlightFields(
-		Collection<HighlightField> highlightFields);
+		Collection<HighlightField> highlightFields) {
 
-	public SearchHitBuilder addSource(String name, Object value);
+		for (HighlightField highlightField : highlightFields) {
+			_highlightFieldsMap.put(highlightField.getName(), highlightField);
+		}
 
-	public SearchHitBuilder addSources(Map<String, Object> sourcesMap);
+		return this;
+	}
 
-	public SearchHit build();
+	public SearchHitBuilder addSource(String name, Object value) {
+		_sourcesMap.put(name, value);
 
-	public SearchHitBuilder document(Document document);
+		return this;
+	}
 
-	public SearchHitBuilder explanation(String explanation);
+	public SearchHitBuilder addSources(Map<String, Object> sourcesMap) {
+		if (MapUtil.isNotEmpty(sourcesMap)) {
+			_sourcesMap.putAll(sourcesMap);
+		}
 
-	public SearchHitBuilder id(String id);
+		return this;
+	}
 
-	public SearchHitBuilder matchedQueries(String... matchedQueries);
+	public SearchHit build() {
+		return new SearchHit(
+			_document, _explanation, _highlightFieldsMap, _id, _score,
+			_sortValues, _sourcesMap, _version);
+	}
 
-	public SearchHitBuilder score(float score);
+	public SearchHitBuilder document(Document document) {
+		_document = document;
 
-	public SearchHitBuilder sortValues(Object[] sortValues);
+		return this;
+	}
 
-	public SearchHitBuilder version(long version);
+	public SearchHitBuilder explanation(String explanation) {
+		_explanation = explanation;
+
+		return this;
+	}
+
+	public SearchHitBuilder id(String id) {
+		_id = id;
+
+		return this;
+	}
+
+	public SearchHitBuilder matchedQueries(String... matchedQueries) {
+		if (matchedQueries != null) {
+			_matchedQueries = matchedQueries;
+		}
+		else {
+			_matchedQueries = new String[0];
+		}
+
+		return this;
+	}
+
+	public SearchHitBuilder score(float score) {
+		_score = score;
+
+		return this;
+	}
+
+	public SearchHitBuilder sortValues(Object[] sortValues) {
+		_sortValues = sortValues;
+
+		return this;
+	}
+
+	public SearchHitBuilder version(long version) {
+		_version = version;
+
+		return this;
+	}
+
+	private Document _document;
+	private String _explanation;
+	private final Map<String, HighlightField> _highlightFieldsMap =
+		new LinkedHashMap<>();
+	private String _id;
+	private String[] _matchedQueries = new String[0];
+	private float _score;
+	private Object[] _sortValues;
+	private final Map<String, Object> _sourcesMap = new LinkedHashMap<>();
+	private long _version;
 
 }

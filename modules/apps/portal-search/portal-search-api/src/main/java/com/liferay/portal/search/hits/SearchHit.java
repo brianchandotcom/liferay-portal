@@ -12,7 +12,6 @@ import com.liferay.portal.search.highlight.HighlightField;
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -67,119 +66,6 @@ public class SearchHit implements Serializable {
 
 	public long getVersion() {
 		return _version;
-	}
-
-	public static class Builder implements SearchHitBuilder {
-
-		@Override
-		public SearchHitBuilder addHighlightField(
-			HighlightField highlightField) {
-
-			_highlightFieldsMap.put(highlightField.getName(), highlightField);
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder addHighlightFields(
-			Collection<HighlightField> highlightFields) {
-
-			for (HighlightField highlightField : highlightFields) {
-				_highlightFieldsMap.put(
-					highlightField.getName(), highlightField);
-			}
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder addSource(String name, Object value) {
-			_sourcesMap.put(name, value);
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder addSources(Map<String, Object> sourcesMap) {
-			if (MapUtil.isNotEmpty(sourcesMap)) {
-				_sourcesMap.putAll(sourcesMap);
-			}
-
-			return this;
-		}
-
-		@Override
-		public SearchHit build() {
-			return new SearchHit(
-				_document, _explanation, _highlightFieldsMap, _id, _score,
-				_sortValues, _sourcesMap, _version);
-		}
-
-		@Override
-		public SearchHitBuilder document(Document document) {
-			_document = document;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder explanation(String explanation) {
-			_explanation = explanation;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder id(String id) {
-			_id = id;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder matchedQueries(String... matchedQueries) {
-			if (matchedQueries != null) {
-				_matchedQueries = matchedQueries;
-			}
-			else {
-				_matchedQueries = new String[0];
-			}
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder score(float score) {
-			_score = score;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder sortValues(Object[] sortValues) {
-			_sortValues = sortValues;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitBuilder version(long version) {
-			_version = version;
-
-			return this;
-		}
-
-		private Document _document;
-		private String _explanation;
-		private final Map<String, HighlightField> _highlightFieldsMap =
-			new LinkedHashMap<>();
-		private String _id;
-		private String[] _matchedQueries = new String[0];
-		private float _score;
-		private Object[] _sortValues;
-		private final Map<String, Object> _sourcesMap = new LinkedHashMap<>();
-		private long _version;
-
 	}
 
 	protected SearchHit(

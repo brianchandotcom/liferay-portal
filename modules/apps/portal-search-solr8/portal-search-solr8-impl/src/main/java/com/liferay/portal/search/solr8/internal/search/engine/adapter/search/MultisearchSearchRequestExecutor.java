@@ -11,9 +11,12 @@ import com.liferay.portal.search.engine.adapter.search.MultisearchSearchResponse
 /**
  * @author Bryan Engler
  */
-public interface MultisearchSearchRequestExecutor {
+public class MultisearchSearchRequestExecutor {
 
 	public MultisearchSearchResponse execute(
-		MultisearchSearchRequest multisearchSearchRequest);
+		MultisearchSearchRequest multisearchSearchRequest) {
+
+		throw new UnsupportedOperationException();
+	}
 
 }

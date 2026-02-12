@@ -35,7 +35,7 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			solrSearchRequestExecutor, "_multisearchSearchRequestExecutor",
-			new MultisearchSearchRequestExecutorImpl());
+			new MultisearchSearchRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
 			solrSearchRequestExecutor, "_searchSearchRequestExecutor",
 			createSearchSearchRequestExecutor(solrClientManager));

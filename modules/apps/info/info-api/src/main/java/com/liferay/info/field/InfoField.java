@@ -44,6 +44,9 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 		InfoField infoField = (InfoField)object;
 
 		if (Objects.equals(
+				_builder._externalUniqueId,
+				infoField._builder._externalUniqueId) &&
+			Objects.equals(
 				_builder._infoFieldType, infoField._builder._infoFieldType) &&
 			Objects.equals(
 				_builder._labelInfoLocalizedValue,
@@ -59,6 +62,11 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 
 	public <V> V getAttribute(InfoFieldType.Attribute<T, V> attribute) {
 		return (V)_builder._attributes.get(attribute);
+	}
+
+	@Override
+	public String getExternalUniqueId() {
+		return _builder._externalUniqueId;
 	}
 
 	public InfoFieldType getInfoFieldType() {
@@ -121,9 +129,9 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 	@Override
 	public String toString() {
 		return StringBundler.concat(
-			"{name: ", _builder._name, ", type: ",
-			_builder._infoFieldType.getName(), ", uniqueId: ",
-			_builder._uniqueId, "}");
+			"{externalUniqueId: ", _builder._externalUniqueId, ", name: ",
+			_builder._name, ", type: ", _builder._infoFieldType.getName(),
+			", uniqueId: ", _builder._uniqueId, "}");
 	}
 
 	public static class Builder {
@@ -143,6 +151,7 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			<InfoFieldType.Attribute<? extends InfoFieldType, ?>, Object>
 				_attributes = new HashMap<>();
 		private boolean _editable;
+		private String _externalUniqueId;
 		private InfoFieldType _infoFieldType;
 		private InfoLocalizedValue<String> _labelInfoLocalizedValue;
 		private boolean _localizable;
@@ -172,11 +181,21 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 					InfoField.class, _builder._name);
 			}
 
+			if (_builder._externalUniqueId == null) {
+				_builder._externalUniqueId = _builder._uniqueId;
+			}
+
 			return new InfoField<>(_builder);
 		}
 
 		public FinalStep<T> editable(boolean editable) {
 			_builder._editable = editable;
+
+			return this;
+		}
+
+		public FinalStep<T> externalUniqueId(String externalUniqueId) {
+			_builder._externalUniqueId = externalUniqueId;
 
 			return this;
 		}
@@ -279,6 +298,10 @@ public class InfoField<T extends InfoFieldType> implements InfoFieldSetEntry {
 			if (Validator.isNull(_builder._uniqueId)) {
 				_builder._uniqueId =
 					_builder._namespace + StringPool.UNDERLINE + name;
+			}
+
+			if (Validator.isNull(_builder._externalUniqueId)) {
+				_builder._externalUniqueId = _builder._uniqueId;
 			}
 
 			return new FinalStep<>(_builder);

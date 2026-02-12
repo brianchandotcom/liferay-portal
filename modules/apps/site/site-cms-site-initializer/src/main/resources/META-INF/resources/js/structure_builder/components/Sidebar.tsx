@@ -155,6 +155,7 @@ function Toolbar({
 							handleAddRepeatableGroup({
 								dispatch,
 								publishedChildren,
+								structure,
 								uuids: selection,
 							}),
 						symbolLeft: 'repeat',

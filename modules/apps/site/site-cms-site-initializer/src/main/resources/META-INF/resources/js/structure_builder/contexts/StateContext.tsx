@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openToast} from 'frontend-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -31,7 +30,6 @@ import findChild from '../utils/findChild';
 import {getChildrenUuids} from '../utils/getChildrenUuids';
 import getRandomId from '../utils/getRandomId';
 import getRandomName from '../utils/getRandomName';
-import getUndeletableChildren from '../utils/getUndeletableChildren';
 import getUuid from '../utils/getUuid';
 import normalizeString from '../utils/normalizeString';
 import addChild from '../utils/state/addChild';
@@ -351,65 +349,11 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			const undeletables = getUndeletableChildren(uuids, structure);
-
-			const reasons = [...undeletables.values()];
-
-			if (reasons.includes('is-locked')) {
-				showWarning({
-					text: Liferay.Language.get(
-						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-system-fields'
-					),
-				});
-
-				return state;
-			}
-
-			if (reasons.includes('is-referenced')) {
-				showWarning({
-					text: Liferay.Language.get(
-						'the-repeatable-group-cannot-be-created-because-referenced-structure-fields-are-not-allowed-in-repeatable-groups'
-					),
-				});
-
-				return state;
-			}
-
-			if (reasons.includes('causes-invalid-group')) {
-				showWarning({
-					text: Liferay.Language.get(
-						'the-repeatable-group-cannot-be-created-because-at-least-one-field-is-required'
-					),
-				});
-
-				return state;
-			}
-
-			const parents = items.map(
-				(item) =>
-					findChild({
-						root: structure,
-						uuid: item.parent,
-					}) || structure
-			);
-
-			const isSameParent = new Set(parents).size === 1;
-
-			if (!isSameParent) {
-				showWarning({
-					text: Liferay.Language.get(
-						'a-repeatable-group-requires-all-selected-items-to-be-at-the-same-hierarchy-level'
-					),
-				});
-
-				return state;
-			}
-
 			const groupUuid = getUuid();
 
 			const children = addRepeatableGroup({
 				groupChildren: items,
-				groupParent: parents[0].uuid,
+				groupParent: items[0].parent,
 				groupUuid,
 				root: structure,
 			});
@@ -675,19 +619,9 @@ function reducer(state: State, action: Action): State {
 			return {...state, structure: nextStructure};
 		}
 		case 'ungroup': {
-			const {publishedChildren, structure} = state;
+			const {structure} = state;
 
 			const {uuid} = action;
-
-			if (publishedChildren.has(uuid)) {
-				showWarning({
-					text: Liferay.Language.get(
-						'the-ungroup-action-cannot-be-done-because-this-repeatable-group-is-already-published'
-					),
-				});
-
-				return state;
-			}
 
 			const nextChildren = ungroup({root: structure, uuid});
 
@@ -1120,10 +1054,6 @@ function getNextName({
 	return normalizeString(localizedLabel, {
 		style: 'status' in item ? 'pascal' : 'camel',
 	});
-}
-
-function showWarning({text}: {text: string}) {
-	openToast({message: text, type: 'danger'});
 }
 
 export {StateContext, StateContextProvider, useSelector, useStateDispatch};

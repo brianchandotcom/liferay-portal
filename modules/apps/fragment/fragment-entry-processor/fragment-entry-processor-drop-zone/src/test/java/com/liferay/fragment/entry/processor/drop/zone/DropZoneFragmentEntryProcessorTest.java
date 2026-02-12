@@ -9,6 +9,7 @@ import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.renderer.FragmentDropZoneRenderer;
 import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.FragmentDropZoneLayoutStructureItem;
@@ -17,14 +18,19 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -309,6 +315,53 @@ public class DropZoneFragmentEntryProcessorTest {
 				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
+	@Test
+	@TestInfo("LPD-79100")
+	public void testProcessFragmentEntryLinkHTMLInViewModeWithAttributes()
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryProcessorDropZoneTestUtil.getMockFragmentEntryLink();
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		String dropZoneId1 = RandomTestUtil.randomString();
+		String dropZoneId2 = RandomTestUtil.randomString();
+
+		FragmentEntryProcessorDropZoneTestUtil.
+			addFragmentDropZoneLayoutStructureItems(
+				fragmentEntryLink, layoutStructure, dropZoneId1, dropZoneId2);
+
+		Map<String, Map<String, String>> dropZoneIdsMap =
+			HashMapBuilder.<String, Map<String, String>>put(
+				dropZoneId1,
+				HashMapBuilder.put(
+					"class", RandomTestUtil.randomString()
+				).put(
+					"id", RandomTestUtil.randomString()
+				).put(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					RandomTestUtil.randomString()
+				).build()
+			).put(
+				dropZoneId2,
+				HashMapBuilder.put(
+					"class", RandomTestUtil.randomString()
+				).put(
+					"id", RandomTestUtil.randomString()
+				).put(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()),
+					RandomTestUtil.randomString()
+				).build()
+			).build();
+
+		Assert.assertEquals(
+			_getExpectedHTML(dropZoneIdsMap),
+			_processFragmentEntryLinkHTML(
+				fragmentEntryLink, _getHTML(dropZoneIdsMap), layoutStructure,
+				FragmentEntryLinkConstants.VIEW));
+	}
+
 	@Test(expected = FragmentEntryContentException.class)
 	public void testValidateFragmentEntryHTMLDuplicatedId() throws Exception {
 		String dropZoneId = RandomTestUtil.randomString();
@@ -386,6 +439,21 @@ public class DropZoneFragmentEntryProcessorTest {
 			Mockito.mock(Language.class));
 	}
 
+	private String _getAttributesHTML(Map<String, String> attributesMap) {
+		StringBundler sb = new StringBundler();
+
+		for (Map.Entry<String, String> attrEntry : attributesMap.entrySet()) {
+			sb.append(StringPool.SPACE);
+			sb.append(attrEntry.getKey());
+			sb.append(StringPool.EQUAL);
+			sb.append(StringPool.QUOTE);
+			sb.append(attrEntry.getValue());
+			sb.append(StringPool.QUOTE);
+		}
+
+		return sb.toString();
+	}
+
 	private Document _getDocument(String html) {
 		Document document = Jsoup.parseBodyFragment(html);
 
@@ -431,8 +499,49 @@ public class DropZoneFragmentEntryProcessorTest {
 		return sb.toString();
 	}
 
+	private String _getExpectedHTML(
+		Map<String, Map<String, String>> dropZoneIdsMap) {
+
+		StringBundler sb = new StringBundler("<div class=\"fragment_1\">");
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				dropZoneIdsMap.entrySet()) {
+
+			sb.append("<div");
+			sb.append(_getAttributesHTML(entry.getValue()));
+			sb.append("></div>");
+		}
+
+		sb.append("</div>");
+
+		return sb.toString();
+	}
+
 	private String _getExpectedHTML(String dropZoneId, String itemId) {
 		return _getExpectedHTML(new KeyValuePair(dropZoneId, itemId));
+	}
+
+	private String _getHTML(Map<String, Map<String, String>> dropZoneIdsMap) {
+		StringBundler sb = new StringBundler("<div class=\"fragment_1\">");
+
+		for (Map.Entry<String, Map<String, String>> entry :
+				dropZoneIdsMap.entrySet()) {
+
+			sb.append("<lfr-drop-zone");
+			sb.append(_getAttributesHTML(entry.getValue()));
+
+			if (!Validator.isBlank(entry.getKey())) {
+				sb.append(" data-lfr-drop-zone-id=\"");
+				sb.append(entry.getKey());
+				sb.append(StringPool.QUOTE);
+			}
+
+			sb.append("></lfr-drop-zone>");
+		}
+
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest(

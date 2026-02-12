@@ -7,7 +7,6 @@ package com.liferay.portal.search.hits;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,58 +34,6 @@ public class SearchHits implements Serializable {
 
 	public long getTotalHits() {
 		return _totalHits;
-	}
-
-	public static class Builder implements SearchHitsBuilder {
-
-		@Override
-		public SearchHitsBuilder addSearchHit(SearchHit searchHit) {
-			_searchHits.add(searchHit);
-
-			return this;
-		}
-
-		@Override
-		public SearchHitsBuilder addSearchHits(
-			Collection<SearchHit> searchHits) {
-
-			_searchHits.addAll(searchHits);
-
-			return this;
-		}
-
-		@Override
-		public SearchHits build() {
-			return new SearchHits(
-				_maxScore, _searchHits, _searchTime, _totalHits);
-		}
-
-		@Override
-		public SearchHitsBuilder maxScore(float maxScore) {
-			_maxScore = maxScore;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitsBuilder searchTime(long searchTime) {
-			_searchTime = searchTime;
-
-			return this;
-		}
-
-		@Override
-		public SearchHitsBuilder totalHits(long totalHits) {
-			_totalHits = totalHits;
-
-			return this;
-		}
-
-		private float _maxScore;
-		private final List<SearchHit> _searchHits = new ArrayList<>();
-		private long _searchTime;
-		private long _totalHits;
-
 	}
 
 	protected SearchHits(

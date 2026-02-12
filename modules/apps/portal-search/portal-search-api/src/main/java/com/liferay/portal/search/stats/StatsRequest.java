@@ -5,32 +5,90 @@
 
 package com.liferay.portal.search.stats;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
+
+import java.io.Serializable;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface StatsRequest {
+public class StatsRequest implements Serializable {
 
-	public String getField();
+	public StatsRequest(
+		boolean cardinality, boolean count, String field, boolean max,
+		boolean mean, boolean min, boolean missing, boolean standardDeviation,
+		boolean sum, boolean sumOfSquares) {
 
-	public boolean isCardinality();
+		_cardinality = cardinality;
+		_count = count;
+		_field = field;
+		_max = max;
+		_mean = mean;
+		_min = min;
+		_missing = missing;
+		_standardDeviation = standardDeviation;
+		_sum = sum;
+		_sumOfSquares = sumOfSquares;
+	}
 
-	public boolean isCount();
+	public String getField() {
+		return _field;
+	}
 
-	public boolean isMax();
+	public boolean isCardinality() {
+		return _cardinality;
+	}
 
-	public boolean isMean();
+	public boolean isCount() {
+		return _count;
+	}
 
-	public boolean isMin();
+	public boolean isMax() {
+		return _max;
+	}
 
-	public boolean isMissing();
+	public boolean isMean() {
+		return _mean;
+	}
 
-	public boolean isStandardDeviation();
+	public boolean isMin() {
+		return _min;
+	}
 
-	public boolean isSum();
+	public boolean isMissing() {
+		return _missing;
+	}
 
-	public boolean isSumOfSquares();
+	public boolean isStandardDeviation() {
+		return _standardDeviation;
+	}
+
+	public boolean isSum() {
+		return _sum;
+	}
+
+	public boolean isSumOfSquares() {
+		return _sumOfSquares;
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			"{_cardinality=", _cardinality, ", _count=", _count, ", field=",
+			_field, ", max=", _max, ", mean=", _mean, ", min=", _min,
+			", missing=", _missing, ", standardDeviation=", _standardDeviation,
+			", sum=", _sum, ", sumOfSquares=", _sumOfSquares, "}");
+	}
+
+	private final boolean _cardinality;
+	private final boolean _count;
+	private final String _field;
+	private final boolean _max;
+	private final boolean _mean;
+	private final boolean _min;
+	private final boolean _missing;
+	private final boolean _standardDeviation;
+	private final boolean _sum;
+	private final boolean _sumOfSquares;
 
 }

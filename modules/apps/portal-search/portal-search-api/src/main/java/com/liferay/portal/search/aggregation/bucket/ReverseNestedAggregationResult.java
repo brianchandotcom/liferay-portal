@@ -10,15 +10,23 @@ import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class ReverseNestedAggregationResult
+public class ReverseNestedAggregationResult
 	extends HierarchicalAggregationResult {
 
-	public ReverseNestedAggregationResult(String name) {
+	public ReverseNestedAggregationResult(String name, long docCount) {
 		super(name);
+
+		_docCount = docCount;
 	}
 
-	public abstract long getDocCount();
+	public long getDocCount() {
+		return _docCount;
+	}
 
-	public abstract void setDocCount(long docCount);
+	public void setDocCount(long docCount) {
+		_docCount = docCount;
+	}
+
+	private long _docCount;
 
 }

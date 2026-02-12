@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.bucket.ReverseNestedAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.SignificantTermsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.SignificantTextAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.bucket.TermsAggregationResultImpl;
@@ -279,7 +278,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public ReverseNestedAggregationResult reverseNested(
 		String name, long docCount) {
 
-		return new ReverseNestedAggregationResultImpl(name, docCount);
+		return new ReverseNestedAggregationResult(name, docCount);
 	}
 
 	@Override

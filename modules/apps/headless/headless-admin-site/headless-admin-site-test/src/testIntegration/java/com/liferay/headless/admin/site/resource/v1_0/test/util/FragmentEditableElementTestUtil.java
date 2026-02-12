@@ -309,6 +309,54 @@ public class FragmentEditableElementTestUtil {
 		return fragmentEditableElement;
 	}
 
+	public static FragmentEditableElement getTextFragmentEditableElement(
+		String className,
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		String externalReferenceCode, String fieldKey,
+		String scopeExternalReferenceCode) {
+
+		FragmentEditableElement fragmentEditableElement =
+			new FragmentEditableElement();
+
+		TextFragmentEditableElementValue textFragmentEditableElementValue =
+			new TextFragmentEditableElementValue();
+
+		FragmentMappedValue fragmentMappedValue = null;
+
+		if (contextSource == null) {
+			fragmentMappedValue =
+				FragmentMappedValueTestUtil.getFragmentMappedValue(
+					className, externalReferenceCode, fieldKey,
+					scopeExternalReferenceCode);
+		}
+		else {
+			fragmentMappedValue =
+				FragmentMappedValueTestUtil.getFragmentMappedValue(
+					contextSource, fieldKey,
+					FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+		}
+
+		TextFragmentMappedValue textFragmentMappedValue =
+			getTextFragmentMappedValue(fragmentMappedValue);
+
+		textFragmentEditableElementValue.setFragmentLinkTextValue(
+			new FragmentLinkTextValue() {
+				{
+					setTextFragmentValue(textFragmentMappedValue);
+				}
+			});
+
+		textFragmentEditableElementValue.setType(
+			FragmentEditableElementValue.Type.TEXT);
+
+		fragmentEditableElement.setFragmentEditableElementValue(
+			textFragmentEditableElementValue);
+
+		fragmentEditableElement.setId("element-text");
+
+		return fragmentEditableElement;
+	}
+
 	public static TextFragmentInlineValue getTextFragmentInlineValue() {
 		return new TextFragmentInlineValue() {
 			{

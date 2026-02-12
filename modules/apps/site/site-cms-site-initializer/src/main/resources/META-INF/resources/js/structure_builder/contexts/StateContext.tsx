@@ -131,9 +131,7 @@ type CreateStructureAction = {
 	type: 'create-structure';
 };
 
-type DeleteChildAction = {type: 'delete-child'; uuid: Uuid};
-
-type DeleteSelectionAction = {type: 'delete-selection'};
+type DeleteChildrenAction = {type: 'delete-children'; uuids: Uuid[]};
 
 type DuplicateChildAction = {type: 'duplicate-child'; uuid: Uuid};
 
@@ -228,8 +226,7 @@ export type Action =
 	| AddErrorAction
 	| ClearErrorsAction
 	| CreateStructureAction
-	| DeleteChildAction
-	| DeleteSelectionAction
+	| DeleteChildrenAction
 	| DuplicateChildAction
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
@@ -475,35 +472,15 @@ function reducer(state: State, action: Action): State {
 				},
 			};
 		}
-		case 'delete-child': {
+		case 'delete-children': {
+			const {uuids} = action;
+
 			const {structure} = state;
-			const {uuid} = action;
-
-			const child = findChild({root: structure, uuid});
-
-			if (!child) {
-				return state;
-			}
-
-			const undeletables = getUndeletableChildren(
-				[child.uuid],
-				structure
-			);
-
-			if (undeletables.get(child.uuid) === 'causes-invalid-group') {
-				showWarning({
-					text: Liferay.Language.get(
-						'you-must-keep-at-least-one-field-in-a-repeatable-group'
-					),
-				});
-
-				return state;
-			}
 
 			const {deletedChildrenUuids, updatedChildren: nextChildren} =
 				deleteChildren({
 					root: structure,
-					uuids: [child.uuid],
+					uuids,
 				});
 
 			const invalids = new Map(state.invalids);
@@ -511,50 +488,6 @@ function reducer(state: State, action: Action): State {
 			for (const deletedChild of deletedChildrenUuids) {
 				invalids.delete(deletedChild);
 			}
-
-			let nextState: State = {
-				...state,
-				invalids,
-				structure: {...state.structure, children: nextChildren},
-			};
-
-			if (state.selection.includes(uuid)) {
-				nextState = {
-					...nextState,
-					selection: INITIAL_STATE.selection,
-				};
-			}
-
-			nextState = {
-				...nextState,
-				history: updateHistory({
-					deletedChildrenUuids,
-					initialHistory: nextState.history,
-					publishedChildren: state.publishedChildren,
-					structure,
-				}),
-			};
-
-			return nextState;
-		}
-		case 'delete-selection': {
-			const {selection, structure} = state;
-
-			const undeletables = getUndeletableChildren(uuids, structure);
-
-			if (undeletables.size) {
-				showWarning({
-					text: Liferay.Language.get(
-						'one-or-more-selected-fields-are-system-or-referenced-fields'
-					),
-				});
-			}
-
-			const {deletedChildrenUuids, updatedChildren: nextChildren} =
-				deleteChildren({
-					root: structure,
-					uuids: selection.filter((uuid) => !undeletables.has(uuid)),
-				});
 
 			return {
 				...state,
@@ -564,7 +497,8 @@ function reducer(state: State, action: Action): State {
 					publishedChildren: state.publishedChildren,
 					structure,
 				}),
-				selection: [...undeletables.keys()],
+				invalids,
+				selection: [],
 				structure: {
 					...structure,
 					children: nextChildren,

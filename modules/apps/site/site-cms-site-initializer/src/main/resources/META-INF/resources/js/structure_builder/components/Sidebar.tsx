@@ -18,7 +18,7 @@ import selectPublishedChildren from '../selectors/selectPublishedChildren';
 import selectSelection from '../selectors/selectSelection';
 import selectStructure from '../selectors/selectStructure';
 import {createRepeatableGroup} from '../utils/createRepeatableGroup';
-import {deleteSelection} from '../utils/deleteSelection';
+import handleDeleteChildren from '../utils/handleDeleteChildren';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -163,11 +163,11 @@ function Toolbar({
 					{
 						label: Liferay.Language.get('delete'),
 						onClick: () =>
-							deleteSelection({
+							handleDeleteChildren({
 								dispatch,
 								publishedChildren,
-								selection,
 								structure,
+								uuids: selection,
 							}),
 						symbolLeft: 'trash',
 					},

@@ -36,9 +36,9 @@ import {
 	StructureChild,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import confirmDeletionAction from '../utils/confirmDeletionAction';
 import {createRepeatableGroup} from '../utils/createRepeatableGroup';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
+import handleDeleteChildren from '../utils/handleDeleteChildren';
 import isField from '../utils/isField';
 import isLocked from '../utils/isLocked';
 import isReferenced from '../utils/isReferenced';
@@ -677,21 +677,13 @@ function getItemActions({
 
 		actions.push({
 			label: Liferay.Language.get('delete-field'),
-			onClick: async () => {
-				if (publishedChildren.has(item.uuid)) {
-					const confirm =
-						await confirmDeletionAction('delete-children');
-
-					if (!confirm) {
-						return;
-					}
-				}
-
-				dispatch({
-					type: 'delete-child',
-					uuid: item.uuid,
-				});
-			},
+			onClick: async () =>
+				handleDeleteChildren({
+					dispatch,
+					publishedChildren,
+					structure,
+					uuids: [item.uuid],
+				}),
 			symbolLeft: 'trash',
 		});
 	}

@@ -146,7 +146,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public GeoPolygonQuery geoPolygon(String field) {
-		return new GeoPolygonQueryImpl(field);
+		return new GeoPolygonQuery(field);
 	}
 
 	@Override

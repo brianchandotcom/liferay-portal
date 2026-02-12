@@ -6,9 +6,11 @@ import {Interval} from 'shared/types';
 import {INTERVAL_KEY_MAP} from 'shared/util/time';
 import {isHourlyRangeKey} from 'shared/util/time';
 import {RangeSelectors} from 'shared/types';
+import {Text} from '@clayui/core';
 
 export interface BaseCardHeaderDefaultIProps
 	extends React.HTMLAttributes<HTMLElement> {
+	description?: string;
 	interval: Interval;
 	label: string;
 	legacy: boolean;
@@ -20,6 +22,7 @@ export interface BaseCardHeaderDefaultIProps
 }
 
 const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
+	description = '',
 	interval,
 	label,
 	legacy,
@@ -44,7 +47,13 @@ const BaseCardHeaderDefault: React.FC<BaseCardHeaderDefaultIProps> = ({
 
 	return (
 		<Card.Header className='align-items-center d-flex justify-content-between'>
-			<Card.Title>{label}</Card.Title>
+			<div>
+				<Card.Title>{label}</Card.Title>
+
+				<Text color='secondary' size={4}>
+					{description}
+				</Text>
+			</div>
 
 			<div className='d-flex'>
 				{showInterval && (

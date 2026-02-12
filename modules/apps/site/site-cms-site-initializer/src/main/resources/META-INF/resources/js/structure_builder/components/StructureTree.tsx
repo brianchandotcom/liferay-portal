@@ -633,7 +633,7 @@ function getItemActions({
 		});
 	}
 
-	if (!isReferenced({item, root: structure}) && isField(item)) {
+	if (!isReferenced({root: structure, uuid: item.uuid}) && isField(item)) {
 		actions.push({
 			label: Liferay.Language.get('create-repeatable-group'),
 			onClick: () =>
@@ -650,7 +650,7 @@ function getItemActions({
 		actions.push({type: 'divider' as const});
 	}
 
-	if (!isReferenced({item, root: structure})) {
+	if (!isReferenced({root: structure, uuid: item.uuid})) {
 		if (item.type === 'repeatable-group') {
 			actions.push({
 				label: Liferay.Language.get('ungroup'),

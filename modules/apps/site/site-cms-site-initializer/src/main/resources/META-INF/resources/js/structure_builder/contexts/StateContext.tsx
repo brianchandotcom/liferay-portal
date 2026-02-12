@@ -1221,7 +1221,7 @@ function getUndeletableItems(
 			undeletables.set(item.uuid, 'is-locked');
 		}
 
-		if (isReferenced({item, root: structure})) {
+		if (isReferenced({root: structure, uuid: item.uuid})) {
 			undeletables.set(item.uuid, 'is-referenced');
 		}
 

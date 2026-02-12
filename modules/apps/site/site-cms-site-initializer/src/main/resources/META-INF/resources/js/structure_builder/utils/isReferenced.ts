@@ -7,28 +7,28 @@ import {
 	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
-	StructureChild,
 } from '../types/Structure';
+import {Uuid} from '../types/Uuid';
 
 export default function isReferenced({
 	hasReferencedParent = false,
-	item,
 	root,
+	uuid,
 }: {
 	hasReferencedParent?: boolean;
-	item: StructureChild;
 	root: ReferencedStructure | RepeatableGroup | Structure;
+	uuid: Uuid;
 }): boolean {
 	for (const child of root.children.values()) {
-		if (child.uuid === item.uuid) {
+		if (child.uuid === uuid) {
 			return hasReferencedParent;
 		}
 
 		if (child.type === 'referenced-structure') {
 			const referenced = isReferenced({
 				hasReferencedParent: true,
-				item,
 				root: child,
+				uuid,
 			});
 
 			if (referenced) {

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -1003,6 +1004,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testPromotedPageWithSamePriorityTakesPrecedenceWithPromoteContentFFEnabled()
 		throws Exception {
 
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35443");
+
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
 		Layout layout3 = LayoutTestUtil.addTypePortletLayout(group);
@@ -1050,6 +1056,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			importedLayout3.getPriority() > importedLayout1.getPriority());
 		Assert.assertTrue(
 			importedLayout2.getPriority() > importedLayout3.getPriority());
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35443");
 	}
 
 	@Test

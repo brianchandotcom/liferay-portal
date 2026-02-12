@@ -5,18 +5,65 @@
 
 package com.liferay.portal.search.highlight;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface HighlightField {
+public class HighlightField {
 
-	public List<String> getFragments();
+	public HighlightField() {
+	}
 
-	public String getName();
+	public HighlightField(HighlightField highlightField) {
+		_fragments.addAll(highlightField._fragments);
+		_name = highlightField._name;
+	}
+
+	public List<String> getFragments() {
+		return Collections.unmodifiableList(_fragments);
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	public static final class HighlightFieldBuilderImpl
+		implements HighlightFieldBuilder {
+
+		@Override
+		public HighlightFieldBuilder addFragment(String fragment) {
+			_highlightField._fragments.add(fragment);
+
+			return this;
+		}
+
+		@Override
+		public HighlightField build() {
+			return new HighlightField(_highlightField);
+		}
+
+		@Override
+		public HighlightFieldBuilder fragments(List<String> fragments) {
+			_highlightField._fragments = fragments;
+
+			return this;
+		}
+
+		@Override
+		public HighlightFieldBuilder name(String name) {
+			_highlightField._name = name;
+
+			return this;
+		}
+
+		private final HighlightField _highlightField = new HighlightField();
+
+	}
+
+	private List<String> _fragments = new ArrayList<>();
+	private String _name;
 
 }

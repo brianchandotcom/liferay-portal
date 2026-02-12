@@ -10,7 +10,7 @@ import com.liferay.portal.search.aggregation.metrics.StatsAggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class StatsBucketPipelineAggregationResult
+public class StatsBucketPipelineAggregationResult
 	extends StatsAggregationResult {
 
 	public StatsBucketPipelineAggregationResult(

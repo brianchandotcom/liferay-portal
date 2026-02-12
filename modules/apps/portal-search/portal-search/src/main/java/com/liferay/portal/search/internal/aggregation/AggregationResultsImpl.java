@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.pipeline.StatsBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.SumBucketPipelineAggregationResultImpl;
 
 import org.osgi.service.component.annotations.Component;
@@ -303,7 +302,7 @@ public class AggregationResultsImpl implements AggregationResults {
 		String name, double avg, long count, double min, double max,
 		double sum) {
 
-		return new StatsBucketPipelineAggregationResultImpl(
+		return new StatsBucketPipelineAggregationResult(
 			name, avg, count, min, max, sum);
 	}
 

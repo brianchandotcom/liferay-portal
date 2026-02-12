@@ -97,8 +97,7 @@ public class QueriesImpl implements Queries {
 	public MoreLikeThisQuery.DocumentIdentifier documentIdentifier(
 		String index, String type, String id) {
 
-		return new MoreLikeThisQueryImpl.DocumentIdentifierImpl(
-			index, type, id);
+		return new MoreLikeThisQuery.DocumentIdentifierImpl(index, type, id);
 	}
 
 	@Override
@@ -195,7 +194,7 @@ public class QueriesImpl implements Queries {
 	@Deprecated
 	@Override
 	public MoreLikeThisQuery moreLikeThis(List<String> likeTexts) {
-		return new MoreLikeThisQueryImpl(
+		return new MoreLikeThisQuery(
 			Collections.emptyList(), likeTexts.toArray(new String[0]));
 	}
 
@@ -203,14 +202,14 @@ public class QueriesImpl implements Queries {
 	public MoreLikeThisQuery moreLikeThis(
 		List<String> fields, String... likeTexts) {
 
-		return new MoreLikeThisQueryImpl(fields, likeTexts);
+		return new MoreLikeThisQuery(fields, likeTexts);
 	}
 
 	@Override
 	public MoreLikeThisQuery moreLikeThis(
 		Set<MoreLikeThisQuery.DocumentIdentifier> documentIdentifiers) {
 
-		return new MoreLikeThisQueryImpl(documentIdentifiers);
+		return new MoreLikeThisQuery(documentIdentifiers);
 	}
 
 	/**
@@ -220,14 +219,14 @@ public class QueriesImpl implements Queries {
 	@Deprecated
 	@Override
 	public MoreLikeThisQuery moreLikeThis(String... likeTexts) {
-		return new MoreLikeThisQueryImpl(Collections.emptyList(), likeTexts);
+		return new MoreLikeThisQuery(Collections.emptyList(), likeTexts);
 	}
 
 	@Override
 	public MoreLikeThisQuery moreLikeThis(
 		String[] fields, String... likeTexts) {
 
-		return new MoreLikeThisQueryImpl(fields, likeTexts);
+		return new MoreLikeThisQuery(fields, likeTexts);
 	}
 
 	@Override

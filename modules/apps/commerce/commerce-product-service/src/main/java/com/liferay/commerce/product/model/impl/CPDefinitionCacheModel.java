@@ -96,52 +96,16 @@ public class CPDefinitionCacheModel
 		sb.append(CProductId);
 		sb.append(", CPTaxCategoryId=");
 		sb.append(CPTaxCategoryId);
-		sb.append(", productTypeName=");
-		sb.append(productTypeName);
+		sb.append(", accountGroupFilterEnabled=");
+		sb.append(accountGroupFilterEnabled);
 		sb.append(", availableIndividually=");
 		sb.append(availableIndividually);
-		sb.append(", ignoreSKUCombinations=");
-		sb.append(ignoreSKUCombinations);
-		sb.append(", shippable=");
-		sb.append(shippable);
-		sb.append(", freeShipping=");
-		sb.append(freeShipping);
-		sb.append(", shipSeparately=");
-		sb.append(shipSeparately);
-		sb.append(", shippingExtraPrice=");
-		sb.append(shippingExtraPrice);
-		sb.append(", width=");
-		sb.append(width);
-		sb.append(", height=");
-		sb.append(height);
-		sb.append(", depth=");
-		sb.append(depth);
-		sb.append(", weight=");
-		sb.append(weight);
-		sb.append(", taxExempt=");
-		sb.append(taxExempt);
-		sb.append(", telcoOrElectronics=");
-		sb.append(telcoOrElectronics);
+		sb.append(", channelFilterEnabled=");
+		sb.append(channelFilterEnabled);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
-		sb.append(", published=");
-		sb.append(published);
-		sb.append(", displayDate=");
-		sb.append(displayDate);
-		sb.append(", expirationDate=");
-		sb.append(expirationDate);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
-		sb.append(", subscriptionEnabled=");
-		sb.append(subscriptionEnabled);
-		sb.append(", subscriptionLength=");
-		sb.append(subscriptionLength);
-		sb.append(", subscriptionType=");
-		sb.append(subscriptionType);
-		sb.append(", subscriptionTypeSettings=");
-		sb.append(subscriptionTypeSettings);
-		sb.append(", maxSubscriptionCycles=");
-		sb.append(maxSubscriptionCycles);
+		sb.append(", deliveryMaxSubscriptionCycles=");
+		sb.append(deliveryMaxSubscriptionCycles);
 		sb.append(", deliverySubscriptionEnabled=");
 		sb.append(deliverySubscriptionEnabled);
 		sb.append(", deliverySubscriptionLength=");
@@ -150,14 +114,50 @@ public class CPDefinitionCacheModel
 		sb.append(deliverySubscriptionType);
 		sb.append(", deliverySubscriptionTypeSettings=");
 		sb.append(deliverySubscriptionTypeSettings);
-		sb.append(", deliveryMaxSubscriptionCycles=");
-		sb.append(deliveryMaxSubscriptionCycles);
-		sb.append(", accountGroupFilterEnabled=");
-		sb.append(accountGroupFilterEnabled);
-		sb.append(", channelFilterEnabled=");
-		sb.append(channelFilterEnabled);
+		sb.append(", depth=");
+		sb.append(depth);
+		sb.append(", displayDate=");
+		sb.append(displayDate);
+		sb.append(", expirationDate=");
+		sb.append(expirationDate);
+		sb.append(", freeShipping=");
+		sb.append(freeShipping);
+		sb.append(", height=");
+		sb.append(height);
+		sb.append(", ignoreSKUCombinations=");
+		sb.append(ignoreSKUCombinations);
+		sb.append(", maxSubscriptionCycles=");
+		sb.append(maxSubscriptionCycles);
+		sb.append(", productTypeName=");
+		sb.append(productTypeName);
+		sb.append(", published=");
+		sb.append(published);
+		sb.append(", shipSeparately=");
+		sb.append(shipSeparately);
+		sb.append(", shippable=");
+		sb.append(shippable);
+		sb.append(", shippingExtraPrice=");
+		sb.append(shippingExtraPrice);
+		sb.append(", subscriptionEnabled=");
+		sb.append(subscriptionEnabled);
+		sb.append(", subscriptionLength=");
+		sb.append(subscriptionLength);
+		sb.append(", subscriptionType=");
+		sb.append(subscriptionType);
+		sb.append(", subscriptionTypeSettings=");
+		sb.append(subscriptionTypeSettings);
+		sb.append(", taxExempt=");
+		sb.append(taxExempt);
+		sb.append(", telcoOrElectronics=");
+		sb.append(telcoOrElectronics);
 		sb.append(", version=");
 		sb.append(version);
+		sb.append(", weight=");
+		sb.append(weight);
+		sb.append(", width=");
+		sb.append(width);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append(", status=");
 		sb.append(status);
 		sb.append(", statusByUserId=");
@@ -220,26 +220,10 @@ public class CPDefinitionCacheModel
 
 		cpDefinitionImpl.setCProductId(CProductId);
 		cpDefinitionImpl.setCPTaxCategoryId(CPTaxCategoryId);
-
-		if (productTypeName == null) {
-			cpDefinitionImpl.setProductTypeName("");
-		}
-		else {
-			cpDefinitionImpl.setProductTypeName(productTypeName);
-		}
-
+		cpDefinitionImpl.setAccountGroupFilterEnabled(
+			accountGroupFilterEnabled);
 		cpDefinitionImpl.setAvailableIndividually(availableIndividually);
-		cpDefinitionImpl.setIgnoreSKUCombinations(ignoreSKUCombinations);
-		cpDefinitionImpl.setShippable(shippable);
-		cpDefinitionImpl.setFreeShipping(freeShipping);
-		cpDefinitionImpl.setShipSeparately(shipSeparately);
-		cpDefinitionImpl.setShippingExtraPrice(shippingExtraPrice);
-		cpDefinitionImpl.setWidth(width);
-		cpDefinitionImpl.setHeight(height);
-		cpDefinitionImpl.setDepth(depth);
-		cpDefinitionImpl.setWeight(weight);
-		cpDefinitionImpl.setTaxExempt(taxExempt);
-		cpDefinitionImpl.setTelcoOrElectronics(telcoOrElectronics);
+		cpDefinitionImpl.setChannelFilterEnabled(channelFilterEnabled);
 
 		if (DDMStructureKey == null) {
 			cpDefinitionImpl.setDDMStructureKey("");
@@ -248,48 +232,8 @@ public class CPDefinitionCacheModel
 			cpDefinitionImpl.setDDMStructureKey(DDMStructureKey);
 		}
 
-		cpDefinitionImpl.setPublished(published);
-
-		if (displayDate == Long.MIN_VALUE) {
-			cpDefinitionImpl.setDisplayDate(null);
-		}
-		else {
-			cpDefinitionImpl.setDisplayDate(new Date(displayDate));
-		}
-
-		if (expirationDate == Long.MIN_VALUE) {
-			cpDefinitionImpl.setExpirationDate(null);
-		}
-		else {
-			cpDefinitionImpl.setExpirationDate(new Date(expirationDate));
-		}
-
-		if (lastPublishDate == Long.MIN_VALUE) {
-			cpDefinitionImpl.setLastPublishDate(null);
-		}
-		else {
-			cpDefinitionImpl.setLastPublishDate(new Date(lastPublishDate));
-		}
-
-		cpDefinitionImpl.setSubscriptionEnabled(subscriptionEnabled);
-		cpDefinitionImpl.setSubscriptionLength(subscriptionLength);
-
-		if (subscriptionType == null) {
-			cpDefinitionImpl.setSubscriptionType("");
-		}
-		else {
-			cpDefinitionImpl.setSubscriptionType(subscriptionType);
-		}
-
-		if (subscriptionTypeSettings == null) {
-			cpDefinitionImpl.setSubscriptionTypeSettings("");
-		}
-		else {
-			cpDefinitionImpl.setSubscriptionTypeSettings(
-				subscriptionTypeSettings);
-		}
-
-		cpDefinitionImpl.setMaxSubscriptionCycles(maxSubscriptionCycles);
+		cpDefinitionImpl.setDeliveryMaxSubscriptionCycles(
+			deliveryMaxSubscriptionCycles);
 		cpDefinitionImpl.setDeliverySubscriptionEnabled(
 			deliverySubscriptionEnabled);
 		cpDefinitionImpl.setDeliverySubscriptionLength(
@@ -311,12 +255,69 @@ public class CPDefinitionCacheModel
 				deliverySubscriptionTypeSettings);
 		}
 
-		cpDefinitionImpl.setDeliveryMaxSubscriptionCycles(
-			deliveryMaxSubscriptionCycles);
-		cpDefinitionImpl.setAccountGroupFilterEnabled(
-			accountGroupFilterEnabled);
-		cpDefinitionImpl.setChannelFilterEnabled(channelFilterEnabled);
+		cpDefinitionImpl.setDepth(depth);
+
+		if (displayDate == Long.MIN_VALUE) {
+			cpDefinitionImpl.setDisplayDate(null);
+		}
+		else {
+			cpDefinitionImpl.setDisplayDate(new Date(displayDate));
+		}
+
+		if (expirationDate == Long.MIN_VALUE) {
+			cpDefinitionImpl.setExpirationDate(null);
+		}
+		else {
+			cpDefinitionImpl.setExpirationDate(new Date(expirationDate));
+		}
+
+		cpDefinitionImpl.setFreeShipping(freeShipping);
+		cpDefinitionImpl.setHeight(height);
+		cpDefinitionImpl.setIgnoreSKUCombinations(ignoreSKUCombinations);
+		cpDefinitionImpl.setMaxSubscriptionCycles(maxSubscriptionCycles);
+
+		if (productTypeName == null) {
+			cpDefinitionImpl.setProductTypeName("");
+		}
+		else {
+			cpDefinitionImpl.setProductTypeName(productTypeName);
+		}
+
+		cpDefinitionImpl.setPublished(published);
+		cpDefinitionImpl.setShipSeparately(shipSeparately);
+		cpDefinitionImpl.setShippable(shippable);
+		cpDefinitionImpl.setShippingExtraPrice(shippingExtraPrice);
+		cpDefinitionImpl.setSubscriptionEnabled(subscriptionEnabled);
+		cpDefinitionImpl.setSubscriptionLength(subscriptionLength);
+
+		if (subscriptionType == null) {
+			cpDefinitionImpl.setSubscriptionType("");
+		}
+		else {
+			cpDefinitionImpl.setSubscriptionType(subscriptionType);
+		}
+
+		if (subscriptionTypeSettings == null) {
+			cpDefinitionImpl.setSubscriptionTypeSettings("");
+		}
+		else {
+			cpDefinitionImpl.setSubscriptionTypeSettings(
+				subscriptionTypeSettings);
+		}
+
+		cpDefinitionImpl.setTaxExempt(taxExempt);
+		cpDefinitionImpl.setTelcoOrElectronics(telcoOrElectronics);
 		cpDefinitionImpl.setVersion(version);
+		cpDefinitionImpl.setWeight(weight);
+		cpDefinitionImpl.setWidth(width);
+
+		if (lastPublishDate == Long.MIN_VALUE) {
+			cpDefinitionImpl.setLastPublishDate(null);
+		}
+		else {
+			cpDefinitionImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		cpDefinitionImpl.setStatus(status);
 		cpDefinitionImpl.setStatusByUserId(statusByUserId);
 
@@ -363,45 +364,15 @@ public class CPDefinitionCacheModel
 		CProductId = objectInput.readLong();
 
 		CPTaxCategoryId = objectInput.readLong();
-		productTypeName = objectInput.readUTF();
+
+		accountGroupFilterEnabled = objectInput.readBoolean();
 
 		availableIndividually = objectInput.readBoolean();
 
-		ignoreSKUCombinations = objectInput.readBoolean();
-
-		shippable = objectInput.readBoolean();
-
-		freeShipping = objectInput.readBoolean();
-
-		shipSeparately = objectInput.readBoolean();
-
-		shippingExtraPrice = objectInput.readDouble();
-
-		width = objectInput.readDouble();
-
-		height = objectInput.readDouble();
-
-		depth = objectInput.readDouble();
-
-		weight = objectInput.readDouble();
-
-		taxExempt = objectInput.readBoolean();
-
-		telcoOrElectronics = objectInput.readBoolean();
+		channelFilterEnabled = objectInput.readBoolean();
 		DDMStructureKey = objectInput.readUTF();
 
-		published = objectInput.readBoolean();
-		displayDate = objectInput.readLong();
-		expirationDate = objectInput.readLong();
-		lastPublishDate = objectInput.readLong();
-
-		subscriptionEnabled = objectInput.readBoolean();
-
-		subscriptionLength = objectInput.readInt();
-		subscriptionType = objectInput.readUTF();
-		subscriptionTypeSettings = (String)objectInput.readObject();
-
-		maxSubscriptionCycles = objectInput.readLong();
+		deliveryMaxSubscriptionCycles = objectInput.readLong();
 
 		deliverySubscriptionEnabled = objectInput.readBoolean();
 
@@ -409,13 +380,43 @@ public class CPDefinitionCacheModel
 		deliverySubscriptionType = objectInput.readUTF();
 		deliverySubscriptionTypeSettings = objectInput.readUTF();
 
-		deliveryMaxSubscriptionCycles = objectInput.readLong();
+		depth = objectInput.readDouble();
+		displayDate = objectInput.readLong();
+		expirationDate = objectInput.readLong();
 
-		accountGroupFilterEnabled = objectInput.readBoolean();
+		freeShipping = objectInput.readBoolean();
 
-		channelFilterEnabled = objectInput.readBoolean();
+		height = objectInput.readDouble();
+
+		ignoreSKUCombinations = objectInput.readBoolean();
+
+		maxSubscriptionCycles = objectInput.readLong();
+		productTypeName = objectInput.readUTF();
+
+		published = objectInput.readBoolean();
+
+		shipSeparately = objectInput.readBoolean();
+
+		shippable = objectInput.readBoolean();
+
+		shippingExtraPrice = objectInput.readDouble();
+
+		subscriptionEnabled = objectInput.readBoolean();
+
+		subscriptionLength = objectInput.readInt();
+		subscriptionType = objectInput.readUTF();
+		subscriptionTypeSettings = (String)objectInput.readObject();
+
+		taxExempt = objectInput.readBoolean();
+
+		telcoOrElectronics = objectInput.readBoolean();
 
 		version = objectInput.readInt();
+
+		weight = objectInput.readDouble();
+
+		width = objectInput.readDouble();
+		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
 
@@ -466,36 +467,11 @@ public class CPDefinitionCacheModel
 
 		objectOutput.writeLong(CPTaxCategoryId);
 
-		if (productTypeName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(productTypeName);
-		}
+		objectOutput.writeBoolean(accountGroupFilterEnabled);
 
 		objectOutput.writeBoolean(availableIndividually);
 
-		objectOutput.writeBoolean(ignoreSKUCombinations);
-
-		objectOutput.writeBoolean(shippable);
-
-		objectOutput.writeBoolean(freeShipping);
-
-		objectOutput.writeBoolean(shipSeparately);
-
-		objectOutput.writeDouble(shippingExtraPrice);
-
-		objectOutput.writeDouble(width);
-
-		objectOutput.writeDouble(height);
-
-		objectOutput.writeDouble(depth);
-
-		objectOutput.writeDouble(weight);
-
-		objectOutput.writeBoolean(taxExempt);
-
-		objectOutput.writeBoolean(telcoOrElectronics);
+		objectOutput.writeBoolean(channelFilterEnabled);
 
 		if (DDMStructureKey == null) {
 			objectOutput.writeUTF("");
@@ -504,30 +480,7 @@ public class CPDefinitionCacheModel
 			objectOutput.writeUTF(DDMStructureKey);
 		}
 
-		objectOutput.writeBoolean(published);
-		objectOutput.writeLong(displayDate);
-		objectOutput.writeLong(expirationDate);
-		objectOutput.writeLong(lastPublishDate);
-
-		objectOutput.writeBoolean(subscriptionEnabled);
-
-		objectOutput.writeInt(subscriptionLength);
-
-		if (subscriptionType == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(subscriptionType);
-		}
-
-		if (subscriptionTypeSettings == null) {
-			objectOutput.writeObject("");
-		}
-		else {
-			objectOutput.writeObject(subscriptionTypeSettings);
-		}
-
-		objectOutput.writeLong(maxSubscriptionCycles);
+		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
 
 		objectOutput.writeBoolean(deliverySubscriptionEnabled);
 
@@ -547,13 +500,61 @@ public class CPDefinitionCacheModel
 			objectOutput.writeUTF(deliverySubscriptionTypeSettings);
 		}
 
-		objectOutput.writeLong(deliveryMaxSubscriptionCycles);
+		objectOutput.writeDouble(depth);
+		objectOutput.writeLong(displayDate);
+		objectOutput.writeLong(expirationDate);
 
-		objectOutput.writeBoolean(accountGroupFilterEnabled);
+		objectOutput.writeBoolean(freeShipping);
 
-		objectOutput.writeBoolean(channelFilterEnabled);
+		objectOutput.writeDouble(height);
+
+		objectOutput.writeBoolean(ignoreSKUCombinations);
+
+		objectOutput.writeLong(maxSubscriptionCycles);
+
+		if (productTypeName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(productTypeName);
+		}
+
+		objectOutput.writeBoolean(published);
+
+		objectOutput.writeBoolean(shipSeparately);
+
+		objectOutput.writeBoolean(shippable);
+
+		objectOutput.writeDouble(shippingExtraPrice);
+
+		objectOutput.writeBoolean(subscriptionEnabled);
+
+		objectOutput.writeInt(subscriptionLength);
+
+		if (subscriptionType == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(subscriptionType);
+		}
+
+		if (subscriptionTypeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(subscriptionTypeSettings);
+		}
+
+		objectOutput.writeBoolean(taxExempt);
+
+		objectOutput.writeBoolean(telcoOrElectronics);
 
 		objectOutput.writeInt(version);
+
+		objectOutput.writeDouble(weight);
+
+		objectOutput.writeDouble(width);
+		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
 
@@ -582,37 +583,37 @@ public class CPDefinitionCacheModel
 	public long modifiedDate;
 	public long CProductId;
 	public long CPTaxCategoryId;
-	public String productTypeName;
+	public boolean accountGroupFilterEnabled;
 	public boolean availableIndividually;
-	public boolean ignoreSKUCombinations;
-	public boolean shippable;
-	public boolean freeShipping;
-	public boolean shipSeparately;
-	public double shippingExtraPrice;
-	public double width;
-	public double height;
-	public double depth;
-	public double weight;
-	public boolean taxExempt;
-	public boolean telcoOrElectronics;
+	public boolean channelFilterEnabled;
 	public String DDMStructureKey;
-	public boolean published;
-	public long displayDate;
-	public long expirationDate;
-	public long lastPublishDate;
-	public boolean subscriptionEnabled;
-	public int subscriptionLength;
-	public String subscriptionType;
-	public String subscriptionTypeSettings;
-	public long maxSubscriptionCycles;
+	public long deliveryMaxSubscriptionCycles;
 	public boolean deliverySubscriptionEnabled;
 	public int deliverySubscriptionLength;
 	public String deliverySubscriptionType;
 	public String deliverySubscriptionTypeSettings;
-	public long deliveryMaxSubscriptionCycles;
-	public boolean accountGroupFilterEnabled;
-	public boolean channelFilterEnabled;
+	public double depth;
+	public long displayDate;
+	public long expirationDate;
+	public boolean freeShipping;
+	public double height;
+	public boolean ignoreSKUCombinations;
+	public long maxSubscriptionCycles;
+	public String productTypeName;
+	public boolean published;
+	public boolean shipSeparately;
+	public boolean shippable;
+	public double shippingExtraPrice;
+	public boolean subscriptionEnabled;
+	public int subscriptionLength;
+	public String subscriptionType;
+	public String subscriptionTypeSettings;
+	public boolean taxExempt;
+	public boolean telcoOrElectronics;
 	public int version;
+	public double weight;
+	public double width;
+	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;
 	public String statusByUserName;

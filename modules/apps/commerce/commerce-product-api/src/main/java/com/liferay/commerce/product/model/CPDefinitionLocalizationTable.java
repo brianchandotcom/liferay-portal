@@ -46,18 +46,9 @@ public class CPDefinitionLocalizationTable
 	public final Column<CPDefinitionLocalizationTable, Long> CProductId =
 		createColumn(
 			"CProductId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionLocalizationTable, String> name =
-		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionLocalizationTable, String>
-		shortDescription = createColumn(
-			"shortDescription", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLocalizationTable, Clob> description =
 		createColumn(
 			"description", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<CPDefinitionLocalizationTable, String> metaTitle =
-		createColumn(
-			"metaTitle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<CPDefinitionLocalizationTable, String> metaDescription =
 		createColumn(
 			"metaDescription", String.class, Types.VARCHAR,
@@ -65,6 +56,15 @@ public class CPDefinitionLocalizationTable
 	public final Column<CPDefinitionLocalizationTable, String> metaKeywords =
 		createColumn(
 			"metaKeywords", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLocalizationTable, String> metaTitle =
+		createColumn(
+			"metaTitle", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLocalizationTable, String> name =
+		createColumn("name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<CPDefinitionLocalizationTable, String>
+		shortDescription = createColumn(
+			"shortDescription", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 
 	private CPDefinitionLocalizationTable() {
 		super("CPDefinitionLocalization", CPDefinitionLocalizationTable::new);

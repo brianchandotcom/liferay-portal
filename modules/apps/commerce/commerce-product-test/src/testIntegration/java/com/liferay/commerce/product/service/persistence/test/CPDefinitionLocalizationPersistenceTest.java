@@ -131,20 +131,20 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		newCPDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
 
-		newCPDefinitionLocalization.setName(RandomTestUtil.randomString());
-
-		newCPDefinitionLocalization.setShortDescription(
-			RandomTestUtil.randomString());
-
 		newCPDefinitionLocalization.setDescription(
 			RandomTestUtil.randomString());
-
-		newCPDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
 
 		newCPDefinitionLocalization.setMetaDescription(
 			RandomTestUtil.randomString());
 
 		newCPDefinitionLocalization.setMetaKeywords(
+			RandomTestUtil.randomString());
+
+		newCPDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
+
+		newCPDefinitionLocalization.setName(RandomTestUtil.randomString());
+
+		newCPDefinitionLocalization.setShortDescription(
 			RandomTestUtil.randomString());
 
 		_cpDefinitionLocalizations.add(
@@ -176,23 +176,23 @@ public class CPDefinitionLocalizationPersistenceTest {
 			existingCPDefinitionLocalization.getCProductId(),
 			newCPDefinitionLocalization.getCProductId());
 		Assert.assertEquals(
-			existingCPDefinitionLocalization.getName(),
-			newCPDefinitionLocalization.getName());
-		Assert.assertEquals(
-			existingCPDefinitionLocalization.getShortDescription(),
-			newCPDefinitionLocalization.getShortDescription());
-		Assert.assertEquals(
 			existingCPDefinitionLocalization.getDescription(),
 			newCPDefinitionLocalization.getDescription());
-		Assert.assertEquals(
-			existingCPDefinitionLocalization.getMetaTitle(),
-			newCPDefinitionLocalization.getMetaTitle());
 		Assert.assertEquals(
 			existingCPDefinitionLocalization.getMetaDescription(),
 			newCPDefinitionLocalization.getMetaDescription());
 		Assert.assertEquals(
 			existingCPDefinitionLocalization.getMetaKeywords(),
 			newCPDefinitionLocalization.getMetaKeywords());
+		Assert.assertEquals(
+			existingCPDefinitionLocalization.getMetaTitle(),
+			newCPDefinitionLocalization.getMetaTitle());
+		Assert.assertEquals(
+			existingCPDefinitionLocalization.getName(),
+			newCPDefinitionLocalization.getName());
+		Assert.assertEquals(
+			existingCPDefinitionLocalization.getShortDescription(),
+			newCPDefinitionLocalization.getShortDescription());
 	}
 
 	@Test
@@ -245,8 +245,8 @@ public class CPDefinitionLocalizationPersistenceTest {
 			"CPDefinitionLocalization", "mvccVersion", true, "ctCollectionId",
 			true, "cpDefinitionLocalizationId", true, "companyId", true,
 			"CPDefinitionId", true, "languageId", true, "CProductId", true,
-			"name", true, "shortDescription", true, "metaTitle", true,
-			"metaDescription", true, "metaKeywords", true);
+			"metaDescription", true, "metaKeywords", true, "metaTitle", true,
+			"name", true, "shortDescription", true);
 	}
 
 	@Test
@@ -548,19 +548,19 @@ public class CPDefinitionLocalizationPersistenceTest {
 
 		cpDefinitionLocalization.setCProductId(RandomTestUtil.nextLong());
 
-		cpDefinitionLocalization.setName(RandomTestUtil.randomString());
-
-		cpDefinitionLocalization.setShortDescription(
-			RandomTestUtil.randomString());
-
 		cpDefinitionLocalization.setDescription(RandomTestUtil.randomString());
-
-		cpDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
 
 		cpDefinitionLocalization.setMetaDescription(
 			RandomTestUtil.randomString());
 
 		cpDefinitionLocalization.setMetaKeywords(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setMetaTitle(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setName(RandomTestUtil.randomString());
+
+		cpDefinitionLocalization.setShortDescription(
+			RandomTestUtil.randomString());
 
 		_cpDefinitionLocalizations.add(
 			_persistence.update(cpDefinitionLocalization));

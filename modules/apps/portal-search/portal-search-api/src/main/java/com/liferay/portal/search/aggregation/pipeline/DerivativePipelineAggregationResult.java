@@ -10,13 +10,20 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class DerivativePipelineAggregationResult
-	extends AggregationResult {
+public class DerivativePipelineAggregationResult extends AggregationResult {
 
-	public DerivativePipelineAggregationResult(String name) {
+	public DerivativePipelineAggregationResult(
+		String name, double normalizedValue) {
+
 		super(name);
+
+		_normalizedValue = normalizedValue;
 	}
 
-	public abstract double getNormalizedValue();
+	public double getNormalizedValue() {
+		return _normalizedValue;
+	}
+
+	private final double _normalizedValue;
 
 }

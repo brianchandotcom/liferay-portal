@@ -95,8 +95,8 @@ public class CounterDataCleanupPreupgradeProcess
 				}
 
 				if ((tableName == null) ||
-					!DataCleanupPreupgradeProcessUtil.isLiferayTable(
-						dbInspector, _liferayTableNames, tableName)) {
+					(!dbInspector.isObjectTable(tableName) &&
+					 !_liferayTableNames.contains(tableName))) {
 
 					continue;
 				}
@@ -131,8 +131,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 		for (String tableName : tableNames) {
 			if (!dbInspector.isObjectTable(tableName) &&
-				!DataCleanupPreupgradeProcessUtil.isLiferayTable(
-					dbInspector, _liferayTableNames, tableName)) {
+				!_liferayTableNames.contains(tableName)) {
 
 				continue;
 			}

@@ -14,7 +14,7 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.solr8.internal.SolrUnitTestRequirements;
 import com.liferay.portal.search.solr8.internal.indexing.SolrIndexingFixture;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.CountSearchRequestExecutor;
-import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.SearchSearchRequestExecutorImpl;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.SearchSearchRequestExecutor;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
@@ -84,7 +84,7 @@ public class SolrSearchEngineAdapterLoggingTest extends BaseIndexingTestCase {
 	}
 
 	@ExpectedLog(
-		expectedClass = SearchSearchRequestExecutorImpl.class,
+		expectedClass = SearchSearchRequestExecutor.class,
 		expectedLevel = ExpectedLog.Level.FINE,
 		expectedLog = "The search engine processed"
 	)

@@ -37,7 +37,7 @@ public class CountSearchRequestExecutorImpl
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
 		SearchRequest.Builder builder = new SearchRequest.Builder();
 
-		_commonSearchRequestBuilderAssembler.assemble(
+		CommonSearchRequestBuilderAssembler.INSTANCE.assemble(
 			countSearchRequest, builder);
 
 		builder.requestCache(countSearchRequest.isRequestCache());
@@ -92,10 +92,6 @@ public class CountSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
-
-	@Reference
-	private CommonSearchRequestBuilderAssembler
-		_commonSearchRequestBuilderAssembler;
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;

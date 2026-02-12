@@ -40,15 +40,11 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private CountSearchRequestExecutor _createCountSearchRequestExecutor(
-		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		CountSearchRequestExecutor countSearchRequestExecutor =
 			new CountSearchRequestExecutorImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutor, "_commonSearchRequestBuilderAssembler",
-			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
 			countSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
@@ -89,20 +85,12 @@ public class SearchRequestExecutorFixture {
 			openSearchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		CommonSearchRequestBuilderAssembler
-			commonSearchRequestBuilderAssembler =
-				new CommonSearchRequestBuilderAssemblerImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor, "_countSearchRequestExecutor",
-			_createCountSearchRequestExecutor(
-				commonSearchRequestBuilderAssembler,
-				openSearchConnectionManager));
+			_createCountSearchRequestExecutor(openSearchConnectionManager));
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
-			_createSearchSearchRequestAssembler(
-				commonSearchRequestBuilderAssembler,
-				statsRequestBuilderFactory);
+			_createSearchSearchRequestAssembler(statsRequestBuilderFactory);
 
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			_createSearchSearchResponseAssembler(statsRequestBuilderFactory);
@@ -126,16 +114,11 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchSearchRequestAssembler _createSearchSearchRequestAssembler(
-		CommonSearchRequestBuilderAssembler commonSearchRequestBuilderAssembler,
 		StatsRequestBuilderFactory statsRequestBuilderFactory) {
 
 		SearchSearchRequestAssembler searchSearchRequestAssembler =
 			new SearchSearchRequestAssemblerImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestAssembler,
-			"_commonSearchRequestBuilderAssembler",
-			commonSearchRequestBuilderAssembler);
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestAssembler, "_highlightTranslator",
 			new HighlightTranslator());

@@ -54,7 +54,7 @@ public class SearchSearchRequestAssemblerImpl
 		SearchRequest.Builder searchRequestBuilder,
 		SearchSearchRequest searchSearchRequest) {
 
-		_commonSearchRequestBuilderAssembler.assemble(
+		CommonSearchRequestBuilderAssembler.INSTANCE.assemble(
 			searchSearchRequest, searchRequestBuilder);
 
 		_setFetchSource(searchRequestBuilder, searchSearchRequest);
@@ -298,10 +298,6 @@ public class SearchSearchRequestAssemblerImpl
 
 		return fieldAndFormats;
 	}
-
-	@Reference
-	private CommonSearchRequestBuilderAssembler
-		_commonSearchRequestBuilderAssembler;
 
 	private final GroupByTranslator _groupByTranslator =
 		new GroupByTranslator();

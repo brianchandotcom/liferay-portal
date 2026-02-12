@@ -10,13 +10,18 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class SumBucketPipelineAggregationResult
-	extends AggregationResult {
+public class SumBucketPipelineAggregationResult extends AggregationResult {
 
-	public SumBucketPipelineAggregationResult(String name) {
+	public SumBucketPipelineAggregationResult(String name, double value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract double getValue();
+	public double getValue() {
+		return _value;
+	}
+
+	private final double _value;
 
 }

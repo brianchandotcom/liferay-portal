@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.test;
 
+import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.lang.SafeCloseable;
@@ -1346,10 +1347,13 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Method method = clazz.getMethod("cleanUp");
 
 		Constructor<?> constructor = clazz.getConstructor(
-			ClassNameLocalService.class, Connection.class);
+			ClassNameLocalService.class, Connection.class,
+			ObjectDefinitionLocalService.class);
 
 		method.invoke(
-			constructor.newInstance(_classNameLocalService, connection));
+			constructor.newInstance(
+				_classNameLocalService, connection,
+				_objectDefinitionLocalService));
 	}
 
 	private void _setEnv(String key, String value) throws Exception {
@@ -1412,6 +1416,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 	private ClassNameLocalService _classNameLocalService;
 
 	private String _diagnosticsReportContent;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
 	private ReleaseLocalService _releaseLocalService;

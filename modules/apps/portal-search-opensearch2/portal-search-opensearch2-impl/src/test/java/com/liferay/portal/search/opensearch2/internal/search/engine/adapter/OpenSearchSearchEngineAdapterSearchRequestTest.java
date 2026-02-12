@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeRequest;
 import com.liferay.portal.search.engine.adapter.search.OpenPointInTimeResponse;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
@@ -39,7 +38,6 @@ import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.document.OpenSearchDocumentFactoryUtil;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.util.IndexUtil;
 import com.liferay.portal.search.pit.PointInTime;
 import com.liferay.portal.search.sort.SortOrder;
@@ -375,28 +373,16 @@ public class OpenSearchSearchEngineAdapterSearchRequestTest
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		SearchEngineAdapter searchEngineAdapter =
+		OpenSearchSearchEngineAdapterImpl openSearchSearchEngineAdapterImpl =
 			new OpenSearchSearchEngineAdapterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchEngineAdapter, "_searchRequestExecutor",
-			_createSearchRequestExecutor(openSearchConnectionManager));
+			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
+			openSearchConnectionManager);
 
-		return searchEngineAdapter;
-	}
+		openSearchSearchEngineAdapterImpl.activate();
 
-	private static SearchRequestExecutor _createSearchRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager) {
-
-		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
-			{
-				setOpenSearchConnectionManager(openSearchConnectionManager);
-			}
-		};
-
-		_searchRequestExecutorFixture.setUp();
-
-		return _searchRequestExecutorFixture.getSearchRequestExecutor();
+		return openSearchSearchEngineAdapterImpl;
 	}
 
 	private void _assertSuggestion(
@@ -577,7 +563,6 @@ public class OpenSearchSearchEngineAdapterSearchRequestTest
 		_frameworkUtilMockedStatic = Mockito.mockStatic(FrameworkUtil.class);
 	private static OpenSearchClient _openSearchClient;
 	private static OpenSearchIndicesClient _openSearchIndicesClient;
-	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
 	private final DocumentFixture _documentFixture = new DocumentFixture();
 

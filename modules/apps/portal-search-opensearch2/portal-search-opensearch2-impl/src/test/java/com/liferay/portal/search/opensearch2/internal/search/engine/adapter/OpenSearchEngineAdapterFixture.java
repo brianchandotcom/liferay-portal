@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.SearchRequestExecutorFixture;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 
 /**
@@ -36,14 +35,7 @@ public class OpenSearchEngineAdapterFixture {
 				}
 			};
 
-		_searchRequestExecutorFixture = new SearchRequestExecutorFixture() {
-			{
-				setOpenSearchConnectionManager(openSearchConnectionManager);
-			}
-		};
-
 		documentRequestExecutorFixture.setUp();
-		_searchRequestExecutorFixture.setUp();
 
 		OpenSearchSearchEngineAdapterImpl openSearchSearchEngineAdapterImpl =
 			new OpenSearchSearchEngineAdapterImpl() {
@@ -59,9 +51,6 @@ public class OpenSearchEngineAdapterFixture {
 			openSearchSearchEngineAdapterImpl, "_documentRequestExecutor",
 			documentRequestExecutorFixture.getDocumentRequestExecutor());
 		ReflectionTestUtil.setFieldValue(
-			openSearchSearchEngineAdapterImpl, "_searchRequestExecutor",
-			_searchRequestExecutorFixture.getSearchRequestExecutor());
-		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngineAdapterImpl, "_snapshotRequestExecutor",
 			SnapshotRequestExecutorTestUtil.createSnapshotRequestExecutor(
 				openSearchConnectionManager));
@@ -76,8 +65,6 @@ public class OpenSearchEngineAdapterFixture {
 
 		_openSearchConnectionManager = openSearchConnectionManager;
 	}
-
-	private static SearchRequestExecutorFixture _searchRequestExecutorFixture;
 
 	private OpenSearchConnectionManager _openSearchConnectionManager;
 	private SearchEngineAdapter _searchEngineAdapter;

@@ -309,7 +309,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public TermsSetQuery termsSet(String fieldName, List<Object> values) {
-		return new TermsSetQueryImpl(fieldName, values);
+		return new TermsSetQuery(fieldName, values);
 	}
 
 	@Override

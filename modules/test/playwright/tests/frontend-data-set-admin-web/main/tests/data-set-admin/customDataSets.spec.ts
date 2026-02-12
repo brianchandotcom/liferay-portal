@@ -619,22 +619,22 @@ test('Sort data sets by different columns', async ({
 		await assertTableCellContent({
 			customDataSetsPage,
 			dataSetConfig: blogPostsDataSetConfig,
-			rowIndex: 0,
+			rowIndex: 3,
 		});
 		await assertTableCellContent({
 			customDataSetsPage,
 			dataSetConfig: catalogsDataSetConfig,
-			rowIndex: 1,
-		});
-		await assertTableCellContent({
-			customDataSetsPage,
-			dataSetConfig: skusDataSetConfig,
 			rowIndex: 2,
 		});
 		await assertTableCellContent({
 			customDataSetsPage,
+			dataSetConfig: skusDataSetConfig,
+			rowIndex: 1,
+		});
+		await assertTableCellContent({
+			customDataSetsPage,
 			dataSetConfig: productsDataSetConfig,
-			rowIndex: 3,
+			rowIndex: 0,
 		});
 	});
 });

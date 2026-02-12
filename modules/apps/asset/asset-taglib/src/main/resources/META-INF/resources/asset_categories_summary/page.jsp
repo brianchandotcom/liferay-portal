@@ -10,10 +10,9 @@
 <%
 AssetCategoriesSummaryDisplayContext assetCategoriesSummaryDisplayContext = new AssetCategoriesSummaryDisplayContext(request);
 
+List<AssetCategory> categories = assetCategoriesSummaryDisplayContext.getCategories();
 String paramName = assetCategoriesSummaryDisplayContext.getParamName();
 PortletURL portletURL = assetCategoriesSummaryDisplayContext.getPortletURL();
-
-List<AssetCategory> categories = assetCategoriesSummaryDisplayContext.getCategories();
 
 List<AssetVocabulary> vocabularies = assetCategoriesSummaryDisplayContext.getVocabularies(scopeGroupId);
 

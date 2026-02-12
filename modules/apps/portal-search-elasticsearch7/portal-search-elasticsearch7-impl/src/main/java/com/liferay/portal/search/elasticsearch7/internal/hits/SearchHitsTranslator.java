@@ -15,7 +15,6 @@ import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
-import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
@@ -35,10 +34,8 @@ import org.elasticsearch.common.document.DocumentField;
 public class SearchHitsTranslator {
 
 	public SearchHitsTranslator(
-		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
-		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
 	}
 
@@ -83,8 +80,7 @@ public class SearchHitsTranslator {
 		org.elasticsearch.search.SearchHit elasticsearchSearchHit,
 		String alternateUidFieldName) {
 
-		SearchHitBuilder searchHitBuilder =
-			_searchHitBuilderFactory.getSearchHitBuilder();
+		SearchHitBuilder searchHitBuilder = new SearchHitBuilder();
 
 		return searchHitBuilder.addHighlightFields(
 			_translateHighlightFields(elasticsearchSearchHit)
@@ -177,7 +173,6 @@ public class SearchHitsTranslator {
 		return highlightFields;
 	}
 
-	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 }

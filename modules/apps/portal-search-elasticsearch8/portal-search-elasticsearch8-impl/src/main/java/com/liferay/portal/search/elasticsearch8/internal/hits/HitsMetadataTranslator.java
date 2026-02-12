@@ -28,7 +28,6 @@ import com.liferay.portal.search.highlight.HighlightField;
 import com.liferay.portal.search.highlight.HighlightFieldBuilder;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
-import com.liferay.portal.search.hits.SearchHitBuilderFactory;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
 import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
@@ -46,10 +45,8 @@ import java.util.Map;
 public class HitsMetadataTranslator {
 
 	public HitsMetadataTranslator(
-		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory) {
 
-		_searchHitBuilderFactory = searchHitBuilderFactory;
 		_searchHitsBuilderFactory = searchHitsBuilderFactory;
 	}
 
@@ -85,8 +82,7 @@ public class HitsMetadataTranslator {
 	protected SearchHit translate(
 		String alternateUidFieldName, Hit<JsonData> hit) {
 
-		SearchHitBuilder searchHitBuilder =
-			_searchHitBuilderFactory.getSearchHitBuilder();
+		SearchHitBuilder searchHitBuilder = new SearchHitBuilder();
 
 		return searchHitBuilder.addHighlightFields(
 			_translateHighlightFields(hit.highlight())
@@ -175,7 +171,6 @@ public class HitsMetadataTranslator {
 		}
 	}
 
-	private final SearchHitBuilderFactory _searchHitBuilderFactory;
 	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 }

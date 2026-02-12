@@ -7,7 +7,6 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.sea
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
@@ -104,9 +103,6 @@ public class SearchRequestExecutorFixture {
 		SearchSearchResponseAssembler searchSearchResponseAssembler =
 			new SearchSearchResponseAssemblerImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssembler, "_searchHitBuilderFactory",
-			new SearchHitBuilderFactoryImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssembler, "_searchHitsBuilderFactory",
 			new SearchHitsBuilderFactoryImpl());

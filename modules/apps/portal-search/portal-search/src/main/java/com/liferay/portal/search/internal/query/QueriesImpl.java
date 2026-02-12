@@ -121,7 +121,7 @@ public class QueriesImpl implements Queries {
 		String field, GeoLocationPoint topLeftGeoLocationPoint,
 		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-		return new GeoBoundingBoxQueryImpl(
+		return new GeoBoundingBoxQuery(
 			field, topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
 	}
 

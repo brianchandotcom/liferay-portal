@@ -9,33 +9,74 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.query.geolocation.GeoExecType;
 import com.liferay.portal.search.query.geolocation.GeoValidationMethod;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class GeoBoundingBoxQuery extends Query {
+public class GeoBoundingBoxQuery extends Query {
 
-	public abstract GeoLocationPoint getBottomRightGeoLocationPoint();
+	public GeoBoundingBoxQuery(
+		String field, GeoLocationPoint topLeftGeoLocationPoint,
+		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-	public abstract String getField();
+		_field = field;
+		_topLeftGeoLocationPoint = topLeftGeoLocationPoint;
+		_bottomRightGeoLocationPoint = bottomRightGeoLocationPoint;
+	}
 
-	public abstract GeoExecType getGeoExecType();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract GeoValidationMethod getGeoValidationMethod();
+	public GeoLocationPoint getBottomRightGeoLocationPoint() {
+		return _bottomRightGeoLocationPoint;
+	}
 
-	public abstract Boolean getIgnoreUnmapped();
+	public String getField() {
+		return _field;
+	}
 
-	public abstract int getSortOrder();
+	public GeoExecType getGeoExecType() {
+		return _geoExecType;
+	}
 
-	public abstract GeoLocationPoint getTopLeftGeoLocationPoint();
+	public GeoValidationMethod getGeoValidationMethod() {
+		return _geoValidationMethod;
+	}
 
-	public abstract void setGeoExecType(GeoExecType geoExecType);
+	public Boolean getIgnoreUnmapped() {
+		return _ignoreUnmapped;
+	}
 
-	public abstract void setGeoValidationMethod(
-		GeoValidationMethod geoValidationMethod);
+	public int getSortOrder() {
+		return 120;
+	}
 
-	public abstract void setIgnoreUnmapped(Boolean ignoreUnmapped);
+	public GeoLocationPoint getTopLeftGeoLocationPoint() {
+		return _topLeftGeoLocationPoint;
+	}
+
+	public void setGeoExecType(GeoExecType geoExecType) {
+		_geoExecType = geoExecType;
+	}
+
+	public void setGeoValidationMethod(
+		GeoValidationMethod geoValidationMethod) {
+
+		_geoValidationMethod = geoValidationMethod;
+	}
+
+	public void setIgnoreUnmapped(Boolean ignoreUnmapped) {
+		_ignoreUnmapped = ignoreUnmapped;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final GeoLocationPoint _bottomRightGeoLocationPoint;
+	private final String _field;
+	private GeoExecType _geoExecType;
+	private GeoValidationMethod _geoValidationMethod;
+	private Boolean _ignoreUnmapped;
+	private final GeoLocationPoint _topLeftGeoLocationPoint;
 
 }

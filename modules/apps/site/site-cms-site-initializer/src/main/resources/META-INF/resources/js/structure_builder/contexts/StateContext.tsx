@@ -139,7 +139,7 @@ type DeleteChildAction = {type: 'delete-child'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
-type DuplicateChild = {type: 'duplicate-child'; uuid: Uuid};
+type DuplicateChildAction = {type: 'duplicate-child'; uuid: Uuid};
 
 type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
@@ -148,13 +148,13 @@ type RefreshReferencedStructuresAction = {
 	type: 'refresh-referenced-structures';
 };
 
-type RenameItem = {
+type RenameItemAction = {
 	name: string;
 	type: 'rename-item';
 	uuid: Uuid;
 };
 
-type SetRenamingItemUuid = {
+type SetRenamingItemUuidAction = {
 	type: 'set-renaming-item-uuid';
 	uuid: Uuid;
 };
@@ -164,7 +164,7 @@ type SetSelectionAction = {
 	type: 'set-selection';
 };
 
-type SetStructureStatus = {
+type SetStructureStatusAction = {
 	status: Structure['status'];
 	type: 'set-structure-status';
 };
@@ -234,13 +234,13 @@ export type Action =
 	| CreateStructureAction
 	| DeleteChildAction
 	| DeleteSelectionAction
-	| DuplicateChild
+	| DuplicateChildAction
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
-	| RenameItem
-	| SetRenamingItemUuid
+	| RenameItemAction
+	| SetRenamingItemUuidAction
 	| SetSelectionAction
-	| SetStructureStatus
+	| SetStructureStatusAction
 	| SetWorkflowAction
 	| UngroupAction
 	| UpdateFieldAction

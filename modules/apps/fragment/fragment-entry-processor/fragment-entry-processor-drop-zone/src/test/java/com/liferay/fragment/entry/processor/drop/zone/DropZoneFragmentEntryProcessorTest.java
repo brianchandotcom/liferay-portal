@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -48,7 +49,7 @@ public class DropZoneFragmentEntryProcessorTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@BeforeClass
-	public static void setUpClass() {
+	public static void setUpClass() throws Exception {
 		_setUpDropZoneDocumentFragmentEntryProcessor();
 		_setUpDropZoneFragmentEntryValidator();
 	}
@@ -95,7 +96,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					dropZoneId1, newDropZoneId, dropZoneId2),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -119,7 +120,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					StringPool.BLANK),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -144,7 +145,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					elementDropZoneId),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -172,7 +173,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					fragmentDropZoneId),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -213,7 +214,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					dropZoneId1, dropZoneId2),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -255,7 +256,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					dropZoneId1, dropZoneId2),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test
@@ -305,7 +306,7 @@ public class DropZoneFragmentEntryProcessorTest {
 				fragmentEntryLink,
 				FragmentEntryProcessorDropZoneTestUtil.getHTML(
 					dropZoneId2, dropZoneId3, dropZoneId1),
-				layoutStructure));
+				layoutStructure, FragmentEntryLinkConstants.EDIT));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -349,9 +350,27 @@ public class DropZoneFragmentEntryProcessorTest {
 			null, LocaleUtil.getDefault());
 	}
 
-	private static void _setUpDropZoneDocumentFragmentEntryProcessor() {
+	private static void _setUpDropZoneDocumentFragmentEntryProcessor()
+		throws Exception {
+
 		_dropZoneDocumentFragmentEntryProcessor =
 			new DropZoneDocumentFragmentEntryProcessor();
+
+		FragmentDropZoneRenderer fragmentDropZoneRenderer = Mockito.mock(
+			FragmentDropZoneRenderer.class);
+
+		Mockito.when(
+			fragmentDropZoneRenderer.renderDropZone(
+				Mockito.any(HttpServletRequest.class),
+				Mockito.any(HttpServletResponse.class), Mockito.anyString(),
+				Mockito.anyString(), Mockito.anyBoolean())
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_dropZoneDocumentFragmentEntryProcessor,
+			"_fragmentDropZoneRenderer", fragmentDropZoneRenderer);
 
 		ReflectionTestUtil.setFieldValue(
 			_dropZoneDocumentFragmentEntryProcessor,
@@ -433,7 +452,7 @@ public class DropZoneFragmentEntryProcessorTest {
 
 	private String _processFragmentEntryLinkHTML(
 			FragmentEntryLink fragmentEntryLink, String html,
-			LayoutStructure layoutStructure)
+			LayoutStructure layoutStructure, String mode)
 		throws Exception {
 
 		Mockito.when(
@@ -448,9 +467,9 @@ public class DropZoneFragmentEntryProcessorTest {
 			fragmentEntryLink, document,
 			new DefaultFragmentEntryProcessorContext(
 				fragmentEntryLink.getCompanyId(),
-				_getMockHttpServletRequest(layoutStructure), null,
-				LocaleUtil.getMostRelevantLocale(),
-				FragmentEntryLinkConstants.EDIT,
+				_getMockHttpServletRequest(layoutStructure),
+				Mockito.mock(HttpServletResponse.class),
+				LocaleUtil.getMostRelevantLocale(), mode,
 				fragmentEntryLink.getGroupId()));
 
 		Element bodyElement = document.body();

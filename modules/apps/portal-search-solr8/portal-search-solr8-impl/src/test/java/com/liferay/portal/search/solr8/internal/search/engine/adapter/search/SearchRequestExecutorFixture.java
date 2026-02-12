@@ -7,10 +7,8 @@ package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
-import com.liferay.portal.search.internal.legacy.document.DocumentBuilderFactoryImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.search.response.DefaultSearchSearchResponseAssemblerHelperImpl;
-import com.liferay.portal.search.solr8.internal.search.response.SearchSearchResponseAssemblerHelper;
 import com.liferay.portal.search.solr8.internal.sort.SolrSortFieldTranslator;
 
 /**
@@ -76,23 +74,9 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssemblerImpl,
 			"_searchSearchResponseAssemblerHelper",
-			createSearchSearchResponseAssemblerHelper());
+			new DefaultSearchSearchResponseAssemblerHelperImpl());
 
 		return searchSearchResponseAssemblerImpl;
-	}
-
-	protected SearchSearchResponseAssemblerHelper
-		createSearchSearchResponseAssemblerHelper() {
-
-		DefaultSearchSearchResponseAssemblerHelperImpl
-			defaultSearchSearchResponseAssemblerHelperImpl =
-				new DefaultSearchSearchResponseAssemblerHelperImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			defaultSearchSearchResponseAssemblerHelperImpl,
-			"_documentBuilderFactory", new DocumentBuilderFactoryImpl());
-
-		return defaultSearchSearchResponseAssemblerHelperImpl;
 	}
 
 	protected SearchSolrQueryAssembler createSearchSolrQueryAssembler() {

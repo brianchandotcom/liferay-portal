@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.legacy.document.DocumentBuilderFactory;
 import com.liferay.portal.search.test.rule.SearchTestRule;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -34,7 +33,7 @@ public class LegacyDocumentBuilderInstantiationTest {
 	@Test
 	public void testDocumentBuilderFactory() {
 		Assert.assertNotNull(
-			_documentBuilderFactory.builder(
+			DocumentBuilderFactory.builder(
 				new DocumentImpl()
 			).setString(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
@@ -43,8 +42,5 @@ public class LegacyDocumentBuilderInstantiationTest {
 
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
-
-	@Inject
-	private static DocumentBuilderFactory _documentBuilderFactory;
 
 }

@@ -24,19 +24,9 @@ import {
 	expectAllCookiesDeclined,
 } from './utils/cookies';
 
-export const disabledTest = mergeTests(
-	accountSettingsPagesTest,
-	featureFlagsTest({
-		'LPD-51356': {enabled: false},
-	}),
-	loginTest(),
-	systemSettingsPageTest
-);
-
 export const test = mergeTests(
 	accountSettingsPagesTest,
 	featureFlagsTest({
-		'LPD-51356': {enabled: true},
 		'LPD-75032': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
@@ -135,23 +125,6 @@ test.beforeEach(async ({page, systemSettingsPage}) => {
 		await page.waitForTimeout(1000);
 	});
 });
-
-disabledTest(
-	'Data and Privacy tab is not visible',
-	{tag: '@LPD-72749'},
-	async ({accountSettingsPage}) => {
-		await accountSettingsPage.goToAccountSettings();
-
-		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
-			'.nav-link',
-			{
-				hasText: 'Data And Privacy',
-			}
-		);
-
-		await expect(await dataAndPrivacyTab).not.toBeVisible();
-	}
-);
 
 test(
 	'Data and Privacy tab is visible',

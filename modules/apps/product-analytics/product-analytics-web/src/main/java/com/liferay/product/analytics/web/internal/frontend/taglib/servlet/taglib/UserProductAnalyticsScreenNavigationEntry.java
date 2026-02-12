@@ -9,7 +9,6 @@ import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -73,10 +72,7 @@ public class UserProductAnalyticsScreenNavigationEntry
 
 	@Override
 	public boolean isVisible(User user, User selUser) {
-		if ((selUser == null) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-51356")) {
-
+		if (selUser == null) {
 			return false;
 		}
 

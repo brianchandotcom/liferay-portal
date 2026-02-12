@@ -88,7 +88,7 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 		}
 
 		for (ConsentCookieType optionalConsentCookieType : cookiesBannerConfigurationDisplayContext.getOptionalConsentCookieTypes()) {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-51356") && optionalConsentCookieType.isHideFromEndUser()) {
+			if (optionalConsentCookieType.isHideFromEndUser()) {
 				continue;
 			}
 		%>

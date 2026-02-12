@@ -6,7 +6,6 @@
 package com.liferay.product.analytics.web.internal.portlet;
 
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsPortletKeys;
@@ -54,12 +53,6 @@ public class ProductAnalyticsConsentPanelPortlet extends MVCPortlet {
 	public void render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_portal.getCompanyId(renderRequest), "LPD-51356")) {
-
-			return;
-		}
 
 		ProductAnalyticsConsentPanelDisplayContext
 			productAnalyticsConsentPanelDisplayContext =

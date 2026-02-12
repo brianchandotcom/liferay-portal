@@ -29,7 +29,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -43,24 +46,38 @@ public class FragmentMappingFieldUtil {
 		long layoutPlid, LayoutStructure layoutStructure,
 		String layoutStructureItemId, long scopeGroupId) {
 
-		String collectionFieldId = jsonObject.getString("collectionFieldId");
+		ServiceContext serviceContext = new ServiceContext();
 
-		if (Validator.isNotNull(collectionFieldId)) {
-			return _getCollectionFieldKey(
-				collectionFieldId, infoItemServiceRegistry, layoutStructure,
-				layoutStructureItemId, scopeGroupId);
+		serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
+		serviceContext.setScopeGroupId(scopeGroupId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			String collectionFieldId = jsonObject.getString(
+				"collectionFieldId");
+
+			if (Validator.isNotNull(collectionFieldId)) {
+				return _getCollectionFieldKey(
+					collectionFieldId, infoItemServiceRegistry, layoutStructure,
+					layoutStructureItemId, scopeGroupId);
+			}
+
+			if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
+				return _getInstanceFieldKey(
+					infoItemServiceRegistry, jsonObject, scopeGroupId);
+			}
+
+			String mappedField = jsonObject.getString("mappedField");
+
+			if (Validator.isNotNull(mappedField)) {
+				return _getContextFieldKey(
+					infoItemServiceRegistry, layoutPlid, scopeGroupId,
+					mappedField);
+			}
 		}
-
-		if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
-			return _getInstanceFieldKey(
-				infoItemServiceRegistry, jsonObject, scopeGroupId);
-		}
-
-		String mappedField = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(mappedField)) {
-			return _getContextFieldKey(
-				infoItemServiceRegistry, layoutPlid, scopeGroupId, mappedField);
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
 		}
 
 		return null;

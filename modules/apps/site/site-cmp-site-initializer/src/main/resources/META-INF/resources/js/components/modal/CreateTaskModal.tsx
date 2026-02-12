@@ -30,12 +30,14 @@ import './../AssigneeTrigger.scss';
 type CreateTaskModalProps = {
 	closeModal: () => void;
 	loadData: Function;
+	projectId?: string;
 	state: string;
 };
 
 export default function CreateTaskModal({
 	closeModal,
 	loadData,
+	projectId,
 	state,
 }: CreateTaskModalProps) {
 	const [states, setStates] = useState([]);
@@ -60,7 +62,7 @@ export default function CreateTaskModal({
 		initialValues: {
 			assignTo: {},
 			dueDate: '',
-			r_cmpProjectToCMPTasks_c_cmpProjectId: 0,
+			r_cmpProjectToCMPTasks_c_cmpProjectId: Number(projectId) ?? 0,
 			state,
 			title: '',
 		},
@@ -120,10 +122,20 @@ export default function CreateTaskModal({
 					};
 				})
 			);
+
+			if (projectId) {
+				const scopeKey = items.find(
+					({embedded: {id}}) => String(id) === projectId
+				)?.embedded.scopeKey;
+
+				if (scopeKey) {
+					setScopeKey(scopeKey);
+				}
+			}
 		};
 
 		makeFetch();
-	}, []);
+	}, [projectId]);
 
 	return (
 		<ClayForm
@@ -149,6 +161,7 @@ export default function CreateTaskModal({
 				/>
 
 				<FieldPicker
+					disabled={!!projectId}
 					errorMessage={
 						touched.r_cmpProjectToCMPTasks_c_cmpProjectId
 							? errors.r_cmpProjectToCMPTasks_c_cmpProjectId

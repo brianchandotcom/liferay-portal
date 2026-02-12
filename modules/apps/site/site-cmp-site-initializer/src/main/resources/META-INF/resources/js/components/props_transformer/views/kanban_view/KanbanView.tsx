@@ -14,7 +14,6 @@ import {KanbanViewContext} from './context';
 import {useOptimisticBoard} from './hooks/useOptimisticBoard';
 
 interface KanbanViewProps {
-	currentURL: string;
 	items: ITask[];
 	itemsActions: IItemsActions[];
 	projectId: string;

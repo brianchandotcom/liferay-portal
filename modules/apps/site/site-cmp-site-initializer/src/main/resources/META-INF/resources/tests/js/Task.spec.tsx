@@ -96,18 +96,15 @@ describe('Kanban Task', () => {
 		},
 	} as any;
 
-	const renderTask = (
-		itemsActions: any[] = [],
-		currentURL = 'http://localhost/tasks'
-	) =>
+	const renderTask = (itemsActions: any[] = [], projectId = '') =>
 		render(
 			<KanbanViewContext.Provider
 				value={{
 					boardData: {},
 					changeTaskStatus: jest.fn(),
-					currentURL,
 					itemsActions,
 					loadData: mockLoadData,
+					projectId,
 				}}
 			>
 				<Task {...task} />
@@ -166,7 +163,7 @@ describe('Kanban Task', () => {
 		expect(mockOpenCMPModal).toHaveBeenCalledTimes(1);
 	});
 
-	it('renders due date when currentURL contains "project"', () => {
+	it('renders due date when projectId is provided', () => {
 		const taskWithDueDate = {
 			...task,
 			embedded: {
@@ -180,9 +177,9 @@ describe('Kanban Task', () => {
 				value={{
 					boardData: {},
 					changeTaskStatus: jest.fn(),
-					currentURL: 'http://localhost/project/123',
 					itemsActions: [],
 					loadData: mockLoadData,
+					projectId: '123',
 				}}
 			>
 				<Task {...taskWithDueDate} />
@@ -195,7 +192,7 @@ describe('Kanban Task', () => {
 		expect(queryByText('Project A')).not.toBeInTheDocument();
 	});
 
-	it('renders project title when the currentURL does not contain "project"', () => {
+	it('renders project title when projectId is not provided', () => {
 		const {getByText} = renderTask();
 
 		expect(getByText('Task title')).toBeInTheDocument();
@@ -274,9 +271,9 @@ describe('Kanban Task', () => {
 					value={{
 						boardData: {},
 						changeTaskStatus: jest.fn(),
-						currentURL: '',
 						itemsActions: [],
 						loadData: mockLoadData,
+						projectId: '',
 					}}
 				>
 					<Task {...taskWithSubscription} />
@@ -307,9 +304,9 @@ describe('Kanban Task', () => {
 					value={{
 						boardData: {},
 						changeTaskStatus: jest.fn(),
-						currentURL: '',
 						itemsActions: [],
 						loadData: mockLoadData,
+						projectId: '',
 					}}
 				>
 					<Task {...taskWithSubscription} />

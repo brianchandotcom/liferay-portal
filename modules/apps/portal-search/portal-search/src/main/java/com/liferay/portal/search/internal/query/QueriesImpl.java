@@ -66,7 +66,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public BoostingQuery boosting(Query positiveQuery, Query negativeQuery) {
-		return new BoostingQueryImpl(positiveQuery, negativeQuery);
+		return new BoostingQuery(positiveQuery, negativeQuery);
 	}
 
 	@Override

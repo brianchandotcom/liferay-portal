@@ -5,20 +5,41 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class BoostingQuery extends Query {
+public class BoostingQuery extends Query {
 
-	public abstract Float getNegativeBoost();
+	public BoostingQuery(Query positiveQuery, Query negativeQuery) {
+		_positiveQuery = positiveQuery;
+		_negativeQuery = negativeQuery;
+	}
 
-	public abstract Query getNegativeQuery();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract Query getPositiveQuery();
+	public Float getNegativeBoost() {
+		return _negativeBoost;
+	}
 
-	public abstract void setNegativeBoost(Float negativeBoost);
+	public Query getNegativeQuery() {
+		return _negativeQuery;
+	}
+
+	public Query getPositiveQuery() {
+		return _positiveQuery;
+	}
+
+	public void setNegativeBoost(Float negativeBoost) {
+		_negativeBoost = negativeBoost;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private Float _negativeBoost;
+	private final Query _negativeQuery;
+	private final Query _positiveQuery;
 
 }

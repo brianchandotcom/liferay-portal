@@ -14,6 +14,12 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 public class FragmentViewportStyleTestUtil {
 
 	public static FragmentViewportStyle getFragmentViewportStyle() {
+		return getFragmentViewportStyle(RandomTestUtil.randomBoolean());
+	}
+
+	public static FragmentViewportStyle getFragmentViewportStyle(
+		Boolean curHidden) {
+
 		return new FragmentViewportStyle() {
 			{
 				setBackgroundColor(RandomTestUtil::randomString);
@@ -24,7 +30,7 @@ public class FragmentViewportStyleTestUtil {
 				setFontSize(RandomTestUtil::randomString);
 				setFontWeight(RandomTestUtil::randomString);
 				setHeight(RandomTestUtil::randomString);
-				setHidden(RandomTestUtil::randomBoolean);
+				setHidden(() -> curHidden);
 				setMarginBottom(RandomTestUtil::randomString);
 				setMarginLeft(RandomTestUtil::randomString);
 				setMarginRight(RandomTestUtil::randomString);

@@ -7,7 +7,6 @@ package com.liferay.portal.search.opensearch2.internal.query;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.search.internal.query.FuzzyQueryImpl;
 import com.liferay.portal.search.internal.query.MatchAllQueryImpl;
 import com.liferay.portal.search.internal.query.MoreLikeThisQueryImpl;
 import com.liferay.portal.search.internal.query.MultiMatchQueryImpl;
@@ -20,6 +19,7 @@ import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 import com.liferay.portal.search.opensearch2.internal.util.QueryUtil;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
+import com.liferay.portal.search.query.FuzzyQuery;
 import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermsQuery;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -54,7 +54,7 @@ public class OpenSearchQueryTranslatorTest {
 
 	@Test
 	public void testTranslateBoostFuzzyQuery() {
-		_assertBoost(new FuzzyQueryImpl("test", "test"));
+		_assertBoost(new FuzzyQuery("test", "test"));
 	}
 
 	@Test

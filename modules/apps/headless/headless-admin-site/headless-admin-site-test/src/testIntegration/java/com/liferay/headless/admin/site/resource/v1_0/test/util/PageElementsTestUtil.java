@@ -69,6 +69,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsEntryConstants;
+import com.liferay.template.model.TemplateEntry;
+import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -930,6 +932,19 @@ public class PageElementsTestUtil {
 
 	private static PageElementDefinition.Type _getRandomType() {
 		return _types.get(RandomTestUtil.randomInt(0, _types.size() - 1));
+	}
+
+	private static TemplateEntry _getTemplateEntry(
+			JournalArticle journalArticle, String text,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return TemplateTestUtil.addTemplateEntry(
+			JournalArticle.class.getName(),
+			String.valueOf(journalArticle.getDDMStructureId()), text,
+			RandomTestUtil.randomString(),
+			TemplateTestUtil.getSampleScriptFTL("JournalArticle_title", text),
+			serviceContext);
 	}
 
 	private static WidgetInstance _getWidgetInstance() {

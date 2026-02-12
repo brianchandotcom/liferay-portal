@@ -295,8 +295,6 @@ public class AddFragmentCompositionMVCActionCommandTest {
 		JSONObject fragmentCompositionJSONObject = jsonObject.getJSONObject(
 			"fragmentComposition");
 
-		Assert.assertNotNull(fragmentCompositionJSONObject);
-
 		Assert.assertFalse(
 			fragmentCompositionJSONObject.has("fragmentEntryKey"));
 

@@ -9335,6 +9335,11 @@ paths:
                     schema:
                         type: string
                 -   in: query
+                    name: privatePage
+                    schema:
+                        default: false
+                        type: boolean
+                -   in: query
                     name: restrictFields
                     schema:
                         type: string

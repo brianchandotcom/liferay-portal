@@ -667,7 +667,10 @@ public class DisplayPageTemplateResourceImpl
 			return -2;
 		}
 
-		if (itemExternalReference == null) {
+		if ((itemExternalReference == null) ||
+			Validator.isNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
 			throw new UnsupportedOperationException();
 		}
 

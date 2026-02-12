@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class MovingFunctionPipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements MovingFunctionPipelineAggregationResult {
+	extends MovingFunctionPipelineAggregationResult {
 
 	public MovingFunctionPipelineAggregationResultImpl(
 		String name, double value) {

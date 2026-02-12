@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregationRe
  * @author Michael C. Han
  */
 public class SignificantTextAggregationResultImpl
-	extends BaseBucketAggregationResult
-	implements SignificantTextAggregationResult {
+	extends SignificantTextAggregationResult {
 
 	public SignificantTextAggregationResultImpl(
 		String name, long errorDocCounts, long otherDocCounts) {

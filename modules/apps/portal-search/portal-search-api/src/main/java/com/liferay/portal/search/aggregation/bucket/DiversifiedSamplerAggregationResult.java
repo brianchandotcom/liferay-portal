@@ -5,12 +5,14 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface DiversifiedSamplerAggregationResult
+public abstract class DiversifiedSamplerAggregationResult
 	extends SamplerAggregationResult {
+
+	public DiversifiedSamplerAggregationResult(String name, long docCount) {
+		super(name, docCount);
+	}
+
 }

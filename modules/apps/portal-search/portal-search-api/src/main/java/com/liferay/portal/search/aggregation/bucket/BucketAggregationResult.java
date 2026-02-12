@@ -8,19 +8,35 @@ package com.liferay.portal.search.aggregation.bucket;
 import com.liferay.portal.search.aggregation.AggregationResult;
 
 import java.util.Collection;
-
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
  */
-@ProviderType
-public interface BucketAggregationResult extends AggregationResult {
+public abstract class BucketAggregationResult extends AggregationResult {
 
-	public Bucket addBucket(String key, long docCount);
+	public BucketAggregationResult(String name) {
+		super(name);
+	}
 
-	public Bucket getBucket(String key);
+	public Bucket addBucket(String key, long docCount) {
+		Bucket bucket = new Bucket(key, docCount);
 
-	public Collection<Bucket> getBuckets();
+		_buckets.put(bucket.getKey(), bucket);
+
+		return bucket;
+	}
+
+	public Bucket getBucket(String key) {
+		return _buckets.get(key);
+	}
+
+	public Collection<Bucket> getBuckets() {
+		return Collections.unmodifiableCollection(_buckets.values());
+	}
+
+	private final Map<String, Bucket> _buckets = new LinkedHashMap<>();
 
 }

@@ -10,9 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.ChildrenAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class ChildrenAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements ChildrenAggregationResult {
+public class ChildrenAggregationResultImpl extends ChildrenAggregationResult {
 
 	public ChildrenAggregationResultImpl(String name, long docCount) {
 		super(name);

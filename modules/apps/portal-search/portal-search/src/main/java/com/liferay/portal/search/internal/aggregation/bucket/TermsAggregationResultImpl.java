@@ -10,8 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class TermsAggregationResultImpl
-	extends BaseBucketAggregationResult implements TermsAggregationResult {
+public class TermsAggregationResultImpl extends TermsAggregationResult {
 
 	public TermsAggregationResultImpl(
 		String name, long errorDocCounts, long otherDocCounts) {

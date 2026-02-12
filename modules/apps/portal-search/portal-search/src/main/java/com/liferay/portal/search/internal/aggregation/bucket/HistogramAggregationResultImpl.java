@@ -10,8 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class HistogramAggregationResultImpl
-	extends BaseBucketAggregationResult implements HistogramAggregationResult {
+public class HistogramAggregationResultImpl extends HistogramAggregationResult {
 
 	public HistogramAggregationResultImpl(String name) {
 		super(name);

@@ -6,13 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class WeightedAvgAggregationResultImpl
-	extends BaseAggregationResult implements WeightedAvgAggregationResult {
+	extends WeightedAvgAggregationResult {
 
 	public WeightedAvgAggregationResultImpl(String name, double value) {
 		super(name);

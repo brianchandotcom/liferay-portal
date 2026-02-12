@@ -10,9 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.MissingAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class MissingAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements MissingAggregationResult {
+public class MissingAggregationResultImpl extends MissingAggregationResult {
 
 	public MissingAggregationResultImpl(String name, long docCount) {
 		super(name);

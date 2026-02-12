@@ -7,13 +7,12 @@ package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.GeoCentroidAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class GeoCentroidAggregationResultImpl
-	extends BaseAggregationResult implements GeoCentroidAggregationResult {
+	extends GeoCentroidAggregationResult {
 
 	public GeoCentroidAggregationResultImpl(
 		String name, GeoLocationPoint centroidGeoLocationPoint, long count) {

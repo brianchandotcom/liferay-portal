@@ -6,13 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.CardinalityAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class CardinalityAggregationResultImpl
-	extends BaseAggregationResult implements CardinalityAggregationResult {
+	extends CardinalityAggregationResult {
 
 	public CardinalityAggregationResultImpl(String name, long value) {
 		super(name);

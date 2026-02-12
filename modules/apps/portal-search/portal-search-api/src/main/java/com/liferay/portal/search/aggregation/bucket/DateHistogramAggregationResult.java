@@ -5,12 +5,14 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface DateHistogramAggregationResult
+public abstract class DateHistogramAggregationResult
 	extends BucketAggregationResult {
+
+	public DateHistogramAggregationResult(String name) {
+		super(name);
+	}
+
 }

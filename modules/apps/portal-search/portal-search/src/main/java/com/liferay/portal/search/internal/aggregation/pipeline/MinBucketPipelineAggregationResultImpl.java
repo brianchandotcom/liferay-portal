@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregati
  * @author Michael C. Han
  */
 public class MinBucketPipelineAggregationResultImpl
-	extends BaseBucketPipelineAggregationResult
-	implements MinBucketPipelineAggregationResult {
+	extends MinBucketPipelineAggregationResult {
 
 	public MinBucketPipelineAggregationResultImpl(String name, double value) {
 		super(name, value);

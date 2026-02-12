@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.GeoHashGridAggregationResult
  * @author Michael C. Han
  */
 public class GeoHashGridAggregationResultImpl
-	extends BaseBucketAggregationResult
-	implements GeoHashGridAggregationResult {
+	extends GeoHashGridAggregationResult {
 
 	public GeoHashGridAggregationResultImpl(String name) {
 		super(name);

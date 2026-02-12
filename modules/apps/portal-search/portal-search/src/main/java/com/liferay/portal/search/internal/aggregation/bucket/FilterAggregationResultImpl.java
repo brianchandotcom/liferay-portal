@@ -10,9 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.FilterAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class FilterAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements FilterAggregationResult {
+public class FilterAggregationResultImpl extends FilterAggregationResult {
 
 	public FilterAggregationResultImpl(String name, long docCount) {
 		super(name);

@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.DiversifiedSamplerAggregatio
  * @author Michael C. Han
  */
 public class DiversifiedSamplerAggregationResultImpl
-	extends SamplerAggregationResultImpl
-	implements DiversifiedSamplerAggregationResult {
+	extends DiversifiedSamplerAggregationResult {
 
 	public DiversifiedSamplerAggregationResultImpl(String name, long docCount) {
 		super(name, docCount);

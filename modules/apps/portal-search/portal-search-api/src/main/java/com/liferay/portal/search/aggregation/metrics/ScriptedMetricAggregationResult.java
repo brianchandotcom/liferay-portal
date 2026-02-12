@@ -7,16 +7,18 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface ScriptedMetricAggregationResult extends AggregationResult {
+public abstract class ScriptedMetricAggregationResult
+	extends AggregationResult {
 
-	public Object getValue();
+	public ScriptedMetricAggregationResult(String name) {
+		super(name);
+	}
 
-	public void setValue(Object value);
+	public abstract Object getValue();
+
+	public abstract void setValue(Object value);
 
 }

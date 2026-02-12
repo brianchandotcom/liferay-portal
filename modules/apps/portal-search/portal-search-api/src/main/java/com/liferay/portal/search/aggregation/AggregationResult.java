@@ -5,14 +5,19 @@
 
 package com.liferay.portal.search.aggregation;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface AggregationResult {
+public abstract class AggregationResult {
 
-	public String getName();
+	public AggregationResult(String name) {
+		_name = name;
+	}
+
+	public String getName() {
+		return _name;
+	}
+
+	private final String _name;
 
 }

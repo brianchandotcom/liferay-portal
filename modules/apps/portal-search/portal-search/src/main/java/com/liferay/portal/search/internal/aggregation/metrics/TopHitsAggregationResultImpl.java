@@ -7,13 +7,11 @@ package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
-public class TopHitsAggregationResultImpl
-	extends BaseAggregationResult implements TopHitsAggregationResult {
+public class TopHitsAggregationResultImpl extends TopHitsAggregationResult {
 
 	public TopHitsAggregationResultImpl(String name, SearchHits searchHits) {
 		super(name);

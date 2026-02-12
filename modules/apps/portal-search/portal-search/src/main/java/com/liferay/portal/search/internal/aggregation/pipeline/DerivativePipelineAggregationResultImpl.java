@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class DerivativePipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements DerivativePipelineAggregationResult {
+	extends DerivativePipelineAggregationResult {
 
 	public DerivativePipelineAggregationResultImpl(
 		String name, double normalizedValue) {

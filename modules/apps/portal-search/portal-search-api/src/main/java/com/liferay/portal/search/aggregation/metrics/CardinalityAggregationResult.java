@@ -7,14 +7,15 @@ package com.liferay.portal.search.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface CardinalityAggregationResult extends AggregationResult {
+public abstract class CardinalityAggregationResult extends AggregationResult {
 
-	public long getValue();
+	public CardinalityAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract long getValue();
 
 }

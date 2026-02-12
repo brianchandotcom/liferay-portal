@@ -10,9 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.NestedAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class NestedAggregationResultImpl
-	extends BaseHierarchicalAggregationResult
-	implements NestedAggregationResult {
+public class NestedAggregationResultImpl extends NestedAggregationResult {
 
 	public NestedAggregationResultImpl(String name, long docCount) {
 		super(name);

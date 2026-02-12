@@ -6,14 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class BucketScriptPipelineAggregationResultImpl
-	extends BaseAggregationResult
-	implements BucketScriptPipelineAggregationResult {
+	extends BucketScriptPipelineAggregationResult {
 
 	public BucketScriptPipelineAggregationResultImpl(
 		String name, double value) {

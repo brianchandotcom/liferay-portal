@@ -5,11 +5,14 @@
 
 package com.liferay.portal.search.aggregation.bucket;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface GeoDistanceAggregationResult extends BucketAggregationResult {
+public abstract class GeoDistanceAggregationResult
+	extends BucketAggregationResult {
+
+	public GeoDistanceAggregationResult(String name) {
+		super(name);
+	}
+
 }

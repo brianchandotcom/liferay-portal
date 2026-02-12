@@ -5,12 +5,14 @@
 
 package com.liferay.portal.search.aggregation.pipeline;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface MaxBucketPipelineAggregationResult
+public abstract class MaxBucketPipelineAggregationResult
 	extends BucketPipelineAggregationResult {
+
+	public MaxBucketPipelineAggregationResult(String name, double value) {
+		super(name, value);
+	}
+
 }

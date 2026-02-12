@@ -5,24 +5,48 @@
 
 package com.liferay.portal.search.aggregation.metrics;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface ExtendedStatsAggregationResult extends StatsAggregationResult {
+public class ExtendedStatsAggregationResult extends StatsAggregationResult {
 
-	public double getStdDeviation();
+	public ExtendedStatsAggregationResult(
+		String name, double avg, long count, double min, double max, double sum,
+		double sumOfSquares, double variance, double stdDeviation) {
 
-	public double getSumOfSquares();
+		super(name, avg, count, min, max, sum);
 
-	public double getVariance();
+		_sumOfSquares = sumOfSquares;
+		_variance = variance;
+		_stdDeviation = stdDeviation;
+	}
 
-	public void setStdDeviation(double stdDeviation);
+	public double getStdDeviation() {
+		return _stdDeviation;
+	}
 
-	public void setSumOfSquares(double sumOfSquares);
+	public double getSumOfSquares() {
+		return _sumOfSquares;
+	}
 
-	public void setVariance(double variance);
+	public double getVariance() {
+		return _variance;
+	}
+
+	public void setStdDeviation(double stdDeviation) {
+		_stdDeviation = stdDeviation;
+	}
+
+	public void setSumOfSquares(double sumOfSquares) {
+		_sumOfSquares = sumOfSquares;
+	}
+
+	public void setVariance(double variance) {
+		_variance = variance;
+	}
+
+	private double _stdDeviation;
+	private double _sumOfSquares;
+	private double _variance;
 
 }

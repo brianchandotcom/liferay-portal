@@ -6,13 +6,12 @@
 package com.liferay.portal.search.internal.aggregation.metrics;
 
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
-import com.liferay.portal.search.internal.aggregation.BaseAggregationResult;
 
 /**
  * @author Michael C. Han
  */
 public class ValueCountAggregationResultImpl
-	extends BaseAggregationResult implements ValueCountAggregationResult {
+	extends ValueCountAggregationResult {
 
 	public ValueCountAggregationResultImpl(String name, long value) {
 		super(name);

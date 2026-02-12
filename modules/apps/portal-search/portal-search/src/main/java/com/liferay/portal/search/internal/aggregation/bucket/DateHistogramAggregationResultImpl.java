@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregationResu
  * @author Michael C. Han
  */
 public class DateHistogramAggregationResultImpl
-	extends BaseBucketAggregationResult
-	implements DateHistogramAggregationResult {
+	extends DateHistogramAggregationResult {
 
 	public DateHistogramAggregationResultImpl(String name) {
 		super(name);

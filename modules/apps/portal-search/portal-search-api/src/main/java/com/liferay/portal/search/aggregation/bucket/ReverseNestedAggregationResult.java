@@ -7,17 +7,18 @@ package com.liferay.portal.search.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.HierarchicalAggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface ReverseNestedAggregationResult
+public abstract class ReverseNestedAggregationResult
 	extends HierarchicalAggregationResult {
 
-	public long getDocCount();
+	public ReverseNestedAggregationResult(String name) {
+		super(name);
+	}
 
-	public void setDocCount(long docCount);
+	public abstract long getDocCount();
+
+	public abstract void setDocCount(long docCount);
 
 }

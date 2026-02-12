@@ -10,8 +10,7 @@ import com.liferay.portal.search.aggregation.bucket.FiltersAggregationResult;
 /**
  * @author Michael C. Han
  */
-public class FiltersAggregationResultImpl
-	extends BaseBucketAggregationResult implements FiltersAggregationResult {
+public class FiltersAggregationResultImpl extends FiltersAggregationResult {
 
 	public FiltersAggregationResultImpl(String name) {
 		super(name);

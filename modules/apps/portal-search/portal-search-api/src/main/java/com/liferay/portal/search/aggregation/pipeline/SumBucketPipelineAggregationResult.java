@@ -7,14 +7,16 @@ package com.liferay.portal.search.aggregation.pipeline;
 
 import com.liferay.portal.search.aggregation.AggregationResult;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public interface SumBucketPipelineAggregationResult extends AggregationResult {
+public abstract class SumBucketPipelineAggregationResult
+	extends AggregationResult {
 
-	public double getValue();
+	public SumBucketPipelineAggregationResult(String name) {
+		super(name);
+	}
+
+	public abstract double getValue();
 
 }

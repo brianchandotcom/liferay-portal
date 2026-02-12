@@ -11,8 +11,7 @@ import com.liferay.portal.search.aggregation.bucket.SignificantTermsAggregationR
  * @author Michael C. Han
  */
 public class SignificantTermsAggregationResultImpl
-	extends BaseBucketAggregationResult
-	implements SignificantTermsAggregationResult {
+	extends SignificantTermsAggregationResult {
 
 	public SignificantTermsAggregationResultImpl(
 		String name, long errorDocCounts, long otherDocCounts) {

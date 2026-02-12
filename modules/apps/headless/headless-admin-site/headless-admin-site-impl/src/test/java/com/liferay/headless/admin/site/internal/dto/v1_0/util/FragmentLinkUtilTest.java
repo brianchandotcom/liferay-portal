@@ -120,7 +120,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -134,7 +134,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -185,7 +185,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -244,7 +244,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -315,7 +315,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -382,7 +382,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -426,7 +426,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -473,7 +473,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -506,7 +506,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -545,7 +545,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_SCOPE_GROUP_ID));
+				0, null, null, _SCOPE_GROUP_ID));
 	}
 
 	@Test

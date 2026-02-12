@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.metrics.GeoBoundsAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.GeoCentroidAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MaxAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.metrics.MinAggregationResultImpl;
@@ -174,7 +173,7 @@ public class AggregationResultsImpl implements AggregationResults {
 		String name, GeoLocationPoint topLeftGeoLocationPoint,
 		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-		return new GeoBoundsAggregationResultImpl(
+		return new GeoBoundsAggregationResult(
 			name, topLeftGeoLocationPoint, bottomRightGeoLocationPoint);
 	}
 

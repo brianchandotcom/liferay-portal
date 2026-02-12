@@ -11,18 +11,35 @@ import com.liferay.portal.search.geolocation.GeoLocationPoint;
 /**
  * @author Michael C. Han
  */
-public abstract class GeoBoundsAggregationResult extends AggregationResult {
+public class GeoBoundsAggregationResult extends AggregationResult {
 
-	public GeoBoundsAggregationResult(String name) {
+	public GeoBoundsAggregationResult(
+		String name, GeoLocationPoint topLeftGeoLocationPoint,
+		GeoLocationPoint bottomRightGeoLocationPoint) {
+
 		super(name);
+
+		_topLeftGeoLocationPoint = topLeftGeoLocationPoint;
+		_bottomRightGeoLocationPoint = bottomRightGeoLocationPoint;
 	}
 
-	public abstract GeoLocationPoint getBottomRight();
+	public GeoLocationPoint getBottomRight() {
+		return _bottomRightGeoLocationPoint;
+	}
 
-	public abstract GeoLocationPoint getTopLeft();
+	public GeoLocationPoint getTopLeft() {
+		return _topLeftGeoLocationPoint;
+	}
 
-	public abstract void setBottomRight(GeoLocationPoint geoLocationPoint);
+	public void setBottomRight(GeoLocationPoint geoLocationPoint) {
+		_bottomRightGeoLocationPoint = geoLocationPoint;
+	}
 
-	public abstract void setTopLeft(GeoLocationPoint geoLocationPoint);
+	public void setTopLeft(GeoLocationPoint geoLocationPoint) {
+		_topLeftGeoLocationPoint = geoLocationPoint;
+	}
+
+	private GeoLocationPoint _bottomRightGeoLocationPoint;
+	private GeoLocationPoint _topLeftGeoLocationPoint;
 
 }

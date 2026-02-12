@@ -31,28 +31,6 @@ import java.util.Objects;
  */
 public class FragmentMappingUtil {
 
-	public static String getFieldKey(JSONObject jsonObject) {
-		String collectionFieldId = jsonObject.getString("collectionFieldId");
-
-		if (Validator.isNotNull(collectionFieldId)) {
-			return collectionFieldId;
-		}
-
-		String fieldId = jsonObject.getString("fieldId");
-
-		if (Validator.isNotNull(fieldId)) {
-			return fieldId;
-		}
-
-		String mappedField = jsonObject.getString("mappedField");
-
-		if (Validator.isNotNull(mappedField)) {
-			return mappedField;
-		}
-
-		return null;
-	}
-
 	public static FragmentMappedValueItemReference
 			getFragmentMappedValueItemReference(
 				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,

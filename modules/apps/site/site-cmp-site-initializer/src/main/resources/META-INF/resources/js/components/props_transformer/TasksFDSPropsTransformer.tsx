@@ -5,6 +5,7 @@
 
 import {
 	DateRenderer,
+	FDS_PAGINATION_DELTA_ALL,
 	IInternalRenderer,
 	IView,
 } from '@liferay/frontend-data-set-web';
@@ -120,14 +121,13 @@ export default function TasksFDSPropsTransformer({
 		return {
 			...view,
 			default: false,
-			initialPaginationDelta: 20,
 		};
 	});
 
 	const kanbanView: IView = {
 		component: (props: any) => KanbanView({...props, currentURL}),
 		default: false,
-		initialPaginationDelta: -1,
+		initialPaginationDelta: FDS_PAGINATION_DELTA_ALL,
 		label: Liferay.Language.get('kanban'),
 		name: 'kanban',
 		schema: {

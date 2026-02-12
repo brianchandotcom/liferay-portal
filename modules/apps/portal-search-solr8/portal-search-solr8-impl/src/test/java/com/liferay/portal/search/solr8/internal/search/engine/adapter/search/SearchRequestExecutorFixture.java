@@ -10,7 +10,6 @@ import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.internal.hits.SearchHitBuilderFactoryImpl;
 import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.document.DocumentBuilderFactoryImpl;
-import com.liferay.portal.search.internal.legacy.stats.StatsRequestBuilderFactoryImpl;
 import com.liferay.portal.search.internal.legacy.stats.StatsResultsTranslatorImpl;
 import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 import com.liferay.portal.search.solr8.internal.search.response.DefaultSearchSearchResponseAssemblerHelperImpl;
@@ -31,25 +30,6 @@ public class SearchRequestExecutorFixture {
 			_solrClientManager);
 	}
 
-	protected CountSearchRequestExecutor createCountSearchRequestExecutor(
-		SolrClientManager solrClientManager) {
-
-		CountSearchRequestExecutorImpl countSearchRequestExecutorImpl =
-			new CountSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutorImpl, "_baseSearchResponseAssembler",
-			new BaseSearchResponseAssemblerImpl());
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutorImpl, "_baseSolrQueryAssembler",
-			_baseSolrQueryAssemblerImpl);
-		ReflectionTestUtil.setFieldValue(
-			countSearchRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return countSearchRequestExecutorImpl;
-	}
-
 	protected SearchRequestExecutor createSearchRequestExecutor(
 		SolrClientManager solrClientManager) {
 
@@ -57,14 +37,16 @@ public class SearchRequestExecutorFixture {
 			new SolrSearchRequestExecutor();
 
 		ReflectionTestUtil.setFieldValue(
-			solrSearchRequestExecutor, "_countSearchRequestExecutor",
-			createCountSearchRequestExecutor(solrClientManager));
+			solrSearchRequestExecutor, "_solrClientManager", solrClientManager);
+
 		ReflectionTestUtil.setFieldValue(
 			solrSearchRequestExecutor, "_multisearchSearchRequestExecutor",
 			new MultisearchSearchRequestExecutorImpl());
 		ReflectionTestUtil.setFieldValue(
 			solrSearchRequestExecutor, "_searchSearchRequestExecutor",
 			createSearchSearchRequestExecutor(solrClientManager));
+
+		solrSearchRequestExecutor.activate();
 
 		return solrSearchRequestExecutor;
 	}
@@ -94,9 +76,6 @@ public class SearchRequestExecutorFixture {
 		SearchSearchResponseAssemblerImpl searchSearchResponseAssemblerImpl =
 			new SearchSearchResponseAssemblerImpl();
 
-		ReflectionTestUtil.setFieldValue(
-			searchSearchResponseAssemblerImpl, "_baseSearchResponseAssembler",
-			new BaseSearchResponseAssemblerImpl());
 		ReflectionTestUtil.setFieldValue(
 			searchSearchResponseAssemblerImpl,
 			"_searchSearchResponseAssemblerHelper",
@@ -138,9 +117,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSolrQueryAssemblerImpl, "_sortFieldTranslator",
 			new SolrSortFieldTranslator());
-		ReflectionTestUtil.setFieldValue(
-			searchSolrQueryAssemblerImpl, "_statsRequestBuilderFactory",
-			new StatsRequestBuilderFactoryImpl());
 
 		return searchSolrQueryAssemblerImpl;
 	}

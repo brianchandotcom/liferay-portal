@@ -20,7 +20,9 @@ import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SuggestSearchResponse;
+import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -82,7 +84,12 @@ public class SolrSearchRequestExecutor implements SearchRequestExecutor {
 		return _suggestSearchRequestExecutor.execute(suggestSearchRequest);
 	}
 
-	@Reference
+	@Activate
+	protected void activate() {
+		_countSearchRequestExecutor = new CountSearchRequestExecutor(
+			_solrClientManager);
+	}
+
 	private CountSearchRequestExecutor _countSearchRequestExecutor;
 
 	@Reference
@@ -90,6 +97,9 @@ public class SolrSearchRequestExecutor implements SearchRequestExecutor {
 
 	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
+
+	@Reference
+	private SolrClientManager _solrClientManager;
 
 	private final SuggestSearchRequestExecutor _suggestSearchRequestExecutor =
 		new SuggestSearchRequestExecutor();

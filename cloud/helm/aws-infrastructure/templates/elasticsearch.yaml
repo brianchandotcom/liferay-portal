@@ -9,13 +9,19 @@ spec:
             selfSignedCertificate:
                 disabled: true
     nodeSets:
-        -   config:
-                node.store.allow_mmap: false
             count: 1
             name: default
             podTemplate:
                 spec:
                     initContainers:
+                        -   command:
+                                -   sh
+                                -   -c
+                                -   sysctl -w vm.max_map_count={{ .Values.search.maxMapCount | default 262144 }}}
+                            name: configure-memory-map
+                            securityContext:
+                                privileged: true
+                                runAsUser: 0
                         -   command:
                                 -   sh
                                 -   -c

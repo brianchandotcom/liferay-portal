@@ -304,7 +304,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public TermsQuery terms(String field) {
-		return new TermsQueryImpl(field);
+		return new TermsQuery(field);
 	}
 
 	@Override

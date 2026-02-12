@@ -5,22 +5,55 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Michael C. Han
  */
-@ProviderType
-public abstract class TermsQuery extends Query {
+public class TermsQuery extends Query {
 
-	public abstract void addValue(Object value);
+	public TermsQuery(String field) {
+		_field = field;
+	}
 
-	public abstract void addValues(Object... values);
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
 
-	public abstract String getField();
+	public void addValue(Object value) {
+		_values.add(value);
+	}
 
-	public abstract String[] getValues();
+	public void addValues(Object... values) {
+		Collections.addAll(_values, values);
+	}
 
-	public abstract boolean isEmpty();
+	public String getField() {
+		return _field;
+	}
+
+	public String[] getValues() {
+		return _values.toArray(new String[0]);
+	}
+
+	public boolean isEmpty() {
+		return _values.isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		return StringBundler.concat(
+			"{(", _field, "=", _values, "), ", super.toString(), "}");
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String _field;
+	private final Set<Object> _values = new HashSet<>();
 
 }

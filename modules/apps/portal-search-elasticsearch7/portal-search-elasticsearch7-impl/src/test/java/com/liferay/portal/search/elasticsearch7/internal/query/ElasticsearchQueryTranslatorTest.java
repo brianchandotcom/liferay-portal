@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch7.internal.filter.ElasticsearchFilterVisitor;
 import com.liferay.portal.search.elasticsearch7.internal.util.QueryUtil;
-import com.liferay.portal.search.internal.query.TermsQueryImpl;
 import com.liferay.portal.search.internal.query.WildcardQueryImpl;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.CommonTermsQuery;
@@ -121,7 +120,7 @@ public class ElasticsearchQueryTranslatorTest {
 
 	@Test
 	public void testTranslateTermsQueryExceedingMaxAllowedTerms() {
-		TermsQuery termsQuery = new TermsQueryImpl("groupId");
+		TermsQuery termsQuery = new TermsQuery("groupId");
 
 		termsQuery.addValues("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
 

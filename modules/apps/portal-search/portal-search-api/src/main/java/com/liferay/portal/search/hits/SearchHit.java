@@ -22,7 +22,9 @@ import java.util.Map;
 public class SearchHit implements Serializable {
 
 	public void addHighlightFields(Collection<HighlightField> highlightFields) {
-		highlightFields.forEach(this::addHighlightField);
+		for (HighlightField highlightField : highlightFields) {
+			_highlightFieldsMap.put(highlightField.getName(), highlightField);
+		}
 	}
 
 	public void addSources(Map<String, Object> sourcesMap) {
@@ -73,7 +75,7 @@ public class SearchHit implements Serializable {
 		public SearchHitBuilder addHighlightField(
 			HighlightField highlightField) {
 
-			_searchHit.addHighlightField(highlightField);
+			_highlightFieldsMap.put(highlightField.getName(), highlightField);
 
 			return this;
 		}
@@ -82,149 +84,127 @@ public class SearchHit implements Serializable {
 		public SearchHitBuilder addHighlightFields(
 			Collection<HighlightField> highlightFields) {
 
-			_searchHit.addHighlightFields(highlightFields);
+			for (HighlightField highlightField : highlightFields) {
+				_highlightFieldsMap.put(
+					highlightField.getName(), highlightField);
+			}
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder addSource(String name, Object value) {
-			_searchHit.addSource(name, value);
+			_sourcesMap.put(name, value);
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder addSources(Map<String, Object> sourcesMap) {
-			_searchHit.addSources(sourcesMap);
+			if (MapUtil.isNotEmpty(sourcesMap)) {
+				_sourcesMap.putAll(sourcesMap);
+			}
 
 			return this;
 		}
 
 		@Override
 		public SearchHit build() {
-			return new SearchHit(_searchHit);
+			return new SearchHit(
+				_document, _explanation, _highlightFieldsMap, _id, _score,
+				_sortValues, _sourcesMap, _version);
 		}
 
 		@Override
 		public SearchHitBuilder document(Document document) {
-			_searchHit._setDocument(document);
+			_document = document;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder explanation(String explanation) {
-			_searchHit._setExplanation(explanation);
+			_explanation = explanation;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder id(String id) {
-			_searchHit._setId(id);
+			_id = id;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder matchedQueries(String... matchedQueries) {
-			_searchHit._setMatchedQueries(matchedQueries);
+			if (matchedQueries != null) {
+				_matchedQueries = matchedQueries;
+			}
+			else {
+				_matchedQueries = new String[0];
+			}
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder score(float score) {
-			_searchHit._setScore(score);
+			_score = score;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder sortValues(Object[] sortValues) {
-			_searchHit._setSortValues(sortValues);
+			_sortValues = sortValues;
 
 			return this;
 		}
 
 		@Override
 		public SearchHitBuilder version(long version) {
-			_searchHit._setVersion(version);
+			_version = version;
 
 			return this;
 		}
 
-		private final SearchHit _searchHit = new SearchHit();
+		private Document _document;
+		private String _explanation;
+		private final Map<String, HighlightField> _highlightFieldsMap =
+			new LinkedHashMap<>();
+		private String _id;
+		private String[] _matchedQueries = new String[0];
+		private float _score;
+		private Object[] _sortValues;
+		private final Map<String, Object> _sourcesMap = new LinkedHashMap<>();
+		private long _version;
 
 	}
 
-	protected SearchHit(SearchHit searchHit) {
-		_document = searchHit._document;
-		_explanation = searchHit._explanation;
-		_id = searchHit._id;
-		_matchedQueries = searchHit._matchedQueries;
-		_score = searchHit._score;
-		_sortValues = searchHit._sortValues;
-		_version = searchHit._version;
+	protected SearchHit(
+		Document document, String explanation,
+		Map<String, HighlightField> highlightFieldsMap, String id, float score,
+		Object[] sortValues, Map<String, Object> sourcesMap, long version) {
 
-		_highlightFieldsMap.putAll(searchHit._highlightFieldsMap);
-		_sourcesMap.putAll(searchHit._sourcesMap);
-	}
-
-	protected void addHighlightField(HighlightField highlightField) {
-		_highlightFieldsMap.put(highlightField.getName(), highlightField);
-	}
-
-	protected void addSource(String name, Object value) {
-		_sourcesMap.put(name, value);
-	}
-
-	private SearchHit() {
-	}
-
-	private void _setDocument(Document document) {
 		_document = document;
-	}
-
-	private void _setExplanation(String explanation) {
 		_explanation = explanation;
-	}
-
-	private void _setId(String id) {
+		_highlightFieldsMap = highlightFieldsMap;
 		_id = id;
-	}
-
-	private void _setMatchedQueries(String... matchedQueries) {
-		if (matchedQueries != null) {
-			_matchedQueries = matchedQueries;
-		}
-		else {
-			_matchedQueries = new String[0];
-		}
-	}
-
-	private void _setScore(float score) {
 		_score = score;
-	}
-
-	private void _setSortValues(Object[] sortValues) {
 		_sortValues = sortValues;
-	}
-
-	private void _setVersion(long version) {
+		_sourcesMap = sourcesMap;
 		_version = version;
 	}
 
-	private Document _document;
-	private String _explanation;
-	private final Map<String, HighlightField> _highlightFieldsMap =
-		new LinkedHashMap<>();
-	private String _id;
-	private String[] _matchedQueries = new String[0];
-	private float _score;
-	private Object[] _sortValues;
-	private final Map<String, Object> _sourcesMap = new LinkedHashMap<>();
-	private long _version;
+	private final Document _document;
+	private final String _explanation;
+	private final Map<String, HighlightField> _highlightFieldsMap;
+	private final String _id;
+	private final String[] _matchedQueries = new String[0];
+	private final float _score;
+	private final Object[] _sortValues;
+	private final Map<String, Object> _sourcesMap;
+	private final long _version;
 
 }

@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -886,6 +887,10 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testLayoutExportImportWithPromoteContentFeatureFlagsEnabledParentsNotPublishedEvenWithConfigurationEnabled()
 		throws Exception {
 
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35443");
 		_configurationProvider.saveCompanyConfiguration(
 			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -925,6 +930,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		Assert.assertNotNull(importedChildLayout);
 		Assert.assertEquals(0, importedChildLayout.getParentLayoutId());
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35443");
 	}
 
 	@FeatureFlag("LPS-199086")

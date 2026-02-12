@@ -26,7 +26,6 @@ import com.liferay.object.service.ObjectDefinitionSettingLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,7 +116,7 @@ public class CollectionUtil {
 
 			if (matcher.find()) {
 				ObjectDefinition objectDefinition = _getObjectDefinition(
-					matcher.group(0));
+					companyId, matcher.group(0));
 
 				if (objectDefinition != null) {
 					className = matcher.replaceFirst(
@@ -128,13 +127,7 @@ public class CollectionUtil {
 		}
 
 		InfoCollectionProvider infoCollectionProvider =
-			infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class, className);
-
-		if (infoCollectionProvider == null) {
-			infoCollectionProvider = infoItemServiceRegistry.getInfoItemService(
-				RelatedInfoItemCollectionProvider.class, className);
-		}
+			_getInfoCollectionProvider(className, infoItemServiceRegistry);
 
 		if (infoCollectionProvider == null) {
 			LogUtil.logOptionalReference(
@@ -147,13 +140,10 @@ public class CollectionUtil {
 			);
 		}
 
-		InfoCollectionProvider finalInfoCollectionProvider =
-			infoCollectionProvider;
-
 		return JSONUtil.put(
 			"itemSubtype",
 			() -> {
-				if (!(finalInfoCollectionProvider instanceof
+				if (!(infoCollectionProvider instanceof
 						SingleFormVariationInfoCollectionProvider)) {
 
 					return null;
@@ -162,7 +152,7 @@ public class CollectionUtil {
 				SingleFormVariationInfoCollectionProvider<?>
 					singleFormVariationInfoCollectionProvider =
 						(SingleFormVariationInfoCollectionProvider<?>)
-							finalInfoCollectionProvider;
+							infoCollectionProvider;
 
 				return singleFormVariationInfoCollectionProvider.
 					getFormVariationKey();
@@ -173,7 +163,7 @@ public class CollectionUtil {
 			"key", infoCollectionProvider.getKey()
 		).put(
 			"title",
-			() -> finalInfoCollectionProvider.getLabel(LocaleUtil.getDefault())
+			() -> infoCollectionProvider.getLabel(LocaleUtil.getDefault())
 		).put(
 			"type", InfoListProviderItemSelectorReturnType.class.getName()
 		);
@@ -256,13 +246,28 @@ public class CollectionUtil {
 		);
 	}
 
+	private static InfoCollectionProvider _getInfoCollectionProvider(
+		String className, InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		InfoCollectionProvider infoCollectionProvider =
+			infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class, className);
+
+		if (infoCollectionProvider == null) {
+			infoCollectionProvider = infoItemServiceRegistry.getInfoItemService(
+				RelatedInfoItemCollectionProvider.class, className);
+		}
+
+		return infoCollectionProvider;
+	}
+
 	private static ObjectDefinition _getObjectDefinition(
-		String objectDefinitionSettingValue) {
+		long companyId, String objectDefinitionSettingValue) {
 
 		ObjectDefinitionSetting objectDefinitionSetting =
 			ObjectDefinitionSettingLocalServiceUtil.
 				fetchObjectDefinitionSetting(
-					CompanyThreadLocal.getCompanyId(),
+					companyId,
 					ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
 					objectDefinitionSettingValue);
 
@@ -315,7 +320,7 @@ public class CollectionUtil {
 
 	private static final Pattern _objectDefinitionClassNamePattern =
 		Pattern.compile(
-			"(com\\.liferay\\.object\\.model\\.ObjectDefinition#)" +
-				"([a-zA-Z]\\d[a-zA-Z]\\d)");
+			"(com\\.liferay\\.object\\.model\\.ObjectDefinition#" +
+				"[a-zA-Z]\\d[a-zA-Z]\\d)");
 
 }

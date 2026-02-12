@@ -89,16 +89,17 @@ public class MarketplaceService extends BaseService {
 		Map<String, String> customFields =
 			(Map<String, String>)order.getCustomFields();
 
-		JSONArray cloudProvisioningJSONArray;
+		JSONArray cloudProvisioningJSONArray = null;
 
-		if (Validator.isNull(customFields.get("cloud-provisioning"))) {
+		String cloudProvisioningJSON = customFields.get("cloud-provisioning");
+
+		if (cloudProvisioningJSON != null) {
+			cloudProvisioningJSONArray = new JSONArray(cloudProvisioningJSON);
+		}
+		else {
 			cloudProvisioningJSONArray =
 				MarketplaceUtil.createCloudProvisioningJSONArray(
 					order.getOrderItems());
-		}
-		else {
-			cloudProvisioningJSONArray = new JSONArray(
-				customFields.get("cloud-provisioning"));
 		}
 
 		JSONObject cloudProvisioningJSONObject =

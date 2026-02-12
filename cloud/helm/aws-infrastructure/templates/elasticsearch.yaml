@@ -1,7 +1,8 @@
+{{- $search := .Values.search -}}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
-    name: {{ .Release.Name }}-es
+    name: {{ $search.name | default (printf "%s-es" .Release.Name) }}
     namespace: {{ .Release.Namespace }}
 spec:
     http:
@@ -9,15 +10,41 @@ spec:
             selfSignedCertificate:
                 disabled: true
     nodeSets:
-            count: 1
+        -   count: {{ $search.nodeCount | default 3 }}
             name: default
             podTemplate:
                 spec:
+                    containers:
+                        -   #
+                            env:
+                            {{- if or $search.env $search.customEnv }}
+                                {{- with $search.env }}
+                                {{- toYaml . | nindent 32 }}
+                                {{- end }}
+                                    {{- range $k, $v := $search.customEnv }}
+                                    {{- toYaml $v | nindent 32 }}
+                                    {{- end }}
+                                {{- else }}
+                                -   name:   ES_JAVA_OPTS
+                                    value: "-Xms4g -Xmx4g"
+                                {{- end }}
+                            name: elasticsearch
+                            resources:
+                                {{- if $search.resources -}}
+                                {{ $search.resources | toYaml | nindent 32 }}
+                                {{- else }}
+                                requests:
+                                    cpu: 500m
+                                    memory: 4Gi
+                                limits:
+                                    cpu: 1000m
+                                    memory: 8Gi
+                            {{- end }}
                     initContainers:
                         -   command:
                                 -   sh
                                 -   -c
-                                -   sysctl -w vm.max_map_count={{ .Values.search.maxMapCount | default 262144 }}}
+                                -   sysctl -w vm.max_map_count={{ $search.maxMapCount | default 262144 }}
                             name: configure-memory-map
                             securityContext:
                                 privileged: true
@@ -39,5 +66,5 @@ spec:
                             -   ReadWriteOnce
                         resources:
                             requests:
-                                storage: 10Gi
-    version: 8.12.0
+                                storage: {{ $search.volumeSize | default "10Gi" }}
+    version: {{ $search.version | default "8.12.0" }}

@@ -10,12 +10,18 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class MinAggregationResult extends AggregationResult {
+public class MinAggregationResult extends AggregationResult {
 
-	public MinAggregationResult(String name) {
+	public MinAggregationResult(String name, double value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract double getValue();
+	public double getValue() {
+		return _value;
+	}
+
+	private final double _value;
 
 }

@@ -859,17 +859,17 @@ public class CustomFDSSerializer
 
 			List<String> ercs = ListUtil.fromString(
 				MapUtil.getString(
-						objectEntry.getProperties(), propertyKey), 
+					objectEntry.getProperties(), propertyKey),
 				StringPool.COMMA);
 
 			objectEntries.sort(new ObjectEntryERCComparator(ercs));
 		}
 		else {
 			List<Long> ids = ListUtil.toList(
-				List<String> ercs = ListUtil.fromString(
+				ListUtil.fromString(
 					MapUtil.getString(
-							objectEntry.getProperties(), propertyKey), 
-					StringPool.COMMA);,
+						objectEntry.getProperties(), propertyKey),
+					StringPool.COMMA),
 				GetterUtil::getLong);
 
 			objectEntries.sort(new ObjectEntryIdComparator(ids));

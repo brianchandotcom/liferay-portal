@@ -33,11 +33,11 @@ public interface TaskAssigneeResource {
 		return new Builder();
 	}
 
-	public Page<TaskAssignee> getTaskAssigneesPage(String search)
+	public Page<TaskAssignee> getTaskAssigneesPage(String search, String type)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getTaskAssigneesPageHttpResponse(
-			String search)
+			String search, String type)
 		throws Exception;
 
 	public static class Builder {
@@ -149,11 +149,12 @@ public interface TaskAssigneeResource {
 	public static class TaskAssigneeResourceImpl
 		implements TaskAssigneeResource {
 
-		public Page<TaskAssignee> getTaskAssigneesPage(String search)
+		public Page<TaskAssignee> getTaskAssigneesPage(
+				String search, String type)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getTaskAssigneesPageHttpResponse(search);
+				getTaskAssigneesPageHttpResponse(search, type);
 
 			String content = httpResponse.getContent();
 
@@ -215,7 +216,7 @@ public interface TaskAssigneeResource {
 		}
 
 		public HttpInvoker.HttpResponse getTaskAssigneesPageHttpResponse(
-				String search)
+				String search, String type)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -241,6 +242,10 @@ public interface TaskAssigneeResource {
 
 			if (search != null) {
 				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (type != null) {
+				httpInvoker.parameter("type", String.valueOf(type));
 			}
 
 			httpInvoker.path(

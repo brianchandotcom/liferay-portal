@@ -1,0 +1,37 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+    name: {{ .Release.Name }}-es
+    namespace: {{ .Release.Namespace }}
+spec:
+    http:
+        tls:
+            selfSignedCertificate:
+                disabled: true
+    nodeSets:
+        -   config:
+                node.store.allow_mmap: false
+            count: 1
+            name: default
+            podTemplate:
+                spec:
+                    initContainers:
+                        -   command:
+                                -   sh
+                                -   -c
+                                -   |
+                                    elasticsearch-plugin \
+                                        install \
+                                        --batch \
+                                        analysis-{icu,kuromoji,smartcn,stempel}
+                            name: install-plugins
+            volumeClaimTemplates:
+                -   metadata:
+                        name: elasticsearch-data
+                    spec:
+                        accessModes:
+                            -   ReadWriteOnce
+                        resources:
+                            requests:
+                                storage: 10Gi
+    version: 8.12.0

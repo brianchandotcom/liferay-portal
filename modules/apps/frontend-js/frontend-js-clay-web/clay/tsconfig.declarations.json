@@ -16,15 +16,24 @@
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
 		"noUnusedParameters": true,
-		"paths": {},
+		"paths": {
+		},
 		"removeComments": false,
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"strict": true,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
-		"types": ["node", "react", "react-dom"],
-		"target": "esnext"
+		"target": "esnext",
+		"types": [
+			"node",
+			"react",
+			"react-dom"
+		]
 	},
-	"exclude": ["**/node_modules/**", "**/lib", "**/__tests__/**"]
+	"exclude": [
+		"**/node_modules/**",
+		"**/lib",
+		"**/__tests__/**"
+	]
 }

@@ -1,9 +1,9 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.158.0",
-		"@clayui/button": "3.158.0",
-		"@clayui/icon": "3.158.0",
-		"@clayui/modal": "3.158.0",
+		"@clayui/alert": "^3.159.0",
+		"@clayui/button": "^3.159.0",
+		"@clayui/icon": "^3.159.0",
+		"@clayui/modal": "^3.159.0",
 		"@liferay/frontend-js-react-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",

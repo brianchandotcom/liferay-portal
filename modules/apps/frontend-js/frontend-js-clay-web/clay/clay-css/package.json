@@ -23,7 +23,8 @@
 				"globals": {
 					"jQuery": true
 				},
-				"rules": {}
+				"rules": {
+				}
 			}
 		}
 	},

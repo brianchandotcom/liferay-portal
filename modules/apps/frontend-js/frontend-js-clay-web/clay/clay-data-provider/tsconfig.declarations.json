@@ -2,9 +2,18 @@
 	"compilerOptions": {
 		"baseUrl": ".",
 		"declarationDir": "./lib",
-		"types": ["react", "react-dom", "node"]
+		"types": [
+			"react",
+			"react-dom",
+			"node"
+		]
 	},
+	"exclude": [
+		"src/**/__tests__/**",
+		"**/lib/**"
+	],
 	"extends": "../tsconfig.declarations.json",
-	"exclude": ["src/**/__tests__/**", "**/lib/**"],
-	"include": ["src/**/*"]
+	"include": [
+		"src/**/*"
+	]
 }

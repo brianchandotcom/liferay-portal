@@ -137,8 +137,7 @@ public class JSONPackageJSONDependencyVersionCheck extends BaseFileCheck {
 				absolutePath, "senna")
 		).putAll(
 			_getDependencyVersionsMap(
-				"modules/apps/frontend-js/frontend-js-clay-web" +
-					"/package.json",
+				"modules/apps/frontend-js/frontend-js-clay-web/package.json",
 				absolutePath, "@clayui/.*")
 		).build();
 

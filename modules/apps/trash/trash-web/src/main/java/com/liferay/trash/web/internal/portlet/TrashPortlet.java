@@ -5,12 +5,19 @@
 
 package com.liferay.trash.web.internal.portlet;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.service.AssetEntryService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -151,6 +158,17 @@ public class TrashPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
+
+		try {
+			_checkPermissions(renderRequest);
+		}
+		catch (PortalException portalException) {
+			SessionErrors.add(renderRequest, portalException.getClass());
+
+			include("/error.jsp", renderRequest, renderResponse);
+
+			return;
+		}
 
 		super.render(renderRequest, renderResponse);
 	}
@@ -328,6 +346,42 @@ public class TrashPortlet extends MVCPortlet {
 				restoreEntryException.getCause());
 		}
 	}
+
+	private void _checkPermissions(RenderRequest renderRequest)
+		throws PortalException {
+
+		long trashEntryId = ParamUtil.getLong(renderRequest, "trashEntryId");
+
+		if (trashEntryId > 0) {
+			TrashEntry entry = _trashEntryLocalService.getTrashEntry(
+				trashEntryId);
+
+			String className = entry.getClassName();
+			long classPK = entry.getClassPK();
+
+			AssetEntry assetEntry = _assetEntryService.getEntry(
+				className, classPK);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
+
+			if ((themeDisplay.getScopeGroupId() != assetEntry.getGroupId()) ||
+				(assetRenderer == null) ||
+				!assetRenderer.hasViewPermission(
+					themeDisplay.getPermissionChecker()
+				)) {
+
+				throw new PrincipalException.MustHavePermission(
+					themeDisplay.getUserId(), className, classPK,
+					ActionKeys.VIEW);
+			}
+		}
+	}
+
+	@Reference
+	private AssetEntryService _assetEntryService;
 
 	@Reference
 	private Portal _portal;

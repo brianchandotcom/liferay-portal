@@ -9,4 +9,8 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= com.liferay.trash.exception.NoSuchEntryException.class %>" message="the-entry-could-not-be-found" />
+
+<liferay-ui:error exception="<%= com.liferay.asset.kernel.exception.NoSuchEntryException.class %>" message="the-entry-could-not-be-found" />
+
 <liferay-ui:error-principal />

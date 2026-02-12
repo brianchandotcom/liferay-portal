@@ -15,6 +15,7 @@ import com.liferay.fragment.service.FragmentEntryLinkServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
+import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.provider.LayoutStructureProvider;
@@ -38,9 +39,11 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
@@ -621,6 +624,52 @@ public class ContentLayoutTestUtil {
 
 			return mockHttpServletResponse.getContentAsString();
 		}
+	}
+
+	public static String getRenderLayoutHTML(
+			Map<String, Object> attributes, String externalReferenceCode,
+			Group group,
+			LayoutDisplayPageObjectProvider<Object>
+				layoutDisplayPageObjectProvider,
+			LayoutServiceContextHelper layoutServiceContextHelper,
+			LayoutStructureProvider layoutStructureProvider)
+		throws Exception {
+
+		String renderLayoutHTML = null;
+
+		Layout layout = LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+			externalReferenceCode, group.getGroupId());
+
+		long segmentsExperienceId =
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout.getPlid());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest(
+				ServletContextPool.get(StringPool.BLANK));
+
+		mockHttpServletRequest.setAttribute(
+			"LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER",
+			layoutDisplayPageObjectProvider);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			renderLayoutHTML = getRenderLayoutHTML(
+				attributes, layout, layoutServiceContextHelper,
+				layoutStructureProvider, segmentsExperienceId);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		return renderLayoutHTML;
 	}
 
 	public static ThemeDisplay getThemeDisplay(

@@ -229,21 +229,23 @@ test(
 
 				await expect(tasksPage.assignTaskToDialog).toBeVisible();
 
-				await page.getByPlaceholder('Unassigned').fill('Publications Viewer');
+				await page
+					.getByPlaceholder('Unassigned')
+					.fill('Publications Viewer');
 
-				await page.getByRole('option', {name: 'Publications Viewer'}).click();
+				await page
+					.getByRole('option', {name: 'Publications Viewer'})
+					.click();
 
 				await tasksPage.saveButton.click();
 
-				await expect(async()=>{
-
+				await expect(async () => {
 					await tasksPage.goto();
-	
+
 					await expect(
 						page.getByRole('row', {name: 'Publications Viewer'})
-					).toHaveCount(2, {timeout:1000});
-
-				}).toPass({timeout:10000});
+					).toHaveCount(2, {timeout: 1000});
+				}).toPass({timeout: 10000});
 			});
 		}
 		finally {

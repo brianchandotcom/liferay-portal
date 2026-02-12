@@ -342,8 +342,8 @@ export default function TasksFDSPropsTransformer({
 				await openCMPModal({
 					center: true,
 					contentComponent: ({
-										   closeModal,
-									   }: {
+						closeModal,
+					}: {
 						closeModal: () => void;
 					}) => (
 						<BulkEditAssigneeModalContent

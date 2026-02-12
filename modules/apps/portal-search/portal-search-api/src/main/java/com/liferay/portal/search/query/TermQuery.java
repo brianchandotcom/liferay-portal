@@ -5,16 +5,53 @@
 
 package com.liferay.portal.search.query;
 
-import org.osgi.annotation.versioning.ProviderType;
+import com.liferay.petra.string.StringBundler;
 
 /**
  * @author Brian Wing Shun Chan
  */
-@ProviderType
-public abstract class TermQuery extends Query {
+public class TermQuery extends Query {
 
-	public abstract String getField();
+	public TermQuery(String field, Object value) {
+		_field = field;
+		_value = value;
+	}
 
-	public abstract Object getValue();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visit(this);
+	}
+
+	public String getField() {
+		return _field;
+	}
+
+	public Object getValue() {
+		return _value;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{className=");
+
+		Class<?> clazz = getClass();
+
+		sb.append(clazz.getSimpleName());
+
+		sb.append(", field=");
+		sb.append(_field);
+		sb.append(", value=");
+		sb.append(_value);
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final String _field;
+	private final Object _value;
 
 }

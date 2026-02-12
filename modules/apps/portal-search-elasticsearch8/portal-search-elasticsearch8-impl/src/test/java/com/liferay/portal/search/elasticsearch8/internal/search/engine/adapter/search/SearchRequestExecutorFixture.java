@@ -39,26 +39,9 @@ public class SearchRequestExecutorFixture {
 			elasticsearchSearchRequestExecutor, "_elasticsearchClientResolver",
 			elasticsearchClientResolver);
 
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchRequestExecutor, "_searchSearchRequestExecutor",
-			_createSearchSearchRequestExecutor(elasticsearchClientResolver));
-
 		elasticsearchSearchRequestExecutor.activate();
 
 		return elasticsearchSearchRequestExecutor;
-	}
-
-	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
-		ElasticsearchClientResolver elasticsearchClientResolver) {
-
-		SearchSearchRequestExecutor searchSearchRequestExecutor =
-			new SearchSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutor, "_elasticsearchClientResolver",
-			elasticsearchClientResolver);
-
-		return searchSearchRequestExecutor;
 	}
 
 	private ElasticsearchClientResolver _elasticsearchClientResolver;

@@ -99,8 +99,8 @@ public class SearchSearchRequestExecutorImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchSearchRequestExecutorImpl.class);
 
-	@Reference
-	private SearchSolrQueryAssembler _searchSolrQueryAssembler;
+	private final SearchSolrQueryAssembler _searchSolrQueryAssembler =
+		new SearchSolrQueryAssembler();
 
 	@Reference
 	private SolrClientManager _solrClientManager;

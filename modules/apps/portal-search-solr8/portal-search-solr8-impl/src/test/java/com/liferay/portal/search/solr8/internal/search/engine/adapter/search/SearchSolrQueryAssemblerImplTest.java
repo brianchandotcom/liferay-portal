@@ -32,7 +32,7 @@ public class SearchSolrQueryAssemblerImplTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_searchSolrQueryAssemblerImpl = new SearchSolrQueryAssemblerImpl();
+		_searchSolrQueryAssemblerImpl = new SearchSolrQueryAssembler();
 	}
 
 	@Test
@@ -109,6 +109,6 @@ public class SearchSolrQueryAssemblerImplTest {
 		Assert.assertEquals(expectedOrder, sort.getOrder());
 	}
 
-	private static SearchSolrQueryAssemblerImpl _searchSolrQueryAssemblerImpl;
+	private static SearchSolrQueryAssembler _searchSolrQueryAssemblerImpl;
 
 }

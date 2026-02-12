@@ -1818,10 +1818,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		String siteExternalReferenceCode =
 			testGetSiteSitePagesPage_getSiteExternalReferenceCode();
 
+		String sitePageExternalReferenceCode = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
 		SitePage sitePage = sitePageResource.postSiteSitePage(
 			siteExternalReferenceCode, privatePages,
 			_getRandomSitePage(
-				StringUtil.toLowerCase(RandomTestUtil.randomString()), null,
+				sitePageExternalReferenceCode, null,
 				ServiceContextTestUtil.getServiceContext(
 					testGroup, TestPropsValues.getUserId()),
 				SitePage.Type.CONTENT_PAGE,
@@ -1838,6 +1841,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		List<SitePage> pages = new ArrayList<>(page.getItems());
 
 		Assert.assertEquals(sitePage, pages.get(0));
+
+		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
+			sitePageExternalReferenceCode, testGroup.getGroupId());
+
+		Assert.assertEquals(privatePages, layout.isPrivateLayout());
 	}
 
 	private void _testGetSiteSitePage(Layout layout) throws Exception {
@@ -2785,8 +2793,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				sitePage.getExternalReferenceCode(), testGroup.getGroupId()),
 			sitePage);
 
-		Layout layout =
-			LayoutTestUtil.addTypePortletLayout(testGroup, privatePage);
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			testGroup, privatePage);
 
 		sitePage = _getRandomSitePage(
 			sitePage.getExternalReferenceCode(),

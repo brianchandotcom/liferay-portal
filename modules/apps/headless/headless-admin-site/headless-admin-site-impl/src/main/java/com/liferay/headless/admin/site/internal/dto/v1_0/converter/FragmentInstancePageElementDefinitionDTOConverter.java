@@ -28,6 +28,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.WidgetInstanceUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
@@ -74,10 +75,16 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 		throws Exception {
 
 		Long companyId = (Long)dtoConverterContext.getAttribute("companyId");
+		Long layoutPlid = (Long)dtoConverterContext.getAttribute("layoutPlid");
+		LayoutStructure layoutStructure =
+			(LayoutStructure)dtoConverterContext.getAttribute(
+				LayoutStructure.class.getName());
 		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
 			"scopeGroupId");
 
-		if ((companyId == null) || (scopeGroupId == null)) {
+		if ((companyId == null) || (layoutPlid == null) ||
+			(layoutStructure == null) || (scopeGroupId == null)) {
+
 			throw new UnsupportedOperationException();
 		}
 

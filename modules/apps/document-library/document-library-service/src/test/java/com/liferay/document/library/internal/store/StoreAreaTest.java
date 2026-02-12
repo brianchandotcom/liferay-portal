@@ -39,4 +39,28 @@ public class StoreAreaTest {
 			"_deleted/1/2/a/b", StoreArea.DELETED.getPath(1, 2, "a/", "/b"));
 	}
 
+	@Test
+	public void testRelocate() {
+		Assert.assertEquals(
+			"_deleted/a",
+			StoreArea.DELETED.relocate("_deleted/a", StoreArea.DELETED));
+		Assert.assertEquals(
+			"a", StoreArea.DELETED.relocate("_deleted/a", StoreArea.LIVE));
+		Assert.assertEquals(
+			"_new/a", StoreArea.DELETED.relocate("_deleted/a", StoreArea.NEW));
+
+		Assert.assertEquals(
+			"_deleted/a", StoreArea.LIVE.relocate("a", StoreArea.DELETED));
+		Assert.assertEquals("a", StoreArea.LIVE.relocate("a", StoreArea.LIVE));
+		Assert.assertEquals(
+			"_new/a", StoreArea.LIVE.relocate("a", StoreArea.NEW));
+
+		Assert.assertEquals(
+			"_deleted/a", StoreArea.NEW.relocate("_new/a", StoreArea.DELETED));
+		Assert.assertEquals(
+			"a", StoreArea.NEW.relocate("_new/a", StoreArea.LIVE));
+		Assert.assertEquals(
+			"_new/a", StoreArea.NEW.relocate("_new/a", StoreArea.NEW));
+	}
+
 }

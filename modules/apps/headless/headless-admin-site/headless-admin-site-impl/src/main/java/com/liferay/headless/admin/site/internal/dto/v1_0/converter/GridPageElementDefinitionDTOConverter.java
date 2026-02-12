@@ -75,6 +75,8 @@ public class GridPageElementDefinitionDTOConverter
 						companyId, _infoItemServiceRegistry,
 						rowStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
+						layoutPlid, layoutStructure,
+						rowStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setCssClasses(
 					() -> {

@@ -111,8 +111,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						() -> _getFragmentInstance(
 							companyId, fragmentEntryLink,
 							fragmentStyledLayoutStructureItem,
-							freeMarkerJSONObject, scopeGroupId,
-							dtoConverterContext.getUser()));
+							freeMarkerJSONObject, layoutPlid, layoutStructure,
+							scopeGroupId, dtoConverterContext.getUser()));
 					setType(Type.BASIC_FRAGMENT);
 				}
 			};
@@ -128,7 +128,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 					() -> _getFragmentInstance(
 						companyId, fragmentEntryLink,
 						fragmentStyledLayoutStructureItem, freeMarkerJSONObject,
-						scopeGroupId, dtoConverterContext.getUser()));
+						layoutPlid, layoutStructure, scopeGroupId,
+						dtoConverterContext.getUser()));
 				setHelpText_i18n(
 					() -> _getI18nMap(freeMarkerJSONObject, "inputHelpText"));
 				setLabel_i18n(
@@ -242,7 +243,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 	private FragmentInstance _getFragmentInstance(
 		long companyId, FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		JSONObject freeMarkerJSONObject, long scopeGroupId, User user) {
+		JSONObject freeMarkerJSONObject, long layoutPlid,
+		LayoutStructure layoutStructure, long scopeGroupId, User user) {
 
 		return new FragmentInstance() {
 			{
@@ -251,6 +253,8 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						companyId, _infoItemServiceRegistry,
 						fragmentStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
+						layoutPlid, layoutStructure,
+						fragmentStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setConfiguration(fragmentEntryLink::getConfiguration);
 				setCss(fragmentEntryLink::getCss);
@@ -277,7 +281,10 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						FragmentEditableElementUtil.getFragmentEditableElements(
 							companyId, fragmentEntryLink,
 							_fragmentEntryProcessorRegistry,
-							_infoItemServiceRegistry, scopeGroupId, user));
+							_infoItemServiceRegistry, layoutPlid,
+							layoutStructure,
+							fragmentStyledLayoutStructureItem.getItemId(),
+							scopeGroupId, user));
 				setFragmentInstanceExternalReferenceCode(
 					fragmentEntryLink::getExternalReferenceCode);
 				setFragmentReference(

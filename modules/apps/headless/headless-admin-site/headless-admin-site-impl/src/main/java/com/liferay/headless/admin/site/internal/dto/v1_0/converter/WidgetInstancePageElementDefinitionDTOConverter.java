@@ -80,10 +80,11 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 
 		widgetInstancePageElementDefinition.setBackgroundImageValue(
 			() -> ImageValueUtil.toBackgroundImageValue(
-				fragmentEntryLink.getCompanyId(), _infoItemServiceRegistry,
+				companyId, _infoItemServiceRegistry,
 				fragmentStyledLayoutStructureItem.
 					getBackgroundImageJSONObject(),
-				fragmentEntryLink.getGroupId()));
+				layoutPlid, layoutStructure,
+				fragmentStyledLayoutStructureItem.getItemId(), scopeGroupId));
 		widgetInstancePageElementDefinition.setCssClasses(
 			() -> {
 				Set<String> cssClasses =

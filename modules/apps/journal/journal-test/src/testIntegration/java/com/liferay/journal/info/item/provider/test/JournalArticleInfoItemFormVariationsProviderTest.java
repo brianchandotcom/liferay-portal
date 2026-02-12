@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -68,6 +69,31 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 		_group1 = GroupTestUtil.addGroup();
 		_group2 = GroupTestUtil.addGroup();
 		_group3 = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testGetInfoItemFormVariation() throws Exception {
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			_group1.getGroupId(), JournalArticle.class.getName());
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				JournalArticle.class.getName());
+
+		_assertInfoItemFormVariation(
+			ddmStructure,
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				_group1.getGroupId(), null,
+				String.valueOf(ddmStructure.getStructureId())));
+		_assertInfoItemFormVariation(
+			ddmStructure,
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				_group1.getGroupId(), ddmStructure.getStructureKey(), "-1"));
+		Assert.assertNull(
+			infoItemFormVariationsProvider.getInfoItemFormVariation(
+				_group1.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString()));
 	}
 
 	@Test
@@ -254,6 +280,19 @@ public class JournalArticleInfoItemFormVariationsProviderTest {
 				TestPropsValues.getCompanyId(), availableLocales,
 				LocaleUtil.getDefault());
 		}
+	}
+
+	private void _assertInfoItemFormVariation(
+		DDMStructure ddmStructure,
+		InfoItemFormVariation infoItemFormVariation) {
+
+		Assert.assertNotNull(infoItemFormVariation);
+		Assert.assertEquals(
+			String.valueOf(ddmStructure.getStructureId()),
+			infoItemFormVariation.getKey());
+		Assert.assertEquals(
+			ddmStructure.getStructureKey(),
+			infoItemFormVariation.getExternalReferenceCode());
 	}
 
 	private void _assertInfoItemFormVariations(

@@ -277,8 +277,12 @@ public class WorkflowDefinitionResourceImpl
 			return 0;
 		}
 
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
+
+		if (group == null) {
+			return 0;
+		}
 
 		return group.getGroupId();
 	}

@@ -8,13 +8,16 @@ package com.liferay.portal.workflow.kaleo.service.impl;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryUserRel;
 import com.liferay.account.service.AccountEntryUserRelLocalService;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -22,6 +25,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
+import com.liferay.portal.workflow.kaleo.exception.KaleoDefinitionGroupIdException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoConditionLocalService;
@@ -127,6 +131,8 @@ public class KaleoDefinitionLocalServiceImpl
 		throws PortalException {
 
 		// Kaleo definition
+
+		_validateGroupId(serviceContext.getScopeGroupId(), scope);
 
 		long kaleoDefinitionId = counterLocalService.increment();
 
@@ -376,6 +382,9 @@ public class KaleoDefinitionLocalServiceImpl
 		KaleoDefinition kaleoDefinition =
 			kaleoDefinitionPersistence.findByPrimaryKey(kaleoDefinitionId);
 
+		_validateGroupId(
+			serviceContext.getScopeGroupId(), kaleoDefinition.getScope());
+
 		kaleoDefinition.setExternalReferenceCode(externalReferenceCode);
 		kaleoDefinition.setGroupId(
 			_staging.getLiveGroupId(serviceContext.getScopeGroupId()));
@@ -445,6 +454,35 @@ public class KaleoDefinitionLocalServiceImpl
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
+
+	private void _validateGroupId(long groupId, String scope)
+		throws PortalException {
+
+		if (!Objects.equals(scope, WorkflowDefinitionConstants.SCOPE_AI)) {
+			return;
+		}
+
+		if (groupId == 0) {
+			throw new KaleoDefinitionGroupIdException(
+				"Invalid groupId 0 for scope ai");
+		}
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
+			group.getClassPK());
+
+		if (accountEntry == null) {
+			throw new KaleoDefinitionGroupIdException(
+				"Invalid groupId " + groupId + " for scope ai");
+		}
+	}
+
+	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;

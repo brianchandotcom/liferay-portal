@@ -48,7 +48,7 @@ public class CountSearchRequestExecutorImpl
 
 		CountSearchResponse countSearchResponse = new CountSearchResponse();
 
-		_baseSearchResponseAssembler.assemble(
+		BaseSearchResponseAssembler.INSTANCE.assemble(
 			countSearchResponse, solrQuery, queryResponse, countSearchRequest);
 
 		if (_log.isDebugEnabled()) {
@@ -88,9 +88,6 @@ public class CountSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CountSearchRequestExecutorImpl.class);
-
-	@Reference
-	private BaseSearchResponseAssembler _baseSearchResponseAssembler;
 
 	private final BaseSolrQueryAssembler _baseSolrQueryAssembler =
 		new BaseSolrQueryAssembler();

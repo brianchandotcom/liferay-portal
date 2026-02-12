@@ -27,16 +27,13 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchResponse searchSearchResponse, SolrQuery solrQuery,
 		QueryResponse queryResponse, SearchSearchRequest searchSearchRequest) {
 
-		_baseSearchResponseAssembler.assemble(
+		BaseSearchResponseAssembler.INSTANCE.assemble(
 			searchSearchResponse, solrQuery, queryResponse,
 			searchSearchRequest);
 
 		_searchSearchResponseAssemblerHelper.populate(
 			searchSearchResponse, queryResponse, searchSearchRequest);
 	}
-
-	@Reference
-	private BaseSearchResponseAssembler _baseSearchResponseAssembler;
 
 	@Reference
 	private SearchSearchResponseAssemblerHelper

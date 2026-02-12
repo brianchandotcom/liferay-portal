@@ -78,16 +78,22 @@ function SideNavigation({
 		[visibleSessionKey]
 	);
 
-	useEffect(() => {
-		async function handleStateRequest({visible}: {visible: boolean}) {
-			await updateVisible(visible);
-		}
+	useEffect(
+		function setupVisibilityRequestHandler() {
+			async function handleStateRequest({visible}: {visible: boolean}) {
+				await updateVisible(visible);
+			}
 
-		Liferay.on('sideNavigationStateRequested', handleStateRequest);
+			Liferay.on('sideNavigationStateRequested', handleStateRequest);
 
-		return () =>
-			Liferay.detach('sideNavigationStateRequested', handleStateRequest);
-	}, [updateVisible]);
+			return () =>
+				Liferay.detach(
+					'sideNavigationStateRequested',
+					handleStateRequest
+				);
+		},
+		[updateVisible]
+	);
 
 	return (
 		<SidePanel

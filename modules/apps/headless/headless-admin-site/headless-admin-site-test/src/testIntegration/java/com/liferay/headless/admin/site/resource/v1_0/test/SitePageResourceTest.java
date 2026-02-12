@@ -316,6 +316,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
+	@FeatureFlag(enable = true, value = "LPD-38869")
 	@Override
 	@Test
 	public void testPostSiteSitePage() throws Exception {
@@ -388,6 +389,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 				serviceContext));
 	}
 
+	@FeatureFlag(enable = true, value = "LPD-38869")
 	@Override
 	@Test
 	@TestInfo(

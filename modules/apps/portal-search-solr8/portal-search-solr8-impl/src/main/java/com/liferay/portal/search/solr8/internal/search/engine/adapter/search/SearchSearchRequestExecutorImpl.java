@@ -51,7 +51,7 @@ public class SearchSearchRequestExecutorImpl
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
-		_searchSearchResponseAssembler.assemble(
+		SearchSearchResponseAssembler.INSTANCE.assemble(
 			searchSearchResponse, solrQuery, queryResponse,
 			searchSearchRequest);
 
@@ -98,9 +98,6 @@ public class SearchSearchRequestExecutorImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchSearchRequestExecutorImpl.class);
-
-	@Reference
-	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 	@Reference
 	private SearchSolrQueryAssembler _searchSolrQueryAssembler;

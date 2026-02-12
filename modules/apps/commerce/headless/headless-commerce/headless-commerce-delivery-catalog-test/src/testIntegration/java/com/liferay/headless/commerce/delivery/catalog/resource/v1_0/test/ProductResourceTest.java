@@ -191,28 +191,32 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		CPDefinition cpDefinition2 =
 			_cpDefinitionLocalService.updateCPDefinition(
 				cpDefinition1.getCPDefinitionId(),
-				HashMapBuilder.put(
-					siteDefaultLocale, product.getName()
-				).build(),
-				HashMapBuilder.put(
-					siteDefaultLocale, product.getShortDescription()
-				).build(),
+				cpDefinition1.getCPTaxCategoryId(),
+				cpDefinition1.isAccountGroupFilterEnabled(),
+				cpDefinition1.isChannelFilterEnabled(),
+				cpDefinition1.getDDMStructureKey(), cpDefinition1.getDepth(),
 				HashMapBuilder.put(
 					siteDefaultLocale, product.getDescription()
 				).build(),
-				cpDefinition1.getUrlTitleMap(), cpDefinition1.getMetaTitleMap(),
+				1, 12, 0, 1, 2022, 0, 0, 0, 0, 0,
+				cpDefinition1.isFreeShipping(), cpDefinition1.getHeight(),
+				cpDefinition1.isIgnoreSKUCombinations(),
 				cpDefinition1.getMetaDescriptionMap(),
 				cpDefinition1.getMetaKeywordsMap(),
-				cpDefinition1.isIgnoreSKUCombinations(),
-				cpDefinition1.isShippable(), cpDefinition1.isFreeShipping(),
-				cpDefinition1.isShipSeparately(),
-				cpDefinition1.getShippingExtraPrice(), cpDefinition1.getWidth(),
-				cpDefinition1.getHeight(), cpDefinition1.getDepth(),
-				cpDefinition1.getWeight(), cpDefinition1.getCPTaxCategoryId(),
+				cpDefinition1.getMetaTitleMap(),
+				HashMapBuilder.put(
+					siteDefaultLocale, product.getName()
+				).build(),
+				true, cpDefinition1.isPublished(),
+				cpDefinition1.isShipSeparately(), cpDefinition1.isShippable(),
+				cpDefinition1.getShippingExtraPrice(),
+				HashMapBuilder.put(
+					siteDefaultLocale, product.getShortDescription()
+				).build(),
 				cpDefinition1.isTaxExempt(),
 				cpDefinition1.isTelcoOrElectronics(),
-				cpDefinition1.getDDMStructureKey(), cpDefinition1.isPublished(),
-				1, 1, 2022, 12, 0, 0, 0, 0, 0, 0, true, _serviceContext);
+				cpDefinition1.getUrlTitleMap(), cpDefinition1.getWeight(),
+				cpDefinition1.getWidth(), _serviceContext);
 
 		_cpDefinitions.add(cpDefinition2);
 

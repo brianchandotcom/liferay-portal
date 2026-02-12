@@ -86,13 +86,14 @@ public class CommerceOSGiCommands implements OSGiCommands {
 			titleMap.put(LocaleUtil.US, title);
 
 			_cpDefinitionLocalService.addCPDefinition(
-				null, user.getUserId(), commerceCatalog.getGroupId(), titleMap,
-				null, null, null, null, null, null, "simple", true, false,
-				false, false, 0, 0, 0, 0, 0, 0, false, false, null, true,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true,
-				CPInstanceConstants.DEFAULT_SKU, false, 0, null, null, 0,
-				WorkflowConstants.STATUS_DRAFT, serviceContext);
+				null, user.getUserId(), commerceCatalog.getGroupId(), 0, false,
+				false, null, CPInstanceConstants.DEFAULT_SKU, 0, false, 1, null,
+				null, 0, null, displayDateDay, displayDateHour,
+				displayDateMinute, displayDateMonth, displayDateYear, 0, 0, 0,
+				0, 0, false, 0, true, 0, null, null, null, titleMap, true,
+				"simple", true, false, false, 0, null, false, 0, null, null,
+				false, false, null, 0, 0, WorkflowConstants.STATUS_DRAFT,
+				serviceContext);
 		}
 	}
 

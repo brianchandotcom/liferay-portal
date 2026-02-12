@@ -78,22 +78,23 @@ public class CPDefinitionLinkUpgradeProcessTest {
 		Date expirationDate = cpDefinition.getExpirationDate();
 
 		cpDefinition = _cpDefinitionLocalService.updateCPDefinition(
-			cpDefinition.getCPDefinitionId(), nameMap,
-			cpDefinition.getShortDescriptionMap(), descriptionMap,
-			cpDefinition.getUrlTitleMap(), cpDefinition.getMetaTitleMap(),
+			cpDefinition.getCPDefinitionId(), cpDefinition.getCPTaxCategoryId(),
+			cpDefinition.isAccountGroupFilterEnabled(),
+			cpDefinition.isChannelFilterEnabled(),
+			cpDefinition.getDDMStructureKey(), cpDefinition.getDepth(),
+			descriptionMap, displayDate.getDate(), displayDate.getHours(),
+			displayDate.getMinutes(), displayDate.getMonth(),
+			displayDate.getYear(), expirationDate.getDate(),
+			expirationDate.getHours(), expirationDate.getMinutes(),
+			expirationDate.getMonth(), expirationDate.getYear(), true,
+			cpDefinition.getHeight(), cpDefinition.isIgnoreSKUCombinations(),
 			cpDefinition.getMetaDescriptionMap(),
-			cpDefinition.getMetaKeywordsMap(),
-			cpDefinition.isIgnoreSKUCombinations(), true, true, true,
-			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
-			cpDefinition.getHeight(), cpDefinition.getDepth(),
-			cpDefinition.getWeight(), cpDefinition.getCPTaxCategoryId(),
-			cpDefinition.isTaxExempt(), cpDefinition.isTelcoOrElectronics(),
-			cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
-			displayDate.getMonth(), displayDate.getDate(),
-			displayDate.getYear(), displayDate.getHours(),
-			displayDate.getMinutes(), expirationDate.getMonth(),
-			expirationDate.getDate(), expirationDate.getYear(),
-			expirationDate.getHours(), expirationDate.getMinutes(), true,
+			cpDefinition.getMetaKeywordsMap(), cpDefinition.getMetaTitleMap(),
+			nameMap, true, cpDefinition.isPublished(), true, true,
+			cpDefinition.getShippingExtraPrice(),
+			cpDefinition.getShortDescriptionMap(), cpDefinition.isTaxExempt(),
+			cpDefinition.isTelcoOrElectronics(), cpDefinition.getUrlTitleMap(),
+			cpDefinition.getWeight(), cpDefinition.getWidth(),
 			ServiceContextTestUtil.getServiceContext());
 
 		CPDefinitionLink cpDefinitionLink =

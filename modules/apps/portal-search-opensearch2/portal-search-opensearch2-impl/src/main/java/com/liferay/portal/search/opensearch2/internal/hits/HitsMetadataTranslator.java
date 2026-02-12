@@ -21,7 +21,6 @@ import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHitBuilder;
 import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.hits.SearchHitsBuilder;
-import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.opensearch2.internal.util.ConversionUtil;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
 
@@ -43,12 +42,6 @@ import org.opensearch.client.opensearch.core.search.TotalHits;
  */
 public class HitsMetadataTranslator {
 
-	public HitsMetadataTranslator(
-		SearchHitsBuilderFactory searchHitsBuilderFactory) {
-
-		_searchHitsBuilderFactory = searchHitsBuilderFactory;
-	}
-
 	public SearchHits translate(HitsMetadata<JsonData> hitsMetadata) {
 		return translate(null, hitsMetadata);
 	}
@@ -56,8 +49,7 @@ public class HitsMetadataTranslator {
 	public SearchHits translate(
 		String alternateUidFieldName, HitsMetadata<JsonData> hitsMetadata) {
 
-		SearchHitsBuilder searchHitsBuilder =
-			_searchHitsBuilderFactory.getSearchHitsBuilder();
+		SearchHitsBuilder searchHitsBuilder = new SearchHitsBuilder();
 
 		List<Hit<JsonData>> hits = hitsMetadata.hits();
 
@@ -169,7 +161,5 @@ public class HitsMetadataTranslator {
 			throw new RuntimeException(jsonProcessingException);
 		}
 	}
-
-	private final SearchHitsBuilderFactory _searchHitsBuilderFactory;
 
 }

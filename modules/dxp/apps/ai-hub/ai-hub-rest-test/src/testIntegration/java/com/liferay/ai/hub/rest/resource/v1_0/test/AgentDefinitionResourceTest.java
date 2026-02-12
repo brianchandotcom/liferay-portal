@@ -215,9 +215,6 @@ public class AgentDefinitionResourceTest
 			objectEntry1.getPropertyValue("externalReferenceCode"),
 			objectEntry2.getPropertyValue("externalReferenceCode"));
 		Assert.assertNotEquals(
-			objectEntry1.getPropertyValue("name"),
-			objectEntry2.getPropertyValue("name"));
-		Assert.assertNotEquals(
 			objectEntry1.getPropertyValue("workflowDefinitionName"),
 			objectEntry2.getPropertyValue("workflowDefinitionName"));
 
@@ -246,7 +243,7 @@ public class AgentDefinitionResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"active", "externalReferenceCode", "inputVariables", "name",
+			"active", "externalReferenceCode", "inputVariables",
 			"outputVariable", "version", "workflowDefinitionName"
 		};
 	}
@@ -347,7 +344,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name = WorkflowDefinitionConstants.NAME_CHANGE_TONE;
 					outputVariable = new Variable() {
 						{
 							name = "rewrittenText";
@@ -373,9 +369,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name =
-						WorkflowDefinitionConstants.
-							NAME_FIX_SPELLING_AND_GRAMMAR;
 					outputVariable = new Variable() {
 						{
 							name = "rewrittenText";
@@ -402,7 +395,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name = WorkflowDefinitionConstants.NAME_IMPROVE_WRITING;
 					outputVariable = new Variable() {
 						{
 							name = "rewrittenText";
@@ -428,7 +420,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name = WorkflowDefinitionConstants.NAME_LIFERAY_SEARCH;
 					outputVariable = new Variable() {
 						{
 							name = "response";
@@ -454,7 +445,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name = WorkflowDefinitionConstants.NAME_MAKE_LONGER;
 					outputVariable = new Variable() {
 						{
 							name = "rewrittenText";
@@ -480,7 +470,6 @@ public class AgentDefinitionResourceTest
 							}
 						}
 					};
-					name = WorkflowDefinitionConstants.NAME_MAKE_SHORTER;
 					outputVariable = new Variable() {
 						{
 							name = "rewrittenText";

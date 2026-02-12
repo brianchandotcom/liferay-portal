@@ -24,8 +24,6 @@ components:
                     items:
                         $ref: "#/components/schemas/Variable"
                     type: array
-                name:
-                    type: string
                 outputVariable:
                     $ref: "#/components/schemas/Variable"
                 title:

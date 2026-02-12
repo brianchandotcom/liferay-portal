@@ -194,11 +194,6 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
 										"inputVariables")),
-								"name",
-								LanguageUtil.format(
-									locale, "copy-of-x",
-									GetterUtil.getString(
-										objectEntry.getPropertyValue("name"))),
 								"outputVariable",
 								GetterUtil.getString(
 									objectEntry.getPropertyValue(
@@ -312,9 +307,6 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 									"inputVariables"))),
 						inputVariable -> _toVariable(inputVariable),
 						Variable.class));
-				setName(
-					() -> GetterUtil.getString(
-						objectEntry.getPropertyValue("name")));
 				setOutputVariable(
 					() -> _toVariable(
 						GetterUtil.getString(

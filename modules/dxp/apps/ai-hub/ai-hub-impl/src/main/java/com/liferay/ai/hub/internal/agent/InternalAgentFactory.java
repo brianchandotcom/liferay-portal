@@ -49,10 +49,14 @@ public class InternalAgentFactory {
 		internalAgentImpl.setDescription(
 			GetterUtil.getString(objectEntry.getPropertyValue("description")));
 		internalAgentImpl.setName(
-			GetterUtil.getString(objectEntry.getPropertyValue("name")));
+			GetterUtil.getString(
+				objectEntry.getPropertyValue("externalReferenceCode")));
 		internalAgentImpl.setOutputKey(
 			GetterUtil.getString(
 				objectEntry.getPropertyValue("outputVariable")));
+		internalAgentImpl.setWorkflowDefinitionName(
+			GetterUtil.getString(
+				objectEntry.getPropertyValue("workflowDefinitionName")));
 
 		return (InternalAgent)ProxyUtil.newProxyInstance(
 			UntypedAgent.class.getClassLoader(),

@@ -59,14 +59,23 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			_exportImportReportEntryLocalService.
-				addEmptyExportImportReportEntry(
-					0L, companyId, externalReferenceCode,
-					_classNameLocalService.getClassNameId(clazz.getName()),
-					GetterUtil.getLong(
-						ExportImportThreadLocal.
-							getExportImportConfigurationId()),
-					modelNameLanguageKey);
+			long classNameId = _classNameLocalService.getClassNameId(
+				clazz.getName());
+
+			ExportImportReportEntry exportImportReportEntry =
+				_exportImportReportEntryLocalService.
+					fetchEmptyExportImportReportEntryByG_C_C_C(
+						0L, companyId, externalReferenceCode, classNameId);
+
+			if (exportImportReportEntry == null) {
+				_exportImportReportEntryLocalService.
+					addEmptyExportImportReportEntry(
+						0L, companyId, externalReferenceCode, classNameId,
+						GetterUtil.getLong(
+							ExportImportThreadLocal.
+								getExportImportConfigurationId()),
+						modelNameLanguageKey);
+			}
 
 			return emptyModelUnsafeSupplier.get();
 		}
@@ -104,14 +113,22 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			_exportImportReportEntryLocalService.
-				addEmptyExportImportReportEntry(
-					groupId, companyId, externalReferenceCode,
-					_classNameLocalService.getClassNameId(className),
-					GetterUtil.getLong(
-						ExportImportThreadLocal.
-							getExportImportConfigurationId()),
-					modelNameLanguageKey);
+			long classNameId = _classNameLocalService.getClassNameId(className);
+
+			ExportImportReportEntry exportImportReportEntry =
+				_exportImportReportEntryLocalService.
+					fetchEmptyExportImportReportEntryByG_C_C_C(
+						groupId, companyId, externalReferenceCode, classNameId);
+
+			if (exportImportReportEntry == null) {
+				_exportImportReportEntryLocalService.
+					addEmptyExportImportReportEntry(
+						groupId, companyId, externalReferenceCode, classNameId,
+						GetterUtil.getLong(
+							ExportImportThreadLocal.
+								getExportImportConfigurationId()),
+						modelNameLanguageKey);
+			}
 
 			return emptyModelUnsafeSupplier.get();
 		}

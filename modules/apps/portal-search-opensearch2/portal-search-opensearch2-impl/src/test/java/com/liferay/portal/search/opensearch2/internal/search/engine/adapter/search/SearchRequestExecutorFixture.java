@@ -32,8 +32,7 @@ public class SearchRequestExecutorFixture {
 
 	private MultisearchSearchRequestExecutor
 		_createMultisearchSearchRequestExecutor(
-			OpenSearchConnectionManager openSearchConnectionManager,
-			SearchSearchResponseAssembler searchSearchResponseAssembler) {
+			OpenSearchConnectionManager openSearchConnectionManager) {
 
 		MultisearchSearchRequestExecutor multisearchSearchRequestExecutor =
 			new MultisearchSearchRequestExecutorImpl();
@@ -41,9 +40,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			multisearchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			multisearchSearchRequestExecutor, "_searchSearchResponseAssembler",
-			searchSearchResponseAssembler);
 
 		return multisearchSearchRequestExecutor;
 	}
@@ -58,19 +54,15 @@ public class SearchRequestExecutorFixture {
 			openSearchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		SearchSearchResponseAssembler searchSearchResponseAssembler =
-			new SearchSearchResponseAssemblerImpl();
-
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor,
 			"_multisearchSearchRequestExecutor",
 			_createMultisearchSearchRequestExecutor(
-				openSearchConnectionManager, searchSearchResponseAssembler));
+				openSearchConnectionManager));
 
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchRequestExecutor, "_searchSearchRequestExecutor",
-			_createSearchSearchRequestExecutor(
-				openSearchConnectionManager, searchSearchResponseAssembler));
+			_createSearchSearchRequestExecutor(openSearchConnectionManager));
 
 		openSearchSearchRequestExecutor.activate();
 
@@ -78,8 +70,7 @@ public class SearchRequestExecutorFixture {
 	}
 
 	private SearchSearchRequestExecutor _createSearchSearchRequestExecutor(
-		OpenSearchConnectionManager openSearchConnectionManager,
-		SearchSearchResponseAssembler searchSearchResponseAssembler) {
+		OpenSearchConnectionManager openSearchConnectionManager) {
 
 		SearchSearchRequestExecutor searchSearchRequestExecutor =
 			new SearchSearchRequestExecutorImpl();
@@ -87,9 +78,6 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestExecutor, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutor, "_searchSearchResponseAssembler",
-			searchSearchResponseAssembler);
 
 		return searchSearchRequestExecutor;
 	}

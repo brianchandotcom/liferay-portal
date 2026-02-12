@@ -61,8 +61,7 @@ public class SearchRequestExecutorFixture {
 
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchRequestExecutor, "_searchSearchRequestExecutor",
-			_createSearchSearchRequestExecutor(
-				elasticsearchClientResolver));
+			_createSearchSearchRequestExecutor(elasticsearchClientResolver));
 
 		elasticsearchSearchRequestExecutor.activate();
 

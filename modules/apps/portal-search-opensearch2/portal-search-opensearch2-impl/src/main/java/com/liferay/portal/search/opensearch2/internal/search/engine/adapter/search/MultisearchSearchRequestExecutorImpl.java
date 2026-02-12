@@ -108,7 +108,7 @@ public class MultisearchSearchRequestExecutorImpl
 			SearchSearchRequest searchSearchRequest =
 				searchRequestHolder.getSearchSearchRequest();
 
-			_searchSearchResponseAssembler.assemble(
+			SearchSearchResponseAssembler.INSTANCE.assemble(
 				searchRequestHolder.getSearchRequest(), multiSearchItem,
 				searchSearchRequest, searchSearchResponse);
 
@@ -178,9 +178,6 @@ public class MultisearchSearchRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 	private class SearchRequestHolder {
 

@@ -33,8 +33,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
@@ -42,11 +40,8 @@ public class SearchSearchResponseAssembler
 	implements AggregationResultTranslatorFactory,
 			   PipelineAggregationResultTranslatorFactory {
 
-	public static final SearchSearchResponseAssembler INSTANCE = new SearchSearchResponseAssembler();
-	
-	private SearchSearchResponseAssembler() {
-	}
-
+	public static final SearchSearchResponseAssembler INSTANCE =
+		new SearchSearchResponseAssembler();
 
 	public void assemble(
 		ResponseBody responseBody, String searchRequestString,
@@ -91,6 +86,9 @@ public class SearchSearchResponseAssembler
 		TotalHits totalHits = hitsMetadata.total();
 
 		searchSearchResponse.setCount(totalHits.value());
+	}
+
+	private SearchSearchResponseAssembler() {
 	}
 
 	private void _addAggregations(

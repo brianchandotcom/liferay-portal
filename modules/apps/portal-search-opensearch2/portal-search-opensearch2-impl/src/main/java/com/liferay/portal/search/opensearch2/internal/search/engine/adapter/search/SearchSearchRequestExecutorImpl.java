@@ -71,7 +71,7 @@ public class SearchSearchRequestExecutorImpl
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
-		_searchSearchResponseAssembler.assemble(
+		SearchSearchResponseAssembler.INSTANCE.assemble(
 			searchRequest, searchResponse, searchSearchRequest,
 			searchSearchResponse);
 
@@ -140,8 +140,5 @@ public class SearchSearchRequestExecutorImpl
 
 	@Reference
 	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	@Reference
-	private SearchSearchResponseAssembler _searchSearchResponseAssembler;
 
 }

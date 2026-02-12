@@ -7,25 +7,40 @@ package com.liferay.portal.search.groupby;
 
 import com.liferay.portal.kernel.search.Hits;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
 
 /**
  * @author Bryan Engler
  * @author Michael C. Han
  */
-@ProviderType
-public interface GroupByResponse {
+public class GroupByResponse {
 
-	public String getField();
+	public GroupByResponse(String field) {
+		_field = field;
+	}
 
-	public Hits getHits(String term);
+	public String getField() {
+		return _field;
+	}
 
-	public Map<String, Hits> getHitsMap();
+	public Hits getHits(String term) {
+		return _groupedHits.get(term);
+	}
 
-	public void putHits(String term, Hits hits);
+	public Map<String, Hits> getHitsMap() {
+		return _groupedHits;
+	}
 
-	public void setField(String field);
+	public void putHits(String term, Hits hits) {
+		_groupedHits.put(term, hits);
+	}
+
+	public void setField(String field) {
+		_field = field;
+	}
+
+	private String _field;
+	private final Map<String, Hits> _groupedHits = new LinkedHashMap<>();
 
 }

@@ -18,7 +18,7 @@ public class GroupByResponseFactoryImpl implements GroupByResponseFactory {
 
 	@Override
 	public GroupByResponse getGroupByResponse(String field) {
-		return new GroupByResponseImpl(field);
+		return new GroupByResponse(field);
 	}
 
 }

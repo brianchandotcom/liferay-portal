@@ -10,15 +10,22 @@ import com.liferay.portal.search.aggregation.AggregationResult;
 /**
  * @author Michael C. Han
  */
-public abstract class ScriptedMetricAggregationResult
-	extends AggregationResult {
+public class ScriptedMetricAggregationResult extends AggregationResult {
 
-	public ScriptedMetricAggregationResult(String name) {
+	public ScriptedMetricAggregationResult(String name, Object value) {
 		super(name);
+
+		_value = value;
 	}
 
-	public abstract Object getValue();
+	public Object getValue() {
+		return _value;
+	}
 
-	public abstract void setValue(Object value);
+	public void setValue(Object value) {
+		_value = value;
+	}
+
+	private Object _value;
 
 }

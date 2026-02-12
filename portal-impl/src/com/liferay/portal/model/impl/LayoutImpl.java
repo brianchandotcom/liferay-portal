@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
@@ -45,6 +46,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
@@ -758,18 +760,23 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the current layout has a configured icon.
+	 * Returns the icon image associated with the layout.
 	 *
-	 * @return <code>true</code> if the current layout has a configured icon;
-	 *         <code>false</code> otherwise
+	 * @return the icon image, or <code>null</code> if the layout has no icon image
 	 */
 	@Override
-	public boolean getIconImage() {
-		if (getIconImageId() > 0) {
-			return true;
+	public Image getIconImage() {
+		Image iconImage = null;
+
+		if (hasIconImage()) {
+			iconImage = ImageLocalServiceUtil.fetchImage(getIconImageId());
+
+			if ((iconImage == null) && _log.isWarnEnabled()) {
+				_log.warn("Unable to get image with ID " + getIconImageId());
+			}
 		}
 
-		return false;
+		return iconImage;
 	}
 
 	@Override
@@ -1066,6 +1073,21 @@ public class LayoutImpl extends LayoutBaseImpl {
 			getGroupId(), isPrivateLayout(), getLayoutId());
 	}
 
+	/**
+	 * Returns <code>true</code> if the current layout has a configured icon.
+	 *
+	 * @return <code>true</code> if the current layout has a configured icon;
+	 *         <code>false</code> otherwise
+	 */
+	@Override
+	public boolean hasIconImage() {
+		if (getIconImageId() > 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public boolean hasScopeGroup() throws PortalException {
 		Group group = getScopeGroup();
@@ -1220,11 +1242,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return getIconImage();
 	}
 
 	/**

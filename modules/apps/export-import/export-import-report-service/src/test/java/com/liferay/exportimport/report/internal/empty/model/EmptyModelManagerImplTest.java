@@ -41,6 +41,7 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
 
 /**
  * @author Carlos Correa
@@ -178,10 +179,43 @@ public class EmptyModelManagerImplTest {
 						}),
 					User.class.getName()));
 
+			// Empty report already exists
+
+			ExportImportReportEntry mockedExportImportReportEntry =
+				Mockito.mock(ExportImportReportEntry.class);
+
+			Mockito.when(
+				_exportImportReportEntryLocalService.
+					fetchEmptyExportImportReportEntryByG_C_C_C(
+						0L, companyId, externalReferenceCode, classNameId)
+			).thenReturn(
+				mockedExportImportReportEntry
+			);
+
+			Assert.assertSame(
+				_user,
+				_emptyModelManager.getOrAddEmptyModel(
+					User.class, companyId, () -> _user, externalReferenceCode,
+					_toBiFunction(() -> null),
+					_toUnsafeBiFunction(
+						() -> {
+							Assert.fail();
+
+							return null;
+						}),
+					User.class.getName()));
+
 			Mockito.verify(
-				_classNameLocalService
+				_classNameLocalService, VerificationModeFactory.times(2)
 			).getClassNameId(
 				User.class.getName()
+			);
+
+			Mockito.verify(
+				_exportImportReportEntryLocalService,
+				VerificationModeFactory.times(2)
+			).fetchEmptyExportImportReportEntryByG_C_C_C(
+				0L, companyId, externalReferenceCode, classNameId
 			);
 
 			Mockito.verify(
@@ -359,20 +393,54 @@ public class EmptyModelManagerImplTest {
 						}),
 					groupId, User.class.getName()));
 
+			// Empty report already exists
+
+			ExportImportReportEntry mockedExportImportReportEntry =
+				Mockito.mock(ExportImportReportEntry.class);
+
+			Mockito.when(
+				_exportImportReportEntryLocalService.
+					fetchEmptyExportImportReportEntryByG_C_C_C(
+						groupId, companyId, userExternalReferenceCode,
+						classNameId)
+			).thenReturn(
+				mockedExportImportReportEntry
+			);
+
+			Assert.assertSame(
+				_user,
+				_emptyModelManager.getOrAddEmptyModel(
+					User.class.getName(), companyId, () -> _user,
+					userExternalReferenceCode, _toBiFunction(() -> null),
+					_toUnsafeBiFunction(
+						() -> {
+							Assert.fail();
+
+							return null;
+						}),
+					groupId, User.class.getName()));
+
 			Mockito.verify(
-				_classNameLocalService
+				_groupLocalService, VerificationModeFactory.times(2)
+			).fetchGroup(
+				groupId
+			);
+
+			Mockito.verify(
+				_group, VerificationModeFactory.times(2)
+			).getCompanyId();
+
+			Mockito.verify(
+				_classNameLocalService, VerificationModeFactory.times(2)
 			).getClassNameId(
 				User.class.getName()
 			);
 
 			Mockito.verify(
-				_group
-			).getCompanyId();
-
-			Mockito.verify(
-				_groupLocalService
-			).fetchGroup(
-				groupId
+				_exportImportReportEntryLocalService,
+				VerificationModeFactory.times(2)
+			).fetchEmptyExportImportReportEntryByG_C_C_C(
+				groupId, companyId, userExternalReferenceCode, classNameId
 			);
 
 			Mockito.verify(
@@ -470,6 +538,12 @@ public class EmptyModelManagerImplTest {
 						return null;
 					}),
 				User.class.getName());
+
+			Mockito.verify(
+				_exportImportReportEntryLocalService
+			).fetchEmptyExportImportReportEntryByG_C_C_C(
+				0L, companyId, externalReferenceCode, classNameId
+			);
 
 			Mockito.verify(
 				_classNameLocalService

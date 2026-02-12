@@ -299,7 +299,7 @@ public class QueriesImpl implements Queries {
 
 	@Override
 	public TermQuery term(String field, Object value) {
-		return new TermQueryImpl(field, value);
+		return new TermQuery(field, value);
 	}
 
 	@Override

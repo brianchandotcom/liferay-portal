@@ -71,6 +71,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.junit.Assert;
+
 /**
  * @author Lourdes Fernández Besada
  */
@@ -92,6 +94,49 @@ public class PageElementsTestUtil {
 			fragmentCollection.getFragmentCollectionId(), company.getGroupId(),
 			"<div data-lfr-editable-id=\"element-text\" " +
 				"data-lfr-editable-type=\"text\">Default text</div>");
+	}
+
+	public static void assertRenderedLayoutHTMLWithTemplateEntries(
+		String renderLayoutHTML) {
+
+		Assert.assertNotNull(renderLayoutHTML);
+
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry1"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry2"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry3"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry4"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry5"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("companyGroupTemplateEntry6"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry1"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry2"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry3"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry4"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry5"));
+		Assert.assertTrue(
+			renderLayoutHTML,
+			renderLayoutHTML.contains("scopeGroupTemplateEntry6"));
 	}
 
 	public static BasicFragmentInstancePageElementDefinition

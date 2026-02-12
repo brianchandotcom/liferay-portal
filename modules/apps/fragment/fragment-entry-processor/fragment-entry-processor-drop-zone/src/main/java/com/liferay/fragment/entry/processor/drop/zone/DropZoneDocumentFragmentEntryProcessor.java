@@ -34,6 +34,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -227,6 +228,11 @@ public class DropZoneDocumentFragmentEntryProcessor
 				}
 
 				Element dropZoneElement = new Element("div");
+
+				for (Attribute attribute : element.attributes()) {
+					dropZoneElement.attr(
+						attribute.getKey(), attribute.getValue());
+				}
 
 				dropZoneElement.html(dropZoneHTML);
 

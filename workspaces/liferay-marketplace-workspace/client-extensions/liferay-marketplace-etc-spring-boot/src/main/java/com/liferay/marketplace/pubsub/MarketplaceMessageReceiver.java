@@ -252,13 +252,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			};
 		}
 
-		CustomField[] customFields = _getCustomFields(koroneikiAccount);
+		CustomField[] accountCustomFields = _getCustomFields(koroneikiAccount);
 
 		accountResource.postAccount(
 			new Account() {
 				{
 					setAccountUserAccounts(() -> userAccounts);
-					setCustomFields(() -> customFields);
+					setCustomFields(() -> accountCustomFields);
 					setDescription(koroneikiAccount::getDescription);
 					setName(koroneikiAccount::getName);
 				}
@@ -308,13 +308,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		CustomField[] customFields = _getCustomFields(koroneikiAccount);
+		CustomField[] accountCustomFields = _getCustomFields(koroneikiAccount);
 
 		accountResource.patchAccount(
 			account.getId(),
 			new Account() {
 				{
-					setCustomFields(() -> customFields);
+					setCustomFields(() -> accountCustomFields);
 					setDescription(koroneikiAccount::getDescription);
 					setName(koroneikiAccount::getName);
 				}

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,11 +51,33 @@ public class DataCleanupPreupgradeProcessUtil {
 	}
 
 	public static String getTableName(
-			boolean applyFallback, DBInspector dbInspector,
-			String fullyQualifiedName, Set<String> liferayTableNames)
+			boolean applyFallback, Connection connection,
+			DBInspector dbInspector, String fullyQualifiedName,
+			Set<String> liferayTableNames)
 		throws Exception {
 
 		String tableName = null;
+
+		if (StringUtil.startsWith(
+				fullyQualifiedName,
+				"com.liferay.object.model.ObjectDefinition#")) {
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select dbTableName from ObjectDefinition where " +
+							"className = ?")) {
+
+				preparedStatement.setString(1, fullyQualifiedName);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						tableName = resultSet.getString(1);
+					}
+				}
+			}
+
+			return tableName;
+		}
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 

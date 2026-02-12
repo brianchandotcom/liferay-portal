@@ -6,7 +6,6 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
@@ -62,24 +61,16 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 					String tableName = null;
 
 					if (classNames.length == 1) {
-						String className = classNames[0];
-
-						int poundIndex = className.indexOf(StringPool.POUND);
-
-						if (poundIndex != -1) {
-							className = className.substring(0, poundIndex);
-						}
-
 						tableName =
 							DataCleanupPreupgradeProcessUtil.getTableName(
-								false, dbInspector, className,
+								false, connection, dbInspector, classNames[0],
 								liferayTableNames);
 					}
 					else {
 						for (String className : classNames) {
 							tableName =
 								DataCleanupPreupgradeProcessUtil.getTableName(
-									false, dbInspector, className,
+									false, connection, dbInspector, className,
 									liferayTableNames);
 
 							if (StringUtil.startsWith(tableName, "DDM")) {
@@ -92,27 +83,6 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 
 					if (tableName == null) {
 						continue;
-					}
-
-					if (StringUtil.equalsIgnoreCase(
-							tableName, "ObjectDefinition")) {
-
-						try (PreparedStatement preparedStatement1 =
-								connection.prepareStatement(
-									"select dbTableName from " +
-										"ObjectDefinition where className = " +
-											"?")) {
-
-							preparedStatement1.setString(1, name);
-
-							try (ResultSet resultSet1 =
-									preparedStatement1.executeQuery()) {
-
-								if (resultSet1.next()) {
-									tableName = resultSet1.getString(1);
-								}
-							}
-						}
 					}
 
 					if (!dbInspector.hasTable(tableName)) {

@@ -52,7 +52,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.internal.aggregation.pipeline.AvgBucketPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.BucketScriptPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.CumulativeSumPipelineAggregationResultImpl;
 import com.liferay.portal.search.internal.aggregation.pipeline.DerivativePipelineAggregationResultImpl;
@@ -82,7 +81,7 @@ public class AggregationResultsImpl implements AggregationResults {
 	public AvgBucketPipelineAggregationResult avgBucket(
 		String name, double value) {
 
-		return new AvgBucketPipelineAggregationResultImpl(name, value);
+		return new AvgBucketPipelineAggregationResult(name, value);
 	}
 
 	@Override

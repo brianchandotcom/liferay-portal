@@ -52,9 +52,6 @@ public class SearchRequestExecutorFixture {
 			new SearchSearchRequestExecutorImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutorImpl, "_searchSearchResponseAssembler",
-			new SearchSearchResponseAssemblerImpl());
-		ReflectionTestUtil.setFieldValue(
 			searchSearchRequestExecutorImpl, "_searchSolrQueryAssembler",
 			createSearchSolrQueryAssembler());
 		ReflectionTestUtil.setFieldValue(

@@ -695,7 +695,7 @@ test('Staging publish template with smoke', async ({
 	expect(page.getByText(webContentContent, {exact: true})).toBeVisible();
 });
 
-test('A page created in staging is published to live', async ({
+testWithBatchStagingFF('A page created in staging is published to live', async ({
 	apiHelpers,
 	page,
 	stagingPage,

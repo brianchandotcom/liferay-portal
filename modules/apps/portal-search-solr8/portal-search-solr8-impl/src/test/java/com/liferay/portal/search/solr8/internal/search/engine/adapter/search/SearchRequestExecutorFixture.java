@@ -35,26 +35,10 @@ public class SearchRequestExecutorFixture {
 		ReflectionTestUtil.setFieldValue(
 			solrSearchRequestExecutor, "_multisearchSearchRequestExecutor",
 			new MultisearchSearchRequestExecutor());
-		ReflectionTestUtil.setFieldValue(
-			solrSearchRequestExecutor, "_searchSearchRequestExecutor",
-			createSearchSearchRequestExecutor(solrClientManager));
 
 		solrSearchRequestExecutor.activate();
 
 		return solrSearchRequestExecutor;
-	}
-
-	protected SearchSearchRequestExecutor createSearchSearchRequestExecutor(
-		SolrClientManager solrClientManager) {
-
-		SearchSearchRequestExecutorImpl searchSearchRequestExecutorImpl =
-			new SearchSearchRequestExecutorImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			searchSearchRequestExecutorImpl, "_solrClientManager",
-			solrClientManager);
-
-		return searchSearchRequestExecutorImpl;
 	}
 
 	protected void setSolrClientManager(SolrClientManager solrClientManager) {

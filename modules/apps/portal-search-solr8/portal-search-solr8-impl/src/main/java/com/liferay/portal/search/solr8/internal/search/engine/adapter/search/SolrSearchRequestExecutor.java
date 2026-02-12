@@ -88,14 +88,14 @@ public class SolrSearchRequestExecutor implements SearchRequestExecutor {
 	protected void activate() {
 		_countSearchRequestExecutor = new CountSearchRequestExecutor(
 			_solrClientManager);
+		_searchSearchRequestExecutor = new SearchSearchRequestExecutor(
+			_solrClientManager);
 	}
 
 	private CountSearchRequestExecutor _countSearchRequestExecutor;
 	private final MultisearchSearchRequestExecutor
 		_multisearchSearchRequestExecutor =
 			new MultisearchSearchRequestExecutor();
-
-	@Reference
 	private SearchSearchRequestExecutor _searchSearchRequestExecutor;
 
 	@Reference

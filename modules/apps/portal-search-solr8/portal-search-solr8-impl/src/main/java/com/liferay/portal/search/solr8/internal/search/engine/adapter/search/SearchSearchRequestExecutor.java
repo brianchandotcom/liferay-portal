@@ -5,15 +5,100 @@
 
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.search;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
+import com.liferay.portal.search.solr8.internal.connection.SolrClientManager;
+
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrRequest;
+import org.apache.solr.client.solrj.request.QueryRequest;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrException;
 
 /**
  * @author Bryan Engler
  */
-public interface SearchSearchRequestExecutor {
+public class SearchSearchRequestExecutor {
+
+	public SearchSearchRequestExecutor(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
+	}
 
 	public SearchSearchResponse execute(
-		SearchSearchRequest searchSearchRequest);
+		SearchSearchRequest searchSearchRequest) {
+
+		SolrQuery solrQuery = new SolrQuery();
+
+		_searchSolrQueryAssembler.assemble(solrQuery, searchSearchRequest);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Search query: " +
+					_getDebugRequestString(solrQuery.toString()));
+		}
+
+		QueryResponse queryResponse = getQueryResponse(
+			new QueryRequest(solrQuery), searchSearchRequest.getIndexNames());
+
+		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
+
+		SearchSearchResponseAssembler.INSTANCE.assemble(
+			searchSearchResponse, solrQuery, queryResponse,
+			searchSearchRequest);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"The search engine processed ",
+					searchSearchResponse.getSearchRequestString(), " in ",
+					searchSearchResponse.getExecutionTime(), " ms"));
+		}
+
+		return searchSearchResponse;
+	}
+
+	protected QueryResponse getQueryResponse(
+		QueryRequest queryRequest, String[] indexNames) {
+
+		try {
+			queryRequest.setMethod(SolrRequest.METHOD.POST);
+
+			return queryRequest.process(
+				_solrClientManager.getSolrClient(), indexNames[0]);
+		}
+		catch (Exception exception) {
+			if (exception instanceof SolrException) {
+				SolrException solrException = (SolrException)exception;
+
+				throw solrException;
+			}
+
+			throw new RuntimeException(exception);
+		}
+	}
+
+	private String _getDebugRequestString(String requestString) {
+		requestString = URLCodec.decodeURL(requestString);
+
+		requestString = StringUtil.replace(
+			requestString, CharPool.AMPERSAND,
+			StringPool.NEW_LINE + StringPool.AMPERSAND);
+
+		return requestString;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SearchSearchRequestExecutor.class);
+
+	private final SearchSolrQueryAssembler _searchSolrQueryAssembler =
+		new SearchSolrQueryAssembler();
+	private final SolrClientManager _solrClientManager;
 
 }

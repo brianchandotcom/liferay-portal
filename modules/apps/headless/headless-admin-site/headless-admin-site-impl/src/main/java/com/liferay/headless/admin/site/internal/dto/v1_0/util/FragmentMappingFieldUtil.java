@@ -38,23 +38,29 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class FragmentMappingFieldUtil {
 
-	public static String getFieldKey(JSONObject jsonObject) {
+	public static String getFieldKey(
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long layoutPlid, LayoutStructure layoutStructure,
+		String layoutStructureItemId, long scopeGroupId) {
+
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			return collectionFieldId;
+			return _getCollectionFieldKey(
+				collectionFieldId, infoItemServiceRegistry, layoutStructure,
+				layoutStructureItemId, scopeGroupId);
 		}
 
-		String fieldId = jsonObject.getString("fieldId");
-
-		if (Validator.isNotNull(fieldId)) {
-			return fieldId;
+		if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
+			return _getInstanceFieldKey(
+				infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
 		String mappedField = jsonObject.getString("mappedField");
 
 		if (Validator.isNotNull(mappedField)) {
-			return mappedField;
+			return _getContextFieldKey(
+				infoItemServiceRegistry, layoutPlid, scopeGroupId, mappedField);
 		}
 
 		return null;

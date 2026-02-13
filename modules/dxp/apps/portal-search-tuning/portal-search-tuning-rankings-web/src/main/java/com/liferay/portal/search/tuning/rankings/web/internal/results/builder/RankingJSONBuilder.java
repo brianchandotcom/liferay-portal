@@ -6,10 +6,14 @@
 package com.liferay.portal.search.tuning.rankings.web.internal.results.builder;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
+import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -38,6 +42,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -152,6 +157,31 @@ public class RankingJSONBuilder {
 		return format.format(date);
 	}
 
+	private AssetRenderer<?> _getAssetRenderer() {
+		AssetRendererFactory<?> assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_document.getString(Field.ENTRY_CLASS_NAME));
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		try {
+			return assetRendererFactory.getAssetRenderer(
+				_document.getLong(Field.ENTRY_CLASS_PK));
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Error getting AssetRenderer for " +
+						_document.getLong(Field.ENTRY_CLASS_PK),
+					portalException);
+			}
+		}
+
+		return null;
+	}
+
 	private String _getAuthor() {
 		if (_isUser()) {
 			return _document.getString("screenName");
@@ -198,6 +228,19 @@ public class RankingJSONBuilder {
 
 		if (Validator.isBlank(description)) {
 			description = _document.getString(Field.DESCRIPTION);
+		}
+
+		if (Validator.isBlank(description)) {
+			String entryClassName = _document.getString(Field.ENTRY_CLASS_NAME);
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(
+						_themeDisplay.getCompanyId(), entryClassName);
+
+			if (objectDefinition != null) {
+				description = _getObjectEntryContent();
+			}
 		}
 
 		return StringUtil.shorten(description, 200);
@@ -277,6 +320,42 @@ public class RankingJSONBuilder {
 		return "document-default";
 	}
 
+	private String _getObjectEntryContent() {
+		StringBundler sb = new StringBundler();
+
+		Map<String, com.liferay.portal.search.document.Field> fields =
+			_document.getFields();
+
+		for (Map.Entry<String, com.liferay.portal.search.document.Field> entry :
+				fields.entrySet()) {
+
+			String fieldName = entry.getKey();
+
+			if (fieldName.startsWith("snippet_nestedFieldArray.value")) {
+				com.liferay.portal.search.document.Field field =
+					entry.getValue();
+
+				sb.append(
+					StringUtil.merge(
+						field.getValues(), StringPool.TRIPLE_PERIOD));
+
+				sb.append(StringPool.TRIPLE_PERIOD);
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		String content = sb.toString();
+
+		if (Validator.isBlank(content)) {
+			content = _document.getString("objectEntryContent");
+		}
+
+		return content;
+	}
+
 	private String _getTitle() {
 		if (_isUser()) {
 			return _document.getString("fullName");
@@ -296,6 +375,14 @@ public class RankingJSONBuilder {
 
 		if (Validator.isBlank(title)) {
 			title = _document.getString(Field.NAME);
+		}
+
+		if (Validator.isBlank(title)) {
+			AssetRenderer<?> assetRenderer = _getAssetRenderer();
+
+			if (assetRenderer != null) {
+				title = assetRenderer.getTitle(_locale);
+			}
 		}
 
 		return title;

@@ -6,16 +6,21 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {searchExperiencesPagesTest} from '../../../fixtures/searchExperiencesPageTest';
 import {searchPageTest} from '../../../fixtures/searchPageTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
+import getRandomString from '../../../utils/getRandomString';
 import {hoverAndExpectToBeVisible} from '../../../utils/hoverAndExpectToBeVisible';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-17564': {enabled: true}, // CMS 2.0
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	searchExperiencesPagesTest,
@@ -182,6 +187,101 @@ test.describe('Reordering', () => {
 			await resultRankingsViewPage.goto();
 
 			await resultRankingsViewPage.deleteResultRanking(searchQuery);
+		});
+	});
+});
+
+test.describe('CMS Object Entries', () => {
+	test('View object entries details created in CMS space @LPD-76602', async ({
+		apiHelpers,
+		editResultRankingPage,
+		resultRankingsViewPage,
+	}) => {
+		const cmsId = `CMS_${getRandomString()}`;
+
+		const cmsObjectEntry1 = {
+			content: `Description ${cmsId}`,
+			title: `${cmsId} Web Content`,
+		};
+		const cmsObjectEntry2 = {
+			fileName: `File_${cmsId}.png`,
+			title: `${cmsId} File`,
+		};
+		const spaceName = `Space ${cmsId}`;
+
+		await test.step('Create a new Space', async () => {
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a basic web content for that space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					content: cmsObjectEntry1.content,
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: cmsObjectEntry1.title,
+				},
+				'cms/basic-web-contents',
+				spaceName
+			);
+		});
+
+		await test.step('Create a file for that space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: cmsObjectEntry2.fileName,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: cmsObjectEntry2.title,
+				},
+				'cms/basic-documents',
+				spaceName
+			);
+		});
+
+		await test.step('Create result ranking for search query', async () => {
+			await resultRankingsViewPage.goto();
+
+			await resultRankingsViewPage.createResultRanking(cmsId);
+		});
+
+		const resultRankingItem1 = await editResultRankingPage.results.item(
+			cmsObjectEntry1.title
+		);
+		const resultRankingItem2 = await editResultRankingPage.results.item(
+			cmsObjectEntry2.title
+		);
+
+		await test.step('View the results title, content, and icon', async () => {
+			await expect(resultRankingItem1).toBeVisible();
+			await expect(resultRankingItem2).toBeVisible();
+
+			await expect(
+				resultRankingItem1.locator('.list-item-description')
+			).toHaveText(new RegExp(cmsObjectEntry1.content));
+
+			await expect(
+				resultRankingItem2.locator('.list-item-description')
+			).toHaveText(new RegExp(cmsObjectEntry2.fileName));
+
+			await expect(
+				resultRankingItem1.locator('.lexicon-icon-forms')
+			).toBeVisible();
+
+			await expect(
+				resultRankingItem2.locator('.lexicon-icon-documents-and-media')
+			).toBeVisible();
+		});
+
+		await test.step('Delete the created result ranking', async () => {
+			await resultRankingsViewPage.goto();
+
+			await resultRankingsViewPage.deleteResultRanking(cmsId);
 		});
 	});
 });

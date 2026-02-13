@@ -121,6 +121,7 @@ export default function TasksFDSPropsTransformer({
 		return {
 			...view,
 			default: false,
+			initialPaginationDelta: 20,
 		};
 	});
 

@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Site Initializer DSR
+Bundle-SymbolicName: com.liferay.site.initializer.dsr
+Bundle-Version: 1.0.0
+Liferay-Client-Extension-Batch: com/liferay/site/initializer/dsr/internal/batch
+Liferay-Site-Initializer-Feature-Flag: LPD-66359
+Liferay-Site-Initializer-Name: DSR
+Provide-Capability: liferay.site.initializer
+Web-ContextPath: /site-initializer-dsr

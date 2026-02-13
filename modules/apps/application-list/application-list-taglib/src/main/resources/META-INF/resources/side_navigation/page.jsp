@@ -20,7 +20,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 						<div class="align-items-center autofit-col autofit-col-expand d-flex flex-row">
 							<span class="border-0 sticker sticker-outline">
 								<span class="sticker-overlay">
-									<img alt="" class="c-mx-1" src="<%= sideNavigationDisplayContext.getPanelCategoryImageUrl() %>" />
+									<img alt="" class="c-mx-1" data-qa-id="sideNavigationProductIcon" src="<%= sideNavigationDisplayContext.getPanelCategoryImageUrl() %>" />
 								</span>
 							</span>
 							<span class="c-px-2 component-title flex-grow-1" id="com_liferay_application_list_taglib_side_navigation_label">

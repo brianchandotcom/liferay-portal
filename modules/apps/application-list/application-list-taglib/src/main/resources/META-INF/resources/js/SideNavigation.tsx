@@ -120,7 +120,12 @@ function SideNavigation({
 			>
 				<div className="align-items-center d-flex flex-row">
 					<ClaySticker borderless displayType="outline">
-						<img alt="" className="c-mx-1" src={categoryImageUrl} />
+						<img
+							alt=""
+							className="c-mx-1"
+							data-qa-id="sideNavigationProductIcon"
+							src={categoryImageUrl}
+						/>
 					</ClaySticker>
 
 					<SidePanel.Title className="c-px-2 flex-grow-1">

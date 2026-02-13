@@ -24,20 +24,23 @@ test(
 	async ({globalMenuPage, page}) => {
 		const testCases = [
 			{
+				image: 'applications_sm.svg',
 				name: 'Applications',
 				navigateToPage: () => globalMenuPage.goToApplications(),
 			},
 			{
+				image: 'commerce_sm.svg',
 				name: 'Commerce',
 				navigateToPage: () => globalMenuPage.goToCommerce(),
 			},
 			{
+				image: 'control_panel_sm.svg',
 				name: 'Control Panel',
 				navigateToPage: () => globalMenuPage.goToControlPanel(),
 			},
 		];
 
-		for (const {name, navigateToPage} of testCases) {
+		for (const {image, name, navigateToPage} of testCases) {
 			await test.step(`Go to a page from the "${name}" panel and check if navigation is visible`, async () => {
 				await navigateToPage();
 
@@ -45,13 +48,14 @@ test(
 
 				const sideNavigation = page.getByTestId('sideNavigation');
 
-				await sideNavigation.waitFor({state: 'visible'});
-
 				await expect(sideNavigation).toBeVisible();
 				await expect(sideNavigation).toHaveAccessibleName(name);
 				await expect(
 					page.getByTestId('sideNavigationLabel')
 				).toHaveText(name);
+				await expect(
+					sideNavigation.getByTestId('sideNavigationProductIcon')
+				).toHaveAttribute('src', new RegExp(`${image}$`));
 			});
 		}
 	}

@@ -50,7 +50,7 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "status != 3 && oldValue(\"state\") != state && state == \"blocked\"",
+					"conditionExpression": "(status != 3) && oldValue(\"state\") != state && state == \"blocked\"",
 					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_STATE_BLOCKED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Project Subscription State Blocked"
@@ -68,7 +68,7 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "status != 3 && NOT(oldValue(\"state\") != state && state == \"blocked\")",
+					"conditionExpression": "(status != 3) && NOT(oldValue(\"state\") != state && state == \"blocked\")",
 					"externalReferenceCode": "L_CMP_PROJECT_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Project Subscription Updated"
@@ -342,7 +342,7 @@
 			"objectActions": [
 				{
 					"active": true,
-					"conditionExpression": "status != 3 && isEmpty(oldValue(\"title\")) == true",
+					"conditionExpression": "(status != 3) && isEmpty(oldValue(\"title\")) == true",
 					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_ADDED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Task Subscription Added"
@@ -394,7 +394,7 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "status != 3 && oldValue(\"state\") != state && state == \"blocked\"",
+					"conditionExpression": "(status != 3) && oldValue(\"state\") != state && state == \"blocked\"",
 					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_STATE_BLOCKED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Task Subscription State Blocked"
@@ -412,7 +412,7 @@
 				},
 				{
 					"active": true,
-					"conditionExpression": "status != 3 && NOT(oldValue(\"state\") != state && state == \"blocked\")",
+					"conditionExpression": "(status != 3) && NOT(oldValue(\"state\") != state && state == \"blocked\")",
 					"externalReferenceCode": "L_CMP_TASK_SUBSCRIPTION_UPDATED_OBJECT_ACTION",
 					"label": {
 						"en_US": "Task Subscription Updated"

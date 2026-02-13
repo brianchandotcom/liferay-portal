@@ -7,6 +7,7 @@ package com.liferay.exportimport.internal.lar;
 
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.constants.ExportImportBackgroundTaskContextMapConstants;
+import com.liferay.exportimport.data.handler.PortletElementUtil;
 import com.liferay.exportimport.internal.data.handler.MissingPortlet;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -1636,6 +1637,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Reference
+	private PortletElementUtil _portletElementUtil;
+
+	@Reference
 	private PortletLocalService _portletLocalService;
 
 	private volatile StagingConfiguration _stagingConfiguration;
@@ -1675,40 +1679,32 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							Time.RFC822_FORMAT)));
 			}
 			else if (elementName.equals("portlet")) {
-				String portletId = element.attributeValue("portlet-id");
-
-				Portlet portlet = null;
-
-				try {
-					portlet = _portletLocalService.getPortletById(
-						_group.getCompanyId(), portletId);
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-
-					return;
-				}
-
 				String[] configurationPortletOptions = StringUtil.split(
 					element.attributeValue("portlet-configuration"));
+
+				String portletId = element.attributeValue("portlet-id");
+
+				Portlet portlet = _portletLocalService.getPortletById(
+					_group.getCompanyId(), portletId);
 
 				PortletDataHandler portletDataHandler =
 					_portletDataHandlerProvider.provide(portlet);
 
-				String portletDataHandlerKey = element.attributeValue(
-					"portlet-data-handler-key");
+				if (portletDataHandler == null) {
+					String portletDataHandlerKey =
+						_portletElementUtil.getPortletDataHandlerKey(element);
 
-				if ((portletDataHandler == null) &&
-					(portletDataHandlerKey != null)) {
+					if (_portletElementUtil.isMissingPortletSupported(
+							element) &&
+						(portletDataHandlerKey != null)) {
 
-					MissingPortlet missingPortlet = new MissingPortlet(
-						portlet, portletDataHandlerKey, portletId,
-						element.attributeValue("display-name"));
+						MissingPortlet missingPortlet = new MissingPortlet(
+							portlet, portletDataHandlerKey, portletId,
+							element.attributeValue("display-name"));
 
-					_manifestSummary.addDataPortlet(
-						missingPortlet, configurationPortletOptions);
+						_manifestSummary.addDataPortlet(
+							missingPortlet, configurationPortletOptions);
+					}
 
 					return;
 				}

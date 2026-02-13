@@ -36,8 +36,8 @@ public class ChangesetEntryLocalServiceImpl
 
 	@Override
 	public ChangesetEntry addChangesetEntry(
-		long userId, long changesetCollectionId, long classNameId,
-		long classPK)
+			long userId, long changesetCollectionId, long classNameId,
+			long classPK)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -104,7 +104,7 @@ public class ChangesetEntryLocalServiceImpl
 
 	@Override
 	public ChangesetEntry fetchOrAddChangesetEntry(
-		long changesetCollectionId, long classNameId, long classPK)
+			long changesetCollectionId, long classNameId, long classPK)
 		throws PortalException {
 
 		ChangesetEntry changesetEntry =
@@ -172,7 +172,7 @@ public class ChangesetEntryLocalServiceImpl
 
 	@Override
 	public ChangesetEntry getChangesetEntry(
-		long changesetCollectionId, long classNameId, long classPK)
+			long changesetCollectionId, long classNameId, long classPK)
 		throws NoSuchEntryException {
 
 		return changesetEntryPersistence.findByC_C_C(

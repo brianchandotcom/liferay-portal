@@ -89,7 +89,7 @@ public class ChangesetEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ChangesetEntry (changesetEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,changesetCollectionId LONG,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,classPK LONG)";
+		"create table ChangesetEntry (changesetEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,changesetCollectionId LONG,classExternalReferenceCode VARCHAR(1000) null,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table ChangesetEntry";
 

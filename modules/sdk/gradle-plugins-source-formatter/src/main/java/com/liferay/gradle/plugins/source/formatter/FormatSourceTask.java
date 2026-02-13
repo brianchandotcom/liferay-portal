@@ -271,7 +271,7 @@ public class FormatSourceTask extends JavaExec {
 		_sourceFormatterArgs.setValidateCommitMessages(validateCommitMessages);
 	}
 
-	public void sourceFormatterProperty(String key, String value) {
+	public void addSourceFormatterProperty(String key, String value) {
 		List<String> sourceFormatterProperties = getSourceFormatterProperties();
 
 		sourceFormatterProperties.add(key + "=" + value);

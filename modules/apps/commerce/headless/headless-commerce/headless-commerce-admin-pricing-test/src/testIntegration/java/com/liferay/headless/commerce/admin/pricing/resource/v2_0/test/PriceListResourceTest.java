@@ -158,6 +158,14 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 
 	@Override
 	@Test
+	public void testPatchPriceList() throws Exception {
+		super.testPatchPriceList();
+
+		_testPatchPriceListWithSameAccount();
+	}
+
+	@Override
+	@Test
 	public void testPostPriceList() throws Exception {
 		super.testPostPriceList();
 
@@ -268,11 +276,86 @@ public class PriceListResourceTest extends BasePriceListResourceTestCase {
 				accountExternalReferenceCode =
 					_accountEntry.getExternalReferenceCode();
 				accountId = _accountEntry.getAccountEntryId();
+				order = RandomTestUtil.randomInt();
 				priceListExternalReferenceCode =
 					priceList.getExternalReferenceCode();
 				priceListId = priceList.getId();
 			}
 		};
+	}
+
+	private void _testPatchPriceListWithSameAccount() throws Exception {
+		User omniadminUser = UserTestUtil.addOmniadminUser();
+		String password = RandomTestUtil.randomString();
+
+		_userLocalService.updatePassword(
+			omniadminUser.getUserId(), password, password, false, true);
+
+		PriceListResource priceListResource = PriceListResource.builder(
+		).authentication(
+			omniadminUser.getEmailAddress(), password
+		).locale(
+			LocaleUtil.getDefault()
+		).parameters(
+			"nestedFields", "priceListAccounts"
+		).build();
+
+		PriceList priceList = randomPriceList();
+
+		PriceListAccount priceListAccount = _createPriceListAccount(priceList);
+
+		priceListAccount.setAccountId(0L);
+		priceListAccount.setPriceListId(0L);
+
+		priceList.setPriceListAccounts(
+			new PriceListAccount[] {priceListAccount});
+
+		PriceList expectedPriceList = priceListResource.getPriceList(
+			testPostPriceList_addPriceList(
+				priceList
+			).getId());
+
+		PriceListAccount[] expectedPriceListAccounts =
+			expectedPriceList.getPriceListAccounts();
+
+		PriceListAccount expectedPriceListAccount =
+			expectedPriceListAccounts[0];
+
+		Assert.assertEquals(
+			priceListAccount.toString(),
+			expectedPriceListAccount.getAccountExternalReferenceCode(),
+			priceListAccount.getAccountExternalReferenceCode());
+		Assert.assertEquals(
+			priceListAccount.toString(), expectedPriceListAccount.getOrder(),
+			priceListAccount.getOrder());
+		Assert.assertEquals(
+			priceListAccount.toString(),
+			expectedPriceListAccount.getPriceListExternalReferenceCode(),
+			priceListAccount.getPriceListExternalReferenceCode());
+
+		priceListAccount.setOrder(RandomTestUtil.randomInt());
+
+		priceList.setPriceListAccounts(
+			new PriceListAccount[] {priceListAccount});
+
+		expectedPriceList = priceListResource.patchPriceList(
+			expectedPriceList.getId(), priceList);
+
+		expectedPriceListAccounts = expectedPriceList.getPriceListAccounts();
+
+		expectedPriceListAccount = expectedPriceListAccounts[0];
+
+		Assert.assertEquals(
+			priceListAccount.toString(),
+			expectedPriceListAccount.getAccountExternalReferenceCode(),
+			priceListAccount.getAccountExternalReferenceCode());
+		Assert.assertEquals(
+			priceListAccount.toString(), expectedPriceListAccount.getOrder(),
+			priceListAccount.getOrder());
+		Assert.assertEquals(
+			priceListAccount.toString(),
+			expectedPriceListAccount.getPriceListExternalReferenceCode(),
+			priceListAccount.getPriceListExternalReferenceCode());
 	}
 
 	private void _testPostPriceListWithSamePriceListAccount() throws Exception {

@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -347,7 +348,7 @@ public class ElasticsearchSearchEngineAdapterSearchRequestTest {
 			elasticsearchSearchEngineAdapterImpl,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
-		elasticsearchSearchEngineAdapterImpl.activate();
+		elasticsearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}

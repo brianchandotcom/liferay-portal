@@ -1,8 +1,0 @@
-monitor.jvm.gc.enabled: false
-thread_pool:
-    warmer:
-        max: 8
-    write:
-        queue_size: 100
-thread_pool.warmer.core: 1
-thread_pool.warmer.keep_alive: 2m

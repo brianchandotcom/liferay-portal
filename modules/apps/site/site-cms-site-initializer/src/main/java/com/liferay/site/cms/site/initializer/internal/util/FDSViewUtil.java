@@ -20,6 +20,7 @@ public class FDSViewUtil {
 	}
 
 	private static final Map<String, String> _viewTypes = Map.of(
+		CMSSiteInitializerFDSNames.ALL_RELATED_ASSETS_SECTION, "table",
 		CMSSiteInitializerFDSNames.ALL_SECTION, "table",
 		CMSSiteInitializerFDSNames.CONTENTS_SECTION, "table",
 		CMSSiteInitializerFDSNames.FILES_SECTION, "cards",

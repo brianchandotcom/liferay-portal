@@ -4,17 +4,17 @@
  */
 
 import LoadingIndicator from '@clayui/loading-indicator';
-import { useParams } from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
-import { PaymentStatus } from '../../../../enums/Order';
+import {PaymentStatus} from '../../../../enums/Order';
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import PaymentStatusLabel from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
-import { BaseOutlet } from '../Apps/App/AppOutlet';
+import {BaseOutlet} from '../Apps/App/AppOutlet';
 
 const LiferayServicesOutlet = () => {
-	const { orderId } = useParams();
-	const { data, isLoading } = useGetProductByOrderId(orderId as string);
+	const {orderId} = useParams();
+	const {data, isLoading} = useGetProductByOrderId(orderId as string);
 
 	const order = data?.placedOrder;
 
@@ -33,7 +33,7 @@ const LiferayServicesOutlet = () => {
 					)
 				)
 			}
-			routes={[{ name: i18n.translate('details'), path: '' }]}
+			routes={[{name: i18n.translate('details'), path: ''}]}
 			showActions={false}
 		/>
 	);

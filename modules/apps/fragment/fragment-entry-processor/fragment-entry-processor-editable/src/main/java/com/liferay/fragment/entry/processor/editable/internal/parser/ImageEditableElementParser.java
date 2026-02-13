@@ -301,7 +301,7 @@ public class ImageEditableElementParser extends BaseEditableElementParser {
 
 			if (mimeType.startsWith("image")) {
 				return _dlURLHelper.getPreviewURL(
-					fileEntry, fileEntry.getFileVersion(), null,
+					fileEntry, fileEntry.getFileVersion(), themeDisplay,
 					StringPool.BLANK);
 			}
 

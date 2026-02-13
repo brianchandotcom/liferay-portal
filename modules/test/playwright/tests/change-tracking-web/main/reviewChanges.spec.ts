@@ -12,8 +12,8 @@ import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTe
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -905,4 +905,41 @@ test('LPD-62940 Assert download button is visible and functional in the data tab
 
 	const download = await downloadPromise;
 	expect(download.suggestedFilename()).toEqual('astronaut.png');
+});
+
+test('LPD-78919 Unified view in FragmentEntryLink review page is shown', async ({
+	changeTrackingPage,
+	ctCollection,
+	page,
+	pageEditorPage,
+}) => {
+	await changeTrackingPage.workOnPublication(ctCollection);
+
+	await test.step('Go to home edit page', async () => {
+		await page.goto(`/web/guest/home?p_l_mode=edit`);
+	});
+
+	const headingId = await pageEditorPage.getFragmentId('Paragraph');
+
+	await pageEditorPage.editTextEditable(headingId, 'element-text', 'Edited');
+
+	await pageEditorPage.publishPage();
+
+	await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+	await page
+		.locator('td')
+		.getByRole('link')
+		.filter({hasText: 'Fragment Entry Link'})
+		.click();
+
+	const renderViewDropdown = page.locator(
+		'.publications-render-view-divider .dropdown'
+	);
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Unified View'}),
+		trigger: renderViewDropdown,
+	});
 });

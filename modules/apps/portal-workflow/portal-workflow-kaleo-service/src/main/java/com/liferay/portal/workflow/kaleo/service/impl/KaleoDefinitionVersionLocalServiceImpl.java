@@ -36,7 +36,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -403,7 +403,7 @@ public class KaleoDefinitionVersionLocalServiceImpl
 		}
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -568,6 +568,9 @@ public class KaleoDefinitionVersionLocalServiceImpl
 	private ResourceLocalService _resourceLocalService;
 
 	@Reference
+	private SearchEngineAdapter _searchEngineAdapter;
+
+	@Reference
 	private Searcher _searcher;
 
 	@Reference
@@ -575,9 +578,6 @@ public class KaleoDefinitionVersionLocalServiceImpl
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
 
 	@Reference
 	private Sorts _sorts;

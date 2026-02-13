@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -32,13 +32,13 @@ public class SPINodeResource<T> {
 
 	public SPINodeResource(
 		long companyId, IndexNameBuilder indexNameBuilder, Queries queries,
-		SearchRequestExecutor searchRequestExecutor,
+		SearchEngineAdapter searchEngineAdapter,
 		UnsafeFunction<Document, T, SystemException> transformUnsafeFunction) {
 
 		_companyId = companyId;
 		_indexNameBuilder = indexNameBuilder;
 		_queries = queries;
-		_searchRequestExecutor = searchRequestExecutor;
+		_searchEngineAdapter = searchEngineAdapter;
 		_transformUnsafeFunction = transformUnsafeFunction;
 	}
 
@@ -61,7 +61,7 @@ public class SPINodeResource<T> {
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -89,7 +89,7 @@ public class SPINodeResource<T> {
 		searchSearchRequest.setSelectedFieldNames("version");
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -109,7 +109,7 @@ public class SPINodeResource<T> {
 	private final long _companyId;
 	private final IndexNameBuilder _indexNameBuilder;
 	private final Queries _queries;
-	private final SearchRequestExecutor _searchRequestExecutor;
+	private final SearchEngineAdapter _searchEngineAdapter;
 	private final UnsafeFunction<Document, T, SystemException>
 		_transformUnsafeFunction;
 

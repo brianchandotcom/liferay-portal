@@ -22,7 +22,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.AvgAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.index.IndexNameBuilder;
@@ -428,7 +428,7 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				nodeMetrics.keySet()));
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -474,7 +474,7 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				taskNames));
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -546,7 +546,7 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 				processVersion));
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -738,7 +738,7 @@ public class NodeMetricResourceImpl extends BaseNodeMetricResourceImpl {
 	private ResourceHelper _resourceHelper;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private Sorts _sorts;

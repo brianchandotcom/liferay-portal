@@ -50,7 +50,7 @@ function SideNavigation({
 		() => new Set(externalExpandedKeys)
 	);
 
-	const [defaultExpandedKeys, setExpandedKeys] =
+	const [userExpandedKeys, setUserExpandedKeys] =
 		useState<Set<React.Key>>(initialExpandedKeys);
 
 	const [visible, setVisible] = useState(initialVisible);
@@ -69,7 +69,7 @@ function SideNavigation({
 				Array.from(updatedExpandedKeys).join(',')
 			);
 
-			setExpandedKeys(updatedExpandedKeys);
+			setUserExpandedKeys(updatedExpandedKeys);
 		},
 		[expandedKeysSessionKey, isFilterActive]
 	);
@@ -163,7 +163,7 @@ function SideNavigation({
 					active={portletId}
 					defaultExpandedKeys={initialExpandedKeys}
 					displayType="primary"
-					expandedKeys={expandedKeys ?? defaultExpandedKeys}
+					expandedKeys={expandedKeys ?? userExpandedKeys}
 					itemAriaCurrent={true}
 					items={items}
 					onExpandedChange={updateExpandedKeys}

@@ -114,7 +114,7 @@ public class CPDefinitionIndexerTest {
 		CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
 		_cpDefinitionLocalService.updateCPDefinitionLocalization(
-			cpDefinition, "en_US", null, null, "<p>test</p>", null, null, null);
+			cpDefinition, "en_US", "<p>test</p>", null, null, null, null, null);
 
 		_indexer.reindex(cpDefinition);
 

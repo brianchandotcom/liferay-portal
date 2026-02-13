@@ -387,8 +387,8 @@ public class CPDefinitionLocalServiceTest {
 
 		CPDefinitionLocalization cpDefinitionLocalization =
 			_cpDefinitionLocalService.updateCPDefinitionLocalization(
-				cpDefinition, cpDefinition.getDefaultLanguageId(), testString,
-				null, null, null, null, null);
+				cpDefinition, cpDefinition.getDefaultLanguageId(), null, null,
+				null, null, testString, null);
 
 		Assert.assertEquals(testString, cpDefinitionLocalization.getName());
 	}

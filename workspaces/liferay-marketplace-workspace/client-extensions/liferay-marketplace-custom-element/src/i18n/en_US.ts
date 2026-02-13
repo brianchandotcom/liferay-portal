@@ -44,6 +44,7 @@ export default {
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the solution will be lost unless you save the solution as a draft. Do you still want to exit?',
 	'all-published-apps': 'All Published Apps',
+	'allowed-email-domains': 'Allowed Email Domains',
 	'amount': 'Amount',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email.',
@@ -89,6 +90,7 @@ export default {
 	'back': 'Back',
 	'back-to-apps': 'Back to Apps',
 	'back-to-last-transaction': 'Back to Last Transaction',
+	'back-to-liferay-services': 'Back to Liferay Services',
 	'back-to-my-apps': 'Back to My Apps',
 	'back-to-my-solutions': 'Back to My Solutions',
 	'back-to-solutions': 'Back to Solutions',
@@ -222,6 +224,7 @@ export default {
 	'done': 'Done',
 	'download': 'Download',
 	'download-app': 'Download App',
+	'download-invoice': 'Download Invoice',
 	'download-key': 'Download Key',
 	'draft': 'Draft',
 	'drag-and-drop-to-upload-or': 'Drag and drop to upload or',
@@ -376,6 +379,7 @@ export default {
 	'liferay-s': 'Liferay’s',
 	'liferay-saas': 'Liferay SaaS',
 	'liferay-self-hosted': 'Liferay Self-Hosted',
+	'liferay-services': 'Liferay Services',
 	'liferay-version': 'Liferay Version',
 	'limit-reached': 'Limit Reached',
 	'list-with-latest-published-apps': 'List with latest published apps',
@@ -401,6 +405,8 @@ export default {
 	'manage-user-roles': 'Manage User Roles',
 	'manage-users': 'Manage Users',
 	'manage-your-current-trials': 'Manage your current trials',
+	'manage-your-liferay-services-purchased-from-the-marketplace':
+		'Manage your Liferay Services purchased from the Marketplace',
 	'manage-your-teams-trial': "Manage your team's trial",
 	'mark-as-paid': 'Mark as Paid',
 	'marked-as-paid': 'Marked as paid.',
@@ -421,6 +427,7 @@ export default {
 	'move-up': 'Move Up',
 	'mp-commission': 'MP Commission',
 	'my-apps': 'My Apps',
+	'my-liferay-services': 'My Liferay Services',
 	'my-saas-demos': 'My SaaS Demos',
 	'my-solutions': 'My Solutions',
 	'name': 'Name',
@@ -542,7 +549,9 @@ export default {
 	'purchase-completed': 'Purchase Completed',
 	'purchase-date': 'Purchase Date',
 	'purchase-failed': 'Purchase Failed',
+	'purchase-number': 'Purchase Number',
 	'purchase-order-number': 'Purchase Order Number',
+	'purchase-upgrade': 'Purchase Upgrade',
 	'purchased-by': 'Purchased by',
 	'qty': 'Qty',
 	'quantity': 'Quantity',
@@ -776,6 +785,7 @@ export default {
 	'view-all': 'View All',
 	'view-details': 'View details',
 	'view-request': 'View Request',
+	'visit': 'Visit',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our customers in the Marketplace and access is invite only. If you are an existing Liferay customer, please keep an eye out for an announcement related to the new Marketplace in the coming months!',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
@@ -784,9 +794,11 @@ export default {
 	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
 		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',
 	'workflow-action': 'Workflow Action',
+	'workspace-friendly-url': 'Workspace Friendly URL',
 	'workspace-info': 'Workspace Info',
 	'workspace-name': 'Workspace Name',
 	'workspace-owner-email': 'Workspace Owner Email',
+	'workspace-timezone': 'Workspace Timezone',
 	'x-available-for-you': `{0} available for <b>${Liferay.ThemeDisplay.getUserEmailAddress()}</b> (you)`,
 	'x-is-required': '{0} is required',
 	'x-items': '{0} Items',

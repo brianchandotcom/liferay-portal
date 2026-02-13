@@ -3,34 +3,34 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
-import {PageRenderer} from '../../../../components/Page';
-import QATable, {Orientation} from '../../../../components/QATable';
+import { DetailedCard } from '../../../../components/DetailedCard/DetailedCard';
+import { PageRenderer } from '../../../../components/Page';
+import QATable, { Orientation } from '../../../../components/QATable';
 import Table from '../../../../components/Table/Table';
-import {CurrencyAbbreviation} from '../../../../enums/CurrencyAbbreviation';
+import { CurrencyAbbreviation } from '../../../../enums/CurrencyAbbreviation';
 import {
 	OrderCustomFields,
 	PaymentStatus as PaymentStatusCode,
 } from '../../../../enums/Order';
-import {ProductSpecificationKey} from '../../../../enums/Product';
+import { ProductSpecificationKey } from '../../../../enums/Product';
 import useAdminOrderProduct from '../../../../hooks/useAdminOrderProduct';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import { Liferay } from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
-import {safeJSONParse} from '../../../../utils/util';
+import { safeJSONParse } from '../../../../utils/util';
 import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
-import {formatCurrency} from '../../util/finance';
-import {formatAddress, formatDate, textWrapper} from '../../util/util';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import { formatCurrency } from '../../util/finance';
+import { formatAddress, formatDate, textWrapper } from '../../util/util';
 
 const OrderDetails = () => {
-	const {orderId} = useParams();
+	const { orderId } = useParams();
 
-	const {data, error, isLoading, mutate} = useAdminOrderProduct(orderId!!);
+	const { data, error, isLoading, mutate } = useAdminOrderProduct(orderId!!);
 
-	const {order, payments, product} = data || {};
+	const { order, payments, product } = data || {};
 
 	const koroneikiProjects = safeJSONParse(
 		order?.customFields![OrderCustomFields.KORONEIKI_PROJECT] || '[]',
@@ -38,7 +38,7 @@ const OrderDetails = () => {
 	);
 
 	const koroneikiProjectNames = koroneikiProjects.map(
-		(project: {name: string}) => project?.name
+		(project: { name: string }) => project?.name
 	);
 
 	const currencyCode = order?.currencyCode || CurrencyAbbreviation.USD;
@@ -65,7 +65,7 @@ const OrderDetails = () => {
 										paymentStatus: PaymentStatusCode.PAID,
 									},
 								},
-								{revalidate: false}
+								{ revalidate: false }
 							);
 
 							Liferay.Util.openToast({
@@ -181,7 +181,7 @@ const OrderDetails = () => {
 								visible:
 									!!payments?.items[0]?.errorMessages &&
 									order?.paymentStatus ===
-										PaymentStatusCode.FAILED,
+									PaymentStatusCode.FAILED,
 							},
 							{
 								className: 'mt-2',
@@ -210,7 +210,7 @@ const OrderDetails = () => {
 					columns={[
 						{
 							key: 'options',
-							render: (options, {quantity}) => {
+							render: (options, { quantity }) => {
 								const [skuOption] = safeJSONParse(options, [
 									{
 										skuOptionValueKey: 'Standard',
@@ -234,10 +234,9 @@ const OrderDetails = () => {
 												</span>
 
 												<small className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize text-muted">
-													{`${quantity} ${
-														skuOption?.skuOptionValueKey ||
+													{`${quantity} ${skuOption?.skuOptionValueKey ||
 														skuOption?.skuOptionValueName
-													} license`}
+														} license`}
 												</small>
 											</span>
 										</div>
@@ -273,7 +272,7 @@ const OrderDetails = () => {
 									formatCurrency(
 										currencyCode,
 										finalPriceWithTaxAmount -
-											order?.finalPrice
+										order?.finalPrice
 									)
 								),
 							title: i18n.translate('vat'),

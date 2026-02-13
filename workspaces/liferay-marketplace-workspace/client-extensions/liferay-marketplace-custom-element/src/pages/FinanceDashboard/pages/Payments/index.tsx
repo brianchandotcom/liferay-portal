@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useNavigate} from 'react-router-dom';
-import {KeyedMutator} from 'swr';
+import { useNavigate } from 'react-router-dom';
+import { KeyedMutator } from 'swr';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import { PaymentStatus as PaymentStatusCode } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import { Liferay } from '../../../../liferay/liferay';
 import PublisherSalesSummary from '../../../../services/rest/PublisherSalesSummary';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
-import {getTotalByOrderKey} from '../../util/finance';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import { getTotalByOrderKey } from '../../util/finance';
 
 export enum PublisherPayoutStatus {
 	PAID = 'paid',
@@ -65,7 +65,7 @@ const Payments = () => {
 			title={i18n.translate('payments')}
 		>
 			<ListView<PublisherSalesSummaryEntry>
-				emptyStateProps={{title: i18n.translate('no-orders-yet')}}
+				emptyStateProps={{ title: i18n.translate('no-orders-yet') }}
 				id="finance-dashboard-orders"
 				managementToolbarProps={{
 					filterSchema: 'financeDashboardPayments',
@@ -150,7 +150,7 @@ const Payments = () => {
 								<PaymentStatus
 									paymentStatus={
 										paymentStatus?.key ===
-										PublisherPayoutStatus.PAID
+											PublisherPayoutStatus.PAID
 											? PaymentStatusCode.PAID
 											: PaymentStatusCode.PENDING
 									}

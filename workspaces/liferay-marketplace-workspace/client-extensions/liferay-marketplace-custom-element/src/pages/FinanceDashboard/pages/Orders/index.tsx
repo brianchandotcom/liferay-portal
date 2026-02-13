@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useNavigate} from 'react-router-dom';
-import {KeyedMutator} from 'swr';
+import { useNavigate } from 'react-router-dom';
+import { KeyedMutator } from 'swr';
 
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import { PaymentStatus as PaymentStatusCode } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import { Liferay } from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
 
 async function onClickMarkAsPaid(order: Order, mutate: KeyedMutator<any>) {
 	try {
@@ -52,7 +52,7 @@ const Orders = () => {
 			title={i18n.translate('last-orders')}
 		>
 			<ListView<Order>
-				emptyStateProps={{title: i18n.translate('no-orders-yet')}}
+				emptyStateProps={{ title: i18n.translate('no-orders-yet') }}
 				id="finance-dashboard-orders"
 				managementToolbarProps={{
 					filterSchema: 'financeDashboardOrders',
@@ -112,7 +112,7 @@ const Orders = () => {
 						{
 							id: 'account',
 							name: i18n.translate('account'),
-							render: (account, {creatorEmailAddress}) => (
+							render: (account, { creatorEmailAddress }) => (
 								<div className="d-flex flex-column justify-content-center">
 									<p className="mb-0 pt-1">{account.name}</p>
 									<p className="mb-0 text-muted">
@@ -129,7 +129,7 @@ const Orders = () => {
 						{
 							id: 'paymentStatusInfo',
 							name: i18n.translate('payment-status'),
-							render: (paymentStatusInfo, {paymentMethod}) => (
+							render: (paymentStatusInfo, { paymentMethod }) => (
 								<div className="d-flex flex-column justify-content-center">
 									<p className="mb-0 pt-1">
 										<PaymentStatus

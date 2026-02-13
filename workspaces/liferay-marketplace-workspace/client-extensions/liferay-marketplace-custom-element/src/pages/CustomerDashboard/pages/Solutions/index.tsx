@@ -21,7 +21,6 @@ const Solutions = () => {
 	);
 	const {channel} = useMarketplaceContext();
 	const {selectedAccount} = useOutletContext<any>();
-
 	const {
 		data: placedOrders = {items: []},
 		error,
@@ -32,7 +31,6 @@ const Solutions = () => {
 		orderTypeExternalReferenceCodes: [
 			OrderTypes.SOLUTIONS7,
 			OrderTypes.SOLUTIONS30,
-			OrderTypes.ADDONS,
 		],
 		page: 1,
 		pageSize: 20,

@@ -94,9 +94,8 @@ public class CounterDataCleanupPreupgradeProcess
 					tableName = StringUtil.extractLast(counterName, '.');
 				}
 
-				if ((tableName == null) ||
-					(!dbInspector.isObjectTable(tableName) &&
-					 !_liferayTableNames.contains(tableName))) {
+				if (!dbInspector.isObjectTable(tableName) &&
+					!_liferayTableNames.contains(tableName)) {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(

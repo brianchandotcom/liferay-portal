@@ -4,7 +4,7 @@
 	},
 	"description": "Liferay Learn Theme Spritemap",
 	"devDependencies": {
-		"@clayui/css": "3.158.0"
+		"@clayui/css": "^3.159.0"
 	},
 	"name": "@liferay/liferay-learn-theme-spritemap",
 	"scripts": {

@@ -182,18 +182,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		String absolutePath, DetailAST detailAST, String methodName,
 		String fullyQualifiedTypeName) {
 
-		DetailAST parentDetailAST = detailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.EXPR) {
-			return;
-		}
-
-		parentDetailAST = parentDetailAST.getParent();
-
-		if (parentDetailAST.getType() != TokenTypes.SLIST) {
-			return;
-		}
-
 		JavaClass javaClass = _getDTOJavaClass(
 			absolutePath, fullyQualifiedTypeName);
 

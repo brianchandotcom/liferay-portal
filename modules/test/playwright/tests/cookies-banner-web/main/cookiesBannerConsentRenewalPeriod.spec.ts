@@ -12,7 +12,8 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetConsentManagerConfiguration,
-} from './utils/consentManagerAfterEach';
+	updateConsentManagerConfiguration,
+} from './utils/consentManagerConfigurationHelper';
 
 const cookieKeys = [
 	'CONSENT_TYPE_FUNCTIONAL',
@@ -41,24 +42,12 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
-test.beforeEach(async ({page, systemSettingsPage}) => {
+test.beforeEach(async ({page}) => {
 	await test.step('Enable Consent Manager', async () => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const enabledButton = page.getByLabel('Enabled');
-
-		await enabledButton.waitFor({state: 'visible'});
-
-		await page.waitForLoadState();
-
-		await enabledButton.setChecked(true);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await waitForAlert(page);
+		await updateConsentManagerConfiguration(page, {
+			enabled: true,
+			forceReload: true,
+		});
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
@@ -141,13 +130,9 @@ test(
 	{tag: '@LPD-78627'},
 	async ({page}) => {
 		await test.step('Disable Consent Manager and save configuration', async () => {
-			await page.getByLabel('Enabled').setChecked(false);
-
-			await page
-				.getByRole('button', {name: 'Update'})
-				.dispatchEvent('click');
-
-			await waitForAlert(page);
+			await updateConsentManagerConfiguration(page, {
+				enabled: false,
+			});
 
 			await expect(page.getByLabel('Enabled')).not.toBeChecked();
 		});
@@ -234,15 +219,9 @@ test(
 		});
 
 		await test.step('Update Consent Renewal Period and expect cookies banner to appear', async () => {
-			page.once('dialog', async (dialogWindow) => {
-				await dialogWindow.accept();
+			await updateConsentManagerConfiguration(page, {
+				consentRenewalPeriod: '2',
 			});
-
-			await page.getByLabel('Consent Renewal Period').fill('2');
-
-			await page.getByRole('button', {name: 'Update'}).click();
-
-			await waitForAlert(page);
 
 			await expect(
 				await page.locator(

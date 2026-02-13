@@ -12,7 +12,8 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetAllConsentManagerConfigurations,
-} from './utils/consentManagerAfterEach';
+	updateConsentManagerConfiguration,
+} from './utils/consentManagerConfigurationHelper';
 
 const hideableCookieTypes = [
 	'Functional Cookies',
@@ -38,64 +39,17 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
-test('LPD-30561 Cookie Banner Cookie Policy Page', async ({
-	page,
-	systemSettingsPage,
-}) => {
-	await test.step('Enable Preference Handling Cookies', async () => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const enabledButton = page.getByLabel('Enabled');
-
-		await enabledButton.waitFor({state: 'visible'});
-
-		await page.waitForTimeout(3000);
-
-		const isChecked = await enabledButton.isChecked();
-
-		if (!isChecked) {
-			await enabledButton.click();
-		}
-
-		await expect(enabledButton).toBeChecked();
-	});
-
-	await test.step('Enable Explicit Cookie Consent Mode', async () => {
-		const explicitCookieConsentModeButton = page.getByLabel(
-			'Explicit Cookie Consent Mode'
-		);
-
-		await explicitCookieConsentModeButton.waitFor({state: 'visible'});
-
-		const isChecked = await explicitCookieConsentModeButton.isChecked();
-
-		if (!isChecked) {
-			await explicitCookieConsentModeButton.click();
-		}
-
-		await expect(explicitCookieConsentModeButton).toBeChecked();
-	});
-
-	await test.step('Update Preference Handling', async () => {
-		const updateButton = page.getByRole('button', {
-			name: 'Update',
+test('LPD-30561 Cookie Banner Cookie Policy Page', async ({page}) => {
+	await test.step('Enable Consent Manager with Explicit Cookie Consent Mode', async () => {
+		await updateConsentManagerConfiguration(page, {
+			enabled: true,
+			explicitCookieConsentMode: true,
+			forceReload: true,
 		});
 
-		const saveButton = page.getByRole('button', {
-			name: 'Save',
-		});
-
-		if (await saveButton.isVisible()) {
-			await saveButton.dispatchEvent('click');
-		}
-		else if (await updateButton.isVisible()) {
-			await updateButton.dispatchEvent('click');
-		}
-
-		await waitForAlert(page);
+		await expect(
+			page.getByLabel('Explicit Cookie Consent Mode')
+		).toBeChecked();
 	});
 
 	await test.step('Go to Cookie Policy page', async () => {
@@ -159,26 +113,12 @@ test(
 		const saveButton = page.getByRole('button', {name: 'Save'});
 		const updateButton = page.getByRole('button', {name: 'Update'});
 
-		await test.step('Enable Preference Handling Cookies if needed', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Privacy',
-				'Consent Manager'
-			);
-
-			const enabledButton = await page.getByLabel('Enabled');
-
-			await enabledButton.waitFor();
-
-			await enabledButton.check();
-
-			if (await saveButton.isVisible()) {
-				await saveButton.dispatchEvent('click');
-			}
-			else if (await updateButton.isVisible()) {
-				await updateButton.dispatchEvent('click');
-			}
-
-			await waitForAlert(page);
+		await test.step('Enable Preference Handling Cookies', async () => {
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				explicitCookieConsentMode: true,
+				forceReload: true,
+			});
 		});
 
 		const cookiesBanner = await page.locator(

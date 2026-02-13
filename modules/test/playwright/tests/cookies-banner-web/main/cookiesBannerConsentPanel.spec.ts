@@ -13,7 +13,8 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetAllConsentManagerConfigurations,
-} from './utils/consentManagerAfterEach';
+	updateConsentManagerConfiguration,
+} from './utils/consentManagerConfigurationHelper';
 
 const cookieHeadingNames = [
 	'Functional Cookies',
@@ -46,32 +47,12 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
-test.beforeEach(async ({systemSettingsPage}) => {
+test.beforeEach(async ({page}) => {
 	await test.step('Enable Preference Handling Cookies', async () => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		const enabledButton = systemSettingsPage.page.getByLabel('Enabled');
-
-		await enabledButton.waitFor({state: 'visible'});
-
-		await systemSettingsPage.page.waitForTimeout(3000);
-
-		const isChecked = await enabledButton.isChecked();
-
-		if (!isChecked) {
-			await enabledButton.click();
-
-			await systemSettingsPage.page
-				.getByRole('button', {name: 'Save'})
-				.click();
-
-			await waitForAlert(systemSettingsPage.page);
-		}
-
-		await expect(enabledButton).toBeChecked();
+		await updateConsentManagerConfiguration(page, {
+			enabled: true,
+			forceReload: true,
+		});
 	});
 });
 

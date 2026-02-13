@@ -8,11 +8,11 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	clearConsentCookies,
 	resetConsentManagerConfiguration,
-} from './utils/consentManagerAfterEach';
+	updateConsentManagerConfiguration,
+} from './utils/consentManagerConfigurationHelper';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -32,26 +32,12 @@ test.afterEach(async ({systemSettingsPage}) => {
 	});
 });
 
-test.beforeEach(async ({page, systemSettingsPage}) => {
+test.beforeEach(async ({page}) => {
 	await test.step('Enable Consent Manager', async () => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
-		await systemSettingsPage.page.waitForTimeout(1000);
-
-		const enabledButton = page.getByLabel('Enabled');
-
-		await enabledButton.waitFor({state: 'visible'});
-
-		await page.waitForLoadState();
-
-		await enabledButton.setChecked(true);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await waitForAlert(page);
+		await updateConsentManagerConfiguration(page, {
+			enabled: true,
+			forceReload: true,
+		});
 	});
 
 	await test.step('Verify Cookies Banner appears, then Accept All cookies', async () => {
@@ -68,12 +54,7 @@ test.beforeEach(async ({page, systemSettingsPage}) => {
 test(
 	'Store Consent configuration field validation',
 	{tag: '@LPD-78076'},
-	async ({page, systemSettingsPage}) => {
-		await systemSettingsPage.goToSystemSetting(
-			'Privacy',
-			'Consent Manager'
-		);
-
+	async ({page}) => {
 		const storeConsentField = page.getByLabel('Store Consent');
 
 		await test.step('Validate Store Consent field is not enabled by default', async () => {
@@ -81,17 +62,10 @@ test(
 		});
 
 		await test.step('Verify Store Consent field can be saved', async () => {
-			page.once('dialog', async (dialogWindow) => {
-				await dialogWindow.dismiss();
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				storeConsent: true,
 			});
-
-			await storeConsentField.dispatchEvent('click');
-
-			await page
-				.getByRole('button', {name: 'Update'})
-				.dispatchEvent('click');
-
-			await page.waitForLoadState();
 
 			await expect(storeConsentField).toBeChecked();
 		});

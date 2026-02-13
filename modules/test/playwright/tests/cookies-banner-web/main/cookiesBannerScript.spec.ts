@@ -14,7 +14,8 @@ import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest
 import {
 	clearConsentCookies,
 	resetConsentManagerConfiguration,
-} from './utils/consentManagerAfterEach'; //
+	updateConsentManagerConfiguration,
+} from './utils/consentManagerConfigurationHelper';
 
 export const test = mergeTests(
 	featureFlagsTest({
@@ -38,41 +39,12 @@ test.afterEach(async ({systemSettingsPage}) => {
 test(
 	'Cookie Banner Script',
 	{tag: '@LPD-25701'},
-	async ({journalEditArticlePage, page, systemSettingsPage}) => {
+	async ({journalEditArticlePage, page}) => {
 		await test.step('Enable Third Party Cookies', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Privacy',
-				'Consent Manager'
-			);
-
-			const enabledButton = page.getByLabel('Enabled');
-
-			await enabledButton.waitFor({state: 'visible'});
-
-			const isChecked = await enabledButton.isChecked();
-
-			if (!isChecked) {
-				await enabledButton.click();
-			}
-
-			await expect(enabledButton).toBeChecked();
-
-			const updateButton = page.getByRole('button', {
-				name: 'Update',
+			await updateConsentManagerConfiguration(page, {
+				enabled: true,
+				forceReload: true,
 			});
-
-			const saveButton = page.getByRole('button', {
-				name: 'Save',
-			});
-
-			if (await saveButton.isVisible()) {
-				await saveButton.dispatchEvent('click');
-			}
-			else if (await updateButton.isVisible()) {
-				await updateButton.dispatchEvent('click');
-			}
-
-			await waitForAlert(page);
 		});
 
 		await test.step('Created Web Content with script and check script loads', async () => {

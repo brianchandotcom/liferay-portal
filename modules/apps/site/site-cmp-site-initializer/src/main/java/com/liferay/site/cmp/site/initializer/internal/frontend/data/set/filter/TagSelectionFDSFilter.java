@@ -56,7 +56,7 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 	public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
 		Locale locale) {
 
-		long[] groupIds;
+		long[] groupIds = null;
 
 		if (_assetEntry != null) {
 			groupIds = new long[] {_assetEntry.getGroupId()};

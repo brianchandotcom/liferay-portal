@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.constants.CPConfigurationEntrySettingConstants;
+import com.liferay.commerce.product.constants.CPField;
 import com.liferay.commerce.product.exception.CPConfigurationEntryAllowedOrderQuantitiesException;
 import com.liferay.commerce.product.exception.RequiredCPConfigurationEntryException;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
@@ -24,6 +25,10 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -498,6 +503,20 @@ public class CPConfigurationEntryLocalServiceTest {
 
 		_cpConfigurationEntryLocalService.deleteCPConfigurationEntry(
 			cpConfigurationEntry, true);
+
+		Indexer<CPConfigurationEntry> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CPConfigurationEntry.class);
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute(
+			CPField.CP_CONFIGURATION_LIST_ID,
+			masterCPConfigurationList.getCPConfigurationListId());
+		searchContext.setAttribute(
+			Field.CLASS_NAME_ID, _portal.getClassNameId(CPDefinition.class));
+		searchContext.setCompanyId(_group.getCompanyId());
+
+		Assert.assertEquals(0, indexer.searchCount(searchContext));
 	}
 
 	@Test

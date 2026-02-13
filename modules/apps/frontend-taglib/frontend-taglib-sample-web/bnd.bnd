@@ -1,4 +1,8 @@
 Bundle-Name: Liferay Frontend Taglib Sample Web
 Bundle-SymbolicName: com.liferay.frontend.taglib.sample.web
 Bundle-Version: 1.0.0
+Provide-Capability:\
+	liferay.language.resources;\
+		resource.bundle.base.name="content.Language";\
+		service.ranking:Long="-1"
 Web-ContextPath: /frontend-taglib-sample-web

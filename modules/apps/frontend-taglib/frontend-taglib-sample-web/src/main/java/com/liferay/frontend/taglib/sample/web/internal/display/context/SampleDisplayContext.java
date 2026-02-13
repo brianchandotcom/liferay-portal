@@ -64,6 +64,14 @@ public class SampleDisplayContext {
 				"Logo Selector"
 			).build(),
 			NavigationItemBuilder.setActive(
+				navigation.equals("override-language")
+			).setHref(
+				_renderResponse.createRenderURL(), "navigation",
+				"override-language"
+			).setLabel(
+				"Override Language"
+			).build(),
+			NavigationItemBuilder.setActive(
 				navigation.equals("search-iterator")
 			).setHref(
 				_renderResponse.createRenderURL(), "navigation",

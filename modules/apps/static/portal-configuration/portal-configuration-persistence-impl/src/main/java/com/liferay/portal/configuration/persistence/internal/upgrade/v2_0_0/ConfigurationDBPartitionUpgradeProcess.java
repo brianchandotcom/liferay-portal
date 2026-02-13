@@ -151,21 +151,21 @@ public class ConfigurationDBPartitionUpgradeProcess extends UpgradeProcess {
 				dictionary.getBytes(StringPool.UTF8)));
 
 		Object value = dictionaryMap.get(
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
-
-		if (value != null) {
-			return new ScopeConfiguration(
-				configurationId, dictionary, GetterUtil.getLong(value),
-				ExtendedObjectClassDefinition.Scope.COMPANY);
-		}
-
-		value = dictionaryMap.get(
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey());
 
 		if (value != null) {
 			return new ScopeConfiguration(
 				configurationId, dictionary, GetterUtil.getLong(value),
 				ExtendedObjectClassDefinition.Scope.GROUP);
+		}
+
+		value = dictionaryMap.get(
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
+
+		if (value != null) {
+			return new ScopeConfiguration(
+				configurationId, dictionary, GetterUtil.getLong(value),
+				ExtendedObjectClassDefinition.Scope.COMPANY);
 		}
 
 		value = dictionaryMap.get(

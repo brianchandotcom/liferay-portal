@@ -860,7 +860,8 @@ public class CustomFDSSerializer
 				MapUtil.getString(objectEntry.getProperties(), propertyKey),
 				StringPool.COMMA);
 
-			objectEntries.sort(new ObjectEntryERCComparator(externalReferenceCodes));
+			objectEntries.sort(
+				new ObjectEntryERCComparator(externalReferenceCodes));
 		}
 		else {
 			List<Long> ids = ListUtil.toList(
@@ -1356,11 +1357,15 @@ public class CustomFDSSerializer
 
 		@Override
 		public int compare(ObjectEntry objectEntry1, ObjectEntry objectEntry2) {
-			String externalReferenceCode1 = objectEntry1.getExternalReferenceCode();
-			String externalReferenceCode2 = objectEntry2.getExternalReferenceCode();
+			String externalReferenceCode1 =
+				objectEntry1.getExternalReferenceCode();
+			String externalReferenceCode2 =
+				objectEntry2.getExternalReferenceCode();
 
-			int index1 = _externalReferenceCodes.indexOf(externalReferenceCode1);
-			int index2 = _externalReferenceCodes.indexOf(externalReferenceCode2);
+			int index1 = _externalReferenceCodes.indexOf(
+				externalReferenceCode1);
+			int index2 = _externalReferenceCodes.indexOf(
+				externalReferenceCode2);
 
 			if ((index1 == -1) && (index2 == -1)) {
 				Date date = objectEntry1.getDateCreated();

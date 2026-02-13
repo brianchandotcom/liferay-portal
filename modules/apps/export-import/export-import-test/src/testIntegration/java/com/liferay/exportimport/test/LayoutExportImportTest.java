@@ -888,9 +888,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35443");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 		_configurationProvider.saveCompanyConfiguration(
 			StagingConfiguration.class, CompanyThreadLocal.getCompanyId(),
 			HashMapDictionaryBuilder.<String, Object>put(
@@ -932,9 +932,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertEquals(0, importedChildLayout.getParentLayoutId());
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), false, "LPD-35443");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@FeatureFlag("LPS-199086")

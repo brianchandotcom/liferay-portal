@@ -17,6 +17,8 @@ const selectButton = document.getElementById(
 	`${fragmentElementId}-file-upload-button-label`
 );
 
+const isCMS = /^\/web\/cms\//.test(Liferay.ThemeDisplay.getLayoutURL());
+
 function showRemoveButton() {
 	removeButton.classList.remove('d-none');
 	removeButton.addEventListener('click', onRemoveFile);
@@ -72,6 +74,20 @@ function onRemoveFile() {
 
 function onSelectFile(event, onChange, setTranslationInputValue) {
 	event.preventDefault();
+
+	if (isCMS) {
+		import('@liferay/fragment-impl/api')
+			.then(({openItemSelectorModal}) => {
+				openItemSelectorModal({
+
+					// space id?
+
+				});
+			})
+			.catch(console.error);
+
+		return;
+	}
 
 	Liferay.Util.openSelectionModal({
 		onSelect(selectedItem) {

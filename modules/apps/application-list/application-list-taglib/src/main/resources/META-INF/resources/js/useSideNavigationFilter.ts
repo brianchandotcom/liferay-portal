@@ -29,9 +29,11 @@ export function filterItemsByQuery(
 
 			if (items.length) {
 				return {
-					expandedKeys: result.expandedKeys
-						.union(expandedKeys ?? EMPTY_KEYS_SET)
-						.add(item.id),
+					expandedKeys: new Set([
+						...result.expandedKeys,
+						...(expandedKeys ?? EMPTY_KEYS_SET),
+						item.id,
+					]),
 
 					items: result.items.concat({
 						...item,

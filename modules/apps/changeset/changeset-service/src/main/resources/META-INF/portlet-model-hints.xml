@@ -21,6 +21,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="changesetCollectionId" type="long" />
+		<field name="classExternalReferenceCode" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 	</model>

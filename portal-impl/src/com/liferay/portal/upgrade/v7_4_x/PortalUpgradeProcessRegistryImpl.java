@@ -735,6 +735,11 @@ public class PortalUpgradeProcessRegistryImpl
 				}
 
 			});
+
+		upgradeVersionTreeMap.put(
+			new Version(38, 1, 1),
+			UpgradeModulesFactory.create(
+				new String[] {"com.liferay.frontend.data.set.impl"}, null));
 	}
 
 }

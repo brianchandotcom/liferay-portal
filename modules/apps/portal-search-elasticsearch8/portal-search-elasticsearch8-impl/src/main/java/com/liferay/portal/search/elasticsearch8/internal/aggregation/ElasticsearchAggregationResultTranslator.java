@@ -798,7 +798,7 @@ public class ElasticsearchAggregationResultTranslator
 				buckets.array(),
 				longTermsBucket -> {
 					Bucket bucket = bucketAggregationResult.addBucket(
-						longTermsBucket.keyAsString(),
+						String.valueOf(longTermsBucket.key()),
 						longTermsBucket.docCount());
 
 					_addBucketChildAggregationResults(

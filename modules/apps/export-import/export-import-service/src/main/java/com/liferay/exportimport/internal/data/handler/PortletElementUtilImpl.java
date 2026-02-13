@@ -54,15 +54,14 @@ public class PortletElementUtilImpl implements PortletElementUtil {
 			return getSourcePortletId(portletElement);
 		}
 
-		BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-			BatchEnginePortletDataHandlerRegistryUtil.getByKey(
-				companyId, getPortletDataHandlerKey(portletElement));
+		String portletDataHandlerKey = getPortletDataHandlerKey(portletElement);
 
-		if (batchEnginePortletDataHandler == null) {
+		if (portletDataHandlerKey == null) {
 			return null;
 		}
 
-		return batchEnginePortletDataHandler.getPortletId();
+		return BatchEnginePortletDataHandlerRegistryUtil.getPortletId(
+			companyId, portletDataHandlerKey);
 	}
 
 	@Override

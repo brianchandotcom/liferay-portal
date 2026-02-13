@@ -88,15 +88,15 @@ public class ResourcePermissionDataCleanupPreupgradeProcess
 								StringBundler.concat(
 									"Skipping class name ", name,
 									" because its associated table was not ",
-									"found"));
+									"found or it does not belong to Liferay"));
 						}
 
 						continue;
 					}
 
 					if (!dbInspector.hasTable(tableName)) {
-						if (_log.isInfoEnabled()) {
-							_log.info("Table " + tableName + " does not exist");
+						if (_log.isWarnEnabled()) {
+							_log.warn("Table " + tableName + " does not exist");
 						}
 
 						continue;

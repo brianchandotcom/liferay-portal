@@ -7,11 +7,13 @@ package com.liferay.site.cmp.site.initializer.internal.fragment.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -19,6 +21,8 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+
+import java.util.Collections;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -78,6 +82,13 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 			"New Project", MapUtil.getString(getProps(), "title"));
 
 		mockHttpServletRequest = getMockHttpServletRequest(
+			projectObjectDefinition,
+			_partialUpdateObjectEntry(projectObjectEntry));
+
+		Assert.assertEquals(
+			"Edit Project", MapUtil.getString(getProps(), "title"));
+
+		mockHttpServletRequest = getMockHttpServletRequest(
 			taskObjectDefinition, taskObjectEntry);
 
 		Assert.assertEquals(
@@ -98,11 +109,26 @@ public class EditorToolbarComponentSectionFragmentRendererTest
 		Assert.assertEquals(
 			"/redirect-url", MapUtil.getString(getProps(), "formSubmitURL"));
 		Assert.assertEquals("New Task", MapUtil.getString(getProps(), "title"));
+
+		mockHttpServletRequest = getMockHttpServletRequest(
+			taskObjectDefinition, _partialUpdateObjectEntry(taskObjectEntry));
+
+		Assert.assertEquals(
+			"Edit Task", MapUtil.getString(getProps(), "title"));
 	}
 
 	@Override
 	protected FragmentRenderer getFragmentRenderer() {
 		return _fragmentRenderer;
+	}
+
+	private ObjectEntry _partialUpdateObjectEntry(ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryLocalService.partialUpdateObjectEntry(
+			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+			objectEntry.getObjectEntryFolderId(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	@Inject(

@@ -36,6 +36,8 @@ public class CategoryEntityModel implements EntityModel {
 			new IdEntityField(
 				"assetTypes", locale -> "classNameIds", String::valueOf),
 			new StringEntityField(
+				"externalReferenceCode", locale -> "externalReferenceCode"),
+			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
 					"localized_title_" + LocaleUtil.toLanguageId(locale)),

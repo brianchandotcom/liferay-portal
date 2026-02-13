@@ -53,8 +53,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		FeatureFlagManagerUtil.checkEnabled("LPD-35443");
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.
@@ -134,8 +134,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageExperience.getPageSpecificationExternalReferenceCode(),
@@ -159,8 +159,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageExperience.getPageSpecificationExternalReferenceCode(),

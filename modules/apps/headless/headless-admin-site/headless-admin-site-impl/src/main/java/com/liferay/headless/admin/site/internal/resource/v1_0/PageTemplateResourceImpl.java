@@ -216,8 +216,8 @@ public class PageTemplateResourceImpl
 			_layoutPageTemplateEntryService.
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					pageTemplateExternalReferenceCode,
-					GroupUtil.getGroupId(
-						false, contextCompany.getCompanyId(),
+					GroupUtil.getStagingAwareGroupId(
+						contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
 		if (!Objects.equals(
@@ -257,8 +257,8 @@ public class PageTemplateResourceImpl
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollection(
 					pageTemplateSetExternalReferenceCode,
-					GroupUtil.getGroupId(
-						false, contextCompany.getCompanyId(),
+					GroupUtil.getStagingAwareGroupId(
+						contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
 		if (!Objects.equals(
@@ -362,8 +362,8 @@ public class PageTemplateResourceImpl
 		}
 
 		return _addPageTemplate(
-			GroupUtil.getGroupId(
-				_isTypeWidgetPageTemplate(pageTemplate), false,
+			GroupUtil.getStagingAwareGroupId(
+				_isTypeWidgetPageTemplate(pageTemplate),
 				contextCompany.getCompanyId(), siteExternalReferenceCode),
 			pageTemplate);
 	}
@@ -378,8 +378,8 @@ public class PageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			_isTypeWidgetPageTemplate(pageTemplate), false,
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			_isTypeWidgetPageTemplate(pageTemplate),
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =

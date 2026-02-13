@@ -62,9 +62,8 @@ public class PageTemplateSetResourceImpl
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			pageTemplateSetExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 	}
 
 	@Override
@@ -183,9 +182,8 @@ public class PageTemplateSetResourceImpl
 
 		return _toPageTemplateSet(
 			PageTemplateSetUtil.addLayoutPageTemplateCollection(
-				GroupUtil.getGroupId(
-					false, contextCompany.getCompanyId(),
-					siteExternalReferenceCode),
+				GroupUtil.getStagingAwareGroupId(
+					contextCompany.getCompanyId(), siteExternalReferenceCode),
 				contextHttpServletRequest, pageTemplateSet));
 	}
 
@@ -200,8 +198,8 @@ public class PageTemplateSetResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.

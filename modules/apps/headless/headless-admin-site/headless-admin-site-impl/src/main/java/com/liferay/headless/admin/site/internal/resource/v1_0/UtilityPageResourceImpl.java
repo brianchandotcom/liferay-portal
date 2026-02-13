@@ -83,9 +83,8 @@ public class UtilityPageResourceImpl
 
 		_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
 			utilityPageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 	}
 
 	@Override
@@ -155,8 +154,8 @@ public class UtilityPageResourceImpl
 			_layoutUtilityPageEntryService.
 				getLayoutUtilityPageEntryByExternalReferenceCode(
 					utilityPageExternalReferenceCode,
-					GroupUtil.getGroupId(
-						false, contextCompany.getCompanyId(),
+					GroupUtil.getStagingAwareGroupId(
+						contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
@@ -250,9 +249,8 @@ public class UtilityPageResourceImpl
 		}
 
 		return _addLayoutUtilityPageEntry(
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode),
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode),
 			utilityPage);
 	}
 
@@ -266,8 +264,8 @@ public class UtilityPageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.

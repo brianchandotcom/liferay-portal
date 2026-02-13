@@ -23,4 +23,8 @@
 		top: 0;
 		z-index: 10;
 	}
+
+	.cp-project-usage-grid .d-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }

@@ -15,7 +15,12 @@ import {
 	getStructuredContentFolders,
 	getUserAccount,
 } from '~/services/liferay/graphql/queries';
-import {ROLE_TYPES, ROUTE_TYPES} from '~/utils/constants';
+import {
+	EXPERIENCE_SUBSCRIPTIONS,
+	PLAN_SUBSCRIPTIONS,
+	ROLE_TYPES,
+	ROUTE_TYPES,
+} from '~/utils/constants';
 import {getAccountKey} from '~/utils/getAccountKey';
 import {isValidPage} from '~/utils/page.validation';
 import routerPath from '~/utils/routerPath';
@@ -33,6 +38,8 @@ import reducer, {ActionPayload, IAction, IState, actionTypes} from './reducer';
 const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 	{
 		businessEvents: undefined,
+		hasExperienceSubscription: false,
+		hasPlanSubscription: false,
 		isQuickLinksExpanded: true,
 		page: undefined,
 		project: undefined,
@@ -52,6 +59,8 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 		reducer,
 		{
 			businessEvents: undefined,
+			hasExperienceSubscription: false,
+			hasPlanSubscription: false,
 			isQuickLinksExpanded: true,
 			page: undefined,
 			project: undefined,
@@ -248,9 +257,27 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 			if (dataSubscriptions) {
 				const items = dataSubscriptions?.c?.accountSubscriptions?.items;
 
+				const hasExperienceSubscription = items?.some(({name}) =>
+					EXPERIENCE_SUBSCRIPTIONS.includes(name as string)
+				);
+
+				const hasPlanSubscription = items?.some(({name}) =>
+					PLAN_SUBSCRIPTIONS.includes(name as string)
+				);
+
 				dispatch({
 					payload: items as unknown as IAccountSubscription[],
 					type: actionTypes.UPDATE_SUBSCRIPTIONS as keyof typeof actionTypes,
+				});
+
+				dispatch({
+					payload: hasExperienceSubscription as boolean,
+					type: actionTypes.UPDATE_HAS_EXPERIENCE_SUBSCRIPTION as keyof typeof actionTypes,
+				});
+
+				dispatch({
+					payload: hasPlanSubscription as boolean,
+					type: actionTypes.UPDATE_HAS_PLAN_SUBSCRIPTION as keyof typeof actionTypes,
 				});
 			}
 		};
@@ -350,10 +377,14 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 								projectExternalReferenceCode,
 								accountBrief
 							);
+
 							getSubscriptions(
-								accountBrief.externalReferenceCode
+								projectExternalReferenceCode as string
 							);
-							getSubscriptionGroups(projectExternalReferenceCode);
+
+							getSubscriptionGroups(
+								projectExternalReferenceCode as string
+							);
 						}
 
 						getStructuredContents();

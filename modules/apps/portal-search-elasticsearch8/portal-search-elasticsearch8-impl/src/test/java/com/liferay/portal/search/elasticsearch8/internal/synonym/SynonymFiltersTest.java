@@ -25,6 +25,9 @@ import com.liferay.portal.search.engine.adapter.index.DeleteIndexRequest;
 import com.liferay.portal.search.engine.adapter.index.DeleteIndexResponse;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -196,7 +199,8 @@ public class SynonymFiltersTest {
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
 		ReflectionTestUtil.invoke(
-			elasticsearchSearchEngineAdapterImpl, "activate", new Class<?>[0]);
+			elasticsearchSearchEngineAdapterImpl, "activate",
+			new Class<?>[] {Map.class}, Collections.emptyMap());
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}

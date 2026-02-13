@@ -28,6 +28,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -133,7 +135,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			elasticsearchSearchEngineAdapterImpl,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
-		elasticsearchSearchEngineAdapterImpl.activate();
+		elasticsearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}

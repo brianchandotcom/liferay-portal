@@ -7,8 +7,9 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
-import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
+
+import java.util.Collections;
 
 /**
  * @author Michael C. Han
@@ -27,15 +28,6 @@ public class ElasticsearchEngineAdapterFixture {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		ElasticsearchClientResolver elasticsearchClientResolver) {
 
-		DocumentRequestExecutorFixture documentRequestExecutorFixture =
-			new DocumentRequestExecutorFixture() {
-				{
-					setElasticsearchClientResolver(elasticsearchClientResolver);
-				}
-			};
-
-		documentRequestExecutorFixture.setUp();
-
 		ElasticsearchSearchEngineAdapterImpl
 			elasticsearchSearchEngineAdapterImpl =
 				new ElasticsearchSearchEngineAdapterImpl() {
@@ -47,11 +39,8 @@ public class ElasticsearchEngineAdapterFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchSearchEngineAdapterImpl,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchSearchEngineAdapterImpl, "_documentRequestExecutor",
-			documentRequestExecutorFixture.getDocumentRequestExecutor());
 
-		elasticsearchSearchEngineAdapterImpl.activate();
+		elasticsearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}

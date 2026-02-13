@@ -567,6 +567,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler) &&
 			batchEnginePortletDataHandler.isMissingPortletSupported()) {
 
+			element.addAttribute("missing-portlet-supported", "true");
+
 			element.addAttribute(
 				"portlet-data-handler-key",
 				batchEnginePortletDataHandler.getKey());

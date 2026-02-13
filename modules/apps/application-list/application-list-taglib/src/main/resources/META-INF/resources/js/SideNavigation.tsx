@@ -66,6 +66,13 @@ export function filterItemsByQuery(
 					}),
 				};
 			}
+
+			if (item.label.toLowerCase().includes(query)) {
+				return {
+					expandedKeys: result.expandedKeys.add(item.id),
+					items: result.items.concat(item),
+				};
+			}
 		}
 		else if (item.label.toLowerCase().includes(query)) {
 			return {

@@ -172,11 +172,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 
 					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 						DDMFieldTable.INSTANCE.fieldId,
+						DDMFieldTable.INSTANCE.parentFieldId,
+						DDMFieldTable.INSTANCE.storageId,
 						DDMFieldTable.INSTANCE.fieldName,
 						DDMFieldTable.INSTANCE.instanceId,
 						DDMFieldTable.INSTANCE.localizable,
-						DDMFieldTable.INSTANCE.parentFieldId,
-						DDMFieldTable.INSTANCE.storageId,
 						DDMFieldAttributeTable.INSTANCE.attributeName,
 						DDMFieldAttributeTable.INSTANCE.languageId,
 						DDMFieldAttributeTable.INSTANCE.largeAttributeValue,
@@ -196,11 +196,11 @@ public class DDMFieldLocalServiceImpl extends DDMFieldLocalServiceBaseImpl {
 								dslQuery, false)) {
 
 						Long fieldId = (Long)values[0];
-						String fieldName = GetterUtil.getString(values[1]);
-						String instanceId = GetterUtil.getString(values[2]);
-						boolean localizable = (Boolean)values[3];
-						Long parentFieldId = (Long)values[4];
-						Long localStorageId = (Long)values[5];
+						Long parentFieldId = (Long)values[1];
+						Long localStorageId = (Long)values[2];
+						String fieldName = GetterUtil.getString(values[3]);
+						String instanceId = GetterUtil.getString(values[4]);
+						boolean localizable = (Boolean)values[5];
 						String attributeName = GetterUtil.getString(values[6]);
 						String languageId = GetterUtil.getString(values[7]);
 						String largeAttributeValue = GetterUtil.getString(

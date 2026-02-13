@@ -7,7 +7,7 @@ package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -89,7 +89,7 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 	private SPINodeResource<Node> _getSPINodeResource() {
 		return new SPINodeResource<>(
 			contextCompany.getCompanyId(), _indexNameBuilder, _queries,
-			_searchRequestExecutor,
+			_searchEngineAdapter,
 			document -> NodeUtil.toNode(
 				document, _language,
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -110,6 +110,6 @@ public class NodeResourceImpl extends BaseNodeResourceImpl {
 	private Queries _queries;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 }

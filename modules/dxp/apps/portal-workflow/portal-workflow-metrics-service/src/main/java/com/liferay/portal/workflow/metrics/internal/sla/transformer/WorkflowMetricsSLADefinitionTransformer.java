@@ -21,7 +21,7 @@ import com.liferay.portal.search.aggregation.bucket.TermsAggregation;
 import com.liferay.portal.search.aggregation.bucket.TermsAggregationResult;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -146,7 +146,7 @@ public class WorkflowMetricsSLADefinitionTransformer {
 		searchSearchRequest.setSize(0);
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -261,7 +261,7 @@ public class WorkflowMetricsSLADefinitionTransformer {
 	private Queries _queries;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private WorkflowMetricsSLADefinitionLocalService

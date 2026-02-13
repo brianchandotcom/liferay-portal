@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.index.IndexNameBuilder;
 import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -197,7 +197,7 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 
 	private SPINodeResource<Node> _getSPINodeResource(long companyId) {
 		return new SPINodeResource<>(
-			companyId, _indexNameBuilder, _queries, _searchRequestExecutor,
+			companyId, _indexNameBuilder, _queries, _searchEngineAdapter,
 			document -> NodeUtil.toNode(
 				document, _language,
 				ResourceBundleUtil.getModuleAndPortalResourceBundle(
@@ -249,7 +249,7 @@ public class WorkflowMetricsSLADefinitionDemoDataCreatorImpl
 	private Queries _queries;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	private final List<Long> _workflowMetricsSLADefinitionIds =
 		new CopyOnWriteArrayList<>();

@@ -34,9 +34,9 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.CountSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.CountSearchResponse;
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -212,7 +212,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setSize(10000);
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -634,8 +634,8 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 					assigneeIds, classPKs, dateEnd, dateStart, processId,
 					slaStatuses, null, statuses, taskNames)));
 
-		CountSearchResponse countSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(countSearchRequest);
+		CountSearchResponse countSearchResponse = _searchEngineAdapter.execute(
+			countSearchRequest);
 
 		return countSearchResponse.getCount();
 	}
@@ -665,7 +665,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setStart(9999);
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -717,7 +717,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setStart(pagination.getStartPosition());
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponse.getSearchHits();
 
@@ -802,7 +802,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 				_createBooleanQuery(processId, instanceId)));
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -1036,7 +1036,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 		searchSearchRequest.setQuery(booleanQuery);
 
 		SearchSearchResponse searchSearchResponse =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		Map<String, AggregationResult> aggregationResultsMap =
 			searchSearchResponse.getAggregationResultsMap();
@@ -1221,7 +1221,7 @@ public class InstanceResourceImpl extends BaseInstanceResourceImpl {
 	private ResourceHelper _resourceHelper;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private Sorts _sorts;

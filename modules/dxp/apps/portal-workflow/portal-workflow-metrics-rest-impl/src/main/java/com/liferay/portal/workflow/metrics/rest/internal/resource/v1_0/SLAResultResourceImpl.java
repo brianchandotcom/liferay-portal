@@ -5,7 +5,7 @@
 
 package com.liferay.portal.workflow.metrics.rest.internal.resource.v1_0;
 
-import com.liferay.portal.search.engine.adapter.search.SearchRequestExecutor;
+import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchResponse;
 import com.liferay.portal.search.hits.SearchHit;
@@ -62,7 +62,7 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 		searchSearchRequest.setSize(1);
 
 		SearchSearchResponse searchSearchResponses =
-			_searchRequestExecutor.executeSearchRequest(searchSearchRequest);
+			_searchEngineAdapter.execute(searchSearchRequest);
 
 		SearchHits searchHits = searchSearchResponses.getSearchHits();
 
@@ -88,7 +88,7 @@ public class SLAResultResourceImpl extends BaseSLAResultResourceImpl {
 	private Queries _queries;
 
 	@Reference
-	private SearchRequestExecutor _searchRequestExecutor;
+	private SearchEngineAdapter _searchEngineAdapter;
 
 	@Reference
 	private Sorts _sorts;

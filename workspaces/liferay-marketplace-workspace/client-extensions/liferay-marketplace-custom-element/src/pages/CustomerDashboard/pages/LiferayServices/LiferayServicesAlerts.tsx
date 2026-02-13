@@ -1,0 +1,49 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayAlert from '@clayui/alert';
+
+import {OrderWorkflowStatusCode} from '../../../../enums/Order';
+
+const statusAlert = {
+	[OrderWorkflowStatusCode.CANCELLED]: {
+		displayType: 'danger',
+		text: 'Your order has been cancelled. Please contact support if you have any questions.',
+	},
+	[OrderWorkflowStatusCode.ON_HOLD]: {
+		displayType: 'secondary',
+		text: 'Your order is currently on hold. Please check your email for further instructions.',
+	},
+	[OrderWorkflowStatusCode.PROCESSING]: {
+		displayType: 'info',
+		text: 'Your order is being processed. We will notify you once it is ready for the next step.',
+	},
+	[OrderWorkflowStatusCode.PENDING]: {
+		displayType: 'warning',
+		text: 'Your order is pending. Please wait a few minutes or hours for the processing to complete.',
+	},
+	[OrderWorkflowStatusCode.IN_PROGRESS]: {
+		displayType: 'warning',
+		text: 'Your order is pending. Please wait a few minutes or hours for the processing to complete.',
+	},
+};
+
+type LiferayServicesAlertsProps = {
+	orderStatusCode: number;
+};
+
+const LiferayServicesAlerts: React.FC<LiferayServicesAlertsProps> = ({
+	orderStatusCode,
+}) => {
+	const alert = (statusAlert as any)[orderStatusCode];
+
+	if (!alert) {
+		return null;
+	}
+
+	return <ClayAlert displayType={alert.displayType}>{alert.text}</ClayAlert>;
+};
+
+export default LiferayServicesAlerts;

@@ -559,6 +559,13 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group>
+		getCMSGroups() {
+
+		return _assetCategoryLocalService.getCMSGroups();
+	}
+
+	@Override
 	public java.util.List<AssetCategory> getDescendantCategories(
 		AssetCategory category) {
 
@@ -615,6 +622,14 @@ public class AssetCategoryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.kernel.model.Group> getSpaceGroups(
+			long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetCategoryLocalService.getSpaceGroups(groupIds);
 	}
 
 	@Override

@@ -7110,6 +7110,14 @@ public class ObjectEntryLocalServiceImpl
 			return;
 		}
 
+		ListTypeEntry listTypeEntry =
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				objectField.getListTypeDefinitionId(), listTypeEntryKey);
+
+		if (listTypeEntry != null) {
+			return;
+		}
+
 		try {
 			_listTypeEntryService.getOrAddEmptyListTypeEntry(
 				objectField.getUserId(), objectField.getListTypeDefinitionId(),

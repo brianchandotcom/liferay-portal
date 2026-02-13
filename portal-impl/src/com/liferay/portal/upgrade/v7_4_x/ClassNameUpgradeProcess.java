@@ -59,7 +59,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			int oldCount = _getDLFileEntryMetadataCount(oldStructureId);
+			int oldCount = _getDLFileEntryMetadatasCount(oldStructureId);
 
 			if (oldCount == 0) {
 				_deleteDDMStructure(oldCTCollectionId, oldStructureId);
@@ -71,7 +71,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 			long newStructureId = newDDMStructureValues[1];
 
-			int newCount = _getDLFileEntryMetadataCount(newStructureId);
+			int newCount = _getDLFileEntryMetadatasCount(newStructureId);
 
 			if (newCount == 0) {
 				_deleteDDMStructure(newCTCollectionId, newStructureId);
@@ -188,7 +188,7 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		return 0;
 	}
 
-	private int _getDLFileEntryMetadataCount(long structureId)
+	private int _getDLFileEntryMetadatasCount(long structureId)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(

@@ -1,0 +1,136 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": [
+						"p-3",
+						"p-lg-4"
+					],
+					"indexed": true,
+					"layout": {
+					}
+				},
+				"id": "27edfb44-ab3e-5671-1b7d-3c8ace340ecc",
+				"pageElements": [
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"id": "2c14a5f5-e235-1234-a146-34999055341d",
+						"pageElements": [
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {
+							}
+						},
+						"id": "5d512a72-a41d-405d-9876-b7b73ed33053",
+						"pageElements": [
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"gutters": true,
+							"indexed": true,
+							"modulesPerRow": 2,
+							"numberOfColumns": 2,
+							"reverseOrder": false,
+							"rowViewports": [
+								{
+									"id": "landscapeMobile",
+									"rowViewportDefinition": {
+										"modulesPerRow": 1
+									}
+								},
+								{
+									"id": "portraitMobile",
+									"rowViewportDefinition": {
+									}
+								},
+								{
+									"id": "tablet",
+									"rowViewportDefinition": {
+									}
+								}
+							],
+							"verticalAlignment": "top"
+						},
+						"id": "217ebad7-ef54-65e6-a123-b181b89419f7",
+						"pageElements": [
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 7
+								},
+								"id": "02137bb8-9814-84a1-615c-a5fdb57a5033",
+								"pageElements": [
+								],
+								"type": "Column"
+							},
+							{
+								"definition": {
+									"columnViewports": [
+										{
+											"columnViewportDefinition": {
+												"size": 12
+											},
+											"id": "landscapeMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "portraitMobile"
+										},
+										{
+											"columnViewportDefinition": {
+											},
+											"id": "tablet"
+										}
+									],
+									"size": 5
+								},
+								"id": "3e7c52b6-4a61-9160-8751-1f1e3cc21427",
+								"pageElements": [
+								],
+								"type": "Column"
+							}
+						],
+						"type": "Row"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "dsr-master"
+		}
+	},
+	"version": 1.1
+}

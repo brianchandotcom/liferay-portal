@@ -1,0 +1,164 @@
+{
+	"pageElement": {
+		"id": "307eeda7-c54b-12ac-6a79-c20994668d81",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "sidebar",
+						"siteKey": "DSR"
+					},
+					"fragmentConfig": {
+						"sidebarAriaLabel": "DSR Product Menu"
+					},
+					"fragmentFields": [
+						{
+							"id": "sidebarTitle",
+							"value": {
+								"fragmentLink": {
+								}
+							}
+						}
+					],
+					"indexed": true
+				},
+				"id": "6a354764-116e-2b1b-1cb0-47e49cb25627",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentDropZoneId": "topBar"
+						},
+						"id": "5aeb1eb5-f96e-16cb-06b7-61e612a0485b",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "page-bar",
+										"siteKey": "DSR"
+									},
+									"fragmentConfig": {
+										"alt": "Site Logo"
+									},
+									"fragmentFields": [
+										{
+											"id": "sidebarImage",
+											"value": {
+												"fragmentImage": {
+													"url": {
+														"value_i18n": {
+														}
+													}
+												},
+												"fragmentLink": {
+												}
+											}
+										},
+										{
+											"id": "sidebarTitle",
+											"value": {
+												"fragmentLink": {
+												}
+											}
+										}
+									],
+									"indexed": true,
+									"widgetInstances": [
+										{
+											"widgetConfig": {
+											},
+											"widgetName": "com_liferay_product_navigation_applications_menu_web_internal_portlet_ProductNavigationApplicationsMenuPortlet"
+										}
+									]
+								},
+								"id": "32f64cbe-57dd-937b-2d9e-edc1de70b958",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentDropZoneId": "sidebarTrigger"
+										},
+										"id": "57750634-2ad5-dbdb-cf52-0577eeca1155",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "sidebar-trigger",
+														"siteKey": "DSR"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"id": "88b7f132-967b-ca14-1275-04240379f1e0",
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+							"fragmentDropZoneId": "sidebarBody"
+						},
+						"id": "212eb06f-ac24-4b75-cde8-face21ecf4e5",
+						"pageElements": [
+							{
+								"definition": {
+									"fragment": {
+										"key": "vertical-navigation",
+										"siteKey": "DSR"
+									},
+									"fragmentConfig": {
+										"ariaLabel": "DSR Primary Navigation",
+										"displayStyle": "stacked",
+										"hoveredItemColor": "",
+										"selectedItemColor": "",
+										"source": "{\"parentSiteNavigationMenuItemId\": \"0\", \"privateLayout\": \"false\", \"siteNavigationMenuExternalReferenceCode\": \"DSRPRIMARYNAVIGATION\", \"title\": \"DSR Primary Navigation\", \"type\": \"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
+										"sublevels": "-1"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"id": "339a84e4-b212-a686-2e8e-724ca1458332",
+								"type": "Fragment"
+							}
+						],
+						"type": "FragmentDropZone"
+					},
+					{
+						"definition": {
+							"fragmentDropZoneId": "content"
+						},
+						"id": "5400998b-15ff-c123-f346-4c6a2bf62947",
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentSettings": {
+										"unallowedFragments": [
+										]
+									}
+								},
+								"id": "5b085050-70dd-18d8-1127-06afb1ebac78",
+								"type": "DropZone"
+							}
+						],
+						"type": "FragmentDropZone"
+					}
+				],
+				"type": "Fragment"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"themeName": "CMS"
+	},
+	"version": 1.1
+}

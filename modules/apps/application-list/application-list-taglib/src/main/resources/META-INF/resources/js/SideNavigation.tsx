@@ -7,24 +7,13 @@ import {SidePanel} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {sub} from '../../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main';
+import {type SideNavigationItem} from './SideNavigationItem';
 import SideNavigationSearchInput from './SideNavigationSearchInput';
 import SideNavigationSiteSelector from './SideNavigationSiteSelector';
-
-interface SideNavigationItem {
-	href?: string;
-	id: string;
-	items?: Array<SideNavigationItem>;
-	label: string;
-	leadingIcon?: string;
-}
-
-interface SideNavigationFilter {
-	expandedKeys?: Set<React.Key>;
-	items: Array<SideNavigationItem>;
-}
+import {useSideNavigationFilter} from './useSideNavigationFilter';
 
 interface Props {
 	categoryImageUrl: string;
@@ -37,72 +26,6 @@ interface Props {
 	siteAdministrationItemSelectorUrl: string;
 	visible: boolean;
 	visibleSessionKey: string;
-}
-
-const EMPTY_KEYS_SET = new Set<React.Key>();
-const EMPTY_FILTER = {expandedKeys: EMPTY_KEYS_SET, items: []};
-
-export function filterItemsByQuery(
-	items: Array<SideNavigationItem>,
-	query: string
-): SideNavigationFilter {
-	if (!query) {
-		return {items};
-	}
-
-	return items.reduce<Required<SideNavigationFilter>>((result, item) => {
-		if (item.items && item.items.length) {
-			const {expandedKeys, items} = filterItemsByQuery(item.items, query);
-
-			if (items.length) {
-				return {
-					expandedKeys: result.expandedKeys
-						.union(expandedKeys ?? EMPTY_KEYS_SET)
-						.add(item.id),
-
-					items: result.items.concat({
-						...item,
-						items,
-					}),
-				};
-			}
-
-			if (item.label.toLowerCase().includes(query)) {
-				return {
-					expandedKeys: result.expandedKeys.add(item.id),
-					items: result.items.concat(item),
-				};
-			}
-		}
-		else if (item.label.toLowerCase().includes(query)) {
-			return {
-				expandedKeys: result.expandedKeys,
-				items: result.items.concat(item),
-			};
-		}
-
-		return result;
-	}, EMPTY_FILTER);
-}
-
-function useSideNavigationFilter(items: Array<SideNavigationItem>) {
-	const [query, setQuery] = useState('');
-
-	const filter = useMemo(
-		() => filterItemsByQuery(items, query),
-		[items, query]
-	);
-
-	const updateQuery = useCallback((query: string) => {
-		setQuery(query.trim().toLowerCase());
-	}, []);
-
-	return {
-		expandedKeys: filter.expandedKeys,
-		isFilterActive: !!query,
-		items: filter.items,
-		setQuery: updateQuery,
-	};
 }
 
 function SideNavigation({

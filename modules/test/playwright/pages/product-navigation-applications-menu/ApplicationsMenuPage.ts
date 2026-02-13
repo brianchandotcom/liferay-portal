@@ -51,8 +51,8 @@ export class ApplicationsMenuPage {
 	private readonly jobSchedulerMenuItem: Locator;
 	private readonly licenseManagerMenuItem: Locator;
 	private readonly metricsItem: Locator;
-	private readonly oAuthClientAdministration: Locator;
 	private readonly oAuth2Administration: Locator;
+	private readonly oAuthClientAdministration: Locator;
 	private readonly objectsMenuItem: Locator;
 	private readonly onDemandAdminItem: Locator;
 	private readonly page: Page;
@@ -245,13 +245,13 @@ export class ApplicationsMenuPage {
 			exact: true,
 			name: 'Metrics',
 		});
-		this.oAuthClientAdministration = page.getByRole('menuitem', {
-			exact: true,
-			name: 'OAuth Client Administration',
-		});
 		this.oAuth2Administration = page.getByRole('menuitem', {
 			exact: true,
 			name: 'OAuth 2 Administration',
+		});
+		this.oAuthClientAdministration = page.getByRole('menuitem', {
+			exact: true,
+			name: 'OAuth Client Administration',
 		});
 		this.objectsMenuItem = page.getByRole('menuitem', {
 			exact: true,

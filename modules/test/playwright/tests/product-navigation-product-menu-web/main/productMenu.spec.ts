@@ -7,7 +7,9 @@ import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
+import {liferayConfig} from '../../../liferay.config';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {closeProductMenu, openProductMenu} from '../../../utils/productMenu';
 
 const test = mergeTests(loginTest(), productMenuPageTest);
 
@@ -103,3 +105,29 @@ test(
 		});
 	}
 );
+
+test('Control menu on home page is styled correctly after refreshing page.', async ({
+	page,
+}) => {
+	const expectControlMenuStyles = async () => {
+		const controlMenu = page.locator('#controlMenu');
+		await expect(controlMenu).toHaveCSS('display', 'flex');
+		await expect(controlMenu).toHaveCSS('list-style', 'outside none none');
+	};
+
+	await test.step('Navigate to home page and close product menu', async () => {
+		await page.goto(liferayConfig.environment.baseUrl);
+		await closeProductMenu(page);
+	});
+
+	await test.step('Verify styles after refresh with menu closed', async () => {
+		await page.reload();
+		await expectControlMenuStyles();
+	});
+
+	await test.step('Open product menu and verify styles after refresh', async () => {
+		await openProductMenu(page);
+		await page.reload();
+		await expectControlMenuStyles();
+	});
+});

@@ -4,6 +4,7 @@
  */
 
 import React, {ReactNode} from 'react';
+import PopoverIconButton from '~/features/project/components/PopoverIconButton';
 
 import CardContainer from '../CardContainer';
 
@@ -13,6 +14,8 @@ interface IProps {
 	contentSkeleton?: number;
 	isLoading?: boolean;
 	title?: string;
+	tooltipClassName?: string;
+	tooltipText?: string;
 }
 
 const ProjectUsageSection: React.FC<IProps> = ({
@@ -21,10 +24,24 @@ const ProjectUsageSection: React.FC<IProps> = ({
 	contentSkeleton = 3,
 	isLoading,
 	title,
+	tooltipClassName,
+	tooltipText,
 }) => {
 	return (
 		<div className={`${className}`}>
-			<h3 className="mb-3">{title}</h3>
+			<h3 className="mb-3">
+				{title}
+
+				{tooltipText && (
+					<span className="ml-1">
+						<PopoverIconButton
+							className={tooltipClassName}
+							popoverText={tooltipText}
+							symbol="question-circle"
+						/>
+					</span>
+				)}
+			</h3>
 
 			<div className="d-grid">
 				{isLoading

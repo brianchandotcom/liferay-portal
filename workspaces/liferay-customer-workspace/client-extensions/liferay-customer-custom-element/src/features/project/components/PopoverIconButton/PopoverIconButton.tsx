@@ -11,6 +11,7 @@ type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
 	alignPosition?: Writeable<(typeof ALIGN_POSITIONS)[number]>;
+	className?: string;
 	formatedHTML?: string;
 	iconSize?: 'regular' | 'sm' | 'xs';
 	popoverLink?: {textLink: string; url: string};
@@ -20,6 +21,7 @@ type PopoverIconButtonProps = {
 
 const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 	alignPosition = 'bottom',
+	className,
 	formatedHTML,
 	iconSize = 'sm',
 	popoverLink,
@@ -35,7 +37,7 @@ const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 			trigger={
 				<Button
 					aria-labelledby="Info Icon"
-					className="btn-monospaced text-brand-primary-darken-2"
+					className={`btn-monospaced text-brand-primary-darken-2 ${className}`}
 					displayType={null}
 					onClick={(event) => event.stopPropagation()}
 					size={iconSize}

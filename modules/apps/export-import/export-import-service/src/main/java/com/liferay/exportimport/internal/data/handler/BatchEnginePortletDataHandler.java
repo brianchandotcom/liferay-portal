@@ -14,6 +14,7 @@ import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
+import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.exportimport.internal.lar.ExportImportDescriptorThreadLocal;
 import com.liferay.exportimport.internal.lar.PortletDataContextImpl;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -93,6 +95,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
+		ChangesetEntryLocalService changesetEntryLocalService,
+		ClassNameLocalService classNameLocalService,
 		ExportImportHelper exportImportHelper,
 		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService,
@@ -102,6 +106,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
+		_changesetEntryLocalService = changesetEntryLocalService;
+		_classNameLocalService = classNameLocalService;
 		_exportImportHelper = exportImportHelper;
 		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
@@ -686,6 +692,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(),
 				BatchEnginePortletDataHandlerUtil.buildExportParameters(
+					_changesetEntryLocalService, _classNameLocalService,
 					registration.getExportImportDescriptor(),
 					_groupLocalService, portletDataContext,
 					_stagingGroupHelper),
@@ -884,6 +891,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineExportTaskLocalService;
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
+	private final ChangesetEntryLocalService _changesetEntryLocalService;
+	private final ClassNameLocalService _classNameLocalService;
 	private final ExportImportHelper _exportImportHelper;
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;

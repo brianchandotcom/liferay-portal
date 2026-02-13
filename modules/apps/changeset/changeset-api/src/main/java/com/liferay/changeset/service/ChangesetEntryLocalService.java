@@ -73,6 +73,11 @@ public interface ChangesetEntryLocalService
 			long classPK)
 		throws PortalException;
 
+	public ChangesetEntry addChangesetEntry(
+			long userId, long changesetCollectionId,
+			String classExternalReferenceCode, long classNameId, long classPK)
+		throws PortalException;
+
 	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
@@ -209,8 +214,19 @@ public interface ChangesetEntryLocalService
 		long changesetCollectionId, long classNameId, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ChangesetEntry fetchChangesetEntry(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ChangesetEntry fetchOrAddChangesetEntry(
 			long changesetCollectionId, long classNameId, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ChangesetEntry fetchOrAddChangesetEntry(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId, long classPK)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -63,6 +63,16 @@ public class ChangesetEntryLocalServiceUtil {
 			userId, changesetCollectionId, classNameId, classPK);
 	}
 
+	public static ChangesetEntry addChangesetEntry(
+			long userId, long changesetCollectionId,
+			String classExternalReferenceCode, long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().addChangesetEntry(
+			userId, changesetCollectionId, classExternalReferenceCode,
+			classNameId, classPK);
+	}
+
 	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
@@ -236,12 +246,30 @@ public class ChangesetEntryLocalServiceUtil {
 			changesetCollectionId, classNameId, classPK);
 	}
 
+	public static ChangesetEntry fetchChangesetEntry(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return getService().fetchChangesetEntry(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
 	public static ChangesetEntry fetchOrAddChangesetEntry(
 			long changesetCollectionId, long classNameId, long classPK)
 		throws PortalException {
 
 		return getService().fetchOrAddChangesetEntry(
 			changesetCollectionId, classNameId, classPK);
+	}
+
+	public static ChangesetEntry fetchOrAddChangesetEntry(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId, long classPK)
+		throws PortalException {
+
+		return getService().fetchOrAddChangesetEntry(
+			changesetCollectionId, classExternalReferenceCode, classNameId,
+			classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

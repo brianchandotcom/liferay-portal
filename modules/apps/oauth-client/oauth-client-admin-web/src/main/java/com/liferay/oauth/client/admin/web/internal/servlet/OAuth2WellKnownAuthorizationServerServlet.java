@@ -7,6 +7,7 @@ package com.liferay.oauth.client.admin.web.internal.servlet;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,6 +16,8 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.Servlet;
@@ -43,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class OAuth2WellKnownServlet extends HttpServlet {
+public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(
@@ -63,7 +66,7 @@ public class OAuth2WellKnownServlet extends HttpServlet {
 
 		long companyId = GetterUtil.getLong(
 			httpServletRequest.getAttribute(WebKeys.COMPANY_ID));
-		String issuer = _extractIssuerFromRequest(httpServletRequest);
+		String issuer = _getIssuer(httpServletRequest);
 
 		if (issuer == null) {
 			if (_log.isDebugEnabled()) {
@@ -112,35 +115,30 @@ public class OAuth2WellKnownServlet extends HttpServlet {
 		}
 	}
 
-	private String _extractIssuerFromRequest(
-		HttpServletRequest httpServletRequest) {
-
-		String contextPath = httpServletRequest.getContextPath();
+	private String _getIssuer(HttpServletRequest httpServletRequest) {
+		String requestURI = StringUtil.trimTrailing(
+			httpServletRequest.getRequestURI(), StringPool.SLASH.charAt(0));
 
 		String basePath =
-			contextPath + "/.well-known/oauth-authorization-server";
+			httpServletRequest.getContextPath() +
+				"/.well-known/oauth-authorization-server";
 
-		String requestURI = httpServletRequest.getRequestURI();
-
-		if (requestURI.length() == basePath.length()) {
+		if (requestURI.length() <= basePath.length()) {
 			return null;
 		}
 
-		String extra = requestURI.substring(basePath.length());
+		String issuer = requestURI.substring(
+			requestURI.lastIndexOf(StringPool.SLASH) + 1);
 
-		if (extra.startsWith("/")) {
-			extra = extra.substring(1);
-		}
-
-		if (extra.isEmpty()) {
+		if (Validator.isNull(issuer)) {
 			return null;
 		}
 
-		return URLDecoder.decode(extra, StandardCharsets.UTF_8);
+		return URLDecoder.decode(issuer, StandardCharsets.UTF_8);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		OAuth2WellKnownServlet.class);
+		OAuth2WellKnownAuthorizationServerServlet.class);
 
 	@Reference
 	private OAuthClientASLocalMetadataLocalService

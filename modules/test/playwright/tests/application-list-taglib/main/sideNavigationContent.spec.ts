@@ -5,16 +5,16 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest()
 );
 
@@ -34,53 +34,18 @@ async function setAllCategoriesExpanded(page: Page, expanded: boolean) {
 	await expect(buttons).toHaveCount(0);
 }
 
-test.beforeEach(async ({applicationsMenuPage, page}) => {
-	await applicationsMenuPage.goToInstanceSettings();
+test.beforeEach(async ({globalMenuPage, page}) => {
+	await globalMenuPage.goToControlPanel();
 
-	await expect(page.getByTestId('sideNavigation')).toBeVisible();
+	const sideNavigation = page.getByTestId('sideNavigation');
+
+	await expect(sideNavigation).toBeVisible();
+	await expect(
+		sideNavigation.getByRole('menuitem', {expanded: true, name: 'Users'})
+	).toBeVisible();
+
+	await setAllCategoriesExpanded(page, false);
 });
-
-test(
-	'The category containing the current page is expanded by default',
-	{tag: '@LPD-73706'},
-	async ({applicationsMenuPage, page}) => {
-		await test.step('Collapse all categories', async () => {
-			await setAllCategoriesExpanded(page, false);
-		});
-
-		const testCases = [
-			{
-				categoryName: 'Configuration',
-				navigateToPage: () =>
-					applicationsMenuPage.goToInstanceSettings(),
-			},
-			{
-				categoryName: 'Users',
-				navigateToPage: () =>
-					applicationsMenuPage.goToUsersAndOrganizations(),
-			},
-			{
-				categoryName: 'Object',
-				navigateToPage: () => applicationsMenuPage.goToPicklists(),
-			},
-		];
-
-		for (const {categoryName, navigateToPage} of testCases) {
-			await test.step(`Go to ${categoryName} and expect it to be expanded`, async () => {
-				await navigateToPage();
-
-				await expect(page.getByTestId('sideNavigation')).toBeVisible();
-
-				const categories = page
-					.getByTestId('sideNavigation')
-					.getByRole('menuitem', {expanded: true});
-
-				await expect(categories).toHaveCount(1);
-				await expect(categories).toHaveAccessibleName(categoryName);
-			});
-		}
-	}
-);
 
 test(
 	'Each leaf navigation item has an icon, a label and a link to navigate to',
@@ -117,25 +82,25 @@ test(
 	{tag: '@LPD-73706'},
 	async ({page}) => {
 		await test.step('Click on a leaf item and check if it navigates to the correct page', async () => {
-			const instanceSettingsItem = page.getByRole('menuitem', {
-				name: 'Instance Settings',
+			const usersAndOrganizationsItem = page.getByRole('menuitem', {
+				name: 'Users and Organizations',
 			});
 
-			await expect(instanceSettingsItem).toHaveClass(/active/);
+			await expect(usersAndOrganizationsItem).toHaveClass(/active/);
 
-			const systemSettingsItem = page.getByRole('menuitem', {
-				name: 'System Settings',
+			const userGroupsItem = page.getByRole('menuitem', {
+				name: 'User Groups',
 			});
 
-			await expect(systemSettingsItem).not.toHaveClass(/active/);
+			await expect(userGroupsItem).not.toHaveClass(/active/);
 
 			await clickAndExpectToBeVisible({
-				target: page.getByRole('heading', {name: 'System Settings'}),
-				trigger: systemSettingsItem,
+				target: page.getByRole('heading', {name: 'User Groups'}),
+				trigger: userGroupsItem,
 			});
 
-			await expect(instanceSettingsItem).not.toHaveClass(/active/);
-			await expect(systemSettingsItem).toHaveClass(/active/);
+			await expect(usersAndOrganizationsItem).not.toHaveClass(/active/);
+			await expect(userGroupsItem).toHaveClass(/active/);
 		});
 	}
 );

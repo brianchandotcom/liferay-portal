@@ -5,22 +5,22 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest()
 );
 
-test.beforeEach(async ({applicationsMenuPage, page}) => {
-	await applicationsMenuPage.goToInstanceSettings();
+test.beforeEach(async ({globalMenuPage, page}) => {
+	await globalMenuPage.goToCommerce();
 
 	await expect(page.getByTestId('sideNavigation')).toBeVisible();
 });

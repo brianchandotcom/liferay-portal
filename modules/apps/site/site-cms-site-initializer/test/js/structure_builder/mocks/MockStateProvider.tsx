@@ -43,7 +43,7 @@ const DEFAULT_STATE: State = {
 };
 
 export type MockState = Omit<Partial<State>, 'structure'> & {
-	structure?: Partial<State['structure']>;
+	structure?: Partial<Structure>;
 };
 
 export function MockStateProvider({

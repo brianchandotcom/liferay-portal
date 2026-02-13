@@ -4,11 +4,11 @@ import CriteriaCard from 'segment/components/criteria-card';
 import DistributionCard from 'contacts/hoc/segment/DistributionCard';
 import InterestsCard from 'contacts/hoc/segment/InterestsCard';
 import React, {useCallback, useEffect, useRef} from 'react';
+import SegmentActivationCard from 'segment/components/SegmentActivationCard';
 import SegmentProfileCard from 'segment/components/ProfileCard';
 import {debounce} from 'lodash';
 import {ReferencedObjectsProvider} from 'segment/segment-editor/dynamic/context/referencedObjects';
 import {Segment} from 'shared/util/records';
-import {SegmentActivationCard} from 'segment/components/SegmentActivationCard';
 import {SegmentTypes} from 'shared/util/constants';
 import {useTimeZone} from 'shared/hooks/useTimeZone';
 

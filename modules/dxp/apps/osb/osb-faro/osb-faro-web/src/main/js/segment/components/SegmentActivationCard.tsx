@@ -11,7 +11,7 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {connect, ConnectedProps} from 'react-redux';
 import {formatUTCDateFromUnix} from 'shared/util/date';
-import {Option, Picker} from '@clayui/core';
+import {Option, Picker, Text} from '@clayui/core';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {
 	SegmentActivationFrequencyTypes,
@@ -19,15 +19,28 @@ import {
 	SegmentTypes
 } from 'shared/util/constants';
 import {sub} from 'shared/util/lang';
-import {Text} from '@clayui/core';
 import {useParams} from 'react-router-dom';
+
+const sanitizeActivation = (activation: any) => {
+	if (!activation) return null;
+
+	const data =
+		typeof activation.toJS === 'function' ? activation.toJS() : activation;
+
+	if (data.frequencyType === SegmentActivationFrequencyTypes.Indefinitely) {
+		return {
+			...data,
+			scheduleEndDate: null,
+			scheduleStartDate: null
+		};
+	}
+
+	return data;
+};
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const connector = connect(null, {
-	addAlert
-});
-
+const connector = connect(null, {addAlert});
 export type SegmentActivationDetails = {
 	frequencyType: SegmentActivationFrequencyTypes;
 	scheduleEndDate?: string;
@@ -36,10 +49,10 @@ export type SegmentActivationDetails = {
 };
 
 type IActivationFormValues = {
-	scheduleEndDate?: string;
+	scheduleEndDate?: string | null;
 	frequencyType: SegmentActivationFrequencyTypes;
 	scheduleType: SegmentActivationScheduleTypes;
-	scheduleStartDate?: string;
+	scheduleStartDate?: string | null;
 };
 
 interface IActivationConfigurationModalProps {
@@ -84,7 +97,7 @@ const FREQUENCY_TYPE_LABELS: Record<
 	}
 };
 
-export const ActivationConfigurationModal: React.FC<
+const ActivationConfigurationModal: React.FC<
 	IActivationConfigurationModalProps & PropsFromRedux
 > = ({
 	addAlert,
@@ -119,10 +132,14 @@ export const ActivationConfigurationModal: React.FC<
 		setFormState(prev => ({
 			...prev,
 			frequencyType: value,
-			...(value === SegmentActivationFrequencyTypes.Indefinitely && {
-				scheduleEndDate: null,
-				scheduleStartDate: null
-			})
+			scheduleEndDate:
+				value === SegmentActivationFrequencyTypes.Between
+					? prev.scheduleEndDate
+					: null,
+			scheduleStartDate:
+				value === SegmentActivationFrequencyTypes.Between
+					? prev.scheduleStartDate
+					: null
 		}));
 	};
 
@@ -147,147 +164,139 @@ export const ActivationConfigurationModal: React.FC<
 	if (!open) return null;
 
 	return (
-		<>
-			{open && (
-				<Modal
-					center
-					data-testId='segment-activation-modal'
-					observer={observer}
-					size='lg'
-				>
-					<Modal.Header>
-						{Liferay.Language.get('configure-activation')}
-					</Modal.Header>
-					<Modal.Body>
-						<div className='d-flex flex-column mb-4'>
-							<Text weight='semi-bold'>
-								{Liferay.Language.get('schedule')}
-							</Text>
-							<Text color='secondary'>
-								{Liferay.Language.get(
-									'set-the-sync-frequency-and-duration-for-this-segments-membership-across-all-sites-in-this-property'
-								)}
-							</Text>
-						</div>
-
-						{showActivationTypePicker && (
-							<Form.Group className='mb-4'>
-								<label
-									htmlFor='schedule-type-picker'
-									id='schedule-type-picker-label'
-								>
-									{Liferay.Language.get('activation-type')}
-								</label>
-								<Picker
-									aria-labelledby='schedule-type-picker-label'
-									className='border-light font-weight-semi-bold'
-									id='schedule-type-picker'
-									items={[
-										SCHEDULE_TYPE_LABELS.BATCH,
-										SCHEDULE_TYPE_LABELS.REAL_TIME
-									]}
-									onSelectionChange={(
-										value: SegmentActivationScheduleTypes
-									) =>
-										setFormState({
-											...formState,
-											scheduleType: value as SegmentActivationScheduleTypes
-										})
-									}
-									placeholder={
-										SCHEDULE_TYPE_LABELS[
-											formState.scheduleType
-										].label
-									}
-									shrink
-								>
-									{item => (
-										<Option key={item.value}>
-											{item.label}
-										</Option>
-									)}
-								</Picker>
-							</Form.Group>
+		<Modal
+			center
+			data-testId='segment-activation-modal'
+			observer={observer}
+			size='lg'
+		>
+			<Modal.Header>
+				{Liferay.Language.get('configure-activation')}
+			</Modal.Header>
+			<Modal.Body>
+				<div className='d-flex flex-column mb-4'>
+					<Text weight='semi-bold'>
+						{Liferay.Language.get('schedule')}
+					</Text>
+					<Text color='secondary'>
+						{Liferay.Language.get(
+							'set-the-sync-frequency-and-duration-for-this-segments-membership-across-all-sites-in-this-property'
 						)}
+					</Text>
+				</div>
 
-						<Form.Group>
-							<label
-								htmlFor='frequency-type-picker'
-								id='frequency-type-picker-label'
-							>
-								{Liferay.Language.get('frequency')}
-							</label>
-							<div className='d-flex'>
-								<Picker
-									aria-labelledby='frequency-type-picker-label'
-									className='border-light font-weight-semi-bold mr-2'
-									id='frequency-type-picker'
-									items={[
-										FREQUENCY_TYPE_LABELS.BETWEEN,
-										FREQUENCY_TYPE_LABELS.INDEFINITELY
-									]}
-									onSelectionChange={(
-										value: SegmentActivationFrequencyTypes
-									) => {
-										handleFrequencyChange(value);
-									}}
-									placeholder={
-										FREQUENCY_TYPE_LABELS[
-											formState.frequencyType
-										].label
-									}
-									shrink
-								>
-									{item => (
-										<Option key={item.value}>
-											{item.label}
-										</Option>
-									)}
-								</Picker>
-								{formState.frequencyType ===
-									SegmentActivationFrequencyTypes.Between && (
-									<DateInput
-										className='flex-fill'
-										limitEndDate={false}
-										maxRange={365}
-										onChange={value => {
-											setFormState({
-												...formState,
-												scheduleEndDate: value.end,
-												scheduleStartDate: value.start
-											});
-										}}
-										value={{
-											end: formState.scheduleEndDate,
-											start: formState.scheduleStartDate
-										}}
-									/>
-								)}
-							</div>
-						</Form.Group>
-					</Modal.Body>
+				{showActivationTypePicker && (
+					<Form.Group className='mb-4'>
+						<label
+							htmlFor='schedule-type-picker'
+							id='schedule-type-picker-label'
+						>
+							{Liferay.Language.get('activation-type')}
+						</label>
+						<Picker
+							aria-labelledby='schedule-type-picker-label'
+							className='border-light font-weight-semi-bold'
+							id='schedule-type-picker'
+							items={[
+								SCHEDULE_TYPE_LABELS.BATCH,
+								SCHEDULE_TYPE_LABELS.REAL_TIME
+							]}
+							onSelectionChange={value =>
+								setFormState({
+									...formState,
+									scheduleType: value as SegmentActivationScheduleTypes
+								})
+							}
+							placeholder={
+								SCHEDULE_TYPE_LABELS[formState.scheduleType]
+									?.label
+							}
+							shrink
+						>
+							{item => (
+								<Option key={item.value}>{item.label}</Option>
+							)}
+						</Picker>
+					</Form.Group>
+				)}
 
-					<Modal.Footer
-						last={
-							<Button.Group spaced>
-								<Button
-									displayType='secondary'
-									onClick={() => onOpenChange(false)}
-								>
-									{Liferay.Language.get('cancel')}
-								</Button>
-								<Button
-									disabled={isSaving || isInvalid}
-									onClick={handleInternalSave}
-								>
-									{Liferay.Language.get('save-configuration')}
-								</Button>
-							</Button.Group>
-						}
-					/>
-				</Modal>
-			)}
-		</>
+				<Form.Group>
+					<label
+						htmlFor='frequency-type-picker'
+						id='frequency-type-picker-label'
+					>
+						{Liferay.Language.get('frequency')}
+					</label>
+					<div className='d-flex'>
+						<Picker
+							aria-labelledby='frequency-type-picker-label'
+							className='border-light font-weight-semi-bold mr-2'
+							id='frequency-type-picker'
+							items={[
+								FREQUENCY_TYPE_LABELS[
+									SegmentActivationFrequencyTypes.Between
+								],
+								FREQUENCY_TYPE_LABELS[
+									SegmentActivationFrequencyTypes.Indefinitely
+								]
+							]}
+							onSelectionChange={value =>
+								handleFrequencyChange(
+									value as SegmentActivationFrequencyTypes
+								)
+							}
+							placeholder={
+								FREQUENCY_TYPE_LABELS[formState.frequencyType]
+									?.label
+							}
+							shrink
+						>
+							{item => (
+								<Option key={item.value}>{item.label}</Option>
+							)}
+						</Picker>
+						{formState.frequencyType ===
+							SegmentActivationFrequencyTypes.Between && (
+							<DateInput
+								className='flex-fill'
+								limitEndDate={false}
+								maxRange={365}
+								onChange={value => {
+									setFormState({
+										...formState,
+										scheduleEndDate: value.end,
+										scheduleStartDate: value.start
+									});
+								}}
+								value={{
+									end: formState.scheduleEndDate || '',
+									start: formState.scheduleStartDate || ''
+								}}
+							/>
+						)}
+					</div>
+				</Form.Group>
+			</Modal.Body>
+
+			<Modal.Footer
+				last={
+					<Button.Group spaced>
+						<Button
+							displayType='secondary'
+							onClick={() => onOpenChange(false)}
+						>
+							{Liferay.Language.get('cancel')}
+						</Button>
+						<Button
+							disabled={isSaving || isInvalid}
+							onClick={handleInternalSave}
+						>
+							{Liferay.Language.get('save-configuration')}
+						</Button>
+					</Button.Group>
+				}
+			/>
+		</Modal>
 	);
 };
 
@@ -295,26 +304,27 @@ const ConnectedActivationConfigurationModal = connector(
 	ActivationConfigurationModal
 );
 
-const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
-	segmentActivation: initialActivation,
-	segmentType
-}) => {
-	const [localActivation, setLocalActivation] = useState(initialActivation);
+const SegmentActivationCard: React.FC<
+	ISegmentActivationCardProps & PropsFromRedux
+> = ({addAlert, segmentActivation, segmentType}) => {
+	const {observer, onOpenChange, open} = useModal();
+
+	const {groupId, id: segmentId} = useParams();
+
+	const [localActivation, setLocalActivation] = useState(() =>
+		sanitizeActivation(segmentActivation)
+	);
 
 	useEffect(() => {
-		setLocalActivation(initialActivation);
-	}, [initialActivation]);
+		setLocalActivation(sanitizeActivation(segmentActivation));
+	}, [segmentActivation]);
 
 	const {
 		frequencyType,
 		scheduleEndDate,
 		scheduleStartDate,
 		scheduleType
-	} = localActivation.toJS();
-
-	const {observer, onOpenChange, open} = useModal();
-
-	const {groupId, id: segmentId} = useParams();
+	} = localActivation;
 
 	const handleSave = async (updatedValues: IActivationFormValues) =>
 		API.updateSegmentActivation({
@@ -324,10 +334,17 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 			},
 			segmentId
 		}).then(() => {
-			setLocalActivation(prev => ({
-				...prev,
-				...updatedValues
-			}));
+			const processedValues = {
+				...updatedValues,
+				scheduleEndDate: updatedValues.scheduleEndDate
+					? new Date(updatedValues.scheduleEndDate).getTime()
+					: null,
+				scheduleStartDate: updatedValues.scheduleStartDate
+					? new Date(updatedValues.scheduleStartDate).getTime()
+					: null
+			};
+
+			setLocalActivation(processedValues);
 
 			addAlert({
 				alertType: Alert.Types.Success,
@@ -335,13 +352,16 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 			});
 		});
 
+	const getScheduleLabel = (type: SegmentActivationScheduleTypes) =>
+		type && SCHEDULE_TYPE_LABELS[type]?.label;
+
 	const labelMessage =
 		frequencyType === SegmentActivationFrequencyTypes.Indefinitely
 			? sub(Liferay.Language.get('x-sync-will-run-indefinitely'), [
-					SCHEDULE_TYPE_LABELS[scheduleType].label
+					getScheduleLabel(scheduleType)
 			  ])
 			: sub(Liferay.Language.get('x-sync-will-run-from-x-to-x'), [
-					SCHEDULE_TYPE_LABELS[scheduleType].label,
+					getScheduleLabel(scheduleType),
 					formatUTCDateFromUnix(scheduleStartDate, 'MMM DD, yyyy'),
 					formatUTCDateFromUnix(scheduleEndDate, 'MMM DD, yyyy')
 			  ]);
@@ -409,4 +429,4 @@ const SegmentActivationCard: React.FC<ISegmentActivationCardProps> = ({
 	);
 };
 
-export {SegmentActivationCard};
+export default connector(SegmentActivationCard);

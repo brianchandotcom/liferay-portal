@@ -117,8 +117,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST literalNewDetailAST = parentDetailAST;
-
 		String fullyQualifiedTypeName = null;
 
 		DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
@@ -141,73 +139,40 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> childDetailASTs = getAllChildTokens(
-			detailAST, true, TokenTypes.ASSIGN, TokenTypes.METHOD_CALL);
+		DetailAST slistDetailAST = detailAST.findFirstToken(TokenTypes.SLIST);
 
-		for (DetailAST childDetailAST : childDetailASTs) {
-			parentDetailAST = getParentWithTokenType(
-				childDetailAST, TokenTypes.INSTANCE_INIT);
+		List<DetailAST> exprDetailASTs = getAllChildTokens(
+			slistDetailAST, false, TokenTypes.EXPR);
 
-			if (parentDetailAST == null) {
-				continue;
-			}
+		for (DetailAST exprDetailAST : exprDetailASTs) {
+			firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			parentDetailAST = parentDetailAST.getParent();
-
-			if ((parentDetailAST == null) ||
-				(parentDetailAST.getType() != TokenTypes.OBJBLOCK)) {
-
-				continue;
-			}
-
-			parentDetailAST = parentDetailAST.getParent();
-
-			if ((parentDetailAST == null) ||
-				!equals(parentDetailAST, literalNewDetailAST)) {
-
-				continue;
-			}
-
-			if (childDetailAST.getType() == TokenTypes.ASSIGN) {
-				firstChildDetailAST = childDetailAST.getFirstChild();
-
-				if (firstChildDetailAST.getType() != TokenTypes.IDENT) {
-					continue;
-				}
-
-				String variableName = firstChildDetailAST.getText();
-
-				DetailAST variableDefinitionDetailAST =
-					getVariableDefinitionDetailAST(
-						childDetailAST, variableName, false);
-
-				if (variableDefinitionDetailAST != null) {
-					return;
-				}
+			if (firstChildDetailAST.getType() == TokenTypes.ASSIGN) {
+				String variableName = getName(firstChildDetailAST);
 
 				String methodName =
 					"set" + StringUtil.upperCaseFirstLetter(variableName);
 
 				_checkSetCall(
-					absolutePath, childDetailAST, methodName,
+					absolutePath, firstChildDetailAST, methodName,
 					fullyQualifiedTypeName);
 			}
 			else {
-				DetailAST dotDetailAST = childDetailAST.findFirstToken(
+				DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
 					TokenTypes.DOT);
 
 				if (dotDetailAST != null) {
 					continue;
 				}
 
-				String methodName = getMethodName(childDetailAST);
+				String methodName = getMethodName(firstChildDetailAST);
 
 				if (!methodName.startsWith("set")) {
 					continue;
 				}
 
 				_checkSetCall(
-					absolutePath, childDetailAST, methodName,
+					absolutePath, firstChildDetailAST, methodName,
 					fullyQualifiedTypeName);
 			}
 		}

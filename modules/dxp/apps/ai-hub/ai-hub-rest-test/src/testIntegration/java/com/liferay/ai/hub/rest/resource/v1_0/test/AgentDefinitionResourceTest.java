@@ -223,20 +223,19 @@ public class AgentDefinitionResourceTest
 				agentDefinition.getWorkflowDefinitionName(), 1);
 
 		Assert.assertEquals(
-			workflowDefinition1.getDescription(),
-			workflowDefinition2.getDescription());
-		Assert.assertEquals(
 			workflowDefinition1.getContentAsXML(),
 			workflowDefinition2.getContentAsXML());
-
-		Assert.assertNotEquals(
-			workflowDefinition1.getWorkflowDefinitionId(),
-			workflowDefinition2.getWorkflowDefinitionId());
-		Assert.assertNotEquals(
-			workflowDefinition1.getName(), workflowDefinition2.getName());
+		Assert.assertEquals(
+			workflowDefinition1.getDescription(),
+			workflowDefinition2.getDescription());
 		Assert.assertNotEquals(
 			workflowDefinition1.getExternalReferenceCode(),
 			workflowDefinition2.getExternalReferenceCode());
+		Assert.assertNotEquals(
+			workflowDefinition1.getName(), workflowDefinition2.getName());
+		Assert.assertNotEquals(
+			workflowDefinition1.getWorkflowDefinitionId(),
+			workflowDefinition2.getWorkflowDefinitionId());
 	}
 
 	@Override

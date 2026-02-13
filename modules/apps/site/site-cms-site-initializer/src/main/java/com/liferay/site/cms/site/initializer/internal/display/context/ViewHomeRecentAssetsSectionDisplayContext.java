@@ -95,9 +95,10 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return appendStatus(
-			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
-				"eq 'files')");
+		return appendGroupIds(
+			appendStatus(
+				"cmsKind eq 'object' and (cmsSection eq 'contents' or " +
+					"cmsSection eq 'files')"));
 	}
 
 }

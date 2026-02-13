@@ -88,7 +88,8 @@ export const VERSION_ACTIONS: any = {
 		action: (
 			event: React.MouseEvent<HTMLAnchorElement>,
 			objectEntry: IAssetObjectEntry,
-			loadData: () => {}
+			loadData: () => {},
+			objectEntryTitle: string
 		) => {
 			event?.preventDefault();
 
@@ -96,7 +97,7 @@ export const VERSION_ACTIONS: any = {
 				bodyHTML: sub(
 					Liferay.Language.get('delete-version-confirmation'),
 					`<strong>${sub(Liferay.Language.get('version-x'), objectEntry.systemProperties.version.number)}</strong>`,
-					objectEntry.title
+					objectEntryTitle
 				),
 				deleteAction: objectEntry.actions.delete,
 				loadData,

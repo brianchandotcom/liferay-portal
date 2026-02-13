@@ -19,10 +19,12 @@ const AssetVersionsListItem = ({
 	file,
 	getAssetVersions,
 	items,
+	objectEntryTitle,
 }: {
 	file?: IAssetFile;
 	getAssetVersions: () => Promise<void>;
 	items: IAssetObjectEntry[];
+	objectEntryTitle?: string;
 }) => {
 	return (
 		<>
@@ -74,7 +76,8 @@ const AssetVersionsListItem = ({
 										await VERSION_ACTIONS[key]?.action(
 											event,
 											item,
-											getAssetVersions
+											getAssetVersions,
+											objectEntryTitle
 										);
 									}}
 								>

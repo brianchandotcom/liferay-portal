@@ -67,6 +67,7 @@ const VersionsTabContent = () => {
 						{...assetVersions}
 						file={asset?.file}
 						getAssetVersions={getAssetVersions}
+						objectEntryTitle={asset?.title}
 					/>
 				</List>
 			)}

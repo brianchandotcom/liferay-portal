@@ -56,6 +56,17 @@ public class ChangesetEntryLocalServiceWrapper
 			userId, changesetCollectionId, classNameId, classPK);
 	}
 
+	@Override
+	public com.liferay.changeset.model.ChangesetEntry addChangesetEntry(
+			long userId, long changesetCollectionId,
+			String classExternalReferenceCode, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _changesetEntryLocalService.addChangesetEntry(
+			userId, changesetCollectionId, classExternalReferenceCode,
+			classNameId, classPK);
+	}
+
 	/**
 	 * Creates a new changeset entry with the primary key. Does not add the changeset entry to the database.
 	 *
@@ -266,12 +277,32 @@ public class ChangesetEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.changeset.model.ChangesetEntry fetchChangesetEntry(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return _changesetEntryLocalService.fetchChangesetEntry(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
+	@Override
 	public com.liferay.changeset.model.ChangesetEntry fetchOrAddChangesetEntry(
 			long changesetCollectionId, long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _changesetEntryLocalService.fetchOrAddChangesetEntry(
 			changesetCollectionId, classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.changeset.model.ChangesetEntry fetchOrAddChangesetEntry(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _changesetEntryLocalService.fetchOrAddChangesetEntry(
+			changesetCollectionId, classExternalReferenceCode, classNameId,
+			classPK);
 	}
 
 	@Override

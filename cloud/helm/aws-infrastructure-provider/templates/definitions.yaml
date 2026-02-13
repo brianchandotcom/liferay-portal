@@ -138,5 +138,11 @@ spec:
                                 -   search
                                 -   storage
                             type: object
+                        status:
+                            properties:
+                                managedServiceDetailsReady:
+                                    default: false
+                                    type: boolean
+                            type: object
                     type: object
             served: true

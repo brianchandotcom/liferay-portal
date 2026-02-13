@@ -18,7 +18,7 @@ public class UpgradeSourceCodeTask extends FormatSourceTask {
 		description = "The Liferay version to upgrade to", option = "to-version"
 	)
 	public void setToVersion(String toVersion) {
-		sourceFormatterProperty("upgrade.to.release.version", toVersion);
+		addSourceFormatterProperty("upgrade.to.release.version", toVersion);
 	}
 
 }

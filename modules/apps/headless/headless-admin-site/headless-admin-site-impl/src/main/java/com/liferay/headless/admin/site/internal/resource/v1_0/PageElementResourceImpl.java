@@ -56,8 +56,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
@@ -113,8 +113,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
@@ -169,8 +169,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
@@ -224,8 +224,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
@@ -274,8 +274,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);
@@ -327,8 +327,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode, groupId);

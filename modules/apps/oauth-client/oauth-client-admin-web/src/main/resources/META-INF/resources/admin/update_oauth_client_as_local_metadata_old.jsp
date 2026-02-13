@@ -52,7 +52,7 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 					type="textarea"
 					value='<%=
 						JSONUtil.put(
-							"authorization_endpoint", ""
+							"authorizationEndpoint", ""
 						).put(
 							"issuer", ""
 						).put(
@@ -60,9 +60,9 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 						).put(
 							"subject_types_supported", JSONUtil.put("public")
 						).put(
-							"token_endpoint", ""
+							"tokenEndpoint", ""
 						).put(
-							"userinfo_endpoint", ""
+							"userInfoEndpoint", ""
 						)
 					%>'
 				/>

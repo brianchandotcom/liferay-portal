@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.persistence.service.impl;
 
 import com.liferay.oauth.client.persistence.exception.DuplicateOAuthClientASLocalMetadataException;
+import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataIssuerException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataMetadataJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
@@ -34,6 +35,7 @@ import com.nimbusds.oauth2.sdk.id.Issuer;
 import com.nimbusds.openid.connect.sdk.SubjectType;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 
@@ -96,7 +98,11 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		if (FeatureFlagManagerUtil.isEnabled(
 				user.getCompanyId(), "LPD-63415")) {
 
-			_validateUrl(issuer);
+			_validateHttpsUrl(authorizationEndpoint, false);
+			_validateHttpsUrl(issuer, true);
+			_validateHttpsUrl(jwksURI, false);
+			_validateHttpsUrl(tokenEndpoint, false);
+			_validateHttpsUrl(userInfoEndpoint, false);
 
 			oAuthClientASLocalMetadata =
 				oAuthClientASLocalMetadataPersistence.fetchByC_I(
@@ -330,6 +336,12 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				}
 			}
 
+			_validateHttpsUrl(authorizationEndpoint, false);
+			_validateHttpsUrl(issuer, true);
+			_validateHttpsUrl(jwksURI, false);
+			_validateHttpsUrl(tokenEndpoint, false);
+			_validateHttpsUrl(userInfoEndpoint, false);
+
 			oAuthClientASLocalMetadata1.setIssuer(issuer);
 			oAuthClientASLocalMetadata1.setLocalWellKnownEnabled(
 				localWellKnownEnabled);
@@ -486,23 +498,27 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private void _validateUrl(String url) throws PortalException {
-		if (!Validator.isUrl(url)) {
-			throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+	private void _validateHttpsUrl(String urlString, boolean required)
+		throws PortalException {
+
+		if (Validator.isNull(urlString)) {
+			if (required) {
+				throw new OAuthClientASLocalMetadataIssuerException();
+			}
+
+			return;
 		}
 
 		try {
-			URL parsed = new URL(url);
+			URL url = new URL(urlString);
 
-			if (Validator.isNull(parsed.getProtocol()) &&
-				!Http.HTTPS.equalsIgnoreCase(parsed.getProtocol())) {
-
+			if (!Http.HTTPS.equalsIgnoreCase(url.getProtocol())) {
 				throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
 			}
 		}
-		catch (Exception exception) {
+		catch (MalformedURLException malformedURLException) {
 			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
-				exception.getMessage());
+				urlString, malformedURLException);
 		}
 	}
 

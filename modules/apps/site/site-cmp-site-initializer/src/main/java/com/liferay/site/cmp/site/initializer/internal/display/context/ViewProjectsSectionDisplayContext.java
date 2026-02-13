@@ -5,6 +5,8 @@
 
 package com.liferay.site.cmp.site.initializer.internal.display.context;
 
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -23,7 +25,9 @@ import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.D
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectManagerSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.ProjectSponsorSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.StateSelectionFDSFilter;
+import com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter.TagSelectionFDSFilter;
 import com.liferay.site.cmp.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cmp.site.initializer.internal.util.ObjectEntryUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,11 +41,16 @@ public class ViewProjectsSectionDisplayContext
 	extends BaseSectionDisplayContext {
 
 	public ViewProjectsSectionDisplayContext(
+		AssetTagLocalService assetTagLocalService,
+		DepotEntryLocalService depotEntryLocalService,
 		HttpServletRequest httpServletRequest,
 		ObjectDefinition objectDefinition,
 		ObjectEntryService objectEntryService) {
 
 		super(httpServletRequest, objectDefinition, objectEntryService);
+
+		_assetTagLocalService = assetTagLocalService;
+		_depotEntryLocalService = depotEntryLocalService;
 	}
 
 	public String getAPIURL() {
@@ -163,7 +172,14 @@ public class ViewProjectsSectionDisplayContext
 		return ListUtil.fromArray(
 			new DueDateRangeFDSFilter(), new ProjectManagerSelectionFDSFilter(),
 			new ProjectSponsorSelectionFDSFilter(),
-			new StateSelectionFDSFilter());
+			new StateSelectionFDSFilter(),
+			new TagSelectionFDSFilter(
+				_assetTagLocalService, _depotEntryLocalService,
+				ObjectEntryUtil.getObjectEntry(httpServletRequest),
+				objectDefinition));
 	}
+
+	private final AssetTagLocalService _assetTagLocalService;
+	private final DepotEntryLocalService _depotEntryLocalService;
 
 }

@@ -48,7 +48,7 @@ public class ClassNameUpgradeProcessTest {
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
 
-		_companyId = _addCompanyId();
+		_companyId = _addCompany();
 
 		_originalCacheEnabled = ReflectionTestUtil.getAndSetFieldValue(
 			PortalInstancePool.class, "_cacheEnabled", false);
@@ -230,7 +230,7 @@ public class ClassNameUpgradeProcessTest {
 		_multiVMPool.clear();
 	}
 
-	private static long _addCompanyId() throws Exception {
+	private static long _addCompany() throws Exception {
 		long companyId = RandomTestUtil.nextLong();
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(

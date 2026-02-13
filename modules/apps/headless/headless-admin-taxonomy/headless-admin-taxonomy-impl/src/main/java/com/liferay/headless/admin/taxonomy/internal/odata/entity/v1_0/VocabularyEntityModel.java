@@ -40,6 +40,8 @@ public class VocabularyEntityModel implements EntityModel {
 				"numberOfTaxonomyCategories",
 				locale -> Field.getSortableFieldName("categoriesCount")),
 			new StringEntityField(
+				"externalReferenceCode", locale -> "externalReferenceCode"),
+			new StringEntityField(
 				"name",
 				locale -> Field.getSortableFieldName(
 					"localized_title_" + LocaleUtil.toLanguageId(locale)),

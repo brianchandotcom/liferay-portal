@@ -50,22 +50,9 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 					</div>
 				</div>
 
-				<div class="c-px-0 sidebar-body">
-					<div class="c-px-4">
-						<div class="form-group">
-							<div class="input-group">
-								<div class="input-group-item">
-									<input aria-label="<%= LanguageUtil.get(request, "search") %>" class="form-control input-group-inset input-group-inset-before" id="com_liferay_application_list_taglib_side_navigation_search_input" placeholder="<%= LanguageUtil.get(request, "search") %>" type="text" value="" />
-
-									<div class="input-group-inset-item input-group-inset-item-before">
-										<clay:icon
-											cssClass="c-ml-3 c-mr-1"
-											symbol="search"
-										/>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="c-pt-2 c-px-0 sidebar-body">
+					<div class="c-mx-1 c-px-2 form-group">
+						<input class="c-pl-3 form-control" placeholder="Search" type="search" value="" />
 					</div>
 
 					<clay:vertical-nav

@@ -41,10 +41,9 @@ function SideNavigationToggler({visible: initialVisible}: Props) {
 			aria-controls="com_liferay_application_list_taglib_side_navigation"
 			aria-expanded={visible}
 			aria-label={title}
-			className="control-menu-nav-link lfr-portal-tooltip"
+			className="control-menu-nav-link"
 			data-qa-id="sideNavigationToggler"
 			displayType="unstyled"
-			id="com_liferay_application_list_taglib_side_navigation_toggler"
 			monospaced
 			onClick={toggle}
 			role="tab"

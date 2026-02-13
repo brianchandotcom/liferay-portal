@@ -154,10 +154,8 @@ function SideNavigation({
 				</SidePanel.Title>
 			</SidePanel.Header>
 
-			<SidePanel.Body className="c-px-0">
-				<div className="c-px-4">
-					<SideNavigationSearchInput onChange={setQuery} />
-				</div>
+			<SidePanel.Body className="c-pt-2 c-px-0">
+				<SideNavigationSearchInput onChange={setQuery} />
 
 				<ClayVerticalNav
 					active={portletId}

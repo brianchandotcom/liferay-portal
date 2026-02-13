@@ -1005,9 +1005,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		throws Exception {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35443");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group);
@@ -1058,9 +1058,9 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			importedLayout2.getPriority() > importedLayout3.getPriority());
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), false, "LPD-35443");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test

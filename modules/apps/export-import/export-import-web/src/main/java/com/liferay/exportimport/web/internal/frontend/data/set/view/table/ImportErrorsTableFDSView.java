@@ -45,7 +45,7 @@ public class ImportErrorsTableFDSView extends BaseTableFDSView {
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"label")
+				"importReportStatusRenderer")
 		).build();
 	}
 

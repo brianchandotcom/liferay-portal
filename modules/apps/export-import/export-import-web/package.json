@@ -9,6 +9,7 @@
 		"@clayui/loading-indicator": "^3.159.0",
 		"@clayui/modal": "^3.159.0",
 		"@clayui/multi-step-nav": "^3.159.0",
+		"@liferay/frontend-data-set-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"classnames": "2.3.1",
 		"formik": "2.1.4",

@@ -43,6 +43,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 		apiURL="<%= importReportEntriesDisplayContext.getAPIURL(String.valueOf(backgroundTaskId)) %>"
 		fdsActionDropdownItems="<%= importReportEntriesDisplayContext.getFDSActionDropdownItems() %>"
 		id="<%= stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) ? ExportImportFDSNames.COMPANY_IMPORT_REPORT_ENTRIES : ExportImportFDSNames.IMPORT_REPORT_ENTRIES %>"
+		propsTransformer="{ImportReportFDSPropsTransformer} from exportimport-web"
 		style="fluid"
 	/>
 </aui:form>

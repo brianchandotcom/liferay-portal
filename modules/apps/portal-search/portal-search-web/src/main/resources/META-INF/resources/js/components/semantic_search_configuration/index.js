@@ -882,7 +882,7 @@ export default function ({
 								onChange={_handleInputChange(
 									`textEmbeddingProviderConfigurationJSONs[${index}].attributes.basicAuthPassword`
 								)}
-								type="basicAuthPassword"
+								type="password"
 								value={
 									formik.values
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -921,6 +921,7 @@ export default function ({
 										index
 									]?.attributes?.accessToken
 								}
+								type="password"
 								value={
 									formik.values
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -1044,6 +1045,7 @@ export default function ({
 										index
 									]?.attributes?.accessToken
 								}
+								type="password"
 								value={
 									formik.values
 										.textEmbeddingProviderConfigurationJSONs?.[
@@ -1118,6 +1120,7 @@ export default function ({
 										index
 									]?.attributes?.apiKey
 								}
+								type="password"
 								value={
 									formik.values
 										.textEmbeddingProviderConfigurationJSONs?.[

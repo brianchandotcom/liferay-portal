@@ -6,7 +6,7 @@
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import { PaymentStatus as PaymentStatusCode } from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 
 import './index.scss';
@@ -19,7 +19,7 @@ const paymentStatusLabel = {
 	[PaymentStatusCode.PENDING]: i18n.translate('unpaid'),
 };
 
-const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
+const PaymentStatusBadge = ({ paymentStatus }: { paymentStatus: number }) => (
 	<div>
 		<ClayIcon
 			className={classNames('mr-2 payment-status-icon', {
@@ -43,4 +43,4 @@ const PaymentStatus = ({paymentStatus}: {paymentStatus: number}) => (
 	</div>
 );
 
-export default PaymentStatus;
+export default PaymentStatusBadge;

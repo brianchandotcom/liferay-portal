@@ -14,7 +14,7 @@ ViewHomeRecentAssetsSectionDisplayContext viewHomeRecentAssetsSectionDisplayCont
 <div class="cms-section p-2 p-sm-3">
 	<div class="container-fluid-max">
 		<div class="align-items-center d-flex justify-content-between">
-			<span role="heading" aria-level={2} class="font-weight-semi-bold text-4">Recent Assets</span>
+			<span role="heading" aria-level=2 class="font-weight-semi-bold text-4">Recent Assets</span>
 
 			<a class="btn btn-link btn-sm font-weight-semi-bold" href="<%= viewHomeRecentAssetsSectionDisplayContext.getAssetsAllURL() %>">View All</a>
 		</div>

@@ -111,12 +111,12 @@ public class ClassNamePostUpgradeDataCleanupProcess
 					}
 				}
 
-				int dashIndex = value.indexOf(StringPool.DASH);
+				int index = value.indexOf(StringPool.DASH);
 
-				if ((dashIndex != -1) &&
+				if ((index != -1) &&
 					StringUtil.startsWith(value, Layout.class.getName())) {
 
-					value = value.substring(0, dashIndex);
+					value = value.substring(0, index);
 				}
 
 				boolean missingClass = false;

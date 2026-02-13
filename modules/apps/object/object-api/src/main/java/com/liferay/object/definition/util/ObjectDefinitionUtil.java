@@ -108,13 +108,12 @@ public class ObjectDefinitionUtil {
 
 	private static final String[] _ALLOWED_INVOKER_BUNDLE_SYMBOLIC_NAMES = {
 		"com.liferay.ai.hub.site.initializer", "com.liferay.commerce.service",
-		"com.liferay.cookies.impl", "com.liferay.digital.sales.room.impl",
-		"com.liferay.frontend.data.set.admin.web",
+		"com.liferay.cookies.impl", "com.liferay.frontend.data.set.admin.web",
 		"com.liferay.frontend.data.set.impl",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
 		"com.liferay.mcp.server", "com.liferay.notification.service",
 		"com.liferay.object.service", "com.liferay.site.initializer.cmp",
-		"com.liferay.site.initializer.cms"
+		"com.liferay.site.initializer.cms", "com.liferay.site.initializer.dsr"
 	};
 
 	private static final Map<String, String>

@@ -92,6 +92,18 @@ public class ExceptionMapper extends BaseExceptionMapper<Exception> {
 			return Response.Status.BAD_REQUEST;
 		}
 
+		if (com.liferay.portal.vulcan.problem.Problem.Status.CONFLICT.equals(
+				status)) {
+
+			return Response.Status.CONFLICT;
+		}
+
+		if (com.liferay.portal.vulcan.problem.Problem.Status.NOT_FOUND.equals(
+				status)) {
+
+			return Response.Status.NOT_FOUND;
+		}
+
 		return Response.Status.INTERNAL_SERVER_ERROR;
 	}
 

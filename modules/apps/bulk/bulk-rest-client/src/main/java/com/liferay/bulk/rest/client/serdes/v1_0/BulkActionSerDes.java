@@ -8,6 +8,7 @@ package com.liferay.bulk.rest.client.serdes.v1_0;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
+import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
@@ -61,6 +62,10 @@ public class BulkActionSerDes {
 			if (typeString.equals("AssignToBulkAction")) {
 				return AssignToBulkActionSerDes.toJSON(
 					(AssignToBulkAction)bulkAction);
+			}
+
+			if (typeString.equals("CopyBulkAction")) {
+				return CopyBulkActionSerDes.toJSON((CopyBulkAction)bulkAction);
 			}
 
 			if (typeString.equals("DefaultPermissionBulkAction")) {
@@ -204,6 +209,10 @@ public class BulkActionSerDes {
 
 				if (typeString.equals("AssignToBulkAction")) {
 					return AssignToBulkAction.toDTO(json);
+				}
+
+				if (typeString.equals("CopyBulkAction")) {
+					return CopyBulkAction.toDTO(json);
 				}
 
 				if (typeString.equals("DefaultPermissionBulkAction")) {

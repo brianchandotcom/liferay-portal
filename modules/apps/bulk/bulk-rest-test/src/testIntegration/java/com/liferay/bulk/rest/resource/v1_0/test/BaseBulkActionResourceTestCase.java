@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.liferay.bulk.rest.client.dto.v1_0.AssignToBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
+import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteAssetVersionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
@@ -335,6 +336,22 @@ public abstract class BaseBulkActionResourceTestCase {
 				}
 
 				if (((AssignToBulkAction)bulkAction).getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectEntryFolderId", additionalAssertFieldName)) {
+
+				if (!(bulkAction instanceof CopyBulkAction)) {
+					continue;
+				}
+
+				if (((CopyBulkAction)bulkAction).getObjectEntryFolderId() ==
+						null) {
+
 					valid = false;
 				}
 
@@ -867,6 +884,26 @@ public abstract class BaseBulkActionResourceTestCase {
 				if (!Objects.deepEquals(
 						((AssignToBulkAction)bulkAction1).getName(),
 						((AssignToBulkAction)bulkAction2).getName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"objectEntryFolderId", additionalAssertFieldName)) {
+
+				if (!(bulkAction1 instanceof CopyBulkAction) ||
+					!(bulkAction2 instanceof CopyBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((CopyBulkAction)bulkAction1).getObjectEntryFolderId(),
+						((CopyBulkAction)bulkAction2).
+							getObjectEntryFolderId())) {
 
 					return false;
 				}
@@ -1483,6 +1520,15 @@ public abstract class BaseBulkActionResourceTestCase {
 
 				bulkAction.setType(
 					BulkAction.Type.create("AssignToBulkAction"));
+
+				return bulkAction;
+			},
+			() -> {
+				CopyBulkAction bulkAction = new CopyBulkAction();
+
+				bulkAction.setObjectEntryFolderId(RandomTestUtil.randomLong());
+
+				bulkAction.setType(BulkAction.Type.create("CopyBulkAction"));
 
 				return bulkAction;
 			},

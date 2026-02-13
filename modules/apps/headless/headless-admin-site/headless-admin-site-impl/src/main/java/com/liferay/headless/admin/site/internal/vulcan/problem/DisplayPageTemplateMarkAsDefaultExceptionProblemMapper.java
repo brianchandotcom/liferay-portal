@@ -3,17 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.admin.site.internal.jaxrs.exception.mapper;
+package com.liferay.headless.admin.site.internal.vulcan.problem;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
-import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
-
-import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.ext.ExceptionMapper;
-import jakarta.ws.rs.ext.Provider;
+import com.liferay.portal.vulcan.problem.Problem;
+import com.liferay.portal.vulcan.problem.ProblemMapper;
 
 import java.util.Objects;
 
@@ -22,21 +18,12 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Bárbara Cabrera
  */
-@Component(
-	property = {
-		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Admin.Site)",
-		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Admin.Site.DisplayPageTemplateMarkAsDefaultExceptionMapper"
-	},
-	service = ExceptionMapper.class
-)
-@Provider
-public class DisplayPageTemplateMarkAsDefaultExceptionMapper
-	extends BaseExceptionMapper
-		<LayoutPageTemplateEntryDefaultTemplateException> {
+@Component(service = ProblemMapper.class)
+public class DisplayPageTemplateMarkAsDefaultExceptionProblemMapper
+	implements ProblemMapper<LayoutPageTemplateEntryDefaultTemplateException> {
 
 	@Override
-	protected Problem getProblem(
+	public Problem getProblem(
 		LayoutPageTemplateEntryDefaultTemplateException
 			layoutPageTemplateEntryDefaultTemplateException) {
 
@@ -49,11 +36,12 @@ public class DisplayPageTemplateMarkAsDefaultExceptionMapper
 			name = "master page";
 		}
 
-		return new Problem(
-			Response.Status.CONFLICT,
+		return ProblemUtil.getProblem(
 			StringUtil.replace(
 				layoutPageTemplateEntryDefaultTemplateException.getMessage(),
-				"layout page template entry", name));
+				"layout page template entry", name),
+			Problem.Status.CONFLICT,
+			layoutPageTemplateEntryDefaultTemplateException);
 	}
 
 }

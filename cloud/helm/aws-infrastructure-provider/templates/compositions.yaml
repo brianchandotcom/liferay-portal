@@ -1127,6 +1127,15 @@ spec:
                                     type: Opaque
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
+                        ---
+                        apiVersion: aws.liferay.com/v1alpha1
+                        kind: LiferayInfrastructure
+                        status:
+                        {{- if and $databaseAddress $databasePassword $searchEndpoint $storageName }}
+                            managedServiceDetailsReady: true
+                        {{- else }}
+                            managedServiceDetailsReady: false
+                        {{- end }}
                         `}}
                 kind: GoTemplate
                 source: Inline

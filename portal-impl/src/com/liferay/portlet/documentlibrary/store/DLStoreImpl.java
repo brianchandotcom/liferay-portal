@@ -97,6 +97,41 @@ public class DLStoreImpl implements DLStore {
 
 	@Override
 	public void copyFileVersion(
+			DLStoreRequest dlStoreRequest, String toVersionLabel)
+		throws PortalException {
+
+		if (_isStoreAreaSupported()) {
+			StoreAreaProcessor storeAreaProcessor =
+				_storeAreaProcessorSnapshot.get();
+
+			StoreArea.tryRunWithStoreAreas(
+				sourceStoreArea -> storeAreaProcessor.copy(
+					sourceStoreArea.getPath(
+						dlStoreRequest.getCompanyId(),
+						dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(),
+						dlStoreRequest.getVersionLabel()),
+					StoreArea.NEW.getPath(
+						dlStoreRequest.getCompanyId(),
+						dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(), toVersionLabel)),
+				StoreArea.LIVE, StoreArea.NEW, StoreArea.DELETED);
+		}
+		else {
+			_wrappedStore.addFile(
+				dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+				dlStoreRequest.getFileName(), toVersionLabel,
+				_getNullSafeInputStream(
+					_wrappedStore.getFileAsStream(
+						dlStoreRequest.getCompanyId(),
+						dlStoreRequest.getRepositoryId(),
+						dlStoreRequest.getFileName(),
+						dlStoreRequest.getVersionLabel())));
+		}
+	}
+
+	@Override
+	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {

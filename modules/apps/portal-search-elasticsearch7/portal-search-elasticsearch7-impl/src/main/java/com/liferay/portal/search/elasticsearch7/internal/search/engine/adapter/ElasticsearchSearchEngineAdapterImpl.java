@@ -17,6 +17,7 @@ import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.c
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.cluster.ElasticsearchClusterRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index.ElasticsearchIndexRequestExecutor;
 import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.search.ElasticsearchSearchRequestExecutor;
+import com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.snapshot.ElasticsearchSnapshotRequestExecutor;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequestExecutor;
@@ -226,6 +227,8 @@ public class ElasticsearchSearchEngineAdapterImpl
 			_elasticsearchClientResolver);
 		_searchRequestExecutor = new ElasticsearchSearchRequestExecutor(
 			_elasticsearchClientResolver);
+		_snapshotRequestExecutor = new ElasticsearchSnapshotRequestExecutor(
+			_elasticsearchClientResolver);
 	}
 
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
@@ -278,10 +281,7 @@ public class ElasticsearchSearchEngineAdapterImpl
 
 	private IndexRequestExecutor _indexRequestExecutor;
 	private SearchRequestExecutor _searchRequestExecutor;
-
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private SnapshotRequestExecutor _snapshotRequestExecutor;
-
 	private boolean _throwOriginalExceptions;
 
 }

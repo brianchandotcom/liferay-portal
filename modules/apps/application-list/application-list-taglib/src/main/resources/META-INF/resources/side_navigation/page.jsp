@@ -15,21 +15,22 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 	<div class="c-slideout c-slideout-fixed c-slideout-push c-slideout-start<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-shown" : "" %>">
 		<section aria-labelledby="com_liferay_application_list_taglib_side_navigation_label" class="sidebar sidebar-light<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-show" : "" %>" data-qa-id="sideNavigation" id="com_liferay_application_list_taglib_side_navigation">
 			<div class="c-focus-trap">
-				<div class="sidebar-header">
+				<div class="c-mt-2 c-mx-1 c-px-2 sidebar-header">
 					<div class="autofit-row">
 						<div class="align-items-center autofit-col autofit-col-expand d-flex flex-row">
-							<span class="border-0 sticker sticker-outline">
+							<span class="border-0 c-mr-1 sticker sticker-outline">
 								<span class="sticker-overlay">
 									<img alt="" class="c-mx-1" data-qa-id="sideNavigationProductIcon" src="<%= sideNavigationDisplayContext.getPanelCategoryImageUrl() %>" />
 								</span>
 							</span>
-							<span class="c-px-2 component-title flex-grow-1" id="com_liferay_application_list_taglib_side_navigation_label">
-								<span data-qa-id="sideNavigationLabel"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
+							<span class="align-items-center c-my-0 component-title d-flex" id="com_liferay_application_list_taglib_side_navigation_label">
+								<span class="c-ml-2 text-5" id="sideNavigationLabel"><%= sideNavigationDisplayContext.getPanelCategoryLabel() %></span>
 							</span>
 
 							<clay:button
 								aria-label='<%= LanguageUtil.get(request, "go-to-other-site") %>'
 								borderless="<%= true %>"
+								cssClass="c-ml-auto"
 								data-qa-id="sideNavigationSiteSelectorButton"
 								displayType="secondary"
 								icon="sites"

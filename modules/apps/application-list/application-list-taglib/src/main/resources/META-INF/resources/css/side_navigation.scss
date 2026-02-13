@@ -1,9 +1,8 @@
-.side-navigation-container {
-	height: 100vh;
+@import 'cadmin-variables';
 
-	& .menubar .nav-link[aria-expanded] {
-		font-size: 0.75rem;
-		font-weight: 600;
-		text-transform: uppercase;
+.side-navigation-container {
+	.c-slideout-start .sidebar-light {
+		border-right: 0.5px solid $cadmin-secondary-l0;
+		box-shadow: none;
 	}
 }

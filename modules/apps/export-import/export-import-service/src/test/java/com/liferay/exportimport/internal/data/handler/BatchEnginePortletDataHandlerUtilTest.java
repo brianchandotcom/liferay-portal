@@ -5,11 +5,13 @@
 
 package com.liferay.exportimport.internal.data.handler;
 
+import com.liferay.changeset.service.ChangesetEntryLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
@@ -74,6 +76,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(), _mockGroupLocalService(null),
 				_mockPortletDataContext(endDate, null, null),
 				_getStagingGroupHelper(false));
@@ -90,6 +93,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(), _mockGroupLocalService(null),
 				_mockPortletDataContext(endDate, null, startDate),
 				_getStagingGroupHelper(false));
@@ -107,6 +111,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(modelClassName, null, null),
 				_mockGroupLocalService(null), _mockPortletDataContext(),
 				_getStagingGroupHelper(false));
@@ -118,6 +123,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNestedFields() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(
 					null, List.of("nestedField1", "nestedField2"), null),
 				_mockGroupLocalService(null), _mockPortletDataContext(),
@@ -128,6 +134,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 			parameters.get("batchNestedFields"));
 
 		parameters = BatchEnginePortletDataHandlerUtil.buildExportParameters(
+			_changesetEntryLocalService, _classNameLocalService,
 			_mockExportImportDescriptor(
 				null, List.of("nestedField1", "nestedField2"), null),
 			_mockGroupLocalService(null),
@@ -151,6 +158,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(), _mockGroupLocalService(null),
 				_mockPortletDataContext(), _getStagingGroupHelper(false));
 
@@ -161,6 +169,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithParameters() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(
 					null, null,
 					HashMapBuilder.<String, Serializable>put(
@@ -181,6 +190,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(), _mockGroupLocalService(null),
 				_mockPortletDataContext(null, null, startDate),
 				_getStagingGroupHelper(false));
@@ -397,6 +407,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_changesetEntryLocalService, _classNameLocalService,
 				_mockExportImportDescriptor(), _mockGroupLocalService(group),
 				_mockPortletDataContext(null, null, null),
 				_getStagingGroupHelper(companyGroup));
@@ -423,6 +434,10 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Assert.assertEquals(expectedSiteId, parameters.get("siteId"));
 	}
 
+	private final ChangesetEntryLocalService _changesetEntryLocalService =
+		Mockito.mock(ChangesetEntryLocalService.class);
+	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
+		ClassNameLocalService.class);
 	private DateFormat _dateFormat;
 	private MockedStatic<FastDateFormatFactoryUtil>
 		_fastDateFormatFactoryUtilMockedStatic;

@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
 import {Dispatch} from 'react';
 
 import {Action, State} from '../contexts/StateContext';
 import {Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import confirmDeletionAction from './confirmDeletionAction';
 import getUndeletableChildren from './getUndeletableChildren';
 import isReferenced from './isReferenced';
 
@@ -31,7 +31,18 @@ export default async function handleDeleteChildren({
 	);
 
 	if (deletingPublished) {
-		const confirm = await confirmDeletionAction('delete-children');
+		const confirm = await openConfirmModal({
+			buttonLabel: Liferay.Language.get('delete'),
+			center: true,
+			optOutConfig: {
+				sessionKey: 'disableChildrenDeletionModal',
+			},
+			status: 'warning',
+			text: Liferay.Language.get(
+				'deleting-fields-may-impact-existing-stored-data-after-publishing-the-structure'
+			),
+			title: Liferay.Language.get('delete-fields'),
+		});
 
 		if (!confirm) {
 			return;

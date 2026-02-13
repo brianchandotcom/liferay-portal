@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {openConfirmModal} from '@liferay/layout-js-components-web';
 import {openToast} from 'frontend-js-components-web';
 import {Dispatch} from 'react';
 
 import {Action, State} from '../contexts/StateContext';
 import {Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
-import confirmDeletionAction from './confirmDeletionAction';
 import findChild from './findChild';
 import getUndeletableChildren from './getUndeletableChildren';
 
@@ -89,7 +89,18 @@ export default async function handleAddRepeatableGroup({
 	}
 
 	if (uuids.some((uuid) => publishedChildren.has(uuid))) {
-		const confirm = await confirmDeletionAction('create-repeatable-group');
+		const confirm = await openConfirmModal({
+			buttonLabel: Liferay.Language.get('create-repeatable-group'),
+			center: true,
+			optOutConfig: {
+				sessionKey: 'disableRepeatableGroupCreationModal',
+			},
+			status: 'warning',
+			text: Liferay.Language.get(
+				'creating-a-repeatable-group-with-published-fields-will-permanently-delete-existing-field-data-after-publishing-the-structure'
+			),
+			title: Liferay.Language.get('create-repeatable-group'),
+		});
 
 		if (!confirm) {
 			return;

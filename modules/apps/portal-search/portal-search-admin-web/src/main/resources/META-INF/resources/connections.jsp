@@ -252,56 +252,59 @@ SearchEngineDisplayContext searchEngineDisplayContext = (SearchEngineDisplayCont
 										</c:if>
 									</div>
 
-									<%
-									List<NodeInformation> nodeInformationList = connectionInformation.getNodeInformationList();
-									%>
+									<c:if test="<%= !searchEngineDisplayContext.isWarnAboutSidecarConnection() %>">
 
-									<liferay-frontend:fieldset
-										collapsible="<%= nodeInformationList.size() > 0 %>"
-										cssClass="connection-info-node-list"
-										label='<%= LanguageUtil.format(request, "nodes-x", nodeInformationList.size(), false) %>'
-									>
-										<liferay-ui:search-container
-											deltaConfigurable="<%= false %>"
-											headerNames="name,version"
-											id="<%= connectionInformation.getConnectionId() %>"
-											total="<%= nodeInformationList.size() %>"
+										<%
+										List<NodeInformation> nodeInformationList = connectionInformation.getNodeInformationList();
+										%>
+
+										<liferay-frontend:fieldset
+											collapsible="<%= nodeInformationList.size() > 0 %>"
+											cssClass="connection-info-node-list"
+											label='<%= LanguageUtil.format(request, "nodes-x", nodeInformationList.size(), false) %>'
 										>
-											<liferay-ui:search-container-results
-												results="<%= nodeInformationList %>"
-											/>
-
-											<liferay-ui:search-container-row
-												className="com.liferay.portal.search.engine.NodeInformation"
-												escapedModel="<%= true %>"
-												keyProperty="name"
-												modelVar="nodeInformation"
+											<liferay-ui:search-container
+												deltaConfigurable="<%= false %>"
+												headerNames="name,version"
+												id="<%= connectionInformation.getConnectionId() %>"
+												total="<%= nodeInformationList.size() %>"
 											>
-												<liferay-ui:search-container-column-text
-													property="name"
+												<liferay-ui:search-container-results
+													results="<%= nodeInformationList %>"
 												/>
 
-												<liferay-ui:search-container-column-text
-													property="version"
-												/>
-											</liferay-ui:search-container-row>
+												<liferay-ui:search-container-row
+													className="com.liferay.portal.search.engine.NodeInformation"
+													escapedModel="<%= true %>"
+													keyProperty="name"
+													modelVar="nodeInformation"
+												>
+													<liferay-ui:search-container-column-text
+														property="name"
+													/>
 
-											<liferay-ui:search-iterator
-												markupView="lexicon"
-												paginate="<%= false %>"
+													<liferay-ui:search-container-column-text
+														property="version"
+													/>
+												</liferay-ui:search-container-row>
+
+												<liferay-ui:search-iterator
+													markupView="lexicon"
+													paginate="<%= false %>"
+												/>
+											</liferay-ui:search-container>
+										</liferay-frontend:fieldset>
+
+										<%
+										String errorMessage = connectionInformation.getError();
+										%>
+
+										<c:if test="<%= Validator.isNotNull(errorMessage) %>">
+											<clay:alert
+												displayType="danger"
+												message="<%= errorMessage %>"
 											/>
-										</liferay-ui:search-container>
-									</liferay-frontend:fieldset>
-
-									<%
-									String errorMessage = connectionInformation.getError();
-									%>
-
-									<c:if test="<%= Validator.isNotNull(errorMessage) %>">
-										<clay:alert
-											displayType="danger"
-											message="<%= errorMessage %>"
-										/>
+										</c:if>
 									</c:if>
 								</clay:sheet>
 

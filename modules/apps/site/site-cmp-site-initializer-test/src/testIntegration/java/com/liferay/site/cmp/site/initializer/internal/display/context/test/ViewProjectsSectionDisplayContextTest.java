@@ -111,7 +111,7 @@ public class ViewProjectsSectionDisplayContextTest
 	public void testGetFDSFilters() throws Exception {
 		List<FDSFilter> fdsFilters = getFDSFilters(null);
 
-		Assert.assertEquals(fdsFilters.toString(), 4, fdsFilters.size());
+		Assert.assertEquals(fdsFilters.toString(), 5, fdsFilters.size());
 
 		assertFDSFilter(
 			FDSEntityFieldTypes.DATE_TIME, "cmpDueDate", "due-date",
@@ -124,6 +124,8 @@ public class ViewProjectsSectionDisplayContextTest
 			fdsFilters.get(2));
 		assertFDSFilter(
 			FDSEntityFieldTypes.STRING, "cmpState", "state", fdsFilters.get(3));
+		assertFDSFilter(
+			FDSEntityFieldTypes.STRING, "keywords", "tag", fdsFilters.get(4));
 	}
 
 	@Override

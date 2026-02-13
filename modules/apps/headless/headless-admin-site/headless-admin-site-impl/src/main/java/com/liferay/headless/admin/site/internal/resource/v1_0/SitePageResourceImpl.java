@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
@@ -122,9 +123,8 @@ public class SitePageResourceImpl
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 
 		_validateSitePageLayout(layout);
 
@@ -161,6 +161,12 @@ public class SitePageResourceImpl
 			@Override
 			public Map<String, Serializable> getParameters(
 				PortletDataContext portletDataContext) {
+
+				if (ExportImportDateUtil.isRangeFromLastPublishDate(
+						portletDataContext)) {
+
+					return null;
+				}
 
 				return HashMapBuilder.<String, Serializable>put(
 					"filter",
@@ -259,9 +265,8 @@ public class SitePageResourceImpl
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			GroupUtil.getStagingAwareGroupId(
+				contextCompany.getCompanyId(), siteExternalReferenceCode));
 
 		if (!layout.isTypeContent()) {
 			throw new UnsupportedOperationException();
@@ -401,8 +406,8 @@ public class SitePageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		long groupId = GroupUtil.getGroupId(
-			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+		long groupId = GroupUtil.getStagingAwareGroupId(
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
 
 		Layout layout = _layoutService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode, groupId);

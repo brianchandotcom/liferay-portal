@@ -22,6 +22,7 @@ export {default as MarketplacePresentationModal} from './components/marketplace/
 export {default as CreationModal} from './components/modals/CreationModal';
 export {default as openConfirmModal} from './components/modals/openConfirmModal';
 export {default as openModalComponent} from './components/modals/openModalComponent';
+export {default as openOptionsModal} from './components/modals/openOptionsModal';
 export {default as PageTemplateModal} from './components/page_template_modal/PageTemplateModal';
 export {default as Resizer} from './components/resizer/Resizer';
 export {default as ScreenReaderAnnouncer} from './components/screen_reader_announcer/ScreenReaderAnnouncer';

@@ -42,6 +42,7 @@ import java.lang.reflect.InvocationHandler;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.sql.DataSource;
@@ -2677,6 +2678,245 @@ public class ChangesetEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 =
 		"changesetEntry.classNameId = ?";
 
+	private FinderPath _finderPathFetchByC_CERC_C;
+
+	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the matching changeset entry
+	 * @throws NoSuchEntryException if a matching changeset entry could not be found
+	 */
+	@Override
+	public ChangesetEntry findByC_CERC_C(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId)
+		throws NoSuchEntryException {
+
+		ChangesetEntry changesetEntry = fetchByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+
+		if (changesetEntry == null) {
+			StringBundler sb = new StringBundler(8);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("changesetCollectionId=");
+			sb.append(changesetCollectionId);
+
+			sb.append(", classExternalReferenceCode=");
+			sb.append(classExternalReferenceCode);
+
+			sb.append(", classNameId=");
+			sb.append(classNameId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return changesetEntry;
+	}
+
+	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
+	 */
+	@Override
+	public ChangesetEntry fetchByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return fetchByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId,
+			true);
+	}
+
+	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
+	 */
+	@Override
+	public ChangesetEntry fetchByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId, boolean useFinderCache) {
+
+		classExternalReferenceCode = Objects.toString(
+			classExternalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {
+				changesetCollectionId, classExternalReferenceCode, classNameId
+			};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByC_CERC_C, finderArgs, this);
+		}
+
+		if (result instanceof ChangesetEntry) {
+			ChangesetEntry changesetEntry = (ChangesetEntry)result;
+
+			if ((changesetCollectionId !=
+					changesetEntry.getChangesetCollectionId()) ||
+				!Objects.equals(
+					classExternalReferenceCode,
+					changesetEntry.getClassExternalReferenceCode()) ||
+				(classNameId != changesetEntry.getClassNameId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(_SQL_SELECT_CHANGESETENTRY_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_CERC_C_CHANGESETCOLLECTIONID_2);
+
+			boolean bindClassExternalReferenceCode = false;
+
+			if (classExternalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_CERC_C_CLASSEXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindClassExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_C_CERC_C_CLASSEXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_CERC_C_CLASSNAMEID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(changesetCollectionId);
+
+				if (bindClassExternalReferenceCode) {
+					queryPos.add(classExternalReferenceCode);
+				}
+
+				queryPos.add(classNameId);
+
+				List<ChangesetEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByC_CERC_C, finderArgs, list);
+					}
+				}
+				else {
+					ChangesetEntry changesetEntry = list.get(0);
+
+					result = changesetEntry;
+
+					cacheResult(changesetEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ChangesetEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the changeset entry that was removed
+	 */
+	@Override
+	public ChangesetEntry removeByC_CERC_C(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId)
+		throws NoSuchEntryException {
+
+		ChangesetEntry changesetEntry = findByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+
+		return remove(changesetEntry);
+	}
+
+	/**
+	 * Returns the number of changeset entries where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63;.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the number of matching changeset entries
+	 */
+	@Override
+	public int countByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		ChangesetEntry changesetEntry = fetchByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+
+		if (changesetEntry == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String
+		_FINDER_COLUMN_C_CERC_C_CHANGESETCOLLECTIONID_2 =
+			"changesetEntry.changesetCollectionId = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_CERC_C_CLASSEXTERNALREFERENCECODE_2 =
+			"changesetEntry.classExternalReferenceCode = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_CERC_C_CLASSEXTERNALREFERENCECODE_3 =
+			"(changesetEntry.classExternalReferenceCode IS NULL OR changesetEntry.classExternalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_CERC_C_CLASSNAMEID_2 =
+		"changesetEntry.classNameId = ?";
+
 	private FinderPath _finderPathFetchByC_C_C;
 
 	/**
@@ -2909,6 +3149,15 @@ public class ChangesetEntryPersistenceImpl
 			changesetEntry);
 
 		finderCache.putResult(
+			_finderPathFetchByC_CERC_C,
+			new Object[] {
+				changesetEntry.getChangesetCollectionId(),
+				changesetEntry.getClassExternalReferenceCode(),
+				changesetEntry.getClassNameId()
+			},
+			changesetEntry);
+
+		finderCache.putResult(
 			_finderPathFetchByC_C_C,
 			new Object[] {
 				changesetEntry.getChangesetCollectionId(),
@@ -2990,6 +3239,15 @@ public class ChangesetEntryPersistenceImpl
 		ChangesetEntryModelImpl changesetEntryModelImpl) {
 
 		Object[] args = new Object[] {
+			changesetEntryModelImpl.getChangesetCollectionId(),
+			changesetEntryModelImpl.getClassExternalReferenceCode(),
+			changesetEntryModelImpl.getClassNameId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByC_CERC_C, args, changesetEntryModelImpl);
+
+		args = new Object[] {
 			changesetEntryModelImpl.getChangesetCollectionId(),
 			changesetEntryModelImpl.getClassNameId(),
 			changesetEntryModelImpl.getClassPK()
@@ -3549,6 +3807,18 @@ public class ChangesetEntryPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_C",
 			new String[] {Long.class.getName(), Long.class.getName()},
 			new String[] {"changesetCollectionId", "classNameId"}, false);
+
+		_finderPathFetchByC_CERC_C = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_CERC_C",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			},
+			new String[] {
+				"changesetCollectionId", "classExternalReferenceCode",
+				"classNameId"
+			},
+			true);
 
 		_finderPathFetchByC_C_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_C",

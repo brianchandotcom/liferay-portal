@@ -1005,6 +1005,91 @@ public class ChangesetEntryUtil {
 	}
 
 	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the matching changeset entry
+	 * @throws NoSuchEntryException if a matching changeset entry could not be found
+	 */
+	public static ChangesetEntry findByC_CERC_C(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId)
+		throws com.liferay.changeset.exception.NoSuchEntryException {
+
+		return getPersistence().findByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
+	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
+	 */
+	public static ChangesetEntry fetchByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return getPersistence().fetchByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
+	/**
+	 * Returns the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching changeset entry, or <code>null</code> if a matching changeset entry could not be found
+	 */
+	public static ChangesetEntry fetchByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId, boolean useFinderCache) {
+
+		return getPersistence().fetchByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId,
+			useFinderCache);
+	}
+
+	/**
+	 * Removes the changeset entry where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; from the database.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the changeset entry that was removed
+	 */
+	public static ChangesetEntry removeByC_CERC_C(
+			long changesetCollectionId, String classExternalReferenceCode,
+			long classNameId)
+		throws com.liferay.changeset.exception.NoSuchEntryException {
+
+		return getPersistence().removeByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
+	/**
+	 * Returns the number of changeset entries where changesetCollectionId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63;.
+	 *
+	 * @param changesetCollectionId the changeset collection ID
+	 * @param classExternalReferenceCode the class external reference code
+	 * @param classNameId the class name ID
+	 * @return the number of matching changeset entries
+	 */
+	public static int countByC_CERC_C(
+		long changesetCollectionId, String classExternalReferenceCode,
+		long classNameId) {
+
+		return getPersistence().countByC_CERC_C(
+			changesetCollectionId, classExternalReferenceCode, classNameId);
+	}
+
+	/**
 	 * Returns the changeset entry where changesetCollectionId = &#63; and classNameId = &#63; and classPK = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
 	 *
 	 * @param changesetCollectionId the changeset collection ID

@@ -6,6 +6,7 @@
 import {SidePanel} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
+import ClaySticker from '@clayui/sticker';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import SideNavigationSiteSelector from './SideNavigationSiteSelector';
@@ -19,6 +20,7 @@ interface SideNavigationItem {
 }
 
 interface Props {
+	categoryImageUrl: string;
 	expandedKeys: Array<React.Key>;
 	expandedKeysSessionKey: string;
 	items: Array<SideNavigationItem>;
@@ -31,6 +33,7 @@ interface Props {
 }
 
 function SideNavigation({
+	categoryImageUrl,
 	expandedKeys: initialExpandedKeys,
 	expandedKeysSessionKey,
 	items,
@@ -116,7 +119,9 @@ function SideNavigation({
 				}}
 			>
 				<div className="align-items-center d-flex flex-row">
-					<ClayIcon symbol="grid" />
+					<ClaySticker borderless displayType="outline">
+						<img alt="" className="c-mx-1" src={categoryImageUrl} />
+					</ClaySticker>
 
 					<SidePanel.Title className="c-px-2 flex-grow-1">
 						<span data-qa-id="sideNavigationLabel">{label}</span>

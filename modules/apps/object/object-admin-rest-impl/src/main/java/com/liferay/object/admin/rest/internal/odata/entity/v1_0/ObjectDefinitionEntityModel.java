@@ -27,6 +27,9 @@ public class ObjectDefinitionEntityModel implements EntityModel {
 			new BooleanEntityField("hidden", locale -> Field.HIDDEN),
 			new BooleanEntityField("modifiable", locale -> "modifiable"),
 			new CollectionEntityField(
+				new IntegerEntityField(
+					"acceptedGroupIds", locale -> "acceptedGroupIds")),
+			new CollectionEntityField(
 				new IntegerEntityField("status", locale -> Field.STATUS)),
 			new DateTimeEntityField(
 				"dateCreated",

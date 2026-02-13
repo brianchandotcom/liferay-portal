@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.module.configuration.ConfigurationProvid
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -64,8 +65,9 @@ public class ProductNavigationControlMenuManagerImpl
 		Group group = themeDisplay.getScopeGroup();
 		Layout layout = themeDisplay.getLayout();
 
-		if ((!group.isCMS() && !group.isSite()) || layout.isDraftLayout() ||
-			layout.isTypeControlPanel()) {
+		if ((!group.isCMS() && !group.isSite() &&
+			 !Objects.equals(GroupConstants.DSR, group.getGroupKey())) ||
+			layout.isDraftLayout() || layout.isTypeControlPanel()) {
 
 			return hasRelevantProductNavigationControlMenuEntries;
 		}

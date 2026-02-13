@@ -6,7 +6,7 @@
 package com.liferay.exportimport.internal.lar;
 
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
-import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryImpl;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
@@ -130,7 +130,7 @@ public class DeletionSystemEventExporterImpl
 			}
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				BatchEnginePortletDataHandlerRegistryImpl.getByClassName(
+				BatchEnginePortletDataHandlerRegistryUtil.getByClassName(
 					portletDataContext.getCompanyId(),
 					StringUtil.removeLast(
 						key,
@@ -241,7 +241,7 @@ public class DeletionSystemEventExporterImpl
 		String className = PortalUtil.getClassName(
 			systemEvent.getClassNameId());
 
-		if (BatchEnginePortletDataHandlerRegistryImpl.hasByClassName(
+		if (BatchEnginePortletDataHandlerRegistryUtil.hasByClassName(
 				className, portletDataContext.getCompanyId())) {
 
 			Map<String, String> newPrimaryKeysMap =

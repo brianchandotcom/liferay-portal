@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegistry;
+import com.liferay.exportimport.data.handler.PortletElementUtil;
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -18,9 +18,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
-import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -95,38 +93,16 @@ public class DeletionSystemEventImporterImpl
 		}
 
 		for (Element portletElement : sitePortletsElement.elements()) {
-			String portletDataHandlerKey = portletElement.attributeValue(
-				"portlet-data-handler-key");
-
-			String portletId = portletElement.attributeValue("portlet-id");
-
-			Portlet portlet = _portletLocalService.getPortletById(
-				portletDataContext.getCompanyId(), portletId);
-
-			if ((portletDataHandlerKey == null) &&
-				(!portlet.isActive() || portlet.isUndeployedPortlet())) {
-
-				continue;
-			}
-
-			if (portletDataHandlerKey != null) {
-				PortletDataHandler portletDataHandler =
-					_batchEnginePortletDataHandlerRegistry.getByKey(
-						portletDataContext.getCompanyId(),
-						portletDataHandlerKey);
-
-				if (portletDataHandler != null) {
-					portletId = portletDataHandler.getPortletId();
-				}
-			}
+			String targetPortletId = _portletElementUtil.getTargetPortletId(
+				portletDataContext.getCompanyId(), portletElement);
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
-					portletDataContext.getCompanyId(), portletId);
+					portletDataContext.getCompanyId(), targetPortletId);
 
 			if (portletDataHandler instanceof BatchEnginePortletDataHandler) {
 				portletDataHandler.deleteData(
-					portletDataContext, portletId, null);
+					portletDataContext, targetPortletId, null);
 			}
 		}
 	}
@@ -190,13 +166,9 @@ public class DeletionSystemEventImporterImpl
 		DeletionSystemEventImporterImpl.class);
 
 	@Reference
-	private BatchEnginePortletDataHandlerRegistry
-		_batchEnginePortletDataHandlerRegistry;
-
-	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Reference
-	private PortletLocalService _portletLocalService;
+	private PortletElementUtil _portletElementUtil;
 
 }

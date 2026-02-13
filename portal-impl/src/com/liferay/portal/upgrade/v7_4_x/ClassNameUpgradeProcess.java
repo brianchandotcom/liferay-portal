@@ -59,7 +59,8 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			int oldDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(oldStructureId);
+			int oldDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
+				oldStructureId);
 
 			if (oldDLFileEntryMetadatasCount == 0) {
 				_deleteDDMStructure(oldCTCollectionId, oldStructureId);
@@ -71,7 +72,8 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 
 			long newStructureId = newDDMStructureValues[1];
 
-			int newDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(newStructureId);
+			int newDLFileEntryMetadatasCount = _getDLFileEntryMetadatasCount(
+				newStructureId);
 
 			if (newDLFileEntryMetadatasCount == 0) {
 				_deleteDDMStructure(newCTCollectionId, newStructureId);
@@ -223,6 +225,18 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
+	private void _updateClassNameValue(long classNameId) throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"update ClassName_ set value = ? where classNameId = ? ")) {
+
+			preparedStatement.setString(
+				1, RawMetadataProcessor.class.getName());
+			preparedStatement.setLong(2, classNameId);
+
+			preparedStatement.executeUpdate();
+		}
+	}
+
 	private void _updateDDMStructureClassNameId(
 			long classNameId, long ctCollectionId, long structureId)
 		throws Exception {
@@ -263,18 +277,6 @@ public class ClassNameUpgradeProcess extends UpgradeProcess {
 		_update(
 			"DDMStructureLayout", "structureVersionId", newStructureVersionId,
 			oldStructureVersionId);
-	}
-
-	private void _updateClassNameValue(long classNameId) throws Exception {
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update ClassName_ set value = ? where classNameId = ? ")) {
-
-			preparedStatement.setString(
-				1, RawMetadataProcessor.class.getName());
-			preparedStatement.setLong(2, classNameId);
-
-			preparedStatement.executeUpdate();
-		}
 	}
 
 }

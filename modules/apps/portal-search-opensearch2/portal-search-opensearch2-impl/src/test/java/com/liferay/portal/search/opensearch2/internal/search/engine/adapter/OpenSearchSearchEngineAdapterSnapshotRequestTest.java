@@ -27,7 +27,6 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.opensearch2.internal.BaseOpenSearchTestCase;
 import com.liferay.portal.search.opensearch2.internal.OpenSearchTestRule;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.SnapshotRequestExecutorTestUtil;
 import com.liferay.portal.search.test.util.IdempotentRetryAssert;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -300,15 +299,16 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		SearchEngineAdapter searchEngineAdapter =
+		OpenSearchSearchEngineAdapterImpl openSearchSearchEngineAdapterImpl =
 			new OpenSearchSearchEngineAdapterImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			searchEngineAdapter, "_snapshotRequestExecutor",
-			SnapshotRequestExecutorTestUtil.createSnapshotRequestExecutor(
-				openSearchConnectionManager));
+			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
+			openSearchConnectionManager);
 
-		return searchEngineAdapter;
+		openSearchSearchEngineAdapterImpl.activate();
+
+		return openSearchSearchEngineAdapterImpl;
 	}
 
 	private void _createIndex() {

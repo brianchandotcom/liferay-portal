@@ -20,25 +20,36 @@ import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotResponse
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael C. Han
  */
-@Component(
-	property = "search.engine.impl=OpenSearch",
-	service = SnapshotRequestExecutor.class
-)
 public class OpenSearchSnapshotRequestExecutor
 	implements SnapshotRequestExecutor {
+
+	public OpenSearchSnapshotRequestExecutor(
+		OpenSearchConnectionManager openSearchConnectionManager) {
+
+		_createSnapshotRepositoryRequestExecutor =
+			new CreateSnapshotRepositoryRequestExecutor(
+				openSearchConnectionManager);
+		_createSnapshotRequestExecutor = new CreateSnapshotRequestExecutor(
+			openSearchConnectionManager);
+		_deleteSnapshotRequestExecutor = new DeleteSnapshotRequestExecutor(
+			openSearchConnectionManager);
+		_getSnapshotRepositoriesRequestExecutor =
+			new GetSnapshotRepositoriesRequestExecutor(
+				openSearchConnectionManager);
+		_getSnapshotsRequestExecutor = new GetSnapshotsRequestExecutor(
+			openSearchConnectionManager);
+		_restoreSnapshotRequestExecutor = new RestoreSnapshotRequestExecutor(
+			openSearchConnectionManager);
+	}
 
 	@Override
 	public CreateSnapshotRepositoryResponse executeSnapshotRequest(
 		CreateSnapshotRepositoryRequest createSnapshotRepositoryRequest) {
 
-		return createSnapshotRepositoryRequestExecutor.execute(
+		return _createSnapshotRepositoryRequestExecutor.execute(
 			createSnapshotRepositoryRequest);
 	}
 
@@ -46,21 +57,21 @@ public class OpenSearchSnapshotRequestExecutor
 	public CreateSnapshotResponse executeSnapshotRequest(
 		CreateSnapshotRequest createSnapshotRequest) {
 
-		return createSnapshotRequestExecutor.execute(createSnapshotRequest);
+		return _createSnapshotRequestExecutor.execute(createSnapshotRequest);
 	}
 
 	@Override
 	public DeleteSnapshotResponse executeSnapshotRequest(
 		DeleteSnapshotRequest deleteSnapshotRequest) {
 
-		return deleteSnapshotRequestExecutor.execute(deleteSnapshotRequest);
+		return _deleteSnapshotRequestExecutor.execute(deleteSnapshotRequest);
 	}
 
 	@Override
 	public GetSnapshotRepositoriesResponse executeSnapshotRequest(
 		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest) {
 
-		return getSnapshotRepositoriesRequestExecutor.execute(
+		return _getSnapshotRepositoriesRequestExecutor.execute(
 			getSnapshotRepositoriesRequest);
 	}
 
@@ -68,44 +79,24 @@ public class OpenSearchSnapshotRequestExecutor
 	public GetSnapshotsResponse executeSnapshotRequest(
 		GetSnapshotsRequest getSnapshotsRequest) {
 
-		return getSnapshotsRequestExecutor.execute(getSnapshotsRequest);
+		return _getSnapshotsRequestExecutor.execute(getSnapshotsRequest);
 	}
 
 	@Override
 	public RestoreSnapshotResponse executeSnapshotRequest(
 		RestoreSnapshotRequest restoreSnapshotRequest) {
 
-		return restoreSnapshotRequestExecutor.execute(restoreSnapshotRequest);
+		return _restoreSnapshotRequestExecutor.execute(restoreSnapshotRequest);
 	}
 
-	@Activate
-	protected void activate() {
-		createSnapshotRepositoryRequestExecutor =
-			new CreateSnapshotRepositoryRequestExecutor(
-				_openSearchConnectionManager);
-		createSnapshotRequestExecutor = new CreateSnapshotRequestExecutor(
-			_openSearchConnectionManager);
-		deleteSnapshotRequestExecutor = new DeleteSnapshotRequestExecutor(
-			_openSearchConnectionManager);
-		getSnapshotRepositoriesRequestExecutor =
-			new GetSnapshotRepositoriesRequestExecutor(
-				_openSearchConnectionManager);
-		getSnapshotsRequestExecutor = new GetSnapshotsRequestExecutor(
-			_openSearchConnectionManager);
-		restoreSnapshotRequestExecutor = new RestoreSnapshotRequestExecutor(
-			_openSearchConnectionManager);
-	}
-
-	protected CreateSnapshotRepositoryRequestExecutor
-		createSnapshotRepositoryRequestExecutor;
-	protected CreateSnapshotRequestExecutor createSnapshotRequestExecutor;
-	protected DeleteSnapshotRequestExecutor deleteSnapshotRequestExecutor;
-	protected GetSnapshotRepositoriesRequestExecutor
-		getSnapshotRepositoriesRequestExecutor;
-	protected GetSnapshotsRequestExecutor getSnapshotsRequestExecutor;
-	protected RestoreSnapshotRequestExecutor restoreSnapshotRequestExecutor;
-
-	@Reference
-	private OpenSearchConnectionManager _openSearchConnectionManager;
+	private final CreateSnapshotRepositoryRequestExecutor
+		_createSnapshotRepositoryRequestExecutor;
+	private final CreateSnapshotRequestExecutor _createSnapshotRequestExecutor;
+	private final DeleteSnapshotRequestExecutor _deleteSnapshotRequestExecutor;
+	private final GetSnapshotRepositoriesRequestExecutor
+		_getSnapshotRepositoriesRequestExecutor;
+	private final GetSnapshotsRequestExecutor _getSnapshotsRequestExecutor;
+	private final RestoreSnapshotRequestExecutor
+		_restoreSnapshotRequestExecutor;
 
 }

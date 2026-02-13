@@ -23,6 +23,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
+
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.client.IndicesClient;
 import org.elasticsearch.client.RequestOptions;
@@ -134,7 +136,7 @@ public class ElasticsearchSearchEngineAdapterClusterRequestTest {
 			elasticsearchSearchEngineAdapterImpl,
 			"_elasticsearchClientResolver", elasticsearchClientResolver);
 
-		elasticsearchSearchEngineAdapterImpl.activate();
+		elasticsearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return elasticsearchSearchEngineAdapterImpl;
 	}

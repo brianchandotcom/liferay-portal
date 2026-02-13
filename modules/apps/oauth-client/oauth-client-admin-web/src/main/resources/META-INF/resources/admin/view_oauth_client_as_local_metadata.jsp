@@ -31,12 +31,12 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 
 <c:choose>
 	<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-63415") %>'>
-		<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_oic.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_openid_configuration.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 
 		<%
-		String navigation = ParamUtil.getString(request, "navigation", "oauth-client-as-local-metadata-oic");
+		String navigation = ParamUtil.getString(request, "navigation", "oauth-client-as-local-metadata-openid-configuration");
 		%>
 
 		<clay:navigation-bar
@@ -45,31 +45,31 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 					{
 						add(
 							navigationItem -> {
-								navigationItem.setActive(navigation.equals("oauth-client-as-local-metadata-oic") || navigation.equals("oauth-client-as-local-metadata"));
+								navigationItem.setActive(navigation.equals("oauth-client-as-local-metadata-openid-configuration") || navigation.equals("oauth-client-as-local-metadata"));
 
 								PortletURL portletURL = PortletURLBuilder.createRenderURL(
 									renderResponse
 								).setMVCRenderCommandName(
 									"/oauth_client_admin/view_oauth_client_as_local_metadata"
 								).setNavigation(
-									"oauth-client-as-local-metadata-oic"
+									"oauth-client-as-local-metadata-openid-configuration"
 								).buildPortletURL();
 
 								navigationItem.setHref(portletURL.toString());
 
-								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "oauth-client-as-local--openid-configuration"));
+								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "oauth-client-as-local-openid-configuration"));
 							});
 
 						add(
 							navigationItem -> {
-								navigationItem.setActive(navigation.equals("oauth-client-as-local-metadata-oas"));
+								navigationItem.setActive(navigation.equals("oauth-client-as-local-metadata-oauth-authorization-server"));
 
 								PortletURL portletURL = PortletURLBuilder.createRenderURL(
 									renderResponse
 								).setMVCRenderCommandName(
 									"/oauth_client_admin/view_oauth_client_as_local_metadata"
 								).setNavigation(
-									"oauth-client-as-local-metadata-oas"
+									"oauth-client-as-local-metadata-oauth-authorization-server"
 								).buildPortletURL();
 
 								navigationItem.setHref(portletURL.toString());
@@ -82,11 +82,11 @@ OAuthClientASLocalMetadataManagementToolbarDisplayContext oAuthClientASLocalMeta
 		/>
 
 		<c:choose>
-			<c:when test='<%= navigation.equals("oauth-client-as-local-metadata") || navigation.equals("oauth-client-as-local-metadata-oic") %>'>
-				<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_oic.jsp" servletContext="<%= application %>" />
+			<c:when test='<%= navigation.equals("oauth-client-as-local-metadata") || navigation.equals("oauth-client-as-local-metadata-openid-configuration") %>'>
+				<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_openid_configuration.jsp" servletContext="<%= application %>" />
 			</c:when>
-			<c:when test='<%= navigation.equals("oauth-client-as-local-metadata-oas") %>'>
-				<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_oas.jsp" servletContext="<%= application %>" />
+			<c:when test='<%= navigation.equals("oauth-client-as-local-metadata-oauth-authorization-server") %>'>
+				<liferay-util:include page="/admin/view_oauth_client_as_local_metadata_oauth_authorization_server.jsp" servletContext="<%= application %>" />
 			</c:when>
 		</c:choose>
 	</c:otherwise>

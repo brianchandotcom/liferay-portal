@@ -10,7 +10,6 @@ import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadata
 import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataMetadataJSONException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,8 +22,8 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.portlet.MockPortletSession;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -47,7 +46,6 @@ import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -73,14 +71,10 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_company = CompanyTestUtil.addCompany();
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		_user = UserTestUtil.addUser(_company);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		_companyLocalService.deleteCompany(_company);
 	}
 
 	@Test
@@ -90,83 +84,48 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
 				HashMapBuilder.put(
-					"authorization_endpoint",
+					"authorizationEndpoint",
 					new String[] {RandomTestUtil.randomString()}
 				).build());
 
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
 
 		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			HashMapBuilder.put(
 				"issuer", new String[] {RandomTestUtil.randomString()}
 			).build());
 
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
-
-		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
-			HashMapBuilder.put(
-				"jwks_uri", new String[] {RandomTestUtil.randomString()}
-			).build());
-
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
-
-		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
-			HashMapBuilder.put(
-				"token_endpoint", new String[] {RandomTestUtil.randomString()}
-			).build());
-
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
-
-		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
-			HashMapBuilder.put(
-				"userinfo_endpoint",
-				new String[] {RandomTestUtil.randomString()}
-			).build());
-
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
 
 		String issuer =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			HashMapBuilder.put(
+				"issuer", new String[] {issuer}
+			).put(
+				"jwksURI", new String[] {RandomTestUtil.randomString()}
+			).build());
+
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			HashMapBuilder.put(
+				"issuer", new String[] {issuer}
+			).put(
+				"tokenEndpoint", new String[] {RandomTestUtil.randomString()}
+			).build());
+
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			HashMapBuilder.put(
+				"issuer", new String[] {issuer}
+			).put(
+				"userInfoEndpoint", new String[] {RandomTestUtil.randomString()}
+			).build());
+
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
 
 		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			HashMapBuilder.put(
@@ -177,7 +136,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			_editMVCActionCommand.processAction(
 				mockLiferayPortletActionRequest,
 				new MockLiferayPortletActionResponse()));
-
 		Assert.assertTrue(
 			SessionErrors.contains(
 				mockLiferayPortletActionRequest,
@@ -189,8 +147,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			_oAuthClientASLocalMetadataLocalService.
 				getCompanyOAuthClientASLocalMetadata(user.getCompanyId());
 
-		int numberOfOAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadatas.size();
+		int count = oAuthClientASLocalMetadatas.size();
 
 		Assert.assertTrue(
 			_editMVCActionCommand.processAction(
@@ -198,7 +155,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 					HashMapBuilder.put(
 						"issuer", new String[] {issuer}
 					).put(
-						"supported_subject_types", new String[] {"public"}
+						"supportedSubjectTypes", new String[] {"public"}
 					).build()),
 				new MockLiferayPortletActionResponse()));
 
@@ -206,9 +163,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			_oAuthClientASLocalMetadataLocalService.
 				getCompanyOAuthClientASLocalMetadata(user.getCompanyId());
 
-		Assert.assertTrue(
-			(numberOfOAuthClientASLocalMetadata + 1) ==
-				oAuthClientASLocalMetadatas.size());
+		Assert.assertEquals(oAuthClientASLocalMetadatas.size(), count + 1);
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadatas.get(0);
@@ -226,15 +181,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 				new String[] {String.valueOf(oAuthClientASLocalMetadataId)}
 			).build());
 
-		Assert.assertFalse(
-			_editMVCActionCommand.processAction(
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse()));
-
-		Assert.assertTrue(
-			SessionErrors.contains(
-				mockLiferayPortletActionRequest,
-				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
 
 		oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.
@@ -242,37 +189,38 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 
 		Assert.assertEquals(issuer, oAuthClientASLocalMetadata.getIssuer());
 
-		String okURL =
+		String urlString =
 			Http.HTTPS_WITH_SLASH + RandomTestUtil.randomString() + ".com";
 
-		String supported = RandomTestUtil.randomString();
+		String supportedGrantType = RandomTestUtil.randomString();
+		String supportedScope = RandomTestUtil.randomString();
 
 		Assert.assertTrue(
 			_editMVCActionCommand.processAction(
 				_getMockLiferayPortletActionRequest(
 					HashMapBuilder.put(
-						"authorization_endpoint", new String[] {okURL}
+						"authorizationEndpoint", new String[] {urlString}
 					).put(
-						"enabled", new String[] {"true"}
+						"enabledLocalWellKnown", new String[] {"true"}
 					).put(
-						"issuer", new String[] {okURL}
+						"issuer", new String[] {urlString}
 					).put(
-						"jwks_uri", new String[] {okURL}
+						"jwksURI", new String[] {urlString}
 					).put(
 						"oAuthClientASLocalMetadataId",
 						new String[] {
 							String.valueOf(oAuthClientASLocalMetadataId)
 						}
 					).put(
-						"supported-grant-types", new String[] {supported}
+						"supportedGrantTypes", new String[] {supportedGrantType}
 					).put(
-						"supported-scopes", new String[] {supported}
+						"supportedScopes", new String[] {supportedScope}
 					).put(
-						"supported_subject_types", new String[] {"public"}
+						"supportedSubjectTypes", new String[] {"public"}
 					).put(
-						"token_endpoint", new String[] {okURL}
+						"tokenEndpoint", new String[] {urlString}
 					).put(
-						"userinfo_endpoint", new String[] {okURL}
+						"userInfoEndpoint", new String[] {urlString}
 					).build()),
 				new MockLiferayPortletActionResponse()));
 
@@ -280,57 +228,67 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			_oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 
-		Assert.assertEquals(okURL, oAuthClientASLocalMetadata.getIssuer());
-
+		Assert.assertEquals(urlString, oAuthClientASLocalMetadata.getIssuer());
 		Assert.assertTrue(oAuthClientASLocalMetadata.isLocalWellKnownEnabled());
-
 		Assert.assertEquals(
-			okURL + "/o/.well-known/oauth-authorization-server",
+			urlString + "/o/.well-known/oauth-authorization-server",
 			oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI());
 
 		OIDCProviderMetadata oidcProviderMetadata = OIDCProviderMetadata.parse(
 			oAuthClientASLocalMetadata.getMetadataJSON());
 
+		URI url = URI.create(urlString);
+
 		Assert.assertEquals(
-			Issuer.parse(okURL), oidcProviderMetadata.getIssuer());
-		Assert.assertEquals(
-			URI.create(okURL),
+			URI.create(urlString),
 			oidcProviderMetadata.getAuthorizationEndpointURI());
 		Assert.assertEquals(
-			URI.create(okURL), oidcProviderMetadata.getTokenEndpointURI());
-		Assert.assertEquals(
-			URI.create(okURL), oidcProviderMetadata.getUserInfoEndpointURI());
-		Assert.assertEquals(
-			URI.create(okURL), oidcProviderMetadata.getJWKSetURI());
+			Issuer.parse(urlString), oidcProviderMetadata.getIssuer());
+		Assert.assertEquals(url, oidcProviderMetadata.getJWKSetURI());
+		Assert.assertEquals(url, oidcProviderMetadata.getTokenEndpointURI());
+		Assert.assertEquals(url, oidcProviderMetadata.getUserInfoEndpointURI());
 
 		List<SubjectType> subjectTypes = oidcProviderMetadata.getSubjectTypes();
 
 		Assert.assertEquals(SubjectType.parse("public"), subjectTypes.get(0));
 
 		Assert.assertEquals(
-			Scope.parse(supported), oidcProviderMetadata.getScopes());
+			Scope.parse(supportedScope), oidcProviderMetadata.getScopes());
 
 		AuthorizationServerMetadata authorizationServerMetadata =
 			AuthorizationServerMetadata.parse(
 				oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
 
 		Assert.assertEquals(
-			Issuer.parse(okURL), authorizationServerMetadata.getIssuer());
+			Issuer.parse(urlString), authorizationServerMetadata.getIssuer());
 		Assert.assertEquals(
-			URI.create(okURL),
-			authorizationServerMetadata.getAuthorizationEndpointURI());
+			Scope.parse(supportedScope),
+			authorizationServerMetadata.getScopes());
 		Assert.assertEquals(
-			URI.create(okURL),
-			authorizationServerMetadata.getTokenEndpointURI());
+			url, authorizationServerMetadata.getAuthorizationEndpointURI());
+		Assert.assertEquals(url, authorizationServerMetadata.getJWKSetURI());
 		Assert.assertEquals(
-			URI.create(okURL), authorizationServerMetadata.getJWKSetURI());
-		Assert.assertEquals(
-			Scope.parse(supported), authorizationServerMetadata.getScopes());
+			url, authorizationServerMetadata.getTokenEndpointURI());
 
 		List<GrantType> grantTypes =
 			authorizationServerMetadata.getGrantTypes();
 
-		Assert.assertEquals(GrantType.parse(supported), grantTypes.get(0));
+		Assert.assertEquals(
+			GrantType.parse(supportedGrantType), grantTypes.get(0));
+	}
+
+	private void _assertOAuthClientASLocalMetadata(
+			MockLiferayPortletActionRequest mockLiferayPortletActionRequest)
+		throws Exception {
+
+		Assert.assertFalse(
+			_editMVCActionCommand.processAction(
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse()));
+		Assert.assertTrue(
+			SessionErrors.contains(
+				mockLiferayPortletActionRequest,
+				OAuthClientASLocalMetadataLocalWellKnownURIException.class));
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

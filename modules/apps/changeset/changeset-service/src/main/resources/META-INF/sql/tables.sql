@@ -19,7 +19,7 @@ create table ChangesetEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	changesetCollectionId LONG,
-	classExternalReferenceCode VARCHAR(75) null,
+	classExternalReferenceCode VARCHAR(1000) null,
 	classNameId LONG,
 	classPK LONG
 );

@@ -135,8 +135,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		if ((fullyQualifiedTypeName == null) ||
-			!fullyQualifiedTypeName.startsWith("com.liferay.") ||
-			!fullyQualifiedTypeName.contains(".dto.v")) {
+			!fullyQualifiedTypeName.contains(".dto.v") ||
+			!fullyQualifiedTypeName.startsWith("com.liferay.")) {
 
 			return;
 		}

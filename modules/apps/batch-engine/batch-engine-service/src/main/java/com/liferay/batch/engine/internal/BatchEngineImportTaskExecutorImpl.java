@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal;
 
-import com.liferay.batch.engine.BatchEngineFileProcessor;
+import com.liferay.batch.engine.BatchEngineContentProcessor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
@@ -206,8 +206,8 @@ public class BatchEngineImportTaskExecutorImpl
 	protected void activate(
 		BundleContext bundleContext, Map<String, Object> properties) {
 
-		_batchEngineFileProcessors = ServiceTrackerListFactory.open(
-			bundleContext, BatchEngineFileProcessor.class);
+		_batchEngineContentProcessors = ServiceTrackerListFactory.open(
+			bundleContext, BatchEngineContentProcessor.class);
 		_batchEngineImportTaskExceptionHandlers =
 			ServiceTrackerListFactory.open(
 				bundleContext, BatchEngineImportTaskExceptionHandler.class);
@@ -253,7 +253,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 	@Deactivate
 	protected void deactivate() {
-		_batchEngineFileProcessors.close();
+		_batchEngineContentProcessors.close();
 		_batchEngineImportTaskExceptionHandlers.close();
 		_importTaskPostActions.close();
 		_importTaskPreActions.close();
@@ -560,7 +560,7 @@ public class BatchEngineImportTaskExecutorImpl
 		InputStream inputStream = ZipInputStreamUtil.asZipInputStream(
 			zipInputStream);
 
-		if (_batchEngineFileProcessors.isEmpty() ||
+		if (_batchEngineContentProcessors.isEmpty() ||
 			(batchEngineTaskContentType != BatchEngineTaskContentType.JSON) ||
 			!ExportImportThreadLocal.isImportInProcess()) {
 
@@ -569,10 +569,10 @@ public class BatchEngineImportTaskExecutorImpl
 
 		String content = StringUtil.read(inputStream);
 
-		for (BatchEngineFileProcessor batchEngineFileProcessor :
-				_batchEngineFileProcessors) {
+		for (BatchEngineContentProcessor batchEngineContentProcessor :
+				_batchEngineContentProcessors) {
 
-			content = batchEngineFileProcessor.process(content);
+			content = batchEngineContentProcessor.process(content);
 		}
 
 		return new ByteArrayInputStream(content.getBytes());
@@ -643,8 +643,8 @@ public class BatchEngineImportTaskExecutorImpl
 	private BackgroundTaskStatusMessageSender
 		_backgroundTaskStatusMessageSender;
 
-	private ServiceTrackerList<BatchEngineFileProcessor>
-		_batchEngineFileProcessors;
+	private ServiceTrackerList<BatchEngineContentProcessor>
+		_batchEngineContentProcessors;
 
 	@Reference
 	private BatchEngineImportTaskErrorLocalService

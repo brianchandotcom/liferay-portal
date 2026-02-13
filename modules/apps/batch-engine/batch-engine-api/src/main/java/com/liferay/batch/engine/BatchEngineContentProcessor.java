@@ -8,7 +8,7 @@ package com.liferay.batch.engine;
 /**
  * @author Alejandro Tardín
  */
-public interface BatchEngineFileProcessor {
+public interface BatchEngineContentProcessor {
 
 	public String process(String content);
 

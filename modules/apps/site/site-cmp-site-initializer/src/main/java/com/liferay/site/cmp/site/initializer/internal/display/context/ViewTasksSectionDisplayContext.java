@@ -326,7 +326,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 		fdsFilters.add(new StateSelectionFDSFilter());
 		fdsFilters.add(
 			new TagSelectionFDSFilter(
-				_assetEntry, _assetTagLocalService, _depotEntryLocalService,
+				_assetTagLocalService, _depotEntryLocalService, _assetEntry,
 				_projectObjectDefinition));
 
 		return fdsFilters;

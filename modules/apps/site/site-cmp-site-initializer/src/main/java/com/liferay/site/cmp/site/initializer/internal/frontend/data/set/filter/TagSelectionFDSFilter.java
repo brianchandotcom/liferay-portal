@@ -5,7 +5,6 @@
 
 package com.liferay.site.cmp.site.initializer.internal.frontend.data.set.filter;
 
-import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntryModel;
@@ -15,6 +14,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
 
 import java.util.HashSet;
 import java.util.List;
@@ -27,13 +27,13 @@ import java.util.Set;
 public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	public TagSelectionFDSFilter(
-		AssetEntry assetEntry, AssetTagLocalService assetTagLocalService,
+		AssetTagLocalService assetTagLocalService,
 		DepotEntryLocalService depotEntryLocalService,
-		ObjectDefinition projectObjectDefinition) {
+		GroupedModel groupedModel, ObjectDefinition projectObjectDefinition) {
 
-		_assetEntry = assetEntry;
 		_assetTagLocalService = assetTagLocalService;
 		_depotEntryLocalService = depotEntryLocalService;
+		_groupedModel = groupedModel;
 		_projectObjectDefinition = projectObjectDefinition;
 	}
 
@@ -58,8 +58,8 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		long[] groupIds = null;
 
-		if (_assetEntry != null) {
-			groupIds = new long[] {_assetEntry.getGroupId()};
+		if (_groupedModel != null) {
+			groupIds = new long[] {_groupedModel.getGroupId()};
 		}
 		else {
 			groupIds = TransformUtil.transformToLongArray(
@@ -88,9 +88,9 @@ public class TagSelectionFDSFilter extends BaseSelectionFDSFilter {
 		return true;
 	}
 
-	private final AssetEntry _assetEntry;
 	private final AssetTagLocalService _assetTagLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private final GroupedModel _groupedModel;
 	private final ObjectDefinition _projectObjectDefinition;
 
 }

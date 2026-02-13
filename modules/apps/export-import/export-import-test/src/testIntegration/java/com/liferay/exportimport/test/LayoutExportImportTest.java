@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -158,6 +159,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	public void testDeleteMissingLayoutsSameSiteWithPromoteContentFeatureFlags()
 		throws Exception {
 
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35443");
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+
 		Layout layoutA = LayoutTestUtil.addTypePortletLayout(group);
 		Layout layoutB = LayoutTestUtil.addTypePortletLayout(group);
 
@@ -197,6 +203,11 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					layoutC.getUuid(), group.getGroupId(), false);
 
 			Assert.assertNull(fetchedLayoutCAfterImport);
+
+			FeatureFlagTestUtil.invokeFeatureFlagListeners(
+				TestPropsValues.getCompanyId(), false, "LPD-35443");
+			FeatureFlagTestUtil.invokeFeatureFlagListeners(
+				TestPropsValues.getCompanyId(), false, "LPD-35914");
 		}
 		finally {
 			importedGroup = originalImportedGroup;

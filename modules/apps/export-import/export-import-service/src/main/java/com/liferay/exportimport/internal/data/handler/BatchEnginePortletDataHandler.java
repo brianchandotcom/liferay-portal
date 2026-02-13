@@ -628,7 +628,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		for (Layout layout :
 				_layoutLocalService.getLayouts(
-					portletDataContext.getGroupId(), false)) {
+					portletDataContext.getGroupId(),
+					portletDataContext.isPrivateLayout())) {
 
 			String layoutERC = layout.getExternalReferenceCode();
 

@@ -185,14 +185,14 @@ public class NotificationsPortlet extends MVCPortlet {
 
 				_sendRedirect(actionRequest, actionResponse);
 			}
+			else if (actionName.equals("markNotificationAsRead")) {
+				_markAsRead(
+					actionName, actionRequest, actionResponse, themeDisplay);
+			}
 			else if (actionName.equals("markNotificationAsUnread") ||
 					 actionName.equals("markNotificationsAsUnread")) {
 
 				markAsUnread(actionRequest, actionResponse, actionName);
-			}
-			else if (actionName.equals("markNotificationAsRead")) {
-				_markAsRead(
-					actionName, actionRequest, actionResponse, themeDisplay);
 			}
 			else if (actionName.equals("unsubscribe")) {
 				unsubscribe(actionRequest, actionResponse);

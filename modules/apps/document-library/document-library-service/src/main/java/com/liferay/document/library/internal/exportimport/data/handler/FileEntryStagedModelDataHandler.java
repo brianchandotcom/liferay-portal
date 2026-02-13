@@ -130,6 +130,23 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	@Override
+	public FileEntry fetchStagedModelByExternalReferenceCodeAndGroupId(
+		String externalReferenceCode, long groupId) {
+
+		try {
+			return _dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+				groupId, externalReferenceCode);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
+	}
+
+	@Override
 	public FileEntry fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
@@ -444,8 +461,8 @@ public class FileEntryStagedModelDataHandler
 			FileEntry importedFileEntry = null;
 
 			if (portletDataContext.isDataStrategyMirror()) {
-				FileEntry existingFileEntry = fetchStagedModelByUuidAndGroupId(
-					fileEntry.getUuid(), portletDataContext.getScopeGroupId());
+				FileEntry existingFileEntry = fetchExistingStagedModel(
+					fileEntry, portletDataContext.getScopeGroupId());
 
 				if (existingFileEntry == null) {
 					if (portletDataContext.

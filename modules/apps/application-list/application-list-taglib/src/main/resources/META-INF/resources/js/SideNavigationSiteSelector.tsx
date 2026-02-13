@@ -33,6 +33,7 @@ function SideNavigationSiteSelector({
 		<ClayButtonWithIcon
 			aria-label={Liferay.Language.get('go-to-other-site')}
 			borderless
+			className="c-ml-auto"
 			data-qa-id="sideNavigationSiteSelectorButton"
 			displayType="secondary"
 			monospaced

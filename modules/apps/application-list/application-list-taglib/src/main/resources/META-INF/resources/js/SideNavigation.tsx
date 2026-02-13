@@ -112,14 +112,19 @@ function SideNavigation({
 			position="fixed"
 		>
 			<SidePanel.Header
+				className="c-mt-2 c-mx-1 c-px-2"
 				data-qa-id="sideNavigationHeader"
 				messages={{
 					backAriaLabel: Liferay.Language.get('go-back'),
 					closeAriaLabel: Liferay.Language.get('close-product-menu'),
 				}}
 			>
-				<div className="align-items-center d-flex flex-row">
-					<ClaySticker borderless displayType="outline">
+				<SidePanel.Title className="align-items-center c-my-0 d-flex">
+					<ClaySticker
+						borderless
+						className="c-mr-1"
+						displayType="outline"
+					>
 						<img
 							alt=""
 							className="c-mx-1"
@@ -128,15 +133,18 @@ function SideNavigation({
 						/>
 					</ClaySticker>
 
-					<SidePanel.Title className="c-px-2 flex-grow-1">
-						<span data-qa-id="sideNavigationLabel">{label}</span>
-					</SidePanel.Title>
+					<span
+						className="c-ml-2 text-5"
+						data-qa-id="sideNavigationLabel"
+					>
+						{label}
+					</span>
 
 					<SideNavigationSiteSelector
 						eventName={siteAdministrationItemSelectedEventName}
 						url={siteAdministrationItemSelectorUrl}
 					/>
-				</div>
+				</SidePanel.Title>
 			</SidePanel.Header>
 
 			<SidePanel.Body className="c-px-0">

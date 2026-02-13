@@ -113,13 +113,12 @@ public class LayoutUtil {
 		}
 
 		if (pageSpecifications == null) {
-			Layout layout = LayoutLocalServiceUtil.addLayout(
+			Layout layout = LayoutServiceUtil.addLayout(
 				GetterUtil.getString(
 					serviceContext.getAttribute("layoutExternalReferenceCode"),
 					null),
-				serviceContext.getUserId(), groupId, privateLayout,
-				parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap,
-				keywordsMap, robotsMap, type,
+				groupId, privateLayout, parentLayoutId, 0, 0, nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap, type,
 				typeSettingsUnicodeProperties.toString(), hidden, system,
 				friendlyURLMap, null, serviceContext);
 

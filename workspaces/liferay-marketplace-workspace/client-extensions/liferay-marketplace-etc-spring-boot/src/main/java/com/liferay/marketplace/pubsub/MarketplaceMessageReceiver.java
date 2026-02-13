@@ -30,10 +30,6 @@ import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Contact;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 
-import java.math.BigDecimal;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -196,9 +192,19 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		AccountResource accountResource =
 			_marketplaceService.getAccountResource();
 
-		List<String> contactKeys = new ArrayList<>();
+		Account account = accountResource.postAccount(
+			new Account() {
+				{
+					setCustomFields(() -> _getCustomFields(koroneikiAccount));
+					setDescription(koroneikiAccount::getDescription);
+					setExternalReferenceCode(koroneikiAccount::getKey);
+					setName(koroneikiAccount::getName);
+				}
+			});
 
 		try {
+			Long accountId = account.getId();
+
 			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
 				<Contact> contactPage = _koroneikiService.getContactPage(
 					koroneikiAccount.getKey(),
@@ -210,13 +216,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					break;
 				}
 
-				String contactKey = contact.getKey();
-				String contactEmailAddress = contact.getEmailAddress();
-
-				contactKeys.add(contactKey);
+				String emailAddress = contact.getEmailAddress();
 
 				try {
-					_marketplaceService.getUserAccount(contactEmailAddress);
+					_marketplaceService.getUserAccount(emailAddress);
+
+					_marketplaceService.postAccountUserAccountByEmailAddress(
+						accountId, emailAddress);
 
 					continue;
 				}
@@ -234,33 +240,14 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 							setGivenName(contact::getFirstName);
 						}
 					});
+
+				_marketplaceService.postAccountUserAccountByEmailAddress(
+					accountId, emailAddress);
 			}
 		}
 		catch (Exception exception) {
 			_log.error(exception);
 		}
-
-		UserAccount[] userAccounts = new UserAccount[contactKeys.size()];
-
-		for (int i = 0; i < contactKeys.size(); i++) {
-			String contactKey = contactKeys.get(i);
-
-			userAccounts[i] = new UserAccount() {
-				{
-					setExternalReferenceCode(() -> contactKey);
-				}
-			};
-		}
-
-		accountResource.postAccount(
-			new Account() {
-				{
-					setAccountUserAccounts(() -> userAccounts);
-					setCustomFields(() -> _getCustomFields(koroneikiAccount));
-					setDescription(koroneikiAccount::getDescription);
-					setName(koroneikiAccount::getName);
-				}
-			});
 	}
 
 	private void _processKoroneikiAccountUpdate(

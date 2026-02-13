@@ -487,6 +487,16 @@ public class MarketplaceService extends BaseService {
 			).toUri());
 	}
 
+	public void postAccountUserAccountByEmailAddress(
+			Long accountId, String emailAddress)
+		throws Exception {
+
+		UserAccountResource userAccountResource = getUserAccountResource();
+
+		userAccountResource.postAccountUserAccountByEmailAddress(
+			accountId, emailAddress);
+	}
+
 	public void postNotificationQueueEntry(
 			String emailAddress, String externalReferenceCode,
 			Map<String, String> map)

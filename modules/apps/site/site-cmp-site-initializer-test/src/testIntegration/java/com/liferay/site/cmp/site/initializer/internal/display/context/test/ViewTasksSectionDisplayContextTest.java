@@ -187,7 +187,7 @@ public class ViewTasksSectionDisplayContextTest
 			"bell-off", "unsubscribe", "Stop Watching Task", "post",
 			fdsActionDropdownItems.get(3));
 		assertFDSActionDropdownItem(
-			null, "assign-to", "Assign to...", null,
+			null, "assign-to", "Assign to...", "get",
 			Collections.singletonMap(
 				"entryClassName", objectDefinition.getClassName()),
 			fdsActionDropdownItems.get(4));

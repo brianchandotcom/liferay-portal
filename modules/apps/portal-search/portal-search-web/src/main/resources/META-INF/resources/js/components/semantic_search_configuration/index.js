@@ -407,19 +407,6 @@ export default function ({
 									['50']
 								);
 						}
-
-						if (
-							textEmbeddingProviderConfigurationJSON.attributes
-								?.maxCharacterCount > 10000
-						) {
-							textEmbeddingProviderConfigurationJSONError.attributes.maxCharacterCount =
-								sub(
-									Liferay.Language.get(
-										'please-enter-a-value-less-than-or-equal-to-x'
-									),
-									['10000']
-								);
-						}
 					}
 
 					if (
@@ -1554,7 +1541,7 @@ export default function ({
 						onChange={_handleInputChange(
 							`textEmbeddingProviderConfigurationJSONs[${index}].attributes.maxCharacterCount`
 						)}
-						options={{max: 10000, min: 50}}
+						options={{min: 50}}
 						required
 						touched={
 							formik.touched
@@ -1569,7 +1556,15 @@ export default function ({
 								index
 							]?.attributes?.maxCharacterCount
 						}
-					/>
+					>
+						<ClayForm.FeedbackGroup>
+							<ClayForm.Text>
+								{Liferay.Language.get(
+									'text-embedding-provider-max-character-count-refer-to-doc-help'
+								)}
+							</ClayForm.Text>
+						</ClayForm.FeedbackGroup>
+					</Input>
 
 					<Input
 						disabled={formik.isSubmitting}

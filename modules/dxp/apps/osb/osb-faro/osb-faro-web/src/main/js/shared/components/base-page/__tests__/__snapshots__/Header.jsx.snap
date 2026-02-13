@@ -15,6 +15,7 @@ exports[`BasePage.Header NavBar renders NavBar 1`] = `
           aria-expanded="false"
           aria-label="Open Menu, Current Page: Test"
           class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+          data-testid="navbarToggler"
           type="button"
         >
           <span
@@ -76,6 +77,7 @@ exports[`BasePage.Header NavBar renders NavBar w/o routeQueries 1`] = `
           aria-expanded="false"
           aria-label="Open Menu, Current Page: Test"
           class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+          data-testid="navbarToggler"
           type="button"
         >
           <span
@@ -137,6 +139,7 @@ exports[`BasePage.Header NavBar renders NavBar with deprecated label 1`] = `
           aria-expanded="false"
           aria-label="Open Menu, Current Page: Test"
           class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+          data-testid="navbarToggler"
           type="button"
         >
           <span

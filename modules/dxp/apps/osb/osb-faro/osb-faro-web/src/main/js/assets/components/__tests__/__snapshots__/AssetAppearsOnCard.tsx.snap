@@ -361,6 +361,7 @@ exports[`AssetAppearsOnCard should render 1`] = `
           >
             <div
               class="page-link"
+              data-testid="prevArrow"
             >
               <svg
                 class="lexicon-icon lexicon-icon-angle-left"
@@ -439,6 +440,7 @@ exports[`AssetAppearsOnCard should render 1`] = `
             <a
               aria-label="Go to the next page, 2"
               class="page-link"
+              data-testid="nextArrow"
               role="button"
               tabindex="0"
             >

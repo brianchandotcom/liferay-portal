@@ -15,6 +15,7 @@ exports[`TabsCard should render 1`] = `
           aria-expanded="false"
           aria-label="Open Menu, Current Page: Global Attributes"
           class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
+          data-testid="navbarToggler"
           type="button"
         >
           <span

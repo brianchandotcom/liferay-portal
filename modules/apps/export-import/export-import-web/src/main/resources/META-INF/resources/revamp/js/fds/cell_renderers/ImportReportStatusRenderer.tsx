@@ -6,6 +6,11 @@
 import {LabelRenderer} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
+const labelDisplayStyles = {
+	1: 'success',
+	2: 'danger',
+};
+
 export default function ImportReportStatusRenderer({
 	value,
 }: {
@@ -15,23 +20,16 @@ export default function ImportReportStatusRenderer({
 		label_i18n?: string;
 	};
 }) {
-	const getLabelType = (code: number): string => {
-		switch (code) {
-			case 1:
-				return 'success';
-			case 2:
-				return 'danger';
-			default:
-				return 'secondary';
-		}
-	};
+	if (!value) {
+		return null;
+	}
 
-	return value ? (
+	return (
 		<LabelRenderer
 			value={{
-				displayStyle: getLabelType(value.code),
+				displayStyle: labelDisplayStyles[value.code],
 				label: value.label_i18n ?? value.label,
 			}}
 		/>
-	) : null;
+	);
 }

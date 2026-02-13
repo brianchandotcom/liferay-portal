@@ -66,7 +66,6 @@ public class AgentDefinitionDisplayContext {
 
 		String href =
 			getAPIURL() + "/by-external-reference-code/{externalReferenceCode}";
-
 		String namespace = _portal.getPortletNamespace(
 			WorkflowPortletKeys.KALEO_DESIGNER);
 

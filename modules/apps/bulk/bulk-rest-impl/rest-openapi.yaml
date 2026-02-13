@@ -22,6 +22,7 @@ components:
             discriminator:
                 mapping:
                     AssignToBulkAction: "#/components/schemas/AssignToBulkAction"
+                    CopyBulkAction: "#/components/schemas/CopyBulkAction"
                     DefaultPermissionBulkAction: "#/components/schemas/DefaultPermissionBulkAction"
                     DeleteAssetVersionBulkAction: "#/components/schemas/DeleteAssetVersionBulkAction"
                     DeleteBulkAction: "#/components/schemas/DeleteBulkAction"
@@ -44,6 +45,7 @@ components:
                 type:
                     enum:
                         -   AssignToBulkAction
+                        -   CopyBulkAction
                         -   DefaultPermissionBulkAction
                         -   DeleteAssetVersionBulkAction
                         -   DeleteBulkAction
@@ -94,6 +96,15 @@ components:
                     type: integer
                 type:
                     type: string
+        CopyBulkAction:
+            allOf:
+                -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        objectEntryFolderId:
+                            description:
+                                The object entry folder's ID.
+                            format: int64
+                            type: integer
         DefaultPermissionBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"

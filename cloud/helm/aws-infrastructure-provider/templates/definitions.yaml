@@ -27,8 +27,6 @@ spec:
                                         enabled:
                                             default: false
                                             type: boolean
-                                        planName:
-                                            type: string
                                         region:
                                             type: string
                                         rules:
@@ -50,19 +48,9 @@ spec:
                                                 type: object
                                             minItems: 1
                                             type: array
-                                        selectionName:
-                                            type: string
-                                        serviceRoleName:
-                                            type: string
-                                        vaultName:
-                                            type: string
                                     required:
-                                        -   planName
                                         -   region
                                         -   rules
-                                        -   selectionName
-                                        -   serviceRoleName
-                                        -   vaultName
                                     type: object
                                 commonTags:
                                     additionalProperties: true

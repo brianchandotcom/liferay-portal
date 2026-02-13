@@ -35,26 +35,69 @@ spec:
                         {{- $managementPolicies := $xr.spec.deletionProtection | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
                         {{- $managementPoliciesNoUpdate := $xr.spec.deletionProtection | ternary (list "Create" "Observe") (list "Create" "Delete" "Observe") | toJson -}}
                         {{- $namespace := $xr.metadata.namespace -}}
+                        {{- $oidcProvider := `}}{{ .Values.aws.oidcProvider | quote }}{{` -}}
                         {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
 
                         {{- $backupSpec := $xr.spec.backup | default dict -}}
 
                         {{- if $backupSpec.enabled }}
                         ---
+                        apiVersion: s3.aws.m.upbound.io/v1beta1
+                        kind: Bucket
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $accountId}}-{{ $baseName }}-argo-wf
+                                gotemplating.fn.crossplane.io/composition-resource-name: argo-wf
+                            labels:
+                                app: liferay
+                                component: argo-wf
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $accountId}}-{{ $baseName }}-argo-wf
+                        spec:
+                            forProvider:
+                                region: {{ $backupSpec.region }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: s3.aws.m.upbound.io/v1beta1
+                        kind: BucketVersioning
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $accountId}}-{{ $baseName }}-argo-wf-versioning
+                                gotemplating.fn.crossplane.io/composition-resource-name: argo-wf-versioning
+                            labels:
+                                app: liferay
+                                component: argo-wf
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $accountId}}-{{ $baseName }}-argo-wf-versioning
+                        spec:
+                            forProvider:
+                                bucketSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: argo-wf
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                region: {{ $backupSpec.region }}
+                                versioningConfiguration:
+                                    status: Enabled
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
                         apiVersion: backup.aws.m.upbound.io/v1beta1
                         kind: Plan
                         metadata:
                             annotations:
-                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.planName }}
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-plan
                             labels:
                                 app: liferay
                                 component: backup-plan
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-{{ $backupSpec.planName }}
+                            name: {{ $baseName }}-backup-plan
                         spec:
                             forProvider:
-                                name: {{ $baseName }}-{{ $backupSpec.planName }}
+                                name: {{ $baseName }}-backup-plan
                                 region: {{ $backupSpec.region }}
                                 rule:
                                     {{- range $rule := $backupSpec.rules }}
@@ -73,17 +116,102 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: Policy
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-backup-restore-policy
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-policy
+                            labels:
+                                app: liferay
+                                component: backup-restore-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-policy
+                        spec:
+                            forProvider:
+                                policy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": [
+                                                    "s3:DeleteObject",
+                                                    "s3:GetObject",
+                                                    "s3:ListBucket",
+                                                    "s3:PutObject"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Resource": [
+                                                    "arn:aws:s3:::{{ $accountId}}-{{ $baseName }}-argo-wf",
+                                                    "arn:aws:s3:::{{ $accountId}}-{{ $baseName }}-argo-wf/*"
+                                                ]
+                                            },
+                                            {
+                                                "Action": "iam:PassRole",
+                                                "Effect": "Allow",
+                                                "Resource": "arn:aws:iam::{{ $accountId }}:role/{{ $baseName }}-backup-service-role"
+                                            },
+                                            {
+                                                "Action": [
+                                                    "backup:DescribeRecoveryPoint",
+                                                    "backup:DescribeRestoreJob",
+                                                    "backup:GetRecoveryPointRestoreMetadata",
+                                                    "backup:ListRecoveryPointsByBackupVault",
+                                                    "backup:StartRestoreJob"
+                                                ],
+                                                "Effect": "Allow",
+                                                "Resource": "*"
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
                         kind: Role
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.serviceRoleName }}
-                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.serviceRoleName }}
+                                crossplane.io/external-name: {{ $baseName }}-backup-restore-role
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role
+                            labels:
+                                app: liferay
+                                component: backup-restore-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-role
+                        spec:
+                            forProvider:
+                                assumeRolePolicy: |
+                                    {
+                                        "Statement": [
+                                            {
+                                                "Action": "sts:AssumeRoleWithWebIdentity",
+                                                "Condition": {
+                                                    "StringEquals": {
+                                                        "{{ $oidcProvider }}:aud": "sts.amazonaws.com",
+                                                        "{{ $oidcProvider }}:sub": "system:serviceaccount:{{ $namespace }}:backup-restore"
+                                                    }
+                                                },
+                                                "Effect": "Allow",
+                                                "Principal": {
+                                                    "Federated": "arn:aws:iam::{{ $accountId }}:oidc-provider/{{ $oidcProvider }}"
+                                                }
+                                            }
+                                        ],
+                                        "Version": "2012-10-17"
+                                    }
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: Role
+                        metadata:
+                            annotations:
+                                crossplane.io/external-name: {{ $baseName }}-backup-service-role
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-service-role
                             labels:
                                 app: liferay
                                 component: backup-service-role
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-{{ $backupSpec.serviceRoleName }}
+                            name: {{ $baseName }}-backup-service-role
                         spec:
                             forProvider:
                                 assumeRolePolicy: |
@@ -106,18 +234,45 @@ spec:
                                     -   arn:aws:iam::aws:policy/AWSBackupServiceRolePolicyForS3Restore
                             managementPolicies: {{ $managementPolicies }}
                         ---
+                        apiVersion: iam.aws.m.upbound.io/v1beta1
+                        kind: RolePolicyAttachment
+                        metadata:
+                            annotations:
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-restore-role-policy-attachment
+                            labels:
+                                app: liferay
+                                component: backup-restore-role
+                                environmentId: {{ $environmentId }}
+                                projectId: {{ $projectId }}
+                            name: {{ $baseName }}-backup-restore-role-policy-attachment
+                        spec:
+                            forProvider:
+                                policyArnSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-restore-role
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                                roleSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: backup-restore-role
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
+                            managementPolicies: {{ $managementPolicies }}
+                        ---
                         apiVersion: backup.aws.m.upbound.io/v1beta1
                         kind: Selection
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.selectionName }}
-                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.selectionName }}
+                                crossplane.io/external-name: {{ $baseName }}-by-tags-selection
+                                gotemplating.fn.crossplane.io/composition-resource-name: by-tags-selection
                             labels:
                                 app: liferay
                                 component: backup-selection
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-{{ $backupSpec.selectionName }}
+                            name: {{ $baseName }}-by-tags-selection
                         spec:
                             forProvider:
                                 condition:
@@ -134,7 +289,7 @@ spec:
                                         component: backup-service-role
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                name: {{ $baseName }}-{{ $backupSpec.selectionName }}
+                                name: {{ $baseName }}-by-tags-selection
                                 planIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -149,14 +304,14 @@ spec:
                         kind: Vault
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $baseName }}-{{ $backupSpec.vaultName }}
-                                gotemplating.fn.crossplane.io/composition-resource-name: {{ $backupSpec.vaultName }}
+                                crossplane.io/external-name: {{ $baseName }}-backup-vault
+                                gotemplating.fn.crossplane.io/composition-resource-name: backup-vault
                             labels:
                                 app: liferay
                                 component: backup-vault
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $baseName }}-{{ $backupSpec.vaultName }}
+                            name: {{ $baseName }}-backup-vault
                         spec:
                             forProvider:
                                 region: {{ $backupSpec.region }}

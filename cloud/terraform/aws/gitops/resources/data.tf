@@ -158,6 +158,7 @@ data "aws_iam_policy_document" "provider_aws_iam_policy_document" {
 			"iam:ListAttachedRolePolicies",
 			"iam:ListAttachedUserPolicies",
 			"iam:ListGroupsForUser",
+			"iam:ListInstanceProfilesForRole",
 			"iam:ListPolicyVersions",
 			"iam:ListRolePolicies",
 			"iam:ListUserPolicies",
@@ -167,6 +168,7 @@ data "aws_iam_policy_document" "provider_aws_iam_policy_document" {
 			"iam:TagUser",
 			"iam:UntagUser",
 			"iam:UpdateAccessKey",
+			"iam:UpdateAssumeRolePolicy",
 			"iam:UpdateUser",
 		]
 		effect="Allow"

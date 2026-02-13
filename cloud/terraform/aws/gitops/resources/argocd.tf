@@ -189,6 +189,10 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 								value=data.aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
 							},
 							{
+								name="aws.oidcProvider"
+								value=local.oidc_provider
+							},
+							{
 								name="aws.privateSubnetIds"
 								value=jsonencode(data.aws_subnets.private.ids)
 							},

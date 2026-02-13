@@ -33,6 +33,8 @@ public class UserAccountEntityModel implements EntityModel {
 		List<EntityField> entityFieldList = new ArrayList<>(
 			Arrays.asList(
 				new CollectionEntityField(
+					new IntegerEntityField("groupIds", locale -> "groupIds")),
+				new CollectionEntityField(
 					new StringEntityField(
 						"keywords", locale -> "assetTagNames.lowercase")),
 				new CollectionEntityField(

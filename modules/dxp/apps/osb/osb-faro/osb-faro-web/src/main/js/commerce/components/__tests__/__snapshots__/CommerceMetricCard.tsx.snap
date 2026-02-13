@@ -9,10 +9,15 @@ exports[`CommerceMetricCard should render 1`] = `
     <div
       class="card-header align-items-center d-flex justify-content-between"
     >
-      <div
-        class="card-title"
-      >
-        this is the label
+      <div>
+        <div
+          class="card-title"
+        >
+          this is the label
+        </div>
+        <span
+          class="text-4 text-secondary"
+        />
       </div>
       <div
         class="d-flex"

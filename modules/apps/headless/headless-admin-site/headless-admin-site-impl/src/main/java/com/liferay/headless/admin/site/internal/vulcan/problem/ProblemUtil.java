@@ -15,6 +15,12 @@ import java.util.Locale;
 public class ProblemUtil {
 
 	public static <T extends Throwable> Problem getProblem(
+		Problem.Status status, T throwable) {
+
+		return getProblem(throwable.getMessage(), status, throwable);
+	}
+
+	public static <T extends Throwable> Problem getProblem(
 		String message, Problem.Status status, T throwable) {
 
 		return new Problem() {
@@ -43,6 +49,10 @@ public class ProblemUtil {
 			}
 
 		};
+	}
+
+	public static <T extends Throwable> Problem getProblem(T throwable) {
+		return getProblem(Problem.Status.BAD_REQUEST, throwable);
 	}
 
 }

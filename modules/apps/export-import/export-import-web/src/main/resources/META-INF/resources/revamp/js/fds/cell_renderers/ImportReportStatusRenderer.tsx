@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {LabelRenderer} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 export default function ImportReportStatusRenderer({
@@ -17,21 +18,20 @@ export default function ImportReportStatusRenderer({
 	const getLabelType = (code: number): string => {
 		switch (code) {
 			case 1:
-				return 'label-success';
+				return 'success';
 			case 2:
-				return 'label-danger';
+				return 'danger';
 			default:
-				return 'label-secondary';
+				return 'secondary';
 		}
 	};
 
 	return value ? (
-		<span className="taglib-workflow-status">
-			<span className="workflow-status">
-				<strong className={`label ${getLabelType(value.code)}`}>
-					{value.label_i18n ?? value.label}
-				</strong>
-			</span>
-		</span>
+		<LabelRenderer
+			value={{
+				displayStyle: getLabelType(value.code),
+				label: value.label_i18n ?? value.label,
+			}}
+		/>
 	) : null;
 }

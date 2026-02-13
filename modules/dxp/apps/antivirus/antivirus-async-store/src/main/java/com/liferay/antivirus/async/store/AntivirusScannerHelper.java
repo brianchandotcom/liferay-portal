@@ -260,9 +260,9 @@ public class AntivirusScannerHelper {
 	}
 
 	private String _getVersion(String versionLabel) {
-		String[] versionParts = StringUtil.split(versionLabel, "~");
-
 		String version = "";
+
+		String[] versionParts = StringUtil.split(versionLabel, "~");
 
 		if (versionParts.length > 0) {
 			version = versionParts[0];

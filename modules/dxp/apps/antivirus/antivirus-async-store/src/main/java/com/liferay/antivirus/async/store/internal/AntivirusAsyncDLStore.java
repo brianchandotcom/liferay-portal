@@ -141,6 +141,39 @@ public class AntivirusAsyncDLStore implements DLStore {
 
 	@Override
 	public void copyFileVersion(
+			DLStoreRequest dlStoreRequest, String toVersionLabel)
+		throws PortalException {
+
+		InputStream inputStream = _store.getFileAsStream(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName(), dlStoreRequest.getVersionLabel());
+
+		if (inputStream == null) {
+			inputStream = new UnsyncByteArrayInputStream(new byte[0]);
+		}
+
+		DLStoreRequest dlStoreRequest1 = DLStoreRequest.builder(
+			dlStoreRequest.getCompanyId(), dlStoreRequest.getRepositoryId(),
+			dlStoreRequest.getFileName()
+		).className(
+			dlStoreRequest.getClassName()
+		).classPK(
+			dlStoreRequest.getClassPK()
+		).fileExtension(
+			dlStoreRequest.getFileExtension()
+		).sourceFileName(
+			dlStoreRequest.getSourceFileName()
+		).validateFileExtension(
+			false
+		).versionLabel(
+			toVersionLabel
+		).build();
+
+		addFile(dlStoreRequest1, inputStream);
+	}
+
+	@Override
+	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {

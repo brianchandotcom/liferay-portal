@@ -78,6 +78,15 @@ public class DLStoreUtil {
 		dlStore.addFile(dlStoreRequest, inputStream);
 	}
 
+	public static void copyFileVersion(
+			DLStoreRequest dlStoreRequest, String toVersionLabel)
+		throws PortalException {
+
+		DLStore dlStore = _getDLStore();
+
+		dlStore.copyFileVersion(dlStoreRequest, toVersionLabel);
+	}
+
 	/**
 	 * Creates a new copy of the file version.
 	 *

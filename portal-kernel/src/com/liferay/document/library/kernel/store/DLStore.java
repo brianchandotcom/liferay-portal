@@ -34,6 +34,10 @@ public interface DLStore {
 		throws PortalException;
 
 	public void copyFileVersion(
+			DLStoreRequest dlStoreRequest, String toVersionLabel)
+		throws PortalException;
+
+	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException;

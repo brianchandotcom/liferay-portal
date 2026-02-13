@@ -66,8 +66,9 @@ public class ChangesetEntryModelImpl
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
-		{"changesetCollectionId", Types.BIGINT}, {"classNameId", Types.BIGINT},
-		{"classPK", Types.BIGINT}
+		{"changesetCollectionId", Types.BIGINT},
+		{"classExternalReferenceCode", Types.VARCHAR},
+		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -82,12 +83,13 @@ public class ChangesetEntryModelImpl
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("changesetCollectionId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classExternalReferenceCode", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ChangesetEntry (changesetEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,changesetCollectionId LONG,classNameId LONG,classPK LONG)";
+		"create table ChangesetEntry (changesetEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,changesetCollectionId LONG,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,classPK LONG)";
 
 	public static final String TABLE_SQL_DROP = "drop table ChangesetEntry";
 
@@ -113,32 +115,38 @@ public class ChangesetEntryModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSNAMEID_COLUMN_BITMASK = 2L;
+	public static final long CLASSEXTERNALREFERENCECODE_COLUMN_BITMASK = 2L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CLASSPK_COLUMN_BITMASK = 4L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 4L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long COMPANYID_COLUMN_BITMASK = 8L;
+	public static final long CLASSPK_COLUMN_BITMASK = 8L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long GROUPID_COLUMN_BITMASK = 16L;
+	public static final long COMPANYID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long GROUPID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
 	 *		#getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long CHANGESETENTRYID_COLUMN_BITMASK = 32L;
+	public static final long CHANGESETENTRYID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -266,6 +274,9 @@ public class ChangesetEntryModelImpl
 				"changesetCollectionId",
 				ChangesetEntry::getChangesetCollectionId);
 			attributeGetterFunctions.put(
+				"classExternalReferenceCode",
+				ChangesetEntry::getClassExternalReferenceCode);
+			attributeGetterFunctions.put(
 				"classNameId", ChangesetEntry::getClassNameId);
 			attributeGetterFunctions.put("classPK", ChangesetEntry::getClassPK);
 
@@ -314,6 +325,10 @@ public class ChangesetEntryModelImpl
 				"changesetCollectionId",
 				(BiConsumer<ChangesetEntry, Long>)
 					ChangesetEntry::setChangesetCollectionId);
+			attributeSetterBiConsumers.put(
+				"classExternalReferenceCode",
+				(BiConsumer<ChangesetEntry, String>)
+					ChangesetEntry::setClassExternalReferenceCode);
 			attributeSetterBiConsumers.put(
 				"classNameId",
 				(BiConsumer<ChangesetEntry, Long>)
@@ -497,6 +512,36 @@ public class ChangesetEntryModelImpl
 	}
 
 	@Override
+	public String getClassExternalReferenceCode() {
+		if (_classExternalReferenceCode == null) {
+			return "";
+		}
+		else {
+			return _classExternalReferenceCode;
+		}
+	}
+
+	@Override
+	public void setClassExternalReferenceCode(
+		String classExternalReferenceCode) {
+
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_classExternalReferenceCode = classExternalReferenceCode;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalClassExternalReferenceCode() {
+		return getColumnOriginalValue("classExternalReferenceCode");
+	}
+
+	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
 			return "";
@@ -627,6 +672,8 @@ public class ChangesetEntryModelImpl
 		changesetEntryImpl.setCreateDate(getCreateDate());
 		changesetEntryImpl.setModifiedDate(getModifiedDate());
 		changesetEntryImpl.setChangesetCollectionId(getChangesetCollectionId());
+		changesetEntryImpl.setClassExternalReferenceCode(
+			getClassExternalReferenceCode());
 		changesetEntryImpl.setClassNameId(getClassNameId());
 		changesetEntryImpl.setClassPK(getClassPK());
 
@@ -655,6 +702,8 @@ public class ChangesetEntryModelImpl
 			this.<Date>getColumnOriginalValue("modifiedDate"));
 		changesetEntryImpl.setChangesetCollectionId(
 			this.<Long>getColumnOriginalValue("changesetCollectionId"));
+		changesetEntryImpl.setClassExternalReferenceCode(
+			this.<String>getColumnOriginalValue("classExternalReferenceCode"));
 		changesetEntryImpl.setClassNameId(
 			this.<Long>getColumnOriginalValue("classNameId"));
 		changesetEntryImpl.setClassPK(
@@ -774,6 +823,18 @@ public class ChangesetEntryModelImpl
 		changesetEntryCacheModel.changesetCollectionId =
 			getChangesetCollectionId();
 
+		changesetEntryCacheModel.classExternalReferenceCode =
+			getClassExternalReferenceCode();
+
+		String classExternalReferenceCode =
+			changesetEntryCacheModel.classExternalReferenceCode;
+
+		if ((classExternalReferenceCode != null) &&
+			(classExternalReferenceCode.length() == 0)) {
+
+			changesetEntryCacheModel.classExternalReferenceCode = null;
+		}
+
 		changesetEntryCacheModel.classNameId = getClassNameId();
 
 		changesetEntryCacheModel.classPK = getClassPK();
@@ -848,6 +909,7 @@ public class ChangesetEntryModelImpl
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private long _changesetCollectionId;
+	private String _classExternalReferenceCode;
 	private long _classNameId;
 	private long _classPK;
 
@@ -888,6 +950,8 @@ public class ChangesetEntryModelImpl
 		_columnOriginalValues.put("modifiedDate", _modifiedDate);
 		_columnOriginalValues.put(
 			"changesetCollectionId", _changesetCollectionId);
+		_columnOriginalValues.put(
+			"classExternalReferenceCode", _classExternalReferenceCode);
 		_columnOriginalValues.put("classNameId", _classNameId);
 		_columnOriginalValues.put("classPK", _classPK);
 	}
@@ -919,9 +983,11 @@ public class ChangesetEntryModelImpl
 
 		columnBitmasks.put("changesetCollectionId", 128L);
 
-		columnBitmasks.put("classNameId", 256L);
+		columnBitmasks.put("classExternalReferenceCode", 256L);
 
-		columnBitmasks.put("classPK", 512L);
+		columnBitmasks.put("classNameId", 512L);
+
+		columnBitmasks.put("classPK", 1024L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

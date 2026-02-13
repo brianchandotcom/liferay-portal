@@ -465,7 +465,7 @@ public class SearchResultSummaryDisplayContextBuilderTest {
 		).when(
 			indexer
 		).getSummary(
-			Mockito.any(), Mockito.anyString(), Mockito.any(), Mockito.any()
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()
 		);
 
 		return indexer;

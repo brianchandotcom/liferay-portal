@@ -182,7 +182,7 @@ public class SearchResultsPortletTest {
 		).when(
 			indexer
 		).getSummary(
-			Mockito.any(), Mockito.anyString(), Mockito.any(), Mockito.any()
+			Mockito.any(), Mockito.any(), Mockito.any(), Mockito.any()
 		);
 
 		return indexer;

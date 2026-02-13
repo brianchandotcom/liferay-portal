@@ -16,7 +16,6 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
@@ -67,7 +66,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -578,33 +576,15 @@ public class OIDCUserInfoProcessor {
 			String issuer, String tokenEndpoint)
 		throws Exception {
 
-		String filterString = null;
+		Dictionary<String, Object> properties =
+			OpenIdConnectProviderUtil.
+				getOpenIdConnectProviderConfigurationProperties(
+					authServerWellKnownURI, clientId, companyId,
+					_configurationAdmin, issuer, tokenEndpoint);
 
-		if (authServerWellKnownURI.equals(
-				OpenIdConnectProviderUtil.generateLocalWellKnownURI(
-					issuer, tokenEndpoint))) {
-
-			filterString = StringBundler.concat(
-				"(&(companyId=", companyId, ")(issuerURL=", issuer,
-				")(openIdConnectClientId=", clientId, ")(tokenEndpoint=",
-				tokenEndpoint, "))");
-		}
-		else {
-			filterString = StringBundler.concat(
-				"(&(companyId=", companyId, ")(discoveryEndpoint=",
-				authServerWellKnownURI, ")(openIdConnectClientId=", clientId,
-				"))");
-		}
-
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			filterString);
-
-		if (ArrayUtil.isEmpty(configurations)) {
+		if (properties == null) {
 			return "email";
 		}
-
-		Dictionary<String, Object> properties =
-			configurations[0].getProperties();
 
 		return GetterUtil.getString(properties.get("matcherField"));
 	}

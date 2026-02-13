@@ -36,6 +36,7 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
+import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -93,6 +94,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
@@ -637,8 +639,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 		Date originalStartDate = portletDataContext.getStartDate();
 
-		Date portletLastPublishDate = ExportImportDateUtil.getLastPublishDate(
-			portletDataContext, jxPortletPreferences);
+		Date portletLastPublishDate = _getPortletLastPublishDate(
+			jxPortletPreferences, portletDataContext);
 
 		portletDataContext.setStartDate(portletLastPublishDate);
 
@@ -1244,13 +1246,68 @@ public class PortletExportControllerImpl implements PortletExportController {
 	private PortletDataHandler _getPortletDataHandler(
 		PortletDataContext portletDataContext, Portlet portlet) {
 
-		portlet = _replacePortlet(portletDataContext, portlet);
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
 
-		if (portlet != null) {
-			return portlet.getPortletDataHandlerInstance();
+		if (portletDataHandler.isBatch()) {
+			if (portletDataContext.isPrivateLayout() &&
+				ExportImportThreadLocal.isLayoutStagingInProcess() &&
+				!Objects.equals(
+					LayoutAdminPortletKeys.LAYOUT_SET_LAYOUTS,
+					portlet.getPortletId())) {
+
+				return null;
+			}
+
+			return portletDataHandler;
 		}
 
-		return null;
+		if (!ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			return portletDataHandler;
+		}
+
+		if (ExportImportThreadLocal.isPortletStagingInProcess()) {
+			Portlet changesetPortlet = _portletLocalService.getPortletById(
+				ChangesetPortletKeys.CHANGESET);
+
+			return changesetPortlet.getPortletDataHandlerInstance();
+		}
+
+		if (ExportImportThreadLocal.isLayoutStagingInProcess() &&
+			!Objects.equals(
+				ChangesetPortletKeys.CHANGESET, portlet.getPortletId())) {
+
+			return null;
+		}
+
+		return portletDataHandler;
+	}
+
+	private Date _getPortletLastPublishDate(
+			jakarta.portlet.PortletPreferences jxPortletPreferences,
+			PortletDataContext portletDataContext)
+		throws Exception {
+
+		if (ExportImportDateUtil.isRangeFromLastPublishDate(
+				portletDataContext)) {
+
+			if (jxPortletPreferences != null) {
+				return ExportImportDateUtil.getLastPublishDate(
+					portletDataContext, jxPortletPreferences);
+			}
+
+			long changesetLastPublishDate = MapUtil.getLong(
+				portletDataContext.getParameterMap(),
+				"changesetLastPublishDate");
+
+			if (changesetLastPublishDate > 0) {
+				return new Date(changesetLastPublishDate);
+			}
+		}
+
+		return portletDataContext.getStartDate();
 	}
 
 	private boolean _hasPortletId(
@@ -1304,28 +1361,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 		}
 
 		return false;
-	}
-
-	private Portlet _replacePortlet(
-		PortletDataContext portletDataContext, Portlet portlet) {
-
-		if (ExportImportDateUtil.isRangeFromLastPublishDate(
-				portletDataContext)) {
-
-			String changesetPortletId = ChangesetPortletKeys.CHANGESET;
-
-			if (ExportImportThreadLocal.isPortletStagingInProcess()) {
-				return _portletLocalService.getPortletById(changesetPortletId);
-			}
-
-			if (ExportImportThreadLocal.isLayoutStagingInProcess() &&
-				!changesetPortletId.equals(portlet.getPortletId())) {
-
-				return null;
-			}
-		}
-
-		return portlet;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

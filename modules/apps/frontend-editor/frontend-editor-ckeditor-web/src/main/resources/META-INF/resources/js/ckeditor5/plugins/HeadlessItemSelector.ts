@@ -10,6 +10,33 @@ import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 
 import getIcon from '../utils/getIcon';
 
+const ALLOWED_IMAGE_FILE_EXTENSIONS = [
+	'apng',
+	'avif',
+	'gif',
+	'jpg',
+	'jpeg',
+	'png',
+	'svg',
+	'tiff',
+	'webp',
+];
+
+const CMS_FILE_ITEM_SELECTOR_CONFIG = {
+	items: [],
+	locator: {
+		id: 'embedded.id',
+		label: 'embedded.title',
+		value: 'embedded.id',
+	},
+	multiSelect: false,
+};
+
+const CMS_FILE_SEARCH_API_URL = `${location.origin}/o/search/v1.0/search?${[
+	'emptySearch=true',
+	'nestedFields=embedded,file.thumbnailURL',
+].join('&')}`;
+
 const FDS_PROPS: IFrontendDataSetProps = {
 	filters: [
 		{
@@ -76,21 +103,6 @@ const FDS_PROPS: IFrontendDataSetProps = {
 	],
 };
 
-const CMS_FILE_ITEM_SELECTOR_CONFIG = {
-	apiURL: `${location.origin}/o/search/v1.0/search?${[
-		'emptySearch=true',
-		'nestedFields=embedded,file.thumbnailURL',
-		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
-	].join('&')}`,
-	items: [],
-	locator: {
-		id: 'embedded.id',
-		label: 'embedded.title',
-		value: 'embedded.id',
-	},
-	multiSelect: false,
-};
-
 function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
@@ -135,6 +147,7 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.on('execute', () => {
 				openItemSelectorModal({
 					...CMS_FILE_ITEM_SELECTOR_CONFIG,
+					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3) and (extension in ('${ALLOWED_IMAGE_FILE_EXTENSIONS.join("','")}')))`,
 					fdsProps: {
 						...FDS_PROPS,
 						id: `ImageHeadlessItemSelectorFDS_${getRandomId()}`,
@@ -175,6 +188,7 @@ class HeadlessItemSelector extends Plugin {
 			buttonView.on('execute', () => {
 				openItemSelectorModal({
 					...CMS_FILE_ITEM_SELECTOR_CONFIG,
+					apiURL: `${CMS_FILE_SEARCH_API_URL}&filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))`,
 					fdsProps: {
 						...FDS_PROPS,
 						id: `VideoHeadlessItemSelectorFDS_${getRandomId()}`,

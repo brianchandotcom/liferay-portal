@@ -119,7 +119,7 @@ export default function refreshReferencedStructures({
 			// Ignore if it's not in the new objectDefinition
 
 			const objectField = objectDefinition?.objectFields?.find(
-				(objectField) => objectField.name === child.name
+				(objectField) => objectField.externalReferenceCode === child.erc
 			);
 
 			if (
@@ -148,13 +148,17 @@ export default function refreshReferencedStructures({
 			(child) => child.name
 		);
 
+		const childrenERCs = Array.from(root.children.values()).map(
+			(child) => child.erc
+		);
+
 		// Insert new fields
 
 		const newObjectFields = Array.from(
 			objectDefinition.objectFields || []
 		).filter(
 			(objectField) =>
-				!childrenNames.includes(objectField.name) &&
+				!childrenERCs.includes(objectField.externalReferenceCode) &&
 				isCustomObjectField(objectField)
 		);
 

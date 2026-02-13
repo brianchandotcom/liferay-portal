@@ -54,8 +54,6 @@ public class DataCleanupPreupgradeProcessUtil {
 			String fullyQualifiedName)
 		throws Exception {
 
-		String tableName = null;
-
 		if (StringUtil.startsWith(
 				fullyQualifiedName,
 				"com.liferay.object.model.ObjectDefinition#")) {
@@ -69,12 +67,12 @@ public class DataCleanupPreupgradeProcessUtil {
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					if (resultSet.next()) {
-						tableName = resultSet.getString(1);
+						return resultSet.getString(1);
 					}
 				}
 			}
 
-			return tableName;
+			return null;
 		}
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
@@ -92,13 +90,11 @@ public class DataCleanupPreupgradeProcessUtil {
 
 				clazz = bundle.loadClass(implementationClassName.value());
 
-				tableName = (String)clazz.getField(
+				return (String)clazz.getField(
 					"TABLE_NAME"
 				).get(
 					null
 				);
-
-				break;
 			}
 			catch (ClassNotFoundException classNotFoundException) {
 				if (_log.isDebugEnabled()) {
@@ -107,7 +103,7 @@ public class DataCleanupPreupgradeProcessUtil {
 			}
 		}
 
-		return tableName;
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

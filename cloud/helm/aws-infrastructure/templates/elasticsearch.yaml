@@ -1,9 +1,10 @@
 {{- $search := .Values.search -}}
 {{- if $search.enabled -}}
+{{- $name := $search.name | default (printf "%s-es" .Release.Name) -}}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
-    name: {{ $search.name | default (printf "%s-es" .Release.Name) }}
+    name: {{ $name }}
     namespace: {{ .Release.Namespace }}
 spec:
     http:

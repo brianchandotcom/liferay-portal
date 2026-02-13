@@ -8,14 +8,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String authorizationEndpoint = (String)request.getAttribute("authorization_endpoint");
-String jwksUri = (String)request.getAttribute("jwks_uri");
+String authorizationEndpoint = (String)request.getAttribute("authorizationEndpoint");
+String jwksURI = (String)request.getAttribute("jwksURI");
 String redirect = ParamUtil.getString(request, "redirect");
-String supportedGrantTypes = (String)request.getAttribute("supported-grant-types");
-String supportedScopes = (String)request.getAttribute("supported-scopes");
-String supportedSubjectTypes = (String)request.getAttribute("supported_subject_types");
-String tokenEndpoint = (String)request.getAttribute("token_endpoint");
-String userinfoEndpoint = (String)request.getAttribute("userinfo_endpoint");
+String supportedGrantTypes = (String)request.getAttribute("supportedGrantTypes");
+String supportedScopes = (String)request.getAttribute("supportedScopes");
+String supportedSubjectTypes = (String)request.getAttribute("supportedSubjectTypes");
+String tokenEndpoint = (String)request.getAttribute("tokenEndpoint");
+String userInfoEndpoint = (String)request.getAttribute("userInfoEndpoint");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
@@ -25,13 +25,13 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(request, "new-oauth-client-as-local-metadata") : LanguageUtil.get(request, "edit-oauth-client-as-local-metadata"));
 
 JSONObject metadataJSONObject = JSONUtil.put(
-	"authorization_endpoint", ""
+	"authorizationEndpoint", ""
 ).put(
 	"issuer", ""
 ).put(
 	"jwks_uri", ""
 ).put(
-	"token_endpoint", ""
+	"tokenEndpoint", ""
 );
 %>
 
@@ -40,8 +40,8 @@ JSONObject metadataJSONObject = JSONUtil.put(
 </portlet:actionURL>
 
 <aui:form action="<%= updateOAuthClientASLocalMetadataURL %>" id="oauth-client-as-fm" method="post" name="oauth-client-as-fm" onSubmit="event.preventDefault();">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="oAuthClientASLocalMetadataId" type="hidden" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId() : StringPool.BLANK %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 	<aui:model-context bean="<%= oAuthClientASLocalMetadata %>" model="<%= OAuthClientASLocalMetadata.class %>" />
 
@@ -54,8 +54,10 @@ JSONObject metadataJSONObject = JSONUtil.put(
 
 				<liferay-ui:error exception="<%= DuplicateOAuthClientEntryException.class %>" message="oauth-client-as-local-metadata-duplicate-as-issuer" />
 
+				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataIssuerException.class %>" message="oauth-client-as-local-metadata-issuer-cannot-be-empty" />
+
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataLocalWellKnownURIException.class %>">
-					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-issuer-uri-x" />
+					<liferay-ui:message arguments="<%= HtmlUtil.escape(((OAuthClientASLocalMetadataLocalWellKnownURIException)errorException).getMessage()) %>" key="oauth-client-as-local-metadata-invalid-https-uri-x" />
 				</liferay-ui:error>
 
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataMetadataJSONException.class %>">
@@ -64,29 +66,29 @@ JSONObject metadataJSONObject = JSONUtil.put(
 
 				<aui:fieldset label="general">
 					<aui:input helpMessage="oauth-client-as-local-metadata-issuer-help" label="oauth-client-as-local-metadata-issuer" name="issuer" required="<%= true %>" type="text" />
-					<aui:input helpMessage="oauth-client-as-local-metadata-allowed-scopes-help" label="oauth-client-as-local-metadata-allowed-scopes" name="supported-scopes" type="text" value="<%= supportedScopes %>" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-supported-scopes-help" label="oauth-client-as-local-metadata-supported-scopes" name="supportedScopes" type="text" value="<%= supportedScopes %>" />
 
-					<aui:input helpMessage="oauth-client-as-local-metadata-allowed-grant-types-help" label="oauth-client-as-local-metadata-allowed-grant-types" name="supported-grant-types" type="text" value="<%= supportedGrantTypes %>" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-supported-grant-types-help" label="oauth-client-as-local-metadata-supported-grant-types" name="supportedGrantTypes" type="text" value="<%= supportedGrantTypes %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-authorization_endpoint" name="authorization_endpoint" type="text" value="<%= authorizationEndpoint %>" />
+					<aui:input label="oauth-client-as-local-metadata-authorization-endpoint" name="authorizationEndpoint" type="text" value="<%= authorizationEndpoint %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-jwks_uri" name="jwks_uri" type="text" value="<%= jwksUri %>" />
+					<aui:input label="oauth-client-as-local-metadata-jwks-uri" name="jwksURI" type="text" value="<%= jwksURI %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-token_endpoint" name="token_endpoint" type="text" value="<%= tokenEndpoint %>" />
+					<aui:input label="oauth-client-as-local-metadata-token-endpoint" name="tokenEndpoint" type="text" value="<%= tokenEndpoint %>" />
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local-oauth-authorization-server">
-					<aui:input checked="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="enabled" type="checkbox" />
+					<aui:input checked="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="enabledLocalWellKnown" type="checkbox" />
 
 					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\" %>" />
 
 					<aui:input helpMessage="oauth-client-as-local-metadata-json-oauth-authorization-server-help" label="oauth-client-as-local-metadata-json-oauth-authorization-server" name="oAuthASMetadataJSON" readonly="true" style="min-height: 600px;" type="textarea" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASMetadataJSON() : metadataJSONObject.toString() %>" />
 				</aui:fieldset>
 
-				<aui:fieldset label="oauth-client-as-local--openid-configuration">
-					<aui:input label="oauth-client-as-local-metadata-subject_types_supported" name="supported_subject_types" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : "public" %>' />
+				<aui:fieldset label="oauth-client-as-local-openid-configuration">
+					<aui:input label="oauth-client-as-local-metadata-subject-types-supported" name="supportedSubjectTypes" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : "public" %>' />
 
-					<aui:input label="oauth-client-as-local-metadata-userinfo_endpoint" name="userinfo_endpoint" type="text" value="<%= userinfoEndpoint %>" />
+					<aui:input label="oauth-client-as-local-metadata-userinfo-endpoint" name="userInfoEndpoint" type="text" value="<%= userInfoEndpoint %>" />
 
 					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURI" readonly="true" type="text" />
 
@@ -99,7 +101,7 @@ JSONObject metadataJSONObject = JSONUtil.put(
 						type="textarea"
 						value='<%=
 							JSONUtil.put(
-								"authorization_endpoint", ""
+								"authorizationEndpoint", ""
 							).put(
 								"issuer", ""
 							).put(
@@ -107,9 +109,9 @@ JSONObject metadataJSONObject = JSONUtil.put(
 							).put(
 								"subject_types_supported", JSONUtil.put("public")
 							).put(
-								"token_endpoint", ""
+								"tokenEndpoint", ""
 							).put(
-								"userinfo_endpoint", ""
+								"userInfoEndpoint", ""
 							)
 						%>'
 					/>
@@ -140,7 +142,7 @@ JSONObject metadataJSONObject = JSONUtil.put(
 			);
 		}
 		catch (e) {
-			alert('Ill-formatted Metadata JSON');
+			console.error('Ill-formatted Metadata JSON');
 			return;
 		}
 
@@ -155,7 +157,7 @@ JSONObject metadataJSONObject = JSONUtil.put(
 			metadataJSON = JSON.stringify(JSON.parse(metadataJSON), null, 0);
 		}
 		catch (e) {
-			alert('Ill-formatted Metadata JSON');
+			console.error('Ill-formatted Metadata JSON');
 			return;
 		}
 

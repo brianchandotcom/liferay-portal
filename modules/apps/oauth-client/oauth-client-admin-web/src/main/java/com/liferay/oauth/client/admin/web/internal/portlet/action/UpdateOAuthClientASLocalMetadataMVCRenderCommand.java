@@ -19,16 +19,20 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.ParseException;
+import com.nimbusds.oauth2.sdk.Scope;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import jakarta.portlet.RenderRequest;
 import jakarta.portlet.RenderResponse;
+
+import java.net.URI;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Arthur Chan
+ * @author Alvaro Saugar
  */
 @Component(
 	property = {
@@ -62,57 +66,56 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 					OIDCProviderMetadata.parse(
 						oAuthClientASLocalMetadata.getMetadataJSON());
 
-				if (authorizationServerMetadata.getAuthorizationEndpointURI() !=
-						null) {
+				URI authorizationEndpointURI =
+					authorizationServerMetadata.getAuthorizationEndpointURI();
 
+				if (authorizationEndpointURI != null) {
 					renderRequest.setAttribute(
-						"authorization_endpoint",
-						authorizationServerMetadata.getAuthorizationEndpointURI(
-						).toString());
+						"authorizationEndpoint",
+						authorizationEndpointURI.toString());
 				}
 
 				if (authorizationServerMetadata.getGrantTypes() != null) {
 					renderRequest.setAttribute(
-						"supported-grant-types",
+						"supportedGrantTypes",
 						StringUtil.merge(
 							authorizationServerMetadata.getGrantTypes()));
 				}
 
-				if (authorizationServerMetadata.getJWKSetURI() != null) {
-					renderRequest.setAttribute(
-						"jwks_uri",
-						authorizationServerMetadata.getJWKSetURI(
-						).toString());
+				URI jwksURI = authorizationServerMetadata.getJWKSetURI();
+
+				if (jwksURI != null) {
+					renderRequest.setAttribute("jwksURI", jwksURI.toString());
 				}
 
-				if (authorizationServerMetadata.getScopes() != null) {
+				Scope supportedScopes = authorizationServerMetadata.getScopes();
+
+				if (supportedScopes != null) {
 					renderRequest.setAttribute(
-						"supported-scopes",
-						authorizationServerMetadata.getScopes(
-						).toString());
+						"supportedScopes", supportedScopes.toString());
 				}
 
 				if (authorizationServerMetadata.getSubjectTypes() != null) {
 					renderRequest.setAttribute(
-						"supported_subject_types",
+						"supportedSubjectTypes",
 						StringUtil.merge(
 							authorizationServerMetadata.getSubjectTypes()));
 				}
 
-				if (authorizationServerMetadata.getTokenEndpointURI() != null) {
+				URI tokenEndpointURI =
+					authorizationServerMetadata.getTokenEndpointURI();
+
+				if (tokenEndpointURI != null) {
 					renderRequest.setAttribute(
-						"token_endpoint",
-						authorizationServerMetadata.getTokenEndpointURI(
-						).toString());
+						"tokenEndpoint", tokenEndpointURI.toString());
 				}
 
-				if (authorizationServerMetadata.getUserInfoEndpointURI() !=
-						null) {
+				URI userInfoEndpoint =
+					authorizationServerMetadata.getUserInfoEndpointURI();
 
+				if (userInfoEndpoint != null) {
 					renderRequest.setAttribute(
-						"userinfo_endpoint",
-						authorizationServerMetadata.getUserInfoEndpointURI(
-						).toString());
+						"userInfoEndpoint", userInfoEndpoint.toString());
 				}
 			}
 		}

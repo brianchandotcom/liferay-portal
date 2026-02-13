@@ -16,7 +16,7 @@ import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Set;
 import java.util.function.Predicate;
 
 import org.osgi.framework.BundleContext;
@@ -59,8 +59,8 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 		long companyId, boolean activeOnly) {
 
 		Predicate<SiteInitializer> predicate =
-			siteInitializer -> !Objects.equals(
-				siteInitializer.getKey(), "com.liferay.site.initializer.cms");
+			siteInitializer -> !_excludedSiteInitializerKeys.contains(
+				siteInitializer.getKey());
 
 		if (activeOnly) {
 			predicate = predicate.and(
@@ -84,6 +84,9 @@ public class SiteInitializerRegistryImpl implements SiteInitializerRegistry {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SiteInitializerRegistryImpl.class);
+
+	private static final Set<String> _excludedSiteInitializerKeys = Set.of(
+		"com.liferay.site.initializer.cmp", "com.liferay.site.initializer.cms");
 
 	private ServiceTrackerMap<String, SiteInitializer> _serviceTrackerMap;
 

@@ -12,6 +12,10 @@ export {INTERNAL_CELL_RENDERERS as FDS_INTERNAL_CELL_RENDERERS} from './cell_ren
 
 // @ts-ignore
 
+export {default as LabelRenderer} from './cell_renderers/LabelRenderer';
+
+// @ts-ignore
+
 export {default as StatusRenderer} from './cell_renderers/StatusRenderer';
 
 export {getInternalCellRenderer as getFDSInternalCellRenderer} from './cell_renderers/getInternalCellRenderer';

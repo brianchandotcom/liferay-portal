@@ -68,6 +68,7 @@
 		<!-- Other fields -->
 
 		<column name="changesetCollectionId" type="long" />
+		<column name="classExternalReferenceCode" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 
@@ -88,6 +89,11 @@
 		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="changesetCollectionId" />
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="C_CERC_C" return-type="ChangesetEntry" unique="true">
+			<finder-column name="changesetCollectionId" />
+			<finder-column name="classExternalReferenceCode" />
 			<finder-column name="classNameId" />
 		</finder>
 		<finder name="C_C_C" return-type="ChangesetEntry" unique="true">

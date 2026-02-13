@@ -1,7 +1,16 @@
 @import 'cadmin-variables';
 
 .side-navigation-container {
+	input:not(:focus-within) {
+		background-image: clay-icon(search, $cadmin-secondary);
+		background-position: 15px;
+		background-repeat: no-repeat;
+		background-size: 16px;
+		padding-left: 40px;
+	}
+
 	.c-slideout-start .sidebar-light {
+		background-color: $cadmin-light-l1;
 		border-right: 0.5px solid $cadmin-secondary-l0;
 		box-shadow: none;
 	}

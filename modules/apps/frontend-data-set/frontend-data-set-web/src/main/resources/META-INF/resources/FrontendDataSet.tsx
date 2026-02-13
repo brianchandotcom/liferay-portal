@@ -610,7 +610,7 @@ const FrontendDataSetContent = ({
 			showPagination &&
 			(getDelta() ||
 				activeView.initialPaginationDelta ||
-				DEFAULT_PAGINATION_DELTA);
+				defaultSnapshot.paginationDelta);
 
 		defaultSnapshot.paginationDelta = paginationDelta;
 

@@ -298,7 +298,7 @@ export const IndividualsListCDPColumns = {
 		cellRenderer: ({className, data: {lastActivityDate}}) => (
 			<td className={getCN('name-cell-root', className)}>
 				<div className='text-truncate'>
-					{formatUTCDate(lastActivityDate) || '-'}
+					{lastActivityDate ? formatUTCDate(lastActivityDate) : null}
 				</div>
 			</td>
 		),

@@ -19,15 +19,9 @@ import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRequestExecutor;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Bryan Engler
  */
-@Component(
-	property = "search.engine.impl=Solr",
-	service = SnapshotRequestExecutor.class
-)
 public class SolrSnapshotRequestExecutor implements SnapshotRequestExecutor {
 
 	@Override

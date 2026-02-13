@@ -29,6 +29,7 @@ import com.liferay.portal.search.solr8.internal.query.SolrQueryVisitor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.cluster.SolrClusterRequestExecutor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.index.SolrIndexRequestExecutor;
 import com.liferay.portal.search.solr8.internal.search.engine.adapter.search.SolrSearchRequestExecutor;
+import com.liferay.portal.search.solr8.internal.search.engine.adapter.snapshot.SolrSnapshotRequestExecutor;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -158,9 +159,8 @@ public class SolrSearchEngineAdapterImpl implements SearchEngineAdapter {
 
 	private IndexRequestExecutor _indexRequestExecutor;
 	private SearchRequestExecutor _searchRequestExecutor;
-
-	@Reference(target = "(search.engine.impl=Solr)")
-	private SnapshotRequestExecutor _snapshotRequestExecutor;
+	private final SnapshotRequestExecutor _snapshotRequestExecutor =
+		new SolrSnapshotRequestExecutor();
 
 	@Reference
 	private SolrClientManager _solrClientManager;

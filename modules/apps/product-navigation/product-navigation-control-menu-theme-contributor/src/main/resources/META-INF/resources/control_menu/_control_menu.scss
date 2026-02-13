@@ -16,7 +16,7 @@ html#{$cadmin-selector} {
 			top: 0;
 			z-index: $control-menu-zindex;
 
-			@include media-breakpoint-up(sm) {
+			@include media-breakpoint-up(lg) {
 				position: sticky;
 			}
 		}

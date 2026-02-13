@@ -425,8 +425,7 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	public List<Group> getCMSGroups() {
 		return ListUtil.filter(
-			_groupLocalService.getGroups(-1, -1),
-			Group::isCMS);
+			_groupLocalService.getGroups(-1, -1), Group::isCMS);
 	}
 
 	@Override
@@ -460,17 +459,15 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
-	public List<Group> getSpaceGroups(long[] groupIds)
-		throws PortalException {
-
-		List<Group> groups = _groupLocalService.getGroups(groupIds);
-
+	public List<Group> getSpaceGroups(long[] groupIds) throws PortalException {
 		return ListUtil.filter(
-			groups,
-			group -> GetterUtil.getInteger(
-				group.getTypeSettingsProperty("depotEntryType")
-			) == _DEPOT_ENTRY_TYPE_SPACE
-		);
+			_groupLocalService.getGroups(groupIds),
+			group -> {
+				int depotEntryType = GetterUtil.getInteger(
+					group.getTypeSettingsProperty("depotEntryType"));
+
+				return depotEntryType == _DEPOT_ENTRY_TYPE_SPACE;
+			});
 	}
 
 	@Override

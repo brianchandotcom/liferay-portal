@@ -480,35 +480,6 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			groupId, name, vocabularyId, start, end, orderByComparator);
 	}
 
-	private long[] _resolveGroupIds(long[] groupIds)
-		throws PortalException {
-
-		List<Group> spaceGroups =
-			assetCategoryLocalService.getSpaceGroups(groupIds);
-
-		if (ListUtil.isEmpty(spaceGroups)) {
-			return groupIds;
-		}
-
-		Set<Long> finalGroupIds = new LinkedHashSet<>();
-
-		for (long groupId : groupIds) {
-			finalGroupIds.add(groupId);
-		}
-
-		for (Group group : spaceGroups) {
-			finalGroupIds.remove(group.getGroupId());
-		}
-
-		for (Group group :
-			assetCategoryLocalService.getCMSGroups()) {
-
-			finalGroupIds.add(group.getGroupId());
-		}
-
-		return ArrayUtil.toLongArray(finalGroupIds);
-	}
-
 	@Override
 	public JSONArray search(
 			long groupId, String name, String[] categoryProperties, int start,
@@ -525,8 +496,8 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public JSONArray search(
-		long[] groupIds, String name, long[] vocabularyIds, int start,
-		int end)
+			long[] groupIds, String name, long[] vocabularyIds, int start,
+			int end)
 		throws PortalException {
 
 		groupIds = _resolveGroupIds(groupIds);
@@ -699,6 +670,32 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 		return jsonArray;
 	}
 
+	private long[] _resolveGroupIds(long[] groupIds) throws PortalException {
+		List<Group> spaceGroups = assetCategoryLocalService.getSpaceGroups(
+			groupIds);
+
+		if (ListUtil.isEmpty(spaceGroups)) {
+			return groupIds;
+		}
+
+		Set<Long> finalGroupIds = new LinkedHashSet<>();
+
+		for (long groupId : groupIds) {
+			finalGroupIds.add(groupId);
+		}
+
+		for (Group group : spaceGroups) {
+			finalGroupIds.remove(group.getGroupId());
+		}
+
+		for (Group group : assetCategoryLocalService.getCMSGroups()) {
+			finalGroupIds.add(group.getGroupId());
+		}
+
+		return ArrayUtil.toLongArray(finalGroupIds);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryServiceImpl.class);
+
 }

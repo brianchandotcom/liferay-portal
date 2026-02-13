@@ -222,7 +222,7 @@ test('Can import account restricted entry when account does and does not exist i
 		).toEqual({status: 'NOT_FOUND'});
 	});
 
-	await test.step('assert entry is imported wiht account relationship properties when it does not exist', async () => {
+	await test.step('assert entry is imported with account relationship properties when it does not exist', async () => {
 		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
 
 		expect(

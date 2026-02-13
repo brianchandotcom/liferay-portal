@@ -80,6 +80,9 @@ public class BatchEnginePortletDataHandlerUtil {
 		PortletDataContext portletDataContext,
 		StagingGroupHelper stagingGroupHelper) {
 
+		Map<String, Serializable> exportImportDescriptorParameters =
+			exportImportDescriptor.getParameters(portletDataContext);
+
 		Map<String, Serializable> exportParameters =
 			HashMapBuilder.<String, Serializable>put(
 				"batchNestedFields",
@@ -134,7 +137,7 @@ public class BatchEnginePortletDataHandlerUtil {
 						return null;
 					}
 
-					StringBundler sb = new StringBundler(5);
+					StringBundler sb = new StringBundler(8);
 
 					if (portletDataContext.getEndDate() != null) {
 						sb.append("dateModified le ");
@@ -152,6 +155,19 @@ public class BatchEnginePortletDataHandlerUtil {
 							_format.format(portletDataContext.getStartDate()));
 					}
 
+					if ((exportImportDescriptorParameters == null) ||
+						!exportImportDescriptorParameters.containsKey(
+							"filter")) {
+
+						return sb.toString();
+					}
+
+					sb.append(" and (");
+					sb.append(exportImportDescriptorParameters.get("filter"));
+					sb.append(")");
+
+					exportImportDescriptorParameters.remove("filter");
+
 					return sb.toString();
 				}
 			).put(
@@ -160,7 +176,7 @@ public class BatchEnginePortletDataHandlerUtil {
 				"modelNameLanguageKey",
 				exportImportDescriptor.getLabelLanguageKey()
 			).putAll(
-				exportImportDescriptor.getParameters(portletDataContext)
+				exportImportDescriptorParameters
 			).build();
 
 		Group group = groupLocalService.fetchGroup(

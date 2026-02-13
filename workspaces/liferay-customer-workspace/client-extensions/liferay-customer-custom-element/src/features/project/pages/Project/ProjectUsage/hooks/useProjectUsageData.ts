@@ -41,6 +41,15 @@ export enum SiteAndUserDataEnum {
 	STORAGE_CAPACITY_DOCUMENT_LIBRARY = 'storageCapacityDocumentLibrary',
 }
 
+export enum ResourceUsageDataEnum {
+	CLIENT_EXTENSIONS_CPU = 'clientExtensionsCPU',
+	CLIENT_EXTENSIONS_RAM = 'clientExtensionsRAM',
+	DATABASE_STORAGE = 'databaseStorage',
+	DOCUMENT_LIBRARY_AND_BACKUP_STORAGE = 'documentLibraryAndBackupStorage',
+	LOG_STORAGE = 'logStorage',
+	NETWORK_TRAFFIC = 'networkTraffic',
+}
+
 enum ADD_ON_NAMES {
 	DEDICATED_RESOURCES = 'Dedicated Resources',
 	PRIVATE_CLUSTER = 'Private Cluster',
@@ -49,13 +58,22 @@ enum ADD_ON_NAMES {
 const DEFAULT_USAGE_DATA_VALUES = {
 	resourceUsage: [
 		{
-			title: i18n.translate('extension-capacity-ram'),
+			title: i18n.translate('extensions-ram'),
 		},
 		{
-			title: i18n.translate('extension-capacity-vcpu'),
+			title: i18n.translate('extensions-vcpu'),
 		},
 		{
-			title: i18n.translate('storage-capacity'),
+			title: i18n.translate('storage'),
+		},
+		{
+			title: i18n.translate('database'),
+		},
+		{
+			title: i18n.translate('traffic-networking'),
+		},
+		{
+			title: i18n.translate('logs'),
 		},
 	],
 	siteAndUsers: [
@@ -88,15 +106,17 @@ const ADD_ONS_CARDS = [
 	},
 ];
 
-const ACCEPTED_SUBSCRIPTIONS = ['Business Plan', 'Enterprise Plan', 'Pro Plan'];
 const ADD_ONS = ['Dedicated Resources', 'Private Cluster'];
 
-const formatedSubscriptions = () =>
-	[...ACCEPTED_SUBSCRIPTIONS, ...ADD_ONS]
+const formatedSubscriptions = (acceptedSubscriptions: string[]) =>
+	[...acceptedSubscriptions, ...ADD_ONS]
 		.map((projectName) => `'${projectName}'`)
 		.join(',');
 
-const useProjectUsageData = () => {
+const useProjectUsageData = (
+	acceptedSubscriptions: string[],
+	hasExperienceSubscription: boolean
+) => {
 	const [usageData, setUsageData] = useState<IUsageData>(
 		DEFAULT_USAGE_DATA_VALUES
 	);
@@ -105,16 +125,29 @@ const useProjectUsageData = () => {
 	const [{project}] = useAppContext();
 
 	const {data: subscriptionsData} = useGetAccountSubscriptions({
-		filter: `name in (${formatedSubscriptions()}) and accountSubscriptionGroupERC eq '${
+		filter: `name in (${formatedSubscriptions(
+			acceptedSubscriptions
+		)}) and accountSubscriptionGroupERC eq '${
 			project?.accountKey
 		}_liferay-saas'`,
 	});
 
 	const displayUsage = useMemo(() => {
-		return !!subscriptionsData?.c?.accountSubscriptions?.items.some(
-			({name}: {name: string}) => ACCEPTED_SUBSCRIPTIONS.includes(name)
+		if (hasExperienceSubscription) {
+			return true;
+		}
+
+		const subscriptions = subscriptionsData?.c?.accountSubscriptions?.items;
+
+		if (!subscriptions) {
+			return false;
+		}
+
+		return subscriptions.some(
+			({name}: {name: string}) =>
+				name && acceptedSubscriptions.includes(name.trim())
 		);
-	}, [subscriptionsData]);
+	}, [acceptedSubscriptions, hasExperienceSubscription, subscriptionsData]);
 
 	const addOns = useMemo<IAddOn[]>(() => {
 		const filteredAddOns =
@@ -146,52 +179,120 @@ const useProjectUsageData = () => {
 
 			if (response) {
 				const formatedData = {
-					resourceUsage: [
-						{
-							...response[
-								SiteAndUserDataEnum
-									.CLIENT_EXTENSIONS_CAPACITY_RAM
+					resourceUsage: hasExperienceSubscription
+						? [
+								{
+									...response[
+										ResourceUsageDataEnum
+											.CLIENT_EXTENSIONS_RAM
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'additional-ram-in-gb-allocated-to-customer-s-extension-environments-with-the-liferay-cloud-infrastructure-to-run-client-extensions'
+									),
+									maxCountText: i18n.translate('total-ram'),
+									title: i18n.translate('extensions-ram'),
+								},
+								{
+									...response[
+										ResourceUsageDataEnum
+											.CLIENT_EXTENSIONS_CPU
+									],
+									infoText: i18n.translate(
+										'additional-vcpus-allocated-to-customer-s-extension-environments-within-the-liferay-cloud-infrastructure-to-run-client-extensions'
+									),
+									maxCountText: i18n.translate('total-vcpu'),
+									title: i18n.translate('extensions-vcpu'),
+								},
+								{
+									...response[
+										ResourceUsageDataEnum
+											.DOCUMENT_LIBRARY_AND_BACKUP_STORAGE
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
+									),
+									maxCountText:
+										i18n.translate('total-storage'),
+									title: i18n.translate('storage'),
+								},
+								{
+									...response[
+										ResourceUsageDataEnum.DATABASE_STORAGE
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'the-amount-of-data-in-gibs-used-by-the-sql-database-instance-provisioned-as-part-of-liferay-cloud-infrastructure-including-the-database-data-itself-and-any-other-storage-needed-in-an-high-availability-scenario'
+									),
+									maxCountText:
+										i18n.translate('total-storage'),
+									title: i18n.translate('database'),
+								},
+								{
+									...response[
+										ResourceUsageDataEnum.NETWORK_TRAFFIC
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'amount-of-data-transfered-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region'
+									),
+									maxCountText: i18n.translate(
+										'monthly-inbound-and-outbound'
+									),
+									title: i18n.translate('traffic-networking'),
+								},
+								{
+									...response[
+										ResourceUsageDataEnum.LOG_STORAGE
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'volume-of-logs-in-gib-pertaining-to-the-customer-application-ingested-by-liferay-s-cloud-infrastructure-this-can-include-logs-from-the-default-services-custom-services-or-liferay-s-cloud-platform-itself'
+									),
+									maxCountText:
+										i18n.translate('total-volume'),
+									title: i18n.translate('logs'),
+								},
+							]
+						: [
+								{
+									...response[
+										SiteAndUserDataEnum
+											.CLIENT_EXTENSIONS_CAPACITY_RAM
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'additional-ram-in-gb-allocated-to-customer-s-extension-environments-with-the-liferay-cloud-infrastructure-to-run-client-extensions'
+									),
+									maxCountText: i18n.translate('total-ram'),
+									title: i18n.translate('extensions-ram'),
+								},
+								{
+									...response[
+										SiteAndUserDataEnum
+											.CLIENT_EXTENSIONS_CAPACITY_CPU
+									],
+									infoText: i18n.translate(
+										'additional-vcpus-allocated-to-customer-s-extension-environments-within-the-liferay-cloud-infrastructure-to-run-client-extensions-a-vcpu-means-a-virtual-machine-s-virtual-processor-to-which-a-physical-cpu-is-assigned-in-whole-or-in-part-for-the-avoidance-of-doubt-in-the-event-of-simultaneous-multithreading-in-the-same-physical-cpu-each-thread-will-be-considered-a-vcpu'
+									),
+									maxCountText: i18n.translate('total-vcpu'),
+									title: i18n.translate('extensions-vcpu'),
+								},
+								{
+									...response[
+										SiteAndUserDataEnum
+											.STORAGE_CAPACITY_DOCUMENT_LIBRARY
+									],
+									dataSizeUnits: 'GB',
+									infoText: i18n.translate(
+										'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
+									),
+									maxCountText:
+										i18n.translate('total-storage'),
+									title: i18n.translate('storage'),
+								},
 							],
-							dataSizeUnits: 'GB',
-							infoText:
-								i18n.translate(
-									'amount-of-ram-allocated-across-all-extension-environments'
-								) +
-								' ' +
-								i18n.translate('this-data-is-refreshed-daily'),
-							maxCountText: i18n.translate('total-ram'),
-							title: i18n.translate('extension-capacity-ram'),
-						},
-						{
-							...response[
-								SiteAndUserDataEnum
-									.CLIENT_EXTENSIONS_CAPACITY_CPU
-							],
-							infoText:
-								i18n.translate(
-									'amount-of-virtual-cpus-allocated-across-all-extension-environments'
-								) +
-								' ' +
-								i18n.translate('this-data-is-refreshed-daily'),
-							maxCountText: i18n.translate('total-vcpu'),
-							title: i18n.translate('extension-capacity-vcpu'),
-						},
-						{
-							...response[
-								SiteAndUserDataEnum
-									.STORAGE_CAPACITY_DOCUMENT_LIBRARY
-							],
-							dataSizeUnits: 'GB',
-							infoText:
-								i18n.translate(
-									'amount-of-storage-space-available-for-your-projects'
-								) +
-								' ' +
-								i18n.translate('this-data-is-refreshed-daily'),
-							maxCountText: i18n.translate('total-storage'),
-							title: i18n.translate('storage-capacity'),
-						},
-					],
 					siteAndUsers: [
 						{
 							...response[SiteAndUserDataEnum.SITES],
@@ -240,6 +341,7 @@ const useProjectUsageData = () => {
 		}
 	}, [
 		displayUsage,
+		hasExperienceSubscription,
 		project?.externalReferenceCode,
 		setUsageData,
 		subscriptionsData,

@@ -37,7 +37,15 @@ const expandGroupForSideMenu = (group) => {
 };
 
 const SideMenu = () => {
-	const [{project, subscriptionGroups}] = useAppContext();
+	const [
+		{
+			hasExperienceSubscription,
+			hasPlanSubscription,
+			project,
+			subscriptionGroups,
+			subscriptions,
+		},
+	] = useAppContext();
 	const [isOpenedProductsMenu, setIsOpenedProductsMenu] = useState(false);
 	const [menuItemActiveStatus, setMenuItemActiveStatus] = useState([]);
 	const {featureFlags} = useAppPropertiesContext();
@@ -257,19 +265,20 @@ const SideMenu = () => {
 					</div>
 				)}
 
-				{((featureFlags.includes('LRSD-6322') && loggedUserAccount?.isLiferayStaff) ||
-					(featureFlags.includes('LRSD-7805') && loggedUserAccount?.isPartner)) &&
-						hasSaasSubscription && (
-							<div className="d-flex">
-								<MenuItem
-									iconKey="projectUsage"
-									to={getKebabCase(MENU_TYPES.projectUsage)}
-								>
-									{i18n.translate(
-										getKebabCase(MENU_TYPES.projectUsage)
-									)}
-								</MenuItem>
-							</div>
+				{(((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
+					hasPlanSubscription) ||
+					(featureFlags.includes('LRSD-12003') &&
+						hasExperienceSubscription)) && (
+					<div className="d-flex">
+						<MenuItem
+							iconKey="projectUsage"
+							to={getKebabCase(MENU_TYPES.projectUsage)}
+						>
+							{i18n.translate(
+								getKebabCase(MENU_TYPES.projectUsage)
+							)}
+						</MenuItem>
+					</div>
 				)}
 			</ul>
 		</div>

@@ -68,8 +68,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			detailAST, variableName, false, false, true);
 
 		if ((fullyQualifiedTypeName == null) ||
-			!fullyQualifiedTypeName.contains(".dto.v") ||
-			!fullyQualifiedTypeName.startsWith("com.liferay.")) {
+			!fullyQualifiedTypeName.matches(
+				"com\\.liferay\\..+\\.dto\\.v\\d+_\\d+\\.\\w+")) {
 
 			return;
 		}
@@ -133,8 +133,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		if ((fullyQualifiedTypeName == null) ||
-			!fullyQualifiedTypeName.contains(".dto.v") ||
-			!fullyQualifiedTypeName.startsWith("com.liferay.")) {
+			!fullyQualifiedTypeName.matches(
+				"com\\.liferay\\..+\\.dto\\.v\\d+_\\d+\\.\\w+")) {
 
 			return;
 		}

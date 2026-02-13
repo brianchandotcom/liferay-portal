@@ -353,6 +353,11 @@ public abstract class BaseSectionDisplayContext {
 			));
 	}
 
+	protected String appendGroupIds(String filterString) {
+		return _sectionDisplayContextHelper.appendGroupIds(
+			filterString, httpServletRequest);
+	}
+
 	protected String appendStatus(String filterString) {
 		return _sectionDisplayContextHelper.appendStatus(filterString);
 	}

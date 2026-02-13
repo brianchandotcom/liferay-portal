@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.BulkDocumentResponse;
 import com.liferay.portal.search.engine.adapter.document.DeleteByQueryDocumentRequest;
@@ -22,25 +21,35 @@ import com.liferay.portal.search.engine.adapter.document.UpdateByQueryDocumentRe
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentResponse;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration;
-
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
  */
-@Component(
-	configurationPid = "com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration",
-	property = "search.engine.impl=OpenSearch",
-	service = DocumentRequestExecutor.class
-)
 public class OpenSearchDocumentRequestExecutor
 	implements DocumentRequestExecutor {
+
+	public OpenSearchDocumentRequestExecutor(
+		int numberOfTries,
+		OpenSearchConnectionManager openSearchConnectionManager,
+		int waitInSeconds) {
+
+		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutor(
+			numberOfTries, openSearchConnectionManager, waitInSeconds);
+		_deleteByQueryDocumentRequestExecutor =
+			new DeleteByQueryDocumentRequestExecutor(
+				openSearchConnectionManager);
+		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
+			openSearchConnectionManager);
+		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
+			openSearchConnectionManager);
+		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
+			openSearchConnectionManager);
+		_updateByQueryDocumentRequestExecutor =
+			new UpdateByQueryDocumentRequestExecutor(
+				openSearchConnectionManager);
+		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
+			openSearchConnectionManager);
+	}
 
 	@Override
 	public BulkDocumentResponse executeBulkDocumentRequest(
@@ -93,51 +102,14 @@ public class OpenSearchDocumentRequestExecutor
 		return _updateDocumentRequestExecutor.execute(updateDocumentRequest);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		modified(properties);
-
-		_deleteByQueryDocumentRequestExecutor =
-			new DeleteByQueryDocumentRequestExecutor(
-				_openSearchConnectionManager);
-		_deleteDocumentRequestExecutor = new DeleteDocumentRequestExecutor(
-			_openSearchConnectionManager);
-		_getDocumentRequestExecutor = new GetDocumentRequestExecutor(
-			_openSearchConnectionManager);
-		_indexDocumentRequestExecutor = new IndexDocumentRequestExecutor(
-			_openSearchConnectionManager);
-		_updateByQueryDocumentRequestExecutor =
-			new UpdateByQueryDocumentRequestExecutor(
-				_openSearchConnectionManager);
-		_updateDocumentRequestExecutor = new UpdateDocumentRequestExecutor(
-			_openSearchConnectionManager);
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties) {
-		BulkDocumentRequestRetryConfiguration
-			bulkDocumentRequestRetryConfiguration =
-				ConfigurableUtil.createConfigurable(
-					BulkDocumentRequestRetryConfiguration.class, properties);
-
-		_bulkDocumentRequestExecutor = new BulkDocumentRequestExecutor(
-			bulkDocumentRequestRetryConfiguration.numberOfTries(),
-			_openSearchConnectionManager,
-			bulkDocumentRequestRetryConfiguration.waitInSeconds());
-	}
-
-	private volatile BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
-	private DeleteByQueryDocumentRequestExecutor
+	private final BulkDocumentRequestExecutor _bulkDocumentRequestExecutor;
+	private final DeleteByQueryDocumentRequestExecutor
 		_deleteByQueryDocumentRequestExecutor;
-	private DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
-	private GetDocumentRequestExecutor _getDocumentRequestExecutor;
-	private IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
-
-	@Reference
-	private OpenSearchConnectionManager _openSearchConnectionManager;
-
-	private UpdateByQueryDocumentRequestExecutor
+	private final DeleteDocumentRequestExecutor _deleteDocumentRequestExecutor;
+	private final GetDocumentRequestExecutor _getDocumentRequestExecutor;
+	private final IndexDocumentRequestExecutor _indexDocumentRequestExecutor;
+	private final UpdateByQueryDocumentRequestExecutor
 		_updateByQueryDocumentRequestExecutor;
-	private UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
+	private final UpdateDocumentRequestExecutor _updateDocumentRequestExecutor;
 
 }

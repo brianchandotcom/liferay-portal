@@ -8,7 +8,8 @@ package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConnectionManager;
-import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.DocumentRequestExecutorFixture;
+
+import java.util.Collections;
 
 /**
  * @author Michael C. Han
@@ -27,15 +28,6 @@ public class OpenSearchEngineAdapterFixture {
 	protected static SearchEngineAdapter createSearchEngineAdapter(
 		OpenSearchConnectionManager openSearchConnectionManager) {
 
-		DocumentRequestExecutorFixture documentRequestExecutorFixture =
-			new DocumentRequestExecutorFixture() {
-				{
-					setOpenSearchConnectionManager(openSearchConnectionManager);
-				}
-			};
-
-		documentRequestExecutorFixture.setUp();
-
 		OpenSearchSearchEngineAdapterImpl openSearchSearchEngineAdapterImpl =
 			new OpenSearchSearchEngineAdapterImpl() {
 				{
@@ -46,11 +38,8 @@ public class OpenSearchEngineAdapterFixture {
 		ReflectionTestUtil.setFieldValue(
 			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
-		ReflectionTestUtil.setFieldValue(
-			openSearchSearchEngineAdapterImpl, "_documentRequestExecutor",
-			documentRequestExecutorFixture.getDocumentRequestExecutor());
 
-		openSearchSearchEngineAdapterImpl.activate();
+		openSearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return openSearchSearchEngineAdapterImpl;
 	}

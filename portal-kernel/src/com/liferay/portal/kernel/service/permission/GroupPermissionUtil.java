@@ -5,6 +5,7 @@
 
 package com.liferay.portal.kernel.service.permission;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -107,7 +108,9 @@ public class GroupPermissionUtil {
 		if ((actionId.equals(ActionKeys.ADD_LAYOUT) ||
 			 actionId.equals(ActionKeys.MANAGE_LAYOUTS)) &&
 			((group.hasLocalOrRemoteStagingGroup() &&
-			  _STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
+			  _STAGING_LIVE_GROUP_LOCKING_ENABLED &&
+			  !ExportImportThreadLocal.isInitialLayoutStagingInProcess() &&
+			  !ExportImportThreadLocal.isStagingInProcess()) ||
 			 group.isLayoutPrototype())) {
 
 			return false;

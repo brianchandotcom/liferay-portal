@@ -3,15 +3,43 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelect, ClaySelectBox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
-import React from 'react';
+import React, {useState} from 'react';
 
 import ModelAutocomplete from './ModelAutocomplete';
 
 const SELECT_BOX_SHOW_ITEMS_COUNT = 6;
+
+function PasswordInput(props) {
+	const [show, setShow] = useState(false);
+
+	return (
+		<ClayInput.Group inset>
+			<ClayInput.GroupItem prepend>
+				<ClayInput
+					insetAfter
+					type={show ? 'text' : 'password'}
+					{...props}
+				/>
+
+				<ClayInput.GroupInsetItem after>
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('show')}
+						displayType="unstyled"
+						onClick={() => {
+							setShow(!show);
+						}}
+						symbol={show ? 'hidden' : 'view'}
+					/>
+				</ClayInput.GroupInsetItem>
+			</ClayInput.GroupItem>
+		</ClayInput.Group>
+	);
+}
 
 function Input({
 	error,
@@ -79,6 +107,19 @@ function Input({
 						required={required}
 						type="number"
 						value={value}
+					/>
+				);
+			case 'password':
+				return (
+					<PasswordInput
+						aria-label={label}
+						disabled={disabled}
+						id={name}
+						name={name}
+						onBlur={onBlur}
+						onChange={_handleEventChange}
+						required={required}
+						value={value || ''}
 					/>
 				);
 			case 'select':

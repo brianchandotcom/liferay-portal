@@ -158,13 +158,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 					fullyQualifiedTypeName);
 			}
 			else {
-				DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
-					TokenTypes.DOT);
-
-				if (dotDetailAST != null) {
-					continue;
-				}
-
 				String methodName = getMethodName(firstChildDetailAST);
 
 				if (!methodName.startsWith("set")) {

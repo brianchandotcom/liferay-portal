@@ -32,6 +32,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -306,7 +307,7 @@ public class OpenSearchSearchEngineAdapterSnapshotRequestTest
 			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		openSearchSearchEngineAdapterImpl.activate();
+		openSearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return openSearchSearchEngineAdapterImpl;
 	}

@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.ccr.CCRRequest;
@@ -29,22 +30,28 @@ import com.liferay.portal.search.opensearch2.internal.connection.OpenSearchConne
 import com.liferay.portal.search.opensearch2.internal.legacy.query.OpenSearchQueryVisitor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.ccr.OpenSearchCCRRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.cluster.OpenSearchClusterRequestExecutor;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.OpenSearchDocumentRequestExecutor;
+import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index.OpenSearchIndexRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.search.OpenSearchSearchRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.search.engine.adapter.snapshot.OpenSearchSnapshotRequestExecutor;
 import com.liferay.portal.search.opensearch2.internal.util.JsonpUtil;
+
+import java.util.Map;
 
 import org.opensearch.client.opensearch._types.OpenSearchException;
 import org.opensearch.client.opensearch._types.query_dsl.QueryVariant;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Dylan Rebelak
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration",
 	property = "search.engine.impl=OpenSearch",
 	service = SearchEngineAdapter.class
 )
@@ -132,7 +139,9 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(Map<String, Object> properties) {
+		modified(properties);
+
 		_ccrRequestExecutor = new OpenSearchCCRRequestExecutor();
 		_clusterRequestExecutor = new OpenSearchClusterRequestExecutor(
 			_openSearchConnectionManager);
@@ -142,6 +151,19 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 			_openSearchConnectionManager);
 		_snapshotRequestExecutor = new OpenSearchSnapshotRequestExecutor(
 			_openSearchConnectionManager);
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		BulkDocumentRequestRetryConfiguration
+			bulkDocumentRequestRetryConfiguration =
+				ConfigurableUtil.createConfigurable(
+					BulkDocumentRequestRetryConfiguration.class, properties);
+
+		_documentRequestExecutor = new OpenSearchDocumentRequestExecutor(
+			bulkDocumentRequestRetryConfiguration.numberOfTries(),
+			_openSearchConnectionManager,
+			bulkDocumentRequestRetryConfiguration.waitInSeconds());
 	}
 
 	protected void setThrowOriginalExceptions(boolean throwOriginalExceptions) {
@@ -179,10 +201,7 @@ public class OpenSearchSearchEngineAdapterImpl implements SearchEngineAdapter {
 
 	private CCRRequestExecutor _ccrRequestExecutor;
 	private ClusterRequestExecutor _clusterRequestExecutor;
-
-	@Reference(target = "(search.engine.impl=OpenSearch)")
-	private DocumentRequestExecutor _documentRequestExecutor;
-
+	private volatile DocumentRequestExecutor _documentRequestExecutor;
 	private IndexRequestExecutor _indexRequestExecutor;
 
 	@Reference

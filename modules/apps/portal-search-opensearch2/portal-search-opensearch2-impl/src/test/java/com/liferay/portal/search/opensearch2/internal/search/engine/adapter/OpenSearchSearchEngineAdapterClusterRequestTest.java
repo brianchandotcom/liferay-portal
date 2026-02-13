@@ -24,6 +24,8 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
+import java.util.Collections;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,7 +117,7 @@ public class OpenSearchSearchEngineAdapterClusterRequestTest
 			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		openSearchSearchEngineAdapterImpl.activate();
+		openSearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return openSearchSearchEngineAdapterImpl;
 	}

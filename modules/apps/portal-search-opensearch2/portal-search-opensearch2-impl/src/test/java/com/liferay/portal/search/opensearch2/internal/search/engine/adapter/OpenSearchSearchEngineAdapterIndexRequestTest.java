@@ -577,7 +577,7 @@ public class OpenSearchSearchEngineAdapterIndexRequestTest
 			openSearchSearchEngineAdapterImpl, "_openSearchConnectionManager",
 			openSearchConnectionManager);
 
-		openSearchSearchEngineAdapterImpl.activate();
+		openSearchSearchEngineAdapterImpl.activate(Collections.emptyMap());
 
 		return openSearchSearchEngineAdapterImpl;
 	}

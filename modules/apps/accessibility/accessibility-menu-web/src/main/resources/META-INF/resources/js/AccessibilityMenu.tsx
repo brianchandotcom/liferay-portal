@@ -216,18 +216,18 @@ const AccessibilityMenu = (props: Props) => {
 							{(Object.keys(settings) as Array<KEYS>).map(
 								(key, index) => (
 									<AccessibilitySetting
-										description={settings[key].description}
+										description={settings[key]!.description}
 										disabled={isSettingsDisabled}
 										index={index}
-										key={settings[key].key}
-										label={settings[key].label}
+										key={settings[key]!.key}
+										label={settings[key]!.label}
 										onChange={(value) =>
 											handleAccessibilitySettingChange(
 												value,
-												settings[key]
+												settings[key]!
 											)
 										}
-										value={settings[key].value}
+										value={settings[key]!.value}
 									/>
 								)
 							)}

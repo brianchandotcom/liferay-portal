@@ -72,36 +72,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERCs.length = 0;
 });
 
-testWithOrderByERC.beforeEach(
-	async ({dataSetManagerApiHelpers, filtersPage}) => {
-		dataSetERC = getRandomString();
-		dataSetLabel = getRandomString();
-		dataSetERCs.push(dataSetERC);
-		await test.step('Create a data set', async () => {
-			await dataSetManagerApiHelpers.createDataSet({
-				erc: dataSetERC,
-				label: dataSetLabel,
-			});
-		});
-
-		await test.step('Navigate to Filters section', async () => {
-			await filtersPage.goto({
-				dataSetLabel,
-			});
-		});
-	}
-);
-
-testWithOrderByERC.afterEach(async ({dataSetManagerApiHelpers}) => {
-	for (const DATA_SET_ERC of dataSetERCs) {
-		await dataSetManagerApiHelpers.deleteDataSet({
-			erc: DATA_SET_ERC,
-		});
-	}
-
-	dataSetERCs.length = 0;
-});
-
 testWithOrderByERC(
 	'Date filters can be reordered with orderByERC feature flag enabled',
 	async ({dataSetManagerApiHelpers, filtersPage, page}) => {

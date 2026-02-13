@@ -67,22 +67,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-testWithOrderByERC.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
-
-	await test.step('Create data set', async () => {
-		await dataSetManagerApiHelpers.createDataSet({
-			erc: dataSetERC,
-			label: dataSetLabel,
-		});
-	});
-});
-
-testWithOrderByERC.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
-});
-
 async function assertTableCellContent({actionData, page, rowIndex = 0}) {
 	await test.step('Assert table cell content', async () => {
 		await page

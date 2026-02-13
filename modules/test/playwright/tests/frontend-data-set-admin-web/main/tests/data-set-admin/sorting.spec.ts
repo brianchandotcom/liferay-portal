@@ -54,20 +54,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-testWithOrderByERC.beforeEach(async ({dataSetManagerApiHelpers}) => {
-	dataSetERC = getRandomString();
-	dataSetLabel = getRandomString();
-
-	await dataSetManagerApiHelpers.createDataSet({
-		erc: dataSetERC,
-		label: dataSetLabel,
-	});
-});
-
-testWithOrderByERC.afterEach(async ({dataSetManagerApiHelpers}) => {
-	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
-});
-
 test.describe('Sorting in Data Set Manager', () => {
 	test('Save and cancel buttons are not present @LPD-9468', async ({
 		page,

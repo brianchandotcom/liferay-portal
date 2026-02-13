@@ -32,8 +32,8 @@ public class AssetVocabularyGroupRelServiceImpl
 	}
 
 	@Override
-	public List<AssetVocabularyGroupRel>
-	getAssetVocabularyGroupRelByGroupIds(long[] groupIds)
+	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelByGroupIds(
+			long[] groupIds)
 		throws PortalException {
 
 		return assetVocabularyGroupRelPersistence.findByGroupId(groupIds);

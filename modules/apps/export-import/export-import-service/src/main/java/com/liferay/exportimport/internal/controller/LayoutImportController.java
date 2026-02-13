@@ -9,7 +9,7 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
-import com.liferay.exportimport.data.handler.BatchEnginePortletDataHandlerRegistry;
+import com.liferay.exportimport.data.handler.PortletElementUtil;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -624,27 +624,11 @@ public class LayoutImportController implements ImportController {
 		List<Element> portletElements = _fetchPortletElements(rootElement);
 
 		for (Element portletElement : portletElements) {
-			String portletDataHandlerKey = portletElement.attributeValue(
-				"portlet-data-handler-key");
-			String portletId = GetterUtil.getString(
-				portletElement.attributeValue("portlet-id"));
-
-			if (portletDataHandlerKey != null) {
-				PortletDataHandler portletDataHandler =
-					_batchEnginePortletDataHandlerRegistry.getByKey(
-						companyId, portletDataHandlerKey);
-
-				if (portletDataHandler != null) {
-					portletId = portletDataHandler.getPortletId();
-				}
-			}
-
-			if (Validator.isNull(portletId)) {
-				continue;
-			}
+			String targetPortletId = _portletElementUtil.getTargetPortletId(
+				companyId, portletElement);
 
 			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(companyId, portletId);
+				_portletDataHandlerProvider.provide(companyId, targetPortletId);
 
 			if (portletDataHandler == null) {
 				if (GetterUtil.getBoolean(
@@ -666,7 +650,7 @@ public class LayoutImportController implements ImportController {
 				throw new LayoutImportException(
 					LayoutImportException.TYPE_WRONG_PORTLET_SCHEMA_VERSION,
 					new Object[] {
-						schemaVersion, portletId,
+						schemaVersion, targetPortletId,
 						portletDataHandler.getSchemaVersion()
 					});
 			}
@@ -1361,10 +1345,6 @@ public class LayoutImportController implements ImportController {
 		LayoutImportController.class);
 
 	@Reference
-	private BatchEnginePortletDataHandlerRegistry
-		_batchEnginePortletDataHandlerRegistry;
-
-	@Reference
 	private ConfigurationProvider _configurationProvider;
 
 	@Reference
@@ -1405,6 +1385,9 @@ public class LayoutImportController implements ImportController {
 
 	@Reference
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
+
+	@Reference
+	private PortletElementUtil _portletElementUtil;
 
 	@Reference
 	private PortletImportController _portletImportController;

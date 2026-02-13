@@ -1,0 +1,14 @@
+{
+	"pageElement": {
+		"id": "cf15ab1c-5f86-60e6-1234-5c1e44a5c2a9",
+		"pageElements": [
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"masterPage": {
+			"key": "dsr-master"
+		}
+	},
+	"version": 1.1
+}

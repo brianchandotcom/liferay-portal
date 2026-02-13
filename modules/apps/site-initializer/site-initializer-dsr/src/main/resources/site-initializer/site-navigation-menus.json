@@ -1,0 +1,36 @@
+[
+	{
+		"externalReferenceCode": "DSRPRIMARYNAVIGATION",
+		"menuItems": [
+			{
+				"displayIcon": "home",
+				"externalReferenceCode": "DSRPRIMARYNAVIGATION1",
+				"friendlyURL": "/home",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "squares",
+				"externalReferenceCode": "DSRPRIMARYNAVIGATION2",
+				"friendlyURL": "/rooms",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "books",
+				"externalReferenceCode": "DSRPRIMARYNAVIGATION3",
+				"friendlyURL": "/templates",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
+				"displayIcon": "analytics",
+				"externalReferenceCode": "DSRPRIMARYNAVIGATION4",
+				"friendlyURL": "/analytics",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "DSR Primary Navigation"
+	}
+]

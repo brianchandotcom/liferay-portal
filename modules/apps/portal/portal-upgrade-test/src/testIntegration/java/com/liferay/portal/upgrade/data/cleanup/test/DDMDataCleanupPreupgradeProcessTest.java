@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -275,12 +276,12 @@ public class DDMDataCleanupPreupgradeProcessTest
 
 		connection = _connection;
 
-		String companyStructureKey = RandomTestUtil.randomString();
+		String globalStructureKey = RandomTestUtil.randomString();
 		String orphanStructureKey = RandomTestUtil.randomString();
 		String parentStructureKey = RandomTestUtil.randomString();
 		long childGroupId = RandomTestUtil.nextLong();
-		long companyGroupId = RandomTestUtil.nextLong();
 		long companyId = RandomTestUtil.randomLong();
+		long globalGroupId = RandomTestUtil.nextLong();
 		long orphanGroupId = RandomTestUtil.nextLong();
 		long otherGroupId = RandomTestUtil.nextLong();
 		long parentGroupId = RandomTestUtil.nextLong();
@@ -293,7 +294,8 @@ public class DDMDataCleanupPreupgradeProcessTest
 				DDMDataCleanupPreupgradeProcess.class.getName(),
 				() -> {
 					_insertGroup(
-						companyId, "/company", companyGroupId, "company", 0);
+						companyId, GroupConstants.GLOBAL_FRIENDLY_URL,
+						globalGroupId, GroupConstants.GLOBAL, 0);
 					_insertGroup(
 						companyId, "/parent", parentGroupId, "parent", 0);
 					_insertGroup(
@@ -304,7 +306,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 					_insertDDMStructure(
 						companyId, parentGroupId, parentStructureKey);
 					_insertDDMStructure(
-						companyId, companyGroupId, companyStructureKey);
+						companyId, globalGroupId, globalStructureKey);
 					_insertDDMStructure(
 						companyId, orphanGroupId, orphanStructureKey);
 
@@ -313,7 +315,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 						"'" + parentStructureKey + "'");
 					_insertJournalArticle(
 						companyId, otherGroupId, "DDMStructureKey",
-						"'" + companyStructureKey + "'");
+						"'" + globalStructureKey + "'");
 					_insertJournalArticle(
 						companyId, otherGroupId, "DDMStructureKey",
 						"'" + orphanStructureKey + "'");
@@ -322,7 +324,7 @@ public class DDMDataCleanupPreupgradeProcessTest
 					Assert.assertFalse(
 						messages.toString(
 						).contains(
-							companyStructureKey
+							globalStructureKey
 						));
 					Assert.assertFalse(
 						messages.toString(

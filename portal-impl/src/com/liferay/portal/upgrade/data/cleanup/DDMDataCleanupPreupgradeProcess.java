@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
@@ -266,7 +267,7 @@ public class DDMDataCleanupPreupgradeProcess
 						"on DDMStructure1.structureKey = ",
 						"JournalArticle.DDMStructureKey and ",
 						"DDMStructure1.groupId = JournalArticle.groupId left ",
-						"join Group_ on Group_.friendlyURL = '/global' and ",
+						"join Group_ on Group_.friendlyURL = ? and ",
 						"Group_.companyId = JournalArticle.companyId left ",
 						"join DDMStructure DDMStructure2 on ",
 						"DDMStructure2.structureKey = ",
@@ -287,7 +288,7 @@ public class DDMDataCleanupPreupgradeProcess
 						"JournalArticle.DDMStructureKey and ",
 						"(DDMStructure.groupId = JournalArticle.groupId or ",
 						"DDMStructure.groupId in (select groupId from Group_ ",
-						"where friendlyURL = '/global' and companyId = ",
+						"where friendlyURL = ? and companyId = ",
 						"JournalArticle.companyId))) group by groupId, ",
 						"DDMStructureKey");
 				}
@@ -297,43 +298,49 @@ public class DDMDataCleanupPreupgradeProcess
 					PreparedStatement preparedStatement2 =
 						connection.prepareStatement(
 							"delete from JournalArticle where groupId = ? " +
-								"and DDMStructureKey = ?");
-					ResultSet resultSet = preparedStatement1.executeQuery()) {
+								"and DDMStructureKey = ?")) {
 
-					while (resultSet.next()) {
-						long groupId = resultSet.getLong("groupId");
+					preparedStatement1.setString(
+						1, GroupConstants.GLOBAL_FRIENDLY_URL);
 
-						String structureKey = resultSet.getString(
-							"DDMStructureKey");
+					try (ResultSet resultSet =
+							preparedStatement1.executeQuery()) {
 
-						if (_hasStructure(
-								groupId, parentGroupIds, structureKey,
-								structureKeysMap)) {
+						while (resultSet.next()) {
+							long groupId = resultSet.getLong("groupId");
 
-							continue;
+							String structureKey = resultSet.getString(
+								"DDMStructureKey");
+
+							if (_hasStructure(
+									groupId, parentGroupIds, structureKey,
+									structureKeysMap)) {
+
+								continue;
+							}
+
+							if (_log.isInfoEnabled()) {
+								DataCleanupLoggingUtil.logDelete(
+									_log, resultSet.getLong(3),
+									dbInspector.normalizeName("JournalArticle"),
+									StringBundler.concat(
+										dbInspector.normalizeName(
+											"DDMStructureKey"),
+										StringPool.SPACE, structureKey,
+										" was not found in ",
+										dbInspector.normalizeName("groupId"),
+										StringPool.SPACE, groupId,
+										" or its ancestors"));
+							}
+
+							preparedStatement2.setLong(1, groupId);
+							preparedStatement2.setString(2, structureKey);
+
+							preparedStatement2.addBatch();
 						}
 
-						if (_log.isInfoEnabled()) {
-							DataCleanupLoggingUtil.logDelete(
-								_log, resultSet.getLong(3),
-								dbInspector.normalizeName("JournalArticle"),
-								StringBundler.concat(
-									dbInspector.normalizeName(
-										"DDMStructureKey"),
-									StringPool.SPACE, structureKey,
-									" was not found in ",
-									dbInspector.normalizeName("groupId"),
-									StringPool.SPACE, groupId,
-									" or its ancestors"));
-						}
-
-						preparedStatement2.setLong(1, groupId);
-						preparedStatement2.setString(2, structureKey);
-
-						preparedStatement2.addBatch();
+						preparedStatement2.executeBatch();
 					}
-
-					preparedStatement2.executeBatch();
 				}
 			}
 

@@ -9,6 +9,7 @@ import SpaceMembersModal from '../../spaces/SpaceMembersModal';
 export interface ManageMembersData {
 	assetLibraryCreatorUserId: string;
 	externalReferenceCode: string;
+	filter?: string;
 	hasAssignMembersPermission: boolean;
 	title: string;
 }
@@ -20,6 +21,7 @@ export default function manageMembersAction(
 	const {
 		assetLibraryCreatorUserId,
 		externalReferenceCode,
+		filter,
 		hasAssignMembersPermission,
 		title,
 	} = data;
@@ -29,6 +31,7 @@ export default function manageMembersAction(
 			SpaceMembersModal({
 				assetLibraryCreatorUserId,
 				externalReferenceCode,
+				filter,
 				hasAssignMembersPermission,
 			}),
 		onClose: loadData,

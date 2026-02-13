@@ -11,10 +11,12 @@ import {SpaceMembersWithList} from './SpaceMembersWithList';
 export default function SpaceMembersModal({
 	assetLibraryCreatorUserId,
 	externalReferenceCode,
+	filter,
 	hasAssignMembersPermission,
 }: {
 	assetLibraryCreatorUserId: string;
 	externalReferenceCode: string;
+	filter?: string;
 	hasAssignMembersPermission: boolean;
 }) {
 	return (
@@ -29,6 +31,7 @@ export default function SpaceMembersModal({
 				<SpaceMembersWithList
 					assetLibraryCreatorUserId={assetLibraryCreatorUserId}
 					externalReferenceCode={externalReferenceCode}
+					filter={filter}
 					hasAssignMembersPermission={hasAssignMembersPermission}
 				/>
 			</ClayModal.Body>

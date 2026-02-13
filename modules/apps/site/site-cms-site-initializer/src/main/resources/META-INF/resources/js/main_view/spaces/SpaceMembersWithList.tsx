@@ -19,6 +19,7 @@ export interface SpaceMembersWithListProps {
 	assetLibraryCreatorUserId: string;
 	className?: string;
 	externalReferenceCode: string;
+	filter?: string;
 	hasAssignMembersPermission: boolean;
 	onHasSelectedMembersChange?: (hasSelectedMembers: boolean) => void;
 	pageSize?: number;
@@ -29,6 +30,7 @@ const DEFAULT_PAGE_SIZE = 20;
 export function SpaceMembersWithList({
 	assetLibraryCreatorUserId,
 	externalReferenceCode,
+	filter,
 	hasAssignMembersPermission,
 	className,
 	onHasSelectedMembersChange,
@@ -106,6 +108,7 @@ export function SpaceMembersWithList({
 			{hasAssignMembersPermission ? (
 				<SpaceMembersInputWithSelect
 					excludeMembers={excludeMembers}
+					filter={filter}
 					onAutocompleteItemSelected={(item) =>
 						addMember(item, selectedOption)
 					}

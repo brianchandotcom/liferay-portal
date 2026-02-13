@@ -35,6 +35,7 @@ interface AdminUserGroup {
 export interface SpaceMembersInputWithSelectProps {
 	className?: string;
 	excludeMembers?: (UserAccount | UserGroup)[];
+	filter?: string;
 	onAutocompleteItemSelected?: (item: UserAccount | UserGroup) => void;
 	onSelectChange?: (value: SelectOptions) => void;
 	selectValue: SelectOptions;
@@ -48,6 +49,7 @@ const endpoints = {
 export function SpaceMembersInputWithSelect({
 	className,
 	excludeMembers,
+	filter,
 	onAutocompleteItemSelected,
 	onSelectChange,
 	selectValue,
@@ -56,17 +58,27 @@ export function SpaceMembersInputWithSelect({
 
 	const apiURL = useMemo(() => {
 		const endpoint = endpoints[selectValue as SelectOptions];
-		const filterKey =
-			selectValue === SelectOptions.USERS ? 'id' : 'userGroupId';
+
+		const filters: string[] = [];
 
 		if (excludeMembers?.length) {
 			const excludeIds = excludeMembers.map((member) => `'${member.id}'`);
+			const filterKey =
+				selectValue === SelectOptions.USERS ? 'id' : 'userGroupId';
 
-			return `${endpoint}?filter=${filterKey} ne ${excludeIds.join(` and ${filterKey} ne `)}`;
+			filters.push(
+				`${filterKey} ne ${excludeIds.join(` and ${filterKey} ne `)}`
+			);
 		}
 
-		return endpoint;
-	}, [excludeMembers, selectValue]);
+		if (filter) {
+			filters.push(filter);
+		}
+
+		return filters.length
+			? `${endpoint}?filter=${filters.join(' and ')}`
+			: endpoint;
+	}, [excludeMembers, filter, selectValue]);
 
 	const renderUserAccountItem = (item: AdminUserAccount) => {
 		return (

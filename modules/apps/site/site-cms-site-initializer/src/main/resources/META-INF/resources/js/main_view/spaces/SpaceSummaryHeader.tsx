@@ -34,6 +34,7 @@ type SpaceModalPropsType = {
 	action: SpaceSummaryHeaderActions;
 	assetLibraryCreatorUserId: string;
 	externalReferenceCode: string;
+	filter?: string;
 };
 
 interface SpaceSummaryHeaderProps {
@@ -136,11 +137,13 @@ export default function SpaceSummaryHeader({
 	};
 
 	const openMembersModal = (props: SpaceModalPropsType) => {
-		const {assetLibraryCreatorUserId, externalReferenceCode} = props;
+		const {assetLibraryCreatorUserId, externalReferenceCode, filter} =
+			props;
 
 		const data: ManageMembersData = {
 			assetLibraryCreatorUserId,
 			externalReferenceCode,
+			filter,
 			hasAssignMembersPermission: Boolean(
 				permissions?.hasAssignMembersPermission
 			),

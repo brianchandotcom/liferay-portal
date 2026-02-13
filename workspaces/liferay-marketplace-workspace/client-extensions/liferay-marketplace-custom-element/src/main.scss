@@ -30,6 +30,19 @@ html.dev body {
 	z-index: 100;
 }
 
+.dropdown-menu {
+	border-radius: 8px !important;
+	padding: 8px !important;
+}
+
+.dropdown-item {
+	transition: all 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+	border-radius: 4px;
+}
+
 .loading-overlay {
 	align-items: center;
 	display: flex;

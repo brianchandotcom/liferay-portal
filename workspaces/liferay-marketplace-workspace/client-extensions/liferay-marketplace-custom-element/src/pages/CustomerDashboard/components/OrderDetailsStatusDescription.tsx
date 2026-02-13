@@ -5,12 +5,14 @@
 
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 import purchasedAppIcon from '../../../assets/icons/purchased_app_icon.svg';
 import OrderStatus from '../../../components/OrderStatus';
 import {OrderTypes} from '../../../enums/Order';
 
 type OrderDetailsStatusDescriptionProps = {
+	customStatus?: ReactNode;
 	order?: Cart;
 	productOwner?: string;
 };
@@ -26,6 +28,7 @@ const getOrderDetailsType = (orderTypeExternalReferenceCode: string) => {
 };
 
 const OrderDetailsStatusDescription = ({
+	customStatus,
 	order,
 	productOwner,
 }: OrderDetailsStatusDescriptionProps) => {
@@ -45,9 +48,13 @@ const OrderDetailsStatusDescription = ({
 
 			{order && (
 				<div className="align-items-center app-details-status d-flex mr-3">
-					<OrderStatus orderStatus={order?.orderStatusInfo.label}>
-						{order?.orderStatusInfo.label}
-					</OrderStatus>
+					{customStatus ? (
+						customStatus
+					) : (
+						<OrderStatus orderStatus={order?.orderStatusInfo.label}>
+							{order?.orderStatusInfo.label}
+						</OrderStatus>
+					)}
 				</div>
 			)}
 

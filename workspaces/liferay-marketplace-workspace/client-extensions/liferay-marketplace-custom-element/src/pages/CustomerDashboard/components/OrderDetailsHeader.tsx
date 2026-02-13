@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 import OrderDetailsStatusDescription from './OrderDetailsStatusDescription';
 
@@ -11,6 +11,7 @@ import './OrderDetailsHeader.scss';
 
 type OrderDetailsProps = {
 	className?: string;
+	customStatus?: ReactNode;
 	hasOrderDescription?: string;
 	hasOrderDetails?: boolean;
 	image?: string;
@@ -22,6 +23,7 @@ type OrderDetailsProps = {
 
 const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 	className,
+	customStatus,
 	hasOrderDescription = false,
 	hasOrderDetails = false,
 	image,
@@ -47,6 +49,7 @@ const OrderDetailsHeader: React.FC<OrderDetailsProps> = ({
 
 				{hasOrderDetails && (
 					<OrderDetailsStatusDescription
+						customStatus={customStatus}
 						order={order}
 						productOwner={productOwner}
 					/>

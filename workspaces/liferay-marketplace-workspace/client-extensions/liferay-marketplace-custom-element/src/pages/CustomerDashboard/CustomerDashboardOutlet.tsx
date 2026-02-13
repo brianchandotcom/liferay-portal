@@ -19,6 +19,11 @@ export const dashboardNavigationItems = [
 		symbol: 'grid',
 	},
 	{
+		itemTitle: i18n.translate('my-liferay-services'),
+		path: '/services',
+		symbol: 'display-content',
+	},
+	{
 		itemTitle: i18n.translate('my-solutions'),
 		path: '/solutions',
 		symbol: 'polls',

@@ -7,7 +7,7 @@ import Button from '@clayui/button';
 
 import BackLink from '../../../../components/BackLink';
 import i18n from '../../../../i18n';
-import PaymentStatus from '../PaymentStatus/PaymentStatus';
+import PaymentStatus from '../PaymentStatus/PaymentStatusBadge';
 
 type DetailsHeaderProps = {
 	backLink: string;

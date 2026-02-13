@@ -12,7 +12,7 @@ export default class HeadlessCommerceDeliveryOrder {
 		params = new URLSearchParams()
 	) {
 		return fetcher<APIResponse<PlacedOrder>>(
-			`/o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders?${params}`
+			`o/headless-commerce-delivery-order/v1.0/channels/${channelId}/accounts/${accountId}/placed-orders?${params}`
 		);
 	}
 

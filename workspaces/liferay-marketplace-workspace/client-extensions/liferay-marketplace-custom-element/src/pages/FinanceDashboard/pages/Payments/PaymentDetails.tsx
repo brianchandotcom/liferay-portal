@@ -6,24 +6,24 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
-import {useParams} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-import {PublisherPayoutStatus} from '.';
-import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
-import {PageRenderer} from '../../../../components/Page';
-import QATable, {Orientation} from '../../../../components/QATable';
+import { PublisherPayoutStatus } from '.';
+import { DetailedCard } from '../../../../components/DetailedCard/DetailedCard';
+import { PageRenderer } from '../../../../components/Page';
+import QATable, { Orientation } from '../../../../components/QATable';
 import Table from '../../../../components/Table/Table';
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import { PaymentStatus as PaymentStatusCode } from '../../../../enums/Order';
 import usePublisherSalesSummaryObject from '../../../../hooks/usePublisherSalesSummaryObject';
 import i18n from '../../../../i18n';
-import {Liferay} from '../../../../liferay/liferay';
+import { Liferay } from '../../../../liferay/liferay';
 import PublisherSalesSummary from '../../../../services/rest/PublisherSalesSummary';
-import {exportToCSV} from '../../../../utils/csv';
-import {safeJSONParse} from '../../../../utils/util';
+import { exportToCSV } from '../../../../utils/csv';
+import { safeJSONParse } from '../../../../utils/util';
 import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatus';
-import {formatCurrency, getTotalByOrderKey} from '../../util/finance';
-import {formatDate, textWrapper} from '../../util/util';
+import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import { formatCurrency, getTotalByOrderKey } from '../../util/finance';
+import { formatDate, textWrapper } from '../../util/util';
 
 enum Payouts {
 	MP_COMMISSION = 0.2,
@@ -49,16 +49,16 @@ export function formatPostalAddress(
 }
 
 const PaymentDetails = () => {
-	const {entryId} = useParams();
+	const { entryId } = useParams();
 
-	const {data, error, isLoading, mutate} = usePublisherSalesSummaryObject(
+	const { data, error, isLoading, mutate } = usePublisherSalesSummaryObject(
 		entryId as string
 	);
 
 	const {
 		account,
 		completeOrderItems,
-		postalAddresses = {items: []},
+		postalAddresses = { items: [] },
 		publisherSalesSummary,
 	} = data || {};
 
@@ -103,7 +103,7 @@ const PaymentDetails = () => {
 			i18n.translate('total'),
 		];
 
-		const rows = completeOrderItems.map(({orderItem, placedOrderItem}) => {
+		const rows = completeOrderItems.map(({ orderItem, placedOrderItem }) => {
 			const finalPrice = orderItem.finalPrice ?? 0;
 			const finalPriceWithTax = orderItem.finalPriceWithTaxAmount ?? 0;
 			const vat = finalPriceWithTax - finalPrice;
@@ -148,7 +148,7 @@ const PaymentDetails = () => {
 									...updatedPublisherSalesSummary,
 								},
 							},
-							{revalidate: false}
+							{ revalidate: false }
 						);
 					})
 				}
@@ -337,10 +337,9 @@ const PaymentDetails = () => {
 												</span>
 
 												<small className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize text-muted">
-													{`${placedOrderItem.quantity} ${
-														skuOption?.skuOptionValueKey ||
+													{`${placedOrderItem.quantity} ${skuOption?.skuOptionValueKey ||
 														skuOption?.skuOptionValueName
-													} license`}
+														} license`}
 												</small>
 											</span>
 										</div>
@@ -379,7 +378,7 @@ const PaymentDetails = () => {
 								formatCurrency(
 									orderItem.currencyCode,
 									orderItem.finalPriceWithTaxAmount -
-										orderItem.finalPrice
+									orderItem.finalPrice
 								),
 							title: i18n.translate('vat'),
 						},

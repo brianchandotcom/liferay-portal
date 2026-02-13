@@ -122,10 +122,7 @@ public class EditorToolbarComponentSectionFragmentRenderer
 					return baseViewProjectURL + objectEntry.getObjectEntryId();
 				}
 
-				String baseViewTaskURL = ActionUtil.getBaseViewTaskURL(
-					objectDefinition, themeDisplay);
-
-				return baseViewTaskURL + objectEntry.getObjectEntryId();
+				return null;
 			}
 		).put(
 			"title",

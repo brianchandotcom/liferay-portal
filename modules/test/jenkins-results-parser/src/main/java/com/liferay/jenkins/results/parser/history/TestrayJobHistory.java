@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -105,6 +106,12 @@ public class TestrayJobHistory extends BaseJobHistory {
 			}
 
 			for (TestrayBuild testrayBuild : testrayBuilds) {
+				if (!Objects.equals(testrayBuild.getImportStatus(), "DONE")) {
+					System.out.println("SKIPPED: " + testrayBuild.getURL());
+
+					continue;
+				}
+
 				TopLevelBuildReport topLevelBuildReport =
 					testrayBuild.getTopLevelBuildReport();
 

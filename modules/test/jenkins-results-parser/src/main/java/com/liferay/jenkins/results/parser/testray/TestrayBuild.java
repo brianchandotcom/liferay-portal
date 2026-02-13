@@ -39,8 +39,9 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public static final String[] FIELD_NAMES = {
 		"dateCreated", "dateModified", "description", "dueDate",
-		"dueStatus {key name}", "githubCompareURLs", "gitHash", "id", "name",
-		"productVersionToBuilds", "projectToBuilds", "routineToBuilds"
+		"dueStatus {key name}", "githubCompareURLs", "gitHash", "id",
+		"importStatus {key name}", "name", "productVersionToBuilds",
+		"projectToBuilds", "routineToBuilds"
 	};
 
 	public static final String[] FIELD_NAMES_CASE_RESULT = {
@@ -95,6 +96,17 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 	public long getID() {
 		return _jsonObject.getLong("id");
+	}
+
+	public String getImportStatus() {
+		JSONObject importStatusJSONObject = _jsonObject.optJSONObject(
+			"importStatus");
+
+		if (importStatusJSONObject == null) {
+			return "UNKNOWN";
+		}
+
+		return importStatusJSONObject.optString("name", "UNKNOWN");
 	}
 
 	public JSONObject getJSONObject() {

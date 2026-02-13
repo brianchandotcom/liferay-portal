@@ -370,7 +370,7 @@ public class TestrayProject {
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"cases", TestrayCase.FIELD_NAMES_CASE_IDS, filter, null, 0, 50);
+				"cases", TestrayCase.FIELD_NAMES_CASE_IDS, filter, null);
 
 			for (JSONObject entityJSONObject : entityJSONObjects) {
 				_testrayCaseIDs.put(

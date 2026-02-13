@@ -5,38 +5,35 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForPageToBeLoaded} from '../../../utils/waitForPageToBeLoaded';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest()
 );
 
 test(
 	'The side navigation is visible by default',
 	{tag: '@LPD-73706'},
-	async ({applicationsMenuPage, page}) => {
+	async ({globalMenuPage, page}) => {
 		const testCases = [
 			{
 				name: 'Applications',
-				navigateToPage: () =>
-					applicationsMenuPage.goToClientExtensions(),
+				navigateToPage: () => globalMenuPage.goToApplications(),
 			},
 			{
 				name: 'Commerce',
-				navigateToPage: () =>
-					applicationsMenuPage.goToCommerceSpecifications(),
+				navigateToPage: () => globalMenuPage.goToCommerce(),
 			},
 			{
 				name: 'Control Panel',
-				navigateToPage: () =>
-					applicationsMenuPage.goToInstanceSettings(),
+				navigateToPage: () => globalMenuPage.goToControlPanel(),
 			},
 		];
 
@@ -63,9 +60,9 @@ test(
 test(
 	'The close button hides the side navigation',
 	{tag: '@LPD-73706'},
-	async ({applicationsMenuPage, page}) => {
+	async ({globalMenuPage, page}) => {
 		await test.step('Go to an Applications Panel page', async () => {
-			await applicationsMenuPage.goToClientExtensions();
+			await globalMenuPage.goToApplications();
 		});
 
 		const sideNavigation = page.getByTestId('sideNavigation');
@@ -90,9 +87,9 @@ test(
 test(
 	'The toggle button controls the visibility of the side navigation',
 	{tag: '@LPD-73706'},
-	async ({applicationsMenuPage, page}) => {
+	async ({globalMenuPage, page}) => {
 		await test.step('Go to an Applications Panel page', async () => {
-			await applicationsMenuPage.goToClientExtensions();
+			await globalMenuPage.goToApplications();
 		});
 
 		const sideNavigation = page.getByTestId('sideNavigation');
@@ -123,9 +120,9 @@ test(
 test(
 	'The side navigation visibility persists across page reloads',
 	{tag: '@LPD-73706'},
-	async ({applicationsMenuPage, page}) => {
+	async ({globalMenuPage, page}) => {
 		await test.step('Go to an Applications Panel page', async () => {
-			await applicationsMenuPage.goToClientExtensions();
+			await globalMenuPage.goToApplications();
 		});
 
 		const sideNavigation = page.getByTestId('sideNavigation');

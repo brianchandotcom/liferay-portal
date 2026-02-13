@@ -1164,9 +1164,18 @@ public class FragmentLinkUtilTest {
 
 		Mockito.when(
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				Mockito.any(), Mockito.any(), Mockito.any())
+				Mockito.eq(InfoItemDetailsProvider.class), Mockito.any(),
+				Mockito.any())
 		).thenReturn(
-			infoItemObjectProvider, infoItemDetailsProvider
+			infoItemDetailsProvider
+		);
+
+		Mockito.when(
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				Mockito.eq(InfoItemObjectProvider.class), Mockito.any(),
+				Mockito.any())
+		).thenReturn(
+			infoItemObjectProvider
 		);
 
 		Mockito.when(

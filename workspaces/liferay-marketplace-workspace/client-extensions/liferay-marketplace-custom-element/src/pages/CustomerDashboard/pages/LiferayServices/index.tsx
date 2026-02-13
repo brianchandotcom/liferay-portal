@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import {useNavigate, useOutletContext} from 'react-router-dom';
 
 import ListView from '../../../../components/ListView';
 import OrderStatus from '../../../../components/OrderStatus';
 import Page from '../../../../components/Page';
-import { useMarketplaceContext } from '../../../../context/MarketplaceContext';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import { OrderWorkflowStatusCode } from '../../../../enums/Order';
-import { PaymentStatus } from '../../../../enums/Order';
+import {OrderWorkflowStatusCode, PaymentStatus} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
 
@@ -21,8 +20,8 @@ const searhParams = new URLSearchParams({
 });
 
 const LiferayServicesListView = () => {
-	const { selectedAccount } = useOutletContext<any>();
-	const { channel } = useMarketplaceContext();
+	const {selectedAccount} = useOutletContext<any>();
+	const {channel} = useMarketplaceContext();
 	const navigate = useNavigate();
 
 	return (
@@ -79,7 +78,7 @@ const LiferayServicesListView = () => {
 										placedOrderItems[0] || [];
 
 									return (
-										<div style={{ width: 200 }}>
+										<div style={{width: 200}}>
 											<img
 												alt="App Image"
 												className="order-details-publisher-table-icon"
@@ -98,7 +97,7 @@ const LiferayServicesListView = () => {
 								clickable: true,
 								id: 'author',
 								name: i18n.translate('purchased-by'),
-								render: (author, { createDate }) => (
+								render: (author, {createDate}) => (
 									<div className="d-flex flex-column">
 										<span className="dashboard-table-row-text">
 											{author}

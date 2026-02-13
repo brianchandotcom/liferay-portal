@@ -34,11 +34,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -81,6 +83,39 @@ public class SectionDisplayContextHelper {
 		_objectEntryFolderModelResourcePermission =
 			objectEntryFolderModelResourcePermission;
 		_portal = portal;
+	}
+
+	public String appendGroupIds(
+		String filterString, HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			boolean cmsAdministrator = RoleLocalServiceUtil.hasUserRole(
+				themeDisplay.getUserId(), themeDisplay.getCompanyId(),
+				RoleConstants.CMS_ADMINISTRATOR, true);
+
+			if (cmsAdministrator) {
+				return filterString;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		String depotEntryGroupIdsString = StringUtil.merge(
+			_depotEntryLocalService.getDepotEntryGroupIds(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				DepotConstants.TYPE_SPACE),
+			StringPool.COMMA);
+
+		return StringBundler.concat(
+			filterString, " and groupIds/any(g:g in (",
+			depotEntryGroupIdsString, "))");
 	}
 
 	public String appendStatus(String filterString) {

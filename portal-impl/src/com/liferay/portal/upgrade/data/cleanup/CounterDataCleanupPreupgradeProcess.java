@@ -94,13 +94,23 @@ public class CounterDataCleanupPreupgradeProcess
 					tableName = StringUtil.extractLast(counterName, '.');
 				}
 
+				if (!dbInspector.hasTable(tableName)) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Table " + tableName + " does not exist");
+					}
+
+					continue;
+				}
+
 				if (!dbInspector.isObjectTable(tableName) &&
 					!_liferayTableNames.contains(tableName)) {
 
 					if (_log.isDebugEnabled()) {
 						_log.debug(
-							"Skipping counter " + counterName +
-								" because its associated table was not found");
+							StringBundler.concat(
+								"Skipping counter ", counterName,
+								" because its associated table does not ",
+								"belong to Liferay"));
 					}
 
 					continue;

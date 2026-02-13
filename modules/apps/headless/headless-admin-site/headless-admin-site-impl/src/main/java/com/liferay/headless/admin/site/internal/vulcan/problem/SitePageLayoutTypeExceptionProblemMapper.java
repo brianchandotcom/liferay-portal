@@ -26,34 +26,12 @@ public class SitePageLayoutTypeExceptionProblemMapper
 
 	@Override
 	public Problem getProblem(LayoutTypeException layoutTypeException) {
-		String message = _getLayoutTypeExceptionMessage(
-			layoutTypeException.getMessage(), layoutTypeException.getType(),
-			GetterUtil.getString(layoutTypeException.getLayoutType()),
-			LocaleUtil.getMostRelevantLocale());
-
-		return new Problem() {
-
-			@Override
-			public String getDetail(Locale locale) {
-				return message;
-			}
-
-			@Override
-			public Status getStatus() {
-				return Status.CONFLICT;
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return message;
-			}
-
-			@Override
-			public String getType() {
-				return LayoutTypeException.class.getName();
-			}
-
-		};
+		return ProblemUtil.getProblem(
+			_getLayoutTypeExceptionMessage(
+				layoutTypeException.getMessage(), layoutTypeException.getType(),
+				GetterUtil.getString(layoutTypeException.getLayoutType()),
+				LocaleUtil.getMostRelevantLocale()),
+			Problem.Status.CONFLICT, layoutTypeException);
 	}
 
 	private String _getLayoutTypeExceptionMessage(

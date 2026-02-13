@@ -49,9 +49,7 @@ const Tags = ({
 				updateObjectEntry={async ({
 					keywords,
 				}: Partial<IAssetObjectEntry>): Promise<void> => {
-					if (keywords) {
-						setKeywords(keywords);
-					}
+					setKeywords(keywords ? [...keywords] : []);
 				}}
 			/>
 

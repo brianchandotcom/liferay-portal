@@ -201,16 +201,15 @@ public class AgentDefinitionResourceTest
 		Assert.assertEquals(
 			objectEntry1.getPropertyValue("description"),
 			objectEntry2.getPropertyValue("description"));
+		Assert.assertNotEquals(
+			objectEntry1.getPropertyValue("externalReferenceCode"),
+			objectEntry2.getPropertyValue("externalReferenceCode"));
 		Assert.assertEquals(
 			objectEntry1.getPropertyValue("inputVariables"),
 			objectEntry2.getPropertyValue("inputVariables"));
 		Assert.assertEquals(
 			objectEntry1.getPropertyValue("outputVariable"),
 			objectEntry2.getPropertyValue("outputVariable"));
-
-		Assert.assertNotEquals(
-			objectEntry1.getPropertyValue("externalReferenceCode"),
-			objectEntry2.getPropertyValue("externalReferenceCode"));
 		Assert.assertNotEquals(
 			objectEntry1.getPropertyValue("title_i18n"),
 			objectEntry2.getPropertyValue("title_i18n"));

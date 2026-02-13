@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -203,18 +202,17 @@ public class SegmentsEntryLocalServiceImpl
 		// Segments entry
 
 		if (!GroupThreadLocal.isDeleteInProcess()) {
+			Group group = _groupLocalService.getGroup(
+				segmentsEntry.getGroupId());
+
 			int count = _segmentsExperiencePersistence.countBySEERC_SESERC(
 				segmentsEntry.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					segmentsEntry.getGroupId(), 0));
+				group.getExternalReferenceCode());
 
 			if (count == 0) {
 				count = _segmentsExperiencePersistence.countByG_SEERC_SESERC(
 					segmentsEntry.getGroupId(),
-					segmentsEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						segmentsEntry.getGroupId(),
-						segmentsEntry.getGroupId()));
+					segmentsEntry.getExternalReferenceCode(), null);
 			}
 
 			if (count > 0) {

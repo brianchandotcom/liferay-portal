@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -421,6 +423,13 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	public List<Group> getCMSGroups() {
+		return ListUtil.filter(
+			_groupLocalService.getGroups(-1, -1),
+			Group::isCMS);
+	}
+
+	@Override
 	public List<AssetCategory> getDescendantCategories(AssetCategory category) {
 		return assetCategoryPersistence.findByG_LikeT_V(
 			category.getGroupId(), category.getTreePath() + "%",
@@ -448,6 +457,20 @@ public class AssetCategoryLocalServiceImpl
 			externalReferenceCode,
 			this::fetchAssetCategoryByExternalReferenceCode,
 			this::getAssetCategoryByExternalReferenceCode, groupId, "category");
+	}
+
+	@Override
+	public List<Group> getSpaceGroups(long[] groupIds)
+		throws PortalException {
+
+		List<Group> groups = _groupLocalService.getGroups(groupIds);
+
+		return ListUtil.filter(
+			groups,
+			group -> GetterUtil.getInteger(
+				group.getTypeSettingsProperty("depotEntryType")
+			) == _DEPOT_ENTRY_TYPE_SPACE
+		);
 	}
 
 	@Override
@@ -891,11 +914,16 @@ public class AssetCategoryLocalServiceImpl
 		}
 	}
 
+	private static final int _DEPOT_ENTRY_TYPE_SPACE = 1;
+
 	@BeanReference(type = AssetVocabularyPersistence.class)
 	private AssetVocabularyPersistence _assetVocabularyPersistence;
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	private GroupLocalService _groupLocalService;
 
 	@BeanReference(type = ResourceLocalService.class)
 	private ResourceLocalService _resourceLocalService;

@@ -14,12 +14,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Autocomplete;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -31,9 +33,11 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the remote service for accessing, adding, deleting, moving, and
@@ -476,6 +480,35 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 			groupId, name, vocabularyId, start, end, orderByComparator);
 	}
 
+	private long[] _resolveGroupIds(long[] groupIds)
+		throws PortalException {
+
+		List<Group> spaceGroups =
+			assetCategoryLocalService.getSpaceGroups(groupIds);
+
+		if (ListUtil.isEmpty(spaceGroups)) {
+			return groupIds;
+		}
+
+		Set<Long> finalGroupIds = new LinkedHashSet<>();
+
+		for (long groupId : groupIds) {
+			finalGroupIds.add(groupId);
+		}
+
+		for (Group group : spaceGroups) {
+			finalGroupIds.remove(group.getGroupId());
+		}
+
+		for (Group group :
+			assetCategoryLocalService.getCMSGroups()) {
+
+			finalGroupIds.add(group.getGroupId());
+		}
+
+		return ArrayUtil.toLongArray(finalGroupIds);
+	}
+
 	@Override
 	public JSONArray search(
 			long groupId, String name, String[] categoryProperties, int start,
@@ -492,9 +525,11 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	@Override
 	public JSONArray search(
-			long[] groupIds, String name, long[] vocabularyIds, int start,
-			int end)
+		long[] groupIds, String name, long[] vocabularyIds, int start,
+		int end)
 		throws PortalException {
+
+		groupIds = _resolveGroupIds(groupIds);
 
 		JSONArray jsonArray = null;
 
@@ -666,5 +701,4 @@ public class AssetCategoryServiceImpl extends AssetCategoryServiceBaseImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetCategoryServiceImpl.class);
-
 }

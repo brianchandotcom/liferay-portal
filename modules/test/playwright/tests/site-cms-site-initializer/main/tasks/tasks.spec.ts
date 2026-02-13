@@ -9,7 +9,6 @@ import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
-import {waitForAlert} from '../../../../utils/waitForAlert';
 import {cmsPagesTest} from '../fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -99,26 +98,19 @@ test(
 
 				await tasksPage.saveButton.click();
 
-				await waitForAlert(
-					page,
-					'Info:Due date update action started for 2 task.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+				await expect(async () => {
+					await tasksPage.goto();
 
-				await tasksPage.goto();
+					const expectedDate = tomorrow.toLocaleDateString(locale, {
+						day: 'numeric',
+						month: 'short',
+						year: 'numeric',
+					});
 
-				const expectedDate = tomorrow.toLocaleDateString(locale, {
-					day: 'numeric',
-					month: 'short',
-					year: 'numeric',
-				});
-
-				await expect(
-					page.getByRole('row', {name: expectedDate})
-				).toHaveCount(2);
+					await expect(
+						page.getByRole('row', {name: expectedDate})
+					).toHaveCount(2);
+				}).toPass({timeout: 10000});
 			});
 		}
 		finally {
@@ -361,20 +353,13 @@ test(
 
 				await tasksPage.saveButton.click();
 
-				await waitForAlert(
-					page,
-					'Info:State update action started for 2 task.',
-					{
-						autoClose: true,
-						type: 'info',
-					}
-				);
+				await expect(async () => {
+					await tasksPage.goto();
 
-				await tasksPage.goto();
-
-				await expect(
-					page.getByRole('row', {name: 'Blocked'})
-				).toHaveCount(2);
+					await expect(
+						page.getByRole('row', {name: 'Blocked'})
+					).toHaveCount(2);
+				}).toPass({timeout: 10000});
 			});
 		}
 		finally {

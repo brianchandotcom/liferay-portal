@@ -15,19 +15,19 @@ export const CONSTANTS = {
 		'ACCESSIBILITY_SETTING_UNDERLINED_LINKS',
 } as const;
 
-type KEYS = keyof typeof CONSTANTS;
+type SettingId = (typeof CONSTANTS)[keyof typeof CONSTANTS];
 
 type AccessibilityMenuSetting = {
 	className: string;
 	description: string;
-	key: KEYS;
+	key: SettingId;
 	label: string;
 	updating?: boolean;
 	value: boolean;
 };
 
 export const accessibilityMenuAtom = State.atom<
-	Record<KEYS, AccessibilityMenuSetting>
->('accessibility-menu', {} as any);
+	Partial<Record<SettingId, AccessibilityMenuSetting>>
+>('accessibility-menu', {});
 
 export {isReducedMotion} from './isReducedMotion';

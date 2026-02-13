@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
@@ -37,6 +38,29 @@ public class GroupUtil {
 
 		return getGroupId(
 			false, allowLiveGroup, companyId, siteExternalReferenceCode);
+	}
+
+	public static long getStagingAwareGroupId(
+			boolean allowCompanyGroup, long companyId,
+			String siteExternalReferenceCode)
+		throws Exception {
+
+		return getGroupId(
+			allowCompanyGroup,
+			ExportImportThreadLocal.isInitialLayoutStagingInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess(),
+			companyId, siteExternalReferenceCode);
+	}
+
+	public static long getStagingAwareGroupId(
+			long companyId, String siteExternalReferenceCode)
+		throws Exception {
+
+		return getGroupId(
+			false,
+			ExportImportThreadLocal.isInitialLayoutStagingInProcess() ||
+			ExportImportThreadLocal.isStagingInProcess(),
+			companyId, siteExternalReferenceCode);
 	}
 
 }

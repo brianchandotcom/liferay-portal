@@ -36,7 +36,9 @@ public class KeywordEntityModel implements EntityModel {
 				"groupIds", locale -> "groupIds", String::valueOf),
 			new StringEntityField(
 				Field.NAME,
-				locale -> Field.getSortableFieldName(Field.NAME + "_String")));
+				locale -> Field.getSortableFieldName(Field.NAME + "_String")),
+			new StringEntityField(
+				"externalReferenceCode", locale -> "externalReferenceCode"));
 	}
 
 	@Override

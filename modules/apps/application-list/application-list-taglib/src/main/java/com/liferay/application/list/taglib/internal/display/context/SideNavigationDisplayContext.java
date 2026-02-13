@@ -74,6 +74,18 @@ public class SideNavigationDisplayContext {
 		return expandedKeys;
 	}
 
+	public String getPanelCategoryImageUrl() {
+		PanelCategory panelCategory = _getPanelCategory();
+
+		if (panelCategory == null) {
+			return null;
+		}
+
+		return String.format(
+			"%s/product_icons/%s_sm.svg", _themeDisplay.getPathThemeImages(),
+			panelCategory.getKey());
+	}
+
 	public String getPanelCategoryLabel() {
 		PanelCategory panelCategory = _getPanelCategory();
 
@@ -101,6 +113,8 @@ public class SideNavigationDisplayContext {
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
 		return HashMapBuilder.<String, Object>put(
+			"categoryImageUrl", getPanelCategoryImageUrl()
+		).put(
 			"expandedKeys", getExpandedKeys()
 		).put(
 			"expandedKeysSessionKey", _getExpandedKeysSessionKey()

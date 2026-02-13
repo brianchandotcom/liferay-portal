@@ -1491,6 +1491,48 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	public void testFragmentEntryProcessorEditableMappedDLImagePreviewURLWithDoAsUserId()
+		throws Exception {
+
+		FileEntry fileEntry = _addImageFileEntry(RandomTestUtil.randomString());
+
+		String editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
+			"FileEntry_previewImage",
+			"fragment_entry_link_mapped_asset_field_image.json");
+
+		ThemeDisplay themeDisplay = _serviceContext.getThemeDisplay();
+
+		themeDisplay.setDoAsUserId(RandomTestUtil.randomString());
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.VIEW);
+
+		String src = element.attr("src");
+
+		Assert.assertTrue(
+			src.contains("doAsUserId=" + themeDisplay.getDoAsUserId()));
+
+		editableValues = _getEditableFieldValues(
+			_portal.getClassNameId(FileEntry.class), fileEntry.getFileEntryId(),
+			"FileEntry_downloadURL",
+			"link/fragment_entry_link_mapped_asset_field_image.json");
+
+		element = _getElement(
+			"data-lfr-editable-id", "image-square", editableValues,
+			"fragment_entry_image.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.VIEW
+		).parent();
+
+		String href = element.attr("href");
+
+		Assert.assertTrue(
+			href.contains("doAsUserId=" + themeDisplay.getDoAsUserId()));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableMappedJournalArticleBackgroundImageFileEntryId()
 		throws Exception {
 

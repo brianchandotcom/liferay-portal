@@ -1,0 +1,15 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"image-square": {
+			"config": {
+				"classNameId": "CLASS_NAME_ID",
+				"classPK": "CLASS_PK",
+				"fieldId": "FIELD_ID",
+				"mapperType": "link",
+				"rel": "",
+				"target": ""
+			},
+			"defaultValue": "Default Editable Values Link Text"
+		}
+	}
+}

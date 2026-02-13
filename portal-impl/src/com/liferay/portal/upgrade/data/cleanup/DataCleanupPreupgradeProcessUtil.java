@@ -87,9 +87,7 @@ public class DataCleanupPreupgradeProcessUtil {
 					clazz.getAnnotation(ImplementationClassName.class);
 
 				if (implementationClassName == null) {
-					tableName = StringUtil.extractLast(fullyQualifiedName, '.');
-
-					break;
+					return null;
 				}
 
 				clazz = bundle.loadClass(implementationClassName.value());

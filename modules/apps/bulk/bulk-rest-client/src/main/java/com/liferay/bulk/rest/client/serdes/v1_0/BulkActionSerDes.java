@@ -72,6 +72,11 @@ public class BulkActionSerDes {
 					(DeleteBulkAction)bulkAction);
 			}
 
+			if (typeString.equals("DeleteObjectEntryBulkAction")) {
+				return DeleteBulkActionSerDes.toJSON(
+					(DeleteBulkAction)bulkAction);
+			}
+
 			if (typeString.equals("DueDateBulkAction")) {
 				return DueDateBulkActionSerDes.toJSON(
 					(DueDateBulkAction)bulkAction);
@@ -205,6 +210,10 @@ public class BulkActionSerDes {
 				}
 
 				if (typeString.equals("DeleteBulkAction")) {
+					return DeleteBulkAction.toDTO(json);
+				}
+
+				if (typeString.equals("DeleteObjectEntryBulkAction")) {
 					return DeleteBulkAction.toDTO(json);
 				}
 

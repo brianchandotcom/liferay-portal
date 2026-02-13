@@ -132,6 +132,7 @@ public abstract class BulkAction implements Cloneable, Serializable {
 		ASSIGN_TO_BULK_ACTION("AssignToBulkAction"),
 		DEFAULT_PERMISSION_BULK_ACTION("DefaultPermissionBulkAction"),
 		DELETE_BULK_ACTION("DeleteBulkAction"),
+		DELETE_OBJECT_ENTRY_BULK_ACTION("DeleteObjectEntryBulkAction"),
 		DUE_DATE_BULK_ACTION("DueDateBulkAction"),
 		EXPIRE_BULK_ACTION("ExpireBulkAction"),
 		KEYWORD_BULK_ACTION("KeywordBulkAction"),

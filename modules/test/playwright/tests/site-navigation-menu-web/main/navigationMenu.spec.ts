@@ -768,6 +768,64 @@ test(
 	}
 );
 
+test('Navigation Menu widget defaults to public pages when menu is deleted', async ({
+	apiHelpers,
+	navigationMenuWidgetPage,
+	navigationMenusPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layoutName = getRandomString();
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: layoutName,
+	});
+
+	await navigationMenusPage.goto(site.friendlyUrlPath);
+
+	const navigationMenuName = getRandomString();
+
+	await navigationMenusPage.createNavigationMenu(navigationMenuName);
+
+	const urlItemName = getRandomString();
+
+	await navigationMenusPage.addURLItem(urlItemName);
+
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+	await navigationMenuWidgetPage.openConfigurationModal(layoutName);
+
+	await navigationMenuWidgetPage.selectCustomNavigationMenu(
+		navigationMenuName
+	);
+
+	await navigationMenuWidgetPage.saveAndCloseConfigurationModal();
+
+	await expect(page.getByRole('menuitem', {name: urlItemName})).toBeVisible();
+
+	await navigationMenusPage.goto(site.friendlyUrlPath);
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {
+			exact: true,
+			name: 'Delete',
+		}),
+		trigger: page.getByRole('button', {name: 'Show Actions'}),
+	});
+
+	await page
+		.getByLabel('Delete Navigation Menu')
+		.getByRole('button', {name: 'Delete'})
+		.click();
+
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
+
+	await expect(page.getByRole('menuitem', {name: layoutName})).toBeVisible();
+});
+
 test(
 	'Select global Navigation Menu in normal site',
 	{

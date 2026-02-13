@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.problem.Problem;
 import com.liferay.portal.vulcan.problem.ProblemProvider;
 
@@ -34,6 +35,10 @@ public class ErrorMessageUtil {
 
 		if (problem != null) {
 			return problem.getDetail(_getLocale(userId));
+		}
+
+		if (Validator.isNotNull(throwable.getMessage())) {
+			return throwable.getMessage();
 		}
 
 		return throwable.toString();

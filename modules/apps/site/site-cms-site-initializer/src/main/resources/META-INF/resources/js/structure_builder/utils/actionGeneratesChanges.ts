@@ -13,6 +13,7 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'add-repeatable-group':
 		case 'delete-children':
 		case 'duplicate-child':
+		case 'move-children':
 		case 'rename-item':
 		case 'set-workflow':
 		case 'ungroup':

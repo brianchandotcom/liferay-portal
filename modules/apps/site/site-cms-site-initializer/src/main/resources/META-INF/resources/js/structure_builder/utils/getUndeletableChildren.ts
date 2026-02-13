@@ -10,7 +10,10 @@ import isField from './isField';
 import isLocked from './isLocked';
 import isReferenced from './isReferenced';
 
-type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
+export type UndeletableReason =
+	| 'is-locked'
+	| 'is-referenced'
+	| 'causes-invalid-group';
 
 export default function getUndeletableChildren(
 	uuids: Uuid[],

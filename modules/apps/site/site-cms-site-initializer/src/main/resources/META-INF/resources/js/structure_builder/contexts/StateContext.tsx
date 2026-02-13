@@ -35,6 +35,7 @@ import normalizeString from '../utils/normalizeString';
 import addChild from '../utils/state/addChild';
 import addRepeatableGroup from '../utils/state/addRepeatableGroup';
 import deleteChildren from '../utils/state/deleteChildren';
+import moveChildren from '../utils/state/moveChildren';
 import refreshReferencedStructures from '../utils/state/refreshReferencedStructures';
 import sortChildren from '../utils/state/sortChildren';
 import ungroup from '../utils/state/ungroupRepeatableGroup';
@@ -133,6 +134,12 @@ type DeleteChildrenAction = {type: 'delete-children'; uuids: Uuid[]};
 
 type DuplicateChildAction = {type: 'duplicate-child'; uuid: Uuid};
 
+type MoveChildrenAction = {
+	items: StructureChild[];
+	targetUuid: Uuid;
+	type: 'move-children';
+};
+
 type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
 type RefreshReferencedStructuresAction = {
@@ -226,6 +233,7 @@ export type Action =
 	| CreateStructureAction
 	| DeleteChildrenAction
 	| DuplicateChildAction
+	| MoveChildrenAction
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
 	| RenameItemAction
@@ -500,6 +508,41 @@ function reducer(state: State, action: Action): State {
 			return {
 				...state,
 				selection: [copyUuid],
+				structure: {
+					...structure,
+					children,
+				},
+			};
+		}
+		case 'move-children': {
+			const {items, targetUuid} = action;
+
+			const {history, publishedChildren, structure} = state;
+
+			const children = moveChildren({
+				items,
+				root: structure,
+				targetUuid,
+			});
+
+			const deletedChildrenUuids = new Set<Uuid>();
+
+			for (const item of items) {
+				if (publishedChildren.has(item.uuid)) {
+					deletedChildrenUuids.add(item.uuid);
+				}
+			}
+
+			return {
+				...state,
+				history: deletedChildrenUuids.size
+					? updateHistory({
+							deletedChildrenUuids,
+							initialHistory: history,
+							publishedChildren,
+							structure,
+						})
+					: history,
 				structure: {
 					...structure,
 					children,

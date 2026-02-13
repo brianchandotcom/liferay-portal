@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -55,24 +54,10 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 
-import javax.management.DynamicMBean;
 import java.io.File;
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,6 +72,24 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.management.DynamicMBean;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Raymond Augé
@@ -580,6 +583,7 @@ public class AsyncAntivirusDLStoreTest {
 					() -> firedEventVirusFound.set(true)
 				).build()),
 			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
+
 		_registerService(
 			AntivirusAsyncRetryScheduler.class,
 			ProxyFactory.newDummyInstance(AntivirusAsyncRetryScheduler.class),
@@ -606,14 +610,12 @@ public class AsyncAntivirusDLStoreTest {
 				DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
 					dlFolder.getFolderId());
 
-				ServiceContext serviceContext =
-					ServiceContextTestUtil.getServiceContext(
-						_group, TestPropsValues.getUserId());
-
 				dlFileEntry = _dlFileEntryLocalService.updateStatus(
 					TestPropsValues.getUserId(), dlFileEntry,
 					dlFileEntry.getLatestFileVersion(true),
-					WorkflowConstants.STATUS_APPROVED, serviceContext,
+					WorkflowConstants.STATUS_APPROVED,
+					ServiceContextTestUtil.getServiceContext(
+						_group, TestPropsValues.getUserId()),
 					Collections.emptyMap());
 
 				Assert.assertTrue(firedEventSuccess.get());

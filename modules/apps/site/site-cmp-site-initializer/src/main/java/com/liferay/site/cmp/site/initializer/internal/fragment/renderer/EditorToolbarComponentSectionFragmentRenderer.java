@@ -135,10 +135,13 @@ public class EditorToolbarComponentSectionFragmentRenderer
 						"L_CMP_PROJECT")) {
 
 					return LanguageUtil.get(
-						themeDisplay.getLocale(), "new-project");
+						themeDisplay.getLocale(),
+						objectEntry.isDraft() ? "new-project" : "edit-project");
 				}
 
-				return LanguageUtil.get(themeDisplay.getLocale(), "new-task");
+				return LanguageUtil.get(
+					themeDisplay.getLocale(),
+					objectEntry.isDraft() ? "new-task" : "edit-task");
 			}
 		).build();
 	}

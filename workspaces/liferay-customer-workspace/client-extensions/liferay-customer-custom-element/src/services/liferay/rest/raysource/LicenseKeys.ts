@@ -3,45 +3,44 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export async function getCommonLicenseKey(
+export async function createNewGenerateKey(
 	accountKey: string,
-	dateEnd: Date,
-	dateStart: Date,
-	environment: string,
 	oAuthToken: string,
 	provisioningServerAPI: string,
-	productName: string
+	licenseKey: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
+		`${provisioningServerAPI}/accounts/${accountKey}/license-keys`,
 		{
+			body: JSON.stringify([licenseKey]),
 			headers: {
+				'Content-Type': 'application/json',
 				'OAuth-Token': oAuthToken,
 			},
+			method: 'POST',
 		}
 	);
 
-	return response;
+	return response.json();
 }
 
-export async function getDevelopmentLicenseKey(
-	accountKey: string,
+export async function deleteSubscriptionInKey(
 	oAuthToken: string,
 	provisioningServerAPI: string,
-	selectedVersion: string,
-	productName: string
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-version/${selectedVersion}/development-license-key`,
+		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
 
 		{
 			headers: {
 				'OAuth-Token': oAuthToken,
 			},
+			method: 'DELETE',
 		}
 	);
 
@@ -88,15 +87,60 @@ export async function getAggregatedActivationDownloadKey(
 	return response;
 }
 
-export async function getMultipleActivationDownloadKey(
-	selectedKeysIDs: string,
+export async function getCloudSubscriptionLicenseKey(
 	oAuthToken: string,
-	provisioningServerAPI: string
+	provisioningServerAPI: string,
+	subscriptionUuid: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/license-keys/download-zip?${selectedKeysIDs}`,
+		`${provisioningServerAPI}/cloud/subscriptions/${subscriptionUuid}/license/download`,
+
+		{
+			headers: {
+				'OAuth-Token': oAuthToken,
+			},
+		}
+	);
+
+	return response;
+}
+
+export async function getCommonLicenseKey(
+	accountKey: string,
+	dateEnd: Date,
+	dateStart: Date,
+	environment: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	productName: string
+) {
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-environment/${environment}/common-license-key?dateEnd=${dateEnd}&dateStart=${dateStart}`,
+		{
+			headers: {
+				'OAuth-Token': oAuthToken,
+			},
+		}
+	);
+
+	return response;
+}
+
+export async function getDevelopmentLicenseKey(
+	accountKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	selectedVersion: string,
+	productName: string
+) {
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/accounts/${accountKey}/product-groups/${productName}/product-version/${selectedVersion}/development-license-key`,
 
 		{
 			headers: {
@@ -129,26 +173,6 @@ export async function getExportedLicenseKeys(
 	return response;
 }
 
-export async function getCloudSubscriptionLicenseKey(
-	oAuthToken: string,
-	provisioningServerAPI: string,
-	subscriptionUuid: string
-) {
-
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(
-		`${provisioningServerAPI}/cloud/subscriptions/${subscriptionUuid}/license/download`,
-
-		{
-			headers: {
-				'OAuth-Token': oAuthToken,
-			},
-		}
-	);
-
-	return response;
-}
-
 export async function getExportedSelectedLicenseKeys(
 	selectedKeysIDs: string,
 	oAuthToken: string,
@@ -169,21 +193,20 @@ export async function getExportedSelectedLicenseKeys(
 	return response;
 }
 
-export async function putDeactivateKeys(
+export async function getMultipleActivationDownloadKey(
+	selectedKeysIDs: string,
 	oAuthToken: string,
-	provisioningServerAPI: string,
-	licenseKeyIds: string
+	provisioningServerAPI: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/license-keys/deactivate?${licenseKeyIds}`,
+		`${provisioningServerAPI}/license-keys/download-zip?${selectedKeysIDs}`,
 
 		{
 			headers: {
 				'OAuth-Token': oAuthToken,
 			},
-			method: 'PUT',
 		}
 	);
 
@@ -210,27 +233,45 @@ export async function getNewGenerateKeyFormValues(
 	return response.json();
 }
 
-export async function createNewGenerateKey(
-	accountKey: string,
+export async function getSubscriptionInKey(
 	oAuthToken: string,
 	provisioningServerAPI: string,
-	licenseKey: string
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
-		`${provisioningServerAPI}/accounts/${accountKey}/license-keys`,
+		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyId=${licenseKeyIds}`,
 		{
-			body: JSON.stringify([licenseKey]),
 			headers: {
-				'Content-Type': 'application/json',
 				'OAuth-Token': oAuthToken,
 			},
-			method: 'POST',
+			method: 'GET',
 		}
 	);
 
 	return response.json();
+}
+
+export async function putDeactivateKeys(
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKeyIds: string
+) {
+
+	// eslint-disable-next-line @liferay/portal/no-global-fetch
+	const response = await fetch(
+		`${provisioningServerAPI}/license-keys/deactivate?${licenseKeyIds}`,
+
+		{
+			headers: {
+				'OAuth-Token': oAuthToken,
+			},
+			method: 'PUT',
+		}
+	);
+
+	return response;
 }
 
 export async function putSubscriptionInKey(
@@ -252,45 +293,4 @@ export async function putSubscriptionInKey(
 	);
 
 	return response;
-}
-
-export async function deleteSubscriptionInKey(
-	oAuthToken: string,
-	provisioningServerAPI: string,
-	licenseKeyIds: string
-) {
-
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(
-		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyIds=${licenseKeyIds}`,
-
-		{
-			headers: {
-				'OAuth-Token': oAuthToken,
-			},
-			method: 'DELETE',
-		}
-	);
-
-	return response;
-}
-
-export async function getSubscriptionInKey(
-	oAuthToken: string,
-	provisioningServerAPI: string,
-	licenseKeyIds: string
-) {
-
-	// eslint-disable-next-line @liferay/portal/no-global-fetch
-	const response = await fetch(
-		`${provisioningServerAPI}/license-keys/subscriptions?licenseKeyId=${licenseKeyIds}`,
-		{
-			headers: {
-				'OAuth-Token': oAuthToken,
-			},
-			method: 'GET',
-		}
-	);
-
-	return response.json();
 }

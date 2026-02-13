@@ -73,9 +73,8 @@ public class CommerceInventoryItemFDSActionProvider
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getInventoryItemDeleteURL(
-						inventoryItem.getSku(),
-						inventoryItem.getUnitOfMeasureKey(),
-						httpServletRequest));
+						httpServletRequest, inventoryItem.getSku(),
+						inventoryItem.getUnitOfMeasureKey()));
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "delete"));
 			}
@@ -101,8 +100,8 @@ public class CommerceInventoryItemFDSActionProvider
 	}
 
 	private String _getInventoryItemDeleteURL(
-		String sku, String unitOfMeasureKey,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, String sku,
+		String unitOfMeasureKey) {
 
 		return PortletURLBuilder.create(
 			_portal.getControlPanelPortletURL(

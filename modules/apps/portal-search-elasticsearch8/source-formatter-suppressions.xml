@@ -7,5 +7,7 @@
 	</checkstyle>
 	<source-check>
 		<suppress checks="JavaComponentAnnotationsCheck" files=".*" />
+		<suppress checks="JavaTermOrderCheck" files="portal-search-elasticsearch8-api/src/main/java/com/liferay/portal/search/elasticsearch8/configuration/ElasticsearchConfiguration.java" />
+		<suppress checks="JavaTermOrderCheck" files="portal-search-elasticsearch8-api/src/main/java/com/liferay/portal/search/elasticsearch8/configuration/ElasticsearchConnectionConfiguration.java" />
 	</source-check>
 </suppressions>

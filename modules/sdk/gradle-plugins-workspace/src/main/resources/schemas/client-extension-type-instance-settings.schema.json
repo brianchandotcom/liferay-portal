@@ -188,6 +188,9 @@
 				"liferayAnalyticsConnectionType": {
 					"type": "string"
 				},
+				"liferayAnalyticsCredentialType": {
+					"type": "string"
+				},
 				"liferayAnalyticsDataSourceId": {
 					"type": "string"
 				},

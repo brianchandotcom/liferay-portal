@@ -213,6 +213,57 @@ testWithBatchStagingFF(
 	}
 );
 
+testWithBatchStagingFF(
+	'Taxonomy Categories do not display select options with batch',
+	{tag: ['@LPD-78848']},
+	async ({apiHelpers, page, stagingPage}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({
+			id: site.id,
+			type: 'site',
+		});
+
+		const taxonomyVocabularyAPIClient = await apiHelpers.buildRestClient(
+			TaxonomyVocabularyAPI
+		);
+
+		const {body: taxonomyVocabulary} =
+			await taxonomyVocabularyAPIClient.postSiteTaxonomyVocabulary(
+				Number(site.id),
+				{
+					externalReferenceCode: getRandomString(),
+					name: getRandomString(),
+				}
+			);
+
+		const taxonomyCategoryAPIClient =
+			await apiHelpers.buildRestClient(TaxonomyCategoryAPI);
+
+		await taxonomyCategoryAPIClient.postSiteTaxonomyCategory(
+			Number(site.id),
+			{
+				externalReferenceCode: getRandomString(),
+				name: getRandomString(),
+				taxonomyVocabularyId: taxonomyVocabulary.id,
+			}
+		);
+
+		await stagingPage.goto(site.name);
+		await stagingPage.enableLocalStaging([StageableEntities.CATEGORIES]);
+
+		await stagingPage.goto(`${site.name}-staging`);
+
+		await page.getByRole('link', {name: 'Custom Publish Process'}).click();
+
+		await page.waitForTimeout(2000);
+
+		await expect(page.getByRole('button', {name: 'Select'})).toHaveCount(0);
+	}
+);
+
 test('Staging only approved content goes to live', async ({
 	apiHelpers,
 	page,

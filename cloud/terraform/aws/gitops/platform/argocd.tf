@@ -8,7 +8,6 @@ resource "helm_release" "argocd" {
 	name="argocd"
 	namespace=var.argocd_namespace
 	repository="https://argoproj.github.io/argo-helm"
-	upgrade_install=true
 	values=[
 		yamlencode(
 			{

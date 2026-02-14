@@ -26,7 +26,24 @@ resource "helm_release" "argocd" {
 				configs={
 					cm={
 						"application.resourceTrackingMethod"="annotation"
+						"controller.diff.timeout"="120s"
 						"resource.customizations.health.aws.liferay.com_LiferayInfrastructure"=file("${path.module}/health-aws.liferay.com_LiferayInfrastructure.lua")
+						"resource.customizations.ignoreDifferences.all"=yamlencode(
+							{
+								jsonPointers=["/metadata/labels/apiextensions.crossplane.io~1composite"]
+								managedFieldsManagers=[
+									"apiextensions.crossplane.io/composite",
+									"crossplane",
+									"kube-controller-manager",
+								]
+							})
+						"resource.customizations.ignoreDifferences.aws.liferay.com_LiferayInfrastructure"=yamlencode(
+							{
+								jsonPointers=[
+									"/status/atProvider",
+									"/status/internalMetadata",
+								]
+							})
 						"resource.exclusions"=yamlencode(
 							[
 								{
@@ -43,12 +60,12 @@ resource "helm_release" "argocd" {
 				controller={
 					resources={
 						limits={
-							cpu="1000m"
-							memory="1.5Gi"
+							cpu="2000m"
+							memory="2Gi"
 						}
 						requests={
-							cpu="200m"
-							memory="512Mi"
+							cpu="500m"
+							memory="1Gi"
 						}
 					}
 				}
@@ -68,11 +85,11 @@ resource "helm_release" "argocd" {
 				repoServer={
 					resources={
 						limits={
-							cpu="500m"
-							memory="768Mi"
+							cpu="1000m"
+							memory="1Gi"
 						}
 						requests={
-							cpu="200m"
+							cpu="100m"
 							memory="256Mi"
 						}
 					}
@@ -88,12 +105,12 @@ resource "helm_release" "argocd" {
 					}
 					resources={
 						limits={
-							cpu="1000m"
-							memory="2Gi"
-						}
-						requests={
 							cpu="500m"
 							memory="1Gi"
+						}
+						requests={
+							cpu="100m"
+							memory="256Mi"
 						}
 					}
 					service={

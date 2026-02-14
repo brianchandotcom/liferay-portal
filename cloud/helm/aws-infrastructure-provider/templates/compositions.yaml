@@ -29,7 +29,7 @@ spec:
                         {{- $environmentId := $xr.spec.environmentId -}}
                         {{- $projectId := $xr.spec.projectId -}}
                         {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-                        {{- $uidHash := printf "%s-%s" $accountId $projectIdFull | sha256sum | trunc 6 -}}
+                        {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
                         {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
                         {{- $managementPolicies := $xr.spec.deletionProtection | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}
@@ -1011,13 +1011,14 @@ spec:
                     template: |
                         {{`
                         {{- $accountId := `}}{{ .Values.aws.accountId | quote }}{{` -}}
+                        {{- $deploymentName := `}}{{ .Values.deploymentName | quote }}{{` -}}
 
                         {{- $xr := .observed.composite.resource -}}
 
                         {{- $environmentId := $xr.spec.environmentId -}}
                         {{- $projectId := $xr.spec.projectId -}}
                         {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
-                        {{- $uidHash := printf "%s-%s" $accountId $projectIdFull | sha256sum | trunc 6 -}}
+                        {{- $uidHash := printf "%s-%s-%s" $accountId $deploymentName $projectIdFull | sha256sum | trunc 6 -}}
                         {{- $baseName := printf "%.18s-%s" $projectIdFull $uidHash -}}
 
                         {{- $managementPolicies := $xr.spec.deletionProtection | ternary (list "Create" "Observe" "Update") (list "*") | toJson -}}

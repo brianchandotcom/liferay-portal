@@ -114,14 +114,15 @@ public class ObjectEntryAssetRendererTest {
 
 		LiferayPortletRequest liferayPortletRequest = Mockito.mock(
 			LiferayPortletRequest.class);
-		LiferayPortletResponse liferayPortletResponse = Mockito.mock(
-			LiferayPortletResponse.class);
 
 		Mockito.when(
 			liferayPortletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			null
 		);
+
+		LiferayPortletResponse liferayPortletResponse = Mockito.mock(
+			LiferayPortletResponse.class);
 
 		Assert.assertNull(
 			assetRenderer.getURLViewInContext(

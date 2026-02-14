@@ -57,10 +57,46 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 
 		if (detailAST.getType() == TokenTypes.INSTANCE_INIT) {
-			_checkInstanceInitializer(detailAST, absolutePath);
+			_checkSetCallInInstanceInitializer(absolutePath, detailAST);
+		}
+		else {
+			_checkSetCallByVariableDefinition(absolutePath, detailAST);
+		}
+	}
+
+	private void _checkSetCall(
+		String absolutePath, DetailAST detailAST, String methodName,
+		String fullyQualifiedTypeName) {
+
+		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
+			DetailAST elistDetailAST = detailAST.findFirstToken(
+				TokenTypes.ELIST);
+
+			DetailAST childDetailAST = elistDetailAST.getFirstChild();
+
+			if ((childDetailAST == null) ||
+				(childDetailAST.findFirstToken(TokenTypes.METHOD_REF) !=
+					null) ||
+				(childDetailAST.getType() == TokenTypes.LAMBDA)) {
+
+				return;
+			}
+		}
+
+		JavaClass javaClass = _getDTOJavaClass(
+			absolutePath, fullyQualifiedTypeName);
+
+		if ((javaClass == null) ||
+			!_hasReplaceableMethodSignature(methodName, javaClass)) {
 
 			return;
 		}
+
+		log(detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
+	}
+
+	private void _checkSetCallByVariableDefinition(
+		String absolutePath, DetailAST detailAST) {
 
 		String variableName = getName(detailAST);
 
@@ -102,8 +138,8 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkInstanceInitializer(
-		DetailAST detailAST, String absolutePath) {
+	private void _checkSetCallInInstanceInitializer(
+		String absolutePath, DetailAST detailAST) {
 
 		DetailAST parentDetailAST = detailAST.getParent();
 
@@ -167,37 +203,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 				absolutePath, firstChildDetailAST, methodName,
 				fullyQualifiedTypeName);
 		}
-	}
-
-	private void _checkSetCall(
-		String absolutePath, DetailAST detailAST, String methodName,
-		String fullyQualifiedTypeName) {
-
-		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
-			DetailAST elistDetailAST = detailAST.findFirstToken(
-				TokenTypes.ELIST);
-
-			DetailAST childDetailAST = elistDetailAST.getFirstChild();
-
-			if ((childDetailAST == null) ||
-				(childDetailAST.findFirstToken(TokenTypes.METHOD_REF) !=
-					null) ||
-				(childDetailAST.getType() == TokenTypes.LAMBDA)) {
-
-				return;
-			}
-		}
-
-		JavaClass javaClass = _getDTOJavaClass(
-			absolutePath, fullyQualifiedTypeName);
-
-		if ((javaClass == null) ||
-			!_hasReplaceableMethodSignature(methodName, javaClass)) {
-
-			return;
-		}
-
-		log(detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);
 	}
 
 	private synchronized Map<String, String> _getBundleSymbolicNamesMap(

@@ -64,6 +64,9 @@ spec:
                                     type: object
                                 database:
                                     properties:
+                                        engine:
+                                            default: "postgres"
+                                            type: string
                                         engineVersion:
                                             default: "16.11"
                                             type: string

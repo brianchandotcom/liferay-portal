@@ -351,10 +351,11 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                engine: postgres
-                                engineVersion: {{ $databaseSpec.engineVersion | quote }}
-                                identifier: {{ $baseName }}-database-{{ $dataPlane }}
-                                instanceClass: {{ $databaseSpec.instanceClass }}
+                                        slot: {{ $slot }}
+                                engine: {{ $spec.engine | quote }}
+                                engineVersion: {{ $spec.engineVersion | quote }}
+                                identifier: {{ $baseName }}-database-{{ $slot }}
+                                instanceClass: {{ $spec.instanceClass }}
                                 multiAz: false
                                 passwordSecretRef:
                                     key: password

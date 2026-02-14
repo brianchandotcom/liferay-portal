@@ -936,6 +936,15 @@ public abstract class BaseCheck extends AbstractCheck {
 
 			globalVariable = true;
 		}
+		else if (parentDetailAST.getType() == TokenTypes.RESOURCES) {
+			DetailAST literalTryDetailAST = getParentWithTokenType(
+				parentDetailAST, TokenTypes.LITERAL_TRY);
+
+			DetailAST slistChildDetailAST = literalTryDetailAST.findFirstToken(
+				TokenTypes.SLIST);
+
+			rangeDetailAST = slistChildDetailAST;
+		}
 		else if (parentDetailAST.getType() == TokenTypes.SLIST) {
 			rangeDetailAST = parentDetailAST;
 		}

@@ -200,13 +200,6 @@ resource "aws_kms_key" "eks_secrets" {
 	deletion_window_in_days=7
 	description="KMS key for EKS secrets encryption"
 }
-resource "aws_vpc_security_group_ingress_rule" "node_liferay_ingress" {
-	cidr_ipv4=var.vpc_cidr
-	from_port=8080
-	ip_protocol="tcp"
-	security_group_id=module.eks.node_security_group_id
-	to_port=8080
-}
 resource "kubernetes_storage_class_v1" "gp3_storage_class" {
 	allowed_topologies {
 		match_label_expressions {

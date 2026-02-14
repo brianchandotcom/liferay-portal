@@ -100,6 +100,8 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 						}
 						syncOptions=[
 							"CreateNamespace=true",
+							"IgnoreExtraneous=true",
+							"RespectIgnoreDifferences=true",
 							"SkipDryRunOnMissingResource=true"
 						]
 					}

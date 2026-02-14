@@ -5,12 +5,12 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.filter;
 
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.util.filter.BaseDateRangeFilterTestCase;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-
-import org.elasticsearch.ElasticsearchStatusException;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -91,14 +91,12 @@ public class ElasticsearchDateRangeFilterTest
 
 					Assert.fail();
 				}
-				catch (ElasticsearchStatusException
-							elasticsearchStatusException) {
-
+				catch (ElasticsearchException elasticsearchException) {
 					Assert.assertEquals(
-						"Elasticsearch exception [" +
-							"type=search_phase_execution_exception, " +
-								"reason=all shards failed]",
-						elasticsearchStatusException.getMessage());
+						"[es/search] failed: " +
+							"[search_phase_execution_exception] all shards " +
+								"failed",
+						elasticsearchException.getMessage());
 				}
 			});
 	}

@@ -6,13 +6,19 @@ backup:
             ruleName: daily-backups
             schedule: cron(0 5 * * ? *)
             startWindow: 60
+    selectionName: by-tags
+    serviceRoleName: liferay-backup-restore
+    vaultName: liferay-backup-vault
 database:
+    engine: postgres
     engineVersion: "16.11"
     instanceClass: db.t3.medium
     region: us-west-2
     storageGB: 20
     username: liferay_database_admin
 enabled: true
+gateway: {}
+license: {}
 search:
     elasticsearch:
         enabled: false
@@ -26,3 +32,5 @@ search:
         instanceType: t3.small.search
         region: us-west-2
         username: liferay_search_admin
+storage:
+    region: us-west-2

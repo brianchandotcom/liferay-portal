@@ -15,7 +15,9 @@ import co.elastic.clients.elasticsearch.indices.CreateIndexRequest;
 import co.elastic.clients.elasticsearch.indices.DeleteIndexRequest;
 import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
 import co.elastic.clients.json.JsonData;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -23,9 +25,11 @@ import com.liferay.portal.search.elasticsearch8.internal.connection.Elasticsearc
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import jakarta.json.JsonArray;
+import jakarta.json.JsonValue;
+
 import java.io.IOException;
 
-import java.util.List;
 import java.util.Map;
 
 import org.junit.After;
@@ -79,57 +83,60 @@ public class UpdateRequestTest {
 	public void testUnsetValueWithArrayWithNull() throws Exception {
 		String id = _indexAndGetId();
 
-		_updateField(id, "field2", new Object[] {null});
+		_updateField("field2", new Object[] {null}, id);
 
 		Map<String, JsonData> fields = _getFields(id);
 
-		Assert.assertEquals("an example", fields.get("field1"));
+		Assert.assertEquals("an example", String.valueOf(fields.get("field1")));
 
-		@SuppressWarnings("unchecked")
-		List<Object> list = (List<Object>)fields.get("field2");
+		JsonArray jsonArray = _getJsonArrayValue(fields.get("field2"));
 
-		Assert.assertEquals(list.toString(), 1, list.size());
-		Assert.assertNull(list.get(0));
+		Assert.assertEquals(jsonArray.toString(), 1, jsonArray.size());
+
+		JsonValue jsonValue = jsonArray.get(0);
+
+		Assert.assertEquals(JsonValue.ValueType.NULL, jsonValue.getValueType());
+	}
+
+	@Test
+	public void testUnsetValueWithBlankString() throws Exception {
+		String id = _indexAndGetId();
+
+		_updateField("field2", StringPool.BLANK, id);
+
+		Map<String, JsonData> fields = _getFields(id);
+
+		Assert.assertEquals("an example", String.valueOf(fields.get("field1")));
+		Assert.assertEquals(
+			StringPool.BLANK, String.valueOf(fields.get("field2")));
 	}
 
 	@Test
 	public void testUnsetValueWithEmptyArray() throws Exception {
 		String id = _indexAndGetId();
 
-		_updateField(id, "field2", new Object[0]);
+		_updateField("field2", new Object[0], id);
 
 		Map<String, JsonData> fields = _getFields(id);
 
-		Assert.assertEquals("an example", fields.get("field1"));
+		Assert.assertEquals("an example", String.valueOf(fields.get("field1")));
 
-		@SuppressWarnings("unchecked")
-		List<Object> list = (List<Object>)fields.get("field2");
+		JsonArray jsonArray = _getJsonArrayValue(fields.get("field2"));
 
-		Assert.assertTrue(list.toString(), list.isEmpty());
-	}
-
-	@Test
-	public void testUnsetValueWithNull() throws Exception {
-		String id = _indexAndGetId();
-
-		_updateField(id, "field2", null);
-
-		Map<String, JsonData> fields = _getFields(id);
-
-		Assert.assertEquals("an example", fields.get("field1"));
-		Assert.assertNull(fields.get("field2"));
+		Assert.assertTrue(jsonArray.toString(), jsonArray.isEmpty());
 	}
 
 	@Test
 	public void testUpdateRequestWithMap() throws Exception {
 		String id = _indexAndGetId();
 
-		_updateField(id, "field2", "UPDATED FIELD");
+		_updateField("field2", "UPDATED FIELD", id);
 
 		Map<String, JsonData> fields = _getFields(id);
 
-		Assert.assertEquals("an example", fields.get("field1"));
-		Assert.assertEquals("UPDATED FIELD", fields.get("field2"));
+		Assert.assertEquals("an example", String.valueOf(fields.get("field1")));
+		Assert.assertEquals(
+			"UPDATED FIELD", String.valueOf(fields.get("field2")));
 	}
 
 	private Map<String, JsonData> _getFields(String id) throws Exception {
@@ -146,6 +153,12 @@ public class UpdateRequestTest {
 			String.valueOf(getResponse.source()));
 
 		return ConversionUtil.toJsonDataMap(jsonObject.toMap());
+	}
+
+	private JsonArray _getJsonArrayValue(JsonData jsonData) {
+		JsonValue jsonValue = jsonData.toJson(new JacksonJsonpMapper());
+
+		return jsonValue.asJsonArray();
 	}
 
 	private String _indexAndGetId() throws Exception {
@@ -167,7 +180,7 @@ public class UpdateRequestTest {
 		return indexResponse.id();
 	}
 
-	private void _updateField(String id, String fieldName, Object fieldValue)
+	private void _updateField(String fieldName, Object fieldValue, String id)
 		throws Exception {
 
 		UpdateRequest.Builder<JsonData, JsonData> updateRequestBuilder =

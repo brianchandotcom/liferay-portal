@@ -54,6 +54,7 @@ import com.liferay.exportimport.kernel.staging.constants.StagingConstants;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryHelper;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.lang.ThreadContextClassLoaderUtil;
 import com.liferay.petra.string.StringBundler;
@@ -265,8 +266,9 @@ public class StagingImpl implements Staging {
 
 		long classPK = (long)stagedGroupedModel.getPrimaryKeyObj();
 
-		if (model instanceof
-				ExternalReferenceCodeModel externalReferenceCodeModel) {
+		if ((model instanceof
+				ExternalReferenceCodeModel externalReferenceCodeModel) &&
+			!(model instanceof JournalArticle)) {
 
 			_changesetEntryLocalService.fetchOrAddChangesetEntry(
 				changesetCollection.getChangesetCollectionId(),

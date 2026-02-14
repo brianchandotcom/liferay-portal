@@ -68,6 +68,10 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 											name="projectId"
 											value=var.infrastructure_git_repo_config.target.slugProjectId
 										},
+										{
+											name="secretStoreName"
+											value=local.secret_store_name
+										},
 									]
 									valueFiles=[
 										"$values/${var.infrastructure_git_repo_config.source_paths.base}/${var.infrastructure_git_repo_config.source_paths.values_filename}",

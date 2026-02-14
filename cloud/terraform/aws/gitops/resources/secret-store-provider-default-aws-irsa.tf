@@ -1,6 +1,6 @@
-resource "aws_iam_policy" "argocd_git_repo_auth_policy" {
-	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
-	name="${local.cluster_name}-argocd-git-repo-auth-policy"
+resource "aws_iam_policy" "secret_store_policy" {
+	count=local.secret_store_provider_default_enabled ? 1 : 0
+	name="${local.cluster_name}-secret-store-policy"
 	policy=jsonencode(
 		{
 			Statement=[
@@ -10,15 +10,20 @@ resource "aws_iam_policy" "argocd_git_repo_auth_policy" {
 						"secretsmanager:GetSecretValue",
 					]
 					Effect="Allow"
-					Resource=[
-						for git_repo_auth_config in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${git_repo_auth_config.vault_secret_name}*"
-					]
+					Resource=concat(
+						[
+							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.certificates}*",
+							"arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${local.secret_prefixes.licenses}*",
+						],
+						[
+							for git_repo_auth_config in local.git_repo_auth_configs : "arn:aws:secretsmanager:${var.region}:${local.account_id}:secret:${git_repo_auth_config.credentials_secret_name}*"
+						])
 				},
 			]
 			Version="2012-10-17"
 		})
 }
-resource "aws_iam_role" "argocd_git_repo_auth_role" {
+resource "aws_iam_role" "secret_store_role" {
 	assume_role_policy=jsonencode(
 		{
 			Statement=[
@@ -27,7 +32,7 @@ resource "aws_iam_role" "argocd_git_repo_auth_role" {
 					Condition={
 						StringEquals={
 							"${local.oidc_provider}:aud"="sts.amazonaws.com",
-							"${local.oidc_provider}:sub"="system:serviceaccount:${var.argocd_namespace}:argocd-git-repo-auth-sa"
+							"${local.oidc_provider}:sub"="system:serviceaccount:${var.external_secrets_namespace}:secret-store-sa"
 						}
 					}
 					Effect="Allow"
@@ -38,23 +43,23 @@ resource "aws_iam_role" "argocd_git_repo_auth_role" {
 			]
 			Version="2012-10-17"
 		})
-	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
-	name="${local.cluster_name}-argocd-git-repo-auth"
+	count=local.secret_store_provider_default_enabled ? 1 : 0
+	name="${local.cluster_name}-secret-store"
 }
-resource "aws_iam_role_policy_attachment" "argocd_git_repo_auth_policy_attachment" {
-	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
-	policy_arn=aws_iam_policy.argocd_git_repo_auth_policy[0].arn
-	role=aws_iam_role.argocd_git_repo_auth_role[0].name
+resource "aws_iam_role_policy_attachment" "secret_store_policy_attachment" {
+	count=local.secret_store_provider_default_enabled ? 1 : 0
+	policy_arn=aws_iam_policy.secret_store_policy[0].arn
+	role=aws_iam_role.secret_store_role[0].name
 }
-resource "kubernetes_service_account" "argocd_git_repo_auth_sa" {
+resource "kubernetes_service_account" "secret_store_sa" {
 	automount_service_account_token=false
-	count=local.git_repo_secret_store_provider_default_enabled ? 1 : 0
+	count=local.secret_store_provider_default_enabled ? 1 : 0
 	metadata {
 		annotations={
-			"eks.amazonaws.com/role-arn"=aws_iam_role.argocd_git_repo_auth_role[0].arn
+			"eks.amazonaws.com/role-arn"=aws_iam_role.secret_store_role[0].arn
 		}
 		labels=local.common_labels
-		name="argocd-git-repo-auth-sa"
-		namespace=var.argocd_namespace
+		name="secret-store-sa"
+		namespace=var.external_secrets_namespace
 	}
 }

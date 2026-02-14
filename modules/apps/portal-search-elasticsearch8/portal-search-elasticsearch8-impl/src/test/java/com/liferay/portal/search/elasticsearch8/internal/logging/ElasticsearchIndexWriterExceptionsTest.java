@@ -5,7 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.logging;
 
-import com.liferay.petra.string.StringBundler;
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
@@ -15,7 +16,6 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.elasticsearch8.internal.ElasticsearchIndexWriter;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.test.rule.logging.ExpectedLogMethodTestRule;
@@ -27,10 +27,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.elasticsearch.ElasticsearchStatusException;
-
-import org.hamcrest.CustomMatcher;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -51,25 +47,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testAddDocument() {
-		String regex = StringBundler.concat(
-			"Elasticsearch exception \\[type=document_parsing_exception, ",
-			"reason=\\[.+\\] failed to parse field \\[expirationDate\\] of ",
-			"type \\[date\\] in document with id ",
-			"'elasticsearchindexwriterexceptionstest.testadddocument_PORTLET_",
-			"\\d+'\\. Preview of field's value: 'text'\\]");
-
-		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
-			new CustomMatcher<>("Add document") {
-
-				@Override
-				public boolean matches(Object object) {
-					String s = GetterUtil.getString(object);
-
-					return s.matches(regex);
-				}
-
-			});
+			"failed to parse field [expirationDate] of type [date]");
 
 		addDocument(
 			DocumentCreationHelpers.singleKeyword(
@@ -103,9 +83,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testCommit() {
-		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
-			"type=index_not_found_exception, reason=no such index");
+			"[index_not_found_exception] no such index");
 
 		SearchContext searchContext = new SearchContext();
 
@@ -172,9 +152,9 @@ public class ElasticsearchIndexWriterExceptionsTest
 
 	@Test
 	public void testDeleteEntityDocuments() {
-		expectedException.expect(ElasticsearchStatusException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
-			"type=index_not_found_exception, reason=no such index");
+			"[index_not_found_exception] no such index");
 
 		SearchContext searchContext = new SearchContext();
 

@@ -28,6 +28,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -77,9 +78,14 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 		_elasticsearchSearchEngineFixture.tearDown();
 	}
 
+	@Before
+	public void setUp() throws Exception {
+		_setAutoCreateIndexSetting(StringPool.BLANK);
+	}
+
 	@After
 	public void tearDown() throws Exception {
-		_setAutoCreateIndexSetting(null);
+		_setAutoCreateIndexSetting(StringPool.BLANK);
 	}
 
 	@Test
@@ -181,6 +187,18 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 	}
 
 	@Test
+	public void testEnableAutoCreateIndexWithExistingValueBlank()
+		throws Exception {
+
+		ElasticsearchSearchEngine elasticsearchSearchEngine =
+			_elasticsearchSearchEngineFixture.getElasticsearchSearchEngine();
+
+		elasticsearchSearchEngine.setAutoCreateIndex(true);
+
+		Assert.assertEquals(StringPool.BLANK, _getAutoCreateIndexSetting());
+	}
+
+	@Test
 	public void testEnableAutoCreateIndexWithExistingValueDisabled()
 		throws Exception {
 
@@ -250,18 +268,6 @@ public class ElasticsearchSearchEngineAutoCreateIndexTest {
 				"+my-index-1*, ", _enableAutoCreateLiferayIndexPattern,
 				_COMMA_AND_SPACE_AND_STAR),
 			_getAutoCreateIndexSetting());
-	}
-
-	@Test
-	public void testEnableAutoCreateIndexWithExistingValueNull()
-		throws Exception {
-
-		ElasticsearchSearchEngine elasticsearchSearchEngine =
-			_elasticsearchSearchEngineFixture.getElasticsearchSearchEngine();
-
-		elasticsearchSearchEngine.setAutoCreateIndex(true);
-
-		Assert.assertEquals(null, _getAutoCreateIndexSetting());
 	}
 
 	private String _getAutoCreateIndexSetting() throws Exception {

@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Petteri Karttunen
  */
 @Component(service = ExportTaskPostAction.class)
-public class ChangeSetExportTaskPostAction implements ExportTaskPostAction {
+public class ChangesetExportTaskPostAction implements ExportTaskPostAction {
 
 	@Override
 	public void run(
@@ -107,7 +107,7 @@ public class ChangeSetExportTaskPostAction implements ExportTaskPostAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ChangeSetExportTaskPostAction.class);
+		ChangesetExportTaskPostAction.class);
 
 	@Reference
 	private ChangesetEntryLocalService _changesetEntryLocalService;

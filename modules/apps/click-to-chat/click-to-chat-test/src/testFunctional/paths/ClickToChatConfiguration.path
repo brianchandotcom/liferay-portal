@@ -16,11 +16,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CHAT_PROVIDER_OPTION</td>
-	<td>//select//option[contains(text(),'${chatProviderOption}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CHAT_PROVIDER_ID</td>
 	<td>//select[contains(@name,'chatProviderId')]</td>
 	<td></td>
@@ -38,16 +33,6 @@
 <tr>
 	<td>CHECK_INPUT_ENABLED</td>
 	<td>//input[contains(@id, 'SiteSettingsPortlet_enabled') and @checked]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECK_CHAT_PROVIDER_SELECTED</td>
-	<td>//option[contains(@value, '${chatProvider}') and @selected]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHECK_CHAT_PROVIDER_ID</td>
-	<td>//input[contains(@value, '${chatProviderId}')]</td>
 	<td></td>
 </tr>
 </tbody>

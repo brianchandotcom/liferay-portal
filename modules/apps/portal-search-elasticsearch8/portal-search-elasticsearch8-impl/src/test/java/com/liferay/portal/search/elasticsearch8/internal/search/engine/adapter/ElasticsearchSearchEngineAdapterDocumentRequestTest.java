@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.Refresh;
+import co.elastic.clients.elasticsearch._types.Result;
 import co.elastic.clients.elasticsearch._types.mapping.TypeMapping;
 import co.elastic.clients.elasticsearch.core.GetRequest;
 import co.elastic.clients.elasticsearch.core.GetResponse;
@@ -411,7 +412,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			null, new DocumentImpl());
 
-		Assert.assertEquals(201, indexDocumentResponse.getStatus());
+		Assert.assertEquals(
+			Result.Created.jsonValue(),
+			indexDocumentResponse.getStatusString());
+
 		Assert.assertNotNull(indexDocumentResponse.getUid());
 	}
 
@@ -444,7 +448,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			null, document);
 
-		Assert.assertEquals(201, indexDocumentResponse.getStatus());
+		Assert.assertEquals(
+			Result.Created.jsonValue(),
+			indexDocumentResponse.getStatusString());
+
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 
@@ -453,7 +460,10 @@ public class ElasticsearchSearchEngineAdapterDocumentRequestTest {
 		IndexDocumentResponse indexDocumentResponse = _indexDocumentWithAdapter(
 			"1", new DocumentImpl());
 
-		Assert.assertEquals(201, indexDocumentResponse.getStatus());
+		Assert.assertEquals(
+			Result.Created.jsonValue(),
+			indexDocumentResponse.getStatusString());
+
 		Assert.assertEquals("1", indexDocumentResponse.getUid());
 	}
 

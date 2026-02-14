@@ -98,6 +98,11 @@ liferay-default:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
+    gateway:
+        enabled: true
+        timeouts:
+            request: 300s
+            backendRequest: 300s
     portalBundleDenyList:
         -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
         -   com.liferay.portal.search.elasticsearch.monitoring.web
@@ -118,10 +123,6 @@ liferay-default:
         requests:
             cpu: 2000m
             memory: 4Gi
-    service:
-        annotations:
-            service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-        type: LoadBalancer
     volumeClaimTemplates:
         -   metadata:
                 name: liferay-persistent-volume

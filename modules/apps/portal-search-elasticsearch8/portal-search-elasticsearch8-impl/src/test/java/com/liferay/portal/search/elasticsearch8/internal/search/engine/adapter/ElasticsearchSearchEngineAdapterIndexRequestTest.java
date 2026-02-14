@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.Time;
 import co.elastic.clients.elasticsearch.indices.ElasticsearchIndicesClient;
 import co.elastic.clients.elasticsearch.indices.ExistsRequest;
 import co.elastic.clients.elasticsearch.indices.GetIndicesSettingsRequest;
@@ -22,17 +23,18 @@ import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.transport.endpoints.BooleanResponse;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchFixture;
+import com.liferay.portal.search.elasticsearch8.internal.util.JsonpUtil;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
 import com.liferay.portal.search.engine.adapter.index.AnalysisIndexResponseToken;
 import com.liferay.portal.search.engine.adapter.index.AnalyzeIndexRequest;
@@ -90,7 +92,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -145,16 +146,20 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithCharFilters() {
 		_putSettings(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n", "        \"analysis\": {\n",
-				"            \"char_filter\": {\n",
-				"                \"custom_cf\": {\n",
-				"                    \"type\": \"mapping\",\n",
-				"                    \"mappings\": [\n",
-				"                        \"- => +\",\n",
-				"                        \"2 => 3\"\n",
-				"                    ]\n", "                }\n",
-				"            }\n", "        }\n", "    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"analysis",
+					JSONUtil.put(
+						"char_filter",
+						JSONUtil.put(
+							"custom_cf",
+							JSONUtil.put(
+								"mappings", JSONUtil.putAll("- => +", "2 => 3")
+							).put(
+								"type", "mapping"
+							))))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
@@ -222,10 +227,12 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithFieldName() {
-		String mappingSource =
-			"{\"properties\":{\"keywordTestField\":{\"type\":\"keyword\"}}}";
-
-		_putMapping(mappingSource);
+		_putMapping(
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"keywordTestField", JSONUtil.put("type", "keyword"))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
@@ -236,26 +243,27 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			"The 2 QUICK Brown-Foxes jumped over the lazy dog's bone.");
 	}
 
-	@Ignore
 	@Test
 	public void testExecuteAnalyzeIndexRequestWithNormalizer() {
 		_putSettings(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n", "        \"analysis\": {\n",
-				"            \"normalizer\": {\n",
-				"                \"custom_normalizer\": {\n",
-				"                    \"type\": \"custom\",\n",
-				"                    \"filter\": [\"uppercase\"]\n",
-				"                }\n", "            }\n", "        }\n",
-				"    }\n", "}"));
+			JSONUtil.put(
+				"settings",
+				JSONUtil.put(
+					"analysis",
+					JSONUtil.put(
+						"normalizer",
+						JSONUtil.put(
+							"custom_normalizer",
+							JSONUtil.put(
+								"filter", JSONUtil.put("uppercase")
+							).put(
+								"type", "custom"
+							))))
+			).toString());
 
 		AnalyzeIndexRequest analyzeIndexRequest = new AnalyzeIndexRequest();
 
 		analyzeIndexRequest.setNormalizer("custom_normalizer");
-
-		// Elasticsearch bug? Calls AnalyzeRequest.withNormalizer()
-		// Response contains tokens:
-		// "the,2,quick,brown,foxes,jumped,over,the,lazy,dog's,bone"
 
 		_assertExecuteAnalyzeIndexRequest(
 			analyzeIndexRequest,
@@ -311,13 +319,14 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			"test_index_2");
 
 		createIndexRequest.setSource(
-			StringBundler.concat(
-				"{\n", "    \"settings\": {\n",
-				"        \"number_of_shards\": 1\n", "    },\n",
-				"    \"mappings\": {\n", "            \"properties\": {\n",
-				"                \"field1\": {\n",
-				"                    \"type\": \"text\"\n",
-				"                }\n", "            }\n", "    }\n", "}"));
+			JSONUtil.put(
+				"mappings",
+				JSONUtil.put(
+					"properties",
+					JSONUtil.put("field1", JSONUtil.put("type", "text")))
+			).put(
+				"settings", JSONUtil.put("number_of_shards", 1)
+			).toString());
 
 		CreateIndexResponse createIndexResponse = _searchEngineAdapter.execute(
 			createIndexRequest);
@@ -359,11 +368,15 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Test
 	public void testExecuteGetFieldMappingIndexRequest() throws Exception {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}, " +
-				"\"otherTestField\":{\"type\":\"keyword\"}}}";
-
-		_putMapping(mappingSource);
+		_putMapping(
+			JSONUtil.put(
+				"properties",
+				JSONUtil.put(
+					"otherTestField", JSONUtil.put("type", "keyword")
+				).put(
+					"testField", JSONUtil.put("type", "keyword")
+				)
+			).toString());
 
 		String[] fields = {"otherTestField"};
 
@@ -388,8 +401,10 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Test
 	public void testExecuteGetIndexIndexRequest() {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		_putMapping(mappingSource);
 
@@ -404,16 +419,22 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		Assert.assertEquals(Arrays.toString(indexNames), 1, indexNames.length);
 		Assert.assertEquals(_INDEX_NAME, indexNames[0]);
 
-		String indexMappings = String.valueOf(
-			getIndexIndexResponse.getMappings());
+		Map<String, String> indexMappings =
+			getIndexIndexResponse.getIndexMappings();
 
-		Assert.assertTrue(indexMappings, indexMappings.contains(mappingSource));
+		String responseIndexMappings = indexMappings.get(_INDEX_NAME);
+
+		Assert.assertTrue(
+			responseIndexMappings,
+			responseIndexMappings.contains(mappingSource));
 	}
 
 	@Test
 	public void testExecuteGetMappingIndexRequest() {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		_putMapping(mappingSource);
 
@@ -474,8 +495,10 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 
 	@Test
 	public void testExecutePutMappingIndexRequest() {
-		String mappingSource =
-			"{\"properties\":{\"testField\":{\"type\":\"keyword\"}}}";
+		String mappingSource = JSONUtil.put(
+			"properties",
+			JSONUtil.put("testField", JSONUtil.put("type", "keyword"))
+		).toString();
 
 		PutMappingIndexRequest putMappingIndexRequest =
 			new PutMappingIndexRequest(
@@ -489,9 +512,14 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		GetMappingResponse getMappingResponse = _getGetMappingResponse(
 			_INDEX_NAME);
 
-		Map<String, IndexMappingRecord> map = getMappingResponse.result();
+		Map<String, IndexMappingRecord> indexMappingsRecords =
+			getMappingResponse.result();
 
-		String mappingMetadataSource = String.valueOf(map.get(_INDEX_NAME));
+		IndexMappingRecord indexMappingRecord = indexMappingsRecords.get(
+			_INDEX_NAME);
+
+		String mappingMetadataSource = JsonpUtil.toString(
+			indexMappingRecord.mappings());
 
 		Assert.assertTrue(mappingMetadataSource.contains(mappingSource));
 	}
@@ -515,9 +543,9 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 			new UpdateIndexSettingsIndexRequest("test_index_2");
 
 		updateIndexSettingsIndexRequest.setSettings(
-			StringBundler.concat(
-				"{\n", "    \"index\": {\n",
-				"        \"refresh_interval\": \"2s\"\n", "    }\n", "}"));
+			JSONUtil.put(
+				"index", JSONUtil.put("refresh_interval", "2s")
+			).toString());
 
 		UpdateIndexSettingsIndexResponse indexSettingsIndexResponse =
 			_searchEngineAdapter.execute(updateIndexSettingsIndexRequest);
@@ -527,10 +555,18 @@ public class ElasticsearchSearchEngineAdapterIndexRequestTest {
 		GetIndicesSettingsResponse getIndicesSettingsResponse =
 			_getGetIndicesSettingsResponse("test_index_2");
 
-		IndexState indexState = getIndicesSettingsResponse.get(
-			"index.refresh_interval");
+		Map<String, IndexState> indexStates =
+			getIndicesSettingsResponse.result();
 
-		Assert.assertEquals("2s", indexState.toString());
+		IndexState indexState = indexStates.get("test_index_2");
+
+		IndexSettings indexSettings1 = indexState.settings();
+
+		IndexSettings indexSettings2 = indexSettings1.index();
+
+		Time refreshInterval = indexSettings2.refreshInterval();
+
+		Assert.assertEquals("2s", refreshInterval.time());
 
 		_deleteIndex("test_index_2");
 	}

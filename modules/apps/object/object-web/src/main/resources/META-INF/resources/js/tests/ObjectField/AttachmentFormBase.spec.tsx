@@ -107,7 +107,9 @@ describe('The AttachmentFormBase component', () => {
 
 	it('does not render library toggle for documentsAndMedia file source', () => {
 		renderComponent({
-			objectFieldSettings: [{name: 'fileSource', value: 'documentsAndMedia'}],
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'documentsAndMedia'},
+			],
 		});
 
 		expect(

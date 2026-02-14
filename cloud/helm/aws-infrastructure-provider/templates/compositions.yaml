@@ -916,7 +916,9 @@ spec:
                                                 "Principal": {
                                                     "AWS": "*"
                                                 },
-                                                "Resource": "arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*"
+                                                "Resource": [
+                                                    "arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*"
+                                                ]
                                             }
                                         ],
                                         "Version": "2012-10-17"
@@ -1156,7 +1158,7 @@ spec:
                     -   fromFieldPath: spec.commonTags
                         type: FromCompositeFieldPath
                     -   tags:
-                            DeploymentName: {{ .Values.deploymentName }}
+                            DeploymentName: {{ .Values.deploymentName | quote }}
                         type: FromValue
                 apiVersion: tag-manager.fn.crossplane.io/v1beta1
                 kind: ManagedTags

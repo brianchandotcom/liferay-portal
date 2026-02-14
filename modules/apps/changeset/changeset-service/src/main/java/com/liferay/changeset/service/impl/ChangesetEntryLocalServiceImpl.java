@@ -41,25 +41,8 @@ public class ChangesetEntryLocalServiceImpl
 			long classPK)
 		throws PortalException {
 
-		User user = _userLocalService.getUser(userId);
-		ChangesetCollection changesetCollection =
-			_changesetCollectionPersistence.fetchByPrimaryKey(
-				changesetCollectionId);
-
-		long changesetEntryId = counterLocalService.increment();
-
-		ChangesetEntry changesetEntry = changesetEntryPersistence.create(
-			changesetEntryId);
-
-		changesetEntry.setGroupId(changesetCollection.getGroupId());
-		changesetEntry.setCompanyId(user.getCompanyId());
-		changesetEntry.setUserId(user.getUserId());
-		changesetEntry.setUserName(user.getFullName());
-		changesetEntry.setChangesetCollectionId(changesetCollectionId);
-		changesetEntry.setClassNameId(classNameId);
-		changesetEntry.setClassPK(classPK);
-
-		return changesetEntryPersistence.update(changesetEntry);
+		return addChangesetEntry(
+			userId, changesetCollectionId, null, classNameId, classPK);
 	}
 
 	@Override
@@ -146,23 +129,8 @@ public class ChangesetEntryLocalServiceImpl
 			long changesetCollectionId, long classNameId, long classPK)
 		throws PortalException {
 
-		ChangesetEntry changesetEntry =
-			changesetEntryLocalService.fetchChangesetEntry(
-				changesetCollectionId, classNameId, classPK);
-
-		if (changesetEntry != null) {
-			return changesetEntry;
-		}
-
-		ChangesetCollection changesetCollection =
-			_changesetCollectionPersistence.findByPrimaryKey(
-				changesetCollectionId);
-
-		User user = _userLocalService.getGuestUser(
-			changesetCollection.getCompanyId());
-
-		return changesetEntryLocalService.addChangesetEntry(
-			user.getUserId(), changesetCollectionId, classNameId, classPK);
+		return fetchOrAddChangesetEntry(
+			changesetCollectionId, null, classNameId, classPK);
 	}
 
 	@Override

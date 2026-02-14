@@ -6,6 +6,21 @@ resource "helm_release" "crossplane" {
 	name="crossplane"
 	namespace=var.crossplane_namespace
 	repository="https://charts.crossplane.io/stable"
+	values=[
+		yamlencode(
+			{
+				resources={
+					limits={
+						cpu="500m"
+						memory="1Gi"
+					}
+					requests={
+						cpu="250m"
+						memory="512Mi"
+					}
+				}
+			})
+	]
 	version="2.1.3"
 	wait=true
 }

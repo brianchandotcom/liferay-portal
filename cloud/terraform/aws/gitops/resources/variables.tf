@@ -20,7 +20,11 @@ variable "gateway_namespace" {
 	default="envoy-gateway-system"
 }
 variable "external_secrets_namespace" {
-	default="external-secrets"
+	default="external-secrets-system"
+}
+variable "external_secret_store_provider_hcl" {
+	default=null
+	type=any
 }
 variable "infrastructure_git_repo_config" {
 	default={
@@ -31,13 +35,12 @@ variable "infrastructure_git_repo_config" {
 	type=object(
 		{
 			auth=object({
+				credentials_secret_name=optional(string, "liferay/credentials/gitops")
 				internal_secret_name=optional(string, "argocd-infrastructure-git-credentials")
 				method=optional(string, "https")
-				secret_store_provider_hcl=optional(any, null)
-				ssh_private_key_vault_secret_property=optional(string, "git_ssh_private_key")
-				token_vault_secret_property=optional(string, "git_access_token")
-				username_vault_secret_property=optional(string, "git_machine_user_id")
-				vault_secret_name=optional(string, "liferay-cloud-native/gitops-repo-credentials")
+				ssh_private_key_property=optional(string, "git_ssh_private_key")
+				token_property=optional(string, "git_access_token")
+				username_property=optional(string, "git_machine_user_id")
 			})
 			revision=optional(string, "HEAD")
 			source_paths=object({
@@ -89,13 +92,12 @@ variable "liferay_git_repo_config" {
 	type=object(
 		{
 			auth=object({
+				credentials_secret_name=optional(string, "liferay/credentials/gitops")
 				internal_secret_name=optional(string, "argocd-liferay-git-credentials")
 				method=optional(string, "https")
-				secret_store_provider_hcl=optional(any, null)
-				ssh_private_key_vault_secret_property=optional(string, "git_ssh_private_key")
-				token_vault_secret_property=optional(string, "git_access_token")
-				username_vault_secret_property=optional(string, "git_machine_user_id")
-				vault_secret_name=optional(string, "liferay-cloud-native/gitops-repo-credentials")
+				ssh_private_key_property=optional(string, "git_ssh_private_key")
+				token_property=optional(string, "git_access_token")
+				username_property=optional(string, "git_machine_user_id")
 			})
 			revision=optional(string, "HEAD")
 			source_paths=object({

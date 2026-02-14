@@ -6,10 +6,12 @@
 package com.liferay.portal.search.test.util.aggregation.bucket;
 
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregationResult;
+import com.liferay.portal.search.test.util.aggregation.AggregationAssert;
 import com.liferay.portal.search.test.util.indexing.BaseIndexingTestCase;
 import com.liferay.portal.search.test.util.indexing.DocumentCreationHelpers;
 
@@ -50,13 +52,9 @@ public abstract class BaseRangeAggregationTestCase
 				RangeAggregationResult rangeAggregationResult =
 					indexingTestHelper.getAggregationResult(rangeAggregation);
 
-				List<Bucket> buckets = new ArrayList<>(
-					rangeAggregationResult.getBuckets());
-
-				Assert.assertEquals("Num buckets", 2, buckets.size());
-
-				assertBucket(buckets.get(0), "0.0-11.0", 10);
-				assertBucket(buckets.get(1), "11.0-*", 10);
+				AggregationAssert.assertKeyedBuckets(
+					rangeAggregationResult, new Tuple("0.0-11.0", 10),
+					new Tuple("11.0-*", 10));
 			});
 	}
 

@@ -384,7 +384,7 @@
 									},
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] {\nbutton.nav-btn.btn.btn-primary {\n\tbackground-color: #fff;\n\tborder-color: #9b92a5;\n\tcolor: #6b6c7e;\n\tmargin-right: -1rem;\n\tz-index: 1;\n\n\t&:hover {\n\t\tbackground-color: #f7f8f9;\n\t\tborder-color: #9b92a5;\n\t\tcolor: #272833;\n\t}\n}\n\n.fds\n\t.data-set-wrapper.drop-target\n\tbutton.nav-btn.btn.btn-primary\n\t*:not(.btn-primary):not(.lexicon-icon-plus):not(.lexicon-icon-plus use) {\n\tbackground-color: #fff !important;\n}\n\n.cms-related-assets-header {\n\tfont-weight: 600;\n\tz-index: 1;\n}\n}",
+											"customCSS": ".[$FRAGMENT_CLASS$] {.cms-related-assets-header {font-weight: 600;}}",
 											"fragment": {
 												"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewRelatedAssetsJSPSectionFragmentRenderer"
 											},

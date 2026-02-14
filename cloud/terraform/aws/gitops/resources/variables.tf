@@ -1,14 +1,23 @@
 variable "argocd_namespace" {
-	default="argocd"
+	default="argocd-system"
 }
 variable "crossplane_namespace" {
 	default="crossplane-system"
+}
+variable "demo_mode" {
+	default=false
 }
 variable "deployment_name" {
 	validation {
 		condition=can(regex("^[a-z0-9-]*$", var.deployment_name))
 		error_message="The deployment_name must contain only lowercase letters, numbers, and hyphens."
 	}
+}
+variable "gateway_class_name" {
+	default="liferay-gateway-class"
+}
+variable "gateway_namespace" {
+	default="envoy-gateway-system"
 }
 variable "external_secrets_namespace" {
 	default="external-secrets"
@@ -130,5 +139,5 @@ variable "liferay_helm_chart_config" {
 	}
 }
 variable "region" {
-	default="us-west-2"
+	type=string
 }

@@ -188,17 +188,21 @@ envFrom:
     -   secretRef:
             name: liferay-default
 fullnameOverride: ""
+gateway:
+    annotations: {}
+    domainConfigName: http
+    enabled: false
+    extraParentRefs: []
+    extraRules: []
+    forceHttpsRedirect: false
+    hostnames: []
+    name: ""
+    timeouts: {}
 image:
     pullPolicy: IfNotPresent
     pullSecrets: []
     repository: liferay/dxp
     tag: latest
-ingress:
-    annotations: {}
-    className: ""
-    enabled: false
-    rules: []
-    tls: []
 initContainers: []
 livenessProbe:
     failureThreshold: 3

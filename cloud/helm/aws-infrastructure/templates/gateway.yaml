@@ -49,7 +49,7 @@ spec:
             name: {{ $name }}
             port: {{ $config.port }}
             protocol: {{ $config.protocol }}
-			{{- with $config.tls }}
+            {{- with $config.tls }}
             tls:
                 {{- if or .externalSecretNames .certificateRefs }}
                 certificateRefs:

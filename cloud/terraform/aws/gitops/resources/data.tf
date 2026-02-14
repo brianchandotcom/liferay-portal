@@ -332,6 +332,9 @@ data "aws_iam_policy_document" "provider_aws_s3_policy_document" {
 		resources=["arn:aws:s3:::*/*"]
 	}
 }
+data "aws_iam_role" "envoy_proxy_role" {
+	name="${var.deployment_name}-envoy-proxy"
+}
 data "aws_iam_roles" "opensearch_linked_role_lookup" {
 	name_regex="AWSServiceRoleForAmazonOpenSearchService"
 }

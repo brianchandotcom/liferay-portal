@@ -161,21 +161,19 @@ public class ElasticsearchQueryTranslatorTest {
 	}
 
 	private void _assertTermsCount(int expected, TermsFilter termsFilter) {
-		String queryString = termsFilter.accept(
-			ElasticsearchFilterVisitor.INSTANCE
-		).toString();
+		String jsonp = JsonpUtil.toString(
+			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+				termsFilter.accept(ElasticsearchFilterVisitor.INSTANCE)));
 
-		Assert.assertEquals(
-			queryString, expected, StringUtil.count(queryString, "terms"));
+		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
 	}
 
 	private void _assertTermsCount(int expected, TermsQuery termsQuery) {
-		String queryString = ElasticsearchQueryVisitor.INSTANCE.visit(
-			termsQuery
-		).toString();
+		String jsonp = JsonpUtil.toString(
+			new co.elastic.clients.elasticsearch._types.query_dsl.Query(
+				ElasticsearchQueryVisitor.INSTANCE.translate(termsQuery)));
 
-		Assert.assertEquals(
-			queryString, expected, StringUtil.count(queryString, "terms"));
+		Assert.assertEquals(jsonp, expected, StringUtil.count(jsonp, "terms"));
 	}
 
 	private static final Float _BOOST = 1.5F;

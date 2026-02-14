@@ -157,15 +157,15 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 
 		DetailAST firstChildDetailAST = parentDetailAST.getFirstChild();
 
-		if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
-			fullyQualifiedTypeName = getFullyQualifiedTypeName(
-				firstChildDetailAST.getText(), detailAST, false);
-		}
-		else if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+		if (firstChildDetailAST.getType() == TokenTypes.DOT) {
 			FullIdent fullIdent = FullIdent.createFullIdent(
 				firstChildDetailAST);
 
 			fullyQualifiedTypeName = fullIdent.getText();
+		}
+		else if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
+			fullyQualifiedTypeName = getFullyQualifiedTypeName(
+				firstChildDetailAST.getText(), detailAST, false);
 		}
 
 		if ((fullyQualifiedTypeName == null) ||

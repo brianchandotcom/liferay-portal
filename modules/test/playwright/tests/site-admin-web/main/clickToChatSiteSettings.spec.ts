@@ -7,35 +7,33 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
-import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {clickToChatPagesTest} from '../../site-admin-web/main/fixtures/clickToChatPagesTest';
 import {clickToChatConfig} from './clickToChat.config';
 
 export const test = mergeTests(
 	clickToChatPagesTest,
 	instanceSettingsPagesTest,
-	loginTest(),
-	siteSettingsPagesTest
+	loginTest()
 );
 
-test.afterEach(async ({clickToChatInstanceSettingsPage, page}) => {
-	await clickToChatInstanceSettingsPage.goto();
+test.afterEach(async ({clickToChatSettingsPage, page}) => {
+	await clickToChatSettingsPage.gotoInstanceSettings();
 
 	await page.getByLabel('Enable Click to Chat').uncheck();
 
-	if (clickToChatInstanceSettingsPage.chatProvider.isHidden()) {
+	if (clickToChatSettingsPage.chatProvider.isHidden()) {
 		await page
 			.getByLabel('Site Settings Strategy')
 			.selectOption({label: 'Always Inherit'});
 	}
 
-	await clickToChatInstanceSettingsPage.selectChatProvider('');
+	await clickToChatSettingsPage.selectChatProvider('');
 
-	await clickToChatInstanceSettingsPage.setChatProviderPassword('');
+	await clickToChatSettingsPage.setChatProviderPassword('');
 });
 
-test.beforeEach(async ({clickToChatInstanceSettingsPage}) => {
-	await clickToChatInstanceSettingsPage.enableClickToChat();
+test.beforeEach(async ({clickToChatSettingsPage}) => {
+	await clickToChatSettingsPage.enableClickToChat();
 });
 
 test(
@@ -43,41 +41,36 @@ test(
 	{
 		tag: '@LPS-132716',
 	},
-	async ({clickToChatInstanceSettingsPage, page, siteSettingsPage}) => {
+	async ({clickToChatSettingsPage, page}) => {
 		await page
 			.getByLabel('Site Settings Strategy')
 			.selectOption({label: 'Always Inherit'});
 
-		await clickToChatInstanceSettingsPage.saveConfiguration();
+		await clickToChatSettingsPage.saveConfiguration();
 
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
+		await clickToChatSettingsPage.selectChatProvider('JivoChat');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			clickToChatConfig.password.jivochat
 		);
 
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
+		await expect(clickToChatSettingsPage.jivoChatIcon).toBeAttached();
 
-		await siteSettingsPage.goToSiteSetting(
-			'Click to Chat',
-			'Click to Chat'
-		);
+		await clickToChatSettingsPage.gotoSiteSettings();
 
 		await expect(
 			page.getByText('Always Inherit', {exact: true})
 		).toBeVisible();
 
 		await expect(
-			clickToChatInstanceSettingsPage.chatProvider.filter({
+			clickToChatSettingsPage.chatProvider.filter({
 				hasText: 'JivoChat',
 			})
 		).toBeVisible();
 
-		await expect(
-			clickToChatInstanceSettingsPage.chatProviderAccountId
-		).toHaveValue(clickToChatConfig.password.jivochat);
+		await expect(clickToChatSettingsPage.chatProviderAccountId).toHaveValue(
+			clickToChatConfig.password.jivochat
+		);
 	}
 );
 
@@ -86,33 +79,28 @@ test(
 	{
 		tag: '@LPS-132716',
 	},
-	async ({clickToChatInstanceSettingsPage, page, siteSettingsPage}) => {
+	async ({clickToChatSettingsPage, page}) => {
 		await page
 			.getByLabel('Site Settings Strategy')
 			.selectOption({label: 'Always Override'});
 
-		await clickToChatInstanceSettingsPage.saveConfiguration();
+		await clickToChatSettingsPage.saveConfiguration();
 
-		await siteSettingsPage.goToSiteSetting(
-			'Click to Chat',
-			'Click to Chat'
-		);
+		await clickToChatSettingsPage.gotoSiteSettings();
 
 		await expect(
 			page.getByText('Always Override', {exact: true})
 		).toBeVisible();
 
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
+		await clickToChatSettingsPage.selectChatProvider('JivoChat');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			clickToChatConfig.password.jivochat
 		);
 
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
+		await expect(clickToChatSettingsPage.jivoChatIcon).toBeAttached();
 
-		await clickToChatInstanceSettingsPage.goto();
+		await clickToChatSettingsPage.gotoInstanceSettings();
 
 		await page
 			.getByLabel('Site Settings Strategy')
@@ -125,48 +113,41 @@ test(
 	{
 		tag: '@LPS-132716',
 	},
-	async ({clickToChatInstanceSettingsPage, page, siteSettingsPage}) => {
+	async ({clickToChatSettingsPage, page}) => {
 		await page
 			.getByLabel('Site Settings Strategy')
 			.selectOption({label: 'Inherit or Override'});
 
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
+		await clickToChatSettingsPage.selectChatProvider('JivoChat');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			clickToChatConfig.password.jivochat
 		);
 
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
+		await expect(clickToChatSettingsPage.jivoChatIcon).toBeAttached();
 
-		await siteSettingsPage.goToSiteSetting(
-			'Click to Chat',
-			'Click to Chat'
-		);
+		await clickToChatSettingsPage.gotoSiteSettings();
 
 		await expect(
 			page.getByText('Inherit or Override', {exact: true})
 		).toBeVisible();
 
 		await expect(
-			clickToChatInstanceSettingsPage.chatProvider.filter({
+			clickToChatSettingsPage.chatProvider.filter({
 				hasText: 'JivoChat',
 			})
 		).toBeVisible();
 
-		await expect(
-			clickToChatInstanceSettingsPage.chatProviderAccountId
-		).toHaveValue(clickToChatConfig.password.jivochat);
+		await expect(clickToChatSettingsPage.chatProviderAccountId).toHaveValue(
+			clickToChatConfig.password.jivochat
+		);
 
-		await clickToChatInstanceSettingsPage.selectChatProvider('Chatwoot');
+		await clickToChatSettingsPage.selectChatProvider('Chatwoot');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			clickToChatConfig.password.chatwoot
 		);
 
-		await expect(
-			clickToChatInstanceSettingsPage.chatwootIcon
-		).toBeAttached();
+		await expect(clickToChatSettingsPage.chatwootIcon).toBeAttached();
 	}
 );

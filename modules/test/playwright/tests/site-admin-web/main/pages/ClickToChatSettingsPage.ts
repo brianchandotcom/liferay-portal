@@ -6,8 +6,9 @@
 import {Locator, Page} from '@playwright/test';
 
 import {InstanceSettingsPage} from '../../../../pages/configuration-admin-web/InstanceSettingsPage';
+import {SiteSettingsPage} from '../../../../pages/site-admin-web/SiteSettingsPage';
 
-export class ClickToChatInstanceSettingsPage {
+export class ClickToChatSettingsPage {
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly chatProvider: Locator;
 	readonly chatProviderAccountId: Locator;
@@ -22,6 +23,7 @@ export class ClickToChatInstanceSettingsPage {
 	readonly tidioIcon: Locator;
 	readonly zendeskIcon: Locator;
 	readonly saveButton: Locator;
+	readonly siteSettingsPage: SiteSettingsPage;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -57,18 +59,26 @@ export class ClickToChatInstanceSettingsPage {
 		);
 		this.zendeskIcon = page.locator(`//iframe[contains(@id, 'launcher')]`);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.siteSettingsPage = new SiteSettingsPage(page);
 		this.page = page;
 	}
 
-	async goto() {
+	async gotoInstanceSettings() {
 		await this.instanceSettingsPage.goToInstanceSetting(
 			'Click to Chat',
 			'Click to Chat Configuration'
 		);
 	}
 
+	async gotoSiteSettings() {
+		await this.siteSettingsPage.goToSiteSetting(
+			'Click to Chat',
+			'Click to Chat'
+		);
+	}
+
 	async enableClickToChat() {
-		await this.goto();
+		await this.gotoInstanceSettings();
 
 		await this.page.getByLabel('Enable Click to Chat').check();
 

@@ -18,18 +18,18 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.afterEach(async ({clickToChatInstanceSettingsPage, page}) => {
-	await clickToChatInstanceSettingsPage.goto();
+test.afterEach(async ({clickToChatSettingsPage, page}) => {
+	await clickToChatSettingsPage.gotoInstanceSettings();
 
 	await page.getByLabel('Enable Click to Chat').uncheck();
 
-	await clickToChatInstanceSettingsPage.selectChatProvider('');
+	await clickToChatSettingsPage.selectChatProvider('');
 
-	await clickToChatInstanceSettingsPage.setChatProviderPassword('');
+	await clickToChatSettingsPage.setChatProviderPassword('');
 });
 
-test.beforeEach(async ({clickToChatInstanceSettingsPage}) => {
-	await clickToChatInstanceSettingsPage.enableClickToChat();
+test.beforeEach(async ({clickToChatSettingsPage}) => {
+	await clickToChatSettingsPage.enableClickToChat();
 });
 
 const providers = [
@@ -96,25 +96,23 @@ for (const provider of providers) {
 		{
 			tag: '@LPS-129042',
 		},
-		async ({clickToChatInstanceSettingsPage, page}) => {
-			await clickToChatInstanceSettingsPage.selectChatProvider(
-				provider.name
-			);
+		async ({clickToChatSettingsPage, page}) => {
+			await clickToChatSettingsPage.selectChatProvider(provider.name);
 
-			await clickToChatInstanceSettingsPage.setChatProviderPassword(
+			await clickToChatSettingsPage.setChatProviderPassword(
 				clickToChatConfig.password[provider.passwordKey]
 			);
 
 			await expect(
-				clickToChatInstanceSettingsPage[provider.iconKey].first()
+				clickToChatSettingsPage[provider.iconKey].first()
 			).toBeAttached({timeout: 1000});
 
 			await page.getByLabel('Enable Click to Chat').uncheck();
 
-			await clickToChatInstanceSettingsPage.saveConfiguration();
+			await clickToChatSettingsPage.saveConfiguration();
 
 			await expect(
-				clickToChatInstanceSettingsPage[provider.iconKey]
+				clickToChatSettingsPage[provider.iconKey]
 			).not.toBeAttached({timeout: 1000});
 		}
 	);
@@ -124,17 +122,15 @@ for (const provider of providers) {
 		{
 			tag: '@LPS-133453',
 		},
-		async ({clickToChatInstanceSettingsPage, page}) => {
-			await clickToChatInstanceSettingsPage.selectChatProvider(
-				provider.name
-			);
+		async ({clickToChatSettingsPage, page}) => {
+			await clickToChatSettingsPage.selectChatProvider(provider.name);
 
-			await clickToChatInstanceSettingsPage.setChatProviderPassword(
+			await clickToChatSettingsPage.setChatProviderPassword(
 				clickToChatConfig.password[provider.passwordKey]
 			);
 
 			await expect(
-				clickToChatInstanceSettingsPage[provider.iconKey].first()
+				clickToChatSettingsPage[provider.iconKey].first()
 			).toBeAttached({timeout: 1000});
 
 			await performLogout(page);
@@ -142,7 +138,7 @@ for (const provider of providers) {
 			await performLoginViaApi({page, screenName: 'test'});
 
 			await expect(
-				clickToChatInstanceSettingsPage[provider.iconKey]
+				clickToChatSettingsPage[provider.iconKey]
 			).toBeAttached({timeout: 1000});
 		}
 	);
@@ -153,30 +149,28 @@ test(
 	{
 		tag: '@LPS-145280',
 	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('JivoChat');
+	async ({clickToChatSettingsPage, page}) => {
+		await clickToChatSettingsPage.selectChatProvider('JivoChat');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			clickToChatConfig.password.jivochat
 		);
 
-		await expect(
-			clickToChatInstanceSettingsPage.jivoChatIcon
-		).toBeAttached();
+		await expect(clickToChatSettingsPage.jivoChatIcon).toBeAttached();
 
 		try {
 			await page.getByLabel('Hide in Control Panel').check();
 
-			await clickToChatInstanceSettingsPage.saveConfiguration();
+			await clickToChatSettingsPage.saveConfiguration();
 
 			await expect(
-				clickToChatInstanceSettingsPage.jivoChatIcon
+				clickToChatSettingsPage.jivoChatIcon
 			).not.toBeAttached();
 		}
 		finally {
 			await page.getByLabel('Hide in Control Panel').uncheck();
 
-			await clickToChatInstanceSettingsPage.saveButton.click();
+			await clickToChatSettingsPage.saveButton.click();
 		}
 	}
 );
@@ -186,10 +180,10 @@ test.skip(
 	{
 		tag: '@LPS-137169',
 	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Hubspot');
+	async ({clickToChatSettingsPage, page}) => {
+		await clickToChatSettingsPage.selectChatProvider('Hubspot');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			'nonexistent/66b6b4b2-d096-45a1-b25d-7dab3f332167'
 		);
 
@@ -206,17 +200,15 @@ test(
 	{
 		tag: '@LPS-129042',
 	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
+	async ({clickToChatSettingsPage, page}) => {
 		await page
 			.getByLabel('Site Settings Strategy')
 			.selectOption({label: 'Always Override'});
 
-		await expect(
-			clickToChatInstanceSettingsPage.chatProvider
-		).not.toBeVisible();
+		await expect(clickToChatSettingsPage.chatProvider).not.toBeVisible();
 
 		await expect(
-			clickToChatInstanceSettingsPage.chatProviderAccountId
+			clickToChatSettingsPage.chatProviderAccountId
 		).not.toBeVisible();
 	}
 );
@@ -226,10 +218,10 @@ test(
 	{
 		tag: '@LPS-137169',
 	},
-	async ({clickToChatInstanceSettingsPage, page}) => {
-		await clickToChatInstanceSettingsPage.selectChatProvider('Hubspot');
+	async ({clickToChatSettingsPage, page}) => {
+		await clickToChatSettingsPage.selectChatProvider('Hubspot');
 
-		await clickToChatInstanceSettingsPage.setChatProviderPassword(
+		await clickToChatSettingsPage.setChatProviderPassword(
 			'19907868/1-d096-45a1-b25d-7dab3f332167'
 		);
 

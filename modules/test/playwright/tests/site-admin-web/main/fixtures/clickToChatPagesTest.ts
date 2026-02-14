@@ -5,13 +5,13 @@
 
 import {test} from '@playwright/test';
 
-import {ClickToChatInstanceSettingsPage} from '../pages/ClickToChatInstanceSettingsPage';
+import {ClickToChatSettingsPage} from '../pages/ClickToChatSettingsPage';
 
 const clickToChatPagesTest = test.extend<{
-	clickToChatInstanceSettingsPage: ClickToChatInstanceSettingsPage;
+	clickToChatSettingsPage: ClickToChatSettingsPage;
 }>({
-	clickToChatInstanceSettingsPage: async ({page}, use) => {
-		await use(new ClickToChatInstanceSettingsPage(page));
+	clickToChatSettingsPage: async ({page}, use) => {
+		await use(new ClickToChatSettingsPage(page));
 	},
 });
 

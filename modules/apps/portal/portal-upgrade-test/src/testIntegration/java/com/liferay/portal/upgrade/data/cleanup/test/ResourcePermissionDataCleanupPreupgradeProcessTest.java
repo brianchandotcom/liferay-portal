@@ -162,9 +162,6 @@ public class ResourcePermissionDataCleanupPreupgradeProcessTest
 
 		Assert.assertFalse(
 			_hasResourcePermission(
-				compositeClassName, String.valueOf(compositeClassNameId)));
-		Assert.assertFalse(
-			_hasResourcePermission(
 				JournalArticle.class.getName(),
 				String.valueOf(journalArticle.getResourcePrimKey())));
 		Assert.assertFalse(
@@ -172,11 +169,14 @@ public class ResourcePermissionDataCleanupPreupgradeProcessTest
 				Layout.class.getName(), String.valueOf(layoutId)));
 		Assert.assertFalse(
 			_hasResourcePermission(
-				objectDefinition.getClassName(),
-				String.valueOf(objectEntry.getObjectEntryId())));
+				compositeClassName, String.valueOf(compositeClassNameId)));
 		Assert.assertTrue(
 			_hasResourcePermission(
 				nonliferayClassName, String.valueOf(nonliferayClassNameId)));
+		Assert.assertFalse(
+			_hasResourcePermission(
+				objectDefinition.getClassName(),
+				String.valueOf(objectEntry.getObjectEntryId())));
 	}
 
 	private boolean _hasResourcePermission(String className, String primKey)

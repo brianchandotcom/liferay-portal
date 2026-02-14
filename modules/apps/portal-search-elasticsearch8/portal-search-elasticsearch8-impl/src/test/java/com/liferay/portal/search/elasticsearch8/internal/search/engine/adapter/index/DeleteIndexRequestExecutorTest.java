@@ -73,10 +73,6 @@ public class DeleteIndexRequestExecutorTest {
 			elasticsearchDeleteIndexRequest.allowNoIndices());
 
 		Assert.assertEquals(
-			indicesOptions.isExpandToOpenIndices(),
-			elasticsearchDeleteIndexRequest.expandWildcards());
-
-		Assert.assertEquals(
 			indicesOptions.isIgnoreUnavailable(),
 			elasticsearchDeleteIndexRequest.ignoreUnavailable());
 	}

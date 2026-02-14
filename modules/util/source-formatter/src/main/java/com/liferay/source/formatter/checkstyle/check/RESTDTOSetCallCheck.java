@@ -173,15 +173,6 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 		String absolutePath, DetailAST detailAST, String methodName,
 		String fullyQualifiedTypeName) {
 
-		JavaClass javaClass = _getDTOJavaClass(
-			absolutePath, fullyQualifiedTypeName);
-
-		if ((javaClass == null) ||
-			!_hasReplaceableMethodSignature(methodName, javaClass)) {
-
-			return;
-		}
-
 		if (detailAST.getType() == TokenTypes.METHOD_CALL) {
 			DetailAST elistDetailAST = detailAST.findFirstToken(
 				TokenTypes.ELIST);
@@ -189,12 +180,21 @@ public class RESTDTOSetCallCheck extends BaseCheck {
 			DetailAST childDetailAST = elistDetailAST.getFirstChild();
 
 			if ((childDetailAST == null) ||
-				(childDetailAST.getType() == TokenTypes.LAMBDA) ||
 				(childDetailAST.findFirstToken(TokenTypes.METHOD_REF) !=
-					null)) {
+					null) ||
+				(childDetailAST.getType() == TokenTypes.LAMBDA)) {
 
 				return;
 			}
+		}
+
+		JavaClass javaClass = _getDTOJavaClass(
+			absolutePath, fullyQualifiedTypeName);
+
+		if ((javaClass == null) ||
+			!_hasReplaceableMethodSignature(methodName, javaClass)) {
+
+			return;
 		}
 
 		log(detailAST, _MSG_USE_SET_METHOD_INSTEAD, methodName);

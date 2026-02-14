@@ -13,18 +13,18 @@ variable "deployment_name" {
 		error_message="The deployment_name must contain only lowercase letters, numbers, and hyphens."
 	}
 }
+variable "external_secret_store_provider_hcl" {
+	default=null
+	type=any
+}
+variable "external_secrets_namespace" {
+	default="external-secrets-system"
+}
 variable "gateway_class_name" {
 	default="liferay-gateway-class"
 }
 variable "gateway_namespace" {
 	default="envoy-gateway-system"
-}
-variable "external_secrets_namespace" {
-	default="external-secrets-system"
-}
-variable "external_secret_store_provider_hcl" {
-	default=null
-	type=any
 }
 variable "infrastructure_git_repo_config" {
 	default={
@@ -36,7 +36,7 @@ variable "infrastructure_git_repo_config" {
 		{
 			auth=object({
 				credentials_secret_name=optional(string, "liferay/credentials/gitops")
-				internal_secret_name=optional(string, "argocd-infrastructure-git-credentials")
+				internal_secret_name=optional(string, "gitops-credentials")
 				method=optional(string, "https")
 				ssh_private_key_property=optional(string, "git_ssh_private_key")
 				token_property=optional(string, "git_access_token")
@@ -93,7 +93,7 @@ variable "liferay_git_repo_config" {
 		{
 			auth=object({
 				credentials_secret_name=optional(string, "liferay/credentials/gitops")
-				internal_secret_name=optional(string, "argocd-liferay-git-credentials")
+				internal_secret_name=optional(string, "gitops-credentials")
 				method=optional(string, "https")
 				ssh_private_key_property=optional(string, "git_ssh_private_key")
 				token_property=optional(string, "git_access_token")

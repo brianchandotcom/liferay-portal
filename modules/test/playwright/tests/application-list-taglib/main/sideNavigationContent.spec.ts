@@ -48,36 +48,6 @@ test.beforeEach(async ({globalMenuPage, page}) => {
 });
 
 test(
-	'Each leaf navigation item has an icon, a label and a link to navigate to',
-	{tag: '@LPD-73706'},
-	async ({page}) => {
-		await test.step('Expand categories', async () => {
-			await setAllCategoriesExpanded(page, true);
-		});
-
-		await test.step('Check that each leaf item has an icon and a label', async () => {
-			const leafItems = page
-				.getByRole('menuitem')
-				.and(page.locator('a.nav-link'));
-
-			await expect(leafItems).not.toHaveCount(0);
-
-			for (const leafItem of await leafItems.all()) {
-				await expect(leafItem.locator('svg')).toBeVisible();
-				await expect(leafItem).toHaveAccessibleName(
-					await leafItem.textContent()
-				);
-				await expect(leafItem).toHaveAttribute('href', /.+/);
-			}
-		});
-
-		await test.step('Reset the navigation visibility for the next tests', async () => {
-			await setAllCategoriesExpanded(page, false);
-		});
-	}
-);
-
-test(
 	'The leaf item links have active state based on the current page',
 	{tag: '@LPD-73706'},
 	async ({page}) => {

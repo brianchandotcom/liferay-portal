@@ -64,7 +64,7 @@ public abstract class BaseMovingFunctionPipelineAggregationTestCase
 					histogramAggregationResult);
 
 				AggregationAssert.assertBucketValues(
-					"NaN, 10.0, 22.5, 35.0, 47.5", this::getMovingFunctionValue,
+					"0.0, 10.0, 22.5, 35.0, 47.5", this::getMovingFunctionValue,
 					histogramAggregationResult);
 			});
 	}

@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -91,7 +92,8 @@ public class HitsMetadataTranslator {
 		).score(
 			ConversionUtil.toFloat(hit.score(), 0.0F)
 		).sortValues(
-			ArrayUtil.toStringArray(hit.sort())
+			TransformUtil.transformToArray(
+				hit.sort(), fieldValue -> fieldValue._get(), Object.class)
 		).version(
 			GetterUtil.getLong(hit.version())
 		).build();

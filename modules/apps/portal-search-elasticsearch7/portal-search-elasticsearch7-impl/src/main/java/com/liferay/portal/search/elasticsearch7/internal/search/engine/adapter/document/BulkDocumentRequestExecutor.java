@@ -107,49 +107,46 @@ public class BulkDocumentRequestExecutor {
 		for (BulkableDocumentRequest<?> bulkableDocumentRequest :
 				bulkDocumentRequest.getBulkableDocumentRequests()) {
 
-			bulkableDocumentRequest.accept(
-				request -> {
-					if (request instanceof DeleteDocumentRequest) {
-						DeleteDocumentRequest deleteDocumentRequest =
-							(DeleteDocumentRequest)request;
+			if (bulkableDocumentRequest instanceof DeleteDocumentRequest) {
+				DeleteDocumentRequest deleteDocumentRequest =
+					(DeleteDocumentRequest)bulkableDocumentRequest;
 
-						deleteDocumentRequest.setRefresh(false);
+				deleteDocumentRequest.setRefresh(false);
 
-						DeleteRequest deleteRequest =
-							ElasticsearchBulkableDocumentRequestTranslatorUtil.
-								translate(deleteDocumentRequest);
+				DeleteRequest deleteRequest =
+					ElasticsearchBulkableDocumentRequestTranslatorUtil.
+						translate(deleteDocumentRequest);
 
-						bulkRequest.add(deleteRequest);
-					}
-					else if (request instanceof IndexDocumentRequest) {
-						IndexDocumentRequest indexDocumentRequest =
-							(IndexDocumentRequest)request;
+				bulkRequest.add(deleteRequest);
+			}
+			else if (bulkableDocumentRequest instanceof IndexDocumentRequest) {
+				IndexDocumentRequest indexDocumentRequest =
+					(IndexDocumentRequest)bulkableDocumentRequest;
 
-						indexDocumentRequest.setRefresh(false);
+				indexDocumentRequest.setRefresh(false);
 
-						IndexRequest indexRequest =
-							ElasticsearchBulkableDocumentRequestTranslatorUtil.
-								translate(indexDocumentRequest);
+				IndexRequest indexRequest =
+					ElasticsearchBulkableDocumentRequestTranslatorUtil.
+						translate(indexDocumentRequest);
 
-						bulkRequest.add(indexRequest);
-					}
-					else if (request instanceof UpdateDocumentRequest) {
-						UpdateDocumentRequest updateDocumentRequest =
-							(UpdateDocumentRequest)request;
+				bulkRequest.add(indexRequest);
+			}
+			else if (bulkableDocumentRequest instanceof UpdateDocumentRequest) {
+				UpdateDocumentRequest updateDocumentRequest =
+					(UpdateDocumentRequest)bulkableDocumentRequest;
 
-						updateDocumentRequest.setRefresh(false);
+				updateDocumentRequest.setRefresh(false);
 
-						UpdateRequest updateRequest =
-							ElasticsearchBulkableDocumentRequestTranslatorUtil.
-								translate(updateDocumentRequest);
+				UpdateRequest updateRequest =
+					ElasticsearchBulkableDocumentRequestTranslatorUtil.
+						translate(updateDocumentRequest);
 
-						bulkRequest.add(updateRequest);
-					}
-					else {
-						throw new IllegalArgumentException(
-							"No translator available for: " + request);
-					}
-				});
+				bulkRequest.add(updateRequest);
+			}
+			else {
+				throw new IllegalArgumentException(
+					"No translator available for: " + bulkableDocumentRequest);
+			}
 		}
 
 		return bulkRequest;

@@ -110,34 +110,31 @@ public class BulkDocumentRequestExecutor {
 		for (BulkableDocumentRequest<?> bulkableDocumentRequest :
 				bulkDocumentRequest.getBulkableDocumentRequests()) {
 
-			bulkableDocumentRequest.accept(
-				request -> {
-					if (request instanceof DeleteDocumentRequest) {
-						DeleteOperation deleteOperation =
-							OpenSearchBulkableDocumentRequestTranslatorUtil.
-								translate((DeleteDocumentRequest)request);
+			if (bulkableDocumentRequest instanceof DeleteDocumentRequest) {
+				DeleteOperation deleteOperation =
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
+						(DeleteDocumentRequest)bulkableDocumentRequest);
 
-						builder.operations(new BulkOperation(deleteOperation));
-					}
-					else if (request instanceof IndexDocumentRequest) {
-						IndexOperation<JsonData> indexOperation =
-							OpenSearchBulkableDocumentRequestTranslatorUtil.
-								translate((IndexDocumentRequest)request);
+				builder.operations(new BulkOperation(deleteOperation));
+			}
+			else if (bulkableDocumentRequest instanceof IndexDocumentRequest) {
+				IndexOperation<JsonData> indexOperation =
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
+						(IndexDocumentRequest)bulkableDocumentRequest);
 
-						builder.operations(new BulkOperation(indexOperation));
-					}
-					else if (request instanceof UpdateDocumentRequest) {
-						UpdateOperation<JsonData> updateOperation =
-							OpenSearchBulkableDocumentRequestTranslatorUtil.
-								translate((UpdateDocumentRequest)request);
+				builder.operations(new BulkOperation(indexOperation));
+			}
+			else if (bulkableDocumentRequest instanceof UpdateDocumentRequest) {
+				UpdateOperation<JsonData> updateOperation =
+					OpenSearchBulkableDocumentRequestTranslatorUtil.translate(
+						(UpdateDocumentRequest)bulkableDocumentRequest);
 
-						builder.operations(new BulkOperation(updateOperation));
-					}
-					else {
-						throw new IllegalArgumentException(
-							"No translator available for " + request);
-					}
-				});
+				builder.operations(new BulkOperation(updateOperation));
+			}
+			else {
+				throw new IllegalArgumentException(
+					"No translator available for " + bulkableDocumentRequest);
+			}
 		}
 
 		return builder.build();

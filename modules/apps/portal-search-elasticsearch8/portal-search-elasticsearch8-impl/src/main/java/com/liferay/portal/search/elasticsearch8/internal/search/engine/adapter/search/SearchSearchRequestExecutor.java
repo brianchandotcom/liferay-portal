@@ -12,6 +12,7 @@ import co.elastic.clients.elasticsearch.core.ScrollRequest;
 import co.elastic.clients.elasticsearch.core.ScrollResponse;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
 import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.ResponseBody;
 import co.elastic.clients.json.JsonData;
 
 import com.liferay.petra.string.StringBundler;
@@ -71,20 +72,21 @@ public class SearchSearchRequestExecutor {
 					searchRequestString));
 		}
 
-		SearchResponse<JsonData> searchResponse = null;
+		ResponseBody<JsonData> responseBody = null;
 
 		if (searchSearchRequest.getScrollId() != null) {
-			_getScrollResponse(elasticsearchClient, searchSearchRequest);
+			responseBody = _getScrollResponse(
+				elasticsearchClient, searchSearchRequest);
 		}
 		else {
-			searchResponse = _getSearchResponse(
+			responseBody = _getSearchResponse(
 				elasticsearchClient, searchRequest);
 		}
 
 		SearchSearchResponse searchSearchResponse = new SearchSearchResponse();
 
 		SearchSearchResponseAssembler.INSTANCE.assemble(
-			searchResponse, searchRequestString, searchSearchRequest,
+			responseBody, searchRequestString, searchSearchRequest,
 			searchSearchResponse);
 
 		if (_log.isDebugEnabled()) {

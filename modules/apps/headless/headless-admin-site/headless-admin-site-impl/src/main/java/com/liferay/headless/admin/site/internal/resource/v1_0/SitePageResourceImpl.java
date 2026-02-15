@@ -383,7 +383,7 @@ public class SitePageResourceImpl
 
 	@Override
 	protected SitePage doPostSiteSitePage(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception {
 
@@ -391,7 +391,7 @@ public class SitePageResourceImpl
 				contextCompany.getCompanyId(), "LPD-35443") ||
 			(!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privatePage)) {
+			 privatePages)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -402,13 +402,13 @@ public class SitePageResourceImpl
 				GroupUtil.getGroupId(
 					false, contextCompany.getCompanyId(),
 					siteExternalReferenceCode),
-				privatePage, sitePage));
+				privatePages, sitePage));
 	}
 
 	@Override
 	protected SitePage doPutSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception {
 
@@ -416,7 +416,7 @@ public class SitePageResourceImpl
 				contextCompany.getCompanyId(), "LPD-35443") ||
 			(!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privatePage)) {
+			 privatePages)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -430,11 +430,11 @@ public class SitePageResourceImpl
 		if (layout == null) {
 			return _toSitePage(
 				_addLayout(
-					sitePageExternalReferenceCode, groupId, privatePage,
+					sitePageExternalReferenceCode, groupId, privatePages,
 					sitePage));
 		}
 
-		if (layout.isPrivateLayout() != privatePage) {
+		if (layout.isPrivateLayout() != privatePages) {
 			throw new UnsupportedOperationException();
 		}
 

@@ -2499,14 +2499,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPostSiteParentSitePage(
-			boolean privatePage, ServiceContext serviceContext)
+			boolean privatePages, ServiceContext serviceContext)
 		throws Exception {
 
 		Layout parentLayout = LayoutTestUtil.addTypePortletLayout(
-			testGroup, privatePage);
+			testGroup, privatePages);
 
 		sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), privatePage,
+			testGroup.getExternalReferenceCode(), privatePages,
 			_getRandomSitePage(
 				StringUtil.toLowerCase(RandomTestUtil.randomString()),
 				parentLayout.getExternalReferenceCode(), serviceContext,
@@ -2516,7 +2516,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		_assertProblemException(
 			null,
 			() -> sitePageResource.postSiteSitePage(
-				testGroup.getExternalReferenceCode(), !privatePage,
+				testGroup.getExternalReferenceCode(), !privatePages,
 				_getRandomSitePage(
 					StringUtil.toLowerCase(RandomTestUtil.randomString()),
 					parentLayout.getExternalReferenceCode(), serviceContext,
@@ -2773,12 +2773,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPutSiteSitePage(
-			boolean privatePage, ServiceContext serviceContext,
+			boolean privatePages, ServiceContext serviceContext,
 			SitePage.Type type)
 		throws Exception {
 
 		SitePage sitePage = sitePageResource.postSiteSitePage(
-			testGroup.getExternalReferenceCode(), privatePage,
+			testGroup.getExternalReferenceCode(), privatePages,
 			_getRandomSitePage(type));
 
 		_assertSitePage(
@@ -2787,7 +2787,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			sitePage);
 
 		Layout layout = LayoutTestUtil.addTypePortletLayout(
-			testGroup, privatePage);
+			testGroup, privatePages);
 
 		sitePage = _getRandomSitePage(
 			sitePage.getExternalReferenceCode(),
@@ -2796,7 +2796,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testGroup.getExternalReferenceCode(),
-			sitePage.getExternalReferenceCode(), privatePage, sitePage);
+			sitePage.getExternalReferenceCode(), privatePages, sitePage);
 
 		assertEquals(sitePage, putSitePage);
 		assertValid(putSitePage);

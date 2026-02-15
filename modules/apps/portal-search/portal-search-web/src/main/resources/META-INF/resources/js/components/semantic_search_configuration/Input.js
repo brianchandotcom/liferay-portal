@@ -8,6 +8,7 @@ import ClayForm, {ClayInput, ClaySelect, ClaySelectBox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import getCN from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import ModelAutocomplete from './ModelAutocomplete';
@@ -28,7 +29,9 @@ function PasswordInput(props) {
 
 				<ClayInput.GroupInsetItem after>
 					<ClayButtonWithIcon
-						aria-label={Liferay.Language.get('show')}
+						aria-label={sub(Liferay.Language.get('show-x'), [
+							Liferay.Language.get('password'),
+						])}
 						displayType="unstyled"
 						onClick={() => {
 							setShow(!show);

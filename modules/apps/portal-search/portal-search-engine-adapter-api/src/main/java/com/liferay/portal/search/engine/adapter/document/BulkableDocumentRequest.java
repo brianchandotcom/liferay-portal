@@ -5,8 +5,6 @@
 
 package com.liferay.portal.search.engine.adapter.document;
 
-import java.util.function.Consumer;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -14,7 +12,4 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface BulkableDocumentRequest<T> {
-
-	public void accept(Consumer<T> consumer);
-
 }

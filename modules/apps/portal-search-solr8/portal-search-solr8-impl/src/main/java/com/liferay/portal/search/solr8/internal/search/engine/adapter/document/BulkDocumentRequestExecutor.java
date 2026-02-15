@@ -360,25 +360,28 @@ public class BulkDocumentRequestExecutor {
 			for (BulkableDocumentRequest<?> bulkableDocumentRequest :
 					bulkDocumentRequest.getBulkableDocumentRequests()) {
 
-				bulkableDocumentRequest.accept(
-					request -> {
-						if (request instanceof DeleteDocumentRequest) {
-							_deleteDocumentRequests.add(
-								(DeleteDocumentRequest)request);
-						}
-						else if (request instanceof GetDocumentRequest) {
-							_getDocumentRequests.add(
-								(GetDocumentRequest)request);
-						}
-						else if (request instanceof IndexDocumentRequest) {
-							_indexDocumentRequests.add(
-								(IndexDocumentRequest)request);
-						}
-						else if (request instanceof UpdateDocumentRequest) {
-							_updateDocumentRequests.add(
-								(UpdateDocumentRequest)request);
-						}
-					});
+				if (bulkableDocumentRequest instanceof DeleteDocumentRequest) {
+					_deleteDocumentRequests.add(
+						(DeleteDocumentRequest)bulkableDocumentRequest);
+				}
+				else if (bulkableDocumentRequest instanceof
+							GetDocumentRequest) {
+
+					_getDocumentRequests.add(
+						(GetDocumentRequest)bulkableDocumentRequest);
+				}
+				else if (bulkableDocumentRequest instanceof
+							IndexDocumentRequest) {
+
+					_indexDocumentRequests.add(
+						(IndexDocumentRequest)bulkableDocumentRequest);
+				}
+				else if (bulkableDocumentRequest instanceof
+							UpdateDocumentRequest) {
+
+					_updateDocumentRequests.add(
+						(UpdateDocumentRequest)bulkableDocumentRequest);
+				}
 			}
 		}
 

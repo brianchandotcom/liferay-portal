@@ -8,8 +8,6 @@ package com.liferay.portal.search.engine.adapter.document;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
 
-import java.util.function.Consumer;
-
 /**
  * @author Michael C. Han
  */
@@ -58,11 +56,6 @@ public class IndexDocumentRequest
 		_document = document;
 
 		_legacyDocument = null;
-	}
-
-	@Override
-	public void accept(Consumer<IndexDocumentRequest> consumer) {
-		consumer.accept(this);
 	}
 
 	@Override

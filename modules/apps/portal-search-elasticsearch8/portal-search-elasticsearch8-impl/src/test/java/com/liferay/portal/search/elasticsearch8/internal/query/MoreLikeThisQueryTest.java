@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.query;
 
+import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.search.elasticsearch8.internal.indexing.LiferayElasticsearchIndexingFixtureFactory;
 import com.liferay.portal.search.engine.adapter.SearchEngineAdapter;
@@ -15,13 +17,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Collections;
 
-import org.elasticsearch.ElasticsearchStatusException;
-import org.elasticsearch.client.ResponseException;
-
-import org.hamcrest.CoreMatchers;
-
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -36,14 +32,9 @@ public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Ignore
 	@Override
 	@Test
 	public void testMoreLikeThisWithoutFields() throws Exception {
-	}
-
-	@Test
-	public void testMoreLikeThisWithoutFieldsElasticsearch8() throws Throwable {
 		SearchSearchRequest searchSearchRequest = createSearchSearchRequest();
 
 		searchSearchRequest.setQuery(
@@ -52,17 +43,12 @@ public class MoreLikeThisQueryTest extends BaseMoreLikeThisQueryTestCase {
 
 		SearchEngineAdapter searchEngineAdapter = getSearchEngineAdapter();
 
-		expectedException.expect(ResponseException.class);
+		expectedException.expect(ElasticsearchException.class);
 		expectedException.expectMessage(
-			CoreMatchers.containsString(
-				"[more_like_this] query cannot infer the field"));
+			"[es/search] failed: [search_phase_execution_exception] all " +
+				"shards failed");
 
-		try {
-			searchEngineAdapter.execute(searchSearchRequest);
-		}
-		catch (ElasticsearchStatusException elasticsearchStatusException) {
-			throw elasticsearchStatusException.getSuppressed()[0];
-		}
+		searchEngineAdapter.execute(searchSearchRequest);
 	}
 
 	@Rule

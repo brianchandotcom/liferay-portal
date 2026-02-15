@@ -20,6 +20,30 @@ export class GlobalMenuPage {
 		this.page = page;
 	}
 
+	async closeProductMenu(name: string) {
+		const productMenu = this.page.getByLabel(`${name} Menu`, {exact: true});
+
+		const isClosed = await productMenu.evaluate(
+			(element) => !element.classList.contains('c-slideout-show')
+		);
+
+		if (!isClosed) {
+			const button = this.page.getByTestId('sideNavigationToggler');
+
+			await expect(button).toHaveAttribute('aria-expanded', 'true');
+
+			await expect(async () => {
+				await button.click();
+
+				await expect(productMenu).not.toHaveClass(/c-slideout-show/, {
+					timeout: 2000,
+				});
+
+				await expect(button).toHaveAttribute('aria-expanded', 'false');
+			}).toPass();
+		}
+	}
+
 	async goTo(categoryName: Categories) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -48,5 +72,29 @@ export class GlobalMenuPage {
 
 	async goToControlPanel() {
 		await this.goTo('Control Panel');
+	}
+
+	async openProductMenu(name: string) {
+		const menu = this.page.getByLabel(`${name} Menu`, {exact: true});
+
+		const isOpen = await menu.evaluate((element) =>
+			element.classList.contains('c-slideout-show')
+		);
+
+		if (!isOpen) {
+			const button = this.page.getByTestId('sideNavigationToggler');
+
+			await expect(button).toHaveAttribute('aria-expanded', 'false');
+
+			await expect(async () => {
+				await button.click();
+
+				await expect(menu).toHaveClass(/c-slideout-show/, {
+					timeout: 2000,
+				});
+
+				await expect(button).toHaveAttribute('aria-expanded', 'true');
+			}).toPass();
+		}
 	}
 }

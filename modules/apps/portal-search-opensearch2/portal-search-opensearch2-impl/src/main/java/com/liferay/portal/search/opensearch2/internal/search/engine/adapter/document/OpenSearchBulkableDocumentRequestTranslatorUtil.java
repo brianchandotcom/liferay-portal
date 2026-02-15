@@ -6,7 +6,6 @@
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.document;
 
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.opensearch2.internal.script.ScriptTranslator;
@@ -33,10 +32,6 @@ public class OpenSearchBulkableDocumentRequestTranslatorUtil {
 		builder.index(deleteDocumentRequest.getIndexName());
 
 		return builder.build();
-	}
-
-	public static Object translate(GetDocumentRequest getDocumentRequest) {
-		throw new UnsupportedOperationException();
 	}
 
 	public static IndexOperation translate(

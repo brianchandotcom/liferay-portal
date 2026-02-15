@@ -18,6 +18,8 @@ import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrException;
+import org.apache.solr.common.params.CommonParams;
+import org.apache.solr.common.params.ModifiableSolrParams;
 
 /**
  * @author Bryan Engler
@@ -29,9 +31,7 @@ public class GetDocumentRequestExecutor {
 	}
 
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
-		QueryRequest queryRequest =
-			SolrBulkableDocumentRequestTranslatorUtil.translate(
-				getDocumentRequest);
+		QueryRequest queryRequest = _translate(getDocumentRequest);
 
 		try {
 			QueryResponse queryResponse = queryRequest.process(
@@ -72,6 +72,16 @@ public class GetDocumentRequestExecutor {
 
 			throw new RuntimeException(exception);
 		}
+	}
+
+	private QueryRequest _translate(GetDocumentRequest getDocumentRequest) {
+		ModifiableSolrParams modifiableSolrParams = new ModifiableSolrParams();
+
+		modifiableSolrParams.set(CommonParams.QT, "/get");
+
+		modifiableSolrParams.set("ids", getDocumentRequest.getId());
+
+		return new QueryRequest(modifiableSolrParams);
 	}
 
 	private static final String _VERSION_FIELD = "_version_";

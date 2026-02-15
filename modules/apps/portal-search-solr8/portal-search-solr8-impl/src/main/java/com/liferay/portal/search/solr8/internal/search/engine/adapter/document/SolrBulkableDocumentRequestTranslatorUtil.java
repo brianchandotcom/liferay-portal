@@ -6,16 +6,12 @@
 package com.liferay.portal.search.solr8.internal.search.engine.adapter.document;
 
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 import com.liferay.portal.search.solr8.internal.document.SolrDocumentFactoryUtil;
 import com.liferay.portal.search.solr8.internal.document.SolrInputDocumentAtomicUpdateTranslator;
 
-import org.apache.solr.client.solrj.request.QueryRequest;
 import org.apache.solr.client.solrj.request.UpdateRequest;
-import org.apache.solr.common.params.CommonParams;
-import org.apache.solr.common.params.ModifiableSolrParams;
 
 /**
  * @author Bryan Engler
@@ -36,18 +32,6 @@ public class SolrBulkableDocumentRequestTranslatorUtil {
 		}
 
 		return updateRequest;
-	}
-
-	public static QueryRequest translate(
-		GetDocumentRequest getDocumentRequest) {
-
-		ModifiableSolrParams modifiableSolrParams = new ModifiableSolrParams();
-
-		modifiableSolrParams.set(CommonParams.QT, "/get");
-
-		modifiableSolrParams.set("ids", getDocumentRequest.getId());
-
-		return new QueryRequest(modifiableSolrParams);
 	}
 
 	public static UpdateRequest translate(

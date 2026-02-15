@@ -83,33 +83,33 @@ public interface SitePageResource {
 
 	public SitePage patchSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse patchSiteSitePageHttpResponse(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public SitePage postSiteSitePage(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteSitePageHttpResponse(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public void postSiteSitePageBatch(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteSitePageBatchHttpResponse(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			String callbackURL, Object object)
 		throws Exception;
 
@@ -141,13 +141,13 @@ public interface SitePageResource {
 
 	public SitePage putSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse putSiteSitePageHttpResponse(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
@@ -749,14 +749,14 @@ public interface SitePageResource {
 
 		public SitePage patchSiteSitePage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode, Boolean privatePage,
+				String sitePageExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				patchSiteSitePageHttpResponse(
 					siteExternalReferenceCode, sitePageExternalReferenceCode,
-					privatePage, sitePage);
+					privatePages, sitePage);
 
 			String content = httpResponse.getContent();
 
@@ -819,7 +819,7 @@ public interface SitePageResource {
 
 		public HttpInvoker.HttpResponse patchSiteSitePageHttpResponse(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode, Boolean privatePage,
+				String sitePageExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
@@ -846,9 +846,9 @@ public interface SitePageResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PATCH);
 
-			if (privatePage != null) {
+			if (privatePages != null) {
 				httpInvoker.parameter(
-					"privatePage", String.valueOf(privatePage));
+					"privatePages", String.valueOf(privatePages));
 			}
 
 			httpInvoker.path(
@@ -870,13 +870,13 @@ public interface SitePageResource {
 		}
 
 		public SitePage postSiteSitePage(
-				String siteExternalReferenceCode, Boolean privatePage,
+				String siteExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteSitePageHttpResponse(
-					siteExternalReferenceCode, privatePage, sitePage);
+					siteExternalReferenceCode, privatePages, sitePage);
 
 			String content = httpResponse.getContent();
 
@@ -938,7 +938,7 @@ public interface SitePageResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteSitePageHttpResponse(
-				String siteExternalReferenceCode, Boolean privatePage,
+				String siteExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
@@ -965,9 +965,9 @@ public interface SitePageResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			if (privatePage != null) {
+			if (privatePages != null) {
 				httpInvoker.parameter(
-					"privatePage", String.valueOf(privatePage));
+					"privatePages", String.valueOf(privatePages));
 			}
 
 			httpInvoker.path(
@@ -987,13 +987,13 @@ public interface SitePageResource {
 		}
 
 		public void postSiteSitePageBatch(
-				String siteExternalReferenceCode, Boolean privatePage,
+				String siteExternalReferenceCode, Boolean privatePages,
 				String callbackURL, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteSitePageBatchHttpResponse(
-					siteExternalReferenceCode, privatePage, callbackURL,
+					siteExternalReferenceCode, privatePages, callbackURL,
 					object);
 
 			String content = httpResponse.getContent();
@@ -1045,7 +1045,7 @@ public interface SitePageResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteSitePageBatchHttpResponse(
-				String siteExternalReferenceCode, Boolean privatePage,
+				String siteExternalReferenceCode, Boolean privatePages,
 				String callbackURL, Object object)
 			throws Exception {
 
@@ -1072,9 +1072,9 @@ public interface SitePageResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
 
-			if (privatePage != null) {
+			if (privatePages != null) {
 				httpInvoker.parameter(
-					"privatePage", String.valueOf(privatePage));
+					"privatePages", String.valueOf(privatePages));
 			}
 
 			if (callbackURL != null) {
@@ -1356,13 +1356,13 @@ public interface SitePageResource {
 
 		public SitePage putSiteSitePage(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode, Boolean privatePage,
+				String sitePageExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = putSiteSitePageHttpResponse(
 				siteExternalReferenceCode, sitePageExternalReferenceCode,
-				privatePage, sitePage);
+				privatePages, sitePage);
 
 			String content = httpResponse.getContent();
 
@@ -1425,7 +1425,7 @@ public interface SitePageResource {
 
 		public HttpInvoker.HttpResponse putSiteSitePageHttpResponse(
 				String siteExternalReferenceCode,
-				String sitePageExternalReferenceCode, Boolean privatePage,
+				String sitePageExternalReferenceCode, Boolean privatePages,
 				SitePage sitePage)
 			throws Exception {
 
@@ -1452,9 +1452,9 @@ public interface SitePageResource {
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
 
-			if (privatePage != null) {
+			if (privatePages != null) {
 				httpInvoker.parameter(
-					"privatePage", String.valueOf(privatePage));
+					"privatePages", String.valueOf(privatePages));
 			}
 
 			httpInvoker.path(

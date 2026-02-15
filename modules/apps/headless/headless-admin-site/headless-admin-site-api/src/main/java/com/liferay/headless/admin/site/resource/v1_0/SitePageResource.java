@@ -74,17 +74,17 @@ public interface SitePageResource {
 
 	public SitePage patchSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public SitePage postSiteSitePage(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 
 	public Response postSiteSitePageBatch(
-			String siteExternalReferenceCode, Boolean privatePage,
+			String siteExternalReferenceCode, Boolean privatePages,
 			String callbackURL, Object object)
 		throws Exception;
 
@@ -104,7 +104,7 @@ public interface SitePageResource {
 
 	public SitePage putSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePage,
+			String sitePageExternalReferenceCode, Boolean privatePages,
 			SitePage sitePage)
 		throws Exception;
 

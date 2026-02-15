@@ -720,7 +720,7 @@ public abstract class BaseSitePageResourceTestCase {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 			null, postSitePage.getExternalReferenceCode(),
-			testPatchSiteSitePage_getPrivatePage(), randomPatchSitePage);
+			testPatchSiteSitePage_getPrivatePages(), randomPatchSitePage);
 
 		SitePage expectedPatchSitePage = postSitePage.clone();
 
@@ -738,7 +738,7 @@ public abstract class BaseSitePageResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Boolean testPatchSiteSitePage_getPrivatePage() throws Exception {
+	protected Boolean testPatchSiteSitePage_getPrivatePages() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -793,7 +793,7 @@ public abstract class BaseSitePageResourceTestCase {
 		SitePage putSitePage = sitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
 			postSitePage.getExternalReferenceCode(),
-			testPutSiteSitePage_getPrivatePage(), randomSitePage);
+			testPutSiteSitePage_getPrivatePages(), randomSitePage);
 
 		assertEquals(randomSitePage, putSitePage);
 		assertValid(putSitePage);
@@ -812,7 +812,7 @@ public abstract class BaseSitePageResourceTestCase {
 		putSitePage = sitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
 			postSitePage.getExternalReferenceCode(),
-			testPutSiteSitePage_getPrivatePage(), randomPermissionsSitePage);
+			testPutSiteSitePage_getPrivatePages(), randomPermissionsSitePage);
 
 		assertEquals(randomPermissionsSitePage, putSitePage);
 		assertValid(putSitePage);
@@ -822,7 +822,7 @@ public abstract class BaseSitePageResourceTestCase {
 		putSitePage = permissionsSitePageResource.putSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
 			postSitePage.getExternalReferenceCode(),
-			testPutSiteSitePage_getPrivatePage(), randomPermissionsSitePage);
+			testPutSiteSitePage_getPrivatePages(), randomPermissionsSitePage);
 
 		Assert.assertNotNull(putSitePage.getPermissions());
 	}
@@ -838,7 +838,7 @@ public abstract class BaseSitePageResourceTestCase {
 		return testGroup.getExternalReferenceCode();
 	}
 
-	protected Boolean testPutSiteSitePage_getPrivatePage() throws Exception {
+	protected Boolean testPutSiteSitePage_getPrivatePages() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}

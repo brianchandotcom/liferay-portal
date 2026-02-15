@@ -7,6 +7,9 @@ package com.liferay.portal.search.elasticsearch8.internal;
 
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.ElasticsearchException;
+import co.elastic.clients.elasticsearch.cat.ElasticsearchCatClient;
+import co.elastic.clients.elasticsearch.cat.RepositoriesResponse;
+import co.elastic.clients.elasticsearch.cat.repositories.RepositoriesRecord;
 import co.elastic.clients.elasticsearch.cluster.ElasticsearchClusterClient;
 import co.elastic.clients.elasticsearch.cluster.GetClusterSettingsResponse;
 import co.elastic.clients.elasticsearch.cluster.PutClusterSettingsRequest;
@@ -57,11 +60,8 @@ import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRepositor
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.CreateSnapshotResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.DeleteSnapshotRequest;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesRequest;
-import com.liferay.portal.search.engine.adapter.snapshot.GetSnapshotRepositoriesResponse;
 import com.liferay.portal.search.engine.adapter.snapshot.RestoreSnapshotRequest;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotDetails;
-import com.liferay.portal.search.engine.adapter.snapshot.SnapshotRepositoryDetails;
 import com.liferay.portal.search.engine.adapter.snapshot.SnapshotState;
 import com.liferay.portal.search.index.IndexNameBuilder;
 
@@ -542,16 +542,32 @@ public class ElasticsearchSearchEngine
 	}
 
 	private boolean _hasBackupRepository() {
-		GetSnapshotRepositoriesRequest getSnapshotRepositoriesRequest =
-			new GetSnapshotRepositoriesRequest(_BACKUP_REPOSITORY_NAME);
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchConnectionManager.getElasticsearchClient();
 
-		GetSnapshotRepositoriesResponse getSnapshotRepositoriesResponse =
-			_searchEngineAdapter.execute(getSnapshotRepositoriesRequest);
+		ElasticsearchCatClient elasticsearchCatClient =
+			elasticsearchClient.cat();
 
-		List<SnapshotRepositoryDetails> snapshotRepositoryDetailsList =
-			getSnapshotRepositoriesResponse.getSnapshotRepositoryDetails();
+		try {
+			RepositoriesResponse repositoriesResponse =
+				elasticsearchCatClient.repositories();
 
-		return !snapshotRepositoryDetailsList.isEmpty();
+			List<RepositoriesRecord> repositoriesRecords =
+				repositoriesResponse.valueBody();
+
+			for (RepositoriesRecord repositoriesRecord : repositoriesRecords) {
+				if (Objects.equals(
+						repositoriesRecord.id(), _BACKUP_REPOSITORY_NAME)) {
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
 	}
 
 	private void _putTimestampPipeline() {

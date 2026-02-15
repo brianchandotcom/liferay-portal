@@ -9,6 +9,7 @@ import {ClayVerticalNav} from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import {sub} from '../../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main';
 import SideNavigationSiteSelector from './SideNavigationSiteSelector';
 
 interface SideNavigationItem {
@@ -100,7 +101,7 @@ function SideNavigation({
 
 	return (
 		<SidePanel
-			as="section"
+			aria-label={sub(Liferay.Language.get('x-menu'), label)}
 			containerRef={containerRef}
 			data-qa-id="sideNavigation"
 			defaultOpen={initialVisible}

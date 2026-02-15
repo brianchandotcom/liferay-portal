@@ -107,8 +107,10 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 	@Test
 	public void testCreateSnapshot() {
+		String snapshotName = "test_create_snapshot";
+
 		CreateSnapshotRequest createSnapshotRequest = new CreateSnapshotRequest(
-			_TEST_REPOSITORY_NAME, "test_create_snapshot");
+			_TEST_REPOSITORY_NAME, snapshotName);
 
 		createSnapshotRequest.setIndexNames(_INDEX_NAME);
 
@@ -121,14 +123,11 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 		Assert.assertArrayEquals(
 			createSnapshotRequest.getIndexNames(),
 			snapshotDetails.getIndexNames());
-
 		Assert.assertEquals(
 			SnapshotState.SUCCESS, snapshotDetails.getSnapshotState());
-
 		Assert.assertTrue(snapshotDetails.getSuccessfulShards() > 0);
 
-		List<SnapshotInfo> snapshotInfos = _getSnapshotInfo(
-			"test_create_snapshot");
+		List<SnapshotInfo> snapshotInfos = _getSnapshotInfo(snapshotName);
 
 		Assert.assertEquals("Expected 1 SnapshotInfo", 1, snapshotInfos.size());
 
@@ -140,11 +139,9 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 			createSnapshotRequest.getIndexNames(), indices.toArray());
 
 		Assert.assertEquals(
-			"test_create_snapshot", createSnapshotRequest.getSnapshotName());
-		Assert.assertEquals(
-			createSnapshotRequest.getRepositoryName(), _TEST_REPOSITORY_NAME);
+			snapshotName, createSnapshotRequest.getSnapshotName());
 
-		_deleteSnapshot(_TEST_REPOSITORY_NAME, "test_create_snapshot");
+		_deleteSnapshot(_TEST_REPOSITORY_NAME, snapshotName);
 	}
 
 	@Test
@@ -186,10 +183,6 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 	@Test
 	public void testDeleteSnapshot() throws Exception {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage(
-			"Missing required property 'GetSnapshotResponse.total'");
-
 		String snapshotName = "test_delete_snapshot";
 
 		_createSnapshot(_TEST_REPOSITORY_NAME, snapshotName, true, _INDEX_NAME);
@@ -247,10 +240,6 @@ public class ElasticsearchSearchEngineAdapterSnapshotRequestTest {
 
 	@Test
 	public void testGetSnapshots() {
-		expectedException.expect(RuntimeException.class);
-		expectedException.expectMessage(
-			"Missing required property 'GetSnapshotResponse.total'");
-
 		String snapshotName = "test_get_snapshots";
 
 		_createSnapshot(_TEST_REPOSITORY_NAME, snapshotName, true, _INDEX_NAME);

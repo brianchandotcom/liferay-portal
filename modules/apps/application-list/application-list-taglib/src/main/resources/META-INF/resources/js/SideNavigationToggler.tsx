@@ -4,7 +4,7 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 interface Props {
 	visible: boolean;
@@ -28,19 +28,29 @@ function SideNavigationToggler({visible: initialVisible}: Props) {
 			Liferay.detach('sideNavigationStateChanged', handleStateChanged);
 	}, []);
 
+	const title = useMemo(
+		() =>
+			visible
+				? Liferay.Language.get('close-product-menu')
+				: Liferay.Language.get('open-product-menu'),
+		[visible]
+	);
+
 	return (
 		<ClayButtonWithIcon
 			aria-controls="com_liferay_application_list_taglib_side_navigation"
 			aria-expanded={visible}
+			aria-label={title}
 			className="control-menu-nav-link lfr-portal-tooltip"
 			data-qa-id="sideNavigationToggler"
 			displayType="unstyled"
 			id="com_liferay_application_list_taglib_side_navigation_toggler"
-			monospaced={true}
+			monospaced
 			onClick={toggle}
 			role="tab"
 			size="sm"
 			symbol={visible ? 'product-menu-open' : 'product-menu-closed'}
+			title={title}
 		/>
 	);
 }

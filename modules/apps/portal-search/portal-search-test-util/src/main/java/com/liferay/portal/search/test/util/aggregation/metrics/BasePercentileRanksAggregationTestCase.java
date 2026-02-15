@@ -46,6 +46,7 @@ public abstract class BasePercentileRanksAggregationTestCase
 			aggregations.percentileRanks(
 				"percentileRanks", Field.PRIORITY, values);
 
+		percentileRanksAggregation.setKeyed(false);
 		percentileRanksAggregation.setPercentilesMethod(percentilesMethod);
 
 		assertSearch(

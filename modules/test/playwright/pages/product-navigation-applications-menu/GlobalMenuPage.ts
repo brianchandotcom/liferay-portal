@@ -47,15 +47,17 @@ export class GlobalMenuPage {
 	async goTo(categoryName: Categories) {
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page
-				.getByRole('menu')
-				.getByRole('menuitem', {name: categoryName}),
+			target: this.page.getByRole('menuitem', {name: categoryName}),
 			trigger: this.globalMenuButton,
 		});
 
-		await expect(
-			this.page.getByRole('region', {name: categoryName})
-		).toBeVisible();
+		const menu = this.page.getByLabel(`${categoryName} Menu`);
+
+		await expect(menu).toBeAttached();
+
+		if (!(await menu.isVisible())) {
+			this.openProductMenu(categoryName);
+		}
 	}
 
 	async goToApplications() {

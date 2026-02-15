@@ -233,8 +233,10 @@ public class StagedLayoutSetStagedModelDataHandler
 		List<Element> layoutElements = layoutsElement.elements();
 
 		if (portletDataContext.isPrivateLayout() ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-35443") ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+			!FeatureFlagManagerUtil.isEnabled(
+				portletDataContext.getCompanyId(), "LPD-35443") ||
+			!FeatureFlagManagerUtil.isEnabled(
+				portletDataContext.getCompanyId(), "LPD-35914")) {
 
 			// Delete missing pages
 
@@ -512,8 +514,10 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		portletDataContext.getExportDataGroupElement(Layout.class);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35443") &&
-			FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				portletDataContext.getCompanyId(), "LPD-35443") &&
+			FeatureFlagManagerUtil.isEnabled(
+				portletDataContext.getCompanyId(), "LPD-35914")) {
 
 			return;
 		}

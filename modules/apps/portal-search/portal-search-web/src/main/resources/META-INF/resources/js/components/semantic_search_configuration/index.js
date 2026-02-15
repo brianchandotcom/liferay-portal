@@ -9,11 +9,10 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {useFormik} from 'formik';
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {LearnMessageWithoutContext} from '../../shared/LearnMessage';
-import sub from '../../utils/language/sub';
 import Input from './Input';
 import SubmitWarningModal from './SubmitWarningModal';
 import TestConfigurationButton from './TestConfigurationButton';

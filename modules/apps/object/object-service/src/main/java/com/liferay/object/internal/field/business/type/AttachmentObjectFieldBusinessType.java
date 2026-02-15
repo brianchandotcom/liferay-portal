@@ -449,9 +449,9 @@ public class AttachmentObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 
 		if (Objects.equals(
-				ObjectFieldSettingConstants.VALUE_DEPOT_FILES, fileSource) ||
+				fileSource, ObjectFieldSettingConstants.VALUE_DEPOT_FILES) ||
 			Objects.equals(
-				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA, fileSource) ||
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) ||
 			GetterUtil.getBoolean(
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,

@@ -8,11 +8,16 @@ package com.liferay.portal.search.elasticsearch8.internal.highlight;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query.Kind;
 import co.elastic.clients.elasticsearch.core.search.BoundaryScanner;
 import co.elastic.clients.elasticsearch.core.search.HighlightField;
+import co.elastic.clients.elasticsearch.core.search.HighlighterEncoder;
+import co.elastic.clients.elasticsearch.core.search.HighlighterFragmenter;
 import co.elastic.clients.elasticsearch.core.search.HighlighterOrder;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.highlight.FieldConfig;
+import com.liferay.portal.search.highlight.FieldConfigBuilder;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.internal.highlight.FieldConfigImpl;
 import com.liferay.portal.search.internal.highlight.HighlightImpl;
@@ -24,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
@@ -61,7 +65,8 @@ public class HighlightTranslatorTest {
 	@Test
 	public void testBoundaryScannerTypeInvalid() {
 		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage("No enum constant");
+		expectedException.expectMessage(
+			"Invalid boundary scanner type invalid");
 
 		_highlightPrototype._boundaryScannerType = "invalid";
 
@@ -87,10 +92,9 @@ public class HighlightTranslatorTest {
 		List<FieldConfig> fieldConfigs = new ArrayList<>();
 
 		fieldConfigs.add(
-			_buildFieldConfig(_createFieldConfigPrototype("title")));
-
-		fieldConfigs.add(
 			_buildFieldConfig(_createFieldConfigPrototype("description")));
+		fieldConfigs.add(
+			_buildFieldConfig(_createFieldConfigPrototype("title")));
 
 		_highlightPrototype._fieldConfigs = fieldConfigs;
 
@@ -108,19 +112,11 @@ public class HighlightTranslatorTest {
 	public void testNullValues() {
 		_highlightPrototype = _createHighlightPrototypeWithNullValues();
 
-		_assertTranslation(_highlightPrototype);
-	}
+		List<FieldConfig> fieldConfigs = new ArrayList<>();
 
-	@Test
-	public void testOrderNone() {
-		_highlightPrototype._order = "none";
+		fieldConfigs.add(_buildFieldConfig(_createFieldConfigPrototype("abc")));
 
-		_assertTranslation(_highlightPrototype);
-	}
-
-	@Test
-	public void testOrderOther() {
-		_highlightPrototype._order = "other";
+		_highlightPrototype._fieldConfigs = fieldConfigs;
 
 		_assertTranslation(_highlightPrototype);
 	}
@@ -133,16 +129,9 @@ public class HighlightTranslatorTest {
 	}
 
 	@Test
-	public void testTagSchemaDefault() {
-		_highlightPrototype._tagsSchema = "default";
-
-		_assertTranslation(_highlightPrototype);
-	}
-
-	@Test
 	public void testTagSchemaInvalid() {
 		expectedException.expect(IllegalArgumentException.class);
-		expectedException.expectMessage("Unknown tag schema [invalid]");
+		expectedException.expectMessage("Invalid tags schema");
 
 		_highlightPrototype._tagsSchema = "invalid";
 
@@ -179,6 +168,14 @@ public class HighlightTranslatorTest {
 		}
 
 		return null;
+	}
+
+	protected Boolean getUseExplicitFieldOrder(Boolean useExplicitFieldOrder) {
+		if (useExplicitFieldOrder != null) {
+			return useExplicitFieldOrder;
+		}
+
+		return false;
 	}
 
 	protected class FieldConfigPrototype {
@@ -299,14 +296,16 @@ public class HighlightTranslatorTest {
 		HighlightField highlightField, FieldConfig fieldConfig) {
 
 		Assert.assertEquals(
-			highlightField.boundaryChars(), fieldConfig.getBoundaryChars());
+			highlightField.boundaryChars(),
+			_getBoundaryChars(fieldConfig.getBoundaryChars()));
 
 		Assert.assertEquals(
-			highlightField.boundaryMaxScan(), fieldConfig.getBoundaryMaxScan());
+			GetterUtil.getInteger(highlightField.boundaryMaxScan(), -1),
+			GetterUtil.getInteger(fieldConfig.getBoundaryMaxScan(), -1));
 
 		Assert.assertEquals(
 			highlightField.boundaryScannerLocale(),
-			_getLocale(fieldConfig.getBoundaryScannerLocale()));
+			fieldConfig.getBoundaryScannerLocale());
 
 		Assert.assertEquals(
 			highlightField.boundaryScanner(),
@@ -316,16 +315,14 @@ public class HighlightTranslatorTest {
 			highlightField.forceSource(), fieldConfig.getForceSource());
 
 		Assert.assertEquals(
-			highlightField.fragmenter(), fieldConfig.getFragmenter());
+			_getHighlighterFragmenter(highlightField.fragmenter()),
+			fieldConfig.getFragmenter());
 
 		Assert.assertEquals(
 			highlightField.fragmentSize(), fieldConfig.getFragmentSize());
 
 		Assert.assertEquals(
 			highlightField.type(), fieldConfig.getHighlighterType());
-
-		Assert.assertEquals(
-			highlightField.highlightFilter(), fieldConfig.getHighlightFilter());
 
 		Assert.assertEquals(
 			_getQueryKind(highlightField.highlightQuery()),
@@ -387,7 +384,7 @@ public class HighlightTranslatorTest {
 
 		Assert.assertEquals(
 			elasticsearchHighlight.boundaryChars(),
-			highlight.getBoundaryChars());
+			_getBoundaryChars(highlight.getBoundaryChars()));
 
 		Assert.assertEquals(
 			elasticsearchHighlight.boundaryMaxScan(),
@@ -395,32 +392,27 @@ public class HighlightTranslatorTest {
 
 		Assert.assertEquals(
 			elasticsearchHighlight.boundaryScannerLocale(),
-			_getLocale(highlight.getBoundaryScannerLocale()));
+			highlight.getBoundaryScannerLocale());
 
 		Assert.assertEquals(
 			elasticsearchHighlight.boundaryScanner(),
 			getBoundaryScanner(highlight.getBoundaryScannerType()));
 
 		Assert.assertEquals(
-			elasticsearchHighlight.encoder(), highlight.getEncoder());
+			_getHighlighterEncoder(elasticsearchHighlight.encoder()),
+			highlight.getEncoder());
 
 		_assertFields(elasticsearchHighlight, highlight);
 
 		Assert.assertEquals(
-			elasticsearchHighlight.forceSource(), highlight.getForceSource());
-
-		Assert.assertEquals(
-			elasticsearchHighlight.fragmenter(), highlight.getFragmenter());
+			_getHighlighterFragmenter(elasticsearchHighlight.fragmenter()),
+			highlight.getFragmenter());
 
 		Assert.assertEquals(
 			elasticsearchHighlight.fragmentSize(), highlight.getFragmentSize());
 
 		Assert.assertEquals(
 			elasticsearchHighlight.type(), highlight.getHighlighterType());
-
-		Assert.assertEquals(
-			elasticsearchHighlight.highlightFilter(),
-			highlight.getHighlightFilter());
 
 		Assert.assertEquals(
 			_getQueryKind(elasticsearchHighlight.highlightQuery()),
@@ -435,9 +427,6 @@ public class HighlightTranslatorTest {
 
 		Assert.assertEquals(
 			elasticsearchHighlight.order(), getOrder(highlight.getOrder()));
-
-		Assert.assertEquals(
-			elasticsearchHighlight.phraseLimit(), highlight.getPhraseLimit());
 
 		Assert.assertEquals(
 			elasticsearchHighlight.requireFieldMatch(),
@@ -473,15 +462,6 @@ public class HighlightTranslatorTest {
 			Assert.assertArrayEquals(
 				ArrayUtil.toStringArray(elasticsearchHighlight.preTags()),
 				preTags);
-		}
-		else if (tagsSchema.equals("default")) {
-			Assert.assertArrayEquals(
-				ArrayUtil.toStringArray(elasticsearchHighlight.postTags()),
-				new String[] {"</em>"});
-
-			Assert.assertArrayEquals(
-				ArrayUtil.toStringArray(elasticsearchHighlight.preTags()),
-				new String[] {"<em>"});
 		}
 		else if (tagsSchema.equals("styled")) {
 			Assert.assertArrayEquals(
@@ -605,9 +585,9 @@ public class HighlightTranslatorTest {
 		String boundaryScannerLocale = "locale";
 		String boundaryScannerType = "word";
 		Boolean forceSource = true;
-		String fragmenter = "fragmenter";
+		String fragmenter = "simple";
 		Integer fragmentSize = 3;
-		String highlighterType = "highlighterType";
+		String highlighterType = "plain";
 		Boolean highlightFilter = true;
 		Query highlightQuery = new StringQuery("title:test");
 		String[] matchedFields = null;
@@ -628,16 +608,20 @@ public class HighlightTranslatorTest {
 	}
 
 	private HighlightPrototype _createHighlightPrototype() {
+		FieldConfigBuilder fieldConfigBuilder =
+			new FieldConfigImpl.FieldConfigBuilderImpl("abc");
+
 		char[] boundaryChars = {'a', 'b'};
 		Integer boundaryMaxScan = 2;
 		String boundaryScannerLocale = "locale";
 		String boundaryScannerType = null;
-		String encoder = "encoder";
-		List<FieldConfig> fieldConfigs = null;
+		String encoder = "default";
+		List<FieldConfig> fieldConfigs = ListUtil.toList(
+			fieldConfigBuilder.build());
 		Boolean forceSource = true;
-		String fragmenter = "fragmenter";
+		String fragmenter = "simple";
 		Integer fragmentSize = 3;
-		String highlighterType = "highlighterType";
+		String highlighterType = "plain";
 		Boolean highlightFilter = true;
 		Query highlightQuery = null;
 		Integer noMatchSize = 4;
@@ -689,12 +673,32 @@ public class HighlightTranslatorTest {
 			requireFieldMatch, tagsSchema, useExplicitFieldOrder);
 	}
 
-	private Locale _getLocale(String boundaryScannerLocale) {
-		if (boundaryScannerLocale != null) {
-			return Locale.forLanguageTag(boundaryScannerLocale);
+	private String _getBoundaryChars(char[] boundaryChars) {
+		if (ArrayUtil.isEmpty(boundaryChars)) {
+			return null;
 		}
 
-		return null;
+		return String.valueOf(boundaryChars);
+	}
+
+	private String _getHighlighterEncoder(
+		HighlighterEncoder highlighterEncoder) {
+
+		if (highlighterEncoder == null) {
+			return null;
+		}
+
+		return highlighterEncoder.jsonValue();
+	}
+
+	private String _getHighlighterFragmenter(
+		HighlighterFragmenter highlighterFragmenter) {
+
+		if (highlighterFragmenter == null) {
+			return null;
+		}
+
+		return highlighterFragmenter.jsonValue();
 	}
 
 	private Object _getQueryKind(

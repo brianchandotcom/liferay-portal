@@ -143,10 +143,6 @@ public class BulkDocumentRequestExecutor {
 
 				bulkRequest.add(updateRequest);
 			}
-			else {
-				throw new IllegalArgumentException(
-					"No translator available for: " + bulkableDocumentRequest);
-			}
 		}
 
 		return bulkRequest;

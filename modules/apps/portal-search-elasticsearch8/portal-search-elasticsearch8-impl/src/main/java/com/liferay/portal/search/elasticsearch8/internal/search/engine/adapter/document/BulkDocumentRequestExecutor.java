@@ -136,10 +136,6 @@ public class BulkDocumentRequestExecutor {
 
 				builder.operations(new BulkOperation(updateOperation));
 			}
-			else {
-				throw new IllegalArgumentException(
-					"No translator available for: " + bulkableDocumentRequest);
-			}
 		}
 
 		return builder.build();

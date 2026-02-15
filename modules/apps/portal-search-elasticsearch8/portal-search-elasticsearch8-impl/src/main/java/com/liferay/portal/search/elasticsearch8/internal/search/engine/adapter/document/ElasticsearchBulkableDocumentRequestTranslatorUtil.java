@@ -13,7 +13,6 @@ import co.elastic.clients.json.JsonData;
 
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
@@ -33,10 +32,6 @@ public class ElasticsearchBulkableDocumentRequestTranslatorUtil {
 		builder.index(deleteDocumentRequest.getIndexName());
 
 		return builder.build();
-	}
-
-	public static Object translate(GetDocumentRequest getDocumentRequest) {
-		throw new UnsupportedOperationException();
 	}
 
 	public static IndexOperation<JsonData> translate(

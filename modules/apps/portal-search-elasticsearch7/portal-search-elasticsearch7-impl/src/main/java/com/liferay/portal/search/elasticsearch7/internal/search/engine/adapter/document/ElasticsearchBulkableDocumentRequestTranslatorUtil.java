@@ -11,18 +11,15 @@ import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.elasticsearch7.internal.document.ElasticsearchDocumentFactoryUtil;
 import com.liferay.portal.search.elasticsearch7.internal.script.ScriptTranslator;
 import com.liferay.portal.search.engine.adapter.document.DeleteDocumentRequest;
-import com.liferay.portal.search.engine.adapter.document.GetDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.IndexDocumentRequest;
 import com.liferay.portal.search.engine.adapter.document.UpdateDocumentRequest;
 
 import java.util.Collections;
 
 import org.elasticsearch.action.delete.DeleteRequest;
-import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.action.update.UpdateRequest;
-import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.xcontent.XContentBuilder;
 import org.elasticsearch.xcontent.XContentType;
 
@@ -43,25 +40,6 @@ public class ElasticsearchBulkableDocumentRequestTranslatorUtil {
 		deleteRequest.type(deleteDocumentRequest.getType());
 
 		return deleteRequest;
-	}
-
-	public static GetRequest translate(GetDocumentRequest getDocumentRequest) {
-		GetRequest getRequest = new GetRequest();
-
-		FetchSourceContext fetchSourceContext = new FetchSourceContext(
-			getDocumentRequest.isFetchSource(),
-			getDocumentRequest.getFetchSourceIncludes(),
-			getDocumentRequest.getFetchSourceExcludes());
-
-		getRequest.fetchSourceContext(fetchSourceContext);
-
-		getRequest.id(getDocumentRequest.getId());
-		getRequest.index(getDocumentRequest.getIndexName());
-		getRequest.refresh(getDocumentRequest.isRefresh());
-		getRequest.storedFields(getDocumentRequest.getStoredFields());
-		getRequest.type(_getType(getDocumentRequest.getType()));
-
-		return getRequest;
 	}
 
 	public static IndexRequest translate(

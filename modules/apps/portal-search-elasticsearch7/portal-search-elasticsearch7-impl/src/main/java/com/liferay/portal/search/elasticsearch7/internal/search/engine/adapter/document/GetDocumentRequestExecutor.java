@@ -18,6 +18,7 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 
 /**
  * @author Bryan Engler
@@ -31,9 +32,7 @@ public class GetDocumentRequestExecutor {
 	}
 
 	public GetDocumentResponse execute(GetDocumentRequest getDocumentRequest) {
-		GetRequest getRequest =
-			ElasticsearchBulkableDocumentRequestTranslatorUtil.translate(
-				getDocumentRequest);
+		GetRequest getRequest = _translate(getDocumentRequest);
 
 		GetResponse getResponse = _getGetResponse(
 			getRequest, getDocumentRequest);
@@ -75,6 +74,33 @@ public class GetDocumentRequestExecutor {
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
 		}
+	}
+
+	private String _getType(String type) {
+		if (type != null) {
+			return type;
+		}
+
+		return "_doc";
+	}
+
+	private GetRequest _translate(GetDocumentRequest getDocumentRequest) {
+		GetRequest getRequest = new GetRequest();
+
+		FetchSourceContext fetchSourceContext = new FetchSourceContext(
+			getDocumentRequest.isFetchSource(),
+			getDocumentRequest.getFetchSourceIncludes(),
+			getDocumentRequest.getFetchSourceExcludes());
+
+		getRequest.fetchSourceContext(fetchSourceContext);
+
+		getRequest.id(getDocumentRequest.getId());
+		getRequest.index(getDocumentRequest.getIndexName());
+		getRequest.refresh(getDocumentRequest.isRefresh());
+		getRequest.storedFields(getDocumentRequest.getStoredFields());
+		getRequest.type(_getType(getDocumentRequest.getType()));
+
+		return getRequest;
 	}
 
 	private final ElasticsearchClientResolver _elasticsearchClientResolver;

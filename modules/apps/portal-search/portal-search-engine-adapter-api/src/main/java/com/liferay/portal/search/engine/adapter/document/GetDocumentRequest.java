@@ -12,8 +12,7 @@ import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
  */
 public class GetDocumentRequest
 	extends CrossClusterRequest
-	implements BulkableDocumentRequest<GetDocumentRequest>,
-			   DocumentRequest<GetDocumentResponse> {
+	implements DocumentRequest<GetDocumentResponse> {
 
 	public GetDocumentRequest(String indexName, String id) {
 		_indexName = indexName;

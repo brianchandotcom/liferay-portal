@@ -52,8 +52,8 @@ public class StatsIndexRequestExecutorTest {
 				statsIndexRequest);
 
 		Assert.assertEquals(
-			"/liferay-1,liferay-2,liferay-3/_stats",
-			indicesStatsRequest.index());
+			"[liferay-1, liferay-2, liferay-3]",
+			String.valueOf(indicesStatsRequest.index()));
 	}
 
 	@Test
@@ -68,7 +68,8 @@ public class StatsIndexRequestExecutorTest {
 			statsIndexRequestExecutor.createIndicesStatsRequest(
 				statsIndexRequest);
 
-		Assert.assertEquals("/liferay-1/_stats", indicesStatsRequest.index());
+		Assert.assertEquals(
+			"[liferay-1]", String.valueOf(indicesStatsRequest.index()));
 	}
 
 	@Test
@@ -82,7 +83,8 @@ public class StatsIndexRequestExecutorTest {
 			statsIndexRequestExecutor.createIndicesStatsRequest(
 				statsIndexRequest);
 
-		Assert.assertEquals("/_all/_stats", indicesStatsRequest.index());
+		Assert.assertEquals(
+			"[_all]", String.valueOf(indicesStatsRequest.index()));
 	}
 
 	private ElasticsearchFixture _elasticsearchFixture;

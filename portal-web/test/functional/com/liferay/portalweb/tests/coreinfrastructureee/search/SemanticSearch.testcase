@@ -156,9 +156,10 @@ definition {
 		}
 
 		task ("Fill out required fields so that the test can save the form") {
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "original");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "original");
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
@@ -205,17 +206,19 @@ definition {
 				key_infoMessage = "Changes to this configuration require a reindex",
 				locator1 = "Message#INFO_SPECIFIC");
 
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "change");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "change");
 
 			AssertElementPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
 				locator1 = "Message#INFO_SPECIFIC");
 
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "original");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "original");
 
 			AssertElementNotPresent(
 				key_infoMessage = "Changes to this configuration require a reindex",
@@ -455,9 +458,10 @@ definition {
 
 		PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
-		PortletEntry.inputText(
-			fieldLabel = "Access Token",
-			text = "");
+		Type(
+			key_fieldName = "accessToken",
+			locator1 = "FormFields#PASSWORD_FIELD",
+			value1 = "");
 
 		AssertElementPresent(
 			key_text = "Test Configuration",
@@ -469,9 +473,10 @@ definition {
 
 		FormPortlet.viewValidationErrorMessage(validationErrorMessage = "This field is required.");
 
-		PortletEntry.inputText(
-			fieldLabel = "Access Token",
-			text = "test");
+		Type(
+			key_fieldName = "accessToken",
+			locator1 = "FormFields#PASSWORD_FIELD",
+			value1 = "test");
 
 		PortletEntry.inputText(
 			fieldLabel = "Model",
@@ -540,9 +545,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "System Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
@@ -566,9 +572,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "System Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -582,9 +589,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "System Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -607,9 +615,10 @@ definition {
 				key_value = "Hugging Face Inference API",
 				locator1 = "Select#GENERIC_SELECT_VALUE");
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -619,9 +628,10 @@ definition {
 		task ("Within Instance Settings, fill out required fields for Hugging Face Inference API and save") {
 			PortalSettings.openToConfigInInstanceSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "Instance Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "Instance Settings Token");
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
@@ -641,9 +651,10 @@ definition {
 		}
 
 		task ("Assert form fields retain the values added earlier") {
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "Instance Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "Instance Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -653,9 +664,10 @@ definition {
 		task ("Refresh the page and assert form fields retain the values added earlier") {
 			Refresh();
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "Instance Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "Instance Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -669,9 +681,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			PortletEntry.inputText(
-				fieldLabel = "Access Token",
-				text = "System Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			PortletEntry.inputText(
 				fieldLabel = "Model",
@@ -691,9 +704,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "Instance Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "Instance Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",
@@ -707,9 +721,10 @@ definition {
 				key_settingFieldName = "Text Embeddings Enabled",
 				locator1 = "SystemSettings#SETTING_FIELD_NAME_CHECKBOX");
 
-			SystemSettings.viewInputText(
-				fieldLabel = "Access Token",
-				fieldValue = "System Settings Token");
+			Type(
+				key_fieldName = "accessToken",
+				locator1 = "FormFields#PASSWORD_FIELD",
+				value1 = "System Settings Token");
 
 			SystemSettings.viewInputText(
 				fieldLabel = "Model",

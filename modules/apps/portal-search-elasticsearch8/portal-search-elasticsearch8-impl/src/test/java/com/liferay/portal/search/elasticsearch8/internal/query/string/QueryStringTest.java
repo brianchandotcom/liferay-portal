@@ -30,7 +30,7 @@ public class QueryStringTest extends BaseQueryStringTestCase {
 
 	@Override
 	protected String getExpectedPartOfResponseString() {
-		return "\"hits\":{\"total\":{\"value\":1,";
+		return "\"hits\":{\"total\":{\"relation\":\"eq\",\"value\":1";
 	}
 
 }

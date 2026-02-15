@@ -11,5 +11,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Michael C. Han
  */
 @ProviderType
-public interface BulkableDocumentRequest<T> {
+public interface BulkableDocumentRequest<T extends DocumentResponse>
+	extends DocumentRequest<T> {
 }

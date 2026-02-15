@@ -12,8 +12,7 @@ import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
  */
 public class DeleteDocumentRequest
 	extends CrossClusterRequest
-	implements BulkableDocumentRequest<DeleteDocumentRequest>,
-			   DocumentRequest<DeleteDocumentResponse> {
+	implements BulkableDocumentRequest<DeleteDocumentResponse> {
 
 	public DeleteDocumentRequest(String indexName, String uid) {
 		_indexName = indexName;

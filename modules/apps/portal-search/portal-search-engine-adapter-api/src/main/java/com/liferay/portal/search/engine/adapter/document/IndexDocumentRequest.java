@@ -13,8 +13,7 @@ import com.liferay.portal.search.engine.adapter.ccr.CrossClusterRequest;
  */
 public class IndexDocumentRequest
 	extends CrossClusterRequest
-	implements BulkableDocumentRequest<IndexDocumentRequest>,
-			   DocumentRequest<IndexDocumentResponse> {
+	implements BulkableDocumentRequest<IndexDocumentResponse> {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by

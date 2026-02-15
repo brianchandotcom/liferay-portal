@@ -14,8 +14,7 @@ import com.liferay.portal.search.script.Script;
  */
 public class UpdateDocumentRequest
 	extends CrossClusterRequest
-	implements BulkableDocumentRequest<UpdateDocumentRequest>,
-			   DocumentRequest<UpdateDocumentResponse> {
+	implements BulkableDocumentRequest<UpdateDocumentResponse> {
 
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by

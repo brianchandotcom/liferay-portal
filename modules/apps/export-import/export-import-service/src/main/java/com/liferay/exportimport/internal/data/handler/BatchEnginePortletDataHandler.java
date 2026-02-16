@@ -769,13 +769,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
 			normalizedFileName);
 
-		if (inputStream == null) {
+		if (inputStream1 == null) {
 			return exportedLayoutERCs;
 		}
 
-		try (InputStream exportedLayoutsInputStream = inputStream) {
-			String jsonContent = StreamUtil.toString(
-				exportedLayoutsInputStream);
+		try {
+			String jsonContent = StreamUtil.toString(inputStream);
 
 			if ((jsonContent == null) || jsonContent.isEmpty()) {
 				return exportedLayoutERCs;
@@ -799,6 +798,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					exportedLayoutERCs.add(externalReferenceCode);
 				}
 			}
+		}
+		finally {
+			StreamUtil.cleanUp(true, inputStream);
 		}
 
 		return exportedLayoutERCs;

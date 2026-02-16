@@ -7,7 +7,8 @@ import {SidePanel} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {SearchResultsMessage} from '@liferay/layout-js-components-web';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {sub} from '../../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main';
 import {type SideNavigationItem} from './SideNavigationItem';
@@ -105,6 +106,11 @@ function SideNavigation({
 		[updateVisible]
 	);
 
+	const numberOfResults = useMemo(
+		() => items.reduce((acc, item) => acc + (item.items?.length || 0), 0),
+		[items]
+	);
+
 	return (
 		<SidePanel
 			aria-label={sub(Liferay.Language.get('x-menu'), label)}
@@ -156,6 +162,11 @@ function SideNavigation({
 
 			<SidePanel.Body className="c-pt-2 c-px-0">
 				<SideNavigationSearchInput onChange={setQuery} />
+
+				<SearchResultsMessage
+					numberOfResults={numberOfResults}
+					resultType={Liferay.Language.get('navigation-items')}
+				/>
 
 				<ClayVerticalNav
 					active={portletId}

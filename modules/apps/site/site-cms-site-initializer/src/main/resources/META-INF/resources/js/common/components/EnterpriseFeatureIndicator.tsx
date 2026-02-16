@@ -13,10 +13,12 @@ import React, {useRef, useState} from 'react';
 import {ENTERPRISE_URL} from '../utils/constants';
 
 type EnterpriseFeatureIndicatorProps = {
+	alignPosition?: 'bottom' | 'bottom-left';
 	showTooltip?: boolean;
 };
 
 export default function EnterpriseFeatureIndicator({
+	alignPosition = 'bottom',
 	showTooltip,
 }: EnterpriseFeatureIndicatorProps) {
 	const [show, setShow] = useState(false);
@@ -67,7 +69,7 @@ export default function EnterpriseFeatureIndicator({
 
 	return (
 		<ClayPopover
-			alignPosition="bottom"
+			alignPosition={alignPosition}
 			className="mw-100"
 			disableScroll
 			header={Liferay.Language.get('get-more-with-enterprise')}

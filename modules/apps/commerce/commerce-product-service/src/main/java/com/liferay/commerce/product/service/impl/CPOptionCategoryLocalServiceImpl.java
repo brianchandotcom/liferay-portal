@@ -109,6 +109,16 @@ public class CPOptionCategoryLocalServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
+		if (Validator.isBlank(key)) {
+			throw new UnsupportedOperationException(
+				"Invalid request: 'key' must not be empty");
+		}
+
+		if ((titleMap == null) || titleMap.isEmpty()) {
+			throw new UnsupportedOperationException(
+				"Invalid request: 'title' must not be empty");
+		}
+
 		if (Validator.isNotNull(externalReferenceCode)) {
 			CPOptionCategory cpOptionCategory =
 				cpOptionCategoryPersistence.fetchByERC_C(

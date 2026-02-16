@@ -12,6 +12,7 @@ import com.liferay.depot.model.DepotEntryModel;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.comment.ObjectEntryComment;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
@@ -63,6 +64,7 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectEntryVersionService;
@@ -1374,22 +1376,36 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceContext.setCompanyId(companyId);
 
+		serviceBuilderObjectEntry = _objectEntryService.addOrUpdateObjectEntry(
+			externalReferenceCode, groupId,
+			objectDefinition.getObjectDefinitionId(),
+			_getObjectEntryFolderId(
+				objectDefinition.getCompanyId(), groupId, objectEntry,
+				serviceContext),
+			_toObjectValues(
+				0L, dtoConverterContext.getLocale(), objectDefinition,
+				objectEntry, scopeKey, serviceContext),
+			serviceContext);
+
+		if (ExportImportThreadLocal.isImportInProcess() &&
+			(serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_EMPTY) &&
+			(objectEntry.getStatus() != null)) {
+
+			Status status = objectEntry.getStatus();
+
+			serviceBuilderObjectEntry = _objectEntryLocalService.updateStatus(
+				dtoConverterContext.getUserId(),
+				serviceBuilderObjectEntry.getObjectEntryId(), status.getCode(),
+				serviceContext);
+		}
+
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				_objectEntryService.addOrUpdateObjectEntry(
-					externalReferenceCode, groupId,
-					objectDefinition.getObjectDefinitionId(),
-					_getObjectEntryFolderId(
-						objectDefinition.getCompanyId(), groupId, objectEntry,
-						serviceContext),
-					_toObjectValues(
-						0L, dtoConverterContext.getLocale(), objectDefinition,
-						objectEntry, scopeKey, serviceContext),
-					serviceContext),
-				scopeKey),
+				serviceBuilderObjectEntry, scopeKey),
 			null);
 	}
 
@@ -3741,6 +3757,19 @@ public class DefaultObjectEntryManagerImpl
 				values, serviceContext);
 		}
 
+		if (ExportImportThreadLocal.isImportInProcess() &&
+			(serviceBuilderObjectEntry.getStatus() ==
+				WorkflowConstants.STATUS_EMPTY) &&
+			(objectEntry.getStatus() != null)) {
+
+			Status status = objectEntry.getStatus();
+
+			serviceBuilderObjectEntry = _objectEntryLocalService.updateStatus(
+				dtoConverterContext.getUserId(),
+				serviceBuilderObjectEntry.getObjectEntryId(), status.getCode(),
+				serviceContext);
+		}
+
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_addOrUpdateNestedObjectEntries(
@@ -3848,6 +3877,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectEntryFolderService _objectEntryFolderService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;

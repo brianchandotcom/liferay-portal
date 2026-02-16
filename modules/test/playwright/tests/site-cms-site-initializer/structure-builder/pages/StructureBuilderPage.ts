@@ -303,7 +303,9 @@ export class StructureBuilderPage {
 			target: this.page.getByRole('menuitem', {
 				name: action,
 			}),
-			trigger: this.page.getByRole('button', {name: 'Field Options'}),
+			trigger: this.page
+				.getByRole('treeitem', {name: field.label})
+				.getByRole('button', {name: 'Field Options'}),
 		});
 	}
 

@@ -536,7 +536,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
-							"Unable to delete missing pages after batch import",
+							"Unable to delete missing layouts after batch " +
+								"import",
 							exception);
 					}
 				}
@@ -666,7 +667,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to delete layout with ERC " + layoutERC,
+						"Unable to delete layout with external reference " +
+							"code " + layoutERC,
 						exception);
 				}
 			}
@@ -759,7 +761,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, Registration registration)
 		throws Exception {
 
-		Set<String> exportedERCs = new HashSet<>();
+		Set<String> exportedLayoutERCs = new HashSet<>();
 
 		String normalizedFileName = _normalize(
 			registration.getFileName(), portletDataContext.getSourceGroupId());
@@ -768,7 +770,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			normalizedFileName);
 
 		if (inputStream == null) {
-			return exportedERCs;
+			return exportedLayoutERCs;
 		}
 
 		try (InputStream exportedLayoutsInputStream = inputStream) {
@@ -776,7 +778,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				exportedLayoutsInputStream);
 
 			if ((jsonContent == null) || jsonContent.isEmpty()) {
-				return exportedERCs;
+				return exportedLayoutERCs;
 			}
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray(jsonContent);
@@ -794,12 +796,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				if ((externalReferenceCode != null) &&
 					!externalReferenceCode.isEmpty()) {
 
-					exportedERCs.add(externalReferenceCode);
+					exportedLayoutERCs.add(externalReferenceCode);
 				}
 			}
 		}
 
-		return exportedERCs;
+		return exportedLayoutERCs;
 	}
 
 	private PortletDataHandlerControl _getPortletDataHandlerControl(

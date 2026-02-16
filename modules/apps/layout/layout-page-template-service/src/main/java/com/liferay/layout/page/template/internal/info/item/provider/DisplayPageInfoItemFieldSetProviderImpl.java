@@ -198,6 +198,12 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		return DisplayPageInfoFieldType.INSTANCE;
 	}
 
+	private String _getExternalUniqueId(String externalReferenceCode) {
+		return StringBundler.concat(
+			LayoutPageTemplateEntry.class.getSimpleName(), "__ERC__",
+			externalReferenceCode);
+	}
+
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries(
 		String itemClassName, String infoItemFormVariationKey, String namespace,
 		long scopeGroupId) {
@@ -227,6 +233,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 								getLayoutPageTemplateEntryId()))
 				).name(
 					layoutPageTemplateEntry.getName()
+				).externalUniqueId(
+					_getExternalUniqueId(
+						layoutPageTemplateEntry.getExternalReferenceCode())
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.singleValue(
 						layoutPageTemplateEntry.getName())
@@ -274,6 +283,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					layoutPageTemplateEntry.getName()
 				).attribute(
 					URLInfoFieldType.NOFOLLOW, Boolean.TRUE
+				).externalUniqueId(
+					_getExternalUniqueId(
+						layoutPageTemplateEntry.getExternalReferenceCode())
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.singleValue(
 						layoutPageTemplateEntry.getName())

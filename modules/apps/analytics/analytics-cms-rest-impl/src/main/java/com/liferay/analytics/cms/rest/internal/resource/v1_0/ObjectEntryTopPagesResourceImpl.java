@@ -9,6 +9,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryTopPages;
 import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryTopPagesResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,6 +30,10 @@ public class ObjectEntryTopPagesResourceImpl
 	public ObjectEntryTopPages getObjectEntryTopPages(
 			String externalReferenceCode, Long groupId, Integer rangeKey)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
 			_http);

@@ -759,11 +759,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
 				layoutPageTemplateEntry.getGroupId(),
 				layoutPageTemplateEntry.getClassNameId(),
-				LayoutPageTemplateEntryUtil.getClassTypeKey(
-					layoutPageTemplateEntry.getClassNameId(),
-					layoutPageTemplateEntry.getClassTypeId(),
-					layoutPageTemplateEntry.getGroupId()),
-				true, null);
+				layoutPageTemplateEntry.getClassTypeKey(), true, null);
 
 		if (defaultTemplate && (defaultLayoutPageTemplateEntry != null) &&
 			(defaultLayoutPageTemplateEntry.getLayoutPageTemplateEntryId() !=

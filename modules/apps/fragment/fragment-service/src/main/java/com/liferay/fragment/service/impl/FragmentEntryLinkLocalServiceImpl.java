@@ -36,11 +36,13 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -348,16 +350,20 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
-	public int getAllFragmentEntryLinksCountByFragmentEntryERC(
-		long groupId, String fragmentEntryERC, String fragmentEntryScopeERC) {
+	public int getAllFragmentEntryLinksCountByFragmentEntryId(
+		long fragmentEntryId) {
 
-		Predicate fragmentEntryScopeERCPredicate =
-			FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
-				fragmentEntryScopeERC);
+		FragmentEntry fragmentEntry =
+			_fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 
-		if (Validator.isNull(fragmentEntryScopeERC)) {
-			fragmentEntryScopeERCPredicate =
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull();
+		if (fragmentEntry == null) {
+			return 0;
+		}
+
+		Group group = _groupLocalService.fetchGroup(fragmentEntry.getGroupId());
+
+		if (group == null) {
+			return 0;
 		}
 
 		return fragmentEntryLinkPersistence.dslQueryCount(
@@ -369,13 +375,23 @@ public class FragmentEntryLinkLocalServiceImpl
 				).from(
 					FragmentEntryLinkTable.INSTANCE
 				).where(
-					FragmentEntryLinkTable.INSTANCE.groupId.eq(
-						groupId
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
+						fragmentEntry.getExternalReferenceCode()
 					).and(
-						FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-							fragmentEntryERC)
-					).and(
-						fragmentEntryScopeERCPredicate
+						Predicate.withParentheses(
+							FragmentEntryLinkTable.INSTANCE.
+								fragmentEntryScopeERC.eq(
+									group.getExternalReferenceCode()
+								).or(
+									Predicate.withParentheses(
+										FragmentEntryLinkTable.INSTANCE.
+											fragmentEntryScopeERC.isNull(
+											).and(
+												FragmentEntryLinkTable.INSTANCE.
+													groupId.eq(
+														group.getGroupId())
+											))
+								))
 					).and(
 						FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
 					)
@@ -1032,6 +1048,9 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

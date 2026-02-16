@@ -908,8 +908,6 @@ components:
                         hu_HU: Horvatorszag
                     type: object
             required:
-                -   key
-                -   title
             type: object
         OptionValue:
             properties:

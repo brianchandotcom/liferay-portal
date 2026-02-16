@@ -13,7 +13,7 @@ export default function EditorCustomizerModal() {
 		return null;
 	}
 
-	if (Liferay.FeatureFlags['LPD-74377']) {
+	if (config.freeTier) {
 		return <EnterpriseModal />;
 	}
 
@@ -93,6 +93,8 @@ function EnterpriseModal() {
 				},
 				{
 					displayType: 'primary',
+					href: 'https://www.liferay.com/en/contact-sales',
+					icon: 'shortcut',
 					label: Liferay.Language.get('contact-sales'),
 				},
 			]}

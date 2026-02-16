@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useCallback, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 
-import {type SideNavigationItem} from './SideNavigationItem';
+import {SideNavigationItem} from './types/SideNavigation';
 
 interface SideNavigationFilter {
 	expandedKeys?: Set<React.Key>;
@@ -24,6 +24,8 @@ export function filterItemsByQuery(
 	}
 
 	return items.reduce<Required<SideNavigationFilter>>((result, item) => {
+		const labelMatches = item.label.toLowerCase().includes(query);
+
 		if (item.items && item.items.length) {
 			const {expandedKeys, items} = filterItemsByQuery(item.items, query);
 
@@ -42,14 +44,14 @@ export function filterItemsByQuery(
 				};
 			}
 
-			if (item.label.toLowerCase().includes(query)) {
+			if (labelMatches) {
 				return {
-					expandedKeys: result.expandedKeys.add(item.id),
+					expandedKeys: new Set([...result.expandedKeys, item.id]),
 					items: result.items.concat(item),
 				};
 			}
 		}
-		else if (item.label.toLowerCase().includes(query)) {
+		else if (labelMatches) {
 			return {
 				expandedKeys: result.expandedKeys,
 				items: result.items.concat(item),
@@ -68,14 +70,10 @@ export function useSideNavigationFilter(items: Array<SideNavigationItem>) {
 		[items, query]
 	);
 
-	const updateQuery = useCallback((query: string) => {
-		setQuery(query.trim().toLowerCase());
-	}, []);
-
 	return {
 		expandedKeys: filter.expandedKeys,
 		isFilterActive: !!query,
 		items: filter.items,
-		setQuery: updateQuery,
+		setQuery: (query: string) => setQuery(query.trim().toLowerCase()),
 	};
 }

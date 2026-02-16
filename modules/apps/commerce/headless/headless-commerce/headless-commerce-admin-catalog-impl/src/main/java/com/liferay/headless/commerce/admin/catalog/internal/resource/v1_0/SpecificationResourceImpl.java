@@ -6,7 +6,9 @@
 package com.liferay.headless.commerce.admin.catalog.internal.resource.v1_0;
 
 import com.liferay.commerce.product.exception.NoSuchCPSpecificationOptionException;
+import com.liferay.commerce.product.model.CPOptionCategory;
 import com.liferay.commerce.product.model.CPSpecificationOption;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.service.CPSpecificationOptionService;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.dto.v1_0.Specification;
@@ -322,14 +324,34 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
-	private long _getCPOptionCategoryId(Specification specification) {
+	private long _getCPOptionCategoryId(Specification specification)
+		throws PortalException {
+
 		OptionCategory optionCategory = specification.getOptionCategory();
 
 		if (optionCategory == null) {
 			return 0;
 		}
 
-		return optionCategory.getId();
+		if ((optionCategory.getId() != null) && (optionCategory.getId() > 0)) {
+			return optionCategory.getId();
+		}
+
+		if (Validator.isBlank(optionCategory.getExternalReferenceCode())) {
+			return 0;
+		}
+
+		CPOptionCategory cpOptionCategory =
+			_cpOptionCategoryService.
+				fetchCPOptionCategoryByExternalReferenceCode(
+					optionCategory.getExternalReferenceCode(),
+					contextCompany.getCompanyId());
+
+		if (cpOptionCategory == null) {
+			return 0;
+		}
+
+		return cpOptionCategory.getCPOptionCategoryId();
 	}
 
 	private Specification _toSpecification(Long cpSpecificationOptionId)
@@ -413,6 +435,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 
 	private static final EntityModel _entityModel =
 		new SpecificationEntityModel();
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private CPSpecificationOptionService _cpSpecificationOptionService;

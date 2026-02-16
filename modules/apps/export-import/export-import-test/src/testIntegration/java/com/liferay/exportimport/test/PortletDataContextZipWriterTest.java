@@ -23,6 +23,7 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Assert;
@@ -48,7 +49,7 @@ public class PortletDataContextZipWriterTest {
 		_portletDataContext =
 			PortletDataContextFactoryUtil.createExportPortletDataContext(
 				TestPropsValues.getCompanyId(), TestPropsValues.getGroupId(),
-				null, null, null, _recorderZipWriter);
+				new HashMap<>(), null, null, _recorderZipWriter);
 	}
 
 	@Test

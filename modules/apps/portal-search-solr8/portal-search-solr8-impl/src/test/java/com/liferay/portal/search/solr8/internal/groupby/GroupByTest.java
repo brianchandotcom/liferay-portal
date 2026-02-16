@@ -40,7 +40,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 	@Override
 	@Test
 	public void testFieldNamesDefault() throws Exception {
-		indexDuplicates("one", 1);
+		indexDuplicates(1, "one");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -52,17 +52,16 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 				indexingTestHelper.verify(
 					hits -> assertGroupedHitsFieldNames(
-						"one",
 						Arrays.asList(
 							"companyId", "entryClassName", "entryClassPK",
 							"groupId", SORT_FIELD, "uid", "userName"),
-						hits, indexingTestHelper));
+						hits, indexingTestHelper, "one"));
 			});
 	}
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -80,7 +79,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testGroupByDocsSizeZero() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -244,9 +243,9 @@ public class GroupByTest extends BaseGroupByTestCase {
 	}
 
 	protected void indexTermsSortsDuplicates() {
-		indexDuplicates("one", 1);
-		indexDuplicates("two", 2);
-		indexDuplicates("three", 3);
+		indexDuplicates(1, "one");
+		indexDuplicates(2, "two");
+		indexDuplicates(3, "three");
 	}
 
 }

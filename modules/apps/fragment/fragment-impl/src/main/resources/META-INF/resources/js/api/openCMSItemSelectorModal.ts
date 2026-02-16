@@ -5,7 +5,11 @@
 
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 
-export const openCMSItemSelectorModal = function () {
+export const openCMSItemSelectorModal = function ({
+	onSelect,
+}: {
+	onSelect: () => void;
+}) {
 	const ROOT_URL = `${window.location.origin}${Liferay.ThemeDisplay.getPathContext()}/o/search/v1.0/search`;
 
 	const BASE_SEARCH_PARAMS = {
@@ -79,6 +83,6 @@ export const openCMSItemSelectorModal = function () {
 			value: 'embedded.id',
 		},
 		multiSelect: false,
-		onItemsChange: ([file]) => alert(JSON.stringify(file, null, 2)),
+		onItemsChange: onSelect,
 	});
 };

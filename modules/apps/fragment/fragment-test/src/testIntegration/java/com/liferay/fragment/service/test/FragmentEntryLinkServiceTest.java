@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -144,7 +145,8 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -170,7 +172,8 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -204,7 +207,8 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -236,7 +240,8 @@ public class FragmentEntryLinkServiceTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,

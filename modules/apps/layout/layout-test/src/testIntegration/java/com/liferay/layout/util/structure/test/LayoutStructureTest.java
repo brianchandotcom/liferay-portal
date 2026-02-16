@@ -18,6 +18,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -87,11 +89,13 @@ public class LayoutStructureTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-				_layout.getPlid(), _fragmentEntry.getCss(),
-				_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
-				_fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
-				null, _fragmentEntry.getType(), serviceContext);
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _group.getGroupId()),
+				defaultSegmentsExperienceId, _layout.getPlid(),
+				_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+				_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(), null,
+				StringPool.BLANK, 0, null, _fragmentEntry.getType(),
+				serviceContext);
 	}
 
 	@Test
@@ -888,7 +892,9 @@ public class LayoutStructureTest {
 	}
 
 	@Test
-	public void testMarkLayoutStructureItemForDeletion1() {
+	public void testMarkLayoutStructureItemForDeletion1()
+		throws PortalException {
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
@@ -922,7 +928,8 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			fragmentStyledLayoutStructureItem.getItemId());
@@ -933,11 +940,14 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 	}
 
 	@Test
-	public void testMarkLayoutStructureItemForDeletion2() {
+	public void testMarkLayoutStructureItemForDeletion2()
+		throws PortalException {
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
@@ -969,7 +979,8 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			columnLayoutStructureItem.getItemId());
@@ -980,11 +991,14 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 	}
 
 	@Test
-	public void testMarkLayoutStructureItemForDeletion3() {
+	public void testMarkLayoutStructureItemForDeletion3()
+		throws PortalException {
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
@@ -1016,7 +1030,8 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			rowStyledLayoutStructureItem.getItemId());
@@ -1027,11 +1042,14 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 	}
 
 	@Test
-	public void testMarkLayoutStructureItemForDeletion4() {
+	public void testMarkLayoutStructureItemForDeletion4()
+		throws PortalException {
+
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		LayoutStructureItem rootLayoutStructureItem =
@@ -1064,7 +1082,8 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			containerStyledLayoutStructureItem.getItemId());
@@ -1075,7 +1094,8 @@ public class LayoutStructureTest {
 				getAllFragmentEntryLinksCountByFragmentEntryERC(
 					_group.getGroupId(),
 					_fragmentEntry.getExternalReferenceCode(),
-					_fragmentEntry.getScopeERC()));
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						_fragmentEntry.getGroupId(), _layout.getGroupId())));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {
@@ -1086,11 +1106,12 @@ public class LayoutStructureTest {
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_fragmentEntry.getExternalReferenceCode(),
-			_fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-			_layout.getPlid(), _fragmentEntry.getCss(),
-			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
-			_fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0, null,
-			_fragmentEntry.getType(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				_fragmentEntry.getGroupId(), _group.getGroupId()),
+			defaultSegmentsExperienceId, _layout.getPlid(),
+			_fragmentEntry.getCss(), _fragmentEntry.getHtml(),
+			_fragmentEntry.getJs(), _fragmentEntry.getConfiguration(), null,
+			StringPool.BLANK, 0, null, _fragmentEntry.getType(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 	}
 

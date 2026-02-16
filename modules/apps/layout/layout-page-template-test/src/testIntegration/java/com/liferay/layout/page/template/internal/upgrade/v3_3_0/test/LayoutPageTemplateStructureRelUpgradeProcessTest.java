@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.log.LogCapture;
@@ -236,8 +237,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				null, fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), layout,
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), layout.getGroupId()),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(), layout,
 				fragmentEntry.getFragmentEntryKey(),
 				_SEGMENTS_EXPERIENCE_ID_DEFAULT, fragmentEntry.getType());
 

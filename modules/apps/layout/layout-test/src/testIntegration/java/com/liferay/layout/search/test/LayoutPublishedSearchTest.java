@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.IndexerFixture;
@@ -205,7 +206,8 @@ public class LayoutPublishedSearchTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
 				draftLayout.getPlid(), fragmentEntry.getCss(),
@@ -233,8 +235,7 @@ public class LayoutPublishedSearchTest {
 		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
-				contributedFragmentEntry.getExternalReferenceCode(),
-				contributedFragmentEntry.getScopeERC(),
+				contributedFragmentEntry.getExternalReferenceCode(), null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()),
 				draftLayout.getPlid(), contributedFragmentEntry.getCss(),
@@ -385,8 +386,7 @@ public class LayoutPublishedSearchTest {
 		FragmentEntryLink inlineFragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
-				contributedFragmentEntry.getExternalReferenceCode(),
-				contributedFragmentEntry.getScopeERC(),
+				contributedFragmentEntry.getExternalReferenceCode(), null,
 				defaultSegmentsExperienceId, draftLayout.getPlid(),
 				contributedFragmentEntry.getCss(),
 				contributedFragmentEntry.getHtml(),
@@ -449,12 +449,13 @@ public class LayoutPublishedSearchTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), StringPool.BLANK,
-				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
-				fragmentEntry.getType(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
+				defaultSegmentsExperienceId, draftLayout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_addFragmentEntryLinkToLayout(

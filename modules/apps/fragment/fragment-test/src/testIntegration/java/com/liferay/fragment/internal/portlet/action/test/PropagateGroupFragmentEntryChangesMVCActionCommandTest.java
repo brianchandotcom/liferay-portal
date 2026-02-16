@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -138,11 +139,9 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid())));
 		mockLiferayPortletActionRequest.setParameter(
-			"fragmentEntryERC",
-			String.valueOf(fragmentEntry.getExternalReferenceCode()));
+			"fragmentEntryERC", fragmentEntry.getExternalReferenceCode());
 		mockLiferayPortletActionRequest.setParameter(
-			"fragmentEntryScopeERC",
-			String.valueOf(fragmentEntry.getScopeERC()));
+			"fragmentEntryGroupId", String.valueOf(fragmentEntry.getGroupId()));
 		mockLiferayPortletActionRequest.setParameter(
 			"rowIds", new String[] {String.valueOf(_group.getGroupId())});
 
@@ -185,7 +184,8 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layout.getPlid(), RandomTestUtil.randomString(),
@@ -232,7 +232,8 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
 				layout.getPlid(), RandomTestUtil.randomString(),

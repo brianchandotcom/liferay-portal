@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -150,11 +151,12 @@ public class UpdatePasswordActionTest {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-				layout.getPlid(), StringPool.BLANK, fragmentEntry.getHtml(),
-				StringPool.BLANK, "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
-				serviceContext);
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), group.getGroupId()),
+				defaultSegmentsExperienceId, layout.getPlid(), StringPool.BLANK,
+				fragmentEntry.getHtml(), StringPool.BLANK, "{fieldSets: []}",
+				StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(), serviceContext);
 
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem =
 			(ContainerStyledLayoutStructureItem)

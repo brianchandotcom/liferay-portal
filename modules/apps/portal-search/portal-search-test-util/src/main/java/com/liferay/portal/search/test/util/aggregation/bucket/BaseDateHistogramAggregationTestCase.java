@@ -302,7 +302,7 @@ public abstract class BaseDateHistogramAggregationTestCase
 		addDocument(getDate("2018-02-13T00:00:00"));
 
 		DateHistogramAggregation dateHistogramAggregation = getAggregation(
-			"1w");
+			"7d");
 
 		dateHistogramAggregation.setOffset(-86400000L);
 

@@ -18,7 +18,6 @@ import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -215,35 +214,19 @@ public class DLReferencesExportImportContentProcessor
 					companyGroup = _stagingGroupHelper.isCompanyGroup(group);
 				}
 
-				ExportImportReportEntry existingExportImportReportEntry =
-					_exportImportReportEntryLocalService.
-						fetchEmptyExportImportReportEntryByG_C_C_C(
-							companyGroup ? 0L : groupId,
-							portletDataContext.getCompanyId(),
-							documentLibraryReference.getExternalReferenceCode(),
-							_classNameLocalService.getClassNameId(
-								FileEntry.class));
+				long classNameId = _classNameLocalService.getClassNameId(
+					FileEntry.class);
 
-				ExportImportReportEntry exportImportReportEntry;
+				long exportImportConfigurationId = GetterUtil.getLong(
+					ExportImportThreadLocal.getExportImportConfigurationId());
 
-				if (existingExportImportReportEntry == null) {
-					exportImportReportEntry =
-						_exportImportReportEntryLocalService.
-							addEmptyExportImportReportEntry(
-								companyGroup ? 0L : groupId,
-								portletDataContext.getCompanyId(),
-								documentLibraryReference.
-									getExternalReferenceCode(),
-								_classNameLocalService.getClassNameId(
-									FileEntry.class),
-								GetterUtil.getLong(
-									ExportImportThreadLocal.
-										getExportImportConfigurationId()),
-								FileEntry.class.getName());
-				}
-				else {
-					exportImportReportEntry = existingExportImportReportEntry;
-				}
+				_exportImportReportEntryLocalService.
+					getOrAddEmptyExportImportReportEntry(
+						companyGroup ? 0L : groupId,
+						portletDataContext.getCompanyId(),
+						documentLibraryReference.getExternalReferenceCode(),
+						classNameId, exportImportConfigurationId,
+						FileEntry.class.getName());
 
 				_exportImportProcessCallbackRegistry.registerCallback(
 					portletDataContext.getExportImportProcessId(),
@@ -259,9 +242,11 @@ public class DLReferencesExportImportContentProcessor
 								afterImportFileEntry)) {
 
 							_exportImportReportEntryLocalService.
-								deleteExportImportReportEntry(
-									exportImportReportEntry.
-										getExportImportReportEntryId());
+								resolveEmptyExportImportReportEntries(
+									groupId, portletDataContext.getCompanyId(),
+									documentLibraryReference.
+										getExternalReferenceCode(),
+									classNameId);
 						}
 
 						return null;

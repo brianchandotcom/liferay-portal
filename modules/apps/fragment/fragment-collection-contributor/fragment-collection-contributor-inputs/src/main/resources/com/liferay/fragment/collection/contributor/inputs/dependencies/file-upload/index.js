@@ -77,14 +77,9 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 
 	if (isCMS) {
 		import('@liferay/fragment-impl/api')
-			.then(({openItemSelectorModal}) => {
-				openItemSelectorModal({
-
-					// space id?
-
-				});
-			})
-			.catch(console.error);
+			.then(({openCMSItemSelectorModal}) => {
+				openCMSItemSelectorModal();
+			});
 
 		return;
 	}

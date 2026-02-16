@@ -6,24 +6,15 @@
 import ClayLink from '@clayui/link';
 import React from 'react';
 
+import {ENTERPRISE_URL} from '../utils/constants';
 import EnterpriseFeatureIndicator from './EnterpriseFeatureIndicator';
 
-interface EnterpriseProductMenuBannerProps {
-	enterpriseDetailsActionLink: string;
-}
-
-export default function EnterpriseProductMenuBanner({
-	enterpriseDetailsActionLink,
-}: EnterpriseProductMenuBannerProps) {
+export default function EnterpriseProductMenuBanner() {
 	return (
 		<div className="p-3">
 			<div className="bg-white border p-2 rounded-lg">
 				<div className="p-1 pb-2">
-					<EnterpriseFeatureIndicator
-						enterpriseDetailsActionLink={
-							enterpriseDetailsActionLink
-						}
-					/>
+					<EnterpriseFeatureIndicator />
 
 					<div className="mt-3 text-2 text-secondary">
 						<p className="mb-1 text-3 text-dark text-weight-semi-bold">
@@ -38,7 +29,7 @@ export default function EnterpriseProductMenuBanner({
 
 						<ClayLink
 							className="btn btn-primary btn-sm w-100"
-							href={enterpriseDetailsActionLink}
+							href={ENTERPRISE_URL}
 						>
 							{Liferay.Language.get('get-enterprise-details')}
 						</ClayLink>

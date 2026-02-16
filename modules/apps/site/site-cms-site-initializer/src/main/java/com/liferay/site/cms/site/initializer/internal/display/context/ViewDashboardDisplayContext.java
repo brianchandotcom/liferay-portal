@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.site.cms.site.initializer.internal.constants.SiteCMSConstants;
 
 import java.util.Map;
 
@@ -68,9 +67,6 @@ public class ViewDashboardDisplayContext {
 				LayoutLocalServiceUtil.getLayoutByFriendlyURL(
 					_themeDisplay.getScopeGroupId(), false, "/dashboard"),
 				_themeDisplay)
-		).put(
-			"enterpriseDetailsActionLink",
-			SiteCMSConstants.ENTERPRISE_DETAILS_ACTION_LINK
 		).put(
 			"freeTier",
 			FeatureFlagManagerUtil.isEnabled(

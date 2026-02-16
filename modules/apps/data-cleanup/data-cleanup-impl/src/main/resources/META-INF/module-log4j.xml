@@ -3,5 +3,6 @@
 <Configuration strict="true">
 	<Loggers>
 		<Logger level="INFO" name="com.liferay.data.cleanup.internal.verify" />
+		<Logger level="DEBUG" name="com.liferay.data.cleanup.internal.verify.ResourceActionPostUpgradeDataCleanupProcess" />
 	</Loggers>
 </Configuration>

@@ -8,12 +8,42 @@ package com.liferay.layout.page.template.util;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Mikel Lorza
  */
 public class LayoutPageTemplateEntryUtil {
+
+	public static long getClassTypeId(
+		long classNameId, String classTypeKey, long groupId) {
+
+		if (Validator.isNull(classTypeKey)) {
+			return -1;
+		}
+
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			InfoItemServiceRegistryUtil.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				PortalUtil.getClassName(classNameId));
+
+		if (infoItemFormVariationsProvider == null) {
+			return -2;
+		}
+
+		InfoItemFormVariation infoItemFormVariation =
+			infoItemFormVariationsProvider.
+				getInfoItemFormVariationByExternalReferenceCode(
+					classTypeKey, groupId);
+
+		if (infoItemFormVariation == null) {
+			return -2;
+		}
+
+		return GetterUtil.getLong(infoItemFormVariation.getKey());
+	}
 
 	public static String getClassTypeKey(
 		long classNameId, long classTypeId, long groupId) {

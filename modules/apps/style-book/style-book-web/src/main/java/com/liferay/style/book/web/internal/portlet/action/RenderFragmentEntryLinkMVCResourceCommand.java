@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -66,12 +67,18 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
 
+		fragmentEntryLink.setGroupId(themeDisplay.getScopeGroupId());
 		fragmentEntryLink.setFragmentEntryERC(
 			fragmentEntry.getExternalReferenceCode());
-		fragmentEntryLink.setFragmentEntryScopeERC(fragmentEntry.getScopeERC());
+		fragmentEntryLink.setFragmentEntryScopeERC(
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), themeDisplay.getScopeGroupId()));
 		fragmentEntryLink.setCss(fragmentEntry.getCss());
 		fragmentEntryLink.setHtml(fragmentEntry.getHtml());
 		fragmentEntryLink.setJs(fragmentEntry.getJs());
@@ -98,9 +105,6 @@ public class RenderFragmentEntryLinkMVCResourceCommand
 
 		DefaultFragmentRendererContext defaultFragmentRendererContext =
 			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String languageId = ParamUtil.getString(
 			resourceRequest, "languageId", themeDisplay.getLanguageId());

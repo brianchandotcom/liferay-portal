@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.ActionRequest;
@@ -114,11 +115,13 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		return _fragmentEntryLinkService.addFragmentEntryLink(
 			null, serviceContext.getScopeGroupId(), null,
 			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), segmentsExperienceId,
-			serviceContext.getPlid(), fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
-			contributedRendererKey, fragmentEntry.getType(), serviceContext);
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), serviceContext.getScopeGroupId()),
+			segmentsExperienceId, serviceContext.getPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
+			StringPool.BLANK, 0, contributedRendererKey,
+			fragmentEntry.getType(), serviceContext);
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -85,7 +86,7 @@ public class GroupFragmentEntryLinkDisplayContext {
 		return _fragmentEntryId;
 	}
 
-	public long getFragmentGroupUsageCount(Group group) {
+	public long getFragmentGroupUsageCount(Group group) throws PortalException {
 		Map<Group, Integer> groupFragmentEntryUsages =
 			_getGroupFragmentEntryUsages();
 
@@ -126,7 +127,7 @@ public class GroupFragmentEntryLinkDisplayContext {
 		return _redirect;
 	}
 
-	public SearchContainer<Group> getSearchContainer() {
+	public SearchContainer<Group> getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -175,20 +176,17 @@ public class GroupFragmentEntryLinkDisplayContext {
 		return _searchContainer;
 	}
 
-	private Map<Group, Integer> _getGroupFragmentEntryUsages() {
+	private Map<Group, Integer> _getGroupFragmentEntryUsages()
+		throws PortalException {
+
 		if (_groupFragmentEntryUsages != null) {
 			return _groupFragmentEntryUsages;
 		}
 
-		Group group;
+		FragmentEntry fragmentEntry = getFragmentEntry();
 
-		try {
-			group = GroupLocalServiceUtil.getGroup(
-				getFragmentEntry().getGroupId());
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		Group group = GroupLocalServiceUtil.getGroup(
+			fragmentEntry.getGroupId());
 
 		Map<Group, Integer> groupFragmentEntryUsages = new HashMap<>();
 
@@ -198,16 +196,20 @@ public class GroupFragmentEntryLinkDisplayContext {
 			FragmentEntryLinkTable.INSTANCE
 		).where(
 			FragmentEntryLinkTable.INSTANCE.fragmentEntryERC.eq(
-				getFragmentEntry().getExternalReferenceCode()
+				fragmentEntry.getExternalReferenceCode()
 			).and(
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
-					group.getExternalReferenceCode())
-			).or(
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.isNull(
-				).and(
-					FragmentEntryLinkTable.INSTANCE.groupId.eq(
-						getFragmentEntry().getGroupId())
-				)
+				Predicate.withParentheses(
+					FragmentEntryLinkTable.INSTANCE.fragmentEntryScopeERC.eq(
+						group.getExternalReferenceCode()
+					).or(
+						Predicate.withParentheses(
+							FragmentEntryLinkTable.INSTANCE.
+								fragmentEntryScopeERC.isNull(
+								).and(
+									FragmentEntryLinkTable.INSTANCE.groupId.eq(
+										fragmentEntry.getGroupId())
+								))
+					))
 			)
 		);
 
@@ -215,12 +217,18 @@ public class GroupFragmentEntryLinkDisplayContext {
 			dslQuery);
 
 		for (long groupId : groupIds) {
+			String fragmentEntryScopeERC = null;
+
+			if (fragmentEntry.getGroupId() != groupId) {
+				fragmentEntryScopeERC = group.getExternalReferenceCode();
+			}
+
 			groupFragmentEntryUsages.put(
-				GroupLocalServiceUtil.fetchGroup(groupId),
+				GroupLocalServiceUtil.getGroup(groupId),
 				FragmentEntryLinkLocalServiceUtil.
 					getFragmentEntryLinksCountByFragmentEntryERC(
-						groupId, getFragmentEntry().getExternalReferenceCode(),
-						getFragmentEntry().getScopeERC(), false));
+						groupId, fragmentEntry.getExternalReferenceCode(),
+						fragmentEntryScopeERC, false));
 		}
 
 		_groupFragmentEntryUsages = groupFragmentEntryUsages;

@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -1169,11 +1170,12 @@ public class ActionUtil {
 		return fragmentEntryLinkService.addFragmentEntryLink(
 			null, layout.getGroupId(), null,
 			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), segmentsExperienceId, layout.getPlid(),
-			fragmentEntry.getCss(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
-			editableValues, StringPool.BLANK, 0, contributedRendererKey,
-			fragmentEntry.getType(), serviceContext);
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), layout.getGroupId()),
+			segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			fragmentEntry.getConfiguration(), editableValues, StringPool.BLANK,
+			0, contributedRendererKey, fragmentEntry.getType(), serviceContext);
 	}
 
 	private static LayoutStructure _addInputFragmentEntryLink(

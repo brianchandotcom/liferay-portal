@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionC
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -47,11 +48,15 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommand
 
 		String fragmentEntryERC = ParamUtil.getString(
 			actionRequest, "fragmentEntryERC");
-		String fragmentEntryScopeERC = ParamUtil.getString(
-			actionRequest, "fragmentEntryScopeERC");
+		long fragmentEntryGroupId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryGroupId");
 		long[] groupIds = ParamUtil.getLongValues(actionRequest, "rowIds");
 
 		for (long groupId : groupIds) {
+			String fragmentEntryScopeERC =
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntryGroupId, groupId);
+
 			ActionableDynamicQuery actionableDynamicQuery =
 				_fragmentEntryLinkLocalService.getActionableDynamicQuery();
 

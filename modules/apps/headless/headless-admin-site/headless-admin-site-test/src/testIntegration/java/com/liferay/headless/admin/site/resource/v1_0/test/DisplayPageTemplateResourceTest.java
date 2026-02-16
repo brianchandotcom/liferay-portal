@@ -736,27 +736,22 @@ public class DisplayPageTemplateResourceTest
 				testGroup, TestPropsValues.getUserId()));
 	}
 
-	private ClassSubtypeReference _getClassSubtypeReference(
-		String classSubtypeReferenceClassName) {
+	private ClassSubtypeReference _getClassSubtypeReference(String className) {
+		if (className.equals(AssetCategory.class.getName())) {
+			ClassSubtypeReference classSubtypeReference =
+				new ClassSubtypeReference();
 
-		if (classSubtypeReferenceClassName.equals(
-				AssetCategory.class.getName())) {
+			classSubtypeReference.setClassName(className);
 
-			return new ClassSubtypeReference() {
-				{
-					setClassName(classSubtypeReferenceClassName);
-				}
-			};
+			return classSubtypeReference;
 		}
 
 		Assert.assertEquals(
-			"com.liferay.journal.model.JournalArticle",
-			classSubtypeReferenceClassName);
+			"com.liferay.journal.model.JournalArticle", className);
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				classSubtypeReferenceClassName);
+				InfoItemFormVariationsProvider.class, className);
 
 		List<InfoItemFormVariation> infoItemFormVariations = new ArrayList<>(
 			infoItemFormVariationsProvider.getInfoItemFormVariations(
@@ -771,8 +766,7 @@ public class DisplayPageTemplateResourceTest
 			infoItemFormVariations.get(0);
 
 		return _getClassSubtypeReference(
-			classSubtypeReferenceClassName,
-			infoItemFormVariation.getExternalReferenceCode());
+			className, infoItemFormVariation.getExternalReferenceCode());
 	}
 
 	private ClassSubtypeReference _getClassSubtypeReference(

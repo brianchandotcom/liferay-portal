@@ -85,7 +85,7 @@ export default function EnterpriseFeatureIndicator({
 			<div style={{width: 288}}>
 				<p className="mb-0">
 					{Liferay.Language.get(
-						'this-feature-is-only-available-on-the-enterprise-plan'
+						'this-feature-is-only-available-on-the-enterprise-subscription'
 					)}
 
 					<ClayLink

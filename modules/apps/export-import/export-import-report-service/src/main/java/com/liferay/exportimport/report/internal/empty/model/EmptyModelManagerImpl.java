@@ -7,14 +7,15 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
-import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -59,23 +60,14 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			long classNameId = _classNameLocalService.getClassNameId(
-				clazz.getName());
-
-			ExportImportReportEntry exportImportReportEntry =
-				_exportImportReportEntryLocalService.
-					fetchEmptyExportImportReportEntryByG_C_C_C(
-						0L, companyId, externalReferenceCode, classNameId);
-
-			if (exportImportReportEntry == null) {
-				_exportImportReportEntryLocalService.
-					addEmptyExportImportReportEntry(
-						0L, companyId, externalReferenceCode, classNameId,
-						GetterUtil.getLong(
-							ExportImportThreadLocal.
-								getExportImportConfigurationId()),
-						modelNameLanguageKey);
-			}
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					0L, companyId, externalReferenceCode,
+					_classNameLocalService.getClassNameId(clazz.getName()),
+					GetterUtil.getLong(
+						ExportImportThreadLocal.
+							getExportImportConfigurationId()),
+					modelNameLanguageKey);
 
 			return emptyModelUnsafeSupplier.get();
 		}
@@ -113,22 +105,14 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			long classNameId = _classNameLocalService.getClassNameId(className);
-
-			ExportImportReportEntry exportImportReportEntry =
-				_exportImportReportEntryLocalService.
-					fetchEmptyExportImportReportEntryByG_C_C_C(
-						groupId, companyId, externalReferenceCode, classNameId);
-
-			if (exportImportReportEntry == null) {
-				_exportImportReportEntryLocalService.
-					addEmptyExportImportReportEntry(
-						groupId, companyId, externalReferenceCode, classNameId,
-						GetterUtil.getLong(
-							ExportImportThreadLocal.
-								getExportImportConfigurationId()),
-						modelNameLanguageKey);
-			}
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, externalReferenceCode,
+					_classNameLocalService.getClassNameId(className),
+					GetterUtil.getLong(
+						ExportImportThreadLocal.
+							getExportImportConfigurationId()),
+					modelNameLanguageKey);
 
 			return emptyModelUnsafeSupplier.get();
 		}
@@ -149,33 +133,26 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			return status;
 		}
 
-		ExportImportReportEntry exportImportReportEntry =
+		try {
 			_exportImportReportEntryLocalService.
-				fetchEmptyExportImportReportEntryByG_C_C_C(
+				resolveEmptyExportImportReportEntries(
 					groupId, companyId, classExternalReferenceCode,
 					_classNameLocalService.getClassNameId(className));
-
-		if (exportImportReportEntry == null) {
-			return updatedModelStatusSupplier.get();
 		}
-
-		if (ExportImportThreadLocal.isImportInProcess() &&
-			(ExportImportThreadLocal.getExportImportConfigurationId() ==
-				exportImportReportEntry.getExportImportConfigurationId())) {
-
-			_exportImportReportEntryLocalService.deleteExportImportReportEntry(
-				exportImportReportEntry);
-		}
-		else {
-			exportImportReportEntry.setStatus(
-				ExportImportReportEntryConstants.STATUS_RESOLVED);
-
-			_exportImportReportEntryLocalService.updateExportImportReportEntry(
-				exportImportReportEntry);
+		catch (Exception exception) {
+			_log.error(
+				StringBundler.concat(
+					"Error resolving the report entries for the class name \"",
+					className, "\" and the external reference code \"",
+					classExternalReferenceCode, "\""),
+				exception);
 		}
 
 		return updatedModelStatusSupplier.get();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EmptyModelManagerImpl.class);
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

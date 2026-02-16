@@ -9,14 +9,13 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.site.cms.site.initializer.internal.constants.SiteCMSConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -70,14 +69,10 @@ public class EnterpriseProductMenuBannerFragmentRenderer
 
 	@Override
 	protected Map<String, Object> getProps(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest)
-		throws Exception {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
 
-		return HashMapBuilder.<String, Object>put(
-			"enterpriseDetailsActionLink",
-			SiteCMSConstants.ENTERPRISE_DETAILS_ACTION_LINK
-		).build();
+		return Collections.emptyMap();
 	}
 
 }

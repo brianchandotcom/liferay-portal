@@ -5,3 +5,5 @@
 
 export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
+
+export const ENTERPRISE_URL = 'https://www.liferay.com/en/contact-sales';

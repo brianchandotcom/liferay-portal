@@ -12,15 +12,14 @@ import {
 } from 'frontend-js-components-web';
 import React from 'react';
 
+import {ENTERPRISE_URL} from '../utils/constants';
 import {getImage} from '../utils/getImage';
 
 interface EnterpriseOnlyPlaceholderProps {
-	enterpriseDetailsActionLink: string;
 	learnResources: ILearnResourceContext;
 }
 
 export default function EnterpriseOnlyPlaceholder({
-	enterpriseDetailsActionLink,
 	learnResources,
 }: EnterpriseOnlyPlaceholderProps) {
 	return (
@@ -61,10 +60,7 @@ export default function EnterpriseOnlyPlaceholder({
 			</div>
 
 			<div className="c-empty-state-footer">
-				<ClayLink
-					className="btn btn-primary"
-					href={enterpriseDetailsActionLink}
-				>
+				<ClayLink className="btn btn-primary" href={ENTERPRISE_URL}>
 					{Liferay.Language.get('get-enterprise-details')}
 				</ClayLink>
 			</div>

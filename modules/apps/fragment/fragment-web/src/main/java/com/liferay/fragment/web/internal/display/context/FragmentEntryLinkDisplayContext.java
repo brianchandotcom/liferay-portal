@@ -60,12 +60,8 @@ public class FragmentEntryLinkDisplayContext {
 		FragmentEntry fragmentEntry = getFragmentEntry();
 
 		return FragmentEntryLinkLocalServiceUtil.
-			getAllFragmentEntryLinksCountByFragmentEntryERC(
-				fragmentEntry.getGroupId(),
-				fragmentEntry.getExternalReferenceCode(),
-				ScopeUtil.getItemScopeExternalReferenceCode(
-					fragmentEntry.getGroupId(),
-					_getThemeDisplay().getScopeGroupId()));
+			getAllFragmentEntryLinksCountByFragmentEntryId(
+				fragmentEntry.getFragmentEntryId());
 	}
 
 	public int getDisplayPagesUsageCount() throws PortalException {
@@ -419,10 +415,8 @@ public class FragmentEntryLinkDisplayContext {
 							fragmentEntryLinksSearchContainer.
 								getOrderByComparator()),
 				FragmentEntryLinkLocalServiceUtil.
-					getAllFragmentEntryLinksCountByFragmentEntryERC(
-						fragmentEntry.getGroupId(),
-						fragmentEntry.getExternalReferenceCode(),
-						fragmentEntryScopeERC));
+					getAllFragmentEntryLinksCountByFragmentEntryId(
+						fragmentEntry.getFragmentEntryId()));
 		}
 
 		_searchContainer = fragmentEntryLinksSearchContainer;

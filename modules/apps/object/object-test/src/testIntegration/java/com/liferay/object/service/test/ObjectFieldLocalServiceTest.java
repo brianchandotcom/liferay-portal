@@ -584,17 +584,18 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingConstants.VALUE_DEPOT_FILES,
 			SetUtil.fromArray(
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH));
 		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
 			ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
 			SetUtil.fromArray(
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH));
 		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
 			ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA,
-			SetUtil.fromArray(ObjectFieldSettingConstants.NAME_STORAGE_DEPOT));
+			SetUtil.fromArray(
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP));
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingNameException.NotAllowedNames.class,
@@ -701,14 +702,15 @@ public class ObjectFieldLocalServiceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		String storageDepot = group.getExternalReferenceCode();
+		String groupExternalReferenceCode = group.getExternalReferenceCode();
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
 			String.format(
 				"The value %s of setting \"%s\" is invalid for object field " +
 					"\"upload\"",
-				storageDepot, ObjectFieldSettingConstants.NAME_STORAGE_DEPOT),
+				groupExternalReferenceCode,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP),
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Collections.singletonList(
 					new AttachmentObjectFieldBuilder(
@@ -748,9 +750,10 @@ public class ObjectFieldLocalServiceTest {
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_DEPOT_GROUP
 							).value(
-								storageDepot
+								groupExternalReferenceCode
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
@@ -2117,7 +2120,7 @@ public class ObjectFieldLocalServiceTest {
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
-					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP
 				).value(
 					String.valueOf(group.getGroupId())
 				).build(),
@@ -2141,7 +2144,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				StringPool.TRUE
 			).put(
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 				String.valueOf(group.getGroupId())
 			).put(
 				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
@@ -3203,7 +3206,8 @@ public class ObjectFieldLocalServiceTest {
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
-								ObjectFieldSettingConstants.NAME_STORAGE_DEPOT
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_DEPOT_GROUP
 							).value(
 								RandomTestUtil.randomString()
 							).build(),

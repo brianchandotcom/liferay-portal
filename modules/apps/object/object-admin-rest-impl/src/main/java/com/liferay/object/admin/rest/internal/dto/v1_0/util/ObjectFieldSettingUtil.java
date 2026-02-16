@@ -116,7 +116,7 @@ public class ObjectFieldSettingUtil {
 		if (FeatureFlagManagerUtil.isEnabled(
 				serviceBuilderObjectFieldSetting.getCompanyId(), "LPD-74813") &&
 			serviceBuilderObjectFieldSetting.compareName(
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT)) {
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP)) {
 
 			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
 				String.valueOf(objectFieldSetting.getValue()),

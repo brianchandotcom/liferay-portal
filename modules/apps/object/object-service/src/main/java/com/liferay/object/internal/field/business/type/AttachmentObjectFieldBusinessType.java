@@ -86,7 +86,7 @@ public class AttachmentObjectFieldBusinessType
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 	}
 
@@ -303,7 +303,7 @@ public class AttachmentObjectFieldBusinessType
 			validateNotAllowedObjectFieldSettingNames(
 				SetUtil.fromArray(
 					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
 				objectField.getName(), objectFieldSettingsValues);
 		}
@@ -317,7 +317,7 @@ public class AttachmentObjectFieldBusinessType
 			validateRelatedObjectFieldSettings(
 				objectField,
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 				objectFieldSettingsValues);
 
 			validateRelatedObjectFieldSettings(
@@ -333,7 +333,7 @@ public class AttachmentObjectFieldBusinessType
 
 			validateNotAllowedObjectFieldSettingNames(
 				SetUtil.fromArray(
-					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT),
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP),
 				objectField.getName(), objectFieldSettingsValues);
 
 			validateRelatedObjectFieldSettings(
@@ -390,7 +390,7 @@ public class AttachmentObjectFieldBusinessType
 
 		if (Objects.equals(
 				objectFieldSettingName,
-				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT)) {
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP)) {
 
 			Group group = _groupLocalService.fetchGroup(
 				GetterUtil.getLong(objectFieldSettingValue));
@@ -398,7 +398,7 @@ public class AttachmentObjectFieldBusinessType
 			if ((group == null) || !group.isDepot()) {
 				throw new ObjectFieldSettingValueException.InvalidValue(
 					objectField.getName(),
-					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 					objectFieldSettingValue);
 			}
 		}

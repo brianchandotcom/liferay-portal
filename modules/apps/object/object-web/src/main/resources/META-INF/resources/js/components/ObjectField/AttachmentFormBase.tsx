@@ -151,7 +151,7 @@ export function AttachmentFormBase({
 						value: `/${objectDefinitionName}`,
 					},
 					{
-						name: 'storageDepot',
+						name: 'storageDepotGroup',
 						value: String(spaces[0].externalReferenceCode),
 					}
 				);

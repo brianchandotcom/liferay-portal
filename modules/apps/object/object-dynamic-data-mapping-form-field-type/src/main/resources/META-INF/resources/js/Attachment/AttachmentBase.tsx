@@ -28,7 +28,7 @@ export type AttachmentFile = {
 	contentURL: string;
 	fileEntryId: string;
 	source?: 'dm' | 'cms';
-	storageDepot?: string;
+	storageDepotGroup?: string;
 	title: string;
 };
 
@@ -67,7 +67,7 @@ export interface AttachmentBaseProps<TValue> {
 	readOnly: boolean;
 	setError: React.Dispatch<React.SetStateAction<{}>>;
 	storageDLFolderPath?: string;
-	storageDepot?: string;
+	storageDepotGroup?: string;
 	tip: string;
 	url: string;
 	value: TValue;
@@ -101,7 +101,7 @@ export default function AttachmentBase({
 	readOnly,
 	setError,
 	storageDLFolderPath,
-	storageDepot,
+	storageDepotGroup,
 	url,
 }: AttachmentBaseProps<string | LocalizedValue<string>>) {
 	const {portletNamespace} = useConfig();
@@ -277,13 +277,14 @@ export default function AttachmentBase({
 	const uploadToCMS = async (
 		file: File,
 		storageDLFolderPath: string | undefined,
-		storageDepot: string | undefined
+		storageDepotGroup: string | undefined
 	): Promise<AttachmentFile & {id: string}> => {
-		const spaceERC = storageDepot || spaces[0]?.externalReferenceCode || '';
+		const spaceERC =
+			storageDepotGroup || spaces[0]?.externalReferenceCode || '';
 
 		const fileBase64 = await getBase64(file);
 
-		const isVisible = !!storageDepot;
+		const isVisible = !!storageDepotGroup;
 
 		const folderName = storageDLFolderPath
 			? storageDLFolderPath.replace(/^\//, '')
@@ -386,7 +387,7 @@ export default function AttachmentBase({
 				result = await uploadToCMS(
 					selectedFile,
 					storageDLFolderPath,
-					storageDepot
+					storageDepotGroup
 				);
 			}
 			else {

@@ -188,7 +188,7 @@ public class ObjectFieldDTOConverter
 
 						if (serviceBuilderObjectFieldSetting.compareName(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_DEPOT)) {
+									NAME_STORAGE_DEPOT_GROUP)) {
 
 							Group group = _groupLocalService.fetchGroup(
 								GetterUtil.getLong(

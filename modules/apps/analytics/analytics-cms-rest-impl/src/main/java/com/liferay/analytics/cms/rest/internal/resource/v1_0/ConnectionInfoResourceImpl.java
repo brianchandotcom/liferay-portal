@@ -12,6 +12,7 @@ import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.depot.model.DepotEntryGroupRelModel;
 import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,6 +35,10 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 	@Override
 	public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(

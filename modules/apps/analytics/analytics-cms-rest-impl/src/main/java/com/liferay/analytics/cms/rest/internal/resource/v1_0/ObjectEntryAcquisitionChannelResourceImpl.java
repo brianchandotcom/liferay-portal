@@ -9,6 +9,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryAcquisitionChannel;
 import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryAcquisitionChannelResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -32,6 +33,10 @@ public class ObjectEntryAcquisitionChannelResourceImpl
 			getObjectEntryAcquisitionChannelsPage(
 				String externalReferenceCode, Long groupId, Integer rangeKey)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
 			_http);

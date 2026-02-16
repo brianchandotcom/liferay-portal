@@ -9,6 +9,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.ObjectEntryMetric;
 import com.liferay.analytics.cms.rest.internal.client.AnalyticsCloudClient;
 import com.liferay.analytics.cms.rest.resource.v1_0.ObjectEntryMetricResource;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.util.Http;
 
 import org.osgi.service.component.annotations.Component;
@@ -30,6 +31,10 @@ public class ObjectEntryMetricResourceImpl
 			String externalReferenceCode, Long groupId, Integer rangeKey,
 			String[] selectedMetrics)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
 			_http);

@@ -9,6 +9,7 @@ import com.liferay.analytics.cms.rest.dto.v1_0.Channel;
 import com.liferay.analytics.cms.rest.resource.v1_0.ChannelResource;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +30,10 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	public Page<Channel> getChannelsPage(String keywords) throws Exception {
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(
 				contextUser.getCompanyId());

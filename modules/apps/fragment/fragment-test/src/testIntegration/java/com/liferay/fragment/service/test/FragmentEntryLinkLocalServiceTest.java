@@ -458,7 +458,7 @@ public class FragmentEntryLinkLocalServiceTest {
 	}
 
 	@Test
-	public void testGetAllFragmentEntryLinksCountByFragmentEntryERC()
+	public void testGetAllFragmentEntryLinksCountByFragmentEntryId()
 		throws Exception {
 
 		_addFragmentEntryLinkToLayout();
@@ -468,20 +468,13 @@ public class FragmentEntryLinkLocalServiceTest {
 		Assert.assertEquals(
 			2,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _group.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_globalFragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_globalFragmentEntry.getGroupId(),
-						_group.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_globalFragmentEntry.getFragmentEntryId()));
 	}
 
 	@Test

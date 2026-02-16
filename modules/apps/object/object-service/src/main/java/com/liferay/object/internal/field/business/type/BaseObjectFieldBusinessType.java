@@ -197,7 +197,7 @@ public abstract class BaseObjectFieldBusinessType
 		}
 		else if (Objects.equals(
 					objectFieldSettingName,
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH)) {
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH)) {
 
 			validateMaxLength(
 				255, objectFieldSettingName, objectFieldSettingValue);

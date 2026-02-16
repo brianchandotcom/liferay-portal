@@ -87,7 +87,7 @@ public class AttachmentObjectFieldBusinessType
 		return SetUtil.fromArray(
 			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
-			ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH);
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 	}
 
 	@Override
@@ -225,7 +225,7 @@ public class AttachmentObjectFieldBusinessType
 		properties.remove(
 			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY);
 		properties.remove(
-			ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH);
+			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 
 		return HashMapBuilder.<String, Object>put(
 			"groupAware",
@@ -304,7 +304,7 @@ public class AttachmentObjectFieldBusinessType
 				SetUtil.fromArray(
 					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH),
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
 				objectField.getName(), objectFieldSettingsValues);
 		}
 		else if (FeatureFlagManagerUtil.isEnabled(
@@ -323,7 +323,7 @@ public class AttachmentObjectFieldBusinessType
 			validateRelatedObjectFieldSettings(
 				objectField,
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectFieldSettingsValues);
 		}
 		else if (Objects.equals(
@@ -339,7 +339,7 @@ public class AttachmentObjectFieldBusinessType
 			validateRelatedObjectFieldSettings(
 				objectField,
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectFieldSettingsValues);
 		}
 		else {

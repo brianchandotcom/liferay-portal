@@ -116,7 +116,7 @@ function FirstSectionComponent({
 								settings: {
 									...uploadField.settings,
 									showFilesInLibrary: event.target.checked,
-									storageLibraryPath:
+									storageDLFolderPath:
 										'/' + Liferay.Language.get('new'),
 								},
 								type: 'update-field',
@@ -141,13 +141,13 @@ function FirstSectionComponent({
 						dispatch({
 							settings: {
 								...uploadField.settings,
-								storageLibraryPath: value,
+								storageDLFolderPath: value,
 							},
 							type: 'update-field',
 							uuid: field.uuid,
 						});
 					}}
-					value={uploadField.settings.storageLibraryPath!}
+					value={uploadField.settings.storageDLFolderPath!}
 				/>
 			) : null}
 

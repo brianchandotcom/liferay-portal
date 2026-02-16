@@ -2028,6 +2028,12 @@ public class BatchEnginePortletDataHandlerTest {
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
+								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+							).value(
+								"100"
+							).build(),
+							new ObjectFieldSettingBuilder(
+							).name(
 								ObjectFieldSettingConstants.
 									NAME_SHOW_FILES_IN_LIBRARY
 							).value(
@@ -2036,15 +2042,9 @@ public class BatchEnginePortletDataHandlerTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								StringPool.SLASH + objectDefinitionName
-							).build(),
-							new ObjectFieldSettingBuilder(
-							).name(
-								ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
-							).value(
-								"100"
 							).build()),
 						false),
 					ObjectFieldUtil.createObjectField(

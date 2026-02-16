@@ -398,7 +398,7 @@ type ObjectFieldSettingName =
 	| 'showCounter'
 	| 'showFilesInLibrary'
 	| 'stateFlow'
-	| 'storageLibraryPath'
+	| 'storageDLFolderPath'
 	| 'timeStorage'
 	| 'uniqueValues'
 	| 'uniqueValuesErrorMessage';

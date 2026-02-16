@@ -121,4 +121,4 @@ type ObjectFieldSettingName =
 	| 'maxLength'
 	| 'showCounter'
 	| 'showFilesInLibrary'
-	| 'storageLibraryPath';
+	| 'storageDLFolderPath';

@@ -127,7 +127,7 @@ type ObjectFieldSettingName =
 	| 'maxLength'
 	| 'showCounter'
 	| 'showFilesInLibrary'
-	| 'storageLibraryPath'
+	| 'storageDLFolderPath'
 	| 'relationship'
 	| 'function'
 	| 'summarizeField'

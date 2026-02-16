@@ -316,8 +316,8 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 		) {
 			settings.showFilesInLibrary =
 				objectFieldSettings.showFilesInLibrary;
-			settings.storageLibraryPath =
-				objectFieldSettings.storageLibraryPath;
+			settings.storageDLFolderPath =
+				objectFieldSettings.storageDLFolderPath;
 		}
 	}
 	else if (objectField.businessType === 'DateTime') {

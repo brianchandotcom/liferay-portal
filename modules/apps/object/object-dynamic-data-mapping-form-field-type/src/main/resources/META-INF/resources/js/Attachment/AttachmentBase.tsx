@@ -66,8 +66,8 @@ export interface AttachmentBaseProps<TValue> {
 	overallMaximumUploadRequestSize: number;
 	readOnly: boolean;
 	setError: React.Dispatch<React.SetStateAction<{}>>;
+	storageDLFolderPath?: string;
 	storageDepot?: string;
-	storageLibraryPath?: string;
 	tip: string;
 	url: string;
 	value: TValue;
@@ -100,8 +100,8 @@ export default function AttachmentBase({
 	overallMaximumUploadRequestSize,
 	readOnly,
 	setError,
+	storageDLFolderPath,
 	storageDepot,
-	storageLibraryPath,
 	url,
 }: AttachmentBaseProps<string | LocalizedValue<string>>) {
 	const {portletNamespace} = useConfig();
@@ -276,7 +276,7 @@ export default function AttachmentBase({
 
 	const uploadToCMS = async (
 		file: File,
-		storageLibraryPath: string | undefined,
+		storageDLFolderPath: string | undefined,
 		storageDepot: string | undefined
 	): Promise<AttachmentFile & {id: string}> => {
 		const spaceERC = storageDepot || spaces[0]?.externalReferenceCode || '';
@@ -285,8 +285,8 @@ export default function AttachmentBase({
 
 		const isVisible = !!storageDepot;
 
-		const folderName = storageLibraryPath
-			? storageLibraryPath.replace(/^\//, '')
+		const folderName = storageDLFolderPath
+			? storageDLFolderPath.replace(/^\//, '')
 			: 'HIDDEN_FILES';
 
 		const folder = await resolveFolderId(
@@ -385,7 +385,7 @@ export default function AttachmentBase({
 			if (isUserComputerDepotUpload) {
 				result = await uploadToCMS(
 					selectedFile,
-					storageLibraryPath,
+					storageDLFolderPath,
 					storageDepot
 				);
 			}

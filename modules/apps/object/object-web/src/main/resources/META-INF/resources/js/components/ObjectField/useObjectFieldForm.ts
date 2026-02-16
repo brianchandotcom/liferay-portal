@@ -191,18 +191,18 @@ export function useObjectFieldForm({
 			) {
 				if (
 					invalidateRequired(
-						settings.storageLibraryPath as string | undefined
+						settings.storageDLFolderPath as string | undefined
 					)
 				) {
-					errors.storageLibraryPath = constantsUtils.REQUIRED_MSG;
+					errors.storageDLFolderPath = constantsUtils.REQUIRED_MSG;
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(
-						settings.storageLibraryPath as string
+						settings.storageDLFolderPath as string
 					);
 
 					if (sourceFolderError !== null) {
-						errors.storageLibraryPath = sourceFolderError;
+						errors.storageDLFolderPath = sourceFolderError;
 					}
 				}
 			}
@@ -213,18 +213,18 @@ export function useObjectFieldForm({
 			) {
 				if (
 					invalidateRequired(
-						settings.storageLibraryPath as string | undefined
+						settings.storageDLFolderPath as string | undefined
 					)
 				) {
-					errors.storageLibraryPath = constantsUtils.REQUIRED_MSG;
+					errors.storageDLFolderPath = constantsUtils.REQUIRED_MSG;
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(
-						settings.storageLibraryPath as string
+						settings.storageDLFolderPath as string
 					);
 
 					if (sourceFolderError !== null) {
-						errors.storageLibraryPath = sourceFolderError;
+						errors.storageDLFolderPath = sourceFolderError;
 					}
 				}
 
@@ -238,11 +238,11 @@ export function useObjectFieldForm({
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(
-						settings.storageLibraryPath as string
+						settings.storageDLFolderPath as string
 					);
 
 					if (sourceFolderError !== null) {
-						errors.storageLibraryPath = sourceFolderError;
+						errors.storageDLFolderPath = sourceFolderError;
 					}
 				}
 			}

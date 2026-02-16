@@ -53,7 +53,7 @@
 					"value": "true"
 				},
 				{
-					"name": "storageLibraryPath",
+					"name": "storageDLFolderPath",
 					"value": "/MDFClaimBudget"
 				}
 			],

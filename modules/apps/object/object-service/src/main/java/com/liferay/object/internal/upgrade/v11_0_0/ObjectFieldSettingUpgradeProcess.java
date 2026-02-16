@@ -24,10 +24,6 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 						"showFilesInDocumentsAndMedia'"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
-					"update ObjectFieldSetting set name = ? where name = '" +
-						"storageDLFolderPath'"));
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				SQLTransformer.transform(
 					"update ObjectFieldSetting set value = ? where name = ? " +
 						"and value like 'userComputer'"))) {
 
@@ -37,18 +33,13 @@ public class ObjectFieldSettingUpgradeProcess extends UpgradeProcess {
 			preparedStatement1.executeUpdate();
 
 			preparedStatement2.setString(
-				1, ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH);
-
-			preparedStatement2.executeUpdate();
-
-			preparedStatement3.setString(
 				1,
 				ObjectFieldSettingConstants.
 					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA);
-			preparedStatement3.setString(
+			preparedStatement2.setString(
 				2, ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
-			preparedStatement3.executeUpdate();
+			preparedStatement2.executeUpdate();
 		}
 	}
 

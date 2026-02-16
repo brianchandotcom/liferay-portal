@@ -481,7 +481,7 @@ public class ObjectEntryResourceTest {
 						new ObjectFieldSettingBuilder(
 						).name(
 							ObjectFieldSettingConstants.
-								NAME_STORAGE_LIBRARY_PATH
+								NAME_STORAGE_DL_FOLDER_PATH
 						).value(
 							StringPool.SLASH + objectDefinitionName
 						).build()),
@@ -986,7 +986,7 @@ public class ObjectEntryResourceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								StringPool.SLASH + objectDefinitionName
 							).build()),
@@ -9648,7 +9648,7 @@ public class ObjectEntryResourceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								StringPool.SLASH + objectDefinitionName
 							).build()),
@@ -12109,7 +12109,7 @@ public class ObjectEntryResourceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								StringPool.SLASH + objectDefinitionName
 							).build())

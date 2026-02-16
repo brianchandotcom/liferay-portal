@@ -292,10 +292,10 @@ definition {
 			var showFilesInLibrary = "false";
 		}
 
-		if (!(isSet(storageLibraryPath))) {
-			var storageLibraryPath = StringUtil.removeSpaces(${objectName});
+		if (!(isSet(storageDLFolderPath))) {
+			var storageDLFolderPath = StringUtil.removeSpaces(${objectName});
 
-			var storageLibraryPath = "/${storageLibraryPath}";
+			var storageDLFolderPath = "/${storageDLFolderPath}";
 		}
 
 		if (!(isSet(isReadOnly))) {
@@ -389,8 +389,8 @@ definition {
 									"value": "true"
 								},
 								{
-									"name": "storageLibraryPath",
-									"value": "${storageLibraryPath}"
+									"name": "storageDLFolderPath",
+									"value": "${storageDLFolderPath}"
 								}
 							],
 							"readOnly": "${isReadOnly}",

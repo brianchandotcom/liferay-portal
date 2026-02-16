@@ -585,13 +585,13 @@ public class ObjectFieldLocalServiceTest {
 			SetUtil.fromArray(
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH));
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH));
 		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
 			ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
 			SetUtil.fromArray(
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH));
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH));
 		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
 			ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA,
 			SetUtil.fromArray(ObjectFieldSettingConstants.NAME_STORAGE_DEPOT));
@@ -755,7 +755,7 @@ public class ObjectFieldLocalServiceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								RandomTestUtil.randomString()
 							).build())
@@ -833,7 +833,7 @@ public class ObjectFieldLocalServiceTest {
 				null, "true", null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings \"storageLibraryPath\" are required for object " +
+			"The settings \"storageDLFolderPath\" are required for object " +
 				"field \"upload\"",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Collections.singletonList(
@@ -875,7 +875,7 @@ public class ObjectFieldLocalServiceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								StringPool.BLANK
 							).build())
@@ -2013,7 +2013,7 @@ public class ObjectFieldLocalServiceTest {
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH
 				).value(
 					objectDefinition.getLabel(LocaleUtil.US)
 				).build()));
@@ -2032,7 +2032,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				StringPool.TRUE
 			).put(
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectDefinition.getLabel(LocaleUtil.US)
 			).build());
 
@@ -2123,7 +2123,7 @@ public class ObjectFieldLocalServiceTest {
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH
 				).value(
 					objectDefinition.getLabel(LocaleUtil.US)
 				).build()));
@@ -2144,7 +2144,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT,
 				String.valueOf(group.getGroupId())
 			).put(
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectDefinition.getLabel(LocaleUtil.US)
 			).build());
 
@@ -3210,7 +3210,7 @@ public class ObjectFieldLocalServiceTest {
 							new ObjectFieldSettingBuilder(
 							).name(
 								ObjectFieldSettingConstants.
-									NAME_STORAGE_LIBRARY_PATH
+									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
 								RandomTestUtil.randomString()
 							).build())

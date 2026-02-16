@@ -229,8 +229,10 @@ public class DisplayPageTemplateDTOConverter
 	private ItemExternalReference _getSubtypeItemExternalReference(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
+		ItemExternalReference itemExternalReference = null;
+
 		if (Validator.isNotNull(layoutPageTemplateEntry.getClassTypeKey())) {
-			return new ItemExternalReference() {
+			itemExternalReference = new ItemExternalReference() {
 				{
 					setExternalReferenceCode(
 						layoutPageTemplateEntry::getClassTypeKey);
@@ -244,7 +246,14 @@ public class DisplayPageTemplateDTOConverter
 				layoutPageTemplateEntry.getClassName());
 
 		if (infoItemFormVariationsProvider == null) {
-			return null;
+			return itemExternalReference;
+		}
+
+		if (itemExternalReference != null) {
+			itemExternalReference.setClassName(
+				infoItemFormVariationsProvider::getSubtypeClassName);
+
+			return itemExternalReference;
 		}
 
 		InfoItemFormVariation infoItemFormVariation =
@@ -254,11 +263,13 @@ public class DisplayPageTemplateDTOConverter
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
 		if (infoItemFormVariation == null) {
-			return null;
+			return itemExternalReference;
 		}
 
 		return new ItemExternalReference() {
 			{
+				setClassName(
+					infoItemFormVariationsProvider::getSubtypeClassName);
 				setExternalReferenceCode(
 					infoItemFormVariation::getExternalReferenceCode);
 			}

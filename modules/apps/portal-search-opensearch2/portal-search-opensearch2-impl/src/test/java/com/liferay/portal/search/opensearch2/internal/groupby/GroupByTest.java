@@ -5,13 +5,11 @@
 
 package com.liferay.portal.search.opensearch2.internal.groupby;
 
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.GroupBy;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.groupby.GroupByRequest;
@@ -50,7 +48,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -68,7 +66,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testGroupByDocsSizeZero() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -163,8 +161,8 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testMultipleGroupByRequests() throws Exception {
-		indexDuplicates("three", 3);
-		indexDuplicates("two", 2);
+		indexDuplicates(3, "three");
+		indexDuplicates(2, "two");
 
 		Map<String, List<String>> orderedResultsMap =
 			HashMapBuilder.<String, List<String>>put(
@@ -201,48 +199,6 @@ public class GroupByTest extends BaseGroupByTestCase {
 							orderedResultsMap, groupByResponses,
 							indexingTestHelper);
 					});
-			});
-	}
-
-	@Override
-	protected void assertGroupByDocsSortsScoreField(boolean desc)
-		throws Exception {
-
-		indexDuplicates("one", 1);
-		indexDuplicates("two", 2);
-		indexDuplicates("three", 3);
-
-		assertSearch(
-			indexingTestHelper -> {
-				indexingTestHelper.define(
-					searchContext -> {
-						Sort[] sorts = new Sort[1];
-
-						sorts[0] = new Sort(
-							"scoreField", Sort.SCORE_TYPE, !desc);
-
-						GroupBy groupBy = new GroupBy(GROUP_FIELD);
-
-						groupBy.setSize(3);
-						groupBy.setSorts(sorts);
-
-						searchContext.setGroupBy(groupBy);
-					});
-
-				BooleanQueryImpl booleanQueryImpl = new BooleanQueryImpl();
-
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "3");
-				booleanQueryImpl.addExactTerm(SORT_FIELD, "2");
-
-				booleanQueryImpl.add(
-					getDefaultQuery(), BooleanClauseOccur.MUST);
-
-				indexingTestHelper.setQuery(booleanQueryImpl);
-
-				indexingTestHelper.search();
-
-				indexingTestHelper.verify(
-					hits -> assertGroupsSorted(hits, desc, 3));
 			});
 	}
 
@@ -323,9 +279,9 @@ public class GroupByTest extends BaseGroupByTestCase {
 	}
 
 	private void _indexTermsSortsDuplicates() {
-		indexDuplicates("one", 2);
-		indexDuplicates("two", 2);
-		indexDuplicates("three", 3);
+		indexDuplicates(2, "one");
+		indexDuplicates(2, "two");
+		indexDuplicates(3, "three");
 	}
 
 }

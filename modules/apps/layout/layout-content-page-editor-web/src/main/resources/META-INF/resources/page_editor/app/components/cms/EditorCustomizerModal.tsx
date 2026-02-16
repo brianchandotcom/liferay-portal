@@ -84,7 +84,7 @@ function EnterpriseModal() {
 		<CardStyleModal
 			badgeText={Liferay.Language.get('enterprise')}
 			body={Liferay.Language.get(
-				'editor-customization-is-available-on-enterprise-plans'
+				'editor-customization-is-available-on-the-enterprise-plan'
 			)}
 			buttons={[
 				{

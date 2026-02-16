@@ -40,7 +40,8 @@ public class PortletElementUtilImpl implements PortletElementUtil {
 
 	@Override
 	public int getRank(Element portletElement) {
-		return 100;
+		return GetterUtil.getInteger(
+			portletElement.attributeValue("portlet-data-handler-rank"));
 	}
 
 	@Override

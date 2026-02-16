@@ -44,7 +44,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testGroupByDocsSizeDefault() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -62,7 +62,7 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testGroupByDocsSizeZero() throws Exception {
-		indexDuplicates("five", 5);
+		indexDuplicates(5, "five");
 
 		assertSearch(
 			indexingTestHelper -> {
@@ -157,8 +157,8 @@ public class GroupByTest extends BaseGroupByTestCase {
 
 	@Test
 	public void testMultipleGroupByRequests() throws Exception {
-		indexDuplicates("three", 3);
-		indexDuplicates("two", 2);
+		indexDuplicates(3, "three");
+		indexDuplicates(2, "two");
 
 		Map<String, List<String>> orderedResultsMap =
 			HashMapBuilder.<String, List<String>>put(
@@ -275,9 +275,9 @@ public class GroupByTest extends BaseGroupByTestCase {
 	}
 
 	private void _indexTermsSortsDuplicates() {
-		indexDuplicates("one", 2);
-		indexDuplicates("two", 2);
-		indexDuplicates("three", 3);
+		indexDuplicates(2, "one");
+		indexDuplicates(2, "two");
+		indexDuplicates(3, "three");
 	}
 
 }

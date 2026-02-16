@@ -7,10 +7,12 @@ package com.liferay.portal.search.test.util.aggregation;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.search.aggregation.bucket.Bucket;
 import com.liferay.portal.search.aggregation.bucket.BucketAggregationResult;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.function.Function;
 
 import org.junit.Assert;
@@ -39,6 +41,23 @@ public class AggregationAssert {
 				bucketAggregationResult.getBuckets(),
 				bucket -> String.valueOf(function.apply(bucket)),
 				StringPool.COMMA_AND_SPACE));
+	}
+
+	public static void assertKeyedBuckets(
+		BucketAggregationResult bucketAggregationResult, Tuple... tuples) {
+
+		Collection<Bucket> buckets = bucketAggregationResult.getBuckets();
+
+		Assert.assertEquals(buckets.toString(), tuples.length, buckets.size());
+
+		for (Tuple tuple : tuples) {
+			Bucket bucket = bucketAggregationResult.getBucket(
+				String.valueOf(tuple.getObject(0)));
+
+			Assert.assertEquals(
+				bucket.toString(), String.valueOf(tuple.getObject(1)),
+				String.valueOf(bucket.getDocCount()));
+		}
 	}
 
 }

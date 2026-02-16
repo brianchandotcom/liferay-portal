@@ -365,41 +365,6 @@ public class DisplayPageTemplateResourceImpl
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
-	protected Page<DisplayPageTemplate> doGetSiteDissplayPageTemplatesPage(
-			String siteExternalReferenceCode, String search,
-			Aggregation aggregation, Filter filter, Pagination pagination,
-			Sort[] sorts)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		long groupId = GroupUtil.getGroupId(
-			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
-
-		return Page.of(
-			transform(
-				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-					groupId, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				layoutPageTemplateEntry ->
-					_displayPageTemplateDTOConverter.toDTO(
-						DTOConverterContextUtil.getDTOConverterContext(
-							contextAcceptLanguage, _dtoConverterRegistry,
-							contextHttpServletRequest,
-							layoutPageTemplateEntry.
-								getLayoutPageTemplateEntryId(),
-							contextUriInfo, contextUser),
-						layoutPageTemplateEntry)),
-			pagination,
-			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
-				groupId, LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
-	}
-
 	@Override
 	protected DisplayPageTemplate doPostSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,

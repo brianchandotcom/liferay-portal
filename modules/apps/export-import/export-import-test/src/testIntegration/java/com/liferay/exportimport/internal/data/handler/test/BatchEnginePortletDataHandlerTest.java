@@ -460,7 +460,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		Assert.assertEquals(
 			"The data handler for the \"" +
-				objectDefinition2.getPluralLabel(LocaleUtil.US) +
+				objectDefinition2.getPluralLabel(LocaleUtil.getDefault()) +
 					"\" portlet is missing from the system.",
 			exportImportReportEntries.get(
 				0

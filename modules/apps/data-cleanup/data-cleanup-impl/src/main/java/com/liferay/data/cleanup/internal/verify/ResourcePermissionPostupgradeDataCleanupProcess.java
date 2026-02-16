@@ -1,0 +1,109 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.data.cleanup.internal.verify;
+
+import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
+import com.liferay.portal.upgrade.data.cleanup.ResourcePermissionDataCleanupPreupgradeProcess;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.HashSet;
+import java.util.Set;
+
+/**
+ * @author Luis Ortiz
+ */
+public class ResourcePermissionPostupgradeDataCleanupProcess
+	implements PostUpgradeDataCleanupProcess {
+
+	public ResourcePermissionPostupgradeDataCleanupProcess(
+		Connection connection,
+		ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_connection = connection;
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+
+		_dbInspector = new DBInspector(connection);
+	}
+
+	@Override
+	public void cleanUp() throws Exception {
+		if (!PostUpgradeDataCleanupProcessUtil.isEveryLiferayBundleResolved()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						ResourcePermissionPostupgradeDataCleanupProcess.class.
+							getSimpleName(),
+						" cannot be executed because there are modules with ",
+						"unsatisfied references"));
+			}
+
+			return;
+		}
+
+		Set<String> portletIds = new HashSet<>();
+
+		for (Portlet portlet : PortletLocalServiceUtil.getPortlets()) {
+			portletIds.add(portlet.getPortletId());
+		}
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select count(1), name from ResourcePermission where scope = " +
+					"? group by name")) {
+
+			preparedStatement.setInt(1, ResourceConstants.SCOPE_INDIVIDUAL);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					String name = resultSet.getString(2);
+
+					if (!name.startsWith("com_liferay_") ||
+						portletIds.contains(name)) {
+
+						continue;
+					}
+
+					_resourcePermissionLocalService.deleteResourcePermissions(
+						name);
+
+					int count = resultSet.getInt(1);
+
+					DataCleanupLoggingUtil.logDelete(
+						_log, count,
+						_dbInspector.normalizeName("ResourcePermission"),
+						StringBundler.concat(
+							"\"", name, "\" has not been found"));
+				}
+			}
+		}
+
+		UpgradeProcess upgradeProcess =
+			new ResourcePermissionDataCleanupPreupgradeProcess();
+
+		upgradeProcess.upgrade();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ResourcePermissionPostupgradeDataCleanupProcess.class);
+
+	private final Connection _connection;
+	private final DBInspector _dbInspector;
+	private final ResourcePermissionLocalService
+		_resourcePermissionLocalService;
+
+}

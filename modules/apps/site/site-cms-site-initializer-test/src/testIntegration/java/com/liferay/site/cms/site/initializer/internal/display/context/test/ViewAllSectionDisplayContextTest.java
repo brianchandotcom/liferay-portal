@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -46,6 +47,13 @@ public class ViewAllSectionDisplayContextTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@Override
+	protected String getCMSSectionFilterString(Object displayContext) {
+		return ReflectionTestUtil.invoke(
+			displayContext, "getAdditionalAPIURLParameters", new Class<?>[0],
+			new Object[0]);
+	}
 
 	@Override
 	protected Map<String, String> getExpectedCreationMenuItems()

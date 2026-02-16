@@ -82,8 +82,8 @@ public class ResourceActionPostUpgradeDataCleanupProcess
 				preparedStatement2.setString(1, name);
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-					if (resultSet2.next() && _log.isInfoEnabled()) {
-						_log.info(
+					if (resultSet2.next() && _log.isDebugEnabled()) {
+						_log.debug(
 							StringBundler.concat(
 								"Resource action ", name,
 								" is not defined in any deployed module but ",

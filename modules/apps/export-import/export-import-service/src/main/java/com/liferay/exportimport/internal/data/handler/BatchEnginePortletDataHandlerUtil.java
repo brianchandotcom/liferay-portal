@@ -113,13 +113,15 @@ public class BatchEnginePortletDataHandlerUtil {
 			).put(
 				"filter",
 				() -> {
-					List<String> filters = new ArrayList<>();
-
 					String dateFilter = _buildDateFilter(portletDataContext);
 
-					if (Validator.isNotNull(dateFilter)) {
-						filters.add(dateFilter);
+					if (Validator.isNull(dateFilter)) {
+						return null;
 					}
+
+					List<String> filters = new ArrayList<>();
+
+					filters.add(dateFilter);
 
 					if (exportImportDescriptorParameters != null) {
 						String filter = GetterUtil.getString(
@@ -128,10 +130,6 @@ public class BatchEnginePortletDataHandlerUtil {
 						if (Validator.isNotNull(filter)) {
 							filters.add("(" + filter + ")");
 						}
-					}
-
-					if (filters.isEmpty()) {
-						return null;
 					}
 
 					return StringUtil.merge(filters, " and ");

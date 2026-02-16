@@ -47,7 +47,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
@@ -90,12 +89,13 @@ public class ViewRecycleBinSectionDisplayContextTest
 			_getBreadcrumbProps(displayContext));
 	}
 
+	@Override
 	@Test
 	public void testGetCMSSectionFilterString() throws Exception {
 		Object displayContext = getSectionDisplayContext(
 			getMockHttpServletRequest());
 
-		String filterString = _getCMSSectionFilterString(displayContext);
+		String filterString = getCMSSectionFilterString(displayContext);
 
 		Assert.assertTrue(
 			filterString.contains("status eq " + WorkflowConstants.STATUS_ANY));
@@ -112,7 +112,7 @@ public class ViewRecycleBinSectionDisplayContextTest
 				GetterUtil.getBoolean(
 					depotGroup.getTypeSettingsProperty("trashEnabled")));
 
-			filterString = _getCMSSectionFilterString(displayContext);
+			filterString = getCMSSectionFilterString(displayContext);
 
 			Assert.assertTrue(
 				filterString.contains(
@@ -163,12 +163,6 @@ public class ViewRecycleBinSectionDisplayContextTest
 		return Collections.emptyMap();
 	}
 
-	protected MockHttpServletRequest getMockHttpServletRequest()
-		throws Exception {
-
-		return getMockHttpServletRequest(null);
-	}
-
 	@Override
 	protected String getObjectFolderExternalReferenceCode() {
 		if (RandomTestUtil.randomBoolean()) {
@@ -208,12 +202,6 @@ public class ViewRecycleBinSectionDisplayContextTest
 	private HashMap<String, Object> _getBreadcrumbProps(Object displayContext) {
 		return ReflectionTestUtil.invoke(
 			displayContext, "getBreadcrumbProps", new Class<?>[0]);
-	}
-
-	private String _getCMSSectionFilterString(Object displayContext) {
-		return ReflectionTestUtil.invoke(
-			displayContext, "getCMSSectionFilterString", new Class<?>[0],
-			new Object[0]);
 	}
 
 	private void _setTrashEnabledGroupProperty(Group group, String value)

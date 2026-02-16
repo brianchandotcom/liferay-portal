@@ -249,7 +249,11 @@ export default function StructureTree({search}: {search: string}) {
 									isBeingRenamed(childItem.id) ? undefined : (
 										<>
 											{childItem.type ===
-											'repeatable-group' ? (
+												'repeatable-group' &&
+											!isReferenced({
+												root: structure,
+												uuid: childItem.id,
+											}) ? (
 												<AddChildDropdown
 													className="component-action quick-action-item"
 													displayType="unstyled"

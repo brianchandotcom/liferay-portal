@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -332,8 +333,9 @@ public class MapToFieldInformationTemplateTest {
 			).toString(),
 			_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
 			_fragmentEntry.getExternalReferenceCode(),
-			_fragmentEntry.getScopeERC(), _fragmentEntry.getHtml(),
-			_fragmentEntry.getJs(), _draftLayout,
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				_fragmentEntry.getGroupId(), _draftLayout.getGroupId()),
+			_fragmentEntry.getHtml(), _fragmentEntry.getJs(), _draftLayout,
 			_fragmentEntry.getFragmentEntryKey(), _fragmentEntry.getType(),
 			null, 0, _segmentsExperienceId);
 

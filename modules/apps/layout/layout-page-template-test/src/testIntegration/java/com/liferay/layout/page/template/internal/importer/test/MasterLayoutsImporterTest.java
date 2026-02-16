@@ -228,11 +228,10 @@ public class MasterLayoutsImporterTest {
 				JSONUtil.put("headingLevel", "h1")
 			).toString(),
 			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), layout.fetchDraftLayout(),
-			fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(), null,
-			0,
+			fragmentEntry.getExternalReferenceCode(), null,
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			layout.fetchDraftLayout(), fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getType(), null, 0,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid()));
 

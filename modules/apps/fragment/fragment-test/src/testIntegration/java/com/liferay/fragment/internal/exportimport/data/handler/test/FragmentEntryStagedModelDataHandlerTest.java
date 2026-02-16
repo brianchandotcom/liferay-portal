@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -188,7 +189,8 @@ public class FragmentEntryStagedModelDataHandlerTest
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 				null, fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), stagingGroup.getGroupId()),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), fragmentEntry.getCss(),
@@ -246,12 +248,13 @@ public class FragmentEntryStagedModelDataHandlerTest
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
 				null, fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), segmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs(),
-				fragmentEntry.getConfiguration(), StringPool.BLANK,
-				StringPool.BLANK, 0, StringPool.BLANK, fragmentEntry.getType(),
-				serviceContext),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), stagingGroup.getGroupId()),
+				segmentsExperienceId, draftLayout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK,
+				fragmentEntry.getType(), serviceContext),
 			draftLayout, null, 0, segmentsExperienceId);
 
 		String dropZoneId1 = RandomTestUtil.randomString();
@@ -431,11 +434,10 @@ public class FragmentEntryStagedModelDataHandlerTest
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					null, TestPropsValues.getUserId(),
 					stagingGroup.getGroupId(), null,
-					fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC(), segmentsExperienceId,
-					layout.getPlid(), fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					fragmentEntry.getConfiguration(),
+					fragmentEntry.getExternalReferenceCode(), null,
+					segmentsExperienceId, layout.getPlid(),
+					fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 					JSONUtil.put(
 						FragmentEntryProcessorConstants.
 							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,

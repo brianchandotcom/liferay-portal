@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -100,9 +101,8 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			null, TestPropsValues.getUserId(), _group.getGroupId(), null,
-			_fragmentEntry.getExternalReferenceCode(),
-			_fragmentEntry.getScopeERC(), _segmentsExperienceId,
-			_layout.getPlid(), _fragmentEntry.getCss(),
+			_fragmentEntry.getExternalReferenceCode(), null,
+			_segmentsExperienceId, _layout.getPlid(), _fragmentEntry.getCss(),
 			_fragmentEntry.getHtml(), _fragmentEntry.getJs(),
 			_fragmentEntry.getConfiguration(),
 			JSONUtil.put(
@@ -196,8 +196,9 @@ public class FragmentEntryLinkEditableValuesUpgradeProcessTest
 				).toString(),
 				_fragmentEntry.getCss(), _fragmentEntry.getConfiguration(),
 				_fragmentEntry.getExternalReferenceCode(),
-				_fragmentEntry.getScopeERC(), _fragmentEntry.getHtml(),
-				_fragmentEntry.getJs(), _draftLayout,
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					_fragmentEntry.getGroupId(), _draftLayout.getGroupId()),
+				_fragmentEntry.getHtml(), _fragmentEntry.getJs(), _draftLayout,
 				_fragmentEntry.getFragmentEntryKey(), _segmentsExperienceId,
 				_fragmentEntry.getType());
 

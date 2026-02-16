@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -396,8 +397,10 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-				_layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
+				defaultSegmentsExperienceId, _layout.getPlid(),
+				StringPool.BLANK, html, StringPool.BLANK,
 				_read("fragment_configuration.json"), editableValues,
 				StringPool.BLANK, 0, null, fragmentEntry.getType(),
 				_serviceContext);
@@ -540,9 +543,11 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), defaultSegmentsExperienceId,
-				_layout.getPlid(), StringPool.BLANK, html, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, null,
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
+				defaultSegmentsExperienceId, _layout.getPlid(),
+				StringPool.BLANK, html, StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, 0, null,
 				fragmentEntry.getType(), _serviceContext);
 
 		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
@@ -786,9 +791,11 @@ public class AddFragmentCompositionMVCActionCommandTest {
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), segmentsExperienceId,
-				draftLayout.getPlid(), fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getConfiguration(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), _group.getGroupId()),
+				segmentsExperienceId, draftLayout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getConfiguration(),
 				fragmentEntry.getConfiguration(),
 				JSONUtil.put(
 					FragmentEntryProcessorConstants.

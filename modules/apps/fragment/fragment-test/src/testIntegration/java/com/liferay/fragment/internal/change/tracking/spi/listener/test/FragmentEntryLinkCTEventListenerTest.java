@@ -80,8 +80,7 @@ public class FragmentEntryLinkCTEventListenerTest {
 			fragmentEntryLink =
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					null, fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC(),
+					null, fragmentEntry.getExternalReferenceCode(), null,
 					_segmentsExperienceLocalService.
 						fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 					_layout.getPlid(), fragmentEntry.getCss(),

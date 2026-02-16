@@ -44,6 +44,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -136,7 +137,9 @@ public class FragmentEntryLinkUpgradeProcessTest
 				null, globalFragmentEntry.getCss(),
 				globalFragmentEntry.getConfiguration(),
 				globalFragmentEntry.getExternalReferenceCode(),
-				globalFragmentEntry.getScopeERC(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					globalFragmentEntry.getGroupId(),
+					_draftLayout.getGroupId()),
 				globalFragmentEntry.getHtml(), globalFragmentEntry.getJs(),
 				_draftLayout, globalFragmentEntry.getFragmentEntryKey(),
 				globalFragmentEntry.getType(), null, 0, _segmentsExperienceId);

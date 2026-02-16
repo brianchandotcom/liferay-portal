@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -316,10 +317,11 @@ public class FragmentsImporterTest {
 				_fragmentEntryLinkLocalService.addFragmentEntryLink(
 					null, _user.getUserId(), _group.getGroupId(), null,
 					fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC(), 0, 0, fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					fragmentEntry.getConfiguration(), StringPool.BLANK,
-					StringPool.BLANK, 0, StringPool.BLANK, 0,
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						fragmentEntry.getGroupId(), _group.getGroupId()),
+					0, 0, fragmentEntry.getCss(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+					StringPool.BLANK, StringPool.BLANK, 0, StringPool.BLANK, 0,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 

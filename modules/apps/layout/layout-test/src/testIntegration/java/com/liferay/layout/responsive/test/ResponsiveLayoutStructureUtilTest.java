@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -96,8 +97,10 @@ public class ResponsiveLayoutStructureUtilTest {
 		_fragmentEntryLink = _fragmentEntryLinkService.addFragmentEntryLink(
 			null, _group.getGroupId(), null,
 			fragmentEntry.getExternalReferenceCode(),
-			fragmentEntry.getScopeERC(), _defaultSegmentsExperienceId,
-			_layout.getPlid(), fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), _group.getGroupId()),
+			_defaultSegmentsExperienceId, _layout.getPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
 			fragmentEntry.getJs(), fragmentEntry.getConfiguration(), null,
 			StringPool.BLANK, 0, null, fragmentEntry.getType(), serviceContext);
 

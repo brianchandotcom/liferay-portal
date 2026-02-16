@@ -19,6 +19,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -154,11 +155,25 @@ public abstract class BaseDisplayContextTestCase {
 	protected MockHttpServletRequest getMockHttpServletRequest()
 		throws Exception {
 
-		return getMockHttpServletRequest(null);
+		return getMockHttpServletRequest(TestPropsValues.getUser(), null);
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest(
 			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return getMockHttpServletRequest(
+			TestPropsValues.getUser(), objectEntryFolder);
+	}
+
+	protected MockHttpServletRequest getMockHttpServletRequest(User user)
+		throws Exception {
+
+		return getMockHttpServletRequest(user, null);
+	}
+
+	protected MockHttpServletRequest getMockHttpServletRequest(
+			User user, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -170,13 +185,21 @@ public abstract class BaseDisplayContextTestCase {
 		}
 
 		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, getThemeDisplay(mockHttpServletRequest));
+			WebKeys.THEME_DISPLAY,
+			getThemeDisplay(user, mockHttpServletRequest));
 
 		return mockHttpServletRequest;
 	}
 
 	protected ThemeDisplay getThemeDisplay(
 			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		return getThemeDisplay(TestPropsValues.getUser(), httpServletRequest);
+	}
+
+	protected ThemeDisplay getThemeDisplay(
+			User user, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -195,12 +218,12 @@ public abstract class BaseDisplayContextTestCase {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setPortalURL("http://localhost:8080");
-		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRealUser(user);
 		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setSiteGroupId(group.getGroupId());
 		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(user);
 
 		return themeDisplay;
 	}

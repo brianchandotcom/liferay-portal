@@ -7,6 +7,7 @@ package com.liferay.staging.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -29,6 +30,9 @@ public interface StagingConfiguration {
 	)
 	public boolean publishDisplayedContent();
 
+	@ExtendedAttributeDefinition(
+		visibilityControllerKey = "com.liferay.staging.internal.configuration.admin.display.StagingConfigurationVisibilityController"
+	)
 	@Meta.AD(
 		deflt = "true", description = "publish-parent-layouts-by-default-help",
 		name = "publish-parent-layouts-by-default", required = false

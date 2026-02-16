@@ -19,6 +19,7 @@ import {
 	getSpaces,
 } from '../buildStructure';
 import isCustomObjectField from '../isCustomObjectField';
+import sortChildren from './sortChildren';
 
 export default function refreshReferencedStructures({
 	ancestors = [],
@@ -215,5 +216,5 @@ export default function refreshReferencedStructures({
 		}
 	}
 
-	return children;
+	return sortChildren(children);
 }

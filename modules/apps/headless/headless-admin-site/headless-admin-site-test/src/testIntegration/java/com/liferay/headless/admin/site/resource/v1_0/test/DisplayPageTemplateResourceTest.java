@@ -766,11 +766,13 @@ public class DisplayPageTemplateResourceTest
 			infoItemFormVariations.get(0);
 
 		return _getClassSubtypeReference(
-			className, infoItemFormVariation.getExternalReferenceCode());
+			className, infoItemFormVariation.getExternalReferenceCode(),
+			infoItemFormVariationsProvider.getSubtypeClassName());
 	}
 
 	private ClassSubtypeReference _getClassSubtypeReference(
-		String className, String externalReferenceCode) {
+		String className, String externalReferenceCode,
+		String subtypeClassName) {
 
 		ClassSubtypeReference classSubtypeReference =
 			new ClassSubtypeReference();
@@ -780,6 +782,7 @@ public class DisplayPageTemplateResourceTest
 		ItemExternalReference itemExternalReference =
 			new ItemExternalReference();
 
+		itemExternalReference.setClassName(subtypeClassName);
 		itemExternalReference.setExternalReferenceCode(externalReferenceCode);
 
 		classSubtypeReference.setSubTypeExternalReference(
@@ -1981,7 +1984,8 @@ public class DisplayPageTemplateResourceTest
 
 				ClassSubtypeReference classSubtypeReference1 =
 					_getClassSubtypeReference(
-						JournalArticle.class.getName(), externalReferenceCode);
+						JournalArticle.class.getName(), externalReferenceCode,
+						DDMStructure.class.getName());
 
 				DisplayPageTemplate displayPageTemplate1 =
 					_randomDisplayPageTemplate(
@@ -2020,7 +2024,8 @@ public class DisplayPageTemplateResourceTest
 				String externalReferenceCode = RandomTestUtil.randomString();
 
 				ClassSubtypeReference classSubtypeReference2 =
-					_getClassSubtypeReference(className, externalReferenceCode);
+					_getClassSubtypeReference(
+						className, externalReferenceCode, null);
 
 				DisplayPageTemplate displayPageTemplate2 =
 					_randomDisplayPageTemplate(
@@ -2069,7 +2074,8 @@ public class DisplayPageTemplateResourceTest
 		ClassSubtypeReference classSubtypeReference3 =
 			_getClassSubtypeReference(
 				JournalArticle.class.getName(),
-				infoItemFormVariation.getExternalReferenceCode());
+				infoItemFormVariation.getExternalReferenceCode(),
+				DDMStructure.class.getName());
 
 		DisplayPageTemplate displayPageTemplate3 = _randomDisplayPageTemplate(
 			classSubtypeReference3, Boolean.FALSE);

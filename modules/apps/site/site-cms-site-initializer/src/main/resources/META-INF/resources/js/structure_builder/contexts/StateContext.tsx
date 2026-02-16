@@ -96,7 +96,7 @@ const INITIAL_STATE: State = {
 	unsavedChanges: false,
 };
 
-type AddFieldAction = {field: Field; parentUuid?: Uuid; type: 'add-field'};
+type AddFieldAction = {field: Field; type: 'add-field'};
 
 type AddReferencedStructuresAction = {
 	referencedStructures: ReferencedStructure[];
@@ -255,14 +255,14 @@ function reducer(state: State, action: Action): State {
 
 	switch (action.type) {
 		case 'add-field': {
-			const {field, parentUuid} = action;
+			const {field} = action;
 
 			const {structure} = state;
 
 			let parent: Structure | RepeatableGroup = structure;
 
-			if (parentUuid) {
-				const item = findChild({root: structure, uuid: parentUuid});
+			if (field.parent !== structure.uuid) {
+				const item = findChild({root: structure, uuid: field.parent});
 
 				if (item?.type === 'repeatable-group') {
 					parent = item;
@@ -280,7 +280,6 @@ function reducer(state: State, action: Action): State {
 
 			const children = addChild({
 				child: nextField,
-				parentUuid: parent.uuid,
 				root: structure,
 			});
 
@@ -336,7 +335,6 @@ function reducer(state: State, action: Action): State {
 
 			const children = addChild({
 				child: relatedContent,
-				parentUuid: relatedContent.parent,
 				root: structure,
 			});
 
@@ -501,7 +499,6 @@ function reducer(state: State, action: Action): State {
 
 			const children = addChild({
 				child: copy,
-				parentUuid: parent.uuid,
 				root: structure,
 			});
 

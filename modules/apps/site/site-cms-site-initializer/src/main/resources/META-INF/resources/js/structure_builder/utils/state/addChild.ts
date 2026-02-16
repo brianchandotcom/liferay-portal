@@ -8,16 +8,13 @@ import {
 	Structure,
 	StructureChild,
 } from '../../types/Structure';
-import {Uuid} from '../../types/Uuid';
 import sortChildren from './sortChildren';
 
 export default function addChild({
 	child,
-	parentUuid,
 	root,
 }: {
 	child: StructureChild;
-	parentUuid: Uuid;
 	root: Structure | RepeatableGroup;
 }): Structure['children'] | RepeatableGroup['children'] {
 	const children = new Map();
@@ -33,7 +30,6 @@ export default function addChild({
 				...rootChild,
 				children: addChild({
 					child,
-					parentUuid,
 					root: rootChild,
 				}),
 			};
@@ -47,7 +43,7 @@ export default function addChild({
 
 	// Insert child if this is the correct parent
 
-	if (root.uuid === parentUuid) {
+	if (root.uuid === child.parent) {
 		children.set(child.uuid, child);
 	}
 

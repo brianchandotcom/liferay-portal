@@ -28,6 +28,7 @@ import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -63,6 +64,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Integer rangeKey, String rangeStart)
 		throws Exception {
 
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
+
 		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);
 
@@ -86,6 +91,10 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Long depotEntryId, String languageId, String rangeEnd,
 			Integer rangeKey, String rangeStart)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);

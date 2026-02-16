@@ -26,6 +26,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -56,6 +57,10 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 	public Page<ExpiredAsset> getExpiredAssetsPage(
 			Long depotEntryId, String languageId, Pagination pagination)
 		throws Exception {
+
+		if (LicenseManagerUtil.isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
 
 		Long[] groupIds = DepotEntryUtil.getGroupIds(
 			DepotEntryUtil.getDepotEntries(

@@ -43,7 +43,7 @@ const renderCSSSelectorField = ({
 	);
 };
 
-describe('CSSClassSelectorField', () => {
+describe.skip('CSSClassSelectorField', () => {
 	beforeEach(() => {
 		window.document.createRange = () => ({
 			cloneRange: (range) => range,

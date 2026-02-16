@@ -1882,6 +1882,32 @@ public class DisplayPageTemplateResourceTest
 			putDisplayPageTemplate.getDisplayPageTemplateSettings());
 	}
 
+	private void _testPutSiteDisplayPageTemplateWithMissingOptionalReference(
+			int count, UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.util.LogUtil",
+				LoggerTestUtil.WARN)) {
+
+			unsafeRunnable.run();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(
+				logEntries.toString(), count, logEntries.size());
+
+			for (LogEntry logEntry : logEntries) {
+				String message = logEntry.getMessage();
+
+				Assert.assertTrue(
+					message,
+					message.startsWith(
+						"Optional reference generated for missing"));
+			}
+		}
+	}
+
 	private void _testPutSiteDisplayPageTemplateWithPageSpecifications()
 		throws Exception {
 
@@ -1948,36 +1974,82 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private void _testPutSiteDisplayPageTemplateWithSubtype() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
+		_testPutSiteDisplayPageTemplateWithMissingOptionalReference(
+			1,
+			() -> {
+				String externalReferenceCode = RandomTestUtil.randomString();
 
-		ClassSubtypeReference classSubtypeReference = _getClassSubtypeReference(
-			JournalArticle.class.getName(), externalReferenceCode);
+				ClassSubtypeReference classSubtypeReference1 =
+					_getClassSubtypeReference(
+						JournalArticle.class.getName(), externalReferenceCode);
 
-		DisplayPageTemplate displayPageTemplate = _randomDisplayPageTemplate(
-			classSubtypeReference, Boolean.FALSE);
+				DisplayPageTemplate displayPageTemplate1 =
+					_randomDisplayPageTemplate(
+						classSubtypeReference1, Boolean.FALSE);
 
-		DisplayPageTemplate putDisplayPageTemplate =
-			displayPageTemplateResource.putSiteDisplayPageTemplate(
-				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplate);
+				DisplayPageTemplate putDisplayPageTemplate1 =
+					displayPageTemplateResource.putSiteDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						displayPageTemplate1.getExternalReferenceCode(),
+						displayPageTemplate1);
 
-		Assert.assertEquals(
-			classSubtypeReference,
-			putDisplayPageTemplate.getContentTypeReference());
+				Assert.assertEquals(
+					classSubtypeReference1,
+					putDisplayPageTemplate1.getContentTypeReference());
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryLocalService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					displayPageTemplate.getExternalReferenceCode(),
-					testGroup.getGroupId());
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						getLayoutPageTemplateEntryByExternalReferenceCode(
+							displayPageTemplate1.getExternalReferenceCode(),
+							testGroup.getGroupId());
 
-		Assert.assertEquals(
-			JournalArticle.class.getName(),
-			layoutPageTemplateEntry.getClassName());
-		Assert.assertEquals(-2, layoutPageTemplateEntry.getClassTypeId());
-		Assert.assertEquals(
-			externalReferenceCode, layoutPageTemplateEntry.getClassTypeKey());
+				Assert.assertEquals(
+					JournalArticle.class.getName(),
+					layoutPageTemplateEntry.getClassName());
+				Assert.assertEquals(
+					-2, layoutPageTemplateEntry.getClassTypeId());
+				Assert.assertEquals(
+					externalReferenceCode,
+					layoutPageTemplateEntry.getClassTypeKey());
+			});
+
+		_testPutSiteDisplayPageTemplateWithMissingOptionalReference(
+			2,
+			() -> {
+				String className = RandomTestUtil.randomString();
+				String externalReferenceCode = RandomTestUtil.randomString();
+
+				ClassSubtypeReference classSubtypeReference2 =
+					_getClassSubtypeReference(className, externalReferenceCode);
+
+				DisplayPageTemplate displayPageTemplate2 =
+					_randomDisplayPageTemplate(
+						classSubtypeReference2, Boolean.FALSE);
+
+				DisplayPageTemplate putDisplayPageTemplate2 =
+					displayPageTemplateResource.putSiteDisplayPageTemplate(
+						testGroup.getExternalReferenceCode(),
+						displayPageTemplate2.getExternalReferenceCode(),
+						displayPageTemplate2);
+
+				Assert.assertEquals(
+					classSubtypeReference2,
+					putDisplayPageTemplate2.getContentTypeReference());
+
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					_layoutPageTemplateEntryLocalService.
+						getLayoutPageTemplateEntryByExternalReferenceCode(
+							displayPageTemplate2.getExternalReferenceCode(),
+							testGroup.getGroupId());
+
+				Assert.assertEquals(
+					className, layoutPageTemplateEntry.getClassName());
+				Assert.assertEquals(
+					-2, layoutPageTemplateEntry.getClassTypeId());
+				Assert.assertEquals(
+					externalReferenceCode,
+					layoutPageTemplateEntry.getClassTypeKey());
+			});
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			testGroup.getGroupId(), JournalArticle.class.getName());
@@ -1994,27 +2066,28 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertNotNull(infoItemFormVariation);
 
-		classSubtypeReference = _getClassSubtypeReference(
-			JournalArticle.class.getName(),
-			infoItemFormVariation.getExternalReferenceCode());
+		ClassSubtypeReference classSubtypeReference3 =
+			_getClassSubtypeReference(
+				JournalArticle.class.getName(),
+				infoItemFormVariation.getExternalReferenceCode());
 
-		displayPageTemplate = _randomDisplayPageTemplate(
-			classSubtypeReference, Boolean.FALSE);
+		DisplayPageTemplate displayPageTemplate3 = _randomDisplayPageTemplate(
+			classSubtypeReference3, Boolean.FALSE);
 
-		putDisplayPageTemplate =
+		DisplayPageTemplate putDisplayPageTemplate3 =
 			displayPageTemplateResource.putSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(),
-				displayPageTemplate.getExternalReferenceCode(),
-				displayPageTemplate);
+				displayPageTemplate3.getExternalReferenceCode(),
+				displayPageTemplate3);
 
 		Assert.assertEquals(
-			classSubtypeReference,
-			putDisplayPageTemplate.getContentTypeReference());
+			classSubtypeReference3,
+			putDisplayPageTemplate3.getContentTypeReference());
 
-		layoutPageTemplateEntry =
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByExternalReferenceCode(
-					displayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate3.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
 		Assert.assertEquals(

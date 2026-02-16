@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.List;
 
@@ -173,15 +174,14 @@ public class ExportImportReportEntryLocalServiceImpl
 		Long exportImportConfigurationId =
 			ExportImportThreadLocal.getExportImportConfigurationId();
 
-		boolean importInProcess = ExportImportThreadLocal.isImportInProcess();
-
 		actionableDynamicQuery.setPerformActionMethod(
 			(ExportImportReportEntry exportImportReportEntry) -> {
 				long exportImportReportEntryId =
 					exportImportReportEntry.getExportImportReportEntryId();
 
 				try {
-					if (importInProcess &&
+					if ((GetterUtil.getLong(exportImportConfigurationId) !=
+							0) &&
 						(exportImportConfigurationId ==
 							exportImportReportEntry.
 								getExportImportConfigurationId())) {

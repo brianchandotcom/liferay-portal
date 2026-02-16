@@ -6,7 +6,7 @@
 import {dateUtils} from 'frontend-js-web';
 
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
-import {ASSET_TYPE, ASSET_TYPE_ERC} from './constants';
+import {ASSET_TYPE, L_CONTENTS, L_FILES} from './constants';
 
 export function formatDate(date: string): string {
 	return dateUtils.format(new Date(date), 'P p');
@@ -14,23 +14,16 @@ export function formatDate(date: string): string {
 
 export function getAssetType(objectEntry: IAssetObjectEntry): string {
 	const {
-		systemProperties: {
-			objectDefinitionBrief: {externalReferenceCode = ''} = {},
-		} = {},
+		objectEntryFolderExternalReferenceCode:
+			objectEntryFolderExternalReferenceCode = '',
 	} = objectEntry;
 
 	let type = ASSET_TYPE.FOLDER;
 
-	if (externalReferenceCode === ASSET_TYPE_ERC.BASIC_DOCUMENT) {
-		type = ASSET_TYPE.FILES;
-	}
-	else if (externalReferenceCode === ASSET_TYPE_ERC.BASIC_WEB_CONTENT) {
+	if (objectEntryFolderExternalReferenceCode === L_CONTENTS) {
 		type = ASSET_TYPE.CONTENTS;
 	}
-	else if (externalReferenceCode === ASSET_TYPE_ERC.BLOG) {
-		type = ASSET_TYPE.BLOGS;
-	}
-	else if (externalReferenceCode === ASSET_TYPE_ERC.EXTERNAL_VIDEO) {
+	else if (objectEntryFolderExternalReferenceCode === L_FILES) {
 		type = ASSET_TYPE.FILES;
 	}
 

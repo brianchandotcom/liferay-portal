@@ -39,10 +39,7 @@ jest.mock('frontend-js-components-web', () => {
 describe('EnterpriseOnlyPlaceholder', () => {
 	it('renders the placeholder with all its elements', () => {
 		render(
-			<EnterpriseOnlyPlaceholder
-				enterpriseDetailsActionLink="/my-temp-link"
-				learnResources={mockLearnResources}
-			/>
+			<EnterpriseOnlyPlaceholder learnResources={mockLearnResources} />
 		);
 
 		const image = screen.getByAltText('empty-state-image');
@@ -70,6 +67,9 @@ describe('EnterpriseOnlyPlaceholder', () => {
 			name: 'get-enterprise-details',
 		});
 		expect(detailsLink).toBeInTheDocument();
-		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
+		expect(detailsLink).toHaveAttribute(
+			'href',
+			'https://www.liferay.com/en/contact-sales'
+		);
 	});
 });

@@ -176,7 +176,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		layoutPageTemplateEntry.setLayoutPageTemplateEntryKey(
 			layoutPageTemplateEntryKey);
 		layoutPageTemplateEntry.setClassNameId(classNameId);
-		layoutPageTemplateEntry.setClassTypeId(classTypeId);
+		layoutPageTemplateEntry.setClassTypeId(
+			LayoutPageTemplateEntryUtil.getClassTypeId(
+				classNameId, classTypeKey, groupId));
 		layoutPageTemplateEntry.setClassTypeKey(classTypeKey);
 		layoutPageTemplateEntry.setName(name);
 		layoutPageTemplateEntry.setType(type);
@@ -266,14 +268,17 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Layout page template entry
 
+		long classTypeId = LayoutPageTemplateEntryUtil.getClassTypeId(
+			classNameId, classTypeKey, groupId);
+
 		_validate(groupId, classNameId, classTypeId);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			addLayoutPageTemplateEntry(
 				externalReferenceCode, userId, groupId,
 				layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
-				classNameId, classTypeKey, name, type, 0, false, 0,
-				0, masterLayoutPlid, status, serviceContext);
+				classNameId, classTypeKey, name, type, 0, false, 0, 0,
+				masterLayoutPlid, status, serviceContext);
 
 		// Dynamic data mapping structure link
 
@@ -822,7 +827,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntry.setModifiedDate(new Date());
 		layoutPageTemplateEntry.setClassNameId(classNameId);
-		layoutPageTemplateEntry.setClassTypeId(classTypeId);
+		layoutPageTemplateEntry.setClassTypeId(
+			layoutPageTemplateEntry.getClassTypeId());
 		layoutPageTemplateEntry.setClassTypeKey(classTypeKey);
 
 		return layoutPageTemplateEntryLocalService.

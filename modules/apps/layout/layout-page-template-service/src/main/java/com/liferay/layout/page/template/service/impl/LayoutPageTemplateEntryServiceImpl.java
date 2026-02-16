@@ -70,30 +70,8 @@ public class LayoutPageTemplateEntryServiceImpl
 			String externalReferenceCode, long groupId,
 			long layoutPageTemplateCollectionId,
 			String layoutPageTemplateEntryKey, long classNameId,
-			long classTypeId, String classTypeKey, String name, int type,
-			long previewFileEntryId, boolean defaultTemplate,
-			long layoutPrototypeId, long plid, long masterLayoutPlid,
-			int status, ServiceContext serviceContext)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), groupId,
-			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
-
-		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			externalReferenceCode, getUserId(), groupId,
-			layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
-			classNameId, classTypeId, classTypeKey, name, type,
-			previewFileEntryId, defaultTemplate, layoutPrototypeId, plid,
-			masterLayoutPlid, status, serviceContext);
-	}
-
-	@Override
-	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId,
-			String layoutPageTemplateEntryKey, long classNameId,
-			long classTypeId, String classTypeKey, String name,
+			String classTypeKey, String name, int type, long previewFileEntryId,
+			boolean defaultTemplate, long layoutPrototypeId, long plid,
 			long masterLayoutPlid, int status, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -104,7 +82,28 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			externalReferenceCode, getUserId(), groupId,
 			layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
-			classNameId, classTypeId, classTypeKey, name,
+			classNameId, classTypeKey, name, type, previewFileEntryId,
+			defaultTemplate, layoutPrototypeId, plid, masterLayoutPlid, status,
+			serviceContext);
+	}
+
+	@Override
+	public LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			String externalReferenceCode, long groupId,
+			long layoutPageTemplateCollectionId,
+			String layoutPageTemplateEntryKey, long classNameId,
+			String classTypeKey, String name, long masterLayoutPlid, int status,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		_portletResourcePermission.check(
+			getPermissionChecker(), groupId,
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
+
+		return layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+			externalReferenceCode, getUserId(), groupId,
+			layoutPageTemplateCollectionId, layoutPageTemplateEntryKey,
+			classNameId, classTypeKey, name,
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, masterLayoutPlid,
 			status, serviceContext);
 	}
@@ -172,9 +171,8 @@ public class LayoutPageTemplateEntryServiceImpl
 				null, getUserId(), sourceLayout.getGroupId(),
 				targetLayoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				null, 0, 0, null, name,
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0, false, 0, 0,
-				sourceLayout.getMasterLayoutPlid(),
+				null, 0, null, name, LayoutPageTemplateEntryTypeConstants.BASIC,
+				0, false, 0, 0, sourceLayout.getMasterLayoutPlid(),
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 		Layout layout = _layoutLocalService.getLayout(
@@ -1019,7 +1017,7 @@ public class LayoutPageTemplateEntryServiceImpl
 
 	@Override
 	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long classNameId, long classTypeId,
+			long layoutPageTemplateEntryId, long classNameId,
 			String classTypeKey)
 		throws PortalException {
 
@@ -1030,7 +1028,7 @@ public class LayoutPageTemplateEntryServiceImpl
 		return layoutPageTemplateEntryLocalService.
 			updateLayoutPageTemplateEntry(
 				getUserId(), layoutPageTemplateEntryId, classNameId,
-				classTypeId, classTypeKey);
+				classTypeKey);
 	}
 
 	@Override

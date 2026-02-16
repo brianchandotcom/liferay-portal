@@ -201,6 +201,19 @@ public class UserTestUtil {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
+	public static User addUser(Company company, String roleName)
+		throws Exception {
+
+		User user = addUser(company);
+
+		Role role = RoleLocalServiceUtil.getRole(
+			company.getCompanyId(), roleName);
+
+		UserLocalServiceUtil.addRoleUser(role.getRoleId(), user);
+
+		return user;
+	}
+
 	public static User addUser(long... groupIds) throws Exception {
 		return addUser(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),

@@ -68,7 +68,7 @@ function IntroModal() {
 			]}
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={handleClose}
-			title={Liferay.Language.get('introducing-editor-customizer')}
+			title={Liferay.Language.get('introducing-editor-customization')}
 		/>
 	);
 }
@@ -84,7 +84,7 @@ function EnterpriseModal() {
 		<CardStyleModal
 			badgeText={Liferay.Language.get('enterprise')}
 			body={Liferay.Language.get(
-				'editor-customization-is-available-on-the-enterprise-plan'
+				'editor-customization-is-available-on-the-enterprise-subscription'
 			)}
 			buttons={[
 				{
@@ -99,7 +99,7 @@ function EnterpriseModal() {
 			imageSrc={`${config.imagesPath}/editor_customizer.svg`}
 			onCloseModal={() => setVisible(false)}
 			title={Liferay.Language.get(
-				'upgrade-to-unlock-the-editor-customizer'
+				'upgrade-to-unlock-the-editor-customization'
 			)}
 		/>
 	);

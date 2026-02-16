@@ -49,6 +49,12 @@ public class IndexFactoryFixture {
 		).thenReturn(
 			elasticsearchClientResolver.getElasticsearchClient()
 		);
+
+		Mockito.when(
+			_elasticsearchConnectionManager.getJsonpMapper(Mockito.any())
+		).thenReturn(
+			elasticsearchClientResolver.getJsonpMapper(null)
+		);
 	}
 
 	public void createIndices() {

@@ -55,21 +55,31 @@ public class SideNavigationDisplayContext {
 	public List<String> getExpandedKeys() {
 		List<String> expandedKeys = new ArrayList<>();
 
-		PanelCategory panelCategory = _getPanelCategory();
-
-		PanelCategory childPanelCategory = _getActivePanelCategory(
-			panelCategory.getKey());
-
-		if (childPanelCategory != null) {
-			expandedKeys.add(childPanelCategory.getKey());
-		}
-
 		String storedExpandedKeysAsString = SessionClicks.get(
 			_httpServletRequest, _getExpandedKeysSessionKey(),
 			StringPool.BLANK);
 
-		Collections.addAll(
-			expandedKeys, storedExpandedKeysAsString.split(StringPool.COMMA));
+		if (!storedExpandedKeysAsString.isEmpty()) {
+			Collections.addAll(
+				expandedKeys,
+				storedExpandedKeysAsString.split(StringPool.COMMA));
+
+			return expandedKeys;
+		}
+
+		PanelCategory panelCategory = _getPanelCategory();
+
+		if (panelCategory == null) {
+			return expandedKeys;
+		}
+
+		List<PanelCategory> childPanelCategories =
+			_panelCategoryHelper.getChildPanelCategories(
+				panelCategory.getKey(), _themeDisplay);
+
+		for (PanelCategory childPanelCategory : childPanelCategories) {
+			expandedKeys.add(childPanelCategory.getKey());
+		}
 
 		return expandedKeys;
 	}

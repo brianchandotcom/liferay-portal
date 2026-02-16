@@ -6,6 +6,7 @@
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
@@ -14,6 +15,7 @@ interface CardStyleModalProps {
 	body: string;
 	buttons: Array<{
 		displayType: 'primary' | 'secondary';
+		href?: string;
 		icon?: string;
 		label: string;
 		onClick?: () => void;
@@ -70,28 +72,48 @@ const CardStyleModal: React.FC<CardStyleModalProps> = ({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						{buttons.map((button, index) => (
-							<ClayButton
-								displayType={button.displayType}
-								key={index}
-								onClick={() => {
-									if (button.onClick) {
-										button.onClick();
-									}
+						{buttons.map((button, index) =>
+							button.href ? (
+								<ClayLink
+									className={`btn btn-${button.displayType}`}
+									displayType="unstyled"
+									href={button.href}
+									key={index}
+									role="button"
+									target="_blank"
+								>
+									{button.label}
 
-									onClose();
-								}}
-							>
-								{button.icon ? (
-									<ClayIcon
-										className="inline-item inline-item-before"
-										symbol={button.icon}
-									/>
-								) : null}
+									{button.icon ? (
+										<ClayIcon
+											className="inline-item inline-item-after"
+											symbol={button.icon}
+										/>
+									) : null}
+								</ClayLink>
+							) : (
+								<ClayButton
+									displayType={button.displayType}
+									key={index}
+									onClick={() => {
+										if (button.onClick) {
+											button.onClick();
+										}
 
-								{button.label}
-							</ClayButton>
-						))}
+										onClose();
+									}}
+								>
+									{button.icon ? (
+										<ClayIcon
+											className="inline-item inline-item-before"
+											symbol={button.icon}
+										/>
+									) : null}
+
+									{button.label}
+								</ClayButton>
+							)
+						)}
 					</ClayButton.Group>
 				}
 			/>

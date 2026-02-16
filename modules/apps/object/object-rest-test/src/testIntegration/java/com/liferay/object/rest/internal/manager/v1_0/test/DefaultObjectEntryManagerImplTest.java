@@ -7686,6 +7686,80 @@ public class DefaultObjectEntryManagerImplTest
 	}
 
 	@Test
+	public void testPartialUpdateObjectEntryWithPortletImportInProcess()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				RandomTestUtil.randomLong());
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.getOrAddEmptyObjectEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+					TestPropsValues.getUserId(),
+					objectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY,
+				serviceBuilderObjectEntry.getStatus());
+
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_EMPTY,
+				_defaultObjectEntryManager.partialUpdateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+						}
+					}));
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_APPROVED,
+				_defaultObjectEntryManager.partialUpdateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+							setStatus(
+								new Status() {
+									{
+										setCode(
+											WorkflowConstants.STATUS_APPROVED);
+									}
+								});
+						}
+					}));
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_APPROVED,
+				_defaultObjectEntryManager.partialUpdateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+							setStatus(
+								new Status() {
+									{
+										setCode(
+											WorkflowConstants.STATUS_EXPIRED);
+									}
+								});
+						}
+					}));
+
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+	}
+
+	@Test
 	public void testPartialUpdateObjectEntryWithReadOnlyFields()
 		throws Exception {
 
@@ -9131,6 +9205,80 @@ public class DefaultObjectEntryManagerImplTest
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
 		PrincipalThreadLocal.setName(_originalName);
+	}
+
+	@Test
+	public void testUpdateObjectEntryWithPortletImportInProcess()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				RandomTestUtil.randomLong());
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+				_objectEntryLocalService.getOrAddEmptyObjectEntry(
+					RandomTestUtil.randomString(), TestPropsValues.getGroupId(),
+					TestPropsValues.getUserId(),
+					objectDefinition.getObjectDefinitionId());
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY,
+				serviceBuilderObjectEntry.getStatus());
+
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_EMPTY,
+				_defaultObjectEntryManager.updateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+						}
+					}));
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_APPROVED,
+				_defaultObjectEntryManager.updateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+							setStatus(
+								new Status() {
+									{
+										setCode(
+											WorkflowConstants.STATUS_APPROVED);
+									}
+								});
+						}
+					}));
+			_assertObjectEntryStatus(
+				WorkflowConstants.STATUS_APPROVED,
+				_defaultObjectEntryManager.updateObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					serviceBuilderObjectEntry.getObjectEntryId(),
+					new ObjectEntry() {
+						{
+							setFriendlyUrlPath("Test URL");
+							setStatus(
+								new Status() {
+									{
+										setCode(
+											WorkflowConstants.STATUS_EXPIRED);
+									}
+								});
+						}
+					}));
+
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
 	}
 
 	@FeatureFlag("LPD-17564")

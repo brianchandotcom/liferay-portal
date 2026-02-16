@@ -776,7 +776,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		InputStream inputStream = portletDataContext.getZipEntryAsInputStream(
 			normalizedFileName);
 
-		if (inputStream1 == null) {
+		if (inputStream == null) {
 			return exportedLayoutERCs;
 		}
 
@@ -807,7 +807,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 		finally {
-			StreamUtil.cleanUp(true, inputStream);
+			StreamUtil.cleanUp(inputStream);
 		}
 
 		return exportedLayoutERCs;

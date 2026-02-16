@@ -7525,7 +7525,11 @@ public class JournalArticleLocalServiceImpl
 
 		targetArticle.setModifiedDate(modifiedDate);
 
-		targetArticle.setExternalReferenceCode(targetArticleId);
+		if (!newArticle) {
+			targetArticle.setExternalReferenceCode(
+				sourceArticle.getExternalReferenceCode());
+		}
+
 		targetArticle.setFolderId(sourceArticle.getFolderId());
 		targetArticle.setTreePath(sourceArticle.getTreePath());
 		targetArticle.setArticleId(targetArticleId);

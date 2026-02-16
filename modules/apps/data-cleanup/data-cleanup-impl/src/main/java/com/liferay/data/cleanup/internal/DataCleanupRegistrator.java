@@ -58,6 +58,7 @@ import com.liferay.data.cleanup.internal.verify.ClassNamePostUpgradeDataCleanupP
 import com.liferay.data.cleanup.internal.verify.PortletPreferencesPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.PostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ResourceActionPostUpgradeDataCleanupProcess;
+import com.liferay.data.cleanup.internal.verify.ResourcePermissionPostupgradeDataCleanupProcess;
 import com.liferay.data.cleanup.internal.verify.ServiceComponentPostUpgradeDataCleanupProcess;
 import com.liferay.data.cleanup.util.DataCleanupUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
@@ -77,6 +78,7 @@ import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -96,7 +98,6 @@ import com.liferay.portal.upgrade.data.cleanup.LayoutDataCleanupPreupgradeProces
 import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.PortalPreferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
-import com.liferay.portal.upgrade.data.cleanup.ResourcePermissionDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.RoleDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
 import com.liferay.portal.verify.VerifyProcess;
@@ -490,6 +491,26 @@ public class DataCleanupRegistrator {
 				}));
 		_registerDataCleanup(
 			DataCleanupAdapter.create(
+				"remove-resource-permission-orphan-data",
+				_getBundleSymbolicName(
+					ClassNamePostUpgradeDataCleanupProcess.class),
+				DataCleanup.SYSTEM_DATA_CLEANUP,
+				new VerifyProcess() {
+
+					@Override
+					protected void doVerify() throws Exception {
+						PostUpgradeDataCleanupProcess
+							postUpgradeDataCleanupProcess =
+								new ResourcePermissionPostupgradeDataCleanupProcess(
+									connection,
+									_resourcePermissionLocalService);
+
+						postUpgradeDataCleanupProcess.cleanUp();
+					}
+
+				}));
+		_registerDataCleanup(
+			DataCleanupAdapter.create(
 				"remove-service-component-orphan-data",
 				_getBundleSymbolicName(
 					ClassNamePostUpgradeDataCleanupProcess.class),
@@ -578,9 +599,6 @@ public class DataCleanupRegistrator {
 			QuartzJobDetailsDataCleanupPreupgradeProcess.class,
 			"remove-quartz-job-details-data"
 		).put(
-			ResourcePermissionDataCleanupPreupgradeProcess.class,
-			"remove-resource-permission-orphan-data"
-		).put(
 			RoleDataCleanupPreupgradeProcess.class, "remove-role-orphan-data"
 		).put(
 			UserDataCleanupPreupgradeProcess.class, "remove-user-orphan-data"
@@ -653,6 +671,9 @@ public class DataCleanupRegistrator {
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	@Reference
 	private ServiceComponentLocalService _serviceComponentLocalService;

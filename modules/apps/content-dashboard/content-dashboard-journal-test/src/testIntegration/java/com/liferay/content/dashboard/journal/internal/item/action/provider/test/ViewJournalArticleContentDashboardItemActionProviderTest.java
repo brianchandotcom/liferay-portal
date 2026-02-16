@@ -77,7 +77,6 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 					_group.getGroupId(),
 					_portal.getClassNameId(JournalArticle.class.getName()),
-					journalArticle.getDDMStructureId(),
 					journalArticle.getDDMStructureKey(), true,
 					WorkflowConstants.STATUS_APPROVED);
 
@@ -180,7 +179,6 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 					_group.getGroupId(),
 					_portal.getClassNameId(JournalArticle.class.getName()),
-					journalArticle.getDDMStructureId(),
 					journalArticle.getDDMStructureKey(), true,
 					WorkflowConstants.STATUS_APPROVED);
 
@@ -265,7 +263,6 @@ public class ViewJournalArticleContentDashboardItemActionProviderTest {
 				DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 					_group.getGroupId(),
 					_portal.getClassNameId(JournalArticle.class.getName()),
-					journalArticle.getDDMStructureId(),
 					journalArticle.getDDMStructureKey(), true,
 					WorkflowConstants.STATUS_APPROVED);
 

@@ -299,7 +299,7 @@ public class FileEntryInfoDisplayContributorTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
-				_portal.getClassNameId(FileEntry.class.getName()), 0, null);
+				_portal.getClassNameId(FileEntry.class.getName()), null);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			dlFileEntry.getUserId(), _group.getGroupId(),

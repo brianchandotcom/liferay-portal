@@ -79,7 +79,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				classNameId, classTypeId,
+				classNameId,
 				LayoutPageTemplateEntryUtil.getClassTypeKey(
 					classNameId, classTypeId, themeDisplay.getScopeGroupId()));
 

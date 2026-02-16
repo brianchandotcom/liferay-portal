@@ -450,7 +450,6 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 			null, groupId, layoutPageTemplateCollectionId, null, classNameId,
-			classTypeId,
 			LayoutPageTemplateEntryUtil.getClassTypeKey(
 				classNameId, classTypeId, groupId),
 			name, 0, WorkflowConstants.STATUS_APPROVED,

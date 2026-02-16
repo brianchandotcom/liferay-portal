@@ -27,36 +27,34 @@ public class DisplayPageTemplateTestUtil {
 	}
 
 	public static LayoutPageTemplateEntry addDisplayPageTemplate(
-			long groupId, long classNameId, long classTypeId,
-			String classTypeKey)
+			long groupId, long classNameId, String classTypeKey)
 		throws PortalException {
 
 		return addDisplayPageTemplate(
-			groupId, classNameId, classTypeId, classTypeKey, false,
+			groupId, classNameId, classTypeKey, false,
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	public static LayoutPageTemplateEntry addDisplayPageTemplate(
-			long groupId, long classNameId, long classTypeId,
-			String classTypeKey, boolean defaultTemplate, int status)
+			long groupId, long classNameId, String classTypeKey,
+			boolean defaultTemplate, int status)
 		throws PortalException {
 
 		return addDisplayPageTemplate(
-			groupId, classNameId, classTypeId, classTypeKey, defaultTemplate,
-			null, status);
+			groupId, classNameId, classTypeKey, defaultTemplate, null, status);
 	}
 
 	public static LayoutPageTemplateEntry addDisplayPageTemplate(
-			long groupId, long classNameId, long classTypeId,
-			String classTypeKey, boolean defaultTemplate,
-			String layoutPageTemplateEntryKey, int status)
+			long groupId, long classNameId, String classTypeKey,
+			boolean defaultTemplate, String layoutPageTemplateEntryKey,
+			int status)
 		throws PortalException {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), groupId, 0,
-				layoutPageTemplateEntryKey, classNameId, classTypeId,
-				classTypeKey, RandomTestUtil.randomString(),
+				layoutPageTemplateEntryKey, classNameId, classTypeKey,
+				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				defaultTemplate, 0, 0, 0, status,
 				ServiceContextTestUtil.getServiceContext(

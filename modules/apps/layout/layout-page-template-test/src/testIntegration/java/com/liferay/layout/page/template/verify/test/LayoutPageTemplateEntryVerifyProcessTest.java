@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -59,12 +58,14 @@ public class LayoutPageTemplateEntryVerifyProcessTest
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
-				_portal.getClassNameId(JournalArticle.class.getName()),
-				ddmStructure.getStructureId(), null, true,
-				WorkflowConstants.STATUS_APPROVED);
+				_portal.getClassNameId(JournalArticle.class.getName()), null,
+				true, WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertTrue(
-			Validator.isNull(layoutPageTemplateEntry.getClassTypeKey()));
+		layoutPageTemplateEntry.setClassTypeId(ddmStructure.getStructureId());
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.updateLayoutPageTemplateEntry(
+				layoutPageTemplateEntry);
 
 		doVerify();
 

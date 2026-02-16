@@ -106,7 +106,7 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.asset.kernel.model.AssetCategory"),
-			0, null, null, 0, null);
+			null, null, 0, null);
 	}
 
 	@Test
@@ -119,7 +119,7 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.commerce.product.model.CPDefinition"),
-			0, null, null, 0, null);
+			null, null, 0, null);
 	}
 
 	@Test
@@ -183,7 +183,6 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.portal.kernel.repository.model.FileEntry"),
-			dlFileEntryType1.getFileEntryTypeId(),
 			dlFileEntryType1.getFileEntryTypeKey(), null,
 			dlFileEntryType2.getFileEntryTypeId(),
 			dlFileEntryType2.getFileEntryTypeKey());
@@ -220,7 +219,6 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.portal.kernel.repository.model.FileEntry"),
-			dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntryType.getFileEntryTypeKey(),
 			"x-could-not-be-imported-because-its-content-type-or-subtype-is-" +
 				"missing",
@@ -265,8 +263,7 @@ public class ExportImportDisplayPagesTest {
 			_serviceContext2);
 
 		_assertExportImportDisplayPage(
-			classNameId, ddmStructure1.getStructureId(),
-			ddmStructure1.getStructureKey(), null,
+			classNameId, ddmStructure1.getStructureKey(), null,
 			ddmStructure2.getStructureId(), ddmStructure2.getStructureKey());
 	}
 
@@ -291,24 +288,22 @@ public class ExportImportDisplayPagesTest {
 			_serviceContext1);
 
 		_assertExportImportDisplayPage(
-			classNameId, ddmStructure.getStructureId(),
-			ddmStructure.getStructureKey(),
+			classNameId, ddmStructure.getStructureKey(),
 			"x-could-not-be-imported-because-its-content-type-or-subtype-is-" +
 				"missing",
 			0, null);
 	}
 
 	private void _assertExportImportDisplayPage(
-			long classNameId, long classTypeId, String classTypeKey,
-			String errorMessageKey, long expectedClassTypeId,
-			String expectedClassTypeKey)
+			long classNameId, String classTypeKey, String errorMessageKey,
+			long expectedClassTypeId, String expectedClassTypeKey)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext1.getUserId(),
 				_serviceContext1.getScopeGroupId(), 0, null, classNameId,
-				classTypeId, classTypeKey, "Display Page Template One",
+				classTypeKey, "Display Page Template One",
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
@@ -467,11 +462,9 @@ public class ExportImportDisplayPagesTest {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariations.get(0);
 
-		long classTypeId = GetterUtil.getLong(infoItemFormVariation.getKey());
-
 		_assertExportImportDisplayPage(
-			classNameId, classTypeId,
-			infoItemFormVariation.getExternalReferenceCode(), null, classTypeId,
+			classNameId, infoItemFormVariation.getExternalReferenceCode(), null,
+			GetterUtil.getLong(infoItemFormVariation.getKey()),
 			infoItemFormVariation.getExternalReferenceCode());
 	}
 

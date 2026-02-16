@@ -134,7 +134,6 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(FileEntry.class.getName()),
-			dlFileEntryType.getFileEntryTypeId(),
 			dlFileEntryType.getFileEntryTypeKey());
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -157,7 +156,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	@TestInfo({"LPS-112360", "LPS-127023"})
 	public void testMapContentDisplayInCollectionDisplay() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
-			_portal.getClassNameId(BlogsEntry.class.getName()), 0, null);
+			_portal.getClassNameId(BlogsEntry.class.getName()), null);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -180,7 +179,6 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	public void testMapInfoFieldInCollectionDisplay() throws Exception {
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
 			_portal.getClassNameId(JournalArticle.class.getName()),
-			_journalArticle.getDDMStructureId(),
 			_journalArticle.getDDMStructureKey());
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -227,7 +225,7 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 		throws Exception {
 
 		Layout layout = _addDefaultDisplayPageTemplateLayout(
-			_portal.getClassNameId(AssetCategory.class.getName()), 0, null);
+			_portal.getClassNameId(AssetCategory.class.getName()), null);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -356,13 +354,13 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 	}
 
 	private Layout _addDefaultDisplayPageTemplateLayout(
-			long classNameId, long classTypeId, String classTypeKey)
+			long classNameId, String classTypeKey)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, classTypeId, classTypeKey,
-				true, WorkflowConstants.STATUS_APPROVED);
+				_group.getGroupId(), classNameId, classTypeKey, true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		return _layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid());
 	}

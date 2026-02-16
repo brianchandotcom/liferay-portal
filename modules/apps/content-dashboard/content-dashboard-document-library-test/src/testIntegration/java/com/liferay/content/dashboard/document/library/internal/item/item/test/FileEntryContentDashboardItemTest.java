@@ -18,11 +18,13 @@ import com.liferay.content.dashboard.item.VersionableContentDashboardItem;
 import com.liferay.content.dashboard.item.action.ContentDashboardItemAction;
 import com.liferay.content.dashboard.item.type.ContentDashboardItemSubtype;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.model.DLVersionNumberIncrease;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -706,11 +708,15 @@ public class FileEntryContentDashboardItemTest {
 			StringPool.BLANK, "description", StringPool.BLANK, bytes, null,
 			null, null, _serviceContext);
 
+		DLFileEntryType basicDocumentDLFileEntryType =
+			_dlFileEntryTypeLocalService.getDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 			_group.getGroupId(),
 			_portal.getClassNameId(FileEntry.class.getName()),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
-			true, WorkflowConstants.STATUS_APPROVED);
+			basicDocumentDLFileEntryType.getFileEntryTypeKey(), true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		if (numVersions > 1) {
 			for (int i = 1; i < numVersions; i++) {
@@ -851,6 +857,9 @@ public class FileEntryContentDashboardItemTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

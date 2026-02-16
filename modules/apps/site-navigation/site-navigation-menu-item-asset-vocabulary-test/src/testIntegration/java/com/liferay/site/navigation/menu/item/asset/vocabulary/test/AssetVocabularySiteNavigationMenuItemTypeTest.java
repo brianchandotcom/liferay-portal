@@ -422,8 +422,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 			_group.getGroupId(),
-			_portal.getClassNameId(AssetCategory.class.getName()), 0, null,
-			true, WorkflowConstants.STATUS_APPROVED);
+			_portal.getClassNameId(AssetCategory.class.getName()), null, true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		AssetCategory assetCategory = _addAssetCategory(0);
 
@@ -822,8 +822,8 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 
 		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 			_group.getGroupId(),
-			_portal.getClassNameId(AssetCategory.class.getName()), 0, null,
-			true, WorkflowConstants.STATUS_APPROVED);
+			_portal.getClassNameId(AssetCategory.class.getName()), null, true,
+			WorkflowConstants.STATUS_APPROVED);
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();

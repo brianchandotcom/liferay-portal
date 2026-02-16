@@ -444,7 +444,6 @@ public class PortalImplAlternateURLTest {
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				journalArticle.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getDDMStructureId(),
 				journalArticle.getDDMStructureKey(), true,
 				WorkflowConstants.STATUS_APPROVED);
 

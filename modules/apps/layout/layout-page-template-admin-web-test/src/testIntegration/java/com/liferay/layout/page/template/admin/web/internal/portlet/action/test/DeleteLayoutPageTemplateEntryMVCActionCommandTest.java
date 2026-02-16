@@ -70,8 +70,8 @@ public class DeleteLayoutPageTemplateEntryMVCActionCommandTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
-				_portal.getClassNameId(BlogsEntry.class.getName()), 0, null,
-				true, WorkflowConstants.STATUS_APPROVED);
+				_portal.getClassNameId(BlogsEntry.class.getName()), null, true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(
 			blogsEntry.getUserId(), _group.getGroupId(),

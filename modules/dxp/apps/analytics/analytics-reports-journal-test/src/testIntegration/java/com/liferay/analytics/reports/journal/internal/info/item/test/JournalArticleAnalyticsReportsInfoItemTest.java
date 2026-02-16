@@ -155,7 +155,6 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				journalArticle.getDDMStructureId(),
 				journalArticle.getDDMStructureKey(), true,
 				WorkflowConstants.STATUS_APPROVED);
 
@@ -253,8 +252,8 @@ public class JournalArticleAnalyticsReportsInfoItemTest {
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				_group.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class.getName()),
-				ddmStructure.getStructureId(), ddmStructure.getStructureKey(),
-				true, WorkflowConstants.STATUS_APPROVED);
+				ddmStructure.getStructureKey(), true,
+				WorkflowConstants.STATUS_APPROVED);
 
 		AssetDisplayPageEntry assetDisplayPageEntry =
 			_assetDisplayPageEntryLocalService.addAssetDisplayPageEntry(

@@ -454,8 +454,7 @@ public class DisplayPageTemplateResourceImpl
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				classNameId, _getClassTypeId(contentTypeReference, groupId),
-				classTypeKey);
+				classNameId, classTypeKey);
 		}
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
@@ -626,7 +625,6 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate.getExternalReferenceCode(), groupId,
 				layoutPageTemplateCollectionId, displayPageTemplate.getKey(),
 				_getContentTypeReferenceClassNameId(contentTypeReference),
-				_getClassTypeId(contentTypeReference, groupId),
 				_getClassTypeKey(contentTypeReference, layout.getGroupId()),
 				displayPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
@@ -647,47 +645,6 @@ public class DisplayPageTemplateResourceImpl
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				contextUriInfo, contextUser),
 			layoutPageTemplateEntry);
-	}
-
-	private long _getClassTypeId(
-		ClassSubtypeReference contentTypeReference, long groupId) {
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				contentTypeReference.getClassName());
-
-		ItemExternalReference itemExternalReference =
-			contentTypeReference.getSubTypeExternalReference();
-
-		if (infoItemFormVariationsProvider == null) {
-			if ((itemExternalReference == null) ||
-				Validator.isNull(
-					itemExternalReference.getExternalReferenceCode())) {
-
-				return -1;
-			}
-
-			return -2;
-		}
-
-		if ((itemExternalReference == null) ||
-			Validator.isNull(
-				itemExternalReference.getExternalReferenceCode())) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.
-				getInfoItemFormVariationByExternalReferenceCode(
-					itemExternalReference.getExternalReferenceCode(), groupId);
-
-		if (infoItemFormVariation != null) {
-			return GetterUtil.getLong(infoItemFormVariation.getKey());
-		}
-
-		return -2;
 	}
 
 	private String _getClassTypeKey(

@@ -4,6 +4,7 @@
  */
 
 export {default as Breadcrumb} from './common/components/Breadcrumb';
+export {default as EnterpriseFeatureIndicator} from './common/components/EnterpriseFeatureIndicator';
 export {default as EnterpriseProductMenuBanner} from './common/components/EnterpriseProductMenuBanner';
 export {default as SpaceSelector} from './common/components/SpaceSelector';
 export {default as SpaceSticker} from './common/components/SpaceSticker';

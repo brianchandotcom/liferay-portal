@@ -111,6 +111,7 @@ export default function ShortcutManager() {
 				openReferencedStructureModal({
 					dispatch,
 					objectDefinitions,
+					parentUuid: structure.uuid,
 					status: objectDefinitionsStatus,
 					structure,
 				}),

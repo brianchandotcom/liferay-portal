@@ -407,7 +407,7 @@ describe('StructureFieldSettings', () => {
 				fileSource: 'userComputerToDocumentsAndMedia',
 				maximumFileSize: 100,
 				showFilesInLibrary: true,
-				storageLibraryPath: '/new',
+				storageDLFolderPath: '/new',
 			},
 			type: 'update-field',
 			uuid,

@@ -5920,7 +5920,7 @@ public class DataFactory {
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
 					objectFieldId,
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 					String.valueOf(objectFieldModel.getObjectDefinitionId())));
 		}
 		else if (StringUtil.equals(

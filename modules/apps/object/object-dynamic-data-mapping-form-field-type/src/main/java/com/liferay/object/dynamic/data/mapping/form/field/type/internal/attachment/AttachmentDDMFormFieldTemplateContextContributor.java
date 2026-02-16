@@ -174,9 +174,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			parameters.put(
 				"storageDepot", _getGroupExternalReferenceCode(objectField));
 			parameters.put(
-				"storageLibraryPath",
+				"storageDLFolderPath",
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 					objectField));
 		}
 

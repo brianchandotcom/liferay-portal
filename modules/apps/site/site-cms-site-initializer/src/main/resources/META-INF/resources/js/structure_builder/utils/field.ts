@@ -166,7 +166,7 @@ export type UploadField = BaseField & {
 		fileSource: 'userComputerToDocumentsAndMedia' | 'documentsAndMedia';
 		maximumFileSize: number;
 		showFilesInLibrary?: boolean;
-		storageLibraryPath?: string;
+		storageDLFolderPath?: string;
 	};
 };
 

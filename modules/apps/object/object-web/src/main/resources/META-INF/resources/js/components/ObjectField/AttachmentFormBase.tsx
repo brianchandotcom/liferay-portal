@@ -103,7 +103,7 @@ export function AttachmentFormBase({
 			(setting) =>
 				setting.name !== 'fileSource' &&
 				setting.name !== 'showFilesInLibrary' &&
-				setting.name !== 'storageLibraryPath'
+				setting.name !== 'storageDLFolderPath'
 		);
 
 		updatedSettings.push(fileSource);
@@ -129,7 +129,7 @@ export function AttachmentFormBase({
 		const updatedSettings = objectFieldSettings.filter(
 			(setting) =>
 				setting.name !== 'showFilesInLibrary' &&
-				setting.name !== 'storageLibraryPath'
+				setting.name !== 'storageDLFolderPath'
 		);
 
 		updatedSettings.push({
@@ -140,14 +140,14 @@ export function AttachmentFormBase({
 		if (value) {
 			if (settings.fileSource === 'userComputerToDocumentsAndMedia') {
 				updatedSettings.push({
-					name: 'storageLibraryPath',
+					name: 'storageDLFolderPath',
 					value: `/${objectDefinitionName}`,
 				});
 			}
 			else if (settings.fileSource === 'userComputerToDepotFiles') {
 				updatedSettings.push(
 					{
-						name: 'storageLibraryPath',
+						name: 'storageDLFolderPath',
 						value: `/${objectDefinitionName}`,
 					},
 					{

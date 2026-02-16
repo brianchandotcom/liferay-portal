@@ -56,9 +56,6 @@ public class ObjectFieldSettingUpgradeProcessTest {
 			"userComputer");
 		ObjectFieldSetting objectFieldSetting4 = _addObjectFieldSetting(
 			objectFieldId2, "showFilesInDocumentsAndMedia", StringPool.TRUE);
-		ObjectFieldSetting objectFieldSetting5 = _addObjectFieldSetting(
-			objectFieldId2, "storageDLFolderPath",
-			RandomTestUtil.randomString());
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
@@ -102,14 +99,6 @@ public class ObjectFieldSettingUpgradeProcessTest {
 		Assert.assertEquals(
 			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 			objectFieldSetting4.getName());
-
-		objectFieldSetting5 =
-			_objectFieldSettingLocalService.getObjectFieldSetting(
-				objectFieldSetting5.getObjectFieldSettingId());
-
-		Assert.assertEquals(
-			ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
-			objectFieldSetting5.getName());
 	}
 
 	private ObjectFieldSetting _addObjectFieldSetting(

@@ -109,7 +109,7 @@ public class AttachmentManagerImpl implements AttachmentManager {
 
 		if (showFilesInDocumentsAndMedia) {
 			String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.NAME_STORAGE_LIBRARY_PATH,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectField.getObjectFieldSettings());
 
 			dlFolderId = _getStorageDLFolderId(

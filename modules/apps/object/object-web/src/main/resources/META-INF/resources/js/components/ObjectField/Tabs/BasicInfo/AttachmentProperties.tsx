@@ -68,7 +68,7 @@ export function AttachmentProperties({
 			<ClayForm.Group>
 				{usesDocumentsAndMediaStorage ? (
 					<Input
-						error={errors.storageLibraryPath}
+						error={errors.storageDLFolderPath}
 						feedbackMessage={sub(
 							Liferay.Language.get(
 								'input-the-path-of-the-chosen-folder-in-documents-and-media-an-example-of-a-valid-path-is-x'
@@ -86,12 +86,12 @@ export function AttachmentProperties({
 						}}
 						onChange={({target: {value}}) =>
 							onSettingsChange({
-								name: 'storageLibraryPath',
+								name: 'storageDLFolderPath',
 								value,
 							})
 						}
 						required
-						value={settings.storageLibraryPath as string}
+						value={settings.storageDLFolderPath as string}
 					/>
 				) : (
 					usesDepotStorage && (
@@ -118,7 +118,7 @@ export function AttachmentProperties({
 								})}
 							>
 								<Input
-									error={errors.storageLibraryPath}
+									error={errors.storageDLFolderPath}
 									feedbackMessage={sub(
 										Liferay.Language.get(
 											'input-the-path-of-the-chosen-folder-in-cms-files-an-example-of-a-valid-path-is-x'
@@ -139,13 +139,13 @@ export function AttachmentProperties({
 									}}
 									onChange={({target: {value}}) =>
 										onSettingsChange({
-											name: 'storageLibraryPath',
+											name: 'storageDLFolderPath',
 											value,
 										})
 									}
 									required
 									value={
-										settings.storageLibraryPath as string
+										settings.storageDLFolderPath as string
 									}
 								/>
 							</div>

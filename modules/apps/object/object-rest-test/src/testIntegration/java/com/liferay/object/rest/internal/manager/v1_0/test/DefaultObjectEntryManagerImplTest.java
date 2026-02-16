@@ -1515,7 +1515,7 @@ public class DefaultObjectEntryManagerImplTest
 							"true"),
 						_createObjectFieldSetting(
 							ObjectFieldSettingConstants.
-								NAME_STORAGE_LIBRARY_PATH,
+								NAME_STORAGE_DL_FOLDER_PATH,
 							"/" + dlFolderName))
 				).build()),
 			ObjectDefinitionConstants.SCOPE_SITE);

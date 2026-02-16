@@ -11,7 +11,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.Serializable;
@@ -29,6 +29,7 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -112,44 +113,28 @@ public class BatchEnginePortletDataHandlerUtil {
 			).put(
 				"filter",
 				() -> {
-					if ((portletDataContext.getEndDate() == null) &&
-						(portletDataContext.getStartDate() == null)) {
+					List<String> filters = new ArrayList<>();
 
+					String dateFilter = _buildDateFilter(portletDataContext);
+
+					if (Validator.isNotNull(dateFilter)) {
+						filters.add(dateFilter);
+					}
+
+					if (exportImportDescriptorParameters != null) {
+						String filter = GetterUtil.getString(
+							exportImportDescriptorParameters.remove("filter"));
+
+						if (Validator.isNotNull(filter)) {
+							filters.add("(" + filter + ")");
+						}
+					}
+
+					if (filters.isEmpty()) {
 						return null;
 					}
 
-					StringBundler sb = new StringBundler(8);
-
-					if (portletDataContext.getEndDate() != null) {
-						sb.append("dateModified le ");
-						sb.append(
-							_format.format(portletDataContext.getEndDate()));
-					}
-
-					if (portletDataContext.getStartDate() != null) {
-						if (sb.length() > 0) {
-							sb.append(" and ");
-						}
-
-						sb.append("dateModified ge ");
-						sb.append(
-							_format.format(portletDataContext.getStartDate()));
-					}
-
-					if ((exportImportDescriptorParameters == null) ||
-						!exportImportDescriptorParameters.containsKey(
-							"filter")) {
-
-						return sb.toString();
-					}
-
-					sb.append(" and (");
-					sb.append(exportImportDescriptorParameters.get("filter"));
-					sb.append(")");
-
-					exportImportDescriptorParameters.remove("filter");
-
-					return sb.toString();
+					return StringUtil.merge(filters, " and ");
 				}
 			).put(
 				"modelClassName", exportImportDescriptor.getModelClassName()
@@ -251,6 +236,29 @@ public class BatchEnginePortletDataHandlerUtil {
 		}
 
 		return importParameters;
+	}
+
+	private static String _buildDateFilter(
+		PortletDataContext portletDataContext) {
+
+		Date endDate = portletDataContext.getEndDate();
+		Date startDate = portletDataContext.getStartDate();
+
+		if ((endDate == null) && (startDate == null)) {
+			return null;
+		}
+
+		List<String> filters = new ArrayList<>();
+
+		if (endDate != null) {
+			filters.add("dateModified le " + _format.format(endDate));
+		}
+
+		if (startDate != null) {
+			filters.add("dateModified ge " + _format.format(startDate));
+		}
+
+		return StringUtil.merge(filters, " and ");
 	}
 
 	private static boolean _isCompanyScoped(

@@ -6,6 +6,7 @@
 package com.liferay.exportimport.report.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
@@ -182,6 +183,199 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportReportEntries.size());
 
 		_companyLocalService.deleteCompany(company);
+	}
+
+	@Test
+	public void testGetOrAddEmptyExportImportReportEntry() throws Exception {
+		int count =
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount();
+
+		long groupId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+		String modelNameLanguageKey = RandomTestUtil.randomString();
+
+		ExportImportReportEntry exportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId, modelNameLanguageKey);
+
+		Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
+		Assert.assertEquals(companyId, exportImportReportEntry.getCompanyId());
+		Assert.assertEquals(
+			classExternalReferenceCode,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			classNameId, exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(
+			exportImportConfigurationId,
+			exportImportReportEntry.getExportImportConfigurationId());
+		Assert.assertNull(exportImportReportEntry.getErrorMessage());
+		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(
+			modelNameLanguageKey,
+			exportImportReportEntry.getModelNameLanguageKey());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.ORIGIN_STAGING,
+			exportImportReportEntry.getOrigin());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_EMPTY,
+			exportImportReportEntry.getType());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+
+		ExportImportReportEntry getExportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId, modelNameLanguageKey);
+
+		Assert.assertEquals(
+			exportImportReportEntry.getExportImportReportEntryId(),
+			getExportImportReportEntry.getExportImportReportEntryId());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+	}
+
+	@Test
+	public void testResolveEmptyExportImportReportEntries() throws Exception {
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
+		long exportImportConfigurationId1 = RandomTestUtil.randomLong();
+		long exportImportConfigurationId2 = RandomTestUtil.randomLong();
+		long exportImportConfigurationId3 = RandomTestUtil.randomLong();
+		long groupId = TestPropsValues.getGroupId();
+
+		ExportImportReportEntry exportImportReportEntry1 =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId1,
+					RandomTestUtil.randomString());
+		ExportImportReportEntry exportImportReportEntry2 =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId2,
+					RandomTestUtil.randomString());
+		ExportImportReportEntry exportImportReportEntry3 = _markAsResolved(
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					exportImportConfigurationId3,
+					RandomTestUtil.randomString()));
+
+		ExportImportReportEntry randomExportImportReportEntry1 =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, RandomTestUtil.randomString(),
+					classNameId, RandomTestUtil.randomLong(),
+					RandomTestUtil.randomString());
+		ExportImportReportEntry randomExportImportReportEntry2 =
+			_exportImportReportEntryLocalService.
+				getOrAddEmptyExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode,
+					RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
+					RandomTestUtil.randomString());
+		ExportImportReportEntry randomExportImportReportEntry3 =
+			_markAsResolved(
+				_exportImportReportEntryLocalService.
+					getOrAddEmptyExportImportReportEntry(
+						groupId, companyId, RandomTestUtil.randomString(),
+						classNameId, RandomTestUtil.randomLong(),
+						RandomTestUtil.randomString()));
+		ExportImportReportEntry randomExportImportReportEntry4 =
+			_markAsResolved(
+				_exportImportReportEntryLocalService.
+					getOrAddEmptyExportImportReportEntry(
+						groupId, companyId, classExternalReferenceCode,
+						RandomTestUtil.randomLong(),
+						RandomTestUtil.randomLong(),
+						RandomTestUtil.randomString()));
+
+		Long originalExportImportConfigurationId =
+			ExportImportThreadLocal.getExportImportConfigurationId();
+
+		ExportImportThreadLocal.setExportImportConfigurationId(
+			exportImportConfigurationId1);
+
+		try {
+			_exportImportReportEntryLocalService.
+				resolveEmptyExportImportReportEntries(
+					groupId, companyId, classExternalReferenceCode,
+					classNameId);
+
+			Assert.assertNull(
+				_exportImportReportEntryLocalService.
+					fetchExportImportReportEntry(
+						exportImportReportEntry1.
+							getExportImportReportEntryId()));
+
+			_assertStatus(
+				exportImportReportEntry2,
+				ExportImportReportEntryConstants.STATUS_RESOLVED, true);
+			_assertStatus(
+				exportImportReportEntry3,
+				ExportImportReportEntryConstants.STATUS_RESOLVED, false);
+			_assertStatus(
+				randomExportImportReportEntry1,
+				ExportImportReportEntryConstants.STATUS_UNRESOLVED, false);
+			_assertStatus(
+				randomExportImportReportEntry2,
+				ExportImportReportEntryConstants.STATUS_UNRESOLVED, false);
+			_assertStatus(
+				randomExportImportReportEntry3,
+				ExportImportReportEntryConstants.STATUS_RESOLVED, false);
+			_assertStatus(
+				randomExportImportReportEntry4,
+				ExportImportReportEntryConstants.STATUS_RESOLVED, false);
+		}
+		finally {
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				originalExportImportConfigurationId);
+		}
+	}
+
+	private void _assertStatus(
+			ExportImportReportEntry exportImportReportEntry, int status,
+			boolean updated)
+		throws Exception {
+
+		ExportImportReportEntry actualExportImportReportEntry =
+			_exportImportReportEntryLocalService.getExportImportReportEntry(
+				exportImportReportEntry.getExportImportReportEntryId());
+
+		long mvccVersion = exportImportReportEntry.getMvccVersion();
+
+		Assert.assertEquals(
+			updated ? mvccVersion + 1 : mvccVersion,
+			actualExportImportReportEntry.getMvccVersion());
+
+		Assert.assertEquals(status, actualExportImportReportEntry.getStatus());
+	}
+
+	private ExportImportReportEntry _markAsResolved(
+		ExportImportReportEntry exportImportReportEntry) {
+
+		exportImportReportEntry.setStatus(
+			ExportImportReportEntryConstants.STATUS_RESOLVED);
+
+		return _exportImportReportEntryLocalService.
+			updateExportImportReportEntry(exportImportReportEntry);
 	}
 
 	@Inject

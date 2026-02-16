@@ -4,6 +4,7 @@
 		"@clayui/button": "^3.159.0",
 		"@clayui/core": "^3.159.0",
 		"@clayui/drop-down": "^3.159.0",
+		"@clayui/empty-state": "^3.159.0",
 		"@clayui/form": "^3.159.0",
 		"@clayui/icon": "^3.159.0",
 		"@clayui/nav": "^3.159.0",

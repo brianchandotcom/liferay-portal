@@ -4,6 +4,7 @@
  */
 
 import {SidePanel} from '@clayui/core';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import {ClayVerticalNav} from '@clayui/nav';
 import ClaySticker from '@clayui/sticker';
@@ -11,9 +12,9 @@ import {SearchResultsMessage} from '@liferay/layout-js-components-web';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {sub} from '../../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/main';
-import {type SideNavigationItem} from './SideNavigationItem';
 import SideNavigationSearchInput from './SideNavigationSearchInput';
 import SideNavigationSiteSelector from './SideNavigationSiteSelector';
+import {SideNavigationItem} from './types/SideNavigation';
 import {useSideNavigationFilter} from './useSideNavigationFilter';
 
 interface Props {
@@ -168,40 +169,51 @@ function SideNavigation({
 					resultType={Liferay.Language.get('navigation-items')}
 				/>
 
-				<ClayVerticalNav
-					active={portletId}
-					defaultExpandedKeys={initialExpandedKeys}
-					displayType="primary"
-					expandedKeys={expandedKeys ?? userExpandedKeys}
-					itemAriaCurrent={true}
-					items={items}
-					onExpandedChange={updateExpandedKeys}
-				>
-					{(item) => {
-						if (typeof item === 'string') {
-							return <span>{item}</span>;
-						}
+				{numberOfResults ? (
+					<ClayVerticalNav
+						active={portletId}
+						defaultExpandedKeys={initialExpandedKeys}
+						displayType="primary"
+						expandedKeys={expandedKeys ?? userExpandedKeys}
+						itemAriaCurrent={true}
+						items={items}
+						onExpandedChange={updateExpandedKeys}
+					>
+						{(item) => {
+							if (typeof item === 'string') {
+								return <span>{item}</span>;
+							}
 
-						return (
-							<ClayVerticalNav.Item
-								href={item.href}
-								items={item.items}
-								key={item.id}
-								textValue={item.label}
-							>
-								{item.leadingIcon && (
-									<ClayIcon
-										className="c-mr-2"
-										key={item.leadingIcon}
-										symbol={item.leadingIcon}
-									/>
-								)}
+							return (
+								<ClayVerticalNav.Item
+									href={item.href}
+									items={item.items}
+									key={item.id}
+									textValue={item.label}
+								>
+									{item.leadingIcon && (
+										<ClayIcon
+											className="c-mr-2"
+											key={item.leadingIcon}
+											symbol={item.leadingIcon}
+										/>
+									)}
 
-								{item.label}
-							</ClayVerticalNav.Item>
-						);
-					}}
-				</ClayVerticalNav>
+									{item.label}
+								</ClayVerticalNav.Item>
+							);
+						}}
+					</ClayVerticalNav>
+				) : (
+					<ClayEmptyState
+						className="c-mt-n2 c-px-4 text-center"
+						description={Liferay.Language.get(
+							'adjust-or-clear-the-search-to-view-all-navigation-items'
+						)}
+						small
+						title={Liferay.Language.get('no-matching-items')}
+					/>
+				)}
 			</SidePanel.Body>
 		</SidePanel>
 	);

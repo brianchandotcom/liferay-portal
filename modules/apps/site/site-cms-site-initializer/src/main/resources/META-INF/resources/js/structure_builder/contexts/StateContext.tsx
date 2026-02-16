@@ -297,7 +297,7 @@ function reducer(state: State, action: Action): State {
 
 			const {publishedChildren, structure} = state;
 
-			const children = new Map(structure.children);
+			let children = new Map(structure.children);
 
 			let nextPublishedChildren = new Set(publishedChildren);
 
@@ -307,7 +307,10 @@ function reducer(state: State, action: Action): State {
 				i,
 				referencedStructure,
 			] of referencedStructures.entries()) {
-				children.set(referencedStructure.uuid, referencedStructure);
+				children = addChild({
+					child: referencedStructure,
+					root: {...structure, children},
+				});
 
 				nextPublishedChildren = new Set([
 					...nextPublishedChildren,

@@ -33,11 +33,13 @@ type Item = {
 export default function openReferencedStructureModal({
 	dispatch,
 	objectDefinitions,
+	parentUuid,
 	status,
 	structure,
 }: {
 	dispatch: Dispatch<Action>;
 	objectDefinitions: ObjectDefinitions;
+	parentUuid: Uuid;
 	status: CacheStatus;
 	structure: Structure;
 }) {
@@ -56,6 +58,7 @@ export default function openReferencedStructureModal({
 				closeModal={closeModal}
 				objectDefinitions={objectDefinitions}
 				onAdd={addReferencedStructures}
+				parentUuid={parentUuid}
 				status={status}
 				structure={structure}
 			/>
@@ -67,12 +70,14 @@ function ReferencedStructureModal({
 	closeModal,
 	objectDefinitions,
 	onAdd,
+	parentUuid,
 	status,
 	structure,
 }: {
 	closeModal: () => void;
 	objectDefinitions: ObjectDefinitions;
 	onAdd: (referencedStructures: ReferencedStructure[]) => void;
+	parentUuid: Uuid;
 	status: CacheStatus;
 	structure: Structure;
 }) {
@@ -153,8 +158,8 @@ function ReferencedStructureModal({
 								const structures = buildStructures(
 									selection,
 									objectDefinitions,
-									structure.uuid,
-									structure.erc
+									structure.erc,
+									parentUuid
 								);
 
 								onAdd(structures);
@@ -244,8 +249,8 @@ function hasCircularDependency(
 function buildStructures(
 	selection: Item[],
 	objectDefinitions: ObjectDefinitions,
-	mainStructureUuid: Uuid,
-	mainStructureERC: Structure['erc']
+	mainStructureERC: Structure['erc'],
+	parentUuid: Uuid
 ) {
 	const ercs = selection.map(({value}) => value);
 
@@ -254,7 +259,7 @@ function buildStructures(
 			ancestors: [mainStructureERC],
 			erc,
 			objectDefinitions,
-			parent: mainStructureUuid,
+			parent: parentUuid,
 			relationshipERC: getRandomId(),
 			relationshipName: getRandomName(),
 		});

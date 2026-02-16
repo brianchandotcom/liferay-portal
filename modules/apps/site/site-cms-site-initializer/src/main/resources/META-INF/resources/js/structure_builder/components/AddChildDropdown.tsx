@@ -98,6 +98,7 @@ export default function AddChildDropdown({
 							openReferencedStructureModal({
 								dispatch,
 								objectDefinitions,
+								parentUuid: parentUuid ?? structure.uuid,
 								status,
 								structure,
 							}),

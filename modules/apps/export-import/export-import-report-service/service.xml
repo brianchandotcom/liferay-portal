@@ -39,11 +39,12 @@
 			<finder-column name="companyId" />
 			<finder-column name="exportImportConfigurationId" />
 		</finder>
-		<finder name="G_C_C_C_T" return-type="ExportImportReportEntry" unique="true">
+		<finder name="G_C_C_C_E_T" return-type="ExportImportReportEntry" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="companyId" />
 			<finder-column name="classExternalReferenceCode" />
 			<finder-column name="classNameId" />
+			<finder-column name="exportImportConfigurationId" />
 			<finder-column name="type" />
 		</finder>
 	</entity>

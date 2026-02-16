@@ -9,6 +9,7 @@ import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,7 +41,7 @@ public class LayoutPageTemplateEntryImpl
 			return super.getClassTypeId();
 		}
 
-		String classTypeKey = getClassTypeKey();
+		String classTypeKey = super.getClassTypeKey();
 
 		if (Validator.isNull(classTypeKey)) {
 			return -1;
@@ -64,6 +65,16 @@ public class LayoutPageTemplateEntryImpl
 		}
 
 		return GetterUtil.getLong(infoItemFormVariation.getKey());
+	}
+
+	@Override
+	public String getClassTypeKey() {
+		if (Validator.isNotNull(super.getClassTypeKey())) {
+			return super.getClassTypeKey();
+		}
+
+		return LayoutPageTemplateEntryUtil.getClassTypeKey(
+			getClassNameId(), super.getClassTypeId(), getGroupId());
 	}
 
 	@Override

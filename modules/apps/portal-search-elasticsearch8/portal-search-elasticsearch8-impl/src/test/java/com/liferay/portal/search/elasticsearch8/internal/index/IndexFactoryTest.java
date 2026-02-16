@@ -119,6 +119,8 @@ public class IndexFactoryTest {
 
 	@After
 	public void tearDown() {
+		deleteIndex();
+
 		_indexFactoryFixture.tearDown();
 
 		if (_serviceRegistrations.isEmpty()) {
@@ -764,7 +766,9 @@ public class IndexFactoryTest {
 
 		DynamicTemplate dynamicTemplate = dynamicTemplateNamedValue.value();
 
-		Assert.assertEquals("*_additional_mapping", dynamicTemplate.match());
+		List<String> match = dynamicTemplate.match();
+
+		Assert.assertEquals("*_additional_mapping", match.get(0));
 
 		Property property = dynamicTemplate.mapping();
 

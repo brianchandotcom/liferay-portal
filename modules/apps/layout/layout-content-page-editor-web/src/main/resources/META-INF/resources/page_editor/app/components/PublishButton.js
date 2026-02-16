@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 
@@ -11,7 +12,15 @@ import {config} from '../config/index';
 import useCheckFormsValidity from '../utils/useCheckFormsValidity';
 import {FormValidationModal} from './FormValidationModal';
 
-export default function PublishButton({canPublish, formRef, label, onPublish}) {
+export default function PublishButton({
+	ariaLabel,
+	canPublish,
+	disabled,
+	formRef,
+	icon,
+	label,
+	onPublish,
+}) {
 	const checkFormsValidity = useCheckFormsValidity();
 
 	const [openFormValidationModal, setOpenFormValidationModal] =
@@ -33,8 +42,8 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 				/>
 
 				<ClayButton
-					aria-label={label}
-					disabled={config.pending || !canPublish}
+					aria-label={ariaLabel}
+					disabled={disabled || config.pending || !canPublish}
 					displayType="primary"
 					onClick={() => {
 						checkFormsValidity().then((valid) => {
@@ -48,6 +57,8 @@ export default function PublishButton({canPublish, formRef, label, onPublish}) {
 					}}
 					size="sm"
 				>
+					{icon ? <ClayIcon className="mr-2" symbol={icon} /> : null}
+
 					{label}
 				</ClayButton>
 			</form>

@@ -78,7 +78,25 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 	if (isCMS) {
 		import('@liferay/fragment-impl/api')
 			.then(({openCMSItemSelectorModal}) => {
-				openCMSItemSelectorModal();
+				openCMSItemSelectorModal({
+					onSelect(items) {
+						const {id, title} = items[0].embedded;
+
+						if (onChange) {
+							setTranslationInputValue({
+								fileName: title,
+								value: id,
+							});
+
+							onChange();
+						}
+
+						fileInput.value = id;
+						fileName.innerText = title;
+
+						showRemoveButton();
+					}
+				});
 			});
 
 		return;

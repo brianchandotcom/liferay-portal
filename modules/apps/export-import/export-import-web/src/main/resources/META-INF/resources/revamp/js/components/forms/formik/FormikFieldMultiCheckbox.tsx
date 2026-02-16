@@ -4,62 +4,10 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import {
-	ArrayHelpers,
-	Field,
-	FieldArray,
-	FieldProps,
-	FieldValidator,
-	FormikValues,
-	useFormikContext,
-} from 'formik';
+import {ArrayHelpers, FieldArray, FormikValues, useFormikContext} from 'formik';
 import React from 'react';
 
-import {FieldCheckbox} from './FieldCheckbox';
-import FieldText, {FieldTextProps} from './FieldText';
-import {required as requiredValidation} from './validations';
-
-function FormikWrapper({
-	children,
-	name,
-	required,
-	validate,
-}: {
-	children: (props: {
-		errorMessage?: string;
-		field: FieldProps['field'];
-	}) => React.ReactNode;
-	name: string;
-	required?: boolean;
-	validate?: FieldValidator;
-}) {
-	return (
-		<Field
-			name={name}
-			validate={
-				validate ? validate : required ? requiredValidation : undefined
-			}
-		>
-			{({field, meta}: FieldProps) =>
-				children({
-					errorMessage:
-						meta.touched && meta.error ? meta.error : undefined,
-					field,
-				})
-			}
-		</Field>
-	);
-}
-
-export function FormikFieldText(props: FieldTextProps) {
-	return (
-		<FormikWrapper name={props.name} required={props.required}>
-			{({errorMessage, field}) => (
-				<FieldText {...props} {...field} errorMessage={errorMessage} />
-			)}
-		</FormikWrapper>
-	);
-}
+import {FieldCheckbox} from '../FieldCheckbox';
 
 interface FormikFieldMultiCheckboxProps {
 	'aria-describedby'?: string;

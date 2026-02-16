@@ -8,7 +8,7 @@ import {Form, Formik, FormikConfig, FormikHelpers, FormikValues} from 'formik';
 import React, {ReactElement, useState} from 'react';
 
 import Footer from './Footer';
-import {FormikDebug} from './forms/FormikDebug';
+import {FormikDebug} from './forms/formik';
 
 interface WizardStepProps {
 	actionButton?: React.ReactElement;

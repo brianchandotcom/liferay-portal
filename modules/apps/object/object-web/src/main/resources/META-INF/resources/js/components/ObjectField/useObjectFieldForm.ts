@@ -231,10 +231,10 @@ export function useObjectFieldForm({
 				if (
 					settings.fileSource === 'userComputerToDepotFiles' &&
 					invalidateRequired(
-						settings.storageDepot as string | undefined
+						settings.storageDepotGroup as string | undefined
 					)
 				) {
-					errors.storageDepot = constantsUtils.REQUIRED_MSG;
+					errors.storageDepotGroup = constantsUtils.REQUIRED_MSG;
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(

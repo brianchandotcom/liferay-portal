@@ -172,12 +172,13 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				objectField.getCompanyId(), "LPD-74813")) {
 
 			parameters.put(
-				"storageDepot", _getGroupExternalReferenceCode(objectField));
-			parameters.put(
 				"storageDLFolderPath",
 				ObjectFieldSettingUtil.getValue(
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 					objectField));
+			parameters.put(
+				"storageDepotGroup",
+				_getGroupExternalReferenceCode(objectField));
 		}
 
 		return parameters;
@@ -283,7 +284,7 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 	private String _getGroupExternalReferenceCode(ObjectField objectField) {
 		String groupId = ObjectFieldSettingUtil.getValue(
-			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT, objectField);
+			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP, objectField);
 
 		Group group = _groupLocalService.fetchGroup(
 			GetterUtil.getLong(groupId));

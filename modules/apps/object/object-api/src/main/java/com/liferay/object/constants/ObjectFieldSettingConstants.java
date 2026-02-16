@@ -49,7 +49,7 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_STATE_FLOW = "stateFlow";
 
-	public static final String NAME_STORAGE_DEPOT = "storageDepot";
+	public static final String NAME_STORAGE_DEPOT_GROUP = "storageDepotGroup";
 
 	public static final String NAME_STORAGE_DL_FOLDER_PATH =
 		"storageDLFolderPath";

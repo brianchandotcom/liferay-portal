@@ -42,13 +42,13 @@ export function AttachmentProperties({
 
 	const handleSpaceChange = (value: string) => {
 		const setting: ObjectFieldSetting = {
-			name: 'storageDepot' as ObjectFieldSettingName,
+			name: 'storageDepotGroup' as ObjectFieldSettingName,
 			value,
 		};
 
 		const updatedSettings = [
 			...objectFieldSettings.filter(
-				(setting) => setting.name !== 'storageDepot'
+				(setting) => setting.name !== 'storageDepotGroup'
 			),
 			setting,
 		];
@@ -106,9 +106,9 @@ export function AttachmentProperties({
 								})}
 							>
 								<SpacePicker
-									error={errors.storageDepot}
+									error={errors.storageDepotGroup}
 									onChange={handleSpaceChange}
-									value={settings.storageDepot as string}
+									value={settings.storageDepotGroup as string}
 								/>
 							</div>
 

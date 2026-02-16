@@ -98,6 +98,12 @@ function ToolbarBody({className}) {
 		publishButtonLabel = Liferay.Language.get('submit-for-workflow');
 	}
 
+	const ariaLabel = isCMSFreeTier
+		? Liferay.Language.get('publish-locked')
+		: publishButtonLabel;
+
+	const icon = isCMSFreeTier ? 'lock' : null;
+
 	useEffect(() => {
 		if (
 			(network.status === SERVICE_NETWORK_STATUS_TYPES.draftSaved ||
@@ -226,8 +232,11 @@ function ToolbarBody({className}) {
 
 				<li className="nav-item">
 					<PublishButton
+						ariaLabel={ariaLabel}
 						canPublish={canPublish}
+						disabled={isCMSFreeTier}
 						formRef={formRef}
+						icon={icon}
 						label={publishButtonLabel}
 						onPublish={onPublish}
 					/>

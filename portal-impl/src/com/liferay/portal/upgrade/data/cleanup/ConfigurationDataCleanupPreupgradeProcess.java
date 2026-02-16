@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.PropsValues;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +48,7 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		}
 
 		long[] companyIds = PortalInstancePool.getCompanyIds();
-		Map<Long, Long> groupCompanyIds = getGroupCompanyIds();
+		long[] groupIds = getGroupIds();
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select configurationId, dictionary from Configuration_");
@@ -80,25 +80,10 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 				long groupId = _getPrimaryKey(dictionary, _groupIdPattern);
 
-				if (groupId != -1) {
-					if (!groupCompanyIds.containsKey(groupId)) {
-						_deleteConfiguration(
-							configurationId, dbInspector, "groupId", "Group_",
-							groupId, preparedStatement2);
-					}
-					else {
-						long groupCompanyId = groupCompanyIds.get(groupId);
-
-						if (!ArrayUtil.contains(companyIds, groupCompanyId) ||
-							(PropsValues.DATABASE_PARTITION_ENABLED &&
-							 (CompanyThreadLocal.getCompanyId() !=
-								 groupCompanyId))) {
-
-							_deleteConfiguration(
-								configurationId, dbInspector, "groupId",
-								"Group_", groupId, preparedStatement2);
-						}
-					}
+				if ((groupId != -1) && !ArrayUtil.contains(groupIds, groupId)) {
+					_deleteConfiguration(
+						configurationId, dbInspector, "groupId", "Group_",
+						groupId, preparedStatement2);
 				}
 			}
 
@@ -106,21 +91,19 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		}
 	}
 
-	protected Map<Long, Long> getGroupCompanyIds() throws Exception {
-		Map<Long, Long> groupCompanyIds = new HashMap<>();
+	protected long[] getGroupIds() throws Exception {
+		List<Long> groupIds = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select groupId, companyId from Group_");
+				"select groupId from Group_");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				groupCompanyIds.put(
-					resultSet.getLong("groupId"),
-					resultSet.getLong("companyId"));
+				groupIds.add(resultSet.getLong("groupId"));
 			}
 		}
 
-		return groupCompanyIds;
+		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
 	}
 
 	private void _deleteConfiguration(

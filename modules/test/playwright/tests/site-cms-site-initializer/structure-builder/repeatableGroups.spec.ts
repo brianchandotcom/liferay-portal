@@ -282,7 +282,7 @@ test(
 			})
 		).toBeVisible();
 
-		// Published and check we can't ungroup the published group
+		// Publish and check we can't ungroup the published group
 
 		await expect(async () => {
 			await structureBuilderPage.publishButton.click({timeout: 1000});

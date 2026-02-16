@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
+import dragAndDropElement from '../../../../utils/dragAndDropElement';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
@@ -91,8 +92,14 @@ export class StructureBuilderPage {
 		}).toPass();
 	}
 
-	getTreeItem(field: Field) {
-		return this.page
+	getTreeItem({
+		field,
+		parent = this.page,
+	}: {
+		field: Field;
+		parent?: Locator | Page;
+	}) {
+		return parent
 			.locator('.treeview-link', {hasText: field.label})
 			.nth(field.nth || 0);
 	}
@@ -103,7 +110,7 @@ export class StructureBuilderPage {
 		if (parent) {
 			await this.selectFields([parent]);
 
-			const treeItem = this.getTreeItem(parent);
+			const treeItem = this.getTreeItem({field: parent});
 
 			trigger = treeItem.getByTitle('Add Field');
 		}
@@ -295,6 +302,19 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async checkIsParent({child, parent}) {
+		const parentContainer = this.page.locator('.treeview-item', {
+			has: this.getTreeItem({field: parent}),
+		});
+
+		await expect(
+			this.getTreeItem({
+				field: child,
+				parent: parentContainer,
+			})
+		).toBeVisible();
+	}
+
 	async clickFieldAction(field: Field, action: string) {
 		await this.selectFields([field]);
 
@@ -407,7 +427,7 @@ export class StructureBuilderPage {
 		if (fields.length === 1) {
 			const [field] = fields;
 
-			const treeItem = this.getTreeItem(field);
+			const treeItem = this.getTreeItem({field});
 
 			await treeItem.waitFor({state: 'visible'});
 
@@ -448,6 +468,33 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async dragItem({
+		item,
+		target,
+		verify = true,
+	}: {
+		item: Field;
+		target: Field;
+		verify?: boolean;
+	}) {
+		const dragItem = this.getTreeItem({
+			field: item,
+		});
+
+		const targetItem = this.getTreeItem({
+			field: target,
+		});
+
+		await dragAndDropElement({
+			dragTarget: dragItem,
+			dropTarget: targetItem,
+		});
+
+		if (verify) {
+			await this.checkIsParent({child: item, parent: target});
+		}
+	}
+
 	async editStructure(id: number) {
 		await this.goto({id});
 	}
@@ -472,7 +519,7 @@ export class StructureBuilderPage {
 	}
 
 	async expandField(field: Field) {
-		const treeItem = this.getTreeItem(field);
+		const treeItem = this.getTreeItem({field});
 
 		await expect(async () => {
 			await treeItem.locator('.component-expander').click({timeout: 500});
@@ -556,7 +603,7 @@ export class StructureBuilderPage {
 
 	async selectFields(fields: Field[]) {
 		for (const [i, field] of fields.entries()) {
-			const treeItem = this.getTreeItem(field);
+			const treeItem = this.getTreeItem({field});
 
 			await expect(async () => {
 				await treeItem.click({

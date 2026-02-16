@@ -9,6 +9,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -495,5 +496,106 @@ test(
 		await expect(
 			page.locator('.treeview-link', {hasText: 'Text'})
 		).toBeVisible();
+	}
+);
+
+test(
+	'Can drag and drop items to repeatable groups',
+	{
+		tag: '@LPD-76099',
+	},
+	async ({page, structureBuilderPage}) => {
+
+		// Create structure and go to structure builder
+
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			page: structureBuilderPage,
+			publish: false,
+		});
+
+		// Add some fields and create some repeatable groups
+
+		await structureBuilderPage.addField('Decimal');
+		await structureBuilderPage.addField('Boolean');
+		await structureBuilderPage.addField('Rich Text');
+		await structureBuilderPage.addField('Numeric');
+
+		await structureBuilderPage.createRepeatableGroup({
+			fields: [{label: 'Rich Text'}],
+			label: 'Group 1',
+		});
+
+		await structureBuilderPage.createRepeatableGroup({
+			fields: [{label: 'Numeric'}],
+			label: 'Group 2',
+		});
+
+		// Drag one of the fields to one group
+
+		await structureBuilderPage.dragItem({
+			item: {label: 'Decimal'},
+			target: {label: 'Group 1'},
+		});
+
+		// Try to move the only field in Group 2 and check error
+
+		await structureBuilderPage.dragItem({
+			item: {label: 'Numeric'},
+			target: {label: 'Group 1'},
+			verify: false,
+		});
+
+		await expect(
+			page.getByText(
+				'at least one field is required in a repeatable group'
+			)
+		).toBeVisible();
+
+		// Try to move a locked field and check error
+
+		await structureBuilderPage.dragItem({
+			item: {label: 'Title'},
+			target: {label: 'Group 1'},
+			verify: false,
+		});
+
+		await expect(
+			page.getByText(
+				'Some items could not be moved because they are system fields'
+			)
+		).toBeVisible();
+
+		// Publish and move a field to check warning is shown
+
+		await structureBuilderPage.publishStructure();
+
+		await structureBuilderPage.dragItem({
+			item: {label: 'Boolean'},
+			target: {label: 'Group 1'},
+			verify: false,
+		});
+
+		await page
+			.getByText(
+				'Moving fields may impact existing stored data after publishing the structure.'
+			)
+			.waitFor();
+
+		// Check move is done properly if confirming
+
+		await clickAndExpectToBeHidden({
+			target: page.getByText(
+				'Moving fields may impact existing stored data after publishing the structure.'
+			),
+			trigger: page.locator('.modal-footer').getByText('Move'),
+		});
+
+		await structureBuilderPage.checkIsParent({
+			child: {label: 'Boolean'},
+			parent: {label: 'Group 1'},
+		});
 	}
 );

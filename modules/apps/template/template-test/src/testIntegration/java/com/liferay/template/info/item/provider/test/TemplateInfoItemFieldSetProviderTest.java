@@ -213,9 +213,25 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
 		Assert.assertEquals(
 			infoFields.toString(),
+			StringBundler.concat(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX ,
+				StringPool.UNDERLINE,
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX, "_ERC__",
+				journalArticleTemplateEntry.getExternalReferenceCode()),
+			infoField.getExternalUniqueId());
+		Assert.assertEquals(
+			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
+		Assert.assertEquals(
+			infoFields.toString(),
+			StringBundler.concat(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX ,
+				StringPool.UNDERLINE,
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX,
+				journalArticleTemplateEntry.getTemplateEntryId()),
+			infoField.getUniqueId());
 	}
 
 	@Test
@@ -278,7 +294,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		long groupId = _serviceContext.getScopeGroupId();
 
-		_serviceContext.setScopeGroupId(_company.getGroupId());
+		Group companyGroup = _company.getGroup();
+
+		_serviceContext.setScopeGroupId(companyGroup.getGroupId());
 
 		_globalTemplateEntry = TemplateTestUtil.addTemplateEntry(
 			BlogsEntry.class.getName(), StringPool.BLANK, _serviceContext);
@@ -302,9 +320,26 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoField.getInfoFieldType() instanceof HTMLInfoFieldType);
 		Assert.assertEquals(
 			infoFields.toString(),
+			StringBundler.concat(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX ,
+				StringPool.UNDERLINE,
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX, "_ERC__",
+				_globalTemplateEntry.getExternalReferenceCode(), "__SERC__",
+				companyGroup.getExternalReferenceCode()),
+			infoField.getExternalUniqueId());
+		Assert.assertEquals(
+			infoFields.toString(),
 			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				_globalTemplateEntry.getTemplateEntryId(),
+			_globalTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
+		Assert.assertEquals(
+			infoFields.toString(),
+			StringBundler.concat(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX ,
+				StringPool.UNDERLINE,
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX,
+				_globalTemplateEntry.getTemplateEntryId()),
+			infoField.getUniqueId());
 	}
 
 	@Test

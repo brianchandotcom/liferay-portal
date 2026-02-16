@@ -59,8 +59,8 @@ public class SearchIndexPostUpgradeDataCleanupProcess
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Found orphan index from deleted company: " +
-							indexName);
+						"Orphaned index from a deleted company detected: " +
+							indexName + ". Manual deletion required.");
 				}
 			}
 		}

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.ActionRequest;
@@ -50,11 +51,23 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLinkId);
 
+			if (fragmentEntryLink == null) {
+				continue;
+			}
+
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.
 					fetchFragmentEntryByExternalReferenceCode(
 						fragmentEntryLink.getFragmentEntryERC(),
 						fragmentEntryLink.getFragmentEntryGroupId());
+
+			if (fragmentEntry == null) {
+				continue;
+			}
+
+			String fragmentEntryScopeERC =
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), fragmentEntryLink.getGroupId());
 
 			ActionableDynamicQuery actionableDynamicQuery =
 				_fragmentEntryLinkLocalService.getActionableDynamicQuery();
@@ -71,14 +84,14 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 					Property fragmentEntryScopeERCProperty =
 						PropertyFactoryUtil.forName("fragmentEntryScopeERC");
 
-					if (Validator.isNull(fragmentEntry.getScopeERC())) {
+					if (Validator.isNull(fragmentEntryScopeERC)) {
 						dynamicQuery.add(
 							fragmentEntryScopeERCProperty.isNull());
 					}
 					else {
 						dynamicQuery.add(
 							fragmentEntryScopeERCProperty.eq(
-								fragmentEntry.getScopeERC()));
+								fragmentEntryScopeERC));
 					}
 
 					Property plidProperty = PropertyFactoryUtil.forName("plid");

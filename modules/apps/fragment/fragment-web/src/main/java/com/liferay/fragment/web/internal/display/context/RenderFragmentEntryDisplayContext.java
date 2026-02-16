@@ -17,11 +17,14 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadRequest;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -52,6 +55,10 @@ public class RenderFragmentEntryDisplayContext {
 
 		UploadRequest uploadRequest = _getUploadRequest();
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		String css = _readParameter(fragmentEntry, "css", uploadRequest);
 		String html = _readParameter(fragmentEntry, "html", uploadRequest);
 		String js = _readParameter(fragmentEntry, "js", uploadRequest);
@@ -67,9 +74,11 @@ public class RenderFragmentEntryDisplayContext {
 
 		if (fragmentEntry != null) {
 			fragmentEntryERC = fragmentEntry.getExternalReferenceCode();
-			fragmentEntryScopeERC = fragmentEntry.getScopeERC();
+			fragmentEntryScopeERC = ScopeUtil.getItemScopeExternalReferenceCode(
+				fragmentEntry.getGroupId(), themeDisplay.getScopeGroupId());
 		}
 
+		fragmentEntryLink.setGroupId(themeDisplay.getScopeGroupId());
 		fragmentEntryLink.setFragmentEntryERC(fragmentEntryERC);
 		fragmentEntryLink.setFragmentEntryScopeERC(fragmentEntryScopeERC);
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 
 import java.util.List;
 
@@ -169,7 +170,8 @@ public class FragmentEntryStagedModelRepository
 			_fragmentEntryLinkLocalService.
 				getFragmentEntryLinksByFragmentEntryERC(
 					groupId, fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC());
+					ScopeUtil.getItemScopeExternalReferenceCode(
+						fragmentEntry.getGroupId(), groupId));
 
 		if (ListUtil.isEmpty(fragmentEntryLinks)) {
 			return;

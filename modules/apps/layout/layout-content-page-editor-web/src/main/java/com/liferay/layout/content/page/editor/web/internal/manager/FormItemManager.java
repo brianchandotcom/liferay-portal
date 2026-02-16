@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -823,8 +824,9 @@ public class FormItemManager {
 			_fragmentEntryLinkService.addFragmentEntryLink(
 				null, layout.getGroupId(), null,
 				fragmentEntry.getExternalReferenceCode(),
-				fragmentEntry.getScopeERC(), segmentsExperienceId,
-				layout.getPlid(), fragmentEntry.getCss(),
+				ScopeUtil.getItemScopeExternalReferenceCode(
+					fragmentEntry.getGroupId(), layout.getGroupId()),
+				segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
 				fragmentEntry.getHtml(), fragmentEntry.getJs(),
 				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
 				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),

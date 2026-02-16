@@ -27,14 +27,12 @@ interface IViewDashboard {
 	constants: {
 		[key: string]: string;
 	};
-	enterpriseDetailsActionLink: string;
 	freeTier: boolean;
 	learnResources: ILearnResourceContext;
 }
 
 const ViewDashboard: React.FC<IViewDashboard> = ({
 	constants,
-	enterpriseDetailsActionLink,
 	freeTier,
 	learnResources,
 }) => {
@@ -42,7 +40,6 @@ const ViewDashboard: React.FC<IViewDashboard> = ({
 		<>
 			<Breadcrumb
 				breadcrumbItems={[{label: Liferay.Language.get('dashboard')}]}
-				enterpriseDetailsActionLink={enterpriseDetailsActionLink}
 				freeTier={freeTier}
 				hideSpace
 			/>
@@ -52,9 +49,6 @@ const ViewDashboard: React.FC<IViewDashboard> = ({
 					<ClayLayout.Container className="px-4" fluid>
 						{freeTier ? (
 							<EnterpriseOnlyPlaceholder
-								enterpriseDetailsActionLink={
-									enterpriseDetailsActionLink
-								}
 								learnResources={learnResources}
 							/>
 						) : (

@@ -10,13 +10,13 @@ import ClayPopover from '@clayui/popover';
 import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
+import {ENTERPRISE_URL} from '../utils/constants';
+
 type EnterpriseFeatureIndicatorProps = {
-	enterpriseDetailsActionLink: string;
 	showTooltip?: boolean;
 };
 
 export default function EnterpriseFeatureIndicator({
-	enterpriseDetailsActionLink,
 	showTooltip,
 }: EnterpriseFeatureIndicatorProps) {
 	const [show, setShow] = useState(false);
@@ -94,7 +94,7 @@ export default function EnterpriseFeatureIndicator({
 							Liferay.Language.get('get-enterprise-details')
 						)}
 						className="ml-1 text-decoration-underline"
-						href={enterpriseDetailsActionLink}
+						href={ENTERPRISE_URL}
 						rel="noopener noreferrer"
 						target="_blank"
 					>

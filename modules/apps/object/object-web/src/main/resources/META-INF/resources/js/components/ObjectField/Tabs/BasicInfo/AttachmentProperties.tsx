@@ -127,7 +127,7 @@ export function AttachmentProperties({
 									)}
 									id="storageDepotFolderPathInput"
 									label={Liferay.Language.get(
-										'cms-folder-storage'
+										'cms-storage-folder'
 									)}
 									maxLength={255}
 									onBlur={(event) => {

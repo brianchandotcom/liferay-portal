@@ -124,7 +124,7 @@ describe('The SpacePicker component', () => {
 	it('renders the label and initial placeholder', async () => {
 		render(<SpacePicker {...defaultProps} />);
 
-		expect(screen.getByText('cms-space-storage')).toBeInTheDocument();
+		expect(screen.getByText('cms-space')).toBeInTheDocument();
 
 		expect(screen.getByText('choose-a-space')).toBeInTheDocument();
 	});

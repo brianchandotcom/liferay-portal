@@ -85,7 +85,7 @@ export default function SpacePicker({
 		<FieldBase
 			errorMessage={error}
 			id="spaceStoragePicker"
-			label={Liferay.Language.get('cms-space-storage')}
+			label={Liferay.Language.get('cms-space')}
 			required
 		>
 			<Picker

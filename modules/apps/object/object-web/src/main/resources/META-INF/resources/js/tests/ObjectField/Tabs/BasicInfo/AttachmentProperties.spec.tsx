@@ -57,7 +57,7 @@ describe('AttachmentProperties', () => {
 		expect(screen.queryByText(/storage-folder/)).not.toBeInTheDocument();
 
 		expect(
-			screen.queryByLabelText(/cms-folder-storage/)
+			screen.queryByLabelText(/cms-storage-folder/)
 		).not.toBeInTheDocument();
 	});
 
@@ -81,6 +81,6 @@ describe('AttachmentProperties', () => {
 
 		expect(screen.getByText('Mock SpacePicker')).toBeInTheDocument();
 
-		expect(screen.getByLabelText(/cms-folder-storage/)).toBeInTheDocument();
+		expect(screen.getByLabelText(/cms-storage-folder/)).toBeInTheDocument();
 	});
 });

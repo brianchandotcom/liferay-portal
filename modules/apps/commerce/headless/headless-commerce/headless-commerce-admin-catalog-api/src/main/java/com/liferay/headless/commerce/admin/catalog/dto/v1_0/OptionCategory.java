@@ -20,8 +20,6 @@ import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -39,9 +37,6 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName("OptionCategory")
-@io.swagger.v3.oas.annotations.media.Schema(
-	requiredProperties = {"key", "title"}
-)
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "OptionCategory")
 public class OptionCategory implements Serializable {
@@ -214,7 +209,6 @@ public class OptionCategory implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
 	protected String key;
 
 	@JsonIgnore
@@ -301,7 +295,6 @@ public class OptionCategory implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
 	protected Map<String, String> title;
 
 	@JsonIgnore

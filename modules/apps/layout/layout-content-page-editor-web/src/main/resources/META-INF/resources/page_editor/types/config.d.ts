@@ -129,6 +129,7 @@ export interface Config {
 	fragmentCompositionNameMaxLength: number;
 	fragmentPortletNamespace: string;
 	fragmentsImportURL: string;
+	freeTier: boolean;
 	frontendTokens: {
 		[key: string]:
 			| {

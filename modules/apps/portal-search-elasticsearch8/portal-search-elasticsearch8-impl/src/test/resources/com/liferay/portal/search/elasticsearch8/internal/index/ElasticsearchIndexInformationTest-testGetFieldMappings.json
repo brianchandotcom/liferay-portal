@@ -9,7 +9,9 @@
 							"scaling_factor": 1000,
 							"type": "scaled_float"
 						},
-						"path_match": "ddmFieldArray.ddmFieldValue*Number_sortable"
+						"path_match": [
+							"ddmFieldArray.ddmFieldValue*Number_sortable"
+						]
 					}
 				},
 				{
@@ -23,8 +25,12 @@
 							},
 							"type": "text"
 						},
-						"match": "expando__keyword__*",
-						"match_mapping_type": "string"
+						"match": [
+							"expando__keyword__*"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -32,8 +38,12 @@
 						"mapping": {
 							"type": "long"
 						},
-						"match": "*_sortable",
-						"match_mapping_type": "long"
+						"match": [
+							"*_sortable"
+						],
+						"match_mapping_type": [
+							"long"
+						]
 					}
 				},
 				{
@@ -48,8 +58,12 @@
 							"language": "ar",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ar_[A-Z]{2}_sortable\\b|\\w+_ar_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ar_[A-Z]{2}_sortable\\b|\\w+_ar_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -65,8 +79,12 @@
 							"language": "bg",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_bg_[A-Z]{2}_sortable\\b|\\w+_bg_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_bg_[A-Z]{2}_sortable\\b|\\w+_bg_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -82,8 +100,12 @@
 							"language": "ca",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ca_[A-Z]{2}_sortable\\b|\\w+_ca_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ca_[A-Z]{2}_sortable\\b|\\w+_ca_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -99,8 +121,12 @@
 							"language": "cs",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_cs_[A-Z]{2}_sortable\\b|\\w+_cs_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_cs_[A-Z]{2}_sortable\\b|\\w+_cs_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -116,8 +142,12 @@
 							"language": "da",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_da_[A-Z]{2}_sortable\\b|\\w+_da_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_da_[A-Z]{2}_sortable\\b|\\w+_da_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -134,8 +164,12 @@
 							"language": "de",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_de_AT_sortable\\b|\\w+_de_AT_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_de_AT_sortable\\b|\\w+_de_AT_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -151,8 +185,12 @@
 							"language": "de",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_de_[A-Z]{2}_sortable\\b|\\w+_de_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_de_[A-Z]{2}_sortable\\b|\\w+_de_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -168,8 +206,12 @@
 							"language": "el",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_el_[A-Z]{2}_sortable\\b|\\w+_el_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_el_[A-Z]{2}_sortable\\b|\\w+_el_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -185,8 +227,12 @@
 							"language": "en",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_en_[A-Z]{2}_sortable\\b|\\w+_en_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_en_[A-Z]{2}_sortable\\b|\\w+_en_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -202,8 +248,12 @@
 							"language": "es",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_es_[A-Z]{2}_sortable\\b|\\w+_es_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_es_[A-Z]{2}_sortable\\b|\\w+_es_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -219,8 +269,12 @@
 							"language": "et",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_et_[A-Z]{2}_sortable\\b|\\w+_et_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_et_[A-Z]{2}_sortable\\b|\\w+_et_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -236,8 +290,12 @@
 							"language": "eu",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_eu_[A-Z]{2}_sortable\\b|\\w+_eu_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_eu_[A-Z]{2}_sortable\\b|\\w+_eu_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -253,8 +311,12 @@
 							"language": "fa",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_fa_[A-Z]{2}_sortable\\b|\\w+_fa_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fa_[A-Z]{2}_sortable\\b|\\w+_fa_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -270,8 +332,12 @@
 							"language": "fi",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_fi_[A-Z]{2}_sortable\\b|\\w+_fi_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fi_[A-Z]{2}_sortable\\b|\\w+_fi_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -288,8 +354,12 @@
 							"language": "fr",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_fr_CA_sortable\\b|\\w+_fr_CA_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fr_CA_sortable\\b|\\w+_fr_CA_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -305,8 +375,12 @@
 							"language": "fr",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_fr_[A-Z]{2}_sortable\\b|\\w+_fr_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fr_[A-Z]{2}_sortable\\b|\\w+_fr_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -322,8 +396,12 @@
 							"language": "gl",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_gl_[A-Z]{2}_sortable\\b|\\w+_gl_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_gl_[A-Z]{2}_sortable\\b|\\w+_gl_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -339,8 +417,12 @@
 							"language": "hi",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_hi_[A-Z]{2}_sortable\\b|\\w+_hi_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hi_[A-Z]{2}_sortable\\b|\\w+_hi_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -356,8 +438,12 @@
 							"language": "hr",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_hr_[A-Z]{2}_sortable\\b|\\w+_hr_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hr_[A-Z]{2}_sortable\\b|\\w+_hr_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -373,8 +459,12 @@
 							"language": "hu",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_hu_[A-Z]{2}_sortable\\b|\\w+_hu_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hu_[A-Z]{2}_sortable\\b|\\w+_hu_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -390,8 +480,12 @@
 							"language": "hy",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_hy_[A-Z]{2}_sortable\\b|\\w+_hy_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hy_[A-Z]{2}_sortable\\b|\\w+_hy_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -407,8 +501,12 @@
 							"language": "in",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_in_[A-Z]{2}_sortable\\b|\\w+_in_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_in_[A-Z]{2}_sortable\\b|\\w+_in_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -424,8 +522,12 @@
 							"language": "it",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_it_[A-Z]{2}_sortable\\b|\\w+_it_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_it_[A-Z]{2}_sortable\\b|\\w+_it_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -441,8 +543,12 @@
 							"language": "ja",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ja_[A-Z]{2}_sortable\\b|\\w+_ja_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ja_[A-Z]{2}_sortable\\b|\\w+_ja_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -458,8 +564,12 @@
 							"language": "kk",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_kk_[A-Z]{2}_sortable\\b|\\w+_kk_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_kk_[A-Z]{2}_sortable\\b|\\w+_kk_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -475,8 +585,12 @@
 							"language": "ko",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ko_[A-Z]{2}_sortable\\b|\\w+_ko_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ko_[A-Z]{2}_sortable\\b|\\w+_ko_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -492,8 +606,12 @@
 							"language": "lo",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_lo_[A-Z]{2}_sortable\\b|\\w+_lo_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_lo_[A-Z]{2}_sortable\\b|\\w+_lo_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -509,8 +627,12 @@
 							"language": "lt",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_lt_[A-Z]{2}_sortable\\b|\\w+_lt_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_lt_[A-Z]{2}_sortable\\b|\\w+_lt_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -526,8 +648,12 @@
 							"language": "ms",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ms_[A-Z]{2}_sortable\\b|\\w+_ms_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ms_[A-Z]{2}_sortable\\b|\\w+_ms_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -543,8 +669,12 @@
 							"language": "nb",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_nb_[A-Z]{2}_sortable\\b|\\w+_nb_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_nb_[A-Z]{2}_sortable\\b|\\w+_nb_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -560,8 +690,12 @@
 							"language": "nl",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_nl_[A-Z]{2}_sortable\\b|\\w+_nl_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_nl_[A-Z]{2}_sortable\\b|\\w+_nl_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -577,8 +711,12 @@
 							"language": "no",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_no_[A-Z]{2}_sortable\\b|\\w+_no_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_no_[A-Z]{2}_sortable\\b|\\w+_no_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -594,8 +732,12 @@
 							"language": "pl",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_pl_[A-Z]{2}_sortable\\b|\\w+_pl_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_pl_[A-Z]{2}_sortable\\b|\\w+_pl_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -611,8 +753,12 @@
 							"language": "pt",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_pt_[A-Z]{2}_sortable\\b|\\w+_pt_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_pt_[A-Z]{2}_sortable\\b|\\w+_pt_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -628,8 +774,12 @@
 							"language": "ro",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ro_[A-Z]{2}_sortable\\b|\\w+_ro_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ro_[A-Z]{2}_sortable\\b|\\w+_ro_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -645,8 +795,12 @@
 							"language": "ru",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ru_[A-Z]{2}_sortable\\b|\\w+_ru_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ru_[A-Z]{2}_sortable\\b|\\w+_ru_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -662,8 +816,12 @@
 							"language": "sk",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_sk_[A-Z]{2}_sortable\\b|\\w+_sk_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_sk_[A-Z]{2}_sortable\\b|\\w+_sk_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -679,8 +837,12 @@
 							"language": "sl",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_sl_[A-Z]{2}_sortable\\b|\\w+_sl_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_sl_[A-Z]{2}_sortable\\b|\\w+_sl_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -696,8 +858,12 @@
 							"language": "sr",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_sr_[A-Z]{2}_sortable\\b|\\w+_sr_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_sr_[A-Z]{2}_sortable\\b|\\w+_sr_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -713,8 +879,12 @@
 							"language": "sv",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_sv_[A-Z]{2}_sortable\\b|\\w+_sv_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_sv_[A-Z]{2}_sortable\\b|\\w+_sv_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -730,8 +900,12 @@
 							"language": "ta",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_ta_[A-Z]{2}_sortable\\b|\\w+_ta_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ta_[A-Z]{2}_sortable\\b|\\w+_ta_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -747,8 +921,12 @@
 							"language": "th",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_th_[A-Z]{2}_sortable\\b|\\w+_th_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_th_[A-Z]{2}_sortable\\b|\\w+_th_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -764,8 +942,12 @@
 							"language": "tr",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_tr_[A-Z]{2}_sortable\\b|\\w+_tr_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_tr_[A-Z]{2}_sortable\\b|\\w+_tr_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -781,8 +963,12 @@
 							"language": "uk",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_uk_[A-Z]{2}_sortable\\b|\\w+_uk_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_uk_[A-Z]{2}_sortable\\b|\\w+_uk_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -798,8 +984,12 @@
 							"language": "vi",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_vi_[A-Z]{2}_sortable\\b|\\w+_vi_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_vi_[A-Z]{2}_sortable\\b|\\w+_vi_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -815,8 +1005,12 @@
 							"language": "zh",
 							"type": "icu_collation_keyword"
 						},
-						"match": "\\w+_zh_[A-Z]{2}_sortable\\b|\\w+_zh_[A-Z]{2}_\\w+_sortable\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_zh_[A-Z]{2}_sortable\\b|\\w+_zh_[A-Z]{2}_\\w+_sortable\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -825,8 +1019,12 @@
 						"mapping": {
 							"type": "keyword"
 						},
-						"match": "*_sortable",
-						"match_mapping_type": "string"
+						"match": [
+							"*_sortable"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -839,7 +1037,9 @@
 							},
 							"type": "geo_point"
 						},
-						"match": "*_geolocation"
+						"match": [
+							"*_geolocation"
+						]
 					}
 				},
 				{
@@ -848,7 +1048,9 @@
 							"format": "yyyyMMddHHmmss",
 							"type": "date"
 						},
-						"match": "*_date"
+						"match": [
+							"*_date"
+						]
 					}
 				},
 				{
@@ -856,8 +1058,12 @@
 						"mapping": {
 							"type": "keyword"
 						},
-						"match_mapping_type": "string",
-						"path_match": "ddmFieldArray.ddmFieldValueKeyword*"
+						"match_mapping_type": [
+							"string"
+						],
+						"path_match": [
+							"ddmFieldArray.ddmFieldValueKeyword*"
+						]
 					}
 				},
 				{
@@ -865,8 +1071,12 @@
 						"mapping": {
 							"type": "keyword"
 						},
-						"match": "ddm__keyword__*",
-						"match_mapping_type": "string"
+						"match": [
+							"ddm__keyword__*"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -877,8 +1087,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ar\\b|\\w+_ar_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ar\\b|\\w+_ar_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -889,8 +1103,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_bg\\b|\\w+_bg_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_bg\\b|\\w+_bg_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -902,8 +1120,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ca\\b|\\w+_ca_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ca\\b|\\w+_ca_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -914,8 +1136,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_cs\\b|\\w+_cs_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_cs\\b|\\w+_cs_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -926,8 +1152,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_da\\b|\\w+_da_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_da\\b|\\w+_da_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -939,8 +1169,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_de\\b|\\w+_de_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_de\\b|\\w+_de_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -951,8 +1185,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_el\\b|\\w+_el_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_el\\b|\\w+_el_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -964,8 +1202,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_en\\b|\\w+_en_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_en\\b|\\w+_en_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -977,8 +1219,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_es\\b|\\w+_es_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_es\\b|\\w+_es_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -989,8 +1235,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_et\\b|\\w+_et_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_et\\b|\\w+_et_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1001,8 +1251,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_eu\\b|\\w+_eu_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1013,8 +1267,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_fa\\b|\\w+_fa_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fa\\b|\\w+_fa_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1026,8 +1284,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_fi\\b|\\w+_fi_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fi\\b|\\w+_fi_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1039,8 +1301,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_fr\\b|\\w+_fr_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1051,8 +1317,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_gl\\b|\\w+_gl_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_gl\\b|\\w+_gl_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1063,8 +1333,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_hi\\b|\\w+_hi_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hi\\b|\\w+_hi_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1076,8 +1350,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_hu\\b|\\w+_hu_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hu\\b|\\w+_hu_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1088,8 +1366,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_hy\\b|\\w+_hy_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_hy\\b|\\w+_hy_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1100,8 +1382,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_in\\b|\\w+_in_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_in\\b|\\w+_in_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1113,8 +1399,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_it\\b|\\w+_it_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_it\\b|\\w+_it_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1126,8 +1416,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ja\\b|\\w+_ja_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1138,8 +1432,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ko\\b|\\w+_ko_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1150,8 +1448,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_lt\\b|\\w+_lt_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_lt\\b|\\w+_lt_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1163,8 +1465,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_nl\\b|\\w+_nl_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_nl\\b|\\w+_nl_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1175,8 +1481,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_nb\\b|\\w+_nb_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_nb\\b|\\w+_nb_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1187,8 +1497,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_pl\\b|\\w+_pl_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1200,8 +1514,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_pt\\b|\\w+_pt_PT\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_pt\\b|\\w+_pt_PT\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1213,8 +1531,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "*_pt_BR",
-						"match_mapping_type": "string"
+						"match": [
+							"*_pt_BR"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -1224,8 +1546,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ro\\b|\\w+_ro_RO\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ro\\b|\\w+_ro_RO\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1236,8 +1562,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_ru\\b|\\w+_ru_RU\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_ru\\b|\\w+_ru_RU\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1249,8 +1579,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_sv\\b|\\w+_sv_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_sv\\b|\\w+_sv_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1261,8 +1595,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_th\\b|\\w+_th_TH\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_th\\b|\\w+_th_TH\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1273,8 +1611,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_tr\\b|\\w+_tr_TR\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_tr\\b|\\w+_tr_TR\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1286,8 +1628,12 @@
 							"term_vector": "with_positions_offsets",
 							"type": "text"
 						},
-						"match": "\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b",
-						"match_mapping_type": "string",
+						"match": [
+							"\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b"
+						],
+						"match_mapping_type": [
+							"string"
+						],
 						"match_pattern": "regex"
 					}
 				},
@@ -1296,8 +1642,12 @@
 						"mapping": {
 							"type": "text"
 						},
-						"match_mapping_type": "string",
-						"path_match": "ddmFieldArray.ddmFieldValueText*"
+						"match_mapping_type": [
+							"string"
+						],
+						"path_match": [
+							"ddmFieldArray.ddmFieldValueText*"
+						]
 					}
 				},
 				{
@@ -1305,8 +1655,12 @@
 						"mapping": {
 							"type": "text"
 						},
-						"match": "ddm__*",
-						"match_mapping_type": "string"
+						"match": [
+							"ddm__*"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -1314,8 +1668,12 @@
 						"mapping": {
 							"type": "text"
 						},
-						"match": "expando__*",
-						"match_mapping_type": "string"
+						"match": [
+							"expando__*"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				},
 				{
@@ -1328,7 +1686,9 @@
 							},
 							"type": "double"
 						},
-						"match": "*_double"
+						"match": [
+							"*_double"
+						]
 					}
 				},
 				{
@@ -1341,7 +1701,9 @@
 							},
 							"type": "float"
 						},
-						"match": "*_float"
+						"match": [
+							"*_float"
+						]
 					}
 				},
 				{
@@ -1354,7 +1716,9 @@
 							},
 							"type": "integer"
 						},
-						"match": "*_integer"
+						"match": [
+							"*_integer"
+						]
 					}
 				},
 				{
@@ -1367,7 +1731,9 @@
 							},
 							"type": "long"
 						},
-						"match": "*_long"
+						"match": [
+							"*_long"
+						]
 					}
 				},
 				{
@@ -1380,7 +1746,9 @@
 							},
 							"type": "short"
 						},
-						"match": "*_short"
+						"match": [
+							"*_short"
+						]
 					}
 				},
 				{
@@ -1389,7 +1757,9 @@
 							"dims": 256,
 							"type": "dense_vector"
 						},
-						"path_match": "text_embedding_256*"
+						"path_match": [
+							"text_embedding_256*"
+						]
 					}
 				},
 				{
@@ -1397,8 +1767,12 @@
 						"mapping": {
 							"type": "text"
 						},
-						"match": "*",
-						"match_mapping_type": "string"
+						"match": [
+							"*"
+						],
+						"match_mapping_type": [
+							"string"
+						]
 					}
 				}
 			],

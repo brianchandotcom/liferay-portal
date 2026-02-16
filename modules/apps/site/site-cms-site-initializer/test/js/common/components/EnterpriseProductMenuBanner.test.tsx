@@ -11,9 +11,7 @@ import EnterpriseProductMenuBanner from '../../../../src/main/resources/META-INF
 
 describe('EnterpriseProductMenuBanner', () => {
 	it('renders the banner with all its elements', () => {
-		render(
-			<EnterpriseProductMenuBanner enterpriseDetailsActionLink="/my-temp-link" />
-		);
+		render(<EnterpriseProductMenuBanner />);
 
 		expect(screen.getByText('enterprise')).toBeInTheDocument();
 
@@ -32,6 +30,9 @@ describe('EnterpriseProductMenuBanner', () => {
 		});
 
 		expect(detailsLink).toBeInTheDocument();
-		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
+		expect(detailsLink).toHaveAttribute(
+			'href',
+			'https://www.liferay.com/en/contact-sales'
+		);
 	});
 });

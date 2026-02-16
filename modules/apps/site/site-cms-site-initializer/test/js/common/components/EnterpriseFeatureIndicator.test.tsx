@@ -19,9 +19,7 @@ describe('EnterpriseFeatureIndicator', () => {
 	};
 
 	it('renders the component without a tooltip', () => {
-		render(
-			<EnterpriseFeatureIndicator enterpriseDetailsActionLink="/my-temp-link" />
-		);
+		render(<EnterpriseFeatureIndicator />);
 
 		assertBaseComponent();
 
@@ -31,12 +29,7 @@ describe('EnterpriseFeatureIndicator', () => {
 	});
 
 	it('renders the component with a tooltip', async () => {
-		render(
-			<EnterpriseFeatureIndicator
-				enterpriseDetailsActionLink="/my-temp-link"
-				showTooltip
-			/>
-		);
+		render(<EnterpriseFeatureIndicator showTooltip />);
 
 		assertBaseComponent();
 
@@ -56,7 +49,10 @@ describe('EnterpriseFeatureIndicator', () => {
 			name: 'x-opens-new-window',
 		});
 		expect(detailsLink).toBeInTheDocument();
-		expect(detailsLink).toHaveAttribute('href', '/my-temp-link');
+		expect(detailsLink).toHaveAttribute(
+			'href',
+			'https://www.liferay.com/en/contact-sales'
+		);
 
 		await userEvent.unhover(screen.getByText('enterprise'), {delay: null});
 

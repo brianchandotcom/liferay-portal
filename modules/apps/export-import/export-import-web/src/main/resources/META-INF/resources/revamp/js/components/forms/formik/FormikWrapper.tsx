@@ -1,0 +1,41 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {Field, FieldProps, FieldValidator} from 'formik';
+import React from 'react';
+
+import {required as requiredValidation} from '../validations';
+
+export function FormikWrapper({
+	children,
+	name,
+	required,
+	validate,
+}: {
+	children: (props: {
+		errorMessage?: string;
+		field: FieldProps['field'];
+	}) => React.ReactNode;
+	name: string;
+	required?: boolean;
+	validate?: FieldValidator;
+}) {
+	return (
+		<Field
+			name={name}
+			validate={
+				validate ? validate : required ? requiredValidation : undefined
+			}
+		>
+			{({field, meta}: FieldProps) =>
+				children({
+					errorMessage:
+						meta.touched && meta.error ? meta.error : undefined,
+					field,
+				})
+			}
+		</Field>
+	);
+}

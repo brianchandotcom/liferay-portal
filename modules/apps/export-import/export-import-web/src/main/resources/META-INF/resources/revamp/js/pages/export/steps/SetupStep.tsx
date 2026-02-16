@@ -10,7 +10,7 @@ import React from 'react';
 import {
 	FormikFieldMultiCheckbox,
 	FormikFieldText,
-} from '../../../components/forms/FormikFields';
+} from '../../../components/forms/formik';
 import {mockPorletDataHandlerSections} from '../../../utils/mockPorletDataHandlerSections';
 
 export default function SetupStep() {

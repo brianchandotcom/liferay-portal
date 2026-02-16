@@ -925,11 +925,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			fragmentStyledLayoutStructureItem.getItemId());
@@ -937,11 +934,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 	}
 
 	@Test
@@ -976,11 +970,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			columnLayoutStructureItem.getItemId());
@@ -988,11 +979,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 	}
 
 	@Test
@@ -1027,11 +1015,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			rowStyledLayoutStructureItem.getItemId());
@@ -1039,11 +1024,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 	}
 
 	@Test
@@ -1079,11 +1061,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			0,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 
 		layoutStructure.unmarkLayoutStructureItemForDeletion(
 			containerStyledLayoutStructureItem.getItemId());
@@ -1091,11 +1070,8 @@ public class LayoutStructureTest {
 		Assert.assertEquals(
 			1,
 			_fragmentEntryLinkLocalService.
-				getAllFragmentEntryLinksCountByFragmentEntryERC(
-					_group.getGroupId(),
-					_fragmentEntry.getExternalReferenceCode(),
-					ScopeUtil.getItemScopeExternalReferenceCode(
-						_fragmentEntry.getGroupId(), _layout.getGroupId())));
+				getAllFragmentEntryLinksCountByFragmentEntryId(
+					_fragmentEntry.getFragmentEntryId()));
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink() throws Exception {

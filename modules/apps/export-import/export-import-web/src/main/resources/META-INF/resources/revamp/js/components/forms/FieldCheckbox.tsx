@@ -29,10 +29,6 @@ export function FieldCheckbox({
 
 	const handleChange = () => onChange(!checked);
 
-	const handleContainerClick = () => {
-		handleChange();
-	};
-
 	const stopPropagation = (event: React.SyntheticEvent) => {
 		event.stopPropagation();
 	};
@@ -40,7 +36,7 @@ export function FieldCheckbox({
 	return (
 		<div
 			className="border mb-2 p-3 rounded text-3"
-			onClick={handleContainerClick}
+			onClick={handleChange}
 			style={{cursor: 'pointer'}}
 		>
 			<ClayLayout.ContentRow padded>

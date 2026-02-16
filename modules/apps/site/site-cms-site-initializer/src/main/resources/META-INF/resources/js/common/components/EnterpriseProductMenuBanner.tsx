@@ -23,7 +23,7 @@ export default function EnterpriseProductMenuBanner() {
 
 						<p>
 							{Liferay.Language.get(
-								'share-your-email-and-we-ll-show-you-what-you-can-unlock-with-our-enterprise-plan'
+								'share-your-email-and-we-ll-show-you-what-you-can-unlock-with-our-enterprise-subscription'
 							)}
 						</p>
 

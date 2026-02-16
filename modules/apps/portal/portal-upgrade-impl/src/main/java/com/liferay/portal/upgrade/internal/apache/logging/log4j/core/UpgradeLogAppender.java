@@ -76,13 +76,6 @@ public class UpgradeLogAppender implements Appender {
 			}
 		}
 		else if (logEvent.getLevel() == Level.WARN) {
-			if (_isDataCleanupMessage(logEvent.getLoggerName())) {
-				_upgradeRecorder.recordDataCleanupMessage(
-					logEvent.getLoggerName(), formattedMessage);
-
-				return;
-			}
-
 			_upgradeRecorder.recordWarningMessage(
 				logEvent.getLoggerName(), message.getFormattedMessage());
 		}

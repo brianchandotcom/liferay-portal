@@ -35,33 +35,31 @@ public class LayoutPageTemplateEntryServiceUtil {
 			String externalReferenceCode, long groupId,
 			long layoutPageTemplateCollectionId,
 			String layoutPageTemplateEntryKey, long classNameId,
-			long classTypeId, String classTypeKey, String name, int type,
-			long previewFileEntryId, boolean defaultTemplate,
-			long layoutPrototypeId, long plid, long masterLayoutPlid,
-			int status,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().addLayoutPageTemplateEntry(
-			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
-			layoutPageTemplateEntryKey, classNameId, classTypeId, classTypeKey,
-			name, type, previewFileEntryId, defaultTemplate, layoutPrototypeId,
-			plid, masterLayoutPlid, status, serviceContext);
-	}
-
-	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
-			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId,
-			String layoutPageTemplateEntryKey, long classNameId,
-			long classTypeId, String classTypeKey, String name,
+			String classTypeKey, String name, int type, long previewFileEntryId,
+			boolean defaultTemplate, long layoutPrototypeId, long plid,
 			long masterLayoutPlid, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateEntry(
 			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
-			layoutPageTemplateEntryKey, classNameId, classTypeId, classTypeKey,
-			name, masterLayoutPlid, status, serviceContext);
+			layoutPageTemplateEntryKey, classNameId, classTypeKey, name, type,
+			previewFileEntryId, defaultTemplate, layoutPrototypeId, plid,
+			masterLayoutPlid, status, serviceContext);
+	}
+
+	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
+			String externalReferenceCode, long groupId,
+			long layoutPageTemplateCollectionId,
+			String layoutPageTemplateEntryKey, long classNameId,
+			String classTypeKey, String name, long masterLayoutPlid, int status,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addLayoutPageTemplateEntry(
+			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
+			layoutPageTemplateEntryKey, classNameId, classTypeKey, name,
+			masterLayoutPlid, status, serviceContext);
 	}
 
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
@@ -606,12 +604,12 @@ public class LayoutPageTemplateEntryServiceUtil {
 	}
 
 	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
-			long layoutPageTemplateEntryId, long classNameId, long classTypeId,
+			long layoutPageTemplateEntryId, long classNameId,
 			String classTypeKey)
 		throws PortalException {
 
 		return getService().updateLayoutPageTemplateEntry(
-			layoutPageTemplateEntryId, classNameId, classTypeId, classTypeKey);
+			layoutPageTemplateEntryId, classNameId, classTypeKey);
 	}
 
 	public static LayoutPageTemplateEntry updateLayoutPageTemplateEntry(

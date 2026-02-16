@@ -21,6 +21,8 @@ $sticker-sm-border-radius: 0.25rem;
 $label-font-size: 0.75rem;
 $label-text-transform: capitalize;
 
+$table-list-border-radius: 0;
+
 $btn-sizes: () !default;
 $btn-sizes: map-deep-merge(
 	(

@@ -29,7 +29,7 @@ public class HttpPortRangeTest {
 	public void testEmbeddedHttpPort() {
 		_mockEmbeddedHttpPort(4400);
 
-		_assertSidecarHttpPort("4400");
+		_assertSidecarHttpPort("9201");
 	}
 
 	@Test

@@ -84,8 +84,8 @@ public class DuplicateUniqueFinderRowsCleaner {
 						sqlException);
 				}
 				finally {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
+					if (_log.isInfoEnabled()) {
+						_log.info(
 							StringBundler.concat(
 								"Deleted row from table ", _tableName,
 								" due to duplicate values in finder columns ",

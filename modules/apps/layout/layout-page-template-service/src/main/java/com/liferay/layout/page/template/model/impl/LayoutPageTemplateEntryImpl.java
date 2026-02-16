@@ -6,9 +6,6 @@
 package com.liferay.layout.page.template.model.impl;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.info.item.InfoItemFormVariation;
-import com.liferay.info.item.InfoItemServiceRegistryUtil;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
@@ -16,7 +13,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,30 +37,8 @@ public class LayoutPageTemplateEntryImpl
 			return super.getClassTypeId();
 		}
 
-		String classTypeKey = super.getClassTypeKey();
-
-		if (Validator.isNull(classTypeKey)) {
-			return -1;
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			InfoItemServiceRegistryUtil.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class, getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			return -2;
-		}
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.
-				getInfoItemFormVariationByExternalReferenceCode(
-					classTypeKey, getGroupId());
-
-		if (infoItemFormVariation == null) {
-			return -2;
-		}
-
-		return GetterUtil.getLong(infoItemFormVariation.getKey());
+		return LayoutPageTemplateEntryUtil.getClassTypeId(
+			getClassNameId(), super.getClassTypeKey(), getGroupId());
 	}
 
 	@Override

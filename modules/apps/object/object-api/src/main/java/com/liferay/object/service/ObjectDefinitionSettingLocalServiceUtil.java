@@ -120,14 +120,6 @@ public class ObjectDefinitionSettingLocalServiceUtil {
 			objectDefinitionSetting);
 	}
 
-	public static void deleteObjectDefinitionSettingByObjectDefinitionId(
-			long objectDefinitionId)
-		throws PortalException {
-
-		getService().deleteObjectDefinitionSettingByObjectDefinitionId(
-			objectDefinitionId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

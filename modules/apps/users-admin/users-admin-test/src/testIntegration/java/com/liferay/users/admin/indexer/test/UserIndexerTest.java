@@ -33,9 +33,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.search.engine.ConnectionInformation;
-import com.liferay.portal.search.engine.NodeInformation;
 import com.liferay.portal.search.engine.SearchEngineInformation;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -429,8 +426,10 @@ public class UserIndexerTest {
 				StringPool.SPACE, lastName),
 			user.getUserId());
 
-		String expectedFullNameHighlight = _getExpectedFullNameHighlight(
-			firstName, middleName, lastName);
+		String expectedFullNameHighlight = StringBundler.concat(
+			HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName, StringPool.SPACE,
+			middleName, StringPool.SPACE, lastName,
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 
 		assertSummary(
 			StringUtil.toLowerCase(firstName + " " + lastName),
@@ -853,42 +852,6 @@ public class UserIndexerTest {
 
 	@Inject
 	protected UserLocalService userLocalService;
-
-	private Version _getElasticsearchVersion() {
-		List<ConnectionInformation> connectionInformationList =
-			_searchEngineInformation.getConnectionInformationList();
-
-		ConnectionInformation connectionInformation =
-			connectionInformationList.get(0);
-
-		List<NodeInformation> nodeInformationList =
-			connectionInformation.getNodeInformationList();
-
-		NodeInformation nodeInformation = nodeInformationList.get(0);
-
-		return Version.parseVersion(nodeInformation.getVersion());
-	}
-
-	private String _getExpectedFullNameHighlight(
-		String firstName, String middleName, String lastName) {
-
-		if (StringUtil.startsWith(
-				_searchEngineInformation.getVendorString(), "Elasticsearch") &&
-			(_getElasticsearchVersion().compareTo(
-				Version.parseVersion("8.10.2")) >= 0)) {
-
-			return StringBundler.concat(
-				HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName, StringPool.SPACE,
-				middleName, StringPool.SPACE, lastName,
-				HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-		}
-
-		return StringBundler.concat(
-			HighlightUtil.HIGHLIGHT_TAG_OPEN, firstName,
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE, StringPool.SPACE, middleName,
-			StringPool.SPACE, HighlightUtil.HIGHLIGHT_TAG_OPEN, lastName,
-			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
-	}
 
 	private Long[] _toArrayOfLong(List<Long> list) {
 		return list.toArray(new Long[0]);

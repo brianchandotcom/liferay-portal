@@ -35,13 +35,14 @@ const DropdownTrigger = React.forwardRef(
 					displayType={inEmptyState ? 'secondary' : 'primary'}
 					ref={ref}
 				>
-					<span className="inline-item-before">
+					<span className="inline-item inline-item-before">
 						{Liferay.Language.get('new')}
 					</span>
 
-					<span className="d-inline-flex inline-item-after">
-						<ClayIcon symbol="caret-bottom" />
-					</span>
+					<ClayIcon
+						className="inline-item inline-item-after"
+						symbol="caret-bottom"
+					/>
 				</ClayButton>
 			);
 		}

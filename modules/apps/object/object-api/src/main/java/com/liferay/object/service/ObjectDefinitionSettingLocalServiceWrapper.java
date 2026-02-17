@@ -127,16 +127,6 @@ public class ObjectDefinitionSettingLocalServiceWrapper
 			deleteObjectDefinitionSetting(objectDefinitionSetting);
 	}
 
-	@Override
-	public void deleteObjectDefinitionSettingByObjectDefinitionId(
-			long objectDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		_objectDefinitionSettingLocalService.
-			deleteObjectDefinitionSettingByObjectDefinitionId(
-				objectDefinitionId);
-	}
-
 	/**
 	 * @throws PortalException
 	 */

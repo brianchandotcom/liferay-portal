@@ -10,6 +10,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -28,8 +29,9 @@ public class ObjectEntryTestUtil {
 
 	public static ObjectEntry addObjectEntry(
 			long groupId, ObjectDefinition objectDefinition,
-			Map<String, Serializable> values, String... keywords)
-		throws Exception {
+			long objectEntryFolderId, Map<String, Serializable> values,
+			String... keywords)
+		throws PortalException {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
@@ -43,9 +45,19 @@ public class ObjectEntryTestUtil {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			groupId, TestPropsValues.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), objectEntryFolderId, null,
+			values, serviceContext);
+	}
+
+	public static ObjectEntry addObjectEntry(
+			long groupId, ObjectDefinition objectDefinition,
+			Map<String, Serializable> values, String... keywords)
+		throws Exception {
+
+		return addObjectEntry(
+			groupId, objectDefinition,
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-			null, values, serviceContext);
+			values, keywords);
 	}
 
 	public static ObjectEntry addObjectEntry(

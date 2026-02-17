@@ -131,7 +131,6 @@ public class InformationTemplatesTemplateDisplayContext
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				themeDisplay.getScopeGroupId(),
-				templateEntry.getInfoItemFormVariationKey(),
 				templateEntry.getInfoItemFormVariationKey());
 
 		if (infoItemFormVariation == null) {

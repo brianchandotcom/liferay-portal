@@ -7,6 +7,8 @@ package com.liferay.layout.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
@@ -45,6 +48,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Mikel Lorza
@@ -166,8 +172,17 @@ public class EditLayoutMVCActionCommandTest {
 			Map<String, String> parameters)
 		throws Exception {
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setCharacterEncoding(StringPool.UTF8);
+		mockHttpServletRequest.setContentType(
+			StringBundler.concat(
+				MediaType.MULTIPART_FORM_DATA_VALUE,
+				"; boundary=WebKitFormBoundary", StringUtil.randomString()));
+
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
+			new MockLiferayPortletActionRequest(mockHttpServletRequest);
 
 		for (Map.Entry<String, String> entry : parameters.entrySet()) {
 			mockLiferayPortletActionRequest.addParameter(

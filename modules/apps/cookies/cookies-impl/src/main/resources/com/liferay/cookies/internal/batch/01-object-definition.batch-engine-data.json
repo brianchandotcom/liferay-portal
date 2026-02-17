@@ -12,7 +12,6 @@
 	},
 	"items": [
 		{
-			"className": "com.liferay.object.model.ObjectDefinition#X6Y0",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_FUNCTIONAL_COOKIE_ENTRY",
@@ -182,7 +181,6 @@
 			"system": true
 		},
 		{
-			"className": "com.liferay.object.model.ObjectDefinition#E8D0",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_NECESSARY_COOKIE_ENTRY",
@@ -352,7 +350,6 @@
 			"system": true
 		},
 		{
-			"className": "com.liferay.object.model.ObjectDefinition#U8H9",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_PERFORMANCE_COOKIE_ENTRY",
@@ -522,7 +519,6 @@
 			"system": true
 		},
 		{
-			"className": "com.liferay.object.model.ObjectDefinition#Q9G7",
 			"enableCategorization": true,
 			"enableFormContainer": false,
 			"externalReferenceCode": "L_PERSONALIZATION_COOKIE_ENTRY",

@@ -62,13 +62,12 @@ public interface CPMeasurementUnitService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
-			long companyId, String externalReferenceCode)
+	public CPMeasurementUnit fetchCPMeasurementUnit(long companyId, String key)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
+	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -77,21 +76,7 @@ public interface CPMeasurementUnitService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-			long companyId, int type)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnits(long companyId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -103,17 +88,6 @@ public interface CPMeasurementUnitService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
 			long companyId, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
 			OrderByComparator<CPMeasurementUnit> orderByComparator)
 		throws PortalException;
 

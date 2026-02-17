@@ -56,20 +56,20 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().fetchCPMeasurementUnit(cpMeasurementUnitId);
 	}
 
-	public static CPMeasurementUnit
-			fetchCPMeasurementUnitByExternalReferenceCode(
-				long companyId, String externalReferenceCode)
-		throws PortalException {
-
-		return getService().fetchCPMeasurementUnitByExternalReferenceCode(
-			companyId, externalReferenceCode);
-	}
-
-	public static CPMeasurementUnit fetchCPMeasurementUnitByKey(
+	public static CPMeasurementUnit fetchCPMeasurementUnit(
 			long companyId, String key)
 		throws PortalException {
 
-		return getService().fetchCPMeasurementUnitByKey(companyId, key);
+		return getService().fetchCPMeasurementUnit(companyId, key);
+	}
+
+	public static CPMeasurementUnit
+			fetchCPMeasurementUnitByExternalReferenceCode(
+				String externalReferenceCode, long companyId)
+		throws PortalException {
+
+		return getService().fetchCPMeasurementUnitByExternalReferenceCode(
+			externalReferenceCode, companyId);
 	}
 
 	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnit(
@@ -79,32 +79,11 @@ public class CPMeasurementUnitServiceUtil {
 		return getService().fetchPrimaryCPMeasurementUnit(companyId, type);
 	}
 
-	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-			long companyId, int type)
-		throws PortalException {
-
-		return getService().fetchPrimaryCPMeasurementUnitByType(
-			companyId, type);
-	}
-
 	public static CPMeasurementUnit getCPMeasurementUnit(
 			long cpMeasurementUnitId)
 		throws PortalException {
 
 		return getService().getCPMeasurementUnit(cpMeasurementUnitId);
-	}
-
-	public static CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitByKey(companyId, key);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnits(long companyId)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnits(companyId);
 	}
 
 	public static List<CPMeasurementUnit> getCPMeasurementUnits(
@@ -123,22 +102,6 @@ public class CPMeasurementUnitServiceUtil {
 
 		return getService().getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitsByType(companyId, type);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitsByType(
-			companyId, type, start, end, orderByComparator);
 	}
 
 	public static int getCPMeasurementUnitsCount(long companyId)

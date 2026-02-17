@@ -136,11 +136,13 @@ public abstract class CPMeasurementUnitLocalServiceBaseImpl
 	 *
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPMeasurementUnit deleteCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit) {
+			CPMeasurementUnit cpMeasurementUnit)
+		throws PortalException {
 
 		return cpMeasurementUnitPersistence.remove(cpMeasurementUnit);
 	}

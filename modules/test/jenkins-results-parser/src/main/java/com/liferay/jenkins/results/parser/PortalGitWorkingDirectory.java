@@ -52,7 +52,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			JenkinsResultsParserUtil.combine(
 				"zip -r -y ", fileName,
 				" $(git ls-files --directory --no-empty-directory --others | ",
-				"grep -v \\\\.gradle/)"));
+				"grep -v \\\\.gradle/) modules/yarn.lock"));
 
 		if (executionResult.getExitValue() != 0) {
 			throw new GitWorkingDirectoryRuntimeException(

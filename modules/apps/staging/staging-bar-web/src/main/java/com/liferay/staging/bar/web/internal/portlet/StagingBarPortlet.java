@@ -13,8 +13,6 @@ import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.kernel.staging.StagingURLHelper;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.LayoutBranchNameException;
 import com.liferay.portal.kernel.exception.LayoutSetBranchNameException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -43,7 +41,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.staging.bar.web.internal.portlet.constants.StagingBarPortletKeys;
@@ -107,7 +104,10 @@ public class StagingBarPortlet extends MVCPortlet {
 
 		_layoutRevisionLocalService.deleteLayoutRevision(layoutRevision);
 
-		_deleteUnusedLayoutIconImage(layoutRevision);
+		Layout layout = _layoutLocalService.fetchLayout(
+			layoutRevision.getPlid());
+
+		layout.deleteUnusedIconImage();
 
 		boolean updateRecentLayoutRevisionId = ParamUtil.getBoolean(
 			actionRequest, "updateRecentLayoutRevisionId");
@@ -479,59 +479,6 @@ public class StagingBarPortlet extends MVCPortlet {
 			_portal.getPortletId(actionRequest) + "requestProcessed");
 
 		sendRedirect(actionRequest, actionResponse);
-	}
-
-	private void _deleteUnusedLayoutIconImage(LayoutRevision layoutRevision)
-		throws Exception {
-
-		Layout layout = _layoutLocalService.fetchLayout(
-			layoutRevision.getPlid());
-
-		if (layout == null) {
-			return;
-		}
-
-		long layoutRevisionIconImageId = layoutRevision.getIconImageId();
-		String iconImageERC = layoutRevision.getIconImageERC();
-
-		if (layoutRevisionIconImageId <= GetterUtil.DEFAULT_LONG) {
-			layoutRevisionIconImageId = layout.getIconImageId();
-			iconImageERC = layout.getIconImageERC();
-		}
-
-		if (layoutRevisionIconImageId <= GetterUtil.DEFAULT_LONG) {
-			return;
-		}
-
-		DynamicQuery layoutRevisionDynamicQuery =
-			_layoutRevisionLocalService.dynamicQuery();
-
-		layoutRevisionDynamicQuery.add(
-			RestrictionsFactoryUtil.eq(
-				"iconImageId", layoutRevisionIconImageId));
-
-		long sameImageCount = _layoutRevisionLocalService.dynamicQueryCount(
-			layoutRevisionDynamicQuery);
-
-		if (Validator.isNotNull(iconImageERC)) {
-			DynamicQuery layoutDynamicQuery =
-				_layoutLocalService.dynamicQuery();
-
-			layoutDynamicQuery.add(
-				RestrictionsFactoryUtil.eq("iconImageERC", iconImageERC));
-			layoutDynamicQuery.add(
-				RestrictionsFactoryUtil.ne("plid", layout.getPlid()));
-
-			sameImageCount += _layoutLocalService.dynamicQueryCount(
-				layoutDynamicQuery);
-		}
-
-		if (sameImageCount < 1) {
-			layout.setIconImageERC(iconImageERC);
-
-			_portal.updateImageERC(
-				layout, false, null, "iconImageERC", 0, 0, 0);
-		}
 	}
 
 	private void _setScopedAssetEntry(

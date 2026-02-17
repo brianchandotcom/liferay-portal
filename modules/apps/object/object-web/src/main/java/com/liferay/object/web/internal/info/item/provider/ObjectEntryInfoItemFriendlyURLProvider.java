@@ -39,6 +39,10 @@ public class ObjectEntryInfoItemFriendlyURLProvider
 
 	@Override
 	public String getFriendlyURL(ObjectEntry objectEntry, String languageId) {
+		if (_objectDefinition.isCMS()) {
+			return String.valueOf(objectEntry.getObjectEntryId());
+		}
+
 		String urlTitle = objectEntry.getURLTitle(
 			LocaleUtil.fromLanguageId(languageId));
 

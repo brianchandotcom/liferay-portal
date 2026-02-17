@@ -128,12 +128,18 @@ public class BatchEnginePortletDataHandlerUtil {
 					if (ExportImportDateUtil.isRangeFromLastPublishDate(
 							portletDataContext)) {
 
-						filters.add(
-							_buildFilterParameterFromChangeset(
+						String lastPublishDateFilter =
+							_buildLastPublishDateFilter(
 								changesetEntryLocalService,
 								classNameLocalService,
 								exportImportDescriptor.getModelClassName(),
-								portletDataContext));
+								portletDataContext);
+
+						if (Validator.isNull(lastPublishDateFilter)) {
+							return null;
+						}
+
+						filters.add(lastPublishDateFilter);
 					}
 					else {
 						String dateRangeFilter = _buildDateRangeFilter(
@@ -282,7 +288,7 @@ public class BatchEnginePortletDataHandlerUtil {
 		return StringUtil.merge(filters, " and ");
 	}
 
-	private static String _buildFilterParameterFromChangeset(
+	private static String _buildLastPublishDateFilter(
 		ChangesetEntryLocalService changesetEntryLocalService,
 		ClassNameLocalService classNameLocalService, String modelClassName,
 		PortletDataContext portletDataContext) {

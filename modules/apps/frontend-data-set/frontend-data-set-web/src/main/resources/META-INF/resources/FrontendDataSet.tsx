@@ -606,11 +606,10 @@ const FrontendDataSetContent = ({
 				})
 			: [];
 
-		const paginationDelta =
-			showPagination &&
-			(getDelta() ||
-				activeView.initialPaginationDelta ||
-				defaultSnapshot.paginationDelta);
+		const paginationDelta: number =
+			getDelta() ||
+			activeView.initialPaginationDelta ||
+			defaultSnapshot.paginationDelta;
 
 		defaultSnapshot.paginationDelta = paginationDelta;
 

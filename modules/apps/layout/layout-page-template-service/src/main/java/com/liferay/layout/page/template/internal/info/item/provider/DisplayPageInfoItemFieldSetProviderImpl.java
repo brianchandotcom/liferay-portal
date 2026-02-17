@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -67,7 +69,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		).infoFieldSetEntries(
 			_getInfoFieldSetEntries(
 				itemClassName, infoItemFormVariationKey, namespace,
-				scopeGroupId)
+				_getGroupId(scopeGroupId))
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "display-page")
 		).name(
@@ -204,6 +206,23 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 			externalReferenceCode);
 	}
 
+	private long _getGroupId(long scopeGroupId) {
+		if (scopeGroupId > 0) {
+			return scopeGroupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			(serviceContext.getScopeGroupId() > 0)) {
+
+			return serviceContext.getScopeGroupId();
+		}
+
+		return scopeGroupId;
+	}
+
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries(
 		String itemClassName, String infoItemFormVariationKey, String namespace,
 		long scopeGroupId) {
@@ -302,6 +321,9 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 					layoutPageTemplateEntry.getName()
 				).attribute(
 					URLInfoFieldType.NOFOLLOW, Boolean.TRUE
+				).externalUniqueId(
+					_getExternalUniqueId(
+						layoutPageTemplateEntry.getExternalReferenceCode())
 				).labelInfoLocalizedValue(
 					InfoLocalizedValue.singleValue(
 						layoutPageTemplateEntry.getName())

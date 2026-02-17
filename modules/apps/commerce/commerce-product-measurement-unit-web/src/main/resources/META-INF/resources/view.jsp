@@ -11,7 +11,7 @@
 CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasurementUnitsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
-<c:if test="<%= cpMeasurementUnitsDisplayContext.hasManageCPMeasurementUnitsPermission() %>">
+<c:if test="<%= cpMeasurementUnitsDisplayContext.hasAddPermission() %>">
 	<clay:navigation-bar
 		inverted="<%= false %>"
 		navigationItems="<%= cpMeasurementUnitsDisplayContext.getNavigationItems() %>"

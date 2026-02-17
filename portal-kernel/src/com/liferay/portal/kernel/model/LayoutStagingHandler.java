@@ -291,7 +291,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			"getTheme", "getThemeId", "getThemeSetting", "getTitle",
 			"getTitleMap", "getTypeSettings", "getTypeSettingsProperties",
 			"getTypeSettingsProperty", "isContentDisplayPage", "isCustomizable",
-			"isEscapedModel", "isIconImage", "isInheritLookAndFeel",
+			"isEscapedModel", "hasIconImage", "isInheritLookAndFeel",
 			"setColorSchemeId", "setCss", "setDescription", "setDescriptionMap",
 			"setEscapedModel", "setGroupId", "setIconImage", "setIconImageId",
 			"setKeywords", "setKeywordsMap", "setModifiedDate", "setName",

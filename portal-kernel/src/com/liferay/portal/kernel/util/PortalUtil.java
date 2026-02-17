@@ -1832,6 +1832,16 @@ public class PortalUtil {
 		return _portal.transformSQL(sql);
 	}
 
+	public static void updateImageERC(
+			BaseModel<?> baseModel, boolean hasImage, byte[] bytes,
+			String fieldName, long maxSize, int maxHeight, int maxWidth)
+		throws PortalException {
+
+		_portal.updateImageERC(
+			baseModel, hasImage, bytes, fieldName, maxSize, maxHeight,
+			maxWidth);
+	}
+
 	public static void updateImageId(
 			BaseModel<?> baseModel, boolean hasImage, byte[] bytes,
 			String fieldName, long maxSize, int maxHeight, int maxWidth)

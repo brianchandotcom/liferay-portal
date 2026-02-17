@@ -6284,6 +6284,96 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void updateImageERC(
+			BaseModel<?> baseModel, boolean hasImage, byte[] bytes,
+			String fieldName, long maxSize, int maxHeight, int maxWidth)
+		throws PortalException {
+
+		String externalReferenceCode = BeanPropertiesUtil.getString(
+			baseModel, fieldName);
+
+		if (!hasImage) {
+			if (Validator.isNotNull(externalReferenceCode)) {
+				Image image =
+					ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
+						externalReferenceCode,
+						BeanPropertiesUtil.getLong(baseModel, "companyId"));
+
+				if (image != null) {
+					ImageLocalServiceUtil.deleteImage(image.getImageId());
+				}
+
+				BeanPropertiesUtil.setProperty(baseModel, fieldName, null);
+			}
+
+			return;
+		}
+
+		if (ArrayUtil.isEmpty(bytes)) {
+			return;
+		}
+
+		if ((maxSize > 0) && (bytes.length > maxSize)) {
+			throw new ImageSizeException();
+		}
+
+		if ((maxHeight > 0) || (maxWidth > 0)) {
+			try {
+				ImageBag imageBag = ImageToolUtil.read(bytes);
+
+				RenderedImage renderedImage = imageBag.getRenderedImage();
+
+				if (renderedImage == null) {
+					throw new ImageTypeException();
+				}
+
+				renderedImage = ImageToolUtil.scale(
+					renderedImage, maxHeight, maxWidth);
+
+				bytes = ImageToolUtil.getBytes(
+					renderedImage, imageBag.getType());
+			}
+			catch (IOException ioException) {
+				throw new ImageSizeException(ioException);
+			}
+		}
+
+		Image image = null;
+		long companyId = BeanPropertiesUtil.getLong(baseModel, "companyId");
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			image = ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
+				externalReferenceCode, companyId);
+		}
+
+		if (image != null) {
+			if (!Arrays.equals(image.getTextObj(), bytes)) {
+				image = ImageLocalServiceUtil.updateImage(
+					companyId, image.getImageId(), bytes);
+			}
+		}
+		else {
+			image = ImageLocalServiceUtil.updateImage(
+				companyId, CounterLocalServiceUtil.increment(), bytes);
+
+			if (Validator.isNull(externalReferenceCode)) {
+				externalReferenceCode = String.valueOf(image.getImageId());
+			}
+
+			if (!externalReferenceCode.equals(
+					image.getExternalReferenceCode())) {
+
+				image.setExternalReferenceCode(externalReferenceCode);
+
+				image = ImageLocalServiceUtil.updateImage(image);
+			}
+		}
+
+		BeanPropertiesUtil.setProperty(
+			baseModel, fieldName, image.getExternalReferenceCode());
+	}
+
+	@Override
 	public void updateImageId(
 			BaseModel<?> baseModel, boolean hasImage, byte[] bytes,
 			String fieldName, long maxSize, int maxHeight, int maxWidth)

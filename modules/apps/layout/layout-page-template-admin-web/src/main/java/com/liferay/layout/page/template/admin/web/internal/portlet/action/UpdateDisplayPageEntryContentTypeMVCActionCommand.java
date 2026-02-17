@@ -75,13 +75,14 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 			_layoutLockManager.getLock(draftLayout, themeDisplay.getUserId());
 
 			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
-			long classTypeId = ParamUtil.getLong(actionRequest, "classTypeId");
 
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				classNameId,
 				LayoutPageTemplateEntryUtil.getClassTypeKey(
-					classNameId, classTypeId, themeDisplay.getScopeGroupId()));
+					classNameId,
+					ParamUtil.getLong(actionRequest, "classTypeId"),
+					themeDisplay.getScopeGroupId()));
 
 			hideDefaultSuccessMessage(actionRequest);
 

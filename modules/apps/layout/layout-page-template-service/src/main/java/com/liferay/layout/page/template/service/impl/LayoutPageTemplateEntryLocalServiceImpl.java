@@ -33,6 +33,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.NoSuchClassNameException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ColorScheme;
@@ -834,6 +835,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				layoutPageTemplateEntryId);
 
+		_validateCMSFreeTier(layoutPageTemplateEntry.getGroupId(), status);
+
 		if (!Objects.equals(layoutPageTemplateEntry.getName(), name)) {
 			_validate(
 				layoutPageTemplateEntry.getGroupId(),
@@ -944,6 +947,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			throw new LayoutPageTemplateEntryDefaultTemplateException(
 				layoutPageTemplateEntry.getType());
 		}
+
+		_validateCMSFreeTier(layoutPageTemplateEntry.getGroupId(), status);
 
 		User user = _userLocalService.getUser(userId);
 
@@ -1321,6 +1326,18 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		_validate(groupId, layoutPageTemplateCollectionId, name, type);
+	}
+
+	private void _validateCMSFreeTier(long groupId, int status)
+		throws PortalException {
+
+		Group group = _groupLocalService.getGroup(groupId);
+
+		if (LicenseManagerUtil.isFreeTier() && group.isCMS() &&
+			(status == WorkflowConstants.STATUS_APPROVED)) {
+
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private void _validateLayoutPageTemplateEntryKey(

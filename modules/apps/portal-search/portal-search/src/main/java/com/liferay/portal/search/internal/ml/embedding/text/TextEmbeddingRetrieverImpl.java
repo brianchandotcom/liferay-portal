@@ -24,7 +24,6 @@ import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 import com.liferay.portal.search.rest.text.embeddings.configuration.TextEmbeddingProvider;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -189,6 +188,11 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 			(companyId, featureFlagKey, enabled) ->
 				_betaTextEmbeddingsEnabled = enabled,
 			MapUtil.singletonDictionary("feature.flag.key", "LPS-122920"));
+		_serviceRegistration = bundleContext.registerService(
+			FeatureFlagListener.class,
+			(companyId, featureFlagKey, enabled) ->
+				_devTextEmbeddingsEnabled = enabled,
+			MapUtil.singletonDictionary("feature.flag.key", "LPD-31789"));
 	}
 
 	@Deactivate
@@ -273,10 +277,18 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	}
 
 	private boolean _isProviderEnabled(String textEmbeddingProviderName) {
-		if ((null != textEmbeddingProviderName) &&
-			!_disabledProviderNames.contains(textEmbeddingProviderName) &&
-			(_betaTextEmbeddingsEnabled ||
-			 _supportedProviders.contains(textEmbeddingProviderName))) {
+		if ((null == textEmbeddingProviderName) ||
+			_disabledProviderNames.contains(textEmbeddingProviderName)) {
+
+			return false;
+		}
+
+		if (_devProviders.contains(textEmbeddingProviderName)) {
+			return _devTextEmbeddingsEnabled;
+		}
+
+		if (_betaTextEmbeddingsEnabled ||
+			_supportedProviders.contains(textEmbeddingProviderName)) {
 
 			return true;
 		}
@@ -287,10 +299,11 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextEmbeddingRetrieverImpl.class);
 
-	private static final List<String> _supportedProviders = Arrays.asList(
-		"vertex-ai", "openai");
+	private static final List<String> _devProviders = List.of("vertex-ai");
+	private static final List<String> _supportedProviders = List.of("openai");
 
 	private volatile boolean _betaTextEmbeddingsEnabled;
+	private boolean _devTextEmbeddingsEnabled;
 	private final List<String> _disabledProviderNames = new ArrayList<>();
 
 	@Reference

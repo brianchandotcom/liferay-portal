@@ -1121,6 +1121,9 @@ public interface PropsKeys {
 	public static final String IMAGE_DEFAULT_COMPANY_LOGO =
 		"image.default.company.logo";
 
+	public static final String IMAGE_DEFAULT_GLOBAL_SITE_LOGO =
+		"image.default.global.site.logo";
+
 	public static final String IMAGE_DEFAULT_ORGANIZATION_LOGO =
 		"image.default.organization.logo";
 

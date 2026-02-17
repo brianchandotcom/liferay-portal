@@ -1,0 +1,60 @@
+{
+	"author": "Liferay Frontend Infrastructure Team <pt-frontend-infrastructure@liferay.com>",
+	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "4.30.0",
+		"@typescript-eslint/parser": "4.30.0",
+		"eslint-config-prettier": "8.1.0",
+		"eslint-plugin-no-for-of-loops": "^1.0.0",
+		"eslint-plugin-no-only-tests": "^2.1.0",
+		"eslint-plugin-notice": "0.9.10",
+		"eslint-plugin-promise": "^5.1.0",
+		"eslint-plugin-react": "7.23.1",
+		"eslint-plugin-react-hooks": "4.2.0",
+		"eslint-plugin-sort-destructure-keys": "^1.3.5"
+	},
+	"description": "ESLint plugin for the Liferay JavaScript Style",
+	"files": [
+		".eslintrc.js",
+		"configs",
+		"rules",
+		"scripts",
+		"utils"
+	],
+	"keywords": [
+		"code",
+		"eslint",
+		"eslintplugin",
+		"liferay",
+		"quality"
+	],
+	"license": "MIT",
+	"main": "index.js",
+	"name": "@liferay/eslint-plugin",
+	"peerDependencies": {
+		"eslint": ">=4.1.1",
+		"typescript": "*"
+	},
+	"peerDependenciesMeta": {
+		"typescript": {
+			"optional": true
+		}
+	},
+	"repository": {
+		"directory": "projects/eslint-plugin",
+		"type": "git",
+		"url": "https://github.com/liferay/liferay-frontend-projects.git"
+	},
+	"scripts": {
+		"build": "true",
+		"ci": "liferay-workspace-scripts ci",
+		"format": "liferay-workspace-scripts format",
+		"format:check": "liferay-workspace-scripts format:check",
+		"lint": "liferay-workspace-scripts lint",
+		"lint:fix": "liferay-workspace-scripts lint:fix",
+		"postinstall": "node scripts/postinstall.js",
+		"postversion": "liferay-workspace-scripts publish",
+		"preversion": "liferay-workspace-scripts ci",
+		"test": "liferay-workspace-scripts test"
+	},
+	"version": "1.9.1"
+}

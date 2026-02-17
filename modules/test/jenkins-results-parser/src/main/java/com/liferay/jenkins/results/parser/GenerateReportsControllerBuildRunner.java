@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -37,7 +38,29 @@ public class GenerateReportsControllerBuildRunner
 
 	@Override
 	public void run() {
-		invokeGenerateReportsBuild();
+		List<List<String>> reportNamesList = new ArrayList<>();
+
+		List<String> flakyTestReportNames = new ArrayList<>();
+
+		List<String> selectedReportNames = _getSelectedReportNames();
+
+		Iterator<String> iterator = selectedReportNames.iterator();
+
+		while (iterator.hasNext()) {
+			String reportName = iterator.next();
+
+			if (reportName.startsWith("Flaky Test")) {
+				flakyTestReportNames.add(reportName);
+				iterator.remove();
+			}
+		}
+
+		reportNamesList.add(flakyTestReportNames);
+		reportNamesList.add(selectedReportNames);
+
+		for (List<String> reportNames : reportNamesList) {
+			invokeGenerateReportsBuild(reportNames);
+		}
 	}
 
 	@Override
@@ -48,9 +71,7 @@ public class GenerateReportsControllerBuildRunner
 		super(buildData);
 	}
 
-	protected void invokeGenerateReportsBuild() {
-		List<String> reportNames = _getSelectedReportNames();
-
+	protected void invokeGenerateReportsBuild(List<String> reportNames) {
 		if (reportNames.isEmpty()) {
 			System.out.println("There are no reports to create at this time.");
 
@@ -90,13 +111,21 @@ public class GenerateReportsControllerBuildRunner
 
 		Collections.sort(reportNames);
 
+		invocationParameters.put("REPORT_NAMES", String.join(",", reportNames));
+
+		boolean slaveLabel = false;
+
 		for (String reportName : reportNames) {
-			if (reportName.startsWith("flaky-test-report")) {
-				invocationParameters.put("SLAVE_LABEL", "slave");
+			if (reportName.startsWith("Flaky Test")) {
+				slaveLabel = true;
+
+				break;
 			}
 		}
 
-		invocationParameters.put("REPORT_NAMES", String.join(",", reportNames));
+		if (slaveLabel) {
+			invocationParameters.put("SLAVE_LABEL", "slave");
+		}
 
 		for (Map.Entry<String, String> invocationParameter :
 				invocationParameters.entrySet()) {

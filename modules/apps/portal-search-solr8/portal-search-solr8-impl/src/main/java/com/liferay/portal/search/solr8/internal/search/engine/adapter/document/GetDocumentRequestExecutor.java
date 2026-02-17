@@ -78,7 +78,6 @@ public class GetDocumentRequestExecutor {
 		ModifiableSolrParams modifiableSolrParams = new ModifiableSolrParams();
 
 		modifiableSolrParams.set(CommonParams.QT, "/get");
-
 		modifiableSolrParams.set("ids", getDocumentRequest.getId());
 
 		return new QueryRequest(modifiableSolrParams);

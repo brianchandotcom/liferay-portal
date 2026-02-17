@@ -3166,10 +3166,13 @@ public class ObjectEntryLocalServiceImpl
 				objectEntry.getUserId(), objectDefinition.getPortletId(),
 				UserNotificationDeliveryConstants.TYPE_WEBSITE, false,
 				JSONUtil.put(
+					"classPK", objectEntry.getObjectEntryId()
+				).put(
 					"notificationMessage",
 					StringBundler.concat(
 						"The object entry ", objectEntry.getTitleValue(),
-						" has reached its review date.")));
+						" has reached its review date.")
+				));
 		}
 	}
 

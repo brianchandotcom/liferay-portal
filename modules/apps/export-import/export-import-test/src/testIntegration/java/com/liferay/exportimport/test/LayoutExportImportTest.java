@@ -1158,7 +1158,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Layout importedLayout1 =
 			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout1.getUuid(), importedGroup.getGroupId(), false);
-
 		Layout importedLayout2 =
 			_layoutLocalService.fetchLayoutByUuidAndGroupId(
 				layout2.getUuid(), importedGroup.getGroupId(), false);

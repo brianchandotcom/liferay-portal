@@ -6255,7 +6255,7 @@ components:
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
-        'com.liferay.headless.delivery.client', and version '4.0.102'."
+        'com.liferay.headless.delivery.client', and version '4.0.103'."
     license:
         name: Apache 2.0
         url: http://www.apache.org/licenses/LICENSE-2.0.html
@@ -12729,6 +12729,43 @@ paths:
                     application/xml:
                         schema:
                             $ref: "#/components/schemas/BlogPosting"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/BlogPosting"
+            tags: ["BlogPosting"]
+    "/sites/{siteId}/blog-postings/by-friendly-url-path/{friendlyUrlPath}":
+        get:
+            operationId: getSiteBlogPostingByFriendlyUrlPath
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: friendlyUrlPath
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
             responses:
                 200:
                     content:

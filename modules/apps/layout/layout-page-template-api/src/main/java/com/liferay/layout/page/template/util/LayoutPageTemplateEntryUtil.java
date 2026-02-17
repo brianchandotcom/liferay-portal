@@ -27,7 +27,7 @@ public class LayoutPageTemplateEntryUtil {
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			InfoItemServiceRegistryUtil.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
-				PortalUtil.getClassName(classNameId));
+				PortalUtil.fetchClassName(classNameId));
 
 		if (infoItemFormVariationsProvider == null) {
 			return -2;
@@ -48,14 +48,14 @@ public class LayoutPageTemplateEntryUtil {
 	public static String getClassTypeKey(
 		long classNameId, long classTypeId, long groupId) {
 
-		if (classTypeId < 0) {
+		if ((classNameId == 0) || (classTypeId < 0)) {
 			return null;
 		}
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			InfoItemServiceRegistryUtil.getFirstInfoItemService(
 				InfoItemFormVariationsProvider.class,
-				PortalUtil.getClassName(classNameId));
+				PortalUtil.fetchClassName(classNameId));
 
 		if (infoItemFormVariationsProvider == null) {
 			return null;

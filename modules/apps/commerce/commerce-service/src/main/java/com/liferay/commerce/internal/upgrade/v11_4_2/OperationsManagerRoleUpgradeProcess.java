@@ -6,9 +6,11 @@
 package com.liferay.commerce.internal.upgrade.v11_4_2;
 
 import com.liferay.commerce.product.constants.CPActionKeys;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -52,14 +54,40 @@ public class OperationsManagerRoleUpgradeProcess extends UpgradeProcess {
 
 		if ((operationsManagerRole != null) &&
 			!_resourcePermissionLocalService.hasResourcePermission(
-				companyId, "com.liferay.commerce.product", 1,
-				String.valueOf(companyId), operationsManagerRole.getRoleId(),
-				ActionKeys.ADD_DOCUMENT)) {
+				companyId, "com.liferay.commerce.product",
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				operationsManagerRole.getRoleId(), ActionKeys.ADD_DOCUMENT)) {
 
 			_resourcePermissionLocalService.addResourcePermission(
-				companyId, "com.liferay.commerce.product", 1,
-				String.valueOf(companyId), operationsManagerRole.getRoleId(),
-				CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+				companyId, "com.liferay.commerce.product",
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				operationsManagerRole.getRoleId(),
+				CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, "com.liferay.commerce.product",
+				ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+				operationsManagerRole.getRoleId(),
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+
+			for (String actionId :
+					new String[] {
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.VIEW
+					}) {
+
+				if (!_resourcePermissionLocalService.hasResourcePermission(
+						companyId, CPMeasurementUnit.class.getName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(companyId),
+						operationsManagerRole.getRoleId(), actionId)) {
+
+					_resourcePermissionLocalService.addResourcePermission(
+						companyId, CPMeasurementUnit.class.getName(),
+						ResourceConstants.SCOPE_COMPANY,
+						String.valueOf(companyId),
+						operationsManagerRole.getRoleId(), actionId);
+				}
+			}
 		}
 	}
 

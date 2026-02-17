@@ -726,7 +726,7 @@ public class CommerceOrderItemLocalServiceImpl
 
 		if (!Validator.isBlank(cpMeasurementUnitKey)) {
 			CPMeasurementUnit cpMeasurementUnit =
-				_cpMeasurementUnitLocalService.getCPMeasurementUnitByKey(
+				_cpMeasurementUnitLocalService.getCPMeasurementUnit(
 					user.getCompanyId(), cpMeasurementUnitKey);
 
 			commerceOrderItem.setCPMeasurementUnitId(

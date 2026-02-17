@@ -478,7 +478,8 @@ test(
 					},
 					{
 						actionIds: [
-							'MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS',
+							'ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT',
+							'VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS',
 						],
 						primaryKey: companyId,
 						resourceName: 'com.liferay.commerce.product',
@@ -510,6 +511,13 @@ test(
 						primaryKey: companyId,
 						resourceName:
 							'com.liferay.commerce.product.model.CommerceChannel',
+						scope: 1,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com.liferay.commerce.product.model.CPMeasurementUnit',
 						scope: 1,
 					},
 				],

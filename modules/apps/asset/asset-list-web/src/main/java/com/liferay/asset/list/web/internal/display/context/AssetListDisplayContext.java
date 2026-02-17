@@ -26,6 +26,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
@@ -127,8 +130,21 @@ public class AssetListDisplayContext {
 
 	public String getAssetEntryTypeLabel(AssetListEntry assetListEntry) {
 		if (Validator.isNotNull(assetListEntry.getAssetEntryType())) {
-			return ResourceActionsUtil.getModelResource(
+			String typeLabel = ResourceActionsUtil.getModelResource(
 				_themeDisplay.getLocale(), assetListEntry.getAssetEntryType());
+
+			ObjectDefinition objectDefinition =
+				ObjectDefinitionLocalServiceUtil.
+					fetchObjectDefinitionByClassName(
+						_themeDisplay.getCompanyId(),
+						assetListEntry.getAssetEntryType());
+
+			if ((objectDefinition != null) && objectDefinition.isCMS()) {
+				typeLabel = StringUtil.appendParentheticalSuffix(
+					typeLabel, "CMS");
+			}
+
+			return typeLabel;
 		}
 
 		return StringPool.BLANK;

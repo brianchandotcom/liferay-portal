@@ -18,6 +18,7 @@ import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -625,7 +626,9 @@ public abstract class BaseLayoutStructureItemImporter {
 
 		try {
 			InfoForm infoForm = infoItemFormProvider.getInfoForm(
-				String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+				String.valueOf(
+					LayoutPageTemplateEntryUtil.getClassTypeId(
+						layoutPageTemplateEntry)),
 				layout.getGroupId());
 
 			InfoField<?> infoField = infoForm.getInfoField(fieldKey);

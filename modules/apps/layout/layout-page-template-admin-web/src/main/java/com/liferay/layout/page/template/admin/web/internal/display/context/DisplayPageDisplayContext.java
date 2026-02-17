@@ -19,6 +19,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryCreateDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryModifiedDateComparator;
 import com.liferay.layout.page.template.util.comparator.LayoutPageTemplateCollectionLayoutPageTemplateEntryNameComparator;
@@ -546,10 +547,11 @@ public class DisplayPageDisplayContext {
 		Long[] classTypeIds = classNameIdsMap.get(
 			layoutPageTemplateEntry.getClassNameId());
 
-		if (((layoutPageTemplateEntry.getClassTypeId() == 0) &&
-			 ArrayUtil.isEmpty(classTypeIds)) ||
-			ArrayUtil.contains(
-				classTypeIds, layoutPageTemplateEntry.getClassTypeId())) {
+		long classTypeId = LayoutPageTemplateEntryUtil.getClassTypeId(
+			layoutPageTemplateEntry);
+
+		if (((classTypeId == 0) && ArrayUtil.isEmpty(classTypeIds)) ||
+			ArrayUtil.contains(classTypeIds, classTypeId)) {
 
 			return true;
 		}

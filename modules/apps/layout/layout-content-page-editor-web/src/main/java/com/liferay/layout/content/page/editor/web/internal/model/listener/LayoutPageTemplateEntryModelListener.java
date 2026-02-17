@@ -26,6 +26,7 @@ import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCap
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -112,8 +113,10 @@ public class LayoutPageTemplateEntryModelListener
 				originalLayoutPageTemplateEntry.getClassNameId(),
 				layoutPageTemplateEntry.getClassNameId()) ||
 			!Objects.equals(
-				originalLayoutPageTemplateEntry.getClassTypeId(),
-				layoutPageTemplateEntry.getClassTypeId())) {
+				LayoutPageTemplateEntryUtil.getClassTypeId(
+					originalLayoutPageTemplateEntry),
+				LayoutPageTemplateEntryUtil.getClassTypeId(
+					layoutPageTemplateEntry))) {
 
 			return true;
 		}
@@ -122,6 +125,7 @@ public class LayoutPageTemplateEntryModelListener
 	}
 
 	private List<FragmentEntryLink> _processFormStyledLayoutStructureItem(
+		long classTypeId,
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
 		LayoutPageTemplateEntry originalLayoutPageTemplateEntry,
@@ -131,8 +135,7 @@ public class LayoutPageTemplateEntryModelListener
 				formStyledLayoutStructureItem.getClassNameId(),
 				originalLayoutPageTemplateEntry.getClassNameId()) ||
 			!Objects.equals(
-				formStyledLayoutStructureItem.getClassTypeId(),
-				originalLayoutPageTemplateEntry.getClassTypeId())) {
+				formStyledLayoutStructureItem.getClassTypeId(), classTypeId)) {
 
 			return Collections.emptyList();
 		}
@@ -175,8 +178,9 @@ public class LayoutPageTemplateEntryModelListener
 			InfoItemFormVariation infoItemFormVariation =
 				infoItemFormVariationsProvider.getInfoItemFormVariation(
 					layout.getGroupId(),
-					layoutPageTemplateEntry.getClassTypeKey(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+					LayoutPageTemplateEntryUtil.getClassTypeKey(
+						layoutPageTemplateEntry),
+					String.valueOf(classTypeId));
 
 			if ((infoItemFormVariation == null) ||
 				((infoPermissionProvider != null) &&
@@ -187,14 +191,13 @@ public class LayoutPageTemplateEntryModelListener
 				return Collections.emptyList();
 			}
 		}
-		else if (layoutPageTemplateEntry.getClassTypeId() != 0) {
+		else if (classTypeId != 0) {
 			return Collections.emptyList();
 		}
 
 		formStyledLayoutStructureItem.setClassNameId(
 			layoutPageTemplateEntry.getClassNameId());
-		formStyledLayoutStructureItem.setClassTypeId(
-			layoutPageTemplateEntry.getClassTypeId());
+		formStyledLayoutStructureItem.setClassTypeId(classTypeId);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -293,6 +296,8 @@ public class LayoutPageTemplateEntryModelListener
 		LayoutStructure layoutStructure, long segmentsExperienceId) {
 
 		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+		long classTypeId = LayoutPageTemplateEntryUtil.getClassTypeId(
+			originalLayoutPageTemplateEntry);
 
 		for (LayoutStructureItem layoutStructureItem :
 				ListUtil.copy(layoutStructure.getLayoutStructureItems())) {
@@ -306,6 +311,7 @@ public class LayoutPageTemplateEntryModelListener
 			if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
 				fragmentEntryLinks.addAll(
 					_processFormStyledLayoutStructureItem(
+						classTypeId,
 						(FormStyledLayoutStructureItem)layoutStructureItem,
 						layout, layoutPageTemplateEntry,
 						originalLayoutPageTemplateEntry, layoutStructure,

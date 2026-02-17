@@ -16,6 +16,7 @@ import com.liferay.headless.delivery.dto.v1_0.UtilityPageTemplate;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.exporter.LayoutsExporter;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.MasterPageUtil;
 import com.liferay.layout.internal.headless.delivery.dto.v1_0.util.PageTemplateCollectionUtil;
@@ -45,6 +46,8 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
@@ -288,6 +291,34 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		return zipWriter.getFile();
 	}
 
+	private ContentSubtype _getContentSubtype(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return new ContentSubtype() {
+			{
+				setSubtypeId(
+					() -> {
+						if (layoutPageTemplateEntry.getClassTypeId() < 0) {
+							return null;
+						}
+
+						return layoutPageTemplateEntry.getClassTypeId();
+					});
+
+				setSubtypeKey(
+					() -> {
+						if (Validator.isNull(
+								layoutPageTemplateEntry.getClassTypeKey())) {
+
+							return null;
+						}
+
+						return layoutPageTemplateEntry.getClassTypeKey();
+					});
+			}
+		};
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 		Layout layout, LayoutStructure layoutStructure) {
 
@@ -335,23 +366,6 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 		}
 
 		return null;
-	}
-
-	private String _getSubtypeKey(
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider,
-		LayoutPageTemplateEntry layoutPageTemplateEntry) {
-
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				layoutPageTemplateEntry.getGroupId(),
-				layoutPageTemplateEntry.getClassTypeKey(),
-				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
-
-		if (infoItemFormVariation == null) {
-			return null;
-		}
-
-		return infoItemFormVariation.getExternalReferenceCode();
 	}
 
 	private void _populateDisplayPagesZipWriter(
@@ -580,7 +594,10 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 			{
 				setContentSubtype(
 					() -> {
-						if (layoutPageTemplateEntry.getClassTypeId() < 0) {
+						if ((layoutPageTemplateEntry.getClassTypeId() < 0) &&
+							Validator.isNull(
+								layoutPageTemplateEntry.getClassTypeKey())) {
+
 							return null;
 						}
 
@@ -589,23 +606,38 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 								_infoItemServiceRegistry.
 									getFirstInfoItemService(
 										InfoItemFormVariationsProvider.class,
-										layoutPageTemplateEntry.getClassName());
+										_infoSearchClassMapperRegistry.
+											getClassName(
+												layoutPageTemplateEntry.
+													getClassName()));
 
 						if (infoItemFormVariationsProvider == null) {
-							return null;
+							return _getContentSubtype(layoutPageTemplateEntry);
+						}
+
+						InfoItemFormVariation infoItemFormVariation =
+							infoItemFormVariationsProvider.
+								getInfoItemFormVariation(
+									layoutPageTemplateEntry.getGroupId(),
+									layoutPageTemplateEntry.getClassTypeKey(),
+									String.valueOf(
+										layoutPageTemplateEntry.
+											getClassTypeId()));
+
+						if (infoItemFormVariation == null) {
+							return _getContentSubtype(layoutPageTemplateEntry);
 						}
 
 						return new ContentSubtype() {
 							{
 								setSubtypeId(
-									() ->
-										layoutPageTemplateEntry.
-											getClassTypeId());
+									() -> GetterUtil.getLong(
+										infoItemFormVariation.getKey()));
 
 								setSubtypeKey(
-									() -> _getSubtypeKey(
-										infoItemFormVariationsProvider,
-										layoutPageTemplateEntry));
+									() ->
+										infoItemFormVariation.
+											getExternalReferenceCode());
 							}
 						};
 					});
@@ -628,6 +660,9 @@ public class LayoutsExporterImpl implements LayoutsExporter {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -20,6 +20,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -94,7 +95,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 		}
 
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
-			layoutPageTemplateEntry.getClassTypeId());
+			LayoutPageTemplateEntryUtil.getClassTypeId(
+				layoutPageTemplateEntry));
 
 		if (ddmStructure != null) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -243,7 +245,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId());
 
-		long classTypeId = layoutPageTemplateEntry.getClassTypeId();
+		long classTypeId = LayoutPageTemplateEntryUtil.getClassTypeId(
+			layoutPageTemplateEntry);
 
 		if (classTypeId > 0) {
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
@@ -387,7 +390,8 @@ public class LayoutPageTemplateEntryStagedModelDataHandler
 					fetchDefaultLayoutPageTemplateEntry(
 						layoutPageTemplateEntry.getGroupId(),
 						layoutPageTemplateEntry.getClassNameId(),
-						layoutPageTemplateEntry.getClassTypeId());
+						LayoutPageTemplateEntryUtil.getClassTypeKey(
+							layoutPageTemplateEntry));
 
 			if (defaultLayoutPageTemplateEntry != null) {
 				layoutPageTemplateEntry.setDefaultTemplate(false);

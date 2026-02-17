@@ -2826,8 +2826,14 @@ test(
 
 test(
 	'Info panel shows title with content structure',
-	{tag: '@LPD-69788'},
-	async ({assetsPage, contentsPage, page, structureBuilderPage}) => {
+	{tag: ['@LPD-69788', '@LPD-76513']},
+	async ({
+		assetsPage,
+		contentsPage,
+		infoPanelPage,
+		page,
+		structureBuilderPage,
+	}) => {
 		const structureLabel = `StructureName${getRandomInt()}`;
 		const title = getRandomString();
 
@@ -2861,6 +2867,17 @@ test(
 			await expect(
 				page.getByRole('heading', {name: title})
 			).toBeVisible();
+		});
+
+		await test.step('Assert that all tabs are visible', async () => {
+			await expect(infoPanelPage.selectTab('Performance')).toBeVisible();
+
+			await expect(infoPanelPage.selectTab('More')).toBeVisible();
+
+			await infoPanelPage.selectTab('Categorization').click();
+
+			await expect(page.getByPlaceholder('Add tag')).toBeVisible();
+			await expect(page.getByPlaceholder('Add category')).toBeVisible();
 		});
 	}
 );

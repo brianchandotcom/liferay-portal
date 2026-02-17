@@ -7,10 +7,18 @@ package com.liferay.exportimport.web.internal.portlet;
 
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.trash.TrashHelper;
+import com.liferay.trash.util.TrashWebKeys;
 
 import jakarta.portlet.Portlet;
+import jakarta.portlet.PortletException;
+import jakarta.portlet.RenderRequest;
+import jakarta.portlet.RenderResponse;
+
+import java.io.IOException;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
@@ -42,4 +50,18 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class CompanyExportPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(TrashWebKeys.TRASH_HELPER, _trashHelper);
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	private TrashHelper _trashHelper;
+
 }

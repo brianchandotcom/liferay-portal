@@ -9,8 +9,11 @@ import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.JenkinsSlave;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONObject;
 
@@ -87,6 +90,18 @@ public class AWSFleetCloud {
 		return _jsonObject.getString("fs.root");
 	}
 
+	public int getIdleNodes() {
+		int idleNodes = 0;
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (jenkinsSlave.isIdle()) {
+				idleNodes++;
+			}
+		}
+
+		return idleNodes;
+	}
+
 	public int getInitOnlineCheckIntervalSec() {
 		return _jsonObject.getInt("init.online.check.interval.sec");
 	}
@@ -102,18 +117,26 @@ public class AWSFleetCloud {
 	public List<JenkinsSlave> getJenkinsSlaves() {
 		List<JenkinsSlave> jenkinsSlaves = new ArrayList<>();
 
+		List<String> labels = getLabels();
+
 		for (JenkinsSlave jenkinsSlave : _jenkinsMaster.getJenkinsSlaves()) {
 			if (!jenkinsSlave.isEC2FleetNodeComputer()) {
 				continue;
 			}
 
-			String jenkinsSlaveName = jenkinsSlave.getName();
+			boolean matchingLabel = false;
 
-			if (!jenkinsSlaveName.contains(getName())) {
-				continue;
+			for (String assignedLabel : jenkinsSlave.getAssignedLabels()) {
+				if (labels.contains(assignedLabel)) {
+					matchingLabel = true;
+
+					break;
+				}
 			}
 
-			jenkinsSlaves.add(jenkinsSlave);
+			if (matchingLabel) {
+				jenkinsSlaves.add(jenkinsSlave);
+			}
 		}
 
 		return jenkinsSlaves;
@@ -163,6 +186,81 @@ public class AWSFleetCloud {
 		return _jsonObject.getInt("num.executors");
 	}
 
+	public long getOccupiedNodes() {
+		int occupiedNodes = 0;
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (!jenkinsSlave.isIdle()) {
+				occupiedNodes++;
+			}
+		}
+
+		return occupiedNodes;
+	}
+
+	public long getOfflineNodes() {
+		int offlineNodes = 0;
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (jenkinsSlave.isOffline()) {
+				offlineNodes++;
+			}
+		}
+
+		return offlineNodes;
+	}
+
+	public String getPrimaryLabel() {
+		if (_primaryLabel != null) {
+			return _primaryLabel;
+		}
+
+		List<String> labels = getLabels();
+
+		try {
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
+
+			for (String propertyName : buildProperties.stringPropertyNames()) {
+				if (!propertyName.matches(
+						"cloud.fleet.primary.label(\\[[^\\]]+\\])?")) {
+
+					continue;
+				}
+
+				String propertyValue = JenkinsResultsParserUtil.getProperty(
+					buildProperties, propertyName);
+
+				if (labels.contains(propertyValue)) {
+					_primaryLabel = propertyValue;
+
+					return _primaryLabel;
+				}
+			}
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		return null;
+	}
+
+	public int getQueuedBuilds() {
+		int queuedBuilds = 0;
+
+		List<String> labels = getLabels();
+
+		for (JenkinsMaster.QueueItem queueItem :
+				_jenkinsMaster.getQueueItems()) {
+
+			if (labels.contains(queueItem.getLabelExpression())) {
+				queuedBuilds++;
+			}
+		}
+
+		return queuedBuilds;
+	}
+
 	public String getRegion() {
 		return _jsonObject.getString("region");
 	}
@@ -209,5 +307,6 @@ public class AWSFleetCloud {
 
 	private final JenkinsMaster _jenkinsMaster;
 	private final JSONObject _jsonObject;
+	private String _primaryLabel;
 
 }

@@ -91,11 +91,11 @@ public class AWSFleetCloud {
 	}
 
 	public int getIdleNodes() {
-		int idleNodes = 0;
+		int idleNodes = getMaxSize();
 
 		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
-			if (jenkinsSlave.isIdle()) {
-				idleNodes++;
+			if (!jenkinsSlave.isIdle()) {
+				idleNodes--;
 			}
 		}
 

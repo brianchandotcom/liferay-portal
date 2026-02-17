@@ -5,7 +5,7 @@
 
 const path = require('path');
 
-const config = require(path.join(__dirname, '..', '.eslintrc.js'));
+const config = require(path.join(__dirname, '..', '..', '.eslintrc.js'));
 
 config.ignorePatterns = [
 	...config.ignorePatterns,

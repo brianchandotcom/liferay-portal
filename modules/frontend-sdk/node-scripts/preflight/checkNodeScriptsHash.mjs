@@ -21,6 +21,6 @@ export async function checkNodeScriptsHash() {
 	}
 
 	return [
-		'BAD - node-scripts sha256 field is not up-to-date: run yarn format at modules/_node-scripts',
+		'BAD - node-scripts sha256 field is not up-to-date: run yarn format at modules/frontend-sdk/node-scripts',
 	];
 }

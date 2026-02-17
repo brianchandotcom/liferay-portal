@@ -908,13 +908,7 @@ public class LayoutStagedModelDataHandler
 				importedLayout, layoutElement, portletDataContext);
 		}
 		else if (importedLayout.hasIconImage()) {
-			Image image = importedLayout.getIconImage();
-
-			if (image != null) {
-				_imageLocalService.deleteImage(image);
-			}
-
-			importedLayout.setIconImageERC(null);
+			importedLayout.deleteUnusedIconImage();
 		}
 
 		_importStyleBookEntry(importedLayout, layout, portletDataContext);

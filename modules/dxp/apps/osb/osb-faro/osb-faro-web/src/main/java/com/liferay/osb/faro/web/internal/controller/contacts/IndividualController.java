@@ -199,8 +199,8 @@ public class IndividualController extends BaseFaroController {
 			@FormParam("notIndividualSegmentId") String notIndividualSegmentId,
 			@FormParam("interestName") String interestName,
 			@FormParam("filter") String filterString,
-			@DefaultValue(StringPool.BLANK) @QueryParam("profileTypes")
-				FaroParam<List<String>> profileTypesFaroParam,
+			@DefaultValue(StringPool.BLANK) @FormParam("profileTypes") FaroParam
+				<List<String>> profileTypesFaroParam,
 			@FormParam("query") String query,
 			@FormParam("includeAnonymousUsers") boolean includeAnonymousUsers,
 			@DefaultValue(JSONConstants.NULL_JSON_ARRAY)

@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -209,7 +210,7 @@ public class DefaultActionableDynamicQuery implements ActionableDynamicQuery {
 	}
 
 	protected void addDefaultCriteria(DynamicQuery dynamicQuery) {
-		if (_companyId > 0) {
+		if (!PropsValues.DATABASE_PARTITION_ENABLED && (_companyId > 0)) {
 			Property property = PropertyFactoryUtil.forName("companyId");
 
 			dynamicQuery.add(property.eq(_companyId));

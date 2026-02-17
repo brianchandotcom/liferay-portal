@@ -12,7 +12,6 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.service.base.ClientExtensionEntryLocalServiceBaseImpl;
 import com.liferay.client.extension.type.deployer.CETDeployer;
 import com.liferay.client.extension.type.factory.CETFactory;
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
@@ -190,8 +189,7 @@ public class ClientExtensionEntryLocalServiceImpl
 	@Clusterable
 	@Override
 	public void deployClientExtensionEntry(
-			ClientExtensionEntry clientExtensionEntry)
-		throws PortalException {
+		ClientExtensionEntry clientExtensionEntry) {
 
 		try {
 			if (_log.isInfoEnabled()) {
@@ -223,15 +221,6 @@ public class ClientExtensionEntryLocalServiceImpl
 				"Unable to deploy client extension entry " +
 					clientExtensionEntry.getName(LocaleUtil.getDefault()),
 				exception);
-
-			throw exception;
-		}
-		finally {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Finished deploying client extension entry " +
-						clientExtensionEntry.getName(LocaleUtil.getDefault()));
-			}
 		}
 	}
 
@@ -313,12 +302,7 @@ public class ClientExtensionEntryLocalServiceImpl
 				for (ClientExtensionEntry clientExtensionEntry :
 						clientExtensionEntries) {
 
-					try {
-						deployClientExtensionEntry(clientExtensionEntry);
-					}
-					catch (PortalException portalException) {
-						ReflectionUtil.throwException(portalException);
-					}
+					deployClientExtensionEntry(clientExtensionEntry);
 				}
 			});
 	}

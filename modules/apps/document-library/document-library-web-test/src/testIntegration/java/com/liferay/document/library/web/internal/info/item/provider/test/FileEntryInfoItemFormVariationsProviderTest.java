@@ -41,7 +41,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -60,19 +59,16 @@ public class FileEntryInfoItemFormVariationsProviderTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-	}
-
 	@Test
 	public void testGetInfoItemFormVariation() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			_group.getGroupId(), DLFileEntryMetadata.class.getName());
+			group.getGroupId(), DLFileEntryMetadata.class.getName());
 
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				null, TestPropsValues.getUserId(), group.getGroupId(),
 				ddmStructure.getStructureId(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
@@ -87,16 +83,16 @@ public class FileEntryInfoItemFormVariationsProviderTest {
 		_assertInfoItemFormVariation(
 			dlFileEntryType,
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				_group.getGroupId(), null,
+				group.getGroupId(), null,
 				String.valueOf(dlFileEntryType.getFileEntryTypeId())));
 		_assertInfoItemFormVariation(
 			dlFileEntryType,
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				_group.getGroupId(), dlFileEntryType.getFileEntryTypeKey(),
+				group.getGroupId(), dlFileEntryType.getFileEntryTypeKey(),
 				"-1"));
 		Assert.assertNull(
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				_group.getGroupId(), RandomTestUtil.randomString(),
+				group.getGroupId(), RandomTestUtil.randomString(),
 				RandomTestUtil.randomString()));
 	}
 
@@ -211,8 +207,6 @@ public class FileEntryInfoItemFormVariationsProviderTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
-
-	private Group _group;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

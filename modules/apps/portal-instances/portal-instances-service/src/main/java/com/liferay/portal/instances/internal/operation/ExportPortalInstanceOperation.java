@@ -134,21 +134,21 @@ public class ExportPortalInstanceOperation extends BasePortalInstanceOperation {
 				dictionaryString.getBytes(StringPool.UTF8)));
 
 		Object value = dictionary.get(
-			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
-
-		if (value != null) {
-			return new ScopedConfiguration(
-				configurationId, dictionaryString, GetterUtil.getLong(value),
-				ExtendedObjectClassDefinition.Scope.COMPANY);
-		}
-
-		value = dictionary.get(
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey());
 
 		if (value != null) {
 			return new ScopedConfiguration(
 				configurationId, dictionaryString, GetterUtil.getLong(value),
 				ExtendedObjectClassDefinition.Scope.GROUP);
+		}
+
+		value = dictionary.get(
+			ExtendedObjectClassDefinition.Scope.COMPANY.getPropertyKey());
+
+		if (value != null) {
+			return new ScopedConfiguration(
+				configurationId, dictionaryString, GetterUtil.getLong(value),
+				ExtendedObjectClassDefinition.Scope.COMPANY);
 		}
 
 		value = dictionary.get(

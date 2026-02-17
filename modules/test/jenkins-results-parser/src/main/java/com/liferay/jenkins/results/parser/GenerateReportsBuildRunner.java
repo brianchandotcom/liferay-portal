@@ -94,10 +94,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		FLAKY_TEST_7_1_x("Flaky Test 7.1.x"),
 		FLAKY_TEST_7_2_x("Flaky Test 7.2.x"),
 		FLAKY_TEST_7_3_x("Flaky Test 7.3.x"),
-		FLAKY_TEST_ee_6_1_30("Flaky Test ee-6.1.30"),
-		FLAKY_TEST_ee_6_1_x("Flaky Test ee-6.1.x"),
-		FLAKY_TEST_ee_6_2_10("Flaky Test ee-6.2.10"),
-		FLAKY_TEST_ee_6_2_x("Flaky Test ee-6.2.x"),
 		FLAKY_TEST_MASTER("Flaky Test master"),
 		PULL_REQUEST_HISTORY("Pull Request History"),
 		RELEASE_HISTORY("Release History"),
@@ -1007,18 +1003,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 					Report.FLAKY_TEST_7_3_x.toString(),
 					"flaky-test-report-7.3.x");
 				put(
-					Report.FLAKY_TEST_ee_6_1_30.toString(),
-					"flaky-test-report-ee-6.1.30");
-				put(
-					Report.FLAKY_TEST_ee_6_1_x.toString(),
-					"flaky-test-report-ee-6.1.x");
-				put(
-					Report.FLAKY_TEST_ee_6_2_10.toString(),
-					"flaky-test-report-ee-6.2.10");
-				put(
-					Report.FLAKY_TEST_ee_6_2_x.toString(),
-					"flaky-test-report-ee-6.2.x");
-				put(
 					Report.FLAKY_TEST_MASTER.toString(),
 					"flaky-test-report-master");
 				put(
@@ -1036,10 +1020,6 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		Report.CI_SYSTEM_HISTORY.toString(), Report.CI_SYSTEM_STATUS.toString(),
 		Report.FLAKY_TEST_7_0_x.toString(), Report.FLAKY_TEST_7_1_x.toString(),
 		Report.FLAKY_TEST_7_2_x.toString(), Report.FLAKY_TEST_7_3_x.toString(),
-		Report.FLAKY_TEST_ee_6_1_30.toString(),
-		Report.FLAKY_TEST_ee_6_1_x.toString(),
-		Report.FLAKY_TEST_ee_6_2_10.toString(),
-		Report.FLAKY_TEST_ee_6_2_x.toString(),
 		Report.FLAKY_TEST_MASTER.toString(),
 		Report.PULL_REQUEST_HISTORY.toString(),
 		Report.RELEASE_HISTORY.toString(), Report.UPSTREAM_HISTORY.toString(),

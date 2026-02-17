@@ -288,6 +288,32 @@ public class ImageToolUtil {
 		return unsyncByteArrayOutputStream.toByteArray();
 	}
 
+	public static Image getDefaultCompanyGroupLogo() {
+		if (_defaultCompanyGroupLogo != null) {
+			return _defaultCompanyGroupLogo;
+		}
+
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
+
+		try {
+			InputStream inputStream = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_COMPANY_GROUP_LOGO));
+
+			if (inputStream == null) {
+				_log.error("Default company group logo is not available");
+			}
+
+			_defaultCompanyGroupLogo = getImage(inputStream);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to configure the default company group logo: " +
+					exception.getMessage());
+		}
+
+		return _defaultCompanyGroupLogo;
+	}
+
 	public static Image getDefaultCompanyLogo() {
 		if (_defaultCompanyLogo != null) {
 			return _defaultCompanyLogo;
@@ -964,6 +990,7 @@ public class ImageToolUtil {
 
 	private static final Snapshot<CMYKImageTool> _cmykImageToolSnapshot =
 		new Snapshot<>(ImageToolUtil.class, CMYKImageTool.class);
+	private static Image _defaultCompanyGroupLogo;
 	private static Image _defaultCompanyLogo;
 	private static Image _defaultOrganizationLogo;
 	private static Image _defaultSpacer;

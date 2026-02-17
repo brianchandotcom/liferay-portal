@@ -1118,6 +1118,9 @@ public interface PropsKeys {
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";
 
+	public static final String IMAGE_DEFAULT_COMPANY_GROUP_LOGO =
+		"image.default.company.group.logo";
+
 	public static final String IMAGE_DEFAULT_COMPANY_LOGO =
 		"image.default.company.logo";
 

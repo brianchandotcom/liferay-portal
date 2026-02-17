@@ -111,8 +111,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -122,6 +124,9 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  * @author Daniel Kocsis
  */
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+)
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class StagingImplTest {
@@ -132,6 +137,18 @@ public class StagingImplTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -344,16 +361,10 @@ public class StagingImplTest {
 		enableLocalStaging(false);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
 	@Test
 	@TestInfo("LPD-75738")
 	public void testLocalStagingAssetTagsFromLastPublishDateWithBatchEngine()
 		throws Exception {
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		String externalReferenceCode = StringUtil.toLowerCase(
 			RandomTestUtil.randomString());
@@ -402,20 +413,11 @@ public class StagingImplTest {
 				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertEquals(stagingAssetTag.getName(), liveAssetTag.getName());
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
 	@Test
 	@TestInfo("LPD-75738")
 	public void testLocalStagingChangesetEntries() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		enableLocalStaging(true);
 
 		Group stagingGroup = _group.getStagingGroup();
@@ -462,9 +464,6 @@ public class StagingImplTest {
 			count,
 			_changesetEntryLocalService.getChangesetEntriesCount(
 				changesetCollection.getChangesetCollectionId()));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test

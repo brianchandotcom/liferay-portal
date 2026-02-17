@@ -21,7 +21,7 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
 export async function checkPackageJSONFiles() {
 	let packages = await fg('**/package.json', {
 		ignore: [
-			'_node-scripts',
+			'**/frontend-sdk',
 			'**/build',
 			'**/classes',
 			'**/frontend-js-clay-web/clay',
@@ -41,7 +41,6 @@ export async function checkPackageJSONFiles() {
 
 		if (
 			packagePath.endsWith('modules/package.json') ||
-			packagePath.endsWith('modules/_node-scripts/package.json') ||
 			packagePath.endsWith('modules/test/playwright/package.json') ||
 			packagePath.includes('/workspaces/')
 		) {

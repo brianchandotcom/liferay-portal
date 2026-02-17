@@ -17,7 +17,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 // Directories
 //
 
-export const PORTAL_DIR = path.resolve(__dirname, '..', '..', '..');
+export const PORTAL_DIR = path.resolve(__dirname, '..', '..', '..', '..');
 
 export const MODULES_DIR = path.resolve(PORTAL_DIR, 'modules');
 
@@ -30,7 +30,8 @@ export const GLOBAL_NODE_MODULES_TYPES_DIR = path.resolve(
 	'@types'
 );
 
-export const NODE_SCRIPTS_DIR = path.resolve(MODULES_DIR, '_node-scripts');
+export const FRONTEND_SDK_DIR = path.resolve(MODULES_DIR, 'frontend-sdk');
+export const NODE_SCRIPTS_DIR = path.resolve(FRONTEND_SDK_DIR, 'node-scripts');
 
 export const TSC_DIR = path.resolve(MODULES_DIR, '.tsc');
 export const TSC_BUILDINFO_DIR = path.resolve(TSC_DIR, 'buildinfo');

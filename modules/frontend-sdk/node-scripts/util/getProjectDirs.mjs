@@ -11,7 +11,7 @@ import {MODULES_DIR} from './locations.mjs';
 const IGNORED_PROJECT_DIRS = ['modules'];
 const NO_RECURSE_PROJECT_DIRS = [
 	'clay',
-	'_node-scripts',
+	'frontend-sdk',
 	'build',
 	'classes',
 	'node_modules',

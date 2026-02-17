@@ -43,13 +43,13 @@ definition {
 
 		var liferayHome = PropsUtil.get("liferay.home.dir.name");
 
-		FileUtil.write("${liferayHome}/osgi/configs/com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config", "disabledProviders=[\"txtai\",\"huggingFaceInferenceAPI\"]");
+		FileUtil.write("${liferayHome}/osgi/configs/com.liferay.portal.search.internal.ml.embedding.text.TextEmbeddingRetrieverImpl.config", "disabledProviders=[\"txtai\",\"hugging-face-inference-api\"]");
 
 		OSGiConfig.waitForOSGiConfig();
 
 		WaitForConsoleTextPresent(value1 = "Disabling txtai");
 
-		WaitForConsoleTextPresent(value1 = "Disabling huggingFaceInferenceAPI");
+		WaitForConsoleTextPresent(value1 = "Disabling hugging-face-inference-api");
 
 		SystemSettings.openToConfigInSystemSettings(portletId = "com.liferay.portal.search.configuration.SemanticSearchConfiguration");
 
@@ -79,7 +79,7 @@ definition {
 
 		WaitForConsoleTextPresent(value1 = "Enabling txtai");
 
-		WaitForConsoleTextPresent(value1 = "Enabling huggingFaceInferenceAPI");
+		WaitForConsoleTextPresent(value1 = "Enabling hugging-face-inference-api");
 
 		// This pause allows the semantic search form to render after LPD-68429.
 

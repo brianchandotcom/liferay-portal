@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -35,13 +34,9 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	}
 
 	public IndividualDisplay(Individual individual) {
-		if (Validator.isNotNull(individual.getAccountName())) {
-			_accountNames = Collections.singletonList(
-				individual.getAccountName());
-		}
-
 		_individual = individual;
 
+		_accountName = individual.getAccountName();
 		_activitiesCount = individual.getActivitiesCount();
 		_dataSourceIndividualPKs = individual.getDataSourceIndividualPKs();
 		_dateCreated = individual.getDateCreated();
@@ -60,6 +55,10 @@ public class IndividualDisplay implements FaroEntityDisplay {
 		sb.append(GetterUtil.get(getValue("familyName"), StringPool.BLANK));
 
 		_name = sb.toString();
+
+		if (Validator.isBlank(_name)) {
+			_name = _id;
+		}
 
 		_profileType = individual.getProfileType();
 		_type = FaroConstants.TYPE_INDIVIDUAL;
@@ -112,7 +111,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 		"country", "email", "familyName", "givenName", "image", "jobTitle",
 		"worksFor");
 
-	private List<String> _accountNames;
+	private String _accountName;
 	private Long _activitiesCount;
 	private List<Individual.DataSourceIndividualPK> _dataSourceIndividualPKs;
 	private Date _dateCreated;

@@ -5,11 +5,18 @@
 
 package com.liferay.exportimport.report.service.impl;
 
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.internal.util.ExportImportReportEntryUtil;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.base.ExportImportReportEntryLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -31,6 +38,7 @@ public class ExportImportReportEntryLocalServiceImpl
 	extends ExportImportReportEntryLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public ExportImportReportEntry addEmptyExportImportReportEntry(
 		long groupId, long companyId, String classExternalReferenceCode,
 		long classNameId, long exportImportConfigurationId,
@@ -93,15 +101,6 @@ public class ExportImportReportEntryLocalServiceImpl
 			exportImportReportEntry);
 	}
 
-	public ExportImportReportEntry fetchEmptyExportImportReportEntryByG_C_C_C(
-		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId) {
-
-		return exportImportReportEntryPersistence.fetchByG_C_C_C_T(
-			groupId, companyId, classExternalReferenceCode, classNameId,
-			ExportImportReportEntryConstants.TYPE_EMPTY);
-	}
-
 	@Override
 	public List<ExportImportReportEntry> getExportImportReportEntries(
 		long companyId, long exportImportConfigurationId) {
@@ -109,5 +108,121 @@ public class ExportImportReportEntryLocalServiceImpl
 		return exportImportReportEntryPersistence.findByC_E(
 			companyId, exportImportConfigurationId);
 	}
+
+	@Override
+	public ExportImportReportEntry getOrAddEmptyExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId,
+		String modelNameLanguageKey) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_EMPTY);
+
+		if (exportImportReportEntry != null) {
+			return exportImportReportEntry;
+		}
+
+		return exportImportReportEntryLocalService.
+			addEmptyExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelNameLanguageKey);
+	}
+
+	@Override
+	public void resolveEmptyExportImportReportEntries(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId)
+		throws PortalException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setAddCriteriaMethod(
+			dynamicQuery -> {
+				Property classExternalReferenceCodeProperty =
+					PropertyFactoryUtil.forName("classExternalReferenceCode");
+
+				dynamicQuery.add(
+					classExternalReferenceCodeProperty.eq(
+						classExternalReferenceCode));
+
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(classNameIdProperty.eq(classNameId));
+
+				Property statusProperty = PropertyFactoryUtil.forName("status");
+
+				dynamicQuery.add(
+					statusProperty.eq(
+						ExportImportReportEntryConstants.STATUS_UNRESOLVED));
+
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(
+					typeProperty.eq(
+						ExportImportReportEntryConstants.TYPE_EMPTY));
+			});
+
+		actionableDynamicQuery.setCompanyId(companyId);
+		actionableDynamicQuery.setGroupId(groupId);
+
+		Long exportImportConfigurationId =
+			ExportImportThreadLocal.getExportImportConfigurationId();
+
+		boolean importInProcess = ExportImportThreadLocal.isImportInProcess();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			(ExportImportReportEntry exportImportReportEntry) -> {
+				long exportImportReportEntryId =
+					exportImportReportEntry.getExportImportReportEntryId();
+
+				try {
+					if (importInProcess &&
+						(exportImportConfigurationId ==
+							exportImportReportEntry.
+								getExportImportConfigurationId())) {
+
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Deleting report entry " +
+									exportImportReportEntryId);
+						}
+
+						exportImportReportEntryLocalService.
+							deleteExportImportReportEntry(
+								exportImportReportEntryId);
+					}
+					else {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Resolving report entry " +
+									exportImportReportEntryId);
+						}
+
+						exportImportReportEntry.setStatus(
+							ExportImportReportEntryConstants.STATUS_RESOLVED);
+
+						updateExportImportReportEntry(exportImportReportEntry);
+					}
+				}
+				catch (Exception exception) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Unable to resolve the report entry " +
+								exportImportReportEntryId,
+							exception);
+					}
+				}
+			});
+
+		actionableDynamicQuery.performActions();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportReportEntryLocalServiceImpl.class);
 
 }

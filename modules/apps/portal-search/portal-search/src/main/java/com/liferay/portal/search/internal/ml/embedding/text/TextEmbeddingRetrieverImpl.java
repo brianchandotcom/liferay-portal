@@ -24,6 +24,7 @@ import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 import com.liferay.portal.search.rest.text.embeddings.configuration.TextEmbeddingProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -275,7 +276,7 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 		if ((null != textEmbeddingProviderName) &&
 			!_disabledProviderNames.contains(textEmbeddingProviderName) &&
 			(_betaTextEmbeddingsEnabled ||
-			 Objects.equals(textEmbeddingProviderName, "OpenAI"))) {
+			 _supportedProviders.contains(textEmbeddingProviderName))) {
 
 			return true;
 		}
@@ -285,6 +286,9 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		TextEmbeddingRetrieverImpl.class);
+
+	private static final List<String> _supportedProviders = Arrays.asList(
+		"vertex-ai", "openai");
 
 	private volatile boolean _betaTextEmbeddingsEnabled;
 	private final List<String> _disabledProviderNames = new ArrayList<>();

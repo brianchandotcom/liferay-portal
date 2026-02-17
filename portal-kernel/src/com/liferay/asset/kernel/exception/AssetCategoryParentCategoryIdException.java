@@ -10,20 +10,22 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class VocabularyMismatchException extends PortalException {
+public class AssetCategoryParentCategoryIdException extends PortalException {
 
-	public VocabularyMismatchException() {
+	public AssetCategoryParentCategoryIdException() {
 	}
 
-	public VocabularyMismatchException(String msg) {
+	public AssetCategoryParentCategoryIdException(String msg) {
 		super(msg);
 	}
 
-	public VocabularyMismatchException(String msg, Throwable throwable) {
+	public AssetCategoryParentCategoryIdException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public VocabularyMismatchException(Throwable throwable) {
+	public AssetCategoryParentCategoryIdException(Throwable throwable) {
 		super(throwable);
 	}
 

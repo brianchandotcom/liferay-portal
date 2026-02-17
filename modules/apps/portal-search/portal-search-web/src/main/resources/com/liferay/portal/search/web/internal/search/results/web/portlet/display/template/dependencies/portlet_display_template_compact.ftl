@@ -20,7 +20,7 @@
 					<#if entry.isAssetRendererURLDownloadVisible()>
 						<span
 							class="lfr-portal-tooltip c-ml-1"
-							title="${languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getAssetRendererDownloadSize(), locale) + ')'])}"
+							title="${(entry.getAssetRendererDownloadSize() > 0)?then(languageUtil.format(locale, 'download-x', ['(' + languageUtil.formatStorageSize(entry.getAssetRendererDownloadSize(), locale) + ')']), languageUtil.get(locale, 'download'))}"
 						>
 							<@clay.link
 								aria\-label="${languageUtil.format(locale, 'download-x', [entry.getTitle()])}"

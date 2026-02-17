@@ -16,6 +16,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +41,8 @@ import org.json.JSONObject;
  */
 public class CISystemStatusReportUtil {
 
-	public static void appendNodeHistoryDataToJavaScriptFile(String filePath)
+	public static void appendNodeHistoryDataToJavaScriptFile(
+			String filePath, JenkinsCohort jenkinsCohort)
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();
@@ -53,6 +55,16 @@ public class CISystemStatusReportUtil {
 		long durationDays = _getReportDurationDays();
 
 		localDate = localDate.minusDays(durationDays - 1);
+
+		Set<String> keys = new HashSet<>(Arrays.asList(_NODE_METRIC_NAMES));
+
+		Set<String> asgPrimaryLabels = jenkinsCohort.getASGPrimaryLabels();
+
+		for (String asgPrimaryLabel : asgPrimaryLabels) {
+			for (String asgNodeMetricName : _ASG_NODE_METRIC_NAMES) {
+				keys.add(asgNodeMetricName + "__" + asgPrimaryLabel);
+			}
+		}
 
 		for (String dateString :
 				JenkinsResultsParserUtil.getDateStrings(
@@ -79,7 +91,15 @@ public class CISystemStatusReportUtil {
 				jsonObject,
 				JenkinsResultsParserUtil.toJSONObject(
 					"file://" + nodeDataFile.getPath()),
-				_NODE_METRIC_NAMES);
+				keys);
+		}
+
+		if (jsonObject == null) {
+			jsonObject = new JSONObject();
+		}
+
+		if (!asgPrimaryLabels.isEmpty()) {
+			jsonObject.put("asg_primary_labels", asgPrimaryLabels);
 		}
 
 		sb.append("\nvar nodeHistoryData = ");
@@ -118,7 +138,7 @@ public class CISystemStatusReportUtil {
 
 		jenkinsCohort.writeDataJavaScriptFile(filePath);
 
-		appendNodeHistoryDataToJavaScriptFile(filePath);
+		appendNodeHistoryDataToJavaScriptFile(filePath, jenkinsCohort);
 	}
 
 	public static void writeTestrayDataJavaScriptFile(
@@ -634,7 +654,7 @@ public class CISystemStatusReportUtil {
 	}
 
 	private static void _mergeJSONArraysInJSONObjects(
-		JSONObject jsonObject1, JSONObject jsonObject2, String[] keys) {
+		JSONObject jsonObject1, JSONObject jsonObject2, Set<String> keys) {
 
 		JSONArray timestampsJSONArray1 = jsonObject1.optJSONArray(
 			"timestamps", new JSONArray());
@@ -666,6 +686,10 @@ public class CISystemStatusReportUtil {
 			jsonObject1.put(key, jsonArray1);
 		}
 	}
+
+	private static final String[] _ASG_NODE_METRIC_NAMES = {
+		"idle_nodes", "occupied_nodes", "offline_nodes", "queued_builds"
+	};
 
 	private static final File _CI_SYSTEM_STATUS_REPORT_DIR;
 

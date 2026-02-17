@@ -2393,15 +2393,15 @@ public class DefaultObjectEntryManagerImplTest
 			}
 		};
 
-		_assertPicklistOjectField(listEntry, listEntry);
+		_assertPicklistObjectField(listEntry, listEntry);
 
 		// Picklist by list type entry key
 
-		_assertPicklistOjectField(listEntry, listTypeEntry.getKey());
+		_assertPicklistObjectField(listEntry, listTypeEntry.getKey());
 
 		// Picklist by map
 
-		_assertPicklistOjectField(
+		_assertPicklistObjectField(
 			listEntry,
 			HashMapBuilder.put(
 				"key", listTypeEntry.getKey()
@@ -3771,7 +3771,7 @@ public class DefaultObjectEntryManagerImplTest
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(_user));
 
-		// Relationshp type prevent
+		// Relationship type prevent
 
 		objectRelationship =
 			_objectRelationshipLocalService.updateObjectRelationship(
@@ -10194,7 +10194,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
-	private void _assertPicklistOjectField(
+	private void _assertPicklistObjectField(
 			ListEntry expectedListEntry, Object picklistObjectFieldValue)
 		throws Exception {
 

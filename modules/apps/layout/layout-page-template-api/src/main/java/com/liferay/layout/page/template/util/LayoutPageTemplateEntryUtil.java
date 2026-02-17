@@ -20,8 +20,8 @@ public class LayoutPageTemplateEntryUtil {
 	public static long getClassTypeId(
 		long classNameId, String classTypeKey, long groupId) {
 
-		if (Validator.isNull(classTypeKey)) {
-			return -1;
+		if (classNameId == 0) {
+			return 0;
 		}
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
@@ -29,8 +29,16 @@ public class LayoutPageTemplateEntryUtil {
 				InfoItemFormVariationsProvider.class,
 				PortalUtil.fetchClassName(classNameId));
 
-		if (infoItemFormVariationsProvider == null) {
-			return -2;
+		if (Validator.isNull(classTypeKey) &&
+			(infoItemFormVariationsProvider == null)) {
+
+			return 0;
+		}
+
+		if (Validator.isNull(classTypeKey) ||
+			(infoItemFormVariationsProvider == null)) {
+
+			return -1;
 		}
 
 		InfoItemFormVariation infoItemFormVariation =
@@ -39,7 +47,7 @@ public class LayoutPageTemplateEntryUtil {
 					classTypeKey, groupId);
 
 		if (infoItemFormVariation == null) {
-			return -2;
+			return -1;
 		}
 
 		return GetterUtil.getLong(infoItemFormVariation.getKey());

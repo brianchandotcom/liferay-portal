@@ -207,7 +207,7 @@ public class SitePageResourceImpl
 							")");
 					}
 				).put(
-					"privatePages",
+					"privateLayout",
 					String.valueOf(portletDataContext.isPrivateLayout())
 				).build();
 			}
@@ -323,7 +323,7 @@ public class SitePageResourceImpl
 
 	@Override
 	protected Page<SitePage> doGetSiteSitePagesPage(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -363,7 +363,7 @@ public class SitePageResourceImpl
 						LayoutConstants.TYPE_URL
 					});
 				searchContext.setAttribute(
-					"privateLayout", privatePages.toString());
+					"privateLayout", privateLayout.toString());
 				searchContext.setAttribute(
 					"status", WorkflowConstants.STATUS_ANY);
 				searchContext.setAttribute(
@@ -383,7 +383,7 @@ public class SitePageResourceImpl
 
 	@Override
 	protected SitePage doPostSiteSitePage(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
 
@@ -391,7 +391,7 @@ public class SitePageResourceImpl
 				contextCompany.getCompanyId(), "LPD-35443") ||
 			(!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privatePages)) {
+			 privateLayout)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -402,13 +402,13 @@ public class SitePageResourceImpl
 				GroupUtil.getGroupId(
 					false, contextCompany.getCompanyId(),
 					siteExternalReferenceCode),
-				privatePages, sitePage));
+				privateLayout, sitePage));
 	}
 
 	@Override
 	protected SitePage doPutSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePages,
+			String sitePageExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception {
 
@@ -416,7 +416,7 @@ public class SitePageResourceImpl
 				contextCompany.getCompanyId(), "LPD-35443") ||
 			(!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privatePages)) {
+			 privateLayout)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -430,11 +430,11 @@ public class SitePageResourceImpl
 		if (layout == null) {
 			return _toSitePage(
 				_addLayout(
-					sitePageExternalReferenceCode, groupId, privatePages,
+					sitePageExternalReferenceCode, groupId, privateLayout,
 					sitePage));
 		}
 
-		if (layout.isPrivateLayout() != privatePages) {
+		if (layout.isPrivateLayout() != privateLayout) {
 			throw new UnsupportedOperationException();
 		}
 

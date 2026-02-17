@@ -59,7 +59,11 @@ public class OperationsManagerRoleUpgradeProcess extends UpgradeProcess {
 			_resourcePermissionLocalService.addResourcePermission(
 				companyId, "com.liferay.commerce.product", 1,
 				String.valueOf(companyId), operationsManagerRole.getRoleId(),
-				CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+				CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, "com.liferay.commerce.product", 1,
+				String.valueOf(companyId), operationsManagerRole.getRoleId(),
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 		}
 	}
 

@@ -423,7 +423,8 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			companyResourceActionIds.put(
 				"com.liferay.commerce.product",
 				new String[] {
-					CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS
+					CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS
 				});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.shipment",
@@ -486,13 +487,14 @@ public class CommerceRoleHelperImpl implements CommerceRoleHelper {
 			companyResourceActionIds.put(
 				"com.liferay.commerce.product",
 				new String[] {
+					CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
 					CPActionKeys.ADD_COMMERCE_PRODUCT_OPTION,
 					CPActionKeys.ADD_COMMERCE_PRODUCT_SPECIFICATION_OPTION,
 					CPActionKeys.MANAGE_COMMERCE_PRODUCT_ATTACHMENTS,
 					CPActionKeys.MANAGE_COMMERCE_PRODUCT_IMAGES,
-					CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS,
 					CPActionKeys.VIEW_COMMERCE_PRODUCT_ATTACHMENTS,
-					CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_IMAGES,
+					CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS
 				});
 			companyResourceActionIds.put(
 				"com.liferay.commerce.product.model.CPOption",

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -41,12 +43,14 @@ import java.util.ResourceBundle;
 public class CPMeasurementUnitsDisplayContext {
 
 	public CPMeasurementUnitsDisplayContext(
+		ModelResourcePermission<CPMeasurementUnit>
+			cpMeasurementUnitModelResourcePermission,
 		CPMeasurementUnitService cpMeasurementUnitService,
-		PortletResourcePermission portletResourcePermission,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_cpMeasurementUnitModelResourcePermission =
+			cpMeasurementUnitModelResourcePermission;
 		_cpMeasurementUnitService = cpMeasurementUnitService;
-		_portletResourcePermission = portletResourcePermission;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -206,15 +210,37 @@ public class CPMeasurementUnitsDisplayContext {
 			_renderRequest, "type", CPMeasurementUnitConstants.TYPE_DIMENSION);
 	}
 
-	public boolean hasManageCPMeasurementUnitsPermission()
-		throws PortalException {
+	public boolean hasAddPermission() throws PortalException {
+		PortletResourcePermission portletResourcePermission =
+			_cpMeasurementUnitModelResourcePermission.
+				getPortletResourcePermission();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		return _portletResourcePermission.contains(
+		return portletResourcePermission.contains(
 			themeDisplay.getPermissionChecker(), null,
-			CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
+			CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT);
+	}
+
+	public boolean hasUpdatePermission() throws PortalException {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _cpMeasurementUnitModelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), _getCPMeasurementUnitId(),
+			ActionKeys.UPDATE);
+	}
+
+	private long _getCPMeasurementUnitId() throws PortalException {
+		CPMeasurementUnit primaryCPMeasurementUnit =
+			getPrimaryCPMeasurementUnit();
+
+		if (primaryCPMeasurementUnit != null) {
+			return primaryCPMeasurementUnit.getCPMeasurementUnitId();
+		}
+
+		return 0;
 	}
 
 	private NavigationItem _getNavigationItem(
@@ -250,10 +276,11 @@ public class CPMeasurementUnitsDisplayContext {
 	}
 
 	private CPMeasurementUnit _cpMeasurementUnit;
+	private final ModelResourcePermission<CPMeasurementUnit>
+		_cpMeasurementUnitModelResourcePermission;
 	private final CPMeasurementUnitService _cpMeasurementUnitService;
 	private String _orderByCol;
 	private String _orderByType;
-	private final PortletResourcePermission _portletResourcePermission;
 	private CPMeasurementUnit _primaryCPMeasurementUnit;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

@@ -3,36 +3,9 @@
 		"actions": [
 			{
 				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL",
-					"CONFIGURATION",
-					"PERMISSIONS",
-					"PREFERENCES",
-					"VIEW"
+					"VIEW_CONTROL_PANEL"
 				],
-				"resource": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL",
-					"ADD_TO_PAGE",
-					"CONFIGURATION",
-					"PERMISSIONS",
-					"PREFERENCES",
-					"VIEW"
-				],
-				"resource": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet"
+				"resource": "90"
 			},
 			{
 				"actionIds": [
@@ -82,9 +55,36 @@
 			},
 			{
 				"actionIds": [
-					"VIEW_CONTROL_PANEL"
+					"ACCESS_IN_CONTROL_PANEL",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
+					"VIEW"
 				],
-				"resource": "90"
+				"resource": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL",
+					"ADD_TO_PAGE",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
+					"VIEW"
+				],
+				"resource": "com_liferay_asset_tags_admin_web_portlet_AssetTagsAdminPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_catalog_web_internal_portlet_CommerceCatalogsPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_product_definitions_web_internal_portlet_CPDefinitionsPortlet"
 			}
 		],
 		"name": "Category Manager",
@@ -95,25 +95,9 @@
 		"actions": [
 			{
 				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL",
-					"CONFIGURATION",
-					"PERMISSIONS",
-					"PREFERENCES",
-					"VIEW"
+					"VIEW_CONTROL_PANEL"
 				],
-				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet"
+				"resource": "90"
 			},
 			{
 				"actionIds": [
@@ -160,9 +144,25 @@
 			},
 			{
 				"actionIds": [
-					"VIEW_CONTROL_PANEL"
+					"ACCESS_IN_CONTROL_PANEL",
+					"CONFIGURATION",
+					"PERMISSIONS",
+					"PREFERENCES",
+					"VIEW"
 				],
-				"resource": "90"
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePriceListPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_pricing_web_internal_portlet_CommercePromotionPortlet"
 			}
 		],
 		"name": "Discount Manager",
@@ -173,27 +173,9 @@
 		"actions": [
 			{
 				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
+					"VIEW_CONTROL_PANEL"
 				],
-				"resource": "com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet"
-			},
-			{
-				"actionIds": [
-					"ACCESS_IN_CONTROL_PANEL"
-				],
-				"resource": "com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet"
+				"resource": "90"
 			},
 			{
 				"actionIds": [
@@ -230,9 +212,19 @@
 			},
 			{
 				"actionIds": [
-					"MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS"
+					"ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT",
+					"VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS"
 				],
 				"resource": "com.liferay.commerce.product"
+			},
+			{
+				"actionIds": [
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
+					"VIEW"
+				],
+				"resource": "com.liferay.commerce.product.model.CPMeasurementUnit"
 			},
 			{
 				"actionIds": [
@@ -249,9 +241,27 @@
 			},
 			{
 				"actionIds": [
-					"VIEW_CONTROL_PANEL"
+					"ACCESS_IN_CONTROL_PANEL"
 				],
-				"resource": "90"
+				"resource": "com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_order_web_internal_portlet_CommerceOrderPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_shipment_web_internal_portlet_CommerceShipmentPortlet"
+			},
+			{
+				"actionIds": [
+					"ACCESS_IN_CONTROL_PANEL"
+				],
+				"resource": "com_liferay_commerce_subscription_web_internal_portlet_CommerceSubscriptionEntryPortlet"
 			}
 		],
 		"name": "Operations Manager",

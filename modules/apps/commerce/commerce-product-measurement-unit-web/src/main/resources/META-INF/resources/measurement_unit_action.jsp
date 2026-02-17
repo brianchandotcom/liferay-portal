@@ -22,7 +22,7 @@ CPMeasurementUnit cpMeasurementUnit = (CPMeasurementUnit)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= cpMeasurementUnitsDisplayContext.hasManageCPMeasurementUnitsPermission() %>">
+	<c:if test="<%= cpMeasurementUnitsDisplayContext.hasUpdatePermission() %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/cp_measurement_unit/edit_cp_measurement_unit" />
 			<portlet:param name="cpMeasurementUnitId" value="<%= String.valueOf(cpMeasurementUnit.getCPMeasurementUnitId()) %>" />

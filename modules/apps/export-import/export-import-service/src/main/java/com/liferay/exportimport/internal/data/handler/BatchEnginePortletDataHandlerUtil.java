@@ -129,7 +129,7 @@ public class BatchEnginePortletDataHandlerUtil {
 							portletDataContext)) {
 
 						filters.add(
-							buildFilterParameterFromChangeset(
+							_buildFilterParameterFromChangeset(
 								changesetEntryLocalService,
 								classNameLocalService,
 								exportImportDescriptor.getModelClassName(),
@@ -186,46 +186,6 @@ public class BatchEnginePortletDataHandlerUtil {
 		}
 
 		return exportParameters;
-	}
-
-	public static String buildFilterParameterFromChangeset(
-		ChangesetEntryLocalService changesetEntryLocalService,
-		ClassNameLocalService classNameLocalService, String modelClassName,
-		PortletDataContext portletDataContext) {
-
-		long changesetCollectionId = MapUtil.getLong(
-			portletDataContext.getParameterMap(), "changesetCollectionId");
-
-		if (changesetCollectionId == 0) {
-			return null;
-		}
-
-		Set<String> externalReferenceCodes = new HashSet<>();
-
-		externalReferenceCodes.add("");
-
-		List<ChangesetEntry> changesetEntries =
-			changesetEntryLocalService.getChangesetEntries(
-				changesetCollectionId,
-				classNameLocalService.getClassNameId(modelClassName));
-
-		for (ChangesetEntry changesetEntry : changesetEntries) {
-			if (!Validator.isBlank(
-					changesetEntry.getClassExternalReferenceCode())) {
-
-				externalReferenceCodes.add(
-					changesetEntry.getClassExternalReferenceCode());
-			}
-		}
-
-		return StringBundler.concat(
-			"externalReferenceCode in (",
-			com.liferay.portal.kernel.util.StringUtil.merge(
-				TransformUtil.transform(
-					externalReferenceCodes,
-					layoutExternalReferenceCode ->
-						"'" + layoutExternalReferenceCode + "'")),
-			")");
 	}
 
 	public static Map<String, Serializable> buildImportParameters(
@@ -320,6 +280,46 @@ public class BatchEnginePortletDataHandlerUtil {
 		}
 
 		return StringUtil.merge(filters, " and ");
+	}
+
+	private static String _buildFilterParameterFromChangeset(
+		ChangesetEntryLocalService changesetEntryLocalService,
+		ClassNameLocalService classNameLocalService, String modelClassName,
+		PortletDataContext portletDataContext) {
+
+		long changesetCollectionId = MapUtil.getLong(
+			portletDataContext.getParameterMap(), "changesetCollectionId");
+
+		if (changesetCollectionId == 0) {
+			return null;
+		}
+
+		Set<String> externalReferenceCodes = new HashSet<>();
+
+		externalReferenceCodes.add("");
+
+		List<ChangesetEntry> changesetEntries =
+			changesetEntryLocalService.getChangesetEntries(
+				changesetCollectionId,
+				classNameLocalService.getClassNameId(modelClassName));
+
+		for (ChangesetEntry changesetEntry : changesetEntries) {
+			if (!Validator.isBlank(
+					changesetEntry.getClassExternalReferenceCode())) {
+
+				externalReferenceCodes.add(
+					changesetEntry.getClassExternalReferenceCode());
+			}
+		}
+
+		return StringBundler.concat(
+			"externalReferenceCode in (",
+			com.liferay.portal.kernel.util.StringUtil.merge(
+				TransformUtil.transform(
+					externalReferenceCodes,
+					layoutExternalReferenceCode ->
+						"'" + layoutExternalReferenceCode + "'")),
+			")");
 	}
 
 	private static boolean _isCompanyScoped(

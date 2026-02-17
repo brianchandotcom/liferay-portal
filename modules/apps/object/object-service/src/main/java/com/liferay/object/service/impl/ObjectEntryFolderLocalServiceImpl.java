@@ -6,7 +6,10 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
@@ -36,6 +39,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -72,6 +76,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -669,7 +674,11 @@ public class ObjectEntryFolderLocalServiceImpl
 				ModelPermissions modelPermissions =
 					serviceContext.getModelPermissions();
 
-				if (modelPermissions == null) {
+				if ((modelPermissions == null) ||
+					!Objects.equals(
+						modelPermissions.getResourceName(),
+						ObjectEntryFolder.class.getName())) {
+
 					modelPermissions = ModelPermissionsFactory.create(
 						ObjectEntryFolder.class.getName());
 
@@ -682,6 +691,18 @@ public class ObjectEntryFolderLocalServiceImpl
 				modelPermissions.addRolePermissions(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 					ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+
+				if (group.isDepot()) {
+					DepotEntry depotEntry =
+						_depotEntryLocalService.getGroupDepotEntry(
+							group.getGroupId());
+
+					if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
+						modelPermissions.addRolePermissions(
+							RoleConstants.CMS_ADMINISTRATOR,
+							ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+					}
+				}
 			}
 
 			_resourceLocalService.addModelResources(
@@ -1063,6 +1084,9 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private EmptyModelManager _emptyModelManager;

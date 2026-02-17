@@ -13,7 +13,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Petteri Karttunen
  */
 @ExtendedObjectClassDefinition(
-	category = "search", scope = ExtendedObjectClassDefinition.Scope.COMPANY
+	category = "search", scope = ExtendedObjectClassDefinition.Scope.COMPANY,
+	visibilityControllerKey = "semantic-search"
 )
 @Meta.OCD(
 	description = "semantic-search-configuration-description",

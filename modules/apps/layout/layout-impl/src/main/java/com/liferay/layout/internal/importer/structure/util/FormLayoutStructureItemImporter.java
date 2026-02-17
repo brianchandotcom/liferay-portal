@@ -16,6 +16,7 @@ import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.internal.importer.LayoutStructureItemImporterContext;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -110,7 +111,8 @@ public class FormLayoutStructureItemImporter
 					formStyledLayoutStructureItem.setClassNameId(
 						layoutPageTemplateEntry.getClassNameId());
 					formStyledLayoutStructureItem.setClassTypeId(
-						layoutPageTemplateEntry.getClassTypeId());
+						LayoutPageTemplateEntryUtil.getClassTypeId(
+							layoutPageTemplateEntry));
 				}
 
 				formStyledLayoutStructureItem.setFormConfig(

@@ -19,6 +19,7 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -187,7 +188,8 @@ public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 						_journalArticleLocalService.
 							getArticlesClassPKsWithDefaultDisplayPage(
 								groupId,
-								layoutPageTemplateEntry.getClassTypeId()));
+								LayoutPageTemplateEntryUtil.getClassTypeId(
+									layoutPageTemplateEntry)));
 				}
 				else {
 					resourcePrimKeys.addAll(

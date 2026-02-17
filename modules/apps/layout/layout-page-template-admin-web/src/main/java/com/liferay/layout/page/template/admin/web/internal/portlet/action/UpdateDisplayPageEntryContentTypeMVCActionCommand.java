@@ -184,7 +184,8 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommand
 		).setParameter(
 			"classNameId", layoutPageTemplateEntry.getClassNameId()
 		).setParameter(
-			"classTypeId", layoutPageTemplateEntry.getClassTypeId()
+			"classTypeId",
+			LayoutPageTemplateEntryUtil.getClassTypeId(layoutPageTemplateEntry)
 		).setParameter(
 			"layoutPageTemplateEntryId",
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId()

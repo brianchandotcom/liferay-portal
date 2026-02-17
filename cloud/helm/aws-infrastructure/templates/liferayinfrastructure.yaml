@@ -1,7 +1,4 @@
 {{- if .Values.enabled -}}
-{{- $db := .Values.database | default dict -}}
-{{- $dbBlue := $db.blue | default dict -}}
-{{- $dbGreen := $db.green | default dict -}}
 {{- $overlay := .Values.overlay | default dict -}}
 {{- $search := .Values.search | default dict -}}
 {{- $storage := .Values.storage | default dict -}}
@@ -19,20 +16,7 @@ spec:
     commonTags:
         EnvironmentId: {{ .Values.environmentId }}
         ProjectId: {{ .Values.projectId }}
-    database:
-        activeSlot: {{ $db.activeSlot | default "blue" | quote }}
-        blue:
-            engineVersion: {{ $dbBlue.engineVersion | default "16.11" | quote }}
-            instanceClass: {{ $dbBlue.instanceClass | default "db.t3.medium" | quote }}
-            region: {{ $dbBlue.region | default "us-west-2" | quote }}
-            storageGB: {{ $dbBlue.storageGB | default 20 }}
-            username: {{ $dbBlue.username | default "liferay_database_admin" | quote }}
-        green:
-            engineVersion: {{ $dbGreen.engineVersion | default "16.11" | quote }}
-            instanceClass: {{ $dbGreen.instanceClass | default "db.t3.medium" | quote }}
-            region: {{ $dbGreen.region | default "us-west-2" | quote }}
-            storageGB: {{ $dbGreen.storageGB | default 20 }}
-            username: {{ $dbGreen.username | default "liferay_database_admin" | quote }}
+    database: {{ .Values.database | toYaml | nindent 8 }}
     deletionProtection: {{ .Values.deletionProtection | default false }}
     environmentId: {{ .Values.environmentId }}
     overlay:

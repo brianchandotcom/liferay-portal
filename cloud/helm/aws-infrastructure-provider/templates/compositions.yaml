@@ -318,10 +318,11 @@ spec:
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
 
+                        {{- $databaseInstanceManagementPolicies := $backupSpec.enabled | ternary ((list "*") | toJson) $managementPolicies -}}
                         {{- $databaseSpec := $xr.spec.database }}
-                        {{- $databaseSlots := dict "blue" $databaseSpec.blue "green" $databaseSpec.green -}}
 
-                        {{- range $slot, $spec := $databaseSlots }}
+                        {{- range $slot := list "blue" "green" -}}
+                        {{- if or (eq $slot $databaseSpec.activeSlot) $databaseSpec.isRestoring }}
                         ---
                         apiVersion: rds.aws.m.upbound.io/v1beta1
                         kind: Instance
@@ -339,7 +340,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                allocatedStorage: {{ $spec.storageGB }}
+                                allocatedStorage: {{ $databaseSpec.storageGB }}
                                 autoGeneratePassword: true
                                 backupRetentionPeriod: 7
                                 dbName: lportal
@@ -351,17 +352,20 @@ spec:
                                         projectId: {{ $projectId }}
                                         slot: {{ $slot }}
                                 engine: postgres
-                                engineVersion: {{ $spec.engineVersion | quote }}
+                                engineVersion: {{ $databaseSpec.engineVersion | quote }}
                                 identifier: {{ $baseName }}-database-{{ $slot }}
-                                instanceClass: {{ $spec.instanceClass }}
+                                instanceClass: {{ $databaseSpec.instanceClass }}
                                 multiAz: false
                                 passwordSecretRef:
                                     key: password
                                     name: liferay-database-{{ $slot }}-password
-                                region: {{ $spec.region }}
+                                region: {{ $databaseSpec.region }}
                                 skipFinalSnapshot: true
+                                {{- if and (ne $slot $databaseSpec.activeSlot) $databaseSpec.snapshotIdentifier }}
+                                snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
+                                {{- end }}
                                 storageType: gp3
-                                username: {{ $spec.username }}
+                                username: {{ $databaseSpec.username }}
                                 vpcSecurityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -373,7 +377,7 @@ spec:
                                     Active: {{ printf "%t" (eq $slot $databaseSpec.activeSlot) }}
                                     Backup: true
                                     Name: {{ $baseName }}-database-{{ $slot }}
-                            managementPolicies: {{ $managementPolicies }}
+                            managementPolicies: {{ $databaseInstanceManagementPolicies }}
                             writeConnectionSecretToRef:
                                 name: liferay-database-{{ $slot }}-credentials
                         ---
@@ -391,7 +395,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $spec.region }}
+                                region: {{ $databaseSpec.region }}
                                 tags:
                                     Name: {{ $baseName }}-database-security-group-{{ $slot }}
                                 vpcId: {{ $vpcId }}
@@ -414,7 +418,7 @@ spec:
                                 fromPort: 5432
                                 ipProtocol: tcp
                                 referencedSecurityGroupId: {{ $nodesSecurityGroupId }}
-                                region: {{ $spec.region }}
+                                region: {{ $databaseSpec.region }}
                                 securityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -441,12 +445,13 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $spec.region }}
+                                region: {{ $databaseSpec.region }}
                                 subnetIds: {{ $privateSubnetIdsList | toJson }}
                                 tags:
                                     Name: {{ $baseName }}-database-{{ $slot }}-subnets
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
+                        {{- end -}}
 
                         {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $baseName -}}
                         {{- $overlaySpec := $xr.spec.overlay }}

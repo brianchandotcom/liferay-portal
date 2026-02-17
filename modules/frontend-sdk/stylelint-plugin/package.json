@@ -1,0 +1,12 @@
+{
+	"name": "@liferay/stylelint-plugin",
+	"main": "./index.js",
+	"scripts": {
+		"build": "true",
+		"format": "liferay-workspace-scripts format",
+		"format:check": "liferay-workspace-scripts format:check",
+		"postversion": "liferay-workspace-scripts publish",
+		"preversion": "liferay-workspace-scripts ci"
+	},
+	"version": "1.1.0"
+}

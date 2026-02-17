@@ -1,0 +1,1 @@
+# @liferay/prettier-config

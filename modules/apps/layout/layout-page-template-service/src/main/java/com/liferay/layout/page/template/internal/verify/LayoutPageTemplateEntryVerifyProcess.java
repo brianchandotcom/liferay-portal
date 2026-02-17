@@ -35,12 +35,14 @@ public class LayoutPageTemplateEntryVerifyProcess extends VerifyProcess {
 			_layoutPageTemplateEntryLocalService.getActionableDynamicQuery();
 
 		layoutPageTemplateEntryActionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> dynamicQuery.add(
-				RestrictionsFactoryUtil.and(
-					RestrictionsFactoryUtil.gt("classTypeId", -1L),
+			dynamicQuery -> {
+				dynamicQuery.add(
+					RestrictionsFactoryUtil.isNull("classTypeKey"));
+				dynamicQuery.add(
 					RestrictionsFactoryUtil.eq(
 						"type",
-						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE))));
+						LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE));
+			});
 
 		layoutPageTemplateEntryActionableDynamicQuery.setPerformActionMethod(
 			(ActionableDynamicQuery.PerformActionMethod

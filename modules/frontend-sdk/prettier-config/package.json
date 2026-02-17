@@ -20,10 +20,10 @@
 	},
 	"scripts": {
 		"build": "true",
-		"format": "liferay-workspace-scripts format",
-		"format:check": "liferay-workspace-scripts format:check",
-		"postversion": "liferay-workspace-scripts publish",
-		"preversion": "liferay-workspace-scripts ci"
+		"format": "node-scripts format",
+		"format:check": "node-scripts format --check",
+		"postversion": "npx liferay-js-publish",
+		"preversion": "yarn run format:check"
 	},
 	"type": "module",
 	"version": "1.1.1"

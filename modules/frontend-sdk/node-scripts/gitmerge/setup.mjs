@@ -29,7 +29,7 @@ export default async function main() {
 		`${contents}
 [merge "node-scripts"]
 	name = node-scripts conflicts merger
-	driver = build/node/bin/node modules/_node-scripts/bin.js gitmerge:self --current=%A --base=%B --other=%O
+	driver = build/node/bin/node modules/frontend-sdk/node-scripts/bin.js gitmerge:self --current=%A --base=%B --other=%O
 	recursive = text
 `,
 		'utf-8'

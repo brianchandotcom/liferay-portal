@@ -46,15 +46,12 @@
 	},
 	"scripts": {
 		"build": "true",
-		"ci": "liferay-workspace-scripts ci",
-		"format": "liferay-workspace-scripts format",
-		"format:check": "liferay-workspace-scripts format:check",
-		"lint": "liferay-workspace-scripts lint",
-		"lint:fix": "liferay-workspace-scripts lint:fix",
+		"format": "node-scripts format",
+		"format:check": "node-scripts format --check",
 		"postinstall": "node scripts/postinstall.js",
-		"postversion": "liferay-workspace-scripts publish",
-		"preversion": "liferay-workspace-scripts ci",
-		"test": "liferay-workspace-scripts test"
+		"postversion": "npx liferay-js-publish",
+		"preversion": "yarn run format:check && yarn run test",
+		"test": "jest"
 	},
 	"version": "1.9.1"
 }

@@ -1,4 +1,3 @@
-modules/_node-scripts/    @liferay-frontend
 modules/apps/accessibility/    @liferay-platform-experience
 modules/apps/account/    @liferay-commerce
 modules/apps/adaptive-media/    @liferay-content-management
@@ -435,6 +434,7 @@ modules/dxp/apps/search-experiences/    @liferay-search
 modules/dxp/apps/segments/    @liferay-ac
 modules/dxp/apps/sharepoint-rest/    @liferay-content-management
 modules/dxp/apps/sharepoint-soap/    @liferay-content-management
+modules/frontend-sdk/    @liferay-frontend
 modules/sdk/gradle-plugins/    @liferay-devtools
 modules/sdk/gradle-plugins-app-docker/    @liferay-devtools
 modules/sdk/gradle-plugins-app-javadoc-builder/    @liferay-devtools

@@ -71,7 +71,6 @@ export {
 } from './main_view/props_transformer/AssetsFDSPropsTransformer';
 export {default as AssetsFilesDropFDSPropsTransformer} from './main_view/props_transformer/AssetsFilesDropFDSPropsTransformer';
 export {default as BulkActionTaskReportFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportFDSPropsTransformer';
-export {default as BulkActionTaskReportItemsFDSPropsTransformer} from './main_view/props_transformer/BulkActionTaskReportItemsFDSPropsTransformer';
 export {default as CategoryFDSPropsTransformer} from './main_view/props_transformer/CategoryFDSPropsTransformer';
 export {default as CategoryUsagesFDSPropsTransformer} from './main_view/props_transformer/CategoryUsagesFDSPropsTransformer';
 export {default as HomeRecentAssetsFDSPropsTransformer} from './main_view/props_transformer/HomeRecentAssetsFDSPropsTransformer';

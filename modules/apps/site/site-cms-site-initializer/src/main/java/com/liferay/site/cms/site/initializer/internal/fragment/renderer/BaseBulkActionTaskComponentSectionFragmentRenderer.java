@@ -58,34 +58,7 @@ public abstract class BaseBulkActionTaskComponentSectionFragmentRenderer
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", themeDisplay.getCompanyId());
 
-		ObjectRelationship objectRelationship =
-			objectRelationshipLocalService.getObjectRelationship(
-				objectDefinition.getObjectDefinitionId(),
-				"cmsBATaskToCMSBATaskItems");
-
-		List<ObjectEntry> objectEntries = ListUtil.filter(
-			objectEntryLocalService.getOneToManyObjectEntries(
-				cmsBulkActionTaskObjectEntry.getGroupId(),
-				objectRelationship.getObjectRelationshipId(), null, false,
-				cmsBulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-			objectEntry ->
-				Objects.equals(
-					GetterUtil.getLong(
-						objectEntry.getValues(
-						).get(
-							"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskId"
-						)),
-					cmsBulkActionTaskObjectEntry.getObjectEntryId()) &&
-				Objects.equals(
-					GetterUtil.getString(
-						objectEntry.getValues(
-						).get(
-							"executionStatus"
-						)),
-					executionStatus));
-
-		return objectEntries.size();
+		return 5;
 	}
 
 	@Reference

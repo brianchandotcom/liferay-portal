@@ -34,19 +34,12 @@ public class ViewBulkActionTaskReportFragmentRenderer
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		return new ViewBulkActionTaskReportDisplayContext(
-			httpServletRequest, _language, _objectDefinitionLocalService);
+		return new ViewBulkActionTaskReportDisplayContext();
 	}
 
 	@Override
 	protected String getLabelKey() {
 		return "view-bulk-action-task-report";
 	}
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

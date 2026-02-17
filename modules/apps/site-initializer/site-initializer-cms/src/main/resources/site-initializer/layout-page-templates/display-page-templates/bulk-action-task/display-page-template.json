@@ -1,7 +1,0 @@
-{
-	"contentType": {
-		"className": "com.liferay.object.model.ObjectDefinition#P4T1"
-	},
-	"defaultTemplate": true,
-	"name": "Bulk Action Task"
-}

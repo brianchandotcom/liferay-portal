@@ -1258,7 +1258,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'Whenever one param is changed, only that one will be added to the URL params',
+			'Whenever view is changed, view and pagination delta are added to the URL params',
 			{tag: '@LPD-73128'},
 			async ({page}) => {
 				const fdsSamplePage = new FDSSamplePage(page);
@@ -1268,21 +1268,14 @@ for (const spaConfiguration of spaConfigurations) {
 					visualizationMode: EFDSVisualizationMode.CARDS,
 				});
 
-				await expect(() => {
-					const config = getConfigFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
+				const config = getConfigFromURL(
+					new URL(page.url()).search,
+					'advanced'
+				);
 
-					expect(Object.keys(config)).toHaveLength(1);
+				expect(Object.keys(config)).toStrictEqual(['delta', 'view']);
 
-					assertView(
-						'advanced',
-						page,
-						EFDSVisualizationMode.CARDS,
-						true
-					);
-				}).toPass();
+				assertView('advanced', page, EFDSVisualizationMode.CARDS, true);
 			}
 		);
 
@@ -1302,22 +1295,20 @@ for (const spaConfiguration of spaConfigurations) {
 					visualizationMode: EFDSVisualizationMode.TABLE,
 				});
 
-				await expect(() => {
-					const config = getConfigFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
+				const config = getConfigFromURL(
+					new URL(page.url()).search,
+					'advanced'
+				);
 
-					expect(Object.keys(config)).toHaveLength(1);
+				expect(Object.keys(config)).toStrictEqual(['delta', 'view']);
 
-					assertView(
-						'advanced',
-						page,
-						EFDSVisualizationMode.TABLE,
-						true,
-						'customizedTable'
-					);
-				}).toPass();
+				assertView(
+					'advanced',
+					page,
+					EFDSVisualizationMode.TABLE,
+					true,
+					'customizedTable'
+				);
 			}
 		);
 
@@ -1339,21 +1330,14 @@ for (const spaConfiguration of spaConfigurations) {
 					visualizationMode: EFDSVisualizationMode.CARDS,
 				});
 
-				await expect(() => {
-					const config = getConfigFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
+				const config = getConfigFromURL(
+					new URL(page.url()).search,
+					'advanced'
+				);
 
-					expect(Object.keys(config)).toHaveLength(1);
+				expect(Object.keys(config)).toStrictEqual(['delta', 'view']);
 
-					assertView(
-						'advanced',
-						page,
-						EFDSVisualizationMode.CARDS,
-						true
-					);
-				}).toPass();
+				assertView('advanced', page, EFDSVisualizationMode.CARDS, true);
 			}
 		);
 	});

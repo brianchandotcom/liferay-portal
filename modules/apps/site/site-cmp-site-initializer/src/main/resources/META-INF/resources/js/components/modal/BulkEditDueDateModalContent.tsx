@@ -19,10 +19,12 @@ import DateField, {dateConfig} from '../DateField';
 export default function BulkEditDueDateModalContent({
 	apiURL,
 	closeModal,
+	dataSetId,
 	selectedData,
 }: {
 	apiURL?: string;
 	closeModal: () => void;
+	dataSetId: string;
 	selectedData: IBulkActionFDSData;
 }) {
 	const [dueDate, setDueDate] = useState<string>('');
@@ -41,6 +43,7 @@ export default function BulkEditDueDateModalContent({
 
 		triggerAssetBulkAction({
 			apiURL,
+			dataSetId,
 			keyValues: {dueDate: formattedDate},
 			onCreateError: ({error}) => {
 				setSubmitDisabled(false);
@@ -62,7 +65,14 @@ export default function BulkEditDueDateModalContent({
 			selectedData,
 			type: 'DueDateBulkAction',
 		} as IBulkActionTaskStarterDTO<'DueDateBulkAction'>);
-	}, [apiURL, closeModal, selectedData, dueDate, setSubmitDisabled]);
+	}, [
+		apiURL,
+		closeModal,
+		dataSetId,
+		dueDate,
+		selectedData,
+		setSubmitDisabled,
+	]);
 
 	return (
 		<>

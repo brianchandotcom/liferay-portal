@@ -351,6 +351,7 @@ export default function TasksFDSPropsTransformer({
 						<BulkEditAssigneeModalContent
 							apiURL={otherProps.apiURL}
 							closeModal={closeModal}
+							dataSetId={id}
 							selectedData={selectedData}
 							value={{name: null}}
 						/>
@@ -361,6 +362,7 @@ export default function TasksFDSPropsTransformer({
 			else if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
 					apiURL: otherProps.apiURL,
+					dataSetId: id,
 					selectedData,
 				});
 			}
@@ -375,6 +377,7 @@ export default function TasksFDSPropsTransformer({
 						BulkEditDueDateModalContent({
 							apiURL: otherProps?.apiURL,
 							closeModal,
+							dataSetId: id,
 							selectedData,
 						}),
 					size: 'md',
@@ -391,6 +394,7 @@ export default function TasksFDSPropsTransformer({
 						BulkEditStateModalContent({
 							apiURL: otherProps?.apiURL,
 							closeModal,
+							dataSetId: id,
 							selectedData,
 							states: additionalProps.states,
 						}),

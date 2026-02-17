@@ -76,6 +76,10 @@ public interface BlogPostingResource {
 			Long siteId, String externalReferenceCode)
 		throws Exception;
 
+	public BlogPosting getSiteBlogPostingByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception;
+
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getSiteBlogPostingPermissionsPage(Long siteId, String roleNames)
 		throws Exception;

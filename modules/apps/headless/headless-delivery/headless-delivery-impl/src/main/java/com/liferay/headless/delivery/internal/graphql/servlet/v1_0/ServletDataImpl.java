@@ -1890,6 +1890,11 @@ public class ServletDataImpl implements ServletData {
 							BlogPostingResourceImpl.class,
 							"getSiteBlogPostingByExternalReferenceCode"));
 					put(
+						"query#blogPostingByFriendlyUrlPath",
+						new ObjectValuePair<>(
+							BlogPostingResourceImpl.class,
+							"getSiteBlogPostingByFriendlyUrlPath"));
+					put(
 						"query#siteBlogPostingPermissions",
 						new ObjectValuePair<>(
 							BlogPostingResourceImpl.class,

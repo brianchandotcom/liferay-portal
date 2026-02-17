@@ -145,6 +145,15 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 	}
 
 	@Override
+	public BlogPosting getSiteBlogPostingByFriendlyUrlPath(
+			Long siteId, String friendlyUrlPath)
+		throws Exception {
+
+		return _toBlogPosting(
+			_blogsEntryService.getEntry(siteId, friendlyUrlPath));
+	}
+
+	@Override
 	public Page<BlogPosting> getSiteBlogPostingsPage(
 			Long siteId, String search, Aggregation aggregation, Filter filter,
 			Pagination pagination, Sort[] sorts)

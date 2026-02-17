@@ -14,6 +14,7 @@ import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.client.dto.v1_0.BulkActionTask;
+import com.liferay.bulk.rest.client.dto.v1_0.CopyBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.DeleteBulkAction;
 import com.liferay.bulk.rest.client.dto.v1_0.ExpireBulkAction;
@@ -161,6 +162,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Override
 	@Test
 	public void testPostBulkAction() throws Exception {
+		_testPostBulkActionWithTypeCopy();
 		_testPostBulkActionWithTypeDefaultPermission();
 		_testPostBulkActionWithTypeDefaultPermissionSingleRole();
 		_testPostBulkActionWithTypeDelete();
@@ -555,6 +557,153 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
 			expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
 			"FOLDER", null);
+	}
+
+	private void _testPostBulkActionWithTypeCopy() throws Exception {
+		CopyBulkAction copyBulkAction = new CopyBulkAction();
+
+		copyBulkAction.setType(BulkAction.Type.COPY_BULK_ACTION);
+
+		ObjectEntryFolder sourceObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry1.getGroupId());
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry1.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			sourceObjectEntryFolder.getObjectEntryFolderId(),
+			_getObjectEntryValues());
+
+		ObjectEntryFolder objectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry1.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId());
+
+		copyBulkAction.setBulkActionItems(
+			_toBulkActionItems(objectEntry, objectEntryFolder));
+
+		BulkActionTask bulkActionTask = bulkActionResource.postBulkAction(
+			null, null, null, null, null, null, null, null, copyBulkAction);
+
+		Assert.assertNotNull(bulkActionTask.getId());
+
+		_waitForFinish(GetterUtil.getLong(bulkActionTask.getId()));
+
+		ObjectEntry copyBulkActionObjectEntry =
+			_objectEntryLocalService.getObjectEntry(bulkActionTask.getId());
+
+		Map<String, Serializable> values =
+			copyBulkActionObjectEntry.getValues();
+
+		Assert.assertEquals(2, values.get("numberOfFailedItems"));
+
+		ObjectEntryFolder targetObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry1.getGroupId());
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getCompanyId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			0,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getCompanyId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			0,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		copyBulkAction.setObjectEntryFolderId(
+			targetObjectEntryFolder.getObjectEntryFolderId());
+
+		_postBulkAction(copyBulkAction);
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getCompanyId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getCompanyId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		targetObjectEntryFolder =
+			ObjectEntryFolderTestUtil.addObjectEntryFolder(
+				_depotEntry2.getGroupId());
+
+		Assert.assertEquals(
+			0,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getCompanyId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			0,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		copyBulkAction.setObjectEntryFolderId(
+			targetObjectEntryFolder.getObjectEntryFolderId());
+
+		_postBulkAction(copyBulkAction);
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getCompanyId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				sourceObjectEntryFolder.getGroupId(),
+				sourceObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getCompanyId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
+
+		Assert.assertEquals(
+			1,
+			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+				targetObjectEntryFolder.getGroupId(),
+				targetObjectEntryFolder.getObjectEntryFolderId()));
 	}
 
 	private void _testPostBulkActionWithTypeDefaultPermission()

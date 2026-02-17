@@ -648,6 +648,101 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 	}
 
 	@Test
+	@TestInfo("LPD-78664")
+	public void testCopyLayoutContentSkipsUnmodifiedFragmentEntryLinks()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Locale locale = _portal.getSiteDefaultLocale(_group);
+
+		FragmentEntryLink draftFragmentEntryLink1 =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							LocaleUtil.toLanguageId(locale),
+							RandomTestUtil.randomString()))
+				).toString(),
+				StringPool.BLANK, StringPool.BLANK,
+				RandomTestUtil.randomString(), null,
+				RandomTestUtil.randomString(), StringPool.BLANK, draftLayout,
+				RandomTestUtil.randomString(), 0, null, 0,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+		FragmentEntryLink draftFragmentEntryLink2 =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							LocaleUtil.toLanguageId(locale),
+							RandomTestUtil.randomString()))
+				).toString(),
+				draftLayout,
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+
+		_layoutLocalService.copyLayoutContent(draftLayout, layout);
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(),
+				draftFragmentEntryLink2.getExternalReferenceCode(),
+				layout.getPlid());
+
+		draftFragmentEntryLink2.setEditableValues(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						LocaleUtil.toLanguageId(locale),
+						RandomTestUtil.randomString()))
+			).toString());
+
+		draftFragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+				draftFragmentEntryLink2);
+
+		Thread.sleep(1000);
+
+		_fragmentEntryLinkLocalService.updateFragmentEntryLink(
+			fragmentEntryLink);
+
+		_layoutLocalService.copyLayoutContent(draftLayout, layout);
+
+		FragmentEntryLink updatedFragmentEntryLink1 =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(),
+				draftFragmentEntryLink1.getExternalReferenceCode(),
+				layout.getPlid());
+
+		FragmentEntryLink updatedFragmentEntryLink2 =
+			_fragmentEntryLinkLocalService.getFragmentEntryLink(
+				_group.getGroupId(),
+				draftFragmentEntryLink2.getExternalReferenceCode(),
+				layout.getPlid());
+
+		Assert.assertEquals(
+			draftFragmentEntryLink1.getEditableValues(),
+			updatedFragmentEntryLink1.getEditableValues());
+
+		Assert.assertEquals(
+			draftFragmentEntryLink2.getEditableValues(),
+			updatedFragmentEntryLink2.getEditableValues());
+	}
+
+	@Test
 	public void testCopyLayoutContentUpdateAndPublishDraftWithinPublication()
 		throws Exception {
 

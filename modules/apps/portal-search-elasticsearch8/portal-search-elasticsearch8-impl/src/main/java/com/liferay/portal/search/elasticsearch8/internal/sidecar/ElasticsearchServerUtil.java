@@ -86,6 +86,8 @@ public class ElasticsearchServerUtil {
 				_logger.warn("Unable to invoke stop method", exception);
 			}
 
+			_shutdownCountDownLatch.countDown();
+
 			System.exit(ExitCodes.CODE_ERROR);
 		}
 

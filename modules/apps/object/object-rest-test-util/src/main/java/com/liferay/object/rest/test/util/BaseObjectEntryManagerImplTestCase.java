@@ -71,7 +71,7 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 			ObjectEntry actualObjectEntry, ObjectEntry expectedObjectEntry)
 		throws Exception {
 
-		Map<String, Map<String, String>> actualOjectEntryActions =
+		Map<String, Map<String, String>> actualObjectEntryActions =
 			actualObjectEntry.getActions();
 
 		Map<String, Map<String, String>> expectedObjectEntryActions =
@@ -79,7 +79,7 @@ public abstract class BaseObjectEntryManagerImplTestCase {
 
 		if (expectedObjectEntryActions != null) {
 			for (Map.Entry<String, Map<String, String>> actualActions :
-					actualOjectEntryActions.entrySet()) {
+					actualObjectEntryActions.entrySet()) {
 
 				Assert.assertEquals(
 					actualActions.getKey(), actualActions.getValue(),

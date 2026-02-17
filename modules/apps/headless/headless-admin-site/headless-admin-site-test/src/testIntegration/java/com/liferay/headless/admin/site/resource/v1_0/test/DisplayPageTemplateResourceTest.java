@@ -29,6 +29,7 @@ import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageExperiencesTestUtil;
@@ -1313,7 +1314,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
-			PageElementsTestUtil.addCompanyGroupFragmentEntryWithTextEditable();
+			FragmentEntryTestUtil.
+				addCompanyGroupFragmentEntryWithTextEditable();
 
 		JournalArticle journalArticle =
 			AssetTestUtil.randomCompanyGroupJournalArticle();
@@ -1631,7 +1633,8 @@ public class DisplayPageTemplateResourceTest
 		throws Exception {
 
 		FragmentEntry fragmentEntry =
-			PageElementsTestUtil.addCompanyGroupFragmentEntryWithTextEditable();
+			FragmentEntryTestUtil.
+				addCompanyGroupFragmentEntryWithTextEditable();
 
 		JournalArticle journalArticle =
 			AssetTestUtil.randomCompanyGroupJournalArticle();

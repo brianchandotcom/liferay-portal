@@ -12,7 +12,6 @@ import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -81,7 +80,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.service.TemplateEntryLocalServiceUtil;
@@ -101,24 +99,6 @@ import org.junit.Assert;
  * @author Lourdes Fernández Besada
  */
 public class PageElementsTestUtil {
-
-	public static FragmentEntry addCompanyGroupFragmentEntryWithTextEditable()
-		throws PortalException {
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		FragmentCollection fragmentCollection =
-			FragmentCollectionLocalServiceUtil.addFragmentCollection(
-				null, TestPropsValues.getUserId(), company.getGroupId(),
-				StringUtil.randomString(), StringPool.BLANK,
-				ServiceContextTestUtil.getServiceContext(company.getGroupId()));
-
-		return _addFragmentEntry(
-			fragmentCollection.getFragmentCollectionId(), company.getGroupId(),
-			"<div data-lfr-editable-id=\"element-text\" " +
-				"data-lfr-editable-type=\"text\">Default text</div>");
-	}
 
 	public static void assertFieldKeysWithTemplateEntries(
 			PageSpecification[] externalPageSpecifications,
@@ -738,27 +718,6 @@ public class PageElementsTestUtil {
 		return defaultFragmentReference;
 	}
 
-	private static FragmentEntry _addFragmentEntry(
-			long fragmentCollectionId, long groupId)
-		throws PortalException {
-
-		return _addFragmentEntry(
-			fragmentCollectionId, groupId, "Fragment Entry HTML");
-	}
-
-	private static FragmentEntry _addFragmentEntry(
-			long fragmentCollectionId, long groupId, String html)
-		throws PortalException {
-
-		return FragmentEntryLocalServiceUtil.addFragmentEntry(
-			null, TestPropsValues.getUserId(), groupId, fragmentCollectionId,
-			null, RandomTestUtil.randomString(), StringPool.BLANK, html,
-			StringPool.BLANK, false, null, null, 0, false, false,
-			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(groupId));
-	}
-
 	private static FragmentItemExternalReference
 		_addFragmentItemExternalReference(
 			FragmentEntry fragmentEntry, Scope scope) {
@@ -1242,7 +1201,7 @@ public class PageElementsTestUtil {
 		for (int i = 0; i < 3; i++) {
 			fragmentReferences.add(
 				_addFragmentItemExternalReference(
-					_addFragmentEntry(
+					FragmentEntryTestUtil.addFragmentEntry(
 						fragmentCollection.getFragmentCollectionId(),
 						fragmentCollection.getGroupId()),
 					null));

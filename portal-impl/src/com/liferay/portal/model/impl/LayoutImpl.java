@@ -12,6 +12,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.LayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ImageLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
@@ -195,6 +198,58 @@ public class LayoutImpl extends LayoutBaseImpl {
 			layoutFriendlyURLException.setKeywordConflict(keyword);
 
 			throw layoutFriendlyURLException;
+		}
+	}
+
+	public void deleteUnusedIconImage() {
+		Image image = getIconImage();
+
+		if (image == null) {
+			return;
+		}
+
+		DynamicQuery layoutRevisionDynamicQuery =
+			LayoutRevisionLocalServiceUtil.dynamicQuery();
+
+		layoutRevisionDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("companyId", getCompanyId()));
+
+		layoutRevisionDynamicQuery.add(
+			RestrictionsFactoryUtil.eq("iconImageId", image.getImageId()));
+
+		long sameImageCount = LayoutRevisionLocalServiceUtil.dynamicQueryCount(
+			layoutRevisionDynamicQuery);
+
+		if (sameImageCount > 0) {
+			return;
+		}
+
+		if (Validator.isNotNull(getIconImageERC())) {
+			DynamicQuery layoutDynamicQuery =
+				LayoutLocalServiceUtil.dynamicQuery();
+
+			layoutDynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", getCompanyId()));
+
+			layoutDynamicQuery.add(
+				RestrictionsFactoryUtil.eq(
+					"iconImageERC", image.getExternalReferenceCode()));
+
+			layoutDynamicQuery.add(
+				RestrictionsFactoryUtil.ne("plid", getPlid()));
+
+			sameImageCount += LayoutLocalServiceUtil.dynamicQueryCount(
+				layoutDynamicQuery);
+		}
+
+		if (sameImageCount > 0) {
+			return;
+		}
+
+		if (image.getCompanyId() == getCompanyId()) {
+			ImageLocalServiceUtil.deleteImage(image);
+
+			setIconImageERC(null);
 		}
 	}
 

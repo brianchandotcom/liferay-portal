@@ -354,6 +354,32 @@ public class ImageToolUtil {
 		return _defaultCompanyLogo;
 	}
 
+	public static Image getDefaultGlobalSiteLogo() {
+		if (_defaultGlobalSiteLogo != null) {
+			return _defaultGlobalSiteLogo;
+		}
+
+		ClassLoader classLoader = ImageToolUtil.class.getClassLoader();
+
+		try {
+			InputStream inputStream = classLoader.getResourceAsStream(
+				PropsUtil.get(PropsKeys.IMAGE_DEFAULT_GLOBAL_SITE_LOGO));
+
+			if (inputStream == null) {
+				_log.error("Default global site logo is not available");
+			}
+
+			_defaultGlobalSiteLogo = getImage(inputStream);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to configure the default global site logo: " +
+					exception.getMessage());
+		}
+
+		return _defaultGlobalSiteLogo;
+	}
+
 	public static Image getDefaultOrganizationLogo() {
 		if (_defaultOrganizationLogo != null) {
 			return _defaultOrganizationLogo;
@@ -965,6 +991,7 @@ public class ImageToolUtil {
 	private static final Snapshot<CMYKImageTool> _cmykImageToolSnapshot =
 		new Snapshot<>(ImageToolUtil.class, CMYKImageTool.class);
 	private static Image _defaultCompanyLogo;
+	private static Image _defaultGlobalSiteLogo;
 	private static Image _defaultOrganizationLogo;
 	private static Image _defaultSpacer;
 	private static Image _defaultUserFemalePortrait;

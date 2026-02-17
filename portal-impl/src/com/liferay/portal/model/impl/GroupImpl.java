@@ -483,7 +483,13 @@ public class GroupImpl extends GroupBaseImpl {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(themeDisplay.getPathImage());
-		sb.append("/company_logo?img_id=");
+
+		if (getGroupId() == themeDisplay.getCompanyGroupId()) {
+			sb.append("/global_site_logo?img_id=");
+		}
+		else {
+			sb.append("/company_logo?img_id=");
+		}
 
 		Company company = themeDisplay.getCompany();
 

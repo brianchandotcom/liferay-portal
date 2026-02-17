@@ -10,6 +10,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -39,8 +40,10 @@ public class FragmentEntryTestUtil {
 
 		return _addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId(), company.getGroupId(),
-			"<div data-lfr-editable-id=\"element-text\" " +
-				"data-lfr-editable-type=\"text\">Default text</div>");
+			StringBundler.concat(
+				"<div data-lfr-editable-id=\"element-text\" ",
+				"data-lfr-editable-type=\"text\">",
+				RandomTestUtil.randomString(), "</div>"));
 	}
 
 	public static FragmentEntry addFragmentEntry(
@@ -48,7 +51,7 @@ public class FragmentEntryTestUtil {
 		throws PortalException {
 
 		return _addFragmentEntry(
-			fragmentCollectionId, groupId, "Fragment Entry HTML");
+			fragmentCollectionId, groupId, RandomTestUtil.randomString());
 	}
 
 	private static FragmentEntry _addFragmentEntry(

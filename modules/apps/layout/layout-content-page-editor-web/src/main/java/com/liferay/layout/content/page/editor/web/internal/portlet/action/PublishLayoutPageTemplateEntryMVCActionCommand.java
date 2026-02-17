@@ -12,9 +12,12 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
@@ -114,6 +117,12 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 			Layout draftLayout, Layout layout, long userId)
 		throws Exception {
 
+		Group group = _groupLocalService.getGroup(layout.getGroupId());
+
+		if (LicenseManagerUtil.isFreeTier() && group.isCMS()) {
+			throw new UnsupportedOperationException();
+		}
+
 		UnicodeProperties previousLayouTypeSettingsUnicodeProperties =
 			layout.getTypeSettingsProperties();
 
@@ -161,6 +170,9 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 		return layoutPageTemplateEntry;
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

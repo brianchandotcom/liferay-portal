@@ -39,7 +39,6 @@ import com.liferay.commerce.product.internal.upgrade.v5_21_0.util.CPConfiguratio
 import com.liferay.commerce.product.internal.upgrade.v5_22_0.CPSpecificationOptionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_25_0.util.CPConfigurationListRelTable;
 import com.liferay.commerce.product.internal.upgrade.v5_26_0.util.CPConfigurationEntrySettingTable;
-import com.liferay.commerce.product.internal.upgrade.v5_4_0.CommercePermissionUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.commerce.product.internal.upgrade.v6_1_0.CPConfigurationEntryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v6_2_0.CPDefinitionLocalizationUpgradeProcess;
@@ -390,8 +389,10 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"5.3.0", "5.4.0",
-			new CommercePermissionUpgradeProcess(
-				_resourceActionLocalService, _resourcePermissionLocalService));
+			new com.liferay.commerce.product.internal.upgrade.v5_4_0.
+				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService));
 
 		registry.register(
 			"5.4.0", "5.5.0", CPInstanceUnitOfMeasureTable.create());
@@ -667,6 +668,13 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register(
 			"6.1.0", "6.2.0", new CPDefinitionLocalizationUpgradeProcess());
+
+		registry.register(
+			"6.2.0", "6.3.0",
+			new com.liferay.commerce.product.internal.upgrade.v6_3_0.
+				CommercePermissionUpgradeProcess(
+					_resourceActionLocalService,
+					_resourcePermissionLocalService));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");

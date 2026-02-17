@@ -23,6 +23,7 @@ import {openToast} from 'frontend-js-components-web';
 type Props = {
 	apiURL: string;
 	closeModal: () => void;
+	dataSetId: string;
 	selectedData: IBulkActionFDSData;
 	value: AssigneeValue | {} | null;
 };
@@ -38,6 +39,7 @@ const displayErrorToast = (errorMessage?: string) => {
 export default function BulkEditAssigneeModalContent({
 	apiURL,
 	closeModal,
+	dataSetId,
 	selectedData,
 	value: initialValue,
 }: Props) {
@@ -47,6 +49,7 @@ export default function BulkEditAssigneeModalContent({
 		event.preventDefault();
 		triggerAssetBulkAction({
 			apiURL,
+			dataSetId,
 			keyValues: {
 				className: (value as AssigneeValue)?.type,
 				externalReferenceCode: (value as AssigneeValue)

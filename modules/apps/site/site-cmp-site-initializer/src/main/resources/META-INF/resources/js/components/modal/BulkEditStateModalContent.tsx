@@ -18,11 +18,13 @@ import StateSelector, {State} from '../StateSelector';
 export default function BulkEditStateModalContent({
 	apiURL,
 	closeModal,
+	dataSetId,
 	selectedData,
 	states,
 }: {
 	apiURL?: string;
 	closeModal: () => void;
+	dataSetId: string;
 	selectedData: IBulkActionFDSData;
 	states: State[];
 }) {
@@ -38,6 +40,7 @@ export default function BulkEditStateModalContent({
 
 		triggerAssetBulkAction({
 			apiURL,
+			dataSetId,
 			keyValues: {
 				status: selectedState,
 			},
@@ -61,7 +64,14 @@ export default function BulkEditStateModalContent({
 			selectedData,
 			type: 'StatusBulkAction',
 		} as IBulkActionTaskStarterDTO<'StatusBulkAction'>);
-	}, [apiURL, closeModal, selectedData, selectedState, setSubmitDisabled]);
+	}, [
+		apiURL,
+		closeModal,
+		dataSetId,
+		selectedData,
+		selectedState,
+		setSubmitDisabled,
+	]);
 
 	return (
 		<>

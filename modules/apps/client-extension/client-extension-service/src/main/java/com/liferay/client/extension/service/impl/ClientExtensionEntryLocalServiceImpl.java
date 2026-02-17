@@ -215,6 +215,12 @@ public class ClientExtensionEntryLocalServiceImpl
 			_serviceRegistrationsMap.put(
 				clientExtensionEntry.getClientExtensionEntryId(),
 				serviceRegistrations);
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Finished deploying client extension entry " +
+						clientExtensionEntry.getName(LocaleUtil.getDefault()));
+			}
 		}
 		catch (PortalException | RuntimeException exception) {
 			_log.error(

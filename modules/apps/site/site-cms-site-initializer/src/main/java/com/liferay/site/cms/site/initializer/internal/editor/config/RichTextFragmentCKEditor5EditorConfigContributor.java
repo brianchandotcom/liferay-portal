@@ -44,13 +44,14 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 			JSONUtil.put(
 				"items",
 				new String[] {
-					"undo", "redo", "|", "style", "|", "heading", "|", "bold",
-					"italic", "underline", "strikethrough", "|", "fontColor",
-					"fontBackgroundColor", "|", "removeFormat", "|",
-					"numberedList", "bulletedList", "|", "indent", "outdent",
-					"|", "blockQuote", "|", "link", "insertTable",
-					"headlessImageSelector", "headlessVideoSelector", "|",
-					"alignment", "|", "aiCreator", "|", "sourceEditing"
+					"accessibilityHelp", "|", "undo", "redo", "|", "style", "|",
+					"heading", "|", "bold", "italic", "underline",
+					"strikethrough", "|", "fontColor", "fontBackgroundColor",
+					"|", "removeFormat", "|", "numberedList", "bulletedList",
+					"|", "indent", "outdent", "|", "blockQuote", "|", "link",
+					"insertTable", "headlessImageSelector",
+					"headlessVideoSelector", "|", "alignment", "|", "aiCreator",
+					"|", "sourceEditing"
 				}
 			).put(
 				"shouldNotGroupWhenFull", true

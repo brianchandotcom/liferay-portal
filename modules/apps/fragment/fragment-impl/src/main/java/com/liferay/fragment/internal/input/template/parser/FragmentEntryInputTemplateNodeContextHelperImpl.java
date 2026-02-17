@@ -491,6 +491,15 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 						fragmentEntryLink.getNamespace() + "selectFileEntry",
 						customFileItemSelectorCriterion)));
 		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		inputTemplateNode.addAttribute(
+			"isCMS",
+			themeDisplay.getScopeGroup(
+			).isCMS());
 	}
 
 	private void _addInputTemplateNodeAttributes(

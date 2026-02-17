@@ -7,15 +7,15 @@ package com.liferay.exportimport.report.internal.empty.model;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
-import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
+import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -41,7 +41,6 @@ import org.junit.Test;
 
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
 
 /**
  * @author Carlos Correa
@@ -57,6 +56,8 @@ public class EmptyModelManagerImplTest {
 	public static void setUpClass() {
 		_stagingGroupHelperUtilMockedStatic = Mockito.mockStatic(
 			StagingGroupHelperUtil.class);
+
+		ReflectionTestUtil.setFieldValue(_emptyModelManager, "_log", _log);
 	}
 
 	@AfterClass
@@ -82,7 +83,7 @@ public class EmptyModelManagerImplTest {
 	public void tearDown() {
 		Mockito.verifyNoMoreInteractions(
 			_classNameLocalService, _exportImportReportEntryLocalService,
-			_group, _groupLocalService, _user);
+			_group, _groupLocalService, _log, _user);
 	}
 
 	@Test
@@ -179,48 +180,15 @@ public class EmptyModelManagerImplTest {
 						}),
 					User.class.getName()));
 
-			// Empty report already exists
-
-			ExportImportReportEntry mockedExportImportReportEntry =
-				Mockito.mock(ExportImportReportEntry.class);
-
-			Mockito.when(
-				_exportImportReportEntryLocalService.
-					fetchEmptyExportImportReportEntryByG_C_C_C(
-						0L, companyId, externalReferenceCode, classNameId)
-			).thenReturn(
-				mockedExportImportReportEntry
-			);
-
-			Assert.assertSame(
-				_user,
-				_emptyModelManager.getOrAddEmptyModel(
-					User.class, companyId, () -> _user, externalReferenceCode,
-					_toBiFunction(() -> null),
-					_toUnsafeBiFunction(
-						() -> {
-							Assert.fail();
-
-							return null;
-						}),
-					User.class.getName()));
-
 			Mockito.verify(
-				_classNameLocalService, VerificationModeFactory.times(2)
+				_classNameLocalService
 			).getClassNameId(
 				User.class.getName()
 			);
 
 			Mockito.verify(
-				_exportImportReportEntryLocalService,
-				VerificationModeFactory.times(2)
-			).fetchEmptyExportImportReportEntryByG_C_C_C(
-				0L, companyId, externalReferenceCode, classNameId
-			);
-
-			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addEmptyExportImportReportEntry(
+			).getOrAddEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId, User.class.getName()
 			);
@@ -393,59 +361,25 @@ public class EmptyModelManagerImplTest {
 						}),
 					groupId, User.class.getName()));
 
-			// Empty report already exists
-
-			ExportImportReportEntry mockedExportImportReportEntry =
-				Mockito.mock(ExportImportReportEntry.class);
-
-			Mockito.when(
-				_exportImportReportEntryLocalService.
-					fetchEmptyExportImportReportEntryByG_C_C_C(
-						groupId, companyId, userExternalReferenceCode,
-						classNameId)
-			).thenReturn(
-				mockedExportImportReportEntry
-			);
-
-			Assert.assertSame(
-				_user,
-				_emptyModelManager.getOrAddEmptyModel(
-					User.class.getName(), companyId, () -> _user,
-					userExternalReferenceCode, _toBiFunction(() -> null),
-					_toUnsafeBiFunction(
-						() -> {
-							Assert.fail();
-
-							return null;
-						}),
-					groupId, User.class.getName()));
-
 			Mockito.verify(
-				_groupLocalService, VerificationModeFactory.times(2)
-			).fetchGroup(
-				groupId
-			);
-
-			Mockito.verify(
-				_group, VerificationModeFactory.times(2)
-			).getCompanyId();
-
-			Mockito.verify(
-				_classNameLocalService, VerificationModeFactory.times(2)
+				_classNameLocalService
 			).getClassNameId(
 				User.class.getName()
 			);
 
 			Mockito.verify(
-				_exportImportReportEntryLocalService,
-				VerificationModeFactory.times(2)
-			).fetchEmptyExportImportReportEntryByG_C_C_C(
-				groupId, companyId, userExternalReferenceCode, classNameId
+				_group
+			).getCompanyId();
+
+			Mockito.verify(
+				_groupLocalService
+			).fetchGroup(
+				groupId
 			);
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addEmptyExportImportReportEntry(
+			).getOrAddEmptyExportImportReportEntry(
 				groupId, companyId, userExternalReferenceCode, classNameId,
 				exportImportConfigurationId, User.class.getName()
 			);
@@ -540,12 +474,6 @@ public class EmptyModelManagerImplTest {
 				User.class.getName());
 
 			Mockito.verify(
-				_exportImportReportEntryLocalService
-			).fetchEmptyExportImportReportEntryByG_C_C_C(
-				0L, companyId, externalReferenceCode, classNameId
-			);
-
-			Mockito.verify(
 				_classNameLocalService
 			).getClassNameId(
 				User.class.getName()
@@ -553,7 +481,7 @@ public class EmptyModelManagerImplTest {
 
 			Mockito.verify(
 				_exportImportReportEntryLocalService
-			).addEmptyExportImportReportEntry(
+			).getOrAddEmptyExportImportReportEntry(
 				0L, companyId, externalReferenceCode, classNameId,
 				exportImportConfigurationId, User.class.getName()
 			);
@@ -561,69 +489,7 @@ public class EmptyModelManagerImplTest {
 	}
 
 	@Test
-	public void testSolveEmptyModelInDifferentExportImportProcess()
-		throws Exception {
-
-		try (MockedStatic<ExportImportThreadLocal>
-				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
-					ExportImportThreadLocal.class)) {
-
-			exportImportThreadLocalMockedStatic.when(
-				ExportImportThreadLocal::isImportInProcess
-			).thenReturn(
-				true
-			);
-
-			exportImportThreadLocalMockedStatic.when(
-				ExportImportThreadLocal::getExportImportConfigurationId
-			).thenReturn(
-				RandomTestUtil.randomLong()
-			);
-
-			_testSolveEmptyModel(RandomTestUtil.randomLong(), false);
-		}
-	}
-
-	@Test
-	public void testSolveEmptyModelInSameExportImportProcess()
-		throws Exception {
-
-		try (MockedStatic<ExportImportThreadLocal>
-				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
-					ExportImportThreadLocal.class)) {
-
-			exportImportThreadLocalMockedStatic.when(
-				ExportImportThreadLocal::isImportInProcess
-			).thenReturn(
-				true
-			);
-
-			long exportExportConfigurationId = RandomTestUtil.randomLong();
-
-			exportImportThreadLocalMockedStatic.when(
-				ExportImportThreadLocal::getExportImportConfigurationId
-			).thenReturn(
-				exportExportConfigurationId
-			);
-
-			_testSolveEmptyModel(exportExportConfigurationId, true);
-		}
-	}
-
-	@Test
-	public void testSolveEmptyModelOutsideAnExportImportProcess()
-		throws Exception {
-
-		_testSolveEmptyModel(RandomTestUtil.randomLong(), false);
-	}
-
-	@Test
-	public void testSolveEmptyModelWithoutExportImportReportEntry()
-		throws Exception {
-
-		long companyId = RandomTestUtil.randomLong();
-		String externalReferenceCode = RandomTestUtil.randomString();
-
+	public void testSolveEmptyModel() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -632,20 +498,16 @@ public class EmptyModelManagerImplTest {
 			classNameId
 		);
 
-		Mockito.when(
-			_exportImportReportEntryLocalService.
-				fetchEmptyExportImportReportEntryByG_C_C_C(
-					0L, companyId, externalReferenceCode, classNameId)
-		).thenReturn(
-			null
-		);
+		long companyId = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+		int status = RandomTestUtil.randomInt();
 
-		Assert.assertSame(
-			WorkflowConstants.STATUS_APPROVED,
+		Assert.assertEquals(
+			status,
 			_emptyModelManager.solveEmptyModel(
-				externalReferenceCode, User.class.getName(), companyId, 0L,
-				WorkflowConstants.STATUS_EMPTY,
-				() -> WorkflowConstants.STATUS_APPROVED));
+				externalReferenceCode, User.class.getName(), companyId, groupId,
+				WorkflowConstants.STATUS_EMPTY, () -> status));
 
 		Mockito.verify(
 			_classNameLocalService
@@ -655,18 +517,13 @@ public class EmptyModelManagerImplTest {
 
 		Mockito.verify(
 			_exportImportReportEntryLocalService
-		).fetchEmptyExportImportReportEntryByG_C_C_C(
-			0L, companyId, externalReferenceCode, classNameId
+		).resolveEmptyExportImportReportEntries(
+			groupId, companyId, externalReferenceCode, classNameId
 		);
 	}
 
-	private void _testSolveEmptyModel(
-			long entryExportImportConfigurationId, boolean expectDelete)
-		throws Exception {
-
-		long companyId = RandomTestUtil.randomLong();
-		String externalReferenceCode = RandomTestUtil.randomString();
-
+	@Test
+	public void testSolveEmptyModelWithException() throws Exception {
 		long classNameId = RandomTestUtil.randomLong();
 
 		Mockito.when(
@@ -675,29 +532,26 @@ public class EmptyModelManagerImplTest {
 			classNameId
 		);
 
-		ExportImportReportEntry mockEntry = Mockito.mock(
-			ExportImportReportEntry.class);
+		long companyId = RandomTestUtil.randomLong();
+		String errorMessage = RandomTestUtil.randomString();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+		PortalException portalException = new PortalException(errorMessage);
+		int status = RandomTestUtil.randomInt();
 
-		Mockito.when(
-			mockEntry.getExportImportConfigurationId()
-		).thenReturn(
-			entryExportImportConfigurationId
+		Mockito.doThrow(
+			portalException
+		).when(
+			_exportImportReportEntryLocalService
+		).resolveEmptyExportImportReportEntries(
+			groupId, companyId, externalReferenceCode, classNameId
 		);
 
-		Mockito.when(
-			_exportImportReportEntryLocalService.
-				fetchEmptyExportImportReportEntryByG_C_C_C(
-					0L, companyId, externalReferenceCode, classNameId)
-		).thenReturn(
-			mockEntry
-		);
-
-		Assert.assertSame(
-			WorkflowConstants.STATUS_APPROVED,
+		Assert.assertEquals(
+			status,
 			_emptyModelManager.solveEmptyModel(
-				externalReferenceCode, User.class.getName(), companyId, 0L,
-				WorkflowConstants.STATUS_EMPTY,
-				() -> WorkflowConstants.STATUS_APPROVED));
+				externalReferenceCode, User.class.getName(), companyId, groupId,
+				WorkflowConstants.STATUS_EMPTY, () -> status));
 
 		Mockito.verify(
 			_classNameLocalService
@@ -707,30 +561,40 @@ public class EmptyModelManagerImplTest {
 
 		Mockito.verify(
 			_exportImportReportEntryLocalService
-		).fetchEmptyExportImportReportEntryByG_C_C_C(
-			0L, companyId, externalReferenceCode, classNameId
+		).resolveEmptyExportImportReportEntries(
+			groupId, companyId, externalReferenceCode, classNameId
 		);
 
-		if (expectDelete) {
-			Mockito.verify(
-				_exportImportReportEntryLocalService
-			).deleteExportImportReportEntry(
-				mockEntry
-			);
-		}
-		else {
-			Mockito.verify(
-				mockEntry
-			).setStatus(
-				ExportImportReportEntryConstants.STATUS_RESOLVED
-			);
+		Mockito.verify(
+			_log
+		).error(
+			StringBundler.concat(
+				"Error resolving the report entries for the class name \"",
+				"com.liferay.portal.kernel.model.User\" and the external ",
+				"reference code \"", externalReferenceCode, "\""),
+			portalException
+		);
+	}
 
-			Mockito.verify(
-				_exportImportReportEntryLocalService
-			).updateExportImportReportEntry(
-				mockEntry
-			);
-		}
+	@Test
+	public void testSolveEmptyModelWithNotEmptyStatus() {
+		long classNameId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_classNameLocalService.getClassNameId(User.class.getName())
+		).thenReturn(
+			classNameId
+		);
+
+		long companyId = RandomTestUtil.randomLong();
+		String externalReferenceCode = RandomTestUtil.randomString();
+		long groupId = RandomTestUtil.randomLong();
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_APPROVED,
+			_emptyModelManager.solveEmptyModel(
+				externalReferenceCode, User.class.getName(), companyId, groupId,
+				WorkflowConstants.STATUS_APPROVED, RandomTestUtil::randomInt));
 	}
 
 	private BiFunction<String, Long, User> _toBiFunction(
@@ -746,13 +610,15 @@ public class EmptyModelManagerImplTest {
 		return (externalReferenceCode, companyId) -> unsafeSupplier.get();
 	}
 
+	private static final Log _log = Mockito.mock(Log.class);
+
+	private static final EmptyModelManager _emptyModelManager =
+		new EmptyModelManagerImpl();
 	private static MockedStatic<StagingGroupHelperUtil>
 		_stagingGroupHelperUtilMockedStatic;
 
 	private final ClassNameLocalService _classNameLocalService = Mockito.mock(
 		ClassNameLocalService.class);
-	private final EmptyModelManager _emptyModelManager =
-		new EmptyModelManagerImpl();
 	private final ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService = Mockito.mock(
 			ExportImportReportEntryLocalService.class);

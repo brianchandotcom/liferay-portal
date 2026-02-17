@@ -694,10 +694,6 @@ public class ObjectDefinitionLocalServiceImpl
 				objectRelationship);
 		}
 
-		_objectDefinitionSettingLocalService.
-			deleteObjectDefinitionSettingByObjectDefinitionId(
-				objectDefinition.getObjectDefinitionId());
-
 		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
 

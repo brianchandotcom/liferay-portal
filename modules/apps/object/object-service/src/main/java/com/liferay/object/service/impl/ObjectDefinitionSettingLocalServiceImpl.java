@@ -56,15 +56,6 @@ public class ObjectDefinitionSettingLocalServiceImpl
 	}
 
 	@Override
-	public void deleteObjectDefinitionSettingByObjectDefinitionId(
-			long objectDefinitionId)
-		throws PortalException {
-
-		objectDefinitionSettingPersistence.removeByObjectDefinitionId(
-			objectDefinitionId);
-	}
-
-	@Override
 	public ObjectDefinitionSetting fetchObjectDefinitionSetting(
 		long objectDefinitionId, String name) {
 

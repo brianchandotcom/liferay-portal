@@ -13,8 +13,10 @@ import com.liferay.commerce.product.service.base.CPMeasurementUnitLocalServiceBa
 import com.liferay.commerce.product.util.comparator.CPMeasurementUnitPriorityComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -22,7 +24,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -75,26 +76,33 @@ public class CPMeasurementUnitLocalServiceImpl
 		cpMeasurementUnit.setPriority(priority);
 		cpMeasurementUnit.setType(type);
 
+		_resourceLocalService.addModelResources(
+			cpMeasurementUnit, serviceContext);
+
 		return cpMeasurementUnitPersistence.update(cpMeasurementUnit);
 	}
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPMeasurementUnit deleteCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit) {
+			CPMeasurementUnit cpMeasurementUnit)
+		throws PortalException {
 
-		return cpMeasurementUnitPersistence.remove(cpMeasurementUnit);
+		cpMeasurementUnit = cpMeasurementUnitPersistence.remove(
+			cpMeasurementUnit);
+
+		_resourceLocalService.deleteResource(
+			cpMeasurementUnit, ResourceConstants.SCOPE_INDIVIDUAL);
+
+		return cpMeasurementUnit;
 	}
 
 	@Override
 	public CPMeasurementUnit deleteCPMeasurementUnit(long cpMeasurementUnitId)
 		throws PortalException {
 
-		CPMeasurementUnit cpMeasurementUnit =
-			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId);
-
 		return cpMeasurementUnitLocalService.deleteCPMeasurementUnit(
-			cpMeasurementUnit);
+			cpMeasurementUnitPersistence.findByPrimaryKey(cpMeasurementUnitId));
 	}
 
 	@Override
@@ -103,22 +111,7 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
-	public CPMeasurementUnit fetchCPMeasurementUnit(long cpMeasurementUnitId) {
-		return cpMeasurementUnitPersistence.fetchByPrimaryKey(
-			cpMeasurementUnitId);
-	}
-
-	@Override
-	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
-
-		return cpMeasurementUnitPersistence.fetchByERC_C(
-			externalReferenceCode, companyId);
-	}
-
-	@Override
-	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
+	public CPMeasurementUnit fetchCPMeasurementUnit(long companyId, String key)
 		throws PortalException {
 
 		return cpMeasurementUnitPersistence.fetchByC_K(companyId, key);
@@ -134,39 +127,17 @@ public class CPMeasurementUnitLocalServiceImpl
 	}
 
 	@Override
-	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-		long companyId, int type) {
-
-		return cpMeasurementUnitPersistence.fetchByC_P_T_First(
-			companyId, true, type,
-			CPMeasurementUnitPriorityComparator.getInstance(false));
-	}
-
-	@Override
-	public CPMeasurementUnit getCPMeasurementUnit(long cpMeasurementUnitId)
-		throws PortalException {
-
-		return cpMeasurementUnitPersistence.findByPrimaryKey(
-			cpMeasurementUnitId);
-	}
-
-	@Override
-	public CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
+	public CPMeasurementUnit getCPMeasurementUnit(long companyId, String key)
 		throws PortalException {
 
 		return cpMeasurementUnitPersistence.findByC_K(companyId, key);
 	}
 
 	@Override
-	public List<CPMeasurementUnit> getCPMeasurementUnits(long companyId) {
-		return cpMeasurementUnitPersistence.findByCompanyId(companyId);
-	}
-
-	@Override
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, int type, int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
+			long companyId, int type, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException {
 
 		return cpMeasurementUnitPersistence.findByC_T(
 			companyId, type, start, end, orderByComparator);
@@ -179,43 +150,6 @@ public class CPMeasurementUnitLocalServiceImpl
 
 		return cpMeasurementUnitPersistence.findByCompanyId(
 			companyId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, String[] keys) {
-
-		List<CPMeasurementUnit> cpMeasurementUnits = new ArrayList<>(
-			keys.length);
-
-		for (String key : keys) {
-			CPMeasurementUnit cpMeasurementUnit =
-				cpMeasurementUnitPersistence.fetchByC_K(companyId, key);
-
-			if (cpMeasurementUnit != null) {
-				cpMeasurementUnits.add(cpMeasurementUnit);
-			}
-		}
-
-		return cpMeasurementUnits;
-	}
-
-	@Override
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException {
-
-		return cpMeasurementUnitPersistence.findByC_T(companyId, type);
-	}
-
-	@Override
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException {
-
-		return cpMeasurementUnitPersistence.findByC_T(
-			companyId, type, start, end, orderByComparator);
 	}
 
 	@Override
@@ -384,6 +318,9 @@ public class CPMeasurementUnitLocalServiceImpl
 			}
 		}
 	}
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

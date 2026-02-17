@@ -11,6 +11,11 @@ import {ItemContext} from './Item';
 type Props = {
 
 	/**
+	 * Component to render.
+	 */
+	as?: React.ElementType;
+
+	/**
 	 * Flag to indicate if step should show its been completed
 	 * @deprecated since v3.91.0 - this is no longer necessary.
 	 */
@@ -40,10 +45,22 @@ type Props = {
 };
 
 const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
-	({complete, innerRef, label, onClick, spritemap, subTitle}: Props, ref) => {
+	(
+		{
+			as = 'div',
+			complete,
+			innerRef,
+			label,
+			onClick,
+			spritemap,
+			subTitle,
+		}: Props,
+		ref
+	) => {
 		const {state} = useContext(ItemContext);
 
 		const isComplete = complete ?? state === 'complete';
+		const Tag = onClick ? 'button' : as;
 
 		return (
 			<div className="multi-step-indicator" ref={ref}>
@@ -51,18 +68,20 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 					<div className="multi-step-indicator-label">{subTitle}</div>
 				)}
 
-				<button
+				<Tag
 					className="multi-step-icon"
-					onClick={onClick}
 					ref={innerRef}
-					type="button"
+					{...(onClick && {
+						onClick,
+						type: 'button',
+					})}
 				>
 					{isComplete && (
 						<ClayIcon spritemap={spritemap} symbol="check" />
 					)}
 
 					{!isComplete && state !== 'error' && label}
-				</button>
+				</Tag>
 			</div>
 		);
 	}

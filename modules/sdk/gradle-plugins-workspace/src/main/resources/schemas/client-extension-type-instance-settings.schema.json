@@ -2026,6 +2026,16 @@
 		},
 		{
 			"properties": {
+				"cachingLevel": {
+					"default": "do-not-use-hashes",
+					"description": "Set the balance between caching span and size of the import maps (which affect the size of the page's HTML). \"Do not use hashes\" makes import maps smaller at the expense of a time limited caching span. \"Use one hash per file\" makes the import maps bigger but files can be cached infinitely.",
+					"enum": [
+						"do-not-use-hashes",
+						"use-one-hash-per-file"
+					],
+					"title": "Caching Level",
+					"type": "string"
+				},
 				"cssStyleSheetsMaxAge": {
 					"default": 86400,
 					"description": "Set the value of the \"max-age\" directive in the \"Cache-Control\" header for mutable CSS style sheets.",
@@ -4102,24 +4112,6 @@
 		},
 		{
 			"properties": {
-				"enableESModulesHashing": {
-					"default": false,
-					"description": "Enable this to generate import map entries that point to hashed file names for ES modules. This makes infinite caching for ES modules possible.",
-					"title": "Enable ES Modules Hashing",
-					"type": "boolean"
-				},
-				"pid": {
-					"const": "com.liferay.portal.url.builder.configuration.PortalURLBuilderConfiguration",
-					"title": "Portal URL Builder"
-				}
-			},
-			"required": [
-				"pid"
-			],
-			"title": "Portal URL Builder"
-		},
-		{
-			"properties": {
 				"pageSizeLimit": {
 					"default": 500,
 					"description": "Set the page size limit of elements that can be recovered through REST. Enter a negative number or zero for unlimited page size.",
@@ -4971,7 +4963,6 @@
 				"com.liferay.portal.security.ldap.exportimport.configuration.LDAPExportConfiguration",
 				"com.liferay.portal.security.ldap.exportimport.configuration.LDAPImportConfiguration",
 				"com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
-				"com.liferay.portal.url.builder.configuration.PortalURLBuilderConfiguration",
 				"com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration",
 				"com.liferay.portal.vulcan.internal.configuration.VulcanCompanyConfiguration",
 				"com.liferay.product.navigation.personal.menu.configuration.PersonalMenuConfiguration",

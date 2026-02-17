@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import React, {useContext} from 'react';
 
 import {ItemContext} from './Item';
@@ -16,12 +17,22 @@ type Props = {
 	as?: React.ElementType;
 
 	/**
+	 * HTML properties that are applied to the step button.
+	 */
+	buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+
+	/**
 	 * Flag to indicate if step should show its been completed
 	 * @deprecated since v3.91.0 - this is no longer necessary.
 	 */
 	complete?: boolean;
 
-	innerRef?: React.Ref<HTMLButtonElement>;
+	/**
+	 * Flag to indicate if step should be disabled
+	 */
+	disabled?: boolean;
+
+	innerRef?: React.Ref<HTMLElement>;
 
 	/**
 	 * Value to display above step icon
@@ -48,7 +59,9 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 	(
 		{
 			as = 'div',
+			buttonProps,
 			complete,
+			disabled,
 			innerRef,
 			label,
 			onClick,
@@ -60,10 +73,16 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 		const {state} = useContext(ItemContext);
 
 		const isComplete = complete ?? state === 'complete';
-		const Tag = onClick ? 'button' : as;
+		const isButtonTag = onClick || buttonProps?.onClick || disabled;
+		const Tag = isButtonTag ? 'button' : as;
 
 		return (
-			<div className="multi-step-indicator" ref={ref}>
+			<div
+				className={classNames('multi-step-indicator', {
+					disabled,
+				})}
+				ref={ref}
+			>
 				{subTitle && (
 					<div className="multi-step-indicator-label">{subTitle}</div>
 				)}
@@ -71,7 +90,9 @@ const MultiStepNavIndicator = React.forwardRef<HTMLDivElement, Props>(
 				<Tag
 					className="multi-step-icon"
 					ref={innerRef}
-					{...(onClick && {
+					{...(isButtonTag && {
+						...buttonProps,
+						disabled,
 						onClick,
 						type: 'button',
 					})}

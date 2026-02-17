@@ -64,7 +64,7 @@ public interface SitePageResource {
 		throws Exception;
 
 	public Page<SitePage> getSiteSitePagesPage(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			String search,
 			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
 			com.liferay.portal.kernel.search.filter.Filter filter,
@@ -74,17 +74,17 @@ public interface SitePageResource {
 
 	public SitePage patchSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePages,
+			String sitePageExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception;
 
 	public SitePage postSiteSitePage(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception;
 
 	public Response postSiteSitePageBatch(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			String callbackURL, Object object)
 		throws Exception;
 
@@ -95,7 +95,7 @@ public interface SitePageResource {
 		throws Exception;
 
 	public Response postSiteSitePagesPageExportBatch(
-			String siteExternalReferenceCode, Boolean privatePages,
+			String siteExternalReferenceCode, Boolean privateLayout,
 			String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
@@ -104,7 +104,7 @@ public interface SitePageResource {
 
 	public SitePage putSiteSitePage(
 			String siteExternalReferenceCode,
-			String sitePageExternalReferenceCode, Boolean privatePages,
+			String sitePageExternalReferenceCode, Boolean privateLayout,
 			SitePage sitePage)
 		throws Exception;
 

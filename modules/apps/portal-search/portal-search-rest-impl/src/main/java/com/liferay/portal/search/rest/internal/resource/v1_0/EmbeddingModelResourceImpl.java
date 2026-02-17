@@ -40,7 +40,7 @@ public class EmbeddingModelResourceImpl extends BaseEmbeddingModelResourceImpl {
 			return null;
 		}
 
-		if (!provider.equals("huggingFaceInferenceAPI")) {
+		if (!provider.equals("hugging-face-inference-api")) {
 			return Page.of(Collections.emptyList());
 		}
 

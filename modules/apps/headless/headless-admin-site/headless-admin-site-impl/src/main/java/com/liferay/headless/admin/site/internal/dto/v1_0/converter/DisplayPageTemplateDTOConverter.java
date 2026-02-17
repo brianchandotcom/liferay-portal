@@ -229,15 +229,10 @@ public class DisplayPageTemplateDTOConverter
 	private ItemExternalReference _getSubtypeItemExternalReference(
 		LayoutPageTemplateEntry layoutPageTemplateEntry) {
 
-		ItemExternalReference itemExternalReference = null;
+		if ((layoutPageTemplateEntry.getClassTypeId() < 0) &&
+			Validator.isNull(layoutPageTemplateEntry.getClassTypeKey())) {
 
-		if (Validator.isNotNull(layoutPageTemplateEntry.getClassTypeKey())) {
-			itemExternalReference = new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						layoutPageTemplateEntry::getClassTypeKey);
-				}
-			};
+			return null;
 		}
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
@@ -246,25 +241,37 @@ public class DisplayPageTemplateDTOConverter
 				layoutPageTemplateEntry.getClassName());
 
 		if (infoItemFormVariationsProvider == null) {
-			return itemExternalReference;
+			if (Validator.isNull(layoutPageTemplateEntry.getClassTypeKey())) {
+				return null;
+			}
+
+			return new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateEntry::getClassTypeKey);
+				}
+			};
 		}
 
-		if (itemExternalReference != null) {
-			itemExternalReference.setClassName(
-				infoItemFormVariationsProvider::
-					getInfoItemFormVariationClassName);
-
-			return itemExternalReference;
+		if (Validator.isNotNull(layoutPageTemplateEntry.getClassTypeKey())) {
+			return new ItemExternalReference() {
+				{
+					setClassName(
+						infoItemFormVariationsProvider::
+							getInfoItemFormVariationClassName);
+					setExternalReferenceCode(
+						layoutPageTemplateEntry::getClassTypeKey);
+				}
+			};
 		}
 
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutPageTemplateEntry.getGroupId(),
-				layoutPageTemplateEntry.getClassTypeKey(),
 				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
 
 		if (infoItemFormVariation == null) {
-			return itemExternalReference;
+			return null;
 		}
 
 		return new ItemExternalReference() {

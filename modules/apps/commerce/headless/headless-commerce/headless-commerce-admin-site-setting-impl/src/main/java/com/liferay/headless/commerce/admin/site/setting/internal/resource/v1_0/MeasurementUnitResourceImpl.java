@@ -109,7 +109,7 @@ public class MeasurementUnitResourceImpl
 
 			return Page.of(
 				transform(
-					_cpMeasurementUnitService.getCPMeasurementUnitsByType(
+					_cpMeasurementUnitService.getCPMeasurementUnits(
 						contextCompany.getCompanyId(), type,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null),
@@ -227,7 +227,7 @@ public class MeasurementUnitResourceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.
 				fetchCPMeasurementUnitByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpMeasurementUnit == null) {
 			return postMeasurementUnit(measurementUnit);
@@ -254,7 +254,7 @@ public class MeasurementUnitResourceImpl
 		CPMeasurementUnit cpMeasurementUnit =
 			_cpMeasurementUnitService.
 				fetchCPMeasurementUnitByExternalReferenceCode(
-					contextCompany.getCompanyId(), externalReferenceCode);
+					externalReferenceCode, contextCompany.getCompanyId());
 
 		if (cpMeasurementUnit == null) {
 			throw new NoSuchCPMeasurementUnitException(
@@ -279,7 +279,7 @@ public class MeasurementUnitResourceImpl
 
 	private CPMeasurementUnit _findByKey(String key) throws Exception {
 		CPMeasurementUnit cpMeasurementUnit =
-			_cpMeasurementUnitService.fetchCPMeasurementUnitByKey(
+			_cpMeasurementUnitService.fetchCPMeasurementUnit(
 				contextCompany.getCompanyId(), key);
 
 		if (cpMeasurementUnit == null) {
@@ -292,7 +292,7 @@ public class MeasurementUnitResourceImpl
 
 	private Boolean _getPrimary(Boolean primary, int type) throws Exception {
 		CPMeasurementUnit cpMeasurementUnit =
-			_cpMeasurementUnitService.fetchPrimaryCPMeasurementUnitByType(
+			_cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(
 				contextCompany.getCompanyId(), type);
 
 		if (cpMeasurementUnit == null) {

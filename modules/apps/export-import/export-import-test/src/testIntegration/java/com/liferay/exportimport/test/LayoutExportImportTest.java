@@ -1138,7 +1138,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		featureFlags = {@FeatureFlag("LPD-34594"), @FeatureFlag("LPD-35443")}
 	)
 	@Test
-	public void testPromotedPageWithSamePriorityTakesPrecedenceWithPromoteContentFFEnabled()
+	public void testPromotedPageWithSamePriorityTakesPrecedence()
 		throws Exception {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(

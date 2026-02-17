@@ -9184,7 +9184,7 @@ paths:
                     schema:
                         type: integer
                 -   in: query
-                    name: privatePages
+                    name: privateLayout
                     schema:
                         default: false
                         type: boolean
@@ -9226,7 +9226,7 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: privatePages
+                    name: privateLayout
                     schema:
                         default: false
                         type: boolean
@@ -9335,7 +9335,7 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: privatePages
+                    name: privateLayout
                     schema:
                         default: false
                         type: boolean
@@ -9386,7 +9386,7 @@ paths:
                     schema:
                         type: string
                 -   in: query
-                    name: privatePages
+                    name: privateLayout
                     schema:
                         default: false
                         type: boolean

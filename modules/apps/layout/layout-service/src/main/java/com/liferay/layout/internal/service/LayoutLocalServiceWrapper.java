@@ -71,7 +71,6 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CopyLayoutThreadLocal;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -1057,18 +1056,72 @@ public class LayoutLocalServiceWrapper
 					originalFragmentEntryLink.getExternalReferenceCode(),
 					targetLayout.getPlid());
 
-			int value = -1;
+			boolean unmodified = false;
 
-			if (targetLayoutFragmentEntryLink != null) {
-				value = DateUtil.compareTo(
-					targetLayoutFragmentEntryLink.getModifiedDate(),
-					sourceLayoutFragmentEntryLink.getModifiedDate());
+			if ((targetLayoutFragmentEntryLink != null) &&
+				Objects.equals(
+					targetLayoutFragmentEntryLink.getCss(),
+					sourceLayoutFragmentEntryLink.getCss()) &&
+				Objects.equals(
+					targetLayoutFragmentEntryLink.getConfiguration(),
+					sourceLayoutFragmentEntryLink.getConfiguration()) &&
+				Objects.equals(
+					targetLayoutFragmentEntryLink.getEditableValues(),
+					sourceLayoutFragmentEntryLink.getEditableValues()) &&
+				Objects.equals(
+					targetLayoutFragmentEntryLink.getJs(),
+					sourceLayoutFragmentEntryLink.getJs()) &&
+				Objects.equals(
+					targetLayoutFragmentEntryLink.getHtml(),
+					sourceLayoutFragmentEntryLink.getHtml())) {
+
+				unmodified = true;
 			}
 
-			if ((targetLayoutFragmentEntryLink != null) && (value >= 0)) {
+			if (targetLayoutFragmentEntryLink == null) {
+				newFragmentEntryLink =
+					(FragmentEntryLink)sourceLayoutFragmentEntryLink.clone();
+
+				newFragmentEntryLink.setUuid(serviceContext.getUuid());
+				newFragmentEntryLink.setExternalReferenceCode(null);
+				newFragmentEntryLink.setFragmentEntryLinkId(
+					_counterLocalService.increment());
+				newFragmentEntryLink.setUserId(user.getUserId());
+				newFragmentEntryLink.setUserName(user.getFullName());
+				newFragmentEntryLink.setCreateDate(
+					serviceContext.getCreateDate(new Date()));
+				newFragmentEntryLink.setModifiedDate(
+					serviceContext.getModifiedDate(new Date()));
+
+				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
+					newFragmentEntryLink.setOriginalFragmentEntryLinkERC(
+						sourceLayoutFragmentEntryLink.
+							getExternalReferenceCode());
+				}
+				else {
+					newFragmentEntryLink.setOriginalFragmentEntryLinkERC(null);
+				}
+
+				newFragmentEntryLink.setSegmentsExperienceId(
+					targetSegmentsExperienceId);
+				newFragmentEntryLink.setClassNameId(
+					_portal.getClassNameId(Layout.class));
+				newFragmentEntryLink.setClassPK(targetLayout.getPlid());
+				newFragmentEntryLink.setPlid(targetLayout.getPlid());
+				newFragmentEntryLink.setEditableValues(
+					editableValuesJSONObject.toString());
+				newFragmentEntryLink.setNamespace(namespace);
+				newFragmentEntryLink.setLastPropagationDate(
+					sourceLayoutFragmentEntryLink.getLastPropagationDate());
+
+				newFragmentEntryLink =
+					_fragmentEntryLinkLocalService.addFragmentEntryLink(
+						newFragmentEntryLink);
+			}
+			else if (unmodified) {
 				newFragmentEntryLink = targetLayoutFragmentEntryLink;
 			}
-			else if (targetLayoutFragmentEntryLink != null) {
+			else {
 				targetLayoutFragmentEntryLink.setUserId(user.getUserId());
 				targetLayoutFragmentEntryLink.setUserName(user.getFullName());
 				targetLayoutFragmentEntryLink.setModifiedDate(
@@ -1114,46 +1167,6 @@ public class LayoutLocalServiceWrapper
 
 				_fragmentEntryLinkCache.removeFragmentEntryLinkCache(
 					newFragmentEntryLink);
-			}
-			else {
-				newFragmentEntryLink =
-					(FragmentEntryLink)sourceLayoutFragmentEntryLink.clone();
-
-				newFragmentEntryLink.setUuid(serviceContext.getUuid());
-				newFragmentEntryLink.setExternalReferenceCode(null);
-				newFragmentEntryLink.setFragmentEntryLinkId(
-					_counterLocalService.increment());
-				newFragmentEntryLink.setUserId(user.getUserId());
-				newFragmentEntryLink.setUserName(user.getFullName());
-				newFragmentEntryLink.setCreateDate(
-					serviceContext.getCreateDate(new Date()));
-				newFragmentEntryLink.setModifiedDate(
-					serviceContext.getModifiedDate(new Date()));
-
-				if (sourceLayout.getClassPK() == targetLayout.getPlid()) {
-					newFragmentEntryLink.setOriginalFragmentEntryLinkERC(
-						sourceLayoutFragmentEntryLink.
-							getExternalReferenceCode());
-				}
-				else {
-					newFragmentEntryLink.setOriginalFragmentEntryLinkERC(null);
-				}
-
-				newFragmentEntryLink.setSegmentsExperienceId(
-					targetSegmentsExperienceId);
-				newFragmentEntryLink.setClassNameId(
-					_portal.getClassNameId(Layout.class));
-				newFragmentEntryLink.setClassPK(targetLayout.getPlid());
-				newFragmentEntryLink.setPlid(targetLayout.getPlid());
-				newFragmentEntryLink.setEditableValues(
-					editableValuesJSONObject.toString());
-				newFragmentEntryLink.setNamespace(namespace);
-				newFragmentEntryLink.setLastPropagationDate(
-					sourceLayoutFragmentEntryLink.getLastPropagationDate());
-
-				newFragmentEntryLink =
-					_fragmentEntryLinkLocalService.addFragmentEntryLink(
-						newFragmentEntryLink);
 			}
 
 			fragmentStyledLayoutStructureItem.setFragmentEntryLinkId(

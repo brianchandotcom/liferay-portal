@@ -110,11 +110,13 @@ public interface CPMeasurementUnitLocalService
 	 *
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPMeasurementUnit deleteCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit);
+			CPMeasurementUnit cpMeasurementUnit)
+		throws PortalException;
 
 	/**
 	 * Deletes the cp measurement unit with the primary key from the database. Also notifies the appropriate model listeners.
@@ -216,17 +218,12 @@ public interface CPMeasurementUnitLocalService
 	public CPMeasurementUnit fetchCPMeasurementUnit(long CPMeasurementUnitId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
-		long companyId, String externalReferenceCode);
+	public CPMeasurementUnit fetchCPMeasurementUnit(long companyId, String key)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
 		String externalReferenceCode, long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException;
 
 	/**
 	 * Returns the cp measurement unit matching the UUID and group.
@@ -244,10 +241,6 @@ public interface CPMeasurementUnitLocalService
 		long companyId, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-		long companyId, int type);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -262,13 +255,12 @@ public interface CPMeasurementUnitLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnitByExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+	public CPMeasurementUnit getCPMeasurementUnit(long companyId, String key)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
+	public CPMeasurementUnit getCPMeasurementUnitByExternalReferenceCode(
+			String externalReferenceCode, long companyId)
 		throws PortalException;
 
 	/**
@@ -299,32 +291,15 @@ public interface CPMeasurementUnitLocalService
 	public List<CPMeasurementUnit> getCPMeasurementUnits(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnits(long companyId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, int type, int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator);
+			long companyId, int type, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPMeasurementUnit> getCPMeasurementUnits(
 		long companyId, int start, int end,
 		OrderByComparator<CPMeasurementUnit> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, String[] keys);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException;
 
 	/**
 	 * Returns all the cp measurement units matching the UUID and company.

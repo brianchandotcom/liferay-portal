@@ -96,9 +96,11 @@ public class CPMeasurementUnitLocalServiceUtil {
 	 *
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was removed
+	 * @throws PortalException
 	 */
 	public static CPMeasurementUnit deleteCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit) {
+			CPMeasurementUnit cpMeasurementUnit)
+		throws PortalException {
 
 		return getService().deleteCPMeasurementUnit(cpMeasurementUnit);
 	}
@@ -226,12 +228,11 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().fetchCPMeasurementUnit(CPMeasurementUnitId);
 	}
 
-	public static CPMeasurementUnit
-		fetchCPMeasurementUnitByExternalReferenceCode(
-			long companyId, String externalReferenceCode) {
+	public static CPMeasurementUnit fetchCPMeasurementUnit(
+			long companyId, String key)
+		throws PortalException {
 
-		return getService().fetchCPMeasurementUnitByExternalReferenceCode(
-			companyId, externalReferenceCode);
+		return getService().fetchCPMeasurementUnit(companyId, key);
 	}
 
 	public static CPMeasurementUnit
@@ -240,13 +241,6 @@ public class CPMeasurementUnitLocalServiceUtil {
 
 		return getService().fetchCPMeasurementUnitByExternalReferenceCode(
 			externalReferenceCode, companyId);
-	}
-
-	public static CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException {
-
-		return getService().fetchCPMeasurementUnitByKey(companyId, key);
 	}
 
 	/**
@@ -269,13 +263,6 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().fetchPrimaryCPMeasurementUnit(companyId, type);
 	}
 
-	public static CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-		long companyId, int type) {
-
-		return getService().fetchPrimaryCPMeasurementUnitByType(
-			companyId, type);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -296,19 +283,19 @@ public class CPMeasurementUnitLocalServiceUtil {
 		return getService().getCPMeasurementUnit(CPMeasurementUnitId);
 	}
 
+	public static CPMeasurementUnit getCPMeasurementUnit(
+			long companyId, String key)
+		throws PortalException {
+
+		return getService().getCPMeasurementUnit(companyId, key);
+	}
+
 	public static CPMeasurementUnit getCPMeasurementUnitByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws PortalException {
 
 		return getService().getCPMeasurementUnitByExternalReferenceCode(
 			externalReferenceCode, companyId);
-	}
-
-	public static CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitByKey(companyId, key);
 	}
 
 	/**
@@ -344,14 +331,9 @@ public class CPMeasurementUnitLocalServiceUtil {
 	}
 
 	public static List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId) {
-
-		return getService().getCPMeasurementUnits(companyId);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, int type, int start, int end,
-		OrderByComparator<CPMeasurementUnit> orderByComparator) {
+			long companyId, int type, int start, int end,
+			OrderByComparator<CPMeasurementUnit> orderByComparator)
+		throws PortalException {
 
 		return getService().getCPMeasurementUnits(
 			companyId, type, start, end, orderByComparator);
@@ -363,28 +345,6 @@ public class CPMeasurementUnitLocalServiceUtil {
 
 		return getService().getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, String[] keys) {
-
-		return getService().getCPMeasurementUnits(companyId, keys);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitsByType(companyId, type);
-	}
-
-	public static List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			OrderByComparator<CPMeasurementUnit> orderByComparator)
-		throws PortalException {
-
-		return getService().getCPMeasurementUnitsByType(
-			companyId, type, start, end, orderByComparator);
 	}
 
 	/**

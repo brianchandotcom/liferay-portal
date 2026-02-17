@@ -96,10 +96,12 @@ public class CPMeasurementUnitLocalServiceWrapper
 	 *
 	 * @param cpMeasurementUnit the cp measurement unit
 	 * @return the cp measurement unit that was removed
+	 * @throws PortalException
 	 */
 	@Override
 	public CPMeasurementUnit deleteCPMeasurementUnit(
-		CPMeasurementUnit cpMeasurementUnit) {
+			CPMeasurementUnit cpMeasurementUnit)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpMeasurementUnitLocalService.deleteCPMeasurementUnit(
 			cpMeasurementUnit);
@@ -251,12 +253,11 @@ public class CPMeasurementUnitLocalServiceWrapper
 	}
 
 	@Override
-	public CPMeasurementUnit fetchCPMeasurementUnitByExternalReferenceCode(
-		long companyId, String externalReferenceCode) {
+	public CPMeasurementUnit fetchCPMeasurementUnit(long companyId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpMeasurementUnitLocalService.
-			fetchCPMeasurementUnitByExternalReferenceCode(
-				companyId, externalReferenceCode);
+		return _cpMeasurementUnitLocalService.fetchCPMeasurementUnit(
+			companyId, key);
 	}
 
 	@Override
@@ -266,15 +267,6 @@ public class CPMeasurementUnitLocalServiceWrapper
 		return _cpMeasurementUnitLocalService.
 			fetchCPMeasurementUnitByExternalReferenceCode(
 				externalReferenceCode, companyId);
-	}
-
-	@Override
-	public CPMeasurementUnit fetchCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpMeasurementUnitLocalService.fetchCPMeasurementUnitByKey(
-			companyId, key);
 	}
 
 	/**
@@ -301,14 +293,6 @@ public class CPMeasurementUnitLocalServiceWrapper
 	}
 
 	@Override
-	public CPMeasurementUnit fetchPrimaryCPMeasurementUnitByType(
-		long companyId, int type) {
-
-		return _cpMeasurementUnitLocalService.
-			fetchPrimaryCPMeasurementUnitByType(companyId, type);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -331,6 +315,14 @@ public class CPMeasurementUnitLocalServiceWrapper
 	}
 
 	@Override
+	public CPMeasurementUnit getCPMeasurementUnit(long companyId, String key)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _cpMeasurementUnitLocalService.getCPMeasurementUnit(
+			companyId, key);
+	}
+
+	@Override
 	public CPMeasurementUnit getCPMeasurementUnitByExternalReferenceCode(
 			String externalReferenceCode, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -338,15 +330,6 @@ public class CPMeasurementUnitLocalServiceWrapper
 		return _cpMeasurementUnitLocalService.
 			getCPMeasurementUnitByExternalReferenceCode(
 				externalReferenceCode, companyId);
-	}
-
-	@Override
-	public CPMeasurementUnit getCPMeasurementUnitByKey(
-			long companyId, String key)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpMeasurementUnitLocalService.getCPMeasurementUnitByKey(
-			companyId, key);
 	}
 
 	/**
@@ -386,16 +369,10 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 	@Override
 	public java.util.List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId) {
-
-		return _cpMeasurementUnitLocalService.getCPMeasurementUnits(companyId);
-	}
-
-	@Override
-	public java.util.List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, int type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit>
-			orderByComparator) {
+			long companyId, int type, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit>
+				orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnits(
 			companyId, type, start, end, orderByComparator);
@@ -409,34 +386,6 @@ public class CPMeasurementUnitLocalServiceWrapper
 
 		return _cpMeasurementUnitLocalService.getCPMeasurementUnits(
 			companyId, start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<CPMeasurementUnit> getCPMeasurementUnits(
-		long companyId, String[] keys) {
-
-		return _cpMeasurementUnitLocalService.getCPMeasurementUnits(
-			companyId, keys);
-	}
-
-	@Override
-	public java.util.List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsByType(
-			companyId, type);
-	}
-
-	@Override
-	public java.util.List<CPMeasurementUnit> getCPMeasurementUnitsByType(
-			long companyId, int type, int start, int end,
-			com.liferay.portal.kernel.util.OrderByComparator<CPMeasurementUnit>
-				orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _cpMeasurementUnitLocalService.getCPMeasurementUnitsByType(
-			companyId, type, start, end, orderByComparator);
 	}
 
 	/**

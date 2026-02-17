@@ -6,7 +6,10 @@
 package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
@@ -61,6 +64,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.site.cms.site.initializer.util.RoleUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
 
@@ -205,6 +209,33 @@ public class ObjectEntryFolderLocalServiceTest {
 		role = _roleLocalService.fetchRole(
 			TestPropsValues.getCompanyId(),
 			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER);
+
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				ObjectEntryFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+				role.getRoleId(), ActionKeys.ADD_ENTRY));
+
+		role = RoleUtil.getOrAddCMSAdministratorRole(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(),
+				ObjectEntryFolder.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
+				role.getRoleId(), ActionKeys.ADD_ENTRY));
+
+		DepotEntry depotEntry = _getDepotEntry();
+
+		objectEntryFolder =
+			_objectEntryFolderLocalService.
+				getObjectEntryFolderByExternalReferenceCode(
+					"L_CONTENTS", depotEntry.getGroupId(),
+					depotEntry.getCompanyId());
 
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
@@ -776,6 +807,20 @@ public class ObjectEntryFolderLocalServiceTest {
 		Assert.assertEquals(expectedStatus, objectEntry.getStatus());
 	}
 
+	private DepotEntry _getDepotEntry() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		serviceContext.setAddGroupPermissions(false);
+		serviceContext.setAddGuestPermissions(false);
+
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			null, DepotConstants.TYPE_SPACE, serviceContext);
+	}
+
 	private void _testCopyObjectEntryFolder(long groupId) throws Exception {
 		ObjectEntryFolder objectEntryFolder1 =
 			ObjectEntryFolderTestUtil.addObjectEntryFolder(groupId);
@@ -1057,6 +1102,9 @@ public class ObjectEntryFolderLocalServiceTest {
 			_objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
 				groupId, objectEntryFolder1.getObjectEntryFolderId()));
 	}
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private ExportImportReportEntryLocalService

@@ -8,6 +8,7 @@ package com.liferay.commerce.product.internal.change.tracking.spi.reference;
 import com.liferay.change.tracking.spi.reference.TableReferenceDefinition;
 import com.liferay.change.tracking.spi.reference.builder.ChildTableReferenceInfoBuilder;
 import com.liferay.change.tracking.spi.reference.builder.ParentTableReferenceInfoBuilder;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitTable;
 import com.liferay.commerce.product.service.persistence.CPMeasurementUnitPersistence;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
@@ -26,6 +27,10 @@ public class CPMeasurementUnitTableReferenceDefinition
 	public void defineChildTableReferences(
 		ChildTableReferenceInfoBuilder<CPMeasurementUnitTable>
 			childTableReferenceInfoBuilder) {
+
+		childTableReferenceInfoBuilder.resourcePermissionReference(
+			CPMeasurementUnitTable.INSTANCE.CPMeasurementUnitId,
+			CPMeasurementUnit.class);
 	}
 
 	@Override

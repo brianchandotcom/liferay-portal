@@ -1,0 +1,1 @@
+# @liferay/stylelint-plugin

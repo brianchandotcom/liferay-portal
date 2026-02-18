@@ -9,6 +9,7 @@
 				<action-key>ADD_ACCOUNT_ENTRY</action-key>
 				<action-key>ADD_ACCOUNT_GROUP</action-key>
 				<action-key>ADD_COMMUNITY</action-key>
+				<action-key>ADD_COUNTRY</action-key>
 				<action-key>ADD_GENERAL_ANNOUNCEMENTS</action-key>
 				<action-key>ADD_LAYOUT_PROTOTYPE</action-key>
 				<action-key>ADD_LAYOUT_SET_PROTOTYPE</action-key>
@@ -21,7 +22,6 @@
 				<action-key>CONFIGURATION</action-key>
 				<action-key>EXPORT_USER</action-key>
 				<action-key>IMPERSONATE</action-key>
-				<action-key>MANAGE_COUNTRIES</action-key>
 				<action-key>MANAGE_LANGUAGE_OVERRIDES</action-key>
 				<action-key>UNLINK_LAYOUT_SET_PROTOTYPE</action-key>
 				<action-key>VIEW_CONTROL_PANEL</action-key>
@@ -29,10 +29,31 @@
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
-				<action-key>MANAGE_COUNTRIES</action-key>
+				<action-key>ADD_COUNTRY</action-key>
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
+	<model-resource portal="true">
+		<model-name>com.liferay.portal.kernel.model.Country</model-name>
+		<portlet-ref>
+			<portlet-name>com_liferay_address_web_internal_portlet_CountriesManagementAdminPortlet</portlet-name>
+		</portlet-ref>
+		<weight>1</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.kernel.model.Group</model-name>
 		<portlet-ref>

@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
@@ -52,7 +54,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			String methodName = getMethodName(parentDetailAST);
 
-			if (!methodName.matches("get[A-Z].+")) {
+			if (!ArrayUtil.contains(_GET_METHOD_NAMES, methodName)) {
 				continue;
 			}
 
@@ -83,6 +85,15 @@ public class ResultSetGetCallCheck extends BaseCheck {
 				variableName);
 		}
 	}
+
+	private static final String[] _GET_METHOD_NAMES = {
+		"getArray", "getAsciiStream", "getBigDecimal", "getBinaryStream",
+		"getBlob", "getBoolean", "getByte", "getBytes", "getCharacterStream",
+		"getClob", "getDate", "getDouble", "getFloat", "getInt", "getLong",
+		"getNCharacterStream", "getNClob", "getNString", "getObject", "getRef",
+		"getRowId", "getShort", "getSQLXML", "getString", "getTime",
+		"getTimestamp", "getURL"
+	};
 
 	private static final String _MSG_INCORRECT_SET_CALL_PARAMETER =
 		"set.call.parameter.incorrect";

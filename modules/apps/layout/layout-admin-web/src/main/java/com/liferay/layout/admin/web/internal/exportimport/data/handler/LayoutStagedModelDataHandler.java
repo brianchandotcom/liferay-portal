@@ -8,7 +8,6 @@ package com.liferay.layout.admin.web.internal.exportimport.data.handler;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
-import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.controller.PortletExportController;
@@ -89,7 +88,6 @@ import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -139,7 +137,6 @@ import com.liferay.staging.configuration.StagingConfiguration;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -904,13 +901,19 @@ public class LayoutStagedModelDataHandler
 			_getUniqueFriendlyURL(
 				importedLayout, friendlyURL, portletDataContext));
 
+		byte[] iconBytes = null;
+
 		if (layout.hasIconImage()) {
-			_importLayoutIconImage(
-				importedLayout, layoutElement, portletDataContext);
+			String iconImagePath = layoutElement.attributeValue(
+				"icon-image-path");
+
+			iconBytes = portletDataContext.getZipEntryAsByteArray(
+				iconImagePath);
 		}
-		else if (importedLayout.hasIconImage()) {
-			importedLayout.deleteUnusedIconImage();
-		}
+
+		_portal.updateImageERC(
+			importedLayout, layout.hasIconImage(), iconBytes, "iconImageERC", 0,
+			0, 0, importedLayout::deleteUnusedIconImage);
 
 		_importStyleBookEntry(importedLayout, layout, portletDataContext);
 
@@ -2264,38 +2267,6 @@ public class LayoutStagedModelDataHandler
 		_deleteMissingLayoutFriendlyURLs(importedLayout, portletDataContext);
 	}
 
-	private void _importLayoutIconImage(
-			Layout importedLayout, Element layoutElement,
-			PortletDataContext portletDataContext)
-		throws Exception {
-
-		String iconImagePath = layoutElement.attributeValue("icon-image-path");
-
-		byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
-			iconImagePath);
-
-		if (ArrayUtil.isNotEmpty(iconBytes)) {
-			Image image = importedLayout.getIconImage();
-
-			if (image != null) {
-				if (!Arrays.equals(image.getTextObj(), iconBytes)) {
-					_imageLocalService.updateImage(
-						importedLayout.getCompanyId(), image.getImageId(),
-						iconBytes);
-				}
-			}
-			else {
-				long imageId = _counterLocalService.increment();
-
-				image = _imageLocalService.updateImage(
-					importedLayout.getCompanyId(), imageId, iconBytes);
-
-				importedLayout.setIconImageERC(
-					image.getExternalReferenceCode());
-			}
-		}
-	}
-
 	private void _importLayoutLocalizations(
 			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
@@ -3198,9 +3169,6 @@ public class LayoutStagedModelDataHandler
 	@Reference
 	private ConfigurationProvider _configurationProvider;
 
-	@Reference
-	private CounterLocalService _counterLocalService;
-
 	@Reference(target = "(model.class.name=java.lang.String)")
 	private ExportImportContentProcessor<String>
 		_defaultTextExportImportContentProcessor;
@@ -3227,9 +3195,6 @@ public class LayoutStagedModelDataHandler
 
 	@Reference
 	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

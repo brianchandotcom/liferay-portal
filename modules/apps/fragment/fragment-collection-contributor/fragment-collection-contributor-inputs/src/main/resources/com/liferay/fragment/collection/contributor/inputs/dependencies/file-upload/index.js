@@ -79,21 +79,23 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 				openCMSItemSelectorModal({
 					groupId: input.attributes.groupId,
 					onSelect(items) {
-						const {id, title} = items[0].embedded;
+						if (items.length) {
+							const {id, title} = items[0].embedded;
 
-						if (onChange) {
-							setTranslationInputValue({
-								fileName: title,
-								value: id,
-							});
+							if (onChange) {
+								setTranslationInputValue({
+									fileName: title,
+									value: id,
+								});
 
-							onChange();
+								onChange();
+							}
+
+							fileInput.value = id;
+							fileName.innerText = title;
+
+							showRemoveButton();
 						}
-
-						fileInput.value = id;
-						fileName.innerText = title;
-
-						showRemoveButton();
 					}
 				});
 			});

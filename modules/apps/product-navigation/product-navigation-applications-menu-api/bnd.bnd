@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Product Navigation Applications Menu API
-Bundle-SymbolicName: com.liferay.product.navigation.applications.menu.api
-Bundle-Version: 2.0.10
-Export-Package: com.liferay.product.navigation.applications.menu.configuration

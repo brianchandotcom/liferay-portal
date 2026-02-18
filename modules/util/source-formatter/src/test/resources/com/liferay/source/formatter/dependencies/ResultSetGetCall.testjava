@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class ResultSetGetCall {
 
-	protected List<Long> method(Connection connection) throws Exception {
+	protected List<Long> method1(Connection connection) throws Exception {
 		List<Long> plids = new ArrayList<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
@@ -45,6 +45,21 @@ public class ResultSetGetCall {
 			}
 
 			return plids;
+		}
+	}
+
+	protected List<Long> method2(Connection connection) throws Exception {
+		List<Long> objectDefinitionIds = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select objectDefinitionId, name from ObjectDefinition");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				objectDefinitionIds.add(resultSet.getLong(1));
+			}
+
+			return objectDefinitionIds;
 		}
 	}
 

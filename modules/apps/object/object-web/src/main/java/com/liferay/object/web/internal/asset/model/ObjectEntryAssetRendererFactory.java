@@ -12,9 +12,11 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.display.context.ObjectEntryDisplayContextFactory;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -23,6 +25,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -31,6 +34,7 @@ import jakarta.servlet.ServletContext;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Feliphe Marinho
@@ -116,6 +120,20 @@ public class ObjectEntryAssetRendererFactory
 	public boolean hasPermission(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
+
+		if (Objects.equals(actionId, ActionKeys.DOWNLOAD) &&
+			_objectDefinition.isCMS()) {
+
+			ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+				_objectDefinition.getObjectDefinitionId(), "file");
+
+			if ((objectField != null) &&
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				actionId = objectField.getAttachmentDownloadActionKey();
+			}
+		}
 
 		try {
 			return ObjectDefinitionResourcePermissionUtil.

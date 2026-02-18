@@ -88,6 +88,7 @@ export default async function handleMoveChildren({
 
 	if (hasNameConflict(movableItems, target)) {
 		const onNameConflict = await openOptionsModal({
+			defaultValue: 'rename',
 			options: [
 				{
 					label: Liferay.Language.get('do-not-move'),

@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.upgrade.v1_0_0;
 
+import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -33,10 +34,12 @@ public class DataSetOrderValuesUpgradeProcess extends UpgradeProcess {
 
 	public DataSetOrderValuesUpgradeProcess(
 		CompanyLocalService companyLocalService,
+		ObjectActionEngine objectActionEngine,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService) {
 
 		_companyLocalService = companyLocalService;
+		_objectActionEngine = objectActionEngine;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
 	}
@@ -95,6 +98,10 @@ public class DataSetOrderValuesUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
+		if (_objectActionEngine == null) {
+			throw new PortalException("Object action engine is null");
+		}
+
 		for (ObjectEntry objectEntry :
 				_objectEntryLocalService.getObjectEntries(
 					0, objectDefinition.getObjectDefinitionId(),
@@ -119,6 +126,7 @@ public class DataSetOrderValuesUpgradeProcess extends UpgradeProcess {
 		DataSetOrderValuesUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
+	private final ObjectActionEngine _objectActionEngine;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 

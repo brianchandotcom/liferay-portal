@@ -10,11 +10,8 @@ import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
-import org.osgi.service.component.ComponentContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -25,14 +22,6 @@ import org.osgi.service.component.annotations.Reference;
 public class FrontendDataSetImplUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
-	@Activate
-	public void activate(ComponentContext componentContext) {
-		if (PropsValues.DATABASE_PARTITION_ENABLED) {
-			componentContext.enableComponent(
-				ObjectActionEngine.class.getName());
-		}
-	}
-
 	@Override
 	public void register(Registry registry) {
 		registry.registerInitialization();
@@ -40,12 +29,15 @@ public class FrontendDataSetImplUpgradeStepRegistrator
 		registry.register(
 			"0.0.1", "1.0.0",
 			new DataSetOrderValuesUpgradeProcess(
-				_companyLocalService, _objectDefinitionLocalService,
-				_objectEntryLocalService));
+				_companyLocalService, _objectActionEngine,
+				_objectDefinitionLocalService, _objectEntryLocalService));
 	}
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private ObjectActionEngine _objectActionEngine;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

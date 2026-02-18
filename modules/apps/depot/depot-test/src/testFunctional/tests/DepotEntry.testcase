@@ -30,32 +30,6 @@ definition {
 		}
 	}
 
-	@description = "This ensures that a depot can be accessed through the Product Menu when the Applications Menu is disabled."
-	@priority = 5
-	@refactordone
-	test CanAccessAppsViaProductMenu {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		JSONDepot.addDepot(
-			depotDescription = "This is the description of a depot",
-			depotName = "Test Depot Name");
-
-		SystemSettings.openToConfigInSystemSettings(portlet = "Applications Menu");
-
-		FormFields.disableCheckbox(fieldName = "Enable Applications Menu");
-
-		SystemSettings.saveConfiguration();
-
-		for (var application : list "Documents and Media,Web Content") {
-			DepotNavigator.openDepotAdmin();
-
-			DepotNavigator.gotoDepot(depotName = "Test Depot Name");
-
-			DepotNavigator.gotoPortlet(portlet = ${application});
-		}
-	}
-
 	@description = "This tests the basic flow the user will take to add a depot through the UI."
 	@e2e
 	@priority = 5

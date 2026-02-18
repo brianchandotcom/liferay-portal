@@ -9,6 +9,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -45,6 +46,10 @@ import com.liferay.portal.search.engine.adapter.snapshot.SnapshotResponse;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -153,18 +158,36 @@ public class ElasticsearchSearchEngineAdapterImpl
 				return null;
 			}
 
-			try {
-				S documentResponse =
-					(S)_documentRequestExecutor.executeBulkDocumentRequest(
-						bulkDocumentRequest);
+			BulkDocumentRequest transferCopyBulkDocumentRequest =
+				bulkDocumentRequest.transferCopy();
 
-				bulkableDocumentRequests.clear();
+			AtomicReference<Future<?>> futureReference =
+				new AtomicReference<>();
 
-				return documentResponse;
-			}
-			catch (RuntimeException runtimeException) {
-				throw _getRuntimeException(runtimeException);
-			}
+			FutureTask<?> futureTask = new FutureTask<Void>(
+				() -> {
+					try {
+						_documentRequestExecutor.executeBulkDocumentRequest(
+							transferCopyBulkDocumentRequest);
+					}
+					finally {
+						SearchContext.unregisterBatchModeSyncFuture(
+							futureReference.get());
+					}
+
+					return null;
+				});
+
+			futureReference.set(futureTask);
+
+			SearchContext.registerBatchModeSyncFuture(futureTask);
+
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
+			executorService.execute(futureTask);
+
+			return null;
 		}
 
 		try {

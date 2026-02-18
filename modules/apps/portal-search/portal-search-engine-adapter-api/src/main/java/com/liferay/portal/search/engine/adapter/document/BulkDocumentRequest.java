@@ -42,6 +42,17 @@ public class BulkDocumentRequest
 		_refresh = refresh;
 	}
 
+	public BulkDocumentRequest transferCopy() {
+		BulkDocumentRequest bulkDocumentRequest = new BulkDocumentRequest();
+
+		bulkDocumentRequest._bulkableDocumentRequests.addAll(
+			_bulkableDocumentRequests);
+
+		_bulkableDocumentRequests.clear();
+
+		return bulkDocumentRequest;
+	}
+
 	private final List<BulkableDocumentRequest<?>> _bulkableDocumentRequests =
 		new ArrayList<>();
 	private boolean _refresh;

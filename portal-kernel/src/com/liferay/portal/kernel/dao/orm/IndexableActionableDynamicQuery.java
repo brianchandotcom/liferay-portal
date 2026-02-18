@@ -105,8 +105,7 @@ public class IndexableActionableDynamicQuery
 		IndexWriterHelper indexWriterHelper =
 			_indexWriterHelperProxySnapshot.get();
 
-		indexWriterHelper.updateDocuments(
-			getCompanyId(), new ArrayList<>(_documents), false);
+		indexWriterHelper.updateDocuments(getCompanyId(), _documents, false);
 
 		_count += _documents.size();
 

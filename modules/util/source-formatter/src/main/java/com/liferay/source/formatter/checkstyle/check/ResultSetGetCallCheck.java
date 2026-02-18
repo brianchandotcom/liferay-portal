@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -33,6 +34,77 @@ public class ResultSetGetCallCheck extends BaseCheck {
 			detailAST, variableName, false);
 
 		if (!variableTypeName.equals("ResultSet")) {
+			return;
+		}
+
+		DetailAST assignDetailAST = detailAST.findFirstToken(TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return;
+		}
+
+		DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.EXPR)) {
+
+			return;
+		}
+
+		firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+		if ((firstChildDetailAST == null) ||
+			(firstChildDetailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+			return;
+		}
+
+		DetailAST dotDetailAST = firstChildDetailAST.findFirstToken(
+			TokenTypes.DOT);
+
+		if (dotDetailAST == null) {
+			return;
+		}
+
+		List<String> names = getNames(dotDetailAST, false);
+
+		if ((names.size() != 2) ||
+			!StringUtil.equals(names.get(1), "executeQuery")) {
+
+			return;
+		}
+
+		DetailAST variableDefinitionDetailAST = getVariableDefinitionDetailAST(
+			detailAST, names.get(0));
+
+		String typeName = getTypeName(
+			variableDefinitionDetailAST.findFirstToken(TokenTypes.TYPE), true);
+
+		if (!typeName.equals("PreparedStatement")) {
+			return;
+		}
+
+		assignDetailAST = variableDefinitionDetailAST.findFirstToken(
+			TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return;
+		}
+
+		List<DetailAST> stringLiteralDetailASTs = getAllChildTokens(
+			assignDetailAST, true, TokenTypes.STRING_LITERAL);
+
+		if (stringLiteralDetailASTs.isEmpty()) {
+			return;
+		}
+
+		for (DetailAST stringLiteralDetailAST : stringLiteralDetailASTs) {
+			String text = stringLiteralDetailAST.getText();
+
+			if (text.contains("select ")) {
+				break;
+			}
+
 			return;
 		}
 
@@ -64,8 +136,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			DetailAST parameterExprDetailAST = parameterExprDetailASTs.get(0);
 
-			DetailAST firstChildDetailAST =
-				parameterExprDetailAST.getFirstChild();
+			firstChildDetailAST = parameterExprDetailAST.getFirstChild();
 
 			if (firstChildDetailAST.getType() == TokenTypes.NUM_INT) {
 				log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_1);

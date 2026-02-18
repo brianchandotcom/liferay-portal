@@ -18,6 +18,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface BatchIndexingActionable {
 
+	public void addDocument(Document document);
+
 	public void addDocuments(Document... documents);
 
 	public void performActions();

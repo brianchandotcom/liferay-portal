@@ -26,6 +26,16 @@ public class DynamicQueryBatchIndexingActionableAdapter
 	}
 
 	@Override
+	public void addDocument(Document document) {
+		try {
+			_indexableActionableDynamicQuery.addDocument(document);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Override
 	public void addDocuments(Document... documents) {
 		try {
 			_indexableActionableDynamicQuery.addDocuments(documents);

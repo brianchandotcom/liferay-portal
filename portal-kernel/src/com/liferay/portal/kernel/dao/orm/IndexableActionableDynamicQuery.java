@@ -27,6 +27,23 @@ import java.util.concurrent.ConcurrentLinkedDeque;
 public class IndexableActionableDynamicQuery
 	extends DefaultActionableDynamicQuery {
 
+	public void addDocument(Document document) throws PortalException {
+		if (document == null) {
+			return;
+		}
+
+		_documents.add(document);
+
+		long size = _documents.size();
+
+		if (size >= getInterval()) {
+			indexInterval();
+		}
+		else if ((size % _STATUS_INTERVAL) == 0) {
+			sendStatusMessage(size);
+		}
+	}
+
 	public void addDocuments(Document... documents) throws PortalException {
 		if (ArrayUtil.isEmpty(documents)) {
 			return;

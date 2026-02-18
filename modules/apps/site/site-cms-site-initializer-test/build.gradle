@@ -4,6 +4,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:fragment:fragment-api")
+	testIntegrationImplementation project(":apps:friendly-url:friendly-url-api")
 	testIntegrationImplementation project(":apps:frontend-data-set:frontend-data-set-api")
 	testIntegrationImplementation project(":apps:frontend-taglib:frontend-taglib-clay")
 	testIntegrationImplementation project(":apps:headless:headless-asset-library:headless-asset-library-api")

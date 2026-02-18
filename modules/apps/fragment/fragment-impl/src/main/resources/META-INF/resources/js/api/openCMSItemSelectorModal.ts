@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {
+	CMSFileUploaderComponent,
+	openItemSelectorModal,
+} from '@liferay/frontend-js-item-selector-web';
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 	apiURL: `${location.origin}/o/search/v1.0/search?${[
@@ -101,6 +104,7 @@ export const openCMSItemSelectorModal = function ({
 			...FDS_PROPS,
 			id: `UploadFragmentItemSelectorFDS_${getRandomId()}`,
 		},
+		filesUploaderComponent: CMSFileUploaderComponent,
 		itemTypeLabel: Liferay.Language.get('files'),
 		items: [],
 		locator: {

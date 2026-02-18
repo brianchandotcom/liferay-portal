@@ -36,7 +36,7 @@ public class AssetVocabularyModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(AssetVocabulary assetVocabulary) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						assetVocabulary)));
 	}

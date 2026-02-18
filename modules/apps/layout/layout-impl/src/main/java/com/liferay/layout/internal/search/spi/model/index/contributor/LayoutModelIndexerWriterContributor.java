@@ -35,7 +35,7 @@ public class LayoutModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Layout layout) -> batchIndexingActionable.addDocuments(
+			(Layout layout) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(layout)));
 	}
 

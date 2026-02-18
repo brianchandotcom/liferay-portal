@@ -300,7 +300,7 @@ public class CPAttachmentFileEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPAttachmentFileEntry cpAttachmentFileEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(cpAttachmentFileEntry));
 				}
 				catch (PortalException portalException) {

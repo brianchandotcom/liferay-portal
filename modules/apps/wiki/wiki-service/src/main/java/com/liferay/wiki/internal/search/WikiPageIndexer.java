@@ -381,7 +381,7 @@ public class WikiPageIndexer extends BaseIndexer<WikiPage> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(WikiPage page) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(page));
 				}
 				catch (PortalException portalException) {

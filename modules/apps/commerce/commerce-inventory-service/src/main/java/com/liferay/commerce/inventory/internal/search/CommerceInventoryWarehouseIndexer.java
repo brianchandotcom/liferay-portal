@@ -249,7 +249,7 @@ public class CommerceInventoryWarehouseIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceInventoryWarehouse commerceInventoryWarehouse) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(commerceInventoryWarehouse));
 				}
 				catch (PortalException portalException) {

@@ -37,7 +37,7 @@ public class LayoutPageTemplateCollectionModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(LayoutPageTemplateCollection layoutPageTemplateCollection) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						layoutPageTemplateCollection)));
 	}

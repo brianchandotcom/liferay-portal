@@ -35,7 +35,7 @@ public class COREntryModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(COREntry corEntry) -> batchIndexingActionable.addDocuments(
+			(COREntry corEntry) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(corEntry)));
 	}
 

@@ -35,7 +35,7 @@ public class TranslationEntryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(TranslationEntry translationEntry) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						translationEntry)));
 	}

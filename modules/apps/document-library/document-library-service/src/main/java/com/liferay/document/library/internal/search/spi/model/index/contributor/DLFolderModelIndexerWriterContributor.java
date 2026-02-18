@@ -42,7 +42,7 @@ public class DLFolderModelIndexerWriterContributor
 				dynamicQuery.add(property.eq(false));
 			});
 		batchIndexingActionable.setPerformActionMethod(
-			(DLFolder dlFolder) -> batchIndexingActionable.addDocuments(
+			(DLFolder dlFolder) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(dlFolder)));
 	}
 

@@ -161,7 +161,7 @@ public class CommerceCatalogIndexer extends BaseIndexer<CommerceCatalog> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceCatalog commerceCatalog) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(commerceCatalog));
 				}
 				catch (PortalException portalException) {

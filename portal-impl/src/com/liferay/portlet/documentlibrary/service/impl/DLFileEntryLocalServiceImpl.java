@@ -1984,7 +1984,7 @@ public class DLFileEntryLocalServiceImpl
 					return;
 				}
 
-				indexableActionableDynamicQuery.addDocuments(
+				indexableActionableDynamicQuery.addDocument(
 					indexer.getDocument(dlFileEntry));
 			});
 

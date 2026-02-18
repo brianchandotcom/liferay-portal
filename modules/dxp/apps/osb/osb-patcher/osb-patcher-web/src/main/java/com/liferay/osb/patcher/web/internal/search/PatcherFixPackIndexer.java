@@ -176,7 +176,7 @@ public class PatcherFixPackIndexer extends BaseIndexer<PatcherFixPack> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherFixPack patcherFixPack) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(patcherFixPack));
 				}
 				catch (PortalException portalException) {

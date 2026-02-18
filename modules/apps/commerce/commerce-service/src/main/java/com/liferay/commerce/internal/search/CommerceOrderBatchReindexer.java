@@ -43,7 +43,7 @@ public class CommerceOrderBatchReindexer {
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
 			(CommerceOrder commerceOrder) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					_indexerDocumentBuilder.getDocument(commerceOrder)));
 
 		batchIndexingActionable.performActions();

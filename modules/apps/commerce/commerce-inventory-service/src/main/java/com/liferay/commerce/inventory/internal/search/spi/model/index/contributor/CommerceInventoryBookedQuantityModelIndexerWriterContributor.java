@@ -38,7 +38,7 @@ public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						commerceInventoryBookedQuantity)));
 	}

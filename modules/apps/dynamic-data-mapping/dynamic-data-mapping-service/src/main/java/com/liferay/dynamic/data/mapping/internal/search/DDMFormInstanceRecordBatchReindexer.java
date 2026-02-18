@@ -42,7 +42,7 @@ public class DDMFormInstanceRecordBatchReindexer {
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					_indexerDocumentBuilder.getDocument(
 						ddmFormInstanceRecord)));
 

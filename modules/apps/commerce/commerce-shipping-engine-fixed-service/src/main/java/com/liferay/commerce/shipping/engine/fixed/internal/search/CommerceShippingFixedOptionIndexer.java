@@ -187,7 +187,7 @@ public class CommerceShippingFixedOptionIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommerceShippingFixedOption commerceShippingFixedOption) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(commerceShippingFixedOption));
 				}
 				catch (PortalException portalException) {

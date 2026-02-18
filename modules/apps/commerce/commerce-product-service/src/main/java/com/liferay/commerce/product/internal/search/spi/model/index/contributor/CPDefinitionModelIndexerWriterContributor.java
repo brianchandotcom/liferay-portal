@@ -35,7 +35,7 @@ public class CPDefinitionModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(CPDefinition cpDefinition) -> batchIndexingActionable.addDocuments(
+			(CPDefinition cpDefinition) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(cpDefinition)));
 	}
 

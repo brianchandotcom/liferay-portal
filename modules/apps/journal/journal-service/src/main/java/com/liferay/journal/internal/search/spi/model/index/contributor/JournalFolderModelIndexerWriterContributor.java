@@ -35,7 +35,7 @@ public class JournalFolderModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(JournalFolder journalFolder) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						journalFolder)));
 	}

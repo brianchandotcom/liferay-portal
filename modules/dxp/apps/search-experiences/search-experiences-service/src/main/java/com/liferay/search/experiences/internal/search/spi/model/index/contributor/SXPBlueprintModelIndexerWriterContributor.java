@@ -34,7 +34,7 @@ public class SXPBlueprintModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(SXPBlueprint sxpBlueprint) -> batchIndexingActionable.addDocuments(
+			(SXPBlueprint sxpBlueprint) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(sxpBlueprint)));
 	}
 

@@ -122,7 +122,7 @@ public class PatcherFixComponentIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherFixComponent patcherFixComponent) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(patcherFixComponent));
 				}
 				catch (PortalException portalException) {

@@ -267,7 +267,7 @@ public class PatcherBuildIndexer extends BaseIndexer<PatcherBuild> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherBuild patcherBuild) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(patcherBuild));
 				}
 				catch (PortalException portalException) {

@@ -246,7 +246,7 @@ public class CPDisplayLayoutIndexer extends BaseIndexer<CPDisplayLayout> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPDisplayLayout cpDisplayLayout) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(cpDisplayLayout));
 				}
 				catch (PortalException portalException) {

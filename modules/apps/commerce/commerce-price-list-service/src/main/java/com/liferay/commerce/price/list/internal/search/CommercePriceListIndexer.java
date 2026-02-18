@@ -341,7 +341,7 @@ public class CommercePriceListIndexer extends BaseIndexer<CommercePriceList> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CommercePriceList commercePriceList) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(commercePriceList));
 				}
 				catch (PortalException portalException) {

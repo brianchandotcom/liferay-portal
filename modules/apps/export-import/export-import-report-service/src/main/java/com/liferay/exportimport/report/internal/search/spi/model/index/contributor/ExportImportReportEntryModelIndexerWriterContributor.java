@@ -37,7 +37,7 @@ public class ExportImportReportEntryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(ExportImportReportEntry exportImportReportEntry) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						exportImportReportEntry)));
 	}

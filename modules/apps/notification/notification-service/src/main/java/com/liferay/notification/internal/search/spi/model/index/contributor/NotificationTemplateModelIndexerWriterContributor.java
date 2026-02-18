@@ -35,7 +35,7 @@ public class NotificationTemplateModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(NotificationTemplate notificationTemplate) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						notificationTemplate)));
 	}

@@ -35,7 +35,7 @@ public class KaleoInstanceModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(KaleoInstance kaleoInstance) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						kaleoInstance)));
 	}

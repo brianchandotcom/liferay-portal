@@ -34,7 +34,7 @@ public class OrganizationModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Organization organization) -> batchIndexingActionable.addDocuments(
+			(Organization organization) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(organization)));
 	}
 

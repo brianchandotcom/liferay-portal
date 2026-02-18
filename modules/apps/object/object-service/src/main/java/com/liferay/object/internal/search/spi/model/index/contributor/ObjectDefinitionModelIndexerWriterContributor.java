@@ -35,7 +35,7 @@ public class ObjectDefinitionModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(ObjectDefinition objectDefinition) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						objectDefinition)));
 	}

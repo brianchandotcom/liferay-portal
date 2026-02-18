@@ -39,7 +39,7 @@ public class DDMFormInstanceModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(DDMFormInstance ddmFormInstance) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						ddmFormInstance)));
 	}

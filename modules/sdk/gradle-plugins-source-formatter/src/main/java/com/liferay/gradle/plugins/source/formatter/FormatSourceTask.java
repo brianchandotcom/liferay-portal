@@ -39,6 +39,12 @@ public class FormatSourceTask extends JavaExec {
 		mainClass.set("com.liferay.source.formatter.SourceFormatter");
 	}
 
+	public void addSourceFormatterProperty(String key, String value) {
+		List<String> sourceFormatterProperties = getSourceFormatterProperties();
+
+		sourceFormatterProperties.add(key + "=" + value);
+	}
+
 	@Override
 	public void exec() {
 		setArgs(_getCompleteArgs());
@@ -269,12 +275,6 @@ public class FormatSourceTask extends JavaExec {
 
 	public void setValidateCommitMessages(boolean validateCommitMessages) {
 		_sourceFormatterArgs.setValidateCommitMessages(validateCommitMessages);
-	}
-
-	public void addSourceFormatterProperty(String key, String value) {
-		List<String> sourceFormatterProperties = getSourceFormatterProperties();
-
-		sourceFormatterProperties.add(key + "=" + value);
 	}
 
 	private List<String> _getCompleteArgs() {

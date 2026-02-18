@@ -41,9 +41,9 @@ public class BlogsEntryUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long groupId = resultSet.getLong(1);
-				long classPK = resultSet.getLong(2);
-				String urlTitle = resultSet.getString(3);
+				long groupId = resultSet.getLong("groupId");
+				long classPK = resultSet.getLong("entryId");
+				String urlTitle = resultSet.getString("urlTitle");
 
 				long classNameId = PortalUtil.getClassNameId(
 					BlogsEntry.class.getName());

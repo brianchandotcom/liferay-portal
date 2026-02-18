@@ -23,6 +23,14 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 	}
 
 	protected void createBuildFailureObjectRef() throws IOException {
+		boolean bundleBuilderFailureCachingEnabled = Boolean.parseBoolean(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"bundle.builder.failure.caching.enabled"));
+
+		if (!bundleBuilderFailureCachingEnabled) {
+			return;
+		}
+
 		Map<String, String> startPropertiesTempMap =
 			getStartPropertiesTempMap();
 
@@ -33,13 +41,7 @@ public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 		String s3ObjectPath =
 			startPropertiesTempMap.get("S3_BUCKET_DIST_PATH") + "/" + filePath;
 
-		boolean bundleBuilderFailureCachingEnabled = Boolean.parseBoolean(
-			JenkinsResultsParserUtil.getBuildProperty(
-				"bundle.builder.failure.caching.enabled"));
-
-		if (!bundleBuilderFailureCachingEnabled ||
-			CloudBucketUtil.isS3ObjectRefAvailable(s3ObjectPath)) {
-
+		if (CloudBucketUtil.isS3ObjectRefAvailable(s3ObjectPath)) {
 			return;
 		}
 

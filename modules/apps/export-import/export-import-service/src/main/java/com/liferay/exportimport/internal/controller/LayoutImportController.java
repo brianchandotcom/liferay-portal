@@ -9,7 +9,8 @@ import com.liferay.asset.link.model.adapter.StagedAssetLink;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletImportController;
-import com.liferay.exportimport.data.handler.PortletElementUtil;
+import com.liferay.exportimport.data.handler.PortletElementHandler;
+import com.liferay.exportimport.data.handler.PortletElementHandlerFactory;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
@@ -624,8 +625,11 @@ public class LayoutImportController implements ImportController {
 		List<Element> portletElements = _fetchPortletElements(rootElement);
 
 		for (Element portletElement : portletElements) {
-			String targetPortletId = _portletElementUtil.getTargetPortletId(
-				companyId, portletElement);
+			PortletElementHandler portletElementHandler =
+				_portletElementHandlerFactory.create(portletElement);
+
+			String targetPortletId = portletElementHandler.getTargetPortletId(
+				companyId);
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(companyId, targetPortletId);
@@ -637,14 +641,14 @@ public class LayoutImportController implements ImportController {
 
 					throw new MissingPortletDataHandlerException(
 						GetterUtil.getString(
-							portletElement.attributeValue("display-name")));
+							portletElementHandler.getDisplayName()));
 				}
 
 				continue;
 			}
 
 			String schemaVersion = GetterUtil.getString(
-				portletElement.attributeValue("schema-version"));
+				portletElementHandler.getSchemaVersion());
 
 			if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
 				throw new LayoutImportException(
@@ -1387,7 +1391,7 @@ public class LayoutImportController implements ImportController {
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Reference
-	private PortletElementUtil _portletElementUtil;
+	private PortletElementHandlerFactory _portletElementHandlerFactory;
 
 	@Reference
 	private PortletImportController _portletImportController;

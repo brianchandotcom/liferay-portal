@@ -6,8 +6,6 @@
 package com.liferay.portal.search.model.uid;
 
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.DocumentBuilder;
 
 import java.io.Serializable;
 
@@ -24,12 +22,5 @@ public interface UIDFactory {
 	public String getUID(
 		String modelClassName, Serializable primaryKeyObject,
 		long ctCollectionId);
-
-	public void setUID(
-		ClassedModel classedModel,
-		com.liferay.portal.kernel.search.Document document);
-
-	public void setUID(
-		ClassedModel classedModel, DocumentBuilder documentBuilder);
 
 }

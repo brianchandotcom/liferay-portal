@@ -47,7 +47,7 @@ public class BaseModelDocumentFactoryImpl implements BaseModelDocumentFactory {
 			_getRootEntryClassPK(classPKResourcePrimKeyTuple)
 		);
 
-		uidFactory.setUID(baseModel, documentBuilder);
+		documentBuilder.setString(Field.UID, uidFactory.getUID(baseModel));
 
 		return _toLegacyDocument(documentBuilder.build());
 	}

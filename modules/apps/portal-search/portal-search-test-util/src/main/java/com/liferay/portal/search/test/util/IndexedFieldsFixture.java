@@ -127,7 +127,7 @@ public class IndexedFieldsFixture {
 
 		DocumentBuilder documentBuilder = DocumentBuilderFactory.builder();
 
-		_uidFactory.setUID(classedModel, documentBuilder);
+		documentBuilder.setString(Field.UID, _uidFactory.getUID(classedModel));
 
 		Document document = documentBuilder.build();
 

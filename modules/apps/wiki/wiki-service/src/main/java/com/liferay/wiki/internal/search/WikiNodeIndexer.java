@@ -77,7 +77,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	protected Document doGetDocument(WikiNode wikiNode) throws Exception {
 		Document document = getBaseModelDocument(CLASS_NAME, wikiNode);
 
-		uidFactory.setUID(wikiNode, document);
+		document.addKeyword(Field.UID, uidFactory.getUID(wikiNode));
 
 		document.addText(Field.DESCRIPTION, wikiNode.getDescription());
 

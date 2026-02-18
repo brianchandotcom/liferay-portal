@@ -60,7 +60,7 @@ public class JournalArticleModelDocumentContributor
 			_log.debug("Indexing journal article " + journalArticle);
 		}
 
-		_uidFactory.setUID(journalArticle, document);
+		document.addKeyword(Field.UID, _uidFactory.getUID(journalArticle));
 
 		String articleId = journalArticle.getArticleId();
 

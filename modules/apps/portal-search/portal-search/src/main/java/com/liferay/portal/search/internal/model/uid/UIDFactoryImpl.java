@@ -9,9 +9,6 @@ import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.document.Document;
-import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.model.uid.UIDFactory;
 
 import java.io.Serializable;
@@ -51,21 +48,6 @@ public class UIDFactoryImpl implements UIDFactory {
 		}
 
 		return modelClassName + "_PORTLET_" + primaryKeyObject;
-	}
-
-	@Override
-	public void setUID(
-		ClassedModel classedModel,
-		com.liferay.portal.kernel.search.Document document) {
-
-		document.addKeyword(Field.UID, getUID(classedModel));
-	}
-
-	@Override
-	public void setUID(
-		ClassedModel classedModel, DocumentBuilder documentBuilder) {
-
-		documentBuilder.setString(Field.UID, getUID(classedModel));
 	}
 
 }

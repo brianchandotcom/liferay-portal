@@ -42,7 +42,7 @@ public class WikiPageModelDocumentContributor
 
 	@Override
 	public void contribute(Document document, WikiPage wikiPage) {
-		uidFactory.setUID(wikiPage, document);
+		document.addKeyword(Field.UID, uidFactory.getUID(wikiPage));
 
 		String content = null;
 

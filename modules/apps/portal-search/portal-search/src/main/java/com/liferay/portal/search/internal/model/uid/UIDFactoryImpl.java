@@ -26,67 +26,31 @@ public class UIDFactoryImpl implements UIDFactory {
 
 	@Override
 	public String getUID(ClassedModel classedModel) {
-		return _getUID(classedModel);
+		long ctCollectionId = CTConstants.CT_COLLECTION_ID_PRODUCTION;
+
+		if (classedModel instanceof CTModel<?>) {
+			CTModel<?> ctModel = (CTModel<?>)classedModel;
+
+			ctCollectionId = ctModel.getCtCollectionId();
+		}
+
+		return getUID(
+			classedModel.getModelClassName(), classedModel.getPrimaryKeyObj(),
+			ctCollectionId);
 	}
 
 	@Override
 	public String getUID(com.liferay.portal.kernel.search.Document document) {
-		return _getUID(document);
+		return document.getUID();
 	}
 
 	@Override
 	public String getUID(Document document) {
-		return _getUID(document);
+		return document.getString(Field.UID);
 	}
 
 	@Override
 	public String getUID(
-		String modelClassName, Serializable primaryKeyObject,
-		long ctCollectionId) {
-
-		return _getUID(modelClassName, primaryKeyObject, ctCollectionId);
-	}
-
-	@Override
-	public void setUID(
-		ClassedModel classedModel,
-		com.liferay.portal.kernel.search.Document document) {
-
-		document.addKeyword(Field.UID, _getUID(classedModel));
-	}
-
-	@Override
-	public void setUID(
-		ClassedModel classedModel, DocumentBuilder documentBuilder) {
-
-		documentBuilder.setString(Field.UID, _getUID(classedModel));
-	}
-
-	private long _getCtCollectionId(ClassedModel classedModel) {
-		if (classedModel instanceof CTModel<?>) {
-			CTModel<?> ctModel = (CTModel<?>)classedModel;
-
-			return ctModel.getCtCollectionId();
-		}
-
-		return CTConstants.CT_COLLECTION_ID_PRODUCTION;
-	}
-
-	private String _getUID(ClassedModel classedModel) {
-		return _getUID(
-			classedModel.getModelClassName(), classedModel.getPrimaryKeyObj(),
-			_getCtCollectionId(classedModel));
-	}
-
-	private String _getUID(com.liferay.portal.kernel.search.Document document) {
-		return document.getUID();
-	}
-
-	private String _getUID(Document document) {
-		return document.getString(Field.UID);
-	}
-
-	private String _getUID(
 		String modelClassName, Serializable primaryKeyObject,
 		long ctCollectionId) {
 
@@ -97,6 +61,21 @@ public class UIDFactoryImpl implements UIDFactory {
 		}
 
 		return modelClassName + "_PORTLET_" + primaryKeyObject;
+	}
+
+	@Override
+	public void setUID(
+		ClassedModel classedModel,
+		com.liferay.portal.kernel.search.Document document) {
+
+		document.addKeyword(Field.UID, getUID(classedModel));
+	}
+
+	@Override
+	public void setUID(
+		ClassedModel classedModel, DocumentBuilder documentBuilder) {
+
+		documentBuilder.setString(Field.UID, getUID(classedModel));
 	}
 
 }

@@ -1,5 +1,5 @@
 {
-	"@generated": "b4146cc835a9aed47ef385b2c5b0da2be8cfdd3c",
+	"@generated": "21a42015122c8a9de394195f24d52e0c566c7ee4",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -16,9 +16,6 @@
 			],
 			"@liferay/frontend-js-react-web": [
 				"../../../../../../frontend-js-react-web/src/main/resources/META-INF/resources/js/index.ts"
-			],
-			"@liferay/site-cms-site-initializer": [
-				"../../../../../../../site/site-cms-site-initializer/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -51,9 +48,6 @@
 		},
 		{
 			"path": "../../../../../../frontend-js-react-web/src/main/resources/META-INF/resources/tsconfig.json"
-		},
-		{
-			"path": "../../../../../../../site/site-cms-site-initializer/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

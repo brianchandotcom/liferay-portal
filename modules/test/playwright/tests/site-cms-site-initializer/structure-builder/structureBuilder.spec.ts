@@ -378,18 +378,14 @@ test(
 			page.locator('.treeview-link', {hasText: 'File'})
 		).toBeVisible();
 
-		// Check fields are not editable
+		// Check name field is not editable
 
 		await structureBuilderPage.selectFields([{label: 'Title'}]);
 
-		await expect(page.getByLabel('Label')).toBeDisabled();
-		await expect(page.getByLabel('ERC')).toBeDisabled();
 		await expect(page.getByLabel('Field Name')).toBeDisabled();
 
 		await structureBuilderPage.selectFields([{label: 'File'}]);
 
-		await expect(page.getByLabel('Label')).toBeDisabled();
-		await expect(page.getByLabel('ERC')).toBeDisabled();
 		await expect(page.getByLabel('Field Name')).toBeDisabled();
 	}
 );

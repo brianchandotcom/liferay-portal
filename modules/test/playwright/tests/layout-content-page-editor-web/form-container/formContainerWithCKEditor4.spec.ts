@@ -817,7 +817,6 @@ test(
 		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 			{
 				classNameId: className.classNameId,
-				classTypeId: '0',
 				groupId: site.id,
 				name: displayPageTemplateName,
 			}

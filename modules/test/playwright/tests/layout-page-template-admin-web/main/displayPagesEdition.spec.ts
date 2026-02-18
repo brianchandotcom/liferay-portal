@@ -21,7 +21,6 @@ import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import {getWebContentStructureId} from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTest';
 import {
@@ -54,17 +53,11 @@ async function addDefaultAnimalDisplayPageTemplate(
 		'com.liferay.journal.model.JournalArticle'
 	);
 
-	const animalWebContentStructureId = await getWebContentStructureId(
-		apiHelpers,
-		site.id,
-		ANIMAL_DDM_STRUCTURE_KEY
-	);
-
 	const displayPage =
 		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 			{
 				classNameId: className.classNameId,
-				classTypeId: String(animalWebContentStructureId),
+				classTypeKey: ANIMAL_DDM_STRUCTURE_KEY,
 				groupId: site.id,
 				name: displayPageTemplateName,
 			}
@@ -544,7 +537,7 @@ test.describe('Image Resolution', () => {
 				await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 					{
 						classNameId: className.classNameId,
-						classTypeId: '0',
+						classTypeKey: 'BASIC-DOCUMENT',
 						groupId: pageManagementSite.id,
 						name: displayPageTemplateName,
 					}

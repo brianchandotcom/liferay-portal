@@ -13,7 +13,6 @@ import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
-import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 const test = mergeTests(
@@ -57,9 +56,7 @@ test('Add a heading fragment and check that the display page templates are shown
 		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 			{
 				classNameId: className.classNameId,
-				classTypeId: String(
-					await getBasicWebContentStructureId(apiHelpers)
-				),
+				classTypeKey: 'BASIC-WEB-CONTENT',
 				groupId: site.id,
 				name: displayPageTemplateNameWebContent,
 			}

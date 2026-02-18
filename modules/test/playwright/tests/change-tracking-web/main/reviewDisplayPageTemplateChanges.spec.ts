@@ -54,14 +54,11 @@ test.beforeEach(
 			}
 		);
 
-		basicWebContentStructureId =
-			await getBasicWebContentStructureId(apiHelpers);
-
 		journalDisplayPage =
 			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 				{
 					classNameId: journalArticleClassName.classNameId,
-					classTypeId: String(basicWebContentStructureId),
+					classTypeKey: 'BASIC-WEB-CONTENT',
 					groupId: site.id,
 					name: getRandomString(),
 					type: 'display-page',
@@ -100,6 +97,9 @@ test(
 		await expect(displayPageLocator).toBeVisible();
 
 		const journalArticleTitle = getRandomString();
+
+		basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
 
 		await apiHelpers.jsonWebServicesJournal.addWebContent({
 			ddmStructureId: basicWebContentStructureId,

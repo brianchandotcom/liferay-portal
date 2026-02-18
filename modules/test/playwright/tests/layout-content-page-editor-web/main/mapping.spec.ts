@@ -22,9 +22,7 @@ import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden'
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import addApprovedStructuredContent from '../../../utils/structured-content/addApprovedStructuredContent';
-import getBasicWebContentStructureId, {
-	getWebContentStructureId,
-} from '../../../utils/structured-content/getBasicWebContentStructureId';
+import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {
 	ANIMALS_COLLECTION_NAME,
@@ -386,19 +384,13 @@ test(
 				'com.liferay.journal.model.JournalArticle'
 			);
 
-		const animalWebContentStructureId = await getWebContentStructureId(
-			apiHelpers,
-			pageManagementSite.id,
-			ANIMAL_DDM_STRUCTURE_KEY
-		);
-
 		const displayPageTemplateName = getRandomString();
 
 		const displayPage =
 			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 				{
 					classNameId: className.classNameId,
-					classTypeId: String(animalWebContentStructureId),
+					classTypeKey: ANIMAL_DDM_STRUCTURE_KEY,
 					groupId: pageManagementSite.id,
 					name: displayPageTemplateName,
 				}

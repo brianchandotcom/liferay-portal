@@ -22,7 +22,7 @@ Region region = (Region)row.getObject();
 	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
-	<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.MANAGE_COUNTRIES) %>">
+	<c:if test="<%= CountryPermissionUtil.contains(permissionChecker, region.getCountryId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/address/edit_region" />
 			<portlet:param name="backURL" value="<%= currentURL %>" />

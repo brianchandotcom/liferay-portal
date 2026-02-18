@@ -8,6 +8,10 @@ package com.liferay.address.web.internal.frontend.taglib.servlet.taglib;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.model.Country;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.permission.CountryPermissionUtil;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,6 +36,17 @@ public class CountryDetailsScreenNavigationEntry
 	@Override
 	public String getEntryKey() {
 		return getCategoryKey();
+	}
+
+	@Override
+	public boolean isVisible(User user, Country country) {
+		if (country == null) {
+			return true;
+		}
+
+		return CountryPermissionUtil.contains(
+			PermissionCheckerFactoryUtil.create(user), country,
+			ActionKeys.UPDATE);
 	}
 
 	@Override

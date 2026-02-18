@@ -68,6 +68,14 @@ public class VerticalNavTag extends BaseContainerTag {
 		return _large;
 	}
 
+	public boolean getNestMargins() {
+		return _nestMargins;
+	}
+
+	public boolean getStacked() {
+		return _stacked;
+	}
+
 	public List<VerticalNavItem> getVerticalNavItems() {
 		return _verticalNavItems;
 	}
@@ -100,10 +108,18 @@ public class VerticalNavTag extends BaseContainerTag {
 		_large = large;
 	}
 
+	public void setNestMargins(boolean nestMargins) {
+		_nestMargins = nestMargins;
+	}
+
 	public void setSize(String size) {
 		if (Objects.equals(size, "lg") || Objects.equals(size, "md")) {
 			_size = size;
 		}
+	}
+
+	public void setStacked(boolean stacked) {
+		_stacked = stacked;
 	}
 
 	public void setVerticalNavItems(List<VerticalNavItem> verticalNavItems) {
@@ -120,7 +136,9 @@ public class VerticalNavTag extends BaseContainerTag {
 		_defaultExpandedKeys = null;
 		_displayType = "transparent";
 		_large = false;
+		_nestMargins = false;
 		_size = null;
+		_stacked = false;
 		_verticalNavItems = null;
 	}
 
@@ -142,8 +160,10 @@ public class VerticalNavTag extends BaseContainerTag {
 		props.put("defaultExpandedKeys", getDefaultExpandedKeys());
 		props.put("displayType", _displayType);
 		props.put("large", _large);
+		props.put("nestMargins", _nestMargins);
 		props.put("items", _verticalNavItems);
 		props.put("size", _size);
+		props.put("stacked", _stacked);
 
 		return super.prepareProps(props);
 	}
@@ -184,7 +204,8 @@ public class VerticalNavTag extends BaseContainerTag {
 			jspWriter.write("<div class=\"collapse menubar-collapse\">");
 		}
 
-		_renderVerticalNavItems(jspWriter, _verticalNavItems, 0);
+		_renderVerticalNavItems(
+			jspWriter, _verticalNavItems, 0, _nestMargins, _stacked);
 
 		if (_collapse) {
 			jspWriter.write("</div>");
@@ -275,12 +296,15 @@ public class VerticalNavTag extends BaseContainerTag {
 
 	private void _renderVerticalNavItems(
 			JspWriter jspWriter, List<VerticalNavItem> verticalNavItems,
-			int depth)
+			int depth, boolean nestMargins, boolean stacked)
 		throws Exception {
 
 		jspWriter.write("<ul aria-orientation=\"vertical\" class=\"nav ");
 
-		if (depth == 0) {
+		if (nestMargins) {
+			jspWriter.write("nav-nested-margins");
+		}
+		else if ((depth == 0) && !stacked) {
 			jspWriter.write("nav-nested");
 		}
 		else {
@@ -431,7 +455,8 @@ public class VerticalNavTag extends BaseContainerTag {
 			}
 
 			if ((items != null) && expanded) {
-				_renderVerticalNavItems(jspWriter, items, depth++);
+				_renderVerticalNavItems(
+					jspWriter, items, depth++, _nestMargins, _stacked);
 			}
 
 			jspWriter.write("</li>");
@@ -446,7 +471,9 @@ public class VerticalNavTag extends BaseContainerTag {
 	private List<String> _defaultExpandedKeys;
 	private String _displayType = "transparent";
 	private boolean _large;
+	private boolean _nestMargins;
 	private String _size;
+	private boolean _stacked;
 	private List<VerticalNavItem> _verticalNavItems;
 
 }

@@ -25,22 +25,28 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 			   PathProxyAwareAbsolutePortalURLBuilder<T> {
 
 	public BaseWebContextResourceAbsolutePortalURLBuilderImpl(
-		String cdnHost, HashedFilesRegistry hashedFilesRegistry,
+		String cdnHost, boolean enableUseOneHashPerWebContext,
+		HashedFilesRegistry hashedFilesRegistry,
 		HttpServletRequest httpServletRequest, String pathModule,
-		String pathProxy, String resourcePath, String webContextPath) {
+		String pathProxy, String resourcePath, String webContextName) {
 
 		if (!resourcePath.startsWith(StringPool.SLASH)) {
 			resourcePath = StringPool.SLASH + resourcePath;
 		}
 
-		if (!webContextPath.startsWith(StringPool.SLASH)) {
-			webContextPath = StringPool.SLASH + webContextPath;
+		String webContextPath = StringPool.SLASH + webContextName;
+
+		CachingStrategy cachingStrategy =
+			hashedFilesRegistry.getCachingStrategy(httpServletRequest);
+
+		if (!enableUseOneHashPerWebContext &&
+			(cachingStrategy == CachingStrategy.USE_ONE_HASH_PER_WEB_CONTEXT)) {
+
+			cachingStrategy = CachingStrategy.USE_ONE_HASH_PER_FILE;
 		}
 
-		String prefix = pathModule + webContextPath;
-
-		if (hashedFilesRegistry.getCachingStrategy(httpServletRequest) ==
-				CachingStrategy.USE_ONE_HASH_PER_FILE) {
+		if (cachingStrategy == CachingStrategy.USE_ONE_HASH_PER_FILE) {
+			String prefix = pathModule + webContextPath;
 
 			String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
 				prefix + resourcePath);
@@ -49,11 +55,24 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 				resourcePath = hashedFileURI.substring(prefix.length());
 			}
 		}
+		else if (cachingStrategy ==
+					cachingStrategy.USE_ONE_HASH_PER_WEB_CONTEXT) {
+
+			String servletContextHash =
+				hashedFilesRegistry.getServletContextHash(webContextName);
+
+			if (servletContextHash != null) {
+				webContextPath = StringBundler.concat(
+					"/js/-", webContextPath, StringPool.OPEN_PARENTHESIS,
+					servletContextHash, StringPool.CLOSE_PARENTHESIS);
+			}
+		}
 
 		_cdnHost = cdnHost;
 		_pathModule = pathModule;
 		_pathProxy = pathProxy;
 		_resourcePath = resourcePath;
+
 		_webContextPath = webContextPath;
 	}
 

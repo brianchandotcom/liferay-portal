@@ -30,6 +30,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -37,6 +38,8 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.configuration.StagingConfiguration;
@@ -67,6 +70,9 @@ import org.osgi.util.tracker.ServiceTracker;
 /**
  * @author Tamas Molnar
  */
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
+)
 @RunWith(Arquillian.class)
 public class StagingDataPortletPreferencesTest
 	extends BaseLocalStagingTestCase {
@@ -83,12 +89,18 @@ public class StagingDataPortletPreferencesTest
 			HashMapDictionaryBuilder.<String, Object>put(
 				"publishDisplayedContent", false
 			).build());
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		ConfigurationTestUtil.deleteConfiguration(
 			StagingConfiguration.class.getName());
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test
@@ -319,7 +331,11 @@ public class StagingDataPortletPreferencesTest
 
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()});
+			new String[] {Boolean.TRUE.toString()});
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.TRUE.toString()});
 
 		publishLayouts(parameterMap);
 

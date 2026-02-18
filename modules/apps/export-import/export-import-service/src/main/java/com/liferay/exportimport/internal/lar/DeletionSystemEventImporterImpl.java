@@ -5,7 +5,8 @@
 
 package com.liferay.exportimport.internal.lar;
 
-import com.liferay.exportimport.data.handler.PortletElementUtil;
+import com.liferay.exportimport.data.handler.PortletElementHandler;
+import com.liferay.exportimport.data.handler.PortletElementHandlerFactory;
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -93,8 +94,11 @@ public class DeletionSystemEventImporterImpl
 		}
 
 		for (Element portletElement : sitePortletsElement.elements()) {
-			String targetPortletId = _portletElementUtil.getTargetPortletId(
-				portletDataContext.getCompanyId(), portletElement);
+			PortletElementHandler portletElementHandler =
+				_portletElementHandlerFactory.create(portletElement);
+
+			String targetPortletId = portletElementHandler.getTargetPortletId(
+				portletDataContext.getCompanyId());
 
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(
@@ -169,6 +173,6 @@ public class DeletionSystemEventImporterImpl
 	private PortletDataHandlerProvider _portletDataHandlerProvider;
 
 	@Reference
-	private PortletElementUtil _portletElementUtil;
+	private PortletElementHandlerFactory _portletElementHandlerFactory;
 
 }

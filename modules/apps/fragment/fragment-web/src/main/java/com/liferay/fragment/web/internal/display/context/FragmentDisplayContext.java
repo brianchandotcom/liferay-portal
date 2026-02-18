@@ -297,9 +297,20 @@ public class FragmentDisplayContext {
 			return _fragmentCollection;
 		}
 
-		_fragmentCollection =
+		FragmentCollection fragmentCollection =
 			FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
 				getFragmentCollectionId());
+
+		if ((fragmentCollection != null) &&
+			(fragmentCollection.getGroupId() !=
+				_themeDisplay.getCompanyGroupId()) &&
+			(fragmentCollection.getGroupId() !=
+				_themeDisplay.getScopeGroupId())) {
+
+			fragmentCollection = null;
+		}
+
+		_fragmentCollection = fragmentCollection;
 
 		return _fragmentCollection;
 	}

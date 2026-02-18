@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.document;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
@@ -183,7 +184,7 @@ public class ElasticsearchDocumentFactoryUtil {
 		}
 		else {
 			for (String value : values) {
-				xContentBuilder.value(_translateValue(field, value));
+				_translateValue(xContentBuilder, field, value);
 			}
 		}
 
@@ -292,29 +293,44 @@ public class ElasticsearchDocumentFactoryUtil {
 		return xContentBuilder;
 	}
 
-	private static Object _translateValue(
-		com.liferay.portal.kernel.search.Field field, String value) {
+	private static void _translateValue(
+			XContentBuilder xContentBuilder,
+			com.liferay.portal.kernel.search.Field field, String value)
+		throws IOException {
 
 		if (!field.isNumeric()) {
-			return value;
+			xContentBuilder.value(value);
+
+			return;
 		}
 
 		Class<? extends Number> clazz = field.getNumericClass();
 
 		if (clazz.equals(Float.class)) {
-			return Float.valueOf(value);
-		}
-		else if (clazz.equals(Integer.class)) {
-			return Integer.valueOf(value);
-		}
-		else if (clazz.equals(Long.class)) {
-			return Long.valueOf(value);
-		}
-		else if (clazz.equals(Short.class)) {
-			return Short.valueOf(value);
+			xContentBuilder.value(GetterUtil.getFloat(value));
+
+			return;
 		}
 
-		return Double.valueOf(value);
+		if (clazz.equals(Integer.class)) {
+			xContentBuilder.value(GetterUtil.getInteger(value));
+
+			return;
+		}
+
+		if (clazz.equals(Long.class)) {
+			xContentBuilder.value(GetterUtil.getLong(value));
+
+			return;
+		}
+
+		if (clazz.equals(Short.class)) {
+			xContentBuilder.value(GetterUtil.getShort(value));
+
+			return;
+		}
+
+		xContentBuilder.value(GetterUtil.getDouble(value));
 	}
 
 }

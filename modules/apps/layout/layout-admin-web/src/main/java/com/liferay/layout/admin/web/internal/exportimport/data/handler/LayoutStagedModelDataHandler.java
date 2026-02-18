@@ -139,6 +139,7 @@ import com.liferay.staging.configuration.StagingConfiguration;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -2277,9 +2278,11 @@ public class LayoutStagedModelDataHandler
 			Image image = importedLayout.getIconImage();
 
 			if (image != null) {
-				_imageLocalService.updateImage(
-					importedLayout.getCompanyId(), image.getImageId(),
-					iconBytes);
+				if (!Arrays.equals(image.getTextObj(), iconBytes)) {
+					_imageLocalService.updateImage(
+						importedLayout.getCompanyId(), image.getImageId(),
+						iconBytes);
+				}
 			}
 			else {
 				long imageId = _counterLocalService.increment();

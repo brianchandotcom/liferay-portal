@@ -51,6 +51,7 @@ public class GenerateReportsControllerBuildRunner
 
 			if (reportName.startsWith("Flaky Test")) {
 				flakyTestReportNames.add(reportName);
+
 				iterator.remove();
 			}
 		}
@@ -113,18 +114,12 @@ public class GenerateReportsControllerBuildRunner
 
 		invocationParameters.put("REPORT_NAMES", String.join(",", reportNames));
 
-		boolean slaveLabel = false;
-
 		for (String reportName : reportNames) {
 			if (reportName.startsWith("Flaky Test")) {
-				slaveLabel = true;
+				invocationParameters.put("SLAVE_LABEL", "slave");
 
 				break;
 			}
-		}
-
-		if (slaveLabel) {
-			invocationParameters.put("SLAVE_LABEL", "slave");
 		}
 
 		for (Map.Entry<String, String> invocationParameter :

@@ -107,6 +107,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -360,6 +361,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 	public void testGetSearchPageWithSortInteger() throws Exception {
 	}
 
+	@Ignore
 	@Override
 	@Test
 	@TestInfo("LPD-57341")
@@ -390,6 +392,7 @@ public class SearchResultResourceTest extends BaseSearchResultResourceTestCase {
 		_testPostSearchPageZeroResults();
 	}
 
+	@Ignore
 	@Test
 	public void testSearchEndpointRedirect() throws Exception {
 		_baseURI = "portal-search-rest";

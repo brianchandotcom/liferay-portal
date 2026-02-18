@@ -164,16 +164,13 @@ public class SitePageResourceImpl
 			public Map<String, Serializable> getParameters(
 				PortletDataContext portletDataContext) {
 
-				if (ExportImportDateUtil.isRangeFromLastPublishDate(
-						portletDataContext)) {
-
-					return null;
-				}
-
 				return HashMapBuilder.<String, Serializable>put(
 					"filter",
 					() -> {
-						if (portletDataContext.getLayoutIds() == null) {
+						if ((portletDataContext.getLayoutIds() == null) ||
+							ExportImportDateUtil.isRangeFromLastPublishDate(
+								portletDataContext)) {
+
 							return null;
 						}
 

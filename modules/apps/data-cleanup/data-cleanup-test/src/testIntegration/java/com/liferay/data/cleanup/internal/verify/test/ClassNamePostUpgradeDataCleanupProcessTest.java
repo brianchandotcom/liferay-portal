@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.log.LogCapture;
@@ -542,15 +543,15 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 	@Override
 	protected Object[] getPostUpgradeDataCleanupProcessArguments() {
 		return new Object[] {
-			_classNameLocalService, connection, _objectDefinitionLocalService
+			_classNameLocalService, _companyLocalService, connection, _objectDefinitionLocalService
 		};
 	}
 
 	@Override
 	protected Class<?>[] getPostUpgradeDataCleanupProcessArgumentTypes() {
 		return new Class<?>[] {
-			ClassNameLocalService.class, Connection.class,
-			ObjectDefinitionLocalService.class
+			ClassNameLocalService.class, CompanyLocalService.class,
+			Connection.class, ObjectDefinitionLocalService.class
 		};
 	}
 
@@ -610,6 +611,9 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

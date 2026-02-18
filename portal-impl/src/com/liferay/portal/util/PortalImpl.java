@@ -6286,25 +6286,31 @@ public class PortalImpl implements Portal {
 	@Override
 	public void updateImageERC(
 			BaseModel<?> baseModel, boolean hasImage, byte[] bytes,
-			String fieldName, long maxSize, int maxHeight, int maxWidth)
+			String fieldName, long maxSize, int maxHeight, int maxWidth,
+			Runnable deleteStrategy)
 		throws PortalException {
 
 		String externalReferenceCode = BeanPropertiesUtil.getString(
 			baseModel, fieldName);
 
 		if (!hasImage) {
-			if (Validator.isNotNull(externalReferenceCode)) {
+			if (deleteStrategy != null) {
+				deleteStrategy.run();
+			}
+			else if (Validator.isNotNull(externalReferenceCode)) {
+				long companyId = BeanPropertiesUtil.getLong(
+					baseModel, "companyId");
+
 				Image image =
 					ImageLocalServiceUtil.fetchImageByExternalReferenceCode(
-						externalReferenceCode,
-						BeanPropertiesUtil.getLong(baseModel, "companyId"));
+						externalReferenceCode, companyId);
 
 				if (image != null) {
 					ImageLocalServiceUtil.deleteImage(image.getImageId());
 				}
-
-				BeanPropertiesUtil.setProperty(baseModel, fieldName, null);
 			}
+
+			BeanPropertiesUtil.setProperty(baseModel, fieldName, null);
 
 			return;
 		}

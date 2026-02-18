@@ -1119,7 +1119,8 @@ public interface Portal {
 
 	public void updateImageERC(
 			BaseModel<?> baseModel, boolean image, byte[] bytes,
-			String fieldName, long maxSize, int maxHeight, int maxWidth)
+			String fieldName, long maxSize, int maxHeight, int maxWidth,
+			Runnable deleteStrategy)
 		throws PortalException;
 
 	public void updateImageId(

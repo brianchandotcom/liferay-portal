@@ -6,7 +6,6 @@
 package com.liferay.commerce.product.internal.upgrade.v5_22_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -50,14 +49,16 @@ public class CPSpecificationOptionUpgradeProcessTest {
 		try (Connection connection = DataAccess.getConnection()) {
 			DBInspector dbInspector = new DBInspector(connection);
 
-			if (!dbInspector.hasColumn(
+			if (dbInspector.hasColumn(
 					"CPSpecificationOption", "listTypeDefinitionId")) {
 
-				_db.runSQLTemplate(
-					"alter table CPSpecificationOption add " +
-						"listTypeDefinitionId LONG;",
-					true);
+				return;
 			}
+
+			_db.runSQLTemplate(
+				"alter table CPSpecificationOption add listTypeDefinitionId " +
+					"LONG;",
+				true);
 		}
 	}
 
@@ -69,10 +70,9 @@ public class CPSpecificationOptionUpgradeProcessTest {
 			PreparedStatement preparedStatement =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
-					StringBundler.concat(
-						"insert into CPSpecificationOption (",
-						"CPSpecificationOptionId, listTypeDefinitionId) ",
-						"values (?, ?)"))) {
+					"insert into CPSpecificationOption (" +
+						"CPSpecificationOptionId, listTypeDefinitionId) " +
+							"values (?, ?)")) {
 
 			preparedStatement.setLong(1, cpSpecificationOptionId);
 
@@ -87,16 +87,14 @@ public class CPSpecificationOptionUpgradeProcessTest {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from CPSOListTypeDefinitionRel where " +
-					"cpSpecificationOptionId = ?")) {
+				"select count(*) as count from CPSOListTypeDefinitionRel " +
+					"where cpSpecificationOptionId = ?")) {
 
 			preparedStatement.setLong(1, cpSpecificationOptionId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					Assert.assertEquals(1, count);
+					Assert.assertEquals(1, resultSet.getInt("count"));
 				}
 			}
 		}

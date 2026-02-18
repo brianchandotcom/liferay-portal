@@ -74,10 +74,9 @@ public class CPDefinitionLocalizationUpgradeProcessTest {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long cProductId = resultSet.getLong(1);
-
 					Assert.assertEquals(
-						cProductId, cpDefinition.getCProductId());
+						resultSet.getLong("cProductId"),
+						cpDefinition.getCProductId());
 				}
 			}
 		}

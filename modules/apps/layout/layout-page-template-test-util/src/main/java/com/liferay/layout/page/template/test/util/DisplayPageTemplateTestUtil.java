@@ -50,11 +50,21 @@ public class DisplayPageTemplateTestUtil {
 			int status)
 		throws PortalException {
 
+		return addDisplayPageTemplate(
+			groupId, classNameId, classTypeKey, defaultTemplate,
+			layoutPageTemplateEntryKey, RandomTestUtil.randomString(), status);
+	}
+
+	public static LayoutPageTemplateEntry addDisplayPageTemplate(
+			long groupId, long classNameId, String classTypeKey,
+			boolean defaultTemplate, String layoutPageTemplateEntryKey,
+			String name, int status)
+		throws PortalException {
+
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), groupId, 0,
-				layoutPageTemplateEntryKey, classNameId, classTypeKey,
-				RandomTestUtil.randomString(),
+				layoutPageTemplateEntryKey, classNameId, classTypeKey, name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				defaultTemplate, 0, 0, 0, status,
 				ServiceContextTestUtil.getServiceContext(

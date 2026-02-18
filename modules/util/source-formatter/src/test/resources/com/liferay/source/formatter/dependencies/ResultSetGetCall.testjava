@@ -36,11 +36,12 @@ public class ResultSetGetCall {
 
 			preparedStatement.setString(1, "portlet");
 
-			ResultSet resultSet = preparedStatement.executeQuery();
-
-			while (resultSet.next()) {
-				plids.add(
-					resultSet.getLong("LayoutPageTemplateStructure.classPK"));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					plids.add(
+						resultSet.getLong(
+							"LayoutPageTemplateStructure.classPK"));
+				}
 			}
 
 			return plids;

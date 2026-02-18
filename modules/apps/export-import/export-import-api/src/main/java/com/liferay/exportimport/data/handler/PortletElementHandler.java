@@ -40,4 +40,29 @@ public interface PortletElementHandler {
 
 	public boolean isPortletData();
 
+	public boolean isValidateExistingDataHandler();
+
+	public void setDisplayName(String displayName);
+
+	public void setLayoutId(long layoutId);
+
+	public void setMissingPortletSupported(boolean missingPortletSupported);
+
+	public void setPath(String path);
+
+	public void setPortletConfiguration(String portletConfiguration);
+
+	public void setPortletData(boolean portletData);
+
+	public void setPortletDataHandlerKey(String portletDataHandlerKey);
+
+	public void setRank(int rank);
+
+	public void setSchemaVersion(String schemaVersion);
+
+	public void setSourcePortletId(String sourcePortletId);
+
+	public void setValidateExistingDataHandler(
+		boolean validateExistingDataHandler);
+
 }

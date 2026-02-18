@@ -26,17 +26,17 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public String getDisplayName() {
-		return _portletElement.attributeValue("display-name");
+		return _portletElement.attributeValue(_DISPLAY_NAME);
 	}
 
 	@Override
 	public long getLayoutId() {
-		return GetterUtil.getLong(_portletElement.attributeValue("layout-id"));
+		return GetterUtil.getLong(_portletElement.attributeValue(_LAYOUT_ID));
 	}
 
 	@Override
 	public String getPath() {
-		return _portletElement.attributeValue("path");
+		return _portletElement.attributeValue(_PATH);
 	}
 
 	@Override
@@ -53,28 +53,28 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public String getPortletConfiguration() {
-		return _portletElement.attributeValue("portlet-configuration");
+		return _portletElement.attributeValue(_PORTLET_CONFIGURATION);
 	}
 
 	@Override
 	public String getPortletDataHandlerKey() {
-		return _portletElement.attributeValue("portlet-data-handler-key");
+		return _portletElement.attributeValue(_PORTLET_DATA_HANDLER_KEY);
 	}
 
 	@Override
 	public int getRank() {
 		return GetterUtil.getInteger(
-			_portletElement.attributeValue("portlet-data-handler-rank"));
+			_portletElement.attributeValue(_PORTLET_DATA_HANDLER_RANK));
 	}
 
 	@Override
 	public String getSchemaVersion() {
-		return _portletElement.attributeValue("schema-version");
+		return _portletElement.attributeValue(_SCHEMA_VERSION);
 	}
 
 	@Override
 	public String getSourcePortletId() {
-		return _portletElement.attributeValue("portlet-id");
+		return _portletElement.attributeValue(_PORTLET_ID);
 	}
 
 	@Override
@@ -96,14 +96,112 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	@Override
 	public boolean isMissingPortletSupported() {
 		return GetterUtil.getBoolean(
-			_portletElement.attributeValue("missing-portlet-supported"));
+			_portletElement.attributeValue(_MISSING_PORTLET_SUPPORTED));
 	}
 
 	@Override
 	public boolean isPortletData() {
 		return GetterUtil.getBoolean(
-			_portletElement.attributeValue("portlet-data"));
+			_portletElement.attributeValue(_PORTLET_DATA));
 	}
+
+	@Override
+	public boolean isValidateExistingDataHandler() {
+		return GetterUtil.getBoolean(
+			_portletElement.attributeValue(_VALIDATE_EXISTING_DATA_HANDLER));
+	}
+
+	@Override
+	public void setDisplayName(String displayName) {
+		_portletElement.addAttribute(_DISPLAY_NAME, displayName);
+	}
+
+	@Override
+	public void setLayoutId(long layoutId) {
+		_portletElement.addAttribute(_LAYOUT_ID, String.valueOf(layoutId));
+	}
+
+	@Override
+	public void setMissingPortletSupported(boolean missingPortletSupported) {
+		_portletElement.addAttribute(
+			_MISSING_PORTLET_SUPPORTED,
+			String.valueOf(missingPortletSupported));
+	}
+
+	@Override
+	public void setPath(String path) {
+		_portletElement.addAttribute(_PATH, path);
+	}
+
+	@Override
+	public void setPortletConfiguration(String portletConfiguration) {
+		_portletElement.addAttribute(
+			_PORTLET_CONFIGURATION, portletConfiguration);
+	}
+
+	@Override
+	public void setPortletData(boolean portletData) {
+		_portletElement.addAttribute(
+			_PORTLET_DATA, String.valueOf(portletData));
+	}
+
+	@Override
+	public void setPortletDataHandlerKey(String portletDataHandlerKey) {
+		_portletElement.addAttribute(
+			_PORTLET_DATA_HANDLER_KEY, portletDataHandlerKey);
+	}
+
+	@Override
+	public void setRank(int rank) {
+		_portletElement.addAttribute(
+			_PORTLET_DATA_HANDLER_RANK, String.valueOf(rank));
+	}
+
+	@Override
+	public void setSchemaVersion(String schemaVersion) {
+		_portletElement.addAttribute(_SCHEMA_VERSION, schemaVersion);
+	}
+
+	@Override
+	public void setSourcePortletId(String sourcePortletId) {
+		_portletElement.addAttribute(_PORTLET_ID, sourcePortletId);
+	}
+
+	@Override
+	public void setValidateExistingDataHandler(
+		boolean validateExistingDataHandler) {
+
+		_portletElement.addAttribute(
+			_VALIDATE_EXISTING_DATA_HANDLER,
+			String.valueOf(validateExistingDataHandler));
+	}
+
+	private static final String _DISPLAY_NAME = "display-name";
+
+	private static final String _LAYOUT_ID = "layout-id";
+
+	private static final String _MISSING_PORTLET_SUPPORTED =
+		"missing-portlet-supported";
+
+	private static final String _PATH = "path";
+
+	private static final String _PORTLET_CONFIGURATION =
+		"portlet-configuration";
+
+	private static final String _PORTLET_DATA = "portlet-data";
+
+	private static final String _PORTLET_DATA_HANDLER_KEY =
+		"portlet-data-handler-key";
+
+	private static final String _PORTLET_DATA_HANDLER_RANK =
+		"portlet-data-handler-rank";
+
+	private static final String _PORTLET_ID = "portlet-id";
+
+	private static final String _SCHEMA_VERSION = "schema-version";
+
+	private static final String _VALIDATE_EXISTING_DATA_HANDLER =
+		"validate-existing-data-handler";
 
 	private final Element _portletElement;
 	private final PortletLocalService _portletLocalService;

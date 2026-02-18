@@ -8,14 +8,11 @@ package com.liferay.portal.search.internal.model.uid;
 import com.liferay.change.tracking.constants.CTConstants;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.ClassedModel;
-import com.liferay.portal.kernel.model.ResourcedModel;
 import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.document.DocumentBuilder;
 import com.liferay.portal.search.model.uid.UIDFactory;
-import com.liferay.portal.search.util.SearchStringUtil;
 
 import java.io.Serializable;
 
@@ -34,20 +31,11 @@ public class UIDFactoryImpl implements UIDFactory {
 
 	@Override
 	public String getUID(com.liferay.portal.kernel.search.Document document) {
-		if (_ENFORCE_STANDARD_UID) {
-			return _requireEquals(document.get("uidm"), _getUID(document));
-		}
-
 		return _getUID(document);
 	}
 
 	@Override
 	public String getUID(Document document) {
-		if (_ENFORCE_STANDARD_UID) {
-			return _requireEquals(
-				document.getString("uidm"), _getUID(document));
-		}
-
 		return _getUID(document);
 	}
 
@@ -64,32 +52,12 @@ public class UIDFactoryImpl implements UIDFactory {
 		ClassedModel classedModel,
 		com.liferay.portal.kernel.search.Document document) {
 
-		if (_ENFORCE_STANDARD_UID) {
-			if (!(classedModel instanceof ResourcedModel) &&
-				!Validator.isBlank(_getUID(document))) {
-
-				_requireEquals(_getUID(classedModel), _getUID(document));
-			}
-
-			document.addKeyword(Field.UID, _getUID(classedModel));
-			document.addKeyword("uidm", _getUID(classedModel));
-
-			return;
-		}
-
 		document.addKeyword(Field.UID, _getUID(classedModel));
 	}
 
 	@Override
 	public void setUID(
 		ClassedModel classedModel, DocumentBuilder documentBuilder) {
-
-		if (_ENFORCE_STANDARD_UID) {
-			documentBuilder.setString(Field.UID, _getUID(classedModel));
-			documentBuilder.setString("uidm", _getUID(classedModel));
-
-			return;
-		}
 
 		documentBuilder.setString(Field.UID, _getUID(classedModel));
 	}
@@ -130,22 +98,5 @@ public class UIDFactoryImpl implements UIDFactory {
 
 		return modelClassName + "_PORTLET_" + primaryKeyObject;
 	}
-
-	private boolean _isKnownNonstandard(String uid) {
-		return uid.startsWith(_SYSTEM_SETTINGS_UID_PREFIX);
-	}
-
-	private String _requireEquals(String expected, String actual) {
-		if (_isKnownNonstandard(actual)) {
-			return actual;
-		}
-
-		return SearchStringUtil.requireEquals(expected, actual);
-	}
-
-	private static final boolean _ENFORCE_STANDARD_UID = false;
-
-	private static final String _SYSTEM_SETTINGS_UID_PREFIX =
-		"com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet";
 
 }

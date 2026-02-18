@@ -147,6 +147,7 @@ const GalleryView = ({
 					) : (
 						<AssetPreview
 							item={currentItem}
+							key={selectedIndex}
 							url={additionalProps.contentViewURL}
 						/>
 					)}

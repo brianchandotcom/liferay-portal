@@ -53,8 +53,8 @@ export default function Settings() {
 	if (item.type === 'field') {
 		return (
 			<StructureFieldSettings
-				disabled={item.referenced || item.field.locked}
 				field={item.field}
+				isReferenced={item.referenced}
 				key={item.field.uuid}
 			/>
 		);

@@ -35,7 +35,7 @@ public class DepotEntryModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DepotEntry depotEntry) -> batchIndexingActionable.addDocuments(
+			(DepotEntry depotEntry) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(depotEntry)));
 	}
 

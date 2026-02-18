@@ -36,7 +36,7 @@ public class CPTaxCategoryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CPTaxCategory cpTaxCategory) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						cpTaxCategory)));
 	}

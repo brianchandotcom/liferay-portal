@@ -36,7 +36,7 @@ public class CommerceOrderItemModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CommerceOrderItem commerceOrderItem) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						commerceOrderItem)));
 	}

@@ -56,7 +56,7 @@ public class ObjectEntryBatchReindexer {
 			});
 		batchIndexingActionable.setCompanyId(companyId);
 		batchIndexingActionable.setPerformActionMethod(
-			(ObjectEntry objectEntry) -> batchIndexingActionable.addDocuments(
+			(ObjectEntry objectEntry) -> batchIndexingActionable.addDocument(
 				indexerDocumentBuilder.getDocument(objectEntry)));
 
 		batchIndexingActionable.performActions();

@@ -199,7 +199,7 @@ public class CPDefinitionOptionValueRelIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CPDefinitionOptionValueRel cpDefinitionOptionValueRel) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(cpDefinitionOptionValueRel));
 				}
 				catch (PortalException portalException) {

@@ -36,7 +36,7 @@ public class DLFileEntryTypeModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(DLFileEntryType dlFileEntryType) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						dlFileEntryType)));
 	}

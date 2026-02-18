@@ -41,7 +41,7 @@ public class ContactModelIndexerWriterContributor
 
 				@Override
 				public void accept(Contact contact) {
-					batchIndexingActionable.addDocuments(
+					batchIndexingActionable.addDocument(
 						modelIndexerWriterDocumentHelper.getDocument(contact));
 				}
 

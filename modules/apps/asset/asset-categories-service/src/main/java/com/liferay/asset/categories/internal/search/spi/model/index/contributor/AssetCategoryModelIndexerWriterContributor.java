@@ -36,7 +36,7 @@ public class AssetCategoryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(AssetCategory assetCategory) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						assetCategory)));
 	}

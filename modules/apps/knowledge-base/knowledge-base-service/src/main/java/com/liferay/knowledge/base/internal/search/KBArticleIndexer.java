@@ -298,7 +298,7 @@ public class KBArticleIndexer extends BaseIndexer<KBArticle> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(KBArticle kbArticle) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(kbArticle));
 				}
 				catch (PortalException portalException) {

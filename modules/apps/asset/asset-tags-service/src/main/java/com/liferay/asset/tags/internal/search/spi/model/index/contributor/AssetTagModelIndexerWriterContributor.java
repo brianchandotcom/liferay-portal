@@ -35,7 +35,7 @@ public class AssetTagModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(AssetTag assetTag) -> batchIndexingActionable.addDocuments(
+			(AssetTag assetTag) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(assetTag)));
 	}
 

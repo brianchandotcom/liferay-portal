@@ -75,7 +75,7 @@ public class UserBulkReindexer implements BulkReindexer {
 			(User user) -> {
 				if (!user.isGuestUser()) {
 					try {
-						indexableActionableDynamicQuery.addDocuments(
+						indexableActionableDynamicQuery.addDocument(
 							indexer.getDocument(user));
 					}
 					catch (PortalException portalException) {

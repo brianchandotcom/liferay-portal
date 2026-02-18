@@ -41,7 +41,7 @@ public class DLFileEntryModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(DLFileEntry dlFileEntry) -> batchIndexingActionable.addDocuments(
+			(DLFileEntry dlFileEntry) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(dlFileEntry)));
 	}
 

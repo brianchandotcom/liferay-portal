@@ -35,7 +35,7 @@ public class SiteNavigationMenuModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(SiteNavigationMenu siteNavigationMenu) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						siteNavigationMenu)));
 	}

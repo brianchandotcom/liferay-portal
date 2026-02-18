@@ -41,7 +41,7 @@ public class KaleoDefinitionModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(KaleoDefinition kaleoDefinition) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						kaleoDefinition)));
 	}

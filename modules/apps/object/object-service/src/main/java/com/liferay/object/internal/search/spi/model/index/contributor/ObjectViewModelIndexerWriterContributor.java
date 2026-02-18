@@ -34,7 +34,7 @@ public class ObjectViewModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(ObjectView objectView) -> batchIndexingActionable.addDocuments(
+			(ObjectView objectView) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(objectView)));
 	}
 

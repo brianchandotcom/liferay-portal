@@ -35,7 +35,7 @@ public class ObjectEntryFolderModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(ObjectEntryFolder objectEntryFolder) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						objectEntryFolder)));
 	}

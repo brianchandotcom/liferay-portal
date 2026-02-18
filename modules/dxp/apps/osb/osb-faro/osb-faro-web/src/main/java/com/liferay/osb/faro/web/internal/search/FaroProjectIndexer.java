@@ -266,7 +266,7 @@ public class FaroProjectIndexer extends BaseIndexer<FaroProject> {
 						Document document = getDocument(faroProject);
 
 						if (document != null) {
-							indexableActionableDynamicQuery.addDocuments(
+							indexableActionableDynamicQuery.addDocument(
 								document);
 						}
 					}

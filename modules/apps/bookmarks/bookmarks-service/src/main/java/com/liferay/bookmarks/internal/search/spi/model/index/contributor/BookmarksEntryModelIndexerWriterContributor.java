@@ -52,7 +52,7 @@ public class BookmarksEntryModelIndexerWriterContributor
 			});
 		batchIndexingActionable.setPerformActionMethod(
 			(BookmarksEntry bookmarksEntry) -> {
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						bookmarksEntry));
 

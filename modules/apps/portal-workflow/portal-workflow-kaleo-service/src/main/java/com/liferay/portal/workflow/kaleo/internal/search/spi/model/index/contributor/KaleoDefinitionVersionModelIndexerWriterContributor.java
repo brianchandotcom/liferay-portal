@@ -36,7 +36,7 @@ public class KaleoDefinitionVersionModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(KaleoDefinitionVersion kaleoDefinitionVersion) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						kaleoDefinitionVersion)));
 	}

@@ -4454,7 +4454,7 @@ public class JournalArticleLocalServiceImpl
 				indexableActionableDynamicQuery.setCompanyId(
 					article.getCompanyId());
 
-				indexableActionableDynamicQuery.addDocuments(
+				indexableActionableDynamicQuery.addDocument(
 					indexer.getDocument(article));
 			});
 
@@ -6088,7 +6088,7 @@ public class JournalArticleLocalServiceImpl
 					updatePreviousApprovedArticle(article);
 
 					if (indexer != null) {
-						indexableActionableDynamicQuery.addDocuments(
+						indexableActionableDynamicQuery.addDocument(
 							indexer.getDocument(article));
 					}
 				}

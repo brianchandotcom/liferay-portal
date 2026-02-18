@@ -77,7 +77,7 @@ public class MBMessageModelIndexerWriterContributor
 					return;
 				}
 
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(mbMessage));
 			});
 	}

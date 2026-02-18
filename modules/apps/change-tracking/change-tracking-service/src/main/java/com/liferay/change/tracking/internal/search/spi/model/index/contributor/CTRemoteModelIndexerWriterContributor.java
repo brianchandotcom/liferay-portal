@@ -34,7 +34,7 @@ public class CTRemoteModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(CTRemote ctRemote) -> batchIndexingActionable.addDocuments(
+			(CTRemote ctRemote) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(ctRemote)));
 	}
 

@@ -84,7 +84,7 @@ public class ObjectEntryModelIndexerWriterContributor
 			(ObjectEntry objectEntry) -> {
 				objectEntry.setObjectDefinition(objectDefinition);
 
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(objectEntry));
 			});
 	}

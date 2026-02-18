@@ -74,7 +74,7 @@ public class DDLRecordModelIndexerWriterContributor
 				dynamicQuery.add(recordSetProperty.in(recordSetDynamicQuery));
 			});
 		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecord record) -> batchIndexingActionable.addDocuments(
+			(DDLRecord record) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(record)));
 	}
 

@@ -36,7 +36,7 @@ public class CommercePaymentEntryModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CommercePaymentEntry commercePaymentEntry) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						commercePaymentEntry)));
 	}

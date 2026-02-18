@@ -34,7 +34,7 @@ public class ObjectActionModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(ObjectAction objectAction) -> batchIndexingActionable.addDocuments(
+			(ObjectAction objectAction) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(objectAction)));
 	}
 

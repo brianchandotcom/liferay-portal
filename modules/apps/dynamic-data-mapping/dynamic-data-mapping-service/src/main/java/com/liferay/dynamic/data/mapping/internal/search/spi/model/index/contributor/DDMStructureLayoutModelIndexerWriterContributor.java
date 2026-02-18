@@ -35,7 +35,7 @@ public class DDMStructureLayoutModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(DDMStructureLayout ddmStructureLayout) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						ddmStructureLayout)));
 	}

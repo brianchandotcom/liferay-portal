@@ -35,7 +35,7 @@ public class DEDataListViewModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(DEDataListView deDataListView) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						deDataListView)));
 	}

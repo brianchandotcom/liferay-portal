@@ -37,7 +37,7 @@ public class ObjectRelationshipModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(ObjectRelationship objectRelationship) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						objectRelationship)));
 	}

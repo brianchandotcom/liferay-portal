@@ -44,7 +44,7 @@ public class UserModelIndexerWriterContributor
 		batchIndexingActionable.setPerformActionMethod(
 			(User user) -> {
 				if (!user.isGuestUser()) {
-					batchIndexingActionable.addDocuments(
+					batchIndexingActionable.addDocument(
 						modelIndexerWriterDocumentHelper.getDocument(user));
 				}
 			});

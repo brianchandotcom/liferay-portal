@@ -34,7 +34,7 @@ public class ObjectFieldModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(ObjectField objectField) -> batchIndexingActionable.addDocuments(
+			(ObjectField objectField) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(objectField)));
 	}
 

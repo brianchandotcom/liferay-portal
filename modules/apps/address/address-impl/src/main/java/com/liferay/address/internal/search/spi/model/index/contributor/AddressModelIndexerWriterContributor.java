@@ -34,7 +34,7 @@ public class AddressModelIndexerWriterContributor
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		batchIndexingActionable.setPerformActionMethod(
-			(Address address) -> batchIndexingActionable.addDocuments(
+			(Address address) -> batchIndexingActionable.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(address)));
 	}
 

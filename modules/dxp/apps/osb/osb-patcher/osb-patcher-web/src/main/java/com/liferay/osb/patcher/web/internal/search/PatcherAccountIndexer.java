@@ -132,7 +132,7 @@ public class PatcherAccountIndexer extends BaseIndexer<PatcherAccount> {
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(PatcherAccount patcherAccount) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(patcherAccount));
 				}
 				catch (PortalException portalException) {

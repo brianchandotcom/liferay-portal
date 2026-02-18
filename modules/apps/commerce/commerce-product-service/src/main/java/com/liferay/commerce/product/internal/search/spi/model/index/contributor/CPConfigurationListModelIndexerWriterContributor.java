@@ -36,7 +36,7 @@ public class CPConfigurationListModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CPConfigurationList cpConfigurationList) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						cpConfigurationList)));
 	}

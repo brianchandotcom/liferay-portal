@@ -36,7 +36,7 @@ public class CPSpecificationOptionModelIndexerWriterContributor
 
 		batchIndexingActionable.setPerformActionMethod(
 			(CPSpecificationOption cpSpecificationOption) ->
-				batchIndexingActionable.addDocuments(
+				batchIndexingActionable.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						cpSpecificationOption)));
 	}

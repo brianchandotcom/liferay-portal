@@ -420,7 +420,7 @@ public class CPSpecificationOptionLocalServiceImpl
 				cpDefinitionSpecificationOptionValue) -> {
 
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						indexer.getDocument(
 							cpDefinitionSpecificationOptionValue.
 								getCPDefinition()));

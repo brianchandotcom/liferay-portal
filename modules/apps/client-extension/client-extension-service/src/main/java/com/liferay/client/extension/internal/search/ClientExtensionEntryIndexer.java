@@ -151,7 +151,7 @@ public class ClientExtensionEntryIndexer
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(ClientExtensionEntry clientExtensionEntry) -> {
 				try {
-					indexableActionableDynamicQuery.addDocuments(
+					indexableActionableDynamicQuery.addDocument(
 						getDocument(clientExtensionEntry));
 				}
 				catch (PortalException portalException) {

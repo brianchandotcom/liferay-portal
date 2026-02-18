@@ -1,5 +1,5 @@
 {
-	"@generated": "b26796b65a1c8c286ee8d869c93acc16fe5d71f8",
+	"@generated": "aa5bedfe0f4cd43c73e697d4eec90f8c325559ab",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -37,6 +37,9 @@
 			],
 			"@liferay/object-js-components-web": [
 				"../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"@liferay/site-cms-site-initializer": [
+				"../../../../../../../site/site-cms-site-initializer/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-editor-ckeditor-web": [
 				"../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"
@@ -93,6 +96,9 @@
 		},
 		{
 			"path": "../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../site/site-cms-site-initializer/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/tsconfig.json"

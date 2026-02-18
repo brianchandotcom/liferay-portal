@@ -6,7 +6,6 @@
 package com.liferay.layout.page.template.model.impl;
 
 import com.liferay.document.library.util.DLURLHelperUtil;
-import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -14,7 +13,6 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Jürgen Kappler
@@ -29,26 +27,6 @@ public class LayoutPageTemplateEntryImpl
 		}
 
 		return PortalUtil.fetchClassName(getClassNameId());
-	}
-
-	@Override
-	public long getClassTypeId() {
-		if (super.getClassTypeId() >= 0) {
-			return super.getClassTypeId();
-		}
-
-		return LayoutPageTemplateEntryUtil.getClassTypeId(
-			getClassNameId(), super.getClassTypeKey(), getGroupId());
-	}
-
-	@Override
-	public String getClassTypeKey() {
-		if (Validator.isNotNull(super.getClassTypeKey())) {
-			return super.getClassTypeKey();
-		}
-
-		return LayoutPageTemplateEntryUtil.getClassTypeKey(
-			getClassNameId(), super.getClassTypeId(), getGroupId());
 	}
 
 	@Override

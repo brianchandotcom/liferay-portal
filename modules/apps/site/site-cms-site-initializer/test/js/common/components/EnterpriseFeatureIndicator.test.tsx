@@ -41,7 +41,7 @@ describe('EnterpriseFeatureIndicator', () => {
 
 		expect(
 			screen.getByText(
-				'this-feature-is-only-available-on-the-enterprise-plan'
+				'this-feature-is-only-available-on-the-enterprise-subscription'
 			)
 		).toBeInTheDocument();
 

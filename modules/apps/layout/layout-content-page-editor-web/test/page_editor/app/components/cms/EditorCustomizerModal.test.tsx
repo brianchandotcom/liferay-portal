@@ -9,11 +9,13 @@ import React from 'react';
 import '@testing-library/jest-dom';
 
 import EditorCustomizerModal from '../../../../../src/main/resources/META-INF/resources/page_editor/app/components/cms/EditorCustomizerModal';
+import {config} from '../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index';
 
 jest.mock(
 	'../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
 	() => ({
 		config: {
+			freeTier: true,
 			imagesPath: '/images',
 			isCMS: true,
 			portletNamespace: 'test-namespace-',
@@ -43,8 +45,6 @@ describe('EditorCustomizerModal', () => {
 	});
 
 	it('renders enterprise modal when feature flag is enabled', () => {
-		Liferay.FeatureFlags['LPD-74377'] = true;
-
 		render(<EditorCustomizerModal />);
 
 		act(() => {
@@ -52,14 +52,15 @@ describe('EditorCustomizerModal', () => {
 		});
 
 		expect(
-			screen.getByText('upgrade-to-unlock-the-editor-customizer')
+			screen.getByText('upgrade-to-unlock-the-editor-customization')
 		).toBeInTheDocument();
 
 		expect(screen.getByText('enterprise')).toBeInTheDocument();
 	});
 
-	it('renders intro modal when feature flag is disabled', async () => {
-		Liferay.FeatureFlags['LPD-74377'] = false;
+	it('renders intro modal when it is not free tier', async () => {
+		config.freeTier = false;
+
 		Liferay.Util.Session.get.mockResolvedValue('false');
 
 		render(<EditorCustomizerModal />);
@@ -70,7 +71,9 @@ describe('EditorCustomizerModal', () => {
 		});
 
 		expect(
-			await screen.findByText('introducing-editor-customizer')
+			await screen.findByText('introducing-editor-customization')
 		).toBeInTheDocument();
+
+		config.freeTier = true;
 	});
 });

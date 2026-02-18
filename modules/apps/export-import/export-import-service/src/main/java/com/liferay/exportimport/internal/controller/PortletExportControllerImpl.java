@@ -569,11 +569,11 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 			element.addAttribute("missing-portlet-supported", "true");
 			element.addAttribute(
-				"portlet-data-handler-rank",
-				String.valueOf(batchEnginePortletDataHandler.getRank()));
-			element.addAttribute(
 				"portlet-data-handler-key",
 				batchEnginePortletDataHandler.getKey());
+			element.addAttribute(
+				"portlet-data-handler-rank",
+				String.valueOf(batchEnginePortletDataHandler.getRank()));
 		}
 
 		element.addAttribute(

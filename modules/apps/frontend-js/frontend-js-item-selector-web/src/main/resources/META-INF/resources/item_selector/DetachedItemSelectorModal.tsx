@@ -6,12 +6,8 @@
 import {useModal} from '@clayui/modal';
 import React, {useEffect} from 'react';
 
-import ItemSelectorModal, {IItemSelectorModalProps} from './ItemSelectorModal';
-
-export type TDetachedItemSelectorModal<T> = Omit<
-	IItemSelectorModalProps<T>,
-	'observer' | 'onOpenChange' | 'open'
->;
+import ItemSelectorModal from './ItemSelectorModal';
+import {TDetachedItemSelectorModal} from './types';
 
 function DetachedItemSelectorModal<T extends Record<string, any>>(
 	props: TDetachedItemSelectorModal<T>

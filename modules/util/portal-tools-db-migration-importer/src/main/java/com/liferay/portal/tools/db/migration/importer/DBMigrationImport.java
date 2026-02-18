@@ -101,7 +101,7 @@ public class DBMigrationImport {
 				printWriter.println(
 					StringUtil.merge(
 						new Object[] {
-							"Export date: " +
+							"Import date: " +
 								simpleDateFormat.format(new Date()),
 							dbMigrationImportProcess.getReleaseInfo(),
 							StringPool.NEW_LINE, StringPool.NEW_LINE,

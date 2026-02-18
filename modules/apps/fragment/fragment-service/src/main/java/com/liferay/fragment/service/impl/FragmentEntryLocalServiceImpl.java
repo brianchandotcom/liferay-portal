@@ -301,23 +301,7 @@ public class FragmentEntryLocalServiceImpl
 	public FragmentEntry deleteFragmentEntry(FragmentEntry fragmentEntry)
 		throws PortalException {
 
-		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
-
-		long fragmentEntryLinkCount =
-			_fragmentEntryLinkLocalService.
-				getFragmentEntryLinksCountByFragmentEntryERC(
-					fragmentEntry.getExternalReferenceCode(),
-					group.getExternalReferenceCode(), false);
-
-		if (fragmentEntryLinkCount == 0) {
-			fragmentEntryLinkCount +=
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksCountByFragmentEntryERC(
-						fragmentEntry.getGroupId(),
-						fragmentEntry.getExternalReferenceCode(), null, false);
-		}
-
-		if (fragmentEntryLinkCount > 0) {
+		if (fragmentEntry.getUsageCount() > 0) {
 			throw new RequiredFragmentEntryException();
 		}
 
@@ -325,6 +309,8 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getCompanyId(), FragmentEntry.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fragmentEntry.getFragmentEntryId());
+
+		Group group = _groupLocalService.getGroup(fragmentEntry.getGroupId());
 
 		if (Validator.isNotNull(group.getExternalReferenceCode())) {
 			_fragmentEntryLinkLocalService.

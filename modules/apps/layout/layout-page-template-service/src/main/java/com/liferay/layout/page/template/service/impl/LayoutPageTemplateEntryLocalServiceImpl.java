@@ -492,6 +492,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 	}
 
 	@Override
+	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId, String classTypeKey) {
+
+		return layoutPageTemplateEntryPersistence.fetchByG_C_C_D_First(
+			groupId, classNameId, classTypeKey, true, null);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
 		long layoutPrototypeId) {
 

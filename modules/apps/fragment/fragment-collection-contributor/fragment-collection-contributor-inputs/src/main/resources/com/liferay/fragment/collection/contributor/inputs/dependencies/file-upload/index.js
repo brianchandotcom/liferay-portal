@@ -74,8 +74,8 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 	event.preventDefault();
 
 	if (input.attributes.isCMS) {
-		import('@liferay/fragment-impl/api')
-			.then(({openCMSItemSelectorModal}) => {
+		import('@liferay/fragment-impl/api').then(
+			({openCMSItemSelectorModal}) => {
 				openCMSItemSelectorModal({
 					groupId: input.attributes.groupId,
 					onSelect(items) {
@@ -96,9 +96,10 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 
 							showRemoveButton();
 						}
-					}
+					},
 				});
-			});
+			}
+		);
 
 		return;
 	}

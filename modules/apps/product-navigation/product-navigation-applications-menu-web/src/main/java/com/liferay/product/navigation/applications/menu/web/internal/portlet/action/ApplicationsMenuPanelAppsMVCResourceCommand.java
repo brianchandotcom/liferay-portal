@@ -51,7 +51,6 @@ import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.product.navigation.applications.menu.web.internal.constants.ProductNavigationApplicationsMenuPortletKeys;
-import com.liferay.product.navigation.applications.menu.web.internal.util.ApplicationsMenuUtil;
 import com.liferay.site.item.selector.SiteItemSelectorCriterion;
 import com.liferay.site.manager.RecentGroupManager;
 import com.liferay.site.provider.GroupURLProvider;

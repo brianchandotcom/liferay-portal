@@ -11,10 +11,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -69,11 +66,9 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot()) {
-			return;
-		}
+		if (_isApplicationsMenuApp(themeDisplay) || scopeGroup.isDepot() ||
+			!_hasPanelCategories(themeDisplay)) {
 
-		if (!_hasPanelCategories(themeDisplay)) {
 			return;
 		}
 
@@ -142,11 +137,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
-		if (!childPanelCategories.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !childPanelCategories.isEmpty();
 	}
 
 	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {
@@ -172,13 +163,7 @@ public class ProductMenuBodyTopDynamicInclude extends BaseDynamicInclude {
 		return true;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductMenuBodyTopDynamicInclude.class);
-
 	private volatile BundleContext _bundleContext;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private Language _language;

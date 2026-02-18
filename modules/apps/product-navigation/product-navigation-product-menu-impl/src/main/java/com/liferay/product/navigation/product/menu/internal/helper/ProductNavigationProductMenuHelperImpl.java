@@ -10,9 +10,6 @@ import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -47,11 +44,9 @@ public class ProductNavigationProductMenuHelperImpl
 
 		User user = themeDisplay.getUser();
 
-		if (!themeDisplay.isImpersonated() && !user.isSetupComplete()) {
-			return false;
-		}
+		if ((!themeDisplay.isImpersonated() && !user.isSetupComplete()) ||
+			_isApplicationsMenuApp(themeDisplay)) {
 
-		if (_isApplicationsMenuApp(themeDisplay)) {
 			return false;
 		}
 
@@ -66,11 +61,7 @@ public class ProductNavigationProductMenuHelperImpl
 				PanelCategoryKeys.ROOT, themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
-		if (!childPanelCategories.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !childPanelCategories.isEmpty();
 	}
 
 	private boolean _isApplicationsMenuApp(ThemeDisplay themeDisplay) {
@@ -95,12 +86,6 @@ public class ProductNavigationProductMenuHelperImpl
 
 		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductNavigationProductMenuHelperImpl.class);
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private PanelAppRegistry _panelAppRegistry;

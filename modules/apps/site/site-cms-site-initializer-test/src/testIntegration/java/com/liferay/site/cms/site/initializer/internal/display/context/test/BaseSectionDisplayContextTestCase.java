@@ -211,7 +211,7 @@ public abstract class BaseSectionDisplayContextTestCase
 							StringPool.BLANK, Collections.emptyMap(),
 							themeDisplay,
 							RequestBackedPortletURLFactoryUtil.create(
-								getMockHttpServletRequest()));
+								mockHttpServletRequest));
 
 					Map<String, Object> data =
 						contentItemCommentEditorConfiguration.getData();

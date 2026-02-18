@@ -17,7 +17,10 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.VARIABLE_DEF};
+		return new int[] {
+			TokenTypes.PARAMETER_DEF, TokenTypes.RESOURCE,
+			TokenTypes.VARIABLE_DEF
+		};
 	}
 
 	@Override
@@ -77,7 +80,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			log(
 				firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER,
-				variableName + ".get*");
+				variableName);
 		}
 	}
 

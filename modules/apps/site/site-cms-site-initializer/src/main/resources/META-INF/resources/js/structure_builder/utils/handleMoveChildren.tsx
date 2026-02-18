@@ -78,9 +78,13 @@ export default async function handleMoveChildren({
 		return;
 	}
 
-	const target = findChild({root: structure, uuid: targetUuid}) as
-		| Structure
-		| RepeatableGroup;
+	const target =
+		targetUuid === structure.uuid
+			? structure
+			: (findChild({
+					root: structure,
+					uuid: targetUuid,
+				}) as RepeatableGroup);
 
 	if (hasNameConflict(movableItems, target)) {
 		const onNameConflict = await openOptionsModal({

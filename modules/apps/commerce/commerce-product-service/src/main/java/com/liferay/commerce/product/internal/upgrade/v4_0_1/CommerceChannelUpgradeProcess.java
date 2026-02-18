@@ -41,15 +41,15 @@ public class CommerceChannelUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long siteGroupId = resultSet.getLong(1);
+					long siteGroupId = resultSet.getLong("siteGroupId");
 
 					if (siteGroupId == 0) {
 						continue;
 					}
 
 					_updateGroupTypeSetting(
-						resultSet.getLong(2), siteGroupId,
-						resultSet.getString(3));
+						resultSet.getLong("groupId"), siteGroupId,
+						resultSet.getString("typeSettings"));
 				}
 			}
 		}

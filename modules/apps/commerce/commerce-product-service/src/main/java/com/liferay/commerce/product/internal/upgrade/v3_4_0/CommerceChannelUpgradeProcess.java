@@ -49,13 +49,13 @@ public class CommerceChannelUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long siteGroupId = resultSet.getLong(1);
+					long siteGroupId = resultSet.getLong("siteGroupId");
 
 					if (siteGroupId == 0) {
 						continue;
 					}
 
-					long groupId = resultSet.getLong(2);
+					long groupId = resultSet.getLong("groupId");
 
 					_accountEntryGroupSettings.setAllowedTypes(
 						siteGroupId, _getAllowedTypes(groupId));

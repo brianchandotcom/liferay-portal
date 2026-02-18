@@ -212,8 +212,7 @@ public class Field implements Serializable {
 	}
 
 	public static String getSortableFieldName(String name) {
-		return StringBundler.concat(
-			name, StringPool.UNDERLINE, SORTABLE_FIELD_SUFFIX);
+		return name.concat(_SORTABLE_FIELD_SUFFIX);
 	}
 
 	public static String getSortFieldName(Sort sort, String scoreFieldName) {
@@ -278,7 +277,7 @@ public class Field implements Serializable {
 	}
 
 	public static boolean isSortableFieldName(String name) {
-		return name.endsWith(_SORTABLE_FIELD_SUFFIX);
+		return name.endsWith(SORTABLE_FIELD_SUFFIX);
 	}
 
 	public static boolean validateFieldName(String name) {
@@ -558,7 +557,7 @@ public class Field implements Serializable {
 		}
 	}
 
-	private static final String _SORTABLE_FIELD_SUFFIX = "sortable";
+	private static final String _SORTABLE_FIELD_SUFFIX = "_sortable";
 
 	private static final String _UID_FIELD = "_FIELD_";
 

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.CountryPermissionUtil;
 import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.base.CountryServiceBaseImpl;
@@ -35,7 +36,7 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 		throws PortalException {
 
 		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+			getPermissionChecker(), ActionKeys.ADD_COUNTRY);
 
 		return countryLocalService.addCountry(
 			a2, a3, active, billingAllowed, idd, name, number, position,
@@ -66,8 +67,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 
 	@Override
 	public void deleteCountry(long countryId) throws PortalException {
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+		CountryPermissionUtil.check(
+			getPermissionChecker(), countryId, ActionKeys.DELETE);
 
 		countryLocalService.deleteCountry(countryId);
 	}
@@ -239,8 +240,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 	public Country updateActive(long countryId, boolean active)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+		CountryPermissionUtil.check(
+			getPermissionChecker(), countryId, ActionKeys.UPDATE);
 
 		return countryLocalService.updateActive(countryId, active);
 	}
@@ -252,8 +253,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 			double position, boolean shippingAllowed, boolean subjectToVAT)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+		CountryPermissionUtil.check(
+			getPermissionChecker(), countryId, ActionKeys.UPDATE);
 
 		return countryLocalService.updateCountry(
 			countryId, a2, a3, active, billingAllowed, idd, name, number,
@@ -265,8 +266,8 @@ public class CountryServiceImpl extends CountryServiceBaseImpl {
 			long countryId, boolean groupFilterEnabled)
 		throws PortalException {
 
-		PortalPermissionUtil.check(
-			getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+		CountryPermissionUtil.check(
+			getPermissionChecker(), countryId, ActionKeys.UPDATE);
 
 		return countryLocalService.updateGroupFilterEnabled(
 			countryId, groupFilterEnabled);

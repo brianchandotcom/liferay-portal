@@ -396,11 +396,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 
 			if (FeatureFlagManagerUtil.isEnabled(
-					layout.getCompanyId(), "LPS-199086") &&
-				(!FeatureFlagManagerUtil.isEnabled(
-					layout.getCompanyId(), "LPD-35443") ||
-				 !FeatureFlagManagerUtil.isEnabled(
-					 layout.getCompanyId(), "LPD-35914"))) {
+					layout.getCompanyId(), "LPS-199086")) {
 
 				try {
 					StagingConfiguration stagingConfiguration =

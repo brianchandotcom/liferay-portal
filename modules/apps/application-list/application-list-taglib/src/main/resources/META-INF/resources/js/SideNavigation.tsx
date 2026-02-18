@@ -178,6 +178,7 @@ function SideNavigation({
 						itemAriaCurrent={true}
 						items={items}
 						onExpandedChange={updateExpandedKeys}
+						stacked={true}
 					>
 						{(item) => {
 							if (typeof item === 'string') {

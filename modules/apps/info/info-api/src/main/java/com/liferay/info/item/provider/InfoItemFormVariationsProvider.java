@@ -71,6 +71,10 @@ public interface InfoItemFormVariationsProvider<T> {
 		return null;
 	}
 
+	public default String getInfoItemFormVariationClassName() {
+		return null;
+	}
+
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId);
 
@@ -84,10 +88,6 @@ public interface InfoItemFormVariationsProvider<T> {
 		getInfoItemFormVariationsByCompanyId(long companyId) {
 
 		return Collections.emptyList();
-	}
-
-	public default String getInfoItemFormVariationClassName() {
-		return null;
 	}
 
 }

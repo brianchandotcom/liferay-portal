@@ -85,6 +85,11 @@ public class JournalArticleInfoItemFormVariationsProvider
 	}
 
 	@Override
+	public String getInfoItemFormVariationClassName() {
+		return DDMStructure.class.getName();
+	}
+
+	@Override
 	public Collection<InfoItemFormVariation> getInfoItemFormVariations(
 		long groupId) {
 
@@ -152,11 +157,6 @@ public class JournalArticleInfoItemFormVariationsProvider
 		}
 
 		return infoItemFormVariations;
-	}
-
-	@Override
-	public String getInfoItemFormVariationClassName() {
-		return DDMStructure.class.getName();
 	}
 
 	private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)

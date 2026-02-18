@@ -120,6 +120,7 @@ import {config as passwordPoliciesAdminWebFirstLoginConfig} from './tests/passwo
 import {config as passwordPoliciesAdminWebConfig} from './tests/password-policies-admin-web/main/config';
 import {config as passwordPoliciesAdminWebSetupAdminConfig} from './tests/password-policies-admin-web/setup-admin/config';
 import {config as portalDefaultPermissionsWebConfig} from './tests/portal-default-permissions-web/main/config';
+import {config as portalImplMainConfig} from './tests/portal-impl/main/config';
 import {config as portalImplPortletConfig} from './tests/portal-impl/portlet/config';
 import {config as portalLanguageOverrideWebConfig} from './tests/portal-language-override-web/main/config';
 import {config as portalSearchAdminWebConfig} from './tests/portal-search-admin-web/main/config';
@@ -316,6 +317,7 @@ export default defineConfig({
 		passwordPoliciesAdminWebFirstLoginConfig,
 		passwordPoliciesAdminWebSetupAdminConfig,
 		portalDefaultPermissionsWebConfig,
+		portalImplMainConfig,
 		portalImplPortletConfig,
 		portalLanguageOverrideWebConfig,
 		portalSearchAdminWebConfig,

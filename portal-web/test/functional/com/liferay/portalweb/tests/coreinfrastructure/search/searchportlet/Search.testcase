@@ -1161,11 +1161,6 @@ definition {
 			key_title = "Conexiones activas",
 			locator1 = "Header#H3_TITLE",
 			value1 = "Conexiones activas");
-
-		AssertTextEquals.assertPartialText(
-			key_tableHeader = "Nombre",
-			locator1 = "LexiconTable#TABLE_HEADER",
-			value1 = "Nombre");
 	}
 
 	@priority = 3

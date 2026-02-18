@@ -24,7 +24,7 @@ public class WebContextStylesheetAbsolutePortalURLBuilderImpl
 		String pathProxy, String stylesheetPath, String webContextPath) {
 
 		super(
-			cdnHost, hashedFilesRegistry, httpServletRequest, pathModule,
+			cdnHost, false, hashedFilesRegistry, httpServletRequest, pathModule,
 			pathProxy, stylesheetPath, webContextPath);
 	}
 

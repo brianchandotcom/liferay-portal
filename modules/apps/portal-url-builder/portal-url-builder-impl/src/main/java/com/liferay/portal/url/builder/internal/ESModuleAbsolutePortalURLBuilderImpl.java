@@ -25,7 +25,7 @@ public class ESModuleAbsolutePortalURLBuilderImpl
 		String pathProxy, String webContextPath) {
 
 		super(
-			cdnHost, hashedFilesRegistry, httpServletRequest, pathModule,
+			cdnHost, true, hashedFilesRegistry, httpServletRequest, pathModule,
 			pathProxy, "/__liferay__/" + esModulePath, webContextPath);
 	}
 

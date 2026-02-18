@@ -73,14 +73,16 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 		return cacheHelper;
 	}
 
-	protected HashedFilesRegistry mockHashedFilesRegistry() {
+	protected HashedFilesRegistry mockHashedFilesRegistry(
+		CachingStrategy cachingStrategy) {
+
 		HashedFilesRegistry hashedFilesRegistry = Mockito.mock(
 			HashedFilesRegistry.class);
 
 		Mockito.when(
 			hashedFilesRegistry.getCachingStrategy(Mockito.any())
 		).thenReturn(
-			CachingStrategy.USE_ONE_HASH_PER_FILE
+			cachingStrategy
 		);
 
 		Mockito.when(
@@ -88,6 +90,12 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 		).thenAnswer(
 			(Answer<String>)invocationOnMock -> HashedFilesUtil.addHash(
 				invocationOnMock.getArgument(0), "HASH")
+		);
+
+		Mockito.when(
+			hashedFilesRegistry.getServletContextHash(Mockito.anyString())
+		).thenReturn(
+			"HASH"
 		);
 
 		return hashedFilesRegistry;

@@ -70,6 +70,12 @@ public class ResultSetGetCallCheck extends BaseCheck {
 			DetailAST firstChildDetailAST =
 				parameterExprDetailAST.getFirstChild();
 
+			if (firstChildDetailAST.getType() == TokenTypes.NUM_INT) {
+				log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_1);
+
+				continue;
+			}
+
 			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
 				continue;
 			}
@@ -80,9 +86,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 				continue;
 			}
 
-			log(
-				firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER,
-				variableName);
+			log(firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER_2);
 		}
 	}
 
@@ -95,7 +99,10 @@ public class ResultSetGetCallCheck extends BaseCheck {
 		"getTimestamp", "getURL"
 	};
 
-	private static final String _MSG_INCORRECT_SET_CALL_PARAMETER =
-		"set.call.parameter.incorrect";
+	private static final String _MSG_INCORRECT_SET_CALL_PARAMETER_1 =
+		"set.call.parameter.incorrect.1";
+
+	private static final String _MSG_INCORRECT_SET_CALL_PARAMETER_2 =
+		"set.call.parameter.incorrect.2";
 
 }

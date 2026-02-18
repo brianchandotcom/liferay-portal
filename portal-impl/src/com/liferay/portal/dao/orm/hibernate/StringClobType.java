@@ -7,8 +7,6 @@ package com.liferay.portal.dao.orm.hibernate;
 
 import com.liferay.petra.string.StringPool;
 
-import java.io.IOException;
-import java.io.Reader;
 import java.io.Serializable;
 import java.io.StringReader;
 
@@ -76,26 +74,7 @@ public class StringClobType implements Serializable, UserType {
 			Object owner)
 		throws HibernateException, SQLException {
 
-		Reader reader = resultSet.getCharacterStream(names[0]);
-
-		if (reader == null) {
-			return null;
-		}
-
-		StringBuilder stringBuilder = new StringBuilder(4096);
-
-		try {
-			char[] chars = new char[4096];
-
-			for (int i = reader.read(chars); i > 0; i = reader.read(chars)) {
-				stringBuilder.append(chars, 0, i);
-			}
-		}
-		catch (IOException ioException) {
-			throw new SQLException(ioException.getMessage());
-		}
-
-		return stringBuilder.toString();
+		return resultSet.getString(names[0]);
 	}
 
 	@Override

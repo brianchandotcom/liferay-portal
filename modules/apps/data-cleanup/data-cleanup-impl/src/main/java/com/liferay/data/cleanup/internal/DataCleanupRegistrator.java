@@ -72,6 +72,7 @@ import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
@@ -404,7 +405,8 @@ public class DataCleanupRegistrator {
 						PostUpgradeDataCleanupProcess
 							postUpgradeDataCleanupProcess =
 								new ClassNamePostUpgradeDataCleanupProcess(
-									_classNameLocalService, connection,
+									_classNameLocalService,
+									_companyLocalService, connection,
 									_objectDefinitionLocalService);
 
 						postUpgradeDataCleanupProcess.cleanUp();
@@ -586,6 +588,9 @@ public class DataCleanupRegistrator {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private ContentManager _contentManager;

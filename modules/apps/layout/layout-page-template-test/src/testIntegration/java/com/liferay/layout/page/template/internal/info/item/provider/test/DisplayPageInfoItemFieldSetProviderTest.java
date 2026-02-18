@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,6 +54,7 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.junit.After;
@@ -224,15 +226,27 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			infoFieldValues.toString(), 3, infoFieldValues.size());
 
+		List<InfoFieldValue<Object>> sortedInfoFieldValues = ListUtil.sort(
+			infoFieldValues,
+			(infoFieldValue1, infoFieldValue2) -> {
+				InfoField infoField1 = infoFieldValue1.getInfoField();
+				InfoField infoField2 = infoFieldValue2.getInfoField();
+
+				String name1 = infoField1.getName();
+				String name2 = infoField2.getName();
+
+				return name1.compareTo(name2);
+			});
+
 		_assertInfoFieldValue(
-			infoFieldValues.get(0), "displayPageURL",
+			sortedInfoFieldValues.get(0), "displayPageURL",
 			JournalArticle.class.getSimpleName() + "_displayPageURL",
 			object -> Assert.assertEquals(
 				_assetDisplayPageFriendlyURLProvider.getFriendlyURL(
 					infoItemReference, _journalArticle, _themeDisplay),
 				object));
 		_assertInfoFieldValue(
-			infoFieldValues.get(1), _layoutPageTemplateEntry.getName(),
+			sortedInfoFieldValues.get(1), _layoutPageTemplateEntry.getName(),
 			LayoutPageTemplateEntry.class.getSimpleName() +
 				StringPool.UNDERLINE +
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
@@ -255,7 +269,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 					layoutPageTemplateEntryWebURL.getURL());
 			});
 		_assertInfoFieldValue(
-			infoFieldValues.get(2), _layoutPageTemplateEntry.getName(),
+			sortedInfoFieldValues.get(2), _layoutPageTemplateEntry.getName(),
 			LayoutPageTemplateEntry.class.getSimpleName() +
 				StringPool.UNDERLINE +
 					_layoutPageTemplateEntry.getLayoutPageTemplateEntryKey(),

@@ -25,7 +25,7 @@ test(
 
 		await test.step('Create 22 users', async () => {
 			for (let i = 0; i < 22; i++) {
-				await usersAndOrganizationsPage.createUser(apiHelpers);
+				await apiHelpers.headlessAdminUser.postUserAccount();
 			}
 		});
 

@@ -46,29 +46,35 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select companyId, resourcePermissionId, roleId, primKey ",
-					"from ResourcePermission where name = ",
-					"'com.liferay.commerce.catalog' and scope = 1"));
+					"from ResourcePermission where name = 'com.liferay.",
+					"commerce.catalog' and scope = 1"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				ResourcePermission resourcePermission =
-					_resourcePermissionLocalService.getResourcePermission(
-						resultSet.getLong(2));
-
 				resourceAction =
 					_resourceActionLocalService.fetchResourceAction(
 						"com.liferay.commerce.catalog",
 						"VIEW_COMMERCE_CATALOGS");
 
-				if ((resourceAction != null) &&
-					_resourcePermissionLocalService.hasActionId(
+				if (resourceAction == null) {
+					continue;
+				}
+
+				ResourcePermission resourcePermission =
+					_resourcePermissionLocalService.getResourcePermission(
+						resultSet.getLong("resourcePermissionId"));
+
+				if (!_resourcePermissionLocalService.hasActionId(
 						resourcePermission, resourceAction)) {
 
-					_resourcePermissionLocalService.addResourcePermission(
-						resultSet.getLong(1), "com.liferay.commerce.product", 1,
-						resultSet.getString(4), resultSet.getLong(3),
-						"MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY");
+					continue;
 				}
+
+				_resourcePermissionLocalService.addResourcePermission(
+					resultSet.getLong("companyId"),
+					"com.liferay.commerce.product", 1,
+					resultSet.getString("primKey"), resultSet.getLong("roleId"),
+					"MANAGE_COMMERCE_PRODUCT_CHANNEL_VISIBILITY");
 			}
 		}
 	}

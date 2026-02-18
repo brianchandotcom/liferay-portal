@@ -102,8 +102,7 @@ public class DepotObjectEntryBulkSelection implements BulkSelection<Object> {
 
 	@Override
 	public BulkSelection<AssetEntry> toAssetEntryBulkSelection() {
-		return new AssetEntryDepotObjectEntryBulkSelection(
-			_assetEntryLocalService, this);
+		return new AssetEntryBulkSelection(_assetEntryLocalService, this);
 	}
 
 	private final AssetEntryLocalService _assetEntryLocalService;

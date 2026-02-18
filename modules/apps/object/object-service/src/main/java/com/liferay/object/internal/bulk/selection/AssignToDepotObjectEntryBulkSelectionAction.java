@@ -46,11 +46,11 @@ public class AssignToDepotObjectEntryBulkSelectionAction
 			return;
 		}
 
-		ObjectEntry objectObjectEntry = (ObjectEntry)object;
+		ObjectEntry objectEntry = (ObjectEntry)object;
 
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(
-				objectObjectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinitionId());
 
 		if (StringUtil.equals(objectDefinition.getName(), "CMPTask")) {
 			Map<String, Serializable> properties = new HashMap<>();
@@ -61,7 +61,7 @@ public class AssignToDepotObjectEntryBulkSelectionAction
 
 				Role role = _roleService.getRoleByExternalReferenceCode(
 					(String)inputMap.get("externalReferenceCode"),
-					objectObjectEntry.getCompanyId());
+					objectEntry.getCompanyId());
 
 				properties.put(
 					"assignTo",
@@ -87,7 +87,7 @@ public class AssignToDepotObjectEntryBulkSelectionAction
 								_userService.getUserByExternalReferenceCode(
 									(String)inputMap.get(
 										"externalReferenceCode"),
-									objectObjectEntry.getCompanyId());
+									objectEntry.getCompanyId());
 
 							return assigneeUser.getUserId();
 						}
@@ -104,8 +104,8 @@ public class AssignToDepotObjectEntryBulkSelectionAction
 			}
 
 			_objectEntryService.partialUpdateObjectEntry(
-				objectObjectEntry.getObjectEntryId(),
-				objectObjectEntry.getObjectEntryFolderId(), properties,
+				objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(), properties,
 				new ServiceContext());
 		}
 	}

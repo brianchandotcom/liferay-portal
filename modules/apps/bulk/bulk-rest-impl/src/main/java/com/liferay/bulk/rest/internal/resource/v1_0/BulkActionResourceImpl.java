@@ -410,7 +410,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return _assignToDepotObjectEntryBulkSelectionAction;
 		}
 		else if (BulkAction.Type.COPY_BULK_ACTION.equals(type)) {
-			return _copyObjectBulkSelectionAction;
+			return _copyDepotObjectEntryBulkSelectionAction;
 		}
 		else if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
 			return _defaultPermissionDepotObjectEntryBulkSelectionAction;
@@ -418,7 +418,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.DELETE_ASSET_VERSION_BULK_ACTION.equals(
 					type)) {
 
-			return _deleteObjectAssetVersionBulkSelectionAction;
+			return _deleteAssetVersionDepotObjectEntryBulkSelectionAction;
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
 			return _deleteDepotObjectEntryBulkSelectionAction;
@@ -497,6 +497,16 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				defaultPermissionBulkAction::getDefaultPermissions
 			).put(
 				"roleKey", defaultPermissionBulkAction.getRoleKey()
+			).build();
+		}
+		else if (BulkAction.Type.DELETE_ASSET_VERSION_BULK_ACTION.equals(
+					type)) {
+
+			DeleteAssetVersionBulkAction deleteAssetVersionBulkAction =
+				(DeleteAssetVersionBulkAction)bulkAction;
+
+			return hashMapWrapper.put(
+				"toRemoveVersions", deleteAssetVersionBulkAction.getVersions()
 			).build();
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
@@ -908,22 +918,25 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
 
-	@Reference(target = "(bulk.selection.action.key=copy.object)")
-	private BulkSelectionAction<Object> _copyObjectBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=copy.depot.object.entry)")
+	private BulkSelectionAction<Object>
+		_copyDepotObjectEntryBulkSelectionAction;
 
-	@Reference(target = "(bulk.selection.action.key=default.permission.depot.object.entry)")
+	@Reference(
+		target = "(bulk.selection.action.key=default.permission.depot.object.entry)"
+	)
 	private BulkSelectionAction<Object>
 		_defaultPermissionDepotObjectEntryBulkSelectionAction;
+
+	@Reference(
+		target = "(bulk.selection.action.key=delete.asset.version.depot.object.entry)"
+	)
+	private BulkSelectionAction<Object>
+		_deleteAssetVersionDepotObjectEntryBulkSelectionAction;
 
 	@Reference(target = "(bulk.selection.action.key=delete.depot.object.entry)")
 	private BulkSelectionAction<Object>
 		_deleteDepotObjectEntryBulkSelectionAction;
-
-	@Reference(
-		target = "(bulk.selection.action.key=delete.object.asset.version)"
-	)
-	private BulkSelectionAction<Object>
-		_deleteObjectAssetVersionBulkSelectionAction;
 
 	@Reference(target = "(bulk.selection.action.key=delete.object.entry)")
 	private BulkSelectionAction<Object> _deleteObjectEntryBulkSelectionAction;

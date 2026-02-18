@@ -35,10 +35,10 @@ public class ExpireDepotObjectEntryBulkSelectionAction
 		throws Exception {
 
 		if (object instanceof ObjectEntry) {
-			ObjectEntry objectObjectEntry = (ObjectEntry)object;
+			ObjectEntry objectEntry = (ObjectEntry)object;
 
 			_objectEntryService.expireObjectEntry(
-				objectObjectEntry.getObjectEntryId(), new ServiceContext());
+				objectEntry.getObjectEntryId(), new ServiceContext());
 		}
 		else if (object instanceof ObjectEntryFolder) {
 			ObjectEntryFolder objectEntryFolder = (ObjectEntryFolder)object;

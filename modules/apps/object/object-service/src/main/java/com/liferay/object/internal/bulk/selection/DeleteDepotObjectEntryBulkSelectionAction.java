@@ -41,11 +41,11 @@ public class DeleteDepotObjectEntryBulkSelectionAction
 		throws Exception {
 
 		if (object instanceof ObjectEntry) {
-			ObjectEntry objectObjectEntry = (ObjectEntry)object;
+			ObjectEntry objectEntry = (ObjectEntry)object;
 
 			ObjectDefinition objectDefinition =
 				objectDefinitionLocalService.getObjectDefinition(
-					objectObjectEntry.getObjectDefinitionId());
+					objectEntry.getObjectDefinitionId());
 
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
@@ -54,7 +54,7 @@ public class DeleteDepotObjectEntryBulkSelectionAction
 						objectDefinition.getStorageType()));
 
 			defaultObjectEntryManager.deleteObjectEntry(
-				objectDefinition, objectObjectEntry.getObjectEntryId());
+				objectDefinition, objectEntry.getObjectEntryId());
 		}
 		else {
 			ObjectEntryFolder objectEntryFolder = (ObjectEntryFolder)object;

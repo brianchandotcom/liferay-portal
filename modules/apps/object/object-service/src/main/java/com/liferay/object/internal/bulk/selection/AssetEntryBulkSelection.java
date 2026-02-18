@@ -21,10 +21,9 @@ import java.util.Map;
 /**
  * @author Andrea Sbarra
  */
-public class AssetEntryDepotObjectEntryBulkSelection
-	implements BulkSelection<AssetEntry> {
+public class AssetEntryBulkSelection implements BulkSelection<AssetEntry> {
 
-	public AssetEntryDepotObjectEntryBulkSelection(
+	public AssetEntryBulkSelection(
 		AssetEntryLocalService assetEntryLocalService,
 		BulkSelection<Object> objectBulkSelection) {
 
@@ -70,11 +69,11 @@ public class AssetEntryDepotObjectEntryBulkSelection
 
 	private AssetEntry _toAssetEntry(Object object) {
 		try {
-			ObjectEntry objectObjectEntry = (ObjectEntry)object;
+			ObjectEntry objectEntry = (ObjectEntry)object;
 
 			return _assetEntryLocalService.getEntry(
-				objectObjectEntry.getModelClassName(),
-				objectObjectEntry.getObjectEntryId());
+				objectEntry.getModelClassName(),
+				objectEntry.getObjectEntryId());
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

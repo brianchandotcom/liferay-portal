@@ -64,11 +64,11 @@ public class PermissionDepotObjectEntryBulkSelectionAction
 			resourceName = depotEntry.getModelClassName();
 		}
 		else if (object instanceof ObjectEntry) {
-			ObjectEntry objectObjectEntry = (ObjectEntry)object;
+			ObjectEntry objectEntry = (ObjectEntry)object;
 
 			long rootObjectEntryFolderId =
 				ObjectEntryFolderUtil.getRootObjectEntryFolderId(
-					objectObjectEntry.getObjectEntryFolderId());
+					objectEntry.getObjectEntryFolderId());
 
 			if (rootObjectEntryFolderId == 0) {
 				return;
@@ -80,10 +80,10 @@ public class PermissionDepotObjectEntryBulkSelectionAction
 
 			className = objectEntryFolder.getExternalReferenceCode();
 
-			companyId = objectObjectEntry.getCompanyId();
-			groupId = objectObjectEntry.getGroupId();
-			resourceId = objectObjectEntry.getObjectEntryId();
-			resourceName = objectObjectEntry.getModelClassName();
+			companyId = objectEntry.getCompanyId();
+			groupId = objectEntry.getGroupId();
+			resourceId = objectEntry.getObjectEntryId();
+			resourceName = objectEntry.getModelClassName();
 		}
 		else {
 			ObjectEntryFolder objectEntryFolder = (ObjectEntryFolder)object;

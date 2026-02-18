@@ -38,22 +38,20 @@ public class DefaultPermissionDepotObjectEntryBulkSelectionAction
 			User user, Map<String, Serializable> inputMap, Object object)
 		throws PortalException {
 
-		ObjectEntry objectObjectEntry = (ObjectEntry)object;
+		ObjectEntry objectEntry = (ObjectEntry)object;
 
-		Map<String, Serializable> objectObjectEntryValues =
-			objectObjectEntry.getValues();
+		Map<String, Serializable> values = objectEntry.getValues();
 
 		String roleKey = (String)inputMap.get("roleKey");
 
 		if (Validator.isBlank(roleKey)) {
-			objectObjectEntryValues.put(
+			values.put(
 				"defaultPermissions",
 				MapUtil.getString(inputMap, "defaultPermissions"));
 		}
 		else {
 			JSONObject existingJSONObject = _jsonFactory.createJSONObject(
-				GetterUtil.getString(
-					objectObjectEntryValues.get("defaultPermissions"), "{}"));
+				GetterUtil.getString(values.get("defaultPermissions"), "{}"));
 
 			JSONObject newJSONObject = _jsonFactory.createJSONObject(
 				GetterUtil.getString(
@@ -87,12 +85,10 @@ public class DefaultPermissionDepotObjectEntryBulkSelectionAction
 					roleKey)
 			);
 
-			objectObjectEntryValues.put(
-				"defaultPermissions", existingJSONObject.toString());
+			values.put("defaultPermissions", existingJSONObject.toString());
 		}
 
-		partialUpdateObjectEntry(
-			user.getUserId(), objectObjectEntry, objectObjectEntryValues);
+		partialUpdateObjectEntry(user.getUserId(), objectEntry, values);
 	}
 
 	private JSONObject _getJSONObject(

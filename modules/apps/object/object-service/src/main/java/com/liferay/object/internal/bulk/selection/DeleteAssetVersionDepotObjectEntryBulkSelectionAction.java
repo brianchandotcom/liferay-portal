@@ -32,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michele Vigilante
  */
 @Component(
-	property = "bulk.selection.action.key=delete.object.asset.version",
+	property = "bulk.selection.action.key=delete.asset.version.depot.object.entry",
 	service = BulkSelectionAction.class
 )
-public class DeleteObjectAssetVersionBulkSelectionAction
-	extends BaseObjectBulkSelectionAction {
+public class DeleteAssetVersionDepotObjectEntryBulkSelectionAction
+	extends BaseDepotObjectEntryBulkSelectionAction {
 
 	@Override
 	protected void doExecute(
@@ -47,11 +47,11 @@ public class DeleteObjectAssetVersionBulkSelectionAction
 			return;
 		}
 
-		ObjectEntry objectObjectEntry = (ObjectEntry)object;
+		ObjectEntry objectEntry = (ObjectEntry)object;
 
 		ObjectDefinition objectDefinition =
 			objectDefinitionLocalService.getObjectDefinition(
-				objectObjectEntry.getObjectDefinitionId());
+				objectEntry.getObjectDefinitionId());
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
@@ -64,8 +64,8 @@ public class DeleteObjectAssetVersionBulkSelectionAction
 
 		for (Integer version : toRemoveVersions) {
 			defaultObjectEntryManager.deleteObjectEntryByVersion(
-				objectObjectEntry.getExternalReferenceCode(), objectDefinition,
-				_getScopeKey(objectObjectEntry.getGroupId(), objectDefinition),
+				objectEntry.getExternalReferenceCode(), objectDefinition,
+				_getScopeKey(objectEntry.getGroupId(), objectDefinition),
 				version);
 		}
 	}
@@ -110,7 +110,7 @@ public class DeleteObjectAssetVersionBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteObjectAssetVersionBulkSelectionAction.class);
+		DeleteAssetVersionDepotObjectEntryBulkSelectionAction.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

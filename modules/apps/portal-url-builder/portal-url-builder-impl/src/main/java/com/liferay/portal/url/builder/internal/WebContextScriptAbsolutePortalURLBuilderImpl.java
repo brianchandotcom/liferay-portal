@@ -24,7 +24,7 @@ public class WebContextScriptAbsolutePortalURLBuilderImpl
 		String pathProxy, String scriptPath, String webContextPath) {
 
 		super(
-			cdnHost, hashedFilesRegistry, httpServletRequest, pathModule,
+			cdnHost, true, hashedFilesRegistry, httpServletRequest, pathModule,
 			pathProxy, scriptPath, webContextPath);
 	}
 

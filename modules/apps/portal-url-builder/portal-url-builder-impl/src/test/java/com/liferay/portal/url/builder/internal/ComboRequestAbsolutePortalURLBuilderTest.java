@@ -6,6 +6,7 @@
 package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.ComboRequestAbsolutePortalURLBuilder;
@@ -55,7 +56,8 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 		super.setUp();
 
 		_absolutePortalURLBuilder = new AbsolutePortalURLBuilderImpl(
-			mockCacheHelper(), mockHashedFilesRegistry(),
+			mockCacheHelper(),
+			mockHashedFilesRegistry(CachingStrategy.DO_NOT_USE_HASHES),
 			mockPortal(context, proxy, cdnHost), mockHttpServletRequest());
 
 		Bundle bundle = Mockito.mock(Bundle.class);

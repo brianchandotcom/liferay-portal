@@ -21,10 +21,6 @@ public interface UIDFactory {
 
 	public String getUID(ClassedModel classedModel);
 
-	public String getUID(com.liferay.portal.kernel.search.Document document);
-
-	public String getUID(Document document);
-
 	public String getUID(
 		String modelClassName, Serializable primaryKeyObject,
 		long ctCollectionId);

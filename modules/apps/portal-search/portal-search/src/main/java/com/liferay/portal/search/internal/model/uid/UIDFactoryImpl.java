@@ -40,16 +40,6 @@ public class UIDFactoryImpl implements UIDFactory {
 	}
 
 	@Override
-	public String getUID(com.liferay.portal.kernel.search.Document document) {
-		return document.getUID();
-	}
-
-	@Override
-	public String getUID(Document document) {
-		return document.getString(Field.UID);
-	}
-
-	@Override
 	public String getUID(
 		String modelClassName, Serializable primaryKeyObject,
 		long ctCollectionId) {

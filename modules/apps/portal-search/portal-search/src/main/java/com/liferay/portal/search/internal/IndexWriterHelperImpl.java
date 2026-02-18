@@ -61,8 +61,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			long companyId, Document document, boolean commitImmediately)
 		throws SearchException {
 
-		_enforceStandardUID(document);
-
 		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
@@ -91,8 +89,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			long companyId, Collection<Document> documents,
 			boolean commitImmediately)
 		throws SearchException {
-
-		_enforceStandardUID(documents);
 
 		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
 			documents.isEmpty()) {
@@ -340,8 +336,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			long companyId, Document document, boolean commitImmediately)
 		throws SearchException {
 
-		_enforceStandardUID(document);
-
 		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
@@ -370,8 +364,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			long companyId, Collection<Document> documents,
 			boolean commitImmediately)
 		throws SearchException {
-
-		_enforceStandardUID(documents);
 
 		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
 			documents.isEmpty()) {
@@ -484,8 +476,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 	public void updateDocument(long companyId, Document document)
 		throws SearchException {
 
-		_enforceStandardUID(document);
-
 		if (_indexStatusManager.isIndexReadOnly() || (document == null)) {
 			return;
 		}
@@ -514,8 +504,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 			long companyId, Collection<Document> documents,
 			boolean commitImmediately)
 		throws SearchException {
-
-		_enforceStandardUID(documents);
 
 		if (_indexStatusManager.isIndexReadOnly() || (documents == null) ||
 			documents.isEmpty()) {
@@ -571,14 +559,6 @@ public class IndexWriterHelperImpl implements IndexWriterHelper {
 
 	@Reference
 	protected UIDFactory uidFactory;
-
-	private void _enforceStandardUID(Collection<Document> documents) {
-		documents.forEach(this::_enforceStandardUID);
-	}
-
-	private void _enforceStandardUID(Document document) {
-		uidFactory.getUID(document);
-	}
 
 	private String _getIndexerModelName(String name) {
 		String[] names = StringUtil.split(

@@ -567,10 +567,7 @@ public class StagedGroupStagedModelDataHandler
 		for (PortletElementHandler portletElementHandler :
 				orderedPortletElementHandlers) {
 
-			long layoutId = GetterUtil.getLong(
-				portletElementHandler.getLayoutId());
-
-			Layout layout = layouts.get(layoutId);
+			Layout layout = layouts.get(portletElementHandler.getLayoutId());
 
 			long plid = LayoutConstants.DEFAULT_PLID;
 

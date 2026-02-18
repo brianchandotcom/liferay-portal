@@ -12,6 +12,8 @@ import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.exportimport.configuration.ExportImportServiceConfiguration;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.controller.PortletExportController;
+import com.liferay.exportimport.data.handler.PortletElementHandler;
+import com.liferay.exportimport.data.handler.PortletElementHandlerFactory;
 import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandler;
 import com.liferay.exportimport.internal.lar.PermissionExporter;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
@@ -528,12 +530,14 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 		// Zip
 
-		Element element = parentElement.addElement("portlet");
+		PortletElementHandler portletElementHandler =
+			_portletElementHandlerFactory.create(
+				parentElement.addElement("portlet"));
 
-		element.addAttribute("display-name", portlet.getDisplayName());
-		element.addAttribute("portlet-id", portlet.getPortletId());
-		element.addAttribute("layout-id", String.valueOf(layoutId));
-		element.addAttribute("path", path);
+		portletElementHandler.setDisplayName(portlet.getDisplayName());
+		portletElementHandler.setSourcePortletId(portlet.getPortletId());
+		portletElementHandler.setLayoutId(layoutId);
+		portletElementHandler.setPath(path);
 
 		StringBundler configurationOptionsSB = new StringBundler(6);
 
@@ -556,31 +560,27 @@ public class PortletExportControllerImpl implements PortletExportController {
 			configurationOptionsSB.setIndex(configurationOptionsSB.index() - 1);
 		}
 
-		element.addAttribute(
-			"portlet-configuration", configurationOptionsSB.toString());
-
-		element.addAttribute(
-			"portlet-data",
-			String.valueOf(exportPortletData || portletDataHandler.isHidden()));
+		portletElementHandler.setPortletConfiguration(
+			configurationOptionsSB.toString());
+		portletElementHandler.setPortletData(
+			exportPortletData || portletDataHandler.isHidden());
 
 		if ((portletDataHandler instanceof
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler) &&
 			batchEnginePortletDataHandler.isMissingPortletSupported()) {
 
-			element.addAttribute("missing-portlet-supported", "true");
-			element.addAttribute(
-				"portlet-data-handler-key",
+			portletElementHandler.setMissingPortletSupported(true);
+			portletElementHandler.setPortletDataHandlerKey(
 				batchEnginePortletDataHandler.getKey());
-			element.addAttribute(
-				"portlet-data-handler-rank",
-				String.valueOf(batchEnginePortletDataHandler.getRank()));
+			portletElementHandler.setRank(
+				batchEnginePortletDataHandler.getRank());
 		}
 
-		element.addAttribute(
-			"schema-version", portletDataHandler.getSchemaVersion());
+		portletElementHandler.setSchemaVersion(
+			portletDataHandler.getSchemaVersion());
 
 		if (portletDataContext.isValidateExistingDataHandler()) {
-			element.addAttribute("validate-existing-data-handler", "true");
+			portletElementHandler.setValidateExistingDataHandler(true);
 		}
 
 		try {
@@ -1424,6 +1424,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 	@Reference
 	private PortletDataHandlerStatusMessageSender
 		_portletDataHandlerStatusMessageSender;
+
+	@Reference
+	private PortletElementHandlerFactory _portletElementHandlerFactory;
 
 	@Reference
 	private PortletItemLocalService _portletItemLocalService;

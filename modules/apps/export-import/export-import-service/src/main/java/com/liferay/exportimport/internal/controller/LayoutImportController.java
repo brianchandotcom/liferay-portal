@@ -635,10 +635,7 @@ public class LayoutImportController implements ImportController {
 				_portletDataHandlerProvider.provide(companyId, targetPortletId);
 
 			if (portletDataHandler == null) {
-				if (GetterUtil.getBoolean(
-						portletElement.attributeValue(
-							"validate-existing-data-handler"))) {
-
+				if (portletElementHandler.isValidateExistingDataHandler()) {
 					throw new MissingPortletDataHandlerException(
 						GetterUtil.getString(
 							portletElementHandler.getDisplayName()));

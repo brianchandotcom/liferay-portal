@@ -77,6 +77,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 		import('@liferay/fragment-impl/api')
 			.then(({openCMSItemSelectorModal}) => {
 				openCMSItemSelectorModal({
+					groupId: input.attributes.groupId,
 					onSelect(items) {
 						const {id, title} = items[0].embedded;
 

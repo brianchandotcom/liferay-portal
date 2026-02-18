@@ -167,7 +167,9 @@ public class SearchEngineAdapterTest {
 			if (isSearchEngine("Elasticsearch", 8)) {
 				Assert.assertTrue(
 					message,
-					message.contains("reason=no such index [" + index + "]"));
+					message.contains(
+						"[index_not_found_exception] no such index [" + index +
+							"]"));
 			}
 			else if (isSearchEngine("OpenSearch")) {
 				Assert.assertTrue(

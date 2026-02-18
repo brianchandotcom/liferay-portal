@@ -6,10 +6,14 @@
 package com.liferay.fragment.web.internal.display.context;
 
 import com.liferay.fragment.constants.FragmentActionKeys;
+import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentComposition;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -148,6 +152,114 @@ public class FragmentDisplayContextTest {
 		Assert.assertTrue(
 			availableActions.contains(
 				"moveFragmentCompositionsAndFragmentEntries"));
+	}
+
+	@Test
+	@TestInfo("LPD-79101")
+	public void testGetFragmentCollectionFromDifferentGroup() {
+		FragmentCollection fragmentCollection = Mockito.mock(
+			FragmentCollection.class);
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionKey")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Assert.assertNull(fragmentDisplayContext.getFragmentCollection());
+		}
+	}
+
+	@Test
+	@TestInfo("LPD-79101")
+	public void testGetFragmentCollectionFromSameGroup() {
+		long fragmentCollectionId = RandomTestUtil.randomLong();
+		long groupId = RandomTestUtil.randomLong();
+
+		FragmentCollection fragmentCollection = Mockito.mock(
+			FragmentCollection.class);
+
+		Mockito.when(
+			fragmentCollection.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionId")
+		).thenReturn(
+			String.valueOf(fragmentCollectionId)
+		);
+
+		Mockito.when(
+			_httpServletRequest.getParameter("fragmentCollectionKey")
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		try (MockedStatic<FragmentCollectionLocalServiceUtil>
+				fragmentCollectionLocalServiceUtilMockedStatic =
+					Mockito.mockStatic(
+						FragmentCollectionLocalServiceUtil.class)) {
+
+			fragmentCollectionLocalServiceUtilMockedStatic.when(
+				() ->
+					FragmentCollectionLocalServiceUtil.fetchFragmentCollection(
+						fragmentCollectionId)
+			).thenReturn(
+				fragmentCollection
+			);
+
+			FragmentDisplayContext fragmentDisplayContext =
+				new FragmentDisplayContext(
+					_httpServletRequest, _renderRequest, _renderResponse);
+
+			Assert.assertNotNull(
+				fragmentDisplayContext.getFragmentCollection());
+		}
 	}
 
 	private void _setUpFragmentPermission(boolean condition) {

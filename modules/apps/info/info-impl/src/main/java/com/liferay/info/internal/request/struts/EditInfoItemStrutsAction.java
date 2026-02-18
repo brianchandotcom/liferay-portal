@@ -44,6 +44,7 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.exception.InfoFormException;
@@ -69,6 +70,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -479,11 +481,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				continue;
 			}
 
-			if (_isCaptchaFragmentEntry(
-					fragmentEntryLink.getFragmentEntryGroupId(),
-					fragmentEntryLink.getFragmentEntryERC(),
-					fragmentEntryLink.getRendererKey())) {
-
+			if (_isCaptchaFragmentEntry(fragmentEntryLink)) {
 				return fragmentEntryLink;
 			}
 		}
@@ -619,22 +617,41 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	}
 
 	private boolean _isCaptchaFragmentEntry(
-		long fragmentEntryGroupId, String fragmentEntryERC,
-		String rendererKey) {
+		FragmentEntryLink fragmentEntryLink) {
 
 		FragmentEntry fragmentEntry = null;
 
-		if (Validator.isNotNull(rendererKey)) {
+		if (Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
 			fragmentEntry =
 				_fragmentCollectionContributorRegistry.getFragmentEntry(
-					rendererKey);
+					fragmentEntryLink.getRendererKey());
 		}
 
-		if ((fragmentEntry == null) && (fragmentEntryERC != null)) {
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		if (groupId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to resolve group ID for fragment entry link ",
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						" with fragment entry scope external reference code ",
+						fragmentEntryLink.getFragmentEntryScopeERC()));
+			}
+
+			return false;
+		}
+
+		if ((fragmentEntry == null) &&
+			Validator.isNotNull(fragmentEntryLink.getFragmentEntryERC())) {
+
 			fragmentEntry =
 				_fragmentEntryLocalService.
 					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryERC, fragmentEntryGroupId);
+						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if ((fragmentEntry == null) ||

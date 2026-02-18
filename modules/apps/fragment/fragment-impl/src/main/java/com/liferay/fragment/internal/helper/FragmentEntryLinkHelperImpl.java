@@ -13,6 +13,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -31,11 +32,19 @@ public class FragmentEntryLinkHelperImpl implements FragmentEntryLinkHelper {
 	public String getFragmentEntryName(
 		FragmentEntryLink fragmentEntryLink, Locale locale) {
 
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.
-				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryERC(),
-					fragmentEntryLink.getFragmentEntryGroupId());
+		FragmentEntry fragmentEntry = null;
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		if (groupId != null) {
+			fragmentEntry =
+				_fragmentEntryLocalService.
+					fetchFragmentEntryByExternalReferenceCode(
+						fragmentEntryLink.getFragmentEntryERC(), groupId);
+		}
 
 		if (fragmentEntry != null) {
 			return fragmentEntry.getName();

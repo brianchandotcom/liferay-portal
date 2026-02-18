@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -95,15 +96,19 @@ public class FragmentRendererControllerImpl
 			}
 
 			if (_log.isDebugEnabled()) {
+				Long groupId = ScopeUtil.getItemGroupId(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getFragmentEntryScopeERC(),
+					fragmentEntryLink.getGroupId());
+
 				_log.debug(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryERC(),
 						" with fragment entry link ",
 						fragmentEntryLink.getFragmentEntryLinkId(), ", group ",
-						fragmentEntryLink.getFragmentEntryGroupId(),
-						", and PLID ", fragmentEntryLink.getPlid(), ": ",
-						throwable.getMessage()),
+						groupId, ", and PLID ", fragmentEntryLink.getPlid(),
+						": ", throwable.getMessage()),
 					exception);
 			}
 

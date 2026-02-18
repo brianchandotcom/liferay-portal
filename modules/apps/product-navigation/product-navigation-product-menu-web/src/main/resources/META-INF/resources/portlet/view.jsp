@@ -10,38 +10,9 @@
 <%
 String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_productMenuState", "closed");
 String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_pagesTreeState", "closed");
-
-ApplicationsMenuInstanceConfiguration applicationsMenuInstanceConfiguration = ConfigurationProviderUtil.getCompanyConfiguration(ApplicationsMenuInstanceConfiguration.class, themeDisplay.getCompanyId());
 %>
 
-<div class="lfr-product-menu-sidebar <%= applicationsMenuInstanceConfiguration.enableApplicationsMenu() ? "lfr-applications-menu" : "" %>" id="productMenuSidebar">
-	<c:if test="<%= !applicationsMenuInstanceConfiguration.enableApplicationsMenu() %>">
-		<div class="sidebar-header">
-			<h1 class="sr-only"><liferay-ui:message key="product-admin-menu" /></h1>
-
-			<clay:content-row>
-				<clay:content-col
-					expand="<%= true %>"
-				>
-					<a href="<%= PortalUtil.addPreservedParameters(themeDisplay, themeDisplay.getURLPortal(), false, true) %>">
-						<span class="company-details text-truncate">
-							<img alt="" class="company-logo" src="<%= themeDisplay.getPathImage() %>/company_logo?img_id=<%= company.getLogoId() %>&t=<%= WebServerServletTokenUtil.getToken(company.getLogoId()) %>" />
-
-							<span class="company-name"><%= HtmlUtil.escape(company.getName()) %></span>
-						</span>
-					</a>
-				</clay:content-col>
-
-				<clay:content-col>
-					<clay:button
-						cssClass="sidenav-close text-white"
-						displayType="unstyled"
-						icon="times"
-					/>
-				</clay:content-col>
-			</clay:content-row>
-		</div>
-	</c:if>
+<div class="lfr-product-menu-sidebar lfr-applications-menu" id="productMenuSidebar">
 
 	<div class="sidebar-body">
 		<c:choose>

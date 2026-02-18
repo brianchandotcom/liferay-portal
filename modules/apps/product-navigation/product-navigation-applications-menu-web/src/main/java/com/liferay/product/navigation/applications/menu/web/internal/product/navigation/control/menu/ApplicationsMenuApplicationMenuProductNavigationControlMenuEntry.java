@@ -49,12 +49,6 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
-				themeDisplay.getCompanyId(), _configurationProvider)) {
-
-			return false;
-		}
-
 		String layoutMode = ParamUtil.getString(
 			httpServletRequest, "p_l_mode", Constants.VIEW);
 

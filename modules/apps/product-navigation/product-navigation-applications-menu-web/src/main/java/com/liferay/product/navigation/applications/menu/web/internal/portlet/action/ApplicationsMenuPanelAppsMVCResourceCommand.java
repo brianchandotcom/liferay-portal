@@ -600,12 +600,6 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 	private boolean _isApplicationMenuApp(
 		ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
 
-		if (!ApplicationsMenuUtil.isEnableApplicationsMenu(
-				themeDisplay.getCompanyId(), _configurationProvider)) {
-
-			return false;
-		}
-
 		String selectedPortletId = ParamUtil.getString(
 			resourceRequest, "selectedPortletId");
 

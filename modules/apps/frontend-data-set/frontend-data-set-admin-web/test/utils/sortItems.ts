@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY} from '../../src/main/resources/META-INF/resources/js/utils/constants';
 import sortItems from '../../src/main/resources/META-INF/resources/js/utils/sortItems';
 import {IOrderable} from '../../src/main/resources/META-INF/resources/js/utils/types';
 
@@ -35,18 +34,18 @@ interface IOrderResult {
 }
 
 const completeSortCases: IOrderResult = {
-	'1,2,3,4': [1, 2, 3, 4],
-	'4,1,3,2': [4, 1, 3, 2],
+	'erc-1,erc-2,erc-3,erc-4': [1, 2, 3, 4],
+	'erc-4,erc-1,erc-3,erc-2': [4, 1, 3, 2],
 };
 
 const partialSortCases: IOrderResult = {
-	'1,2': [1, 2, 4, 3],
-	'3,2': [3, 2, 4, 1],
+	'erc-1,erc-2': [1, 2, 4, 3],
+	'erc-3,erc-2': [3, 2, 4, 1],
 };
 
 const creationDatePartialSortCases: IOrderResult = {
-	'1,2': [1, 2, 3, 4],
-	'4,3': [4, 3, 1, 2],
+	'erc-1,erc-2': [1, 2, 3, 4],
+	'erc-4,erc-3': [4, 3, 1, 2],
 };
 
 const testCases = (expected: IOrderResult, useCreationDate?: boolean) =>
@@ -69,30 +68,4 @@ describe('sortItems', () => {
 
 	it('sorts over a partial order, with dates', () =>
 		testCases(creationDatePartialSortCases, true));
-
-	it('sorts by externalReferenceCode when FDS_ORDER_BY_ERC feature flag is on', () => {
-		const previousFlags = (global as any).Liferay?.FeatureFlags;
-		if (!(global as any).Liferay) {
-			(global as any).Liferay = {};
-		}
-		(global as any).Liferay.FeatureFlags = {
-			...(global as any).Liferay.FeatureFlags,
-			[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY]: true,
-		};
-
-		try {
-			const ercOrder = 'erc-3,erc-1,erc-2,erc-4';
-			const result = sortItems(items, ercOrder, false);
-
-			expect(result.map((item) => item.externalReferenceCode)).toEqual([
-				'erc-3',
-				'erc-1',
-				'erc-2',
-				'erc-4',
-			]);
-		}
-		finally {
-			(global as any).Liferay.FeatureFlags = previousFlags;
-		}
-	});
 });

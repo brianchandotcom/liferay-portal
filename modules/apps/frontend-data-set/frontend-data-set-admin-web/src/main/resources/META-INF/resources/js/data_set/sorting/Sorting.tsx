@@ -520,8 +520,7 @@ const Sorting = ({
 			sortItems(
 				storedFDSSorts,
 				storedFDSSorts?.[0]?.[OBJECT_RELATIONSHIP.DATA_SET_SORTS]
-					?.sortsOrder as string,
-				false
+					?.sortsOrder as string
 			) as IDataSetSort[]
 		);
 
@@ -650,7 +649,7 @@ const Sorting = ({
 
 		if (fdsSorts && storedSortsOrder && storedSortsOrder === sortsOrder) {
 			setFDSSorts(
-				sortItems(fdsSorts, storedSortsOrder, false) as IDataSetSort[]
+				sortItems(fdsSorts, storedSortsOrder) as IDataSetSort[]
 			);
 
 			openDefaultSuccessToast();

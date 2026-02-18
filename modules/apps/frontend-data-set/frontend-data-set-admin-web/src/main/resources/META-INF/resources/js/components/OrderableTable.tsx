@@ -16,10 +16,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {DndProvider, useDrag, useDrop} from 'react-dnd';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 
-import {
-	FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY,
-	FUZZY_OPTIONS,
-} from '../utils/constants';
+import {FUZZY_OPTIONS} from '../utils/constants';
 import Search from './Search';
 
 import '../../css/components/OrderableTable.scss';
@@ -398,15 +395,9 @@ const OrderableTable = ({
 	onOrderChange,
 	title,
 }: IOrderableTableProps) => {
-	const orderByERC =
-		!!Liferay.FeatureFlags?.[FDS_ORDER_BY_ERC_FEATURE_FLAG_KEY];
-
-	const getOrderKey = (item: any) =>
-		orderByERC ? item.externalReferenceCode : item.id;
-
 	const [items, setItems] = useState(initialItems);
 	const [order, setOrder] = useState(
-		initialItems.map((item) => getOrderKey(item)).join(',')
+		initialItems.map((item) => item.externalReferenceCode).join(',')
 	);
 	const [query, setQuery] = useState('');
 
@@ -517,7 +508,7 @@ const OrderableTable = ({
 							}}
 							onDrop={() => {
 								const newOrder = items
-									.map((item) => getOrderKey(item))
+									.map((item) => item.externalReferenceCode)
 									.join(',');
 
 								if (newOrder !== order) {

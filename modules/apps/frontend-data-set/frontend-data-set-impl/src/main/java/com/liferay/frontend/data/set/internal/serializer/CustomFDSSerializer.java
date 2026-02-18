@@ -37,7 +37,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -849,29 +848,15 @@ public class CustomFDSSerializer
 		ObjectEntry objectEntry = _getObjectEntry(
 			externalReferenceCode, _getObjectDefinition(httpServletRequest));
 
+		List<String> externalReferenceCodes = ListUtil.fromString(
+			MapUtil.getString(objectEntry.getProperties(), propertyKey),
+			StringPool.COMMA);
+
 		List<ObjectEntry> objectEntries = getRelatedObjectEntries(
 			externalReferenceCode, httpServletRequest, predicate,
 			relationshipNames);
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				PortalUtil.getCompanyId(httpServletRequest), "LPD-76632")) {
-
-			List<String> externalReferenceCodes = ListUtil.fromString(
-				MapUtil.getString(objectEntry.getProperties(), propertyKey),
-				StringPool.COMMA);
-
-			objectEntries.sort(
-				new ObjectEntryERCComparator(externalReferenceCodes));
-		}
-		else {
-			List<Long> ids = ListUtil.toList(
-				ListUtil.fromString(
-					MapUtil.getString(objectEntry.getProperties(), propertyKey),
-					StringPool.COMMA),
-				GetterUtil::getLong);
-
-			objectEntries.sort(new ObjectEntryIdComparator(ids));
-		}
+		objectEntries.sort(new ObjectEntryComparator(externalReferenceCodes));
 
 		return objectEntries;
 	}
@@ -1348,10 +1333,10 @@ public class CustomFDSSerializer
 	)
 	private FDSSerializer _systemFDSSerializer;
 
-	private static class ObjectEntryERCComparator
+	private static class ObjectEntryComparator
 		implements Comparator<ObjectEntry> {
 
-		public ObjectEntryERCComparator(List<String> externalReferenceCodes) {
+		public ObjectEntryComparator(List<String> externalReferenceCodes) {
 			_externalReferenceCodes = externalReferenceCodes;
 		}
 
@@ -1385,46 +1370,6 @@ public class CustomFDSSerializer
 		}
 
 		private final List<String> _externalReferenceCodes;
-
-	}
-
-	private static class ObjectEntryIdComparator
-		implements Comparator<ObjectEntry> {
-
-		public ObjectEntryIdComparator(List<Long> ids) {
-			_ids = ids;
-		}
-
-		@Override
-		public int compare(
-			ObjectEntry dataSetObjectEntry1, ObjectEntry dataSetObjectEntry2) {
-
-			long id1 = dataSetObjectEntry1.getId();
-
-			int index1 = _ids.indexOf(id1);
-
-			long id2 = dataSetObjectEntry2.getId();
-
-			int index2 = _ids.indexOf(id2);
-
-			if ((index1 == -1) && (index2 == -1)) {
-				Date date = dataSetObjectEntry1.getDateCreated();
-
-				return date.compareTo(dataSetObjectEntry2.getDateCreated());
-			}
-
-			if (index1 == -1) {
-				return 1;
-			}
-
-			if (index2 == -1) {
-				return -1;
-			}
-
-			return Long.compare(index1, index2);
-		}
-
-		private final List<Long> _ids;
 
 	}
 

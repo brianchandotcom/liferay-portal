@@ -23,17 +23,6 @@ const test = mergeTests(
 	loginTest()
 );
 
-const testWithOrderByERC = mergeTests(
-	dataSetManagerApiHelpersTest,
-	customDataSetsPageTest,
-	featureFlagsTest({
-		'LPD-76632': {enabled: true},
-		'LPS-178052': {enabled: true},
-	}),
-	filtersPageTest,
-	loginTest()
-);
-
 const dataSetERCs = [];
 
 let dataSetERC: string;
@@ -71,104 +60,6 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 	dataSetERCs.length = 0;
 });
-
-testWithOrderByERC(
-	'Date filters can be reordered with orderByERC feature flag enabled',
-	async ({dataSetManagerApiHelpers, filtersPage, page}) => {
-		const createdDateFilterData = {
-			fieldName: DATE_FIELD_NAME,
-			name: DATE_FILTER_NAME,
-			status: 'Active',
-			type: 'Date Filter',
-		};
-
-		const updatedDateFilterData = {
-			fieldName: 'dateModified',
-			name: 'Update date',
-			status: 'Active',
-			type: 'Date Filter',
-		};
-
-		await test.step('Create a couple of date filters', async () => {
-			await dataSetManagerApiHelpers.createDataSetDateFilter({
-				dataSetERC,
-				fieldName: createdDateFilterData.fieldName,
-				from: '2020-01-01',
-				label_i18n: {en_US: createdDateFilterData.name},
-				to: '3020-01-02',
-				type: 'date-time',
-			});
-
-			await dataSetManagerApiHelpers.createDataSetDateFilter({
-				dataSetERC,
-				fieldName: updatedDateFilterData.fieldName,
-				from: '2020-01-01',
-				label_i18n: {en_US: updatedDateFilterData.name},
-				to: '3020-01-02',
-				type: 'date',
-			});
-		});
-
-		await test.step('Check current order of date filters', async () => {
-			await filtersPage.goto({dataSetLabel});
-			await filtersPage.assertFiltersTableRowCount(2);
-
-			await filtersPage.assertTableCellContent({
-				filterData: createdDateFilterData,
-				page: filtersPage.page,
-				rowIndex: 0,
-			});
-
-			await filtersPage.assertTableCellContent({
-				filterData: updatedDateFilterData,
-				page: filtersPage.page,
-				rowIndex: 1,
-			});
-		});
-
-		await test.step('Move second date filter to the top', async () => {
-			const secondRow = filtersPage.page
-				.locator('.orderable-table-row')
-				.nth(1);
-
-			const firstRow = filtersPage.page
-				.locator('.orderable-table-row')
-				.nth(0);
-
-			await secondRow.dragTo(firstRow);
-		});
-
-		await test.step('Check that the filters order has changed', async () => {
-			await filtersPage.assertTableCellContent({
-				filterData: createdDateFilterData,
-				page,
-				rowIndex: 1,
-			});
-
-			await filtersPage.assertTableCellContent({
-				filterData: updatedDateFilterData,
-				page,
-				rowIndex: 0,
-			});
-		});
-
-		await test.step('Reload and check that the filters keep the last order saved', async () => {
-			await filtersPage.goto({dataSetLabel});
-
-			await filtersPage.assertTableCellContent({
-				filterData: createdDateFilterData,
-				page,
-				rowIndex: 1,
-			});
-
-			await filtersPage.assertTableCellContent({
-				filterData: updatedDateFilterData,
-				page,
-				rowIndex: 0,
-			});
-		});
-	}
-);
 
 test('When creating a new filter in DSM, date-time field is available for selection @LPD-10754', async ({
 	filtersPage,

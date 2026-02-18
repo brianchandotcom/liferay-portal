@@ -5,7 +5,10 @@
 
 import {Command, Plugin} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {ButtonView} from '@ckeditor/ckeditor5-ui/dist/index.js';
-import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {
+	EConfigInURLBehavior,
+	IFrontendDataSetProps,
+} from '@liferay/frontend-data-set-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 
 import getIcon from '../utils/getIcon';
@@ -38,6 +41,7 @@ const CMS_FILE_SEARCH_API_URL = `${location.origin}/o/search/v1.0/search?${[
 ].join('&')}`;
 
 const FDS_PROPS: IFrontendDataSetProps = {
+	configInURLBehavior: EConfigInURLBehavior.OFF,
 	filters: [
 		{
 			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',

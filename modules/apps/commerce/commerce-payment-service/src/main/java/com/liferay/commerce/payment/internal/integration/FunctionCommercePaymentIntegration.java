@@ -278,7 +278,7 @@ public class FunctionCommercePaymentIntegration
 
 			if (jsonObject.has("amount")) {
 				commercePaymentEntry.setAmount(
-					BigDecimal.valueOf(jsonObject.getDouble("amount")));
+					new BigDecimal(jsonObject.getString("amount", "0")));
 			}
 
 			if (jsonObject.has("callbackURL")) {

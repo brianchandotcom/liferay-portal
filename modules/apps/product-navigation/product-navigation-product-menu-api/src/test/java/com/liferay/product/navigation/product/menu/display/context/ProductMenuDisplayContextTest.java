@@ -83,8 +83,7 @@ public class ProductMenuDisplayContextTest {
 				).getAllPanelApps(
 					ArgumentMatchers.matches("application-panel*")
 				);
-			},
-			false);
+			});
 	}
 
 	@Test
@@ -115,13 +114,11 @@ public class ProductMenuDisplayContextTest {
 				).getAllPanelApps(
 					ArgumentMatchers.matches("application-panel*")
 				);
-			},
-			true);
+			});
 	}
 
 	private void _assertGetPanelCategories(
-		Consumer<ProductMenuDisplayContext> consumer,
-		boolean enableApplicationsMenu) {
+		Consumer<ProductMenuDisplayContext> consumer) {
 
 		try (MockedStatic<ConfigurationProviderUtil>
 				configurationProviderUtilMockedStatic = Mockito.mockStatic(
@@ -133,13 +130,6 @@ public class ProductMenuDisplayContextTest {
 				() -> PortalUtil.getHttpServletRequest(ArgumentMatchers.any())
 			).thenReturn(
 				_mockHttpServletRequest
-			);
-
-			Mockito.when(
-				true
-				//_applicationsMenuInstanceConfiguration.enableApplicationsMenu()
-			).thenReturn(
-				enableApplicationsMenu
 			);
 
 			Mockito.when(

@@ -56,20 +56,7 @@ public class ProductMenuDisplayContext {
 
 		_childPanelCategories = _panelCategoryHelper.getChildPanelCategories(
 			PanelCategoryKeys.ROOT, _themeDisplay);
-		/*
-		if (_isEnableApplicationsMenu()) {
-			return _childPanelCategories;
-		}
 
-		List<PanelCategory> applicationsMenuChildPanelCategories =
-			_panelCategoryHelper.getChildPanelCategories(
-				PanelCategoryKeys.APPLICATIONS_MENU, _themeDisplay);
-
-		Collections.reverse(applicationsMenuChildPanelCategories);
-
-		_childPanelCategories.addAll(
-			0, _filterPanelCategories(applicationsMenuChildPanelCategories));
-		*/
 		return _childPanelCategories;
 	}
 
@@ -112,8 +99,6 @@ public class ProductMenuDisplayContext {
 						return _rootPanelCategoryKey;
 					}
 				}
-
-				//return _rootPanelCategoryKey;
 			}
 		}
 
@@ -207,7 +192,6 @@ public class ProductMenuDisplayContext {
 		ProductMenuDisplayContext.class);
 
 	private List<PanelCategory> _childPanelCategories;
-	private Boolean _enableApplicationsMenu;
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
 	private final PanelCategoryHelper _panelCategoryHelper;

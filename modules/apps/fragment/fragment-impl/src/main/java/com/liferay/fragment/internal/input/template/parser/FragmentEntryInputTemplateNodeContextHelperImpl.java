@@ -13,6 +13,7 @@ import com.liferay.fragment.input.template.parser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.info.constants.InfoDisplayWebKeys;
 import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
@@ -51,6 +52,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -500,6 +502,16 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			"isCMS",
 			themeDisplay.getScopeGroup(
 			).isCMS());
+
+		Object object = httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		ObjectEntry objectEntry =
+			object instanceof ObjectEntry ? (ObjectEntry)object : null;
+
+		if (objectEntry != null) {
+			inputTemplateNode.addAttribute("groupId", objectEntry.getGroupId());
+		}
 	}
 
 	private void _addInputTemplateNodeAttributes(

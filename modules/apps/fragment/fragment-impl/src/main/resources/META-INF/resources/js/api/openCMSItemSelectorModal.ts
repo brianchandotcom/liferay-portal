@@ -94,8 +94,10 @@ function getRandomId(): string {
 }
 
 export const openCMSItemSelectorModal = function ({
+	groupId,
 	onSelect,
 }: {
+	groupId: number;
 	onSelect: () => void;
 }) {
 	openItemSelectorModal({
@@ -105,7 +107,7 @@ export const openCMSItemSelectorModal = function ({
 			id: `UploadFragmentItemSelectorFDS_${getRandomId()}`,
 		},
 		filesUploaderComponent: CMSFileUploaderComponent,
-		groupId: 36991,
+		groupId,
 		itemTypeLabel: Liferay.Language.get('files'),
 		items: [],
 		locator: {

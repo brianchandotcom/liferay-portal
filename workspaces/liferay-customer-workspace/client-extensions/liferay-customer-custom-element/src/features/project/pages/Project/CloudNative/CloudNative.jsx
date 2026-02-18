@@ -4,7 +4,6 @@
  */
 
 import {ButtonWithIcon} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import {useCallback, useEffect, useState} from 'react';
 import {useOutletContext} from 'react-router-dom';
@@ -143,10 +142,8 @@ const CloudNative = () => {
 										/>
 									</ClayTable.Cell>
 
-									<ClayTable.Cell className={headerClass}>
-										<div className="align-items-center d-flex justify-content-center">
-											<ClayIcon symbol="download" />
-										</div>
+									<ClayTable.Cell className={`${headerClass} text-center`}>
+										{i18n.translate('download')}
 									</ClayTable.Cell>
 								</ClayTable.Row>
 							</ClayTable.Head>

@@ -21,7 +21,7 @@ describe('EnterpriseProductMenuBanner', () => {
 
 		expect(
 			screen.getByText(
-				'share-your-email-and-we-ll-show-you-what-you-can-unlock-with-our-enterprise-plan'
+				'share-your-email-and-we-ll-show-you-what-you-can-unlock-with-our-enterprise-subscription'
 			)
 		).toBeInTheDocument();
 

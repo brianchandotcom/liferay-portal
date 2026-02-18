@@ -57,7 +57,9 @@ describe('PublishButton', () => {
 
 		renderComponent();
 
-		expect(screen.getByLabelText('publish')).toBeInTheDocument();
+		expect(
+			screen.getByRole('button', {name: 'publish'})
+		).toBeInTheDocument();
 	});
 
 	it('calls onPublish when the button is clicked', async () => {
@@ -65,7 +67,7 @@ describe('PublishButton', () => {
 
 		renderComponent({onPublish});
 
-		const button = screen.getByLabelText('publish');
+		const button = screen.getByRole('button', {name: 'publish'});
 
 		await fireEvent.click(button);
 
@@ -80,7 +82,7 @@ describe('PublishButton', () => {
 			onPublish,
 		});
 
-		const button = screen.getByLabelText('publish');
+		const button = screen.getByRole('button', {name: 'publish'});
 
 		fireEvent.click(button);
 
@@ -97,7 +99,7 @@ describe('PublishButton', () => {
 
 		renderComponent({onPublish});
 
-		const button = screen.getByLabelText('publish');
+		const button = screen.getByRole('button', {name: 'publish'});
 
 		await act(async () => {
 			fireEvent.click(button);

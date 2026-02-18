@@ -98,7 +98,7 @@ export const openCMSItemSelectorModal = function ({
 	onSelect,
 }: {
 	groupId: number;
-	onSelect: () => void;
+	onSelect: (items: Array<Record<string, any>>) => void;
 }) {
 	openItemSelectorModal({
 		...CMS_FILE_ITEM_SELECTOR_CONFIG,

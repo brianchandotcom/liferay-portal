@@ -3011,7 +3011,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		PortalUtil.updateImageERC(
-			layout, bytes != null, bytes, "iconImageERC", 0, 0, 0);
+			layout, bytes != null, bytes, "iconImageERC", 0, 0, 0,
+			layout::deleteUnusedIconImage);
 
 		return layoutLocalService.updateLayout(layout);
 	}
@@ -3186,7 +3187,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setFriendlyURL(friendlyURLMap.get(LocaleUtil.getSiteDefault()));
 
 		PortalUtil.updateImageERC(
-			layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0);
+			layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0,
+			layout::deleteUnusedIconImage);
 
 		layout.setStyleBookEntryERC(styleBookEntryERC);
 		layout.setFaviconFileEntryERC(faviconFileEntryERC);
@@ -3310,7 +3312,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			masterLayoutPageTemplateEntryERC);
 
 		PortalUtil.updateImageERC(
-			layout, iconBytes != null, iconBytes, "iconImageERC", 0, 0, 0);
+			layout, iconBytes != null, iconBytes, "iconImageERC", 0, 0, 0,
+			layout::deleteUnusedIconImage);
 
 		return layoutPersistence.update(layout);
 	}

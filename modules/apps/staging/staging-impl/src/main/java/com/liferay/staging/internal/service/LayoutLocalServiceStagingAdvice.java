@@ -217,7 +217,8 @@ public class LayoutLocalServiceStagingAdvice {
 		}
 		else {
 			_portal.updateImageERC(
-				layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0);
+				layout, hasIconImage, iconBytes, "iconImageERC", 0, 0, 0,
+				layout::deleteUnusedIconImage);
 		}
 
 		layout.setPortletLayoutPageTemplateEntryLinkEnabled(

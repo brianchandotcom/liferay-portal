@@ -48,13 +48,10 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			parentDetailAST = parentDetailAST.getParent();
 
-			if (parentDetailAST.getType() != TokenTypes.METHOD_CALL) {
-				continue;
-			}
+			if ((parentDetailAST.getType() != TokenTypes.METHOD_CALL) ||
+				!ArrayUtil.contains(
+					_GET_METHOD_NAMES, getMethodName(parentDetailAST))) {
 
-			String methodName = getMethodName(parentDetailAST);
-
-			if (!ArrayUtil.contains(_GET_METHOD_NAMES, methodName)) {
 				continue;
 			}
 

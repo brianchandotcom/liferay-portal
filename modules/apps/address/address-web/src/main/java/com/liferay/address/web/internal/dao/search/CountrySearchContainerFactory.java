@@ -6,7 +6,6 @@
 package com.liferay.address.web.internal.dao.search;
 
 import com.liferay.address.web.internal.constants.AddressPortletKeys;
-import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Country;
@@ -115,7 +114,7 @@ public class CountrySearchContainerFactory {
 		searchContainer.setResultsAndTotal(baseModelSearchResult);
 
 		searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
+			new CountryRowChecker(liferayPortletResponse));
 
 		return searchContainer;
 	}

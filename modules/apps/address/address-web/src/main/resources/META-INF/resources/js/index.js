@@ -4,5 +4,6 @@
  */
 
 export {default as CountriesManagementToolbarPropsTransformer} from './CountriesManagementToolbarPropsTransformer';
+export {default as CountryActionPropsTransformer} from './CountryActionPropsTransformer';
 export {default as CountryRegionDynamicSelect} from './CountryRegionDynamicSelect';
 export {default as RegionsManagementToolbarPropsTransformer} from './RegionsManagementToolbarPropsTransformer';

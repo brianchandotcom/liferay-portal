@@ -209,7 +209,7 @@ public class CountriesManagementAdminManagementToolbarDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		return PortalPermissionUtil.contains(
-			themeDisplay.getPermissionChecker(), ActionKeys.MANAGE_COUNTRIES);
+			themeDisplay.getPermissionChecker(), ActionKeys.ADD_COUNTRY);
 	}
 
 	@Override

@@ -65,10 +65,17 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public boolean isCacheable() {
-		FragmentEntry fragmentEntry =
-			FragmentEntryLocalServiceUtil.
-				fetchFragmentEntryByExternalReferenceCode(
-					getFragmentEntryERC(), getFragmentEntryGroupId());
+		FragmentEntry fragmentEntry = null;
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
+
+		if (groupId != null) {
+			fragmentEntry =
+				FragmentEntryLocalServiceUtil.
+					fetchFragmentEntryByExternalReferenceCode(
+						getFragmentEntryERC(), groupId);
+		}
 
 		if (fragmentEntry != null) {
 			return fragmentEntry.isCacheable();
@@ -97,10 +104,17 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 
 	@Override
 	public boolean isLatestVersion() throws PortalException {
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
+
+		if (groupId == null) {
+			return false;
+		}
+
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.
 				getFragmentEntryByExternalReferenceCode(
-					getFragmentEntryERC(), getFragmentEntryGroupId());
+					getFragmentEntryERC(), groupId);
 
 		Date fragmentEntryModifiedDate = fragmentEntry.getModifiedDate();
 
@@ -120,10 +134,17 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 			return false;
 		}
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
+
+		if (groupId == null) {
+			return false;
+		}
+
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
-					getFragmentEntryERC(), getFragmentEntryGroupId());
+					getFragmentEntryERC(), groupId);
 
 		if (fragmentEntry == null) {
 			return false;

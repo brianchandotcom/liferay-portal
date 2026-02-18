@@ -53,6 +53,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONDeserializer;
@@ -70,6 +71,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -130,9 +132,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		String rendererKey = fragmentEntryLink.getRendererKey();
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			_fragmentCollectionContributorRegistry,
-			fragmentEntryLink.getFragmentEntryERC(),
-			fragmentEntryLink.getFragmentEntryGroupId(), rendererKey);
+			_fragmentCollectionContributorRegistry, fragmentEntryLink);
 
 		return new PageFragmentInstanceDefinition() {
 			{
@@ -313,13 +313,30 @@ public class PageFragmentInstanceDefinitionMapper {
 	private FragmentEntry _getFragmentEntry(
 		FragmentCollectionContributorRegistry
 			fragmentCollectionContributorRegistry,
-		String fragmentEntryERC, long fragmentEntryGroupId,
-		String rendererKey) {
+		FragmentEntryLink fragmentEntryLink) {
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		if (groupId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to resolve group ID for fragment entry link ",
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						" with fragment entry scope external reference code ",
+						fragmentEntryLink.getFragmentEntryScopeERC()));
+			}
+
+			return null;
+		}
 
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryERC, fragmentEntryGroupId);
+					fragmentEntryLink.getFragmentEntryERC(), groupId);
 
 		if (fragmentEntry != null) {
 			return fragmentEntry;
@@ -328,7 +345,7 @@ public class PageFragmentInstanceDefinitionMapper {
 		Map<String, FragmentEntry> fragmentEntries =
 			fragmentCollectionContributorRegistry.getFragmentEntries();
 
-		return fragmentEntries.get(rendererKey);
+		return fragmentEntries.get(fragmentEntryLink.getRendererKey());
 	}
 
 	private FragmentField[] _getFragmentFields(

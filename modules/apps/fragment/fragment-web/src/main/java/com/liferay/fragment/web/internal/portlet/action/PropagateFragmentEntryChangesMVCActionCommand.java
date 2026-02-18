@@ -55,11 +55,19 @@ public class PropagateFragmentEntryChangesMVCActionCommand
 				continue;
 			}
 
+			Long groupId = ScopeUtil.getItemGroupId(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getFragmentEntryScopeERC(),
+				fragmentEntryLink.getGroupId());
+
+			if (groupId == null) {
+				continue;
+			}
+
 			FragmentEntry fragmentEntry =
 				_fragmentEntryLocalService.
 					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(),
-						fragmentEntryLink.getFragmentEntryGroupId());
+						fragmentEntryLink.getFragmentEntryERC(), groupId);
 
 			if (fragmentEntry == null) {
 				continue;

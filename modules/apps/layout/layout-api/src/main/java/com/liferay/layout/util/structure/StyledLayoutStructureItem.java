@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.util.DLURLHelperUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.petra.lang.HashUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -298,11 +299,22 @@ public abstract class StyledLayoutStructureItem extends LayoutStructureItem {
 			}
 		}
 
+		String scopeExternalReferenceCode = jsonObject.getString(
+			"scopeExternalReferenceCode");
+
 		Long groupId = ScopeUtil.getItemGroupId(
-			companyId, jsonObject.getString("scopeExternalReferenceCode"),
-			scopeGroupId);
+			companyId, scopeExternalReferenceCode, scopeGroupId);
 
 		if (groupId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to resolve group ID for file entry with ",
+						"external reference code ", externalReferenceCode,
+						" using scope external reference code ",
+						scopeExternalReferenceCode));
+			}
+
 			return null;
 		}
 

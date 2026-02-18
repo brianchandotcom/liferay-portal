@@ -228,15 +228,6 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static ExportImportReportEntry
-		fetchEmptyExportImportReportEntryByG_C_C_C(
-			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId) {
-
-		return getService().fetchEmptyExportImportReportEntryByG_C_C_C(
-			groupId, companyId, classExternalReferenceCode, classNameId);
-	}
-
 	public static ExportImportReportEntry fetchExportImportReportEntry(
 		long exportImportReportEntryId) {
 
@@ -305,6 +296,16 @@ public class ExportImportReportEntryLocalServiceUtil {
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
+	public static ExportImportReportEntry getOrAddEmptyExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long exportImportConfigurationId,
+		String modelNameLanguageKey) {
+
+		return getService().getOrAddEmptyExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -321,6 +322,15 @@ public class ExportImportReportEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static void resolveEmptyExportImportReportEntries(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId)
+		throws PortalException {
+
+		getService().resolveEmptyExportImportReportEntries(
+			groupId, companyId, classExternalReferenceCode, classNameId);
 	}
 
 	/**

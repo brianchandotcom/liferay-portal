@@ -263,17 +263,6 @@ public class ExportImportReportEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.exportimport.report.model.ExportImportReportEntry
-		fetchEmptyExportImportReportEntryByG_C_C_C(
-			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId) {
-
-		return _exportImportReportEntryLocalService.
-			fetchEmptyExportImportReportEntryByG_C_C_C(
-				groupId, companyId, classExternalReferenceCode, classNameId);
-	}
-
-	@Override
-	public com.liferay.exportimport.report.model.ExportImportReportEntry
 		fetchExportImportReportEntry(long exportImportReportEntryId) {
 
 		return _exportImportReportEntryLocalService.
@@ -353,6 +342,19 @@ public class ExportImportReportEntryLocalServiceWrapper
 			getIndexableActionableDynamicQuery();
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		getOrAddEmptyExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long exportImportConfigurationId,
+			String modelNameLanguageKey) {
+
+		return _exportImportReportEntryLocalService.
+			getOrAddEmptyExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId, modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -373,6 +375,17 @@ public class ExportImportReportEntryLocalServiceWrapper
 
 		return _exportImportReportEntryLocalService.getPersistedModel(
 			primaryKeyObj);
+	}
+
+	@Override
+	public void resolveEmptyExportImportReportEntries(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_exportImportReportEntryLocalService.
+			resolveEmptyExportImportReportEntries(
+				groupId, companyId, classExternalReferenceCode, classNameId);
 	}
 
 	/**

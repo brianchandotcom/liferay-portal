@@ -189,78 +189,84 @@ public interface ExportImportReportEntryPersistence
 	public int countByC_E(long companyId, long exportImportConfigurationId);
 
 	/**
-	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or throws a <code>NoSuchExportImportReportEntryException</code> if it could not be found.
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or throws a <code>NoSuchExportImportReportEntryException</code> if it could not be found.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classExternalReferenceCode the class external reference code
 	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
 	 * @param type the type
 	 * @return the matching export import report entry
 	 * @throws NoSuchExportImportReportEntryException if a matching export import report entry could not be found
 	 */
-	public ExportImportReportEntry findByG_C_C_C_T(
+	public ExportImportReportEntry findByG_C_C_C_E_T(
 			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId, int type)
+			long classNameId, long exportImportConfigurationId, int type)
 		throws NoSuchExportImportReportEntryException;
 
 	/**
-	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classExternalReferenceCode the class external reference code
 	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
 	 * @param type the type
 	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
 	 */
-	public ExportImportReportEntry fetchByG_C_C_C_T(
+	public ExportImportReportEntry fetchByG_C_C_C_E_T(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, int type);
+		long classNameId, long exportImportConfigurationId, int type);
 
 	/**
-	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classExternalReferenceCode the class external reference code
 	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
 	 * @param type the type
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching export import report entry, or <code>null</code> if a matching export import report entry could not be found
 	 */
-	public ExportImportReportEntry fetchByG_C_C_C_T(
+	public ExportImportReportEntry fetchByG_C_C_C_E_T(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, int type, boolean useFinderCache);
+		long classNameId, long exportImportConfigurationId, int type,
+		boolean useFinderCache);
 
 	/**
-	 * Removes the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63; from the database.
+	 * Removes the export import report entry where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63; from the database.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classExternalReferenceCode the class external reference code
 	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
 	 * @param type the type
 	 * @return the export import report entry that was removed
 	 */
-	public ExportImportReportEntry removeByG_C_C_C_T(
+	public ExportImportReportEntry removeByG_C_C_C_E_T(
 			long groupId, long companyId, String classExternalReferenceCode,
-			long classNameId, int type)
+			long classNameId, long exportImportConfigurationId, int type)
 		throws NoSuchExportImportReportEntryException;
 
 	/**
-	 * Returns the number of export import report entries where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and type = &#63;.
+	 * Returns the number of export import report entries where groupId = &#63; and companyId = &#63; and classExternalReferenceCode = &#63; and classNameId = &#63; and exportImportConfigurationId = &#63; and type = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classExternalReferenceCode the class external reference code
 	 * @param classNameId the class name ID
+	 * @param exportImportConfigurationId the export import configuration ID
 	 * @param type the type
 	 * @return the number of matching export import report entries
 	 */
-	public int countByG_C_C_C_T(
+	public int countByG_C_C_C_E_T(
 		long groupId, long companyId, String classExternalReferenceCode,
-		long classNameId, int type);
+		long classNameId, long exportImportConfigurationId, int type);
 
 	/**
 	 * Caches the export import report entry in the entity cache if it is enabled.

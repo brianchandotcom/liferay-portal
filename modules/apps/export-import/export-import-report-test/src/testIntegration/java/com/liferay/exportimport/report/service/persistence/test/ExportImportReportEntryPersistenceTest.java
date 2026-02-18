@@ -225,14 +225,15 @@ public class ExportImportReportEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C_C_C_T() throws Exception {
-		_persistence.countByG_C_C_C_T(
+	public void testCountByG_C_C_C_E_T() throws Exception {
+		_persistence.countByG_C_C_C_E_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(), "",
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_C_C_C_T(0L, 0L, "null", 0L, 0);
+		_persistence.countByG_C_C_C_E_T(0L, 0L, "null", 0L, 0L, 0);
 
-		_persistence.countByG_C_C_C_T(0L, 0L, (String)null, 0L, 0);
+		_persistence.countByG_C_C_C_E_T(0L, 0L, (String)null, 0L, 0L, 0);
 	}
 
 	@Test
@@ -586,6 +587,12 @@ public class ExportImportReportEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				exportImportReportEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classNameId"));
+		Assert.assertEquals(
+			Long.valueOf(
+				exportImportReportEntry.getExportImportConfigurationId()),
+			ReflectionTestUtil.<Long>invoke(
+				exportImportReportEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "exportImportConfigurationId"));
 		Assert.assertEquals(
 			Integer.valueOf(exportImportReportEntry.getType()),
 			ReflectionTestUtil.<Integer>invoke(

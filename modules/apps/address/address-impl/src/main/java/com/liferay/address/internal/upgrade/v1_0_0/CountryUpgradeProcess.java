@@ -173,10 +173,11 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		try (Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(
 				StringBundler.concat(
-					"select max(", columnName, ") from ", tableName))) {
+					"select max(", columnName, ") as maxColumnName from ",
+					tableName))) {
 
 			if (resultSet.next()) {
-				increment(className, (int)resultSet.getLong(1));
+				increment(className, (int)resultSet.getLong("maxColumnName"));
 			}
 		}
 	}
@@ -445,15 +446,14 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		private boolean _hasCountries(long companyId) throws Exception {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select count(*) from Country where companyId = ?")) {
+						"select count(*) as count from Country where " +
+							"companyId = ?")) {
 
 				preparedStatement.setLong(1, companyId);
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					while (resultSet.next()) {
-						int count = resultSet.getInt(1);
-
-						if (count > 0) {
+						if (resultSet.getInt("count") > 0) {
 							return true;
 						}
 					}

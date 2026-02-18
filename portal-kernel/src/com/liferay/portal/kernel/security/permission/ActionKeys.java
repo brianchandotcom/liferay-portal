@@ -28,6 +28,8 @@ public class ActionKeys {
 
 	public static final String ADD_COMMUNITY = "ADD_COMMUNITY";
 
+	public static final String ADD_COUNTRY = "ADD_COUNTRY";
+
 	public static final String ADD_COUPON = "ADD_COUPON";
 
 	public static final String ADD_DEFINITION = "ADD_DEFINITION";

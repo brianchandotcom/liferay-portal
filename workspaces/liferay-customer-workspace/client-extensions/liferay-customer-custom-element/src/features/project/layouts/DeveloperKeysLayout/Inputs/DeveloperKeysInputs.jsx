@@ -63,23 +63,38 @@ const DeveloperKeysInputs = ({
 			const sortedItems = sortLiferayVersions([...items]);
 
 			if (sortedItems?.length) {
-				const versionedItems = sortedItems.map((sortedItem) => {
-					var name = sortedItem.name.replace('DXP ', '');
+				const versionedItems = sortedItems
+					.map((sortedItem) => {
+						var name = sortedItem.name.replace('DXP ', '');
 
-					const quarterlyVersion = sortedItem.name.match(/\d{4}\.Q\d/);
+						const quarterlyVersion =
+							sortedItem.name.match(/\d{4}\.Q\d/);
 
-					if (quarterlyVersion?.length) {
-						name = quarterlyVersion[0];
-					}
+						if (quarterlyVersion?.length) {
+							name = quarterlyVersion[0];
+						}
 
-					return {...sortedItem, name};
-				});
+						return {...sortedItem, name};
+					})
+					.filter((item) => {
+						const quarterlyMatch = item.name.match(
+							/^(\d{4})\.Q(\d)$/
+						);
+
+						if (quarterlyMatch) {
+							const year = parseInt(quarterlyMatch[1], 10);
+
+							return year >= 2026;
+						}
+
+						return true;
+					});
 
 				setDxpVersions(versionedItems);
 
 				setSelectedVersion(
 					versionedItems.find((item) => item.name === dxpVersion)
-						?.name || versionedItems[0].name
+						?.name || versionedItems[0]?.name
 				);
 			}
 		};

@@ -126,7 +126,7 @@ public class UpgradeCalendarResourceTest {
 
 			resultSet.next();
 
-			return resultSet.getLong(1);
+			return resultSet.getLong("userId");
 		}
 	}
 
@@ -141,7 +141,7 @@ public class UpgradeCalendarResourceTest {
 
 			resultSet.next();
 
-			return resultSet.getLong(1);
+			return resultSet.getLong("userId");
 		}
 	}
 

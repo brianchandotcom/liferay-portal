@@ -875,9 +875,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	public void testResultSetGetCall() throws Exception {
 		test(
 			"ResultSetGetCall.testjava",
-			"Do not use \"TableName.ColumnName\" as the parameter when " +
-				"calling method \"resultSet.get*\", use column index or " +
-					"column name instead",
+			"Use the simple column name instead of \"TableName.ColumnName\" " +
+				"when calling method \"resultSet.get*\"",
 			43);
 	}
 

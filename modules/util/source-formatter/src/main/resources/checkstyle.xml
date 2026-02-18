@@ -822,7 +822,7 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds incorrect use of `ResultSet.get*` calls." />
 			<property name="enabled" value="false" />
-			<message key="set.call.parameter.incorrect" value="Do not use &quot;TableName.ColumnName&quot; as the parameter when calling method &quot;{0}&quot;, use column index or column name instead" />
+			<message key="set.call.parameter.incorrect" value="Use the simple column name instead of &quot;TableName.ColumnName&quot; when calling method &quot;resultSet.get*&quot;" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ReturnVariableDeclarationAsUsedCheck">
 			<property name="category" value="Miscellaneous" />

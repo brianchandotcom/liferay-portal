@@ -12,6 +12,7 @@ import com.liferay.fragment.model.FragmentEntryLinkTable;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
@@ -190,8 +191,13 @@ public class GroupFragmentEntryLinkDisplayContext {
 
 		Map<Group, Integer> groupFragmentEntryUsages = new HashMap<>();
 
-		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
-			FragmentEntryLinkTable.INSTANCE.groupId
+		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+			FragmentEntryLinkTable.INSTANCE.groupId,
+			DSLFunctionFactoryUtil.countDistinct(
+				FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId
+			).as(
+				"fragmentEntryLinkIdCount"
+			)
 		).from(
 			FragmentEntryLinkTable.INSTANCE
 		).where(
@@ -210,25 +216,22 @@ public class GroupFragmentEntryLinkDisplayContext {
 										fragmentEntry.getGroupId())
 								))
 					))
+			).and(
+				FragmentEntryLinkTable.INSTANCE.deleted.eq(false)
 			)
+		).groupBy(
+			FragmentEntryLinkTable.INSTANCE.groupId
 		);
 
-		List<Long> groupIds = FragmentEntryLinkLocalServiceUtil.dslQuery(
+		List<Object[]> results = FragmentEntryLinkLocalServiceUtil.dslQuery(
 			dslQuery);
 
-		for (long groupId : groupIds) {
-			String fragmentEntryScopeERC = null;
-
-			if (fragmentEntry.getGroupId() != groupId) {
-				fragmentEntryScopeERC = group.getExternalReferenceCode();
-			}
+		for (Object[] result : results) {
+			long groupId = (Long)result[0];
+			Number count = (Number)result[1];
 
 			groupFragmentEntryUsages.put(
-				GroupLocalServiceUtil.getGroup(groupId),
-				FragmentEntryLinkLocalServiceUtil.
-					getFragmentEntryLinksCountByFragmentEntryERC(
-						groupId, fragmentEntry.getExternalReferenceCode(),
-						fragmentEntryScopeERC, false));
+				GroupLocalServiceUtil.getGroup(groupId), count.intValue());
 		}
 
 		_groupFragmentEntryUsages = groupFragmentEntryUsages;

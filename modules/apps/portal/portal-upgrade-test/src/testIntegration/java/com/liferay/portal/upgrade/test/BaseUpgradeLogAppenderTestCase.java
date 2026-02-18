@@ -324,8 +324,6 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up", _CLEANUP_INFO_MESSAGE);
 			_assertLogContextDiagnostics(
-				"upgrade.report.data.clean.up", _CLEANUP_WARNING_MESSAGE);
-			_assertLogContextDiagnostics(
 				"upgrade.report.data.clean.up",
 				_DELETE_DUPLICATES_FINDER_WARNING_MESSAGE);
 			_assertLogContextDiagnostics(
@@ -337,6 +335,8 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 					randomCompanyId, " was not found in column ",
 					dbInspector.normalizeName("companyId"), " from table ",
 					dbInspector.normalizeName("Company")));
+			_assertLogContextDiagnostics(
+				"upgrade.report.warnings", _CLEANUP_WARNING_MESSAGE);
 		}
 		finally {
 			_db.runSQL(
@@ -1473,7 +1473,7 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 			).setLoggerName(
 				DuplicateUniqueFinderRowsCleaner.class.getName()
 			).setLevel(
-				Level.WARN
+				Level.INFO
 			).setMessage(
 				new SimpleMessage(_DELETE_DUPLICATES_FINDER_WARNING_MESSAGE)
 			).build();

@@ -294,14 +294,10 @@ public class Field implements Serializable {
 	}
 
 	public Field(String name) {
-		validate(name);
-
 		_name = name;
 	}
 
 	public Field(String name, Map<Locale, String> localizedValues) {
-		validate(name);
-
 		_name = name;
 		_localizedValues = localizedValues;
 	}
@@ -311,8 +307,6 @@ public class Field implements Serializable {
 	}
 
 	public Field(String name, String[] values) {
-		validate(name);
-
 		_name = name;
 		_values = values;
 	}
@@ -528,33 +522,6 @@ public class Field implements Serializable {
 		private final LinkedList<Field> _nestedFieldsBuilderFields =
 			new LinkedList<>();
 
-	}
-
-	protected void validate(String name) {
-		if (name.contains(StringPool.COMMA)) {
-			throw new IllegalArgumentException(
-				"Name must not contain ,: " + name);
-		}
-
-		if (name.contains(StringPool.POUND)) {
-			throw new IllegalArgumentException(
-				"Name must not contain #: " + name);
-		}
-
-		if (name.contains(StringPool.SLASH)) {
-			throw new IllegalArgumentException(
-				"Name must not contain /: " + name);
-		}
-
-		if (name.contains(StringPool.STAR)) {
-			throw new IllegalArgumentException(
-				"Name must not contain *: " + name);
-		}
-
-		if (name.startsWith(StringPool.UNDERLINE)) {
-			throw new IllegalArgumentException(
-				"Name must not start with _: " + name);
-		}
 	}
 
 	private static final String _SORTABLE_FIELD_SUFFIX = "_sortable";

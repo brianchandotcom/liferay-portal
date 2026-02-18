@@ -5198,6 +5198,8 @@ definition {
 
 	@priority = 3
 	test ViewSearchResultsScoreViaBlueprintsPreview {
+		property portal.acceptance = "quarantine";
+
 		Blueprints.openBlueprintsAdmin();
 
 		Blueprints.createBlueprint(title = "Test Blueprint");

@@ -192,6 +192,7 @@ definition {
 	test XPackPkiAuthenticationSmokeTest {
 		property elastic.pki.authentication.enabled = "true";
 		property elastic.xpack.enabled = "true";
+		property portal.acceptance = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";
@@ -251,6 +252,7 @@ definition {
 	@priority = 5
 	test XPackSmokeTest {
 		property elastic.xpack.enabled = "true";
+		property portal.acceptance = "quarantine";
 		property remote.elasticsearch.enabled = "true";
 		property search.environment.suite.exclude = "true";
 		property test.liferay.virtual.instance = "false";

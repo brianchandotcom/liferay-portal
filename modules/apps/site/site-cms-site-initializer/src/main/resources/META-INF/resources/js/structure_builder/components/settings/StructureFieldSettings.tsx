@@ -24,11 +24,11 @@ import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
 
 export default function StructureFieldSettings({
-	disabled,
 	field,
+	isReferenced,
 }: {
-	disabled?: boolean;
 	field: Field;
+	isReferenced?: boolean;
 }) {
 	useEffect(() => {
 		focusInvalidElement();
@@ -51,11 +51,11 @@ export default function StructureFieldSettings({
 
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
-						<GeneralTab disabled={disabled} field={field} />
+						<GeneralTab field={field} isReferenced={isReferenced} />
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane className="px-0">
-						<SearchTab disabled={disabled} field={field} />
+						<SearchTab field={field} isReferenced={isReferenced} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -63,19 +63,25 @@ export default function StructureFieldSettings({
 	);
 }
 
-function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
+function GeneralTab({
+	field,
+	isReferenced,
+}: {
+	field: Field;
+	isReferenced?: boolean;
+}) {
 	const dispatch = useStateDispatch();
 
 	const errors = useSelector(selectErrors(field.uuid));
 	const publishedChildren = useSelector(selectPublishedChildren);
-
-	const isPublished = publishedChildren.has(field.uuid);
 
 	const {FirstSectionComponent, SecondSectionComponent} = getFieldComponents(
 		field.type
 	);
 
 	const labelInputId = useId();
+
+	const isPublished = publishedChildren.has(field.uuid);
 
 	return (
 		<>
@@ -91,7 +97,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 
 			<div className="mt-4 pb-2">
 				<LocalizedInput
-					disabled={disabled}
+					disabled={isReferenced}
 					error={errors.get('label')}
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
@@ -107,7 +113,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 				/>
 
 				<Input
-					disabled={disabled || isPublished}
+					disabled={field.locked || isReferenced || isPublished}
 					error={errors.get('name')}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {
@@ -121,14 +127,14 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 					value={field.name}
 				/>
 
-				<FirstSectionComponent disabled={disabled} field={field} />
+				<FirstSectionComponent disabled={isReferenced} field={field} />
 			</div>
 
 			<div className="pb-2">
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.required}
-						disabled={disabled || isPublished}
+						disabled={isReferenced || isPublished}
 						label={Liferay.Language.get('mandatory')}
 						onChange={(event) => {
 							dispatch({
@@ -143,7 +149,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={field.localized}
-						disabled={disabled || isPublished}
+						disabled={isReferenced || isPublished}
 						label={Liferay.Language.get('localizable')}
 						onChange={(event) => {
 							dispatch({
@@ -155,12 +161,12 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 					/>
 				</ClayForm.Group>
 
-				<SecondSectionComponent disabled={disabled} field={field} />
+				<SecondSectionComponent disabled={isReferenced} field={field} />
 			</div>
 
 			<div>
 				<ERCInput
-					disabled={disabled || isPublished}
+					disabled={isReferenced || isPublished}
 					error={errors.get('erc')}
 					onValueChange={(value) => {
 						dispatch({
@@ -176,7 +182,13 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 	);
 }
 
-function SearchTab({disabled, field}: {disabled?: boolean; field: Field}) {
+function SearchTab({
+	field,
+	isReferenced,
+}: {
+	field: Field;
+	isReferenced?: boolean;
+}) {
 	const dispatch = useStateDispatch();
 
 	const languageLabels = useMemo(
@@ -192,7 +204,7 @@ function SearchTab({disabled, field}: {disabled?: boolean; field: Field}) {
 			<ClayForm.Group>
 				<ClayCheckbox
 					checked={field.indexableConfig.indexed}
-					disabled={disabled}
+					disabled={field.locked || isReferenced}
 					label={Liferay.Language.get('searchable')}
 					onChange={(event) => {
 						dispatch({
@@ -240,13 +252,13 @@ function SearchTab({disabled, field}: {disabled?: boolean; field: Field}) {
 							}}
 						>
 							<ClayRadio
-								disabled={disabled}
+								disabled={isReferenced}
 								label={Liferay.Language.get('keyword')}
 								value="keyword"
 							/>
 
 							<ClayRadio
-								disabled={disabled}
+								disabled={isReferenced}
 								label={Liferay.Language.get('text')}
 								value="text"
 							/>
@@ -257,7 +269,7 @@ function SearchTab({disabled, field}: {disabled?: boolean; field: Field}) {
 						<Picker
 							aria-label={Liferay.Language.get('language')}
 							defaultSelectedKey={Liferay.ThemeDisplay.getDefaultLanguageId()}
-							disabled={disabled}
+							disabled={field.locked || isReferenced}
 							items={languageLabels}
 							messages={{
 								itemDescribedby: Liferay.Language.get(

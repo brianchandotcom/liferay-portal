@@ -543,7 +543,8 @@ public class ClassNamePostUpgradeDataCleanupProcessTest
 	@Override
 	protected Object[] getPostUpgradeDataCleanupProcessArguments() {
 		return new Object[] {
-			_classNameLocalService, _companyLocalService, connection, _objectDefinitionLocalService
+			_classNameLocalService, _companyLocalService, connection,
+			_objectDefinitionLocalService
 		};
 	}
 

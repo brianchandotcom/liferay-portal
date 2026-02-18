@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -181,7 +182,8 @@ public class ResourceActionPostUpgradeDataCleanupProcessTest
 					ResourceConstants.SCOPE_COMPANY,
 					String.valueOf(CompanyThreadLocal.getCompanyId()),
 					role.getRoleId(), resourceActionActionId);
-			});
+			},
+			getPostUpgradeDataCleanupProcessClassName(), LoggerTestUtil.DEBUG);
 	}
 
 	@Test

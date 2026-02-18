@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -58,7 +59,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -90,7 +92,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -124,7 +127,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -217,7 +221,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 				_addLayoutRevision(plid);
 				_addPortletPreference(plid, portletId);
 			},
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -240,7 +245,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -269,7 +275,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(plid, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -299,7 +306,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -331,7 +339,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -363,7 +372,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreferenceValue(portletPreferencesId),
 			() -> _addPortletPreferenceValue(portletPreferencesId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -387,7 +397,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreferenceValue(portletPreferencesId),
 			() -> _addPortletPreferenceValue(portletPreferencesId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -411,7 +422,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -443,7 +455,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test
@@ -477,7 +490,8 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 			},
 			() -> _deletePortletPreference(portletId),
 			() -> _addPortletPreference(0, portletId),
-			OrphanReferencesDataCleanupUtil.class.getName());
+			OrphanReferencesDataCleanupUtil.class.getName(),
+			LoggerTestUtil.INFO);
 	}
 
 	@Test

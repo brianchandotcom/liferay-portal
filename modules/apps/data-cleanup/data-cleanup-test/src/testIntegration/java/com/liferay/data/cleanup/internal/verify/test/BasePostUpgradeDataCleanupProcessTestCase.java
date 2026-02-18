@@ -82,20 +82,20 @@ public abstract class BasePostUpgradeDataCleanupProcessTestCase {
 		test(
 			assertUnsafeConsumer, cleanUpDataUnsafeRunnable,
 			initializeDataUnsafeRunnable,
-			getPostUpgradeDataCleanupProcessClassName());
+			getPostUpgradeDataCleanupProcessClassName(), LoggerTestUtil.INFO);
 	}
 
 	protected void test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
 			UnsafeRunnable<Exception> initializeDataUnsafeRunnable,
-			String logCaptureClass)
+			String logCaptureClass, String logLevel)
 		throws Exception {
 
 		initializeDataUnsafeRunnable.run();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				logCaptureClass, LoggerTestUtil.INFO)) {
+				logCaptureClass, logLevel)) {
 
 			_runPostUpgradeDataCleanUpVerifyProcess();
 

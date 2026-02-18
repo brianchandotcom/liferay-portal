@@ -10,11 +10,14 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -275,8 +278,9 @@ public class ObjectEntryAssetRendererTest {
 
 		return new ObjectEntryAssetRenderer(
 			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
-			_objectDefinition, _objectEntry,
-			_objectEntryDisplayContextFactoryImpl, _objectEntryService);
+			_dlAppLocalService, _dlURLHelper, _objectDefinition, _objectEntry,
+			_objectEntryDisplayContextFactoryImpl, _objectEntryService,
+			_objectFieldLocalService);
 	}
 
 	private final AssetDisplayPageFriendlyURLProvider
@@ -284,6 +288,9 @@ public class ObjectEntryAssetRendererTest {
 			AssetDisplayPageFriendlyURLProvider.class);
 	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
 		DepotEntryLocalService.class);
+	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
+		DLAppLocalService.class);
+	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private final ObjectEntry _objectEntry = Mockito.mock(ObjectEntry.class);
@@ -292,6 +299,8 @@ public class ObjectEntryAssetRendererTest {
 			ObjectEntryDisplayContextFactoryImpl.class);
 	private final ObjectEntryService _objectEntryService = Mockito.mock(
 		ObjectEntryService.class);
+	private final ObjectFieldLocalService _objectFieldLocalService =
+		Mockito.mock(ObjectFieldLocalService.class);
 	private final PermissionChecker _permissionChecker = Mockito.mock(
 		PermissionChecker.class);
 

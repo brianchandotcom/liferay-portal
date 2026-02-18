@@ -53,22 +53,22 @@ public class CalendarUpgradeProcess extends UpgradeProcess {
 						StringBundler.concat(
 							"select Calendar.calendarId, CalendarResource.",
 							"classNameId, User_.timeZoneId from Calendar ",
-							"inner join CalendarResource on ",
-							"Calendar.calendarResourceId = ",
-							"CalendarResource.calendarResourceId inner join ",
-							"User_ on CalendarResource.userId = User_.userId"));
+							"inner join CalendarResource on Calendar.",
+							"calendarResourceId = CalendarResource.",
+							"calendarResourceId inner join User_ on ",
+							"CalendarResource.userId = User_.userId"));
 				ResultSet resultSet = preparedStatement.executeQuery()) {
 
 				long userClassNameId = PortalUtil.getClassNameId(User.class);
 
 				while (resultSet.next()) {
-					long calendarId = resultSet.getLong(1);
-					long classNameId = resultSet.getLong(2);
+					long calendarId = resultSet.getLong("calendarId");
+					long classNameId = resultSet.getLong("classNameId");
 
 					String timeZoneId = null;
 
 					if (classNameId == userClassNameId) {
-						timeZoneId = resultSet.getString(3);
+						timeZoneId = resultSet.getString("timeZoneId");
 					}
 					else {
 						timeZoneId = PropsUtil.get(

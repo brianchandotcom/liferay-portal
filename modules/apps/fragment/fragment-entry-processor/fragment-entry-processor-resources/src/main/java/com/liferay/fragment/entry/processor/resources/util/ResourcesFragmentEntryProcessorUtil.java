@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -30,11 +31,19 @@ public class ResourcesFragmentEntryProcessorUtil {
 			FragmentEntryLink fragmentEntryLink, String code)
 		throws PortalException {
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		if (groupId == null) {
+			return code;
+		}
+
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryERC(),
-					fragmentEntryLink.getFragmentEntryGroupId());
+					fragmentEntryLink.getFragmentEntryERC(), groupId);
 
 		if (fragmentEntry == null) {
 			return code;

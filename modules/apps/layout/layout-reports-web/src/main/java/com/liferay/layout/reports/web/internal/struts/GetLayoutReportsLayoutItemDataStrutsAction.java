@@ -24,6 +24,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.DummyWriter;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -306,10 +308,28 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 		String fragmentEntryERC = fragmentEntryLink.getFragmentEntryERC();
 
 		if (Validator.isNotNull(fragmentEntryERC)) {
+			Long groupId = ScopeUtil.getItemGroupId(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getFragmentEntryScopeERC(),
+				fragmentEntryLink.getGroupId());
+
+			if (groupId == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to resolve group ID for fragment entry ",
+							"link ", fragmentEntryLink.getFragmentEntryLinkId(),
+							" with fragment entry scope external reference ",
+							"code ",
+							fragmentEntryLink.getFragmentEntryScopeERC()));
+				}
+
+				return null;
+			}
+
 			return _fragmentEntryLocalService.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryERC,
-					fragmentEntryLink.getFragmentEntryGroupId());
+					fragmentEntryERC, groupId);
 		}
 
 		String rendererKey = fragmentEntryLink.getRendererKey();

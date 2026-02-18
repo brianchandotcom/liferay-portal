@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.taglib.util.OutputData;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -201,9 +202,14 @@ public class FragmentEntryFragmentRendererReact implements FragmentRenderer {
 				sb.append("</style>");
 			}
 			else {
+				Long groupId = ScopeUtil.getItemGroupId(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getFragmentEntryScopeERC(),
+					fragmentEntryLink.getGroupId());
+
 				String outputKey = StringBundler.concat(
-					fragmentEntryLink.getFragmentEntryERC(), "_",
-					fragmentEntryLink.getFragmentEntryGroupId(), "_CSS");
+					fragmentEntryLink.getFragmentEntryERC(), "_", groupId,
+					"_CSS");
 
 				OutputData outputData =
 					(OutputData)httpServletRequest.getAttribute(

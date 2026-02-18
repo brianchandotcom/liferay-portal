@@ -14,6 +14,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -153,11 +154,19 @@ public class FragmentStyledLayoutStructureItem
 			return PortletIdCodec.decodePortletName(portletId);
 		}
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		if (groupId == null) {
+			return StringPool.BLANK;
+		}
+
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.
 				fetchFragmentEntryByExternalReferenceCode(
-					fragmentEntryLink.getFragmentEntryERC(),
-					fragmentEntryLink.getFragmentEntryGroupId());
+					fragmentEntryLink.getFragmentEntryERC(), groupId);
 
 		if (fragmentEntry != null) {
 			return fragmentEntry.getFragmentEntryKey();

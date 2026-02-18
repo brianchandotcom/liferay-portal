@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -171,11 +172,29 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (fragmentEntry == null) {
+			Long groupId = ScopeUtil.getItemGroupId(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getFragmentEntryScopeERC(),
+				fragmentEntryLink.getGroupId());
+
+			if (groupId == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to resolve group ID for fragment entry ",
+							"link ", fragmentEntryLink.getFragmentEntryLinkId(),
+							" with fragment entry scope external reference ",
+							"code ",
+							fragmentEntryLink.getFragmentEntryScopeERC()));
+				}
+
+				return StringPool.BLANK;
+			}
+
 			fragmentEntry =
 				_fragmentEntryLocalService.
 					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(),
-						fragmentEntryLink.getFragmentEntryGroupId());
+						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if (fragmentEntry == null) {
@@ -235,11 +254,19 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		}
 
 		if (fragmentEntry == null) {
+			Long groupId = ScopeUtil.getItemGroupId(
+				fragmentEntryLink.getCompanyId(),
+				fragmentEntryLink.getFragmentEntryScopeERC(),
+				fragmentEntryLink.getGroupId());
+
+			if (groupId == null) {
+				return fragmentEntryLink.isCacheable();
+			}
+
 			fragmentEntry =
 				_fragmentEntryLocalService.
 					fetchFragmentEntryByExternalReferenceCode(
-						fragmentEntryLink.getFragmentEntryERC(),
-						fragmentEntryLink.getFragmentEntryGroupId());
+						fragmentEntryLink.getFragmentEntryERC(), groupId);
 		}
 
 		if (fragmentEntry == null) {
@@ -300,9 +327,14 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				sb.append("</style>");
 			}
 			else {
+				Long groupId = ScopeUtil.getItemGroupId(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getFragmentEntryScopeERC(),
+					fragmentEntryLink.getGroupId());
+
 				String outputKey = StringBundler.concat(
-					fragmentEntryLink.getFragmentEntryERC(), "_",
-					fragmentEntryLink.getFragmentEntryGroupId(), "_CSS");
+					fragmentEntryLink.getFragmentEntryERC(), "_", groupId,
+					"_CSS");
 
 				OutputData outputData =
 					(OutputData)httpServletRequest.getAttribute(

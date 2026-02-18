@@ -7,11 +7,13 @@ package com.liferay.document.library.internal.workflow.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -288,11 +290,16 @@ public class DLFileEntryWorkflowHandlerTest {
 	private void _addLayoutPageTemplateEntry() throws Exception {
 		String name = StringUtil.randomString();
 
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 				name.toLowerCase(LocaleUtil.ROOT),
-				PortalUtil.getClassNameId(FileEntry.class.getName()), 0, name,
+				PortalUtil.getClassNameId(FileEntry.class.getName()),
+				dlFileEntryType.getFileEntryTypeKey(), name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0L, 0,
 				ServiceContextTestUtil.getServiceContext(
 					_group.getGroupId(), TestPropsValues.getUserId()));
@@ -404,6 +411,9 @@ public class DLFileEntryWorkflowHandlerTest {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	private Folder _folder;
 

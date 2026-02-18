@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexable;
@@ -22,10 +23,12 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
@@ -63,6 +66,16 @@ public class ExportImportReportEntryLocalServiceImpl
 			ExportImportReportEntryConstants.TYPE_EMPTY);
 		exportImportReportEntry.setStatus(
 			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
+
+		String message = _language.format(
+			LocaleUtil.US,
+			"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
+				"shell-was-created",
+			new Object[] {modelNameLanguageKey, classExternalReferenceCode});
+
+		exportImportReportEntry.setErrorMessage(message);
+
+		exportImportReportEntry.setErrorStacktrace(null);
 
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);
@@ -223,5 +236,8 @@ public class ExportImportReportEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ExportImportReportEntryLocalServiceImpl.class);
+
+	@Reference
+	private Language _language;
 
 }

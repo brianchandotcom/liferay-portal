@@ -43,6 +43,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 		_firstActivityDate = individual.getFirstActivityDate();
 		_id = individual.getId();
 		_lastActivityDate = individual.getLastActivityDate();
+		_lastSessionCountry = individual.getLastSessionCountry();
 
 		StringBundler sb = new StringBundler(3);
 
@@ -122,6 +123,7 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	private Individual _individual;
 
 	private Date _lastActivityDate;
+	private String _lastSessionCountry;
 	private String _name;
 	private String _profileType;
 

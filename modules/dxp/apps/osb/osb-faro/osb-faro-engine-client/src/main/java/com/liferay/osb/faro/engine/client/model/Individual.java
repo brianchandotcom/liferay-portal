@@ -79,6 +79,10 @@ public class Individual {
 		return new Date(_lastActivityDate.getTime());
 	}
 
+	public String getLastSessionCountry() {
+		return _lastSessionCountry;
+	}
+
 	public String getProfileType() {
 		return _profileType;
 	}
@@ -137,6 +141,10 @@ public class Individual {
 		}
 	}
 
+	public void setLastSessionCountry(String lastSessionCountry) {
+		_lastSessionCountry = lastSessionCountry;
+	}
+
 	public void setProfileType(String profileType) {
 		_profileType = profileType;
 	}
@@ -185,6 +193,7 @@ public class Individual {
 	private Date _firstActivityDate;
 	private String _id;
 	private Date _lastActivityDate;
+	private String _lastSessionCountry;
 	private String _profileType;
 
 }

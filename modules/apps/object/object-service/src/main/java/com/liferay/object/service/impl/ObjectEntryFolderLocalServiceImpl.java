@@ -695,6 +695,8 @@ public class ObjectEntryFolderLocalServiceImpl
 				modelPermissions.addRolePermissions(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
 					ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+				modelPermissions.addRolePermissions(
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER, ActionKeys.VIEW);
 
 				if (group.isDepot()) {
 					DepotEntry depotEntry =

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -130,13 +129,6 @@ public class ProductMenuDisplayContextTest {
 			MockedStatic<PortalUtil> portalUtilMockedStatic =
 				Mockito.mockStatic(PortalUtil.class)) {
 
-			configurationProviderUtilMockedStatic.when(
-				() -> ConfigurationProviderUtil.getCompanyConfiguration(
-					ArgumentMatchers.any(), ArgumentMatchers.anyLong())
-			).thenReturn(
-				_applicationsMenuInstanceConfiguration
-			);
-
 			portalUtilMockedStatic.when(
 				() -> PortalUtil.getHttpServletRequest(ArgumentMatchers.any())
 			).thenReturn(
@@ -144,7 +136,8 @@ public class ProductMenuDisplayContextTest {
 			);
 
 			Mockito.when(
-				_applicationsMenuInstanceConfiguration.enableApplicationsMenu()
+				true
+				//_applicationsMenuInstanceConfiguration.enableApplicationsMenu()
 			).thenReturn(
 				enableApplicationsMenu
 			);
@@ -193,9 +186,6 @@ public class ProductMenuDisplayContextTest {
 		return panelCategory;
 	}
 
-	private final ApplicationsMenuInstanceConfiguration
-		_applicationsMenuInstanceConfiguration = Mockito.mock(
-			ApplicationsMenuInstanceConfiguration.class);
 	private final List<PanelCategory> _applicationsMenuPanelCategories =
 		Arrays.asList(
 			_mockPanelCategory("application-panel1"),

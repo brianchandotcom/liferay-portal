@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -1347,12 +1348,12 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 		Method method = clazz.getMethod("cleanUp");
 
 		Constructor<?> constructor = clazz.getConstructor(
-			ClassNameLocalService.class, Connection.class,
-			ObjectDefinitionLocalService.class);
+			ClassNameLocalService.class, CompanyLocalService.class,
+			Connection.class, ObjectDefinitionLocalService.class);
 
 		method.invoke(
 			constructor.newInstance(
-				_classNameLocalService, connection,
+				_classNameLocalService, _companyLocalService, connection,
 				_objectDefinitionLocalService));
 	}
 
@@ -1414,6 +1415,9 @@ public abstract class BaseUpgradeLogAppenderTestCase {
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	private String _diagnosticsReportContent;
 

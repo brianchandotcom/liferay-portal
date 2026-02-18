@@ -30,13 +30,14 @@ public class AccountRoleResourceUpgradeProcess extends UpgradeProcess {
 
 	private boolean _hasResourceAction(String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from ResourceAction where actionId = ?")) {
+				"select count(*) as count from ResourceAction where actionId " +
+					"= ?")) {
 
 			preparedStatement.setString(1, name);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (resultSet.getInt(1) > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 

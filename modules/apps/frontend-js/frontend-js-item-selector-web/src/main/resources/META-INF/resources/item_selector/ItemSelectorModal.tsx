@@ -38,6 +38,11 @@ export type FilesUploaderComponent = React.ComponentType<{
 	files: FileData[];
 
 	/**
+	 * Site/Space where to upload items
+	 */
+	groupId?: number;
+
+	/**
 	 * Callback for when upload is done in both cases: by success, or user cancelation.
 	 */
 	onCloseUploadView: () => void;

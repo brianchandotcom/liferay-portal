@@ -22,6 +22,12 @@ spec:
                     properties:
                         spec:
                             properties:
+                                activeDataPlane:
+                                    default: blue
+                                    enum:
+                                        -   blue
+                                        -   green
+                                    type: string
                                 backup:
                                     properties:
                                         enabled:
@@ -58,54 +64,28 @@ spec:
                                     type: object
                                 database:
                                     properties:
-                                        activeSlot:
-                                            default: blue
-                                            enum:
-                                                -   blue
-                                                -   green
+                                        engineVersion:
+                                            default: "16.11"
                                             type: string
-                                        blue:
-                                            properties:
-                                                engineVersion:
-                                                    default: "16.11"
-                                                    type: string
-                                                instanceClass:
-                                                    default: db.t3.medium
-                                                    type: string
-                                                region:
-                                                    default: us-west-2
-                                                    type: string
-                                                storageGB:
-                                                    default: 20
-                                                    type: integer
-                                                username:
-                                                    default: liferay_database_admin
-                                                    type: string
-                                            required:
-                                                -   region
-                                            type: object
-                                        green:
-                                            properties:
-                                                engineVersion:
-                                                    default: "16.11"
-                                                    type: string
-                                                instanceClass:
-                                                    default: db.t3.medium
-                                                    type: string
-                                                region:
-                                                    default: us-west-2
-                                                    type: string
-                                                storageGB:
-                                                    default: 20
-                                                    type: integer
-                                                username:
-                                                    default: liferay_database_admin
-                                                    type: string
-                                            required:
-                                                -   region
-                                            type: object
+                                        instanceClass:
+                                            default: db.t3.medium
+                                            type: string
+                                        isRestoring:
+                                            default: false
+                                            type: boolean
+                                        region:
+                                            default: us-west-2
+                                            type: string
+                                        snapshotIdentifier:
+                                            type: string
+                                        storageGB:
+                                            default: 20
+                                            type: integer
+                                        username:
+                                            default: liferay_database_admin
+                                            type: string
                                     required:
-                                        -   activeSlot
+                                        -   region
                                     type: object
                                 deletionProtection:
                                     default: false
@@ -144,36 +124,11 @@ spec:
                                     type: object
                                 storage:
                                     properties:
-                                        activeSlot:
-                                            default: blue
-                                            enum:
-                                                -   blue
-                                                -   green
+                                        region:
+                                            default: us-west-2
                                             type: string
-                                        blue:
-                                            properties:
-                                                enableVersioning:
-                                                    default: true
-                                                    type: boolean
-                                                region:
-                                                    default: us-west-2
-                                                    type: string
-                                            required:
-                                                -   region
-                                            type: object
-                                        green:
-                                            properties:
-                                                enableVersioning:
-                                                    default: true
-                                                    type: boolean
-                                                region:
-                                                    default: us-west-2
-                                                    type: string
-                                            required:
-                                                -   region
-                                            type: object
                                     required:
-                                        -   activeSlot
+                                        -   region
                                     type: object
                             required:
                                 -   database

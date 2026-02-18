@@ -6,4 +6,12 @@ backup:
             ruleName: daily-backups
             schedule: cron(0 5 * * ? *)
             startWindow: 60
+database:
+    engineVersion: "16.11"
+    instanceClass: db.t3.medium
+    region: us-west-2
+    storageGB: 20
+    username: liferay_database_admin
 enabled: true
+storage:
+    region: us-west-2

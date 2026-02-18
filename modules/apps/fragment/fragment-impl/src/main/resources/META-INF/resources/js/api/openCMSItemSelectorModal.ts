@@ -105,6 +105,7 @@ export const openCMSItemSelectorModal = function ({
 			id: `UploadFragmentItemSelectorFDS_${getRandomId()}`,
 		},
 		filesUploaderComponent: CMSFileUploaderComponent,
+		groupId: 36991,
 		itemTypeLabel: Liferay.Language.get('files'),
 		items: [],
 		locator: {

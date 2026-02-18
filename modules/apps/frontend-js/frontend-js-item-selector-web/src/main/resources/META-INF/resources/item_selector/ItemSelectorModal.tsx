@@ -81,6 +81,11 @@ export interface IItemSelectorModalProps<T> {
 	filesUploaderComponent?: FilesUploaderComponent;
 
 	/**
+	 * Site/Space id where to upload items
+	 */
+	groupId?: number;
+
+	/**
 	 * The displayed label for the type of item being selected. Used in the
 	 * modal title.
 	 */
@@ -152,6 +157,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	createItemURL,
 	fdsProps,
 	filesUploaderComponent: FilesUploaderComponent,
+	groupId,
 	itemTypeLabel,
 	items: externalItems,
 	locator = {
@@ -280,6 +286,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 				{view === 'upload' && FilesUploaderComponent && (
 					<FilesUploaderComponent
 						files={filesToUpload}
+						groupId={groupId}
 						onCloseUploadView={() => {
 							setViewType('fds');
 							setFilesToUpload([]);

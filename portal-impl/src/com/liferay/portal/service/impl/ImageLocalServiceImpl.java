@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
 
@@ -184,6 +185,10 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			image = imagePersistence.create(imageId);
 
 			image.setCompanyId(companyId);
+		}
+
+		if (Validator.isNull(image.getExternalReferenceCode())) {
+			image.setExternalReferenceCode(String.valueOf(imageId));
 		}
 
 		image.setModifiedDate(new Date());

@@ -6361,18 +6361,6 @@ public class PortalImpl implements Portal {
 		else {
 			image = ImageLocalServiceUtil.updateImage(
 				companyId, CounterLocalServiceUtil.increment(), bytes);
-
-			if (Validator.isNull(externalReferenceCode)) {
-				externalReferenceCode = String.valueOf(image.getImageId());
-			}
-
-			if (!externalReferenceCode.equals(
-					image.getExternalReferenceCode())) {
-
-				image.setExternalReferenceCode(externalReferenceCode);
-
-				image = ImageLocalServiceUtil.updateImage(image);
-			}
 		}
 
 		BeanPropertiesUtil.setProperty(

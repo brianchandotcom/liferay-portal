@@ -222,8 +222,8 @@ public class CTCollectionServiceTest {
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from JournalArticle where id_ = ? and " +
-					"ctCollectionId = ?")) {
+				"select count(*) as count from JournalArticle where id_ = ? " +
+					"and ctCollectionId = ?")) {
 
 			preparedStatement.setLong(1, journalArticle.getPrimaryKey());
 			preparedStatement.setLong(2, _ctCollection.getCtCollectionId());
@@ -231,7 +231,7 @@ public class CTCollectionServiceTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
 
-				Assert.assertEquals(0, resultSet.getInt(1));
+				Assert.assertEquals(0, resultSet.getInt("count"));
 			}
 		}
 

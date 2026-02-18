@@ -1222,14 +1222,15 @@ public class LayoutCTTest {
 			try (Connection connection = DataAccess.getConnection();
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select COUNT(*) from Layout where plid = ?")) {
+						"select count(*) as count from Layout where plid = " +
+							"?")) {
 
 				preparedStatement.setLong(1, layout.getPlid());
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(2, resultSet.getLong(1));
+					Assert.assertEquals(2, resultSet.getLong("count"));
 
 					Assert.assertFalse(resultSet.next());
 				}

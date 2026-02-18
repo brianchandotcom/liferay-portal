@@ -196,12 +196,14 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 	}
 
 	private void _assertInfoFieldValue(
-			InfoFieldValue<Object> infoFieldValue, String name, String uniqueId,
+			String externalUniqueId, InfoFieldValue<Object> infoFieldValue,
+			String name, String uniqueId,
 			UnsafeConsumer<Object, Exception> unsafeConsumer)
 		throws Exception {
 
 		InfoField infoField = infoFieldValue.getInfoField();
 
+		Assert.assertEquals(externalUniqueId, infoField.getExternalUniqueId());
 		Assert.assertEquals(name, infoField.getName());
 		Assert.assertEquals(uniqueId, infoField.getUniqueId());
 
@@ -239,6 +241,7 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 			});
 
 		_assertInfoFieldValue(
+			JournalArticle.class.getSimpleName() + "_displayPageURL",
 			sortedInfoFieldValues.get(0), "displayPageURL",
 			JournalArticle.class.getSimpleName() + "_displayPageURL",
 			object -> Assert.assertEquals(
@@ -246,6 +249,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 					infoItemReference, _journalArticle, _themeDisplay),
 				object));
 		_assertInfoFieldValue(
+			LayoutPageTemplateEntry.class.getSimpleName() + "__ERC__" +
+				_layoutPageTemplateEntry.getExternalReferenceCode(),
 			sortedInfoFieldValues.get(1), _layoutPageTemplateEntry.getName(),
 			LayoutPageTemplateEntry.class.getSimpleName() +
 				StringPool.UNDERLINE +
@@ -269,6 +274,8 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 					layoutPageTemplateEntryWebURL.getURL());
 			});
 		_assertInfoFieldValue(
+			LayoutPageTemplateEntry.class.getSimpleName() + "__ERC__" +
+				_layoutPageTemplateEntry.getExternalReferenceCode(),
 			sortedInfoFieldValues.get(2), _layoutPageTemplateEntry.getName(),
 			LayoutPageTemplateEntry.class.getSimpleName() +
 				StringPool.UNDERLINE +

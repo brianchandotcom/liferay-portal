@@ -75,8 +75,6 @@ public class ExportImportReportEntryLocalServiceImpl
 
 		exportImportReportEntry.setErrorMessage(message);
 
-		exportImportReportEntry.setErrorStacktrace(null);
-
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);
 	}

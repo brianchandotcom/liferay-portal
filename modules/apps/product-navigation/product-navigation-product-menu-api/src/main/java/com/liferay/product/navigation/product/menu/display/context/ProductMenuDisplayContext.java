@@ -5,7 +5,6 @@
 
 package com.liferay.product.navigation.product.menu.display.context;
 
-import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
@@ -13,10 +12,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
@@ -155,23 +151,6 @@ public class ProductMenuDisplayContext {
 		return !childPanelCategories.isEmpty();
 	}
 
-	private List<PanelCategory> _filterPanelCategories(
-		List<PanelCategory> panelCategories) {
-
-		return TransformUtil.transform(
-			panelCategories,
-			panelCategory -> {
-				List<PanelApp> panelApps = _panelCategoryHelper.getAllPanelApps(
-					panelCategory.getKey());
-
-				if (!panelApps.isEmpty()) {
-					return panelCategory;
-				}
-
-				return null;
-			});
-	}
-
 	private boolean _hasAdministrationPortletPermission() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			_themeDisplay.getCompanyId(), LayoutAdminPortletKeys.GROUP_PAGES);
@@ -187,9 +166,6 @@ public class ProductMenuDisplayContext {
 			_themeDisplay.getPermissionChecker(), _themeDisplay.getScopeGroup(),
 			portlet);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ProductMenuDisplayContext.class);
 
 	private List<PanelCategory> _childPanelCategories;
 	private final HttpServletRequest _httpServletRequest;

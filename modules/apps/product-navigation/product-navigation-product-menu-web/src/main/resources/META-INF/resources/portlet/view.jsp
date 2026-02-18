@@ -8,12 +8,11 @@
 <%@ include file="/portlet/init.jsp" %>
 
 <%
-String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_productMenuState", "closed");
 String pagesTreeState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_pagesTreeState", "closed");
+String productMenuState = SessionClicks.get(request, "com.liferay.product.navigation.product.menu.web_productMenuState", "closed");
 %>
 
-<div class="lfr-product-menu-sidebar lfr-applications-menu" id="productMenuSidebar">
-
+<div class="lfr-applications-menu lfr-product-menu-sidebar" id="productMenuSidebar">
 	<div class="sidebar-body">
 		<c:choose>
 			<c:when test='<%= Objects.equals(productMenuState, "open") && (!Objects.equals(pagesTreeState, "open") || productMenuDisplayContext.isLayoutsTreeDisabled() || !productMenuDisplayContext.isShowLayoutsTree()) %>'>

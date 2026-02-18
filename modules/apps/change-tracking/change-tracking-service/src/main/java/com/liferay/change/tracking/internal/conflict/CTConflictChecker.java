@@ -177,12 +177,13 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select publication.", primaryKeyName, " from ",
-					ctPersistence.getTableName(), " publication inner join ",
-					"CTEntry on CTEntry.modelClassPK = publication.",
-					primaryKeyName, " where CTEntry.ctCollectionId = ? and ",
-					"CTEntry.modelClassNameId = ? and CTEntry.changeType = ? ",
-					"and publication.ctCollectionId = ?"))) {
+					"select publication.", primaryKeyName,
+					" as primaryKeyName from ", ctPersistence.getTableName(),
+					" publication inner join CTEntry on CTEntry.modelClassPK ",
+					"= publication.", primaryKeyName, " where CTEntry.",
+					"ctCollectionId = ? and CTEntry.modelClassNameId = ? and ",
+					"CTEntry.changeType = ? and publication.ctCollectionId = ",
+					"?"))) {
 
 			preparedStatement.setLong(1, _sourceCTCollectionId);
 			preparedStatement.setLong(2, _modelClassNameId);
@@ -192,7 +193,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					conflictInfos.add(
-						new AdditionConflictInfo(resultSet.getLong(1)));
+						new AdditionConflictInfo(
+							resultSet.getLong("primaryKeyName")));
 				}
 			}
 		}
@@ -358,7 +360,8 @@ public class CTConflictChecker<T extends CTModel<T>> {
 			try (PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
-							"select publication.", primaryKeyName, " from ",
+							"select publication.", primaryKeyName,
+							" as primaryKeyName from ",
 							ctPersistence.getTableName(),
 							" publication inner join CTEntry on CTEntry.",
 							"modelClassPK = publication.", primaryKeyName,
@@ -380,7 +383,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 					while (resultSet.next()) {
 						conflictInfos.add(
 							new ModificationDeletionConflictInfo(
-								resultSet.getLong(1), false));
+								resultSet.getLong("primaryKeyName"), false));
 					}
 				}
 			}
@@ -421,7 +424,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 				while (resultSet.next()) {
 					conflictInfos.add(
 						new ModificationDeletionConflictInfo(
-							resultSet.getLong(1), true));
+							resultSet.getLong("modelClassPK"), true));
 				}
 			}
 		}
@@ -759,7 +762,7 @@ public class CTConflictChecker<T extends CTModel<T>> {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					primaryKeys.add(resultSet.getLong(1));
+					primaryKeys.add(resultSet.getLong("modelClassPK"));
 				}
 			}
 

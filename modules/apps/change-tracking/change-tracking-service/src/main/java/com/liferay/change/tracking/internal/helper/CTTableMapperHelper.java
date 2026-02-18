@@ -190,8 +190,8 @@ public class CTTableMapperHelper {
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
 							StringBundler.concat(
-								"select ", _leftColumnName, ", ",
-								_rightColumnName, " from ", _tableName,
+								"select ", _leftColumnName, " as key, ",
+								_rightColumnName, " as value from ", _tableName,
 								" where ctCollectionId = ? and ctChangeType = ",
 								"?"))) {
 
@@ -204,8 +204,8 @@ public class CTTableMapperHelper {
 						while (resultSet.next()) {
 							mappingChanges.add(
 								new AbstractMap.SimpleImmutableEntry<>(
-									resultSet.getLong(1),
-									resultSet.getLong(2)));
+									resultSet.getLong("key"),
+									resultSet.getLong("value")));
 						}
 					}
 				}
@@ -224,8 +224,9 @@ public class CTTableMapperHelper {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select ", _leftColumnName, ", ", _rightColumnName,
-					" from ", _tableName, " where ctCollectionId = ?"))) {
+					"select ", _leftColumnName, "as key, ", _rightColumnName,
+					" as value from ", _tableName,
+					" where ctCollectionId = ?"))) {
 
 			preparedStatement.setLong(1, ctCollectionId);
 
@@ -233,7 +234,8 @@ public class CTTableMapperHelper {
 				while (resultSet.next()) {
 					entries.add(
 						new AbstractMap.SimpleImmutableEntry<>(
-							resultSet.getLong(1), resultSet.getLong(2)));
+							resultSet.getLong("key"),
+							resultSet.getLong("value")));
 				}
 			}
 		}

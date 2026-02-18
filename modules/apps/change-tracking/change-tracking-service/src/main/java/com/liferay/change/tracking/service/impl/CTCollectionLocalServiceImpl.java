@@ -859,7 +859,7 @@ public class CTCollectionLocalServiceImpl
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
 						StringBundler.concat(
-							"select count(*) from ",
+							"select count(*) as count from ",
 							ctPersistence.getTableName(),
 							" where ctCollectionId = ? and status not in (",
 							StringUtil.merge(
@@ -871,12 +871,8 @@ public class CTCollectionLocalServiceImpl
 				preparedStatement.setLong(1, ctCollectionId);
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
-					if (resultSet.next()) {
-						int count = resultSet.getInt(1);
-
-						if (count > 0) {
-							return true;
-						}
+					if (resultSet.next() && (resultSet.getInt("count") > 0)) {
+						return true;
 					}
 				}
 			}

@@ -127,8 +127,8 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from CTEntry left join ", tableName,
-					" on CTEntry.modelClassPK = ", tableName, ".",
+					"select count(*) as count from CTEntry left join ",
+					tableName, " on CTEntry.modelClassPK = ", tableName, ".",
 					primaryKeyName, " and ", tableName, ".ctCollectionId = ? ",
 					"where CTEntry.changeType = ? and CTEntry.ctCollectionId ",
 					"= ? and CTEntry.modelClassNameId = ? and ", tableName, ".",
@@ -141,7 +141,7 @@ public class CTServicePublisher<T extends CTModel<T>> {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					return resultSet.getInt(1);
+					return resultSet.getInt("count");
 				}
 			}
 		}

@@ -64,7 +64,7 @@ public class AssetTagCTEventListener implements CTEventListener {
 								preparedStatement.executeQuery()) {
 
 							while (resultSet.next()) {
-								long tagId = resultSet.getLong(1);
+								long tagId = resultSet.getLong("tagId");
 
 								AssetTag assetTag =
 									assetTagPersistence.fetchByPrimaryKey(

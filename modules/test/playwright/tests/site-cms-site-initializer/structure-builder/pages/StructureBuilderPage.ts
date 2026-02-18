@@ -708,11 +708,18 @@ export class StructureBuilderPage {
 		await this.page.waitForTimeout(4000);
 
 		const gotItButton = this.page.getByText('Got It');
+		const tryItButton = this.page.getByText('Try It');
 
-		if (await gotItButton.isVisible()) {
+		const button = (await gotItButton.isVisible())
+			? gotItButton
+			: (await tryItButton.isVisible())
+				? tryItButton
+				: null;
+
+		if (button) {
 			await clickAndExpectToBeHidden({
-				target: gotItButton,
-				trigger: gotItButton,
+				target: button,
+				trigger: button,
 			});
 		}
 	}

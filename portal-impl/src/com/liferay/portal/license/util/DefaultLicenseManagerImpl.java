@@ -149,6 +149,11 @@ public class DefaultLicenseManagerImpl implements LicenseManager {
 	}
 
 	@Override
+	public boolean isCMPEnabled() {
+		return true;
+	}
+
+	@Override
 	public boolean isFreeTier() {
 		return false;
 	}

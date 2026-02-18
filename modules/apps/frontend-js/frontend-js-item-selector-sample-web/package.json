@@ -8,6 +8,7 @@
 		"@clayui/sticker": "^3.159.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-item-selector-web": "*",
+		"@liferay/frontend-js-react-web": "*",
 		"@liferay/site-cms-site-initializer": "*",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

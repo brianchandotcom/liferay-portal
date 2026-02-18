@@ -15,12 +15,12 @@ import {
 	IItemSelectorModalProps,
 	ItemSelectorModal,
 } from '@liferay/frontend-js-item-selector-web';
+import {useBrowserTabVisibility} from '@liferay/frontend-js-react-web';
 import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
 import {FileUploaderComponentExample} from './FilesUploaderComponentExample';
-import useBrowserTabVisibility from './utils/useBrowserTabVisibility';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';

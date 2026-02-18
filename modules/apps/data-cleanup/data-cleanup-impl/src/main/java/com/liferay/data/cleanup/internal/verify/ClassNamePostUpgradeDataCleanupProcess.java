@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -45,10 +46,12 @@ public class ClassNamePostUpgradeDataCleanupProcess
 	extends BaseDBProcess implements PostUpgradeDataCleanupProcess {
 
 	public ClassNamePostUpgradeDataCleanupProcess(
-		ClassNameLocalService classNameLocalService, Connection connection,
+		ClassNameLocalService classNameLocalService,
+		CompanyLocalService companyLocalService, Connection connection,
 		ObjectDefinitionLocalService objectDefinitionLocalService) {
 
 		_classNameLocalService = classNameLocalService;
+		_companyLocalService = companyLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 
 		this.connection = connection;
@@ -101,12 +104,24 @@ public class ClassNamePostUpgradeDataCleanupProcess
 						ObjectDefinitionConstants.
 							CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
 
-					ObjectDefinition objectDefinition =
-						_objectDefinitionLocalService.
-							fetchObjectDefinitionByClassName(
-								CompanyThreadLocal.getCompanyId(), value);
+					AtomicReference<ObjectDefinition> objectDefinition =
+						new AtomicReference<>();
 
-					if (objectDefinition != null) {
+					String finalValue = value;
+
+					_companyLocalService.forEachCompanyId(
+						companyId -> {
+							if (objectDefinition.get() != null) {
+								return;
+							}
+
+							objectDefinition.set(
+								_objectDefinitionLocalService.
+									fetchObjectDefinitionByClassName(
+										companyId, finalValue));
+						});
+
+					if (objectDefinition.get() != null) {
 						return;
 					}
 				}
@@ -199,6 +214,7 @@ public class ClassNamePostUpgradeDataCleanupProcess
 		ClassNamePostUpgradeDataCleanupProcess.class);
 
 	private final ClassNameLocalService _classNameLocalService;
+	private final CompanyLocalService _companyLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 }

@@ -59,6 +59,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 						active="<%= sideNavigationDisplayContext.getPortletId() %>"
 						defaultExpandedKeys="<%= sideNavigationDisplayContext.getExpandedKeys() %>"
 						displayType="primary"
+						stacked="<%= true %>"
 						verticalNavItems="<%= sideNavigationDisplayContext.getVerticalNavItems() %>"
 					/>
 				</div>

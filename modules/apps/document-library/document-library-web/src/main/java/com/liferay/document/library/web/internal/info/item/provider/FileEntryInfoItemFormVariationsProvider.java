@@ -187,7 +187,7 @@ public class FileEntryInfoItemFormVariationsProvider
 	}
 
 	@Override
-	public String getSubtypeClassName() {
+	public String getInfoItemFormVariationClassName() {
 		return DLFileEntryType.class.getName();
 	}
 

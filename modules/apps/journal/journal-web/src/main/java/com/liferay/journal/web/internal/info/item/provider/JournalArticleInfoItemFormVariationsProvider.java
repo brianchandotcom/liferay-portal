@@ -155,7 +155,7 @@ public class JournalArticleInfoItemFormVariationsProvider
 	}
 
 	@Override
-	public String getSubtypeClassName() {
+	public String getInfoItemFormVariationClassName() {
 		return DDMStructure.class.getName();
 	}
 

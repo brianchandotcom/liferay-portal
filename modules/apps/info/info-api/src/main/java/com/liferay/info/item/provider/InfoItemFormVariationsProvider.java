@@ -86,7 +86,7 @@ public interface InfoItemFormVariationsProvider<T> {
 		return Collections.emptyList();
 	}
 
-	public default String getSubtypeClassName() {
+	public default String getInfoItemFormVariationClassName() {
 		return null;
 	}
 

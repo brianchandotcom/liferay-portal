@@ -12,8 +12,11 @@ import com.liferay.asset.display.page.service.AssetDisplayPageEntryLocalService;
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
@@ -89,9 +92,14 @@ public class AssetDisplayPageFormProcessorTest {
 
 		long classNameId = _portal.getClassNameId(FileEntry.class.getName());
 
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, null, true,
+				_group.getGroupId(), classNameId,
+				dlFileEntryType.getFileEntryTypeKey(), true,
 				WorkflowConstants.STATUS_APPROVED);
 
 		_withAndWithoutAssetEntry(
@@ -181,9 +189,14 @@ public class AssetDisplayPageFormProcessorTest {
 	public void testProcessWithDefaultAssetDisplayPage() throws Exception {
 		long classNameId = _portal.getClassNameId(FileEntry.class.getName());
 
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, null, true,
+				_group.getGroupId(), classNameId,
+				dlFileEntryType.getFileEntryTypeKey(), true,
 				WorkflowConstants.STATUS_APPROVED);
 
 		_withAndWithoutAssetEntry(
@@ -333,6 +346,9 @@ public class AssetDisplayPageFormProcessorTest {
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

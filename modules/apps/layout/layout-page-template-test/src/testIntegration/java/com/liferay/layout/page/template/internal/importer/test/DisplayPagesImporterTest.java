@@ -6,6 +6,9 @@
 package com.liferay.layout.page.template.internal.importer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
+import com.liferay.document.library.kernel.model.DLFileEntryTypeConstants;
+import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -343,11 +346,16 @@ public class DisplayPagesImporterTest {
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
 
+			DLFileEntryType dlFileEntryType =
+				_dlFileEntryTypeLocalService.fetchDLFileEntryType(
+					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
 					null, _portal.getClassNameId(FileEntry.class.getName()),
-					null, RandomTestUtil.randomString(),
+					dlFileEntryType.getFileEntryTypeKey(),
+					RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					masterLayoutPageTemplateEntry.getPlid(),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -742,6 +750,9 @@ public class DisplayPagesImporterTest {
 
 	private static final String _BASE_PATH =
 		"com/liferay/layout/page/template/internal/importer/test/dependencies/";
+
+	@Inject
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 
 	@Inject
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

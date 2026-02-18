@@ -7708,6 +7708,12 @@ public class ObjectEntryLocalServiceImpl
 				if (value instanceof List) {
 					listTypeEntryKeys = (List<String>)value;
 				}
+				else if (value instanceof Object[]) {
+					listTypeEntryKeys = TransformUtil.transformToList(
+						(Object[])value,
+						currentValue -> GetterUtil.getString(
+							String.valueOf(currentValue)));
+				}
 				else {
 					listTypeEntryKeys = ListUtil.fromString(
 						GetterUtil.getString(String.valueOf(value)),

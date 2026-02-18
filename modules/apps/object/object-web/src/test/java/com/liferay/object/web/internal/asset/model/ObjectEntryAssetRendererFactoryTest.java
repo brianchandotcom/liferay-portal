@@ -7,10 +7,13 @@ package com.liferay.object.web.internal.asset.model;
 
 import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvider;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.web.internal.object.entries.display.context.ObjectEntryDisplayContextFactoryImpl;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
@@ -47,8 +50,9 @@ public class ObjectEntryAssetRendererFactoryTest {
 
 		_objectEntryAssetRendererFactory = new ObjectEntryAssetRendererFactory(
 			_assetDisplayPageFriendlyURLProvider, _depotEntryLocalService,
-			_objectDefinition, _objectEntryDisplayContextFactoryImpl,
-			_objectEntryLocalService, _objectEntryService, _servletContext);
+			_dlAppLocalService, _dlURLHelper, _objectDefinition,
+			_objectEntryDisplayContextFactoryImpl, _objectEntryLocalService,
+			_objectFieldLocalService, _objectEntryService, _servletContext);
 
 		_objectEntryAssetRendererFactory.setClassName(
 			RandomTestUtil.randomString());
@@ -137,6 +141,9 @@ public class ObjectEntryAssetRendererFactoryTest {
 			AssetDisplayPageFriendlyURLProvider.class);
 	private final DepotEntryLocalService _depotEntryLocalService = Mockito.mock(
 		DepotEntryLocalService.class);
+	private final DLAppLocalService _dlAppLocalService = Mockito.mock(
+		DLAppLocalService.class);
+	private final DLURLHelper _dlURLHelper = Mockito.mock(DLURLHelper.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private ObjectEntryAssetRendererFactory _objectEntryAssetRendererFactory;
@@ -147,6 +154,8 @@ public class ObjectEntryAssetRendererFactoryTest {
 		Mockito.mock(ObjectEntryLocalService.class);
 	private final ObjectEntryService _objectEntryService = Mockito.mock(
 		ObjectEntryService.class);
+	private final ObjectFieldLocalService _objectFieldLocalService =
+		Mockito.mock(ObjectFieldLocalService.class);
 	private final MockedStatic<ResourceActionsUtil>
 		_resourceActionsUtilMockedStatic = Mockito.mockStatic(
 			ResourceActionsUtil.class);

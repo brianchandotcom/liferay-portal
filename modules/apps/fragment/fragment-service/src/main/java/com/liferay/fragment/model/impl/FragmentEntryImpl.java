@@ -20,10 +20,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -46,23 +44,6 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	@Override
 	public String getContent() {
 		return StringPool.BLANK;
-	}
-
-	@Override
-	public int getGlobalUsageCount() {
-		if (getGroupId() <= 0) {
-			return 0;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroup(getGroupId());
-
-		if (group == null) {
-			return 0;
-		}
-
-		return FragmentEntryLinkLocalServiceUtil.
-			getFragmentEntryLinksCountByFragmentEntryERC(
-				getExternalReferenceCode(), group.getExternalReferenceCode());
 	}
 
 	@Override

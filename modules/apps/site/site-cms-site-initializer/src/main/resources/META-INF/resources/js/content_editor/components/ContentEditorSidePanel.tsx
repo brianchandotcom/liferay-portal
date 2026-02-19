@@ -17,6 +17,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {IAssetObjectEntry} from '../../common/types/AssetType';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
+import ObjectEntryService from '../../main_view/info_panel/services/ObjectEntryService';
 import {Comment} from '../services/CommentService';
 import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
 import {dateConfig, toMomentDate, toServerISOFormat} from './ScheduleField';
@@ -185,6 +186,46 @@ export default function ContentEditorSidePanel(props: Props) {
 			},
 		}));
 	};
+
+	useEffect(() => {
+		ObjectEntryService.getObjectEntry(props.contentAPIURL).then(
+			({data, error}) => {
+				if (data) {
+					setCategorizationFields((prevState) => {
+
+						// Only populate the categorization fields if they are
+						// empty. If they are not empty, it means that the
+						// categorization panel has already been opened and the
+						// data has been fetched by the AssetCategorization
+						// component.
+
+						if (
+							prevState.assetCategoryIds.serverValue ||
+							prevState.assetTagNames.serverValue
+						) {
+							return prevState;
+						}
+
+						return {
+							assetCategoryIds: {
+								serverValue: (data.taxonomyCategoryBriefs || [])
+									.map(({taxonomyCategoryId: id}) => id)
+									.join(','),
+								value: data.taxonomyCategoryBriefs || [],
+							},
+							assetTagNames: {
+								serverValue: (data.keywords || []).join(','),
+								value: data.keywords || [],
+							},
+						};
+					});
+				}
+				else if (error) {
+					console.error(error);
+				}
+			}
+		);
+	}, [props.contentAPIURL]);
 
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');

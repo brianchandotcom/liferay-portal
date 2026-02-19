@@ -19,7 +19,6 @@ const Solutions = () => {
 	const [refreshInterval, setRefreshInterval] = useState(
 		DEFAULT_REFRESH_INTERVAL
 	);
-	const {channel} = useMarketplaceContext();
 	const {selectedAccount} = useOutletContext<any>();
 	const {
 		data: placedOrders = {items: []},
@@ -27,7 +26,6 @@ const Solutions = () => {
 		isLoading,
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id,
-		channelId: channel?.id,
 		orderTypeExternalReferenceCodes: [
 			OrderTypes.SOLUTIONS7,
 			OrderTypes.SOLUTIONS30,

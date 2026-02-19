@@ -1333,10 +1333,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		Group group = _groupLocalService.getGroup(groupId);
 
-		if (LicenseManagerUtil.isFreeTier() && group.isCMS() &&
-			(status == WorkflowConstants.STATUS_APPROVED)) {
-
-			throw new UnsupportedOperationException();
+		if (group.isCMS() && (status == WorkflowConstants.STATUS_APPROVED)) {
+			LicenseManagerUtil.checkFreeTier();
 		}
 	}
 

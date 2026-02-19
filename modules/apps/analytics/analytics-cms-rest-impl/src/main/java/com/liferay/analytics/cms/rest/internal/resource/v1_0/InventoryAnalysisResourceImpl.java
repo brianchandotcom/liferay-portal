@@ -71,11 +71,9 @@ public class InventoryAnalysisResourceImpl
 			Pagination pagination)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
-
 		InventoryAnalysis inventoryAnalysis = new InventoryAnalysis();
+
+		LicenseManagerUtil.checkFreeTier();
 
 		Long[] groupIds = DepotEntryUtil.getGroupIds(
 			DepotEntryUtil.getDepotEntries(

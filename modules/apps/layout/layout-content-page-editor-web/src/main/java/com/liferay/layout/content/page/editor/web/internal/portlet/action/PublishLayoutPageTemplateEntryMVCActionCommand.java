@@ -119,8 +119,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 		Group group = _groupLocalService.getGroup(layout.getGroupId());
 
-		if (LicenseManagerUtil.isFreeTier() && group.isCMS()) {
-			throw new UnsupportedOperationException();
+		if (group.isCMS()) {
+			LicenseManagerUtil.checkFreeTier();
 		}
 
 		UnicodeProperties previousLayouTypeSettingsUnicodeProperties =

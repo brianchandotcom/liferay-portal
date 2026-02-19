@@ -31,9 +31,7 @@ public class ObjectEntryTopPagesResourceImpl
 			String externalReferenceCode, Long groupId, Integer rangeKey)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		AnalyticsCloudClient analyticsCloudClient = new AnalyticsCloudClient(
 			_http);

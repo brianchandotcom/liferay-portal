@@ -36,9 +36,7 @@ public class ConnectionInfoResourceImpl extends BaseConnectionInfoResourceImpl {
 	public ConnectionInfo getConnectionInfo(Long depotEntryGroupId)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(

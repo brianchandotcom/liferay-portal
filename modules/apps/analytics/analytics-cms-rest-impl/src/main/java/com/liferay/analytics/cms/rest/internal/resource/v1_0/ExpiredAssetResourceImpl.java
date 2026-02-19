@@ -58,9 +58,7 @@ public class ExpiredAssetResourceImpl extends BaseExpiredAssetResourceImpl {
 			Long depotEntryId, String languageId, Pagination pagination)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		Long[] groupIds = DepotEntryUtil.getGroupIds(
 			DepotEntryUtil.getDepotEntries(

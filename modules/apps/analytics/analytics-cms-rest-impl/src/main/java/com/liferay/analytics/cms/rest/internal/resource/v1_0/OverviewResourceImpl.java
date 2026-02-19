@@ -64,9 +64,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);
@@ -92,9 +90,7 @@ public class OverviewResourceImpl extends BaseOverviewResourceImpl {
 			Integer rangeKey, String rangeStart)
 		throws Exception {
 
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		List<DepotEntry> depotEntries = DepotEntryUtil.getDepotEntries(
 			contextCompany.getCompanyId(), depotEntryId);

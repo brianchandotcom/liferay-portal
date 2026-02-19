@@ -30,9 +30,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class ChannelResourceImpl extends BaseChannelResourceImpl {
 
 	public Page<Channel> getChannelsPage(String keywords) throws Exception {
-		if (LicenseManagerUtil.isFreeTier()) {
-			throw new UnsupportedOperationException();
-		}
+		LicenseManagerUtil.checkFreeTier();
 
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsSettingsManager.getAnalyticsConfiguration(

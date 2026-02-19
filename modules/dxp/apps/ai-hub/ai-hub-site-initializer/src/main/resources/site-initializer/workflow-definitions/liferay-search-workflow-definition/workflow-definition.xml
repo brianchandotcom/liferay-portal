@@ -6,7 +6,6 @@
 	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
 >
 	<name>Liferay Search</name>
-	<description>This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.</description>
 	<version>1</version>
 	<llm>
 		<name>liferaySearch</name>

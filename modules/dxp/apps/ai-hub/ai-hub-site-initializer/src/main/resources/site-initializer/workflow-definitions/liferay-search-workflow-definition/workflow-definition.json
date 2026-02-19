@@ -1,6 +1,5 @@
 {
 	"active": true,
-	"description": "This agent provides targeted support by searching the Liferay DXP instance for the most relevant data, ensuring every response is grounded in your specific environment.",
 	"externalReferenceCode": "L_LIFERAY_SEARCH",
 	"name": "Liferay Search",
 	"scope": "ai",

@@ -35,6 +35,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
+import com.liferay.headless.admin.site.internal.util.EnableUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -117,11 +118,7 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -231,12 +228,6 @@ public class SitePageResourceImpl
 			}
 
 			@Override
-			public boolean isActive(PortletDataContext portletDataContext) {
-				return FeatureFlagManagerUtil.isEnabled(
-					portletDataContext.getCompanyId(), "LPD-35443");
-			}
-
-			@Override
 			public boolean isHidden() {
 				return true;
 			}
@@ -256,11 +247,7 @@ public class SitePageResourceImpl
 			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -291,11 +278,7 @@ public class SitePageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		return super.read(filter, pagination, sorts, parameters, search);
 	}
@@ -306,11 +289,7 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -330,11 +309,7 @@ public class SitePageResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443")) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkEnabled(privateLayout);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -389,14 +364,7 @@ public class SitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443") ||
-			(!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privateLayout)) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkEnabled(privateLayout);
 
 		return _toSitePage(
 			_addLayout(
@@ -414,14 +382,7 @@ public class SitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35443") ||
-			(!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-38869") &&
-			 privateLayout)) {
-
-			throw new UnsupportedOperationException();
-		}
+		_checkEnabled(privateLayout);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -618,6 +579,17 @@ public class SitePageResourceImpl
 		}
 
 		return layout;
+	}
+
+	private void _checkEnabled(Boolean privateLayout) {
+		EnableUtil.checkEnabled(contextCompany);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-38869") &&
+			privateLayout) {
+
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private CustomMetaTag[] _getCustomMetaTags(PageSettings pageSettings) {

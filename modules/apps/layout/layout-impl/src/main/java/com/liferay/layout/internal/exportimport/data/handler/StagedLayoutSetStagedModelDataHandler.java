@@ -32,7 +32,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutSetBranch;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
-import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -106,7 +104,7 @@ public class StagedLayoutSetStagedModelDataHandler
 		throws Exception {
 
 		_exportClientExtensionEntryRels(portletDataContext, stagedLayoutSet);
-		_exportLayouts(portletDataContext, stagedLayoutSet);
+		_exportLayouts(portletDataContext);
 		_exportLogo(portletDataContext, stagedLayoutSet);
 		_exportTheme(portletDataContext, stagedLayoutSet);
 
@@ -232,9 +230,7 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		List<Element> layoutElements = layoutsElement.elements();
 
-		if (portletDataContext.isPrivateLayout() ||
-			!FeatureFlagManagerUtil.isEnabled(
-				portletDataContext.getCompanyId(), "LPD-35443")) {
+		if (portletDataContext.isPrivateLayout()) {
 
 			// Delete missing pages
 
@@ -498,10 +494,7 @@ public class StagedLayoutSetStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 
-	private void _exportLayouts(
-			PortletDataContext portletDataContext,
-			StagedLayoutSet stagedLayoutSet)
-		throws Exception {
+	private void _exportLayouts(PortletDataContext portletDataContext) {
 
 		// Force to always export layout deletions
 
@@ -511,67 +504,6 @@ public class StagedLayoutSetStagedModelDataHandler
 		// Force to always have a layout group element
 
 		portletDataContext.getExportDataGroupElement(Layout.class);
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				portletDataContext.getCompanyId(), "LPD-35443")) {
-
-			return;
-		}
-
-		long[] layoutIds = portletDataContext.getLayoutIds();
-
-		LayoutSet layoutSet = stagedLayoutSet.getLayoutSet();
-
-		Group group = layoutSet.getGroup();
-
-		if (group.isLayoutPrototype()) {
-			layoutIds = _exportImportHelper.getAllLayoutIds(
-				group.getGroupId(), portletDataContext.isPrivateLayout());
-		}
-
-		for (StagedModel stagedModel :
-				StagedLayoutSetStagedModelRepositoryUtil.
-					fetchChildrenStagedModels(
-						portletDataContext, stagedLayoutSet)) {
-
-			Layout layout = (Layout)stagedModel;
-
-			if (!ArrayUtil.contains(layoutIds, layout.getLayoutId())) {
-				Element layoutElement = portletDataContext.getExportDataElement(
-					layout);
-
-				if (layoutElement.attributeValue(Constants.ACTION) == null) {
-					layoutElement.addAttribute(
-						Constants.ACTION, Constants.SKIP);
-					layoutElement.addAttribute(
-						"layout-parent-layout-id",
-						String.valueOf(layout.getParentLayoutId()));
-				}
-
-				continue;
-			}
-
-			try {
-				if (!LayoutStagingUtil.prepareLayoutStagingHandler(
-						portletDataContext, layout)) {
-
-					continue;
-				}
-
-				StagedModelDataHandlerUtil.exportReferenceStagedModel(
-					portletDataContext, stagedLayoutSet, layout,
-					PortletDataContext.REFERENCE_TYPE_CHILD);
-			}
-			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to export layout " + layout.getName(),
-						exception);
-				}
-
-				throw exception;
-			}
-		}
 	}
 
 	private void _exportLogo(

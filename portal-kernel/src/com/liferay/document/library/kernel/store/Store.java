@@ -124,4 +124,10 @@ public interface Store {
 		long companyId, long repositoryId, String fileName,
 		String versionLabel);
 
+	/**
+	 * Verifies that all company stores belong to existing companies.
+	 */
+	public default void verifyCompanyStores() throws PortalException {
+	}
+
 }

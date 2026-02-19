@@ -59,8 +59,7 @@ const FiltersDropdown = () => {
 			.filter(Boolean);
 	}, [groupedFilters, validFilters]);
 
-	const filtersList =
-		Liferay.FeatureFlags['LPD-68829'] && groupedFilters
+	const filtersList = groupedFilters
 			? renderableGroupedFilters
 			: validFilters;
 
@@ -124,7 +123,7 @@ const FiltersDropdown = () => {
 
 					{filtersList?.length ? (
 						<ClayDropDown.ItemList items={filtersList}>
-							{Liferay.FeatureFlags['LPD-68829'] && groupedFilters
+							{groupedFilters
 								? (group: any) => (
 										<ClayDropDown.Group
 											header={group.label}

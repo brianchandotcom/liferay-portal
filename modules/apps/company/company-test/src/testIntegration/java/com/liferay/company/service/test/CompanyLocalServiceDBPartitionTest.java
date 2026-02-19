@@ -947,7 +947,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-		try (ResultSet resultSet = databaseMetaData.getTables(
+		try (ResultSet resultSet1 = databaseMetaData.getTables(
 				dbPartitionDB.getCatalog(
 					connection,
 					CompanyLocalServiceTestUtil.getPartitionName(
@@ -958,8 +958,8 @@ public class CompanyLocalServiceDBPartitionTest
 						copiedCompanyId)),
 				null, new String[] {"TABLE"})) {
 
-			while (resultSet.next()) {
-				String tableName = resultSet.getString("TABLE_NAME");
+			while (resultSet1.next()) {
+				String tableName = resultSet1.getString("TABLE_NAME");
 
 				if (dbInspector.isControlTable(tableName)) {
 					continue;
@@ -970,7 +970,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		for (String tableName : tableNames) {
-			try (ResultSet resultSet = databaseMetaData.getColumns(
+			try (ResultSet resultSet2 = databaseMetaData.getColumns(
 					dbPartitionDB.getCatalog(
 						connection,
 						CompanyLocalServiceTestUtil.getPartitionName(
@@ -981,8 +981,8 @@ public class CompanyLocalServiceDBPartitionTest
 							copiedCompanyId)),
 					tableName, null)) {
 
-				while (resultSet.next()) {
-					int columnType = resultSet.getInt("DATA_TYPE");
+				while (resultSet2.next()) {
+					int columnType = resultSet2.getInt("DATA_TYPE");
 
 					if ((columnType != Types.BIGINT) &&
 						(columnType != Types.LONGVARCHAR) &&
@@ -991,7 +991,7 @@ public class CompanyLocalServiceDBPartitionTest
 						continue;
 					}
 
-					String columnName = resultSet.getString("COLUMN_NAME");
+					String columnName = resultSet2.getString("COLUMN_NAME");
 
 					String whereClause = StringBundler.concat(
 						columnName, " like '%", companyId, "%'");
@@ -1016,17 +1016,18 @@ public class CompanyLocalServiceDBPartitionTest
 									StringPool.PERIOD, tableName, " where ",
 									whereClause)));
 
-					try (ResultSet resultSet2 =
+					try (ResultSet resultSet3 =
 							preparedStatement.executeQuery()) {
 
-						if (resultSet2.next()) {
+						if (resultSet3.next()) {
 							Assert.fail(
 								StringBundler.concat(
 									"Company ID ", companyId,
 									" is present in the copied database ",
 									"schema in ", tableName, StringPool.PERIOD,
 									columnName, StringPool.COLON,
-									StringPool.SPACE, resultSet2.getObject(1)));
+									StringPool.SPACE,
+									resultSet3.getObject(columnName)));
 						}
 					}
 				}
@@ -1138,8 +1139,8 @@ public class CompanyLocalServiceDBPartitionTest
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(pg_catalog.pg_rewrite.rulename) from ",
-					"pg_catalog.pg_rewrite join pg_catalog.pg_class on ",
+					"select count(pg_catalog.pg_rewrite.rulename) as count ",
+					"from pg_catalog.pg_rewrite join pg_catalog.pg_class on ",
 					"pg_catalog.pg_rewrite.ev_class = pg_catalog.pg_class.oid ",
 					"where pg_catalog.pg_class.relnamespace = ?::",
 					"regnamespace and (pg_catalog.pg_rewrite.rulename like ",
@@ -1151,7 +1152,7 @@ public class CompanyLocalServiceDBPartitionTest
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();
 
-				return resultSet.getInt(1);
+				return resultSet.getInt("count");
 			}
 		}
 	}

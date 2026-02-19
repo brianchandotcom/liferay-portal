@@ -8,6 +8,15 @@
 			"nonProductionSubscriptionUuid": "testNonProdSubId",
 			"productionSubscriptionUuid": "testProdSubId",
 			"r_accountEntryToCloudNativeEnvironment_accountEntryERC": "ERC-001"
+		},
+		{
+			"accountEntryToCloudNativeEnvironmentERC": "ERC-004",
+			"accountKey": "ERC-004",
+			"externalReferenceCode": "ERC-004_cloud-native-environment",
+			"maxClusterNodes": 2,
+			"nonProductionSubscriptionUuid": "testNonProdSubId4",
+			"productionSubscriptionUuid": "testProdSubId4",
+			"r_accountEntryToCloudNativeEnvironment_accountEntryERC": "ERC-004"
 		}
 	],
 	"objectDefinitionName": "CloudNativeEnvironment"

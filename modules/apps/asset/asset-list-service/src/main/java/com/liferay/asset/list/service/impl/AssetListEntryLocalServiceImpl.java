@@ -596,11 +596,18 @@ public class AssetListEntryLocalServiceImpl
 		long defaultAssetClassTypeId = GetterUtil.getLong(
 			anyAssetClassTypeString, -1);
 
-		if (defaultAssetClassTypeId < 0) {
-			return StringPool.BLANK;
+		if (defaultAssetClassTypeId >= 0) {
+			return String.valueOf(defaultAssetClassTypeId);
 		}
 
-		return String.valueOf(defaultAssetClassTypeId);
+		String classTypeIdsString = unicodeProperties.getProperty(
+			"classTypeIds" + _getAssetRendererFactoryName(assetEntryType));
+
+		if (Validator.isNotNull(classTypeIdsString)) {
+			return classTypeIdsString;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getAssetEntryType(String typeSettings) {

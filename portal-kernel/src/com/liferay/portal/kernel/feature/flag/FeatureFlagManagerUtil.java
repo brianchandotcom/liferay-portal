@@ -54,7 +54,7 @@ public class FeatureFlagManagerUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"No feature flag manager service found. Returning the " +
-				"default value.");
+					"default value.");
 		}
 
 		String json = _json;
@@ -78,7 +78,7 @@ public class FeatureFlagManagerUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"No feature flag manager service found. Returning the " +
-				"default value.");
+					"default value.");
 		}
 
 		return GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key));

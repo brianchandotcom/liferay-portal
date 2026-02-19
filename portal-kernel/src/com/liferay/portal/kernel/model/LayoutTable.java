@@ -80,8 +80,8 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 		"system_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> friendlyURL = createColumn(
 		"friendlyURL", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<LayoutTable, Long> iconImageId = createColumn(
-		"iconImageId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String> iconImageERC = createColumn(
+		"iconImageERC", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> themeId = createColumn(
 		"themeId", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> colorSchemeId = createColumn(

@@ -6,8 +6,6 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
-import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataIssuerException;
-import com.liferay.oauth.client.persistence.exception.OAuthClientASLocalMetadataLocalWellKnownURIException;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.petra.string.StringPool;
@@ -18,16 +16,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
-
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -79,38 +73,23 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				return true;
 			}
 
-			String authorizationEndpoint = ParamUtil.getString(
-				actionRequest, "authorizationEndpoint");
-
-			_validateHttpsUrl(false, authorizationEndpoint);
-
-			String issuer = ParamUtil.getString(actionRequest, "issuer");
-
-			_validateHttpsUrl(true, issuer);
-
-			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
-
-			_validateHttpsUrl(false, jwksURI);
-
-			String tokenEndpoint = ParamUtil.getString(
-				actionRequest, "tokenEndpoint");
-
-			_validateHttpsUrl(false, tokenEndpoint);
-
-			String userInfoEndpoint = ParamUtil.getString(
-				actionRequest, "userInfoEndpoint");
-
-			_validateHttpsUrl(false, userInfoEndpoint);
-
 			boolean enabledLocalWellKnown = ParamUtil.getBoolean(
 				actionRequest, "enabledLocalWellKnown");
 
+			String authorizationEndpoint = ParamUtil.getString(
+				actionRequest, "authorizationEndpoint");
+			String issuer = ParamUtil.getString(actionRequest, "issuer");
+			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
 			String supportedGrantTypes = ParamUtil.getString(
 				actionRequest, "supportedGrantTypes");
 			String supportedScopes = ParamUtil.getString(
 				actionRequest, "supportedScopes");
 			String supportedSubjectTypes = ParamUtil.getString(
 				actionRequest, "supportedSubjectTypes");
+			String tokenEndpoint = ParamUtil.getString(
+				actionRequest, "tokenEndpoint");
+			String userInfoEndpoint = ParamUtil.getString(
+				actionRequest, "userInfoEndpoint");
 
 			long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 				actionRequest, "oAuthClientASLocalMetadataId");
@@ -157,30 +136,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 			SessionErrors.add(actionRequest, clazz.getName(), portalException);
 
 			return false;
-		}
-	}
-
-	private void _validateHttpsUrl(boolean required, String urlString)
-		throws PortalException {
-
-		if (Validator.isNull(urlString)) {
-			if (required) {
-				throw new OAuthClientASLocalMetadataIssuerException();
-			}
-
-			return;
-		}
-
-		try {
-			URL url = new URL(urlString);
-
-			if (!Http.HTTPS.equalsIgnoreCase(url.getProtocol())) {
-				throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
-			}
-		}
-		catch (MalformedURLException malformedURLException) {
-			throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
-				urlString, malformedURLException);
 		}
 	}
 

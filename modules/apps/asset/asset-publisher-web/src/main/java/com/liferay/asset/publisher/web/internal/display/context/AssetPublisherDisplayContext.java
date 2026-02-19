@@ -1221,11 +1221,17 @@ public class AssetPublisherDisplayContext {
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
 		if ((assetListEntry != null) &&
-			(GetterUtil.getLong(assetListEntry.getAssetEntrySubtype()) != 0)) {
+			Validator.isNotNull(assetListEntry.getAssetEntrySubtype())) {
 
-			classTypeIds = ArrayUtil.append(
-				classTypeIds,
-				GetterUtil.getLong(assetListEntry.getAssetEntrySubtype()));
+			String[] subtypeIds = StringUtil.split(
+				assetListEntry.getAssetEntrySubtype(), ",");
+
+			for (String subtypeId : subtypeIds) {
+				if (!Validator.isBlank(subtypeId)) {
+					classTypeIds = ArrayUtil.append(
+						classTypeIds, GetterUtil.getLong(subtypeId));
+				}
+			}
 		}
 
 		for (long groupId : groupIds) {

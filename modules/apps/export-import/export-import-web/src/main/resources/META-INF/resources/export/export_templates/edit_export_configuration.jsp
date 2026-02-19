@@ -103,7 +103,7 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 						exportImportConfigurationId="<%= exportImportConfigurationId %>"
 					/>
 
-					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() && GroupCapabilityUtil.isSupportsPages(group) %>">
 						<liferay-staging:select-pages
 							action="<%= Constants.EXPORT %>"
 							exportImportConfigurationId="<%= exportImportConfigurationId %>"

@@ -34,7 +34,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		ResourceAction resourceAction =
 			_resourceActionLocalService.fetchResourceAction(
 				CommerceInventoryConstants.RESOURCE_NAME,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY);
+				CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		if (resourceAction == null) {
 			return;
@@ -49,12 +49,27 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				(resourcePermission.getScope() !=
 					ResourceConstants.SCOPE_INDIVIDUAL)) {
 
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(),
-					CommerceInventoryWarehouse.class.getName(),
-					resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(), ActionKeys.VIEW);
+				for (String actionId :
+						new String[] {
+							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+							ActionKeys.UPDATE, ActionKeys.VIEW
+						}) {
+
+					if (!_resourcePermissionLocalService.hasResourcePermission(
+							resourcePermission.getCompanyId(),
+							CommerceInventoryWarehouse.class.getName(),
+							ResourceConstants.SCOPE_COMPANY,
+							String.valueOf(resourcePermission.getCompanyId()),
+							resourcePermission.getRoleId(), actionId)) {
+
+						_resourcePermissionLocalService.addResourcePermission(
+							resourcePermission.getCompanyId(),
+							CommerceInventoryWarehouse.class.getName(),
+							ResourceConstants.SCOPE_COMPANY,
+							String.valueOf(resourcePermission.getCompanyId()),
+							resourcePermission.getRoleId(), actionId);
+					}
+				}
 			}
 		}
 	}

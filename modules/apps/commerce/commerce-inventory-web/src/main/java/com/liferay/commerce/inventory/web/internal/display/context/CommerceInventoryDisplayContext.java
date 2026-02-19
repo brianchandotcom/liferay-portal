@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -147,7 +146,7 @@ public class CommerceInventoryDisplayContext {
 	}
 
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses()
-		throws PrincipalException {
+		throws PortalException {
 
 		return _commerceInventoryWarehouseService.
 			getCommerceInventoryWarehouses(
@@ -358,7 +357,7 @@ public class CommerceInventoryDisplayContext {
 
 		if (portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+				CommerceInventoryActionKeys.VIEW_INVENTORIES)) {
 
 			return true;
 		}

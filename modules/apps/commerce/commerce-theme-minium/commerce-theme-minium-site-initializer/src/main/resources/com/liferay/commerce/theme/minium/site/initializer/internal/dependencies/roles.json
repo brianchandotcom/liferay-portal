@@ -185,12 +185,15 @@
 			},
 			{
 				"actionIds": [
-					"MANAGE_INVENTORY"
+					"VIEW_INVENTORIES"
 				],
 				"resource": "com.liferay.commerce.inventory"
 			},
 			{
 				"actionIds": [
+					"DELETE",
+					"PERMISSIONS",
+					"UPDATE",
 					"VIEW"
 				],
 				"resource": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse"

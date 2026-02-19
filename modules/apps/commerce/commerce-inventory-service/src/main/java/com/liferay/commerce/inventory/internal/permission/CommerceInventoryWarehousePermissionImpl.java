@@ -8,8 +8,6 @@ package com.liferay.commerce.inventory.internal.permission;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.service.AccountEntryLocalService;
-import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
-import com.liferay.commerce.inventory.constants.CommerceInventoryConstants;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.permission.CommerceInventoryWarehousePermission;
 import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
@@ -24,8 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -140,10 +136,7 @@ public class CommerceInventoryWarehousePermissionImpl
 				commerceInventoryWarehouse.getCompanyId(),
 				CommerceInventoryWarehouse.class.getName(),
 				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-				commerceInventoryWarehouse.getUserId(), actionId) ||
-			_portletResourcePermission.contains(
-				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+				commerceInventoryWarehouse.getUserId(), actionId)) {
 
 			return true;
 		}
@@ -235,11 +228,6 @@ public class CommerceInventoryWarehousePermissionImpl
 	@Reference
 	private CommerceInventoryWarehouseLocalService
 		_commerceInventoryWarehouseLocalService;
-
-	@Reference(
-		target = "(resource.name=" + CommerceInventoryConstants.RESOURCE_NAME + ")"
-	)
-	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UserGroupRoleLocalService _userGroupRoleLocalService;

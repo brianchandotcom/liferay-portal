@@ -49,7 +49,7 @@ public class CommerceInventoryBookedScreenNavigationEntry
 
 		return portletResourcePermission.contains(
 			PermissionThreadLocal.getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 	}
 
 	@Override

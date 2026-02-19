@@ -159,7 +159,9 @@ public class BlogPostingResourceTest extends BaseBlogPostingResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"articleBody", "description", "headline"};
+		return new String[] {
+			"articleBody", "description", "friendlyUrlPath", "headline"
+		};
 	}
 
 	@Override

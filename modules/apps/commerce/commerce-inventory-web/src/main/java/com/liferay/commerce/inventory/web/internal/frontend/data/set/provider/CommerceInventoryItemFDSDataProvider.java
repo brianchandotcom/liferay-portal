@@ -56,7 +56,7 @@ public class CommerceInventoryItemFDSDataProvider
 				fdsPagination.getEndPosition(),
 				!portletResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(), null,
-					CommerceInventoryActionKeys.MANAGE_INVENTORY)),
+					CommerceInventoryActionKeys.VIEW_INVENTORIES)),
 			ciWarehouseItem -> new InventoryItem(
 				ciWarehouseItem.getSkuCode(),
 				ciWarehouseItem.getUnitOfMeasureKey(),
@@ -80,7 +80,7 @@ public class CommerceInventoryItemFDSDataProvider
 				fdsKeywords.getKeywords(),
 				!portletResourcePermission.contains(
 					PermissionThreadLocal.getPermissionChecker(), null,
-					CommerceInventoryActionKeys.MANAGE_INVENTORY));
+					CommerceInventoryActionKeys.VIEW_INVENTORIES));
 	}
 
 	@Reference

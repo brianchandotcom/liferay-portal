@@ -28,8 +28,23 @@ definition {
 
 		task ("And Operations Manager role does not have Manage Inventory and View Warehouses permissions") {
 			Permissions.removePermissionViaAPI(
-				resourceAction = "MANAGE_INVENTORY",
+				resourceAction = "VIEW_INVENTORIES",
 				resourceName = "com.liferay.commerce.inventory",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
 				roleTitle = "Operations Manager");
 
 			Permissions.removePermissionViaAPI(
@@ -897,8 +912,23 @@ definition {
 
 		task ("When the Operations Manager has Manage Inventory and View Warehouses permissions") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_INVENTORY",
+				resourceAction = "VIEW_INVENTORIES",
 				resourceName = "com.liferay.commerce.inventory",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				roleTitle = "Operations Manager");
+
+			Permissions.removePermissionViaAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
 				roleTitle = "Operations Manager");
 
 			Permissions.definePermissionViaJSONAPI(
@@ -1070,7 +1100,7 @@ definition {
 
 		task ("When the Operations Manager has Manage Inventory permission") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_INVENTORY",
+				resourceAction = "VIEW_INVENTORIES",
 				resourceName = "com.liferay.commerce.inventory",
 				roleTitle = "Operations Manager");
 		}
@@ -1135,7 +1165,7 @@ definition {
 
 		task ("Given the Operations Manager has Manage Inventory permission") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_INVENTORY",
+				resourceAction = "VIEW_INVENTORIES",
 				resourceName = "com.liferay.commerce.inventory",
 				roleTitle = "Operations Manager");
 		}

@@ -12,6 +12,6 @@ public class CommerceInventoryActionKeys {
 
 	public static final String ADD_WAREHOUSE = "ADD_WAREHOUSE";
 
-	public static final String MANAGE_INVENTORY = "MANAGE_INVENTORY";
+	public static final String VIEW_INVENTORIES = "VIEW_INVENTORIES";
 
 }

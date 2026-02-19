@@ -279,8 +279,23 @@
 				"scope": 1
 			},
 			{
-				"actionId": "MANAGE_INVENTORY",
+				"actionId": "VIEW_INVENTORIES",
 				"resource": "com.liferay.commerce.inventory",
+				"scope": 1
+			},
+			{
+				"actionId": "DELETE",
+				"resource": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				"scope": 1
+			},
+			{
+				"actionId": "PERMISSIONS",
+				"resource": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
+				"scope": 1
+			},
+			{
+				"actionId": "UPDATE",
+				"resource": "com.liferay.commerce.inventory.model.CommerceInventoryWarehouse",
 				"scope": 1
 			},
 			{

@@ -286,13 +286,13 @@ export async function configureOperationsManagerUserForSite(
 				scope: 1,
 			},
 			{
-				actionIds: ['MANAGE_INVENTORY'],
+				actionIds: ['VIEW_INVENTORIES'],
 				primaryKey: companyId,
 				resourceName: 'com.liferay.commerce.inventory',
 				scope: 1,
 			},
 			{
-				actionIds: ['VIEW'],
+				actionIds: ['DELETE', 'PERMISSIONS', 'UPDATE', 'VIEW'],
 				primaryKey: companyId,
 				resourceName:
 					'com.liferay.commerce.inventory.model.CommerceInventoryWarehouse',

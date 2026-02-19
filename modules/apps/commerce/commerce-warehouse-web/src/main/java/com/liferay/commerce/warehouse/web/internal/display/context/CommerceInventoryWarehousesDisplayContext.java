@@ -264,7 +264,7 @@ public class CommerceInventoryWarehousesDisplayContext {
 
 		if (portletResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+				CommerceInventoryActionKeys.VIEW_INVENTORIES)) {
 
 			return true;
 		}

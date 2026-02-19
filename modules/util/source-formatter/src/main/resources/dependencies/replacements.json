@@ -4502,6 +4502,22 @@
 		]
 	},
 	{
+		"classNames": [
+			"CommerceLowStockActivity"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-48704",
+		"newImports": [
+			"com.liferay.portal.kernel.language.LanguageUtil",
+			"java.util.HashMap",
+			"java.util.Locale",
+			"java.util.Map"
+		],
+		"newMethods": [
+			"@Override\n\tpublic Map<Locale,String> getLabelMap() {\n\t\tMap<Locale, String> labelMap = new HashMap<>();\n\n\t\tfor (Locale locale : LanguageUtil.getAvailableLocales()) {\n\t\t\tlabelMap.put(locale, getLabel(locale));\n\t\t}\n\n\t\treturn labelMap;\n\t}"
+		]
+	},
+	{
 		"from": "regex:(?<utilName>CPAttachmentFileEntryServiceUtil|CPAttachmentFileEntryLocalServiceUtil)\\.fetchByExternalReferenceCode",
 		"issueKey": "LPD-48708",
 		"to": "${utilName}.fetchCPAttachmentFileEntryByExternalReferenceCode",

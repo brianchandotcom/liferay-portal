@@ -247,11 +247,11 @@ public class CommerceSubscriptionEntryTest {
 			cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 				cpDefinition.getCPDefinitionId());
 
+			cpDefinition.setMaxSubscriptionCycles(
+				cpDefinitionMaxSubscriptionCycles);
 			cpDefinition.setSubscriptionEnabled(true);
 			cpDefinition.setSubscriptionLength(cpDefinitionSubscriptionLength);
 			cpDefinition.setSubscriptionType(cpDefinitionSubscriptionType);
-			cpDefinition.setMaxSubscriptionCycles(
-				cpDefinitionMaxSubscriptionCycles);
 
 			cpDefinition = CPDefinitionLocalServiceUtil.updateCPDefinition(
 				cpDefinition);

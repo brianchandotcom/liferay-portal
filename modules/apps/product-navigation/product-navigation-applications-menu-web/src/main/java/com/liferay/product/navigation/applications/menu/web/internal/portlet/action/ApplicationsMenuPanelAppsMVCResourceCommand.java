@@ -492,8 +492,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 
 		JSONArray recentSitesJSONArray = _jsonFactory.createJSONArray();
 
-		boolean applicationMenuApp = _isApplicationMenuApp(
-			resourceRequest, themeDisplay);
+		boolean applicationMenuApp = _isApplicationMenuApp(resourceRequest);
 
 		for (Group group : groups) {
 			recentSitesJSONArray.put(
@@ -597,7 +596,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 	}
 
 	private boolean _isApplicationMenuApp(
-		ResourceRequest resourceRequest, ThemeDisplay themeDisplay) {
+			ResourceRequest resourceRequest) {
 
 		String selectedPortletId = ParamUtil.getString(
 			resourceRequest, "selectedPortletId");

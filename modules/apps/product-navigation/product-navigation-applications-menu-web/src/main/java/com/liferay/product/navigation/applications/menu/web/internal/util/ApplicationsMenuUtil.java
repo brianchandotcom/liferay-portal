@@ -10,8 +10,6 @@ import com.liferay.application.list.PanelAppRegistry;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 
 import java.util.List;
@@ -50,8 +48,5 @@ public class ApplicationsMenuUtil {
 
 		return false;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ApplicationsMenuUtil.class);
 
 }

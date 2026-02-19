@@ -616,6 +616,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	var exportImport = new Liferay.ExportImport({
 		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		disableInputs: ['endDate', 'endTime', 'startDate', 'startTime'],
 		form: document.<portlet:namespace />fm1,
 		incompleteProcessMessageNode:
 			'#<portlet:namespace />incompleteProcessMessage',

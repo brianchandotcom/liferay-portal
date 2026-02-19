@@ -33,6 +33,7 @@ AUI.add(
 				archivedSetupsNode: defaultConfig,
 				commentsNode: defaultConfig,
 				deletionsNode: defaultConfig,
+				disableInputs: [],
 				exportLAR: defaultConfig,
 				form: defaultConfig,
 				incompleteProcessMessageNode: defaultConfig,
@@ -718,6 +719,19 @@ AUI.add(
 						redirectNode.val(currentURL);
 
 						cmdNode.val(STR_EMPTY);
+
+						const disableInputs =
+							instance.get('disableInputs') || [];
+
+						for (const field of form
+							.getDOMNode()
+							.getElementsByTagName('input')) {
+							const fieldName = field.name.split('_').pop();
+
+							if (disableInputs.includes(fieldName)) {
+								field.disabled = true;
+							}
+						}
 
 						submitForm(form);
 					}

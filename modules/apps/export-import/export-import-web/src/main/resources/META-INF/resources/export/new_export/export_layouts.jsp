@@ -185,6 +185,7 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 			'#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
 		commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
 		deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
+		disableInputs: ['endDate', 'endTime', 'startDate', 'startTime'],
 		exportLAR: true,
 		form: document.<portlet:namespace />fm1,
 		incompleteProcessMessageNode:

@@ -184,7 +184,7 @@ public class ElasticsearchDocumentFactoryUtil {
 		}
 		else {
 			for (String value : values) {
-				_translateValue(xContentBuilder, field, value);
+				_translateValue(field, xContentBuilder, value);
 			}
 		}
 
@@ -294,8 +294,8 @@ public class ElasticsearchDocumentFactoryUtil {
 	}
 
 	private static void _translateValue(
-			XContentBuilder xContentBuilder,
-			com.liferay.portal.kernel.search.Field field, String value)
+			com.liferay.portal.kernel.search.Field field,
+			XContentBuilder xContentBuilder, String value)
 		throws IOException {
 
 		if (!field.isNumeric()) {

@@ -30,6 +30,9 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -42,6 +45,9 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.navigation.constants.SiteNavigationMenuPortletKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.staging.configuration.StagingConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
@@ -273,6 +279,122 @@ public class StagingDataPortletPreferencesTest
 	}
 
 	@Test
+	public void testSiteNavigationMenuPortletPreferences() throws Exception {
+		Company company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		Map<String, String[]> preferenceMap = HashMapBuilder.put(
+			"displayDepth", new String[] {String.valueOf(0)}
+		).put(
+			"displayStyle", new String[] {"ddmTemplate_NAVBAR-BLANK-FTL"}
+		).put(
+			"displayStyleGroupExternalReferenceCode",
+			new String[] {companyGroup.getExternalReferenceCode()}
+		).put(
+			"displayStyleGroupId",
+			new String[] {String.valueOf(companyGroup.getGroupId())}
+		).put(
+			"displayStyleGroupKey",
+			new String[] {String.valueOf(company.getCompanyId())}
+		).put(
+			"expandedLevels", new String[] {"auto"}
+		).put(
+			"rootMenuItemId", new String[0]
+		).put(
+			"rootMenuItemLevel", new String[] {String.valueOf(0)}
+		).put(
+			"rootMenuItemType", new String[] {"absolute"}
+		).put(
+			"siteNavigationMenuId", new String[] {String.valueOf(0)}
+		).put(
+			"siteNavigationMenuType", new String[] {String.valueOf(-1)}
+		).build();
+
+		String portletId = publishLayoutWithDisplayPortlet(
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, preferenceMap,
+			true);
+
+		Assert.assertEquals(
+			String.valueOf(0),
+			livePortletPreferences.getValue("displayDepth", StringPool.BLANK));
+
+		Assert.assertEquals(
+			"ddmTemplate_NAVBAR-BLANK-FTL",
+			livePortletPreferences.getValue("displayStyle", StringPool.BLANK));
+
+		Assert.assertEquals(
+			companyGroup.getExternalReferenceCode(),
+			livePortletPreferences.getValue(
+				"displayStyleGroupExternalReferenceCode", StringPool.BLANK));
+
+		Assert.assertEquals(
+			String.valueOf(companyGroup.getGroupId()),
+			livePortletPreferences.getValue(
+				"displayStyleGroupId", StringPool.BLANK));
+
+		Assert.assertEquals(
+			String.valueOf(company.getCompanyId()),
+			livePortletPreferences.getValue(
+				"displayStyleGroupKey", StringPool.BLANK));
+
+		Assert.assertEquals(
+			"auto",
+			livePortletPreferences.getValue(
+				"expandedLevels", StringPool.BLANK));
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			livePortletPreferences.getValue(
+				"rootMenuItemId", StringPool.BLANK));
+
+		Assert.assertEquals(
+			String.valueOf(0),
+			livePortletPreferences.getValue(
+				"rootMenuItemLevel", StringPool.BLANK));
+
+		Assert.assertEquals(
+			"absolute",
+			livePortletPreferences.getValue(
+				"rootMenuItemType", StringPool.BLANK));
+
+		Assert.assertEquals(
+			String.valueOf(0),
+			livePortletPreferences.getValue(
+				"siteNavigationMenuId", StringPool.BLANK));
+
+		Assert.assertEquals(
+			String.valueOf(-1),
+			livePortletPreferences.getValue(
+				"siteNavigationMenuType", StringPool.BLANK));
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext(
+					stagingGroup.getGroupId()));
+
+		LayoutTestUtil.updateLayoutPortletPreferences(
+			stagingLayout, portletId,
+			HashMapBuilder.put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId",
+				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
+			).build());
+
+		publishLayoutWithDisplayPortlet(portletId, preferenceMap, false);
+
+		Assert.assertEquals(
+			siteNavigationMenu.getExternalReferenceCode(),
+			livePortletPreferences.getValue(
+				"siteNavigationMenuExternalReferenceCode", StringPool.BLANK));
+	}
+
+	@Test
 	public void testWikiDisplayDataPortletPreferences() throws Exception {
 		WikiNode wikiNode = WikiTestUtil.addNode(stagingGroup.getGroupId());
 
@@ -348,6 +470,9 @@ public class StagingDataPortletPreferencesTest
 	protected PortletPreferences livePortletPreferences;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 	@Inject
@@ -358,6 +483,9 @@ public class StagingDataPortletPreferencesTest
 
 	@Inject
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Inject
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Inject
 	private WikiNodeLocalService _wikiNodeLocalService;

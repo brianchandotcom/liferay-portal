@@ -24,6 +24,7 @@ type DateFilter = {
 export type taskStatus = 'success' | 'completedWithErrors';
 
 export class ExportImportPage {
+	readonly allRadioButton: Locator;
 	readonly cancelButton: Locator;
 	readonly clearMenuItem: Locator;
 	readonly continueButton: Locator;
@@ -57,6 +58,7 @@ export class ExportImportPage {
 	readonly rangeDateRangeStartTime: Locator;
 	readonly rangeLast: Locator;
 	readonly rangeLastRadioButton: Locator;
+	readonly refreshCountsLink: Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
 	readonly taskStatusLabel: (
@@ -71,6 +73,7 @@ export class ExportImportPage {
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
+		this.allRadioButton = page.getByTestId('range_rangeAll');
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.clearMenuItem = page.getByRole('link', {name: 'Clear'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
@@ -129,25 +132,52 @@ export class ExportImportPage {
 				)
 			);
 		this.productMenuPage = new ProductMenuPage(page);
-		this.rangeDateRangeEndDate = page.locator(
-			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
-		);
-		this.rangeDateRangeEndTime = page.locator(
-			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
-		);
+		this.rangeDateRangeEndDate = page
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
+			)
+			.or(
+				page.locator(
+					'[id="_com_liferay_exportimport_web_portlet_ExportPortlet_endDate"]'
+				)
+			);
+		this.rangeDateRangeEndTime = page
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
+			)
+			.or(
+				page.locator(
+					'[id="_com_liferay_exportimport_web_portlet_ExportPortlet_endTime"]'
+				)
+			);
 		this.rangeDateRangeRadioButton = page.getByRole('radio', {
 			name: 'Date Range',
 		});
-		this.rangeDateRangeStartDate = page.locator(
-			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
-		);
-		this.rangeDateRangeStartTime = page.locator(
-			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
-		);
+		this.rangeDateRangeStartDate = page
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
+			)
+			.or(
+				page.locator(
+					'[id="_com_liferay_exportimport_web_portlet_ExportPortlet_startDate"]'
+				)
+			);
+		this.rangeDateRangeStartTime = page
+			.locator(
+				'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
+			)
+			.or(
+				page.locator(
+					'[id="_com_liferay_exportimport_web_portlet_ExportPortlet_startTime"]'
+				)
+			);
 		this.rangeLast = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
 		);
 		this.rangeLastRadioButton = page.getByRole('radio', {name: 'Last'});
+		this.refreshCountsLink = page.getByRole('link', {
+			name: 'Refresh Counts',
+		});
 		this.taskActionsMenu = (taskName) =>
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName) =>

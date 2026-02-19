@@ -23,16 +23,17 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 			StringBundler.concat(
-				"select DLFileEntry.externalReferenceCode, ",
-				"DLFileEntry.groupId, Group_.externalReferenceCode, ",
-				"Layout.ctCollectionId, Layout.plid, Layout.groupId from ",
-				"Layout inner join DLFileEntry on (DLFileEntry.ctCollectionId ",
-				"= Layout.ctCollectionId or DLFileEntry.ctCollectionId = 0) ",
-				"and DLFileEntry.fileEntryId = Layout.faviconFileEntryId ",
-				"inner join Group_ on (DLFileEntry.ctCollectionId = ",
-				"Group_.ctCollectionId or Group_.ctCollectionId = 0) and ",
-				"DLFileEntry.groupId = Group_.groupId where ",
-				"Layout.faviconFileEntryId > 0"));
+				"select DLFileEntry.externalReferenceCode as ",
+				"externalReferenceCode1, DLFileEntry.groupId as groupId1, ",
+				"Group_.externalReferenceCode as externalReferenceCod2, ",
+				"Layout.ctCollectionId, Layout.plid, Layout.groupId as ",
+				"groupId2 from Layout inner join DLFileEntry on (DLFileEntry.",
+				"ctCollectionId = Layout.ctCollectionId or DLFileEntry.",
+				"ctCollectionId = 0) and DLFileEntry.fileEntryId = Layout.",
+				"faviconFileEntryId inner join Group_ on (DLFileEntry.",
+				"ctCollectionId = Group_.ctCollectionId or Group_.",
+				"ctCollectionId = 0) and DLFileEntry.groupId = Group_.groupId ",
+				"where Layout.faviconFileEntryId > 0"));
 
 			 ResultSet resultSet = preparedStatement1.executeQuery();
 			 PreparedStatement preparedStatement2 =
@@ -43,18 +44,21 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					 "and plid = ?")) {
 
 			while (resultSet.next()) {
-				long dlFileEntryGroupId = resultSet.getLong(2);
-				String dlFileEntryScopeERC = resultSet.getString(3);
-				long layoutGroupId = resultSet.getLong(6);
+				long dlFileEntryGroupId = resultSet.getLong("groupId1");
+				String dlFileEntryScopeERC = resultSet.getString(
+					"externalReferenceCod2");
+				long layoutGroupId = resultSet.getLong("groupId2");
 
 				if (dlFileEntryGroupId == layoutGroupId) {
 					dlFileEntryScopeERC = null;
 				}
 
-				preparedStatement2.setString(1, resultSet.getString(1));
+				preparedStatement2.setString(
+					1, resultSet.getString("externalReferenceCode1"));
 				preparedStatement2.setString(2, dlFileEntryScopeERC);
-				preparedStatement2.setLong(3, resultSet.getLong(4));
-				preparedStatement2.setLong(4, resultSet.getLong(5));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(4, resultSet.getLong("plid"));
 
 				preparedStatement2.addBatch();
 			}

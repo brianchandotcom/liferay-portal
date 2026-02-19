@@ -110,8 +110,6 @@ public class CPOptionCategoryLocalServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		_validate(titleMap, key);
-
 		if (Validator.isNotNull(externalReferenceCode)) {
 			CPOptionCategory cpOptionCategory =
 				cpOptionCategoryPersistence.fetchByERC_C(
@@ -134,17 +132,6 @@ public class CPOptionCategoryLocalServiceImpl
 		return cpOptionCategoryLocalService.addCPOptionCategory(
 			externalReferenceCode, userId, titleMap, descriptionMap, priority,
 			key, serviceContext);
-	}
-
-	private static void _validate(Map<Locale, String> titleMap, String key)
-		throws PortalException {
-		if (Validator.isBlank(key)) {
-			throw new CPOptionCategoryKeyException();
-		}
-
-		if ((titleMap == null) || titleMap.isEmpty()) {
-			throw new CPOptionCategoryTitleException();
-		}
 	}
 
 	@Override
@@ -369,9 +356,14 @@ public class CPOptionCategoryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	private void _validate(long cpOptionCategoryId, long companyId, String key,
-						   Map<Locale, String> titleMap)
+	private void _validate(
+			long cpOptionCategoryId, long companyId, String key,
+			Map<Locale, String> titleMap)
 		throws PortalException {
+
+		if (Validator.isBlank(key)) {
+			throw new CPOptionCategoryKeyException("Key is mandatory");
+		}
 
 		CPOptionCategory cpOptionCategory =
 			cpOptionCategoryPersistence.fetchByC_K(companyId, key);
@@ -382,8 +374,8 @@ public class CPOptionCategoryLocalServiceImpl
 			throw new CPOptionCategoryKeyException();
 		}
 
-		if(titleMap == null || titleMap.isEmpty()) {
-			throw new CPOptionCategoryTitleException();
+		if ((titleMap == null) || titleMap.isEmpty()) {
+			throw new CPOptionCategoryTitleException("Title is mandatory");
 		}
 	}
 

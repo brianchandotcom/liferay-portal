@@ -324,7 +324,9 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
-	private long _getCPOptionCategoryId(Specification specification) throws PortalException {
+	private long _getCPOptionCategoryId(Specification specification)
+		throws PortalException {
+
 		OptionCategory optionCategory = specification.getOptionCategory();
 
 		if (optionCategory == null) {
@@ -334,16 +336,22 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 		CPOptionCategory cpOptionCategory = null;
 
 		long optionCategoryId = GetterUtil.getLong(optionCategory.getId());
+
 		if (optionCategoryId > 0) {
-			cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategory(optionCategoryId);
+			cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategory(
+				optionCategoryId);
 		}
 
 		if (cpOptionCategory == null) {
-			String externalReferenceCode = GetterUtil.getString(optionCategory.getExternalReferenceCode());
+			String externalReferenceCode = GetterUtil.getString(
+				optionCategory.getExternalReferenceCode());
 
 			if (Validator.isNotNull(externalReferenceCode)) {
-				cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategoryByExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+				cpOptionCategory =
+					_cpOptionCategoryService.
+						fetchCPOptionCategoryByExternalReferenceCode(
+							externalReferenceCode,
+							contextCompany.getCompanyId());
 			}
 		}
 

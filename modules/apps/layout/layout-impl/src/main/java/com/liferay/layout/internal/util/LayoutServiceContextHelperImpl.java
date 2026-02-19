@@ -322,7 +322,11 @@ public class LayoutServiceContextHelperImpl
 					}
 
 					public String getRequestURI() {
-						return StringPool.BLANK;
+						return StringPool.SLASH;
+					}
+
+					public String getScheme() {
+						return "http";
 					}
 
 					public ServletContext getServletContext() {

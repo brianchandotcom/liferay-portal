@@ -10,8 +10,6 @@ import com.liferay.asset.list.internal.upgrade.v1_4_0.AssetListEntryUsageUpgrade
 import com.liferay.asset.list.internal.upgrade.v1_5_0.AssetListEntrySegmentsEntryRelUpgradeProcess;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
@@ -112,9 +110,7 @@ public class AssetListServiceUpgradeStepRegistrator
 		registry.register(
 			"2.1.1", "3.0.0",
 			new com.liferay.asset.list.internal.upgrade.v3_0_0.
-				AssetListEntryUsageUpgradeProcess(
-					_objectDefinitionLocalService,
-					_objectDefinitionSettingLocalService));
+				AssetListEntryUsageUpgradeProcess());
 	}
 
 	@Reference
@@ -127,13 +123,6 @@ public class AssetListServiceUpgradeStepRegistrator
 	@Reference
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
-
-	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
-
-	@Reference
-	private ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -853,7 +853,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			expectedErrorMessage, exportImportReportEntry.getErrorMessage());
 
-		if ((expectedErrorMessage == null) |
+		if ((expectedErrorMessage == null) ||
 			(expectedType == ExportImportReportEntryConstants.TYPE_EMPTY)) {
 
 			Assert.assertNull(exportImportReportEntry.getErrorStacktrace());

@@ -1220,12 +1220,11 @@ public class AssetPublisherDisplayContext {
 
 		AssetListEntry assetListEntry = fetchAssetListEntry();
 
-		if ((assetListEntry != null) &&
-			(GetterUtil.getLong(assetListEntry.getAssetEntrySubtype()) != 0)) {
+		if (assetListEntry != null) {
+			long[] subtypeIds = GetterUtil.getLongValues(
+				StringUtil.split(assetListEntry.getAssetEntrySubtype()));
 
-			classTypeIds = ArrayUtil.append(
-				classTypeIds,
-				GetterUtil.getLong(assetListEntry.getAssetEntrySubtype()));
+			classTypeIds = ArrayUtil.append(classTypeIds, subtypeIds);
 		}
 
 		for (long groupId : groupIds) {

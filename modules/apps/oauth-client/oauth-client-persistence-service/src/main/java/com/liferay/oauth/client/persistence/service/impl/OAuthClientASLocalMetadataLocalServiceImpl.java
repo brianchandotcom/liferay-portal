@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
@@ -336,11 +337,15 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				}
 			}
 
-			_validateHttpsUrl(authorizationEndpoint, false);
-			_validateHttpsUrl(issuer, true);
-			_validateHttpsUrl(jwksURI, false);
-			_validateHttpsUrl(tokenEndpoint, false);
-			_validateHttpsUrl(userInfoEndpoint, false);
+			if (FeatureFlagManagerUtil.isEnabled(
+					CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
+
+				_validateHttpsUrl(authorizationEndpoint, false);
+				_validateHttpsUrl(issuer, true);
+				_validateHttpsUrl(jwksURI, false);
+				_validateHttpsUrl(tokenEndpoint, false);
+				_validateHttpsUrl(userInfoEndpoint, false);
+			}
 
 			oAuthClientASLocalMetadata1.setIssuer(issuer);
 			oAuthClientASLocalMetadata1.setLocalWellKnownEnabled(

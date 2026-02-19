@@ -67,10 +67,9 @@ public class AssetDisplayPageStagedModelDataHandler
 				assetDisplayPageEntry.getLayoutPageTemplateEntryId());
 
 		if (layoutPageTemplateEntry != null) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, assetDisplayPageEntry,
-				layoutPageTemplateEntry,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+			assetDisplayPageElement.addAttribute(
+				"layoutPageTemplateEntryERC",
+				layoutPageTemplateEntry.getExternalReferenceCode());
 		}
 
 		_exportAssetObject(portletDataContext, assetDisplayPageEntry);

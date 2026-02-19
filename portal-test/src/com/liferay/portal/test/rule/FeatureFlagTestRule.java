@@ -8,7 +8,6 @@ package com.liferay.portal.test.rule;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -19,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 import org.junit.runner.Description;
 
@@ -39,10 +37,9 @@ public class FeatureFlagTestRule
 
 		_restoreFeatureFlags(previousValues);
 
-		ReflectionTestUtil.setFieldValue(
-			FeatureFlagManagerUtil.class, "_featureFlagManagerSnapshot",
-			new Snapshot<>(
-				FeatureFlagManagerUtil.class, FeatureFlagManager.class));
+		if (_autoCloseable != null) {
+			_autoCloseable.close();
+		}
 	}
 
 	@Override
@@ -58,19 +55,12 @@ public class FeatureFlagTestRule
 	protected Map<String, String> beforeClass(Description description)
 		throws Throwable {
 
-		Snapshot<FeatureFlagManager> featureFlagManagerSnapshot =
-			ReflectionTestUtil.getFieldValue(
-				FeatureFlagManagerUtil.class, "_featureFlagManagerSnapshot");
-
 		FeatureFlagManager featureFlagManager =
-			featureFlagManagerSnapshot.get();
+			FeatureFlagManagerUtil.getFeatureFlagManager();
 
-		if (featureFlagManager != null) {
-			ReflectionTestUtil.setFieldValue(
-				featureFlagManagerSnapshot, "_serviceSupplier",
-				(Supplier<Object>)() -> new MockFeatureFlagManager(
-					featureFlagManager));
-		}
+		_autoCloseable =
+			FeatureFlagManagerUtil.setFeatureFlagManagerWithAutoCloseable(
+				new MockFeatureFlagManager(featureFlagManager));
 
 		return _updateFeatureFlags(description);
 	}
@@ -133,6 +123,8 @@ public class FeatureFlagTestRule
 
 		return previousValues;
 	}
+
+	private AutoCloseable _autoCloseable;
 
 	private static class MockFeatureFlagManager implements FeatureFlagManager {
 

@@ -19,8 +19,8 @@ public class StorageQuotaUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select companyId, sum(size_) from DLFileVersion group by " +
-					"companyId");
+				"select companyId, sum(size_) as storageSize from " +
+					"DLFileVersion group by companyId");
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -30,13 +30,10 @@ public class StorageQuotaUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(1);
-				long storageSize = resultSet.getLong(2);
-
 				preparedStatement2.setLong(1, 0);
 				preparedStatement2.setLong(2, increment());
-				preparedStatement2.setLong(3, companyId);
-				preparedStatement2.setLong(4, storageSize);
+				preparedStatement2.setLong(3, resultSet.getLong("companyId"));
+				preparedStatement2.setLong(4, resultSet.getLong("storageSize"));
 
 				preparedStatement2.addBatch();
 			}

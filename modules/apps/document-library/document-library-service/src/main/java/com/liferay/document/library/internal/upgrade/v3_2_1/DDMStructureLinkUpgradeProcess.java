@@ -33,11 +33,13 @@ public class DDMStructureLinkUpgradeProcess extends UpgradeProcess {
 					connection,
 					"delete from DDMStructureLink where classPK = ? and " +
 						"structureId = ?");
-			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-			while (resultSet1.next()) {
-				preparedStatement2.setLong(1, resultSet1.getLong(1));
-				preparedStatement2.setLong(2, resultSet1.getLong(2));
+			while (resultSet.next()) {
+				preparedStatement2.setLong(
+					1, resultSet.getLong("fileEntryTypeId"));
+				preparedStatement2.setLong(
+					2, resultSet.getLong("dataDefinitionId"));
 
 				preparedStatement2.addBatch();
 			}

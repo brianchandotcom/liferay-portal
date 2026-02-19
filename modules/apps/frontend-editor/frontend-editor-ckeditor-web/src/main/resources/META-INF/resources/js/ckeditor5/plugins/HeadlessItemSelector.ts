@@ -26,6 +26,7 @@ const ALLOWED_IMAGE_FILE_EXTENSIONS = [
 ];
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
+	createItemURL: `${location.origin}/web/cms/files?com.liferay.site.cms.site.initializer-filesSection_fdsConfig=(view:gallery)`,
 	items: [],
 	locator: {
 		id: 'embedded.id',

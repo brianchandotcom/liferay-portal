@@ -244,7 +244,7 @@ public interface ElasticsearchConfiguration {
 	public String sidecarHttpPort();
 
 	@Meta.AD(
-		deflt = "-XX:+AlwaysPreTouch|-Xms1g|-Xmx1g",
+		deflt = "-XX:+AlwaysPreTouch|-Xms1g|-Xmx2g",
 		description = "sidecar-jvm-options-help", name = "sidecar-jvm-options",
 		required = false
 	)

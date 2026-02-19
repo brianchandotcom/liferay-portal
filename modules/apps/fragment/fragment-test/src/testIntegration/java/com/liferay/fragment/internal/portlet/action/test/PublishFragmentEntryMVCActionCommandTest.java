@@ -77,6 +77,12 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null);
 	}
 
 	@Test
@@ -196,15 +202,9 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	private FragmentEntry _getFragmentEntry(String configuration, String html)
 		throws PortalException {
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				null);
-
 		return _fragmentEntryLocalService.addFragmentEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			fragmentCollection.getFragmentCollectionId(),
+			_fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
 			false, configuration, null, 0, false, false,
@@ -251,6 +251,9 @@ public class PublishFragmentEntryMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@DeleteAfterTestRun
+	private FragmentCollection _fragmentCollection;
 
 	@Inject
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;

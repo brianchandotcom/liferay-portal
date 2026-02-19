@@ -46,14 +46,14 @@ spec:
                         kind: Bucket
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $accountId}}-{{ $baseName }}-argo-wf
+                                crossplane.io/external-name: {{ $baseName }}-argo-wf
                                 gotemplating.fn.crossplane.io/composition-resource-name: argo-wf
                             labels:
                                 app: liferay
                                 component: argo-wf
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $accountId}}-{{ $baseName }}-argo-wf
+                            name: {{ $baseName }}-argo-wf
                         spec:
                             forProvider:
                                 region: {{ $backupSpec.region }}
@@ -63,14 +63,14 @@ spec:
                         kind: BucketVersioning
                         metadata:
                             annotations:
-                                crossplane.io/external-name: {{ $accountId}}-{{ $baseName }}-argo-wf-versioning
+                                crossplane.io/external-name: {{ $baseName }}-argo-wf-versioning
                                 gotemplating.fn.crossplane.io/composition-resource-name: argo-wf-versioning
                             labels:
                                 app: liferay
                                 component: argo-wf
                                 environmentId: {{ $environmentId }}
                                 projectId: {{ $projectId }}
-                            name: {{ $accountId}}-{{ $baseName }}-argo-wf-versioning
+                            name: {{ $baseName }}-argo-wf-versioning
                         spec:
                             forProvider:
                                 bucketSelector:
@@ -141,8 +141,8 @@ spec:
                                                 ],
                                                 "Effect": "Allow",
                                                 "Resource": [
-                                                    "arn:aws:s3:::{{ $accountId}}-{{ $baseName }}-argo-wf",
-                                                    "arn:aws:s3:::{{ $accountId}}-{{ $baseName }}-argo-wf/*"
+                                                    "arn:aws:s3:::{{ $baseName }}-argo-wf",
+                                                    "arn:aws:s3:::{{ $baseName }}-argo-wf/*"
                                                 ]
                                             },
                                             {

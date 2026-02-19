@@ -12,7 +12,7 @@ rules:
             -   get
             -   list
     -   apiGroups: [""]
-        resourceNames: [{{ .Values.liferayWorkload.managedSecretName }}]
+        resourceNames: ["managed-service-details"]
         resources: ["secrets"]
         verbs:
             -   create

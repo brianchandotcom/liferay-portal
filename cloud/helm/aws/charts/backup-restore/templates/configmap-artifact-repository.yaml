@@ -3,7 +3,7 @@ apiVersion: v1
 data:
     {{ $defaultArtifactRepository }}: |-
         s3:
-            bucket: {{ .Values.argo.artifactRepository.bucketId }}
+            bucket: {{ printf "%s-argo-wf" (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}
             endpoint: s3.amazonaws.com
 kind: ConfigMap
 metadata:

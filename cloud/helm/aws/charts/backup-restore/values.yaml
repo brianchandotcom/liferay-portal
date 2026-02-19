@@ -1,7 +1,6 @@
 argo:
     artifactRepository:
-        bucketId: ""
-        namespace: argo
+        namespace: argo-workflows
     workflowSpec:
         artifactGC:
             strategy: OnWorkflowDeletion
@@ -10,9 +9,7 @@ argo:
         ttlStrategy:
             secondsAfterCompletion: 86400
 awsBackupService:
-    assumedIamRoleArn: ""
     restoreWaitTimeoutSeconds: 7200
-    vaultName: liferay-backup
 createClusterResources: true
 fullnameOverride: ""
 git:
@@ -39,7 +36,6 @@ images:
         repository: hashicorp/terraform
         tag: 1.12.2
 liferayWorkload:
-    managedSecretName: managed-service-details
     name: liferay-default
     rolloutTimeout: 15m
 nameOverride: ""

@@ -18,4 +18,4 @@ someVal !== null && typeof someVal === 'object';
 
 ## See also
 
--   https://github.com/liferay/liferay-frontend-projects/issues/19
+- https://github.com/liferay/liferay-frontend-projects/issues/19

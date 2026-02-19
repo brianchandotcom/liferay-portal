@@ -24,4 +24,4 @@ it('reloads after clicking', () => {
 
 ## Further Reading
 
--   [Liferay Frontend Guidelines for testing](https://github.com/liferay/liferay-frontend-guidelines/blob/master/guidelines/general/testing.md)
+- [Liferay Frontend Guidelines for testing](https://github.com/liferay/liferay-frontend-guidelines/blob/master/guidelines/general/testing.md)

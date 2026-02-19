@@ -35,9 +35,9 @@ It does not currently check calls to the popular [classnames](https://www.npmjs.
 
 ## Related
 
--   [no-duplicate-class-names](./no-duplicate-class-names.md)
--   [sort-class-names](./sort-class-names.md)
+- [no-duplicate-class-names](./no-duplicate-class-names.md)
+- [sort-class-names](./sort-class-names.md)
 
 ## Further Reading
 
--   [Issue \#108: Sort class names in JSX className attributes](https://github.com/liferay/eslint-config-liferay/issues/108)
+- [Issue \#108: Sort class names in JSX className attributes](https://github.com/liferay/eslint-config-liferay/issues/108)

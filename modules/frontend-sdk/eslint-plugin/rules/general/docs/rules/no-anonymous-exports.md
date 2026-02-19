@@ -22,4 +22,4 @@ export default function x() {}
 
 ## See also
 
--   https://github.com/liferay/liferay-frontend-projects/issues/25
+- https://github.com/liferay/liferay-frontend-projects/issues/25

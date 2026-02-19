@@ -4,8 +4,8 @@ This rule guards against the direct use of the `ReactDOM.render` API, in favor o
 
 At the time of writing, the wrapper provides:
 
--   Automatic unmounting in response to "destroyPortlet" events.
--   Transparent provisioning of the `ClayIconSpriteContext` needed by Clay.
+- Automatic unmounting in response to "destroyPortlet" events.
+- Transparent provisioning of the `ClayIconSpriteContext` needed by Clay.
 
 If you'd like to propose further useful additions, please [create an issue](https://github.com/liferay/liferay-frontend-guidelines/issues/new) in the [liferay-frontend-guidelines](https://github.com/liferay/liferay-frontend-guidelines) repo.
 
@@ -29,4 +29,4 @@ render(element, container);
 
 ## Further Reading
 
--   [LPS-99399 Mitigate memory leaks in React portlets](https://issues.liferay.com/browse/LPS-99399)
+- [LPS-99399 Mitigate memory leaks in React portlets](https://issues.liferay.com/browse/LPS-99399)

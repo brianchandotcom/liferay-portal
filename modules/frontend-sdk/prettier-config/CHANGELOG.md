@@ -4,7 +4,7 @@
 
 ### :wrench: Bug fixes
 
--   fix(prettier-config): use only the liferay plugin ([\#1215](https://github.com/liferay/liferay-frontend-projects/pull/1215))
+- fix(prettier-config): use only the liferay plugin ([\#1215](https://github.com/liferay/liferay-frontend-projects/pull/1215))
 
 ## [1.1.0](https://github.com/liferay/liferay-frontend-projects/tree/1.1.0) (2024-05-13)
 
@@ -12,4 +12,4 @@
 
 ### :new: Features
 
--   feat(prettier-config): add liferay plugin for custom formatting ([\#1209](https://github.com/liferay/liferay-frontend-projects/pull/1209))
+- feat(prettier-config): add liferay plugin for custom formatting ([\#1209](https://github.com/liferay/liferay-frontend-projects/pull/1209))

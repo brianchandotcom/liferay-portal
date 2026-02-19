@@ -3,7 +3,7 @@
 html#{$cadmin-selector} .cadmin.global-menu {
 	max-height: none;
 
-	.categories-list li:last-child {
+	.categories-list li:last-child:not(:only-child) {
 		border-top: 1px solid $cadmin-secondary-l3;
 	}
 

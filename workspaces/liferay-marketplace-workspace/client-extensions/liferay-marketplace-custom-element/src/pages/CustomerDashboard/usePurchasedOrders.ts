@@ -6,62 +6,43 @@
 import useSWR, {SWRConfiguration} from 'swr';
 
 import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
+import SearchBuilder from '../../core/SearchBuilder';
+import {Liferay} from '../../liferay/liferay';
 
 type Props = {
 	accountId: number;
-	channelId: number | string;
 	orderTypeExternalReferenceCodes: string[];
 	page: number;
 	pageSize: number;
-	refreshInterval?: number;
 	swrConfig?: SWRConfiguration;
 };
 
 const usePurchasedOrders = ({
 	accountId,
-	channelId,
 	orderTypeExternalReferenceCodes,
 	page,
 	pageSize,
 	swrConfig,
 }: Props) => {
-	const key = `/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`;
-
-	const swr = useSWR(
-		accountId && channelId
-			? `/placed-orders/${accountId}/${channelId}/${page}/${pageSize}`
-			: null,
-		async () => {
-			const placedOrders =
-				await HeadlessCommerceDeliveryOrder.getPlacedOrders(
-					channelId,
-					accountId,
-					new URLSearchParams({
-						nestedFields: 'placedOrderItems',
-						page: page.toString(),
-						pageSize: pageSize.toString(),
-						sort: 'createDate:desc',
-					})
-				);
-
-			const placedOrdersFiltered = placedOrders.items.filter(
-				({orderTypeExternalReferenceCode}) =>
-					orderTypeExternalReferenceCodes.length
-						? orderTypeExternalReferenceCodes.includes(
-								orderTypeExternalReferenceCode
-							)
-						: true
-			);
-
-			return {
-				...placedOrders,
-				items: placedOrdersFiltered,
-			};
-		},
+	return useSWR(
+		accountId ? `/placed-orders/${accountId}/${page}/${pageSize}` : null,
+		async () =>
+			HeadlessCommerceDeliveryOrder.getPlacedOrders(
+				Liferay.CommerceContext.commerceChannelId,
+				accountId,
+				new URLSearchParams({
+					filter: SearchBuilder.in(
+						'orderTypeExternalReferenceCode',
+						orderTypeExternalReferenceCodes
+					),
+					nestedFields: 'placedOrderItems',
+					page: page.toString(),
+					pageSize: pageSize.toString(),
+					sort: 'createDate:desc',
+				})
+			),
 		swrConfig
 	);
-
-	return {key, ...swr};
 };
 
 export {usePurchasedOrders};

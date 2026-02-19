@@ -1689,6 +1689,8 @@ test(
 
 				await newTagOption.waitFor();
 				await newTagOption.click();
+
+				await page.waitForTimeout(1000);
 			});
 
 			await test.step('Save content', async () => {
@@ -1697,6 +1699,12 @@ test(
 
 			await test.step('Edit the content and save without opening the categories panel', async () => {
 				await contentsPage.editContent(title);
+
+				// Ideally we'd remove this but right now if you save too
+				// quickly, the initial tag might not have enough time to
+				// populate.
+
+				await page.waitForTimeout(1000);
 
 				await contentsPage.saveContent();
 			});

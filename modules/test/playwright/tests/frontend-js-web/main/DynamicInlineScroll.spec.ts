@@ -24,9 +24,11 @@ test(
 		test.setTimeout(180000);
 
 		await test.step('Create 22 users', async () => {
+			const promises = [];
 			for (let i = 0; i < 22; i++) {
-				await apiHelpers.headlessAdminUser.postUserAccount();
+				promises.push(apiHelpers.headlessAdminUser.postUserAccount());
 			}
+			await Promise.all(promises);
 		});
 
 		await test.step('Check pagination 20 URL works', async () => {

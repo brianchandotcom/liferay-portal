@@ -265,9 +265,7 @@ public class ElasticsearchQueryVisitor implements QueryVisitor<QueryVariant> {
 		SetterUtil.setNotNullFloatAsDouble(
 			builder::cutoffFrequency, multiMatchQuery.getCutOffFrequency());
 
-		builder.fields(
-			QueryUtil.fieldsBoostsToFieldsWithBoosts(
-				multiMatchQuery.getFieldsBoosts()));
+		builder.fields(ListUtil.fromCollection(multiMatchQuery.getFields()));
 
 		SetterUtil.setNotBlankString(
 			builder::fuzziness, multiMatchQuery.getFuzziness());

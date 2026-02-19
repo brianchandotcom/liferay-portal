@@ -7,6 +7,7 @@ package com.liferay.oauth.client.admin.web.internal.servlet;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +80,10 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 
 			if (oAuthClientASLocalMetadata != null) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("There is an OAuthClientASLocalMetadata");
+					_log.debug(
+						StringBundler.concat(
+							"OAuth 2 client authorization server local ",
+							"metadata already exists for company ", companyId));
 				}
 
 				httpServletResponse.setStatus(HttpServletResponse.SC_OK);

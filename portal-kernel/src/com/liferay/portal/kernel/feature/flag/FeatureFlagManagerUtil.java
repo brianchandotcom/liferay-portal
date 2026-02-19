@@ -42,6 +42,10 @@ public class FeatureFlagManagerUtil {
 		}
 	}
 
+	public static FeatureFlagManager getFeatureFlagManager() {
+		return _featureFlagManager;
+	}
+
 	public static String getJSON(long companyId) {
 		if (_featureFlagManager != null) {
 			return _featureFlagManager.getJSON(companyId);
@@ -50,7 +54,7 @@ public class FeatureFlagManagerUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"No feature flag manager service found. Returning the " +
-					"default value.");
+				"default value.");
 		}
 
 		String json = _json;
@@ -74,7 +78,7 @@ public class FeatureFlagManagerUtil {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"No feature flag manager service found. Returning the " +
-					"default value.");
+				"default value.");
 		}
 
 		return GetterUtil.getBoolean(PropsUtil.get("feature.flag." + key));
@@ -97,6 +101,16 @@ public class FeatureFlagManagerUtil {
 		return new FeatureFlaggedServiceRegistration<>(
 			bundleContext, featureFlagKey, serviceClass, serviceFunction,
 			servicePropertiesFunction);
+	}
+
+	public static AutoCloseable setFeatureFlagManagerWithAutoCloseable(
+		FeatureFlagManager featureFlagManager) {
+
+		FeatureFlagManager oldFeatureFlagManager = _featureFlagManager;
+
+		_featureFlagManager = featureFlagManager;
+
+		return () -> _featureFlagManager = oldFeatureFlagManager;
 	}
 
 	public void setFeatureFlagManager(FeatureFlagManager featureFlagManager) {

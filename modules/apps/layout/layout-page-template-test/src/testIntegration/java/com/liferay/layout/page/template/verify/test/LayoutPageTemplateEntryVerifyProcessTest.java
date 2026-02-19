@@ -12,7 +12,6 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -24,10 +23,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -78,40 +73,21 @@ public class LayoutPageTemplateEntryVerifyProcessTest
 
 		doVerify();
 
-		LayoutPageTemplateEntry actualLayoutPageTemplateEntry =
+		layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.getLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-		String classTypeKey = _getClassTypeKey(
-			actualLayoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
-		Assert.assertNotNull(classTypeKey);
-		Assert.assertEquals(ddmStructure.getStructureKey(), classTypeKey);
+		Assert.assertEquals(
+			ddmStructure.getStructureId(),
+			layoutPageTemplateEntry.getClassTypeId());
+		Assert.assertEquals(
+			ddmStructure.getStructureKey(),
+			layoutPageTemplateEntry.getClassTypeKey());
 	}
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return _verifyProcess;
-	}
-
-	private String _getClassTypeKey(long layoutPageTemplateEntryId)
-		throws Exception {
-
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select classTypeKey from LayoutPageTemplateEntry where " +
-					"layoutPageTemplateEntryId = ?")) {
-
-			preparedStatement.setLong(1, layoutPageTemplateEntryId);
-
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return resultSet.getString("classTypeKey");
-				}
-			}
-		}
-
-		return null;
 	}
 
 	@DeleteAfterTestRun

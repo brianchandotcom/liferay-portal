@@ -6,6 +6,8 @@
 package com.liferay.commerce.product.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
+import com.liferay.commerce.product.exception.CPOptionCategoryTitleException;
 import com.liferay.commerce.product.service.CPOptionCategoryLocalService;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -52,34 +54,45 @@ public class CPOptionCategoryLocalServiceTest {
 			_group.getGroupId(), _user.getUserId());
 	}
 
-	@Test
-	public void testAddOrUpdateCategoryOptionValidation() throws Exception {
+	@Test(expected = CPOptionCategoryKeyException.class)
+	public void testAddOrUpdateCPOptionCategoryOptionWithoutKey() throws Exception {
 		frutillaRule.scenario(
 			"Add Option Category"
 		).given(
 			"There is no option category"
 		).when(
-			"Option Category is added without required fields"
+			"Option Category is added without required key field"
 		).then(
 			"Option category should not be created"
 		);
 
-		Assert.assertThrows(
-			UnsupportedOperationException.class,
-			() -> _cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
-				RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), null, _serviceContext));
+		_cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
+			RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), null, _serviceContext);
+	}
 
-		Assert.assertThrows(
-			UnsupportedOperationException.class,
-			() -> _cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
+	@Test(expected = CPOptionCategoryTitleException.class)
+	public void testAddOrUpdateCPOptionCategoryOptionWithoutTitle() throws Exception {
+		frutillaRule.scenario(
+			"Add Option Category"
+		).given(
+			"There is no option category"
+		).when(
+			"Option Category is added without required title field"
+		).then(
+			"Option category should not be created"
+		);
+
+		 _cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
 				RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
 				null, RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
-				_serviceContext));
+				_serviceContext);
 	}
+
+
 
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();

@@ -19,6 +19,7 @@ import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfi
 import com.liferay.exportimport.kernel.exception.ExportImportContentValidationException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
@@ -1113,11 +1114,18 @@ public class DefaultExportImportContentProcessorTest {
 						TYPE_PUBLISH_LAYOUT_LOCAL,
 					publishLayoutLocalSettingsMap);
 
-		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
-			exportImportConfiguration);
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
 
-		ExportImportLocalServiceUtil.importLayouts(
-			exportImportConfiguration, larFile);
+		try {
+			File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
+				exportImportConfiguration);
+
+			ExportImportLocalServiceUtil.importLayouts(
+				exportImportConfiguration, larFile);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
 	}
 
 	private String _replaceLinksToLayoutsParameters(

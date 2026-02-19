@@ -24,15 +24,12 @@ public class KaleoDefinitionUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long kaleoDefinitionId = resultSet.getLong(1);
-
-				String content = resultSet.getString(2);
-
-				content = StringUtil.replace(
-					content, "WorkflowConstants.toStatus(",
-					"WorkflowConstants.getLabelStatus(");
-
-				_updateContent(kaleoDefinitionId, content);
+				_updateContent(
+					resultSet.getLong("kaleoDefinitionId"),
+					StringUtil.replace(
+						resultSet.getString("content"),
+						"WorkflowConstants.toStatus(",
+						"WorkflowConstants.getLabelStatus("));
 			}
 		}
 	}

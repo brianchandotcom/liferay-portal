@@ -594,6 +594,16 @@ test('LPD-62112 Cannot Preview Pending Version of Page in a Publication', async 
 	const newHeading = publicationIFrame.getByText('Edited');
 
 	await expect(newHeading).toBeVisible();
+
+	// Disable workflow for Content Pages
+
+	await changeTrackingPage.workOnProduction();
+
+	await workflowPage.goto();
+
+	await workflowPage.changeWorkflow('Content Page', 'No Workflow', {
+		disable: true,
+	});
 });
 
 test.describe('Publications with incomplete status tests', () => {

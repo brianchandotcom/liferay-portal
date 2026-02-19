@@ -67,14 +67,12 @@ public class EditEntryMVCActionCommandTest {
 
 	@Test
 	public void testIgnoreTamperedReporterAndReportedUser() throws Exception {
+		User reportedUser = UserTestUtil.addUser();
+
 		long groupId = TestPropsValues.getGroupId();
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
-
-		User reporterUser = TestPropsValues.getUser();
-
-		User reportedUser = UserTestUtil.addUser();
 
 		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
 			null, reportedUser.getUserId(),
@@ -88,6 +86,8 @@ public class EditEntryMVCActionCommandTest {
 			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
 			Collections.emptyList(), false, 0, false, serviceContext);
 
+		User reporterUser = TestPropsValues.getUser();
+
 		ThemeDisplay themeDisplay = _getThemeDisplay(groupId, reporterUser);
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
@@ -96,13 +96,13 @@ public class EditEntryMVCActionCommandTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, false, LayoutConstants.TYPE_PORTLET);
 
 		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layouts.get(0));
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
 		AtomicReference<String> reporterEmailAddressRef =
 			new AtomicReference<>();

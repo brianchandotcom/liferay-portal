@@ -175,6 +175,8 @@ public class SearchEngineInitializer implements Runnable {
 				SearchEngineHelperUtil.initialize(_companyId);
 			}
 
+			boolean finalFullMode = fullMode;
+
 			long backgroundTaskId =
 				BackgroundTaskThreadLocal.getBackgroundTaskId();
 			List<FutureTask<Void>> futureTasks = new ArrayList<>();
@@ -193,8 +195,6 @@ public class SearchEngineInitializer implements Runnable {
 			Set<String> indexerClassNames = new HashSet<>();
 			Map<String, Object> sharedReindexCacheMap =
 				new ConcurrentHashMap<>();
-
-			boolean finalFullMode = fullMode;
 
 			for (Indexer<?> indexer : _indexers) {
 				indexerClassNames.add(indexer.getClassName());

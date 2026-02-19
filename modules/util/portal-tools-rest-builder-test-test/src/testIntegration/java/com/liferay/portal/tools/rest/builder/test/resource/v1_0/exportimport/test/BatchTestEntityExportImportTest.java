@@ -378,13 +378,15 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_getEmptyReportEntryErrorMessageString(externalReferenceCode1),
+			_buildEmptyReportEntryErrorMessage(
+				externalReferenceCode1, "CompanyTestEntity"),
 			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_getEmptyReportEntryErrorMessageString(externalReferenceCode2),
+			_buildEmptyReportEntryErrorMessage(
+				externalReferenceCode2, "CompanyTestEntity"),
 			externalReferenceCode2, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(1));
 	}
@@ -518,7 +520,8 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_getEmptyReportEntryErrorMessageString(externalReferenceCode1),
+			_buildEmptyReportEntryErrorMessage(
+				externalReferenceCode1, "CompanyTestEntity"),
 			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
@@ -868,6 +871,15 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 
+	private String _buildEmptyReportEntryErrorMessage(
+		String externalReferenceCode, String modelNameLanguageKey) {
+
+		return StringBundler.concat(
+			"The ", modelNameLanguageKey, " with external reference code ",
+			externalReferenceCode,
+			" was not found. An empty shell was created.");
+	}
+
 	private File _exportLayout(boolean deletions) throws Exception {
 		return _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
@@ -889,17 +901,6 @@ public class BatchTestEntityExportImportTest {
 									_CLASS_NAME,
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
-	}
-
-	private String _getEmptyReportEntryErrorMessageString(
-		String externalReferenceCode) {
-
-		return StringBundler.concat(
-			"The ",
-			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-				CompanyTestEntity.class.getName(),
-			" with external reference code ", externalReferenceCode,
-			" was not found. An empty shell was created.");
 	}
 
 	private ExportImportConfiguration _importLayout(

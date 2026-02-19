@@ -59,15 +59,15 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setClassNameId(classNameId);
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
-		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
 		exportImportReportEntry.setErrorMessage(
 			_language.format(
 				LocaleUtil.US,
 				"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
-				"shell-was-created",
+					"shell-was-created",
 				new String[] {
 					modelNameLanguageKey, classExternalReferenceCode
 				}));
+		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
 		exportImportReportEntry.setOrigin(
 			ExportImportReportEntryUtil.getOrigin());
 		exportImportReportEntry.setType(

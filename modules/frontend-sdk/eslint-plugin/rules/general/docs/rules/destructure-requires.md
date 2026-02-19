@@ -30,4 +30,4 @@ import {thing as alias} from 'bar';
 
 ## Further Reading
 
--   [Initial motivation for this rule](https://github.com/liferay/eslint-config-liferay/issues/94).
+- [Initial motivation for this rule](https://github.com/liferay/eslint-config-liferay/issues/94).

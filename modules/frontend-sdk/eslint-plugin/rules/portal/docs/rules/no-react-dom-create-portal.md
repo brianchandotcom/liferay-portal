@@ -4,8 +4,8 @@ This rule guards against the direct use of the `ReactDOM.createPortal` API, in f
 
 At the time of writing, the wrapper provides:
 
--   Wrapping portal in a `div` by default
--   Adds `.lfr-tooltip-scope` class to wrapper for scoping DXP tooltips
+- Wrapping portal in a `div` by default
+- Adds `.lfr-tooltip-scope` class to wrapper for scoping DXP tooltips
 
 If you'd like to propose further useful additions, please [create an issue](https://github.com/liferay/liferay-frontend-guidelines/issues/new) in the [liferay-frontend-guidelines](https://github.com/liferay/liferay-frontend-guidelines) repo.
 

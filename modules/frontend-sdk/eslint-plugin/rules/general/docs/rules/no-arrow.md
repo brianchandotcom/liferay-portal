@@ -20,4 +20,4 @@ function add(a, b) {
 
 ## See also
 
--   https://github.com/liferay/eslint-config-liferay/issues/179
+- https://github.com/liferay/eslint-config-liferay/issues/179

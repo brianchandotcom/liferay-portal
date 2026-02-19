@@ -4,4 +4,4 @@
 
 ### :wrench: Bug fixes
 
--   fix(stylelint-plugin): provide plugin via cjs with no build step ([\#1223](https://github.com/liferay/liferay-frontend-projects/pull/1223))
+- fix(stylelint-plugin): provide plugin via cjs with no build step ([\#1223](https://github.com/liferay/liferay-frontend-projects/pull/1223))

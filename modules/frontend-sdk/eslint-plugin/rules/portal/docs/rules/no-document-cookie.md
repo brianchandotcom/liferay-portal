@@ -43,4 +43,4 @@ function doSomethingOther(name, value) {
 
 ## Further Reading
 
--   [LPS-151966 Create a JS API for cookie management, which enforces user's consent](https://issues.liferay.com/browse/LPS-151966)
+- [LPS-151966 Create a JS API for cookie management, which enforces user's consent](https://issues.liferay.com/browse/LPS-151966)

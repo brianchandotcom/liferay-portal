@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.Scope;
@@ -49,10 +48,10 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		try {
-			Long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+			long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 				renderRequest, "oAuthClientASLocalMetadataId");
 
-			if (Validator.isNotNull(oAuthClientASLocalMetadataId)) {
+			if (oAuthClientASLocalMetadataId > 0) {
 				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 					_oAuthClientASLocalMetadataService.
 						fetchOAuthClientASLocalMetadata(

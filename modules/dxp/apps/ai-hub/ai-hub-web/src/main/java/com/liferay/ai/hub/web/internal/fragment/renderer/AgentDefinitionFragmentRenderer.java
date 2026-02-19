@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.servlet.RequestDispatcher;
@@ -73,7 +72,7 @@ public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
 				_servletContext.getRequestDispatcher("/view.jsp");
 
 			AgentDefinitionDisplayContext agentDefinitionDisplayContext =
-				new AgentDefinitionDisplayContext(httpServletRequest, _portal);
+				new AgentDefinitionDisplayContext(httpServletRequest);
 
 			Class<?> clazz = agentDefinitionDisplayContext.getClass();
 
@@ -95,9 +94,6 @@ public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=" + AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + ")"

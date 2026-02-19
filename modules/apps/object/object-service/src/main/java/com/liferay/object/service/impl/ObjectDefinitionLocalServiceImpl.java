@@ -678,45 +678,53 @@ public class ObjectDefinitionLocalServiceImpl
 			}
 		}
 
-		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByODI1_R(
-					objectDefinition.getObjectDefinitionId(), false)) {
+		try (SafeCloseable safeCloseable =
+				ObjectDefinitionThreadLocal.
+					setDeleteObjectDefinitionIdWithSafeCloseable(
+						objectDefinition.getObjectDefinitionId())) {
 
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-		}
-
-		for (ObjectRelationship objectRelationship :
-				_objectRelationshipPersistence.findByODI2_R(
-					objectDefinition.getObjectDefinitionId(), false)) {
-
-			_objectRelationshipLocalService.deleteObjectRelationship(
-				objectRelationship);
-		}
-
-		_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
-			objectDefinition.getObjectDefinitionId());
-
-		_objectFolderItemLocalService.
-			deleteObjectFolderItemByObjectDefinitionId(
+			_objectFieldLocalService.deleteObjectFieldByObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId());
 
-		_objectLayoutLocalService.deleteObjectLayouts(
-			objectDefinition.getObjectDefinitionId());
+			_objectFolderItemLocalService.
+				deleteObjectFolderItemByObjectDefinitionId(
+					objectDefinition.getObjectDefinitionId());
 
-		_objectValidationRuleLocalService.deleteObjectValidationRules(
-			objectDefinition.getObjectDefinitionId());
+			_objectLayoutLocalService.deleteObjectLayouts(
+				objectDefinition.getObjectDefinitionId());
 
-		_objectViewLocalService.deleteObjectViews(
-			objectDefinition.getObjectDefinitionId());
+			for (ObjectRelationship objectRelationship :
+					_objectRelationshipPersistence.findByODI1_R(
+						objectDefinition.getObjectDefinitionId(), false)) {
 
-		_resourceLocalService.deleteResource(
-			objectDefinition.getCompanyId(), ObjectDefinition.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			objectDefinition.getObjectDefinitionId());
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationship);
+			}
 
-		_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinks(
-			objectDefinition.getCompanyId(), objectDefinition.getClassName());
+			for (ObjectRelationship objectRelationship :
+					_objectRelationshipPersistence.findByODI2_R(
+						objectDefinition.getObjectDefinitionId(), false)) {
+
+				_objectRelationshipLocalService.deleteObjectRelationship(
+					objectRelationship);
+			}
+
+			_objectValidationRuleLocalService.deleteObjectValidationRules(
+				objectDefinition.getObjectDefinitionId());
+
+			_objectViewLocalService.deleteObjectViews(
+				objectDefinition.getObjectDefinitionId());
+
+			_resourceLocalService.deleteResource(
+				objectDefinition.getCompanyId(),
+				ObjectDefinition.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				objectDefinition.getObjectDefinitionId());
+
+			_workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLinks(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName());
+		}
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			_dropTable(objectDefinition.getExtensionDBTableName());

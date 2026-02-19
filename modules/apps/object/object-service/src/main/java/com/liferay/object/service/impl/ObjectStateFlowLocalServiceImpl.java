@@ -102,6 +102,10 @@ public class ObjectStateFlowLocalServiceImpl
 		ObjectStateFlow objectStateFlow =
 			objectStateFlowPersistence.fetchByObjectFieldId(objectFieldId);
 
+		if (objectStateFlow == null) {
+			return;
+		}
+
 		objectStateFlowPersistence.remove(
 			objectStateFlow.getObjectStateFlowId());
 

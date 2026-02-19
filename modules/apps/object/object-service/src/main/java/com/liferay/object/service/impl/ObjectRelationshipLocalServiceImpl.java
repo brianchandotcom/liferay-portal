@@ -11,6 +11,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
+import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.exception.DuplicateObjectRelationshipException;
 import com.liferay.object.exception.DuplicateObjectRelationshipExternalReferenceCodeException;
@@ -396,21 +397,12 @@ public class ObjectRelationshipLocalServiceImpl
 		_deleteObjectFields(
 			objectRelationship.getObjectDefinitionId2(), objectRelationship);
 
-		ObjectDefinition objectDefinition1 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId1());
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
-			objectRelationship.getObjectDefinitionId2(),
-			objectDefinition1.getObjectFolderId());
-
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionPersistence.findByPrimaryKey(
-				objectRelationship.getObjectDefinitionId2());
-
-		_objectFolderItemLocalService.deleteObjectFolderItem(
+		_deleteObjectFolderItem(
 			objectRelationship.getObjectDefinitionId1(),
-			objectDefinition2.getObjectFolderId());
+			objectRelationship.getObjectDefinitionId2());
+		_deleteObjectFolderItem(
+			objectRelationship.getObjectDefinitionId2(),
+			objectRelationship.getObjectDefinitionId1());
 
 		_objectLayoutTabLocalService.deleteObjectRelationshipObjectLayoutTabs(
 			objectRelationship.getObjectRelationshipId());
@@ -1429,6 +1421,24 @@ public class ObjectRelationshipLocalServiceImpl
 					objectField.getObjectFieldId());
 			}
 		}
+	}
+
+	private void _deleteObjectFolderItem(
+			long objectDefinitionId, long relatedObjectDefinitionId)
+		throws PortalException {
+
+		if (ObjectDefinitionThreadLocal.isDeleteObjectDefinitionId(
+				objectDefinitionId)) {
+
+			return;
+		}
+
+		ObjectDefinition relatedObjectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(
+				relatedObjectDefinitionId);
+
+		_objectFolderItemLocalService.deleteObjectFolderItem(
+			objectDefinitionId, relatedObjectDefinition.getObjectFolderId());
 	}
 
 	private int _getIncompleteWorkflowInstancesCount(

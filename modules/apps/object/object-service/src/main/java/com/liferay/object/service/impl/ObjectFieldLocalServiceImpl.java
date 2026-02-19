@@ -14,6 +14,7 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
+import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.definition.util.ObjectDefinitionValidationThreadLocal;
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
@@ -385,6 +386,11 @@ public class ObjectFieldLocalServiceImpl
 
 			_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
 				objectField);
+
+			if (objectField.isState()) {
+				_objectStateFlowLocalService.deleteObjectFieldObjectStateFlow(
+					objectField.getObjectFieldId());
+			}
 		}
 	}
 
@@ -1239,6 +1245,12 @@ public class ObjectFieldLocalServiceImpl
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectField.getObjectDefinitionId());
+
+		if (ObjectDefinitionThreadLocal.isDeleteObjectDefinitionId(
+				objectField.getObjectDefinitionId())) {
+
+			return objectFieldPersistence.remove(objectField);
+		}
 
 		if (objectDefinition.isSystem() && objectField.isSystem() &&
 			!ObjectDefinitionUtil.isInvokerBundleAllowed()) {

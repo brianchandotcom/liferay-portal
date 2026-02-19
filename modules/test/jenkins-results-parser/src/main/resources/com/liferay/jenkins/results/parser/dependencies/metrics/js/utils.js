@@ -6,7 +6,17 @@ const COLORS = [
 	'#f8f38d',
 	'#08cad1',
 	'#9d94ff',
-	'#c780e8'
+	'#c780e8',
+	'#4472c4',
+    '#ed7d31',
+    '#70ad47',
+    '#ffc000',
+    '#a5a5a5',
+    '#636363',
+    '#ff85a1',
+    '#4bacc6',
+    '#8064a2',
+    '#9bbb59'
 ];
 
 const MAX_WEEKLY_SERVER_DURATION_MILLIS = 2370 * 7 * 24 * 60 * 60 * 1000;
@@ -56,6 +66,129 @@ function addTotalColumn(tableElement) {
 		totalCellElement.textContent = totalValue;
 
 		rowElement.appendChild(totalCellElement);
+	});
+}
+
+function createBarChartFromTable(chartTitle, elementID, metricName, tableElement, dataSuffix, yAxesMax) {
+	headerElements = tableElement.querySelectorAll('thead tr th');
+
+	let xLabels = [];
+
+	headerElements.forEach(headerElement => {
+		if (headerElement.classList.contains('col-1') || headerElement.classList.contains('col-2')) {
+			return;
+		}
+
+		if (headerElement.textContent.trim() === 'Total' && chartTitle == 'Daily Server Duration by Test Suite') {
+			return;
+		}
+
+		xLabels.push(headerElement.textContent);
+	});
+
+	let datasets = [];
+	let rowElements = tableElement.querySelectorAll('tbody tr');
+
+	rowElements.forEach(rowElement => {
+		let cellElements = rowElement.querySelectorAll('td');
+
+		if ((cellElements[0].textContent === 'All') || (cellElements[0].textContent === '[Total]') || (cellElements[0].textContent === '[Unknown]')) {
+			return;
+		}
+
+		if (cellElements[1].textContent !== metricName) {
+			return;
+		}
+
+		let dataValues = [];
+
+		cellElements.forEach(cellElement => {
+			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2')) {
+				return;
+			}
+
+			let dataValue = cellElement.getAttribute('data-value');
+
+			if (chartTitle == 'Daily Server Duration by Test Suite') {
+				dataValue = dataValue / 3600;
+				if (dataValue > 0){
+				dataValue = dataValue.toFixed(2);
+				}
+			}
+
+			dataValues.push(dataValue);
+		});
+
+		let color = getColor(datasets.length);
+
+		let dataset = {
+			backgroundColor: color,
+			borderColor: color,
+			data: dataValues,
+			label: cellElements[0].textContent
+		};
+
+		datasets.push(dataset);
+	});
+
+	let barChart = new Chart(document.getElementById(elementID), {
+		data: {
+			datasets: datasets,
+			labels: xLabels
+		},
+		options: {
+			maintainAspectRatio: false,
+			responsive: true,
+			scales: {
+				xAxes: [{
+					stacked: true,
+				}],
+				yAxes: [{
+					scaleLabel: {
+						display: true,
+						labelString: dataSuffix
+					},
+					stacked: true,
+					ticks: {
+						beginAtZero: true,
+						callback: function(value) {
+							return value + dataSuffix;
+						},
+						max: yAxesMax
+					}
+				}]
+			},
+			title: {
+				display: true,
+				fontSize: 14,
+				text: chartTitle
+			},
+			tooltips: {
+				callbacks: {
+					label: function(tooltipItem, data) {
+				        let label = data.datasets[tooltipItem.datasetIndex].label;
+				        let dataDenomination = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+				        let totaldataDenomination = 0;
+
+				        for (let i = 0; i < data.datasets.length; i++) {
+				            totaldataDenomination += parseFloat(data.datasets[i].data[tooltipItem.index]);
+				        }
+
+				        if (tooltipItem.datasetIndex != 0) {
+				            return label + ' : ' + dataDenomination + dataSuffix;
+				        }
+				        else {
+				            return [label + ' : ' + dataDenomination + dataSuffix, "Total : " + totaldataDenomination.toFixed(2) + dataSuffix];
+				        }
+					}
+				},
+				itemSort: function(a, b) {
+					return b.datasetIndex - a.datasetIndex;
+				},
+				mode: 'index'
+			}
+		},
+		type: 'bar'
 	});
 }
 

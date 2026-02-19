@@ -201,6 +201,8 @@ public class LayoutLocalServiceStagingAdvice {
 		}
 
 		layout.setParentLayoutId(parentLayoutId);
+		layout.setFaviconFileEntryERC(faviconFileEntryERC);
+		layout.setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
 		layoutRevision.setNameMap(nameMap);
 		layoutRevision.setTitleMap(titleMap);
 		layoutRevision.setDescriptionMap(descriptionMap);

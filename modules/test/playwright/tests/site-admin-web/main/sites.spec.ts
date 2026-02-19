@@ -100,94 +100,89 @@ test('Site is still created even if modal window is closed', async ({
 test('Inactivate and reactivate site', async ({
 	apiHelpers,
 	page,
+	site,
 	sitesAdminPage,
 	systemSettingsPage,
 	widgetPagePage,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
+
+	// Activate 'Show Inactive Request Message' configuration in system settings
+
+	await systemSettingsPage.goToSystemSetting(
+		'Infrastructure',
+		'Inactive Request Handler'
+	);
+
+	const showInactiveRequestCheckbox = page.getByLabel(
+		'Show Inactive Request Message'
+	);
+
+	if ((await showInactiveRequestCheckbox.isChecked()) === false) {
+		await showInactiveRequestCheckbox.check();
+		await page.getByRole('button', {name: 'Save'}).click();
+	}
+
+	// Create Layout
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		options: {type: 'portlet'},
+		title: getRandomString(),
 	});
 
-	try {
+	// Deactivate Site
 
-		// Activate 'Show Inactive Request Message' configuration in system settings
+	await sitesAdminPage.goto();
 
-		await systemSettingsPage.goToSystemSetting(
-			'Infrastructure',
-			'Inactive Request Handler'
-		);
+	await page
+		.getByRole('row', {name: site.name})
+		.getByLabel('Show Actions')
+		.click();
 
-		const showInactiveRequestCheckbox = page.getByLabel(
-			'Show Inactive Request Message'
-		);
+	page.once('dialog', async (dialog) => {
+		await dialog.accept();
+	});
 
-		if ((await showInactiveRequestCheckbox.isChecked()) === false) {
-			await showInactiveRequestCheckbox.check();
-			await page.getByRole('button', {name: 'Save'}).click();
-		}
+	await page.getByRole('menuitem', {name: 'Deactivate'}).click();
 
-		// Create Layout
+	await waitForAlert(page);
 
-		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-			groupId: site.id,
-			title: getRandomString(),
-		});
+	await page.waitForLoadState();
 
-		// Deactivate Site
+	// Verify that the message alerting that the Site is deactivated appears
 
-		await sitesAdminPage.goto();
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
 
-		await page
-			.getByRole('row', {name: site.name})
-			.getByLabel('Show Actions')
-			.click();
+	await expect(
+		page.getByText(
+			'This site is inactive. Please contact the administrator.',
+			{exact: true}
+		)
+	).toBeVisible();
 
-		page.once('dialog', async (dialog) => {
-			await dialog.accept();
-		});
+	// Activate Site
 
-		await page.getByRole('menuitem', {name: 'Deactivate'}).click();
+	await sitesAdminPage.goto();
 
-		await waitForAlert(page);
+	await page
+		.getByRole('row', {name: site.name})
+		.getByLabel('Show Actions')
+		.click();
 
-		// Verify that the message alerting that the Site is deactivated appears
+	await page.getByRole('menuitem', {name: 'Activate'}).click();
 
-		await widgetPagePage.goto(layout, site.friendlyUrlPath);
+	await waitForAlert(page);
 
-		await expect(
-			page.getByText(
-				'This site is inactive. Please contact the administrator.',
-				{exact: true}
-			)
-		).toBeVisible();
+	// Verify that the message alerting that the Site is deactivated does not appears
 
-		// Activate Site
+	await widgetPagePage.goto(layout, site.friendlyUrlPath);
 
-		await sitesAdminPage.goto();
-
-		await page
-			.getByRole('row', {name: site.name})
-			.getByLabel('Show Actions')
-			.click();
-
-		await page.getByRole('menuitem', {name: 'Activate'}).click();
-
-		await waitForAlert(page);
-
-		// Verify that the message alerting that the Site is deactivated does not appears
-
-		await widgetPagePage.goto(layout, site.friendlyUrlPath);
-
-		await expect(
-			page.getByText(
-				'This site is inactive. Please contact the administrator.',
-				{exact: true}
-			)
-		).not.toBeVisible();
-	}
-	finally {
-		await apiHelpers.headlessSite.deleteSite(site.id);
-	}
+	await expect(
+		page.getByText(
+			'This site is inactive. Please contact the administrator.',
+			{exact: true}
+		)
+	).not.toBeVisible();
 });
 
 test('Could edit site name', async ({

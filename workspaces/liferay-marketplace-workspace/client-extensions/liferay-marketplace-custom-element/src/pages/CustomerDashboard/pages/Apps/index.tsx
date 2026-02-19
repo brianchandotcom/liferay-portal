@@ -28,7 +28,6 @@ const Apps = () => {
 		isLoading,
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id as number,
-		channelId: Number(Liferay.CommerceContext.commerceChannelId),
 		orderTypeExternalReferenceCodes: [
 			OrderTypes.CLIENT_EXTENSION,
 			OrderTypes.CLOUD_APP,

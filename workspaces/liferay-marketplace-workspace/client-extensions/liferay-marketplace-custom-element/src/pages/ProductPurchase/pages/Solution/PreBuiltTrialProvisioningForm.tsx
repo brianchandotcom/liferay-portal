@@ -61,7 +61,6 @@ const AccountForm = () => {
 		isValidating,
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id,
-		channelId: Liferay.CommerceContext.commerceChannelId,
 		orderTypeExternalReferenceCodes: [
 			OrderTypes.SOLUTIONS7,
 			OrderTypes.SOLUTIONS30,

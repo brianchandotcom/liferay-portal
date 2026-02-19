@@ -6,10 +6,10 @@ then
 	}
 end
 
-local isReady = false
 local progressMessage = ""
+local ready = false
 
-for i, condition in ipairs(obj.status.conditions)
+for _, condition in ipairs(obj.status.conditions)
 do
 	if (condition.status == "False") and (condition.type == "Ready")
 	then
@@ -18,18 +18,18 @@ do
 	then
 		return {
 			health = "Degraded",
-			message = condition.message or "Check Composition Pipeline for errors"
+			message = condition.message or "Composition pipeline has errors."
 		}
 	elseif (condition.status == "True") and (condition.type == "Ready")
 	then
-		isReady = true
+		ready = true
 	end
 end
 
-if (isReady and (obj.status.managedServiceDetailsReady or false))
+if (ready and (obj.status.managedServiceDetailsReady or false))
 then
 	return {
-		message = "Liferay Infrastructure is ready",
+		message = "Liferay Infrastructure is ready.",
 		status = "Health"
 	}
 end

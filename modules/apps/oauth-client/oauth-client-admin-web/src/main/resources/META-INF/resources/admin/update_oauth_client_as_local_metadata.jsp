@@ -8,9 +8,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 String authorizationEndpoint = (String)request.getAttribute("authorizationEndpoint");
 String jwksURI = (String)request.getAttribute("jwksURI");
-String redirect = ParamUtil.getString(request, "redirect");
 String supportedGrantTypes = (String)request.getAttribute("supportedGrantTypes");
 String supportedScopes = (String)request.getAttribute("supportedScopes");
 String supportedSubjectTypes = (String)request.getAttribute("supportedSubjectTypes");

@@ -20,6 +20,7 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
@@ -377,14 +378,14 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			null, externalReferenceCode1,
-			ExportImportReportEntryConstants.TYPE_EMPTY,
+			_getEmptyReportEntryErrorMessageString(externalReferenceCode1),
+			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			null, externalReferenceCode2,
-			ExportImportReportEntryConstants.TYPE_EMPTY,
+			_getEmptyReportEntryErrorMessageString(externalReferenceCode2),
+			externalReferenceCode2, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(1));
 	}
 
@@ -517,8 +518,8 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			null, externalReferenceCode1,
-			ExportImportReportEntryConstants.TYPE_EMPTY,
+			_getEmptyReportEntryErrorMessageString(externalReferenceCode1),
+			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			_CLASS_NAME, errorMessage, externalReferenceCode2,
@@ -849,7 +850,9 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			expectedErrorMessage, exportImportReportEntry.getErrorMessage());
 
-		if (expectedErrorMessage == null) {
+		if ((expectedErrorMessage == null) |
+			(expectedType == ExportImportReportEntryConstants.TYPE_EMPTY)) {
+
 			Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
 		}
 		else {
@@ -886,6 +889,17 @@ public class BatchTestEntityExportImportTest {
 									_CLASS_NAME,
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
+	}
+
+	private String _getEmptyReportEntryErrorMessageString(
+		String externalReferenceCode) {
+
+		return StringBundler.concat(
+			"The ",
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
+				CompanyTestEntity.class.getName(),
+			" with external reference code ", externalReferenceCode,
+			" was not found. An empty shell was created.");
 	}
 
 	private ExportImportConfiguration _importLayout(

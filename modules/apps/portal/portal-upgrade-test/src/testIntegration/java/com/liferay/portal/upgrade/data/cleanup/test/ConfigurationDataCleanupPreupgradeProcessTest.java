@@ -106,6 +106,28 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeWithExistentCompanyAndNonexistentGroup()
+		throws Exception {
+
+		long nonexistentGroupId = _getNonexistentGroupId();
+
+		_testUpgradeWithCombinedScope(
+			TestPropsValues.getCompanyId(), nonexistentGroupId, "groupId",
+			nonexistentGroupId, "Group_", "groupId");
+	}
+
+	@Test
+	public void testUpgradeWithNonexistentCompanyAndExistentGroup()
+		throws Exception {
+
+		long nonexistentCompanyId = _getNonexistentCompanyId();
+
+		_testUpgradeWithCombinedScope(
+			nonexistentCompanyId, TestPropsValues.getGroupId(), "companyId",
+			nonexistentCompanyId, "Company", "companyId");
+	}
+
+	@Test
 	public void testUpgradeWithNullDictionary() throws Exception {
 		String configurationId = RandomTestUtil.randomString();
 
@@ -262,6 +284,45 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);
 			ConfigurationTestUtil.deleteConfiguration(
 				nonexistentConfigurationId);
+		}
+	}
+
+	private void _testUpgradeWithCombinedScope(
+			long companyId, long groupId, String expectedScope,
+			long nonexistentId, String expectedTableName,
+			String expectedColumnName)
+		throws Exception {
+
+		String configurationId = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				ConfigurationDataCleanupPreupgradeProcess.class.getName(),
+				LoggerTestUtil.INFO)) {
+
+			configurationId = ConfigurationTestUtil.createFactoryConfiguration(
+				ConfigurationDataCleanupPreupgradeProcessTest.class.getName(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"companyId", companyId
+				).put(
+					"groupId", groupId
+				).build());
+
+			upgrade();
+
+			List<String> messages = logCapture.getMessages();
+
+			Assert.assertTrue(
+				messages.toString() + CompanyThreadLocal.getCompanyId(),
+				messages.contains(
+					StringBundler.concat(
+						"Table Configuration_, 1 row deleted because ",
+						configurationId, " has scope ", expectedScope, " ",
+						nonexistentId, " that was not found in ",
+						_dbInspector.normalizeName(expectedTableName), ".",
+						_dbInspector.normalizeName(expectedColumnName))));
+		}
+		finally {
+			ConfigurationTestUtil.deleteConfiguration(configurationId);
 		}
 	}
 

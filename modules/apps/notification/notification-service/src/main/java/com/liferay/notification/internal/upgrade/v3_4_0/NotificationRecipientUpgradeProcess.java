@@ -25,16 +25,16 @@ public class NotificationRecipientUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select count(*) from NotificationRecipient");
+				"select count(*) as count from NotificationRecipient");
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select count(*) from NotificationRecipientSetting");
+				"select count(*) as count from NotificationRecipientSetting");
 			ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
-			if (resultSet1.next() && (resultSet1.getInt(1) > 0)) {
+			if (resultSet1.next() && (resultSet1.getInt("count") > 0)) {
 				return;
 			}
-			else if (resultSet2.next() && (resultSet2.getInt(1) == 0)) {
+			else if (resultSet2.next() && (resultSet2.getInt("count") == 0)) {
 				return;
 			}
 		}

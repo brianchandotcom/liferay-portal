@@ -125,35 +125,34 @@ public class StagingDataPortletPreferencesTest
 
 		Group companyGroup = company.getGroup();
 
-		Map<String, String[]> preferenceMap = HashMapBuilder.put(
-			"displayDepth", new String[] {String.valueOf(0)}
-		).put(
-			"displayStyle", new String[] {"ddmTemplate_NAVBAR-BLANK-FTL"}
-		).put(
-			"displayStyleGroupExternalReferenceCode",
-			new String[] {companyGroup.getExternalReferenceCode()}
-		).put(
-			"displayStyleGroupId",
-			new String[] {String.valueOf(companyGroup.getGroupId())}
-		).put(
-			"displayStyleGroupKey",
-			new String[] {String.valueOf(company.getCompanyId())}
-		).put(
-			"expandedLevels", new String[] {"auto"}
-		).put(
-			"rootMenuItemId", new String[0]
-		).put(
-			"rootMenuItemLevel", new String[] {String.valueOf(0)}
-		).put(
-			"rootMenuItemType", new String[] {"absolute"}
-		).put(
-			"siteNavigationMenuId", new String[] {String.valueOf(0)}
-		).put(
-			"siteNavigationMenuType", new String[] {String.valueOf(-1)}
-		).build();
-
 		String portletId = publishLayoutWithDisplayPortlet(
-			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU, preferenceMap,
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU,
+			HashMapBuilder.put(
+				"displayDepth", new String[] {String.valueOf(0)}
+			).put(
+				"displayStyle", new String[] {"ddmTemplate_NAVBAR-BLANK-FTL"}
+			).put(
+				"displayStyleGroupExternalReferenceCode",
+				new String[] {companyGroup.getExternalReferenceCode()}
+			).put(
+				"displayStyleGroupId",
+				new String[] {String.valueOf(companyGroup.getGroupId())}
+			).put(
+				"displayStyleGroupKey",
+				new String[] {String.valueOf(company.getCompanyId())}
+			).put(
+				"expandedLevels", new String[] {"auto"}
+			).put(
+				"rootMenuItemId", new String[0]
+			).put(
+				"rootMenuItemLevel", new String[] {String.valueOf(0)}
+			).put(
+				"rootMenuItemType", new String[] {"absolute"}
+			).put(
+				"siteNavigationMenuId", new String[] {String.valueOf(0)}
+			).put(
+				"siteNavigationMenuType", new String[] {String.valueOf(-1)}
+			).build(),
 			true);
 
 		Assert.assertEquals(
@@ -226,7 +225,7 @@ public class StagingDataPortletPreferencesTest
 				String.valueOf(siteNavigationMenu.getSiteNavigationMenuId())
 			).build());
 
-		publishLayoutWithDisplayPortlet(portletId, preferenceMap, false);
+		publishLayoutWithDisplayPortlet(portletId, null, false);
 
 		Assert.assertEquals(
 			siteNavigationMenu.getExternalReferenceCode(),

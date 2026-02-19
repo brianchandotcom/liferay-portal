@@ -23,6 +23,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -83,38 +84,15 @@ public class PublishFragmentEntryMVCActionCommandTest {
 	public void testCannotPublishFragmentWithInvalidConfiguration()
 		throws Exception {
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.addFragmentCollection(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				null);
-
-		FragmentEntry fragmentEntry =
-			_fragmentEntryLocalService.addFragmentEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(),
-				fragmentCollection.getFragmentCollectionId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(), false, _readFileToString(), null,
-				0, false, false, FragmentConstants.TYPE_COMPONENT, null,
-				WorkflowConstants.STATUS_DRAFT,
-				ServiceContextTestUtil.getServiceContext(
-					_group.getGroupId(), TestPropsValues.getUserId()));
-
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.setParameter(
-			"fragmentEntryId",
-			String.valueOf(fragmentEntry.getFragmentEntryId()));
-		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			_readFileToString(), RandomTestUtil.randomString());
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();
 
 		_mvcActionCommand.processAction(
-			mockLiferayPortletActionRequest, mockLiferayPortletActionResponse);
+			_getMockLiferayPortletActionRequest(fragmentEntry),
+			mockLiferayPortletActionResponse);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)
@@ -143,27 +121,11 @@ public class PublishFragmentEntryMVCActionCommandTest {
 							"propagateChanges", true
 						).build())) {
 
-			FragmentCollection fragmentCollection =
-				_fragmentCollectionLocalService.addFragmentCollection(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					RandomTestUtil.randomString(),
-					RandomTestUtil.randomString(), null);
-
 			String html =
 				"<div><lfr-drop-zone data-lfr-drop-zone-id=\"1\">" +
 					"</lfr-drop-zone></div>";
 
-			FragmentEntry fragmentEntry =
-				_fragmentEntryLocalService.addFragmentEntry(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					fragmentCollection.getFragmentCollectionId(),
-					StringPool.BLANK, RandomTestUtil.randomString(),
-					StringPool.BLANK, html, StringPool.BLANK, false,
-					StringPool.BLANK, null, 0, false, false,
-					FragmentConstants.TYPE_COMPONENT, null,
-					WorkflowConstants.STATUS_DRAFT,
-					ServiceContextTestUtil.getServiceContext(
-						_group, TestPropsValues.getUserId()));
+			FragmentEntry fragmentEntry = _getFragmentEntry(null, html);
 
 			Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
 				_group, RandomTestUtil.randomString(),
@@ -219,18 +181,8 @@ public class PublishFragmentEntryMVCActionCommandTest {
 
 			Assert.assertNotNull(layout.fetchDraftLayout());
 
-			MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-				new MockLiferayPortletActionRequest();
-
-			mockLiferayPortletActionRequest.setParameter(
-				"fragmentEntryId",
-				String.valueOf(fragmentEntry.getFragmentEntryId()));
-
-			mockLiferayPortletActionRequest.setAttribute(
-				WebKeys.THEME_DISPLAY, _getThemeDisplay());
-
 			_mvcActionCommand.processAction(
-				mockLiferayPortletActionRequest,
+				_getMockLiferayPortletActionRequest(fragmentEntry),
 				new MockLiferayPortletActionResponse());
 
 			Layout updatedLayout = _layoutLocalService.getLayout(
@@ -239,6 +191,43 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED, updatedLayout.getStatus());
 		}
+	}
+
+	private FragmentEntry _getFragmentEntry(String configuration, String html)
+		throws PortalException {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				null);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
+			false, configuration, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
+	}
+
+	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
+			FragmentEntry fragmentEntry)
+		throws Exception {
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.setParameter(
+			"fragmentEntryId",
+			String.valueOf(fragmentEntry.getFragmentEntryId()));
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _getThemeDisplay());
+
+		return mockLiferayPortletActionRequest;
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

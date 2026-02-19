@@ -8,19 +8,16 @@ package com.liferay.layout.page.template.internal.upgrade.v6_0_0;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectDefinitionSetting;
-import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LoggingTimer;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Objects;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,209 +27,177 @@ import java.util.regex.Pattern;
 public class LayoutPageTemplateStructureRelUpgradeProcess
 	extends UpgradeProcess {
 
-	public LayoutPageTemplateStructureRelUpgradeProcess(
-		ObjectDefinitionLocalService objectDefinitionLocalService,
-		ObjectDefinitionSettingLocalService
-			objectDefinitionSettingLocalService) {
-
-		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectDefinitionSettingLocalService =
-			objectDefinitionSettingLocalService;
-	}
-
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			processConcurrently(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ctCollectionId, lPageTemplateStructureRelId, ",
 					"companyId, data_ from LayoutPageTemplateStructureRel ",
 					"where (data_ like '%",
-					_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX,
+					"com.liferay.object.internal.info.collection.provider.",
 					"OneToManyObjectRelationshipRelatedInfoCollection",
 					"Provider%' or data_ like '%",
-					_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX,
+					"com.liferay.object.internal.info.collection.provider.",
 					"ManyToManyObjectRelationshipRelatedInfoCollection",
-					"Provider%')"),
-				"update LayoutPageTemplateStructureRel set data_ =" +
-					"? where ctCollectionId = ? and " +
-						"lPageTemplateStructureRelId = ?",
-				resultSet -> new Object[] {
-					resultSet.getLong("ctCollectionId"),
-					resultSet.getLong("lPageTemplateStructureRelId"),
-					resultSet.getLong("companyId"),
-					GetterUtil.getString(resultSet.getString("data_"))
-				},
-				(values, preparedStatement) -> {
-					String data_ = (String)values[3];
+					"Provider%')"));
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					StringBundler.concat(
+						"update LayoutPageTemplateStructureRel set data_ = ? ",
+						"where ctCollectionId = ? and ",
+						"lPageTemplateStructureRelId = ? and companyId = ?"));
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
-					if (data_.isEmpty()) {
-						return;
+			while (resultSet.next()) {
+				LayoutStructure layoutStructure = LayoutStructure.of(
+					GetterUtil.getString(resultSet.getString("data_")));
+
+				for (CollectionStyledLayoutStructureItem
+						collectionStyledLayoutStructureItem :
+							layoutStructure.
+								getCollectionStyledLayoutStructureItems()) {
+
+					JSONObject collectionJSONObject =
+						collectionStyledLayoutStructureItem.
+							getCollectionJSONObject();
+
+					if (collectionJSONObject == null) {
+						continue;
 					}
 
-					LayoutStructure layoutStructure = LayoutStructure.of(data_);
+					String key = collectionJSONObject.getString("key");
 
-					for (CollectionStyledLayoutStructureItem
-							collectionStyledLayoutStructureItem :
-								layoutStructure.
-									getCollectionStyledLayoutStructureItems()) {
-
-						JSONObject collectionJSONObject =
-							collectionStyledLayoutStructureItem.
-								getCollectionJSONObject();
-
-						if (collectionJSONObject == null) {
-							continue;
-						}
-
-						String key = collectionJSONObject.getString("key");
-
-						if (!StringUtil.startsWith(
-								key,
-								_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX)) {
-
-							continue;
-						}
-
-						Matcher
-							objectRelationshipRelatedInfoCollectionProviderKeyMatcher =
-								_manyToManyObjectRelationshipRelatedInfoCollectionProviderKeyPattern.
-									matcher(key);
-
-						if (!objectRelationshipRelatedInfoCollectionProviderKeyMatcher.
-								matches()) {
-
-							objectRelationshipRelatedInfoCollectionProviderKeyMatcher =
-								_oneToManyObjectRelationshipRelatedInfoCollectionProviderKeyPattern.
-									matcher(key);
-						}
-
-						if (!objectRelationshipRelatedInfoCollectionProviderKeyMatcher.
-								matches()) {
-
-							continue;
-						}
-
-						String sourceItemType = collectionJSONObject.getString(
-							"sourceItemType");
-
-						if (Validator.isNull(sourceItemType)) {
-							sourceItemType = collectionJSONObject.getString(
-								"itemType");
-						}
-
-						if (Validator.isNull(sourceItemType)) {
-							continue;
-						}
-
-						Matcher objectDefinitionClassNameMatcher =
-							_objectDefinitionClassNamePattern.matcher(
-								sourceItemType);
-
-						if (!objectDefinitionClassNameMatcher.matches()) {
-							continue;
-						}
-
-						ObjectDefinition objectDefinition =
-							_getObjectDefinition(
-								GetterUtil.getLong(values[2]), sourceItemType);
-
-						if (objectDefinition == null) {
-							continue;
-						}
-
-						String newKey = _getKey(
-							objectRelationshipRelatedInfoCollectionProviderKeyMatcher,
-							objectDefinition);
-
-						if (Objects.equals(newKey, key)) {
-							continue;
-						}
-
-						collectionJSONObject.put("key", newKey);
+					if (Validator.isNull(key)) {
+						continue;
 					}
 
-					JSONObject jsonObject = layoutStructure.toJSONObject();
+					Matcher
+						objectRelationshipRelatedInfoCollectionProviderKeyMatcher =
+							_objectRelationshipRelatedInfoCollectionProviderKeyPattern.
+								matcher(key);
 
-					preparedStatement.setString(1, jsonObject.toString());
+					if (!objectRelationshipRelatedInfoCollectionProviderKeyMatcher.
+							matches()) {
 
-					preparedStatement.setLong(2, (Long)values[0]);
-					preparedStatement.setLong(3, (Long)values[1]);
+						continue;
+					}
 
-					preparedStatement.addBatch();
-				},
-				null);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+					String sourceItemType = collectionJSONObject.getString(
+						"sourceItemType");
+
+					if (Validator.isNull(sourceItemType)) {
+						sourceItemType = collectionJSONObject.getString(
+							"itemType");
+					}
+
+					if (Validator.isNull(sourceItemType)) {
+						continue;
+					}
+
+					Matcher objectDefinitionClassNameMatcher =
+						_objectDefinitionClassNamePattern.matcher(
+							sourceItemType);
+
+					if (!objectDefinitionClassNameMatcher.matches()) {
+						continue;
+					}
+
+					String className = _fetchObjectDefinitionClassName(
+						sourceItemType, resultSet.getLong("companyId"));
+
+					if (Validator.isNull(className)) {
+						continue;
+					}
+
+					collectionJSONObject.put(
+						"key",
+						StringBundler.concat(
+							objectRelationshipRelatedInfoCollectionProviderKeyMatcher.
+								group(1),
+							className,
+							objectRelationshipRelatedInfoCollectionProviderKeyMatcher.
+								group(4)));
+				}
+
+				preparedStatement2.setString(
+					1, String.valueOf(layoutStructure.toJSONObject()));
+				preparedStatement2.setLong(
+					2, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("lPageTemplateStructureRelId"));
+				preparedStatement2.setLong(4, resultSet.getLong("companyId"));
+
+				preparedStatement2.addBatch();
+			}
+
+			preparedStatement2.executeBatch();
 		}
 	}
 
-	private String _getKey(Matcher matcher, ObjectDefinition objectDefinition) {
-		return StringBundler.concat(
-			matcher.group(1), objectDefinition.getClassName(), "_",
-			matcher.group(4));
-	}
+	private String _fetchObjectDefinitionClassName(
+			String className, long companyId)
+		throws Exception {
 
-	private ObjectDefinition _getObjectDefinition(
-		long companyId, String objectDefinitionSettingValue) {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select className from ObjectDefinition where companyId = ? " +
+					"and className = ?")) {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
-				companyId, objectDefinitionSettingValue);
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setString(2, className);
 
-		if (objectDefinition != null) {
-			return objectDefinition;
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
 		}
 
-		ObjectDefinitionSetting objectDefinitionSetting =
-			_objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
-				companyId, ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME,
-				objectDefinitionSettingValue);
-
-		if (objectDefinitionSetting == null) {
-			return null;
-		}
-
-		return _objectDefinitionLocalService.fetchObjectDefinition(
-			objectDefinitionSetting.getObjectDefinitionId());
+		return _fetchObjectDefinitionClassNameByOldClassName(
+			className, companyId);
 	}
 
-	private static final String _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX =
-		"com.liferay.object.internal.info.collection.provider.";
+	private String _fetchObjectDefinitionClassNameByOldClassName(
+			String className, long companyId)
+		throws Exception {
 
-	private static final String
-		_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX_REGEX =
-			StringBundler.concat(
-				"com\\.liferay\\.object\\.internal\\.info\\.collection\\.",
-				"provider\\.");
-
-	private static final String _OBJECT_DEFINITION_CLASS_NAME_REGEX =
-		StringBundler.concat(
-			"com\\.liferay\\.object\\.model\\.ObjectDefinition#",
-			"[A-Za-z]\\d[A-Za-z]\\d");
-
-	private static final Pattern
-		_manyToManyObjectRelationshipRelatedInfoCollectionProviderKeyPattern =
-			Pattern.compile(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"^(", _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX_REGEX,
-					"ManyToManyObjectRelationshipRelatedInfoCollectionProvider",
-					"_)(\\d+)_(.+)_([A-Za-z0-9_]+)$"));
+					"select ObjectDefinition.className from ObjectDefinition ",
+					"inner join ObjectDefinitionSetting on ",
+					"ObjectDefinition.objectDefinitionId = ",
+					"ObjectDefinitionSetting.objectDefinitionId where ",
+					"ObjectDefinitionSetting.companyId = ? and ",
+					"ObjectDefinitionSetting.name = ? and ",
+					"ObjectDefinitionSetting.value = ?"))) {
+
+			preparedStatement.setLong(1, companyId);
+			preparedStatement.setString(
+				2, ObjectDefinitionSettingConstants.NAME_OLD_CLASS_NAME);
+			preparedStatement.setString(3, className);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getString(1);
+				}
+			}
+		}
+
+		return null;
+	}
+
 	private static final Pattern _objectDefinitionClassNamePattern =
 		Pattern.compile(
 			StringBundler.concat(
-				"^", _OBJECT_DEFINITION_CLASS_NAME_REGEX, "$"));
+				"^com\\.liferay\\.object\\.model\\.ObjectDefinition#",
+				"[A-Za-z]\\d[A-Za-z]\\d$"));
 	private static final Pattern
-		_oneToManyObjectRelationshipRelatedInfoCollectionProviderKeyPattern =
+		_objectRelationshipRelatedInfoCollectionProviderKeyPattern =
 			Pattern.compile(
 				StringBundler.concat(
-					"^(", _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX_REGEX,
-					"OneToManyObjectRelationshipRelatedInfoCollectionProvider",
-					"_)(\\d+)_(.+)_([A-Za-z0-9_]+)$"));
-
-	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private final ObjectDefinitionSettingLocalService
-		_objectDefinitionSettingLocalService;
+					"^(com\\.liferay\\.object\\.internal\\.info\\.",
+					"collection\\.provider\\.",
+					"[A-Za-z]+ObjectRelationshipRelatedInfoCollectionProvider",
+					"_)(\\d+)_(.+)(_[A-Za-z0-9]+)$"));
 
 }

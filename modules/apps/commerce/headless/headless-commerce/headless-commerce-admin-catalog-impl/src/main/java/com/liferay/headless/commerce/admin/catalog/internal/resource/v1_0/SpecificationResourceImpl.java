@@ -324,28 +324,28 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			cpSpecificationOption.getCPSpecificationOptionId());
 	}
 
-	private long _getCPOptionCategoryId(Specification specification)
-		throws PortalException {
-
+	private long _getCPOptionCategoryId(Specification specification) throws PortalException {
 		OptionCategory optionCategory = specification.getOptionCategory();
 
 		if (optionCategory == null) {
 			return 0;
 		}
 
-		if ((optionCategory.getId() != null) && (optionCategory.getId() > 0)) {
-			return optionCategory.getId();
+		CPOptionCategory cpOptionCategory = null;
+
+		long optionCategoryId = GetterUtil.getLong(optionCategory.getId());
+		if (optionCategoryId > 0) {
+			cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategory(optionCategoryId);
 		}
 
-		if (Validator.isBlank(optionCategory.getExternalReferenceCode())) {
-			return 0;
-		}
+		if (cpOptionCategory == null) {
+			String externalReferenceCode = GetterUtil.getString(optionCategory.getExternalReferenceCode());
 
-		CPOptionCategory cpOptionCategory =
-			_cpOptionCategoryService.
-				fetchCPOptionCategoryByExternalReferenceCode(
-					optionCategory.getExternalReferenceCode(),
-					contextCompany.getCompanyId());
+			if (Validator.isNotNull(externalReferenceCode)) {
+				cpOptionCategory = _cpOptionCategoryService.fetchCPOptionCategoryByExternalReferenceCode(
+					externalReferenceCode, contextCompany.getCompanyId());
+			}
+		}
 
 		if (cpOptionCategory == null) {
 			return 0;

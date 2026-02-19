@@ -42,6 +42,7 @@
 			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
+			"required": true,
 			"system": true,
 			"type": "String"
 		},
@@ -59,23 +60,7 @@
 			"objectFieldSettings": [
 			],
 			"readOnly": "false",
-			"system": true,
-			"type": "String"
-		},
-		{
-			"DBType": "String",
-			"businessType": "Text",
-			"defaultValue": "null",
-			"externalReferenceCode": "NAME",
-			"indexed": true,
-			"indexedLanguageId": "en_US",
-			"label": {
-				"en_US": "Name"
-			},
-			"name": "name",
-			"objectFieldSettings": [
-			],
-			"readOnly": "false",
+			"required": true,
 			"system": true,
 			"type": "String"
 		},
@@ -93,6 +78,7 @@
 			"objectFieldSettings": [
 			],
 			"readOnly": "false",
+			"required": true,
 			"system": true,
 			"type": "String"
 		},
@@ -128,6 +114,7 @@
 			"objectFieldSettings": [
 			],
 			"readOnly": "false",
+			"required": true,
 			"system": true,
 			"type": "String"
 		}

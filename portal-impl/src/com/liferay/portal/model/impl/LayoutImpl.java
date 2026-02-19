@@ -852,13 +852,13 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public long getIconImageId() {
-		_iconImage = getIconImage();
+		Image iconImage = getIconImage();
 
-		if (_iconImage == null) {
+		if (iconImage == null) {
 			return 0;
 		}
 
-		return _iconImage.getImageId();
+		return iconImage.getImageId();
 	}
 
 	@Override

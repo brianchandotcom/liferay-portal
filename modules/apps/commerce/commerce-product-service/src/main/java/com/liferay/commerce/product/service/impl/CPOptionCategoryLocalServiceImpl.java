@@ -7,6 +7,7 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.constants.CPOptionCategoryConstants;
 import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
+import com.liferay.commerce.product.exception.CPOptionCategoryTitleException;
 import com.liferay.commerce.product.internal.search.CPOptionCategoryIndexer;
 import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPOptionCategory;
@@ -76,7 +77,7 @@ public class CPOptionCategoryLocalServiceImpl
 
 		key = _friendlyURLNormalizer.normalize(key);
 
-		_validate(0, user.getCompanyId(), key);
+		_validate(0, user.getCompanyId(), key, titleMap);
 
 		long cpOptionCategoryId = counterLocalService.increment();
 
@@ -109,15 +110,7 @@ public class CPOptionCategoryLocalServiceImpl
 			double priority, String key, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (Validator.isBlank(key)) {
-			throw new UnsupportedOperationException(
-				"Invalid request: 'key' must not be empty");
-		}
-
-		if ((titleMap == null) || titleMap.isEmpty()) {
-			throw new UnsupportedOperationException(
-				"Invalid request: 'title' must not be empty");
-		}
+		_validate(titleMap, key);
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			CPOptionCategory cpOptionCategory =
@@ -141,6 +134,17 @@ public class CPOptionCategoryLocalServiceImpl
 		return cpOptionCategoryLocalService.addCPOptionCategory(
 			externalReferenceCode, userId, titleMap, descriptionMap, priority,
 			key, serviceContext);
+	}
+
+	private static void _validate(Map<Locale, String> titleMap, String key)
+		throws PortalException {
+		if (Validator.isBlank(key)) {
+			throw new CPOptionCategoryKeyException();
+		}
+
+		if ((titleMap == null) || titleMap.isEmpty()) {
+			throw new CPOptionCategoryTitleException();
+		}
 	}
 
 	@Override
@@ -265,7 +269,7 @@ public class CPOptionCategoryLocalServiceImpl
 
 		_validate(
 			cpOptionCategory.getCPOptionCategoryId(),
-			cpOptionCategory.getCompanyId(), key);
+			cpOptionCategory.getCompanyId(), key, titleMap);
 
 		cpOptionCategory.setExternalReferenceCode(externalReferenceCode);
 		cpOptionCategory.setTitleMap(titleMap);
@@ -365,7 +369,8 @@ public class CPOptionCategoryLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	private void _validate(long cpOptionCategoryId, long companyId, String key)
+	private void _validate(long cpOptionCategoryId, long companyId, String key,
+						   Map<Locale, String> titleMap)
 		throws PortalException {
 
 		CPOptionCategory cpOptionCategory =
@@ -375,6 +380,10 @@ public class CPOptionCategoryLocalServiceImpl
 			(cpOptionCategory.getCPOptionCategoryId() != cpOptionCategoryId)) {
 
 			throw new CPOptionCategoryKeyException();
+		}
+
+		if(titleMap == null || titleMap.isEmpty()) {
+			throw new CPOptionCategoryTitleException();
 		}
 	}
 

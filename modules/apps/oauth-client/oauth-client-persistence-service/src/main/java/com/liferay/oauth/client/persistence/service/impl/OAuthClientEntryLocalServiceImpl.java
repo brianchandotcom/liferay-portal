@@ -60,7 +60,7 @@ public class OAuthClientEntryLocalServiceImpl
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, long metadataCacheTime,
+			String infoJSON, String matcherField, long metadataCacheTime,
 			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -89,6 +89,10 @@ public class OAuthClientEntryLocalServiceImpl
 
 		if (customClaimsJSON == null) {
 			customClaimsJSON = "{}";
+		}
+
+		if (Validator.isNull(matcherField)) {
+			matcherField = "email";
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {
@@ -120,6 +124,7 @@ public class OAuthClientEntryLocalServiceImpl
 		oAuthClientEntry.setClientId(clientId);
 		oAuthClientEntry.setCustomClaimsJSON(customClaimsJSON);
 		oAuthClientEntry.setInfoJSON(clientInformationJSONObject.toString());
+		oAuthClientEntry.setMatcherField(matcherField);
 		oAuthClientEntry.setMetadataCacheTime(metadataCacheTime);
 		oAuthClientEntry.setOIDCUserInfoMapperJSON(oidcUserInfoMapperJSON);
 		oAuthClientEntry.setTokenRequestParametersJSON(
@@ -224,7 +229,7 @@ public class OAuthClientEntryLocalServiceImpl
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, long metadataCacheTime,
+			String infoJSON, String matcherField, long metadataCacheTime,
 			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException {
 
@@ -254,8 +259,12 @@ public class OAuthClientEntryLocalServiceImpl
 			_validateAuthRequestParametersJSON(authRequestParametersJSON);
 		}
 
-		if (customClaimsJSON != null) {
+		if (Validator.isNotNull(customClaimsJSON)) {
 			oAuthClientEntry.setCustomClaimsJSON(customClaimsJSON);
+		}
+
+		if (Validator.isNotNull(matcherField)) {
+			oAuthClientEntry.setMatcherField(matcherField);
 		}
 
 		if (Validator.isNull(tokenRequestParametersJSON)) {

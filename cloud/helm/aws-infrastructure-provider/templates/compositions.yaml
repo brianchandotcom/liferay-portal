@@ -1114,6 +1114,13 @@ spec:
                                             projectId: {{ $projectId }}
                                         name: managed-service-details
                                         namespace: {{ $namespace }}
+                                        ownerReferences:
+                                            -   apiVersion: aws.liferay.com/v1alpha1
+                                                kind: LiferayInfrastructure
+                                                name: {{ .observed.composite.resource.metadata.name }}
+                                                uid: {{ .observed.composite.resource.metadata.uid }}
+                                                blockOwnerDeletion: true
+                                                controller: true
                                     stringData:
                                         DATABASE_ENDPOINT: {{ $databaseAddress | toString }}
                                         DATABASE_PASSWORD: {{ $databasePassword | default "" | toString }}

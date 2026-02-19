@@ -7,6 +7,7 @@ package com.liferay.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.frontend.taglib.clay.internal.servlet.taglib.BaseContainerTag;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.TagResourceBundleUtil;
 
 import jakarta.servlet.jsp.JspException;
@@ -42,6 +43,10 @@ public class ProgressBarTag extends BaseContainerTag {
 		return _warn;
 	}
 
+	public void setFillBarClassName(String fillBarClassName) {
+		_fillBarClassName = fillBarClassName;
+	}
+
 	public void setMessages(Map<String, String> messages) {
 		_messages = messages;
 	}
@@ -58,6 +63,7 @@ public class ProgressBarTag extends BaseContainerTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_fillBarClassName = null;
 		_messages = new HashMap<>();
 		_value = 0;
 		_warn = false;
@@ -88,8 +94,14 @@ public class ProgressBarTag extends BaseContainerTag {
 		jspWriter.write(
 			"\" aria-valuemax=\"100\" aria-valuemin=\"0\" aria-valuenow=\"");
 		jspWriter.write(String.valueOf(_value));
-		jspWriter.write(
-			"\" class=\"progress-bar\" role=\"progressbar\" style=\"width: ");
+		jspWriter.write("\" class=\"progress-bar");
+
+		if (Validator.isNotNull(_fillBarClassName)) {
+			jspWriter.write(" ");
+			jspWriter.write(String.valueOf(_fillBarClassName));
+		}
+
+		jspWriter.write("\" role=\"progressbar\" style=\"width: ");
 		jspWriter.write(String.valueOf(_value));
 		jspWriter.write("%\"></div></div>");
 
@@ -147,6 +159,7 @@ public class ProgressBarTag extends BaseContainerTag {
 
 	private static final String _ATTRIBUTE_NAMESPACE = "clay:progressbar:";
 
+	private String _fillBarClassName;
 	private Map<String, String> _messages = new HashMap<>();
 	private int _value;
 	private boolean _warn;

@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -44,11 +43,8 @@ public class FeatureFlagManagerUtil {
 	}
 
 	public static String getJSON(long companyId) {
-		FeatureFlagManager featureFlagManager =
-			_featureFlagManagerSnapshot.get();
-
-		if (featureFlagManager != null) {
-			return featureFlagManager.getJSON(companyId);
+		if (_featureFlagManager != null) {
+			return _featureFlagManager.getJSON(companyId);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -57,15 +53,22 @@ public class FeatureFlagManagerUtil {
 					"default value.");
 		}
 
-		return _JSON;
+		String json = _json;
+
+		if (json == null) {
+			json = String.valueOf(
+				JSONFactoryUtil.createJSONObject(
+					PropsUtil.getProperties("feature.flag.", true)));
+
+			_json = json;
+		}
+
+		return json;
 	}
 
 	public static boolean isEnabled(long companyId, String key) {
-		FeatureFlagManager featureFlagManager =
-			_featureFlagManagerSnapshot.get();
-
-		if (featureFlagManager != null) {
-			return featureFlagManager.isEnabled(companyId, key);
+		if (_featureFlagManager != null) {
+			return _featureFlagManager.isEnabled(companyId, key);
 		}
 
 		if (_log.isInfoEnabled()) {
@@ -96,16 +99,15 @@ public class FeatureFlagManagerUtil {
 			servicePropertiesFunction);
 	}
 
-	private static final String _JSON = String.valueOf(
-		JSONFactoryUtil.createJSONObject(
-			PropsUtil.getProperties("feature.flag.", true)));
+	public void setFeatureFlagManager(FeatureFlagManager featureFlagManager) {
+		_featureFlagManager = featureFlagManager;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FeatureFlagManagerUtil.class);
 
-	private static final Snapshot<FeatureFlagManager>
-		_featureFlagManagerSnapshot = new Snapshot<>(
-			FeatureFlagManagerUtil.class, FeatureFlagManager.class);
+	private static FeatureFlagManager _featureFlagManager;
+	private static volatile String _json;
 
 	private static class FeatureFlaggedServiceRegistration<T>
 		implements ServiceRegistration<T> {

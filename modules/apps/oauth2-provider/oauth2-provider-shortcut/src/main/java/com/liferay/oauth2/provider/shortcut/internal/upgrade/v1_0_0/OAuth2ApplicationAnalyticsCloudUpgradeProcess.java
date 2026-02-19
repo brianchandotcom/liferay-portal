@@ -121,7 +121,7 @@ public class OAuth2ApplicationAnalyticsCloudUpgradeProcess
 
 			while (resultSet.next()) {
 				_oAuth2ApplicationLocalService.deleteOAuth2Application(
-					resultSet.getLong(1));
+					resultSet.getLong("oAuth2ApplicationId"));
 			}
 		}
 

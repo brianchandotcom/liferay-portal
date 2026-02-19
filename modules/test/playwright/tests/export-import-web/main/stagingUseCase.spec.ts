@@ -41,7 +41,6 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
 	assetPublisherPagesTest,
@@ -64,7 +63,6 @@ const testWithBatchStagingFF = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 		'LPD-41367': {enabled: true},
 	}),
 	loginTest(),

@@ -71,9 +71,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Alvaro Saugar
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-)
+@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 public class ImportStagedModelExceptionHandlerTest {
 

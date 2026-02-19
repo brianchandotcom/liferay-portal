@@ -46,7 +46,6 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-35013': {enabled: true},
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),

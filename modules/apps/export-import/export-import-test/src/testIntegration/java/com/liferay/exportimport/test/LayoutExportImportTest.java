@@ -152,17 +152,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedLayout2);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testDeleteMissingLayoutsSameGroupWithPromoteContentFeatureFlags()
 		throws Exception {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35443");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		Group originalImportedGroup = importedGroup;
 
@@ -207,8 +203,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		finally {
 			FeatureFlagTestUtil.invokeFeatureFlagListeners(
 				TestPropsValues.getCompanyId(), false, "LPD-35443");
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), false, "LPD-35914");
 
 			importedGroup = originalImportedGroup;
 		}
@@ -514,10 +508,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(enable = false, value = "LPD-35443"),
-			@FeatureFlag(enable = false, value = "LPD-35914")
-		}
+		featureFlags = {@FeatureFlag(enable = false, value = "LPD-35443")}
 	)
 	@Test
 	public void testExportImportLayoutsPriorities() throws Exception {
@@ -590,7 +581,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	@FeatureFlags(
 		featureFlags = {
 			@FeatureFlag(enable = false, value = "LPD-35443"),
-			@FeatureFlag(enable = false, value = "LPD-35914"),
 			@FeatureFlag(enable = false, value = "LPD-41367")
 		}
 	)
@@ -605,7 +595,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	@FeatureFlags(
 		featureFlags = {
 			@FeatureFlag(enable = true, value = "LPD-35443"),
-			@FeatureFlag(enable = true, value = "LPD-35914"),
 			@FeatureFlag(enable = true, value = "LPD-41367")
 		}
 	)
@@ -741,10 +730,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@FeatureFlag("LPS-199086")
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(enable = false, value = "LPD-35443"),
-			@FeatureFlag(enable = false, value = "LPD-35914")
-		}
+		featureFlags = {@FeatureFlag(enable = false, value = "LPD-35443")}
 	)
 	@Test
 	public void testLayoutExportImportWithChildLayoutReferencedWithButtonAndChildLayoutHasParentLayout()
@@ -810,10 +796,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@FeatureFlag("LPS-199086")
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(enable = false, value = "LPD-35443"),
-			@FeatureFlag(enable = false, value = "LPD-35914")
-		}
+		featureFlags = {@FeatureFlag(enable = false, value = "LPD-35443")}
 	)
 	@Test
 	@TestInfo("LPD-6808: AC9-AC10")
@@ -898,10 +881,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@FeatureFlag("LPS-199086")
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(enable = false, value = "LPD-35443"),
-			@FeatureFlag(enable = false, value = "LPD-35914")
-		}
+		featureFlags = {@FeatureFlag(enable = false, value = "LPD-35443")}
 	)
 	@Test
 	@TestInfo("LPD-6808: AC9-AC11")
@@ -948,17 +928,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		Assert.assertNotNull(importedChildLayout);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testLayoutExportImportWithPromoteContentFeatureFlagsEnabledParentsNotPublishedEvenWithConfigurationEnabled()
 		throws Exception {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35443");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		try {
 			_configurationProvider.saveCompanyConfiguration(
@@ -1005,8 +981,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		finally {
 			FeatureFlagTestUtil.invokeFeatureFlagListeners(
 				TestPropsValues.getCompanyId(), false, "LPD-35443");
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), false, "LPD-35914");
 		}
 	}
 
@@ -1148,8 +1122,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35443");
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		try {
 			Layout layout1 = LayoutTestUtil.addTypePortletLayout(group);
@@ -1205,8 +1177,6 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		finally {
 			FeatureFlagTestUtil.invokeFeatureFlagListeners(
 				TestPropsValues.getCompanyId(), false, "LPD-35443");
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), false, "LPD-35914");
 		}
 	}
 

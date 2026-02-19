@@ -433,6 +433,11 @@ public class ObjectEntryFolderResourceTest
 	}
 
 	@Override
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"folderId"};
+	}
+
+	@Override
 	protected ObjectEntryFolder randomObjectEntryFolder() throws Exception {
 		return new ObjectEntryFolder() {
 			{

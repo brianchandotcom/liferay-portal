@@ -48,12 +48,10 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 				String previousFriendlyURL = null;
 
 				while (resultSet.next()) {
-					long ctCollectionId = resultSet.getLong("ctCollectionId");
-
 					long categoryId = resultSet.getLong("categoryId");
-					String name = resultSet.getString("name");
 
-					currentFriendlyURL = _getFriendlyURL(categoryId, name);
+					currentFriendlyURL = _getFriendlyURL(
+						categoryId, resultSet.getString("name"));
 
 					String suffix = null;
 
@@ -71,7 +69,8 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setString(
 						1, currentFriendlyURL + suffix);
-					preparedStatement2.setLong(2, ctCollectionId);
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
 					preparedStatement2.setLong(3, categoryId);
 
 					preparedStatement2.addBatch();

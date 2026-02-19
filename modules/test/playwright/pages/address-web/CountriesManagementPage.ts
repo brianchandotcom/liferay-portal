@@ -24,7 +24,8 @@ export class CountriesManagementPage {
 	constructor(page: Page) {
 		this.activateButton = page
 			.getByRole('button', {name: 'Activate'})
-			.or(page.getByRole('link', {name: 'Activate'}));
+			.or(page.getByRole('link', {name: 'Activate'}))
+			.or(page.getByRole('menuitem', {name: 'Activate'}));
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.countriesTable = new DataTablePage(
 			page,
@@ -34,10 +35,12 @@ export class CountriesManagementPage {
 		);
 		this.deactivateButton = page
 			.getByRole('button', {name: 'Deactivate'})
-			.or(page.getByRole('link', {name: 'Deactivate'}));
+			.or(page.getByRole('link', {name: 'Deactivate'}))
+			.or(page.getByRole('menuitem', {name: 'Deactivate'}));
 		this.deleteButton = page
 			.getByRole('button', {name: 'Delete'})
-			.or(page.getByRole('link', {name: 'Delete'}));
+			.or(page.getByRole('link', {name: 'Delete'}))
+			.or(page.getByRole('menuitem', {name: 'Delete'}));
 		this.editButton = page.getByRole('menuitem', {name: 'Edit'});
 		this.noCountriesMessage = page.getByText('There are no countries.');
 		this.noRegionsMessage = page

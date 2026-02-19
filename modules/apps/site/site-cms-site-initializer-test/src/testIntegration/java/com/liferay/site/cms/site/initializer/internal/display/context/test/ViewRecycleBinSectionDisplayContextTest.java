@@ -108,8 +108,13 @@ public class ViewRecycleBinSectionDisplayContextTest
 
 		DepotEntry depotEntry1 = _addDepotEntry(
 			false, TestPropsValues.getUserId());
+
+			_assertTrashEnabled(depotEntry1, false);
+
 		DepotEntry depotEntry2 = _addDepotEntry(
 			true, TestPropsValues.getUserId());
+
+			_assertTrashEnabled(depotEntry2, true);
 
 		User user = UserTestUtil.addUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
@@ -117,9 +122,6 @@ public class ViewRecycleBinSectionDisplayContextTest
 
 		DepotEntry depotEntry3 = _addDepotEntry(true, user.getUserId());
 
-		try {
-			_assertTrashEnabled(depotEntry1, false);
-			_assertTrashEnabled(depotEntry2, true);
 			_assertTrashEnabled(depotEntry3, true);
 
 			filterString = getCMSSectionFilterString(displayContext);
@@ -140,13 +142,12 @@ public class ViewRecycleBinSectionDisplayContextTest
 				filterString.contains(
 					_getExpectedFilterString(
 						depotEntry3.getGroupId(), depotEntry2.getGroupId())));
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry1);
-			_depotEntryLocalService.deleteDepotEntry(depotEntry2);
-			_depotEntryLocalService.deleteDepotEntry(depotEntry3);
-			_userLocalService.deleteUser(user);
-		}
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
+		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
+		_depotEntryLocalService.deleteDepotEntry(depotEntry3);
+
+		_userLocalService.deleteUser(user);
 	}
 
 	@Test

@@ -191,7 +191,7 @@ public class ViewRecycleBinSectionDisplayContext
 			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
 				"'files') and status eq ";
 
-		List<Long> groupIds;
+		List<Long> groupIds = null;
 
 		try {
 			groupIds = _getDepotGroupIds(_themeDisplay.getCompanyId());
@@ -219,17 +219,16 @@ public class ViewRecycleBinSectionDisplayContext
 	private List<Long> _getDepotGroupIds(long companyId)
 		throws PortalException {
 
+		List<Long> depotEntryGroupIds = null;
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		boolean cmsAdministrator = RoleLocalServiceUtil.hasUserRole(
-			themeDisplay.getUserId(), themeDisplay.getCompanyId(),
-			RoleConstants.CMS_ADMINISTRATOR, true);
+		if (RoleLocalServiceUtil.hasUserRole(
+				themeDisplay.getUserId(), themeDisplay.getCompanyId(),
+				RoleConstants.CMS_ADMINISTRATOR, true)) {
 
-		List<Long> depotEntryGroupIds;
-
-		if (cmsAdministrator) {
 			depotEntryGroupIds = depotEntryLocalService.getDepotEntryGroupIds(
 				companyId, DepotConstants.TYPE_SPACE);
 		}

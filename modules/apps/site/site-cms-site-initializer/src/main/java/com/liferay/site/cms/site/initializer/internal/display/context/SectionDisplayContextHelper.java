@@ -93,11 +93,10 @@ public class SectionDisplayContextHelper {
 				WebKeys.THEME_DISPLAY);
 
 		try {
-			boolean cmsAdministrator = RoleLocalServiceUtil.hasUserRole(
-				themeDisplay.getUserId(), themeDisplay.getCompanyId(),
-				RoleConstants.CMS_ADMINISTRATOR, true);
+			if (RoleLocalServiceUtil.hasUserRole(
+					themeDisplay.getUserId(), themeDisplay.getCompanyId(),
+					RoleConstants.CMS_ADMINISTRATOR, true)) {
 
-			if (cmsAdministrator) {
 				return filterString;
 			}
 		}
@@ -107,15 +106,14 @@ public class SectionDisplayContextHelper {
 			}
 		}
 
-		String depotEntryGroupIdsString = StringUtil.merge(
-			_depotEntryLocalService.getDepotEntryGroupIds(
-				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				DepotConstants.TYPE_SPACE),
-			StringPool.COMMA);
-
 		return StringBundler.concat(
 			filterString, " and groupIds/any(g:g in (",
-			depotEntryGroupIdsString, "))");
+			StringUtil.merge(
+				_depotEntryLocalService.getDepotEntryGroupIds(
+					themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+					DepotConstants.TYPE_SPACE),
+				StringPool.COMMA),
+			"))");
 	}
 
 	public String appendStatus(String filterString) {

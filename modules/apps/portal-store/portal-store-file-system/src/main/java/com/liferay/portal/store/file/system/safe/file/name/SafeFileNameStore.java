@@ -188,6 +188,11 @@ public class SafeFileNameStore implements Store {
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		_store.verifyCompanyStores();
+	}
+
 	private final Store _store;
 
 }

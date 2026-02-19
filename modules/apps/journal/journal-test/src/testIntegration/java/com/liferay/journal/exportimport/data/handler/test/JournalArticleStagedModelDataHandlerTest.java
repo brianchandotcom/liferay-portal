@@ -953,7 +953,7 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
-	public void testJournalArticleFolderRename() throws Exception {
+	public void testRenameDLFolder() throws Exception {
 		initExport();
 
 		JournalArticle article = _getJournalArticle(stagingGroup.getGroupId());

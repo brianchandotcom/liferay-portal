@@ -15,7 +15,8 @@ import org.gradle.api.tasks.options.Option;
 public class UpgradeSourceCodeTask extends FormatSourceTask {
 
 	@Option(
-		description = "The Liferay version to upgrade to", option = "to-version"
+		description = "The version of Liferay to target when upgrading the source code.",
+		option = "to-version"
 	)
 	public void setToVersion(String toVersion) {
 		addSourceFormatterProperty("upgrade.to.release.version", toVersion);

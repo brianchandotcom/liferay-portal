@@ -42,7 +42,6 @@ const testWithExportImportAtInstanceLevelFF = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 		'LPD-45276': {enabled: true},
 	})
 );

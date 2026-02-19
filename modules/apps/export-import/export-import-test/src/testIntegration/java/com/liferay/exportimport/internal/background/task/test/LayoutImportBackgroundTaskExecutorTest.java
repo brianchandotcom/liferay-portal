@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -81,14 +80,9 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetStatusCompletedWithErrors() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext());
 
@@ -148,9 +142,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 			});
 
 		ServiceContextThreadLocal.popServiceContext();
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	private DLFileEntry _addDLFileEntry(String content, long groupId)

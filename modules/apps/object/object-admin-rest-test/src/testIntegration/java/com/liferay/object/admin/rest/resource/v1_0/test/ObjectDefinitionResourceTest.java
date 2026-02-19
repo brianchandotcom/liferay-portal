@@ -129,11 +129,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags(
-	featureFlags = {
-		@FeatureFlag(value = "LPD-34594"), @FeatureFlag(value = "LPD-35914")
-	}
-)
+@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-34594"))
 @RunWith(Arquillian.class)
 public class ObjectDefinitionResourceTest
 	extends BaseObjectDefinitionResourceTestCase {

@@ -16,7 +16,6 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.test.util.lar.BasePortletDataHandlerTestCase;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -54,9 +52,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,9 +61,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Zoltan Csaszi
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-)
+@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 public class RolesAdminPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
@@ -78,18 +72,6 @@ public class RolesAdminPortletDataHandlerTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
-	}
 
 	@Test
 	public void testExportImportRole() throws Exception {

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -199,15 +198,10 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 		_assertGetLayout(LayoutTestUtil.addTypePortletLayout(_group));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetLayoutSiteNavigationMenuItemFromExportImport()
 		throws Exception {
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.addSiteNavigationMenu(
@@ -327,9 +321,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 
 		Assert.assertEquals(
 			siteNavigationMenuItem.getName(), updatedLayoutName);
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	private void _assertGetLayout(Layout layout) throws Exception {

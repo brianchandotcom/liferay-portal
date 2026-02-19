@@ -16,12 +16,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -38,9 +36,7 @@ import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.io.File;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,9 +46,7 @@ import org.junit.runner.RunWith;
  * @author Jesus Antonio
  * @author Balazs Breier
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-)
+@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 public class OrganizationAdminPortletDataHandlerTest {
 
@@ -62,18 +56,6 @@ public class OrganizationAdminPortletDataHandlerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
-	}
 
 	@Test
 	public void testExportImportOrganization() throws Exception {

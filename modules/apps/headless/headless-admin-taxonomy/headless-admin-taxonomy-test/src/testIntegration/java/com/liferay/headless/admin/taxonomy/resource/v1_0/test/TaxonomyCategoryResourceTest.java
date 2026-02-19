@@ -459,9 +459,7 @@ public class TaxonomyCategoryResourceTest
 			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary2));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@LazyReferencing
 	@Override
 	@Test
@@ -475,10 +473,7 @@ public class TaxonomyCategoryResourceTest
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
-			@FeatureFlag("LPD-35914")
-		}
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
 	)
 	@LazyReferencing
 	@Override

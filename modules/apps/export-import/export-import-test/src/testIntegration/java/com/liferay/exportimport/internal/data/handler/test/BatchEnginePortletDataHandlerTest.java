@@ -105,7 +105,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -171,7 +170,6 @@ import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -192,7 +190,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Vendel Toreki
  * @author Petteri Karttunen
  */
-@FeatureFlag("LPD-35914")
 @RunWith(Arquillian.class)
 public class BatchEnginePortletDataHandlerTest {
 
@@ -205,19 +202,10 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			BatchEnginePortletDataHandlerTest.class);
 
 		_bundleContext = bundle.getBundleContext();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws PortalException {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test

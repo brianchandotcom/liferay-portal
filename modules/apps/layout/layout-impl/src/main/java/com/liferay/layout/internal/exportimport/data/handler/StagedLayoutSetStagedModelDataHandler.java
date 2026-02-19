@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportProcessCallbackRegistry;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -28,7 +27,6 @@ import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.layout.internal.exportimport.staged.model.repository.StagedLayoutSetStagedModelRepositoryUtil;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -49,7 +47,6 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutSetBranchLocalService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
@@ -230,13 +227,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		List<Element> layoutElements = layoutsElement.elements();
 
-		if (portletDataContext.isPrivateLayout()) {
-
-			// Delete missing pages
-
-			_deleteMissingLayouts(portletDataContext, layoutElements);
-		}
-
 		// Remove layouts that were deleted from the layout set prototype
 
 		Set<Layout> modifiedLayouts = new HashSet<>();
@@ -328,75 +318,6 @@ public class StagedLayoutSetStagedModelDataHandler
 
 			_layoutLocalService.deleteLayout(
 				layout, ServiceContextThreadLocal.getServiceContext());
-		}
-	}
-
-	private void _deleteMissingLayouts(
-		PortletDataContext portletDataContext, List<Element> layoutElements) {
-
-		boolean deleteMissingLayouts = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(),
-			PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS,
-			Boolean.TRUE.booleanValue());
-
-		if (!deleteMissingLayouts) {
-			return;
-		}
-
-		List<String> sourceLayoutUuids = TransformUtil.transform(
-			layoutElements,
-			layoutElement -> layoutElement.attributeValue("uuid"));
-
-		if (_log.isDebugEnabled() && !sourceLayoutUuids.isEmpty()) {
-			_log.debug("Delete missing layouts");
-		}
-
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		for (Layout layout :
-				_layoutLocalService.getLayouts(
-					portletDataContext.getGroupId(),
-					portletDataContext.isPrivateLayout())) {
-
-			if (!sourceLayoutUuids.contains(layout.getUuid()) &&
-				!layoutPlids.containsValue(layout.getPlid())) {
-
-				layout = _layoutLocalService.fetchLayout(layout.getPlid());
-
-				if (layout == null) {
-					continue;
-				}
-
-				String layoutUUID = layout.getUuid();
-				long stagingGroupID = portletDataContext.getSourceGroupId();
-
-				try {
-					Layout stagedLayout =
-						_layoutLocalService.fetchLayoutByUuidAndGroupId(
-							layoutUUID, stagingGroupID,
-							!layout.isPublicLayout());
-
-					if ((stagedLayout != null) &&
-						_exportImportHelper.isLayoutRevisionInReview(
-							stagedLayout)) {
-
-						continue;
-					}
-
-					_layoutLocalService.deleteLayout(layout, serviceContext);
-				}
-				catch (Exception exception) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to delete layout with UUID " + layoutUUID,
-							exception);
-					}
-				}
-			}
 		}
 	}
 
@@ -1125,9 +1046,6 @@ public class StagedLayoutSetStagedModelDataHandler
 	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
 		_dlReferencesExportImportContentProcessor;
-
-	@Reference
-	private ExportImportHelper _exportImportHelper;
 
 	@Reference
 	private ExportImportProcessCallbackRegistry

@@ -281,8 +281,8 @@ function normalizeSiteItems({
 	sites: Sites;
 }): GroupItem[] {
 	const children: SiteItem[] = [
-		...sites.recentSites,
-		...sites.mySites.filter(
+		...(sites.recentSites ?? []),
+		...(sites.mySites ?? []).filter(
 			({label}) => label === Liferay.Language.get('global')
 		),
 	];

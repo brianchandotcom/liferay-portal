@@ -173,6 +173,27 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		return null;
 	}
 
+	private PostalAddress[] _getPostalAddresses(
+		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
+			koroneikiAccount) {
+
+		List<PostalAddress> postalAddresses = new ArrayList<>();
+
+		for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
+				koroneikiPostalAddress :
+					koroneikiAccount.getPostalAddresses()) {
+
+			PostalAddress postalAddress = PostalAddress.toDTO(
+				koroneikiPostalAddress.toString());
+
+			postalAddress.setAddressType(() -> "billing-and-shipping");
+
+			postalAddresses.add(postalAddress);
+		}
+
+		return postalAddresses.toArray(new PostalAddress[0]);
+	}
+
 	private void _processKoroneikiAccountCreate(
 			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
 				koroneikiAccount)
@@ -188,6 +209,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					setDescription(koroneikiAccount::getDescription);
 					setExternalReferenceCode(koroneikiAccount::getKey);
 					setName(koroneikiAccount::getName);
+					setPostalAddresses(
+						() -> _getPostalAddresses(koroneikiAccount));
 				}
 			});
 
@@ -274,21 +297,14 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		PostalAddressResource postalAddressResource =
 			_marketplaceService.getPostalAddressResource();
 
-		for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
-				koroneikiPostalAddress :
-					koroneikiAccount.getPostalAddresses()) {
+		for (PostalAddress postalAddress :
+				_getPostalAddresses(koroneikiAccount)) {
 
-			PostalAddress postalAddress = _getPostalAddress(
-				account, koroneikiPostalAddress.getStreetAddressLine1());
+			if (_getPostalAddress(
+					account, postalAddress.getStreetAddressLine1()) != null) {
 
-			if (postalAddress != null) {
 				continue;
 			}
-
-			postalAddress = PostalAddress.toDTO(
-				koroneikiPostalAddress.toString());
-
-			postalAddress.setAddressType(() -> "billing-and-shipping");
 
 			postalAddressResource.postAccountPostalAddress(
 				account.getId(), postalAddress);

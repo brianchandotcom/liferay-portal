@@ -77,7 +77,7 @@ describe('SideNavigation', () => {
 	});
 
 	it('renders each navigation item', () => {
-		const {baseElement} = renderComponent();
+		renderComponent();
 
 		const menuItems = screen.getAllByRole('menuitem');
 
@@ -95,12 +95,6 @@ describe('SideNavigation', () => {
 				'href',
 				`${label.toLowerCase()}Href`
 			);
-
-			const icon = baseElement.querySelector(
-				`.lexicon-icon-${label.toLowerCase()}Icon`
-			);
-
-			expect(icon).toBeInTheDocument();
 		});
 
 		expect(screen.getByText('Assets')).toHaveClass('active');

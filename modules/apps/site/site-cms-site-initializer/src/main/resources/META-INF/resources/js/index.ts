@@ -98,6 +98,7 @@ export {default as NewSpace} from './main_view/spaces/NewSpace';
 export {default as SpaceSettings} from './main_view/spaces/SpaceSettings';
 export {default as SpaceSummaryHeader} from './main_view/spaces/SpaceSummaryHeader';
 export {default as SpacesNavigation} from './main_view/spaces_navigation/SpacesNavigation';
+export {default as VersionHistoryToolbar} from './main_view/version_history/VersionHistoryToolbar';
 
 // Structure Builder
 

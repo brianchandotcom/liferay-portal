@@ -311,9 +311,11 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		for (PostalAddress postalAddress :
 				_getPostalAddresses(koroneikiAccount)) {
 
-			if (_getPostalAddress(
-					account, postalAddress.getStreetAddressLine1()) != null) {
+			PostalAddress postalAddressExists = _getPostalAddress(
+					account, postalAddress.getStreetAddressLine1()
+			);
 
+			if (postalAddressExists != null) {
 				continue;
 			}
 

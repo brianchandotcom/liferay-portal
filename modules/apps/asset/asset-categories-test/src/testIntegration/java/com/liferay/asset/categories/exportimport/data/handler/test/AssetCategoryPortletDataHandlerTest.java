@@ -74,9 +74,7 @@ public class AssetCategoryPortletDataHandlerTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAssetCategoryExportImportReportEntriesDuplicateExternalReferenceCode()
 		throws Exception {
@@ -119,9 +117,7 @@ public class AssetCategoryPortletDataHandlerTest
 						ExportImportReportEntryConstants.TYPE_ERROR)));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAssetVocabularyExportImportReportEntriesDuplicateTitle()
 		throws Exception {
@@ -162,9 +158,7 @@ public class AssetCategoryPortletDataHandlerTest
 						ExportImportReportEntryConstants.TYPE_ERROR)));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testExportImportAssetCategory() throws Exception {
 		AssetVocabulary assetVocabulary = _addAssetVocabulary();
@@ -190,9 +184,7 @@ public class AssetCategoryPortletDataHandlerTest
 					stagingGroup.getGroupId()));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testExportImportAssetVocabulary() throws Exception {
 		AssetVocabulary assetVocabulary = _addAssetVocabulary();

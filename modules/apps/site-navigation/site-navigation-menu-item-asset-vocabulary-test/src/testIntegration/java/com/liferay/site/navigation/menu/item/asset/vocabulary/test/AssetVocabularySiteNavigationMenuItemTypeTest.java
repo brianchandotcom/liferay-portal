@@ -49,8 +49,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -174,7 +172,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Assert.assertEquals(assetVocabulary1, assetVocabulary2);
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetAssetVocabularySiteNavigationMenuItemFromExportImport()
 		throws Exception {

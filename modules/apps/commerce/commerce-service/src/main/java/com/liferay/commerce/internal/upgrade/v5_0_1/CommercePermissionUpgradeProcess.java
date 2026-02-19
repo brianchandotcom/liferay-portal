@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.internal.upgrade.v5_0_1;
 
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -224,6 +225,24 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				_addResourcePermission(
 					ActionKeys.VIEW, resourcePermission.getCompanyId(),
 					CPMeasurementUnit.class.getName(),
+					resourcePermission.getRoleId());
+			}
+			else if (Objects.equals(actionId, "VIEW_INVENTORIES")) {
+				_addResourcePermission(
+					ActionKeys.DELETE, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.PERMISSIONS, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.UPDATE, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.VIEW, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
 					resourcePermission.getRoleId());
 			}
 		}

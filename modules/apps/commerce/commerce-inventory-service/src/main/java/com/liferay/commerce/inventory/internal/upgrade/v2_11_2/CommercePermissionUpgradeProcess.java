@@ -49,28 +49,44 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				(resourcePermission.getScope() !=
 					ResourceConstants.SCOPE_INDIVIDUAL)) {
 
-				for (String actionId :
-						new String[] {
-							ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-							ActionKeys.UPDATE, ActionKeys.VIEW
-						}) {
-
-					if (!_resourcePermissionLocalService.hasResourcePermission(
-							resourcePermission.getCompanyId(),
-							CommerceInventoryWarehouse.class.getName(),
-							ResourceConstants.SCOPE_COMPANY,
-							String.valueOf(resourcePermission.getCompanyId()),
-							resourcePermission.getRoleId(), actionId)) {
-
-						_resourcePermissionLocalService.addResourcePermission(
-							resourcePermission.getCompanyId(),
-							CommerceInventoryWarehouse.class.getName(),
-							ResourceConstants.SCOPE_COMPANY,
-							String.valueOf(resourcePermission.getCompanyId()),
-							resourcePermission.getRoleId(), actionId);
-					}
-				}
+				_addResourcePermission(
+					ActionKeys.DELETE, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					String.valueOf(resourcePermission.getCompanyId()),
+					resourcePermission.getRoleId(),
+					ResourceConstants.SCOPE_COMPANY);
+				_addResourcePermission(
+					ActionKeys.PERMISSIONS, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					String.valueOf(resourcePermission.getCompanyId()),
+					resourcePermission.getRoleId(),
+					ResourceConstants.SCOPE_COMPANY);
+				_addResourcePermission(
+					ActionKeys.UPDATE, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					String.valueOf(resourcePermission.getCompanyId()),
+					resourcePermission.getRoleId(),
+					ResourceConstants.SCOPE_COMPANY);
+				_addResourcePermission(
+					ActionKeys.VIEW, resourcePermission.getCompanyId(),
+					CommerceInventoryWarehouse.class.getName(),
+					String.valueOf(resourcePermission.getCompanyId()),
+					resourcePermission.getRoleId(),
+					ResourceConstants.SCOPE_COMPANY);
 			}
+		}
+	}
+
+	private void _addResourcePermission(
+			String actionId, long companyId, String name, String primKey,
+			long roleId, int scope)
+		throws Exception {
+
+		if (!_resourcePermissionLocalService.hasResourcePermission(
+				companyId, name, scope, primKey, roleId, actionId)) {
+
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, name, scope, primKey, roleId, actionId);
 		}
 	}
 

@@ -123,8 +123,8 @@ public class LayoutCacheModel
 		sb.append(system);
 		sb.append(", friendlyURL=");
 		sb.append(friendlyURL);
-		sb.append(", iconImageId=");
-		sb.append(iconImageId);
+		sb.append(", iconImageERC=");
+		sb.append(iconImageERC);
 		sb.append(", themeId=");
 		sb.append(themeId);
 		sb.append(", colorSchemeId=");
@@ -279,7 +279,12 @@ public class LayoutCacheModel
 			layoutImpl.setFriendlyURL(friendlyURL);
 		}
 
-		layoutImpl.setIconImageId(iconImageId);
+		if (iconImageERC == null) {
+			layoutImpl.setIconImageERC("");
+		}
+		else {
+			layoutImpl.setIconImageERC(iconImageERC);
+		}
 
 		if (themeId == null) {
 			layoutImpl.setThemeId("");
@@ -440,8 +445,7 @@ public class LayoutCacheModel
 
 		system = objectInput.readBoolean();
 		friendlyURL = objectInput.readUTF();
-
-		iconImageId = objectInput.readLong();
+		iconImageERC = objectInput.readUTF();
 		themeId = objectInput.readUTF();
 		colorSchemeId = objectInput.readUTF();
 		styleBookEntryERC = objectInput.readUTF();
@@ -576,7 +580,12 @@ public class LayoutCacheModel
 			objectOutput.writeUTF(friendlyURL);
 		}
 
-		objectOutput.writeLong(iconImageId);
+		if (iconImageERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(iconImageERC);
+		}
 
 		if (themeId == null) {
 			objectOutput.writeUTF("");
@@ -696,7 +705,7 @@ public class LayoutCacheModel
 	public boolean hidden;
 	public boolean system;
 	public String friendlyURL;
-	public long iconImageId;
+	public String iconImageERC;
 	public String themeId;
 	public String colorSchemeId;
 	public String styleBookEntryERC;

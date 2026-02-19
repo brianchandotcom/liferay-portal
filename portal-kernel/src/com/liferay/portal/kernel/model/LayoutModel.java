@@ -940,18 +940,19 @@ public interface LayoutModel
 	public void setFriendlyURL(String friendlyURL);
 
 	/**
-	 * Returns the icon image ID of this layout.
+	 * Returns the icon image erc of this layout.
 	 *
-	 * @return the icon image ID of this layout
+	 * @return the icon image erc of this layout
 	 */
-	public long getIconImageId();
+	@AutoEscape
+	public String getIconImageERC();
 
 	/**
-	 * Sets the icon image ID of this layout.
+	 * Sets the icon image erc of this layout.
 	 *
-	 * @param iconImageId the icon image ID of this layout
+	 * @param iconImageERC the icon image erc of this layout
 	 */
-	public void setIconImageId(long iconImageId);
+	public void setIconImageERC(String iconImageERC);
 
 	/**
 	 * Returns the theme ID of this layout.

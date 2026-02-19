@@ -217,7 +217,7 @@ testWithBatchStagingFF(
 testWithBatchStagingFF(
 	'Taxonomy Categories do not display select options with batch',
 	{tag: ['@LPD-78848']},
-	async ({apiHelpers, page, stagingPage}) => {
+	async ({apiHelpers, page, stagingPage, uiElementsPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
@@ -259,7 +259,10 @@ testWithBatchStagingFF(
 
 		await uiElementsPage.newButton.click();
 
-		await page.waitForTimeout(2000);
+		await stagingPage.page
+			.getByTestId('headerTitle')
+			.filter({hasText: 'New Publish Process'})
+			.waitFor();
 
 		await expect(page.getByRole('button', {name: 'Select'})).toHaveCount(0);
 	}

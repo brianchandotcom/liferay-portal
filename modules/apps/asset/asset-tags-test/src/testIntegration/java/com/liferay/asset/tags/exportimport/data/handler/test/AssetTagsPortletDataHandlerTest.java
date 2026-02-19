@@ -79,9 +79,7 @@ public class AssetTagsPortletDataHandlerTest
 		super.setUp();
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAssetTagExportImportReportEntries() throws Exception {
 		AssetTag assetTag = _addTag();
@@ -119,9 +117,7 @@ public class AssetTagsPortletDataHandlerTest
 						ExportImportReportEntryConstants.TYPE_ERROR)));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testExportImportAssetTag() throws Exception {
 		AssetTag assetTag = _addTag();

@@ -63,7 +63,6 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.scope.Scope;
 
@@ -459,7 +458,6 @@ public class TaxonomyCategoryResourceTest
 			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary2));
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@LazyReferencing
 	@Override
 	@Test
@@ -472,9 +470,7 @@ public class TaxonomyCategoryResourceTest
 		_testPostAssetLibraryTaxonomyCategoryBatch("UPSERT");
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
-	)
+	@FeatureFlag("LPD-17564")
 	@LazyReferencing
 	@Override
 	@Test

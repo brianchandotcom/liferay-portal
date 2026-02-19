@@ -17,8 +17,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.staging.StagingGroupHelper;
@@ -34,7 +32,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Petteri Karttunen
  */
-@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 public class ImportProcessResourceTest
 	extends BaseImportProcessResourceTestCase {

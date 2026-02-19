@@ -48,8 +48,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.staging.StagingGroupHelper;
@@ -80,7 +78,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetStatusCompletedWithErrors() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(

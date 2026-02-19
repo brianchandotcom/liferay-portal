@@ -44,8 +44,6 @@ import com.liferay.portal.search.query.Queries;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -71,7 +69,6 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Alvaro Saugar
  */
-@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 public class ImportStagedModelExceptionHandlerTest {
 

@@ -38,8 +38,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -198,7 +196,6 @@ public class LayoutSiteNavigationMenuItemTypeTest {
 		_assertGetLayout(LayoutTestUtil.addTypePortletLayout(_group));
 	}
 
-	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetLayoutSiteNavigationMenuItemFromExportImport()
 		throws Exception {

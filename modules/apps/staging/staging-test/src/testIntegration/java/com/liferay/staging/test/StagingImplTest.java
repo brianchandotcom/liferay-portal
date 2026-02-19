@@ -85,8 +85,6 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -121,7 +119,6 @@ import org.junit.runner.RunWith;
  * @author Julio Camarero
  * @author Daniel Kocsis
  */
-@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 @RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class StagingImplTest {

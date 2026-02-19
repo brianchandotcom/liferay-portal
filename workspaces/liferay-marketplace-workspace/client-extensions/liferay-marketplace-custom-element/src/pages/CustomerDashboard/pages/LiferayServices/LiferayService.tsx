@@ -9,6 +9,7 @@ import {useParams} from 'react-router-dom';
 
 import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
+import {PageRenderer} from '../../../../components/Page';
 import QATable from '../../../../components/QATable';
 import {
 	OrderCustomFields,
@@ -17,7 +18,6 @@ import {
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import LiferayServicesAlerts from './LiferayServicesAlerts';
-import {PageRenderer} from '../../../../components/Page';
 
 const LiferayService = () => {
 	const {orderId} = useParams();

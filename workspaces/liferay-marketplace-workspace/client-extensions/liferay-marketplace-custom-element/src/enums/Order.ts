@@ -46,6 +46,7 @@ export enum OrderWorkflowStatusCode {
 	ON_HOLD = 20,
 	PENDING = 1,
 	PROCESSING = 10,
+	PENDING_PAYMENT = 99,
 }
 
 export enum PaymentStatus {
@@ -79,9 +80,10 @@ export const orderWorkflowDisplayType = {
 } as const;
 
 export const orderWorkflowStatusCodeLabels = {
-	[OrderWorkflowStatusCode.CANCELLED]: 'Canceled',
+	[OrderWorkflowStatusCode.CANCELLED]: 'Cancelled',
 	[OrderWorkflowStatusCode.COMPLETED]: 'Completed',
 	[OrderWorkflowStatusCode.IN_PROGRESS]: 'In Progress',
+	[OrderWorkflowStatusCode.PENDING_PAYMENT]: 'Pending Payment',
 	[OrderWorkflowStatusCode.ON_HOLD]: 'On Hold',
 	[OrderWorkflowStatusCode.PENDING]: 'Pending',
 	[OrderWorkflowStatusCode.PROCESSING]: 'Processing',
@@ -92,3 +94,26 @@ export const paymentWorkflowDisplayType = {
 	[PaymentStatus.PENDING]: 'secondary',
 	[PaymentStatus.PAYMENT_PENDING]: 'warning',
 } as const;
+
+export function getOrderStatusLabel(order: PlacedOrder) {
+	if (order.orderTypeExternalReferenceCode === OrderTypes.ADDONS) {
+		if (order.paymentStatus !== PaymentStatus.PAID) {
+			return orderWorkflowStatusCodeLabels[
+				OrderWorkflowStatusCode.PENDING_PAYMENT
+			];
+		}
+
+		return (
+			{
+				[OrderWorkflowStatusCode.CANCELLED]: 'Cancelled',
+				[OrderWorkflowStatusCode.COMPLETED]: 'Environment Ready',
+				[OrderWorkflowStatusCode.IN_PROGRESS]: 'In Progress',
+				[OrderWorkflowStatusCode.ON_HOLD]: 'On Hold',
+				[OrderWorkflowStatusCode.PENDING]: 'Pending',
+				[OrderWorkflowStatusCode.PROCESSING]: 'Processing',
+			}[order.orderStatusInfo.code] || order.orderStatusInfo.label
+		);
+	}
+
+	return order.orderStatusInfo.label;
+}

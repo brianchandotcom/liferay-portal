@@ -956,7 +956,46 @@ public class JournalArticleStagedModelDataHandlerTest
 	public void testRenameDLFolder() throws Exception {
 		initExport();
 
-		JournalArticle article = _getJournalArticle(stagingGroup.getGroupId());
+		JournalArticle article = null;
+
+		DDMFormDeserializerDeserializeRequest.Builder builder =
+			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
+				new String(
+					FileUtil.getBytes(
+						getClass(), "dependencies/test-ddm-form.json")));
+
+		DDMFormDeserializerDeserializeResponse
+			ddmFormDeserializerDeserializeResponse =
+				_ddmFormDeserializer.deserialize(builder.build());
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			stagingGroup.getGroupId(), JournalArticle.class.getName(),
+			ddmFormDeserializerDeserializeResponse.getDDMForm());
+
+		Class<?> clazz = getClass();
+
+		try (InputStream inputStream = clazz.getResourceAsStream(
+				"/com/liferay/journal/dependencies/liferay.png")) {
+
+			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
+				String.valueOf(UUID.randomUUID()), stagingGroup.getGroupId(),
+				TestPropsValues.getUserId(), JournalArticle.class.getName(),
+				"image.png", inputStream, ContentTypes.IMAGE_PNG);
+
+			String content = StringUtil.replace(
+				new String(
+					FileUtil.getBytes(
+						getClass(),
+						"dependencies/test-journal-content-with-image.xml")),
+				new String[] {"$UUID", "$GROUP_ID"},
+				new String[] {
+					tempFileEntry.getUuid(), String.valueOf(stagingGroup.getGroupId())
+				});
+
+			article = JournalTestUtil.addArticleWithXMLContent(
+				stagingGroup.getGroupId(), content,
+				ddmStructure.getStructureKey(), null);
+		}
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, article);
@@ -1573,46 +1612,6 @@ public class JournalArticleStagedModelDataHandlerTest
 			article.isSmallImage(), importedArticle.isSmallImage());
 		Assert.assertEquals(
 			article.getSmallImageURL(), importedArticle.getSmallImageURL());
-	}
-
-	private JournalArticle _getJournalArticle(long groupId) throws Exception {
-		DDMFormDeserializerDeserializeRequest.Builder builder =
-			DDMFormDeserializerDeserializeRequest.Builder.newBuilder(
-				new String(
-					FileUtil.getBytes(
-						getClass(), "dependencies/test-ddm-form.json")));
-
-		DDMFormDeserializerDeserializeResponse
-			ddmFormDeserializerDeserializeResponse =
-				_ddmFormDeserializer.deserialize(builder.build());
-
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
-			groupId, JournalArticle.class.getName(),
-			ddmFormDeserializerDeserializeResponse.getDDMForm());
-
-		Class<?> clazz = getClass();
-
-		try (InputStream inputStream = clazz.getResourceAsStream(
-				"/com/liferay/journal/dependencies/liferay.png")) {
-
-			FileEntry tempFileEntry = TempFileEntryUtil.addTempFileEntry(
-				String.valueOf(UUID.randomUUID()), groupId,
-				TestPropsValues.getUserId(), JournalArticle.class.getName(),
-				"image.png", inputStream, ContentTypes.IMAGE_PNG);
-
-			String content = StringUtil.replace(
-				new String(
-					FileUtil.getBytes(
-						getClass(),
-						"dependencies/test-journal-content-with-image.xml")),
-				new String[] {"$UUID", "$GROUP_ID"},
-				new String[] {
-					tempFileEntry.getUuid(), String.valueOf(groupId)
-				});
-
-			return JournalTestUtil.addArticleWithXMLContent(
-				groupId, content, ddmStructure.getStructureKey(), null);
-		}
 	}
 
 	private void _validateDDMStructureId(

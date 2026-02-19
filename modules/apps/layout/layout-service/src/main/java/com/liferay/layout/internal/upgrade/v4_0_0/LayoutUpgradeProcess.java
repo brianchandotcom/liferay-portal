@@ -26,11 +26,10 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					"select LayoutPageTemplateEntry.externalReferenceCode, ",
 					"Layout.ctCollectionId, Layout.plid from Layout inner ",
 					"join LayoutPageTemplateEntry on Layout.masterLayoutPlid ",
-					"= LayoutPageTemplateEntry.plid and ",
-					"(LayoutPageTemplateEntry.ctCollectionId = ",
-					"Layout.ctCollectionId or ",
-					"LayoutPageTemplateEntry.ctCollectionId = 0) where ",
-					"Layout.masterLayoutPlid > 0"));
+					"= LayoutPageTemplateEntry.plid and (",
+					"LayoutPageTemplateEntry.ctCollectionId = Layout.",
+					"ctCollectionId or LayoutPageTemplateEntry.ctCollectionId ",
+					"= 0) where Layout.masterLayoutPlid > 0"));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -39,9 +38,11 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 						"ctCollectionId = ? and plid = ? ")) {
 
 			while (resultSet.next()) {
-				preparedStatement2.setString(1, resultSet.getString(1));
-				preparedStatement2.setLong(2, resultSet.getLong(2));
-				preparedStatement2.setLong(3, resultSet.getLong(3));
+				preparedStatement2.setString(
+					1, resultSet.getString("externalReferenceCode"));
+				preparedStatement2.setLong(
+					2, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(3, resultSet.getLong("plid"));
 
 				preparedStatement2.addBatch();
 			}

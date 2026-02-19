@@ -23,25 +23,24 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select Group_.externalReferenceCode, ",
-					"Layout.ctCollectionId, Layout.plid, Layout.groupId, ",
-					"LayoutPageTemplateEntry.externalReferenceCode, ",
-					"LayoutPageTemplateEntry.groupId from Layout inner join ",
-					"LayoutPrototype on (Layout.ctCollectionId = ",
-					"LayoutPrototype.ctCollectionId or ",
-					"LayoutPrototype.ctCollectionId = 0) and ",
-					"Layout.layoutPrototypeUuid = LayoutPrototype.uuid_ inner ",
-					"join LayoutPageTemplateEntry on ",
-					"(LayoutPageTemplateEntry.ctCollectionId = ",
-					"LayoutPrototype.ctCollectionId or ",
+					"select Group_.externalReferenceCode as ",
+					"externalReferenceCode1, Layout.ctCollectionId, Layout.",
+					"plid, Layout.groupId as groupId1, ",
+					"LayoutPageTemplateEntry.externalReferenceCode as ",
+					"externalReferenceCode2, LayoutPageTemplateEntry.groupId ",
+					"as groupId2 from Layout inner join LayoutPrototype on (",
+					"Layout.ctCollectionId = LayoutPrototype.ctCollectionId ",
+					"or LayoutPrototype.ctCollectionId = 0) and Layout.",
+					"layoutPrototypeUuid = LayoutPrototype.uuid_ inner join ",
+					"LayoutPageTemplateEntry on (LayoutPageTemplateEntry.",
+					"ctCollectionId = LayoutPrototype.ctCollectionId or ",
 					"LayoutPageTemplateEntry.ctCollectionId = 0) and ",
 					"LayoutPageTemplateEntry.layoutPrototypeId = ",
 					"LayoutPrototype.layoutPrototypeId inner join Group_ on ",
-					"(Group_.ctCollectionId = ",
-					"LayoutPageTemplateEntry.ctCollectionId or ",
-					"Group_.ctCollectionId = 0) and Group_.groupId = ",
-					"LayoutPageTemplateEntry.groupId where ",
-					"Layout.layoutPrototypeUuid is not null"));
+					"(Group_.ctCollectionId = LayoutPageTemplateEntry.",
+					"ctCollectionId or Group_.ctCollectionId = 0) and Group_.",
+					"groupId = LayoutPageTemplateEntry.groupId where Layout.",
+					"layoutPrototypeUuid is not null"));
 			ResultSet resultSet = preparedStatement1.executeQuery();
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
@@ -50,18 +49,22 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 						"? where ctCollectionId = ? and plid = ?")) {
 
 			while (resultSet.next()) {
-				String portletLPTESERC = resultSet.getString(1);
-				long layoutGroupId = resultSet.getLong(4);
-				long layoutPageTemplateEntryGroupId = resultSet.getLong(6);
+				String portletLPTESERC = resultSet.getString(
+					"externalReferenceCode1");
+				long layoutGroupId = resultSet.getLong("groupId1");
+				long layoutPageTemplateEntryGroupId = resultSet.getLong(
+					"groupId2");
 
 				if (layoutGroupId == layoutPageTemplateEntryGroupId) {
 					portletLPTESERC = null;
 				}
 
-				preparedStatement2.setString(1, resultSet.getString(5));
+				preparedStatement2.setString(
+					1, resultSet.getString("externalReferenceCode2"));
 				preparedStatement2.setString(2, portletLPTESERC);
-				preparedStatement2.setLong(3, resultSet.getLong(2));
-				preparedStatement2.setLong(4, resultSet.getLong(3));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(4, resultSet.getLong("plid"));
 
 				preparedStatement2.addBatch();
 			}

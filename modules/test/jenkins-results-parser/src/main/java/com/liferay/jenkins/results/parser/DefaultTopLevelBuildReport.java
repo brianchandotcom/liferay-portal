@@ -130,17 +130,7 @@ public class DefaultTopLevelBuildReport extends BaseTopLevelBuildReport {
 	}
 
 	private String _getBatchName(Build build) {
-		if (build instanceof AxisBuild) {
-			AxisBuild axisBuild = (AxisBuild)build;
-
-			return axisBuild.getBatchName();
-		}
-		else if (build instanceof BatchBuild) {
-			BatchBuild batchBuild = (BatchBuild)build;
-
-			return batchBuild.getBatchName();
-		}
-		else if (build instanceof DownstreamBuild) {
+		if (build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
 			return downstreamBuild.getBatchName();

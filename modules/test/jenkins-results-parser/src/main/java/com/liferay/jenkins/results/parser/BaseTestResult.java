@@ -171,12 +171,7 @@ public abstract class BaseTestResult implements TestResult {
 	protected String getAxisNumber() {
 		Build build = getBuild();
 
-		if (build instanceof AxisBuild) {
-			AxisBuild axisBuild = (AxisBuild)build;
-
-			return axisBuild.getAxisNumber();
-		}
-		else if (build instanceof DownstreamBuild) {
+		if (build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
 			return downstreamBuild.getAxisVariable();

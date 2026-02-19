@@ -17,12 +17,7 @@ public class TestResultFactory {
 
 		String batchName = "";
 
-		if (build instanceof AxisBuild) {
-			AxisBuild axisBuild = (AxisBuild)build;
-
-			batchName = axisBuild.getBatchName();
-		}
-		else if (build instanceof DownstreamBuild) {
+		if (build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
 			batchName = downstreamBuild.getBatchName();

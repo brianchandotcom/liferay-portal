@@ -191,7 +191,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	private boolean _isApplyReinvokeRules() {
 		Build build = getBuild();
 
-		if (build instanceof AxisBuild || build instanceof ParentBuild) {
+		if (build instanceof ParentBuild) {
 			return false;
 		}
 
@@ -258,9 +258,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	private void _reinvoke(ReinvokeRule reinvokeRule) {
 		Build build = getBuild();
 
-		if (build instanceof AxisBuild || build instanceof ParentBuild ||
-			_hasMaximumInvocationCount()) {
-
+		if ((build instanceof ParentBuild) || _hasMaximumInvocationCount()) {
 			return;
 		}
 
@@ -368,7 +366,7 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	private void _setCurrentReinvokeRule() {
 		Build build = getBuild();
 
-		if (build instanceof AxisBuild || build instanceof ParentBuild) {
+		if (build instanceof ParentBuild) {
 			return;
 		}
 

@@ -5,7 +5,6 @@
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.AxisBuild;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.BuildDatabase;
 import com.liferay.jenkins.results.parser.BuildDatabaseUtil;
@@ -148,13 +147,7 @@ public class TestrayAttachmentRecorder {
 
 			sb.append(_build.getJobVariant());
 
-			if (_build instanceof AxisBuild) {
-				AxisBuild axisBuild = (AxisBuild)_build;
-
-				sb.append("/");
-				sb.append(axisBuild.getAxisNumber());
-			}
-			else if (_build instanceof DownstreamBuild) {
+			if (_build instanceof DownstreamBuild) {
 				DownstreamBuild downstreamBuild = (DownstreamBuild)_build;
 
 				sb.append("/");
@@ -440,12 +433,7 @@ public class TestrayAttachmentRecorder {
 	private void _recordFailureMessages() {
 		String batchName = null;
 
-		if (_build instanceof AxisBuild) {
-			AxisBuild axisBuild = (AxisBuild)_build;
-
-			batchName = axisBuild.getBatchName();
-		}
-		else if (_build instanceof DownstreamBuild) {
+		if (_build instanceof DownstreamBuild) {
 			DownstreamBuild downstreamBuild = (DownstreamBuild)_build;
 
 			batchName = downstreamBuild.getBatchName();

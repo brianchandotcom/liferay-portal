@@ -191,71 +191,66 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				}
 			});
 
-		try {
-			Long accountId = account.getId();
+		Long accountId = account.getId();
 
-			PostalAddressResource postalAddressResource =
-				_marketplaceService.getPostalAddressResource();
+		PostalAddressResource postalAddressResource =
+			_marketplaceService.getPostalAddressResource();
 
-			for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.
-					PostalAddress koroneikiPostalAddress :
-						koroneikiAccount.getPostalAddresses()) {
+		for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
+				koroneikiPostalAddress :
+					koroneikiAccount.getPostalAddresses()) {
 
-				if (koroneikiPostalAddress == null) {
-					continue;
-				}
-
-				PostalAddress postalAddress = PostalAddress.toDTO(
-					koroneikiPostalAddress.toString());
-
-				postalAddress.setAddressType(() -> "billing-and-shipping");
-
-				postalAddressResource.postAccountPostalAddress(
-					account.getId(), postalAddress);
+			if (koroneikiPostalAddress == null) {
+				continue;
 			}
 
-			com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
-				<Contact> contactPage = _koroneikiService.getContactPage(
-					koroneikiAccount.getKey(),
-					com.liferay.osb.koroneiki.phloem.rest.client.pagination.
-						Pagination.of(1, -1));
+			PostalAddress postalAddress = PostalAddress.toDTO(
+				koroneikiPostalAddress.toString());
 
-			for (Contact contact : contactPage.getItems()) {
-				if (contact == null) {
-					break;
-				}
+			postalAddress.setAddressType(() -> "billing-and-shipping");
 
-				String emailAddress = contact.getEmailAddress();
+			postalAddressResource.postAccountPostalAddress(
+				account.getId(), postalAddress);
+		}
 
-				try {
-					_marketplaceService.getUserAccount(emailAddress);
+		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Contact>
+			contactPage = _koroneikiService.getContactPage(
+				koroneikiAccount.getKey(),
+				com.liferay.osb.koroneiki.phloem.rest.client.pagination.
+					Pagination.of(1, -1));
 
-					_marketplaceService.postAccountUserAccountByEmailAddress(
-						accountId, emailAddress);
+		for (Contact contact : contactPage.getItems()) {
+			if (contact == null) {
+				break;
+			}
 
-					continue;
-				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
-				}
+			String emailAddress = contact.getEmailAddress();
 
-				_marketplaceService.postUserAccount(
-					new UserAccount() {
-						{
-							setEmailAddress(contact::getEmailAddress);
-							setFamilyName(contact::getLastName);
-							setGivenName(contact::getFirstName);
-						}
-					});
+			try {
+				_marketplaceService.getUserAccount(emailAddress);
 
 				_marketplaceService.postAccountUserAccountByEmailAddress(
 					accountId, emailAddress);
+
+				continue;
 			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+			}
+
+			_marketplaceService.postUserAccount(
+				new UserAccount() {
+					{
+						setEmailAddress(contact::getEmailAddress);
+						setFamilyName(contact::getLastName);
+						setGivenName(contact::getFirstName);
+					}
+				});
+
+			_marketplaceService.postAccountUserAccountByEmailAddress(
+				accountId, emailAddress);
 		}
 	}
 

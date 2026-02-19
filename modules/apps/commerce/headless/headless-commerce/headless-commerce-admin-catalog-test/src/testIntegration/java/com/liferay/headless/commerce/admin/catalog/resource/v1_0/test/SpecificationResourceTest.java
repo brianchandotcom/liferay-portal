@@ -6,11 +6,17 @@
 package com.liferay.headless.commerce.admin.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.product.model.CPOptionCategory;
+import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.OptionCategory;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Specification;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +27,15 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class SpecificationResourceTest
 	extends BaseSpecificationResourceTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_cpOptionCategory = CPTestUtil.addCPOptionCategory(
+			testGroup.getGroupId());
+	}
 
 	@Ignore
 	@Override
@@ -55,6 +70,14 @@ public class SpecificationResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostSpecification() throws Exception {
+		super.testPostSpecification();
+
+		_testPostSpecificationWithRandomOptionCategory();
+	}
+
+	@Override
 	protected String[] getIgnoredEntityFieldNames() {
 		return new String[] {"title"};
 	}
@@ -67,6 +90,27 @@ public class SpecificationResourceTest
 				facetable = true;
 				id = RandomTestUtil.randomLong();
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				title = LanguageUtils.getLanguageIdMap(
+					RandomTestUtil.randomLocaleStringMap());
+			}
+		};
+	}
+
+	protected Specification randomSpecificationWithRandomOptionCategory()
+		throws Exception {
+
+		return new Specification() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				facetable = true;
+				id = RandomTestUtil.randomLong();
+				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				optionCategory = new OptionCategory() {
+					{
+						externalReferenceCode =
+							_cpOptionCategory.getExternalReferenceCode();
+					}
+				};
 				title = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());
 			}
@@ -148,5 +192,29 @@ public class SpecificationResourceTest
 
 		return specificationResource.postSpecification(randomSpecification());
 	}
+
+	private void _testPostSpecificationWithRandomOptionCategory()
+		throws Exception {
+
+		Specification randomSpecification =
+			randomSpecificationWithRandomOptionCategory();
+
+		Specification postSpecification =
+			specificationResource.postSpecification(randomSpecification);
+
+		assertEquals(randomSpecification, postSpecification);
+		assertValid(postSpecification);
+
+		OptionCategory optionCategory = postSpecification.getOptionCategory();
+
+		Assert.assertNotNull(optionCategory);
+		Assert.assertEquals(
+			"External Reference Code",
+			optionCategory.getExternalReferenceCode(),
+			_cpOptionCategory.getExternalReferenceCode());
+	}
+
+	@DeleteAfterTestRun
+	private CPOptionCategory _cpOptionCategory;
 
 }

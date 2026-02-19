@@ -20,7 +20,6 @@ import com.liferay.exportimport.internal.lar.PortletDataContextImpl;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
-import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -97,7 +96,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineImportTaskService batchEngineImportTaskService,
 		ChangesetEntryLocalService changesetEntryLocalService,
 		ClassNameLocalService classNameLocalService,
-		ExportImportHelper exportImportHelper,
 		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService,
 		StagingGroupHelper stagingGroupHelper) {
@@ -108,7 +106,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_changesetEntryLocalService = changesetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
-		_exportImportHelper = exportImportHelper;
 		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -919,7 +916,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final ChangesetEntryLocalService _changesetEntryLocalService;
 	private final ClassNameLocalService _classNameLocalService;
-	private final ExportImportHelper _exportImportHelper;
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();

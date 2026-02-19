@@ -138,12 +138,11 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select CommerceAddress.commerceAddressId, ",
-						"CommerceAddress.classPK, ",
-						"CommerceAddress.defaultBilling, ",
-						"CommerceAddress.defaultShipping from CommerceAddress ",
-						"inner join ClassName_ on CommerceAddress.classNameId ",
-						"= ClassName_.classNameId where ",
-						"(CommerceAddress.defaultBilling = [$TRUE$] or ",
+						"CommerceAddress.classPK, CommerceAddress.",
+						"defaultBilling, CommerceAddress.defaultShipping from ",
+						"CommerceAddress inner join ClassName_ on ",
+						"CommerceAddress.classNameId = ClassName_.classNameId ",
+						"where (CommerceAddress.defaultBilling = [$TRUE$] or ",
 						"CommerceAddress.defaultShipping = [$TRUE$]) and ",
 						"(ClassName_.value = ? or ClassName_.value = ?)")))) {
 
@@ -153,13 +152,15 @@ public class CommerceAddressUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long addressId = resultSet.getLong(1);
-					long classPK = resultSet.getLong(2);
+					long addressId = resultSet.getLong("commerceAddressId");
+					long classPK = resultSet.getLong("classPK");
 
 					_setDefaultBilling(
-						addressId, classPK, resultSet.getBoolean(3));
+						addressId, classPK,
+						resultSet.getBoolean("defaultBilling"));
 					_setDefaultShipping(
-						addressId, classPK, resultSet.getBoolean(4));
+						addressId, classPK,
+						resultSet.getBoolean("defaultShipping"));
 				}
 			}
 		}

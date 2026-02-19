@@ -34,7 +34,7 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 		List<Integer> commerceShipmentStatuses = new ArrayList<>();
 
-		PreparedStatement preparedStatement2 = connection.prepareStatement(
+		PreparedStatement preparedStatement = connection.prepareStatement(
 			StringBundler.concat(
 				"select distinct CommerceShipment.status from ",
 				"CommerceShipment left join CommerceShipmentItem on ",
@@ -44,13 +44,11 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 				"CommerceShipmentItem.commerceOrderItemId where ",
 				"CommerceOrderItem.commerceOrderId = ?"));
 
-		preparedStatement2.setLong(1, commerceOrderId);
+		preparedStatement.setLong(1, commerceOrderId);
 
-		try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-			while (resultSet2.next()) {
-				int status = resultSet2.getInt("status");
-
-				commerceShipmentStatuses.add(status);
+		try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				commerceShipmentStatuses.add(resultSet.getInt("status"));
 			}
 		}
 
@@ -61,16 +59,16 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 			Connection connection, long commerceOrderId)
 		throws Exception {
 
-		PreparedStatement preparedStatement4 = connection.prepareStatement(
+		PreparedStatement preparedStatement = connection.prepareStatement(
 			"select shippedQuantity, quantity from CommerceOrderItem where " +
 				"commerceOrderId = ?");
 
-		preparedStatement4.setLong(1, commerceOrderId);
+		preparedStatement.setLong(1, commerceOrderId);
 
-		try (ResultSet resultSet4 = preparedStatement4.executeQuery()) {
-			while (resultSet4.next()) {
-				int quantity = resultSet4.getInt(1);
-				int shippedQuantity = resultSet4.getInt(2);
+		try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				int quantity = resultSet.getInt("shippedQuantity");
+				int shippedQuantity = resultSet.getInt("quantity");
 
 				if ((shippedQuantity < quantity) &&
 					_isShippable(connection, commerceOrderId)) {
@@ -86,17 +84,15 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 	private boolean _isShippable(Connection connection, long commerceOrderId)
 		throws Exception {
 
-		PreparedStatement preparedStatement3 = connection.prepareStatement(
+		PreparedStatement preparedStatement = connection.prepareStatement(
 			"select distinct shippable from CommerceOrderItem where " +
 				"commerceOrderId = ?");
 
-		preparedStatement3.setLong(1, commerceOrderId);
+		preparedStatement.setLong(1, commerceOrderId);
 
-		try (ResultSet resultSet3 = preparedStatement3.executeQuery()) {
-			while (resultSet3.next()) {
-				boolean shippable = resultSet3.getBoolean("shippable");
-
-				if (shippable) {
+		try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				if (resultSet.getBoolean("shippable")) {
 					return true;
 				}
 			}
@@ -133,27 +129,23 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _updateCommerceOrder() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select commerceOrderId, orderStatus from CommerceOrder " +
 					"where orderStatus = ? or orderStatus = ?")) {
 
-			preparedStatement1.setInt(
+			preparedStatement.setInt(
 				1, CommerceOrderConstants.ORDER_STATUS_PARTIALLY_SHIPPED);
-			preparedStatement1.setInt(
+			preparedStatement.setInt(
 				2, CommerceOrderConstants.ORDER_STATUS_SHIPPED);
 
-			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
-				while (resultSet1.next()) {
-					long commerceOrderId = resultSet1.getLong(1);
-
-					int orderStatus = resultSet1.getInt(2);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long commerceOrderId = resultSet.getLong("commerceOrderId");
+					int orderStatus = resultSet.getInt("orderStatus");
 
 					List<Integer> commerceShipmentStatuses =
 						_getCommerceShipmentStatuses(
 							connection, commerceOrderId);
-
-					boolean shippable = _isShippable(
-						connection, commerceOrderId);
 
 					if (orderStatus ==
 							CommerceOrderConstants.
@@ -169,7 +161,8 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 								CommerceOrderConstants.ORDER_STATUS_SHIPPED) {
 
 						_updateCompletedCommerceOrderStatus(
-							commerceOrderId, orderStatus, shippable,
+							commerceOrderId, orderStatus,
+							_isShippable(connection, commerceOrderId),
 							commerceShipmentStatuses);
 					}
 				}
@@ -201,26 +194,30 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 			List<Integer> commerceShipmentStatuses)
 		throws Exception {
 
-		if (_isTransitionCriteriaMetShippedCommerceOrderStatus(
+		if (!_isTransitionCriteriaMetShippedCommerceOrderStatus(
 				orderStatus, allOrderItemsShipped)) {
 
-			runSQL(
-				StringBundler.concat(
-					"update CommerceOrder set orderStatus = ",
-					CommerceOrderConstants.ORDER_STATUS_SHIPPED,
-					" where commerceOrderId = ", commerceOrderId));
-
-			if ((commerceShipmentStatuses.size() == 1) &&
-				(commerceShipmentStatuses.get(0) ==
-					CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
-
-				runSQL(
-					StringBundler.concat(
-						"update CommerceOrder set orderStatus = ",
-						CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-						" where commerceOrderId = ", commerceOrderId));
-			}
+			return;
 		}
+
+		runSQL(
+			StringBundler.concat(
+				"update CommerceOrder set orderStatus = ",
+				CommerceOrderConstants.ORDER_STATUS_SHIPPED,
+				" where commerceOrderId = ", commerceOrderId));
+
+		if ((commerceShipmentStatuses.size() != 1) ||
+			(commerceShipmentStatuses.get(0) !=
+				CommerceShipmentConstants.SHIPMENT_STATUS_DELIVERED)) {
+
+			return;
+		}
+
+		runSQL(
+			StringBundler.concat(
+				"update CommerceOrder set orderStatus = ",
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+				" where commerceOrderId = ", commerceOrderId));
 	}
 
 }

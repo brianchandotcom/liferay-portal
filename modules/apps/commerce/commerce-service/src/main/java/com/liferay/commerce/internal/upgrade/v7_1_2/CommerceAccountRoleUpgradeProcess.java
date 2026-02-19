@@ -69,7 +69,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					long roleId = resultSet.getLong(2);
+					long roleId = resultSet.getLong("roleId");
 
 					if (_hasNonaccountEntryGroup(roleId)) {
 						AccountRole accountRole = _copyToAccountRole(roleId);
@@ -185,11 +185,11 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 	private boolean _hasNonaccountEntryGroup(long roleId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from (select distinct UserGroupRole.",
-					"groupId from UserGroupRole inner join Group_ on Group_.",
-					"classNameId != ? and Group_.groupId = UserGroupRole.",
-					"groupId where UserGroupRole.roleId = ? union select ",
-					"distinct UserGroupGroupRole.groupId from ",
+					"select count(*) as count from (select distinct ",
+					"UserGroupRole.groupId from UserGroupRole inner join ",
+					"Group_ on Group_.classNameId != ? and Group_.groupId = ",
+					"UserGroupRole.groupId where UserGroupRole.roleId = ? ",
+					"union select distinct UserGroupGroupRole.groupId from ",
 					"UserGroupGroupRole inner join Group_ on Group_.",
 					"classNameId != ? and Group_.groupId = UserGroupGroupRole.",
 					"groupId where UserGroupGroupRole.roleId = ?) as count"))) {
@@ -203,9 +203,7 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 				}

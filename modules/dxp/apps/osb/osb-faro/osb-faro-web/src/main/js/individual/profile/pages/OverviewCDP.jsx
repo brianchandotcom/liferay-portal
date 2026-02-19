@@ -27,7 +27,11 @@ const OverviewCDPEmptyState = ({
 		);
 	}
 
-	if (isNil(dataSourceData?.total) || dataSourceData?.total === 0) {
+	const sitesSelected = dataSourceData?.items[0]?.sitesSelected;
+
+	const noSitesSelected = isNil(sitesSelected) || !sitesSelected;
+
+	if (noSitesSelected) {
 		return (
 			<Card pageDisplay>
 				<NoResultsDisplay
@@ -93,6 +97,8 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 		}
 	});
 
+	const sitesSelected = dataSourceData?.items[0]?.sitesSelected;
+
 	return (
 		<div className='overview-column-main'>
 			<OverviewCDPEmptyState
@@ -102,7 +108,7 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 				groupId={groupId}
 			/>
 
-			{dataSourceData?.total > 0 && (
+			{sitesSelected && (
 				<IndividualProfileCard
 					channelId={channelId}
 					entity={individual}

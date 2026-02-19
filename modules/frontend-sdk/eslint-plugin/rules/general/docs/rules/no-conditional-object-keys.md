@@ -38,4 +38,4 @@ if (Object.keys({foo: 'bar'}).find((i) => true)) {
 
 ## Further Reading
 
--   https://github.com/liferay/liferay-frontend-projects/issues/10
+- https://github.com/liferay/liferay-frontend-projects/issues/10

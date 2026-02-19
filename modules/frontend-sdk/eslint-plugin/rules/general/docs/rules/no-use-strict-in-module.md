@@ -37,4 +37,4 @@ export foo;
 
 ## Further Reading
 
--   [Initial motivation for this rule](https://github.com/liferay/liferay-frontend-projects/issues/20).
+- [Initial motivation for this rule](https://github.com/liferay/liferay-frontend-projects/issues/20).

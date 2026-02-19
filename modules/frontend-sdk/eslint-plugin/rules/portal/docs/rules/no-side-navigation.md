@@ -26,5 +26,5 @@ Liferay.SideNavigation.hide(toggler);
 
 ## Further Reading
 
--   [LPS-95476 Port side-navigation.js jQuery plugin from Clay to vanilla JS](https://github.com/brianchandotcom/liferay-portal/pull/74090)
--   [LPS-96486 Add lint to enforce use of new SideNavigation API](https://issues.liferay.com/browse/LPS-96486)
+- [LPS-95476 Port side-navigation.js jQuery plugin from Clay to vanilla JS](https://github.com/brianchandotcom/liferay-portal/pull/74090)
+- [LPS-96486 Add lint to enforce use of new SideNavigation API](https://issues.liferay.com/browse/LPS-96486)

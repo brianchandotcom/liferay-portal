@@ -2,6 +2,9 @@
 	"dependencies": {
 		"prettier": "3.2.5"
 	},
+	"devDependencies": {
+		"esbuild": "^0.21.2"
+	},
 	"files": [
 		"dist"
 	],
@@ -15,8 +18,5 @@
 		"preversion": "yarn run format:check && yarn run test",
 		"test": "node --test"
 	},
-	"version": "1.1.5",
-	"devDependencies": {
-		"esbuild": "^0.21.2"
-	}
+	"version": "1.1.5"
 }

@@ -7,8 +7,10 @@ This rule enforces (and autofixes) that `import` statements and `require` calls 
 Imports appear in the following order:
 
 1. "External" imports (ie. NodeJS built-in modules and dependencies specified in "package.json"; these do not start with "." or "..").
-2. "Internal" imports (ie. local to the projects, starting with "." or "..");
-3. "Type-only" imports (ie. `import type {A} from 'thing';`), first external ones and then internal ones.
+
+1. "Internal" imports (ie. local to the projects, starting with "." or "..");
+
+1. "Type-only" imports (ie. `import type {A} from 'thing';`), first external ones and then internal ones.
 
 Within each group, we sort lexicographically (and case-sensitively) by the module source (ie. the thing on the right-hand side).
 
@@ -52,4 +54,4 @@ import x from './x';
 
 ## Further Reading
 
--   [Liferay Frontend Guidelines for sorting imports](https://github.com/liferay/liferay-frontend-guidelines/issues/60)
+- [Liferay Frontend Guidelines for sorting imports](https://github.com/liferay/liferay-frontend-guidelines/issues/60)

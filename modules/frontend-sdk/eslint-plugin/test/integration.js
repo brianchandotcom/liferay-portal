@@ -331,7 +331,7 @@ expect.extend({
 					(diffString && diffString.includes('- Expect')
 						? `Difference:\n\n${diffString}`
 						: `Expected: ${this.utils.printExpected(output)}\n` +
-						  `Received: ${this.utils.printReceived(actual)}`)
+							`Received: ${this.utils.printReceived(actual)}`)
 				);
 			},
 			pass: output === actual,

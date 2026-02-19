@@ -40,4 +40,4 @@ describe('thing', () => {
 
 ## Further Reading
 
--   [#65](https://github.com/liferay/eslint-config-liferay/issues/65)
+- [#65](https://github.com/liferay/eslint-config-liferay/issues/65)

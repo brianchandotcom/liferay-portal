@@ -18,4 +18,4 @@ const isArray = Array.isArray(maybeArray);
 
 ## Further Reading
 
--   https://github.com/liferay/eslint-config-liferay/issues/139
+- https://github.com/liferay/eslint-config-liferay/issues/139

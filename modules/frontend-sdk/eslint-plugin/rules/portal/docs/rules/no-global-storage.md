@@ -40,5 +40,5 @@ function doSomethingElse() {
 
 ## Further Reading
 
--   [LPS-155901 Manage local and session storage from the cookie manager](https://issues.liferay.com/browse/LPS-155901)
--   [Technical Draft](https://liferay.atlassian.net/l/cp/sWhsAp11)
+- [LPS-155901 Manage local and session storage from the cookie manager](https://issues.liferay.com/browse/LPS-155901)
+- [Technical Draft](https://liferay.atlassian.net/l/cp/sWhsAp11)

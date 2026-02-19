@@ -38,6 +38,6 @@ module.exports = {
 
 ## Further Reading
 
--   [eslint-config-liferay/#53](https://github.com/liferay/eslint-config-liferay/pull/53)
--   [eslint-config-liferay/#130](https://github.com/liferay/eslint-config-liferay/issues/130)
--   [IFI-1194](https://issues.liferay.com/browse/IFI-1194)
+- [eslint-config-liferay/#53](https://github.com/liferay/eslint-config-liferay/pull/53)
+- [eslint-config-liferay/#130](https://github.com/liferay/eslint-config-liferay/issues/130)
+- [IFI-1194](https://issues.liferay.com/browse/IFI-1194)

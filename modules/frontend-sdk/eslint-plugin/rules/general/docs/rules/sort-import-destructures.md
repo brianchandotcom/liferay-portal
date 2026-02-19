@@ -24,4 +24,4 @@ Note how the sorting is based on the name of the imported export (eg. `first`, `
 
 ## Further Reading
 
--   https://github.com/liferay/eslint-config-liferay/issues/124
+- https://github.com/liferay/eslint-config-liferay/issues/124

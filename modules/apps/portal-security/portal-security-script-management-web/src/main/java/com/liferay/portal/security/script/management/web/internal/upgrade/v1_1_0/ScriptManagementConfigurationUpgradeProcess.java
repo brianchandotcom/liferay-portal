@@ -45,21 +45,19 @@ public class ScriptManagementConfigurationUpgradeProcess
 				SQLTransformer.transform(
 					StringBundler.concat(
 						"select KaleoDefinition.content from KaleoDefinition ",
-						"where KaleoDefinition.name != ",
-						"'message-boards-user-stats-moderation' and ",
-						"KaleoDefinition.active_ = [$TRUE$]")));
+						"where KaleoDefinition.name != 'message-boards-user-",
+						"stats-moderation' and KaleoDefinition.active_ = ",
+						"[$TRUE$]")));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select 1 from ObjectAction where ",
-						"ObjectAction.active_ = [$TRUE$] and ",
-						"ObjectAction.objectActionExecutorKey = 'groovy'")));
+					"select 1 from ObjectAction where ObjectAction.active_ = " +
+						"[$TRUE$] and ObjectAction.objectActionExecutorKey = " +
+							"'groovy'"));
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select 1 from ObjectValidationRule where ",
-						"ObjectValidationRule.active_ = [$TRUE$] and ",
-						"ObjectValidationRule.engine = 'groovy'")));
+					"select 1 from ObjectValidationRule where " +
+						"ObjectValidationRule.active_ = [$TRUE$] and " +
+							"ObjectValidationRule.engine = 'groovy'"));
 			ResultSet resultSet1 = preparedStatement1.executeQuery();
 			ResultSet resultSet2 = preparedStatement2.executeQuery();
 			ResultSet resultSet3 = preparedStatement3.executeQuery()) {
@@ -70,7 +68,7 @@ public class ScriptManagementConfigurationUpgradeProcess
 
 			while (resultSet1.next()) {
 				if (WorkflowDefinitionGroovyScriptUseDetector.detect(
-						resultSet1.getString(1), _jsonFactory)) {
+						resultSet1.getString("content"), _jsonFactory)) {
 
 					return true;
 				}

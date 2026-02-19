@@ -6,7 +6,6 @@
 package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_1;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -39,10 +38,9 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 			companyId -> {
 				try (PreparedStatement preparedStatement1 =
 						connection.prepareStatement(
-							StringBundler.concat(
-								"select count(*) from SAPEntry where ",
-								"companyId = ? and name = ",
-								"'SYSTEM_REST_CLIENT_TEMPLATE_OBJECT'"))) {
+							"select count(*) as count from SAPEntry where " +
+								"companyId = ? and name = 'SYSTEM_REST_" +
+									"CLIENT_TEMPLATE_OBJECT'")) {
 
 					preparedStatement1.setLong(1, companyId);
 
@@ -51,9 +49,7 @@ public class SAPEntryUpgradeProcess extends UpgradeProcess {
 
 						resultSet.next();
 
-						int count = resultSet.getInt(1);
-
-						if (count != 0) {
+						if (resultSet.getInt("count") != 0) {
 							return;
 						}
 

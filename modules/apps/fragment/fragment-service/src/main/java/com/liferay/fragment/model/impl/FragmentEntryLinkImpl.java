@@ -64,18 +64,6 @@ public class FragmentEntryLinkImpl extends FragmentEntryLinkBaseImpl {
 	}
 
 	@Override
-	public long getFragmentEntryGroupId() {
-		Long groupId = ScopeUtil.getItemGroupId(
-			getCompanyId(), getFragmentEntryScopeERC(), getGroupId());
-
-		if (groupId == null) {
-			return 0;
-		}
-
-		return groupId;
-	}
-
-	@Override
 	public boolean isCacheable() {
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.

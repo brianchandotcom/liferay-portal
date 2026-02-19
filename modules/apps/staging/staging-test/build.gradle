@@ -5,9 +5,6 @@ dependencies {
 	testIntegrationImplementation project(":apps:changeset:changeset-api")
 	testIntegrationImplementation project(":apps:data-engine:data-engine-rest-api")
 	testIntegrationImplementation project(":apps:data-engine:data-engine-rest-test-util")
-	testIntegrationImplementation project(":apps:dynamic-data-lists:dynamic-data-lists-api")
-	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-api")
-	testIntegrationImplementation project(":apps:dynamic-data-mapping:dynamic-data-mapping-test-util")
 	testIntegrationImplementation project(":apps:export-import:export-import-api")
 	testIntegrationImplementation project(":apps:export-import:export-import-changeset-api")
 	testIntegrationImplementation project(":apps:friendly-url:friendly-url-api")
@@ -23,7 +20,5 @@ dependencies {
 	testIntegrationImplementation project(":apps:site-navigation:site-navigation-api")
 	testIntegrationImplementation project(":apps:staging:staging-api")
 	testIntegrationImplementation project(":apps:static:osgi:osgi-util")
-	testIntegrationImplementation project(":apps:wiki:wiki-api")
-	testIntegrationImplementation project(":apps:wiki:wiki-test-util")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

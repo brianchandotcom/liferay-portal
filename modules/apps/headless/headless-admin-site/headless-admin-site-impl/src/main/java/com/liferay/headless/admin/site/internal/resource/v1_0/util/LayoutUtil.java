@@ -1225,12 +1225,8 @@ public class LayoutUtil {
 				layout.getLayoutId(), unicodeProperties.toString());
 		}
 
-		WidgetPageSection[] widgetPageSections =
-			widgetPageSpecification.getWidgetPageSections();
-
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
-
 		Theme theme = layout.getTheme();
 
 		LayoutTemplate layoutTemplate =
@@ -1243,6 +1239,9 @@ public class LayoutUtil {
 				LayoutTemplate.class, layoutTypePortlet.getLayoutTemplateId(),
 				0);
 		}
+
+		WidgetPageSection[] widgetPageSections =
+			widgetPageSpecification.getWidgetPageSections();
 
 		if ((layoutTemplate != null) &&
 			(widgetPageSections.length !=

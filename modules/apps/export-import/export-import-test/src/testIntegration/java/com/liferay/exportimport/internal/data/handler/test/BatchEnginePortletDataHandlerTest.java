@@ -751,7 +751,6 @@ public class BatchEnginePortletDataHandlerTest {
 			objectEntries[1]);
 	}
 
-	@FeatureFlag("LPD-35443")
 	@Test
 	@TestInfo("LPD-64365")
 	public void testExportImportLayoutsToOtherSite() throws Exception {

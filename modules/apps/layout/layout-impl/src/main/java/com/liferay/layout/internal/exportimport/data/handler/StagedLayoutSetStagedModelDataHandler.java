@@ -232,11 +232,10 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		List<Element> layoutElements = layoutsElement.elements();
 
-		if (portletDataContext.isPrivateLayout() &&
-			(!FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				portletDataContext.getCompanyId(), "LPD-35443") ||
-			 !FeatureFlagManagerUtil.isEnabled(
-				 portletDataContext.getCompanyId(), "LPD-35914"))) {
+			!FeatureFlagManagerUtil.isEnabled(
+				portletDataContext.getCompanyId(), "LPD-35914")) {
 
 			// Delete missing pages
 

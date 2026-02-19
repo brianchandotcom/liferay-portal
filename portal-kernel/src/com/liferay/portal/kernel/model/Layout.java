@@ -65,6 +65,8 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 		};
 
+	public void deleteUnusedIconImage();
+
 	public Layout fetchDraftLayout();
 
 	/**
@@ -220,12 +222,18 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public String getIcon();
 
 	/**
-	 * Returns <code>true</code> if the current layout has a configured icon.
+	 * Returns the icon image associated with the layout.
 	 *
-	 * @return <code>true</code> if the current layout has a configured icon;
-	 <code>false</code> otherwise
+	 * @return the icon image, or <code>null</code> if the layout has no icon image
 	 */
-	public boolean getIconImage();
+	public Image getIconImage();
+
+	/**
+	 * Returns the icon image ID associated with the layout.
+	 *
+	 * @return the icon image ID, or <code>0</code> if the layout has no icon image
+	 */
+	public long getIconImageId();
 
 	public String getLayoutPrototypeUuid();
 
@@ -315,6 +323,14 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 */
 	public boolean hasChildren();
 
+	/**
+	 * Returns <code>true</code> if the current layout has a configured icon.
+	 *
+	 * @return <code>true</code> if the current layout has a configured icon;
+	 <code>false</code> otherwise
+	 */
+	public boolean hasIconImage();
+
 	public boolean hasScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
@@ -366,8 +382,6 @@ public interface Layout extends LayoutModel, PersistedModel {
 	 layout; <code>false</code> otherwise
 	 */
 	public boolean isFirstParent();
-
-	public boolean isIconImage();
 
 	/**
 	 * Returns <code>true</code> if the current layout utilizes its {@link
@@ -459,6 +473,13 @@ public interface Layout extends LayoutModel, PersistedModel {
 	public boolean matches(
 		jakarta.servlet.http.HttpServletRequest httpServletRequest,
 		String friendlyURL);
+
+	/**
+	 * Sets the icon image ID associated with the layout.
+	 *
+	 * @param iconImageId the icon image ID
+	 */
+	public void setIconImageId(long iconImageId);
 
 	public void setLayoutSet(LayoutSet layoutSet);
 

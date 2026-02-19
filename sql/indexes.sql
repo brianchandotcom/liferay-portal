@@ -221,11 +221,11 @@ create index IX_A0364689 on Layout (groupId, privateLayout, status);
 create index IX_25452BFD on Layout (groupId, privateLayout, system_);
 create index IX_1A1B61D2 on Layout (groupId, privateLayout, type_[$COLUMN_LENGTH:75$]);
 create index IX_6EDC627B on Layout (groupId, type_[$COLUMN_LENGTH:75$]);
-create index IX_23922F7D on Layout (iconImageId);
+create index IX_4E739318 on Layout (iconImageERC[$COLUMN_LENGTH:75$]);
 create index IX_3752C6E2 on Layout (layoutSetPrototypeLayoutERC[$COLUMN_LENGTH:75$]);
 create index IX_1D4DCAA5 on Layout (parentPlid);
 create index IX_E3914157 on Layout (portletLPTEERC[$COLUMN_LENGTH:75$], portletLPTESERC[$COLUMN_LENGTH:75$]);
-create index IX_3BC009C0 on Layout (privateLayout, iconImageId);
+create index IX_3C010135 on Layout (privateLayout, iconImageERC[$COLUMN_LENGTH:75$]);
 create index IX_D0822724 on Layout (uuid_[$COLUMN_LENGTH:75$]);
 
 create index IX_A705FF94 on LayoutBranch (layoutSetBranchId, plid, master);

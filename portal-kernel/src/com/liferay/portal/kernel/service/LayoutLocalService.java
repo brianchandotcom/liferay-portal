@@ -612,8 +612,8 @@ public interface LayoutLocalService
 		long groupId, boolean privateLayout, String friendlyURL);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Layout fetchLayoutByIconImageId(
-		boolean privateLayout, long iconImageId);
+	public Layout fetchLayoutByIconImageERC(
+		boolean privateLayout, String iconImageERC);
 
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.

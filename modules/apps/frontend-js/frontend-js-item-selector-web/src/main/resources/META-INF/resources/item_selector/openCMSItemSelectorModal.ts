@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	CMSFileUploaderComponent,
-	openItemSelectorModal,
-} from '@liferay/frontend-js-item-selector-web';
+import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
+import openItemSelectorModal from './openItemSelectorModal';
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 	apiURL: `${location.origin}/o/search/v1.0/search?${[
@@ -93,29 +91,30 @@ function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
 
-export const openCMSItemSelectorModal = function ({
+export default function openCMSItemSelectorModal({
+	allowDragAndDrop = false,
+	config = CMS_FILE_ITEM_SELECTOR_CONFIG,
+	fdsProps = FDS_PROPS,
 	groupId,
 	onSelect,
 }: {
+	allowDragAndDrop: boolean;
+	config: any;
+	fdsProps: any;
 	groupId: number;
 	onSelect: (items: Array<Record<string, any>>) => void;
 }) {
 	openItemSelectorModal({
-		...CMS_FILE_ITEM_SELECTOR_CONFIG,
+		...config,
 		fdsProps: {
-			...FDS_PROPS,
-			id: `UploadFragmentItemSelectorFDS_${getRandomId()}`,
+			...fdsProps,
+			id: `CMSItemSelectorFDS_${getRandomId()}`,
 		},
-		filesUploaderComponent: CMSFileUploaderComponent,
+		filesUploaderComponent: allowDragAndDrop
+			? CMSFileUploaderComponent
+			: undefined,
 		groupId,
 		itemTypeLabel: Liferay.Language.get('files'),
-		items: [],
-		locator: {
-			id: 'embedded.id',
-			label: 'embedded.title',
-			value: 'embedded.id',
-		},
-		multiSelect: false,
 		onItemsChange: onSelect,
 	});
-};
+}

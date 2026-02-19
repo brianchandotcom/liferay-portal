@@ -77,6 +77,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 		import('@liferay/fragment-impl/api').then(
 			({openCMSItemSelectorModal}) => {
 				openCMSItemSelectorModal({
+					allowDragAndDrop: true,
 					groupId: input.attributes.groupId,
 					onSelect(items) {
 						if (items.length) {

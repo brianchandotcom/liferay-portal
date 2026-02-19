@@ -59,11 +59,6 @@ public class ExportImportReportEntryLocalServiceTest {
 					groupId, companyId, classExternalReferenceCode, classNameId,
 					exportImportConfigurationId, modelNameLanguageKey);
 
-		String errorMessage = StringBundler.concat(
-			"The ", modelNameLanguageKey, " with external reference code ",
-			classExternalReferenceCode,
-			" was not found. An empty shell was created.");
-
 		Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
 		Assert.assertEquals(companyId, exportImportReportEntry.getCompanyId());
 		Assert.assertEquals(
@@ -75,20 +70,24 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportConfigurationId,
 			exportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(
-			errorMessage, exportImportReportEntry.getErrorMessage());
-		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
-		Assert.assertEquals(
 			modelNameLanguageKey,
 			exportImportReportEntry.getModelNameLanguageKey());
+		Assert.assertEquals(
+			StringBundler.concat(
+				"The ", modelNameLanguageKey, " with external reference code ",
+				classExternalReferenceCode,
+				" was not found. An empty shell was created."),
+			exportImportReportEntry.getErrorMessage());
+		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.ORIGIN_STAGING,
 			exportImportReportEntry.getOrigin());
 		Assert.assertEquals(
-			ExportImportReportEntryConstants.TYPE_EMPTY,
-			exportImportReportEntry.getType());
-		Assert.assertEquals(
 			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
 			exportImportReportEntry.getStatus());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_EMPTY,
+			exportImportReportEntry.getType());
 
 		Assert.assertEquals(
 			count + 1,
@@ -141,11 +140,11 @@ public class ExportImportReportEntryLocalServiceTest {
 			ExportImportReportEntryConstants.ORIGIN_STAGING,
 			exportImportReportEntry.getOrigin());
 		Assert.assertEquals(
-			ExportImportReportEntryConstants.TYPE_ERROR,
-			exportImportReportEntry.getType());
-		Assert.assertEquals(
 			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
 			exportImportReportEntry.getStatus());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_ERROR,
+			exportImportReportEntry.getType());
 
 		Assert.assertEquals(
 			count + 1,

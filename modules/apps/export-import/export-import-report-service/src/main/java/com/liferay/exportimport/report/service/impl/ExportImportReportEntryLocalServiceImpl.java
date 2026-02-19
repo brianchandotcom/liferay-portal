@@ -60,20 +60,20 @@ public class ExportImportReportEntryLocalServiceImpl
 		exportImportReportEntry.setExportImportConfigurationId(
 			exportImportConfigurationId);
 		exportImportReportEntry.setModelNameLanguageKey(modelNameLanguageKey);
+		exportImportReportEntry.setErrorMessage(
+			_language.format(
+				LocaleUtil.US,
+				"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
+				"shell-was-created",
+				new String[] {
+					modelNameLanguageKey, classExternalReferenceCode
+				}));
 		exportImportReportEntry.setOrigin(
 			ExportImportReportEntryUtil.getOrigin());
 		exportImportReportEntry.setType(
 			ExportImportReportEntryConstants.TYPE_EMPTY);
 		exportImportReportEntry.setStatus(
 			ExportImportReportEntryConstants.STATUS_UNRESOLVED);
-
-		String message = _language.format(
-			LocaleUtil.US,
-			"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
-				"shell-was-created",
-			new String[] {modelNameLanguageKey, classExternalReferenceCode});
-
-		exportImportReportEntry.setErrorMessage(message);
 
 		return exportImportReportEntryPersistence.update(
 			exportImportReportEntry);

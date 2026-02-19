@@ -764,6 +764,7 @@ public class StagedGroupStagedModelDataHandler
 	private PortletDataHandlerStatusMessageSender
 		_portletDataHandlerStatusMessageSender;
 
+	@Reference
 	private PortletElementHandlerFactory _portletElementHandlerFactory;
 
 	@Reference

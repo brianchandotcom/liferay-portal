@@ -6,6 +6,7 @@
 			"externalReferenceCode": "L_CHANGE_TONE",
 			"inputVariables": "text,tone",
 			"outputVariable": "rewrittenText",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Change Tone"
 			},
@@ -17,6 +18,7 @@
 			"externalReferenceCode": "L_FIX_SPELLING_AND_GRAMMAR",
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Fix Spelling and Grammar"
 			},
@@ -28,6 +30,7 @@
 			"externalReferenceCode": "L_IMPROVE_WRITING",
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Improve Writing"
 			},
@@ -39,6 +42,7 @@
 			"externalReferenceCode": "L_LIFERAY_SEARCH",
 			"inputVariables": "request",
 			"outputVariable": "response",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Liferay Search"
 			},
@@ -50,6 +54,7 @@
 			"externalReferenceCode": "L_MAKE_LONGER",
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Make Longer"
 			},
@@ -61,6 +66,7 @@
 			"externalReferenceCode": "L_MAKE_SHORTER",
 			"inputVariables": "text",
 			"outputVariable": "rewrittenText",
+			"r_accountToAgentDefinitions_accountEntryERC": "L_AI_HUB",
 			"title_i18n": {
 				"en_US": "Make Shorter"
 			},

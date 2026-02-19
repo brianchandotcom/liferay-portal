@@ -1380,9 +1380,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 				accountEntryRestrictedObjectDefinitions.entrySet()) {
 
 			com.liferay.object.model.ObjectDefinition
-				serviceBuilderObjectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						serviceContext.getCompanyId(), "C_" + entry.getKey());
+				serviceBuilderObjectDefinition = _fetchObjectDefinition(
+					serviceContext.getCompanyId(), entry.getKey());
+
+			if (serviceBuilderObjectDefinition == null) {
+				continue;
+			}
 
 			ObjectDefinition objectDefinition = entry.getValue();
 
@@ -3268,16 +3271,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(json);
 
 			com.liferay.object.model.ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.fetchObjectDefinition(
+				_fetchObjectDefinition(
 					serviceContext.getCompanyId(),
-					"C_" + jsonObject.getString("objectDefinitionName"));
-
-			if (objectDefinition == null) {
-				objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						serviceContext.getCompanyId(),
-						jsonObject.getString("objectDefinitionName"));
-			}
+					jsonObject.getString("objectDefinitionName"));
 
 			if (objectDefinition == null) {
 				continue;
@@ -5432,6 +5428,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	private List<R> _dependsOn(R... rArray) {
 		return ListUtil.fromArray(rArray);
+	}
+
+	private com.liferay.object.model.ObjectDefinition _fetchObjectDefinition(
+		long companyId, String name) {
+
+		com.liferay.object.model.ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				companyId, "C_" + name);
+
+		if (objectDefinition == null) {
+			objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinition(
+					companyId, name);
+		}
+
+		return objectDefinition;
 	}
 
 	private long[] _getAssetCategoryIds(

@@ -5592,6 +5592,42 @@
 	},
 	{
 		"classNames": [
+			"DDMStructureLocalService",
+			"DDMStructureLocalServiceUtil"
+		],
+		"from": "addStructure(long paramName, long paramName, long paramName, long paramName, String paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, DDMForm paramName, DDMFormLayout paramName, String paramName, int paramName, ServiceContext paramName)",
+		"issueKey": "LPD-69589",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "addStructure(StringPool.BLANK, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#)"
+	},
+	{
+		"classNames": [
+			"DDMStructureLocalService",
+			"DDMStructureLocalServiceUtil"
+		],
+		"from": "addStructure(long paramName, long paramName, long paramName, long paramName, String paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-69589",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "addStructure(StringPool.BLANK, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#)"
+	},
+	{
+		"classNames": [
+			"DDMStructureLocalService",
+			"DDMStructureLocalServiceUtil"
+		],
+		"from": "updateStructure(long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-69589",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "updateStructure(StringPool.BLANK, param#0#, param#1#, param#6#.getScopeGroupId(), param#2#, DDMStructureLocalServiceUtil.getStructure(param#1#).getClassNameId(), DDMStructureLocalServiceUtil.getStructure(param#1#).getStructureKey(), param#3#, param#4#, param#5#, param#6#)"
+	},
+	{
+		"classNames": [
 			"FFDocumentLibraryDDMEditorConfigurationUtil"
 		],
 		"from": "useDataEngineEditor()",

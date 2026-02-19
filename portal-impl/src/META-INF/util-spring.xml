@@ -33,6 +33,9 @@
 	<bean class="com.liferay.portal.kernel.dao.jdbc.CurrentConnectionUtil">
 		<property name="currentConnection" ref="com.liferay.portal.dao.jdbc.CurrentConnectionImpl" />
 	</bean>
+	<bean class="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" id="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil">
+		<property name="featureFlagManager" ref="com.liferay.portal.kernel.feature.flag.FeatureFlagManager" />
+	</bean>
 	<bean class="com.liferay.portal.kernel.json.JSONFactoryUtil" factory-method="getJSONFactory" id="com.liferay.portal.kernel.json.JSONFactory" />
 	<bean class="com.liferay.portal.language.LanguageImpl" id="com.liferay.portal.kernel.language.Language" />
 	<bean class="com.liferay.portal.kernel.language.LanguageUtil" id="com.liferay.portal.kernel.language.LanguageUtil">

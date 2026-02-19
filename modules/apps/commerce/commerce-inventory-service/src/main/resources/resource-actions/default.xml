@@ -12,11 +12,11 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_WAREHOUSE</action-key>
-				<action-key>MANAGE_INVENTORY</action-key>
+				<action-key>VIEW_INVENTORIES</action-key>
 			</supports>
 			<guest-unsupported>
 				<action-key>ADD_WAREHOUSE</action-key>
-				<action-key>MANAGE_INVENTORY</action-key>
+				<action-key>VIEW_INVENTORIES</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

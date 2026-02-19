@@ -9,10 +9,15 @@ import com.liferay.document.library.kernel.exception.NoSuchFileException;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -248,6 +253,36 @@ public class FileSystemStore implements Store {
 		return fileNameVersionFile.exists();
 	}
 
+	@Override
+	public void verifyCompanyStores() {
+		File[] storeDirs = _rootDir.listFiles(
+			file -> file.isDirectory() && Validator.isNumber(file.getName()));
+
+		if (storeDirs == null) {
+			return;
+		}
+
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		for (File storeDir : storeDirs) {
+			long storeCompanyId = GetterUtil.getLong(storeDir.getName());
+
+			if ((storeCompanyId == 0) ||
+				ArrayUtil.contains(companyIds, storeCompanyId)) {
+
+				continue;
+			}
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Manually remove unused store ", storeCompanyId,
+						" that belongs to company ", storeCompanyId,
+						" if it is no longer used anywhere else"));
+			}
+		}
+	}
+
 	protected File getDirNameDir(
 		long companyId, long repositoryId, String dirName) {
 
@@ -339,6 +374,9 @@ public class FileSystemStore implements Store {
 			file = file.getParentFile();
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		FileSystemStore.class);
 
 	private final File _rootDir;
 

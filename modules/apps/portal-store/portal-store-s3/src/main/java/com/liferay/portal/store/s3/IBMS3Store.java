@@ -21,6 +21,8 @@ import com.ibm.cloud.objectstorage.services.s3.model.DeleteObjectsRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.GetObjectMetadataRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.GetObjectRequest;
 import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsRequest;
+import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsV2Request;
+import com.ibm.cloud.objectstorage.services.s3.model.ListObjectsV2Result;
 import com.ibm.cloud.objectstorage.services.s3.model.ObjectListing;
 import com.ibm.cloud.objectstorage.services.s3.model.ObjectMetadata;
 import com.ibm.cloud.objectstorage.services.s3.model.PutObjectRequest;
@@ -43,9 +45,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
@@ -337,6 +342,61 @@ public class IBMS3Store implements Store {
 			}
 
 			return false;
+		}
+	}
+
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		String continuationToken = null;
+
+		try {
+			do {
+				ListObjectsV2Request request = new ListObjectsV2Request(
+				).withBucketName(
+					_s3StoreConfiguration.bucketName()
+				).withDelimiter(
+					StringPool.SLASH
+				).withContinuationToken(
+					continuationToken
+				);
+
+				ListObjectsV2Result result = _amazonS3.listObjectsV2(request);
+
+				List<String> prefixes = result.getCommonPrefixes();
+
+				for (String folderName : prefixes) {
+					if (folderName.endsWith(StringPool.SLASH)) {
+						folderName = folderName.substring(
+							0, folderName.length() - 1);
+					}
+
+					if (!Validator.isNumber(folderName)) {
+						continue;
+					}
+
+					long storeCompanyId = GetterUtil.getLong(folderName);
+
+					if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+						continue;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Manually remove unused store ", storeCompanyId,
+								" that belongs to company ", storeCompanyId,
+								" if it is no longer used anywhere else"));
+					}
+				}
+
+				continuationToken = result.getNextContinuationToken();
+			}
+			while (continuationToken != null);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 

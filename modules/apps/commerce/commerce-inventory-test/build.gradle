@@ -11,5 +11,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:commerce:commerce-product-test-util")
 	testIntegrationImplementation project(":apps:commerce:commerce-service")
 	testIntegrationImplementation project(":apps:commerce:commerce-test-util")
+	testIntegrationImplementation project(":apps:portal:portal-upgrade-test-util")
+	testIntegrationImplementation project(":apps:static:portal:portal-upgrade-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

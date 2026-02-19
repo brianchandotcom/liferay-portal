@@ -62,32 +62,7 @@ public class ProductMenuDisplayContextTest {
 	}
 
 	@Test
-	public void testShouldReturnOnlyPanelCategoriesThatContainPanelApps() {
-		_assertGetPanelCategories(
-			productMenuDisplayContext -> {
-				List<PanelCategory> childPanelCategories =
-					productMenuDisplayContext.getChildPanelCategories();
-
-				Assert.assertEquals(
-					childPanelCategories.toString(), 5,
-					childPanelCategories.size());
-
-				Mockito.verify(
-					_panelCategoryHelper
-				).getChildPanelCategories(
-					PanelCategoryKeys.APPLICATIONS_MENU, _themeDisplay
-				);
-
-				Mockito.verify(
-					_panelCategoryHelper, Mockito.times(3)
-				).getAllPanelApps(
-					ArgumentMatchers.matches("application-panel*")
-				);
-			});
-	}
-
-	@Test
-	public void testShouldReturnOnlyRootPanelCategoriesWhenApplicationsMenuIsEnabled() {
+	public void testShouldReturnOnlyRootPanelCategories() {
 		_assertGetPanelCategories(
 			productMenuDisplayContext -> {
 				List<PanelCategory> childPanelCategories =

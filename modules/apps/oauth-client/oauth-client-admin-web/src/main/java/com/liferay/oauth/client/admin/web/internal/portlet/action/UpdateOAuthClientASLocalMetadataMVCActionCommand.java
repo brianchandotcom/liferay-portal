@@ -82,25 +82,25 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 			String authorizationEndpoint = ParamUtil.getString(
 				actionRequest, "authorizationEndpoint");
 
-			_validateHttpsUrl(authorizationEndpoint, false);
+			_validateHttpsUrl(false, authorizationEndpoint);
 
 			String issuer = ParamUtil.getString(actionRequest, "issuer");
 
-			_validateHttpsUrl(issuer, true);
+			_validateHttpsUrl(true, issuer);
 
 			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
 
-			_validateHttpsUrl(jwksURI, false);
+			_validateHttpsUrl(false, jwksURI);
 
 			String tokenEndpoint = ParamUtil.getString(
 				actionRequest, "tokenEndpoint");
 
-			_validateHttpsUrl(tokenEndpoint, false);
+			_validateHttpsUrl(false, tokenEndpoint);
 
 			String userInfoEndpoint = ParamUtil.getString(
 				actionRequest, "userInfoEndpoint");
 
-			_validateHttpsUrl(userInfoEndpoint, false);
+			_validateHttpsUrl(false, userInfoEndpoint);
 
 			boolean enabledLocalWellKnown = ParamUtil.getBoolean(
 				actionRequest, "enabledLocalWellKnown");
@@ -160,7 +160,7 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 		}
 	}
 
-	private void _validateHttpsUrl(String urlString, boolean required)
+	private void _validateHttpsUrl(boolean required, String urlString)
 		throws PortalException {
 
 		if (Validator.isNull(urlString)) {

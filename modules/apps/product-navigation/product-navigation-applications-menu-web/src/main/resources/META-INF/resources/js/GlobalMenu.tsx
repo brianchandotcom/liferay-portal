@@ -69,6 +69,11 @@ export default function GlobalMenu({
 
 	const openButtonTitle = useMemo(() => getOpenMenuTooltipMarkup(), []);
 
+	const numberOfSiteItems = data?.items.sites.reduce(
+		(total, group) => total + group.children.length,
+		0
+	);
+
 	const fetchData = useCallback(async () => {
 		if (data || fetchedRef.current) {
 			return;
@@ -186,50 +191,52 @@ export default function GlobalMenu({
 				}}
 			</ClayDropdown.ItemList>
 
-			<ClayDropdown.ItemList
-				className="border-top c-pb-3 c-pt-2 sites-list"
-				items={data?.items.sites}
-			>
-				{(item) => {
-					const groupItem = item as GroupItem;
+			{numberOfSiteItems ? (
+				<ClayDropdown.ItemList
+					className="border-top c-pb-3 c-pt-2 sites-list"
+					items={data?.items.sites}
+				>
+					{(item) => {
+						const groupItem = item as GroupItem;
 
-					return (
-						<ClayDropdown.Group
-							header={groupItem.label}
-							items={groupItem.children}
-							key={groupItem.key}
-						>
-							{(item) => (
-								<ClayDropdown.Item
-									{...item}
-									active={item.current}
-									className="c-py-1 text-primary"
-									href={item.url}
-									key={item.key}
-								>
-									{item.key !== 'view-all' ? (
-										<ClaySticker
-											className="c-mr-2"
-											size="sm"
-										>
-											{item.logoURL ? (
-												<ClaySticker.Image
-													alt=""
-													src={item.logoURL}
-												/>
-											) : (
-												<ClayIcon symbol="sites" />
-											)}
-										</ClaySticker>
-									) : null}
+						return (
+							<ClayDropdown.Group
+								header={groupItem.label}
+								items={groupItem.children}
+								key={groupItem.key}
+							>
+								{(item) => (
+									<ClayDropdown.Item
+										{...item}
+										active={item.current}
+										className="c-py-1 text-primary"
+										href={item.url}
+										key={item.key}
+									>
+										{item.key !== 'view-all' ? (
+											<ClaySticker
+												className="c-mr-2"
+												size="sm"
+											>
+												{item.logoURL ? (
+													<ClaySticker.Image
+														alt=""
+														src={item.logoURL}
+													/>
+												) : (
+													<ClayIcon symbol="sites" />
+												)}
+											</ClaySticker>
+										) : null}
 
-									{item.label}
-								</ClayDropdown.Item>
-							)}
-						</ClayDropdown.Group>
-					);
-				}}
-			</ClayDropdown.ItemList>
+										{item.label}
+									</ClayDropdown.Item>
+								)}
+							</ClayDropdown.Group>
+						);
+					}}
+				</ClayDropdown.ItemList>
+			) : null}
 		</ClayDropdown>
 	);
 }

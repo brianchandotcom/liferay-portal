@@ -46,6 +46,7 @@ public class OAuthClientEntryWrapper
 		attributes.put("clientId", getClientId());
 		attributes.put("customClaimsJSON", getCustomClaimsJSON());
 		attributes.put("infoJSON", getInfoJSON());
+		attributes.put("matcherField", getMatcherField());
 		attributes.put("metadataCacheTime", getMetadataCacheTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
 		attributes.put(
@@ -128,6 +129,12 @@ public class OAuthClientEntryWrapper
 
 		if (infoJSON != null) {
 			setInfoJSON(infoJSON);
+		}
+
+		String matcherField = (String)attributes.get("matcherField");
+
+		if (matcherField != null) {
+			setMatcherField(matcherField);
 		}
 
 		Long metadataCacheTime = (Long)attributes.get("metadataCacheTime");
@@ -224,6 +231,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public String getInfoJSON() {
 		return model.getInfoJSON();
+	}
+
+	/**
+	 * Returns the matcher field of this o auth client entry.
+	 *
+	 * @return the matcher field of this o auth client entry
+	 */
+	@Override
+	public String getMatcherField() {
+		return model.getMatcherField();
 	}
 
 	@Override
@@ -404,6 +421,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setInfoJSON(String infoJSON) {
 		model.setInfoJSON(infoJSON);
+	}
+
+	/**
+	 * Sets the matcher field of this o auth client entry.
+	 *
+	 * @param matcherField the matcher field of this o auth client entry
+	 */
+	@Override
+	public void setMatcherField(String matcherField) {
+		model.setMatcherField(matcherField);
 	}
 
 	/**

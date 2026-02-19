@@ -253,6 +253,21 @@ public interface OAuthClientEntryModel
 	public void setInfoJSON(String infoJSON);
 
 	/**
+	 * Returns the matcher field of this o auth client entry.
+	 *
+	 * @return the matcher field of this o auth client entry
+	 */
+	@AutoEscape
+	public String getMatcherField();
+
+	/**
+	 * Sets the matcher field of this o auth client entry.
+	 *
+	 * @param matcherField the matcher field of this o auth client entry
+	 */
+	public void setMatcherField(String matcherField);
+
+	/**
 	 * Returns the metadata cache time of this o auth client entry.
 	 *
 	 * @return the metadata cache time of this o auth client entry

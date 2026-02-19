@@ -27,6 +27,7 @@ create table OAuthClientEntry (
 	clientId VARCHAR(256) null,
 	customClaimsJSON TEXT null,
 	infoJSON TEXT null,
+	matcherField VARCHAR(75) null,
 	metadataCacheTime LONG,
 	oidcUserInfoMapperJSON VARCHAR(3999) null,
 	tokenRequestParametersJSON VARCHAR(3999) null

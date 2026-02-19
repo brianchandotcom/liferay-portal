@@ -69,7 +69,7 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -95,6 +95,8 @@ public class OAuthClientEntryCacheModel
 		sb.append(customClaimsJSON);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
+		sb.append(", matcherField=");
+		sb.append(matcherField);
 		sb.append(", metadataCacheTime=");
 		sb.append(metadataCacheTime);
 		sb.append(", oidcUserInfoMapperJSON=");
@@ -173,6 +175,13 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setInfoJSON(infoJSON);
 		}
 
+		if (matcherField == null) {
+			oAuthClientEntryImpl.setMatcherField("");
+		}
+		else {
+			oAuthClientEntryImpl.setMatcherField(matcherField);
+		}
+
 		oAuthClientEntryImpl.setMetadataCacheTime(metadataCacheTime);
 
 		if (oidcUserInfoMapperJSON == null) {
@@ -215,6 +224,7 @@ public class OAuthClientEntryCacheModel
 		clientId = objectInput.readUTF();
 		customClaimsJSON = (String)objectInput.readObject();
 		infoJSON = (String)objectInput.readObject();
+		matcherField = objectInput.readUTF();
 
 		metadataCacheTime = objectInput.readLong();
 		oidcUserInfoMapperJSON = objectInput.readUTF();
@@ -276,6 +286,13 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeObject(infoJSON);
 		}
 
+		if (matcherField == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(matcherField);
+		}
+
 		objectOutput.writeLong(metadataCacheTime);
 
 		if (oidcUserInfoMapperJSON == null) {
@@ -305,6 +322,7 @@ public class OAuthClientEntryCacheModel
 	public String clientId;
 	public String customClaimsJSON;
 	public String infoJSON;
+	public String matcherField;
 	public long metadataCacheTime;
 	public String oidcUserInfoMapperJSON;
 	public String tokenRequestParametersJSON;

@@ -69,7 +69,7 @@ public class OAuthClientEntryModelImpl
 		{"authRequestParametersJSON", Types.VARCHAR},
 		{"authServerWellKnownURI", Types.VARCHAR}, {"clientId", Types.VARCHAR},
 		{"customClaimsJSON", Types.CLOB}, {"infoJSON", Types.CLOB},
-		{"metadataCacheTime", Types.BIGINT},
+		{"matcherField", Types.VARCHAR}, {"metadataCacheTime", Types.BIGINT},
 		{"oidcUserInfoMapperJSON", Types.VARCHAR},
 		{"tokenRequestParametersJSON", Types.VARCHAR}
 	};
@@ -90,13 +90,14 @@ public class OAuthClientEntryModelImpl
 		TABLE_COLUMNS_MAP.put("clientId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("customClaimsJSON", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("infoJSON", Types.CLOB);
+		TABLE_COLUMNS_MAP.put("matcherField", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("metadataCacheTime", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("oidcUserInfoMapperJSON", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("tokenRequestParametersJSON", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,customClaimsJSON TEXT null,infoJSON TEXT null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenRequestParametersJSON VARCHAR(3999) null)";
+		"create table OAuthClientEntry (mvccVersion LONG default 0 not null,oAuthClientEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,authRequestParametersJSON VARCHAR(3999) null,authServerWellKnownURI VARCHAR(256) null,clientId VARCHAR(256) null,customClaimsJSON TEXT null,infoJSON TEXT null,matcherField VARCHAR(75) null,metadataCacheTime LONG,oidcUserInfoMapperJSON VARCHAR(3999) null,tokenRequestParametersJSON VARCHAR(3999) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table OAuthClientEntry";
 
@@ -282,6 +283,8 @@ public class OAuthClientEntryModelImpl
 			attributeGetterFunctions.put(
 				"infoJSON", OAuthClientEntry::getInfoJSON);
 			attributeGetterFunctions.put(
+				"matcherField", OAuthClientEntry::getMatcherField);
+			attributeGetterFunctions.put(
 				"metadataCacheTime", OAuthClientEntry::getMetadataCacheTime);
 			attributeGetterFunctions.put(
 				"oidcUserInfoMapperJSON",
@@ -355,6 +358,10 @@ public class OAuthClientEntryModelImpl
 				"infoJSON",
 				(BiConsumer<OAuthClientEntry, String>)
 					OAuthClientEntry::setInfoJSON);
+			attributeSetterBiConsumers.put(
+				"matcherField",
+				(BiConsumer<OAuthClientEntry, String>)
+					OAuthClientEntry::setMatcherField);
 			attributeSetterBiConsumers.put(
 				"metadataCacheTime",
 				(BiConsumer<OAuthClientEntry, Long>)
@@ -645,6 +652,26 @@ public class OAuthClientEntryModelImpl
 
 	@JSON
 	@Override
+	public String getMatcherField() {
+		if (_matcherField == null) {
+			return "";
+		}
+		else {
+			return _matcherField;
+		}
+	}
+
+	@Override
+	public void setMatcherField(String matcherField) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_matcherField = matcherField;
+	}
+
+	@JSON
+	@Override
 	public long getMetadataCacheTime() {
 		return _metadataCacheTime;
 	}
@@ -770,6 +797,7 @@ public class OAuthClientEntryModelImpl
 		oAuthClientEntryImpl.setClientId(getClientId());
 		oAuthClientEntryImpl.setCustomClaimsJSON(getCustomClaimsJSON());
 		oAuthClientEntryImpl.setInfoJSON(getInfoJSON());
+		oAuthClientEntryImpl.setMatcherField(getMatcherField());
 		oAuthClientEntryImpl.setMetadataCacheTime(getMetadataCacheTime());
 		oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
 			getOIDCUserInfoMapperJSON());
@@ -809,6 +837,8 @@ public class OAuthClientEntryModelImpl
 			this.<String>getColumnOriginalValue("customClaimsJSON"));
 		oAuthClientEntryImpl.setInfoJSON(
 			this.<String>getColumnOriginalValue("infoJSON"));
+		oAuthClientEntryImpl.setMatcherField(
+			this.<String>getColumnOriginalValue("matcherField"));
 		oAuthClientEntryImpl.setMetadataCacheTime(
 			this.<Long>getColumnOriginalValue("metadataCacheTime"));
 		oAuthClientEntryImpl.setOIDCUserInfoMapperJSON(
@@ -975,6 +1005,14 @@ public class OAuthClientEntryModelImpl
 			oAuthClientEntryCacheModel.infoJSON = null;
 		}
 
+		oAuthClientEntryCacheModel.matcherField = getMatcherField();
+
+		String matcherField = oAuthClientEntryCacheModel.matcherField;
+
+		if ((matcherField != null) && (matcherField.length() == 0)) {
+			oAuthClientEntryCacheModel.matcherField = null;
+		}
+
 		oAuthClientEntryCacheModel.metadataCacheTime = getMetadataCacheTime();
 
 		oAuthClientEntryCacheModel.oidcUserInfoMapperJSON =
@@ -1076,6 +1114,7 @@ public class OAuthClientEntryModelImpl
 	private String _clientId;
 	private String _customClaimsJSON;
 	private String _infoJSON;
+	private String _matcherField;
 	private long _metadataCacheTime;
 	private String _oidcUserInfoMapperJSON;
 	private String _tokenRequestParametersJSON;
@@ -1122,6 +1161,7 @@ public class OAuthClientEntryModelImpl
 		_columnOriginalValues.put("clientId", _clientId);
 		_columnOriginalValues.put("customClaimsJSON", _customClaimsJSON);
 		_columnOriginalValues.put("infoJSON", _infoJSON);
+		_columnOriginalValues.put("matcherField", _matcherField);
 		_columnOriginalValues.put("metadataCacheTime", _metadataCacheTime);
 		_columnOriginalValues.put(
 			"oidcUserInfoMapperJSON", _oidcUserInfoMapperJSON);
@@ -1164,11 +1204,13 @@ public class OAuthClientEntryModelImpl
 
 		columnBitmasks.put("infoJSON", 2048L);
 
-		columnBitmasks.put("metadataCacheTime", 4096L);
+		columnBitmasks.put("matcherField", 4096L);
 
-		columnBitmasks.put("oidcUserInfoMapperJSON", 8192L);
+		columnBitmasks.put("metadataCacheTime", 8192L);
 
-		columnBitmasks.put("tokenRequestParametersJSON", 16384L);
+		columnBitmasks.put("oidcUserInfoMapperJSON", 16384L);
+
+		columnBitmasks.put("tokenRequestParametersJSON", 32768L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -36,6 +36,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="clientId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="customClaimsJSON" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="infoJSON" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="matcherField" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="metadataCacheTime" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="oidcUserInfoMapperJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.MethodPropertyAccessor" name="tokenRequestParametersJSON" type="com.liferay.portal.dao.orm.hibernate.StringType" />

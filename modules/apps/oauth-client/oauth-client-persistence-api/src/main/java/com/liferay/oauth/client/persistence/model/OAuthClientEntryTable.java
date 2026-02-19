@@ -57,6 +57,9 @@ public class OAuthClientEntryTable extends BaseTable<OAuthClientEntryTable> {
 			"customClaimsJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Clob> infoJSON = createColumn(
 		"infoJSON", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<OAuthClientEntryTable, String> matcherField =
+		createColumn(
+			"matcherField", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<OAuthClientEntryTable, Long> metadataCacheTime =
 		createColumn(
 			"metadataCacheTime", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);

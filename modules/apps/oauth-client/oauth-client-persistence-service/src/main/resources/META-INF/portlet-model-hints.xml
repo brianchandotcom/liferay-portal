@@ -47,6 +47,7 @@
 		<field name="infoJSON" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="matcherField" type="String" />
 		<field name="metadataCacheTime" type="long" />
 		<field name="OIDCUserInfoMapperJSON" type="String">
 			<hint name="max-length">3999</hint>

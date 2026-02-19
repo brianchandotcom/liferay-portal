@@ -17,9 +17,12 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.s3.configuration.S3StoreConfiguration;
 
@@ -61,10 +64,12 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3AsyncClient;
 import software.amazon.awssdk.services.s3.S3AsyncClientBuilder;
 import software.amazon.awssdk.services.s3.model.AbortMultipartUploadResponse;
+import software.amazon.awssdk.services.s3.model.CommonPrefix;
 import software.amazon.awssdk.services.s3.model.DeleteObjectResponse;
 import software.amazon.awssdk.services.s3.model.DeleteObjectsResponse;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
+import software.amazon.awssdk.services.s3.model.ListObjectsV2Response;
 import software.amazon.awssdk.services.s3.model.MultipartUpload;
 import software.amazon.awssdk.services.s3.model.NoSuchKeyException;
 import software.amazon.awssdk.services.s3.model.ObjectIdentifier;
@@ -408,6 +413,74 @@ public class S3Store implements Store {
 			}
 
 			return false;
+		}
+	}
+
+	@Override
+	public void verifyCompanyStores() {
+		long[] companyIds = PortalInstancePool.getCompanyIds();
+
+		String continuationToken = null;
+		boolean hasNext = true;
+
+		try {
+			while (hasNext) {
+				String currentToken = continuationToken;
+
+				CompletableFuture<ListObjectsV2Response> completableFuture =
+					_s3AsyncClient.listObjectsV2(
+						builder -> builder.bucket(
+							_s3StoreConfiguration.bucketName()
+						).continuationToken(
+							currentToken
+						).delimiter(
+							StringPool.SLASH
+						));
+
+				ListObjectsV2Response listObjectsV2Response =
+					completableFuture.join();
+
+				List<CommonPrefix> commonPrefixes =
+					listObjectsV2Response.commonPrefixes();
+
+				for (CommonPrefix commonPrefix : commonPrefixes) {
+					String folderName = commonPrefix.prefix();
+
+					if (folderName.endsWith(StringPool.SLASH)) {
+						folderName = folderName.substring(
+							0, folderName.length() - 1);
+					}
+
+					if (!Validator.isNumber(folderName)) {
+						continue;
+					}
+
+					long storeCompanyId = GetterUtil.getLong(folderName);
+
+					if (ArrayUtil.contains(companyIds, storeCompanyId)) {
+						continue;
+					}
+
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Manually remove unused store ", storeCompanyId,
+								" that belongs to company ", storeCompanyId,
+								" if it is no longer used anywhere else"));
+					}
+				}
+
+				if (Boolean.TRUE.equals(listObjectsV2Response.isTruncated())) {
+					continuationToken =
+						listObjectsV2Response.nextContinuationToken();
+				}
+				else {
+					hasNext = false;
+				}
+			}
+		}
+		catch (CompletionException completionException) {
+			throw _toSystemException(completionException.getCause());
 		}
 	}
 

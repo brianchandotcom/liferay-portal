@@ -46,14 +46,11 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 		return _language.get(resourceBundle, "data-migration");
 	}
 
-	@Override
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "COMMERCE-8087") &&
-			!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-35914")) {
+				group.getCompanyId(), "COMMERCE-8087")) {
 
 			return false;
 		}

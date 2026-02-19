@@ -80,17 +80,15 @@ if (selectAccountEntryManagementToolbarDisplayContext.isSingleSelect()) {
 				value="<%= HtmlUtil.escape(accountEntryDisplay.getType()) %>"
 			/>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-expand-smallest"
-					name="status"
-				>
-					<clay:label
-						displayType="<%= accountEntryDisplay.getStatusLabelStyle() %>"
-						label="<%= accountEntryDisplay.getStatusLabel() %>"
-					/>
-				</liferay-ui:search-container-column-text>
-			</c:if>
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-expand-smallest"
+				name="status"
+			>
+				<clay:label
+					displayType="<%= accountEntryDisplay.getStatusLabelStyle() %>"
+					label="<%= accountEntryDisplay.getStatusLabel() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<c:if test="<%= selectAccountEntryManagementToolbarDisplayContext.isSingleSelect() %>">
 				<liferay-ui:search-container-column-text>

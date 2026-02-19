@@ -1251,10 +1251,7 @@ public class ObjectDefinitionResourceImpl
 		serviceContext.setLanguageId(
 			contextAcceptLanguage.getPreferredLanguageId());
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-35914") ||
-			(objectDefinition.getPermissions() == null)) {
-
+		if (objectDefinition.getPermissions() == null) {
 			serviceContext.setModelPermissions(null);
 
 			return serviceContext;

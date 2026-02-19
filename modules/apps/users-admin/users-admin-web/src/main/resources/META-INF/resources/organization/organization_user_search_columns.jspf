@@ -77,12 +77,10 @@
 					href="<%= rowURL %>"
 					name="status"
 				>
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-						<clay:label
-							displayType="<%= WorkflowConstants.getStatusStyle(curOrganization.getStatus()) %>"
-							label="<%= WorkflowConstants.getStatusLabel(curOrganization.getStatus()) %>"
-						/>
-					</c:if>
+					<clay:label
+						displayType="<%= WorkflowConstants.getStatusStyle(curOrganization.getStatus()) %>"
+						label="<%= WorkflowConstants.getStatusLabel(curOrganization.getStatus()) %>"
+					/>
 				</liferay-ui:search-container-column-text>
 
 				<liferay-ui:search-container-column-text>

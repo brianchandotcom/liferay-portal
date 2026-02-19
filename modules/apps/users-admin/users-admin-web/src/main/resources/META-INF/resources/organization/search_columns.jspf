@@ -33,14 +33,12 @@
 				<%= HtmlUtil.escape(UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization)) %>
 			</div>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-				<div class="list-group-text">
-					<clay:label
-						displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
-						label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
-					/>
-				</div>
-			</c:if>
+			<div class="list-group-text">
+				<clay:label
+					displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
+					label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
+				/>
+			</div>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text>
@@ -85,17 +83,15 @@
 			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
-				name="status"
-			>
-				<clay:label
-					displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
-					label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
-				/>
-			</liferay-ui:search-container-column-text>
-		</c:if>
+		<liferay-ui:search-container-column-text
+			cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
+			name="status"
+		>
+			<clay:label
+				displayType="<%= WorkflowConstants.getStatusStyle(organization.getStatus()) %>"
+				label="<%= WorkflowConstants.getStatusLabel(organization.getStatus()) %>"
+			/>
+		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= Validator.isNotNull(keywords) %>">
 			<liferay-ui:search-container-column-text

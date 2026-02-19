@@ -24,7 +24,7 @@ export type UserForm = z.infer<typeof zodSchema.accountCreator>;
 
 const TrialUnavailable = () => (
 	<div>
-		<h1 className="text-center">Trial not available.</h1>
+		<h1 className="text-center">Trial Not Available</h1>
 
 		<p className="mt-7">
 			Dear <strong>{Liferay.ThemeDisplay.getUserName()}</strong>, based on
@@ -43,7 +43,7 @@ const TrialUnavailable = () => (
 				Liferay.Util.navigate(getSiteURL() + '/pre-built-trial');
 			}}
 		>
-			Return to trial page
+			Return to Trial Page
 		</ClayButton>
 	</div>
 );

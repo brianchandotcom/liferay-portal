@@ -5,9 +5,9 @@
 
 import useSWR, {SWRConfiguration} from 'swr';
 
-import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 import SearchBuilder from '../../core/SearchBuilder';
 import {Liferay} from '../../liferay/liferay';
+import HeadlessCommerceDeliveryOrder from '../../services/rest/HeadlessCommerceDeliveryOrder';
 
 type Props = {
 	accountId: number;

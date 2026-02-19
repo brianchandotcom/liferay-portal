@@ -31,7 +31,6 @@ type BaseOutletProps = {
 	actionButtons?: ReactNode | ((data: ProductAndOrderPayload) => ReactNode);
 	backTitle: string;
 	backURL?: string;
-	customStatus?: ReactNode;
 	routes:
 		| NavbarProps['routes']
 		| ((data: ProductAndOrderPayload) => NavbarProps['routes']);
@@ -42,7 +41,6 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 	actionButtons,
 	backTitle,
 	backURL = '..',
-	customStatus,
 	routes,
 	showActions = true,
 }) => {
@@ -64,11 +62,10 @@ const BaseOutlet: React.FC<BaseOutletProps> = ({
 			<div className="d-flex justify-content-between">
 				<OrderDetailsHeader
 					className="d-flex flex-row justify-content-between pb-3 pt-5"
-					customStatus={customStatus}
 					hasOrderDetails
 					image={placedOrderItems[0]?.thumbnail}
 					name={placedOrderItems[0]?.name}
-					order={data?.placedOrder as unknown as Cart}
+					order={data?.placedOrder}
 					productOwner={productCreatorAccountName}
 				/>
 

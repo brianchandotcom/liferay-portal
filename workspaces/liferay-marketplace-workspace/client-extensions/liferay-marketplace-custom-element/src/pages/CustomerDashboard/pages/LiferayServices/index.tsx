@@ -8,12 +8,12 @@ import {useNavigate} from 'react-router-dom';
 import ListView from '../../../../components/ListView';
 import OrderStatus from '../../../../components/OrderStatus';
 import Page from '../../../../components/Page';
+import SearchBuilder from '../../../../core/SearchBuilder';
 import {OrderTypes, PaymentStatus} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
+import {Liferay} from '../../../../liferay/liferay';
 import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
-import {Liferay} from '../../../../liferay/liferay';
-import SearchBuilder from '../../../../core/SearchBuilder';
 
 const searchParams = new URLSearchParams({
 	filter: SearchBuilder.eq(
@@ -111,7 +111,7 @@ const LiferayServicesListView = () => {
 							{
 								id: 'orderStatusInfo',
 								name: 'Status',
-								render: (orderStatusInfo, item) => {
+								render: (_, item) => {
 									if (
 										item.paymentStatus ===
 										PaymentStatus.PENDING
@@ -125,13 +125,7 @@ const LiferayServicesListView = () => {
 										);
 									}
 
-									return (
-										<OrderStatus
-											orderStatus={orderStatusInfo.label}
-										>
-											{orderStatusInfo.label}
-										</OrderStatus>
-									);
+									return <OrderStatus placedOrder={item} />;
 								},
 							},
 						],

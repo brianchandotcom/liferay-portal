@@ -405,7 +405,7 @@ export default {
 	'manage-users': 'Manage Users',
 	'manage-your-current-trials': 'Manage your current trials',
 	'manage-your-liferay-services-purchased-from-the-marketplace':
-		'Manage your Liferay Services purchased from the Marketplace',
+		'Manage your Liferay Services purchased from the Marketplace.',
 	'manage-your-teams-trial': "Manage your team's trial",
 	'mark-as-paid': 'Mark as Paid',
 	'marked-as-paid': 'Marked as paid.',
@@ -594,7 +594,7 @@ export default {
 	'scroll-to-top': 'Scroll to Top',
 	'search': 'Search',
 	'section-that-shows-the-latest-sales-made':
-		'Section that shows the latest sales made',
+		'Section that shows the latest sales made.',
 	'section-that-shows-the-payments': 'Section that shows the payments.',
 	'select-a-file': 'Select a File',
 	'select-a-local-file-to-upload': 'Select a Local File to Upload',
@@ -781,7 +781,7 @@ export default {
 	'video-url': 'Video URL',
 	'view': 'View',
 	'view-all': 'View All',
-	'view-details': 'View details',
+	'view-details': 'View Details',
 	'view-request': 'View Request',
 	'visit': 'Visit',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-customers-in-the-marketplace-and-access-is-invite-only-if-you-are-an-existing-liferay-customer-please-keep-an-eye-out-for-an-announcement-related-to-the-new-marketplace-in-the-coming-months':

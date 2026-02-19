@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -24,7 +24,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import org.frutilla.FrutillaRule;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -55,7 +54,9 @@ public class CPOptionCategoryLocalServiceTest {
 	}
 
 	@Test(expected = CPOptionCategoryKeyException.class)
-	public void testAddOrUpdateCPOptionCategoryOptionWithoutKey() throws Exception {
+	public void testAddOrUpdateCPOptionCategoryOptionWithoutKey()
+		throws Exception {
+
 		frutillaRule.scenario(
 			"Add Option Category"
 		).given(
@@ -74,7 +75,9 @@ public class CPOptionCategoryLocalServiceTest {
 	}
 
 	@Test(expected = CPOptionCategoryTitleException.class)
-	public void testAddOrUpdateCPOptionCategoryOptionWithoutTitle() throws Exception {
+	public void testAddOrUpdateCPOptionCategoryOptionWithoutTitle()
+		throws Exception {
+
 		frutillaRule.scenario(
 			"Add Option Category"
 		).given(
@@ -85,19 +88,15 @@ public class CPOptionCategoryLocalServiceTest {
 			"Option category should not be created"
 		);
 
-		 _cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
-				RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
-				null, RandomTestUtil.randomLocaleStringMap(),
-				RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
-				_serviceContext);
+		_cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
+			RandomTestUtil.randomString(), _serviceContext.getUserId(), 0L,
+			null, RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomDouble(), RandomTestUtil.randomString(),
+			_serviceContext);
 	}
-
-
 
 	@Rule
 	public final FrutillaRule frutillaRule = new FrutillaRule();
-
-	private static User _user;
 
 	@Inject
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
@@ -106,5 +105,6 @@ public class CPOptionCategoryLocalServiceTest {
 	private Group _group;
 
 	private ServiceContext _serviceContext;
+	private User _user;
 
 }

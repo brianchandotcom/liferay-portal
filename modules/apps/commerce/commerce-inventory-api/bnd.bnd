@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Commerce Inventory API
 Bundle-SymbolicName: com.liferay.commerce.inventory.api
-Bundle-Version: 34.0.2
+Bundle-Version: 35.0.0
 Export-Package:\
 	com.liferay.commerce.inventory.configuration,\
 	com.liferay.commerce.inventory.constants,\

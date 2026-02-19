@@ -60,8 +60,8 @@ const FiltersDropdown = () => {
 	}, [groupedFilters, validFilters]);
 
 	const filtersList = groupedFilters
-			? renderableGroupedFilters
-			: validFilters;
+		? renderableGroupedFilters
+		: validFilters;
 
 	return (
 		<ClayDropDown

@@ -307,14 +307,14 @@ public abstract class BaseSectionDisplayContextTestCase
 	@Test
 	public void testGetCMSSectionFilterString() throws Exception {
 		DepotEntry depotEntry1 = addDepotEntry(
-			TestPropsValues.getUserId(), StringUtil.randomString());
+			StringUtil.randomString(), TestPropsValues.getUserId());
 
 		User user = UserTestUtil.addUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 
 		DepotEntry depotEntry2 = addDepotEntry(
-			user.getUserId(), StringUtil.randomString());
+			StringUtil.randomString(), user.getUserId());
 
 		try {
 			Object displayContext = getSectionDisplayContext(
@@ -474,7 +474,7 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	protected DepotEntry addDepotEntry(long userId, String name)
+	protected DepotEntry addDepotEntry(String name, long userId)
 		throws Exception {
 
 		return _depotEntryLocalService.addDepotEntry(

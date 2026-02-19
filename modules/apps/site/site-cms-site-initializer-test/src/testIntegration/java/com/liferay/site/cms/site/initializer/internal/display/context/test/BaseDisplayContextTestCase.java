@@ -155,7 +155,7 @@ public abstract class BaseDisplayContextTestCase {
 	protected MockHttpServletRequest getMockHttpServletRequest()
 		throws Exception {
 
-		return getMockHttpServletRequest(TestPropsValues.getUser(), null);
+		return getMockHttpServletRequest(null, TestPropsValues.getUser());
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest(
@@ -163,17 +163,17 @@ public abstract class BaseDisplayContextTestCase {
 		throws Exception {
 
 		return getMockHttpServletRequest(
-			TestPropsValues.getUser(), objectEntryFolder);
+			objectEntryFolder, TestPropsValues.getUser());
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest(User user)
 		throws Exception {
 
-		return getMockHttpServletRequest(user, null);
+		return getMockHttpServletRequest(null, user);
 	}
 
 	protected MockHttpServletRequest getMockHttpServletRequest(
-			User user, ObjectEntryFolder objectEntryFolder)
+		ObjectEntryFolder objectEntryFolder, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -186,7 +186,7 @@ public abstract class BaseDisplayContextTestCase {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY,
-			getThemeDisplay(user, mockHttpServletRequest));
+			getThemeDisplay(mockHttpServletRequest, user));
 
 		return mockHttpServletRequest;
 	}
@@ -195,11 +195,11 @@ public abstract class BaseDisplayContextTestCase {
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		return getThemeDisplay(TestPropsValues.getUser(), httpServletRequest);
+		return getThemeDisplay(httpServletRequest, TestPropsValues.getUser());
 	}
 
 	protected ThemeDisplay getThemeDisplay(
-			User user, HttpServletRequest httpServletRequest)
+		HttpServletRequest httpServletRequest, User user)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();

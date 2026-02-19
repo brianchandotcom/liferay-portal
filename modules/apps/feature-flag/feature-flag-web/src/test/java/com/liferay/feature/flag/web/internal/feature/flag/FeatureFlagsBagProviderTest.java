@@ -5,8 +5,10 @@
 
 package com.liferay.feature.flag.web.internal.feature.flag;
 
-import com.liferay.feature.flag.web.internal.manager.FeatureFlagPreferencesManager;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.feature.flag.FeatureFlagsBag;
+import com.liferay.portal.feature.flag.FeatureFlagsBagProviderImpl;
+import com.liferay.portal.feature.flag.manager.FeatureFlagPreferencesManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.language.Language;

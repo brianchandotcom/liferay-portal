@@ -5,8 +5,8 @@
 
 package com.liferay.feature.flag.web.internal.model.listener;
 
-import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBag;
-import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvider;
+import com.liferay.portal.feature.flag.FeatureFlagsBag;
+import com.liferay.portal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;

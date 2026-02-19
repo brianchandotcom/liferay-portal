@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.exportimport.internal.data.handler;
+package com.liferay.exportimport.internal.portlet.element.handler;
 
-import com.liferay.exportimport.data.handler.PortletElementHandler;
+import com.liferay.exportimport.internal.data.handler.BatchEnginePortletDataHandlerRegistryUtil;
+import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;

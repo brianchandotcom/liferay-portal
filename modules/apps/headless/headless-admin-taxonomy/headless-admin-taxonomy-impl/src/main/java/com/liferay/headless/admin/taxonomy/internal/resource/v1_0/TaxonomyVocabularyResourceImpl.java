@@ -518,21 +518,13 @@ public class TaxonomyVocabularyResourceImpl
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				group.getCompanyId(), "LPD-17564") &&
-			group.isCMS()) {
+			group.isCMS() &&
+			ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
 
-			if (ArrayUtil.isNotEmpty(taxonomyVocabulary.getAssetLibraries())) {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(),
-						_getAssetLibraryGroupIds(
-							group.getCompanyId(), taxonomyVocabulary));
-			}
-			else {
-				_assetVocabularyGroupRelLocalService.
-					setAssetVocabularyGroupRels(
-						assetVocabulary.getVocabularyId(),
-						new long[] {_GROUP_ID_ALL});
-			}
+			_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+				assetVocabulary.getVocabularyId(),
+				_getAssetLibraryGroupIds(
+					group.getCompanyId(), taxonomyVocabulary));
 		}
 
 		return assetVocabulary;
@@ -1066,7 +1058,7 @@ public class TaxonomyVocabularyResourceImpl
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
 						assetVocabulary.getVocabularyId(),
-						new long[] {_GROUP_ID_ALL});
+						new long[] {_GROUP_ID_ALL);
 			}
 		}
 

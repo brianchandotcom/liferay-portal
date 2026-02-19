@@ -6,6 +6,8 @@
 package com.liferay.feature.flag.web.internal.model;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.feature.flag.model.DependencyAwareFeatureFlag;
+import com.liferay.portal.feature.flag.model.FeatureFlagImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;

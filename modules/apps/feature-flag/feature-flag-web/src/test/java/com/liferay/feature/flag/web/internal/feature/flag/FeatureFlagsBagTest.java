@@ -5,8 +5,9 @@
 
 package com.liferay.feature.flag.web.internal.feature.flag;
 
-import com.liferay.feature.flag.web.internal.model.FeatureFlagImpl;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.feature.flag.FeatureFlagsBag;
+import com.liferay.portal.feature.flag.model.FeatureFlagImpl;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagType;
 import com.liferay.portal.kernel.json.JSONException;

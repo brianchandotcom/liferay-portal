@@ -82,12 +82,12 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 			Map<String, IntegerWrapper> counts = new HashMap<>();
 
 			while (resultSet.next()) {
-				long messageId = resultSet.getLong(1);
-				String subject = resultSet.getString(2);
+				long messageId = resultSet.getLong("messageId");
+
+				String urlSubject = _getURLSubject(
+					messageId, resultSet.getString("subject"));
 
 				String suffix = StringPool.BLANK;
-
-				String urlSubject = _getURLSubject(messageId, subject);
 
 				IntegerWrapper count = counts.computeIfAbsent(
 					urlSubject, key -> new IntegerWrapper(0));

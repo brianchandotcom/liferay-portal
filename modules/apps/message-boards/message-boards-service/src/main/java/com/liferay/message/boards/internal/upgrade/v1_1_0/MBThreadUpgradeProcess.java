@@ -25,8 +25,8 @@ public class MBThreadUpgradeProcess extends UpgradeProcess {
 				StringBundler.concat(
 					"select MBThread.threadId, MBMessage.subject from ",
 					"MBThread inner join MBMessage on MBThread.rootMessageId ",
-					"= MBMessage.messageId and MBThread.threadId = ",
-					"MBMessage.threadId"));
+					"= MBMessage.messageId and MBThread.threadId = MBMessage.",
+					"threadId"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -34,13 +34,8 @@ public class MBThreadUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				String title = resultSet.getString(2);
-
-				preparedStatement2.setString(1, title);
-
-				long threadId = resultSet.getLong(1);
-
-				preparedStatement2.setLong(2, threadId);
+				preparedStatement2.setString(1, resultSet.getString("subject"));
+				preparedStatement2.setLong(2, resultSet.getLong("threadId"));
 
 				preparedStatement2.addBatch();
 			}

@@ -68,6 +68,28 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/headless-cms/v1.0/bulk-action?nestedFields=embedded&search=test&filter=asset'}`
 			);
 		});
+
+		it('include emptySearch parameters when searchQuery is not provided', () => {
+			const taskUrl = composeCreateTaskURL(
+				URL_BULK_ACTION_TASK,
+				{
+					filters: [
+						{
+							id: 1,
+							multiple: false,
+							odataFilterString: 'asset',
+							selectedItemsLabel: '',
+						},
+					],
+					selectAll: true,
+				},
+				false
+			);
+
+			expect(taskUrl).toBe(
+				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/headless-cms/v1.0/bulk-action?emptySearch=true&nestedFields=embedded&filter=asset'}`
+			);
+		});
 	});
 
 	describe('composeCreateTaskDTO', () => {

@@ -5,18 +5,17 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.DisplayPageTemplateFolder;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.DisplayPageTemplateFolderEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.DisplayPageTemplateFolderUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.util.EnableUtil;
 import com.liferay.headless.admin.site.resource.v1_0.DisplayPageTemplateFolderResource;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -58,9 +57,7 @@ public class DisplayPageTemplateFolderResourceImpl
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			displayPageTemplateFolderExternalReferenceCode,
@@ -103,11 +100,6 @@ public class DisplayPageTemplateFolderResourceImpl
 			}
 
 			@Override
-			public boolean isActive(PortletDataContext portletDataContext) {
-				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
-			}
-
-			@Override
 			public boolean isStagingSupported() {
 				return true;
 			}
@@ -121,9 +113,7 @@ public class DisplayPageTemplateFolderResourceImpl
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		return _toDisplayPageTemplateFolder(
 			_layoutPageTemplateCollectionService.
@@ -142,9 +132,7 @@ public class DisplayPageTemplateFolderResourceImpl
 				Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -180,9 +168,7 @@ public class DisplayPageTemplateFolderResourceImpl
 			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		return _addDisplayPageTemplateFolder(
 			displayPageTemplateFolder,
@@ -197,9 +183,7 @@ public class DisplayPageTemplateFolderResourceImpl
 			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
+		EnableUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

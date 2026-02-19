@@ -646,6 +646,10 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				panelCategory.getKey(), themeDisplay.getPermissionChecker(),
 				themeDisplay.getScopeGroup());
 
+			if (panelApp == null) {
+				continue;
+			}
+
 			panelCategoriesJSONArray.put(
 				JSONUtil.put(
 					"active",

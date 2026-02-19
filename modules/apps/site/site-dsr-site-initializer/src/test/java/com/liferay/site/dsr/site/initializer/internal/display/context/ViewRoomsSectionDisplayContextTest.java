@@ -74,6 +74,18 @@ public class ViewRoomsSectionDisplayContextTest {
 		);
 
 		Mockito.when(
+			_objectDefinition.getLabel(Mockito.any(Locale.class))
+		).thenReturn(
+			RandomTestUtil.randomString()
+		);
+
+		Mockito.when(
+			_objectDefinition.getObjectDefinitionId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
 			_themeDisplay.getLocale()
 		).thenReturn(
 			LocaleUtil.ENGLISH
@@ -89,18 +101,6 @@ public class ViewRoomsSectionDisplayContextTest {
 			_themeDisplay.getPortalURL()
 		).thenReturn(
 			StringPool.BLANK
-		);
-
-		Mockito.when(
-			_objectDefinition.getLabel(Mockito.any(Locale.class))
-		).thenReturn(
-			RandomTestUtil.randomString()
-		);
-
-		Mockito.when(
-			_objectDefinition.getObjectDefinitionId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
 		);
 	}
 

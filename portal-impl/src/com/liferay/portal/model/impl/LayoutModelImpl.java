@@ -85,7 +85,7 @@ public class LayoutModelImpl
 		{"keywords", Types.VARCHAR}, {"robots", Types.VARCHAR},
 		{"type_", Types.VARCHAR}, {"typeSettings", Types.CLOB},
 		{"hidden_", Types.BOOLEAN}, {"system_", Types.BOOLEAN},
-		{"friendlyURL", Types.VARCHAR}, {"iconImageId", Types.BIGINT},
+		{"friendlyURL", Types.VARCHAR}, {"iconImageERC", Types.VARCHAR},
 		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
 		{"styleBookEntryERC", Types.VARCHAR}, {"css", Types.CLOB},
 		{"priority", Types.INTEGER}, {"faviconFileEntryERC", Types.VARCHAR},
@@ -129,7 +129,7 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("hidden_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("system_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("friendlyURL", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("iconImageId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("iconImageERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("themeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("colorSchemeId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("styleBookEntryERC", Types.VARCHAR);
@@ -151,7 +151,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageERC VARCHAR(75) null,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryERC VARCHAR(75) null,faviconFileEntryScopeERC VARCHAR(75) null,masterLPTEERC VARCHAR(75) null,portletLPTEERC VARCHAR(75) null,portletLPTESERC VARCHAR(75) null,portletLPTELE BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -234,7 +234,7 @@ public class LayoutModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ICONIMAGEID_COLUMN_BITMASK = 128L;
+	public static final long ICONIMAGEERC_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -444,7 +444,8 @@ public class LayoutModelImpl
 			attributeGetterFunctions.put("hidden", Layout::getHidden);
 			attributeGetterFunctions.put("system", Layout::getSystem);
 			attributeGetterFunctions.put("friendlyURL", Layout::getFriendlyURL);
-			attributeGetterFunctions.put("iconImageId", Layout::getIconImageId);
+			attributeGetterFunctions.put(
+				"iconImageERC", Layout::getIconImageERC);
 			attributeGetterFunctions.put("themeId", Layout::getThemeId);
 			attributeGetterFunctions.put(
 				"colorSchemeId", Layout::getColorSchemeId);
@@ -562,8 +563,8 @@ public class LayoutModelImpl
 				"friendlyURL",
 				(BiConsumer<Layout, String>)Layout::setFriendlyURL);
 			attributeSetterBiConsumers.put(
-				"iconImageId",
-				(BiConsumer<Layout, Long>)Layout::setIconImageId);
+				"iconImageERC",
+				(BiConsumer<Layout, String>)Layout::setIconImageERC);
 			attributeSetterBiConsumers.put(
 				"themeId", (BiConsumer<Layout, String>)Layout::setThemeId);
 			attributeSetterBiConsumers.put(
@@ -1732,17 +1733,22 @@ public class LayoutModelImpl
 
 	@JSON
 	@Override
-	public long getIconImageId() {
-		return _iconImageId;
+	public String getIconImageERC() {
+		if (_iconImageERC == null) {
+			return "";
+		}
+		else {
+			return _iconImageERC;
+		}
 	}
 
 	@Override
-	public void setIconImageId(long iconImageId) {
+	public void setIconImageERC(String iconImageERC) {
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_iconImageId = iconImageId;
+		_iconImageERC = iconImageERC;
 	}
 
 	/**
@@ -1750,9 +1756,8 @@ public class LayoutModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalIconImageId() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("iconImageId"));
+	public String getOriginalIconImageERC() {
+		return getColumnOriginalValue("iconImageERC");
 	}
 
 	@JSON
@@ -2489,7 +2494,7 @@ public class LayoutModelImpl
 		layoutImpl.setHidden(isHidden());
 		layoutImpl.setSystem(isSystem());
 		layoutImpl.setFriendlyURL(getFriendlyURL());
-		layoutImpl.setIconImageId(getIconImageId());
+		layoutImpl.setIconImageERC(getIconImageERC());
 		layoutImpl.setThemeId(getThemeId());
 		layoutImpl.setColorSchemeId(getColorSchemeId());
 		layoutImpl.setStyleBookEntryERC(getStyleBookEntryERC());
@@ -2562,8 +2567,8 @@ public class LayoutModelImpl
 		layoutImpl.setSystem(this.<Boolean>getColumnOriginalValue("system_"));
 		layoutImpl.setFriendlyURL(
 			this.<String>getColumnOriginalValue("friendlyURL"));
-		layoutImpl.setIconImageId(
-			this.<Long>getColumnOriginalValue("iconImageId"));
+		layoutImpl.setIconImageERC(
+			this.<String>getColumnOriginalValue("iconImageERC"));
 		layoutImpl.setThemeId(this.<String>getColumnOriginalValue("themeId"));
 		layoutImpl.setColorSchemeId(
 			this.<String>getColumnOriginalValue("colorSchemeId"));
@@ -2830,7 +2835,13 @@ public class LayoutModelImpl
 			layoutCacheModel.friendlyURL = null;
 		}
 
-		layoutCacheModel.iconImageId = getIconImageId();
+		layoutCacheModel.iconImageERC = getIconImageERC();
+
+		String iconImageERC = layoutCacheModel.iconImageERC;
+
+		if ((iconImageERC != null) && (iconImageERC.length() == 0)) {
+			layoutCacheModel.iconImageERC = null;
+		}
 
 		layoutCacheModel.themeId = getThemeId();
 
@@ -3071,7 +3082,7 @@ public class LayoutModelImpl
 	private boolean _hidden;
 	private boolean _system;
 	private String _friendlyURL;
-	private long _iconImageId;
+	private String _iconImageERC;
 	private String _themeId;
 	private String _colorSchemeId;
 	private String _styleBookEntryERC;
@@ -3149,7 +3160,7 @@ public class LayoutModelImpl
 		_columnOriginalValues.put("hidden_", _hidden);
 		_columnOriginalValues.put("system_", _system);
 		_columnOriginalValues.put("friendlyURL", _friendlyURL);
-		_columnOriginalValues.put("iconImageId", _iconImageId);
+		_columnOriginalValues.put("iconImageERC", _iconImageERC);
 		_columnOriginalValues.put("themeId", _themeId);
 		_columnOriginalValues.put("colorSchemeId", _colorSchemeId);
 		_columnOriginalValues.put("styleBookEntryERC", _styleBookEntryERC);
@@ -3261,7 +3272,7 @@ public class LayoutModelImpl
 
 		columnBitmasks.put("friendlyURL", 67108864L);
 
-		columnBitmasks.put("iconImageId", 134217728L);
+		columnBitmasks.put("iconImageERC", 134217728L);
 
 		columnBitmasks.put("themeId", 268435456L);
 

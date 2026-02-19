@@ -171,7 +171,7 @@ public class LayoutPersistenceTest {
 
 		newLayout.setFriendlyURL(RandomTestUtil.randomString());
 
-		newLayout.setIconImageId(RandomTestUtil.nextLong());
+		newLayout.setIconImageERC(RandomTestUtil.randomString());
 
 		newLayout.setThemeId(RandomTestUtil.randomString());
 
@@ -267,7 +267,7 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getFriendlyURL(), newLayout.getFriendlyURL());
 		Assert.assertEquals(
-			existingLayout.getIconImageId(), newLayout.getIconImageId());
+			existingLayout.getIconImageERC(), newLayout.getIconImageERC());
 		Assert.assertEquals(
 			existingLayout.getThemeId(), newLayout.getThemeId());
 		Assert.assertEquals(
@@ -387,10 +387,12 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByIconImageId() throws Exception {
-		_persistence.countByIconImageId(RandomTestUtil.nextLong());
+	public void testCountByIconImageERC() throws Exception {
+		_persistence.countByIconImageERC("");
 
-		_persistence.countByIconImageId(0L);
+		_persistence.countByIconImageERC("null");
+
+		_persistence.countByIconImageERC((String)null);
 	}
 
 	@Test
@@ -429,11 +431,14 @@ public class LayoutPersistenceTest {
 	}
 
 	@Test
-	public void testCountByP_I() throws Exception {
-		_persistence.countByP_I(
-			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+	public void testCountByP_IconImageERC() throws Exception {
+		_persistence.countByP_IconImageERC(RandomTestUtil.randomBoolean(), "");
 
-		_persistence.countByP_I(RandomTestUtil.randomBoolean(), 0L);
+		_persistence.countByP_IconImageERC(
+			RandomTestUtil.randomBoolean(), "null");
+
+		_persistence.countByP_IconImageERC(
+			RandomTestUtil.randomBoolean(), (String)null);
 	}
 
 	@Test
@@ -667,7 +672,7 @@ public class LayoutPersistenceTest {
 			true, "layoutId", true, "parentLayoutId", true, "classNameId", true,
 			"classPK", true, "name", true, "keywords", true, "robots", true,
 			"type", true, "hidden", true, "system", true, "friendlyURL", true,
-			"iconImageId", true, "themeId", true, "colorSchemeId", true,
+			"iconImageERC", true, "themeId", true, "colorSchemeId", true,
 			"styleBookEntryERC", true, "priority", true, "faviconFileEntryERC",
 			true, "faviconFileEntryScopeERC", true,
 			"masterLayoutPageTemplateEntryERC", true,
@@ -1045,7 +1050,7 @@ public class LayoutPersistenceTest {
 
 		layout.setFriendlyURL(RandomTestUtil.randomString());
 
-		layout.setIconImageId(RandomTestUtil.nextLong());
+		layout.setIconImageERC(RandomTestUtil.randomString());
 
 		layout.setThemeId(RandomTestUtil.randomString());
 

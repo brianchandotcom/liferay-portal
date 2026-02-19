@@ -57,13 +57,23 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public String getCssText()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getFaviconFileEntryERC();
+
+	public long getFaviconFileEntryGroupId();
+
+	public String getFaviconFileEntryScopeERC();
+
+	public String getFaviconURL();
+
 	public Group getGroup();
 
 	public String getHTMLTitle(java.util.Locale locale);
 
 	public String getHTMLTitle(String localeLanguageId);
 
-	public boolean getIconImage();
+	public Image getIconImage();
+
+	public String getIconImageERC();
 
 	public LayoutBranch getLayoutBranch()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -91,14 +101,20 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 
 	public boolean hasChildren();
 
+	public boolean hasIconImage();
+
 	public boolean isContentDisplayPage();
 
 	public boolean isCustomizable()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public boolean isIconImage();
-
 	public boolean isInheritLookAndFeel();
+
+	public void setFaviconFileEntryERC(String faviconFileEntryERC);
+
+	public void setFaviconFileEntryScopeERC(String faviconFileEntryScopeERC);
+
+	public void setIconImageERC(String iconImageERC);
 
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties

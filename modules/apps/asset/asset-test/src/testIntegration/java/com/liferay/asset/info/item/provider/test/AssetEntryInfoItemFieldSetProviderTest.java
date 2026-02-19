@@ -31,6 +31,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -115,6 +116,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
+		Assert.assertEquals(
+			StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), "__ERC__",
+				assetVocabulary.getExternalReferenceCode()),
+			infoFieldSetEntry.getExternalUniqueId());
 		Assert.assertEquals(
 			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}

@@ -186,3 +186,25 @@ test(
 		}
 	}
 );
+
+test(
+	'Escape key does not close the side navigation menu',
+	{tag: '@LPD-79543'},
+	async ({globalMenuPage, page}) => {
+		const menu = page.getByLabel('Applications Menu');
+
+		await test.step('Go to an Applications Panel page', async () => {
+			await globalMenuPage.goToApplications();
+
+			await expect(menu).toBeVisible();
+		});
+
+		await test.step('Press the Escape key and check if the navigation menu is still visible', async () => {
+			await page.keyboard.press('Escape');
+
+			await page.reload();
+
+			await expect(menu).toBeVisible();
+		});
+	}
+);

@@ -13,7 +13,7 @@ import React, {useId, useImperativeHandle, useState} from 'react';
 
 import FieldWrapper from '../../common/components/forms/FieldWrapper';
 
-export const dateConfig = datetimeUtils.generateDateConfigurations({
+export const dateConfig = datetimeUtils?.generateDateConfigurations({
 	defaultLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
 	locale: Liferay.ThemeDisplay.getLanguageId(),
 	type: 'DateTime',

@@ -296,6 +296,13 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			groupId, classNameId, classTypeId);
 	}
 
+	public static LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId, String classTypeKey) {
+
+		return getService().fetchDefaultLayoutPageTemplateEntry(
+			groupId, classNameId, classTypeKey);
+	}
+
 	public static LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
 		long layoutPrototypeId) {
 

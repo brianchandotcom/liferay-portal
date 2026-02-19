@@ -334,6 +334,15 @@ public class LayoutPageTemplateEntryLocalServiceWrapper
 	}
 
 	@Override
+	public LayoutPageTemplateEntry fetchDefaultLayoutPageTemplateEntry(
+		long groupId, long classNameId, String classTypeKey) {
+
+		return _layoutPageTemplateEntryLocalService.
+			fetchDefaultLayoutPageTemplateEntry(
+				groupId, classNameId, classTypeKey);
+	}
+
+	@Override
 	public LayoutPageTemplateEntry fetchFirstLayoutPageTemplateEntry(
 		long layoutPrototypeId) {
 

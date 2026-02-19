@@ -1255,7 +1255,6 @@ public class LayoutUtil {
 
 		boolean layoutCustomizable = GetterUtil.getBoolean(
 			unicodeProperties.get(LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
 		List<String> nestedColumnIds =
 			com.liferay.petra.string.StringUtil.split(
 				unicodeProperties.get(

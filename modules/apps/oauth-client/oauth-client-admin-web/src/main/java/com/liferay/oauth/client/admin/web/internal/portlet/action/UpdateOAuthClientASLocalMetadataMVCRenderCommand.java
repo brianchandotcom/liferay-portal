@@ -109,12 +109,12 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 						"tokenEndpoint", tokenEndpointURI.toString());
 				}
 
-				URI userInfoEndpoint =
+				URI userInfoEndpointURI =
 					authorizationServerMetadata.getUserInfoEndpointURI();
 
-				if (userInfoEndpoint != null) {
+				if (userInfoEndpointURI != null) {
 					renderRequest.setAttribute(
-						"userInfoEndpoint", userInfoEndpoint.toString());
+						"userInfoEndpoint", userInfoEndpointURI.toString());
 				}
 			}
 		}

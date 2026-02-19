@@ -13,12 +13,12 @@ for _, condition in ipairs(obj.status.conditions)
 do
 	if (condition.status == "False") and (condition.type == "Ready")
 	then
-		progressMessage = "Still " .. (condition.reason or "Provisioning") .. ": " .. (condition.message or "Not Ready")
+		progressMessage = "Still " .. (condition.reason or "Progressing") .. ": " .. (condition.message or "Not Ready")
 	elseif (condition.status == "False") and (condition.type == "Synced")
 	then
 		return {
-			health = "Degraded",
-			message = condition.message or "Composition pipeline has errors."
+			message = condition.message or "Composition pipeline has errors.",
+			status = "Degraded"
 		}
 	elseif (condition.status == "True") and (condition.type == "Ready")
 	then
@@ -29,12 +29,12 @@ end
 if (ready and (obj.status.managedServiceDetailsReady or false))
 then
 	return {
-		message = "Liferay Infrastructure is ready.",
-		status = "Healthy"
-	}
+        message = "Liferay Infrastructure is healthy.",
+        status = "Healthy"
+    }
 end
 
 return {
-	message = progressMessage,
-	status = "Progressing"
+    message = progressMessage,
+    status = "Progressing"
 }

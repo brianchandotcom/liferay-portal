@@ -95,6 +95,61 @@ public class DBInspectorUnitTest {
 	}
 
 	@Test
+	public void testHasIndexIsCaseInsensitive() throws Exception {
+		String indexName = "IX_40A51197";
+
+		try (MockedStatic<DBManagerUtil> dbManagerUtilMockedStatic =
+				Mockito.mockStatic(DBManagerUtil.class)) {
+
+			Mockito.when(
+				_connection.getMetaData()
+			).thenReturn(
+				_databaseMetaData
+			);
+
+			Mockito.when(
+				_databaseMetaData.storesLowerCaseIdentifiers()
+			).thenReturn(
+				true
+			);
+
+			DB db = Mockito.mock(DB.class);
+
+			dbManagerUtilMockedStatic.when(
+				DBManagerUtil::getDB
+			).thenReturn(
+				db
+			);
+
+			Mockito.when(
+				db.getIndexResultSet(
+					Mockito.eq(_connection), Mockito.anyString(),
+					Mockito.anyBoolean())
+			).thenReturn(
+				_resultSet
+			);
+
+			Mockito.when(
+				_resultSet.next()
+			).thenReturn(
+				true, false
+			);
+
+			Mockito.when(
+				_resultSet.getString("index_name")
+			).thenReturn(
+				indexName
+			);
+
+			DBInspector dbInspector = new DBInspector(_connection);
+
+			Assert.assertTrue(
+				dbInspector.hasIndex(
+					"friendlyurlentrylocalization", indexName));
+		}
+	}
+
+	@Test
 	public void testIsObjectTable() {
 		DBInspector dbInspector = new DBInspector(_connection);
 

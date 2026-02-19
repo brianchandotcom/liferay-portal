@@ -984,6 +984,33 @@ public class LayoutLocalServiceWrapper
 		return false;
 	}
 
+	private boolean _isUnmodifiedFragmentEntryLink(
+		FragmentEntryLink sourceLayoutFragmentEntryLink,
+		FragmentEntryLink targetLayoutFragmentEntryLink) {
+
+		if ((targetLayoutFragmentEntryLink != null) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getCss(),
+				targetLayoutFragmentEntryLink.getCss()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getConfiguration(),
+				targetLayoutFragmentEntryLink.getConfiguration()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getEditableValues(),
+				targetLayoutFragmentEntryLink.getEditableValues()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getJs(),
+				targetLayoutFragmentEntryLink.getJs()) &&
+			Objects.equals(
+				sourceLayoutFragmentEntryLink.getHtml(),
+				targetLayoutFragmentEntryLink.getHtml())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private JSONObject _processDataJSONObject(
 			Map<String, String> instanceIdsMap, LayoutStructure layoutStructure,
 			boolean masterLayoutCopy, Layout sourceLayout,
@@ -1056,28 +1083,6 @@ public class LayoutLocalServiceWrapper
 					originalFragmentEntryLink.getExternalReferenceCode(),
 					targetLayout.getPlid());
 
-			boolean unmodified = false;
-
-			if ((targetLayoutFragmentEntryLink != null) &&
-				Objects.equals(
-					targetLayoutFragmentEntryLink.getCss(),
-					sourceLayoutFragmentEntryLink.getCss()) &&
-				Objects.equals(
-					targetLayoutFragmentEntryLink.getConfiguration(),
-					sourceLayoutFragmentEntryLink.getConfiguration()) &&
-				Objects.equals(
-					targetLayoutFragmentEntryLink.getEditableValues(),
-					sourceLayoutFragmentEntryLink.getEditableValues()) &&
-				Objects.equals(
-					targetLayoutFragmentEntryLink.getJs(),
-					sourceLayoutFragmentEntryLink.getJs()) &&
-				Objects.equals(
-					targetLayoutFragmentEntryLink.getHtml(),
-					sourceLayoutFragmentEntryLink.getHtml())) {
-
-				unmodified = true;
-			}
-
 			if (targetLayoutFragmentEntryLink == null) {
 				newFragmentEntryLink =
 					(FragmentEntryLink)sourceLayoutFragmentEntryLink.clone();
@@ -1118,7 +1123,10 @@ public class LayoutLocalServiceWrapper
 					_fragmentEntryLinkLocalService.addFragmentEntryLink(
 						newFragmentEntryLink);
 			}
-			else if (unmodified) {
+			else if (_isUnmodifiedFragmentEntryLink(
+						sourceLayoutFragmentEntryLink,
+						targetLayoutFragmentEntryLink)) {
+
 				newFragmentEntryLink = targetLayoutFragmentEntryLink;
 			}
 			else {

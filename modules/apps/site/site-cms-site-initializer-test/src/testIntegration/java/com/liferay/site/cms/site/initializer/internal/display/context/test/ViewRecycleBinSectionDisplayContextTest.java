@@ -107,15 +107,15 @@ public class ViewRecycleBinSectionDisplayContextTest
 			filterString.contains("status eq " + WorkflowConstants.STATUS_ANY));
 
 		DepotEntry depotEntry1 = _addDepotEntry(
-			TestPropsValues.getUserId(), false);
+			false, TestPropsValues.getUserId());
 		DepotEntry depotEntry2 = _addDepotEntry(
-			TestPropsValues.getUserId(), true);
+			true, TestPropsValues.getUserId());
 
 		User user = UserTestUtil.addUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
 			RoleConstants.CMS_ADMINISTRATOR);
 
-		DepotEntry depotEntry3 = _addDepotEntry(user.getUserId(), true);
+		DepotEntry depotEntry3 = _addDepotEntry(true, user.getUserId());
 
 		try {
 			_assertTrashEnabled(depotEntry1, false);
@@ -222,11 +222,11 @@ public class ViewRecycleBinSectionDisplayContextTest
 		return viewRecycleBinSectionDisplayContext;
 	}
 
-	private DepotEntry _addDepotEntry(long userId, boolean trashEnabled)
+	private DepotEntry _addDepotEntry(boolean trashEnabled, long userId)
 		throws Exception {
 
 		DepotEntry depotEntry = addDepotEntry(
-			userId, RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), userId);
 
 		_setTrashEnabledGroupProperty(
 			depotEntry.getGroup(), String.valueOf(trashEnabled));

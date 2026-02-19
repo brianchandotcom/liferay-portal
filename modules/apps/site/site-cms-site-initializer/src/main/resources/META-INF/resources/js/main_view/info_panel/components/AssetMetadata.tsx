@@ -64,8 +64,10 @@ const AssetMetadata = () => {
 				);
 
 				if (
-					data?.numberOfObjectEntries &&
-					data?.numberOfObjectEntryFolders
+					data?.numberOfObjectEntries !== null &&
+					data?.numberOfObjectEntries !== undefined &&
+					data?.numberOfObjectEntryFolders !== null &&
+					data?.numberOfObjectEntryFolders !== undefined
 				) {
 					setNumberOfAssets(
 						data.numberOfObjectEntries +

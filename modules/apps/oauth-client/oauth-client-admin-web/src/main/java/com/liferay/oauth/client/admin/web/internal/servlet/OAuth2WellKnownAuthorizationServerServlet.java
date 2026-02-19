@@ -95,7 +95,7 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 		}
 		else {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Issuer is NOT null");
+				_log.debug("Issuer is not null");
 			}
 
 			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =

@@ -1028,6 +1028,7 @@ public class BatchEnginePortletDataHandlerTest {
 		new ExportImportExecutor(
 		).withGroupId(
 			group2.getGroupId()
+		).withIncludeLayoutSetLayouts(
 		).withLARFile(
 			larFile
 		).withPrivateLayouts(

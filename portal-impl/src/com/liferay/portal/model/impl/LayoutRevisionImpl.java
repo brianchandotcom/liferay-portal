@@ -234,16 +234,6 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	public String getIconImageERC() {
-		if (_iconImage != null) {
-			return _iconImage.getExternalReferenceCode();
-		}
-
-		_iconImage = getIconImage();
-
-		if (_iconImage != null) {
-			return _iconImage.getExternalReferenceCode();
-		}
-
 		return getTypeSettingsProperty("iconImageERC");
 	}
 
@@ -494,7 +484,8 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 			}
 		}
 		else {
-			setIconImageId(0);
+			super.setIconImageId(0);
+			_iconImage = null;
 			unicodeProperties.setProperty("iconImageERC", null);
 		}
 
@@ -509,7 +500,14 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 
 		super.setIconImageId(iconImageId);
 
-		_iconImage = null;
+		_iconImage = getIconImage();
+
+		if (_iconImage == null) {
+			setIconImageERC(null);
+		}
+		else {
+			setIconImageERC(_iconImage.getExternalReferenceCode());
+		}
 	}
 
 	@Override

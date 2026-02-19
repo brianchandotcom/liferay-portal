@@ -1579,6 +1579,7 @@
 		<exception>CPInstanceWidth</exception>
 		<exception>CPMeasurementUnitType</exception>
 		<exception>CPOptionCategoryKey</exception>
+		<exception>CPOptionCategoryTitle</exception>
 		<exception>CPOptionKey</exception>
 		<exception>CPOptionSKUContributor</exception>
 		<exception>CPOptionValueKey</exception>

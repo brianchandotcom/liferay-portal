@@ -43,7 +43,8 @@ public class SearchIndexPostUpgradeDataCleanupProcessTest
 							"Orphaned index from a deleted company detected: ",
 							_indexNameBuilder.getIndexNamePrefix(),
 							company.getCompanyId(),
-							". Manual deletion required.")));
+							". Manually check that index is not being used ",
+							"and delete it if needed.")));
 			},
 			() -> _companyLocalService.deleteCompany(company),
 			() -> PortalInstances.removeCompany(company.getCompanyId()));

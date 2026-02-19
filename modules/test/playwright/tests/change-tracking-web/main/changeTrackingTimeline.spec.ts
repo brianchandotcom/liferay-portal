@@ -123,11 +123,18 @@ test.beforeEach(
 	}
 );
 
-test.afterEach(async ({apiHelpers, ctCollection}) => {
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection.body.id
-	);
-});
+test.afterEach(
+	async ({apiHelpers, blogsPage, changeTrackingPage, ctCollection}) => {
+		await apiHelpers.headlessChangeTracking.deleteCTCollection(
+			ctCollection.body.id
+		);
+
+		await changeTrackingPage.workOnProduction();
+
+		await blogsPage.goto();
+		await blogsPage.deleteAllBlogEntries();
+	}
+);
 
 test('LPD-25853 Edit in x publication is added in the timeline dropdown actions', async ({
 	changeTrackingPage,

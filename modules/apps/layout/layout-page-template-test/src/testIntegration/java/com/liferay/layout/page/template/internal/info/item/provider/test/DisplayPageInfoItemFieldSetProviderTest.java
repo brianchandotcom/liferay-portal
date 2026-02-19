@@ -125,6 +125,32 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 	}
 
 	@Test
+	public void testGetInfoFieldSet() {
+		InfoFieldSet infoFieldSet =
+			_displayPageInfoItemFieldSetProvider.getInfoFieldSet(
+				JournalArticle.class.getName(),
+				String.valueOf(_journalArticle.getDDMStructureId()),
+				"LayoutPageTemplateEntry", _group.getGroupId());
+
+		List<InfoField<?>> infoFields = infoFieldSet.getAllInfoFields();
+
+		Assert.assertEquals(infoFields.toString(), 2, infoFields.size());
+
+		List<InfoField<?>> sortedInfoFields = ListUtil.sort(
+			infoFields, Comparator.comparing(InfoField::getName));
+
+		_assertInfoField(
+			"LayoutPageTemplateEntry_displayPageURL", sortedInfoFields.get(0),
+			"displayPageURL", "LayoutPageTemplateEntry_displayPageURL");
+		_assertInfoField(
+			"LayoutPageTemplateEntry__ERC__" +
+				_layoutPageTemplateEntry.getExternalReferenceCode(),
+			sortedInfoFields.get(1), _layoutPageTemplateEntry.getName(),
+			"LayoutPageTemplateEntry_" +
+				_layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+	}
+
+	@Test
 	public void testGetInfoFieldValues() throws Exception {
 		_assertInfoFieldValues(
 			FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET);

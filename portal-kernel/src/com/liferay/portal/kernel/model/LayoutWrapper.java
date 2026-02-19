@@ -61,7 +61,7 @@ public class LayoutWrapper
 		attributes.put("hidden", isHidden());
 		attributes.put("system", isSystem());
 		attributes.put("friendlyURL", getFriendlyURL());
-		attributes.put("iconImageId", getIconImageId());
+		attributes.put("iconImageERC", getIconImageERC());
 		attributes.put("themeId", getThemeId());
 		attributes.put("colorSchemeId", getColorSchemeId());
 		attributes.put("styleBookEntryERC", getStyleBookEntryERC());
@@ -259,10 +259,10 @@ public class LayoutWrapper
 			setFriendlyURL(friendlyURL);
 		}
 
-		Long iconImageId = (Long)attributes.get("iconImageId");
+		String iconImageERC = (String)attributes.get("iconImageERC");
 
-		if (iconImageId != null) {
-			setIconImageId(iconImageId);
+		if (iconImageERC != null) {
+			setIconImageERC(iconImageERC);
 		}
 
 		String themeId = (String)attributes.get("themeId");
@@ -389,6 +389,11 @@ public class LayoutWrapper
 	@Override
 	public Layout cloneWithOriginalValues() {
 		return wrap(model.cloneWithOriginalValues());
+	}
+
+	@Override
+	public void deleteUnusedIconImage() {
+		model.deleteUnusedIconImage();
 	}
 
 	@Override
@@ -846,20 +851,29 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if the current layout has a configured icon.
+	 * Returns the icon image associated with the layout.
 	 *
-	 * @return <code>true</code> if the current layout has a configured icon;
-	 <code>false</code> otherwise
+	 * @return the icon image, or <code>null</code> if the layout has no icon image
 	 */
 	@Override
-	public boolean getIconImage() {
+	public Image getIconImage() {
 		return model.getIconImage();
 	}
 
 	/**
-	 * Returns the icon image ID of this layout.
+	 * Returns the icon image erc of this layout.
 	 *
-	 * @return the icon image ID of this layout
+	 * @return the icon image erc of this layout
+	 */
+	@Override
+	public String getIconImageERC() {
+		return model.getIconImageERC();
+	}
+
+	/**
+	 * Returns the icon image ID associated with the layout.
+	 *
+	 * @return the icon image ID, or <code>0</code> if the layout has no icon image
 	 */
 	@Override
 	public long getIconImageId() {
@@ -1623,6 +1637,17 @@ public class LayoutWrapper
 		return model.hasChildren();
 	}
 
+	/**
+	 * Returns <code>true</code> if the current layout has a configured icon.
+	 *
+	 * @return <code>true</code> if the current layout has a configured icon;
+	 <code>false</code> otherwise
+	 */
+	@Override
+	public boolean hasIconImage() {
+		return model.hasIconImage();
+	}
+
 	@Override
 	public boolean hasScopeGroup()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1757,11 +1782,6 @@ public class LayoutWrapper
 	@Override
 	public boolean isHidden() {
 		return model.isHidden();
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return model.isIconImage();
 	}
 
 	/**
@@ -2222,9 +2242,19 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the icon image ID of this layout.
+	 * Sets the icon image erc of this layout.
 	 *
-	 * @param iconImageId the icon image ID of this layout
+	 * @param iconImageERC the icon image erc of this layout
+	 */
+	@Override
+	public void setIconImageERC(String iconImageERC) {
+		model.setIconImageERC(iconImageERC);
+	}
+
+	/**
+	 * Sets the icon image ID associated with the layout.
+	 *
+	 * @param iconImageId the icon image ID
 	 */
 	@Override
 	public void setIconImageId(long iconImageId) {

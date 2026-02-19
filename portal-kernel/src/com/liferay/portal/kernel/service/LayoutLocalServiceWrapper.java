@@ -739,11 +739,11 @@ public class LayoutLocalServiceWrapper
 	}
 
 	@Override
-	public Layout fetchLayoutByIconImageId(
-		boolean privateLayout, long iconImageId) {
+	public Layout fetchLayoutByIconImageERC(
+		boolean privateLayout, String iconImageERC) {
 
-		return _layoutLocalService.fetchLayoutByIconImageId(
-			privateLayout, iconImageId);
+		return _layoutLocalService.fetchLayoutByIconImageERC(
+			privateLayout, iconImageERC);
 	}
 
 	/**

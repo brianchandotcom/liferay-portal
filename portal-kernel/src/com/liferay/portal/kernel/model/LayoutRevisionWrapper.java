@@ -401,6 +401,26 @@ public class LayoutRevisionWrapper
 	}
 
 	@Override
+	public String getFaviconFileEntryERC() {
+		return model.getFaviconFileEntryERC();
+	}
+
+	@Override
+	public long getFaviconFileEntryGroupId() {
+		return model.getFaviconFileEntryGroupId();
+	}
+
+	@Override
+	public String getFaviconFileEntryScopeERC() {
+		return model.getFaviconFileEntryScopeERC();
+	}
+
+	@Override
+	public String getFaviconURL() {
+		return model.getFaviconURL();
+	}
+
+	@Override
 	public Group getGroup() {
 		return model.getGroup();
 	}
@@ -436,8 +456,13 @@ public class LayoutRevisionWrapper
 	}
 
 	@Override
-	public boolean getIconImage() {
+	public Image getIconImage() {
 		return model.getIconImage();
+	}
+
+	@Override
+	public String getIconImageERC() {
+		return model.getIconImageERC();
 	}
 
 	/**
@@ -1015,6 +1040,11 @@ public class LayoutRevisionWrapper
 		return model.hasChildren();
 	}
 
+	@Override
+	public boolean hasIconImage() {
+		return model.hasIconImage();
+	}
+
 	/**
 	 * Returns <code>true</code> if this layout revision is approved.
 	 *
@@ -1075,11 +1105,6 @@ public class LayoutRevisionWrapper
 	@Override
 	public boolean isHead() {
 		return model.isHead();
-	}
-
-	@Override
-	public boolean isIconImage() {
-		return model.isIconImage();
 	}
 
 	/**
@@ -1274,6 +1299,16 @@ public class LayoutRevisionWrapper
 		model.setDescriptionMap(descriptionMap, defaultLocale);
 	}
 
+	@Override
+	public void setFaviconFileEntryERC(String faviconFileEntryERC) {
+		model.setFaviconFileEntryERC(faviconFileEntryERC);
+	}
+
+	@Override
+	public void setFaviconFileEntryScopeERC(String faviconFileEntryScopeERC) {
+		model.setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
+	}
+
 	/**
 	 * Sets the group ID of this layout revision.
 	 *
@@ -1292,6 +1327,11 @@ public class LayoutRevisionWrapper
 	@Override
 	public void setHead(boolean head) {
 		model.setHead(head);
+	}
+
+	@Override
+	public void setIconImageERC(String iconImageERC) {
+		model.setIconImageERC(iconImageERC);
 	}
 
 	/**

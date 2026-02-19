@@ -1102,171 +1102,171 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * Returns all the layouts where iconImageId = &#63;.
+	 * Returns all the layouts where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @return the matching layouts
 	 */
-	public static List<Layout> findByIconImageId(long iconImageId) {
-		return getPersistence().findByIconImageId(iconImageId);
+	public static List<Layout> findByIconImageERC(String iconImageERC) {
+		return getPersistence().findByIconImageERC(iconImageERC);
 	}
 
 	/**
-	 * Returns a range of all the layouts where iconImageId = &#63;.
+	 * Returns a range of all the layouts where iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
-	public static List<Layout> findByIconImageId(
-		long iconImageId, int start, int end) {
+	public static List<Layout> findByIconImageERC(
+		String iconImageERC, int start, int end) {
 
-		return getPersistence().findByIconImageId(iconImageId, start, end);
+		return getPersistence().findByIconImageERC(iconImageERC, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
+	 * Returns an ordered range of all the layouts where iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByIconImageId(
-		long iconImageId, int start, int end,
+	public static List<Layout> findByIconImageERC(
+		String iconImageERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().findByIconImageId(
-			iconImageId, start, end, orderByComparator);
+		return getPersistence().findByIconImageERC(
+			iconImageERC, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where iconImageId = &#63;.
+	 * Returns an ordered range of all the layouts where iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByIconImageId(
-		long iconImageId, int start, int end,
+	public static List<Layout> findByIconImageERC(
+		String iconImageERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByIconImageId(
-			iconImageId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().findByIconImageERC(
+			iconImageERC, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where iconImageId = &#63;.
+	 * Returns the first layout in the ordered set where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByIconImageId_First(
-			long iconImageId, OrderByComparator<Layout> orderByComparator)
+	public static Layout findByIconImageERC_First(
+			String iconImageERC, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByIconImageId_First(
-			iconImageId, orderByComparator);
+		return getPersistence().findByIconImageERC_First(
+			iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where iconImageId = &#63;.
+	 * Returns the first layout in the ordered set where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByIconImageId_First(
-		long iconImageId, OrderByComparator<Layout> orderByComparator) {
+	public static Layout fetchByIconImageERC_First(
+		String iconImageERC, OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByIconImageId_First(
-			iconImageId, orderByComparator);
+		return getPersistence().fetchByIconImageERC_First(
+			iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where iconImageId = &#63;.
+	 * Returns the last layout in the ordered set where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByIconImageId_Last(
-			long iconImageId, OrderByComparator<Layout> orderByComparator)
+	public static Layout findByIconImageERC_Last(
+			String iconImageERC, OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByIconImageId_Last(
-			iconImageId, orderByComparator);
+		return getPersistence().findByIconImageERC_Last(
+			iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where iconImageId = &#63;.
+	 * Returns the last layout in the ordered set where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByIconImageId_Last(
-		long iconImageId, OrderByComparator<Layout> orderByComparator) {
+	public static Layout fetchByIconImageERC_Last(
+		String iconImageERC, OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByIconImageId_Last(
-			iconImageId, orderByComparator);
+		return getPersistence().fetchByIconImageERC_Last(
+			iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where iconImageId = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set where iconImageERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] findByIconImageId_PrevAndNext(
-			long plid, long iconImageId,
+	public static Layout[] findByIconImageERC_PrevAndNext(
+			long plid, String iconImageERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByIconImageId_PrevAndNext(
-			plid, iconImageId, orderByComparator);
+		return getPersistence().findByIconImageERC_PrevAndNext(
+			plid, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Removes all the layouts where iconImageId = &#63; from the database.
+	 * Removes all the layouts where iconImageERC = &#63; from the database.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 */
-	public static void removeByIconImageId(long iconImageId) {
-		getPersistence().removeByIconImageId(iconImageId);
+	public static void removeByIconImageERC(String iconImageERC) {
+		getPersistence().removeByIconImageERC(iconImageERC);
 	}
 
 	/**
-	 * Returns the number of layouts where iconImageId = &#63;.
+	 * Returns the number of layouts where iconImageERC = &#63;.
 	 *
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @return the number of matching layouts
 	 */
-	public static int countByIconImageId(long iconImageId) {
-		return getPersistence().countByIconImageId(iconImageId);
+	public static int countByIconImageERC(String iconImageERC) {
+		return getPersistence().countByIconImageERC(iconImageERC);
 	}
 
 	/**
@@ -2275,190 +2275,196 @@ public class LayoutUtil {
 	}
 
 	/**
-	 * Returns all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns all the layouts where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @return the matching layouts
 	 */
-	public static List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId) {
+	public static List<Layout> findByP_IconImageERC(
+		boolean privateLayout, String iconImageERC) {
 
-		return getPersistence().findByP_I(privateLayout, iconImageId);
+		return getPersistence().findByP_IconImageERC(
+			privateLayout, iconImageERC);
 	}
 
 	/**
-	 * Returns a range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns a range of all the layouts where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
-	public static List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId, int start, int end) {
+	public static List<Layout> findByP_IconImageERC(
+		boolean privateLayout, String iconImageERC, int start, int end) {
 
-		return getPersistence().findByP_I(
-			privateLayout, iconImageId, start, end);
+		return getPersistence().findByP_IconImageERC(
+			privateLayout, iconImageERC, start, end);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId, int start, int end,
+	public static List<Layout> findByP_IconImageERC(
+		boolean privateLayout, String iconImageERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().findByP_I(
-			privateLayout, iconImageId, start, end, orderByComparator);
+		return getPersistence().findByP_IconImageERC(
+			privateLayout, iconImageERC, start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns an ordered range of all the layouts where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching layouts
 	 */
-	public static List<Layout> findByP_I(
-		boolean privateLayout, long iconImageId, int start, int end,
+	public static List<Layout> findByP_IconImageERC(
+		boolean privateLayout, String iconImageERC, int start, int end,
 		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().findByP_I(
-			privateLayout, iconImageId, start, end, orderByComparator,
+		return getPersistence().findByP_IconImageERC(
+			privateLayout, iconImageERC, start, end, orderByComparator,
 			useFinderCache);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByP_I_First(
-			boolean privateLayout, long iconImageId,
+	public static Layout findByP_IconImageERC_First(
+			boolean privateLayout, String iconImageERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByP_I_First(
-			privateLayout, iconImageId, orderByComparator);
+		return getPersistence().findByP_IconImageERC_First(
+			privateLayout, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the first layout in the ordered set where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByP_I_First(
-		boolean privateLayout, long iconImageId,
+	public static Layout fetchByP_IconImageERC_First(
+		boolean privateLayout, String iconImageERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByP_I_First(
-			privateLayout, iconImageId, orderByComparator);
+		return getPersistence().fetchByP_IconImageERC_First(
+			privateLayout, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
-	public static Layout findByP_I_Last(
-			boolean privateLayout, long iconImageId,
+	public static Layout findByP_IconImageERC_Last(
+			boolean privateLayout, String iconImageERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByP_I_Last(
-			privateLayout, iconImageId, orderByComparator);
+		return getPersistence().findByP_IconImageERC_Last(
+			privateLayout, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the last layout in the ordered set where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
-	public static Layout fetchByP_I_Last(
-		boolean privateLayout, long iconImageId,
+	public static Layout fetchByP_IconImageERC_Last(
+		boolean privateLayout, String iconImageERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		return getPersistence().fetchByP_I_Last(
-			privateLayout, iconImageId, orderByComparator);
+		return getPersistence().fetchByP_IconImageERC_Last(
+			privateLayout, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
-	public static Layout[] findByP_I_PrevAndNext(
-			long plid, boolean privateLayout, long iconImageId,
+	public static Layout[] findByP_IconImageERC_PrevAndNext(
+			long plid, boolean privateLayout, String iconImageERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchLayoutException {
 
-		return getPersistence().findByP_I_PrevAndNext(
-			plid, privateLayout, iconImageId, orderByComparator);
+		return getPersistence().findByP_IconImageERC_PrevAndNext(
+			plid, privateLayout, iconImageERC, orderByComparator);
 	}
 
 	/**
-	 * Removes all the layouts where privateLayout = &#63; and iconImageId = &#63; from the database.
+	 * Removes all the layouts where privateLayout = &#63; and iconImageERC = &#63; from the database.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 */
-	public static void removeByP_I(boolean privateLayout, long iconImageId) {
-		getPersistence().removeByP_I(privateLayout, iconImageId);
+	public static void removeByP_IconImageERC(
+		boolean privateLayout, String iconImageERC) {
+
+		getPersistence().removeByP_IconImageERC(privateLayout, iconImageERC);
 	}
 
 	/**
-	 * Returns the number of layouts where privateLayout = &#63; and iconImageId = &#63;.
+	 * Returns the number of layouts where privateLayout = &#63; and iconImageERC = &#63;.
 	 *
 	 * @param privateLayout the private layout
-	 * @param iconImageId the icon image ID
+	 * @param iconImageERC the icon image erc
 	 * @return the number of matching layouts
 	 */
-	public static int countByP_I(boolean privateLayout, long iconImageId) {
-		return getPersistence().countByP_I(privateLayout, iconImageId);
+	public static int countByP_IconImageERC(
+		boolean privateLayout, String iconImageERC) {
+
+		return getPersistence().countByP_IconImageERC(
+			privateLayout, iconImageERC);
 	}
 
 	/**

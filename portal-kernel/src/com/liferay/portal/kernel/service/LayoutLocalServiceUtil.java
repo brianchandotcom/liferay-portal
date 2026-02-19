@@ -695,11 +695,11 @@ public class LayoutLocalServiceUtil {
 			groupId, privateLayout, friendlyURL);
 	}
 
-	public static Layout fetchLayoutByIconImageId(
-		boolean privateLayout, long iconImageId) {
+	public static Layout fetchLayoutByIconImageERC(
+		boolean privateLayout, String iconImageERC) {
 
-		return getService().fetchLayoutByIconImageId(
-			privateLayout, iconImageId);
+		return getService().fetchLayoutByIconImageERC(
+			privateLayout, iconImageERC);
 	}
 
 	/**

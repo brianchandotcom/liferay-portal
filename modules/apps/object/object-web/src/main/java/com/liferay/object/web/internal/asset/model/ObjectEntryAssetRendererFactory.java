@@ -49,8 +49,9 @@ public class ObjectEntryAssetRendererFactory
 		ObjectDefinition objectDefinition,
 		ObjectEntryDisplayContextFactory objectEntryDisplayContextFactory,
 		ObjectEntryLocalService objectEntryLocalService,
+		ObjectEntryService objectEntryService,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectEntryService objectEntryService, ServletContext servletContext) {
+		ServletContext servletContext) {
 
 		setClassName(objectDefinition.getClassName());
 		setSearchable(true);
@@ -64,8 +65,8 @@ public class ObjectEntryAssetRendererFactory
 		_objectDefinition = objectDefinition;
 		_objectEntryDisplayContextFactory = objectEntryDisplayContextFactory;
 		_objectEntryLocalService = objectEntryLocalService;
-		_objectFieldLocalService = objectFieldLocalService;
 		_objectEntryService = objectEntryService;
+		_objectFieldLocalService = objectFieldLocalService;
 		_servletContext = servletContext;
 	}
 

@@ -249,8 +249,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 					_assetDisplayPageFriendlyURLProvider,
 					_depotEntryLocalService, _dlAppLocalService, _dlURLHelper,
 					objectDefinition, _objectEntryDisplayContextFactory,
-					_objectEntryLocalService, _objectFieldLocalService,
-					_objectEntryService, _servletContext),
+					_objectEntryLocalService, _objectEntryService,
+					_objectFieldLocalService, _servletContext),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"company.id", objectDefinition.getCompanyId()
 				).put(

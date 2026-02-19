@@ -50,21 +50,13 @@ public class UserKeywordQueryContributor implements KeywordQueryContributor {
 			booleanQuery, searchContext, "emailAddress.text", false);
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, "firstName", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "firstName", false);
 		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, "fullName", false);
-		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "fullName", false);
 		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "jobTitle", false);
 		queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, "lastName", false);
-		queryHelper.addSearchTerm(
-			booleanQuery, searchContext, "lastName", false);
 		queryHelper.addSearchLocalizedTerm(
-			booleanQuery, searchContext, "middleName", false);
-		queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "middleName", false);
 		queryHelper.addSearchTerm(booleanQuery, searchContext, "region", false);
 		queryHelper.addSearchTerm(

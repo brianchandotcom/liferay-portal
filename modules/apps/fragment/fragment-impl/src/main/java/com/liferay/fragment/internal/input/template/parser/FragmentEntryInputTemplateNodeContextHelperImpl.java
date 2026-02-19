@@ -52,7 +52,6 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -63,6 +62,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -498,19 +498,19 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		inputTemplateNode.addAttribute(
-			"isCMS",
-			themeDisplay.getScopeGroup(
-			).isCMS());
+		boolean cms = themeDisplay.getScopeGroup(
+		).isCMS();
+
+		inputTemplateNode.addAttribute("isCMS", cms);
 
 		Object object = httpServletRequest.getAttribute(
 			InfoDisplayWebKeys.INFO_ITEM);
 
-		ObjectEntry objectEntry =
-			object instanceof ObjectEntry ? (ObjectEntry)object : null;
+		if (object instanceof GroupedModel) {
+			GroupedModel groupedModel = (GroupedModel)object;
 
-		if (objectEntry != null) {
-			inputTemplateNode.addAttribute("groupId", objectEntry.getGroupId());
+			inputTemplateNode.addAttribute(
+				"groupId", groupedModel.getGroupId());
 		}
 	}
 

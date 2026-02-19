@@ -12,7 +12,7 @@ import {
 } from '../../../../../src/main/resources/META-INF/resources/js/main_view/bulk_actions_monitor/util';
 import {URL_BULK_ACTION_TASK} from '../../../../../src/main/resources/META-INF/resources/js/main_view/bulk_actions_monitor/util/constants';
 
-describe.skip('Bulk Actions Monitor Utils', () => {
+describe('Bulk Actions Monitor Utils', () => {
 	describe('composeCreateTaskURL', () => {
 		it('return the download URL when useDownloadUrl is true', () => {
 			const taskUrl = composeCreateTaskURL(
@@ -42,7 +42,7 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 			);
 
 			expect(taskUrl).toBe(
-				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/bulk/v1.0/bulk-action?nestedFields=embedded'}`
+				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/bulk/v1.0/bulk-action'}`
 			);
 		});
 
@@ -65,7 +65,7 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 			);
 
 			expect(taskUrl).toBe(
-				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/headless-cms/v1.0/bulk-action?nestedFields=embedded&search=test&filter=asset'}`
+				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/bulk/v1.0/bulk-action?search=test&filter=asset'}`
 			);
 		});
 
@@ -87,7 +87,7 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 			);
 
 			expect(taskUrl).toBe(
-				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/headless-cms/v1.0/bulk-action?emptySearch=true&nestedFields=embedded&filter=asset'}`
+				`${Liferay.ThemeDisplay.getPortalURL()}${'/o/bulk/v1.0/bulk-action?emptySearch=true&filter=asset'}`
 			);
 		});
 	});
@@ -103,7 +103,9 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 			expect(result).toEqual({
 				bulkActionItems: [],
 				destinationFolderId: 12345,
-				selectAll: false,
+				selectionScope: {
+					selectAll: false,
+				},
 				type: 'MoveBulkAction',
 			});
 		});
@@ -205,7 +207,9 @@ describe.skip('Bulk Actions Monitor Utils', () => {
 
 			expect(result).toEqual({
 				bulkActionItems: [],
-				selectAll: true,
+				selectionScope: {
+					selectAll: true,
+				},
 				type: 'DeleteBulkAction',
 			});
 		});

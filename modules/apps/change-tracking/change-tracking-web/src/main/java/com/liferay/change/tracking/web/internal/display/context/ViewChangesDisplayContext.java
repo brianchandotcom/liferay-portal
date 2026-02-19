@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserTable;
@@ -112,10 +111,7 @@ import java.io.Serializable;
 import java.text.Format;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -164,6 +160,8 @@ public class ViewChangesDisplayContext {
 		_userLocalService = userLocalService;
 		_workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
 		_workflowTaskManager = workflowTaskManager;
+
+		_groupClassNameId = portal.getClassNameId(Group.class);
 
 		_httpServletRequest = portal.getHttpServletRequest(renderRequest);
 
@@ -509,6 +507,10 @@ public class ViewChangesDisplayContext {
 			}
 		}
 
+		Map<Long, Document> ctEntryDocuments =
+			DisplayContextUtil.getCTEntryDocuments(
+				_ctCollection.getCtCollectionId(), _themeDisplay);
+
 		Map<Long, String> typeNameCacheMap = new HashMap<>();
 
 		for (Map.Entry<Long, Set<Long>> entry :
@@ -519,20 +521,8 @@ public class ViewChangesDisplayContext {
 			}
 
 			_populateEntryValues(
-				modelInfoMap, entry.getKey(), entry.getValue(),
-				typeNameCacheMap);
-		}
-
-		if (ctClosure != null) {
-			long groupClassNameId = _portal.getClassNameId(Group.class);
-
-			for (long groupId :
-					classNameIdClassPKsMap.getOrDefault(
-						groupClassNameId, Collections.emptySet())) {
-
-				_populateModelInfoGroupIds(
-					ctClosure, modelInfoMap, groupClassNameId, groupId);
-			}
+				ctEntryDocuments, modelInfoMap, entry.getKey(),
+				entry.getValue(), typeNameCacheMap);
 		}
 
 		_reactData = HashMapBuilder.<String, Object>put(
@@ -1520,6 +1510,21 @@ public class ViewChangesDisplayContext {
 			workflowInstanceLink.getWorkflowInstanceId(), null, 0, 1, null);
 	}
 
+	private boolean _isSite(CTEntry ctEntry) {
+		if (ctEntry == null) {
+			return false;
+		}
+
+		if (ctEntry.getModelClassNameId() == _groupClassNameId) {
+			Group group = _groupLocalService.fetchGroup(
+				ctEntry.getModelClassPK());
+
+			return _isSite(group);
+		}
+
+		return false;
+	}
+
 	private <T extends BaseModel<T>> boolean _isSite(T model) {
 		if (model instanceof Group) {
 			Group group = (Group)model;
@@ -1573,12 +1578,12 @@ public class ViewChangesDisplayContext {
 	}
 
 	private <T extends BaseModel<T>> void _populateEntryValues(
+			Map<Long, Document> ctEntryDocuments,
 			Map<ModelInfoKey, ModelInfo> modelInfoMap, long modelClassNameId,
 			Set<Long> classPKs, Map<Long, String> typeNameCacheMap)
 		throws Exception {
 
 		Map<Serializable, T> baseModelMap = null;
-		Map<Serializable, T> ctModelMap = null;
 
 		Map<Serializable, CTEntry> ctEntryMap = new HashMap<>();
 
@@ -1639,78 +1644,8 @@ public class ViewChangesDisplayContext {
 				modelInfo._site = _isSite(model);
 			}
 			else {
-				long ctCollectionId =
-					_ctDisplayRendererRegistry.getCtCollectionId(
-						_ctCollection, ctEntry);
-
-				CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
-					_ctDisplayRendererRegistry.getCTSQLMode(
-						ctCollectionId, ctEntry);
-
-				T model;
-
-				try {
-					if ((ctCollectionId == _ctCollection.getCtCollectionId()) &&
-						(ctSQLMode == CTSQLModeThreadLocal.CTSQLMode.DEFAULT)) {
-
-						if (ctModelMap == null) {
-							ctModelMap =
-								_ctDisplayRendererRegistry.fetchCTModelMap(
-									_ctCollection.getCtCollectionId(),
-									CTSQLModeThreadLocal.CTSQLMode.DEFAULT,
-									modelClassNameId, classPKs);
-						}
-
-						if (ctModelMap != null) {
-							model = ctModelMap.get(classPK);
-						}
-						else {
-							model = null;
-						}
-					}
-					else {
-						model = _ctDisplayRendererRegistry.fetchCTModel(
-							ctCollectionId, ctSQLMode, modelClassNameId,
-							classPK);
-					}
-				}
-				catch (SystemException systemException) {
-					if (systemException.getCause() instanceof ORMException) {
-						if (_ctCollection.getStatus() !=
-								WorkflowConstants.STATUS_EXPIRED) {
-
-							_log.error(
-								_getMissingModelMessage(
-									classPK, modelClassNameId),
-								systemException.getCause());
-						}
-						else if (_log.isDebugEnabled()) {
-							_log.debug(
-								_getMissingModelMessage(
-									classPK, modelClassNameId),
-								systemException.getCause());
-						}
-
-						continue;
-					}
-
-					throw systemException;
-				}
-
-				if (model == null) {
-					if ((ctEntry.getChangeType() !=
-							CTConstants.CT_CHANGE_TYPE_DELETION) &&
-						_log.isWarnEnabled()) {
-
-						_log.warn(
-							_getMissingModelMessage(classPK, modelClassNameId));
-					}
-
-					continue;
-				}
-
-				Map<String, Object> modelAttributes =
-					model.getModelAttributes();
+				Document document = ctEntryDocuments.get(
+					ctEntry.getCtEntryId());
 
 				Date modifiedDate = ctEntry.getModifiedDate();
 
@@ -1718,9 +1653,24 @@ public class ViewChangesDisplayContext {
 
 				modelInfo._jsonObject = JSONUtil.put(
 					"changeType",
-					_ctDisplayRendererRegistry.getChangeType(ctEntry, model)
+					() -> {
+						if (document == null) {
+							return ctEntry.getChangeType();
+						}
+
+						return document.getInteger("changeType");
+					}
 				).put(
 					"ctEntryId", ctEntry.getCtEntryId()
+				).put(
+					"groupId",
+					() -> {
+						if (document == null) {
+							return 0;
+						}
+
+						return document.getLong(Field.GROUP_ID);
+					}
 				).put(
 					"modelClassNameId", ctEntry.getModelClassNameId()
 				).put(
@@ -1737,84 +1687,92 @@ public class ViewChangesDisplayContext {
 						true)
 				).put(
 					"title",
-					_getTitle(
-						ctCollectionId, ctSQLMode, _themeDisplay.getLocale(),
-						model, modelClassNameId, typeNameCacheMap)
+					() -> {
+						if (document == null) {
+							return StringBundler.concat(
+								_ctDisplayRendererRegistry.getTypeName(
+									_themeDisplay.getLocale(),
+									ctEntry.getModelClassNameId()),
+								StringPool.SPACE, ctEntry.getModelClassPK());
+						}
+
+						return document.getString(
+							Field.getLocalizedName(
+								_themeDisplay.getLocale(), Field.TITLE));
+					}
 				).put(
 					"userId", ctEntry.getUserId()
 				).put(
-					"workflowStatus", (Integer)modelAttributes.get("status")
+					"workflowStatus",
+					() -> {
+						if (document == null) {
+							return WorkflowConstants.STATUS_APPROVED;
+						}
+
+						return document.getInteger(Field.STATUS);
+					}
 				);
 
-				long groupId = 0;
+				if ((document != null) &&
+					(_modelClassNameId == ctEntry.getModelClassNameId()) &&
+					(_modelClassPK == ctEntry.getModelClassPK())) {
 
-				if (model instanceof GroupedModel) {
-					GroupedModel groupedModel = (GroupedModel)model;
+					long ctCollectionId =
+						_ctDisplayRendererRegistry.getCtCollectionId(
+							_ctCollection, ctEntry);
 
-					groupId = groupedModel.getGroupId();
+					CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+						_ctDisplayRendererRegistry.getCTSQLMode(
+							ctCollectionId, ctEntry);
 
-					modelInfo._jsonObject.put("groupId", groupId);
+					T model = null;
+
+					try {
+						model = _ctDisplayRendererRegistry.fetchCTModel(
+							ctCollectionId, ctSQLMode, modelClassNameId,
+							classPK);
+					}
+					catch (SystemException systemException) {
+						if (systemException.getCause() instanceof
+								ORMException) {
+
+							if (_ctCollection.getStatus() !=
+									WorkflowConstants.STATUS_EXPIRED) {
+
+								_log.error(
+									_getMissingModelMessage(
+										classPK, modelClassNameId),
+									systemException.getCause());
+							}
+							else if (_log.isDebugEnabled()) {
+								_log.debug(
+									_getMissingModelMessage(
+										classPK, modelClassNameId),
+									systemException.getCause());
+							}
+
+							continue;
+						}
+
+						throw systemException;
+					}
+
+					if (_ctDisplayRendererRegistry.isWorkflowEnabled(
+							ctEntry, model) &&
+						(document.getInteger("changeType") !=
+							CTConstants.CT_CHANGE_TYPE_DELETION) &&
+						(document.getInteger(Field.STATUS) !=
+							WorkflowConstants.STATUS_DRAFT)) {
+
+						modelInfo._jsonObject.put(
+							"showWorkflow",
+							!_isWorkflowTasksEmpty(
+								ctEntry, document.getLong(Field.GROUP_ID),
+								model));
+					}
 				}
 
-				int changeType = _ctDisplayRendererRegistry.getChangeType(
-					ctEntry, model);
-
-				if (_ctDisplayRendererRegistry.isWorkflowEnabled(
-						ctEntry, model) &&
-					(changeType != CTConstants.CT_CHANGE_TYPE_DELETION) &&
-					((Integer)modelAttributes.get("status") !=
-						WorkflowConstants.STATUS_DRAFT)) {
-
-					modelInfo._jsonObject.put(
-						"showWorkflow",
-						!_isWorkflowTasksEmpty(ctEntry, groupId, model));
-				}
-
-				modelInfo._site = _isSite(model);
-			}
-		}
-	}
-
-	private void _populateModelInfoGroupIds(
-		CTClosure ctClosure, Map<ModelInfoKey, ModelInfo> modelInfoMap,
-		long groupClassNameId, long groupId) {
-
-		ModelInfo groupModelInfo = modelInfoMap.get(
-			new ModelInfoKey(groupClassNameId, groupId));
-
-		if (!groupModelInfo._site) {
-			return;
-		}
-
-		Map<Long, List<Long>> pksMap = ctClosure.getChildPKsMap(
-			groupClassNameId, groupId);
-
-		Deque<Map.Entry<Long, ? extends Collection<Long>>> queue =
-			new LinkedList<>(pksMap.entrySet());
-
-		Map.Entry<Long, ? extends Collection<Long>> entry = null;
-
-		while ((entry = queue.poll()) != null) {
-			long classNameId = entry.getKey();
-
-			for (long classPK : entry.getValue()) {
-				ModelInfo modelInfo = modelInfoMap.get(
-					new ModelInfoKey(classNameId, classPK));
-
-				if (modelInfo == null) {
-					continue;
-				}
-
-				if (modelInfo._jsonObject != null) {
-					modelInfo._jsonObject.put("groupId", groupId);
-				}
-
-				Map<Long, ? extends Collection<Long>> childPKsMap =
-					ctClosure.getChildPKsMap(classNameId, classPK);
-
-				if (!childPKsMap.isEmpty()) {
-					queue.addAll(childPKsMap.entrySet());
-				}
+				modelInfo._site = _isSite(ctEntry);
 			}
 		}
 	}
@@ -1838,6 +1796,7 @@ public class ViewChangesDisplayContext {
 	private final CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 	private final CTEntryLocalService _ctEntryLocalService;
 	private final CTSchemaVersionLocalService _ctSchemaVersionLocalService;
+	private final long _groupClassNameId;
 	private final GroupLocalService _groupLocalService;
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;

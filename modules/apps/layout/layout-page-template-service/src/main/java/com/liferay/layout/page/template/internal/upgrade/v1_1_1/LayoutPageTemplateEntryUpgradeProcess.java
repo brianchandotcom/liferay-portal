@@ -30,8 +30,8 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		try (PreparedStatement countPreparedStatement =
 				connection.prepareStatement(
-					"select count(*) from LayoutPageTemplateEntry where " +
-						"groupId = ? and name = ?");
+					"select count(*) as count from LayoutPageTemplateEntry " +
+						"where groupId = ? and name = ?");
 			PreparedStatement deletePreparedStatement =
 				connection.prepareStatement(
 					"delete from LayoutPageTemplateEntry where groupId <> ? " +
@@ -77,7 +77,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 							countPreparedStatement.executeQuery();
 
 						if (countResultSet.next() &&
-							(countResultSet.getInt(1) > 0)) {
+							(countResultSet.getInt("count") > 0)) {
 
 							newName = name + i;
 						}

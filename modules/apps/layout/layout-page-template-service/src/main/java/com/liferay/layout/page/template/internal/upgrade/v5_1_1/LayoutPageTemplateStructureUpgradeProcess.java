@@ -83,9 +83,8 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 					"LayoutPageTemplateStructure.classPK from ",
 					"LayoutPageTemplateStructure inner join Layout on ",
 					"LayoutPageTemplateStructure.ctCollectionId = ",
-					"Layout.ctCollectionId and ",
-					"LayoutPageTemplateStructure.classPK = Layout.plid and ",
-					"Layout.type_ = ?"));
+					"Layout.ctCollectionId and LayoutPageTemplateStructure.",
+					"classPK = Layout.plid and Layout.type_ = ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -104,13 +103,14 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				plids.add(resultSet.getLong(3));
+				plids.add(resultSet.getLong("classPK"));
 
-				long ctCollectionId = resultSet.getLong(1);
+				long ctCollectionId = resultSet.getLong("ctCollectionId");
 
 				preparedStatement2.setLong(1, ctCollectionId);
 
-				long layoutPageTemplateStructureId = resultSet.getLong(2);
+				long layoutPageTemplateStructureId = resultSet.getLong(
+					"layoutPageTemplateStructureId");
 
 				preparedStatement2.setLong(2, layoutPageTemplateStructureId);
 

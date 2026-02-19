@@ -4,7 +4,15 @@
  */
 
 import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUploaderComponent';
+import {IItemSelectorModalProps} from './ItemSelectorModal';
 import openItemSelectorModal from './openItemSelectorModal';
+
+type ConfigItemSelectorModal<T> = {
+	apiURL: IItemSelectorModalProps<T>['apiURL'];
+	items: IItemSelectorModalProps<T>['items'];
+	locator?: IItemSelectorModalProps<T>['locator'];
+	multiSelect?: IItemSelectorModalProps<T>['multiSelect'];
+};
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 	apiURL: `${location.origin}/o/search/v1.0/search?${[
@@ -91,7 +99,9 @@ function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
 
-export default function openCMSItemSelectorModal({
+export default function openCMSItemSelectorModal<
+	T extends Record<string, any>,
+>({
 	allowDragAndDrop = false,
 	config = CMS_FILE_ITEM_SELECTOR_CONFIG,
 	fdsProps = FDS_PROPS,
@@ -99,8 +109,8 @@ export default function openCMSItemSelectorModal({
 	onSelect,
 }: {
 	allowDragAndDrop: boolean;
-	config: any;
-	fdsProps: any;
+	config: ConfigItemSelectorModal<T>;
+	fdsProps: IItemSelectorModalProps<T>['fdsProps'];
 	groupId: number;
 	onSelect: (items: Array<Record<string, any>>) => void;
 }) {

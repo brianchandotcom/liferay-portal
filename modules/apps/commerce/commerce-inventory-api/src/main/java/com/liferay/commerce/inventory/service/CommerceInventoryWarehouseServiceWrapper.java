@@ -104,7 +104,7 @@ public class CommerceInventoryWarehouseServiceWrapper
 					com.liferay.portal.kernel.util.OrderByComparator
 						<com.liferay.commerce.inventory.model.
 							CommerceInventoryWarehouse> orderByComparator)
-			throws com.liferay.portal.kernel.security.auth.PrincipalException {
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseService.
 			getCommerceInventoryWarehouses(

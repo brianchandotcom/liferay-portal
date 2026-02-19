@@ -407,6 +407,13 @@ public class CommerceInventoryReplenishmentItemLocalServiceUtil {
 				companyId, sku, unitOfMeasureKey);
 	}
 
+	public static List<Long> getCommerceInventoryWarehouseIds(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return getService().getCommerceInventoryWarehouseIds(
+			companyId, sku, unitOfMeasureKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext

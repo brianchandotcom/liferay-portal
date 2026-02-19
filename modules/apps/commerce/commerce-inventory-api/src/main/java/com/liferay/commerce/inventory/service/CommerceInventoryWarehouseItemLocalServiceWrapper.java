@@ -362,6 +362,14 @@ public class CommerceInventoryWarehouseItemLocalServiceWrapper
 			getActionableDynamicQuery();
 	}
 
+	@Override
+	public java.util.List<Long> getCommerceInventoryWarehouseIds(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		return _commerceInventoryWarehouseItemLocalService.
+			getCommerceInventoryWarehouseIds(companyId, sku, unitOfMeasureKey);
+	}
+
 	/**
 	 * Returns the commerce inventory warehouse item with the primary key.
 	 *

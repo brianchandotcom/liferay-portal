@@ -73,15 +73,12 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 
 			while (resultSet.next()) {
-				long ctCollection = resultSet.getLong(1);
-				long layoutSEOEntryId = resultSet.getLong(2);
-				long groupId = resultSet.getLong(3);
-				long companyId = resultSet.getLong(4);
-				long ddmStorageId = resultSet.getLong(5);
-
 				_addLayoutSEOEntryCustomMetaTags(
-					companyId, ctCollection, ddmStorageId, groupId,
-					layoutSEOEntryId, preparedStatement2);
+					resultSet.getLong("companyId"),
+					resultSet.getLong("ctCollectionId"),
+					resultSet.getLong("ddmStorageId"),
+					resultSet.getLong("groupId"),
+					resultSet.getLong("layoutSEOEntryId"), preparedStatement2);
 			}
 
 			preparedStatement2.executeBatch();

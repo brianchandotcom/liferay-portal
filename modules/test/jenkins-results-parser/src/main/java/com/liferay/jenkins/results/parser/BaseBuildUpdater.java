@@ -217,10 +217,6 @@ public abstract class BaseBuildUpdater implements BuildUpdater {
 	private boolean _isApplySlaveOfflineRules() {
 		Build build = getBuild();
 
-		if (build instanceof BatchBuild) {
-			return false;
-		}
-
 		if ((isBuildCompleted() && !isBuildFailing()) || !isBuildCompleted() ||
 			build.isFromArchive()) {
 

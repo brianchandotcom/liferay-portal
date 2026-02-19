@@ -127,17 +127,6 @@ public class BuildFactory {
 				buildURL, (TopLevelBuild)parentBuild);
 		}
 
-		for (String batchToken : _TOKENS_BATCH) {
-			if (jobName.contains(batchToken)) {
-				if (jobName.contains("qa-websites")) {
-					return new QAWebsitesBatchBuild(
-						buildURL, (TopLevelBuild)parentBuild);
-				}
-
-				return new BatchBuild(buildURL, (TopLevelBuild)parentBuild);
-			}
-		}
-
 		if (jobName.contains("legacy")) {
 			return new LegacyTopLevelBuild(
 				buildURL, (TopLevelBuild)parentBuild);
@@ -299,10 +288,6 @@ public class BuildFactory {
 			"((?<axisVariable>AXIS_VARIABLE=[^,/]+(,[^/]+)?)|)/?",
 			"((?<buildNumber>\\d+)|buildWithParameters\\?" +
 				"(?<queryString>.*))/?");
-
-	private static final String[] _TOKENS_BATCH = {
-		"-batch", "-chrome", "-dist", "-edge", "-firefox", "-ie11", "-safari"
-	};
 
 	private static final MultiPattern _buildURLMultiPattern = new MultiPattern(
 		JenkinsResultsParserUtil.combine(

@@ -44,7 +44,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -2111,10 +2110,6 @@ public abstract class BaseTopLevelBuild
 			getModifiedDownstreamBuildsByStatus("completed");
 
 		for (Build modifiedCompletedBuild : modifiedCompletedBuilds) {
-			if (modifiedCompletedBuild instanceof BatchBuild) {
-				continue;
-			}
-
 			sendBuildMetrics(
 				StatsDMetricsUtil.generateTimerMetric(
 					"jenkins_job_build_duration",
@@ -2485,9 +2480,6 @@ public abstract class BaseTopLevelBuild
 
 	private boolean _compareToUpstream;
 	private Build _controllerBuild;
-	private final Map<String, BatchBuild> _downstreamBatchBuilds =
-		new ConcurrentHashMap<>();
-	private boolean _downstreamBatchBuildsPopulated;
 	private JenkinsCohort _jenkinsCohort;
 	private long _lastDownstreamBuildsListingTimestamp = -1L;
 	private String _metricsHostName;

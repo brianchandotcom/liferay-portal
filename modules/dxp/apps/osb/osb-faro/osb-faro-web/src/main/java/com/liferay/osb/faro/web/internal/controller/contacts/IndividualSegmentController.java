@@ -30,6 +30,7 @@ import com.liferay.osb.faro.web.internal.search.FaroSearchContext;
 import com.liferay.osb.faro.web.internal.util.IndividualSegmentUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.RoleConstants;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -46,6 +47,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -318,10 +320,16 @@ public class IndividualSegmentController extends BaseFaroController {
 				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
 		throws Exception {
 
+		List<String> segmentTypes = segmentTypesFaroParam.getValue();
+
+		if (ListUtil.isEmpty(segmentTypes)) {
+			segmentTypes = Arrays.asList("BATCH", "REAL_TIME");
+		}
+
 		return search(
 			groupId, channelId, contactsEntityId, contactsEntityType,
-			dataSourceId, query, segmentTypesFaroParam.getValue(), state, cur,
-			delta, orderByFieldsFaroParam.getValue());
+			dataSourceId, query, segmentTypes, state, cur, delta,
+			orderByFieldsFaroParam.getValue());
 	}
 
 	@Path("/{id}/activation")

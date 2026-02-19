@@ -8,6 +8,7 @@ package com.liferay.layout.page.template.util;
 import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemServiceRegistryUtil;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -16,6 +17,15 @@ import com.liferay.portal.kernel.util.Validator;
  * @author Mikel Lorza
  */
 public class LayoutPageTemplateEntryUtil {
+
+	public static long getClassTypeId(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return getClassTypeId(
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntry.getClassTypeKey(),
+			layoutPageTemplateEntry.getGroupId());
+	}
 
 	public static long getClassTypeId(
 		long classNameId, String classTypeKey, long groupId) {
@@ -51,6 +61,15 @@ public class LayoutPageTemplateEntryUtil {
 		}
 
 		return GetterUtil.getLong(infoItemFormVariation.getKey());
+	}
+
+	public static String getClassTypeKey(
+		LayoutPageTemplateEntry layoutPageTemplateEntry) {
+
+		return getClassTypeKey(
+			layoutPageTemplateEntry.getClassNameId(),
+			layoutPageTemplateEntry.getClassTypeId(),
+			layoutPageTemplateEntry.getGroupId());
 	}
 
 	public static String getClassTypeKey(

@@ -17,6 +17,12 @@ import java.util.Set;
  */
 public class LicenseManagerUtil {
 
+	public static void checkFreeTier() {
+		if (isFreeTier()) {
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	public static void checkLicense(String productId) {
 		_licenseManager.checkLicense(productId);
 	}

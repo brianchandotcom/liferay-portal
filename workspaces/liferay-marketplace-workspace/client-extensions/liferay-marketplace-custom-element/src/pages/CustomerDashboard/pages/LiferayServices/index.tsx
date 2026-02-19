@@ -3,25 +3,30 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useNavigate, useOutletContext} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 import ListView from '../../../../components/ListView';
 import OrderStatus from '../../../../components/OrderStatus';
 import Page from '../../../../components/Page';
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
-import SearchBuilder from '../../../../core/SearchBuilder';
-import {OrderWorkflowStatusCode, PaymentStatus} from '../../../../enums/Order';
+import {OrderTypes, PaymentStatus} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import PaymentStatusBadge from '../../../FinanceDashboard/components/PaymentStatus/PaymentStatusBadge';
+import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
+import {Liferay} from '../../../../liferay/liferay';
+import SearchBuilder from '../../../../core/SearchBuilder';
 
-const searhParams = new URLSearchParams({
+const searchParams = new URLSearchParams({
+	filter: SearchBuilder.eq(
+		'orderTypeExternalReferenceCode',
+		OrderTypes.ADDONS
+	),
 	nestedFields: 'placedOrderItems',
 	sort: 'createDate:desc',
 });
 
 const LiferayServicesListView = () => {
-	const {selectedAccount} = useOutletContext<any>();
-	const {channel} = useMarketplaceContext();
+	const {selectedAccount} = useCustomerDashboardOutletContext();
+
 	const navigate = useNavigate();
 
 	return (
@@ -33,14 +38,6 @@ const LiferayServicesListView = () => {
 		>
 			<div className="customer-liferay-services">
 				<ListView<PlacedOrder>
-					defaultFilters={{
-						filter: new SearchBuilder()
-							.inEqualNumbers('orderStatusInfo/code', [
-								OrderWorkflowStatusCode.IN_PROGRESS,
-								OrderWorkflowStatusCode.COMPLETED,
-							])
-							.build(),
-					}}
 					emptyStateProps={{
 						className:
 							'border px-4 py-6 d-flex align-items-center flex-column justify-content-center',
@@ -51,21 +48,13 @@ const LiferayServicesListView = () => {
 						pageSize: 20,
 						paginationDeltaOptions: [20, 40, 80, 120],
 					}}
-					resource={`o/headless-commerce-delivery-order/v1.0/channels/${channel?.id}/accounts/${selectedAccount?.id}/placed-orders?${searhParams}`}
+					resource={`o/headless-commerce-delivery-order/v1.0/channels/${Liferay.CommerceContext.commerceChannelId}/accounts/${selectedAccount?.id}/placed-orders?${searchParams}`}
 					tableProps={{
 						actions: [
 							{
 								name: i18n.translate('view-details'),
 								onClick: (row: PlacedOrder) =>
 									navigate(`${row.id}`),
-							},
-							{
-								disabled: true,
-								name: i18n.translate('download-invoice'),
-							},
-							{
-								disabled: true,
-								name: i18n.translate('purchase-upgrade'),
 							},
 						],
 						columns: [
@@ -147,21 +136,6 @@ const LiferayServicesListView = () => {
 							},
 						],
 						navigateTo: (item) => `${item.id}`,
-					}}
-					transformData={(response) => {
-						const items = response.items.filter(
-							(item) =>
-								item.paymentStatus === PaymentStatus.PAID ||
-								item.paymentStatus === PaymentStatus.PENDING
-						);
-
-						return {
-							...response,
-							items,
-							totalCount:
-								response.totalCount -
-								(items.length - response.items.length),
-						};
 					}}
 				/>
 			</div>

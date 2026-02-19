@@ -9,7 +9,6 @@ import {useParams} from 'react-router-dom';
 
 import {breadcrumbStore} from '../../../../components/Breadcrumb/BreadcrumbStore';
 import {DetailedCard} from '../../../../components/DetailedCard/DetailedCard';
-import Loading from '../../../../components/Loading';
 import QATable from '../../../../components/QATable';
 import {
 	OrderCustomFields,
@@ -18,10 +17,10 @@ import {
 import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import LiferayServicesAlerts from './LiferayServicesAlerts';
+import {PageRenderer} from '../../../../components/Page';
 
 const LiferayService = () => {
 	const {orderId} = useParams();
-
 	const {data, isLoading} = useGetProductByOrderId(orderId as string);
 
 	const placedOrder = data?.placedOrder;
@@ -46,22 +45,12 @@ const LiferayService = () => {
 
 	const allowedEmailDomains =
 		orderMetadata?.provisioning?.allowedEmailDomains || [];
+
 	const incidentReportEmailAddresses =
 		orderMetadata?.provisioning?.incidentReportEmailAddresses || [];
 
-	if (isLoading) {
-		return (
-			<Loading
-				className="mt-7"
-				displayType="secondary"
-				shape="circle"
-				size="md"
-			/>
-		);
-	}
-
 	return (
-		<div className="mt-6">
+		<PageRenderer className="mt-6" isLoading={isLoading}>
 			{!isCompletedOrder && (
 				<LiferayServicesAlerts orderStatusCode={orderStatusCode} />
 			)}
@@ -166,7 +155,7 @@ const LiferayService = () => {
 					/>
 				</DetailedCard>
 			</div>
-		</div>
+		</PageRenderer>
 	);
 };
 

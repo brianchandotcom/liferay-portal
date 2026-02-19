@@ -48,116 +48,6 @@ function addUtilizationRows(tableElement) {
 	});
 }
 
-function createBarChartFromTable(chartTitle, elementID, metricName, tableElement) {
-	headerElements = tableElement.querySelectorAll('thead tr th');
-
-	let xLabels = [];
-
-	headerElements.forEach(headerElement => {
-		if (headerElement.classList.contains('col-1') || headerElement.classList.contains('col-2')) {
-			return;
-		}
-
-		xLabels.push(headerElement.textContent);
-	});
-
-	let datasets = [];
-	let rowElements = tableElement.querySelectorAll('tbody tr');
-
-	rowElements.forEach(rowElement => {
-		let cellElements = rowElement.querySelectorAll('td');
-
-		if ((cellElements[0].textContent === 'All') || (cellElements[0].textContent === '[Total]')) {
-			return;
-		}
-
-		if (cellElements[1].textContent !== metricName) {
-			return;
-		}
-
-		let dataValues = [];
-
-		cellElements.forEach(cellElement => {
-			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2')) {
-				return;
-			}
-
-			dataValues.push(cellElement.getAttribute('data-value'));
-		});
-
-		let color = getColor(datasets.length);
-
-		let dataset = {
-			backgroundColor: color,
-			borderColor: color,
-			data: dataValues,
-			label: cellElements[0].textContent
-		};
-
-		datasets.push(dataset);
-	});
-
-	let barChart = new Chart(document.getElementById(elementID), {
-		data: {
-			datasets: datasets,
-			labels: xLabels
-		},
-		options: {
-			maintainAspectRatio: false,
-			responsive: true,
-			scales: {
-				xAxes: [{
-					stacked: true,
-				}],
-				yAxes: [{
-					scaleLabel: {
-						display: true,
-						labelString: 'Percentage of Nodes Utilized'
-					},
-					stacked: true,
-					ticks: {
-						beginAtZero: true,
-						callback: function(value) {
-							return value + '%';
-						},
-						max: 100
-					}
-				}]
-			},
-			title: {
-				display: true,
-				fontSize: 14,
-				text: chartTitle
-			},
-			tooltips: {
-				callbacks: {
-					label: function(tooltipItem, data) {
-				        let label = data.datasets[tooltipItem.datasetIndex].label;
-				        let percentage = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-				        let totalPercentage = 0;
-
-				        for (let i = 0; i < data.datasets.length; i++) {
-				            totalPercentage += parseFloat(data.datasets[i].data[tooltipItem.index]);
-				        }
-
-				        if (tooltipItem.datasetIndex != 0) {
-				            return label + ' : ' + percentage + '%';
-				        }
-				        else {
-				            return [label + ' : ' + percentage + '%', "Total : " + totalPercentage.toFixed(2) + '%'];
-				        }
-					}
-				},
-				itemSort: function(a, b) {
-					return b.datasetIndex - a.datasetIndex;
-				},
-				mode: 'index'
-			}
-		},
-		type: 'bar'
-	});
-}
-
 function updateHeaderNames(tableElement) {
 	headerElements = tableElement.querySelectorAll('thead tr th');
 
@@ -184,7 +74,7 @@ if ((typeof categoryTableData !== 'undefined') && categoryTableData) {
 	window.onload = function () {
 		triggerEvent(getElementByXpath('//th[contains(.,"Category")]'), 'click');
 
-		createBarChartFromTable('Weekly Node Utilization by Job Category', 'utilization-canvas', 'Utilization Percentage', categoryTableDataElement);
+		createBarChartFromTable('Weekly Node Utilization by Job Category', 'utilization-canvas', 'Utilization Percentage', categoryTableDataElement, '%', '100');
 	}
 }
 

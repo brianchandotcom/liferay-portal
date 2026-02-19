@@ -146,12 +146,7 @@ public class ReinvokeRule implements Comparable<ReinvokeRule> {
 		if (axisVariablePattern != null) {
 			String axisVariable = null;
 
-			if (build instanceof AxisBuild) {
-				AxisBuild axisBuild = (AxisBuild)build;
-
-				axisVariable = axisBuild.getAxisVariable();
-			}
-			else if (build instanceof DownstreamBuild) {
+			if (build instanceof DownstreamBuild) {
 				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 
 				axisVariable = downstreamBuild.getAxisVariable();

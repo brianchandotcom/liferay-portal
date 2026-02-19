@@ -2485,9 +2485,6 @@ public abstract class BaseTopLevelBuild
 
 	private boolean _compareToUpstream;
 	private Build _controllerBuild;
-	private final Map<String, AxisBuild> _downstreamAxisBuilds =
-		new ConcurrentHashMap<>();
-	private boolean _downstreamAxisBuildsPopulated;
 	private final Map<String, BatchBuild> _downstreamBatchBuilds =
 		new ConcurrentHashMap<>();
 	private boolean _downstreamBatchBuildsPopulated;

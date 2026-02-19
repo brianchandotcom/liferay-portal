@@ -323,15 +323,6 @@ public abstract class BaseBuild implements Build {
 
 		sb.append("/");
 		sb.append(getJobName());
-
-		if (this instanceof AxisBuild) {
-			sb.append("/");
-
-			AxisBuild axisBuild = (AxisBuild)this;
-
-			sb.append(axisBuild.getAxisNumber());
-		}
-
 		sb.append("/");
 		sb.append(getBuildNumber());
 
@@ -1834,12 +1825,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		private String _getAxisName(Build build) {
-			if (build instanceof AxisBuild) {
-				AxisBuild axisBuild = (AxisBuild)build;
-
-				return axisBuild.getAxisNumber();
-			}
-
 			if (build instanceof DownstreamBuild) {
 				DownstreamBuild downstreamBuild = (DownstreamBuild)build;
 

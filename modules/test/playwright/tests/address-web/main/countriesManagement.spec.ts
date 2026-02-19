@@ -1009,15 +1009,16 @@ test(
 
 		await page.reload();
 
-		await editCountryPage.titleTranslationButton.click();
+		await expect(async () => {
+			await editCountryPage.titleTranslationButton.click();
 
-		await expect(
-			editCountryPage.notTranslatedMessage('Catalan')
-		).toHaveCount(0);
-		await expect(
-			editCountryPage.translatedMessage('Catalan')
-		).toBeVisible();
-
+			await expect(
+				editCountryPage.notTranslatedMessage('Catalan')
+			).toHaveCount(0);
+			await expect(
+				editCountryPage.translatedMessage('Catalan')
+			).toBeVisible({timeout: 500});
+		}).toPass({timeout: 5000});
 		await editCountryPage.backButton.click();
 
 		await expect(async () => {
@@ -1094,14 +1095,17 @@ test(
 
 			await page.reload();
 
-			await editRegionPage.titleTranslationButton.click();
+			await expect(async () => {
+				await editRegionPage.titleTranslationButton.click();
 
-			await expect(
-				editRegionPage.notTranslatedMessage('Catalan')
-			).toHaveCount(0);
-			await expect(
-				editRegionPage.translatedMessage('Catalan')
-			).toBeVisible();
+				await expect(
+					editRegionPage.notTranslatedMessage('Catalan')
+				).toHaveCount(0);
+
+				await expect(
+					editRegionPage.translatedMessage('Catalan')
+				).toBeVisible({timeout: 500});
+			}).toPass({timeout: 5000});
 		}
 		finally {
 			await deleteRegion(

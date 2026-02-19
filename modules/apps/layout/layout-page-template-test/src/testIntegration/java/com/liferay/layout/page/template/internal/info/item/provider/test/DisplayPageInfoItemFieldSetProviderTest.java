@@ -195,17 +195,23 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
 	}
 
+	private void _assertInfoField(
+		String externalUniqueId, InfoField infoField, String name,
+		String uniqueId) {
+
+		Assert.assertEquals(externalUniqueId, infoField.getExternalUniqueId());
+		Assert.assertEquals(name, infoField.getName());
+		Assert.assertEquals(uniqueId, infoField.getUniqueId());
+	}
+
 	private void _assertInfoFieldValue(
 			String externalUniqueId, InfoFieldValue<Object> infoFieldValue,
 			String name, String uniqueId,
 			UnsafeConsumer<Object, Exception> unsafeConsumer)
 		throws Exception {
 
-		InfoField infoField = infoFieldValue.getInfoField();
-
-		Assert.assertEquals(externalUniqueId, infoField.getExternalUniqueId());
-		Assert.assertEquals(name, infoField.getName());
-		Assert.assertEquals(uniqueId, infoField.getUniqueId());
+		_assertInfoField(
+			externalUniqueId, infoFieldValue.getInfoField(), name, uniqueId);
 
 		unsafeConsumer.accept(
 			infoFieldValue.getValue(LocaleUtil.getSiteDefault()));

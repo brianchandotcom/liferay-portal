@@ -5,11 +5,11 @@
 
 package com.liferay.feature.flag.web.internal.jaxrs.application;
 
-import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBag;
-import com.liferay.feature.flag.web.internal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.feature.flag.web.internal.model.FeatureFlagDisplay;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.feature.flag.FeatureFlagsBag;
+import com.liferay.portal.feature.flag.FeatureFlagsBagProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlag;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -334,6 +334,11 @@ public class CTStore implements Store {
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}
 
+	@Override
+	public void verifyCompanyStores() throws PortalException {
+		_store.verifyCompanyStores();
+	}
+
 	private void _ensureCTSContentIsLoaded(
 		long companyId, long repositoryId, String fileName,
 		String versionLabel) {

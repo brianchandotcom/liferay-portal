@@ -209,6 +209,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 			if (action?.data.id === 'delete') {
 				deleteAssetVersionBulkAction({
 					apiURL: otherProps.apiURL,
+					dataSetId: otherProps.id,
 					entryClassName: additionalProps.entryClassName,
 					objectEntryCurrentVersion:
 						additionalProps.objectEntryCurrentVersion,

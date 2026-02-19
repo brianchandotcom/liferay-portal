@@ -5,22 +5,15 @@
 
 package com.liferay.ai.hub.web.internal.fragment.renderer;
 
-import com.liferay.ai.hub.web.internal.constants.AIHubWebConstants;
-import com.liferay.ai.hub.web.internal.display.context.AgentDefinitionDisplayContext;
+import com.liferay.ai.hub.web.internal.display.context.ViewAgentDefinitionsDisplayContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
-import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
 
 import java.util.Locale;
 
@@ -32,7 +25,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author João Victor Alves
  */
 @Component(service = FragmentRenderer.class)
-public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
+public class ViewAgentDefinitionsFragmentRenderer
+	extends BaseFragmentRenderer<ViewAgentDefinitionsDisplayContext> {
 
 	@Override
 	public String getCollectionKey() {
@@ -61,32 +55,15 @@ public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+	protected ViewAgentDefinitionsDisplayContext getDisplayContext(
+		HttpServletRequest httpServletRequest) {
 
-		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/view.jsp");
+		return new ViewAgentDefinitionsDisplayContext(httpServletRequest);
+	}
 
-			AgentDefinitionDisplayContext agentDefinitionDisplayContext =
-				new AgentDefinitionDisplayContext(httpServletRequest);
-
-			Class<?> clazz = agentDefinitionDisplayContext.getClass();
-
-			httpServletRequest.setAttribute(
-				clazz.getName(), agentDefinitionDisplayContext);
-
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
-		}
-		catch (IOException | RuntimeException exception) {
-			throw exception;
-		}
-		catch (Exception exception) {
-			throw new IOException(exception);
-		}
+	@Override
+	protected String getJSPPath() {
+		return "/view_agent_definitions.jsp";
 	}
 
 	@Reference
@@ -94,10 +71,5 @@ public class AgentDefinitionFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=" + AIHubWebConstants.BUNDLE_SYMBOLIC_NAME + ")"
-	)
-	private ServletContext _servletContext;
 
 }

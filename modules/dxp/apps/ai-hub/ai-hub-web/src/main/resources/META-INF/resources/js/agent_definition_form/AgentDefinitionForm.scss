@@ -1,0 +1,29 @@
+.agent-definition-form {
+	padding: 24px 0;
+
+	.agent-definition-header {
+		align-items: center;
+		border: 1px solid #e7e8eb;
+		border-radius: 1rem;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 32px;
+		padding: 1.75rem 1.5rem;
+
+		.toggle-container {
+			align-items: center;
+			display: flex;
+			gap: 12px;
+		}
+	}
+
+	.agent-definition-details {
+		border: 1px solid #e7e8eb;
+		border-radius: 1rem;
+	}
+
+	.agent-definition-data-sources {
+		border: 1px solid #e7e8eb;
+		border-radius: 1rem;
+	}
+}

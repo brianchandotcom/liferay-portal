@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AgentDefinitionDisplayContext agentDefinitionDisplayContext = (AgentDefinitionDisplayContext)request.getAttribute(AgentDefinitionDisplayContext.class.getName());
+ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext = (ViewAgentDefinitionsDisplayContext)request.getAttribute(ViewAgentDefinitionsDisplayContext.class.getName());
 %>
 
 <div class="ai-hub-agent-definitions__list-container ml-8 mr-8 mt-5">
@@ -18,9 +18,9 @@ AgentDefinitionDisplayContext agentDefinitionDisplayContext = (AgentDefinitionDi
 </div>
 
 <frontend-data-set:headless-display
-	apiURL="<%= agentDefinitionDisplayContext.getAPIURL() %>"
-	creationMenu="<%= agentDefinitionDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= agentDefinitionDisplayContext.getFDSActionDropdownItems() %>"
+	apiURL="<%= viewAgentDefinitionsDisplayContext.getAPIURL() %>"
+	creationMenu="<%= viewAgentDefinitionsDisplayContext.getCreationMenu() %>"
+	fdsActionDropdownItems="<%= viewAgentDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= AIHubFDSNames.AGENT_DEFINITIONS %>"
 	itemsPerPage="<%= 20 %>"
 	style="fluid"

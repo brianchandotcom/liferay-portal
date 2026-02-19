@@ -4,7 +4,7 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.ViewAgentDefinitionsFragmentRenderer"
+						"key": "com.liferay.ai.hub.web.internal.fragment.renderer.EditAgentDefinitionFragmentRenderer"
 					},
 					"fragmentConfig": {
 					},
@@ -19,7 +19,7 @@
 	},
 	"settings": {
 		"masterPage": {
-			"key": "ai-hub-master"
+			"key": "agent-editor-master"
 		}
 	},
 	"version": 1.0

@@ -1,4 +1,20 @@
 {
+	"dependencies": {
+		"@clayui/alert": "^3.159.0",
+		"@clayui/button": "^3.159.0",
+		"@clayui/form": "^3.159.0",
+		"@clayui/icon": "^3.159.0",
+		"@clayui/layout": "^3.159.0",
+		"@clayui/link": "^3.159.0",
+		"@clayui/panel": "^3.159.0",
+		"@clayui/provider": "^3.159.0",
+		"@clayui/toolbar": "^3.159.0",
+		"@liferay/object-js-components-web": "*",
+		"frontend-js-components-web": "*",
+		"frontend-js-web": "*",
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
+	},
 	"main": "js/index.ts",
 	"name": "@liferay/ai-hub-web",
 	"scripts": {

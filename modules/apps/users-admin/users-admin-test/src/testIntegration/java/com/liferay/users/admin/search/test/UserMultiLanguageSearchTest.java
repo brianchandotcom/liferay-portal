@@ -121,6 +121,16 @@ public class UserMultiLanguageSearchTest {
 		map = _getMapResult(localizedName);
 
 		assertFieldValues(_PREFIX, locale, map, "\"ユーザー管理者\"");
+
+		keywords = "佐藤";
+
+		userSearchFixture.addUser("satou", keywords, "ゆき", locale, group);
+
+		userSearchFixture.addUser("kato", "加藤", "みゆき", locale, group);
+
+		map = _getMapResult(keywords);
+
+		assertFieldValues(_PREFIX, locale, map, keywords);
 	}
 
 	@Rule

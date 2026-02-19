@@ -176,6 +176,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 	const [selectedItems, setSelectedItems] = useState(externalItems);
 	const [view, setViewType] = useState<'fds' | 'upload'>('fds');
 	const [filesToUpload, setFilesToUpload] = useState<FileData[]>([]);
+	const [fdsRefreshKey, setFdsRefreshKey] = useState(0);
 
 	useEffect(() => {
 		if (!open) {
@@ -274,6 +275,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 							(createItemURL ? EMPTY_STATE_PROPS : undefined)
 						}
 						fileDropSettings={fileDropSettings}
+						key={fdsRefreshKey}
 						onSelectedItemsChange={setSelectedItems}
 						selectedItems={selectedItems}
 						selectedItemsKey={locator.id}
@@ -290,6 +292,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 						onCloseUploadView={() => {
 							setViewType('fds');
 							setFilesToUpload([]);
+							setFdsRefreshKey(fdsRefreshKey + 1);
 						}}
 					/>
 				)}

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.AfterClass;
@@ -117,7 +118,17 @@ public class AssetPublisherDisplayContextTest {
 	public void testGetScopeAssetPublisherAddItemHolders() throws Exception {
 		AssetHelper assetHelper = Mockito.mock(AssetHelper.class);
 
+		AssetListEntry assetListEntry = Mockito.mock(AssetListEntry.class);
+
+		Mockito.when(
+			assetListEntry.getAssetEntrySubtype()
+		).thenReturn(
+			"0,3"
+		);
+
 		long[] classTypeIds = {1L, 2L};
+
+		long[] expectedClassTypeIds = {1L, 2L, 0L, 3L};
 
 		AssetPublisherDisplayContext assetPublisherDisplayContext =
 			new AssetPublisherDisplayContext(
@@ -127,7 +138,7 @@ public class AssetPublisherDisplayContextTest {
 
 				@Override
 				public AssetListEntry fetchAssetListEntry() {
-					return Mockito.mock(AssetListEntry.class);
+					return assetListEntry;
 				}
 
 				@Override
@@ -164,7 +175,9 @@ public class AssetPublisherDisplayContextTest {
 		).getAssetPublisherAddItemHolders(
 			Mockito.nullable(LiferayPortletRequest.class),
 			Mockito.nullable(LiferayPortletResponse.class), Mockito.anyLong(),
-			Mockito.any(long[].class), Mockito.eq(classTypeIds),
+			Mockito.any(long[].class),
+			Mockito.argThat(
+				actual -> Arrays.equals(actual, expectedClassTypeIds)),
 			Mockito.any(long[].class), Mockito.any(String[].class),
 			Mockito.nullable(String.class)
 		);

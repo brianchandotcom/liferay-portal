@@ -21,7 +21,7 @@ const useGetProductByOrderId = (
 	swrOptions?: SWRConfiguration
 ) => {
 	return useSWR(
-		`/placed-order/${orderId}`,
+		`/product/${orderId}`,
 		async () => {
 			const placedOrder =
 				await HeadlessCommerceDeliveryOrder.getPlacedOrder(orderId);

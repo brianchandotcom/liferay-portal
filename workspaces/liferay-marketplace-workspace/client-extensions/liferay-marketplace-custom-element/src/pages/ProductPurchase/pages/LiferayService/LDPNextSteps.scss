@@ -1,0 +1,16 @@
+.ldp-background {
+	background: linear-gradient(135deg, #e8eeff 0%, #dce6fa 40%, #c9d4f5 100%);
+	height: calc(100vh - 12rem);
+	width: 100%;
+}
+
+.ldp-next-steps {
+	& .loading-container {
+		background-color: #ffffff;
+		border-radius: 20px;
+		box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+		padding: 2rem;
+		text-align: center;
+		width: 600px;
+	}
+}

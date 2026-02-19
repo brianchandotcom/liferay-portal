@@ -130,10 +130,11 @@ const CDPProvisioning = () => {
 		z.infer<typeof zodSchema.cdpProvisioning>
 	>({
 		defaultValues: {
+			_refAllowedEmailDomains: [],
 			_refIncidentReportContacts: [],
 			acceptTerms: false,
+			allowedEmailDomains: [],
 			dataCenterLocation: acRegions[0]?.externalReferenceCode,
-			friendlyWorkspaceURL: '',
 			incidentReportContacts: [],
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},

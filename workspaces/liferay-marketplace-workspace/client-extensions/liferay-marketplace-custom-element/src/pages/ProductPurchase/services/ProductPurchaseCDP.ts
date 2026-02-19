@@ -21,7 +21,7 @@ export default class ProductPurchaseCDP extends ProductPurchase {
 	}
 
 	protected getCart() {
-		const {productKey, productName, productPurchaseKey} = this.form ?? {};
+		const {productKey, productPurchaseKey} = this.form ?? {};
 
 		const sku = this.product.skus.find(
 			({externalReferenceCode}) => externalReferenceCode === productKey
@@ -50,7 +50,6 @@ export default class ProductPurchaseCDP extends ProductPurchase {
 						serverLocation: this.form?.dataCenterLocation,
 					},
 					productKey,
-					productName,
 					productPurchaseKey,
 				}),
 			},
@@ -58,18 +57,7 @@ export default class ProductPurchaseCDP extends ProductPurchase {
 	}
 
 	public async getNextStepsLink(cart: Cart) {
-		if (this.account.type === 'business') {
-			const callback = `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
-
-			const url = await HeadlessCommerceDeliveryCart.getPaymentMethodURL(
-				cart.id,
-				callback
-			);
-
-			return url || callback;
-		}
-
-		return super.getNextStepsLink(cart);
+		return `${window.location.origin}${getSiteURL()}/next-steps?orderId=${cart.id}`;
 	}
 
 	public async createOrder() {

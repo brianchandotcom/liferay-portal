@@ -16,7 +16,11 @@ import {AccountAndAppCard} from '../../components/Card/AccountAndAppCard';
 import {Header} from '../../components/Header/Header';
 import {PageRenderer} from '../../components/Page';
 import {OrderTypes, PaymentStatus} from '../../enums/Order';
-import {ProductTypeVocabulary, SolutionTypes} from '../../enums/Product';
+import {
+	ProductSpecificationKey,
+	ProductTypeVocabulary,
+	SolutionTypes,
+} from '../../enums/Product';
 import withProviders from '../../hoc/withProviders';
 import useGetProductByOrderId from '../../hooks/useGetProductByOrderId';
 import i18n from '../../i18n';
@@ -27,15 +31,22 @@ import {getAccountImage} from '../../utils/util';
 import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
 
 import './NextSteps.scss';
+import {
+	getProductCategoriesByVocabularyName,
+	getProductSpecification,
+} from '../../utils/productUtils';
+import {MarketplaceCategories} from '../../enums/Categories';
+import LDPNextSteps from '../ProductPurchase/pages/LiferayService/LDPNextSteps';
+
 type NextStepsBodyProps = ReturnType<typeof useGetProductByOrderId>['data'];
 
 export function NextStepsBody(props: NextStepsBodyProps) {
 	const placedOrder = props!.placedOrder;
 	const product = props!.product;
 
-	const accountId = placedOrder.accountId;
-	const orderId = placedOrder.id;
-	const productName = product.name;
+	const accountId = placedOrder?.accountId;
+	const orderId = placedOrder?.id;
+	const productName = product?.name;
 
 	const {data: accountCommerce} = useSWR(
 		accountId ? `/next-steps/account-commerce/${accountId}` : null,
@@ -175,7 +186,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 				<AccountAndAppCard
 					category="Application"
 					logo={
-						props!.marketplaceDeliveryOrder.productThumbnail ||
+						props!.marketplaceDeliveryOrder?.productThumbnail ||
 						'catalog'
 					}
 					title={productName}
@@ -253,9 +264,36 @@ export function NextSteps() {
 		return <ClayLoadingIndicator />;
 	}
 
+	const solutionTypeSpecification = getProductSpecification(
+		ProductSpecificationKey.SOLUTION_TYPE,
+		data?.product as DeliveryProduct
+	);
+
+	const solutionTypeSpecificationValue =
+		solutionTypeSpecification?.value as SolutionTypes;
+
+	const productTypes = getProductCategoriesByVocabularyName(
+		data?.product?.categories || [],
+		MarketplaceCategories.MARKETPLACE_PRODUCT_TYPE
+	);
+
+	const productTypeCategory = productTypes[0] as ProductTypeVocabulary;
+
+	if (
+		productTypeCategory === ProductTypeVocabulary.LIFERAY_SERVICE &&
+		solutionTypeSpecificationValue === SolutionTypes.CONTENT_DATA_PLATFORM
+	) {
+		return (
+			<LDPNextSteps
+				description="Hold tight. We’re preparing your environment so you can start using your Liferay Data Platform. This will only take a moment!"
+				title="Setting up your Free Version LDP 🚀"
+			/>
+		);
+	}
+
 	if (
 		[OrderTypes.ADDONS, OrderTypes.SOLUTIONS7].includes(
-			data?.placedOrder.orderTypeExternalReferenceCode as OrderTypes
+			data?.placedOrder?.orderTypeExternalReferenceCode as OrderTypes
 		)
 	) {
 		return (

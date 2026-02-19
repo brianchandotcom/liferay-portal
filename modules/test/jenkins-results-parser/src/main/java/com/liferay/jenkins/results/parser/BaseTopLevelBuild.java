@@ -286,129 +286,6 @@ public abstract class BaseTopLevelBuild
 	}
 
 	@Override
-	public AxisBuild getDownstreamAxisBuild(String axisName) {
-		AxisBuild targetAxisBuild = _downstreamAxisBuilds.get(axisName);
-
-		if (targetAxisBuild != null) {
-			return targetAxisBuild;
-		}
-
-		for (AxisBuild axisBuild : getDownstreamAxisBuilds()) {
-			if (axisName.equals(axisBuild.getAxisName())) {
-				return axisBuild;
-			}
-		}
-
-		return null;
-	}
-
-	@Override
-	public List<AxisBuild> getDownstreamAxisBuilds() {
-		if (_downstreamAxisBuildsPopulated &&
-			!_downstreamAxisBuilds.isEmpty()) {
-
-			List<AxisBuild> downstreamAxisBuilds = new ArrayList<>(
-				_downstreamAxisBuilds.values());
-
-			Collections.sort(
-				downstreamAxisBuilds,
-				new BaseBuild.BuildDisplayNameComparator());
-
-			return downstreamAxisBuilds;
-		}
-
-		List<AxisBuild> downstreamAxisBuilds = new ArrayList<>();
-
-		for (BatchBuild downstreamBatchBuild : getDownstreamBatchBuilds()) {
-			downstreamAxisBuilds.addAll(
-				downstreamBatchBuild.getDownstreamAxisBuilds());
-		}
-
-		synchronized (_downstreamAxisBuilds) {
-			if (isCompleted() && !_downstreamAxisBuildsPopulated) {
-				for (AxisBuild downstreamAxisBuild : downstreamAxisBuilds) {
-					_downstreamAxisBuilds.put(
-						downstreamAxisBuild.getAxisName(), downstreamAxisBuild);
-				}
-
-				_downstreamAxisBuildsPopulated = true;
-			}
-		}
-
-		Collections.sort(
-			downstreamAxisBuilds, new BaseBuild.BuildDisplayNameComparator());
-
-		return downstreamAxisBuilds;
-	}
-
-	@Override
-	public BatchBuild getDownstreamBatchBuild(String jobVariant) {
-		BatchBuild targetBatchBuild = _downstreamBatchBuilds.get(jobVariant);
-
-		if (targetBatchBuild != null) {
-			return targetBatchBuild;
-		}
-
-		for (BatchBuild batchBuild : getDownstreamBatchBuilds()) {
-			if (jobVariant.equals(batchBuild.getJobVariant())) {
-				return batchBuild;
-			}
-		}
-
-		return null;
-	}
-
-	@Override
-	public List<BatchBuild> getDownstreamBatchBuilds() {
-		if (_downstreamBatchBuildsPopulated &&
-			!_downstreamBatchBuilds.isEmpty()) {
-
-			List<BatchBuild> downstreamBatchBuilds = new ArrayList<>(
-				_downstreamBatchBuilds.values());
-
-			Collections.sort(
-				downstreamBatchBuilds,
-				new BaseBuild.BuildDisplayNameComparator());
-
-			return downstreamBatchBuilds;
-		}
-
-		List<BatchBuild> downstreamBatchBuilds = new ArrayList<>();
-
-		List<Build> downstreamBuilds = getDownstreamBuilds(null);
-
-		for (Build downstreamBuild : downstreamBuilds) {
-			if (!(downstreamBuild instanceof BatchBuild)) {
-				continue;
-			}
-
-			downstreamBatchBuilds.add((BatchBuild)downstreamBuild);
-		}
-
-		synchronized (_downstreamBatchBuilds) {
-			if (isCompleted() && !_downstreamBatchBuildsPopulated) {
-				for (BatchBuild downstreamBatchBuild : downstreamBatchBuilds) {
-					String jobVariant = downstreamBatchBuild.getJobVariant();
-
-					if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
-						continue;
-					}
-
-					_downstreamBatchBuilds.put(
-						jobVariant, downstreamBatchBuild);
-				}
-
-				_downstreamBatchBuildsPopulated = true;
-			}
-		}
-
-		Collections.sort(
-			downstreamBatchBuilds, new BaseBuild.BuildDisplayNameComparator());
-
-		return downstreamBatchBuilds;
-	}
-
-	@Override
 	public DownstreamBuild getDownstreamBuild(String axisName) {
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			String downstreamAxisName = downstreamBuild.getParameterValue(
@@ -1163,7 +1040,7 @@ public abstract class BaseTopLevelBuild
 		List<Element> allCurrentBuildFailureElements = new ArrayList<>();
 		List<Element> upstreamBuildFailureElements = new ArrayList<>();
 
-		int maxFailureCount = 5;
+		int maxFailureCount = 20;
 
 		for (Build failedDownstreamBuild : failedDownstreamBuilds) {
 			Element gitHubMessageElement =

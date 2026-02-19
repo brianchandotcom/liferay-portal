@@ -21,7 +21,7 @@ import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
 import {safeJSONParse} from '../../../../utils/util';
 import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import PaymentStatusBadge from '../../components/PaymentStatus/PaymentStatusBadge';
 import {formatCurrency} from '../../util/finance';
 import {formatAddress, formatDate, textWrapper} from '../../util/util';
 
@@ -167,7 +167,7 @@ const OrderDetails = () => {
 							{
 								title: i18n.translate('payment-status'),
 								value: (
-									<PaymentStatus
+									<PaymentStatusBadge
 										paymentStatus={
 											order?.paymentStatusInfo
 												.code as number

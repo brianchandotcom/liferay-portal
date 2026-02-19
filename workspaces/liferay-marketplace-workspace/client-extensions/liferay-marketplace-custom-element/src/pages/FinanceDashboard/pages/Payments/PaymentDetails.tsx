@@ -21,7 +21,7 @@ import PublisherSalesSummary from '../../../../services/rest/PublisherSalesSumma
 import {exportToCSV} from '../../../../utils/csv';
 import {safeJSONParse} from '../../../../utils/util';
 import DetailsHeader from '../../components/DetailsHeader/DetailsHeader';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import PaymentStatusBadge from '../../components/PaymentStatus/PaymentStatusBadge';
 import {formatCurrency, getTotalByOrderKey} from '../../util/finance';
 import {formatDate, textWrapper} from '../../util/util';
 
@@ -72,7 +72,7 @@ const PaymentDetails = () => {
 
 	const paymentStatus = publisherSalesSummary?.paymentStatus.key;
 
-	const paymentStautsCode =
+	const paymentStatusCode =
 		paymentStatus === PublisherPayoutStatus.PAID
 			? PaymentStatusCode.PAID
 			: PaymentStatusCode.PENDING;
@@ -152,7 +152,7 @@ const PaymentDetails = () => {
 						);
 					})
 				}
-				paymentStatusCode={paymentStautsCode}
+				paymentStatusCode={paymentStatusCode}
 				showButton={paymentStatus !== PublisherPayoutStatus.PAID}
 				title={publisherSalesSummary?.publisherName as string}
 			/>
@@ -251,8 +251,8 @@ const PaymentDetails = () => {
 							{
 								title: i18n.translate('status'),
 								value: (
-									<PaymentStatus
-										paymentStatus={paymentStautsCode}
+									<PaymentStatusBadge
+										paymentStatus={paymentStatusCode}
 									/>
 								),
 							},

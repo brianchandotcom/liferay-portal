@@ -9,16 +9,16 @@ import {KeyedMutator} from 'swr';
 import ListView from '../../../../components/ListView';
 import Page from '../../../../components/Page';
 import SearchBuilder from '../../../../core/SearchBuilder';
-import {PaymentStatus as PaymentStatusCode} from '../../../../enums/Order';
+import {PaymentStatus} from '../../../../enums/Order';
 import i18n from '../../../../i18n';
 import {Liferay} from '../../../../liferay/liferay';
 import HeadlessCommerceAdminOrder from '../../../../services/rest/HeadlessCommerceAdminOrder';
-import PaymentStatus from '../../components/PaymentStatus/PaymentStatusBadge';
+import PaymentStatusBadge from '../../components/PaymentStatus/PaymentStatusBadge';
 
 async function onClickMarkAsPaid(order: Order, mutate: KeyedMutator<any>) {
 	try {
 		await HeadlessCommerceAdminOrder.patchOrder(order.id, {
-			paymentStatus: PaymentStatusCode.PAID,
+			paymentStatus: PaymentStatus.PAID,
 		});
 
 		mutate((response: Order) => response, {
@@ -65,8 +65,8 @@ const Orders = () => {
 						{
 							disabled(order) {
 								return [
-									PaymentStatusCode.CANCELED,
-									PaymentStatusCode.PAID,
+									PaymentStatus.CANCELED,
+									PaymentStatus.PAID,
 								].includes(order.paymentStatus);
 							},
 							name: i18n.translate('mark-as-paid'),
@@ -132,7 +132,7 @@ const Orders = () => {
 							render: (paymentStatusInfo, {paymentMethod}) => (
 								<div className="d-flex flex-column justify-content-center">
 									<p className="mb-0 pt-1">
-										<PaymentStatus
+										<PaymentStatusBadge
 											paymentStatus={
 												paymentStatusInfo.code
 											}

@@ -213,7 +213,7 @@ public class IndexUpdaterUtilTest {
 					() -> StartupHelperUtil.setUpgrading(upgrading);
 				LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 					DuplicateUniqueFinderRowsCleaner.class.getName(),
-					LoggerTestUtil.WARN)) {
+					LoggerTestUtil.INFO)) {
 
 				ReflectionTestUtil.invoke(
 					IndexUpdaterUtil.class, "_updateIndexes",

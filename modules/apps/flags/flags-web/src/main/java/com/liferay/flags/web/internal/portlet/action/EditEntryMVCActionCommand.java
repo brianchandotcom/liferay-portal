@@ -59,12 +59,6 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			String className = ParamUtil.getString(actionRequest, "className");
 			long classPK = ParamUtil.getLong(actionRequest, "classPK");
-
-			String reporterEmailAddress = _getReporterEmailAddress(
-				actionRequest);
-
-			long reportedUserId = _getReportedUserId(className, classPK);
-
 			String contentTitle = ParamUtil.getString(
 				actionRequest, "contentTitle");
 			String contentURL = ParamUtil.getString(
@@ -75,8 +69,9 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				"com.liferay.portlet.flags.model.FlagsEntry", actionRequest);
 
 			_flagsEntryService.addEntry(
-				className, classPK, reporterEmailAddress, reportedUserId,
-				contentTitle, contentURL, reason, serviceContext);
+				className, classPK, _getReporterEmailAddress(actionRequest),
+				_getReportedUserId(className, classPK), contentTitle,
+				contentURL, reason, serviceContext);
 		}
 		catch (CaptchaException captchaException) {
 			ThemeDisplay themeDisplay =

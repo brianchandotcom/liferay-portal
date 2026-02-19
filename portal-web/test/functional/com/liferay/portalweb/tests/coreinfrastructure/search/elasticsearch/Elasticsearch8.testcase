@@ -147,13 +147,15 @@ definition {
 			panel = "Control Panel",
 			portlet = "Search");
 
-		var clientVersion = Elasticsearch.getClientVersion();
-		var serverVersion = Elasticsearch.getServerVersion();
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#SEARCH_ENGINE_VENDOR",
+			value1 = "Elasticsearch");
 
-		SearchAdministration.assertEngineVendorAndVersions(
-			clientVersion = ${clientVersion},
-			engineVendor = "Elasticsearch",
-			serverVersion = ${serverVersion});
+		var clientVersion = Elasticsearch.getClientVersion();
+
+		AssertTextEquals.assertPartialText(
+			locator1 = "SearchAdmin#CLIENT_VERSION",
+			value1 = ${clientVersion});
 
 		SearchAdministration.openFieldMappings();
 

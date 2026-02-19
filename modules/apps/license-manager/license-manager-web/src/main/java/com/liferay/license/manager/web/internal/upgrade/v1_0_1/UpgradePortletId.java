@@ -57,9 +57,9 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 						"ownerType = ? and plid = ? and portletId = ?")) {
 
 			while (resultSet.next()) {
-				preparedStatement2.setLong(1, resultSet.getLong(1));
-				preparedStatement2.setInt(2, resultSet.getInt(2));
-				preparedStatement2.setLong(3, resultSet.getLong(3));
+				preparedStatement2.setLong(1, resultSet.getLong("ownerId"));
+				preparedStatement2.setInt(2, resultSet.getInt("ownerType"));
+				preparedStatement2.setLong(3, resultSet.getLong("plid"));
 				preparedStatement2.setString(
 					4, LicenseManagerPortletKeys.LICENSE_MANAGER);
 
@@ -83,12 +83,12 @@ public class UpgradePortletId extends BasePortletIdUpgradeProcess {
 							"?")) {
 
 			while (resultSet.next()) {
-				preparedStatement2.setLong(1, resultSet.getLong(1));
+				preparedStatement2.setLong(1, resultSet.getLong("companyId"));
 				preparedStatement2.setString(
 					2, LicenseManagerPortletKeys.LICENSE_MANAGER);
-				preparedStatement2.setInt(3, resultSet.getInt(2));
-				preparedStatement2.setString(4, resultSet.getString(3));
-				preparedStatement2.setLong(5, resultSet.getLong(4));
+				preparedStatement2.setInt(3, resultSet.getInt("scope"));
+				preparedStatement2.setString(4, resultSet.getString("primKey"));
+				preparedStatement2.setLong(5, resultSet.getLong("roleId"));
 
 				preparedStatement2.addBatch();
 			}

@@ -1655,3 +1655,68 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Tags are not cleared after saving content when the categories panel is never opened',
+	{tag: '@LPD-79085'},
+	async ({contentsPage, page}) => {
+		const tagName = 'tag test';
+		const title = getRandomString();
+
+		try {
+			await test.step('Create a new basic web content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.createContent('Basic Web Content');
+			});
+
+			await test.step('Fill required fields', async () => {
+				await page.getByLabel('Title').fill(title);
+			});
+
+			await test.step('Add a tag', async () => {
+				await contentsPage.openSidePanel('Categorization');
+
+				const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+				await tagsAutocomplete.click();
+
+				await page.keyboard.type(tagName);
+
+				const newTagOption = page.getByRole('option', {
+					name: 'Create New Tag:',
+				});
+
+				await newTagOption.waitFor();
+				await newTagOption.click();
+			});
+
+			await test.step('Save content', async () => {
+				await contentsPage.saveContent();
+			});
+
+			await test.step('Edit the content and save without opening the categories panel', async () => {
+				await contentsPage.editContent(title);
+
+				await contentsPage.saveContent();
+			});
+
+			await test.step('Edit the content and check that the tag is not cleared', async () => {
+				await contentsPage.editContent(title);
+
+				await contentsPage.openSidePanel('Categorization');
+
+				await expect(
+					page.locator('.label-item', {hasText: tagName})
+				).toBeVisible();
+			});
+		}
+		finally {
+			await test.step('Delete content', async () => {
+				await contentsPage.goto();
+
+				await contentsPage.deleteContent(title);
+			});
+		}
+	}
+);

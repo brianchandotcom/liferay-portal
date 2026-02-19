@@ -30,14 +30,6 @@ public interface TopLevelBuild extends ParentBuild {
 
 	public Build getControllerBuild();
 
-	public AxisBuild getDownstreamAxisBuild(String axisName);
-
-	public List<AxisBuild> getDownstreamAxisBuilds();
-
-	public BatchBuild getDownstreamBatchBuild(String jobVariant);
-
-	public List<BatchBuild> getDownstreamBatchBuilds();
-
 	public DownstreamBuild getDownstreamBuild(String axisName);
 
 	public String getJenkinsReport();

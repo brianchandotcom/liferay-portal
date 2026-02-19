@@ -26,7 +26,10 @@ public class HistoryFactory {
 			throw new RuntimeException("Job history is null");
 		}
 
-		BatchHistory batchHistory = _batchHistories.get(batchName);
+		String key = JenkinsResultsParserUtil.combine(
+			jobHistory.getPortalUpstreamBranchName(), "__", batchName);
+
+		BatchHistory batchHistory = _batchHistories.get(key);
 
 		if (batchHistory != null) {
 			return batchHistory;
@@ -40,7 +43,7 @@ public class HistoryFactory {
 				batchName, jobHistory, jsonObject);
 		}
 
-		_batchHistories.put(batchName, batchHistory);
+		_batchHistories.put(key, batchHistory);
 
 		return batchHistory;
 	}
@@ -84,8 +87,11 @@ public class HistoryFactory {
 			throw new RuntimeException("Batch history is null");
 		}
 
-		TestClassHistory testClassHistory = _testClassHistories.get(
-			testClassName);
+		String key = JenkinsResultsParserUtil.combine(
+			batchHistory.getPortalUpstreamBranchName(), "__",
+			batchHistory.getBatchName(), "__", testClassName);
+
+		TestClassHistory testClassHistory = _testClassHistories.get(key);
 
 		if (testClassHistory != null) {
 			return testClassHistory;
@@ -100,6 +106,8 @@ public class HistoryFactory {
 				batchHistory, jsonObject, testClassName);
 		}
 
+		_testClassHistories.put(key, testClassHistory);
+
 		return testClassHistory;
 	}
 
@@ -110,7 +118,11 @@ public class HistoryFactory {
 			throw new RuntimeException("Batch history is null");
 		}
 
-		TestTaskHistory testTaskHistory = _testTaskHistories.get(testTaskName);
+		String key = JenkinsResultsParserUtil.combine(
+			batchHistory.getPortalUpstreamBranchName(), "__",
+			batchHistory.getBatchName(), "__", testTaskName);
+
+		TestTaskHistory testTaskHistory = _testTaskHistories.get(key);
 
 		if (testTaskHistory != null) {
 			return testTaskHistory;
@@ -125,7 +137,7 @@ public class HistoryFactory {
 				batchHistory, jsonObject, testTaskName);
 		}
 
-		_testTaskHistories.put(testTaskName, testTaskHistory);
+		_testTaskHistories.put(key, testTaskHistory);
 
 		return testTaskHistory;
 	}

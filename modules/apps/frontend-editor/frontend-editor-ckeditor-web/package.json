@@ -75,7 +75,7 @@
 		"eventsource": "^4.0.0",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
-		"liferay-ckeditor": "4.21.0-liferay.13",
+		"liferay-ckeditor": "4.21.0-liferay.14",
 		"prop-types": "15.7.2",
 		"react": "18.2.0",
 		"react-dom": "18.2.0"

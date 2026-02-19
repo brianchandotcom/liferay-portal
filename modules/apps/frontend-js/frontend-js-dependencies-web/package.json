@@ -12,7 +12,7 @@
 		"graphql-hooks": "4.4.0",
 		"graphql-hooks-memcache": "^2.1.1",
 		"highlight.js": "10.4.1",
-		"liferay-ckeditor": "4.21.0-liferay.13",
+		"liferay-ckeditor": "4.21.0-liferay.14",
 		"moment": "2.29.4",
 		"numeral": "2.0.6",
 		"object-hash": "^2.0.1",

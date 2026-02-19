@@ -17039,10 +17039,10 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-liferay-ckeditor@4.21.0-liferay.13:
-  version "4.21.0-liferay.13"
-  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.13.tgz#f69d978405e0e229a26d9d795fcced7b822dd0af"
-  integrity sha512-IR1wLGLOsqhSIGpp2RqfV5KrHtPIncE177UwVH2uYZhD3yAqpZ9PdbnC1JZBYsPc1MvDl5MxAfboOnqFkJXkVA==
+liferay-ckeditor@4.21.0-liferay.14:
+  version "4.21.0-liferay.14"
+  resolved "https://registry.yarnpkg.com/liferay-ckeditor/-/liferay-ckeditor-4.21.0-liferay.14.tgz#113a5bd510589c54f3bc87270edd68d874f2528c"
+  integrity sha512-1acHNrkxXy2xXfOYdvQNBGZl7wxcSPtJHFW3h4PQLiHNJRqdYmCvCBVERWwxe6dV/llf4O5q2va0E9vqXZNzFw==
 
 liferay-frontend-common-css@1.0.4, liferay-frontend-common-css@^1.0.4:
   version "1.0.4"

@@ -3435,17 +3435,17 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			SitePage.Type.PAGE_SET_PAGE);
 		_testPutSiteSitePageWithPageSpecificationsWithCustomFields();
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
-			"1_column", "1_2_1_columns_i");
-		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
-			"1_column", "2_columns_ii");
-		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
-			"1_2_1_columns_i", "1_column");
-		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
-			"1_2_1_columns_i", RandomTestUtil.randomString());
-		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			RandomTestUtil.randomString(), RandomTestUtil.randomString());
 		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
 			RandomTestUtil.randomString(), "1_2_1_columns_i");
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_2_1_columns_i", RandomTestUtil.randomString());
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_2_1_columns_i", "1_column");
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_column", "1_2_1_columns_i");
+		_testPutSiteSitePageWithPageSpecificationsWithWidgetPageSpecification(
+			"1_column", "2_columns_ii");
 	}
 
 	private void _testPutSiteSitePageWithPageSpecifications(

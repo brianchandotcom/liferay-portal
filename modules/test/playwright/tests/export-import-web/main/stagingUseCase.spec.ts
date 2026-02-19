@@ -215,7 +215,7 @@ testWithBatchStagingFF(
 );
 
 testWithBatchStagingFF(
-	'Taxonomy Categories do not display select options with batch',
+	'Taxonomy Categories display controls on staging page',
 	{tag: ['@LPD-78848']},
 	async ({apiHelpers, page, stagingPage, uiElementsPage}) => {
 		const site = await apiHelpers.headlessSite.createSite({
@@ -265,6 +265,10 @@ testWithBatchStagingFF(
 			.waitFor();
 
 		await expect(page.getByRole('button', {name: 'Select'})).toHaveCount(0);
+
+		await expect(
+			stagingPage.page.getByText('Categories (1), Vocabularies (1)')
+		).toBeVisible();
 	}
 );
 

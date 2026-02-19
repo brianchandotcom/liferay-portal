@@ -2257,9 +2257,7 @@ public class ObjectDefinitionLocalServiceImpl
 			String randomClassName =
 				ObjectDefinitionUtil.generateRandomClassName();
 
-			int count = _getObjectDefinitionsCountByClassName(randomClassName);
-
-			if (count == 0) {
+			if (_getObjectDefinitionsCountByClassName(randomClassName) == 0) {
 				return randomClassName;
 			}
 		}

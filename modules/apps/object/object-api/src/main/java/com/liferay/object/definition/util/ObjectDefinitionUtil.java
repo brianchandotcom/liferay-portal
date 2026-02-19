@@ -33,9 +33,7 @@ public class ObjectDefinitionUtil {
 			ObjectDefinitionConstants.
 				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION);
 		sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
-
 		sb.append(RandomUtil.nextThreadLocalInt(10));
-
 		sb.append(StringUtil.toUpperCase(StringUtil.randomId(1)));
 		sb.append(RandomUtil.nextThreadLocalInt(10));
 

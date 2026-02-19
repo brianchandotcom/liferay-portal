@@ -316,28 +316,25 @@ public abstract class BaseSectionDisplayContextTestCase
 		DepotEntry depotEntry2 = addDepotEntry(
 			StringUtil.randomString(), user.getUserId());
 
-		try {
-			Object displayContext = getSectionDisplayContext(
-				getMockHttpServletRequest(TestPropsValues.getUser()));
+		Object displayContext = getSectionDisplayContext(
+			getMockHttpServletRequest(TestPropsValues.getUser()));
 
-			String filterString = getCMSSectionFilterString(displayContext);
+		String filterString = getCMSSectionFilterString(displayContext);
 
-			Assert.assertTrue(
-				filterString.contains(
-					"groupIds/any(g:g in (" + depotEntry1.getGroupId() + "))"));
+		Assert.assertTrue(
+			filterString.contains(
+				"groupIds/any(g:g in (" + depotEntry1.getGroupId() + "))"));
 
-			displayContext = getSectionDisplayContext(
-				getMockHttpServletRequest(user));
+		displayContext = getSectionDisplayContext(
+			getMockHttpServletRequest(user));
 
-			filterString = getCMSSectionFilterString(displayContext);
+		filterString = getCMSSectionFilterString(displayContext);
 
-			Assert.assertFalse(filterString.contains("groupIds/any"));
-		}
-		finally {
-			_depotEntryLocalService.deleteDepotEntry(depotEntry1);
-			_depotEntryLocalService.deleteDepotEntry(depotEntry2);
-			_userLocalService.deleteUser(user);
-		}
+		Assert.assertFalse(filterString.contains("groupIds/any"));
+
+		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
+		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
+		_userLocalService.deleteUser(user);
 	}
 
 	@Test

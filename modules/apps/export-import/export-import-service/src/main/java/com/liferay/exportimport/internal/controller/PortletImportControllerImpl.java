@@ -45,6 +45,8 @@ import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
+import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
+import com.liferay.exportimport.portlet.element.handler.PortletElementHandlerFactory;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessorRegistryUtil;
@@ -1148,23 +1150,30 @@ public class PortletImportControllerImpl implements PortletImportController {
 		String expectedRootPortletId = PortletIdCodec.decodePortletName(
 			portletId);
 
-		if (!expectedRootPortletId.equals(rootPortletId)) {
+		PortletElementHandler portletElementHandler =
+			_portletElementHandlerFactory.create(
+				rootElement.element("portlet"));
+
+		String targetPortletId = portletElementHandler.getTargetPortletId(
+			companyId);
+
+		if (!expectedRootPortletId.equals(rootPortletId) &&
+			!expectedRootPortletId.equals(targetPortletId)) {
+
 			throw new PortletIdException(expectedRootPortletId);
 		}
 
-		Element portletElement = rootElement.element("portlet");
-
 		String schemaVersion = GetterUtil.getString(
-			portletElement.attributeValue("schema-version"), "1.0.0");
+			portletElementHandler.getSchemaVersion(), "1.0.0");
 
 		PortletDataHandler portletDataHandler =
-			_portletDataHandlerProvider.provide(companyId, portletId);
+			_portletDataHandlerProvider.provide(companyId, targetPortletId);
 
 		if (!portletDataHandler.validateSchemaVersion(schemaVersion)) {
 			throw new LayoutImportException(
 				LayoutImportException.TYPE_WRONG_PORTLET_SCHEMA_VERSION,
 				new Object[] {
-					schemaVersion, portletId,
+					schemaVersion, targetPortletId,
 					portletDataHandler.getSchemaVersion()
 				});
 		}
@@ -1548,6 +1557,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 	@Reference
 	private PortletDataHandlerStatusMessageSender
 		_portletDataHandlerStatusMessageSender;
+
+	@Reference
+	private PortletElementHandlerFactory _portletElementHandlerFactory;
 
 	@Reference
 	private PortletItemLocalService _portletItemLocalService;

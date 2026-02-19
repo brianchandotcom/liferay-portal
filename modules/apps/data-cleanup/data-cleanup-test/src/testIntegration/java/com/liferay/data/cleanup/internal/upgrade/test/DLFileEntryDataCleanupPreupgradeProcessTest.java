@@ -133,13 +133,15 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from DLFileEntry where fileEntryId = ?")) {
+				"select count(*) as count from DLFileEntry where fileEntryId " +
+					"= ?")) {
 
 			preparedStatement.setLong(1, fileEntryId);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				Assert.assertTrue(resultSet.next());
-				Assert.assertEquals(0, resultSet.getInt(1));
+
+				Assert.assertEquals(0, resultSet.getInt("count"));
 			}
 		}
 	}

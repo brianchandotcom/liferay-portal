@@ -260,18 +260,13 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 
 			String emailAddress = contact.getEmailAddress();
 
-			try {
-				_marketplaceService.getUserAccount(emailAddress);
+			Page<UserAccount> userAccountsPage =
+				_marketplaceService.getUserAccountsPage(
+					"emailAddress eq '" + emailAddress + "'",
+					Pagination.of(1, 1), "", "");
 
-				_marketplaceService.postAccountUserAccountByEmailAddress(
-					accountId, emailAddress);
-
+			if (userAccountsPage.fetchFirstItem() == null) {
 				continue;
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
 			}
 
 			_marketplaceService.postUserAccount(
@@ -312,8 +307,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				_getPostalAddresses(koroneikiAccount)) {
 
 			PostalAddress postalAddressExists = _getPostalAddress(
-					account, postalAddress.getStreetAddressLine1()
-			);
+				account, postalAddress.getStreetAddressLine1());
 
 			if (postalAddressExists != null) {
 				continue;

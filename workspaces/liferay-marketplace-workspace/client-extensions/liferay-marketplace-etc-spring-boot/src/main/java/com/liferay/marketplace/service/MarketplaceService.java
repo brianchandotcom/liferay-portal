@@ -8,6 +8,7 @@ package com.liferay.marketplace.service;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.client.extension.util.spring.boot3.service.BaseService;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountRoleResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
@@ -472,6 +473,19 @@ public class MarketplaceService extends BaseService {
 			_liferayOAuth2AccessTokenManager.getAuthorization(
 				"liferay-marketplace-etc-spring-boot-oahs")
 		).build();
+	}
+
+	public Page<UserAccount> getUserAccountsPage(
+			String filterString,
+			com.liferay.headless.admin.user.client.pagination.Pagination
+				pagination,
+			String searchString, String sortString)
+		throws Exception {
+
+		UserAccountResource userAccountResource = getUserAccountResource();
+
+		return userAccountResource.getUserAccountsPage(
+			searchString, filterString, pagination, sortString);
 	}
 
 	public void patchPublisherAssetAttachment(String body, long id)

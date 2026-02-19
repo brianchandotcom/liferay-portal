@@ -31,11 +31,9 @@ export default function PreviewButton({
 
 		Liferay.on('asyncFormSubmission', updateArticleId);
 
-		Liferay.componentReady(`${namespace}publishing`).then(
-			(publishLock) => {
-				lockRef.current = publishLock;
-			}
-		);
+		Liferay.componentReady(`${namespace}publishing`).then((publishLock) => {
+			lockRef.current = publishLock;
+		});
 
 		return () => {
 			Liferay.detach('asyncFormSubmission', updateArticleId);

@@ -143,8 +143,7 @@ public class FeatureFlagListenerTest {
 	@Test
 	public void testRegisterWithNoKeys() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.feature.flag.web.internal.feature.flag." +
-					"FeatureFlagsBagProviderImpl",
+				"com.liferay.portal.feature.flag.FeatureFlagsBagProviderImpl",
 				LoggerTestUtil.ERROR);
 			TestFeatureFlagListener ignored = new TestFeatureFlagListener()) {
 

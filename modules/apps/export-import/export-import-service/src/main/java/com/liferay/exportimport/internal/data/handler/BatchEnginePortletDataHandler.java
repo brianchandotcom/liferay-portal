@@ -876,10 +876,13 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				TransformUtil.transformToArray(
 					_registrations, this::_getPortletDataHandlerControl,
 					PortletDataHandlerControl.class));
+			setStagingPortletDataHandlerControls(
+				getExportPortletDataHandlerControls());
 		}
 		else {
 			setEmptyControlsAllowed(true);
 			setExportPortletDataHandlerControls();
+			setStagingPortletDataHandlerControls();
 		}
 	}
 

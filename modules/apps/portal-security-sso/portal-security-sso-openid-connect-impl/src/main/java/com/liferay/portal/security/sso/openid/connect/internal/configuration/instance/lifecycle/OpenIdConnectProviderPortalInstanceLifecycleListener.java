@@ -110,6 +110,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			_updateOAuthClientASLocalMetadata(guestUserId, properties),
 			_generateCustomClaimsJSON(properties),
 			_generateInfoJSON(properties),
+			GetterUtil.getString(properties.get("matcherField")),
 			GetterUtil.getLong(
 				properties.get("discoveryEndpointCacheInMillis")),
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
@@ -452,6 +453,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 							guestUserId, properties),
 						_generateCustomClaimsJSON(properties),
 						_generateInfoJSON(properties),
+						GetterUtil.getString(properties.get("matcherField")),
 						GetterUtil.getLong(
 							properties.get("discoveryEndpointCacheInMillis")),
 						oldOAuthClientEntry.getOIDCUserInfoMapperJSON(),

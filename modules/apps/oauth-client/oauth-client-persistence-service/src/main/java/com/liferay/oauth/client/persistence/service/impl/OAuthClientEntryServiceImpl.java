@@ -48,7 +48,7 @@ public class OAuthClientEntryServiceImpl
 
 		return oAuthClientEntryLocalService.addOAuthClientEntry(
 			userId, authRequestParametersJSON, authServerWellKnownURI,
-			customClaimsJSON, infoJSON, metadataCacheTime,
+			customClaimsJSON, infoJSON, matcherField, metadataCacheTime,
 			oidcUserInfoMapperJSON, tokenRequestParametersJSON);
 	}
 
@@ -156,7 +156,7 @@ public class OAuthClientEntryServiceImpl
 
 		return oAuthClientEntryLocalService.updateOAuthClientEntry(
 			oAuthClientEntryId, authRequestParametersJSON,
-			authServerWellKnownURI, customClaimsJSON, infoJSON,
+			authServerWellKnownURI, customClaimsJSON, infoJSON, matcherField,
 			metadataCacheTime, oidcUserInfoMapperJSON,
 			tokenRequestParametersJSON);
 	}

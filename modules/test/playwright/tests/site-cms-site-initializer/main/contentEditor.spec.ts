@@ -1660,7 +1660,7 @@ test(
 	'Tags are not cleared after saving content when the categories panel is never opened',
 	{tag: '@LPD-79085'},
 	async ({contentsPage, page}) => {
-		const tagName = 'tag test';
+		const tagName = getRandomString();
 		const title = getRandomString();
 
 		try {
@@ -1690,7 +1690,13 @@ test(
 				await newTagOption.waitFor();
 				await newTagOption.click();
 
-				await page.waitForTimeout(1000);
+				// Ideally we'd remove this, but right now if you save too
+				// quickly, the initial tag might not have enough time to
+				// populate.
+
+				await expect(
+					page.locator('input[name="assetTagNames"]')
+				).toHaveValue(tagName);
 			});
 
 			await test.step('Save content', async () => {
@@ -1700,11 +1706,13 @@ test(
 			await test.step('Edit the content and save without opening the categories panel', async () => {
 				await contentsPage.editContent(title);
 
-				// Ideally we'd remove this but right now if you save too
+				// Ideally we'd remove this, but right now if you save too
 				// quickly, the initial tag might not have enough time to
 				// populate.
 
-				await page.waitForTimeout(1000);
+				await expect(
+					page.locator('input[name="assetTagNames"]')
+				).toHaveValue(tagName);
 
 				await contentsPage.saveContent();
 			});

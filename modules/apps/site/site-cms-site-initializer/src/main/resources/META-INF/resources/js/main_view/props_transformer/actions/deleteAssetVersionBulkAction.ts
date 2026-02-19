@@ -6,18 +6,14 @@
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import AssetBulkActionTaskService from '../../../common/services/AssetBulkActionTaskService';
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
-import {
-	IBulkActionFDSData,
-	IBulkActionTaskStarter,
-} from '../../../common/types/BulkActionTask';
+import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
 import {
 	displayCreateTaskErrorToast,
 	displayCreateTaskSuccessToast,
 } from '../../../common/utils/toastUtil';
-import {BulkActionTaskStarter} from '../../bulk_actions_monitor/services/BulkActionTaskStarter';
 import {getBulkActionTaskMessage} from '../../bulk_actions_monitor/util/notifications';
+import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
 function getBulkDeleteMessage(
 	objectEntryTitle: string,
@@ -57,12 +53,14 @@ function getBulkDeleteMessage(
 
 export default function deleteAssetVersionBulkAction({
 	apiURL,
+	dataSetId,
 	entryClassName,
 	objectEntryCurrentVersion,
 	objectEntryTitle,
 	selectedData,
 }: {
 	apiURL?: string;
+	dataSetId?: string;
 	entryClassName?: string;
 	objectEntryCurrentVersion: number;
 	objectEntryTitle: string;
@@ -115,52 +113,37 @@ export default function deleteAssetVersionBulkAction({
 						return;
 					}
 
-					const bulkAction: IBulkActionTaskStarter =
-						new BulkActionTaskStarter({
-							apiURL,
-							keyValues: {versions},
-							onCreateSuccess: () => {
-								const message = getBulkActionTaskMessage(
-									type,
-									'info',
-									selectedData
-								);
+					triggerAssetBulkAction({
+						apiURL,
+						dataSetId,
+						keyValues: {versions},
+						onCreateSuccess: () => {
+							const message = getBulkActionTaskMessage(
+								type,
+								'info',
+								selectedData
+							);
 
-								displayCreateTaskSuccessToast(
-									selectedData.selectAll
-										? message
-										: sub(message, [
-												selectedData?.items?.length ||
-													0,
-											])
-								);
-							},
-							overrideDefaultSuccessToast: true,
-							selectedData: {
-								items: [
-									{
-										embedded: selectedData.items[0],
-										entryClassName,
-									} as ISearchAssetObjectEntry,
-								],
-								selectAll: selectedData.selectAll,
-							},
-							type,
-						});
-
-					const response =
-						await AssetBulkActionTaskService.createTask(
-							bulkAction.payload,
-							bulkAction.postURL
-						);
-
-					if (response.data) {
-						bulkAction.onCreateSuccess(response);
-					}
-
-					if (response.error) {
-						bulkAction.onCreateError(response);
-					}
+							displayCreateTaskSuccessToast(
+								selectedData.selectAll
+									? message
+									: sub(message, [
+											selectedData?.items?.length || 0,
+										])
+							);
+						},
+						overrideDefaultSuccessToast: true,
+						selectedData: {
+							items: [
+								{
+									embedded: selectedData.items[0],
+									entryClassName,
+								} as ISearchAssetObjectEntry,
+							],
+							selectAll: selectedData.selectAll,
+						},
+						type,
+					});
 
 					processClose();
 				},

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -48,7 +47,7 @@ public interface CommerceInventoryBookedQuantityService extends BaseService {
 			getCommerceInventoryBookedQuantities(
 				long companyId, String sku, String unitOfMeasureKey, int start,
 				int end)
-		throws PrincipalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceInventoryBookedQuantity>
@@ -60,7 +59,7 @@ public interface CommerceInventoryBookedQuantityService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryBookedQuantitiesCount(
 			long companyId, String sku, String unitOfMeasureKey)
-		throws PrincipalException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceInventoryBookedQuantitiesCount(

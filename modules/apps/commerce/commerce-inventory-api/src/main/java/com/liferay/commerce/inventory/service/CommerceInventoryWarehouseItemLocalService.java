@@ -252,6 +252,10 @@ public interface CommerceInventoryWarehouseItemLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getCommerceInventoryWarehouseIds(
+		long companyId, String sku, String unitOfMeasureKey);
+
 	/**
 	 * Returns the commerce inventory warehouse item with the primary key.
 	 *

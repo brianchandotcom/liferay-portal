@@ -34,7 +34,7 @@ public class CommerceInventoryBookedQuantityServiceUtil {
 			getCommerceInventoryBookedQuantities(
 				long companyId, String sku, String unitOfMeasureKey, int start,
 				int end)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		throws PortalException {
 
 		return getService().getCommerceInventoryBookedQuantities(
 			companyId, sku, unitOfMeasureKey, start, end);
@@ -52,7 +52,7 @@ public class CommerceInventoryBookedQuantityServiceUtil {
 
 	public static int getCommerceInventoryBookedQuantitiesCount(
 			long companyId, String sku, String unitOfMeasureKey)
-		throws com.liferay.portal.kernel.security.auth.PrincipalException {
+		throws PortalException {
 
 		return getService().getCommerceInventoryBookedQuantitiesCount(
 			companyId, sku, unitOfMeasureKey);

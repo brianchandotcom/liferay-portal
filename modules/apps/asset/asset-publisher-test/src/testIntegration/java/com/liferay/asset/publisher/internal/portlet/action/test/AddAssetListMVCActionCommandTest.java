@@ -62,13 +62,13 @@ public class AddAssetListMVCActionCommandTest {
 
 		_group1Layout = LayoutTestUtil.addTypePortletLayout(_group1);
 
+		_group2 = GroupTestUtil.addGroup();
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
 				_group2.getGroupId(),
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
 				WorkflowConstants.STATUS_APPROVED);
-
-		_group2 = GroupTestUtil.addGroup();
 
 		_group2Layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());

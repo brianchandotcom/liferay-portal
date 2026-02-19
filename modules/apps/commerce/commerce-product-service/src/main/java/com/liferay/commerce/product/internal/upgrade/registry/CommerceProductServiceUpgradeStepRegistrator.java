@@ -42,6 +42,7 @@ import com.liferay.commerce.product.internal.upgrade.v5_26_0.util.CPConfiguratio
 import com.liferay.commerce.product.internal.upgrade.v5_5_0.util.CPInstanceUnitOfMeasureTable;
 import com.liferay.commerce.product.internal.upgrade.v6_1_0.CPConfigurationEntryUpgradeProcess;
 import com.liferay.commerce.product.internal.upgrade.v6_2_0.CPDefinitionLocalizationUpgradeProcess;
+import com.liferay.commerce.product.service.CPTaxCategoryLocalService;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -53,6 +54,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseUuidUpgradeProcess;
@@ -678,6 +680,14 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 		registry.register("6.3.0", "6.3.1", new DummyUpgradeStep());
 
+		registry.register(
+			"6.3.1", "6.4.0",
+			new com.liferay.commerce.product.internal.upgrade.v6_4_0.
+				CommercePermissionUpgradeProcess(
+					_companyLocalService, _cpTaxCategoryLocalService,
+					_resourceActionLocalService, _resourceLocalService,
+					_resourcePermissionLocalService));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}
@@ -714,6 +724,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 	private CounterLocalService _counterLocalService;
 
 	@Reference
+	private CPTaxCategoryLocalService _cpTaxCategoryLocalService;
+
+	@Reference
 	private GroupLocalService _groupLocalService;
 
 	@Reference
@@ -730,6 +743,9 @@ public class CommerceProductServiceUpgradeStepRegistrator
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private ResourceLocalService _resourceLocalService;
 
 	@Reference
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

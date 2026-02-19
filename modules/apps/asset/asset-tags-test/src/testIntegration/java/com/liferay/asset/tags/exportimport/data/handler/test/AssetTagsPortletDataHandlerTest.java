@@ -80,16 +80,10 @@ public class AssetTagsPortletDataHandlerTest
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
-			@FeatureFlag("LPD-35914")
-		}
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
 	)
 	@Test
 	public void testAssetTagExportImportReportEntries() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		AssetTag assetTag = _addTag();
 
 		File larFile = _exportLayout();
@@ -123,22 +117,13 @@ public class AssetTagsPortletDataHandlerTest
 							" already exists") &&
 					(exportImportReportEntry.getType() ==
 						ExportImportReportEntryConstants.TYPE_ERROR)));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443"),
-			@FeatureFlag("LPD-35914")
-		}
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-35443")}
 	)
 	@Test
 	public void testExportImportAssetTag() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		AssetTag assetTag = _addTag();
 
 		File larFile = _exportLayout();
@@ -155,9 +140,6 @@ public class AssetTagsPortletDataHandlerTest
 			_assetTagLocalService.fetchAssetTagByExternalReferenceCode(
 				assetTag.getExternalReferenceCode(),
 				stagingGroup.getGroupId()));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@FeatureFlags(

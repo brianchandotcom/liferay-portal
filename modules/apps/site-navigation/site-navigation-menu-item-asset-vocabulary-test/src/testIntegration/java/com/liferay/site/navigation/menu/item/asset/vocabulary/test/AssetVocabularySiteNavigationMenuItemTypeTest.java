@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -175,15 +174,10 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 		Assert.assertEquals(assetVocabulary1, assetVocabulary2);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testGetAssetVocabularySiteNavigationMenuItemFromExportImport()
 		throws Exception {
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 		Locale locale = _portal.getSiteDefaultLocale(_group.getGroupId());
 
@@ -291,9 +285,6 @@ public class AssetVocabularySiteNavigationMenuItemTypeTest {
 			updatedName,
 			siteNavigationMenuItemType.getTitle(
 				siteNavigationMenuItem, locale));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
 	@Test

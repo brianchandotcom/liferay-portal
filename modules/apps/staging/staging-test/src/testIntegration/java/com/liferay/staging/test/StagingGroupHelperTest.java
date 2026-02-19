@@ -10,11 +10,10 @@ import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
-import com.liferay.portal.kernel.instance.lifecycle.PortalInstanceLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -26,12 +25,11 @@ import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -52,13 +50,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
-import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
-import org.osgi.util.promise.Promise;
 
 /**
  * @author Akos Thurzo
@@ -139,79 +131,17 @@ public class StagingGroupHelperTest {
 		}
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
+	@FeatureFlags(featureFlags = @FeatureFlag("LPD-35443"))
 	@Test
 	public void testFetchCompanyGroup() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		_groupLocalService.deleteGroup(group);
-
-		Bundle bundle = FrameworkUtil.getBundle(StagingGroupHelperTest.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		ComponentDescriptionDTO componentDescriptionDTO1 =
-			_serviceComponentRuntime.getComponentDescriptionDTO(
-				FrameworkUtil.getBundle(
-					_addCompanyGroupPortalInstanceLifecycleListener.getClass()),
-				ClassUtil.getClassName(
-					_addCompanyGroupPortalInstanceLifecycleListener));
-
-		Promise<Void> promise = _serviceComponentRuntime.disableComponent(
-			componentDescriptionDTO1);
-
-		promise.getValue();
-
-		ServiceReference<PortalInstanceLifecycleManager> serviceReference =
-			bundleContext.getServiceReference(
-				PortalInstanceLifecycleManager.class);
-
-		ComponentDescriptionDTO componentDescriptionDTO2 =
-			_serviceComponentRuntime.getComponentDescriptionDTO(
-				serviceReference.getBundle(),
-				"com.liferay.portal.instance.lifecycle.internal." +
-					"PortalInstanceLifecycleListenerManagerImpl");
-
-		promise = _serviceComponentRuntime.disableComponent(
-			componentDescriptionDTO2);
-
-		promise.getValue();
-
-		Assert.assertNull(
-			_stagingGroupHelper.fetchCompanyGroup(
-				TestPropsValues.getCompanyId()));
-
-		promise = _serviceComponentRuntime.enableComponent(
-			componentDescriptionDTO1);
-
-		promise.getValue();
-
-		promise = _serviceComponentRuntime.enableComponent(
-			componentDescriptionDTO2);
-
-		promise.getValue();
-
-		serviceReference = bundleContext.getServiceReference(
-			PortalInstanceLifecycleManager.class);
-
-		PortalInstanceLifecycleManager portalInstanceLifecycleManager =
-			bundleContext.getService(serviceReference);
-
-		portalInstanceLifecycleManager.registerCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
 		Assert.assertNotNull(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()));
+
+		Company company = CompanyTestUtil.addCompany();
+
+		Assert.assertNotNull(
+			_stagingGroupHelper.fetchCompanyGroup(company.getCompanyId()));
 	}
 
 	@Test
@@ -1074,12 +1004,6 @@ public class StagingGroupHelperTest {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		StagingGroupHelperTest.class);
-
-	@Inject(
-		filter = "component.name=com.liferay.staging.internal.instance.lifecycle.AddCompanyGroupPortalInstanceLifecycleListener"
-	)
-	private PortalInstanceLifecycleListener
-		_addCompanyGroupPortalInstanceLifecycleListener;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

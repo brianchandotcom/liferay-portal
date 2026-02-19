@@ -34,7 +34,6 @@ export const test = mergeTests(
 	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 	}),
 	loginTest(),
 	productMenuPageTest,
@@ -46,7 +45,6 @@ const rootModelTest = mergeTests(
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
 		'LPD-35443': {enabled: true},
-		'LPD-35914': {enabled: true},
 	})
 );
 

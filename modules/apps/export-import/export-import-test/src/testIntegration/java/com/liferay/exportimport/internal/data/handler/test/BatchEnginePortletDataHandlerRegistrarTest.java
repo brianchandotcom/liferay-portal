@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -34,7 +33,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
@@ -80,7 +78,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 	public static final AggregateTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlag("LPD-35914")
 	@Test
 	@TestInfo({"LPD-56301", "LPD-65119", "LPD-68124"})
 	public void test() throws Exception {
@@ -123,96 +120,71 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					"true"
 				).build())) {
 
+			_assertPortletDataHandler(
+				TestPropsValues.getCompanyId(), portletId,
+				portletDataHandler ->
+					StringUtil.contains(
+						ClassUtil.getClassName(portletDataHandler),
+						"BatchEnginePortletDataHandler", StringPool.PERIOD) &&
+					Arrays.equals(
+						new String[] {className1, className2},
+						portletDataHandler.getClassNames()) &&
+					_hasPortletDataHandlerControls(
+						new PortletDataHandlerControl[] {
+							new PortletDataHandlerBoolean(
+								portletId, className1, className1, true, false,
+								null, className1, null),
+							new PortletDataHandlerBoolean(
+								portletId, className2, className2, true, false,
+								null, className2, null)
+						},
+						portletDataHandler.
+							getExportPortletDataHandlerControls()));
+
 			Assert.assertEquals(
-				0, _getRegisteredPortletDataHandlersCount(portletId));
+				1, _getRegisteredPortletDataHandlersCount(portletId));
 
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), true, "LPD-35914");
+			Company company = CompanyTestUtil.addCompany();
 
-			Company company = null;
-
-			try {
-				_assertPortletDataHandler(
-					TestPropsValues.getCompanyId(), portletId,
-					portletDataHandler ->
-						StringUtil.contains(
-							ClassUtil.getClassName(portletDataHandler),
-							"BatchEnginePortletDataHandler",
-							StringPool.PERIOD) &&
-						Arrays.equals(
-							new String[] {className1, className2},
-							portletDataHandler.getClassNames()) &&
-						_hasPortletDataHandlerControls(
-							new PortletDataHandlerControl[] {
-								new PortletDataHandlerBoolean(
-									portletId, className1, className1, true,
-									false, null, className1, null),
-								new PortletDataHandlerBoolean(
-									portletId, className2, className2, true,
-									false, null, className2, null)
-							},
-							portletDataHandler.
-								getExportPortletDataHandlerControls()));
-
-				Assert.assertEquals(
-					1, _getRegisteredPortletDataHandlersCount(portletId));
-
-				company = CompanyTestUtil.addCompany();
-
-				FeatureFlagTestUtil.invokeFeatureFlagListeners(
-					company.getCompanyId(), true, "LPD-35914");
-
-				_assertPortletDataHandler(
-					company.getCompanyId(), portletId,
-					portletDataHandler ->
-						StringUtil.contains(
-							ClassUtil.getClassName(portletDataHandler),
-							"BatchEnginePortletDataHandler",
-							StringPool.PERIOD) &&
-						Arrays.equals(
-							new String[] {className1, className2},
-							portletDataHandler.getClassNames()));
-
-				_assertPortletDataHandler(
-					RandomTestUtil.randomLong(), portletId,
-					portletDataHandler -> StringUtil.contains(
+			_assertPortletDataHandler(
+				company.getCompanyId(), portletId,
+				portletDataHandler ->
+					StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
-						"DefaultPortletDataHandler", StringPool.PERIOD));
+						"BatchEnginePortletDataHandler", StringPool.PERIOD) &&
+					Arrays.equals(
+						new String[] {className1, className2},
+						portletDataHandler.getClassNames()));
 
-				safeCloseable2.close();
+			_assertPortletDataHandler(
+				RandomTestUtil.randomLong(), portletId,
+				portletDataHandler -> StringUtil.contains(
+					ClassUtil.getClassName(portletDataHandler),
+					"DefaultPortletDataHandler", StringPool.PERIOD));
 
-				_assertPortletDataHandler(
-					TestPropsValues.getCompanyId(), portletId,
-					portletDataHandler ->
-						StringUtil.contains(
-							ClassUtil.getClassName(portletDataHandler),
-							"BatchEnginePortletDataHandler",
-							StringPool.PERIOD) &&
-						Arrays.equals(
-							new String[] {className2},
-							portletDataHandler.getClassNames()) &&
-						_hasPortletDataHandlerControls(
-							new PortletDataHandlerControl[0],
-							portletDataHandler.
-								getExportPortletDataHandlerControls()));
+			safeCloseable2.close();
 
-				safeCloseable3.close();
-
-				_assertPortletDataHandler(
-					TestPropsValues.getCompanyId(), portletId,
-					portletDataHandler -> StringUtil.contains(
+			_assertPortletDataHandler(
+				TestPropsValues.getCompanyId(), portletId,
+				portletDataHandler ->
+					StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
-						"DefaultPortletDataHandler", StringPool.PERIOD));
-			}
-			finally {
-				FeatureFlagTestUtil.invokeFeatureFlagListeners(
-					TestPropsValues.getCompanyId(), false, "LPD-35914");
+						"BatchEnginePortletDataHandler", StringPool.PERIOD) &&
+					Arrays.equals(
+						new String[] {className2},
+						portletDataHandler.getClassNames()) &&
+					_hasPortletDataHandlerControls(
+						new PortletDataHandlerControl[0],
+						portletDataHandler.
+							getExportPortletDataHandlerControls()));
 
-				if (company != null) {
-					FeatureFlagTestUtil.invokeFeatureFlagListeners(
-						company.getCompanyId(), false, "LPD-35914");
-				}
-			}
+			safeCloseable3.close();
+
+			_assertPortletDataHandler(
+				TestPropsValues.getCompanyId(), portletId,
+				portletDataHandler -> StringUtil.contains(
+					ClassUtil.getClassName(portletDataHandler),
+					"DefaultPortletDataHandler", StringPool.PERIOD));
 		}
 	}
 

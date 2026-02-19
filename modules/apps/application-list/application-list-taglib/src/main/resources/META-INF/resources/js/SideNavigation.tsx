@@ -115,6 +115,7 @@ function SideNavigation({
 	return (
 		<SidePanel
 			aria-label={sub(Liferay.Language.get('x-menu'), label)}
+			closeOnEscape={false}
 			containerRef={containerRef}
 			data-qa-id="sideNavigation"
 			defaultOpen={initialVisible}

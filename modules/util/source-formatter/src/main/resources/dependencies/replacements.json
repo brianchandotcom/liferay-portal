@@ -3596,6 +3596,19 @@
 	},
 	{
 		"classNames": [
+			"UpgradeProcess"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-35264",
+		"methodsToFormat": [
+			{
+				"from": "regex:alter\\(\\s*?(?<tableClass>\\w*),\\s*?new\\s*?AlterColumnName\\(\\s*?(?<oldColumnName>\\w*?)[\\s,]*?(?<newColumnName>\\w*)\\)\\);",
+				"to": "alterColumnName((String)${tableClass}.getField(\"TABLE_NAME\").get(null), ${oldColumnName}, ${newColumnName});"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"IndexWriterHelper",
 			"IndexWriterHelperUtil"
 		],

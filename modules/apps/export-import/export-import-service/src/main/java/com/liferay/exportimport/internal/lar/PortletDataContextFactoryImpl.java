@@ -200,6 +200,10 @@ public class PortletDataContextFactoryImpl
 			parameterMap = HashMapBuilder.put(
 				ExportImportDateUtil.RANGE, new String[] {range}
 			).build();
+
+			if (ExportImportDateUtil.isRangeDateRange(parameterMap)) {
+				portletDataContext.setEndDate(endDate);
+			}
 		}
 
 		portletDataContext.setParameterMap(parameterMap);

@@ -9,6 +9,7 @@ import '../../../css/content_editor/ContentEditorSidePanel.scss';
 
 import {Button, VerticalBar} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {useIsMounted} from '@liferay/frontend-js-react-web';
 import {datetimeUtils} from '@liferay/object-js-components-web';
 import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
@@ -151,6 +152,8 @@ export default function ContentEditorSidePanel(props: Props) {
 	const [categorizationFields, setCategorizationFields] =
 		useState<CategorizationFields | null>(null);
 
+	const isMounted = useIsMounted();
+
 	const onUpdateCategorization = useCallback(
 		([name, value]: UpdateCategorizationProps) => {
 			setCategorizationFields((fields) =>
@@ -186,6 +189,10 @@ export default function ContentEditorSidePanel(props: Props) {
 	useEffect(() => {
 		ObjectEntryService.getObjectEntry(props.contentAPIURL).then(
 			({data, error}) => {
+				if (!isMounted()) {
+					return;
+				}
+
 				if (data) {
 					setCategorizationFields((prevState) => {
 
@@ -218,7 +225,7 @@ export default function ContentEditorSidePanel(props: Props) {
 				}
 			}
 		);
-	}, [props.contentAPIURL]);
+	}, [isMounted, props.contentAPIURL]);
 
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');

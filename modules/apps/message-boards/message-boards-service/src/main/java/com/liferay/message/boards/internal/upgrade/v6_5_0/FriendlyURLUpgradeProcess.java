@@ -48,10 +48,10 @@ public class FriendlyURLUpgradeProcess extends UpgradeProcess {
 				String previousFriendlyURL = null;
 
 				while (resultSet.next()) {
-					long ctCollectionId = resultSet.getLong(1);
+					long ctCollectionId = resultSet.getLong("ctCollectionId");
 
-					long categoryId = resultSet.getLong(2);
-					String name = resultSet.getString(3);
+					long categoryId = resultSet.getLong("categoryId");
+					String name = resultSet.getString("name");
 
 					currentFriendlyURL = _getFriendlyURL(categoryId, name);
 

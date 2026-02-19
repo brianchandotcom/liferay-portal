@@ -153,16 +153,9 @@ export default function ContentEditorSidePanel(props: Props) {
 
 	const onUpdateCategorization = useCallback(
 		([name, value]: UpdateCategorizationProps) => {
-			setCategorizationFields((fields) => {
-				if (!fields) {
-					return fields;
-				}
-
-				return {
-					...fields,
-					[name]: value,
-				} as CategorizationFields;
-			});
+			setCategorizationFields((fields) =>
+				fields ? {...fields, [name]: value} : fields
+			);
 		},
 		[]
 	);

@@ -41,7 +41,7 @@ public class CommerceInventoryAuditServiceImpl
 
 		if (_portletResourcePermission.contains(
 				getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+				CommerceInventoryActionKeys.VIEW_INVENTORIES)) {
 
 			return commerceInventoryAuditLocalService.
 				getCommerceInventoryAudits(
@@ -58,7 +58,7 @@ public class CommerceInventoryAuditServiceImpl
 
 		if (_portletResourcePermission.contains(
 				getPermissionChecker(), null,
-				CommerceInventoryActionKeys.MANAGE_INVENTORY)) {
+				CommerceInventoryActionKeys.VIEW_INVENTORIES)) {
 
 			return commerceInventoryAuditLocalService.
 				getCommerceInventoryAuditsCount(

@@ -239,6 +239,48 @@ public class CommerceInventoryReplenishmentItemLocalServiceImpl
 	}
 
 	@Override
+	public List<Long> getCommerceInventoryWarehouseIds(
+		long companyId, String sku, String unitOfMeasureKey) {
+
+		DSLQuery dslQuery = DSLQueryFactoryUtil.selectDistinct(
+			CommerceInventoryReplenishmentItemTable.INSTANCE.
+				commerceInventoryWarehouseId
+		).from(
+			CommerceInventoryReplenishmentItemTable.INSTANCE
+		).leftJoinOn(
+			CommerceInventoryWarehouseTable.INSTANCE,
+			CommerceInventoryReplenishmentItemTable.INSTANCE.
+				commerceInventoryWarehouseId.eq(
+					CommerceInventoryWarehouseTable.INSTANCE.
+						commerceInventoryWarehouseId)
+		).where(
+			CommerceInventoryReplenishmentItemTable.INSTANCE.companyId.eq(
+				companyId
+			).and(
+				() -> {
+					if (Validator.isNull(sku)) {
+						return null;
+					}
+
+					return CommerceInventoryReplenishmentItemTable.INSTANCE.sku.
+						eq(sku);
+				}
+			).and(
+				() -> {
+					if (Validator.isNull(unitOfMeasureKey)) {
+						return null;
+					}
+
+					return CommerceInventoryReplenishmentItemTable.INSTANCE.
+						unitOfMeasureKey.eq(unitOfMeasureKey);
+				}
+			)
+		);
+
+		return dslQuery(dslQuery);
+	}
+
+	@Override
 	public CommerceInventoryReplenishmentItem
 			updateCommerceInventoryReplenishmentItem(
 				String externalReferenceCode,

@@ -56,8 +56,10 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 				while (resultSet.next()) {
 					preparedStatement2.setString(1, StringUtil.randomString(4));
-					preparedStatement2.setString(2, resultSet.getString(1));
-					preparedStatement2.setString(3, resultSet.getString(2));
+					preparedStatement2.setString(
+						2, resultSet.getString("articleId"));
+					preparedStatement2.setString(
+						3, resultSet.getString("elName"));
 
 					preparedStatement2.addBatch();
 				}
@@ -80,7 +82,7 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 							"articleImageId = ?")) {
 
 				while (resultSet.next()) {
-					String elName = resultSet.getString(2);
+					String elName = resultSet.getString("elName");
 
 					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
 
@@ -96,7 +98,8 @@ public class JournalArticleImageUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setString(
 						1, elName.substring(0, lastIndexOf));
-					preparedStatement2.setLong(2, resultSet.getLong(1));
+					preparedStatement2.setLong(
+						2, resultSet.getLong("articleImageId"));
 
 					preparedStatement2.addBatch();
 				}

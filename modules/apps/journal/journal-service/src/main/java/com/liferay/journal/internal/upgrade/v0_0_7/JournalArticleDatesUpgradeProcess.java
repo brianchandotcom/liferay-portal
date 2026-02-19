@@ -62,16 +62,15 @@ public class JournalArticleDatesUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select classPK, version, AssetEntry.modifiedDate from ",
-					"AssetEntry, (select modifiedDate, ",
-					"JournalArticle.resourcePrimKey, version from ",
-					"JournalArticle, (select resourcePrimKey, max(version) as ",
-					"maxVersion from JournalArticle where status = ? group by ",
-					"resourcePrimKey) LatestVersion where ",
-					"JournalArticle.resourcePrimKey = ",
+					"AssetEntry, (select modifiedDate, JournalArticle.",
+					"resourcePrimKey, version from JournalArticle, (select ",
+					"resourcePrimKey, max(version) as maxVersion from ",
+					"JournalArticle where status = ? group by resourcePrimKey",
+					") LatestVersion where JournalArticle.resourcePrimKey = ",
 					"LatestVersion.resourcePrimKey and version = maxVersion) ",
 					"JournalArticle where classNameId = ? and classPK = ",
-					"JournalArticle.resourcePrimKey and ",
-					"AssetEntry.modifiedDate != JournalArticle.modifiedDate"));
+					"JournalArticle.resourcePrimKey and AssetEntry.",
+					"modifiedDate != JournalArticle.modifiedDate"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -84,15 +83,11 @@ public class JournalArticleDatesUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					long resourcePrimKey = resultSet.getLong(1);
-					Double latestVersion = resultSet.getDouble(2);
-
-					Timestamp assetModifiedDate = resultSet.getTimestamp(3);
-
-					preparedStatement2.setTimestamp(1, assetModifiedDate);
-
-					preparedStatement2.setLong(2, resourcePrimKey);
-					preparedStatement2.setDouble(3, latestVersion);
+					preparedStatement2.setTimestamp(
+						1, resultSet.getTimestamp("modifiedDate"));
+					preparedStatement2.setLong(2, resultSet.getLong("classPK"));
+					preparedStatement2.setDouble(
+						3, resultSet.getDouble("version"));
 
 					preparedStatement2.addBatch();
 				}

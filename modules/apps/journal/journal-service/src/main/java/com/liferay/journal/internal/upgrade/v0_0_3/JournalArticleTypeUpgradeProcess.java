@@ -132,13 +132,12 @@ public class JournalArticleTypeUpgradeProcess extends UpgradeProcess {
 
 	private boolean _hasSelectedArticleTypes() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from JournalArticle where type_ != 'general'");
+				"select count(*) as count from JournalArticle where type_ != " +
+					"'general'");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				int count = resultSet.getInt(1);
-
-				if (count > 0) {
+				if (resultSet.getInt("count") > 0) {
 					return true;
 				}
 			}

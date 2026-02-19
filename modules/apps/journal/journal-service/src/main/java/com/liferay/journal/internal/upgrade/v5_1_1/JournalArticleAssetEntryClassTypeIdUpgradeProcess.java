@@ -59,22 +59,23 @@ public class JournalArticleAssetEntryClassTypeIdUpgradeProcess
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					long ctCollectionId = resultSet.getLong(1);
-					long entryId = resultSet.getLong(2);
-					long classTypeId = resultSet.getLong(3);
-
-					long ddmStructureId = resultSet.getLong(4);
+					long ddmStructureId = resultSet.getLong("DDMStructureId");
 
 					preparedStatement2.setLong(1, ddmStructureId);
 
-					preparedStatement2.setLong(2, ctCollectionId);
+					preparedStatement2.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+
+					long entryId = resultSet.getLong("entryId");
+
 					preparedStatement2.setLong(3, entryId);
 
 					preparedStatement2.addBatch();
 
 					Map<Long, List<Long>> entryIdsMap =
 						entryIdsMaps.computeIfAbsent(
-							classTypeId, key -> new HashMap<>());
+							resultSet.getLong("classTypeId"),
+							key -> new HashMap<>());
 
 					List<Long> entryIds = entryIdsMap.computeIfAbsent(
 						ddmStructureId, key -> new ArrayList<>());

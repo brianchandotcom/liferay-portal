@@ -79,8 +79,8 @@ public class DocumentLibraryTypeContentUpgradeProcess extends UpgradeProcess {
 
 			while (resultSet.next()) {
 				preparedStatement2.setString(
-					1, _convertContent(resultSet.getString(1)));
-				preparedStatement2.setLong(2, resultSet.getLong(2));
+					1, _convertContent(resultSet.getString("content")));
+				preparedStatement2.setLong(2, resultSet.getLong("id_"));
 
 				preparedStatement2.addBatch();
 			}

@@ -92,7 +92,7 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
-				return resultSet.getString(1);
+				return resultSet.getString("elInstanceId");
 			}
 
 			return StringPool.BLANK;
@@ -111,10 +111,12 @@ public class ImageTypeContentAttributesUpgradeProcess extends UpgradeProcess {
 					"update JournalArticle set content = ? where id_ = ?")) {
 
 			while (resultSet.next()) {
-				long id = resultSet.getLong(1);
+				long id = resultSet.getLong("id_");
 
 				preparedStatement2.setString(
-					1, _addImageContentAttributes(id, resultSet.getString(2)));
+					1,
+					_addImageContentAttributes(
+						id, resultSet.getString("content")));
 				preparedStatement2.setLong(2, id);
 
 				preparedStatement2.addBatch();

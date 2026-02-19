@@ -95,7 +95,7 @@ public class ArticleSystemEventsUpgradeProcess extends UpgradeProcess {
 							preparedStatement.executeQuery()) {
 
 						if (resultSet.next()) {
-							articleId = resultSet.getString(1);
+							articleId = resultSet.getString("articleId");
 						}
 					}
 				}

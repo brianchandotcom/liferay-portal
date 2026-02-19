@@ -50,9 +50,12 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					updatePreparedStatement.setLong(1, resultSet.getLong(1));
-					updatePreparedStatement.setLong(2, resultSet.getLong(2));
-					updatePreparedStatement.setLong(3, resultSet.getLong(3));
+					updatePreparedStatement.setLong(
+						1, resultSet.getLong("structureVersionId"));
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("storageLinkId"));
 
 					updatePreparedStatement.addBatch();
 				}
@@ -65,12 +68,12 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 				connection.prepareStatement(
 					StringBundler.concat(
 						"select DDMStructureVersion.structureId, ",
-						"DDMStorageLink.ctCollectionId, ",
-						"DDMStorageLink.storageLinkId from DDMStorageLink ",
-						"inner join DDMStructureVersion on ",
-						"DDMStructureVersion.structureVersionId = ",
-						"DDMStorageLink.structureVersionId where ",
-						"DDMStorageLink.structureId = 0"));
+						"DDMStorageLink.ctCollectionId, DDMStorageLink.",
+						"storageLinkId from DDMStorageLink inner join ",
+						"DDMStructureVersion on DDMStructureVersion.",
+						"structureVersionId = DDMStorageLink.",
+						"structureVersionId where DDMStorageLink.structureId ",
+						"= 0"));
 			PreparedStatement updatePreparedStatement =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -79,9 +82,12 @@ public class StorageLinksUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				updatePreparedStatement.setLong(1, resultSet.getLong(1));
-				updatePreparedStatement.setLong(2, resultSet.getLong(2));
-				updatePreparedStatement.setLong(3, resultSet.getLong(3));
+				updatePreparedStatement.setLong(
+					1, resultSet.getLong("structureId"));
+				updatePreparedStatement.setLong(
+					2, resultSet.getLong("ctCollectionId"));
+				updatePreparedStatement.setLong(
+					3, resultSet.getLong("storageLinkId"));
 
 				updatePreparedStatement.addBatch();
 			}

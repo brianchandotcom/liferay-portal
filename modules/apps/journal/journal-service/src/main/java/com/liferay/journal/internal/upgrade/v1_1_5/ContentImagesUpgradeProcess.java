@@ -238,10 +238,12 @@ public class ContentImagesUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setString(
 					1,
 					_convertTypeImageElements(
-						resultSet.getLong(5), resultSet.getLong(3),
-						resultSet.getLong(4), resultSet.getString(6),
-						resultSet.getLong(2)));
-				preparedStatement2.setLong(2, resultSet.getLong(1));
+						resultSet.getLong("userId"),
+						resultSet.getLong("groupId"),
+						resultSet.getLong("companyId"),
+						resultSet.getString("content"),
+						resultSet.getLong("resourcePrimKey")));
+				preparedStatement2.setLong(2, resultSet.getLong("id_"));
 
 				preparedStatement2.addBatch();
 			}

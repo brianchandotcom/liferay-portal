@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
@@ -122,11 +123,12 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 			Assert.assertEquals(messages.toString(), 1, messages.size());
 
 			Assert.assertTrue(
+				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
-						"Table ", objectDefinitionDBTableName,
-						", altered because incorrect table name casing, was ",
-						invalidObjectDefinitionDBTableName)));
+						"Table ", invalidObjectDefinitionDBTableName,
+						", renamed to ", objectDefinitionDBTableName,
+						" because it had an incorrect table name casing")));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -203,17 +205,18 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
-						"Table ", testTableName,
-						", altered because incorrect table name casing, was ",
-						invalidTableName)));
+						"Table ", invalidTableName, ", renamed to ",
+						testTableName,
+						" because it had an incorrect table name casing")));
 
 			Assert.assertTrue(
+				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
-						"Table ", testTableName,
-						", altered because incorrect column name casing, ",
-						"column: ", invalidColumnName, " renamed to ",
-						testColumnName)));
+						"Table ", testTableName, StringPool.PERIOD,
+						invalidColumnName, ", renamed to ", testTableName,
+						StringPool.PERIOD, testColumnName,
+						" because it had an incorrect column name casing")));
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 

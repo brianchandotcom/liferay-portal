@@ -42,13 +42,11 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 	private boolean _hasDDMFieldCompanyId0() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from DDMField where companyId = 0")) {
+				"select count(*) as count from DDMField where companyId = 0")) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 				}

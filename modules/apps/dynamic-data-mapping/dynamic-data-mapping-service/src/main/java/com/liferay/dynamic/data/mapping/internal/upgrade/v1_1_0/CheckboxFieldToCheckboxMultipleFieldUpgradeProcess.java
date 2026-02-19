@@ -60,10 +60,10 @@ public class CheckboxFieldToCheckboxMultipleFieldUpgradeProcess
 				StringBundler.concat(
 					"select DDMStructure.definition, DDMStructure.version, ",
 					"DDMStructure.structureId, DDLRecordSet.recordSetId from ",
-					"DDLRecordSet inner join DDMStructure on ",
-					"DDLRecordSet.DDMStructureId = DDMStructure.structureId ",
-					"where DDLRecordSet.scope = ? and DDMStructure.definition ",
-					"like ?"));
+					"DDLRecordSet inner join DDMStructure on DDLRecordSet.",
+					"DDMStructureId = DDMStructure.structureId where ",
+					"DDLRecordSet.scope = ? and DDMStructure.definition like ",
+					"?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,
@@ -80,10 +80,8 @@ public class CheckboxFieldToCheckboxMultipleFieldUpgradeProcess
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
-					String definition = resultSet.getString(1);
-					String version = resultSet.getString(2);
-					long structureId = resultSet.getLong(3);
-					long recordSetId = resultSet.getLong(4);
+					String definition = resultSet.getString("definition");
+					long structureId = resultSet.getLong("structureId");
 
 					String newDefinition = _upgradeRecordSetStructureDefinition(
 						definition);
@@ -96,14 +94,15 @@ public class CheckboxFieldToCheckboxMultipleFieldUpgradeProcess
 
 					preparedStatement3.setString(1, newDefinition);
 					preparedStatement3.setLong(2, structureId);
-					preparedStatement3.setString(3, version);
+					preparedStatement3.setString(
+						3, resultSet.getString("version"));
 
 					preparedStatement3.addBatch();
 
 					_updateRecords(
 						DDMFormDeserializeUtil.deserialize(
 							_ddmFormDeserializer, definition),
-						recordSetId);
+						resultSet.getLong("recordSetId"));
 				}
 
 				preparedStatement2.executeBatch();

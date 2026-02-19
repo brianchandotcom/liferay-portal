@@ -45,7 +45,8 @@ public class DDMStructureLayoutUpgradeProcess extends UpgradeProcess {
 					preparedStatement2.setLong(1, classNameId);
 					preparedStatement2.setString(
 						2, String.valueOf(increment()));
-					preparedStatement2.setLong(3, resultSet.getLong(1));
+					preparedStatement2.setLong(
+						3, resultSet.getLong("structureLayoutId"));
 
 					preparedStatement2.addBatch();
 				}

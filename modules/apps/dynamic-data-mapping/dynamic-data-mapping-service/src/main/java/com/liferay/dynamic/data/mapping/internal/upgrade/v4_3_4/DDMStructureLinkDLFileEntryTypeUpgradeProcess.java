@@ -40,15 +40,15 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 
 		sb.append("select DLFileEntryType.uuid_, fileEntryTypeId, ");
 		sb.append("DLFileEntryType.groupId, DLFileEntryType.companyId, ");
-		sb.append("dataDefinitionId, fileEntryTypeKey from DLFileEntryType ");
-		sb.append("inner join DDMStructure ON dataDefinitionId = structureId ");
-		sb.append("where type_ = 0");
+		sb.append("dataDefinitionId from DLFileEntryType inner join ");
+		sb.append("DDMStructure on dataDefinitionId = structureId where ");
+		sb.append("type_ = 0");
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				sb.toString());
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select structureId FROM DDMStructure where groupId = ? AND " +
-					"classNameId = ? AND (structureKey = ? OR structureKey = " +
+				"select structureId from DDMStructure where groupId = ? and " +
+					"classNameId = ? and (structureKey = ? or structureKey = " +
 						"? OR structureKey = ? ) ");
 			PreparedStatement preparedStatement3 = connection.prepareStatement(
 				"select structureLinkId from DDMStructureLink where " +
@@ -63,21 +63,23 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
-				long fileEntryTypeId = resultSet1.getLong(2);
+				long fileEntryTypeId = resultSet1.getLong("fileEntryTypeId");
 
-				preparedStatement2.setLong(1, resultSet1.getLong(3));
+				preparedStatement2.setLong(1, resultSet1.getLong("groupId"));
 				preparedStatement2.setLong(
 					2, PortalUtil.getClassNameId(DLFileEntryMetadata.class));
 				preparedStatement2.setString(
-					3, DLUtil.getDDMStructureKey(resultSet1.getString(1)));
+					3,
+					DLUtil.getDDMStructureKey(resultSet1.getString("uuid_")));
 				preparedStatement2.setString(
 					4, DLUtil.getDeprecatedDDMStructureKey(fileEntryTypeId));
-				preparedStatement2.setString(5, resultSet1.getString(4));
+				preparedStatement2.setString(
+					5, resultSet1.getString("companyId"));
 
 				try (ResultSet resultSet2 = preparedStatement2.executeQuery()) {
-					if (resultSet2.next()) {
-						long structureId = resultSet2.getLong(1);
+					long structureId = resultSet2.getLong("structureId");
 
+					if (resultSet2.next()) {
 						ActionableDynamicQuery actionableDynamicQuery =
 							_dlFileEntryTypeLocalService.
 								getActionableDynamicQuery();
@@ -99,7 +101,7 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 					}
 				}
 
-				long companyId = resultSet1.getLong(4);
+				long companyId = resultSet1.getLong("companyId");
 
 				preparedStatement3.setLong(1, companyId);
 
@@ -107,7 +109,7 @@ public class DDMStructureLinkDLFileEntryTypeUpgradeProcess
 					2, PortalUtil.getClassNameId(DLFileEntryType.class));
 				preparedStatement3.setLong(3, fileEntryTypeId);
 
-				long dataDefinitionId = resultSet1.getLong(5);
+				long dataDefinitionId = resultSet1.getLong("dataDefinitionId");
 
 				preparedStatement3.setLong(4, dataDefinitionId);
 

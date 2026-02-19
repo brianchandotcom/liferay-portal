@@ -453,8 +453,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 					"structureId = ? and structureVersionId = ? and " +
 						"ctCollectionId = 0");
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"select max(structureVersionId) from DDMStructureVersion " +
-					"where structureId = ?")) {
+				"select max(structureVersionId) as maxStructureVersionId " +
+					"from DDMStructureVersion where structureId = ?")) {
 
 			preparedStatement1.setLong(1, structureId);
 			preparedStatement1.setLong(2, structureVersionId);
@@ -481,7 +481,8 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 
 						if (resultSet2.next()) {
 							DDMForm parentDDMForm = _getFullHierarchyDDMForm(
-								parentStructureId, resultSet2.getLong(1));
+								parentStructureId,
+								resultSet2.getLong("maxStructureVersionId"));
 
 							List<DDMFormField> ddmFormFields =
 								fullHierarchyDDMForm.getDDMFormFields();

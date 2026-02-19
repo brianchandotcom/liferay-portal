@@ -61,9 +61,9 @@ public class DDMFormFieldSettingsUpgradeProcess extends UpgradeProcess {
 			preparedStatement1.setInt(1, _SCOPE_FORMS);
 			preparedStatement1.setString(2, "%ddmDataProviderInstanceId%");
 
-			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
-				while (resultSet.next()) {
-					String definition = resultSet.getString(2);
+			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+				while (resultSet1.next()) {
+					String definition = resultSet1.getString("definition");
 
 					String newDefinition = _upgradeRecordSetStructure(
 						definition);
@@ -74,7 +74,7 @@ public class DDMFormFieldSettingsUpgradeProcess extends UpgradeProcess {
 
 					preparedStatement2.setString(1, newDefinition);
 
-					long structureId = resultSet.getLong(1);
+					long structureId = resultSet1.getLong("structureId");
 
 					preparedStatement2.setLong(2, structureId);
 
@@ -97,10 +97,8 @@ public class DDMFormFieldSettingsUpgradeProcess extends UpgradeProcess {
 
 							preparedStatement4.setString(1, newDefinition);
 
-							long structureVersionId = resultSet2.getLong(
-								"structureVersionId");
-
-							preparedStatement4.setLong(2, structureVersionId);
+							preparedStatement4.setLong(
+								2, resultSet2.getLong("structureVersionId"));
 
 							preparedStatement4.addBatch();
 						}

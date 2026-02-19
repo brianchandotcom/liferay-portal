@@ -51,7 +51,8 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 			ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				updatePreparedStatement.setLong(1, resultSet.getLong(1));
+				updatePreparedStatement.setLong(
+					1, resultSet.getLong("portletPreferencesId"));
 
 				updatePreparedStatement.addBatch();
 			}
@@ -87,9 +88,9 @@ public class PollsPortletIdToDDMPortletIdUpgradeProcess
 								"?")) {
 
 				while (resultSet.next()) {
-					preparedStatement2.setLong(1, resultSet.getLong(1));
-					preparedStatement2.setInt(2, resultSet.getInt(2));
-					preparedStatement2.setLong(3, resultSet.getLong(3));
+					preparedStatement2.setLong(1, resultSet.getLong("ownerId"));
+					preparedStatement2.setInt(2, resultSet.getInt("ownerType"));
+					preparedStatement2.setLong(3, resultSet.getLong("plid"));
 					preparedStatement2.setString(
 						4, DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN);
 

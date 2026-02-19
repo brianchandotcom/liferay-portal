@@ -65,23 +65,20 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select DDMFieldAttribute.ctCollectionId, ",
-					"DDMFieldAttribute.fieldAttributeId, ",
-					"DDMFieldAttribute.companyId, ",
-					"DDMFieldAttribute.largeAttributeValue, ",
+					"DDMFieldAttribute.fieldAttributeId, DDMFieldAttribute.",
+					"companyId, DDMFieldAttribute.largeAttributeValue, ",
 					"DDMFieldAttribute.smallAttributeValue from DDMStructure ",
-					"inner join DDMStructureVersion on ",
-					"DDMStructure.ctCollectionId = ",
-					"DDMStructureVersion.ctCollectionId and ",
-					"DDMStructure.structureId = ",
-					"DDMStructureVersion.structureId inner join DDMField on ",
-					"DDMStructureVersion.ctCollectionId = ",
-					"DDMField.ctCollectionId and ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId inner join DDMFieldAttribute ",
-					"on DDMField.ctCollectionId = ",
-					"DDMFieldAttribute.ctCollectionId and DDMField.fieldId = ",
-					"DDMFieldAttribute.fieldId where DDMStructure.classNameId ",
-					"= ? and DDMField.fieldType = 'rich_text'"));
+					"inner join DDMStructureVersion on DDMStructure.",
+					"ctCollectionId = DDMStructureVersion.ctCollectionId and ",
+					"DDMStructure.structureId = DDMStructureVersion.",
+					"structureId inner join DDMField on DDMStructureVersion.",
+					"ctCollectionId = DDMField.ctCollectionId and ",
+					"DDMStructureVersion.structureVersionId = DDMField.",
+					"structureVersionId inner join DDMFieldAttribute on ",
+					"DDMField.ctCollectionId = DDMFieldAttribute.",
+					"ctCollectionId and DDMField.fieldId = DDMFieldAttribute.",
+					"fieldId where DDMStructure.classNameId = ? and DDMField.",
+					"fieldType = 'rich_text'"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
@@ -94,12 +91,12 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			ResultSet resultSet = preparedStatement1.executeQuery();
 
 			while (resultSet.next()) {
-				long companyId = resultSet.getLong(3);
+				long companyId = resultSet.getLong("companyId");
 
 				String largeAttributeValue = _transform(
-					companyId, resultSet.getString(4));
+					companyId, resultSet.getString("largeAttributeValue"));
 				String smallAttributeValue = _transform(
-					companyId, resultSet.getString(5));
+					companyId, resultSet.getString("smallAttributeValue"));
 
 				if ((smallAttributeValue != null) &&
 					(smallAttributeValue.length() > 255)) {
@@ -112,8 +109,10 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 				preparedStatement2.setString(1, largeAttributeValue);
 				preparedStatement2.setString(2, smallAttributeValue);
 
-				preparedStatement2.setLong(3, resultSet.getLong(1));
-				preparedStatement2.setLong(4, resultSet.getLong(2));
+				preparedStatement2.setLong(
+					3, resultSet.getLong("ctCollectionId"));
+				preparedStatement2.setLong(
+					4, resultSet.getLong("fieldAttributeId"));
 
 				preparedStatement2.addBatch();
 			}

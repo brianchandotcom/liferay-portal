@@ -45,13 +45,12 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 					"select DDMField.storageId, DDMField.fieldId from ",
 					"DLFileEntryType inner join DDMStructureLink on ",
 					"DDMStructureLink.classNameId = ? and ",
-					"DDMStructureLink.classPK = ",
-					"DLFileEntryType.fileEntryTypeId inner join ",
-					"DDMStructureVersion on DDMStructureVersion.structureId = ",
-					"DDMStructureLink.structureId inner join DDMField on ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId and DDMField.companyId = ? ",
-					"and DDMField.fieldType like ?"))) {
+					"DDMStructureLink.classPK = DLFileEntryType.",
+					"fileEntryTypeId inner join DDMStructureVersion on ",
+					"DDMStructureVersion.structureId = DDMStructureLink.",
+					"structureId inner join DDMField on DDMStructureVersion.",
+					"structureVersionId = DDMField.structureVersionId and ",
+					"DDMField.companyId = ? and DDMField.fieldType like ?"))) {
 
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
@@ -73,18 +72,17 @@ public class DLFileEntryTypeDDMFieldAttributeUpgradeProcess
 
 			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 				while (resultSet1.next()) {
-					preparedStatement2.setLong(1, resultSet1.getLong(1));
-					preparedStatement2.setLong(2, resultSet1.getLong(2));
+					preparedStatement2.setLong(
+						1, resultSet1.getLong("storageId"));
+					preparedStatement2.setLong(
+						2, resultSet1.getLong("fieldId"));
 
 					try (ResultSet resultSet2 =
 							preparedStatement2.executeQuery()) {
 
 						while (resultSet2.next()) {
-							String languageId = resultSet2.getString(
-								"languageId");
-
 							Locale locale = LocaleUtil.fromLanguageId(
-								languageId);
+								resultSet2.getString("languageId"));
 
 							NumberFormat numberFormat =
 								NumberFormat.getNumberInstance(locale);

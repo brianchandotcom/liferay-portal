@@ -50,16 +50,18 @@ public class DDMStructureIndexTypeUpgradeProcess extends UpgradeProcess {
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {
 					String newDefinition = _upgradeIndexType(
-						resultSet.getString(1));
+						resultSet.getString("definition"));
 
 					preparedStatement2.setString(1, newDefinition);
 
-					preparedStatement2.setLong(2, resultSet.getLong(2));
+					long structureId = resultSet.getLong(2);
+
+					preparedStatement2.setLong(2, structureId);
 
 					preparedStatement2.addBatch();
 
 					preparedStatement3.setString(1, newDefinition);
-					preparedStatement3.setLong(2, resultSet.getLong(2));
+					preparedStatement3.setLong(2, structureId);
 
 					preparedStatement3.addBatch();
 				}

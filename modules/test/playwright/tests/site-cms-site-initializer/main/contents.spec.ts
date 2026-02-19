@@ -241,3 +241,92 @@ test(
 		await picklistBuilderPage.deletePicklist(picklist.id);
 	}
 );
+
+test(
+	'Content with Upload fragment opens new Item Selector',
+	{tag: '@LPD-67215'},
+	async ({apiHelpers, contentsPage, page, structureBuilderPage}) => {
+		const applicationName = 'cms/basic-documents';
+		const fileName = `file_${getRandomString()}.png`;
+		const structureLabel = `StructureName${getRandomInt()}`;
+		let objectEntry;
+
+		await test.step('Create a new file', async () => {
+			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					file: {
+						fileBase64: 'R0lGODlhAQABAAAAACw=',
+						name: fileName,
+					},
+					objectEntryFolderExternalReferenceCode: 'L_FILES',
+					title: fileName,
+				},
+				applicationName,
+				'Default'
+			);
+
+			apiHelpers.data.push({
+				id: objectEntry.file.id,
+				type: 'document',
+			});
+		});
+
+		await test.step('Create a new structure with Upload field from Item Selector', async () => {
+			await structureBuilderPage.createStructureFromData({
+				label: structureLabel,
+				page: structureBuilderPage,
+			});
+
+			await structureBuilderPage.addField('Upload');
+
+			await structureBuilderPage.changeFieldSettings({
+				label: 'Upload from DM',
+				name: 'uploadFromDM',
+				requestFile: 'document-library',
+			});
+
+			await structureBuilderPage.publishStructure();
+		});
+
+		await test.step('Create a content for this structure', async () => {
+			await contentsPage.goto();
+
+			await contentsPage.createContent(structureLabel);
+
+			const contentTitle = getRandomString();
+
+			await contentsPage.fillData([
+				{label: 'Title', value: contentTitle},
+			]);
+
+			// Upload buttons opens new Item Selector
+
+			await page.getByRole('button', {name: 'Select File'}).click();
+
+			await expect(
+				page.getByTestId('visualization-mode-cards')
+			).toBeVisible();
+
+			await page.getByLabel(`Select ${fileName}`).check();
+
+			await page
+				.getByRole('button', {exact: true, name: 'Select'})
+				.click();
+
+			await expect(page.locator('.modal-header')).toBeHidden();
+
+			await contentsPage.saveContent();
+
+			await expect(
+				page.getByRole('link', {name: fileName})
+			).toBeVisible();
+		});
+
+		await test.step('Delete file', async () => {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+		});
+	}
+);

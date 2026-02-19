@@ -442,9 +442,19 @@ public class DuplicateItemMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentEntryLink.getFragmentEntryERC(),
 			duplicatedFragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			fragmentEntryLink.getFragmentEntryGroupId(),
-			duplicatedFragmentEntryLink.getFragmentEntryGroupId());
+
+		Long groupId1 = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		Long groupId2 = ScopeUtil.getItemGroupId(
+			duplicatedFragmentEntryLink.getCompanyId(),
+			duplicatedFragmentEntryLink.getFragmentEntryScopeERC(),
+			duplicatedFragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(groupId1, groupId2);
+
 		Assert.assertEquals(
 			fragmentEntryLink.getHtml(), duplicatedFragmentEntryLink.getHtml());
 		Assert.assertNotEquals(

@@ -1756,9 +1756,14 @@ public class LayoutsImporterTest {
 		Assert.assertEquals(
 			fragmentEntry.getExternalReferenceCode(),
 			fragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			fragmentEntry.getGroupId(),
-			fragmentEntryLink.getFragmentEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(fragmentEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertTrue(
 			fragmentEntryLink.getConfiguration(),
 			JSONUtil.equals(

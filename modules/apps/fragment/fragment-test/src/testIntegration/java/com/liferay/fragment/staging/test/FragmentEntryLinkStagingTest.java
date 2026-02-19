@@ -21,7 +21,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -187,10 +187,14 @@ public class FragmentEntryLinkStagingTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinkByUuidAndGroupId(
 				liveFragmentEntryLink.getUuid(), _liveGroup.getGroupId());
 
+		Long groupId1 = ScopeUtil.getItemGroupId(
+			liveFragmentEntryLink.getCompanyId(),
+			liveFragmentEntryLink.getFragmentEntryScopeERC(),
+			liveFragmentEntryLink.getGroupId());
+
 		FragmentEntry liveFragmentEntry =
 			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
-				liveFragmentEntryLink.getFragmentEntryERC(),
-				liveFragmentEntryLink.getFragmentEntryGroupId());
+				liveFragmentEntryLink.getFragmentEntryERC(), groupId1);
 
 		Assert.assertEquals(
 			liveFragmentEntryLink.getGroupId(), liveFragmentEntry.getGroupId());
@@ -205,7 +209,10 @@ public class FragmentEntryLinkStagingTest {
 		Assert.assertNotNull(
 			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
 				fragmentEntryLink.getFragmentEntryERC(),
-				fragmentEntryLink.getFragmentEntryGroupId()));
+				ScopeUtil.getItemGroupId(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getFragmentEntryScopeERC(),
+					fragmentEntryLink.getGroupId())));
 	}
 
 	@Inject
@@ -215,9 +222,6 @@ public class FragmentEntryLinkStagingTest {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	private Layout _layout;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;

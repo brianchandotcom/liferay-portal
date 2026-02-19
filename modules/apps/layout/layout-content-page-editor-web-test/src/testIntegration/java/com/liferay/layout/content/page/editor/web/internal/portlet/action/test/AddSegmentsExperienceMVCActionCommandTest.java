@@ -244,9 +244,19 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			sourceFragmentEntryLink.getFragmentEntryERC(),
 			targetFragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			sourceFragmentEntryLink.getFragmentEntryGroupId(),
-			targetFragmentEntryLink.getFragmentEntryGroupId());
+
+		Long groupId1 = ScopeUtil.getItemGroupId(
+			sourceFragmentEntryLink.getCompanyId(),
+			sourceFragmentEntryLink.getFragmentEntryScopeERC(),
+			sourceFragmentEntryLink.getGroupId());
+
+		Long groupId2 = ScopeUtil.getItemGroupId(
+			targetFragmentEntryLink.getCompanyId(),
+			targetFragmentEntryLink.getFragmentEntryScopeERC(),
+			targetFragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(groupId1, groupId2);
+
 		Assert.assertEquals(
 			sourceFragmentEntryLink.getHtml(),
 			targetFragmentEntryLink.getHtml());

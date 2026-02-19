@@ -6345,6 +6345,7 @@ public class PortalImpl implements Portal {
 		}
 
 		Image image = null;
+
 		long companyId = BeanPropertiesUtil.getLong(baseModel, "companyId");
 
 		if (Validator.isNotNull(externalReferenceCode)) {

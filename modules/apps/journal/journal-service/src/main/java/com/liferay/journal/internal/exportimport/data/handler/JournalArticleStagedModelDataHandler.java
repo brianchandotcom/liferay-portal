@@ -1588,7 +1588,7 @@ public class JournalArticleStagedModelDataHandler
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to rename Journal Image folder for article " +
+					"Unable to rename journal image folder for article " +
 						newResourcePrimKey,
 					exception);
 			}

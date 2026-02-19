@@ -45,7 +45,7 @@ public interface OAuthClientEntryService extends BaseService {
 	public OAuthClientEntry addOAuthClientEntry(
 			long userId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, long metadataCacheTime,
+			String infoJSON, String matcherField, long metadataCacheTime,
 			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException;
 
@@ -91,7 +91,7 @@ public interface OAuthClientEntryService extends BaseService {
 	public OAuthClientEntry updateOAuthClientEntry(
 			long oAuthClientEntryId, String authRequestParametersJSON,
 			String authServerWellKnownURI, String customClaimsJSON,
-			String infoJSON, long metadataCacheTime,
+			String infoJSON, String matcherField, long metadataCacheTime,
 			String oidcUserInfoMapperJSON, String tokenRequestParametersJSON)
 		throws PortalException;
 

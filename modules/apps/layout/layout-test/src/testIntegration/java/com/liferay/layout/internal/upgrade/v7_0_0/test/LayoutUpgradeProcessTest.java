@@ -243,6 +243,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 
 		Layout layout = _layoutLocalService.fetchLayout(plid);
 
+		Assert.assertEquals(image.getCompanyId(), layout.getCompanyId());
+
 		if (hasSameCtCollectionId) {
 			Assert.assertEquals(
 				image.getCtCollectionId(), layout.getCtCollectionId());
@@ -252,7 +254,6 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 				image.getCtCollectionId(), layout.getCtCollectionId());
 		}
 
-		Assert.assertEquals(image.getCompanyId(), layout.getCompanyId());
 		Assert.assertEquals(
 			image.getExternalReferenceCode(), layout.getIconImageERC());
 		Assert.assertEquals(image.getImageId(), layout.getIconImageId());

@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
@@ -178,9 +177,8 @@ public class DBInspector {
 				false)) {
 
 			while (resultSet.next()) {
-				if (Objects.equals(
-						normalizeName(indexName, databaseMetaData),
-						resultSet.getString("index_name"))) {
+				if (StringUtil.equalsIgnoreCase(
+						indexName, resultSet.getString("index_name"))) {
 
 					return true;
 				}

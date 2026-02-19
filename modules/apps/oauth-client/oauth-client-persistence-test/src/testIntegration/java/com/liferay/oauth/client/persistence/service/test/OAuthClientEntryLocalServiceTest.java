@@ -76,7 +76,7 @@ public class OAuthClientEntryLocalServiceTest {
 			_oAuthClientEntryLocalService.addOAuthClientEntry(
 				TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON);
 
@@ -102,7 +102,7 @@ public class OAuthClientEntryLocalServiceTest {
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
 				TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
 
@@ -120,7 +120,7 @@ public class OAuthClientEntryLocalServiceTest {
 					"scope", "openid email profile"
 				).toString(),
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
 		Assert.assertThrows(
@@ -129,7 +129,7 @@ public class OAuthClientEntryLocalServiceTest {
 				TestPropsValues.getUserId(), _authRequestParametersJSON,
 				"http://172.17.0.3:18080/auth/realms/master/." +
 					"well-known/openid-configuration",
-				_CUSTOM_CLAIMS_JSON, _infoJSON,
+				_CUSTOM_CLAIMS_JSON, _infoJSON, "email",
 				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON,
 				_tokenRequestParametersJSON));
@@ -139,7 +139,7 @@ public class OAuthClientEntryLocalServiceTest {
 			() -> _oAuthClientEntryLocalService.addOAuthClientEntry(
 				TestPropsValues.getUserId(), _authRequestParametersJSON,
 				_AUTH_SERVER_WELL_KNOWN_URI, _CUSTOM_CLAIMS_JSON, _infoJSON,
-				OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
+				"email", OAuthClientEntryConstants.METADATA_CACHE_TIME_DEFAULT,
 				JSONUtil.put(
 					"user", JSONUtil.put("emailAddress", "")
 				).toString(),

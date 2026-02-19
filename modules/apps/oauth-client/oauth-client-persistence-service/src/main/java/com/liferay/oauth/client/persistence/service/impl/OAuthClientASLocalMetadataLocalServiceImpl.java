@@ -323,10 +323,13 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 				_generateAuthorizationServerMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedScopes,
 					supportedGrantTypes, tokenEndpoint));
+
+			oAuthClientASLocalMetadata =
+				oAuthClientASLocalMetadataPersistence.update(
+					oAuthClientASLocalMetadata);
 		}
 
-		return oAuthClientASLocalMetadataPersistence.update(
-			oAuthClientASLocalMetadata);
+		return oAuthClientASLocalMetadata;
 	}
 
 	private String _generateAuthorizationServerMetadataJSON(

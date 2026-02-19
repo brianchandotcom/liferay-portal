@@ -11,7 +11,6 @@ import com.liferay.commerce.inventory.service.base.CommerceInventoryWarehouseSer
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -146,7 +145,15 @@ public class CommerceInventoryWarehouseServiceImpl
 	public List<CommerceInventoryWarehouse> getCommerceInventoryWarehouses(
 			long companyId, boolean active, int start, int end,
 			OrderByComparator<CommerceInventoryWarehouse> orderByComparator)
-		throws PrincipalException {
+		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(
@@ -166,7 +173,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(
@@ -186,7 +193,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(
@@ -204,7 +211,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehouses(
@@ -221,7 +228,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehousesCount(companyId);
@@ -238,7 +245,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			getCommerceInventoryWarehousesCount(
@@ -250,6 +257,14 @@ public class CommerceInventoryWarehouseServiceImpl
 			long companyId, Boolean active, String commerceCountryCode,
 			String keywords, int start, int end, Sort sort)
 		throws PortalException {
+
+		PortletResourcePermission portletResourcePermission =
+			_commerceInventoryWarehouseModelResourcePermission.
+				getPortletResourcePermission();
+
+		portletResourcePermission.check(
+			getPermissionChecker(), null,
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.search(
 			companyId, active, commerceCountryCode, keywords, start, end, sort);
@@ -267,7 +282,7 @@ public class CommerceInventoryWarehouseServiceImpl
 
 		portletResourcePermission.check(
 			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			CommerceInventoryActionKeys.VIEW_INVENTORIES);
 
 		return commerceInventoryWarehouseLocalService.
 			searchCommerceInventoryWarehousesCount(

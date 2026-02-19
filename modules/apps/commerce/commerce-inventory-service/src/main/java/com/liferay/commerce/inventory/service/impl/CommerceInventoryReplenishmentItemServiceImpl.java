@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.inventory.service.impl;
 
-import com.liferay.commerce.inventory.constants.CommerceInventoryActionKeys;
 import com.liferay.commerce.inventory.model.CommerceInventoryReplenishmentItem;
 import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
 import com.liferay.commerce.inventory.service.base.CommerceInventoryReplenishmentItemServiceBaseImpl;
@@ -13,7 +12,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import java.math.BigDecimal;
 
@@ -84,17 +82,22 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 			long companyId, String sku, String unitOfMeasureKey)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
+		for (Long commerceInventoryWarehouseId :
+				commerceInventoryReplenishmentItemLocalService.
+					getCommerceInventoryWarehouseIds(
+						companyId, sku, unitOfMeasureKey)) {
 
-		portletResourcePermission.check(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
+			if (!_commerceInventoryWarehouseModelResourcePermission.contains(
+					getPermissionChecker(), commerceInventoryWarehouseId,
+					ActionKeys.UPDATE)) {
 
-		commerceInventoryReplenishmentItemLocalService.
-			deleteCommerceInventoryReplenishmentItems(
-				companyId, sku, unitOfMeasureKey);
+				continue;
+			}
+
+			commerceInventoryReplenishmentItemLocalService.
+				deleteCommerceInventoryReplenishmentItems(
+					commerceInventoryWarehouseId);
+		}
 	}
 
 	@Override
@@ -161,18 +164,9 @@ public class CommerceInventoryReplenishmentItemServiceImpl
 				int end)
 		throws PortalException {
 
-		PortletResourcePermission portletResourcePermission =
-			_commerceInventoryWarehouseModelResourcePermission.
-				getPortletResourcePermission();
-
-		boolean replacePermissionCheck = !portletResourcePermission.contains(
-			getPermissionChecker(), null,
-			CommerceInventoryActionKeys.MANAGE_INVENTORY);
-
 		return commerceInventoryReplenishmentItemLocalService.
 			getCommerceInventoryReplenishmentItemsByCompanyIdSkuAndUnitOfMeasureKey(
-				companyId, sku, unitOfMeasureKey, start, end,
-				replacePermissionCheck);
+				companyId, sku, unitOfMeasureKey, start, end, true);
 	}
 
 	@Override

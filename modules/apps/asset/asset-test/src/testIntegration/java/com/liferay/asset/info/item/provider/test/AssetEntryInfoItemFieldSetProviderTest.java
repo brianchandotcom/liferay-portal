@@ -189,6 +189,15 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
+		Group depotEntryGroup = _depotEntry.getGroup();
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), "__ERC__",
+				assetVocabulary.getExternalReferenceCode(), "__SERC__",
+				depotEntryGroup.getExternalReferenceCode()),
+			infoFieldSetEntry.getExternalUniqueId());
+
 		Assert.assertEquals(
 			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}

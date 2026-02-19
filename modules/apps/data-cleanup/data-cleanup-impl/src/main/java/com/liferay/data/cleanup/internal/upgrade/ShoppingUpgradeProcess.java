@@ -75,7 +75,7 @@ public class ShoppingUpgradeProcess extends BaseUpgradeProcess {
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				_imageLocalService.deleteImage(resultSet.getLong(1));
+				_imageLocalService.deleteImage(resultSet.getLong(type + "Id"));
 			}
 		}
 	}

@@ -23,14 +23,12 @@ export default function CategorizationPanel({
 }: {
 	assetLibraryId: number | string;
 	assetType: number;
-	categorizationFields: CategorizationFields;
+	categorizationFields: CategorizationFields | null;
 	cmsGroupId: number | string;
 	contentAPIURL: string;
 	hasUpdatePermission: boolean;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 }) {
-	const {assetCategoryIds, assetTagNames} = categorizationFields;
-
 	const updateCategorization = useCallback(
 		({keywords = [], taxonomyCategoryBriefs = []}: IAssetObjectEntry) => {
 			const fields: CategorizationFields = {
@@ -58,13 +56,14 @@ export default function CategorizationPanel({
 			<AssetCategorization
 				assetLibraryId={assetLibraryId}
 				categorization={{
-					keywords: assetTagNames.value,
+					keywords: categorizationFields?.assetTagNames?.value || [],
 					systemProperties: {
 						objectDefinitionBrief: {
 							classNameId: assetType,
 						},
 					} as IAssetObjectEntry['systemProperties'],
-					taxonomyCategoryBriefs: assetCategoryIds.value,
+					taxonomyCategoryBriefs:
+						categorizationFields?.assetCategoryIds?.value || [],
 				}}
 				cmsGroupId={cmsGroupId}
 				getObjectEntryURL={contentAPIURL}

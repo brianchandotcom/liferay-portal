@@ -49,7 +49,7 @@ type Props = {
 };
 
 type SidePanelProps = Props & {
-	categorizationFields: CategorizationFields;
+	categorizationFields: CategorizationFields | null;
 	dateConfig: datetimeUtils.DateConfig;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 	onUpdateSchedule: (props: UpdateScheduleProps) => void;
@@ -149,17 +149,20 @@ export default function ContentEditorSidePanel(props: Props) {
 		},
 	});
 	const [categorizationFields, setCategorizationFields] =
-		useState<CategorizationFields>({
-			assetCategoryIds: {serverValue: '', value: []},
-			assetTagNames: {serverValue: '', value: []},
-		});
+		useState<CategorizationFields | null>(null);
 
 	const onUpdateCategorization = useCallback(
 		([name, value]: UpdateCategorizationProps) => {
-			setCategorizationFields((fields) => ({
-				...fields,
-				[name]: value,
-			}));
+			setCategorizationFields((fields) => {
+				if (!fields) {
+					return fields;
+				}
+
+				return {
+					...fields,
+					[name]: value,
+				} as CategorizationFields;
+			});
 		},
 		[]
 	);
@@ -199,10 +202,7 @@ export default function ContentEditorSidePanel(props: Props) {
 						// data has been fetched by the AssetCategorization
 						// component.
 
-						if (
-							prevState.assetCategoryIds.serverValue ||
-							prevState.assetTagNames.serverValue
-						) {
+						if (prevState) {
 							return prevState;
 						}
 
@@ -249,6 +249,7 @@ export default function ContentEditorSidePanel(props: Props) {
 				onUpdateSchedule={onUpdateSchedule}
 				scheduleFields={scheduleFields}
 			/>
+
 			{Object.entries(scheduleFields).map(([name, {serverValue}]) => (
 				<input
 					form={formId}
@@ -259,17 +260,18 @@ export default function ContentEditorSidePanel(props: Props) {
 				/>
 			))}
 
-			{Object.entries(categorizationFields).map(
-				([name, {serverValue}]) => (
-					<input
-						form={formId}
-						key={name}
-						name={name}
-						type="hidden"
-						value={serverValue}
-					/>
-				)
-			)}
+			{categorizationFields &&
+				Object.entries(categorizationFields).map(
+					([name, {serverValue}]) => (
+						<input
+							form={formId}
+							key={name}
+							name={name}
+							type="hidden"
+							value={serverValue}
+						/>
+					)
+				)}
 		</>
 	);
 }

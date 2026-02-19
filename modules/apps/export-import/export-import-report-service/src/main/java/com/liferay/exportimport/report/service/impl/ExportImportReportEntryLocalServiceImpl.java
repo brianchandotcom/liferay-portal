@@ -71,7 +71,7 @@ public class ExportImportReportEntryLocalServiceImpl
 			LocaleUtil.US,
 			"the-x-with-external-reference-code-x-was-not-found-an-empty-" +
 				"shell-was-created",
-			new Object[] {modelNameLanguageKey, classExternalReferenceCode});
+			new String[] {modelNameLanguageKey, classExternalReferenceCode});
 
 		exportImportReportEntry.setErrorMessage(message);
 

@@ -40,10 +40,11 @@ public class SearchIndexPostUpgradeDataCleanupProcessTest
 					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
-							"Orphaned index from a deleted company detected: ",
-							_indexNameBuilder.getIndexNamePrefix(),
+							"Index ", _indexNameBuilder.getIndexNamePrefix(),
 							company.getCompanyId(),
-							". Manual deletion required.")));
+							" belongs to deleted company ",
+							company.getCompanyId(),
+							". Remove it if it is not used anywhere else.")));
 			},
 			() -> _companyLocalService.deleteCompany(company),
 			() -> PortalInstances.removeCompany(company.getCompanyId()));

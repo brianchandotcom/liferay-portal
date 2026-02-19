@@ -39,9 +39,9 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -178,11 +178,8 @@ public class ObjectEntryAssetRenderer
 
 		try {
 			FileEntry fileEntry = _dlAppLocalService.getFileEntry(
-				GetterUtil.getLong(
-					_objectEntry.getValues(
-					).get(
-						objectField.getName()
-					)));
+				MapUtil.getLong(
+					_objectEntry.getValues(), objectField.getName()));
 
 			return _dlURLHelper.getDownloadURL(
 				fileEntry, fileEntry.getFileVersion(), themeDisplay,

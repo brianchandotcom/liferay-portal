@@ -67,7 +67,7 @@ public class ResourceActionPostUpgradeDataCleanupProcess
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
-				String name = resultSet1.getString(1);
+				String name = resultSet1.getString("name");
 
 				if (!name.startsWith("com.liferay.") &&
 					!name.startsWith("com_liferay_")) {

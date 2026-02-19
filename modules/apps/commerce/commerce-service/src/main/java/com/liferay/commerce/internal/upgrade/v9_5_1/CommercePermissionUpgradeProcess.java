@@ -47,31 +47,42 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 			 ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long roleId = resultSet.getLong(3);
-
 				Role role = _roleLocalService.fetchRole(
-					resultSet.getLong(1), "Sales Agent");
+					resultSet.getLong("companyId"), "Sales Agent");
 
-				if ((role != null) && (roleId == role.getRoleId())) {
-					ResourcePermission resourcePermission =
-						_resourcePermissionLocalService.getResourcePermission(
-							resultSet.getLong(2));
-
-					ResourceAction resourceAction =
-						_resourceActionLocalService.fetchResourceAction(
-							"com.liferay.commerce.order", "MANAGE_QUOTES");
-
-					if ((resourceAction != null) &&
-						!_resourcePermissionLocalService.hasActionId(
-							resourcePermission, resourceAction)) {
-
-						resourcePermission.addResourceAction(
-							resourceAction.getActionId());
-
-						_resourcePermissionLocalService.
-							updateResourcePermission(resourcePermission);
-					}
+				if (role == null) {
+					continue;
 				}
+
+				long roleId = resultSet.getLong("roleId");
+
+				if (roleId != role.getRoleId()) {
+					continue;
+				}
+
+				ResourceAction resourceAction =
+					_resourceActionLocalService.fetchResourceAction(
+						"com.liferay.commerce.order", "MANAGE_QUOTES");
+
+				if (resourceAction == null) {
+					continue;
+				}
+
+				ResourcePermission resourcePermission =
+					_resourcePermissionLocalService.getResourcePermission(
+						resultSet.getLong("resourcePermissionId"));
+
+				if (_resourcePermissionLocalService.hasActionId(
+						resourcePermission, resourceAction)) {
+
+					continue;
+				}
+
+				resourcePermission.addResourceAction(
+					resourceAction.getActionId());
+
+				_resourcePermissionLocalService.updateResourcePermission(
+					resourcePermission);
 			}
 		}
 	}

@@ -31,7 +31,7 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					long commerceOrderId = resultSet.getLong(1);
+					long commerceOrderId = resultSet.getLong("commerceOrderId");
 
 					runSQL(
 						StringBundler.concat(

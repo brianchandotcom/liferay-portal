@@ -49,15 +49,15 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select companyId, resourcePermissionId, roleId from ",
-					"ResourcePermission where name = ",
-					"'com.liferay.commerce.order' and scope = 3"));
+					"ResourcePermission where name = 'com.liferay.commerce.",
+					"order' and scope = 3"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long roleId = resultSet.getLong(3);
+				long roleId = resultSet.getLong("roleId");
 
 				Role role = _roleLocalService.fetchRole(
-					resultSet.getLong(1), name);
+					resultSet.getLong("companyId"), name);
 
 				if ((role == null) || (roleId != role.getRoleId())) {
 					continue;
@@ -65,7 +65,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 				ResourcePermission resourcePermission =
 					_resourcePermissionLocalService.getResourcePermission(
-						resultSet.getLong(2));
+						resultSet.getLong("resourcePermissionId"));
 
 				for (String permission : permissions) {
 					ResourceAction resourceAction =
@@ -96,15 +96,15 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select companyId, resourcePermissionId, roleId from ",
-					"ResourcePermission where name = ",
-					"'com.liferay.commerce.order' and scope = 1"));
+					"ResourcePermission where name = 'com.liferay.commerce.",
+					"order' and scope = 1"));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			while (resultSet.next()) {
-				long roleId = resultSet.getLong(3);
+				long roleId = resultSet.getLong("roleId");
 
 				Role role = _roleLocalService.fetchRole(
-					resultSet.getLong(1), name);
+					resultSet.getLong("companyId"), name);
 
 				if ((role == null) || (roleId != role.getRoleId())) {
 					continue;
@@ -112,7 +112,7 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 
 				ResourcePermission resourcePermission =
 					_resourcePermissionLocalService.getResourcePermission(
-						resultSet.getLong(2));
+						resultSet.getLong("resourcePermissionId"));
 
 				for (String permission : permissions) {
 					ResourceAction resourceAction =

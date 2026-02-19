@@ -37,6 +37,9 @@ export function composeCreateTaskURL(
 	if (searchQuery) {
 		postURL.searchParams.append('search', searchQuery);
 	}
+	else {
+		postURL.searchParams.append('emptySearch', 'true');
+	}
 
 	const fullFilters = filters.map(({odataFilterString}) => odataFilterString);
 

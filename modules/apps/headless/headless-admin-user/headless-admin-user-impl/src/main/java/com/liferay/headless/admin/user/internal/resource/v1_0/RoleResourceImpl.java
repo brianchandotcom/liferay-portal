@@ -14,7 +14,6 @@ import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -621,10 +620,6 @@ public class RoleResourceImpl
 	private com.liferay.portal.kernel.model.Role _updateNestedResources(
 			Role role, com.liferay.portal.kernel.model.Role serviceBuilderRole)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return serviceBuilderRole;
-		}
 
 		return ResourcePermissionUtil.setResourcePermissions(
 			serviceBuilderRole, serviceBuilderRole.getCompanyId(),

@@ -44,7 +44,6 @@ import com.liferay.headless.admin.user.internal.util.v1_0.ResourcePermissionUtil
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -888,10 +887,6 @@ public class OrganizationResourceImpl
 	}
 
 	private long[] _getAssetCategoryIds(Organization organization) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return null;
-		}
-
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			organization.getTaxonomyCategoryBriefs();
 
@@ -1151,21 +1146,6 @@ public class OrganizationResourceImpl
 
 		if (Validator.isBlank(externalReferenceCode)) {
 			return Long.valueOf(parentOrganization.getId());
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			com.liferay.portal.kernel.model.Organization
-				serviceBuilderOrganization =
-					_organizationService.
-						fetchOrganizationByExternalReferenceCode(
-							parentOrganization.getExternalReferenceCode(),
-							contextCompany.getCompanyId());
-
-			if (serviceBuilderOrganization == null) {
-				return defaultValue;
-			}
-
-			return serviceBuilderOrganization.getOrganizationId();
 		}
 
 		com.liferay.portal.kernel.model.Organization
@@ -1443,10 +1423,6 @@ public class OrganizationResourceImpl
 			com.liferay.portal.kernel.model.Organization
 				serviceBuilderOrganization)
 		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return serviceBuilderOrganization;
-		}
 
 		AccountBrief[] accountBriefs = organization.getAccountBriefs();
 

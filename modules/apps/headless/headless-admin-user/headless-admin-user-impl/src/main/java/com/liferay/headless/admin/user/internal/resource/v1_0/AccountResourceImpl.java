@@ -47,7 +47,6 @@ import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Address;
@@ -793,10 +792,6 @@ public class AccountResourceImpl
 	}
 
 	private Long[] _getAssetCategoryIds(Account account) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return null;
-		}
-
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			account.getTaxonomyCategoryBriefs();
 
@@ -870,8 +865,7 @@ public class AccountResourceImpl
 			Account account, long accountEntryId, long defaultBillingAddressId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
-			Validator.isNotNull(
+		if (Validator.isNotNull(
 				account.getDefaultBillingAddressExternalReferenceCode())) {
 
 			Address address = _addressLocalService.getOrAddEmptyAddress(
@@ -905,8 +899,7 @@ public class AccountResourceImpl
 			Account account, long accountEntryId, long defaultShippingAddressId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
-			Validator.isNotNull(
+		if (Validator.isNotNull(
 				account.getDefaultShippingAddressExternalReferenceCode())) {
 
 			Address address = _addressLocalService.getOrAddEmptyAddress(
@@ -1136,24 +1129,9 @@ public class AccountResourceImpl
 			organizationIds = transformToArray(
 				Arrays.asList(organizationExternalReferenceCodes),
 				externalReferenceCode -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-						com.liferay.portal.kernel.model.Organization
-							organization =
-								_organizationService.getOrAddEmptyOrganization(
-									externalReferenceCode, StringPool.BLANK);
-
-						return organization.getOrganizationId();
-					}
-
 					com.liferay.portal.kernel.model.Organization organization =
-						_organizationService.
-							fetchOrganizationByExternalReferenceCode(
-								externalReferenceCode,
-								contextCompany.getCompanyId());
-
-					if (organization == null) {
-						return null;
-					}
+						_organizationService.getOrAddEmptyOrganization(
+							externalReferenceCode, StringPool.BLANK);
 
 					return organization.getOrganizationId();
 				},
@@ -1173,8 +1151,7 @@ public class AccountResourceImpl
 			Account account, long defaultParentAccountId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
-			Validator.isNotNull(
+		if (Validator.isNotNull(
 				account.getParentAccountExternalReferenceCode())) {
 
 			AccountEntry accountEntry =
@@ -1421,10 +1398,6 @@ public class AccountResourceImpl
 						contact.getTwitterSn()),
 					contact.getJobTitle());
 			}
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return accountEntry;
 		}
 
 		AccountGroupBrief[] accountGroupBriefs =

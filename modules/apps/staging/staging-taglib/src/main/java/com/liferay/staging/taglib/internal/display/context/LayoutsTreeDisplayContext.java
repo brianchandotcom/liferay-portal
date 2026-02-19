@@ -112,9 +112,7 @@ public class LayoutsTreeDisplayContext {
 		}
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-35443") &&
-			FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-35914")) {
+				_themeDisplay.getCompanyId(), "LPD-35443")) {
 
 			childPageHelpMessage = "child-page-process-warning-new-procedure";
 		}

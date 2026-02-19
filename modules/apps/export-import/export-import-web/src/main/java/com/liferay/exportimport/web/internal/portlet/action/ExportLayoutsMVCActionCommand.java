@@ -13,11 +13,9 @@ import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -117,16 +115,14 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-
 		if (exportLayoutSettingsMap == null) {
 			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 
 			exportLayoutSettingsMap =
 				_exportImportConfigurationSettingsMapFactory.
 					buildExportLayoutSettingsMap(
-						themeDisplay.getUserId(), groupId, privateLayout,
+						themeDisplay.getUserId(), groupId,
+						ParamUtil.getBoolean(actionRequest, "privateLayout"),
 						_getLayoutIds(actionRequest),
 						actionRequest.getParameterMap(),
 						themeDisplay.getLocale(), themeDisplay.getTimeZone());
@@ -135,29 +131,7 @@ public class ExportLayoutsMVCActionCommand extends BaseMVCActionCommand {
 		String taskName = ParamUtil.getString(actionRequest, "name");
 
 		if (Validator.isNull(taskName)) {
-			if (FeatureFlagManagerUtil.isEnabled(
-					themeDisplay.getCompanyId(), "LPD-35914")) {
-
-				taskName = _language.get(actionRequest.getLocale(), "export");
-			}
-			else {
-				Group group = themeDisplay.getScopeGroup();
-
-				if (group.isPrivateLayoutsEnabled()) {
-					if (privateLayout) {
-						taskName = _language.get(
-							actionRequest.getLocale(), "private-pages");
-					}
-					else {
-						taskName = _language.get(
-							actionRequest.getLocale(), "public-pages");
-					}
-				}
-				else {
-					taskName = _language.get(
-						actionRequest.getLocale(), "pages");
-				}
-			}
+			taskName = _language.get(actionRequest.getLocale(), "export");
 		}
 
 		return _exportImportConfigurationLocalService.

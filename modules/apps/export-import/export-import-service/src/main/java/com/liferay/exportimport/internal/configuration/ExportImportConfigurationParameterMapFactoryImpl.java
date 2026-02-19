@@ -19,7 +19,6 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -72,9 +71,7 @@ public class ExportImportConfigurationParameterMapFactoryImpl
 
 		// Add before parameter replacement
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-35914") &&
-			ArrayUtil.isNotEmpty(
+		if (ArrayUtil.isNotEmpty(
 				GetterUtil.getLongValues(parameterMap.get("layoutIds")))) {
 
 			parameterMap.put(

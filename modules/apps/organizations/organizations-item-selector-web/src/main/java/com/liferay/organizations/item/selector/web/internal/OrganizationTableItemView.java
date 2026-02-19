@@ -9,7 +9,6 @@ import com.liferay.item.selector.TableItemView;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
@@ -35,11 +34,7 @@ public class OrganizationTableItemView implements TableItemView {
 
 	@Override
 	public List<String> getHeaderNames() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			return ListUtil.fromArray("name", "path", "type", "status");
-		}
-
-		return ListUtil.fromArray("name", "path", "type");
+		return ListUtil.fromArray("name", "path", "type", "status");
 	}
 
 	@Override
@@ -71,15 +66,13 @@ public class OrganizationTableItemView implements TableItemView {
 
 		searchEntries.add(typeTextSearchEntry);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
-			StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
+		StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
 
-			statusSearchEntry.setCssClass("text-nowrap");
-			statusSearchEntry.setName(
-				WorkflowConstants.getStatusLabel(_organization.getStatus()));
+		statusSearchEntry.setCssClass("text-nowrap");
+		statusSearchEntry.setName(
+			WorkflowConstants.getStatusLabel(_organization.getStatus()));
 
-			searchEntries.add(statusSearchEntry);
-		}
+		searchEntries.add(statusSearchEntry);
 
 		return searchEntries;
 	}

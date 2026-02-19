@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.AuditedModel;
@@ -651,10 +650,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected T fetchExistingStagedModel(
 		StagedModel stagedModel, long groupId) {
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				stagedModel.getCompanyId(), "LPD-35914") &&
-			(stagedModel instanceof
-				ExternalReferenceCodeModel externalReferenceCodeModel)) {
+		if (stagedModel instanceof
+				ExternalReferenceCodeModel externalReferenceCodeModel) {
 
 			T existingStagedModel =
 				fetchStagedModelByExternalReferenceCodeAndGroupId(

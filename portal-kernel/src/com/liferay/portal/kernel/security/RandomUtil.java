@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.security;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Shuyang Zhou
@@ -38,6 +39,13 @@ public class RandomUtil {
 		System.arraycopy(numbers, 0, results, 0, size);
 
 		return results;
+	}
+
+	public static int nextThreadLocalInt(int bound) {
+		return ThreadLocalRandom.current(
+		).nextInt(
+			bound
+		);
 	}
 
 	public static void shuffle(Random random, int[] numbers) {

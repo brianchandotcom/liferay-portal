@@ -34,5 +34,6 @@
 />
 
 <clay:progressbar
+	fillBarClassName="progress-bar-animated progress-bar-striped"
 	value="<%= 100 %>"
 />

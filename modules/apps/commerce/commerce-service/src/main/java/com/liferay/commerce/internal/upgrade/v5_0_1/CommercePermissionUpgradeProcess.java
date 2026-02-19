@@ -5,13 +5,17 @@
 
 package com.liferay.commerce.internal.upgrade.v5_0_1;
 
+import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -87,6 +91,27 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		_deleteResourceActions(_PORTLET_NAME_COMMERCE_DISCOUNT);
 		_deleteResourceActions(_PORTLET_NAME_COMMERCE_PRICE_LIST);
 		_deleteResourceActions();
+	}
+
+	private void _addResourcePermission(
+			long companyId, String name, long roleId)
+		throws Exception {
+
+		for (String actionId :
+				new String[] {
+					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+					ActionKeys.UPDATE, ActionKeys.VIEW
+				}) {
+
+			if (!_resourcePermissionLocalService.hasResourcePermission(
+					companyId, name, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(companyId), roleId, actionId)) {
+
+				_resourcePermissionLocalService.addResourcePermission(
+					companyId, name, ResourceConstants.SCOPE_COMPANY,
+					String.valueOf(companyId), roleId, actionId);
+			}
+		}
 	}
 
 	private void _deleteResourceActions() {
@@ -188,6 +213,15 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				resourcePermission.getCompanyId(), resourceActionName,
 				resourcePermission.getScope(), resourcePermission.getPrimKey(),
 				resourcePermission.getRoleId(), new String[] {actionId});
+
+			if (StringUtil.equals(
+					"ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT", actionId)) {
+
+				_addResourcePermission(
+					resourcePermission.getCompanyId(),
+					CPMeasurementUnit.class.getName(),
+					resourcePermission.getRoleId());
+			}
 		}
 	}
 

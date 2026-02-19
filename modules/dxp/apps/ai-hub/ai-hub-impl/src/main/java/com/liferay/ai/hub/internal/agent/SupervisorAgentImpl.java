@@ -106,9 +106,7 @@ public class SupervisorAgentImpl implements SupervisorAgent {
 				InternalAgent.class);
 		}
 		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
+			_log.error(exception);
 		}
 
 		return new InternalAgent[0];

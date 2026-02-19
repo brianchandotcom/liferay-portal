@@ -14,3 +14,30 @@
 		margin-left: 0 !important;
 	}
 }
+
+.data-set-wrapper .data-set-content-wrapper {
+	.label {
+		background-color: #fff;
+		border-radius: 0.125rem;
+		border-width: 0.0625rem;
+		font-size: 0.625rem;
+		padding: 0.125rem 0.25rem;
+		min-height: 1rem;
+	}
+
+	.label-danger {
+		border-color: #f48989;
+	}
+
+	.label-info {
+		border-color: #89a7e0;
+	}
+
+	.label-warning {
+		border-color: #ff8f39;
+	}
+
+	.label-success {
+		border-color: #5aca75;
+	}
+}

@@ -153,18 +153,19 @@ public class DBInspectorUnitTest {
 	public void testIsObjectTable() {
 		DBInspector dbInspector = new DBInspector(_connection);
 
-		MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
-			Mockito.mockStatic(PortalInstancePool.class);
+		try (MockedStatic<PortalInstancePool> portalInstancePoolMockedStatic =
+				Mockito.mockStatic(PortalInstancePool.class)) {
 
-		portalInstancePoolMockedStatic.when(
-			PortalInstancePool::getCompanyIds
-		).thenReturn(
-			new long[] {1L}
-		);
+			portalInstancePoolMockedStatic.when(
+				PortalInstancePool::getCompanyIds
+			).thenReturn(
+				new long[] {1L}
+			);
 
-		Assert.assertTrue(dbInspector.isObjectTable("L_1_tableName"));
-		Assert.assertTrue(dbInspector.isObjectTable("l_1_tableName"));
-		Assert.assertTrue(dbInspector.isObjectTable("r_tableName"));
+			Assert.assertTrue(dbInspector.isObjectTable("L_1_tableName"));
+			Assert.assertTrue(dbInspector.isObjectTable("l_1_tableName"));
+			Assert.assertTrue(dbInspector.isObjectTable("r_tableName"));
+		}
 	}
 
 	@Test

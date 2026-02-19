@@ -50,9 +50,9 @@ JSONObject metadataJSONObject = JSONUtil.put(
 	>
 		<div class="sheet">
 			<aui:fieldset>
-				<liferay-ui:error exception="<%= DuplicateOAuthClientASLocalMetadataException.class %>" message="oauth-client-as-local-metadata-duplicate-as-local-metadata" />
+				<liferay-ui:error exception="<%= DuplicateOAuthClientASLocalMetadataException.class %>" message="oauth-client-as-local-metadata-duplicate-authorization-server-local-metadata" />
 
-				<liferay-ui:error exception="<%= DuplicateOAuthClientEntryException.class %>" message="oauth-client-as-local-metadata-duplicate-as-issuer" />
+				<liferay-ui:error exception="<%= DuplicateOAuthClientEntryException.class %>" message="oauth-client-as-local-metadata-duplicate-authorization-server-issuer" />
 
 				<liferay-ui:error exception="<%= OAuthClientASLocalMetadataIssuerException.class %>" message="oauth-client-as-local-metadata-issuer-cannot-be-empty" />
 
@@ -86,7 +86,7 @@ JSONObject metadataJSONObject = JSONUtil.put(
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local-openid-configuration">
-					<aui:input label="oauth-client-as-local-metadata-subject-types-supported" name="supportedSubjectTypes" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : "public" %>' />
+					<aui:input label="oauth-client-as-local-metadata-supported-subject-types" name="supportedSubjectTypes" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : "public" %>' />
 
 					<aui:input label="oauth-client-as-local-metadata-userinfo-endpoint" name="userInfoEndpoint" type="text" value="<%= userInfoEndpoint %>" />
 

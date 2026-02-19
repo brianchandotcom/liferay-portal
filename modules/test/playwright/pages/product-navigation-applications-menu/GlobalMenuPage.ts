@@ -10,14 +10,22 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 type Categories = 'Applications' | 'CMS' | 'Commerce' | 'Control Panel';
 
 export class GlobalMenuPage {
+	readonly categoriesList: Locator;
 	readonly globalMenuButton: Locator;
 	readonly page: Page;
+	readonly sitesList: Locator;
 
 	constructor(page: Page) {
+		this.categoriesList = page
+			.getByRole('menu')
+			.and(page.locator('.categories-list'));
 		this.globalMenuButton = page
 			.getByRole('button', {name: 'Applications Menu'})
 			.or(page.getByTestId('globalMenu'));
 		this.page = page;
+		this.sitesList = page
+			.getByRole('menu')
+			.and(page.locator('.global-menu .sites-list'));
 	}
 
 	async closeProductMenu(name: string) {
@@ -74,6 +82,13 @@ export class GlobalMenuPage {
 
 	async goToControlPanel() {
 		await this.goTo('Control Panel');
+	}
+
+	async openGlobalMenu() {
+		await clickAndExpectToBeVisible({
+			target: this.categoriesList,
+			trigger: this.globalMenuButton,
+		});
 	}
 
 	async openProductMenu(name: string) {

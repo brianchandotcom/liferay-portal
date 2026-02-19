@@ -239,12 +239,12 @@ public class IndexUpdaterUtilTest {
 
 				PreparedStatement preparedStatement =
 					connection.prepareStatement(
-						"select count(*) from TestTable")) {
+						"select count(*) as count from TestTable")) {
 
 				try (ResultSet resultSet = preparedStatement.executeQuery()) {
 					Assert.assertTrue(resultSet.next());
 
-					Assert.assertEquals(1, resultSet.getInt(1));
+					Assert.assertEquals(1, resultSet.getInt("count"));
 				}
 
 				List<IndexMetadata> indexMetadatas = _db.getIndexMetadatas(

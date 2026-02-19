@@ -655,9 +655,19 @@ public class CopyItemsMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentEntryLink.getFragmentEntryERC(),
 			copiedFragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			fragmentEntryLink.getGroupId(),
-			copiedFragmentEntryLink.getFragmentEntryGroupId());
+
+		Long groupId1 = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		Long groupId2 = ScopeUtil.getItemGroupId(
+			copiedFragmentEntryLink.getCompanyId(),
+			copiedFragmentEntryLink.getFragmentEntryScopeERC(),
+			copiedFragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(groupId1, groupId2);
+
 		Assert.assertNotEquals(
 			copiedFragmentEntryLink.getFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryLinkId());

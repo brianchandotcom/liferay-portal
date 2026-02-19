@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
@@ -498,9 +499,14 @@ public class AddFragmentEntryLinkMVCActionCommandTest {
 		Assert.assertEquals(
 			fragmentEntry.getExternalReferenceCode(),
 			fragmentEntryLink.getFragmentEntryERC());
-		Assert.assertEquals(
-			fragmentEntry.getGroupId(),
-			fragmentEntryLink.getFragmentEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			fragmentEntryLink.getCompanyId(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getGroupId());
+
+		Assert.assertEquals(fragmentEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(_layout.getPlid(), fragmentEntryLink.getPlid());
 		Assert.assertEquals(fragmentEntry.getCss(), fragmentEntryLink.getCss());
 		Assert.assertEquals(

@@ -474,6 +474,17 @@ public abstract class BaseSectionDisplayContextTestCase
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
+	protected DepotEntry addDepotEntry(String name, int type) throws Exception {
+		return _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), name
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), StringUtil.randomString()
+			).build(),
+			type, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+	}
+
 	protected DepotEntry addDepotEntry(String name, long userId)
 		throws Exception {
 
@@ -487,17 +498,6 @@ public abstract class BaseSectionDisplayContextTestCase
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), userId));
-	}
-
-	protected DepotEntry addDepotEntry(String name, int type) throws Exception {
-		return _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), name
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), StringUtil.randomString()
-			).build(),
-			type, ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 	}
 
 	protected String getCMSSectionFilterString(Object displayContext) {

@@ -166,14 +166,8 @@ public abstract class BaseDisplayContextTestCase {
 			objectEntryFolder, TestPropsValues.getUser());
 	}
 
-	protected MockHttpServletRequest getMockHttpServletRequest(User user)
-		throws Exception {
-
-		return getMockHttpServletRequest(null, user);
-	}
-
 	protected MockHttpServletRequest getMockHttpServletRequest(
-		ObjectEntryFolder objectEntryFolder, User user)
+			ObjectEntryFolder objectEntryFolder, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -191,6 +185,12 @@ public abstract class BaseDisplayContextTestCase {
 		return mockHttpServletRequest;
 	}
 
+	protected MockHttpServletRequest getMockHttpServletRequest(User user)
+		throws Exception {
+
+		return getMockHttpServletRequest(null, user);
+	}
+
 	protected ThemeDisplay getThemeDisplay(
 			HttpServletRequest httpServletRequest)
 		throws Exception {
@@ -199,7 +199,7 @@ public abstract class BaseDisplayContextTestCase {
 	}
 
 	protected ThemeDisplay getThemeDisplay(
-		HttpServletRequest httpServletRequest, User user)
+			HttpServletRequest httpServletRequest, User user)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();

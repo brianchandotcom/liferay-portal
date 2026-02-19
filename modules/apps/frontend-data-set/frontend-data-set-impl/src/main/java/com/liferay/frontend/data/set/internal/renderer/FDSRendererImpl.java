@@ -204,11 +204,7 @@ public class FDSRendererImpl implements FDSRenderer {
 							fdsSerializer.serializeGroupedFilters(
 								fdsName, httpServletRequest);
 
-						if (JSONUtil.isEmpty(groupedFiltersJSONArray) ||
-							!FeatureFlagManagerUtil.isEnabled(
-								PortalUtil.getCompanyId(httpServletRequest),
-								"LPD-68829")) {
-
+						if (JSONUtil.isEmpty(groupedFiltersJSONArray)) {
 							return null;
 						}
 

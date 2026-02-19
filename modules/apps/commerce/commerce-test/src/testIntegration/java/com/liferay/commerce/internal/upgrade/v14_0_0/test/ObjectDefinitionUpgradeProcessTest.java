@@ -355,8 +355,8 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(*) from ", tableName, " where ", columnName,
-					" = ?"));
+					"select count(*) as count from ", tableName, " where ",
+					columnName, " = ?"));
 
 			preparedStatement.setLong(1, primaryKey);
 
@@ -364,7 +364,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 			Assert.assertNotNull(resultSet.next());
 
-			Assert.assertEquals(1L, resultSet.getInt(1));
+			Assert.assertEquals(1L, resultSet.getInt("count"));
 		}
 	}
 

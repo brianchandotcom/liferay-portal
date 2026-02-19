@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Base64;
@@ -43,6 +42,7 @@ import java.net.URL;
 import java.security.MessageDigest;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -94,38 +94,14 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 		User user = _userLocalService.getUser(userId);
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-63415")) {
-
-			_validateHttpsUrl(authorizationEndpoint, false);
-			_validateHttpsUrl(issuer, true);
-			_validateHttpsUrl(jwksURI, false);
-			_validateHttpsUrl(tokenEndpoint, false);
-			_validateHttpsUrl(userInfoEndpoint, false);
-
-			oAuthClientASLocalMetadata =
-				oAuthClientASLocalMetadataPersistence.fetchByC_I(
-					user.getCompanyId(), issuer);
-
-			if (oAuthClientASLocalMetadata != null) {
-				throw new DuplicateOAuthClientASLocalMetadataException();
-			}
-		}
-
 		String localWellKnownURI = _generateLocalWellKnownURI(
 			issuer, tokenEndpoint, "openid-configuration");
 
-		oAuthClientASLocalMetadata =
-			oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
-				localWellKnownURI);
+		_validate(
+			null, user.getCompanyId(), authorizationEndpoint, issuer, jwksURI,
+			localWellKnownURI, tokenEndpoint, userInfoEndpoint);
 
-		if (oAuthClientASLocalMetadata != null) {
-			throw new DuplicateOAuthClientASLocalMetadataException();
-		}
-
-		oAuthClientASLocalMetadata =
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataPersistence.create(
 				counterLocalService.increment());
 
@@ -313,62 +289,44 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			String userInfoEndpoint)
 		throws PortalException {
 
-		OAuthClientASLocalMetadata oAuthClientASLocalMetadata1 =
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			oAuthClientASLocalMetadataLocalService.
 				getOAuthClientASLocalMetadata(oAuthClientASLocalMetadataId);
 
-		boolean issuerChanged = !issuer.equals(
-			oAuthClientASLocalMetadata1.getIssuer());
-
 		String localWellKnownURI =
-			oAuthClientASLocalMetadata1.getLocalWellKnownURI();
+			oAuthClientASLocalMetadata.getLocalWellKnownURI();
 
-		if (issuerChanged ||
+		if (!issuer.equals(oAuthClientASLocalMetadata.getIssuer()) ||
 			localWellKnownURI.contains("openid-configuration")) {
 
-			if (issuerChanged) {
-				OAuthClientASLocalMetadata oAuthClientASLocalMetadata2 =
-					oAuthClientASLocalMetadataLocalService.
-						fetchOAuthClientASLocalMetadata(
-							oAuthClientASLocalMetadata1.getCompanyId(), issuer);
+			_validate(
+				oAuthClientASLocalMetadata,
+				oAuthClientASLocalMetadata.getCompanyId(),
+				authorizationEndpoint, issuer, jwksURI, localWellKnownURI,
+				tokenEndpoint, userInfoEndpoint);
 
-				if (oAuthClientASLocalMetadata2 != null) {
-					throw new DuplicateOAuthClientASLocalMetadataException();
-				}
-			}
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
-
-				_validateHttpsUrl(authorizationEndpoint, false);
-				_validateHttpsUrl(issuer, true);
-				_validateHttpsUrl(jwksURI, false);
-				_validateHttpsUrl(tokenEndpoint, false);
-				_validateHttpsUrl(userInfoEndpoint, false);
-			}
-
-			oAuthClientASLocalMetadata1.setIssuer(issuer);
-			oAuthClientASLocalMetadata1.setLocalWellKnownEnabled(
+			oAuthClientASLocalMetadata.setIssuer(issuer);
+			oAuthClientASLocalMetadata.setLocalWellKnownEnabled(
 				localWellKnownEnabled);
-			oAuthClientASLocalMetadata1.setLocalWellKnownURI(
+			oAuthClientASLocalMetadata.setLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, tokenEndpoint, "openid-configuration"));
-			oAuthClientASLocalMetadata1.setMetadataJSON(
+			oAuthClientASLocalMetadata.setMetadataJSON(
 				_generateMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedGrantTypes,
 					supportedScopes, supportedSubjectTypes, tokenEndpoint,
 					userInfoEndpoint));
-			oAuthClientASLocalMetadata1.setOAuthASLocalWellKnownURI(
+			oAuthClientASLocalMetadata.setOAuthASLocalWellKnownURI(
 				_generateLocalWellKnownURI(
 					issuer, null, "oauth-authorization-server"));
-			oAuthClientASLocalMetadata1.setOAuthASMetadataJSON(
+			oAuthClientASLocalMetadata.setOAuthASMetadataJSON(
 				_generateAuthorizationServerMetadataJSON(
 					authorizationEndpoint, issuer, jwksURI, supportedScopes,
 					supportedGrantTypes, tokenEndpoint));
 		}
 
 		return oAuthClientASLocalMetadataPersistence.update(
-			oAuthClientASLocalMetadata1);
+			oAuthClientASLocalMetadata);
 	}
 
 	private String _generateAuthorizationServerMetadataJSON(
@@ -503,14 +461,49 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private void _validateHttpsUrl(String urlString, boolean required)
+	private void _validate(
+			OAuthClientASLocalMetadata oldOAuthClientASLocalMetadata,
+			long companyId, String authorizationEndpoint, String issuer,
+			String jwksURI, String localWellKnownURI, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException {
 
-		if (Validator.isNull(urlString)) {
-			if (required) {
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63415")) {
+			_validateHttpsUrl(authorizationEndpoint);
+
+			if (Validator.isNull(issuer)) {
 				throw new OAuthClientASLocalMetadataIssuerException();
 			}
 
+			_validateHttpsUrl(issuer);
+			_validateHttpsUrl(jwksURI);
+			_validateHttpsUrl(tokenEndpoint);
+			_validateHttpsUrl(userInfoEndpoint);
+		}
+
+		if (oldOAuthClientASLocalMetadata == null) {
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				oAuthClientASLocalMetadataPersistence.fetchByLocalWellKnownURI(
+					localWellKnownURI);
+
+			if (oAuthClientASLocalMetadata != null) {
+				throw new DuplicateOAuthClientASLocalMetadataException();
+			}
+		}
+
+		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+			oAuthClientASLocalMetadataPersistence.fetchByC_I(companyId, issuer);
+
+		if ((oAuthClientASLocalMetadata != null) &&
+			!Objects.equals(
+				oldOAuthClientASLocalMetadata, oAuthClientASLocalMetadata)) {
+
+			throw new DuplicateOAuthClientASLocalMetadataException();
+		}
+	}
+
+	private void _validateHttpsUrl(String urlString) throws PortalException {
+		if (Validator.isNull(urlString)) {
 			return;
 		}
 

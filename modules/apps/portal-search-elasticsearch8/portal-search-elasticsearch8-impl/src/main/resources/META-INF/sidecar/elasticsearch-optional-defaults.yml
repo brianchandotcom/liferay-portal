@@ -1,4 +1,5 @@
 http.host: _local_
+indexing_pressure.memory.limit: 100%
 indices.breaker.total.use_real_memory: false
 monitor.jvm.gc.enabled: false
 thread_pool:

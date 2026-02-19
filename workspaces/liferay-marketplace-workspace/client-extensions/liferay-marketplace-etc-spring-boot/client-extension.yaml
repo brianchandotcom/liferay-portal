@@ -5,11 +5,6 @@ liferay-marketplace-etc-spring-boot-analytics-provisioning:
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
     resourcePath: /analytics/provisioning
     type: objectAction
-liferay-marketplace-etc-spring-boot-marketplace-product-purchase:
-    name: Liferay Marketplace Etc Spring Boot Marketplace Product Purchase
-    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
-    resourcePath: /object/action/product-purchase
-    type: objectAction
 liferay-marketplace-etc-spring-boot-marketplace-product-submit:
     name: Liferay Marketplace Etc Spring Boot Marketplace Product Submit
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
@@ -39,6 +34,11 @@ liferay-marketplace-etc-spring-boot-oaua:
     scopes:
         -   Liferay.Headless.Admin.User.everything
     type: oAuthApplicationUserAgent
+liferay-marketplace-etc-spring-boot-object-action-product-purchase:
+    name: Liferay Marketplace Etc Spring Boot Object Action Product Purchase
+    oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
+    resourcePath: /object/action/product-purchase
+    type: objectAction
 liferay-marketplace-etc-spring-boot-trial-provisioning:
     name: Liferay Marketplace Etc Spring Boot Trial Provisioning
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua

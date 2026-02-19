@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.staging.StagingGroupHelper;
 
@@ -81,20 +82,26 @@ public class AssetDisplayPageStagedModelDataHandler
 			AssetDisplayPageEntry assetDisplayPageEntry)
 		throws Exception {
 
+		Element element = portletDataContext.getImportDataStagedModelElement(
+			assetDisplayPageEntry);
+
+		String layoutPageTemplateEntryERC = element.attributeValue(
+			"layoutPageTemplateEntryERC");
+
 		AssetDisplayPageEntry importedAssetDisplayPageEntry =
 			(AssetDisplayPageEntry)assetDisplayPageEntry.clone();
 
 		long layoutPageTemplateEntryId = 0;
 
-		if (importedAssetDisplayPageEntry.getLayoutPageTemplateEntryId() > 0) {
-			Map<Long, Long> layoutPageTemplateEntryIds =
-				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-					LayoutPageTemplateEntry.class);
+		if (Validator.isNotNull(layoutPageTemplateEntryERC)) {
+			LayoutPageTemplateEntry layoutPageTemplateEntry =
+				_layoutPageTemplateEntryLocalService.
+					getLayoutPageTemplateEntryByExternalReferenceCode(
+						layoutPageTemplateEntryERC,
+						portletDataContext.getGroupId());
 
-			layoutPageTemplateEntryId = MapUtil.getLong(
-				layoutPageTemplateEntryIds,
-				assetDisplayPageEntry.getLayoutPageTemplateEntryId(),
-				assetDisplayPageEntry.getLayoutPageTemplateEntryId());
+			layoutPageTemplateEntryId =
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 		}
 
 		Map<Long, Long> plids =

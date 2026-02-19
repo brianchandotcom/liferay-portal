@@ -138,7 +138,7 @@ function main {
 		aws \
 			backup \
 			describe-recovery-point \
-			--backup-vault-name "{{ .Values.awsBackupService.vaultName }}" \
+			--backup-vault-name "{{ printf "%s-backup-vault" (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
 			--recovery-point-arn "{{ "{{" }}workflow.parameters.recovery-point-arn}}")
 
 	local creation_date
@@ -170,7 +170,7 @@ function main {
 		aws \
 			backup \
 			list-recovery-points-by-backup-vault \
-			--backup-vault-name "{{ .Values.awsBackupService.vaultName }}" \
+			--backup-vault-name "{{ printf "%s-backup-vault" (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
 			--by-created-after "${by_created_after}" \
 			--by-created-before "${by_created_before}" \
 			| jq --arg creation_date "${creation_date}" "[.RecoveryPoints[] | select(.CreationDate == \$creation_date)]")
@@ -217,7 +217,7 @@ function main {
 		aws \
 			backup \
 			start-restore-job \
-			--iam-role-arn "{{ .Values.awsBackupService.assumedIamRoleArn }}" \
+			--iam-role-arn "{{ printf "arn:aws:iam::%s:role/%s-backup-service-role" .Values.global.aws.accountId (include "liferayAWSBackupRestore.infraResourceBaseName" .) }}" \
 			--metadata "DestinationBucketName={{ "{{" }}inputs.parameters.s3-bucket-id}},NewBucket=false" \
 			--recovery-point-arn "{{ "{{" }}inputs.parameters.s3-recovery-point-arn}}" \
 			--resource-type "S3" \

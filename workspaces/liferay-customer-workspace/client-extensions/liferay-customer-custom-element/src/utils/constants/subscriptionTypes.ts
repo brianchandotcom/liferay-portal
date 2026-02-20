@@ -5,6 +5,12 @@
 
 export const EXPERIENCE_SUBSCRIPTIONS = ['PaaS Experience', 'SaaS Experience'];
 
+export const LEGACY_SUBSCRIPTIONS = [
+	'Engage Site',
+	'Support Site',
+	'Transact Site',
+];
+
 export const PLAN_SUBSCRIPTIONS = [
 	'Business Plan',
 	'Enterprise Plan',

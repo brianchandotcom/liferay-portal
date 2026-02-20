@@ -14,6 +14,7 @@ import {
 export const actionTypes = {
 	UPDATE_BUSINESS_EVENTS: 'UPDATE_BUSINESS_EVENTS',
 	UPDATE_HAS_EXPERIENCE_SUBSCRIPTION: 'UPDATE_HAS_EXPERIENCE_SUBSCRIPTION',
+	UPDATE_HAS_LEGACY_SUBSCRIPTION: 'UPDATE_HAS_LEGACY_SUBSCRIPTION',
 	UPDATE_HAS_PLAN_SUBSCRIPTION: 'UPDATE_HAS_PLAN_SUBSCRIPTION',
 	UPDATE_PAGE: 'UPDATE_PAGE',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
@@ -43,6 +44,7 @@ export interface IAction {
 export interface IState {
 	businessEvents: IBusinessEvent | undefined;
 	hasExperienceSubscription: boolean;
+	hasLegacySubscription: boolean;
 	hasPlanSubscription: boolean;
 	isQuickLinksExpanded: boolean;
 	page: string | undefined;
@@ -103,6 +105,11 @@ const reducer = (state: IState, action: IAction): IState => {
 			return {
 				...state,
 				hasExperienceSubscription: action.payload as boolean,
+			};
+		case actionTypes.UPDATE_HAS_LEGACY_SUBSCRIPTION:
+			return {
+				...state,
+				hasLegacySubscription: action.payload as boolean,
 			};
 		case actionTypes.UPDATE_HAS_PLAN_SUBSCRIPTION:
 			return {

@@ -17,6 +17,7 @@ import {
 } from '~/services/liferay/graphql/queries';
 import {
 	EXPERIENCE_SUBSCRIPTIONS,
+	LEGACY_SUBSCRIPTIONS,
 	PLAN_SUBSCRIPTIONS,
 	ROLE_TYPES,
 	ROUTE_TYPES,
@@ -39,6 +40,7 @@ const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 	{
 		businessEvents: undefined,
 		hasExperienceSubscription: false,
+		hasLegacySubscription: false,
 		hasPlanSubscription: false,
 		isQuickLinksExpanded: true,
 		page: undefined,
@@ -60,6 +62,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 		{
 			businessEvents: undefined,
 			hasExperienceSubscription: false,
+			hasLegacySubscription: false,
 			hasPlanSubscription: false,
 			isQuickLinksExpanded: true,
 			page: undefined,
@@ -261,6 +264,10 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 					EXPERIENCE_SUBSCRIPTIONS.includes(name as string)
 				);
 
+				const hasLegacySubscription = items?.some(({name}) =>
+					LEGACY_SUBSCRIPTIONS.includes(name as string)
+				);
+
 				const hasPlanSubscription = items?.some(({name}) =>
 					PLAN_SUBSCRIPTIONS.includes(name as string)
 				);
@@ -273,6 +280,11 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 				dispatch({
 					payload: hasExperienceSubscription as boolean,
 					type: actionTypes.UPDATE_HAS_EXPERIENCE_SUBSCRIPTION as keyof typeof actionTypes,
+				});
+
+				dispatch({
+					payload: hasLegacySubscription as boolean,
+					type: actionTypes.UPDATE_HAS_LEGACY_SUBSCRIPTION as keyof typeof actionTypes,
 				});
 
 				dispatch({

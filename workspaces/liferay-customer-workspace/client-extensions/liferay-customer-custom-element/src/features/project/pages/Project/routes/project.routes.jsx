@@ -43,7 +43,7 @@ const ProjectRoutes = () => {
 	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
 
 	const [
-		{hasExperienceSubscription, hasPlanSubscription, project, subscriptionGroups, subscriptions},
+		{hasExperienceSubscription, hasLegacySubscription, hasPlanSubscription, project, subscriptionGroups, subscriptions},
 		dispatch,
 	] = useAppContext();
 	const {featureFlags} = useAppPropertiesContext();
@@ -75,12 +75,22 @@ const ProjectRoutes = () => {
 		}
 	}
 
-	const {data: myUserAccountData} =
+	const {data: myUserAccountData, loading: loggedUserAccountLoading} =
 		useMyUserAccountByAccountExternalReferenceCode(
 			koroneikiAccount?.accountKey,
 			koroneikiAccountLoading
 		);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
+
+	const isLoading =
+		koroneikiAccountLoading ||
+		loggedUserAccountLoading ||
+		subscriptions === undefined;
+
+	const isProjectUsageEnabled =
+		((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
+			(hasPlanSubscription || hasLegacySubscription)) ||
+		(featureFlags.includes('LRSD-12003') && hasExperienceSubscription);
 
 	const hasSaasSubscription = useMemo(
 		() => {
@@ -336,13 +346,20 @@ const ProjectRoutes = () => {
 						</Route>
 					)}
 
-					{(((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) && hasPlanSubscription) ||
-						(featureFlags.includes('LRSD-12003') && hasExperienceSubscription)) && (
-
+					{isProjectUsageEnabled && (
 						<Route element={<ProjectUsage />} path="project-usage" />
 					)}
 
-					<Route element={<h3>Page not found</h3>} path="*" />
+					<Route
+						element={
+							isLoading ? (
+								<ClayLoadingIndicator />
+							) : (
+								<h3>Page not found</h3>
+							)
+						}
+						path="*"
+					/>
 				</Route>
 			</Routes>
 		</HashRouter>

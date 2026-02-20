@@ -20,7 +20,8 @@ import ProjectUsageSection from './components/ProjectUsageSection';
 import useProjectUsageData from './hooks/useProjectUsageData';
 
 const ProjectUsage = () => {
-	const [{hasExperienceSubscription}] = useAppContext();
+	const [{hasExperienceSubscription, hasLegacySubscription}] =
+		useAppContext();
 
 	const acceptedSubscriptions = useMemo(() => {
 		if (hasExperienceSubscription) {
@@ -30,10 +31,16 @@ const ProjectUsage = () => {
 		return PLAN_SUBSCRIPTIONS;
 	}, [hasExperienceSubscription]);
 
-	const {addOns, displayUsage, isLoading, usageData} = useProjectUsageData(
-		acceptedSubscriptions,
-		hasExperienceSubscription
-	);
+	const {
+		addOns,
+		displayUsage: isUsageDisplayed,
+		isLoading,
+		usageData,
+	} = useProjectUsageData(acceptedSubscriptions, hasExperienceSubscription);
+
+	const isLegacySubscription = hasLegacySubscription;
+
+	const displayUsage = isUsageDisplayed && !isLegacySubscription;
 
 	return (
 		<div className="container-xl cp-project-usage-page m-0 p-0">
@@ -48,7 +55,7 @@ const ProjectUsage = () => {
 
 			{!isLoading && (
 				<>
-					{!displayUsage && (
+					{(isLegacySubscription || !displayUsage) && (
 						<ContactBanner
 							className="mb-5"
 							description={i18n.translate(
@@ -121,29 +128,32 @@ const ProjectUsage = () => {
 
 						{displayUsage && (
 							<>
-								{!!addOns.length && (
-									<ProjectUsageSection
-										className="mb-5"
-										title={i18n.translate('add-ons')}
-									>
-										{addOns?.map(
-											(addOn: any, index: number) => (
-												<CardContainer
-													className="align-items-center d-flex p-4"
-													displayUsage={displayUsage}
-													infoButtonText={
-														addOn.infoText
-													}
-													key={`${addOn.title}-${index}`}
-												>
-													<AddOnContent
-														title={addOn.title}
-													/>
-												</CardContainer>
-											)
-										)}
-									</ProjectUsageSection>
-								)}
+								{!hasExperienceSubscription &&
+									!!addOns.length && (
+										<ProjectUsageSection
+											className="mb-5"
+											title={i18n.translate('add-ons')}
+										>
+											{addOns?.map(
+												(addOn: any, index: number) => (
+													<CardContainer
+														className="align-items-center d-flex p-4"
+														displayUsage={
+															displayUsage
+														}
+														infoButtonText={
+															addOn.infoText
+														}
+														key={`${addOn.title}-${index}`}
+													>
+														<AddOnContent
+															title={addOn.title}
+														/>
+													</CardContainer>
+												)
+											)}
+										</ProjectUsageSection>
+									)}
 
 								<ContactBanner
 									description={i18n.translate(

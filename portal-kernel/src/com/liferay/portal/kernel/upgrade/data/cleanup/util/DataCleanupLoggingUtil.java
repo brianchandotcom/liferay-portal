@@ -38,7 +38,7 @@ public class DataCleanupLoggingUtil {
 		if (log.isInfoEnabled()) {
 			log.info(
 				StringBundler.concat(
-					"Table ", tableName, ", dropped because ", cause));
+					"Table ", tableName, " was dropped because ", cause));
 		}
 	}
 
@@ -51,7 +51,7 @@ public class DataCleanupLoggingUtil {
 
 		log.info(
 			StringBundler.concat(
-				"Table ", originalValue, ", renamed to ", renamedValue,
+				"Table ", originalValue, " was renamed to ", renamedValue,
 				" because ", cause));
 	}
 

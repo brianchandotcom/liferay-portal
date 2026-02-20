@@ -159,8 +159,8 @@ public class CompanyDataCleanupPreupgradeProcessTest
 						StringBundler.concat(
 							"Table ",
 							_dbInspector.normalizeName(objectTableName),
-							", dropped because it belonged to a nonexistent ",
-							"company: ", companyId)));
+							" was dropped because it belonged to a ",
+							"nonexistent company: ", companyId)));
 			}
 
 			Assert.assertEquals(

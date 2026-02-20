@@ -127,8 +127,8 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", invalidObjectDefinitionDBTableName,
-						", renamed to ", objectDefinitionDBTableName,
-						" because it had an incorrect table name casing")));
+						" was renamed to ", objectDefinitionDBTableName,
+						" because it was incorrectly cased")));
 		}
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
@@ -207,7 +207,7 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 					StringBundler.concat(
 						"Table ", invalidTableName, ", renamed to ",
 						testTableName,
-						" because it had an incorrect table name casing")));
+						" because it was incorrectly cased")));
 
 			Assert.assertTrue(
 				messages.toString(),

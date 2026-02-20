@@ -27,6 +27,7 @@ import com.liferay.layout.util.constants.LayoutStructureConstants;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,6 +38,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -300,11 +302,30 @@ public class PageDefinitionDTOConverter
 							return null;
 						}
 
+						Long groupId = ScopeUtil.getItemGroupId(
+							layout.getCompanyId(),
+							layout.getFaviconFileEntryScopeERC(),
+							layout.getGroupId());
+
+						if (groupId == null) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									StringBundler.concat(
+										"Unable to resolve group ID for ",
+										"favicon file entry in layout with ",
+										"PLID ", layout.getPlid(),
+										" using favicon file entry scope ",
+										"external reference code ",
+										layout.getFaviconFileEntryScopeERC()));
+							}
+
+							return null;
+						}
+
 						return ContentDocumentUtil.toContentDocument(
 							_dlURLHelper, "settings.favIcon.image",
 							_dlAppService.getFileEntryByExternalReferenceCode(
-								faviconFileEntryERC,
-								layout.getFaviconFileEntryGroupId()),
+								faviconFileEntryERC, groupId),
 							dtoConverterContext.getUriInfo());
 					});
 				setGlobalCSSClientExtensions(

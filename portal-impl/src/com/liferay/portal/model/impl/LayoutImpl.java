@@ -1714,9 +1714,25 @@ public class LayoutImpl extends LayoutBaseImpl {
 		}
 
 		try {
+			Long groupId = ScopeUtil.getItemGroupId(
+				getCompanyId(), getFaviconFileEntryScopeERC(), getGroupId());
+
+			if (groupId == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						StringBundler.concat(
+							"Unable to resolve group ID for favicon file ",
+							"entry in layout with PLID ", getPlid(),
+							" using favicon file entry scope external ",
+							"reference code ", getFaviconFileEntryScopeERC()));
+				}
+
+				return null;
+			}
+
 			FileEntry fileEntry =
 				DLAppServiceUtil.getFileEntryByExternalReferenceCode(
-					getFaviconFileEntryERC(), getFaviconFileEntryGroupId());
+					getFaviconFileEntryERC(), groupId);
 
 			return HtmlUtil.escape(
 				StringBundler.concat(

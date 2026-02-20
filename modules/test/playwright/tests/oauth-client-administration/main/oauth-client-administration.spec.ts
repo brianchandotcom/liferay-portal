@@ -5,10 +5,16 @@
 
 import {mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {AuthServerLocalMetadatasPage} from '../../../pages/oauth-client-administration-web/AuthServerLocalMetadatasPage';
 
-const test = mergeTests(loginTest());
+const test = mergeTests(
+	featureFlagsTest({
+		'LPD-63415': {enabled: true},
+	}),
+	loginTest()
+);
 
 test.describe('LPD-67473 Enable Configuration of oauth-authorization-server Well-Known URIs in the OAuthClient Portlet', () => {
 	test('Creation a oauth-authorization-server and validations', async ({

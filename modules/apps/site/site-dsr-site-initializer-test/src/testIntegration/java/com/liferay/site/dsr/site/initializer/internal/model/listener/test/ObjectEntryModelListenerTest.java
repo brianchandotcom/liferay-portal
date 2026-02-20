@@ -8,46 +8,31 @@ package com.liferay.site.dsr.site.initializer.internal.model.listener.test;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.fragment.model.FragmentCollection;
-import com.liferay.fragment.model.FragmentEntryModel;
-import com.liferay.fragment.service.FragmentCollectionLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.test.util.DSRLayoutTestUtil;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.Serializable;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -146,27 +131,9 @@ public class ObjectEntryModelListenerTest {
 
 		Assert.assertEquals("/" + randomString, group.getFriendlyURL());
 
-		FragmentCollection fragmentCollection =
-			_fragmentCollectionLocalService.fetchFragmentCollection(
-				group.getGroupId(), "dsr");
-
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				TransformUtil.transformToArray(
-					_fragmentEntryLocalService.getFragmentEntries(
-						group.getGroupId(),
-						fragmentCollection.getFragmentCollectionId(), 0),
-					FragmentEntryModel::getName, String.class),
-				new String[] {
-					"Gallery Block", "Header Main", "Header User",
-					"Our Team Block", "PDF Preview Block",
-					"Question and Answer Block", "Text Block", "Timeline Block",
-					"Video Block", "Welcome Block"
-				}));
-
-		_assertLayouts(
+		DSRLayoutTestUtil.assertLayouts(
 			group.getGroupId(),
-			new String[] {"Documents", "Login", "Onboarding"});
+			new String[] {"Documents", "Login", "Onboarding"}, false);
 	}
 
 	@Test
@@ -200,42 +167,6 @@ public class ObjectEntryModelListenerTest {
 				objectEntry.getObjectEntryId()));
 	}
 
-	private void _assertLayouts(long groupId, String[] names) throws Exception {
-		List<Layout> layouts = _layoutLocalService.getLayouts(groupId, false);
-
-		Assert.assertTrue(
-			ArrayUtil.containsAll(
-				TransformUtil.transformToArray(
-					layouts,
-					layout -> layout.getName(LocaleUtil.getSiteDefault()),
-					String.class),
-				names));
-
-		Role role = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), "Guest");
-
-		for (Layout layout : layouts) {
-			boolean hasResourcePermission =
-				_resourcePermissionLocalService.hasResourcePermission(
-					layout.getCompanyId(), Layout.class.getName(),
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(layout.getPlid()), role.getRoleId(),
-					ActionKeys.VIEW);
-
-			if (Objects.equals(
-					layout.getName(LocaleUtil.getSiteDefault()), "Documents") ||
-				Objects.equals(
-					layout.getName(LocaleUtil.getSiteDefault()),
-					"Onboarding")) {
-
-				Assert.assertFalse(hasResourcePermission);
-			}
-			else {
-				Assert.assertTrue(hasResourcePermission);
-			}
-		}
-	}
-
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -244,19 +175,10 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	@Inject
-	private FragmentCollectionLocalService _fragmentCollectionLocalService;
-
-	@Inject
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
 	private Group _group;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private LayoutLocalService _layoutLocalService;
 
 	private ObjectDefinition _objectDefinition;
 
@@ -265,11 +187,5 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
 
 }

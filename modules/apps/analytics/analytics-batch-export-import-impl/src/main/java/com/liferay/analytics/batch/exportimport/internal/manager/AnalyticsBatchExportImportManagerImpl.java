@@ -587,19 +587,21 @@ public class AnalyticsBatchExportImportManagerImpl
 				"No OAuth 2 application found for ANALYTICS-CLOUD");
 		}
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			new String(Base64.decode(analyticsConfiguration.token())));
-
 		Http.Options options = new Http.Options();
 
 		options.addPart("oAuthClientId", oAuth2Application.getClientId());
 		options.addPart(
 			"oAuthClientSecret", oAuth2Application.getClientSecret());
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			new String(Base64.decode(analyticsConfiguration.token())));
+
 		options.setLocation(
 			StringUtil.replace(
 				jsonObject.getString("url"), "data_source/connect",
 				"data_source/" +
 					analyticsConfiguration.liferayAnalyticsDataSourceId()));
+
 		options.setPost(true);
 
 		_http.URLtoString(options);

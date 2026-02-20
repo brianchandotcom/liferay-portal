@@ -409,11 +409,6 @@ public class SegmentsExperienceWrapper
 	}
 
 	@Override
-	public long getSegmentsEntryGroupId() {
-		return model.getSegmentsEntryGroupId();
-	}
-
-	@Override
 	public long getSegmentsEntryId() {
 		return model.getSegmentsEntryId();
 	}

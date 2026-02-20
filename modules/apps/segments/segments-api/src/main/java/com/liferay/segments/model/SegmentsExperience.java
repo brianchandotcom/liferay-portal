@@ -51,8 +51,6 @@ public interface SegmentsExperience
 
 			};
 
-	public long getSegmentsEntryGroupId();
-
 	public long getSegmentsEntryId();
 
 	public String getSegmentsEntryName(java.util.Locale locale);

@@ -275,7 +275,7 @@ function ItemSelector<T extends Record<string, any>>({
 					'The ItemSelector expects an application/json response from apiURL provided.'
 				);
 
-				return;
+				return [] as any;
 			}
 
 			const json = await result.json();
@@ -285,7 +285,7 @@ function ItemSelector<T extends Record<string, any>>({
 					'The ItemSelector expects the response from apiURL to include an array of items.'
 				);
 
-				return json;
+				return [] as any;
 			}
 
 			const {items, lastPage, page} = json as HeadlessPage<T>;

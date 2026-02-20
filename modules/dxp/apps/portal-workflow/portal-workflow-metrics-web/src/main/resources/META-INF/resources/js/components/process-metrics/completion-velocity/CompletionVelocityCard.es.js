@@ -17,6 +17,24 @@ import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
 import {getVelocityUnits} from '../../filter/util/velocityUnitUtil.es';
 import Body from './CompletionVelocityCardBody.es';
 
+const getDefaultStartDate = () => {
+	const date = new Date();
+	date.setDate(date.getDate() - 30);
+
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
+const getDefaultEndDate = () => {
+	const date = new Date();
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
 function CompletionVelocityCard({routeParams}) {
 	const {processId} = routeParams;
 	const filterKeys = ['timeRange', 'velocityUnit'];
@@ -33,7 +51,11 @@ function CompletionVelocityCard({routeParams}) {
 	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRange = useMemo(
-		() => getTimeRangeParams(completionDateStart, completionDateEnd),
+		() => 
+			getTimeRangeParams(
+				completionDateStart ?? getDefaultStartDate(),
+				completionDateEnd ?? getDefaultEndDate()
+			),
 		[completionDateEnd, completionDateStart]
 	);
 

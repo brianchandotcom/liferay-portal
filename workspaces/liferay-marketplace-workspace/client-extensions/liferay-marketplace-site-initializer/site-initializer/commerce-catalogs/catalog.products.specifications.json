@@ -105,6 +105,22 @@
 	},
 	{
 		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-SERVICES-CAPABILITIES",
+		"description": "",
+		"facetable": true,
+		"key": "liferay-services-capabilities",
+		"title": "Liferay Services Capabilities"
+	},
+	{
+		"categoryKey": "product-metadata",
+		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-SERVICES-CATEGORIES",
+		"description": "",
+		"facetable": true,
+		"key": "liferay-services-categories",
+		"title": "Liferay Services Categories"
+	},
+	{
+		"categoryKey": "product-metadata",
 		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-VERSION",
 		"description": "Compatible Liferay Release Version",
 		"facetable": true,
@@ -334,21 +350,5 @@
 		"facetable": true,
 		"key": "type",
 		"title": "Type"
-	},
-	{
-		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-SERVICES-CAPABILITIES",
-		"description": "",
-		"facetable": true,
-		"key": "liferay-services-capabilities",
-		"title": "Liferay Services Capabilities"
-	},
-	{
-		"categoryKey": "product-metadata",
-		"cpDefinitionExternalReferenceCode": "MKT-LIFERAY-SERVICES-CATEGORIES",
-		"description": "",
-		"facetable": true,
-		"key": "liferay-services-categories",
-		"title": "Liferay Services Categories"
 	}
 ]

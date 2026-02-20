@@ -28,9 +28,11 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.util.LayoutPageTemplateEntryUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -106,7 +108,7 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.asset.kernel.model.AssetCategory"),
-			null, null, 0, null);
+			StringPool.BLANK, null, 0, null);
 	}
 
 	@Test
@@ -119,7 +121,7 @@ public class ExportImportDisplayPagesTest {
 		_assertExportImportDisplayPage(
 			_portal.getClassNameId(
 				"com.liferay.commerce.product.model.CPDefinition"),
-			null, null, 0, null);
+			StringPool.BLANK, null, 0, null);
 	}
 
 	@Test
@@ -398,9 +400,13 @@ public class ExportImportDisplayPagesTest {
 		Assert.assertEquals(
 			classNameId, layoutPageTemplateEntry2.getClassNameId());
 		Assert.assertEquals(
-			expectedClassTypeId, layoutPageTemplateEntry2.getClassTypeId());
+			expectedClassTypeId,
+			LayoutPageTemplateEntryUtil.getClassTypeId(
+				layoutPageTemplateEntry2));
 		Assert.assertEquals(
-			expectedClassTypeKey, layoutPageTemplateEntry2.getClassTypeKey());
+			expectedClassTypeKey,
+			LayoutPageTemplateEntryUtil.getClassTypeKey(
+				layoutPageTemplateEntry2));
 
 		Layout layout2 = _layoutLocalService.fetchLayout(
 			layoutPageTemplateEntry2.getPlid());

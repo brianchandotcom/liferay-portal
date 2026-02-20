@@ -1983,7 +1983,7 @@ public class DisplayPageTemplateResourceTest
 				String externalReferenceCode = RandomTestUtil.randomString();
 
 				_testPutSiteDisplayPageTemplateWithSubtype(
-					JournalArticle.class.getName(), -2, externalReferenceCode,
+					JournalArticle.class.getName(), -1, externalReferenceCode,
 					_getClassSubtypeReference(
 						JournalArticle.class.getName(), externalReferenceCode,
 						DDMStructure.class.getName()));
@@ -1996,7 +1996,7 @@ public class DisplayPageTemplateResourceTest
 				String externalReferenceCode = RandomTestUtil.randomString();
 
 				_testPutSiteDisplayPageTemplateWithSubtype(
-					className, -2, externalReferenceCode,
+					className, -1, externalReferenceCode,
 					_getClassSubtypeReference(
 						className, externalReferenceCode, null));
 			});

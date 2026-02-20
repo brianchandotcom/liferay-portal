@@ -1,0 +1,29 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "4",
+					"label": "number-of-tabs",
+					"name": "numberOfTabs",
+					"type": "text",
+					"typeOptions": {
+						"validation": {
+							"min": 1,
+							"type": "number"
+						}
+					}
+				},
+				{
+					"defaultValue": "true",
+					"description": "selected-tab-will-be-persisted-when-users-reload-the-page-or-navigate-through-the-site",
+					"label": "persist-selected-tab",
+					"name": "persistSelectedTab",
+					"type": "checkbox"
+				}
+			],
+			"label": "tabs-options"
+		}
+	]
+}

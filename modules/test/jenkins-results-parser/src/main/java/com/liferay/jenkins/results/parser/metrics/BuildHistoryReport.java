@@ -472,9 +472,7 @@ public class BuildHistoryReport {
 				buildHistories, "Test Suite Name", 1, "[Total]"));
 
 		sb.append("\nvar reportName = \"");
-
 		sb.append(reportName);
-
 		sb.append("\";");
 
 		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests, Page} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
@@ -29,6 +29,14 @@ export const test = mergeTests(
 let dataSetERC: string;
 
 const dataSetLabel: string = getRandomString();
+
+async function confirmLanguageChange(page: Page, linkName: string | RegExp) {
+	const confirmLink = page.getByRole('link', {name: linkName});
+
+	if (await confirmLink.isVisible()) {
+		await confirmLink.click();
+	}
+}
 
 test.beforeEach(async ({dataSetManagerApiHelpers}) => {
 	dataSetERC = getRandomString();
@@ -1374,13 +1382,10 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					navigate: true,
 				});
 
-				const confirmFRLanguageChange = page.getByRole('link', {
-					name: 'Afficher la page en français (France).',
-				});
-
-				if (await confirmFRLanguageChange.isVisible()) {
-					await confirmFRLanguageChange.click();
-				}
+				await confirmLanguageChange(
+					page,
+					'Afficher la page en français (France).'
+				);
 
 				await page.goto(dataSetPageUrl);
 
@@ -1402,13 +1407,7 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					navigate: true,
 				});
 
-				const confirmPTLanguageChange = page.getByRole('link', {
-					name: 'Exibir a página em',
-				});
-
-				if (await confirmPTLanguageChange.isVisible()) {
-					await confirmPTLanguageChange.click();
-				}
+				await confirmLanguageChange(page, /Exibir a página em/);
 
 				await page.goto(dataSetPageUrl);
 

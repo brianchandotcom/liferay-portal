@@ -1,0 +1,10 @@
+{
+	"cacheable": true,
+	"configurationPath": "index.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "tabs",
+	"jsPath": "index.js",
+	"name": "Tabs",
+	"type": "component"
+}

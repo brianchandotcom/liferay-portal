@@ -66,7 +66,7 @@ const CardStyleModal: React.FC<CardStyleModalProps> = ({
 
 				<ClayModal.Title className="c-mx-4">{title}</ClayModal.Title>
 
-				<p className="c-m-4">{body}</p>
+				<p className="c-m-4 text-secondary">{body}</p>
 			</ClayModal.Body>
 
 			<ClayModal.Footer

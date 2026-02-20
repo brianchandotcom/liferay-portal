@@ -95,9 +95,14 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			segmentsEntry.getExternalReferenceCode(),
 			segmentsExperience.getSegmentsEntryERC());
-		Assert.assertEquals(
-			segmentsEntry.getGroupId(),
-			segmentsExperience.getSegmentsEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(_plid, segmentsExperience.getPlid());
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 		Assert.assertTrue(segmentsExperience.isActive());
@@ -154,9 +159,14 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			segmentsEntry.getExternalReferenceCode(),
 			segmentsExperience.getSegmentsEntryERC());
-		Assert.assertEquals(
-			segmentsEntry.getGroupId(),
-			segmentsExperience.getSegmentsEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(_plid, segmentsExperience.getPlid());
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 		Assert.assertFalse(segmentsExperience.isActive());
@@ -332,9 +342,14 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			segmentsEntry.getExternalReferenceCode(),
 			segmentsExperience.getSegmentsEntryERC());
-		Assert.assertEquals(
-			segmentsEntry.getGroupId(),
-			segmentsExperience.getSegmentsEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(_plid, segmentsExperience.getPlid());
 		Assert.assertEquals(nameMap, segmentsExperience.getNameMap());
 		Assert.assertEquals(active, segmentsExperience.isActive());
@@ -692,9 +707,14 @@ public class SegmentsExperienceLocalServiceTest {
 		Assert.assertEquals(
 			segmentsEntry.getExternalReferenceCode(),
 			updatedSegmentsExperience.getSegmentsEntryERC());
-		Assert.assertEquals(
-			segmentsEntry.getGroupId(),
-			updatedSegmentsExperience.getSegmentsEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			updatedSegmentsExperience.getCompanyId(),
+			updatedSegmentsExperience.getSegmentsEntryScopeERC(),
+			updatedSegmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(nameMap, updatedSegmentsExperience.getNameMap());
 		Assert.assertEquals(active, updatedSegmentsExperience.isActive());
 

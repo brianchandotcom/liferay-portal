@@ -393,10 +393,22 @@ public class ExperimentUtilTest {
 		).getSegmentsEntryERC();
 
 		Mockito.doReturn(
+			RandomTestUtil.randomLong()
+		).when(
+			segmentsExperience
+		).getCompanyId();
+
+		Mockito.doReturn(
 			segmentsEntryGroupId
 		).when(
 			segmentsExperience
-		).getSegmentsEntryGroupId();
+		).getGroupId();
+
+		Mockito.doReturn(
+			StringPool.BLANK
+		).when(
+			segmentsExperience
+		).getSegmentsEntryScopeERC();
 
 		Mockito.doReturn(
 			RandomTestUtil.randomString()

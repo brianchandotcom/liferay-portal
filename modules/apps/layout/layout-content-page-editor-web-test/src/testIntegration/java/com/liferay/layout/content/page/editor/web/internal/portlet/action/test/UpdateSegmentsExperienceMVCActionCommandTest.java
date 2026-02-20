@@ -130,9 +130,13 @@ public class UpdateSegmentsExperienceMVCActionCommandTest {
 		Assert.assertEquals(
 			segmentsEntryScopeERC,
 			segmentsExperience.getSegmentsEntryScopeERC());
-		Assert.assertEquals(
-			segmentsEntry2.getGroupId(),
-			segmentsExperience.getSegmentsEntryGroupId());
+
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry2.getGroupId(), groupId.longValue());
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(

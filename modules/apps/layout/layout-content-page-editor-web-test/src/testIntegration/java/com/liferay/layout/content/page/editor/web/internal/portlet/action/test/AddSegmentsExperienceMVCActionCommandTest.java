@@ -426,9 +426,13 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 				segmentsExperience.getSegmentsEntryScopeERC());
 		}
 
-		Assert.assertEquals(
-			segmentsEntry.getGroupId(),
-			segmentsExperience.getSegmentsEntryGroupId());
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		Assert.assertEquals(segmentsEntry.getGroupId(), groupId.longValue());
+
 		Assert.assertEquals(
 			segmentsExperienceId, segmentsExperience.getSegmentsExperienceId());
 

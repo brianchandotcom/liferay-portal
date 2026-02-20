@@ -387,11 +387,15 @@ public class SegmentsExperimentLocalServiceTest {
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperiment.getSegmentsExperienceId());
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.
 				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
+					segmentsExperience.getSegmentsEntryERC(), groupId);
 
 		segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(
@@ -509,11 +513,15 @@ public class SegmentsExperimentLocalServiceTest {
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperiment.getSegmentsExperienceId());
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
 		SegmentsEntry segmentsEntry =
 			_segmentsEntryLocalService.
 				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
+					segmentsExperience.getSegmentsEntryERC(), groupId);
 
 		segmentsExperience =
 			_segmentsExperienceLocalService.addSegmentsExperience(

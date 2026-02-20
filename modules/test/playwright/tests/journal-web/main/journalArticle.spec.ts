@@ -2833,7 +2833,9 @@ baseTest(
 		await journalEditArticlePage.content.waitFor();
 
 		await journalEditArticlePage.openFieldSet(
-			'Display Page', 'displayPage');
+			'Display Page',
+			'displayPage'
+		);
 
 		await journalEditArticlePage.previewButton.waitFor();
 

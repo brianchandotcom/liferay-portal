@@ -21,7 +21,7 @@ export class JournalEditStructureDefaultValuesPage {
 
 		this.journalStructurePage = new JournalStructuresPage(page);
 		this.propertiesTab = page.getByRole('tab', {name: 'Properties'});
-		this.saveButton = page.getByRole('button', {name: 'Save', exact: true});
+		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
 	}
 
 	async goto({

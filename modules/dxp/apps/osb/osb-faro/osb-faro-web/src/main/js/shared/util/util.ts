@@ -36,6 +36,16 @@ export const getRangeSelectorsFromQuery = query => {
 	};
 };
 
+export const getSafeDecodedURIComponent = (
+	encodedURIComponent: string
+): string => {
+	try {
+		return decodeURIComponent(encodedURIComponent);
+	} catch (error) {
+		return encodedURIComponent;
+	}
+};
+
 export const getSafeRangeSelectors = (
 	rangeSelectors: RangeSelectors
 ): SafeRangeSelectors => {

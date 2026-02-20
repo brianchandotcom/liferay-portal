@@ -649,6 +649,7 @@ public class ContentLayoutTestUtil {
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setPlid(layout.getPlid());
+		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
 		themeDisplay.setRealUser(TestPropsValues.getUser());
 		themeDisplay.setScopeGroupId(group.getGroupId());
 		themeDisplay.setSiteGroupId(group.getGroupId());

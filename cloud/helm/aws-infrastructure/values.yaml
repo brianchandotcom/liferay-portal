@@ -6,9 +6,6 @@ backup:
             ruleName: daily-backups
             schedule: cron(0 5 * * ? *)
             startWindow: 60
-    selectionName: by-tags
-    serviceRoleName: liferay-backup-restore
-    vaultName: liferay-backup-vault
 database:
     engine: postgres
     engineVersion: "16.11"

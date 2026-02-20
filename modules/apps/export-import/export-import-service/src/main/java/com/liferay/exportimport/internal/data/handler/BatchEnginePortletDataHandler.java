@@ -20,6 +20,7 @@ import com.liferay.exportimport.internal.lar.PortletDataContextImpl;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
+import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -37,6 +38,7 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -98,6 +100,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineImportTaskService batchEngineImportTaskService,
 		ChangesetEntryLocalService changesetEntryLocalService,
 		ClassNameLocalService classNameLocalService,
+		ExportImportHelper exportImportHelper,
 		GroupLocalService groupLocalService,
 		LayoutLocalService layoutLocalService,
 		StagingGroupHelper stagingGroupHelper) {
@@ -108,6 +111,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_changesetEntryLocalService = changesetEntryLocalService;
 		_classNameLocalService = classNameLocalService;
+		_exportImportHelper = exportImportHelper;
 		_groupLocalService = groupLocalService;
 		_layoutLocalService = layoutLocalService;
 		_stagingGroupHelper = stagingGroupHelper;
@@ -581,16 +585,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-		PortletDataContext portletDataContext,
-		PortletPreferences portletPreferences) {
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortalException {
 
-		for (Registration registration :
-				_getActiveRegistrations(portletDataContext)) {
+		try (SafeCloseable safeCloseable =
+				PortletDataContextThreadLocal.
+					setPortletDataContextWithSafeCloseable(
+						portletDataContext)) {
 
-			try (SafeCloseable safeCloseable =
-					PortletDataContextThreadLocal.
-						setPortletDataContextWithSafeCloseable(
-							portletDataContext)) {
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			for (Registration registration :
+					_getActiveRegistrations(portletDataContext)) {
 
 				BatchEngineExportTaskExecutor.Result result =
 					_executeExportTask(1, portletDataContext, registration);
@@ -598,9 +606,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				if (result == null) {
 					continue;
 				}
-
-				ManifestSummary manifestSummary =
-					portletDataContext.getManifestSummary();
 
 				ExportImportVulcanBatchEngineTaskItemDelegate.
 					ExportImportDescriptor exportImportDescriptor =
@@ -611,6 +616,16 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				manifestSummary.addModelAdditionCount(
 					exportImportDescriptor.getKey(),
 					batchEngineExportTask.getTotalItemsCount());
+			}
+
+			for (String modelClassName : getClassNames()) {
+				long modelDeletionCount =
+					_exportImportHelper.getModelDeletionCount(
+						portletDataContext,
+						new StagedModelType(modelClassName));
+
+				manifestSummary.addModelDeletionCount(
+					modelClassName, modelDeletionCount);
 			}
 		}
 	}
@@ -913,6 +928,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final ChangesetEntryLocalService _changesetEntryLocalService;
 	private final ClassNameLocalService _classNameLocalService;
+	private final ExportImportHelper _exportImportHelper;
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();

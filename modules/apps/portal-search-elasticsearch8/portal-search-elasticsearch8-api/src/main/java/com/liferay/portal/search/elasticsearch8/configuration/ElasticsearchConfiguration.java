@@ -61,6 +61,12 @@ public interface ElasticsearchConfiguration {
 	public String clusterName();
 
 	@Meta.AD(
+		deflt = "true", description = "compression-enabled-help",
+		name = "compression-enabled", required = false
+	)
+	public boolean compressionEnabled();
+
+	@Meta.AD(
 		deflt = "/https?:\\/\\/localhost(:[0-9]+)?/",
 		description = "http-cors-allow-origin-help",
 		name = "http-cors-allow-origin", required = false

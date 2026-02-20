@@ -93,6 +93,10 @@ public class ElasticsearchConnection {
 		_authenticationEnabled = authenticationEnabled;
 	}
 
+	public void setCompressionEnabled(boolean compressionEnabled) {
+		_compressionEnabled = compressionEnabled;
+	}
+
 	public void setConnectionId(String connectionId) {
 		_connectionId = connectionId;
 	}
@@ -154,6 +158,8 @@ public class ElasticsearchConnection {
 			RestClientTransportFactory.builder(
 			).authenticationEnabled(
 				_authenticationEnabled
+			).compressionEnabled(
+				_compressionEnabled
 			).httpSSLEnabled(
 				_httpSSLEnabled
 			).maxConnections(
@@ -187,6 +193,7 @@ public class ElasticsearchConnection {
 
 	private boolean _active;
 	private boolean _authenticationEnabled;
+	private boolean _compressionEnabled;
 	private String _connectionId;
 	private ElasticsearchClient _elasticsearchClient;
 	private boolean _httpSSLEnabled;

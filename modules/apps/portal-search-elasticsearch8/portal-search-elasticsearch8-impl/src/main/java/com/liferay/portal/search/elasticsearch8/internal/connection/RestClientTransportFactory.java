@@ -72,6 +72,8 @@ public class RestClientTransportFactory {
 				}
 
 			}
+		).setCompressionEnabled(
+			_compressionEnabled
 		).setHttpClientConfigCallback(
 			this::_customizeHttpClient
 		).setRequestConfigCallback(
@@ -95,6 +97,13 @@ public class RestClientTransportFactory {
 
 		public RestClientTransportFactory build() {
 			return new RestClientTransportFactory(_restClientTransportFactory);
+		}
+
+		public Builder compressionEnabled(boolean compressionEnabled) {
+			_restClientTransportFactory._compressionEnabled =
+				compressionEnabled;
+
+			return this;
 		}
 
 		public Builder httpSSLEnabled(boolean httpSSLEnabled) {
@@ -173,6 +182,7 @@ public class RestClientTransportFactory {
 
 		_authenticationEnabled =
 			restClientTransportFactory._authenticationEnabled;
+		_compressionEnabled = restClientTransportFactory._compressionEnabled;
 		_httpSSLEnabled = restClientTransportFactory._httpSSLEnabled;
 		_maxConnections = restClientTransportFactory._maxConnections;
 		_maxConnectionsPerRoute =
@@ -336,6 +346,7 @@ public class RestClientTransportFactory {
 		RestClientTransportFactory.class);
 
 	private boolean _authenticationEnabled;
+	private boolean _compressionEnabled;
 	private boolean _httpSSLEnabled;
 	private int _maxConnections;
 	private int _maxConnectionsPerRoute;

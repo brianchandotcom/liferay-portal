@@ -22,6 +22,12 @@ public class GroupUtil {
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			siteExternalReferenceCode, companyId);
 
+		if (ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess()) {
+
+			return group.getGroupId();
+		}
+
 		if ((!allowCompanyGroup && group.isCompany()) || group.isDepot() ||
 			(!allowLiveGroup && group.hasLocalOrRemoteStagingGroup())) {
 

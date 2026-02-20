@@ -1,5 +1,5 @@
 {
-	"@generated": "3bf2bb70522ac7a7dd3cf62952be0513e568a61c",
+	"@generated": "146024e31d30c40f0fb759a9331fe8c5ba9e9fff",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -11,6 +11,9 @@
 		"module": "es2022",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-data-set-web": [
+				"../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
+			],
 			"@liferay/layout-js-components-web": [
 				"../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
@@ -42,6 +45,9 @@
 		"../src/**/*.tsx"
 	],
 	"references": [
+		{
+			"path": "../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},

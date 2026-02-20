@@ -8,7 +8,6 @@ package com.liferay.site.dsr.site.initializer.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -16,7 +15,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -31,15 +29,12 @@ import java.util.List;
 public class SiteInitializerUtil {
 
 	public static void initialize(
-			long companyId, SiteInitializer siteInitializer)
+			long companyId, Group group, SiteInitializer siteInitializer)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-66359")) {
 			return;
 		}
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			companyId, GroupConstants.DSR);
 
 		String name = PrincipalThreadLocal.getName();
 

@@ -15,11 +15,13 @@ import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -31,8 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
-import com.liferay.site.initializer.SiteInitializer;
-import com.liferay.site.initializer.SiteInitializerRegistry;
+import com.liferay.sites.kernel.util.Sites;
 
 import java.io.Serializable;
 
@@ -131,13 +132,17 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			LiveUsers.joinGroup(
 				group.getCompanyId(), group.getGroupId(), user.getUserId());
 
-			SiteInitializer siteInitializer =
-				_siteInitializerRegistry.getSiteInitializer(
-					GetterUtil.getString(
-						values.get("siteInitializerKey"),
-						"com.liferay.digital.sales.room.site.initializer"));
+			LayoutSetPrototype layoutSetPrototype =
+				_layoutSetPrototypeLocalService.
+					getLayoutSetPrototypeByUuidAndCompanyId(
+						GetterUtil.getString(
+							values.get("siteTemplateKey"),
+							"L_DSR_LAYOUT_SET_PROTOTYPE"),
+						company.getCompanyId());
 
-			siteInitializer.initialize(group.getGroupId());
+			_sites.updateLayoutSetPrototypesLinks(
+				group, layoutSetPrototype.getLayoutSetPrototypeId(), 0, true,
+				false);
 
 			TransactionCommitCallbackUtil.registerCallback(
 				() -> {
@@ -203,10 +208,13 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	private LayoutServiceContextHelper _layoutServiceContextHelper;
 
 	@Reference
+	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
+
+	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
-	private SiteInitializerRegistry _siteInitializerRegistry;
+	private Sites _sites;
 
 	@Reference
 	private UserLocalService _userLocalService;

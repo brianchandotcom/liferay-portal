@@ -162,6 +162,8 @@ function getLineChart(chartTitle, datasets, elementID, yLabel) {
 	});
 }
 
+addDateText(document.getElementById("build-history-data-date"), dataGeneratedDate);
+
 let buttonElements = document.getElementsByClassName('accordion');
 
 for (let i = 0; i < buttonElements.length; i++) {

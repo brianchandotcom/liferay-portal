@@ -64,6 +64,8 @@ function updateHeaderNames(tableElement) {
 
 addReportName();
 
+addDateText(document.getElementById("utilization-data-date"), dataGeneratedDate);
+
 if ((typeof categoryTableData !== 'undefined') && categoryTableData) {
 	let categoryTableDataElement = createTable(categoryTableData, 'utilization-category-data-table');
 

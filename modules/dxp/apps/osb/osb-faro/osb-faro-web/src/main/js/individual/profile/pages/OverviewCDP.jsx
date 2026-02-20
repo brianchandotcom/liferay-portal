@@ -2,6 +2,7 @@ import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ContextualInfo from '../components/ContextualInfo';
 import IndividualProfileCard from '../hoc/ProfileCard';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -107,7 +108,7 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 				dataSourceLoading={dataSourceLoading}
 				groupId={groupId}
 			/>
-
+			<ContextualInfo />
 			{sitesSelected && (
 				<IndividualProfileCard
 					channelId={channelId}

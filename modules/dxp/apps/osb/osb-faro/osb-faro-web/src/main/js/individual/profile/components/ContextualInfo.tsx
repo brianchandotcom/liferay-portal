@@ -4,64 +4,106 @@ import React from 'react';
 import Sticker from '@clayui/sticker';
 import {Icon, Text} from '@clayui/core';
 
+const ContextualInfoConfig = [
+	{
+		columnClass: 'col-6',
+		items: [
+			{className: 'col-6', icon: 'mobile-devices', key: 'deviceType'},
+			{className: 'col-6', key: 'screenHeight'},
+			{className: 'col-6', key: 'platformName'},
+			{className: 'col-6', key: 'screenWidth'},
+			{className: 'col-6', key: 'browserName'},
+			{className: 'col-6', key: 'devicePixelRatio'},
+			{className: 'col-12', icon: 'tabs', key: 'userAgent'}
+		],
+		title: Liferay.Language.get('last-session-device')
+	},
+	{
+		columnClass: 'col-3',
+		items: [
+			{className: 'col-12', icon: 'globe-pin', key: 'country'},
+			{className: 'col-12', key: 'city'},
+			{className: 'col-12', key: 'languageId'},
+			{className: 'col-12', key: 'timeZoneOffset'}
+		],
+		title: Liferay.Language.get('last-session-location')
+	},
+	{
+		columnClass: 'col-3',
+		items: [
+			{className: 'col-12', icon: 'lock', key: 'email'},
+			{className: 'col-12', key: 'uuid'},
+			{className: 'col-12', key: 'userId'},
+			{className: 'col-12', key: 'contactId'}
+		],
+		title: Liferay.Language.get('individual-unique-identifiers')
+	}
+];
+
 const mockedData: ContextualInfoData = {
-	browser: 'Chrome',
+	// contactId ?
+	// userId ?
+	browserName: 'Chrome',
 	city: 'Sydney',
-	contactId: '522456661',
 	country: 'Australia',
 	devicePixelRatio: '2',
 	deviceType: 'Desktop',
-	email: 'test@jorge.com',
-	language: 'en-Au',
-	operatingSystem: 'MacOS',
+	languageId: 'en-Au',
+	platformName: 'MacOS',
+	region: 'AEST',
 	screenHeight: '1920',
 	screenWidth: '1080',
-	timeZone: 'UTC+10:00 (AEST)',
+	timeZoneOffset: '-03:00',
 	userAgent:
-		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/',
-	userID: '522456660',
-	UUID: '6ba7b810-9dad-11d1-80b4-00c04fd430c8'
+		'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/'
 };
 
 type ContextualInfoData = {
-	browser?: string;
+	browserName?: string;
 	city?: string;
-	contactId?: string;
 	country?: string;
+	contactId?: string;
 	devicePixelRatio?: string;
 	deviceType?: string;
-	email?: string;
-	language?: string;
-	operatingSystem?: string;
+	languageId?: string;
+	platformName?: string;
+	region?: string;
 	screenHeight?: string;
 	screenWidth?: string;
-	timeZone?: string;
+	timeZoneOffset?: string;
 	userAgent?: string;
-	userID?: string;
-	UUID?: string;
+	userId?: string;
 };
 
 interface IContextualInfoProps {
 	contextualInfo: ContextualInfoData;
+	email?: string;
+	uuid?: string;
 }
 
 const INFO_LANGUAGE_MAP: Record<string, string> = {
-	browser: Liferay.Language.get('browser'),
+	browserName: Liferay.Language.get('browser'),
 	city: Liferay.Language.get('city'),
 	contactId: Liferay.Language.get('contact-id'),
 	country: Liferay.Language.get('country'),
 	devicePixelRatio: Liferay.Language.get('device-pixel-ratio'),
 	deviceType: Liferay.Language.get('device-type'),
 	email: Liferay.Language.get('email'),
-	language: Liferay.Language.get('language'),
-	operatingSystem: Liferay.Language.get('operating-system'),
+	languageId: Liferay.Language.get('language'),
+	platformName: Liferay.Language.get('operating-system'),
 	screenHeight: Liferay.Language.get('screen-height'),
 	screenWidth: Liferay.Language.get('screen-width'),
-	timeZone: Liferay.Language.get('time-zone'),
+	timeZoneOffset: Liferay.Language.get('time-zone'),
 	userAgent: Liferay.Language.get('user-agent'),
-	userID: Liferay.Language.get('user-id'),
-	UUID: 'UUID'
+	userId: Liferay.Language.get('user-id'),
+	uuid: 'UUID'
 };
+
+function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
+	return `${timeZoneOffset ? `UTC ${timeZoneOffset}` : ''} ${
+		region ? `(${region})` : ''
+	}`.trim();
+}
 
 function InfoItem({
 	className,
@@ -100,194 +142,72 @@ function InfoItem({
 }
 
 const ContextualInfo: React.FC<IContextualInfoProps> = ({
-	contextualInfo = mockedData
+	contextualInfo = mockedData,
+	email = 'john.doe@liferay.com',
+	uuid = '6ba7b810-9dad-11d1-80b4-00c04fd430c8'
 }) => {
-	const {
-		browser,
-		city,
-		contactId,
-		country,
-		devicePixelRatio,
-		deviceType,
-		email,
-		language,
-		operatingSystem,
-		screenHeight,
-		screenWidth,
-		timeZone,
-		userAgent,
-		userID,
-		UUID
-	} = contextualInfo;
+	const getValue = (key: string): string | undefined => {
+		if (key === 'email') return email;
+		if (key === 'uuid') return uuid;
+
+		if (key === 'timeZoneOffset') {
+			const {region, timeZoneOffset} = contextualInfo;
+			if (!timeZoneOffset && !region) return undefined;
+			return formatTimeZoneOffset(timeZoneOffset, region);
+		}
+
+		return contextualInfo[key as keyof ContextualInfoData];
+	};
 
 	return (
-		<>
+		<div className='contextual-info mb-4'>
 			<div className='text-secondary mr-3 my-3'>
 				<Icon className='mr-2' symbol='sites' />
 				<span className='text-uppercase text-weight-semi-bold'>
 					{Liferay.Language.get('contextual-info')}
 				</span>
 			</div>
+
 			<div className='row g-3'>
-				<div className='col-6'>
-					<Card className='p-2 h-100'>
-						<Card.Title className='text-uppercase px-2 pt-2'>
-							<Text size={4}>
-								{Liferay.Language.get('last-session-device')}
-							</Text>
-						</Card.Title>
-						<Card.Body className='px-2 pb-0'>
-							<div className='row g-2'>
-								{deviceType && (
-									<InfoItem
-										className='col-6'
-										icon='mobile-devices'
-										label={INFO_LANGUAGE_MAP.deviceType}
-										value={deviceType}
-									/>
-								)}
-								{screenHeight && (
-									<InfoItem
-										className='col-6'
-										label={INFO_LANGUAGE_MAP.screenHeight}
-										value={screenHeight}
-									/>
-								)}
+				{ContextualInfoConfig.map(section => {
+					const visibleItems = section.items.filter(item =>
+						getValue(item.key)
+					);
 
-								{operatingSystem && (
-									<InfoItem
-										className='col-6'
-										label={
-											INFO_LANGUAGE_MAP.operatingSystem
-										}
-										value={operatingSystem}
-									/>
-								)}
-								{screenWidth && (
-									<InfoItem
-										className='col-6'
-										label={INFO_LANGUAGE_MAP.screenWidth}
-										value={screenWidth}
-									/>
-								)}
-								{browser && (
-									<InfoItem
-										className='col-6'
-										label={INFO_LANGUAGE_MAP.browser}
-										value={browser}
-									/>
-								)}
-								{devicePixelRatio && (
-									<InfoItem
-										className='col-6'
-										label={
-											INFO_LANGUAGE_MAP.devicePixelRatio
-										}
-										value={devicePixelRatio}
-									/>
-								)}
-								{userAgent && (
-									<InfoItem
-										className='col-12'
-										icon='tabs'
-										label={INFO_LANGUAGE_MAP.userAgent}
-										value={userAgent}
-									/>
-								)}
-							</div>
-						</Card.Body>
-					</Card>
-				</div>
+					if (visibleItems.length === 0) return null;
 
-				<div className='col-3'>
-					<Card className='p-2 h-100'>
-						<Card.Title className='text-uppercase px-2 pt-2'>
-							<Text size={4}>
-								{Liferay.Language.get('last-session-location')}
-							</Text>
-						</Card.Title>
-						<Card.Body className='px-2 pb-0'>
-							<div className='row g-2'>
-								{country && (
-									<InfoItem
-										className='col-12'
-										icon='globe-pin'
-										label={INFO_LANGUAGE_MAP.country}
-										value={country}
-									/>
-								)}
-								{city && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.city}
-										value={city}
-									/>
-								)}
-								{language && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.language}
-										value={language}
-									/>
-								)}
-								{timeZone && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.timeZone}
-										value={timeZone}
-									/>
-								)}
-							</div>
-						</Card.Body>
-					</Card>
-				</div>
-
-				<div className='col-3'>
-					<Card className='p-2 h-100'>
-						<Card.Title className='text-uppercase px-2 pt-2'>
-							<Text size={4}>
-								{Liferay.Language.get(
-									'individual-unique-identifiers'
-								)}
-							</Text>
-						</Card.Title>
-						<Card.Body className='px-2 pb-0'>
-							<div className='row g-2'>
-								{email && (
-									<InfoItem
-										className='col-12'
-										icon='lock'
-										label={INFO_LANGUAGE_MAP.email}
-										value={email}
-									/>
-								)}
-								{UUID && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.UUID}
-										value={UUID}
-									/>
-								)}
-								{userID && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.userID}
-										value={userID}
-									/>
-								)}
-								{contactId && (
-									<InfoItem
-										className='col-12'
-										label={INFO_LANGUAGE_MAP.contactId}
-										value={contactId}
-									/>
-								)}
-							</div>
-						</Card.Body>
-					</Card>
-				</div>
+					return (
+						<div
+							className={section.columnClass}
+							key={section.title}
+						>
+							<Card className='h-100 p-2 '>
+								<Card.Title className='pt-2 px-2 text-uppercase'>
+									<Text size={4}>{section.title}</Text>
+								</Card.Title>
+								<Card.Body className='pb-0 px-2'>
+									<div className='g-2 row'>
+										{visibleItems.map(item => (
+											<InfoItem
+												className={item.className}
+												icon={item.icon}
+												key={item.key}
+												label={
+													INFO_LANGUAGE_MAP[item.key]
+												}
+												value={
+													getValue(item.key) as string
+												}
+											/>
+										))}
+									</div>
+								</Card.Body>
+							</Card>
+						</div>
+					);
+				})}
 			</div>
-		</>
+		</div>
 	);
 };
 

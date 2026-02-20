@@ -1,7 +1,6 @@
 import * as API from 'shared/api';
 import AssociatedSegmentsCard from 'contacts/components/AssociatedSegmentsCard';
 import ClayLink from '@clayui/link';
-import ContextualInfo from '../components/ContextualInfo';
 import DetailsCard from '../components/DetailsCard';
 import IndividualProfileCard from '../hoc/ProfileCard';
 import InterestsCard from '../components/InterestsCard';
@@ -55,7 +54,6 @@ export class Overview extends React.Component {
 
 		return (
 			<>
-				<ContextualInfo />
 				<div className='overview-layout'>
 					<div className='overview-column-main'>
 						<IndividualProfileCard

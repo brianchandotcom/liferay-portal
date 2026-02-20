@@ -254,10 +254,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					Pagination.of(1, -1));
 
 		for (Contact contact : contactPage.getItems()) {
-			if (contact == null) {
-				break;
-			}
-
 			String emailAddress = contact.getEmailAddress();
 
 			Page<UserAccount> userAccountsPage =

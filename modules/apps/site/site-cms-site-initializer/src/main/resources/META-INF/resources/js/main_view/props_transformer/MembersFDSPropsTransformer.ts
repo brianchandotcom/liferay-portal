@@ -44,5 +44,6 @@ export default function MembersFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 	};
 }

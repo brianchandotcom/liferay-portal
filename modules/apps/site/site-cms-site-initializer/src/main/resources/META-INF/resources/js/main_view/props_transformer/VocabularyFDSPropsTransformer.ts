@@ -33,6 +33,7 @@ export default function VocabularyFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'delete') {
 				return {

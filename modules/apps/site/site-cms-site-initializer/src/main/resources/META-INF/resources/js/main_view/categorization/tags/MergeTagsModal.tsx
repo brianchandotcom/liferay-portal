@@ -252,6 +252,7 @@ export default function MergeTagsModalContent({
 									},
 								],
 							}}
+							hideManagementBarInEmptyState={true}
 							id="merge"
 
 							// @ts-ignore

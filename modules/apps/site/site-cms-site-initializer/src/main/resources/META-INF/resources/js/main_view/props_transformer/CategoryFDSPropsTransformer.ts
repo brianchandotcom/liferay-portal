@@ -16,6 +16,7 @@ export default function CategoryFDSPropsTransformer({
 }) {
 	return {
 		...otherProps,
+		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'delete') {
 				return {

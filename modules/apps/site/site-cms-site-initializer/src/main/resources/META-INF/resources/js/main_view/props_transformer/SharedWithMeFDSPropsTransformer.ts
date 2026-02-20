@@ -44,6 +44,7 @@ export default function SharedWithMeFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {

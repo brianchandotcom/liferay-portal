@@ -141,6 +141,7 @@ export default function ViewWorkflowTasks({
 			image: '',
 			title: Liferay.Language.get('no-tasks'),
 		},
+		hideManagementBarInEmptyState: true,
 		id,
 		items: workflowTasks.items,
 		itemsActions:

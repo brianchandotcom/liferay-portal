@@ -34,5 +34,6 @@ export default function TagUsagesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 	};
 }

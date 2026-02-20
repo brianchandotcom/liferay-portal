@@ -23,5 +23,6 @@ export default function BulkActionTaskReportFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 	};
 }

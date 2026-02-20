@@ -19,6 +19,12 @@
 	right: 2.25rem;
 }
 
+.dsr-container-logos img,
+.dsr-container-logos picture {
+  	height: 80px !important;
+	width: 80px !important;
+}
+
 #dsr-header-main {
 	background-color: var(--white);
 }
@@ -26,9 +32,6 @@
 .dsr-header-banner {
 	align-items: center;
 	background-color: var(--gray-200);
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
 	display: flex;
 	height: 15rem;
 	justify-content: center;
@@ -45,13 +48,22 @@
 	position: absolute;
 }
 
+.dsr-header-banner img {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
+}
+
+.dsr-header-banner picture {
+	height: 100%;
+	width: 100%;
+}
+
 .dsr-logo {
 	background-color: #4D20EC;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
 	border-radius: 50%;
 	height: 80px;
+	object-fit: cover;
 	position: relative;
 	width: 80px;
 	z-index: 2;

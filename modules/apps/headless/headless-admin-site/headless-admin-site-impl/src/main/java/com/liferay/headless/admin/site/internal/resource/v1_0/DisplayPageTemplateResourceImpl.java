@@ -678,7 +678,8 @@ public class DisplayPageTemplateResourceImpl
 
 		if (infoItemFormVariation == null) {
 			LogUtil.logOptionalReference(
-				infoItemFormVariationsProvider.getSubtypeClassName(),
+				infoItemFormVariationsProvider.
+					getInfoItemFormVariationClassName(),
 				itemExternalReference.getExternalReferenceCode(),
 				itemExternalReference.getScope(), groupId);
 		}

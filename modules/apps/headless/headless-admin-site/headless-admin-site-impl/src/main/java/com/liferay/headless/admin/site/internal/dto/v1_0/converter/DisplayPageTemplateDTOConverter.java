@@ -251,7 +251,8 @@ public class DisplayPageTemplateDTOConverter
 
 		if (itemExternalReference != null) {
 			itemExternalReference.setClassName(
-				infoItemFormVariationsProvider::getSubtypeClassName);
+				infoItemFormVariationsProvider::
+					getInfoItemFormVariationClassName);
 
 			return itemExternalReference;
 		}
@@ -269,7 +270,8 @@ public class DisplayPageTemplateDTOConverter
 		return new ItemExternalReference() {
 			{
 				setClassName(
-					infoItemFormVariationsProvider::getSubtypeClassName);
+					infoItemFormVariationsProvider::
+						getInfoItemFormVariationClassName);
 				setExternalReferenceCode(
 					infoItemFormVariation::getExternalReferenceCode);
 			}

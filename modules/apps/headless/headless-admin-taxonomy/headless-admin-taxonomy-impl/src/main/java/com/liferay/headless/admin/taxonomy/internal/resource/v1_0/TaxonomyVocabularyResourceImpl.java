@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
@@ -1058,7 +1059,7 @@ public class TaxonomyVocabularyResourceImpl
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
 						assetVocabulary.getVocabularyId(),
-						new long[] {_GROUP_ID_ALL);
+						new long[] {GroupConstants.GROUP_ID_ALL});
 			}
 		}
 
@@ -1077,8 +1078,6 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getViewableByAsString()
 			).build());
 	}
-
-	private static final long _GROUP_ID_ALL = -1L;
 
 	private static final Map<String, String> _assetTypeTypeToClassNames =
 		new HashMap<>();

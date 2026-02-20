@@ -913,7 +913,7 @@ public class TaxonomyCategoryResourceImpl
 				_assetVocabularyGroupRelLocalService.
 					setAssetVocabularyGroupRels(
 						assetVocabulary.getVocabularyId(),
-						new long[] {_GROUP_ID_ALL});
+						new long[] {GroupConstants.GROUP_ID_ALL});
 			}
 		}
 
@@ -1125,8 +1125,6 @@ public class TaxonomyCategoryResourceImpl
 				taxonomyCategory.getViewableByAsString()
 			).build());
 	}
-
-	private static final long _GROUP_ID_ALL = -1L;
 
 	private static final EntityModel _entityModel = new CategoryEntityModel();
 

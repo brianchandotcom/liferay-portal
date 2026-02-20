@@ -44,6 +44,8 @@ public class GroupConstants {
 
 	public static final String GLOBAL_FRIENDLY_URL = "/global";
 
+	public static final long GROUP_ID_ALL = -1L;
+
 	public static final String GUEST = "Guest";
 
 	public static final String GUEST_FRIENDLY_URL = "/guest";

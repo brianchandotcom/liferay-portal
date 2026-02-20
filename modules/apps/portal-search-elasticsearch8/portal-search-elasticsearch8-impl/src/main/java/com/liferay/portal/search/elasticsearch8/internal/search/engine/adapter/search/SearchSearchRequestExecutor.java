@@ -39,6 +39,11 @@ public class SearchSearchRequestExecutor {
 	public SearchSearchResponse execute(
 		SearchSearchRequest searchSearchRequest) {
 
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				searchSearchRequest.getConnectionId(),
+				searchSearchRequest.isPreferLocalCluster());
+
 		SearchRequest.Builder searchRequestBuilder =
 			new SearchRequest.Builder();
 
@@ -54,11 +59,6 @@ public class SearchSearchRequestExecutor {
 					"Stack trace for [", indexNames, "]: ",
 					DebugStringsUtil.getStackTraceString()));
 		}
-
-		ElasticsearchClient elasticsearchClient =
-			_elasticsearchClientResolver.getElasticsearchClient(
-				searchSearchRequest.getConnectionId(),
-				searchSearchRequest.isPreferLocalCluster());
 
 		SearchRequest searchRequest = searchRequestBuilder.build();
 

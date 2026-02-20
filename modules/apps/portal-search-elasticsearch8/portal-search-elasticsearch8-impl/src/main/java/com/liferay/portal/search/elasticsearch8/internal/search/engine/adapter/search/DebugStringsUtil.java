@@ -58,11 +58,11 @@ public class DebugStringsUtil {
 		ElasticsearchClient elasticsearchClient,
 		JsonpSerializable jsonpSerializable) {
 
+		StringWriter stringWriter = new StringWriter();
+
 		JsonpMapper jsonpMapper = elasticsearchClient._jsonpMapper();
 
 		JsonProvider jsonProvider = jsonpMapper.jsonProvider();
-
-		StringWriter stringWriter = new StringWriter();
 
 		try (JsonGenerator jsonGenerator = jsonProvider.createGenerator(
 				stringWriter)) {

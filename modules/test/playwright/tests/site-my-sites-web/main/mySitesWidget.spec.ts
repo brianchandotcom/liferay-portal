@@ -12,6 +12,7 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {
 	performLoginViaApi,
@@ -55,17 +56,17 @@ test('Assert a user can navigate to a Site public page via My Sites widget', asy
 }) => {
 	await page.goto(`/web${site.friendlyUrlPath}`);
 
-	await page
-		.locator(
-			`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
-		)
-		.getByLabel('Show Actions')
-		.click();
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByRole('menuitem', {name: 'Go to Pages'}),
+		trigger: page
+			.locator(
+				`[id="_com_liferay_site_my_sites_web_portlet_MySitesPortlet_ocerSearchContainer_-${site.name}"]`
+			)
+			.getByLabel('Show Actions'),
+	});
 
-	const [page2] = await Promise.all([
-		context.waitForEvent('page'),
-		page.getByRole('menuitem', {name: 'Go to Pages'}).click(),
-	]);
+	const [page2] = await Promise.all([context.waitForEvent('page')]);
 
 	await page2.waitForLoadState();
 

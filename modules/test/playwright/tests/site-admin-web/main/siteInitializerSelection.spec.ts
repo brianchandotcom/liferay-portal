@@ -153,6 +153,8 @@ test('Ensure that the site administrator can select template provided by liferay
 }) => {
 	await selectSiteInitializerPage.goto();
 
+	await page.getByRole('menuitem', {name: 'Provided by Liferay'}).focus();
+
 	await page
 		.getByRole('menuitem', {name: 'Provided by Liferay'})
 		.press('Tab');

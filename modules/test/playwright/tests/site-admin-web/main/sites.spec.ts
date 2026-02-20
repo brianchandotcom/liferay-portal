@@ -120,6 +120,7 @@ test('Inactivate and reactivate site', async ({
 	if ((await showInactiveRequestCheckbox.isChecked()) === false) {
 		await showInactiveRequestCheckbox.check();
 		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(page);
 	}
 
 	// Create Layout

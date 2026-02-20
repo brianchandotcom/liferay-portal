@@ -529,6 +529,8 @@ test(
 				.getByTitle('Go to Memberships')
 		).toBeVisible();
 
+		await page.reload();
+
 		await page.keyboard.press('Tab');
 
 		await page.keyboard.press('Tab');
@@ -575,28 +577,37 @@ test(
 			surname: user.familyName,
 		};
 
-		await membershipsPage.goto();
+		try {
+			await membershipsPage.goto();
 
-		await page.getByRole('button', {name: 'Add'}).click();
+			await page.getByRole('heading', {name: 'Memberships'}).waitFor();
 
-		await page
-			.frameLocator('iframe[title="Assign Users to This Site"]')
-			.getByLabel(user.givenName)
-			.check();
+			await page.getByRole('button', {name: 'Add'}).click();
 
-		await page.getByRole('button', {name: 'Done'}).click();
+			await page
+				.frameLocator('iframe[title="Assign Users to This Site"]')
+				.getByLabel(user.givenName)
+				.check();
 
-		await page
-			.locator(
+			await page.getByRole('button', {name: 'Done'}).click();
+
+			const userCard = page.locator(
 				`[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_${user.alternateName}"]`
-			)
-			.click({force: true});
+			);
 
-		const alert = page.locator('.alert');
+			await userCard.waitFor();
 
-		await expect(alert).toHaveCount(0);
+			await userCard.click({force: true});
 
-		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+			const alert = page.locator('.alert');
+
+			await expect(alert).toHaveCount(0);
+		}
+		finally {
+			await apiHelpers.headlessAdminUser.deleteUserAccount(
+				Number(user.id)
+			);
+		}
 	}
 );
 
@@ -636,28 +647,13 @@ test(
 
 		await pageEditorPage.addWidget('Community', 'My Sites');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {
-				exact: true,
-				name: 'Permissions',
-			}),
-			trigger: page
-				.locator('#wrapper')
-				.getByRole('button', {name: 'Options'}),
-		});
+		const widgetId = await pageEditorPage.getFragmentId('My Sites');
 
-		await page
-			.frameLocator('iframe[title="Permissions"]')
-			.locator('#user_ACTION_VIEW')
-			.check();
-
-		await page
-			.frameLocator('iframe[title="Permissions"]')
-			.getByRole('button', {name: 'Save'})
-			.click();
-
-		await page.getByLabel('Permissions').getByLabel('Close').click();
+		await pageEditorPage.changeWidgetPermission(
+			widgetId,
+			'#user_ACTION_VIEW',
+			true
+		);
 
 		await page.getByLabel('Publish', {exact: true}).click();
 

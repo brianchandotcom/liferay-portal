@@ -69,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -152,12 +153,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	public String[] getClassNames() {
-		return TransformUtil.transformToArray(
-			TransformUtil.transform(
-				_registrations, Registration::getExportImportDescriptor),
-			ExportImportVulcanBatchEngineTaskItemDelegate.
-				ExportImportDescriptor::getModelClassName,
-			String.class);
+		Set<String> classNames = new LinkedHashSet<>();
+
+		for (Registration registration : _registrations) {
+			classNames.add(
+				registration.getExportImportDescriptor(
+				).getModelClassName());
+		}
+
+		return classNames.toArray(new String[0]);
 	}
 
 	@Override

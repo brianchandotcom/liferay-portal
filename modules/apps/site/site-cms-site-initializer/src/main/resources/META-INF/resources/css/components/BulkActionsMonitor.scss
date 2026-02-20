@@ -61,7 +61,7 @@
 			}
 		}
 
-		.tbar-item:has(&) {
+		.tbar-item:not(:last-child):has(&) {
 			padding-right: 1rem;
 			position: relative;
 

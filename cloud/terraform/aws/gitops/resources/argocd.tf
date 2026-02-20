@@ -144,6 +144,10 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 					namespace=var.crossplane_namespace
 					server="https://kubernetes.default.svc"
 				},
+				{
+					namespace=var.gateway_namespace
+					server="https://kubernetes.default.svc"
+				},
 			]
 			sourceRepos=[
 				"${var.infrastructure_helm_chart_config.chart_url}",
@@ -186,57 +190,80 @@ resource "kubernetes_manifest" "infrastructure_provider_application" {
 				server="https://kubernetes.default.svc"
 			}
 			project=local.infrastructure_appproject_name
-			source=merge(
-				{
-					helm={
-						parameters=[
-							{
-								name="aws.accountId"
-								value=local.account_id
-							},
-							{
-								name="aws.clusterName"
-								value=local.cluster_name
-							},
-							{
-								name="aws.nodesSecurityGroupId"
-								value=data.aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
-							},
-							{
-								name="aws.oidcProvider"
-								value=local.oidc_provider
-							},
-							{
-								name="aws.privateSubnetIds"
-								value=jsonencode(data.aws_subnets.private.ids)
-							},
-							{
-								name="aws.vpcId"
-								value=data.aws_vpc.current.id
-							},
-							{
-								name="crossplaneNamespace"
-								value=var.crossplane_namespace
-							},
-							{
-								name="deploymentName"
-								value=var.deployment_name
-							},
-							{
-								name="liferayServiceAccountRoleName"
-								value=local.liferay_service_account_role_name
-							},
-						]
+			sources=[
+				merge(
+					{
+						helm={
+							parameters=[
+								{
+									name="aws.accountId"
+									value=local.account_id
+								},
+								{
+									name="aws.clusterName"
+									value=local.cluster_name
+								},
+								{
+									name="aws.nodesSecurityGroupId"
+									value=data.aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
+								},
+								{
+									name="aws.oidcProvider"
+									value=local.oidc_provider
+								},
+								{
+									name="aws.privateSubnetIds"
+									value=jsonencode(data.aws_subnets.private.ids)
+								},
+								{
+									name="aws.vpcId"
+									value=data.aws_vpc.current.id
+								},
+								{
+									name="crossplaneNamespace"
+									value=var.crossplane_namespace
+								},
+								{
+									name="deploymentName"
+									value=var.deployment_name
+								},
+								{
+									name="gateway.className"
+									value=var.gateway_class_name
+								},
+								{
+									name="gateway.envoyProxyRoleArn"
+									value=data.aws_iam_role.envoy_proxy_role.arn
+								},
+								{
+									name="gateway.namespace"
+									value=var.gateway_namespace
+								},
+								{
+									name="liferayServiceAccountRoleName"
+									value=local.liferay_service_account_role_name
+								},
+							]
+							valueFiles=[
+								"$values/${var.infrastructure_provider_helm_chart_config.path}/values.yaml",
+								"$values/${var.infrastructure_git_repo_config.source_paths.system}/${var.infrastructure_git_repo_config.source_paths.infrastructure_provider_values_filename}",
+							]
+						}
+						repoURL=var.infrastructure_provider_helm_chart_config.chart_url
+						targetRevision=var.infrastructure_provider_helm_chart_config.version
+					},
+					var.infrastructure_provider_helm_chart_config.path == null ? {
+						chart=var.infrastructure_provider_helm_chart_config.chart_name
+					} : {
+						path=var.infrastructure_provider_helm_chart_config.path
 					}
-					repoURL=var.infrastructure_provider_helm_chart_config.chart_url
-					targetRevision=var.infrastructure_provider_helm_chart_config.version
+				),
+				{
+					ref="values"
+					repoURL=local.infrastructure_git_repo_url
+					targetRevision=var.infrastructure_git_repo_config.revision
 				},
-				var.infrastructure_provider_helm_chart_config.path == null ? {
-					chart=var.infrastructure_provider_helm_chart_config.chart_name
-				} : {
-					path=var.infrastructure_provider_helm_chart_config.path
-				}
-			)
+			]
 			syncPolicy={
 				automated={
 					prune=true

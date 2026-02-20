@@ -1,2 +1,5 @@
 aws: {}
 crossplaneNamespace: crossplane-system
+gateway:
+    internetFacing: false
+    namespace: envoy-gateway-system

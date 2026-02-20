@@ -37,7 +37,6 @@ locals {
 	EOT
 	ecr_credentials_sync_serviceaccount_name="ecr-credentials-sync-sa"
 	gateway_name="${var.infrastructure_git_repo_config.target.slugProjectId}-${var.infrastructure_git_repo_config.target.slugEnvironmentId}-gateway"
-	gateway_proxy_config_name="liferay-proxy-config"
 	git_repo_auth_configs=merge(
 		local.git_repo_infrastructure_separate_from_liferay ? {
 			"infrastructure"=merge(

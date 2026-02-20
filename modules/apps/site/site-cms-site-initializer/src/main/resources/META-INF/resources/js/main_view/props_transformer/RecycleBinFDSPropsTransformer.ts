@@ -51,6 +51,7 @@ export default function RecycleBinFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			if (action?.data?.id === 'actionLink') {
 				return {

@@ -47,6 +47,7 @@ export default function StructuresFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		async onActionDropdownItemClick({
 			action,
 			event,

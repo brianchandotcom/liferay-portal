@@ -58,6 +58,7 @@ export default function AllSpacesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 		itemsActions: itemsActions.map((action) => {
 			const pinnedAssetLibraryIds = additionalProps.pinnedAssetLibraryIds;
 

@@ -173,6 +173,7 @@ const DetailedAssetUsageModal: React.FC<IDetailedAssetUsageModalProps> = ({
 									}
 								: undefined
 						}
+						hideManagementBarInEmptyState={true}
 						id="asset-usages-table"
 						pagination={{
 							deltas: [{label: 20}, {label: 40}, {label: 60}],

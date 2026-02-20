@@ -34,5 +34,6 @@ export default function CategoryUsagesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 	};
 }

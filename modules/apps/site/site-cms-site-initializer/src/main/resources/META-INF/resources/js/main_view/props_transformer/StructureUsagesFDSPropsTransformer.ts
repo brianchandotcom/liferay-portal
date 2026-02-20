@@ -40,5 +40,6 @@ export default function StructureUsagesFDSPropsTransformer({
 				} as IInternalRenderer,
 			],
 		},
+		hideManagementBarInEmptyState: true,
 	};
 }

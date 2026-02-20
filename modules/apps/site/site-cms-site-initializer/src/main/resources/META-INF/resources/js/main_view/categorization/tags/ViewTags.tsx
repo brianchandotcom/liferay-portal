@@ -246,6 +246,7 @@ export default function ViewTags({
 				}}
 				emptyState={emptyState}
 				filters={filters}
+				hideManagementBarInEmptyState={true}
 				id={dataSetId}
 				itemsActions={[
 					{

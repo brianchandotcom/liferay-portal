@@ -63,6 +63,11 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	}
 
 	@Override
+	public boolean getHideManagementBarInEmptyState() {
+		return true;
+	}
+
+	@Override
 	public String getName() {
 		return CMSSiteInitializerFDSNames.ALL_SECTION;
 	}

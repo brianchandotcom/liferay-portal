@@ -33,6 +33,7 @@ public class ElasticsearchConnectionBuilder {
 		elasticsearchConnection.setActive(_active);
 		elasticsearchConnection.setAuthenticationEnabled(
 			_authenticationEnabled);
+		elasticsearchConnection.setCompressionEnabled(_compressionEnabled);
 		elasticsearchConnection.setConnectionId(_connectionId);
 		elasticsearchConnection.setHttpSSLEnabled(_httpSSLEnabled);
 		elasticsearchConnection.setMaxConnections(_maxConnections);
@@ -50,6 +51,14 @@ public class ElasticsearchConnectionBuilder {
 		elasticsearchConnection.setUserName(_userName);
 
 		return elasticsearchConnection;
+	}
+
+	public ElasticsearchConnectionBuilder compressionEnabled(
+		boolean compressionEnabled) {
+
+		_compressionEnabled = compressionEnabled;
+
+		return this;
 	}
 
 	public ElasticsearchConnectionBuilder connectionId(String connectionId) {
@@ -151,6 +160,7 @@ public class ElasticsearchConnectionBuilder {
 
 	private boolean _active;
 	private boolean _authenticationEnabled;
+	private boolean _compressionEnabled;
 	private String _connectionId;
 	private boolean _httpSSLEnabled;
 	private int _maxConnections;

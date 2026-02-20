@@ -102,6 +102,8 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 			elasticsearchConnectionBuilder.active(
 				true
+			).compressionEnabled(
+				elasticsearchConfigurationWrapper.compressionEnabled()
 			).connectionId(
 				ConnectionConstants.SIDECAR_CONNECTION_ID
 			).maxConnections(

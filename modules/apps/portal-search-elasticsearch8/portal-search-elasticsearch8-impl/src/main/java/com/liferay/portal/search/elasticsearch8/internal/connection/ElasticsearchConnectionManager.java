@@ -437,6 +437,8 @@ public class ElasticsearchConnectionManager
 			elasticsearchConfigurationWrapper.authenticationEnabled()
 		).connectionId(
 			ConnectionConstants.REMOTE_CONNECTION_ID
+		).compressionEnabled(
+			elasticsearchConfigurationWrapper.compressionEnabled()
 		).httpSSLEnabled(
 			elasticsearchConfigurationWrapper.httpSSLEnabled()
 		).maxConnections(

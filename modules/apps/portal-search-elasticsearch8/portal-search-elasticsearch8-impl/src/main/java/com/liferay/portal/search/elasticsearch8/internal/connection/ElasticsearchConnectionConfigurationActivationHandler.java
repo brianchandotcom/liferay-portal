@@ -38,6 +38,8 @@ public class ElasticsearchConnectionConfigurationActivationHandler {
 			elasticsearchConnectionConfiguration.active()
 		).authenticationEnabled(
 			elasticsearchConnectionConfiguration.authenticationEnabled()
+		).compressionEnabled(
+			elasticsearchConnectionConfiguration.compressionEnabled()
 		).connectionId(
 			elasticsearchConnectionConfiguration.connectionId()
 		).httpSSLEnabled(

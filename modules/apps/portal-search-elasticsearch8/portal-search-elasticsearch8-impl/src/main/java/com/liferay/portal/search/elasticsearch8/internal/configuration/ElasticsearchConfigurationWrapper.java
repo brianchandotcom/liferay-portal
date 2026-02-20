@@ -78,6 +78,10 @@ public class ElasticsearchConfigurationWrapper
 		return -1;
 	}
 
+	public boolean compressionEnabled() {
+		return _elasticsearchConfiguration.compressionEnabled();
+	}
+
 	public String httpCORSAllowOrigin() {
 		return _elasticsearchConfiguration.httpCORSAllowOrigin();
 	}

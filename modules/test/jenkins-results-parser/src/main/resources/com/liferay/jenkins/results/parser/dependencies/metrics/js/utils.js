@@ -80,16 +80,16 @@ function getDynamicMax(datasets) {
         let data = dataset.data;
 
         data.forEach((dataValue, i) => {
-            let val = parseFloat(dataValue) || 0;
-            indexTotals[i] = (indexTotals[i] || 0) + val;
+            let indexTotal = parseFloat(dataValue) || 0;
+            indexTotals[i] = (indexTotals[i] || 0) + indexTotal;
         });
     });
 
-    let top = Math.max(...indexTotals, 0);
+    let maxIndexTotal = Math.max(...indexTotals, 0);
 
-	console.log(top)
+	console.log(maxIndexTotal)
 
-    return Math.round(top * 1.10);
+    return Math.round(maxIndexTotal * 1.10);
 }
 
 

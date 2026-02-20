@@ -41,7 +41,6 @@ import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -73,50 +72,45 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 	@Override
 	public CTClosure create(long ctCollectionId) {
-		return create(ctCollectionId, Collections.emptySet());
+		return create(ctCollectionId, 0);
 	}
 
 	@Override
 	public CTClosure create(long ctCollectionId, long classNameId) {
-		return create(ctCollectionId, Collections.singleton(classNameId));
-	}
-
-	@Override
-	public CTClosure create(long ctCollectionId, Set<Long> classNameIds) {
-		Map<Set<Long>, CTClosure> ctClosures = _ctClosuresMap.computeIfAbsent(
+		Map<Long, CTClosure> ctClosures = _ctClosuresMap.computeIfAbsent(
 			ctCollectionId, key -> new LRUMap<>(5));
 
-		CTClosure ctClosure = ctClosures.get(classNameIds);
+		CTClosure ctClosure = ctClosures.get(classNameId);
 
 		if (ctClosure != null) {
 			return ctClosure;
 		}
 
-		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos = null;
+		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos;
 
-		if (classNameIds.isEmpty()) {
+		if (classNameId > 0) {
 			combinedTableReferenceInfos =
-				_tableReferenceDefinitionManager.
-					getCombinedTableReferenceInfos();
+				_tableReferenceDefinitionManager.getCombinedTableReferenceInfos(
+					classNameId);
 		}
 		else {
 			combinedTableReferenceInfos =
-				_tableReferenceDefinitionManager.getCombinedTableReferenceInfos(
-					classNameIds);
+				_tableReferenceDefinitionManager.
+					getCombinedTableReferenceInfos();
 		}
 
 		ctClosure = new CTClosureImpl(
 			ctCollectionId,
 			_buildClosureMap(
-				ctCollectionId, classNameIds, combinedTableReferenceInfos));
+				ctCollectionId, classNameId, combinedTableReferenceInfos));
 
-		ctClosures.put(classNameIds, ctClosure);
+		ctClosures.put(classNameId, ctClosure);
 
 		return ctClosure;
 	}
 
 	private Map<Node, Collection<Node>> _buildClosureMap(
-		long ctCollectionId, Set<Long> classNameIds,
+		long ctCollectionId, long classNameId,
 		Map<Long, TableReferenceInfo<?>> combinedTableReferenceInfos) {
 
 		CTCollection ctCollection = _ctCollectionPersistence.fetchByPrimaryKey(
@@ -133,7 +127,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		Collection<Node> nodes = new LinkedHashSet<>();
 
 		for (CTEntry ctEntry : ctEntries) {
-			if (!classNameIds.isEmpty() &&
+			if ((classNameId > 0) &&
 				!combinedTableReferenceInfos.containsKey(
 					ctEntry.getModelClassNameId())) {
 
@@ -196,9 +190,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					_tableReferenceDefinitionManager.getClassNameId(
 						entry.getKey());
 
-				if (!classNameIds.isEmpty() &&
-					!map.containsKey(parentClassNameId)) {
-
+				if ((classNameId > 0) && !map.containsKey(parentClassNameId)) {
 					continue;
 				}
 
@@ -222,7 +214,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 
 					List<Long> newParentPrimaryKeys = _collectParentPrimaryKeys(
 						childClassNameId, batchChildPrimaryKeys, ctCollectionId,
-						entry, edgeMap, nodes, parentClassNameId, classNameIds,
+						entry, edgeMap, nodes, parentClassNameId, classNameId,
 						parentTableReferenceInfo);
 
 					if (newParentPrimaryKeys != null) {
@@ -243,7 +235,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 		long childClassNameId, Long[] childPrimaryKeys, long ctCollectionId,
 		Map.Entry<Table<?>, List<TableJoinHolder>> entry,
 		Map<Node, Collection<Edge>> edgeMap, Collection<Node> nodes,
-		long parentClassNameId, Set<Long> classNameIds,
+		long parentClassNameId, long classNameId,
 		TableReferenceInfo<?> parentTableReferenceInfo) {
 
 		List<Long> newParentPrimaryKeys = null;
@@ -275,9 +267,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					Node parentNode = new Node(
 						parentClassNameId, resultSet.getLong(1));
 
-					if (!classNameIds.isEmpty() &&
-						!nodes.contains(parentNode)) {
-
+					if ((classNameId > 0) && !nodes.contains(parentNode)) {
 						continue;
 					}
 
@@ -509,8 +499,8 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTClosureFactoryImpl.class);
 
-	private final Map<Long, Map<Set<Long>, CTClosure>> _ctClosuresMap =
-		new LRUMap<>(10);
+	private final Map<Long, Map<Long, CTClosure>> _ctClosuresMap = new LRUMap<>(
+		10);
 
 	@Reference
 	private CTCollectionPersistence _ctCollectionPersistence;

@@ -36,7 +36,6 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemListBu
 import com.liferay.knowledge.base.model.KBArticleModel;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -444,24 +443,8 @@ public class ViewChangesDisplayContext {
 
 		if (_ctCollection.getStatus() != WorkflowConstants.STATUS_APPROVED) {
 			try {
-				if (!_user.isOnDemandUser()) {
-					ctClosure = _ctClosureFactory.create(
-						_ctCollection.getCtCollectionId());
-				}
-				else {
-					ctClosure = _ctClosureFactory.create(
-						_ctCollection.getCtCollectionId(),
-						new HashSet<>(
-							_ctEntryLocalService.dslQuery(
-								DSLQueryFactoryUtil.selectDistinct(
-									CTEntryTable.INSTANCE.modelClassNameId
-								).from(
-									CTEntryTable.INSTANCE
-								).where(
-									CTEntryTable.INSTANCE.ctCollectionId.eq(
-										_ctCollection.getCtCollectionId())
-								))));
-				}
+				ctClosure = _ctClosureFactory.create(
+					_ctCollection.getCtCollectionId());
 			}
 			catch (Exception exception) {
 				contextViewJSONObject = JSONUtil.put(

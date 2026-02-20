@@ -1374,6 +1374,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					navigate: true,
 				});
 
+				const confirmFRLanguageChange = page.getByRole('link', {
+					name: 'Afficher la page en français (France).',
+				});
+
+				if (await confirmFRLanguageChange.isVisible()) {
+					await confirmFRLanguageChange.click();
+				}
+
 				await page.goto(dataSetPageUrl);
 
 				await page.locator('nav.navbar').locator('li').nth(1).click();
@@ -1393,6 +1401,14 @@ test.describe('Visualization Modes in Data Set Manager', () => {
 					languageId: 'pt_BR',
 					navigate: true,
 				});
+
+				const confirmPTLanguageChange = page.getByRole('link', {
+					name: 'Exibir a página em',
+				});
+
+				if (await confirmPTLanguageChange.isVisible()) {
+					await confirmPTLanguageChange.click();
+				}
 
 				await page.goto(dataSetPageUrl);
 

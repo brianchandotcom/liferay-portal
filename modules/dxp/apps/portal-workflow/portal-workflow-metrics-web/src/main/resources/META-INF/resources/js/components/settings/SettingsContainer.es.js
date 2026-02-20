@@ -11,7 +11,5 @@ import {usePageTitle} from '../../shared/hooks/usePageTitle.es';
 export default function SettingsContainer() {
 	usePageTitle(Liferay.Language.get('settings'));
 
-	return (
-		<Outlet />
-	);
+	return <Outlet />;
 }

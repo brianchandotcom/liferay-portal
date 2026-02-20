@@ -37,11 +37,14 @@ const PaginationBar = ({
 	const handleChangePageSize = useCallback(
 		(newPageSize) => {
 			if (!withoutRouting) {
-				const pathname = getPathname({
-					...routeParams,
-					page: 1,
-					pageSize: newPageSize,
-				}, path);
+				const pathname = getPathname(
+					{
+						...routeParams,
+						page: 1,
+						pageSize: newPageSize,
+					},
+					path
+				);
 
 				navigate({pathname, search});
 			}
@@ -58,10 +61,13 @@ const PaginationBar = ({
 	const handleChangePage = useCallback(
 		(newPage) => {
 			if (!withoutRouting) {
-				const pathname = getPathname({
-					...routeParams,
-					page: newPage,
-				}, path);
+				const pathname = getPathname(
+					{
+						...routeParams,
+						page: newPage,
+					},
+					path
+				);
 
 				navigate({pathname, search});
 			}

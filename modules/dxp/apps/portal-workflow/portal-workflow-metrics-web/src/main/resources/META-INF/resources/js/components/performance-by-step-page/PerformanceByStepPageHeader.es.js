@@ -27,9 +27,10 @@ export default function Header({
 }) {
 	const {
 		location: {search},
-		routeParams
+		routeParams,
 	} = useRouter();
-	const showFiltersResult = search || hasFilterToShow(selectedFilters, hideFilters);
+	const showFiltersResult =
+		search || hasFilterToShow(selectedFilters, hideFilters);
 
 	return (
 		<>

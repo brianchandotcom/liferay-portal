@@ -767,7 +767,7 @@ public class DisplayPageTemplateResourceTest
 
 		return _getClassSubtypeReference(
 			className, infoItemFormVariation.getExternalReferenceCode(),
-			infoItemFormVariationsProvider.getSubtypeClassName());
+			infoItemFormVariationsProvider.getInfoItemFormVariationClassName());
 	}
 
 	private ClassSubtypeReference _getClassSubtypeReference(

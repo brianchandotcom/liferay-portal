@@ -595,8 +595,7 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				siteItemSelectorCriterion));
 	}
 
-	private boolean _isApplicationMenuApp(
-			ResourceRequest resourceRequest) {
+	private boolean _isApplicationMenuApp(ResourceRequest resourceRequest) {
 
 		String selectedPortletId = ParamUtil.getString(
 			resourceRequest, "selectedPortletId");

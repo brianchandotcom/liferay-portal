@@ -21,6 +21,12 @@ const COLORS = [
 
 const MAX_WEEKLY_SERVER_DURATION_MILLIS = 2370 * 7 * 24 * 60 * 60 * 1000;
 
+function addDateText(element, date) {
+	let dateText = document.createTextNode("Generated " + timeago.format(date) + " on " + date)
+
+	element.appendChild(dateText);
+}
+
 function addReportName() {
 	let headerElement = document.getElementById('report-name');
 

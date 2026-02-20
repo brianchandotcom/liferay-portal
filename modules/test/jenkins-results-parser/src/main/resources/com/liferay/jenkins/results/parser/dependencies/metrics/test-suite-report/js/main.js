@@ -1,5 +1,7 @@
 addReportName();
 
+addDateText(document.getElementById("test-suite-data-date"), dataGeneratedDate);
+
 if ((typeof tableData !== 'undefined') && tableData) {
 	let tableElement = createTable(tableData, 'test-suite-data-table');
 

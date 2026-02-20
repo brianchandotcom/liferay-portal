@@ -295,7 +295,7 @@ public class CTClosureFactoryImpl implements CTClosureFactory {
 					}
 
 					Collection<Edge> edges = edgeMap.computeIfAbsent(
-						parentNode, key -> new LinkedList<>());
+						parentNode, key -> new ArrayList<>());
 
 					edges.add(new Edge(parentNode, childNode));
 				}

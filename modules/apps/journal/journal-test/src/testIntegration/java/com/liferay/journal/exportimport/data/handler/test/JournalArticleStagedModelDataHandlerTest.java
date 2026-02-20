@@ -44,9 +44,11 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -506,6 +508,8 @@ public class JournalArticleStagedModelDataHandlerTest
 				JournalContentPortletKeys.JOURNAL_CONTENT),
 			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 
+		portletDataContext.setPortletId(JournalPortletKeys.JOURNAL);
+
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, journalArticle);
 
@@ -514,6 +518,16 @@ public class JournalArticleStagedModelDataHandlerTest
 				journalArticle);
 
 			Assert.assertNotNull(exportedStagedModel);
+
+			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), liveGroup.getGroupId(), 0, null,
+				_portal.getClassNameId(JournalArticle.class.getName()), null,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
 			boolean portletImportInProcess =
 				ExportImportThreadLocal.isPortletImportInProcess();
@@ -841,6 +855,16 @@ public class JournalArticleStagedModelDataHandlerTest
 				journalArticle);
 
 			Assert.assertNotNull(exportedStagedModel);
+
+			LayoutPageTemplateEntryLocalServiceUtil.addLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), liveGroup.getGroupId(), 0, null,
+				_portal.getClassNameId(JournalArticle.class.getName()), null,
+				RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED,
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId()));
 
 			boolean portletImportInProcess =
 				ExportImportThreadLocal.isPortletImportInProcess();

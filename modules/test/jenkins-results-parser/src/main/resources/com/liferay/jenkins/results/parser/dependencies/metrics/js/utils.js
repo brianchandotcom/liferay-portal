@@ -38,7 +38,7 @@ function addTotalColumn(tableElement) {
 
 	totalHeaderElement.textContent = 'Total';
 
-	totalHeaderElement.classList.add('total-header');
+	totalHeaderElement.classList.add('total-col');
 
 	theadElement.appendChild(totalHeaderElement);
 
@@ -61,7 +61,7 @@ function addTotalColumn(tableElement) {
 
 		totalCellElement.setAttribute('data-value', totalValue);
 
-		totalCellElement.classList.add('total-header');
+		totalCellElement.classList.add('total-col');
 
 		if (cellElements[1].textContent.includes('Duration')) {
 			totalValue = getReadableDuration(totalValue);
@@ -133,7 +133,7 @@ function createBarChartFromTable(chartTitle, dataSuffix, elementID, metricName, 
 		let dataValues = [];
 
 		cellElements.forEach(cellElement => {
-			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2') || cellElement.classList.contains('total-header')) {
+			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2') || cellElement.classList.contains('total-col')) {
 				return;
 			}
 

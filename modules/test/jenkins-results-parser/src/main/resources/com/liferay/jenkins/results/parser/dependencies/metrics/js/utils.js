@@ -38,6 +38,8 @@ function addTotalColumn(tableElement) {
 
 	totalHeaderElement.textContent = 'Total';
 
+	totalHeaderElement.classList.add('total-header');
+
 	theadElement.appendChild(totalHeaderElement);
 
 	var rowElements = tableElement.querySelectorAll('tbody tr');
@@ -59,6 +61,8 @@ function addTotalColumn(tableElement) {
 
 		totalCellElement.setAttribute('data-value', totalValue);
 
+		totalCellElement.classList.add('total-header');
+
 		if (cellElements[1].textContent.includes('Duration')) {
 			totalValue = getReadableDuration(totalValue);
 		}
@@ -69,17 +73,43 @@ function addTotalColumn(tableElement) {
 	});
 }
 
-function createBarChartFromTable(chartTitle, elementID, metricName, tableElement, dataSuffix, yAxesMax) {
+function getDynamicMax(datasets) {
+    let indexTotals = [];
+
+    datasets.forEach(dataset => {
+        let data = dataset.data;
+        
+        data.forEach((dataValue, i) => {
+            const val = parseFloat(dataValue) || 0;
+            indexTotals[i] = (indexTotals[i] || 0) + val;
+        });
+    });
+
+    const top = Math.max(...indexTotals, 0);
+
+	console.log(top)
+
+    return Math.round(top * 1.10);
+}
+
+
+function createBarChartFromTable(chartTitle, dataSuffix, elementID, metricName, tableElement) {
 	headerElements = tableElement.querySelectorAll('thead tr th');
 
 	let xLabels = [];
+
+	let testSuiteReport = false;
+
+	if(chartTitle == 'Daily Server Duration by Test Suite'){
+		testSuiteReport = true;
+	}
 
 	headerElements.forEach(headerElement => {
 		if (headerElement.classList.contains('col-1') || headerElement.classList.contains('col-2')) {
 			return;
 		}
 
-		if (headerElement.textContent.trim() === 'Total' && chartTitle == 'Daily Server Duration by Test Suite') {
+		if (headerElement.textContent.trim() === 'Total' && testSuiteReport) {
 			return;
 		}
 
@@ -103,20 +133,17 @@ function createBarChartFromTable(chartTitle, elementID, metricName, tableElement
 		let dataValues = [];
 
 		cellElements.forEach(cellElement => {
-			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2')) {
+			if (cellElement.classList.contains('col-1') || cellElement.classList.contains('col-2') || cellElement.classList.contains('total-header')) {
 				return;
 			}
 
 			let dataValue = cellElement.getAttribute('data-value');
 
-			if (chartTitle == 'Daily Server Duration by Test Suite') {
-				dataValue = dataValue / 3600;
-				if (dataValue > 0){
-				dataValue = dataValue.toFixed(2);
-				}
+			if (testSuiteReport) {
+				dataValue = dataValue / 3600000;
 			}
 
-			dataValues.push(dataValue);
+			dataValues.push(Math.round(dataValue));
 		});
 
 		let color = getColor(datasets.length);
@@ -130,6 +157,12 @@ function createBarChartFromTable(chartTitle, elementID, metricName, tableElement
 
 		datasets.push(dataset);
 	});
+
+	let yAxesMax = 100;
+
+	if(testSuiteReport){
+		yAxesMax = getDynamicMax(datasets)
+	}
 
 	let barChart = new Chart(document.getElementById(elementID), {
 		data: {

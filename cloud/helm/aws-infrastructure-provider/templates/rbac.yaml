@@ -63,19 +63,19 @@ roleRef:
 subjects:
     -   kind: ServiceAccount
         name: provider-aws-backup
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}
     -   kind: ServiceAccount
         name: provider-aws-ec2
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}
     -   kind: ServiceAccount
         name: provider-aws-iam
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}
     -   kind: ServiceAccount
         name: provider-aws-opensearch
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}
     -   kind: ServiceAccount
         name: provider-aws-rds
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}
     -   kind: ServiceAccount
         name: provider-aws-s3
-        namespace: crossplane-system
+        namespace: {{ $crossplaneNamespace }}

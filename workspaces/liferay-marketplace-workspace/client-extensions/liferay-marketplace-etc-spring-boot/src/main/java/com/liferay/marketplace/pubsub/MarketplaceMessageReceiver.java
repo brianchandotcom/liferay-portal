@@ -229,28 +229,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				}
 			});
 
-		Long accountId = account.getId();
-
-		PostalAddressResource postalAddressResource =
-			_marketplaceService.getPostalAddressResource();
-
-		for (com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.PostalAddress
-				koroneikiPostalAddress :
-					koroneikiAccount.getPostalAddresses()) {
-
-			if (koroneikiPostalAddress == null) {
-				continue;
-			}
-
-			PostalAddress postalAddress = PostalAddress.toDTO(
-				koroneikiPostalAddress.toString());
-
-			postalAddress.setAddressType(() -> "billing-and-shipping");
-
-			postalAddressResource.postAccountPostalAddress(
-				account.getId(), postalAddress);
-		}
-
 		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Contact>
 			contactPage = _koroneikiService.getContactPage(
 				koroneikiAccount.getKey(),

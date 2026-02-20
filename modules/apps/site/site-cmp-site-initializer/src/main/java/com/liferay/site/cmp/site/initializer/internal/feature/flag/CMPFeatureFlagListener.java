@@ -9,6 +9,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.license.util.LicenseManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -34,25 +35,28 @@ public class CMPFeatureFlagListener implements FeatureFlagListener {
 	public void onValue(
 		long companyId, String featureFlagKey, boolean enabled) {
 
-		if (enabled && Objects.equals(featureFlagKey, "LPD-58677")) {
-			Group group = _groupLocalService.fetchGroup(
-				companyId, GroupConstants.CMS);
+		if (!enabled || !Objects.equals(featureFlagKey, "LPD-58677") ||
+			!LicenseManagerUtil.isCMPEnabled()) {
 
-			if (group == null) {
-				return;
-			}
+			return;
+		}
 
-			try (SafeCloseable safeCloseable =
-					CTCollectionThreadLocal.
-						setProductionModeWithSafeCloseable()) {
+		Group group = _groupLocalService.fetchGroup(
+			companyId, GroupConstants.CMS);
 
-				_groupLocalService.checkSystemGroups(companyId);
+		if (group == null) {
+			return;
+		}
 
-				SiteInitializerUtil.initialize(companyId, _siteInitializer);
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
+
+			_groupLocalService.checkSystemGroups(companyId);
+
+			SiteInitializerUtil.initialize(companyId, _siteInitializer);
+		}
+		catch (PortalException portalException) {
+			_log.error(portalException);
 		}
 	}
 

@@ -235,6 +235,37 @@ public class EmptyModelManagerImplTest {
 	}
 
 	@Test
+	public void testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingOutsideAnImportProcess()
+		throws Exception {
+
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class);
+			SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				false
+			);
+
+			Assert.assertSame(
+				_user,
+				_emptyModelManager.getOrAddEmptyModel(
+					User.class, RandomTestUtil.randomLong(), () -> _user,
+					RandomTestUtil.randomString(), _toBiFunction(() -> null),
+					_toUnsafeBiFunction(
+						() -> {
+							Assert.fail();
+
+							return null;
+						}),
+					User.class.getName()));
+		}
+	}
+
+	@Test
 	public void testGetOrAddEmptyModelGroupScopedWithDisabledLazyReferencingAndReturningItem()
 		throws Exception {
 
@@ -450,6 +481,53 @@ public class EmptyModelManagerImplTest {
 							return null;
 						}),
 					groupId, User.class.getName()));
+		}
+	}
+
+	@Test
+	public void testGetOrAddEmptyModelGroupScopedWithEnabledLazyReferencingOutsideAnImportProcess()
+		throws Exception {
+
+		StagingGroupHelper stagingGroupHelper = Mockito.mock(
+			StagingGroupHelper.class);
+
+		Mockito.when(
+			stagingGroupHelper.isCompanyGroup(_group)
+		).thenReturn(
+			false
+		);
+
+		_stagingGroupHelperUtilMockedStatic.when(
+			StagingGroupHelperUtil::getStagingGroupHelper
+		).thenReturn(
+			stagingGroupHelper
+		);
+
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class);
+			SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				false
+			);
+
+			Assert.assertSame(
+				_user,
+				_emptyModelManager.getOrAddEmptyModel(
+					User.class.getName(), RandomTestUtil.randomLong(),
+					() -> _user, RandomTestUtil.randomString(),
+					_toBiFunction(() -> null),
+					_toUnsafeBiFunction(
+						() -> {
+							Assert.fail();
+
+							return null;
+						}),
+					RandomTestUtil.randomLong(), User.class.getName()));
 		}
 	}
 

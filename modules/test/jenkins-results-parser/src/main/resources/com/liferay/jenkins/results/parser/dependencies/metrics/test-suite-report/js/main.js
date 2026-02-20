@@ -1,9 +1,3 @@
-window.onload = function () {
-	var statusChangesRowHeader = getElementByXpath('//th[contains(.,"Test Suite")]');
-
-	triggerEvent(statusChangesRowHeader, 'click');
-}
-
 addReportName();
 
 if ((typeof tableData !== 'undefined') && tableData) {

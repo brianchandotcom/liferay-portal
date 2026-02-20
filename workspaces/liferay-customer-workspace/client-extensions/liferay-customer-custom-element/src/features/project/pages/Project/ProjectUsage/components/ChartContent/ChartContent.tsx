@@ -8,7 +8,7 @@ import React, {useMemo} from 'react';
 import './ChartContent.css';
 
 import classNames from 'classnames';
-import {Cell, Pie, PieChart, Text} from 'recharts';
+import {Cell, Pie, PieChart, ResponsiveContainer, Text} from 'recharts';
 
 import {IChartData} from '../../hooks/useProjectUsageData';
 
@@ -49,20 +49,26 @@ type IChartContentProps = Omit<IChartData, 'infoText'> & {
 const ChartContent: React.FC<IChartContentProps> = ({
 	dataSizeUnits = '',
 	displayUsage,
-	maxCount = 0,
+	maxCount,
 	maxCountText,
 	title,
-	usedCount = 0,
+	usedCount,
 }) => {
 	const chartData = useMemo(() => {
 		let consumedValue = Math.random() * 100;
 		let chartLegend = '##';
 
 		if (displayUsage) {
-			const percentage = (usedCount / maxCount) * 100;
+			if (usedCount !== undefined && maxCount && maxCount > 0) {
+				const percentage = (usedCount / maxCount) * 100;
 
-			consumedValue = percentage >= 100 ? 100 : percentage;
-			chartLegend = usedCount.toLocaleString() + dataSizeUnits;
+				consumedValue = percentage >= 100 ? 100 : percentage;
+				chartLegend = usedCount.toLocaleString() + dataSizeUnits;
+			}
+			else {
+				consumedValue = 0;
+				chartLegend = '-';
+			}
 		}
 
 		const emptySpace = 100 - consumedValue;
@@ -78,29 +84,46 @@ const ChartContent: React.FC<IChartContentProps> = ({
 
 	return (
 		<div className="align-items-center chart-content d-flex w-100">
-			<PieChart className="mr-3" height={140} width={140}>
-				<Pie
-					data={chartData}
-					dataKey="value"
-					endAngle={470}
-					innerRadius={50}
-					label={CustomLabel}
-					labelLine={false}
-					outerRadius={70}
-					startAngle={90}
-					stroke="none"
-				>
-					{chartData.map((item, index) => (
-						<Cell
-							fill={!index ? '#377CFF' : '#EDEDED'}
-							key={item.name}
-							radius={20}
-						/>
-					))}
-				</Pie>
-			</PieChart>
+			<div className="mr-3" style={{height: 140, width: '50%'}}>
+				<ResponsiveContainer height="100%" width="100%">
+					<PieChart>
+						<Pie
+							data={[{value: 100}]}
+							dataKey="value"
+							endAngle={470}
+							innerRadius="71%"
+							isAnimationActive={false}
+							outerRadius="100%"
+							startAngle={90}
+							stroke="none"
+						>
+							<Cell fill="#EDEDED" />
+						</Pie>
 
-			<p className="m-0">
+						<Pie
+							data={chartData}
+							dataKey="value"
+							endAngle={470}
+							innerRadius="71%"
+							label={CustomLabel}
+							labelLine={false}
+							outerRadius="100%"
+							startAngle={90}
+							stroke="none"
+						>
+							{chartData.map((item, index) => (
+								<Cell
+									fill={!index ? '#377CFF' : 'transparent'}
+									key={item.name}
+									radius={20}
+								/>
+							))}
+						</Pie>
+					</PieChart>
+				</ResponsiveContainer>
+			</div>
+
+			<div className="m-0">
 				<h5 className="chart-title mb-3">{title}</h5>
 
 				<h5
@@ -113,7 +136,7 @@ const ChartContent: React.FC<IChartContentProps> = ({
 							'col empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage && maxCountText}
+						{displayUsage && (maxCountText || '-')}
 					</span>
 
 					<span
@@ -121,10 +144,13 @@ const ChartContent: React.FC<IChartContentProps> = ({
 							'col empty-text': !displayUsage,
 						})}
 					>
-						{displayUsage && maxCount + dataSizeUnits}
+						{displayUsage &&
+							(maxCount !== undefined
+								? maxCount.toLocaleString() + dataSizeUnits
+								: '-')}
 					</span>
 				</h5>
-			</p>
+			</div>
 		</div>
 	);
 };

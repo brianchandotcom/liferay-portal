@@ -1,7 +1,7 @@
 .cp-project-usage-page {
 	.d-grid {
 		grid-gap: var(--spacer-3);
-		grid-template-columns: repeat(auto-fit, minmax(300px, 0.5fr));
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	}
 
 	.empty-text {
@@ -26,5 +26,17 @@
 
 	.cp-project-usage-grid .d-grid {
 		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+@media (max-width: 1400px) {
+	.cp-project-usage-page .cp-project-usage-grid .d-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 960px) {
+	.cp-project-usage-page .cp-project-usage-grid .d-grid {
+		grid-template-columns: 1fr;
 	}
 }

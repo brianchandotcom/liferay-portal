@@ -40,6 +40,7 @@ const SideMenu = () => {
 	const [
 		{
 			hasExperienceSubscription,
+			hasLegacySubscription,
 			hasPlanSubscription,
 			project,
 			subscriptionGroups,
@@ -266,7 +267,7 @@ const SideMenu = () => {
 				)}
 
 				{(((loggedUserAccount?.isLiferayStaff || loggedUserAccount?.isPartner) &&
-					hasPlanSubscription) ||
+					(hasPlanSubscription || hasLegacySubscription)) ||
 					(featureFlags.includes('LRSD-12003') &&
 						hasExperienceSubscription)) && (
 					<div className="d-flex">

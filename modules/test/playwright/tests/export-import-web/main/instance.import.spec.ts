@@ -4,6 +4,7 @@
  */
 
 import {
+	ObjectDefinition,
 	ObjectDefinitionAPI,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
@@ -20,18 +21,23 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import performLogin, {
+	performLoginViaApi,
 	performLogout,
 	performUserSwitch,
 	userData,
 } from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {readFileFromZip} from '../../../utils/zip';
 import {generateObjectEntryValues} from '../../object-web/main/utils/generateObjectEntry';
 import {generateObjectFields} from '../../object-web/main/utils/generateObjectFields';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
+import {portletExportImportPageTest} from './fixtures/portletExportImportPageTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {createUserAssignRolesAndLogin} from './utils/createUserAssignRolesAndLogin';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
@@ -52,6 +58,7 @@ export const test = mergeTests(
 	objectPagesTest,
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
+	portletExportImportPageTest,
 	stagingPageTest,
 	wikiPagesTest
 );
@@ -1161,5 +1168,142 @@ test('Can import at instance level when LAR contains custom objects without exis
 	await companyExportImportPage.import({
 		filePath: exportFilePath,
 		taskStatus: 'completedWithErrors',
+	});
+});
+
+test('Can import object with different classname via portlet', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	featureFlags,
+	page,
+	portletExportImportPage,
+	viewObjectDefinitionsPage,
+}) => {
+	test.slow();
+	let objectDefinition: ObjectDefinition;
+	let objectDefinitionFilePath: string;
+	let objectEntryFilePath: string;
+
+	await test.step('Create and download Object Definition LAR', async () => {
+		objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				panelCategoryKey: 'control_panel.object',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectDefinitionsPage.goto();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: viewObjectDefinitionsPage.page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: viewObjectDefinitionsPage.page.getByLabel('Options'),
+		});
+
+		objectDefinitionFilePath = await portletExportImportPage.exportLARFile(
+			/Objects-\d+\.portlet\.lar/
+		);
+	});
+
+	await test.step('Create and download Object Entry LAR', async () => {
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', textField: objectDefinition.name},
+			`${normalizeRestPath(objectDefinition.restContextPath)}`
+		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		objectEntryFilePath = await portletExportImportPage.exportLARFile(
+			/ObjectDefinition\d+-\d+\.portlet\.lar/
+		);
+	});
+
+	await test.step('Create and Configure Virtual Instance (Able)', async () => {
+		const virtualInstance =
+			await apiHelpers.headlessPortalInstance.addVirtualInstance({
+				domain: 'liferay.com',
+				portalInstanceId: 'www.able.com',
+				virtualHost: 'www.able.com',
+			});
+
+		apiHelpers.data.push({
+			id: virtualInstance.portalInstanceId,
+			type: 'virtual-instance',
+		});
+
+		await performLoginViaApi({
+			loginUrl: 'http://www.able.com:8080',
+			page,
+			screenName: 'test',
+		});
+
+		const virtualInstanceApiHelpers = new DataApiHelpers(
+			page,
+			'http://www.able.com:8080'
+		);
+
+		for (const featureFlag of featureFlags) {
+			await virtualInstanceApiHelpers.featureFlag.updateFeatureFlag(
+				featureFlag.key,
+				featureFlag.enabled,
+				'http://www.able.com:8080'
+			);
+		}
+	});
+
+	await test.step('Object Definition into Virtual Instance', async () => {
+		await page.goto(
+			`http://www.able.com:8080/group/guest${PORTLET_URLS.objects}`
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		await portletExportImportPage.importLARFile(objectDefinitionFilePath);
+		await expect(
+			portletExportImportPage.frame
+				.getByRole('cell', {name: 'Successful'})
+				.first()
+		).toBeVisible();
+	});
+
+	await test.step('Import Object Entry into Virtual Instance & Verify', async () => {
+		await page.goto(`http://www.able.com:8080`);
+		await page.getByLabel('Open Applications MenuCtrl+').click();
+		await page.getByRole('tab', {name: 'Control Panel'}).click();
+		await page.getByRole('menuitem', {name: objectDefinition.name}).click();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page
+				.locator('.dropdown-menu')
+				.getByRole('menuitem', {name: 'Export / Import'}),
+			trigger: page.getByLabel('Options'),
+		});
+
+		await portletExportImportPage.importLARFile(objectEntryFilePath);
+		await expect(
+			portletExportImportPage.frame
+				.getByRole('cell', {name: 'Successful'})
+				.first()
+		).toBeVisible();
 	});
 });

@@ -7,7 +7,10 @@ package com.liferay.data.cleanup.internal.verify;
 
 import com.liferay.data.cleanup.internal.verify.util.PostUpgradeDataCleanupProcessUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -62,9 +65,22 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 			portletIds.add(portlet.getPortletId());
 		}
 
+		String escapeClause = "";
+
+		DB db = DBManagerUtil.getDB();
+
+		if ((db.getDBType() == DBType.DB2) ||
+			(db.getDBType() == DBType.ORACLE) ||
+			(db.getDBType() == DBType.SQLSERVER)) {
+
+			escapeClause = "escape '\\' ";
+		}
+
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"select count(1), name from ResourcePermission where scope = " +
-					"? group by name")) {
+				StringBundler.concat(
+					"select count(1), name from ResourcePermission where name ",
+					"like 'com\\_liferay\\_%' ", escapeClause,
+					"and scope = ? group by name"))) {
 
 			preparedStatement.setInt(1, ResourceConstants.SCOPE_INDIVIDUAL);
 
@@ -72,9 +88,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 				while (resultSet.next()) {
 					String name = resultSet.getString(2);
 
-					if (!name.startsWith("com_liferay_") ||
-						portletIds.contains(name)) {
-
+					if (portletIds.contains(name)) {
 						continue;
 					}
 

@@ -2529,14 +2529,6 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertNull(
 			_messageBus.getDestination(objectDefinition.getDestinationName()));
 
-		// Object definition settings
-
-		Assert.assertTrue(
-			ListUtil.isEmpty(
-				_objectDefinitionSettingLocalService.
-					getObjectDefinitionSettings(
-						objectDefinition.getObjectDefinitionId())));
-
 		// Resources
 
 		List<String> resourceActions = _resourceActions.getModelResourceActions(
@@ -2576,6 +2568,14 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinition.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
+
+		// Object definition settings
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_objectDefinitionSettingLocalService.
+					getObjectDefinitionSettings(
+						objectDefinition.getObjectDefinitionId())));
 
 		// Workflow definition links
 

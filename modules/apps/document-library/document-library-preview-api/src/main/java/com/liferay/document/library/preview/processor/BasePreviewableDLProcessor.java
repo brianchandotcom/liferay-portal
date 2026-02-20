@@ -272,9 +272,15 @@ public abstract class BasePreviewableDLProcessor implements DLProcessor {
 	protected void deletePreviews(
 		long companyId, long groupId, long fileEntryId, long fileVersionId) {
 
-		store.deleteDirectory(
-			companyId, REPOSITORY_ID,
-			getPreviewFilePath(groupId, fileEntryId, fileVersionId, null));
+		for (String fileName :
+				store.getFileNames(
+					companyId, REPOSITORY_ID,
+					getPreviewFilePath(
+						groupId, fileEntryId, fileVersionId, null))) {
+
+			store.deleteFile(
+				companyId, REPOSITORY_ID, fileName, StringPool.BLANK);
+		}
 	}
 
 	protected void deleteThumbnail(
@@ -282,10 +288,16 @@ public abstract class BasePreviewableDLProcessor implements DLProcessor {
 		String thumbnailType, int index) {
 
 		try {
-			store.deleteDirectory(
-				companyId, REPOSITORY_ID,
-				getThumbnailFilePath(
-					groupId, fileEntryId, fileVersionId, thumbnailType, index));
+			for (String fileName :
+					store.getFileNames(
+						companyId, REPOSITORY_ID,
+						getThumbnailFilePath(
+							groupId, fileEntryId, fileVersionId, thumbnailType,
+							index))) {
+
+				store.deleteFile(
+					companyId, REPOSITORY_ID, fileName, StringPool.BLANK);
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

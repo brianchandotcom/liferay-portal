@@ -977,25 +977,24 @@ public abstract class BaseSectionDisplayContextTestCase
 				StringPool.TRUE);
 		}
 
-			CreationMenu creationMenu = getCreationMenu(objectEntryFolder);
+		CreationMenu creationMenu = getCreationMenu(objectEntryFolder);
 
-			if (creationMenu == null) {
-				return;
-			}
+		if (creationMenu == null) {
+			return;
+		}
 
-			if (depotEntries != null) {
-				_assertCreationMenuContainsDropdownItem(
-					creationMenu, _getJSONArray(depotEntries),
-					objectDefinition.getLabel(LocaleUtil.getDefault()));
-			}
-			else {
-				_assertCreationMenuNotContainsDropdownItem(
-					creationMenu,
-					objectDefinition.getLabel(LocaleUtil.getDefault()));
-			}
+		if (depotEntries != null) {
+			_assertCreationMenuContainsDropdownItem(
+				creationMenu, _getJSONArray(depotEntries),
+				objectDefinition.getLabel(LocaleUtil.getDefault()));
+		}
+		else {
+			_assertCreationMenuNotContainsDropdownItem(
+				creationMenu,
+				objectDefinition.getLabel(LocaleUtil.getDefault()));
+		}
 
-			objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition);
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Inject

@@ -109,12 +109,12 @@ public class ViewRecycleBinSectionDisplayContextTest
 		DepotEntry depotEntry1 = _addDepotEntry(
 			false, TestPropsValues.getUserId());
 
-			_assertTrashEnabled(depotEntry1, false);
+		_assertTrashEnabled(depotEntry1, false);
 
 		DepotEntry depotEntry2 = _addDepotEntry(
 			true, TestPropsValues.getUserId());
 
-			_assertTrashEnabled(depotEntry2, true);
+		_assertTrashEnabled(depotEntry2, true);
 
 		User user = UserTestUtil.addUser(
 			companyLocalService.getCompany(TestPropsValues.getCompanyId()),
@@ -122,26 +122,26 @@ public class ViewRecycleBinSectionDisplayContextTest
 
 		DepotEntry depotEntry3 = _addDepotEntry(true, user.getUserId());
 
-			_assertTrashEnabled(depotEntry3, true);
+		_assertTrashEnabled(depotEntry3, true);
 
-			filterString = getCMSSectionFilterString(displayContext);
+		filterString = getCMSSectionFilterString(displayContext);
 
-			Assert.assertTrue(
-				filterString.contains(
-					_getExpectedFilterString(depotEntry2.getGroupId())));
+		Assert.assertTrue(
+			filterString.contains(
+				_getExpectedFilterString(depotEntry2.getGroupId())));
 
-			displayContext = getSectionDisplayContext(
-				getMockHttpServletRequest(user));
+		displayContext = getSectionDisplayContext(
+			getMockHttpServletRequest(user));
 
-			filterString = getCMSSectionFilterString(displayContext);
+		filterString = getCMSSectionFilterString(displayContext);
 
-			Assert.assertTrue(
-				filterString.contains(
-					_getExpectedFilterString(
-						depotEntry2.getGroupId(), depotEntry3.getGroupId())) ||
-				filterString.contains(
-					_getExpectedFilterString(
-						depotEntry3.getGroupId(), depotEntry2.getGroupId())));
+		Assert.assertTrue(
+			filterString.contains(
+				_getExpectedFilterString(
+					depotEntry2.getGroupId(), depotEntry3.getGroupId())) ||
+			filterString.contains(
+				_getExpectedFilterString(
+					depotEntry3.getGroupId(), depotEntry2.getGroupId())));
 
 		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2);

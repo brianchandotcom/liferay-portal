@@ -60,4 +60,24 @@ public interface MailSettingSystemConfiguration {
 	)
 	public boolean throwsExceptionOnFailure();
 
+	/**
+	 * Sets the size of core workers to process mail message.
+	 */
+	@Meta.AD(
+		deflt = "2",
+		description = "mail-engine-workers-core-size-key-description",
+		name = "mail-engine-workers-core-size", required = false
+	)
+	public int workersCoreSize();
+
+	/**
+	 * Sets the maximum size of workers to process mail message.
+	 */
+	@Meta.AD(
+		deflt = "3",
+		description = "mail-engine-workers-max-size-key-description",
+		name = "mail-engine-workers-max-size", required = false
+	)
+	public int workersMaxSize();
+
 }

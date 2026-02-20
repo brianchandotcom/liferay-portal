@@ -14,12 +14,6 @@ rules:
     -   apiGroups: [""]
         resources: ["namespaces"]
         verbs: ["get", "list"]
-    -   apiGroups: ["gateway.envoyproxy.io"]
-        resources: ["backendtrafficpolicies", "clienttrafficpolicies", "envoyproxies", "securitypolicies"]
-        verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
-    -   apiGroups: ["gateway.networking.k8s.io"]
-        resources: ["gatewayclasses", "gateways", "httproutes"]
-        verbs: ["create", "delete", "get", "list", "patch", "update", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

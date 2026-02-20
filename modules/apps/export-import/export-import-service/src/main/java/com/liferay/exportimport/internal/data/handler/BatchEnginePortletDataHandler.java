@@ -159,12 +159,14 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 						"externalReferenceCode", externalReferenceCode)
 				).toString());
 
-			ManifestSummary manifestSummary =
-				portletDataContext.getManifestSummary();
+			if (isMissingPortletSupported()) {
+				ManifestSummary manifestSummary =
+					portletDataContext.getManifestSummary();
 
-			manifestSummary.addModelDeletionCount(
-				exportImportDescriptor.getKey(),
-				applicableExternalReferenceCodes.size());
+				manifestSummary.addModelDeletionCount(
+					exportImportDescriptor.getKey(),
+					applicableExternalReferenceCodes.size());
+			}
 		}
 	}
 

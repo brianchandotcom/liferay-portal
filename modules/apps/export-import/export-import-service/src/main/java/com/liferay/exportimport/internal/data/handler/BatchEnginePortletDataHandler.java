@@ -145,6 +145,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				ListUtil.fromCollection(newPrimaryKeysMap.keySet()),
 				exportImportDescriptor::isApplicableExternalReferenceCode);
 
+			if (applicableExternalReferenceCodes.isEmpty()) {
+				continue;
+			}
+
 			portletDataContext.addZipEntry(
 				_normalize(
 					registration.getDeletionsFileName(),

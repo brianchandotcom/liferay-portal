@@ -4,9 +4,6 @@ variable "argocd_namespace" {
 variable "crossplane_namespace" {
 	default="crossplane-system"
 }
-variable "demo_mode" {
-	default=false
-}
 variable "deployment_name" {
 	validation {
 		condition=can(regex("^[a-z0-9-]*$", var.deployment_name))
@@ -46,6 +43,8 @@ variable "infrastructure_git_repo_config" {
 			source_paths=object({
 				base=optional(string, "liferay/projects/{{path[2]}}/base")
 				environments=optional(string, "liferay/projects/*/environments/*")
+				infrastructure_provider_values_filename=optional(string, "infrastructure-provider.yaml")
+				system=optional(string, "liferay/system")
 				values_filename=optional(string, "infrastructure.yaml")
 			})
 			target=object({

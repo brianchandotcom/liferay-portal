@@ -66,6 +66,7 @@ import jakarta.portlet.PortletPreferences;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -881,15 +882,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private void _updateDeletionSystemEventStagedModelTypes() {
 		setDeletionSystemEventStagedModelTypes(
 			TransformUtil.transformToArray(
-				_registrations,
-				registration -> {
-					ExportImportVulcanBatchEngineTaskItemDelegate.
-						ExportImportDescriptor exportImportDescriptor =
-							registration.getExportImportDescriptor();
-
-					return new StagedModelType(
-						exportImportDescriptor.getModelClassName());
-				},
+				Arrays.asList(getClassNames()), StagedModelType::new,
 				StagedModelType.class));
 	}
 

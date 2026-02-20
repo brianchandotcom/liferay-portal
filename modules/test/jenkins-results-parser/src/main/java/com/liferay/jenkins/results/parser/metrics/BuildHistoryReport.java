@@ -50,6 +50,7 @@ public class BuildHistoryReport {
 
 		StringBuilder sb = new StringBuilder();
 
+		sb.append(_getGeneratedDateJavaScriptVariable());
 		sb.append(_getWeeklyServerDurationJavaScriptVariable());
 
 		long duration = TimeUnit.DAYS.toMillis(durationDays);
@@ -193,9 +194,8 @@ public class BuildHistoryReport {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("var dataGeneratedDate = new Date(");
-		sb.append(JenkinsResultsParserUtil.getCurrentTimeMillis());
-		sb.append(");\nvar reportName = \"AWS Build Comparison Report\";");
+		sb.append(_getGeneratedDateJavaScriptVariable());
+		sb.append("\nvar reportName = \"AWS Build Comparison Report\";");
 		sb.append("var tableData = ");
 
 		JSONArray tableJSONArray = new JSONArray();
@@ -277,7 +277,7 @@ public class BuildHistoryReport {
 				"testTypeTableData"));
 
 		sb.append("\n");
-
+		sb.append(_getGeneratedDateJavaScriptVariable());
 		sb.append("\nvar reportName = \"Utilization Report\";");
 
 		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
@@ -325,6 +325,11 @@ public class BuildHistoryReport {
 
 			JenkinsResultsParserUtil.write(entry.getKey(), entry.getValue());
 		}
+	}
+
+	private static String _getGeneratedDateJavaScriptVariable() {
+		return "var dataGeneratedDate = " +
+			JenkinsResultsParserUtil.getCurrentTimeMillis() + ";\n";
 	}
 
 	private static LocalDateTime _getLocalDateTime(String startDateString) {
@@ -459,6 +464,8 @@ public class BuildHistoryReport {
 				duration, jobNamePattern, _getStartTime(startDateString));
 
 		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getGeneratedDateJavaScriptVariable());
 
 		sb.append(
 			_getTableDataJavaScriptVariable(

@@ -1175,7 +1175,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testAddObjectDefinitionWithSeveralAcceptedGroups()
+	public void testAddObjectDefinitionWithAcceptedGroupIds()
 		throws Exception {
 
 		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
@@ -1191,7 +1191,7 @@ public class ObjectDefinitionLocalServiceTest {
 			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
 
-		String objectName = ObjectDefinitionTestUtil.getRandomName();
+		String name = ObjectDefinitionTestUtil.getRandomName();
 
 		StringBuilder sb = new StringBuilder();
 
@@ -1201,23 +1201,23 @@ public class ObjectDefinitionLocalServiceTest {
 		sb.append(StringPool.COMMA);
 		sb.append(depotEntry3.getGroupId());
 
-		String acceptedIDs = sb.toString();
+		String acceptedGroupIds = sb.toString();
 
 		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			objectName, ObjectDefinitionConstants.SCOPE_DEPOT,
+			name, ObjectDefinitionConstants.SCOPE_DEPOT,
 			Collections.singletonList(
 				new ObjectDefinitionSettingBuilder(
 				).name(
 					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS
 				).value(
-					acceptedIDs
+					acceptedGroupIds
 				).build()));
 
 		_assertObjectDefinitionSettingsValues(
 			objectDefinition.getObjectDefinitionSettings(),
 			Collections.singletonMap(
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-				acceptedIDs));
+				acceptedGroupIds));
 	}
 
 	@FeatureFlag("LPD-17564")

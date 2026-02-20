@@ -351,7 +351,6 @@ spec:
                                         dataPlane: {{ $dataPlane }}
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                        slot: {{ $slot }}
                                 engine: {{ $spec.engine | quote }}
                                 engineVersion: {{ $spec.engineVersion | quote }}
                                 identifier: {{ $baseName }}-database-{{ $slot }}

@@ -375,14 +375,14 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 });
 
-const searchBarElement = document.querySelector('.speedwell-search');
-
 Liferay.on('search-bar-toggled', ({active}) => {
 	document.querySelectorAll('.js-toggle-search').forEach((element) => {
 		element.classList.toggle('is-active', active);
 	});
 
 	document.getElementById('speedwell').classList.toggle('has-search', active);
+
+	const searchBarElement = document.querySelector('.speedwell-search');
 
 	if (searchBarElement) {
 		searchBarElement.classList.toggle('is-open', active);

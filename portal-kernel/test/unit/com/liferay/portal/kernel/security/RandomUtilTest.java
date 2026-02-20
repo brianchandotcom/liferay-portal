@@ -31,7 +31,9 @@ public class RandomUtilTest {
 
 	@Test
 	public void testNext() {
-		RandomUtil.random = new PredictableRandom(_NUMBERS);
+		PredictableRandom predictableRandom = new PredictableRandom(_NUMBERS);
+
+		RandomUtil.setRandomSupplier(() -> predictableRandom);
 
 		for (int number : _NUMBERS) {
 			Assert.assertEquals(number, RandomUtil.nextInt(10));
@@ -42,15 +44,15 @@ public class RandomUtilTest {
 	public void testNextInts() {
 		int[] expectedResult = {6, 0, 1, 8, 4, 9, 3, 7, 2, 5};
 
-		RandomUtil.random = new PredictableRandom(_NUMBERS);
+		RandomUtil.setRandomSupplier(() -> new PredictableRandom(_NUMBERS));
 
 		Assert.assertArrayEquals(expectedResult, RandomUtil.nextInts(10, 10));
 
-		RandomUtil.random = new PredictableRandom(_NUMBERS);
+		RandomUtil.setRandomSupplier(() -> new PredictableRandom(_NUMBERS));
 
 		Assert.assertArrayEquals(expectedResult, RandomUtil.nextInts(10, 20));
 
-		RandomUtil.random = new PredictableRandom(_NUMBERS);
+		RandomUtil.setRandomSupplier(() -> new PredictableRandom(_NUMBERS));
 
 		Assert.assertArrayEquals(
 			new int[] {6, 0, 1, 8, 4}, RandomUtil.nextInts(10, 5));
@@ -58,7 +60,7 @@ public class RandomUtilTest {
 
 	@Test
 	public void testShuffle() {
-		RandomUtil.random = new PredictableRandom(_NUMBERS);
+		RandomUtil.setRandomSupplier(() -> new PredictableRandom(_NUMBERS));
 
 		String inputString = "abcdefghij";
 

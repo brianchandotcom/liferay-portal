@@ -27,8 +27,6 @@ import com.liferay.petra.string.StringBundler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -232,7 +230,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 					"emailAddress eq '" + emailAddress + "'",
 					Pagination.of(1, 1), "", "");
 
-			if (userAccountsPage.fetchFirstItem() == null) {
+			if (userAccountsPage.fetchFirstItem() != null) {
 				continue;
 			}
 
@@ -246,7 +244,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				});
 
 			_marketplaceService.postAccountUserAccountByEmailAddress(
-				accountId, emailAddress);
+				account.getId(), emailAddress);
 		}
 	}
 

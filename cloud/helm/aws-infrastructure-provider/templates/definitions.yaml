@@ -65,7 +65,7 @@ spec:
                                 database:
                                     properties:
                                         engine:
-                                            default: "postgres"
+                                            default: postgres
                                             type: string
                                         engineVersion:
                                             default: "16.11"

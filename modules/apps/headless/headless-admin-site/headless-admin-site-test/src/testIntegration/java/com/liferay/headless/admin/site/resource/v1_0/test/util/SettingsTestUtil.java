@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -107,11 +108,14 @@ public class SettingsTestUtil {
 			Assert.assertNull(favIconItemExternalReference);
 		}
 		else {
+			Long groupId = ScopeUtil.getItemGroupId(
+				layout.getCompanyId(), layout.getFaviconFileEntryScopeERC(),
+				layout.getGroupId());
+
 			DLFileEntry dlFileEntry =
 				DLFileEntryLocalServiceUtil.
 					fetchDLFileEntryByExternalReferenceCode(
-						layout.getFaviconFileEntryERC(),
-						layout.getFaviconFileEntryGroupId());
+						layout.getFaviconFileEntryERC(), groupId);
 
 			Assert.assertEquals(
 				dlFileEntry.getExternalReferenceCode(),

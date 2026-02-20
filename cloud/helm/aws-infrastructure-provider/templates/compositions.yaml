@@ -923,7 +923,12 @@ spec:
                                         ],
                                         "Version": "2012-10-17"
                                     }
-                                domainName: {{ $searchName }}
+                                domainNameSelector:
+                                    matchLabels:
+                                        app: liferay
+                                        component: search
+                                        environmentId: {{ $environmentId }}
+                                        projectId: {{ $projectId }}
                                 region: {{ $searchSpec.region }}
                             managementPolicies: {{ $managementPolicies }}
                         ---

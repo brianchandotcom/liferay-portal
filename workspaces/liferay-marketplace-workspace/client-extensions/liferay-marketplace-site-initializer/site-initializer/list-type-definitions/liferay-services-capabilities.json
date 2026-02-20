@@ -1,7 +1,7 @@
 {
-    "externalReferenceCode": "LIFERAY-SERVICES-CAPABILITIES",
-    "name": "Liferay Services Capabilities",
-    "name_i18n": {
-        "en-US": "Liferay Services Capabilities"
-    }
+	"externalReferenceCode": "LIFERAY-SERVICES-CAPABILITIES",
+	"name": "Liferay Services Capabilities",
+	"name_i18n": {
+		"en-US": "Liferay Services Capabilities"
+	}
 }

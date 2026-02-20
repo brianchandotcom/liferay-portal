@@ -977,7 +977,6 @@ public abstract class BaseSectionDisplayContextTestCase
 				StringPool.TRUE);
 		}
 
-		try {
 			CreationMenu creationMenu = getCreationMenu(objectEntryFolder);
 
 			if (creationMenu == null) {
@@ -994,11 +993,9 @@ public abstract class BaseSectionDisplayContextTestCase
 					creationMenu,
 					objectDefinition.getLabel(LocaleUtil.getDefault()));
 			}
-		}
-		finally {
+
 			objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
-		}
 	}
 
 	@Inject

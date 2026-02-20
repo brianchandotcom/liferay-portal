@@ -33,13 +33,15 @@ metadata:
 spec:
     gatewayClassName: {{ .Values.gateway.className }}
     listeners:
+        {{- if not (hasKey .Values.endpoints "http") }}
         -   allowedRoutes:
                 namespaces:
                     from: Same
             name: http
             port: 80
             protocol: HTTP
-        {{- range  $name, $config := .Values.customDomainConfigs }}
+        {{- end }}
+        {{- range  $name, $config := .Values.endpoints }}
         -   allowedRoutes:
                 namespaces:
                     from: Same

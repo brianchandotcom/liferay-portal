@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -242,7 +243,7 @@ public class AssetTagStagedModelDataHandler
 				assetTag.getTagId());
 
 		for (AssetTagGroupRel assetTagGroupRel : assetTagGroupRels) {
-			if (assetTagGroupRel.getGroupId() == _GROUP_ID_ALL) {
+			if (assetTagGroupRel.getGroupId() == GroupConstants.GROUP_ID_ALL) {
 				continue;
 			}
 
@@ -321,14 +322,12 @@ public class AssetTagStagedModelDataHandler
 		}
 
 		if (groupIds.isEmpty()) {
-			groupIds.add(_GROUP_ID_ALL);
+			groupIds.add(GroupConstants.GROUP_ID_ALL);
 		}
 
 		_assetTagGroupRelLocalService.setAssetTagGroupRels(
 			importedTagId, ListUtil.toLongArray(groupIds, Long::longValue));
 	}
-
-	private static final long _GROUP_ID_ALL = -1L;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AssetTagStagedModelDataHandler.class);

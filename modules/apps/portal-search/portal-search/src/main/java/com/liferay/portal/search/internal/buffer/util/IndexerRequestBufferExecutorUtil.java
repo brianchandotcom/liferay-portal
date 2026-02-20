@@ -71,7 +71,7 @@ public class IndexerRequestBufferExecutorUtil {
 		ExecutorService executorService =
 			SystemExecutorServiceUtil.getExecutorService();
 
-		AtomicReference<Future<?>> futureReference = new AtomicReference<>();
+		AtomicReference<Future<?>> futureAtomicReference = new AtomicReference<>();
 
 		FutureTask<?> futureTask = new FutureTask<Void>(
 			new CompanyInheritableThreadLocalCallable<>(
@@ -97,13 +97,13 @@ public class IndexerRequestBufferExecutorUtil {
 						ServiceContextThreadLocal.popServiceContext();
 
 						SearchContext.unregisterBatchModeSyncFuture(
-							futureReference.get());
+							futureAtomicReference.get());
 					}
 
 					return null;
 				}));
 
-		futureReference.set(futureTask);
+		futureAtomicReference.set(futureTask);
 
 		SearchContext.registerBatchModeSyncFuture(futureTask);
 

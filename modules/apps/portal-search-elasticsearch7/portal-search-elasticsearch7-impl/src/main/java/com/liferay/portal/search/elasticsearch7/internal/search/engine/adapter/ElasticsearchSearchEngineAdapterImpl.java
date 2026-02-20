@@ -161,7 +161,7 @@ public class ElasticsearchSearchEngineAdapterImpl
 			BulkDocumentRequest transferCopyBulkDocumentRequest =
 				bulkDocumentRequest.transferCopy();
 
-			AtomicReference<Future<?>> futureReference =
+			AtomicReference<Future<?>> futureAtomicReference =
 				new AtomicReference<>();
 
 			FutureTask<?> futureTask = new FutureTask<Void>(
@@ -172,13 +172,13 @@ public class ElasticsearchSearchEngineAdapterImpl
 					}
 					finally {
 						SearchContext.unregisterBatchModeSyncFuture(
-							futureReference.get());
+							futureAtomicReference.get());
 					}
 
 					return null;
 				});
 
-			futureReference.set(futureTask);
+			futureAtomicReference.set(futureTask);
 
 			SearchContext.registerBatchModeSyncFuture(futureTask);
 

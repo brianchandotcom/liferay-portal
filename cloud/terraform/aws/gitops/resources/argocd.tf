@@ -62,7 +62,7 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 										},
 										{
 											name="gateway.name"
-											value="${local.gateway_name}"
+											value=local.gateway_name
 										},
 										{
 											name="projectId"
@@ -305,8 +305,8 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 								helm={
 									parameters=[
 										{
-											name="${local.liferay_helm_chart_config.values_scope_prefix}gateway.name"
-											value="${local.gateway_name}"
+											name="${local.liferay_helm_chart_config.values_scope_prefix}network.gatewayName"
+											value=local.gateway_name
 										},
 										{
 											name="${local.liferay_helm_chart_config.values_scope_prefix}serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"

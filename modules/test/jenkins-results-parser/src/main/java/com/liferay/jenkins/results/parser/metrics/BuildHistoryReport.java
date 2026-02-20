@@ -83,12 +83,6 @@ public class BuildHistoryReport {
 			"dependencies/metrics/build-comparison-report", "/css/main.css",
 			"/index.html", "/js/main.js");
 
-		BuildHistory buildHistory = BuildHistoryProcessor.mergeBuildHistories(
-			BuildHistoryProcessor.newTopLevelBuildHistories(
-				TimeUnit.DAYS.toMillis(durationDays),
-				_getStartTime(startDateString)),
-			"");
-
 		File baseDir = BuildHistoryProcessor.getBaseDir();
 
 		BuildHistoryProcessor.setBaseDir(
@@ -104,8 +98,13 @@ public class BuildHistoryReport {
 		Map<String, BuildJSONObject> awsBuildJSONObjectsMap =
 			awsBuildHistory.getBuildJSONObjectsMap();
 
-		Map<String, BuildJSONObject> buildJSONObjectsMap =
-			buildHistory.getBuildJSONObjectsMap();
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getGeneratedDateJavaScriptVariable());
+		sb.append("\nvar reportName = \"AWS Build Comparison Report\";");
+		sb.append("var tableData = ");
+
+		JSONArray tableJSONArray = new JSONArray();
 
 		List<List<Object>> rows = new ArrayList<>();
 
@@ -127,6 +126,15 @@ public class BuildHistoryReport {
 					add("Top Level Duration (AWS)");
 				}
 			});
+
+		BuildHistory buildHistory = BuildHistoryProcessor.mergeBuildHistories(
+			BuildHistoryProcessor.newTopLevelBuildHistories(
+				TimeUnit.DAYS.toMillis(durationDays),
+				_getStartTime(startDateString)),
+			"");
+
+		Map<String, BuildJSONObject> buildJSONObjectsMap =
+			buildHistory.getBuildJSONObjectsMap();
 
 		for (Map.Entry<String, BuildJSONObject> entry :
 				buildJSONObjectsMap.entrySet()) {
@@ -192,19 +200,12 @@ public class BuildHistoryReport {
 				});
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_getGeneratedDateJavaScriptVariable());
-		sb.append("\nvar reportName = \"AWS Build Comparison Report\";");
-		sb.append("var tableData = ");
-
-		JSONArray tableJSONArray = new JSONArray();
-
 		for (List<Object> row : rows) {
 			tableJSONArray.put(new JSONArray(row));
 		}
 
 		sb.append(tableJSONArray);
+
 		sb.append(";");
 
 		buildHistoryReport.addFile(sb.toString(), "js/table-data.js");
@@ -451,6 +452,10 @@ public class BuildHistoryReport {
 		long durationDays, Pattern jobNamePattern, File outputDir,
 		String reportName, String startDateString) {
 
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(_getGeneratedDateJavaScriptVariable());
+
 		BuildHistoryReport buildHistoryReport = new BuildHistoryReport(
 			outputDir);
 
@@ -462,10 +467,6 @@ public class BuildHistoryReport {
 		Collection<BuildHistory> buildHistories =
 			BuildHistoryProcessor.newTestSuiteJobHistories(
 				duration, jobNamePattern, _getStartTime(startDateString));
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(_getGeneratedDateJavaScriptVariable());
 
 		sb.append(
 			_getTableDataJavaScriptVariable(

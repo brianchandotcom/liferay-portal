@@ -87,8 +87,6 @@ function getDynamicMax(datasets) {
 
     let maxIndexTotal = Math.max(...indexTotals, 0);
 
-	console.log(maxIndexTotal)
-
     return Math.round(maxIndexTotal * 1.10);
 }
 

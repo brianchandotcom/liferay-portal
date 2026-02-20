@@ -148,7 +148,10 @@ public class EmptyModelManagerImplTest {
 	public void testGetOrAddEmptyModelCompanyScopedWithEnabledLazyReferencingAndAddingEmptyItem()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable =
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class);
+			SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			long classNameId = RandomTestUtil.randomLong();
@@ -159,10 +162,19 @@ public class EmptyModelManagerImplTest {
 				classNameId
 			);
 
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				true
+			);
+
 			long exportImportConfigurationId = RandomTestUtil.randomLong();
 
-			ExportImportThreadLocal.setExportImportConfigurationId(
-				exportImportConfigurationId);
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::getExportImportConfigurationId
+			).thenReturn(
+				exportImportConfigurationId
+			);
 
 			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();
@@ -300,7 +312,10 @@ public class EmptyModelManagerImplTest {
 			stagingGroupHelper
 		);
 
-		try (SafeCloseable safeCloseable =
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class);
+			SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			long classNameId = RandomTestUtil.randomLong();
@@ -341,10 +356,19 @@ public class EmptyModelManagerImplTest {
 				_group
 			);
 
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				true
+			);
+
 			long exportImportConfigurationId = RandomTestUtil.randomLong();
 
-			ExportImportThreadLocal.setExportImportConfigurationId(
-				exportImportConfigurationId);
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::getExportImportConfigurationId
+			).thenReturn(
+				exportImportConfigurationId
+			);
 
 			String userExternalReferenceCode = RandomTestUtil.randomString();
 
@@ -438,7 +462,10 @@ public class EmptyModelManagerImplTest {
 	public void testIsEmptyModelWhenAddingEmptyModel() throws Exception {
 		Assert.assertFalse(_emptyModelManager.isEmptyModel());
 
-		try (SafeCloseable safeCloseable =
+		try (MockedStatic<ExportImportThreadLocal>
+				exportImportThreadLocalMockedStatic = Mockito.mockStatic(
+					ExportImportThreadLocal.class);
+			SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			long classNameId = RandomTestUtil.randomLong();
@@ -449,10 +476,19 @@ public class EmptyModelManagerImplTest {
 				classNameId
 			);
 
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::isImportInProcess
+			).thenReturn(
+				true
+			);
+
 			long exportImportConfigurationId = RandomTestUtil.randomLong();
 
-			ExportImportThreadLocal.setExportImportConfigurationId(
-				exportImportConfigurationId);
+			exportImportThreadLocalMockedStatic.when(
+				ExportImportThreadLocal::getExportImportConfigurationId
+			).thenReturn(
+				exportImportConfigurationId
+			);
 
 			long companyId = RandomTestUtil.randomLong();
 			String externalReferenceCode = RandomTestUtil.randomString();

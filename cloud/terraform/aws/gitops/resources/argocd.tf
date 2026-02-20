@@ -39,6 +39,11 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 					annotations={
 						"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
 					}
+					labels=merge(
+						local.common_labels,
+						{
+							"app.kubernetes.io/name"=var.infrastructure_git_repo_config.target.name
+						})
 					name=var.infrastructure_git_repo_config.target.name
 				}
 				spec={
@@ -318,6 +323,11 @@ resource "kubernetes_manifest" "liferay_applicationset" {
 					annotations={
 						"argocd.argoproj.io/compare-options"="IgnoreExtraneous"
 					}
+					labels=merge(
+						local.common_labels,
+						{
+							"app.kubernetes.io/name"=var.liferay_git_repo_config.target.name
+						})
 					name=var.liferay_git_repo_config.target.name
 				}
 				spec={

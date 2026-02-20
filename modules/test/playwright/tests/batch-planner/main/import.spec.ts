@@ -620,7 +620,7 @@ test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategi
 
 	await expect(
 		page.getByText(
-			'com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException'
+			`Duplicate object entry with external reference code 83b46736-f89b-9b90-188c-497d06c08271, group ID 0, and object definition ID ${objectDefinition.id}`
 		)
 	).toBeVisible();
 });
@@ -1405,7 +1405,7 @@ test('can show duplicate error message with CSV import existing entry and only a
 
 	await expect(
 		page.getByText(
-			'com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeException'
+			`Duplicate object entry with external reference code 83b46736-f89b-9b90-188c-497d06c08271, group ID 0, and object definition ID ${objectDefinition.id}`
 		)
 	).toBeVisible();
 });
@@ -1444,9 +1444,13 @@ test('can show unique contraint error message with CSV import existing entry and
 		'UPDATE'
 	);
 
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
 	await expect(
 		page.getByText(
-			'com.liferay.object.exception.ObjectEntryValuesException$UniqueValueConstraintViolation'
+			`Unique value constraint violation for O_${companyId}_Test.testAutoIncrementField_ with value prefix-1-suffix`
 		)
 	).toBeVisible();
 });

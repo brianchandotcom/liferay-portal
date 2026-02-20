@@ -47,23 +47,25 @@ type IChartContentProps = Omit<IChartData, 'infoText'> & {
 };
 
 const ChartContent: React.FC<IChartContentProps> = ({
-	dataSizeUnits = '',
 	displayUsage,
 	maxCount,
 	maxCountText,
+	maxCountUnits = '',
+	percentage,
 	title,
 	usedCount,
+	usedCountUnits = '',
 }) => {
 	const chartData = useMemo(() => {
 		let consumedValue = Math.random() * 100;
 		let chartLegend = '##';
 
 		if (displayUsage) {
-			if (usedCount !== undefined && maxCount && maxCount > 0) {
-				const percentage = (usedCount / maxCount) * 100;
+			if (percentage !== undefined) {
+				const percentageValue = parseFloat(percentage);
 
-				consumedValue = percentage >= 100 ? 100 : percentage;
-				chartLegend = usedCount.toLocaleString() + dataSizeUnits;
+				consumedValue = percentageValue >= 100 ? 100 : percentageValue;
+				chartLegend = usedCount?.toLocaleString() + usedCountUnits;
 			}
 			else {
 				consumedValue = 0;
@@ -80,7 +82,7 @@ const ChartContent: React.FC<IChartContentProps> = ({
 			},
 			{name: '', value: emptySpace},
 		];
-	}, [usedCount, dataSizeUnits, displayUsage, maxCount]);
+	}, [usedCount, usedCountUnits, displayUsage, percentage]);
 
 	return (
 		<div className="align-items-center chart-content d-flex w-100">
@@ -146,7 +148,7 @@ const ChartContent: React.FC<IChartContentProps> = ({
 					>
 						{displayUsage &&
 							(maxCount !== undefined
-								? maxCount.toLocaleString() + dataSizeUnits
+								? maxCount.toLocaleString() + maxCountUnits
 								: '-')}
 					</span>
 				</h5>

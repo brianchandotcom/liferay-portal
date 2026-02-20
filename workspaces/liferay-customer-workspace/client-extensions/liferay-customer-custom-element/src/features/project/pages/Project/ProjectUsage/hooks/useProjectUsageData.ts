@@ -18,12 +18,14 @@ interface IAddOn {
 interface IData {
 	infoText?: string;
 	maxCount?: number;
+	maxCountUnits?: string;
+	percentage?: string;
 	title: string;
 	usedCount?: number;
+	usedCountUnits?: string;
 }
 
 export interface IChartData extends IData {
-	dataSizeUnits?: string;
 	maxCountText?: string;
 }
 
@@ -157,7 +159,6 @@ const useProjectUsageData = (
 						...response?.[
 							ResourceUsageDataEnum.CLIENT_EXTENSIONS_RAM
 						],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'additional-ram-in-gb-allocated-to-customer-s-extension-environments-with-the-liferay-cloud-infrastructure-to-run-client-extensions'
 						),
@@ -179,7 +180,6 @@ const useProjectUsageData = (
 							ResourceUsageDataEnum
 								.DOCUMENT_LIBRARY_AND_BACKUP_STORAGE
 						],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
 						),
@@ -188,7 +188,6 @@ const useProjectUsageData = (
 					},
 					{
 						...response?.[ResourceUsageDataEnum.DATABASE_STORAGE],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'the-amount-of-data-in-gibs-used-by-the-sql-database-instance-provisioned-as-part-of-liferay-cloud-infrastructure-including-the-database-data-itself-and-any-other-storage-needed-in-an-high-availability-scenario'
 						),
@@ -197,7 +196,6 @@ const useProjectUsageData = (
 					},
 					{
 						...response?.[ResourceUsageDataEnum.NETWORK_TRAFFIC],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'amount-of-data-transfered-out-of-the-customer-application-s-environment-by-load-balancer-response-to-end-users-external-integrations-and-services-in-different-zones-of-the-same-region'
 						),
@@ -208,7 +206,6 @@ const useProjectUsageData = (
 					},
 					{
 						...response?.[ResourceUsageDataEnum.LOG_STORAGE],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'volume-of-logs-in-gib-pertaining-to-the-customer-application-ingested-by-liferay-s-cloud-infrastructure-this-can-include-logs-from-the-default-services-custom-services-or-liferay-s-cloud-platform-itself'
 						),
@@ -221,7 +218,6 @@ const useProjectUsageData = (
 						...response?.[
 							SiteAndUserDataEnum.CLIENT_EXTENSIONS_CAPACITY_RAM
 						],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'additional-ram-in-gb-allocated-to-customer-s-extension-environments-with-the-liferay-cloud-infrastructure-to-run-client-extensions'
 						),
@@ -243,7 +239,6 @@ const useProjectUsageData = (
 							SiteAndUserDataEnum
 								.STORAGE_CAPACITY_DOCUMENT_LIBRARY
 						],
-						dataSizeUnits: 'GB',
 						infoText: i18n.translate(
 							'the-amount-of-data-in-gbs-stored-in-the-backup-service-and-document-library-service-provided-through-liferay-cloud-infrastructure'
 						),

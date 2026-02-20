@@ -8,6 +8,7 @@ import {
 	MAIN_NODE_WIDTH,
 	URL_COLOR
 } from './utils';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {getUrl} from 'shared/util/urls';
 import {Layer, Rectangle} from 'recharts';
 import {Link, useParams} from 'react-router-dom';
@@ -183,7 +184,7 @@ export const Node = ({
 						target='_blank'
 						title={
 							sub(Liferay.Language.get('visit-x'), [
-								decodeURIComponent(payload.url)
+								getSafeDecodedURIComponent(payload.url)
 							]) as string
 						}
 					>
@@ -196,7 +197,10 @@ export const Node = ({
 							x={x + 20}
 							y={y - 10}
 						>
-							{truncateText(decodeURIComponent(payload.url), 18)}
+							{truncateText(
+								getSafeDecodedURIComponent(payload.url),
+								18
+							)}
 						</text>
 					</ClayLink>
 				</>

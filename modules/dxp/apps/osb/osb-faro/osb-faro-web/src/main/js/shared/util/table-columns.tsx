@@ -26,6 +26,7 @@ import {applyTimeZone, formatDateToTimeZone, formatUTCDate} from './date';
 import {Colors} from './colors-size';
 import {formatTime} from './time';
 import {get, isNil, noop, pickBy} from 'lodash';
+import {getSafeDecodedURIComponent} from './util';
 import {Routes, setUriQueryValues, toRoute} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 
@@ -92,7 +93,9 @@ export const activityAssetsListColumns = {
 		cellRenderer: NameCell,
 		cellRendererProps: {
 			renderSecondaryInfo: ({dataSourceAssetPK}) => (
-				<TextTruncate title={decodeURIComponent(dataSourceAssetPK)} />
+				<TextTruncate
+					title={getSafeDecodedURIComponent(dataSourceAssetPK)}
+				/>
 			)
 		},
 		className: 'table-cell-expand',
@@ -929,7 +932,7 @@ export const sitePagesListColumns = {
 		cellRendererProps: {
 			nameKey: 'assetTitle',
 			renderSecondaryInfo: ({assetId}) => (
-				<TextTruncate title={decodeURIComponent(assetId)} />
+				<TextTruncate title={getSafeDecodedURIComponent(assetId)} />
 			),
 			routeFn: ({data: {assetId, assetTitle}}) =>
 				setUriQueryValues(

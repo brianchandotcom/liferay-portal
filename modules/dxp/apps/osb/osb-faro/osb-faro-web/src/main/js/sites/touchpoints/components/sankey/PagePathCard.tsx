@@ -8,7 +8,11 @@ import Sankey from './Sankey';
 import StatesRenderer from 'shared/components/states-renderer/StatesRenderer';
 import URLConstants from 'shared/util/url-constants';
 import {EmptySankey} from './EmptySankey';
-import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint
+} from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
 import {SANKEY_WIDTH, SECONDARY_NODE_COLOR} from './utils';
 import {TitleKey, Type} from './types';
@@ -108,7 +112,7 @@ const PagePathCard: React.FC<IPagePathCardProps> = ({
 		variables: {
 			canonicalUrl: getSafeTouchpoint(touchpoint),
 			channelId,
-			title: decodeURIComponent(title),
+			title: getSafeDecodedURIComponent(title),
 			...(selectedSegment?.id && {
 				segmentId: selectedSegment.id
 			}),

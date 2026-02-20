@@ -11,6 +11,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {CSVType} from 'shared/components/download-report/utils';
 import {ENABLE_GLOBAL_FILTER} from 'shared/util/constants';
 import {getMatchedRoute, Routes} from 'shared/util/router';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {pickBy} from 'lodash';
 import {Router} from 'shared/types';
 import {sub} from 'shared/util/lang';
@@ -54,7 +55,7 @@ const WebContent: React.FC<{
 
 	const dataSourceStates = useDataSource();
 
-	const decodedTitle = decodeURIComponent(title);
+	const decodedTitle = getSafeDecodedURIComponent(title);
 
 	const rangeSelectorsFromQuery = useQueryRangeSelectors();
 

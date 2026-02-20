@@ -1,7 +1,11 @@
 import {DocumentNode} from 'apollo-boost';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {Filters, getFilters, RawFilters} from 'shared/util/filter';
-import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint
+} from 'shared/util/util';
 import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
 import {useQuery} from '@apollo/react-hooks';
@@ -14,9 +18,9 @@ export const useAssetVariables = (commonVariables: ICommonVariables) => {
 	const {assetId, channelId, title, touchpoint} = useParams();
 
 	return {
-		assetId: decodeURIComponent(assetId),
+		assetId: getSafeDecodedURIComponent(assetId),
 		channelId,
-		title: decodeURIComponent(title),
+		title: getSafeDecodedURIComponent(title),
 		touchpoint: getSafeTouchpoint(touchpoint),
 		...commonVariables
 	};

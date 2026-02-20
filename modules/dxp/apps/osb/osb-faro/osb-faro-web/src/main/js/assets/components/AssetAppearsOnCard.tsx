@@ -10,7 +10,10 @@ import TextTruncate from 'shared/components/TextTruncate';
 import URLConstants from 'shared/util/url-constants';
 import {AssetTypes} from 'shared/util/constants';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
-import {getSafeRangeSelectors} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors
+} from 'shared/util/util';
 import {getUrl} from 'shared/util/urls';
 import {metricsListColumns} from 'shared/util/table-columns';
 import {pickBy} from 'lodash';
@@ -96,7 +99,7 @@ const AssetAppearsOnStateRenderer = ({
 			assetType: assetType.toUpperCase(),
 			channelId,
 			selectedMetrics: accessors,
-			title: decodeURIComponent(title),
+			title: getSafeDecodedURIComponent(title),
 			...pagination,
 			...getSafeRangeSelectors(rangeSelectors)
 		}

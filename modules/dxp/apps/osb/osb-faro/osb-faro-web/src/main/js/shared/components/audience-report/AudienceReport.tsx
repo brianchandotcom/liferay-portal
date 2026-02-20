@@ -7,7 +7,11 @@ import {DocumentNode} from 'apollo-boost';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatData} from './util';
 import {getFilters, RawFilters} from 'shared/util/filter';
-import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint
+} from 'shared/util/util';
 import {IAudienceReportBaseCardProps, Name, TData} from './types';
 import {RangeSelectors} from 'shared/types';
 import {useParams} from 'react-router-dom';
@@ -114,7 +118,7 @@ function AudienceReport<TRawData>({
 		variables: {
 			assetId,
 			channelId,
-			title: decodeURIComponent(title),
+			title: getSafeDecodedURIComponent(title),
 			touchpoint: getSafeTouchpoint(touchpoint),
 			...getFilters(filters),
 			...getSafeRangeSelectors(rangeSelectors)

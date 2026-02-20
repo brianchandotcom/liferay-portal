@@ -13,7 +13,11 @@ import {
 	getDefaultSortOrder,
 	NAME
 } from 'shared/util/pagination';
-import {getSafeRangeSelectors, getSafeTouchpoint} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors,
+	getSafeTouchpoint
+} from 'shared/util/util';
 import {RangeSelectors} from 'shared/types';
 import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {
@@ -71,7 +75,7 @@ const filterBySegment: React.FC<IFilterBySegment> = ({
 			canonicalUrl: getSafeTouchpoint(touchpoint),
 			channelId,
 			segmentIds: data?.items.map(({id}) => id),
-			title: decodeURIComponent(title),
+			title: getSafeDecodedURIComponent(title),
 			...getSafeRangeSelectors(rangeSelectors)
 		}
 	});

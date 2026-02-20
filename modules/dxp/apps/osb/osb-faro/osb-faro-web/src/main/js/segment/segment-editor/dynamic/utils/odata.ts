@@ -21,6 +21,7 @@ import {fromJS, Map} from 'immutable';
 import {generateGroupId, generateRowId, isCriterionGroup} from './utils';
 import {get, invert, isFinite, isNull, isString, isUndefined} from 'lodash';
 import {getPropertyValue, setPropertyValue} from './custom-inputs';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {filter as oDataFilterFn} from 'odata-v4-parser';
 
 const OPERATORS = {
@@ -540,7 +541,7 @@ export const decodeValueFromCriteria = (criteria: Criteria) => {
 		let decodedValue = value;
 
 		try {
-			decodedValue = decodeURIComponent(value);
+			decodedValue = getSafeDecodedURIComponent(value);
 		} catch (e) {}
 
 		return decodedValue;

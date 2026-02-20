@@ -5,6 +5,7 @@ import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
 import {applyTimeZone, formatDateToTimeZone} from 'shared/util/date';
 import {DateCell} from 'shared/components/table/cell-components';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {getStatusColor, getStatusName} from 'experiments/util/experiments';
 import {getUrl} from 'shared/util/urls';
 import {isNil} from 'lodash';
@@ -45,7 +46,7 @@ export default timeZoneId => [
 		cellRenderer: ({data: {pageURL}}) => (
 			<TableDataCell
 				firstColumn={false}
-				title={decodeURIComponent(pageURL)}
+				title={getSafeDecodedURIComponent(pageURL)}
 			/>
 		),
 		className: 'table-cell-expand',

@@ -20,6 +20,7 @@ import {ChannelContext} from 'shared/context/channel';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {getRangeSelectorsFromQuery} from 'shared/util/util';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {graphql} from '@apollo/react-hoc';
 import {hasChanges} from 'shared/util/react';
 import {PropTypes} from 'prop-types';
@@ -281,7 +282,7 @@ class CustomAssetsDashboardPage extends React.Component {
 			params: {channelId, groupId, title}
 		} = router;
 
-		const decodedTitle = decodeURIComponent(title);
+		const decodedTitle = getSafeDecodedURIComponent(title);
 
 		return (
 			<BasePage documentTitle={Liferay.Language.get('assets')}>

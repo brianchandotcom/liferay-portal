@@ -13,6 +13,7 @@ import {
 	EXPERIMENT_STATUS_QUERY
 } from 'experiments/queries/ExperimentQuery';
 import {getActions} from 'experiments/util/experiments';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {Routes} from 'shared/util/router';
 import {SessionsCard} from 'experiments/components/SessionsCard';
 import {Status} from 'experiments/components/summary-card/types';
@@ -121,17 +122,17 @@ const ExperimentOverviewContent = ({status}) => {
 							<BasePage.Header.TitleSection
 								subtitle={
 									<TextTruncate
-										title={decodeURIComponent(
+										title={getSafeDecodedURIComponent(
 											data.experiment.pageURL
 										)}
 									>
 										<ClayLink
-											href={decodeURIComponent(
+											href={getSafeDecodedURIComponent(
 												data.experiment.pageURL
 											)}
 											target='_blank'
 										>
-											{decodeURIComponent(
+											{getSafeDecodedURIComponent(
 												data.experiment.pageURL
 											)}
 										</ClayLink>

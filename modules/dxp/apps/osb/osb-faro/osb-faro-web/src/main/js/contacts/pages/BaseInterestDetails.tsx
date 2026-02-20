@@ -18,6 +18,7 @@ import {
 } from 'shared/util/router';
 import {createOrderIOMap, NAME} from 'shared/util/pagination';
 import {formatUTCDateFromUnix} from 'shared/util/date';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {individualsListColumns} from 'shared/util/table-columns';
 import {sub} from 'shared/util/lang';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
@@ -151,7 +152,7 @@ const BaseInterestDetails: React.FC<IBaseInterestDetailsProps> = ({
 		}
 	];
 
-	const interestName = decodeURIComponent(interestId);
+	const interestName = getSafeDecodedURIComponent(interestId);
 
 	const individualsEntityKey =
 		type === ACCOUNTS ? 'accountId' : 'individualSegmentId';

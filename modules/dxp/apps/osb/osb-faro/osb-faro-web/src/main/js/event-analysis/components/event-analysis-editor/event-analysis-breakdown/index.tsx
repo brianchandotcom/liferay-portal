@@ -24,7 +24,10 @@ import {compose} from 'redux';
 import {EditBreakdown, withAttributesConsumer} from '../context/attributes';
 import {get, isNil, omit} from 'lodash';
 import {getMaxEventValue, parseBreakdownData} from 'event-analysis/utils/utils';
-import {getSafeRangeSelectors} from 'shared/util/util';
+import {
+	getSafeDecodedURIComponent,
+	getSafeRangeSelectors
+} from 'shared/util/util';
 import {OrderedMap} from 'immutable';
 import {SafeResults} from 'shared/hoc/util';
 import {sub} from 'shared/util/lang';
@@ -320,14 +323,16 @@ const getColumns = ({
 							'align-top',
 							className
 						)}
-						data-testid={decodeURIComponent(dataValue.name)}
+						data-testid={getSafeDecodedURIComponent(dataValue.name)}
 						rowSpan={dataValue.rowSpan}
 					>
 						<div style={{width: 128}}>
 							<TextTruncate
 								className='white-space-normal'
 								maxCharLength={200}
-								title={decodeURIComponent(dataValue.name)}
+								title={getSafeDecodedURIComponent(
+									dataValue.name
+								)}
 							/>
 						</div>
 					</td>

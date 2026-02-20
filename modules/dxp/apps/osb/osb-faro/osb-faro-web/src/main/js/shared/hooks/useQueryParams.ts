@@ -1,7 +1,8 @@
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {useLocation} from 'react-router-dom';
 
 function decodeQueryParam(param) {
-	return decodeURIComponent(param.replace(/\+/g, ' '));
+	return getSafeDecodedURIComponent(param.replace(/\+/g, ' '));
 }
 
 function queryStringToObject(initialQueryString: string): any {

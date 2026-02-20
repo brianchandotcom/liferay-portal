@@ -5,6 +5,7 @@ import ClayNavigationBar from '@clayui/navigation-bar';
 import InterestPagesList from 'contacts/components/InterestPagesList';
 import React from 'react';
 import {EntityTypes} from 'shared/util/constants';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {Individual} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
@@ -67,7 +68,7 @@ export default class InterestDetails extends React.Component {
 			props: {channelId, groupId, id, interestId}
 		} = this;
 
-		const interestName = decodeURIComponent(interestId);
+		const interestName = getSafeDecodedURIComponent(interestId);
 
 		return (
 			<>

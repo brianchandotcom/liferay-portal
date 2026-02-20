@@ -108,7 +108,9 @@ export const getSafeTouchpoint = (touchpoint: string) => {
 
 		return remainingUrl === '/' ? url.origin : url.origin + remainingUrl;
 	} catch (e) {
-		return touchpoint !== 'Any' ? decodeURIComponent(touchpoint) : null;
+		return touchpoint !== 'Any'
+			? getSafeDecodedURIComponent(touchpoint)
+			: null;
 	}
 };
 
@@ -145,7 +147,7 @@ export const downloadDataAsFile = ({
  * @param {string} url
  */
 export const removeProtocol = url =>
-	decodeURIComponent(url).replace(/^http(s)?:\/\//i, '');
+	getSafeDecodedURIComponent(url).replace(/^http(s)?:\/\//i, '');
 
 /**
  * Remove numbers using regex

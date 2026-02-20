@@ -10,6 +10,7 @@ import {
 	orderBy,
 	toPairs
 } from 'lodash/fp';
+import {getSafeDecodedURIComponent} from './util';
 import {RangeSelectors} from 'shared/types';
 import {sub} from 'shared/util/lang';
 import {TimeIntervals} from 'shared/util/constants';
@@ -119,14 +120,14 @@ export const formatEvents = (events: UserSessionEvent[]): Array<SessionEvent> =>
 			return {
 				attributes: {
 					...(isAsset && {assetTitle}),
-					canonicalUrl: decodeURIComponent(canonicalUrl),
+					canonicalUrl: getSafeDecodedURIComponent(canonicalUrl),
 					header: Liferay.Language.get('event-attributes'),
 					pageTitle,
-					referrer: decodeURIComponent(referrer),
-					url: decodeURIComponent(url)
+					referrer: getSafeDecodedURIComponent(referrer),
+					url: getSafeDecodedURIComponent(url)
 				},
 				description: assetTitle,
-				subtitle: decodeURIComponent(canonicalUrl),
+				subtitle: getSafeDecodedURIComponent(canonicalUrl),
 				time: moment(createDate),
 				title: name
 			};

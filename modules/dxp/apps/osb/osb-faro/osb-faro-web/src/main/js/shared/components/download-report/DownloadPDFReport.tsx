@@ -5,6 +5,7 @@ import {addAlert} from 'shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {DownloadReportButton} from './DownloadReportButton';
 import {DownloadReportModal} from './DownloadReportModal';
+import {getSafeDecodedURIComponent} from 'shared/util/util';
 import {
 	JSPDFExtension,
 	JSPDFExtensionContainer,
@@ -375,7 +376,7 @@ const DownloadPDFReport: React.FC<IDownloadReport> = ({
 									size: Size.Small,
 									truncateText: true,
 									url,
-									value: decodeURIComponent(url),
+									value: getSafeDecodedURIComponent(url),
 									weight: Weight.Bold
 								});
 							}

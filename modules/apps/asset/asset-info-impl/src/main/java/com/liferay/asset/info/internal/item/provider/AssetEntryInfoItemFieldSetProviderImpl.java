@@ -86,6 +86,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		Set<AssetVocabulary> assetVocabularies =
 			_getNoninternalAssetVocabularies(assetEntry);
 
+		long scopeGroupId = _getScopeGroupId();
+
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			infoFieldValues.add(
 				new InfoFieldValue<>(
@@ -101,7 +103,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					).externalUniqueId(
 						_getExternalUniqueId(
 							assetVocabulary.getExternalReferenceCode(),
-							assetVocabulary.getGroupId(), _getScopeGroupId())
+							assetVocabulary.getGroupId(), scopeGroupId)
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
 						).defaultLocale(
@@ -210,6 +212,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	private InfoFieldSet _getInfoFieldSet(
 		Collection<AssetVocabulary> assetVocabularies) {
 
+		long scopeGroupId = _getScopeGroupId();
+
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
 			_categoriesInfoField
@@ -228,7 +232,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 					).externalUniqueId(
 						_getExternalUniqueId(
 							assetVocabulary.getExternalReferenceCode(),
-							assetVocabulary.getGroupId(), _getScopeGroupId())
+							assetVocabulary.getGroupId(), scopeGroupId)
 					).labelInfoLocalizedValue(
 						InfoLocalizedValue.<String>builder(
 						).defaultLocale(

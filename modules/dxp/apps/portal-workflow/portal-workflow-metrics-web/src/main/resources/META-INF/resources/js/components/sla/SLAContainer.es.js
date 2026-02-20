@@ -6,10 +6,6 @@
 import React, {createContext, useState} from 'react';
 import {Outlet} from 'react-router';
 
-import {withParams} from '../../shared/components/router/routerUtil.es';
-import SLAFormPage from './form-page/SLAFormPage.es';
-import SLAListPage from './list-page/SLAListPage.es';
-
 const SLAContext = createContext();
 
 export default function SLAContainer() {

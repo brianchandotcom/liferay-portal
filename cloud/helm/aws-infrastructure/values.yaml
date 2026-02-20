@@ -16,13 +16,5 @@ enabled: true
 storage:
     region: us-west-2
 search:
-    customEnv: {}
-    enabled: false
-    env: {}
-    javaOpts: {}
-    maxMapCount: {}
-    name: {}
-    nodeCount: {}
-    resources: {}
-    version: {}
-    volumeSize: {}
+    elasticsearch:
+        enabled: false

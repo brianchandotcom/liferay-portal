@@ -1,6 +1,6 @@
 {{- if .Values.enabled -}}
 {{- $overlay := .Values.overlay | default dict -}}
-{{- $search := .Values.search | default dict -}}
+{{- $search := .Values.search.opensearch | default dict -}}
 {{- $storage := .Values.storage | default dict -}}
 {{- $storageBlue := $storage.blue | default dict -}}
 {{- $storageGreen := $storage.green | default dict -}}

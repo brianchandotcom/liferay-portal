@@ -1,4 +1,4 @@
-{{- $search := .Values.search -}}
+{{- $search := .Values.search.elasticsearch | default dict -}}
 {{- if $search.enabled -}}
 {{- $name := $search.name | default (printf "%s-es" .Release.Name) -}}
 apiVersion: elasticsearch.k8s.elastic.co/v1

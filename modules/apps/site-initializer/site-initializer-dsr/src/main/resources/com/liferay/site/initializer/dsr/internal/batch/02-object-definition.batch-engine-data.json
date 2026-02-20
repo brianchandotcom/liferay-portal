@@ -122,14 +122,14 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "SITE_INITIALIZER_KEY",
+					"externalReferenceCode": "SITE_TEMPLATE_KEY",
 					"indexed": false,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "",
 					"label": {
-						"en_US": "Site Initializer Key"
+						"en_US": "Site Template Key"
 					},
-					"name": "siteInitializerKey",
+					"name": "siteTemplateKey",
 					"required": false,
 					"system": true
 				}

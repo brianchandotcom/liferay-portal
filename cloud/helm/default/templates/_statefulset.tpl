@@ -171,12 +171,12 @@ spec:
         {{- toYaml $v | nindent 8 }}
         {{- end }}
     {{- end }}
-{{- if and .statefulset.gateway .statefulset.gateway.enabled }}
+{{- if and .statefulset.network .statefulset.network.enabled }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-    {{- with .statefulset.gateway.annotations }}
+    {{- with .statefulset.network.annotations }}
     annotations:
         {{- toYaml . | nindent 8 }}
     {{- end }}
@@ -186,16 +186,16 @@ metadata:
     name: {{ include "liferay.name" .root }}-httproute
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    {{- with .statefulset.gateway.hostnames }}
+    {{- with .statefulset.network.hostnames }}
     hostnames:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     parentRefs:
         -   group: gateway.networking.k8s.io
             kind: Gateway
-            name: {{ .statefulset.gateway.name }}
-            sectionName: {{ .statefulset.gateway.domainConfigName }}
-        {{- with .statefulset.gateway.extraParentRefs }}
+            name: {{ .statefulset.network.gatewayName }}
+            sectionName: {{ .statefulset.network.endpointRef }}
+        {{- with .statefulset.network.extraParentRefs }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
     rules:
@@ -206,15 +206,15 @@ spec:
                 -   path:
                         type: PathPrefix
                         value: /
-            {{- with .statefulset.gateway.timeouts }}
+            {{- with .statefulset.network.timeouts }}
             timeouts:
                 request: {{ .request }}
                 backendRequest: {{ .backendRequest }}
             {{- end }}
-        {{- with .statefulset.gateway.extraRules }}
+        {{- with .statefulset.network.extraRules }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
-{{- if and .statefulset.gateway.forceHttpsRedirect (ne .statefulset.gateway.domainConfigName "http") }}
+{{- if and .statefulset.network.forceHttpsRedirect (ne .statefulset.network.endpointRef "http") }}
 ---
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
@@ -222,14 +222,14 @@ metadata:
     name: {{ include "liferay.name" .root }}-https-redirect
     namespace: {{ include "liferay.namespace" .root }}
 spec:
-    {{- with .statefulset.gateway.hostnames }}
+    {{- with .statefulset.network.hostnames }}
     hostnames:
         {{- toYaml . | nindent 8 }}
     {{- end }}
     parentRefs:
         -   group: gateway.networking.k8s.io
             kind: Gateway
-            name: {{ .statefulset.gateway.name }}
+            name: {{ .statefulset.network.gatewayName }}
             sectionName: http
     rules:
         -   filters:

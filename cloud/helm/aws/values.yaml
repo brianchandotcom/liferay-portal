@@ -98,7 +98,7 @@ liferay-default:
             -   mountPath: /opt/liferay/osgi/configs/com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
                 name: liferay-configmap
                 subPath: com.liferay.portal.store.s3.configuration.S3StoreConfiguration.config
-    gateway:
+    network:
         enabled: true
         timeouts:
             request: 300s

@@ -188,16 +188,6 @@ envFrom:
     -   secretRef:
             name: liferay-default
 fullnameOverride: ""
-gateway:
-    annotations: {}
-    domainConfigName: http
-    enabled: false
-    extraParentRefs: []
-    extraRules: []
-    forceHttpsRedirect: false
-    hostnames: []
-    name: ""
-    timeouts: {}
 image:
     pullPolicy: IfNotPresent
     pullSecrets: []
@@ -213,6 +203,16 @@ livenessProbe:
     periodSeconds: 30
     timeoutSeconds: 5
 nameOverride: ""
+network:
+    annotations: {}
+    enabled: false
+    endpointRef: http
+    extraParentRefs: []
+    extraRules: []
+    forceHttpsRedirect: false
+    gatewayName: ""
+    hostnames: []
+    timeouts: {}
 nodeSelector: {}
 overlay:
     bucketName: ""

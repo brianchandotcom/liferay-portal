@@ -10,6 +10,24 @@ import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
 import ProcessItemsCard from './ProcessItemsCard.es';
 
+const getDefaultStartDate = () => {
+	const date = new Date();
+	date.setDate(date.getDate() - 30);
+
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
+const getDefaultEndDate = () => {
+	const date = new Date();
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
 const CompletedItemsCard = ({routeParams}) => {
 	const filterKeys = ['timeRange'];
 	const prefixKey = 'completed';
@@ -25,8 +43,8 @@ const CompletedItemsCard = ({routeParams}) => {
 	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRange = getTimeRangeParams(
-		completionDateStart,
-		completionDateEnd
+		completionDateStart ?? getDefaultStartDate(),
+		completionDateEnd ?? getDefaultEndDate()
 	);
 
 	return (

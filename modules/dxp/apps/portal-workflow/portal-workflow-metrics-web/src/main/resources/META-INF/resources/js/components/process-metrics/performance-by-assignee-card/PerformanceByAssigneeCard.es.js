@@ -16,6 +16,24 @@ import TimeRangeFilter from '../../filter/TimeRangeFilter.es';
 import {getTimeRangeParams} from '../../filter/util/timeRangeUtil.es';
 import {Body, Footer} from './PerformanceByAssigneeCardBody.es';
 
+const getDefaultStartDate = () => {
+	const date = new Date();
+	date.setDate(date.getDate() - 30);
+
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
+const getDefaultEndDate = () => {
+	const date = new Date();
+	let newDate = date.toISOString();
+	newDate = newDate.split('.')[0] + 'Z';
+
+	return newDate;
+};
+
 function Header({disableFilters, prefixKey, processId}) {
 	return (
 		<PanelHeaderWithOptions
@@ -71,7 +89,11 @@ function PerformanceByAssigneeCard({routeParams}) {
 
 	const taskNames = taskName !== 'allSteps' ? [taskName] : undefined;
 	const timeRange = useMemo(
-		() => getTimeRangeParams(assigneeDateStart, assigneeDateEnd),
+		() =>
+			getTimeRangeParams(
+				assigneeDateStart ?? getDefaultStartDate(),
+				assigneeDateEnd ?? getDefaultEndDate
+			),
 		[assigneeDateEnd, assigneeDateStart]
 	);
 

@@ -1376,36 +1376,26 @@ public class DefaultObjectEntryManagerImpl
 
 		serviceContext.setCompanyId(companyId);
 
-		serviceBuilderObjectEntry = _objectEntryService.addOrUpdateObjectEntry(
-			externalReferenceCode, groupId,
-			objectDefinition.getObjectDefinitionId(),
-			_getObjectEntryFolderId(
-				objectDefinition.getCompanyId(), groupId, objectEntry,
-				serviceContext),
-			_toObjectValues(
-				0L, dtoConverterContext.getLocale(), objectDefinition,
-				objectEntry, scopeKey, serviceContext),
-			serviceContext);
-
-		if (ExportImportThreadLocal.isImportInProcess() &&
-			(serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_EMPTY) &&
-			(objectEntry.getStatus() != null)) {
-
-			Status status = objectEntry.getStatus();
-
-			serviceBuilderObjectEntry = _objectEntryLocalService.updateStatus(
-				dtoConverterContext.getUserId(),
-				serviceBuilderObjectEntry.getObjectEntryId(), status.getCode(),
-				serviceContext);
-		}
-
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry, scopeKey),
+				_updateStatus(
+					dtoConverterContext, objectEntry,
+					_objectEntryService.addOrUpdateObjectEntry(
+						externalReferenceCode, groupId,
+						objectDefinition.getObjectDefinitionId(),
+						_getObjectEntryFolderId(
+							objectDefinition.getCompanyId(), groupId,
+							objectEntry, serviceContext),
+						_toObjectValues(
+							0L, dtoConverterContext.getLocale(),
+							objectDefinition, objectEntry, scopeKey,
+							serviceContext),
+						serviceContext),
+					serviceContext),
+				scopeKey),
 			null);
 	}
 
@@ -3757,25 +3747,15 @@ public class DefaultObjectEntryManagerImpl
 				values, serviceContext);
 		}
 
-		if (ExportImportThreadLocal.isImportInProcess() &&
-			(serviceBuilderObjectEntry.getStatus() ==
-				WorkflowConstants.STATUS_EMPTY) &&
-			(objectEntry.getStatus() != null)) {
-
-			Status status = objectEntry.getStatus();
-
-			serviceBuilderObjectEntry = _objectEntryLocalService.updateStatus(
-				dtoConverterContext.getUserId(),
-				serviceBuilderObjectEntry.getObjectEntryId(), status.getCode(),
-				serviceContext);
-		}
-
 		return _toObjectEntry(
 			dtoConverterContext, objectDefinition,
 			_addOrUpdateNestedObjectEntries(
 				dtoConverterContext, objectDefinition, objectEntry,
 				_getObjectRelationships(objectDefinition, objectEntry),
-				serviceBuilderObjectEntry, scopeKey),
+				_updateStatus(
+					dtoConverterContext, objectEntry, serviceBuilderObjectEntry,
+					serviceContext),
+				scopeKey),
 			null);
 	}
 
@@ -3813,6 +3793,31 @@ public class DefaultObjectEntryManagerImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				objectRelationship.getObjectDefinitionId2()),
 			objectEntry, objectEntryId, false, true);
+	}
+
+	private com.liferay.object.model.ObjectEntry _updateStatus(
+			DTOConverterContext dtoConverterContext, ObjectEntry objectEntry,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (!ExportImportThreadLocal.isImportInProcess() ||
+			(serviceBuilderObjectEntry.getStatus() !=
+				WorkflowConstants.STATUS_EMPTY)) {
+
+			return serviceBuilderObjectEntry;
+		}
+
+		Status status = objectEntry.getStatus();
+
+		if (status == null) {
+			return serviceBuilderObjectEntry;
+		}
+
+		return _objectEntryLocalService.updateStatus(
+			dtoConverterContext.getUserId(),
+			serviceBuilderObjectEntry.getObjectEntryId(), status.getCode(),
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

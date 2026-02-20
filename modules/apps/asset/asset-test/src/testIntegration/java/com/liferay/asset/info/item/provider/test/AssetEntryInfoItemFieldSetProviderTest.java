@@ -275,8 +275,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
-			assetCategory.getTitle(LocaleUtil.ENGLISH));
+			keyLocalizedLabelPair.getLabel(LocaleUtil.US),
+			assetCategory.getTitle(LocaleUtil.US));
 	}
 
 	@Test
@@ -310,8 +310,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
-			publicAssetCategory.getTitle(LocaleUtil.ENGLISH));
+			keyLocalizedLabelPair.getLabel(LocaleUtil.US),
+			publicAssetCategory.getTitle(LocaleUtil.US));
 	}
 
 	@Test
@@ -431,7 +431,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 			Assert.assertNotNull(fieldName, infoFieldValue);
 
-			Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+			Object value = infoFieldValue.getValue(LocaleUtil.US);
 
 			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 				(List<KeyLocalizedLabelPair>)value;
@@ -485,7 +485,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		InfoFieldValue<Object> infoFieldValue = filteredInfoFieldValues.get(0);
 
-		Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+		Object value = infoFieldValue.getValue(LocaleUtil.US);
 
 		List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
 			(List<KeyLocalizedLabelPair>)value;
@@ -513,8 +513,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			filteredInfoFieldValues);
 
 		Assert.assertEquals(
-			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
-			assetCategory.getTitle(LocaleUtil.ENGLISH));
+			keyLocalizedLabelPair.getLabel(LocaleUtil.US),
+			assetCategory.getTitle(LocaleUtil.US));
 
 		_assertInfoFieldValues(
 			assetEntry.getClassPK(), keyLocalizedLabelPair,

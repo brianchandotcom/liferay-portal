@@ -54,6 +54,9 @@ public class IndexerRequestBufferExecutorUtil {
 			return;
 		}
 
+		ExecutorService executorService =
+			SystemExecutorServiceUtil.getExecutorService();
+
 		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
 
 		ServiceContext serviceContext =
@@ -67,9 +70,6 @@ public class IndexerRequestBufferExecutorUtil {
 
 		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
 			indexerRequestBuffer.transferCopy();
-
-		ExecutorService executorService =
-			SystemExecutorServiceUtil.getExecutorService();
 
 		AtomicReference<Future<?>> futureAtomicReference = new AtomicReference<>();
 

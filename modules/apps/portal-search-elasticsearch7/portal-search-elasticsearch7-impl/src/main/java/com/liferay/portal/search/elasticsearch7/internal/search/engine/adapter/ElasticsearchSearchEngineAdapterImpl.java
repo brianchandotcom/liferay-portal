@@ -158,6 +158,9 @@ public class ElasticsearchSearchEngineAdapterImpl
 				return null;
 			}
 
+			ExecutorService executorService =
+				SystemExecutorServiceUtil.getExecutorService();
+
 			BulkDocumentRequest transferCopyBulkDocumentRequest =
 				bulkDocumentRequest.transferCopy();
 
@@ -181,9 +184,6 @@ public class ElasticsearchSearchEngineAdapterImpl
 			futureAtomicReference.set(futureTask);
 
 			SearchContext.registerBatchModeSyncFuture(futureTask);
-
-			ExecutorService executorService =
-				SystemExecutorServiceUtil.getExecutorService();
 
 			executorService.execute(futureTask);
 

@@ -78,6 +78,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 			({openCMSItemSelectorModal}) => {
 				openCMSItemSelectorModal({
 					allowDragAndDrop: true,
+					allowedExtensions: input.attributes.allowedFileExtensions,
 					groupId: input.attributes.groupId,
 					onSelect(items) {
 						if (items.length) {

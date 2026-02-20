@@ -504,21 +504,12 @@ public class AnalyticsCloudClient {
 		}
 	}
 
-	private void _buildAnalyticsCloudScopes(OAuth2ScopeBuilder builder) {
+	private void _buildScopes(OAuth2ScopeBuilder builder) {
 		builder.forApplication(
 			"Liferay.JSON.Web.Services.Analytics",
 			"com.liferay.oauth2.provider.shortcut",
 			applicationScopeAssigner -> _scopeAliasesList.forEach(
 				applicationScopeAssigner::assignScope));
-	}
-
-	private void _buildScopes(OAuth2ScopeBuilder builder) {
-		_buildAnalyticsCloudScopes(builder);
-
-		_buildSegmentsAsahScopes(builder);
-	}
-
-	private void _buildSegmentsAsahScopes(OAuth2ScopeBuilder builder) {
 		builder.forApplication(
 			"Liferay.Segments.Asah.REST", "com.liferay.segments.asah.rest.impl",
 			applicationScopeAssigner -> applicationScopeAssigner.assignScope(

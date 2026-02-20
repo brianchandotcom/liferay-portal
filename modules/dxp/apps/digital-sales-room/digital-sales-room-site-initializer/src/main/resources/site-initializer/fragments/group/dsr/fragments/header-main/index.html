@@ -13,62 +13,24 @@
 			<div>
 				[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-rooms/${groupId}") /]
 
-				[#if !response?has_content || !response.id?has_content]
-					[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-room-templates/${groupId}") /]
-				[/#if]
-
-				[#if response?has_content && response.banner?has_content]
-					[@liferay_aui.style]
-						.dsr-header-banner {
-							background-image: url(${response.banner.fileURL})
-						}
-					[/@]
-				[#else]
-					[@liferay_aui.style]
-						.dsr-header-banner {
-							background-image: url([resources:banner.png])
-						}
-					[/@]
-				[/#if]
-
 				<div class="dsr-header-banner">
+					<img alt="" data-lfr-editable-id="banner" data-lfr-editable-type="image" src="[resources:banner.png]" />
+
 					<h1>
 						[#if response?has_content && (response.name)??]${response.name}[/#if]
 					</h1>
 
 					<div class="dsr-container-logos">
-						[#if response?has_content && response.clientLogo?has_content]
-							[@liferay_aui.style]
-								.dsr-primary-logo .dsr-logo {
-									background-image: url(${response.clientLogo.fileURL})
-								}
-
-								.dsr-primary-logo .dsr-logo-name {
-									display: none;
-								}
-							[/@]
-						[/#if]
-
-						[@liferay_aui.style]
-							.dsr-secondary-logo .dsr-logo {
-								background-image: url([resources:logo2.png])
-							}
-						[/@]
-
 						<div class="dsr-container-logo dsr-secondary-logo">
 							<div class="dsr-logo-background"></div>
-							<div class="dsr-logo"></div>
+
+							<img alt="" class="dsr-logo" data-lfr-editable-id="secondary-logo" data-lfr-editable-type="image" src="[resources:logo2.png]" />
 						</div>
 
 						<div class="dsr-container-logo dsr-primary-logo">
 							<div class="dsr-logo-background"></div>
-							<div class="dsr-logo">
-								[#if response?has_content && response.clientName?has_content]
-									<div class="dsr-logo-name">
-										${response.clientName?substring(0,1)}
-									</div>
-								[/#if]
-							</div>
+
+							<img alt="" class="dsr-logo" data-lfr-editable-id="primary-logo" data-lfr-editable-type="image" />
 						</div>
 					</div>
 				</div>

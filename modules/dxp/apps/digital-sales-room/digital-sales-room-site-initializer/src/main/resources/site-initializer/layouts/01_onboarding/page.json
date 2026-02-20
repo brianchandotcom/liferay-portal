@@ -14,7 +14,7 @@
 			"scope": 4
 		}
 	],
-	"private": false,
+	"private": true,
 	"system": false,
 	"type": "content"
 }

@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -137,7 +138,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 		_childObjectDefinition = _addObjectDefinition(
 			new AttachmentObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+				RandomTestUtil.randomLocaleStringMap()
 			).name(
 				"attachmentObjectFieldName"
 			).objectFieldSettings(
@@ -147,9 +148,18 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 						"fileSource", "documentsAndMedia"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
 			).build(),
+			new DateTimeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"dateTimeObjectFieldName"
+			).objectFieldSettings(
+				Collections.singletonList(
+					_createObjectFieldSetting("timeStorage", "convertToUTC"))
+			).build(),
 			new PicklistObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+				RandomTestUtil.randomLocaleStringMap()
 			).listTypeDefinitionId(
 				_listTypeDefinition.getListTypeDefinitionId()
 			).name(
@@ -158,15 +168,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				Collections.emptyList()
 			).state(
 				false
-			).build(),
-			new DateTimeObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"dateTimeFieldName"
-			).objectFieldSettings(
-				Arrays.asList(
-					_createObjectFieldSetting("timeStorage", "convertToUTC"))
 			).build());
 
 		_childObjectDefinition =
@@ -208,17 +209,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		String parentTextObjectFieldNameValue = RandomTestUtil.randomString();
 
-		LocalDateTime utcDateTime = LocalDateTime.of(2026, 1, 1, 23, 30);
-
-		Date utcDate = Date.from(utcDateTime.toInstant(ZoneOffset.UTC));
-		LocalDateTime expectedConvertedDate = utcDateTime.atZone(
-			ZoneOffset.UTC
-		).withZoneSameInstant(
-			TimeZoneUtil.getTimeZone(
-				"Asia/Kolkata"
-			).toZoneId()
-		).toLocalDateTime();
-
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			_parentObjectDefinition.getObjectDefinitionId(),
@@ -228,6 +218,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				"parentTextObjectFieldName", parentTextObjectFieldNameValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		LocalDateTime localDateTime = LocalDateTime.of(2026, 1, 1, 23, 30);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),
@@ -241,7 +233,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			).put(
 				"attachmentObjectFieldName", fileEntry.getFileEntryId()
 			).put(
-				"dateTimeFieldName", utcDate
+				"dateTimeObjectFieldName",
+				Date.from(localDateTime.toInstant(ZoneOffset.UTC))
 			).put(
 				"expirationDate",
 				new Date(System.currentTimeMillis() + Time.DAY)
@@ -267,27 +260,36 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			false);
 
 		_testObjectEntryInfoItemFieldValuesProvider(
-			utcDateTime, fileEntry, objectAction, objectEntry,
+			fileEntry, localDateTime, objectAction, objectEntry,
 			parentTextObjectFieldNameValue, null);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		User user = TestPropsValues.getUser();
-
-		user.setTimeZoneId("Asia/Kolkata");
 
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
+
+		User user = UserTestUtil.addUser();
+
+		user.setTimeZoneId("Asia/Kolkata");
+
 		themeDisplay.setTimeZone(
 			TimeZoneUtil.getTimeZone(user.getTimeZoneId()));
 		themeDisplay.setUser(user);
 
 		_testObjectEntryInfoItemFieldValuesProvider(
-			expectedConvertedDate, fileEntry, objectAction, objectEntry,
-			parentTextObjectFieldNameValue, themeDisplay);
+			fileEntry,
+			localDateTime.atZone(
+				ZoneOffset.UTC
+			).withZoneSameInstant(
+				TimeZoneUtil.getTimeZone(
+					"Asia/Kolkata"
+				).toZoneId()
+			).toLocalDateTime(),
+			objectAction, objectEntry, parentTextObjectFieldNameValue,
+			themeDisplay);
 	}
 
 	private ObjectDefinition _addObjectDefinition(ObjectField... objectFields)
@@ -329,7 +331,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 	}
 
 	private void _testObjectEntryInfoItemFieldValuesProvider(
-			LocalDateTime expectedConvertedDate, FileEntry fileEntry,
+			FileEntry fileEntry, LocalDateTime localDateTime,
 			ObjectAction objectAction, ObjectEntry objectEntry,
 			String parentTextObjectFieldNameValue, ThemeDisplay themeDisplay)
 		throws Exception {
@@ -396,6 +398,13 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			_assertInfoFieldValue(
 				"#size", infoItemFieldValues, objectField, fileEntry.getSize());
 
+			InfoFieldValue<Object> dateTimeInfoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(
+					"dateTimeObjectFieldName");
+
+			Assert.assertEquals(
+				localDateTime, dateTimeInfoFieldValue.getValue());
+
 			InfoFieldValue<Object> parentTextObjectFieldNameInfoFieldValue =
 				infoItemFieldValues.getInfoFieldValue(
 					"parentTextObjectFieldName");
@@ -403,12 +412,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			Assert.assertEquals(
 				parentTextObjectFieldNameValue,
 				parentTextObjectFieldNameInfoFieldValue.getValue());
-
-			InfoFieldValue<Object> dateTimeInfoFieldValue =
-				infoItemFieldValues.getInfoFieldValue("dateTimeFieldName");
-
-			Assert.assertEquals(
-				expectedConvertedDate, dateTimeInfoFieldValue.getValue());
 
 			InfoFieldValue<Object> picklistObjectFieldNameInfoFieldValue =
 				infoItemFieldValues.getInfoFieldValue(

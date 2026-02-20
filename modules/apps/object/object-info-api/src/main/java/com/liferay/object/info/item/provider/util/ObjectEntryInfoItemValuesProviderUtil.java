@@ -33,7 +33,6 @@ import com.liferay.object.info.item.util.ObjectEntryInfoItemUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
@@ -45,7 +44,6 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -644,46 +642,37 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
 
-			String valueString = String.valueOf(value);
-
 			LocalDateTime localDateTime = LocalDateTime.parse(
-				valueString,
+				value.toString(),
 				DateTimeFormatter.ofPattern(
-					ObjectFieldUtil.getDateTimePattern(valueString)));
+					ObjectFieldUtil.getDateTimePattern(value.toString())));
 
-			List<ObjectFieldSetting> objectFieldSettings =
-				ObjectFieldSettingLocalServiceUtil.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId());
+			String timeStorage = ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.NAME_TIME_STORAGE, objectField);
 
-			if (objectFieldSettings.isEmpty()) {
+			if (StringUtil.equals(
+					timeStorage,
+					ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED)) {
+
 				return localDateTime;
 			}
 
-			for (ObjectFieldSetting objectFieldSetting : objectFieldSettings) {
-				if (ObjectFieldSettingConstants.NAME_TIME_STORAGE.equals(
-						objectFieldSetting.getName()) &&
-					ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED.
-						equals(objectFieldSetting.getValue())) {
+			ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneOffset.UTC);
 
-					return localDateTime;
-				}
+			if (themeDisplay == null) {
+				return zonedDateTime.toLocalDateTime();
 			}
 
-			ZonedDateTime utcZonedDateTime = localDateTime.atZone(
-				ZoneOffset.UTC);
+			String timeZoneId = ObjectFieldSettingUtil.getTimeZoneId(
+				objectField.getObjectFieldSettings(), themeDisplay.getUser());
 
-			String zoneId = ObjectFieldSettingUtil.getTimeZoneId(
-				objectFieldSettings, themeDisplay.getUser());
-
-			if (zoneId == null) {
-				return utcZonedDateTime.toLocalDateTime();
+			if (timeZoneId == null) {
+				return zonedDateTime.toLocalDateTime();
 			}
 
-			ZonedDateTime userZonedDateTime =
-				utcZonedDateTime.withZoneSameInstant(ZoneId.of(zoneId));
-
-			return userZonedDateTime.toLocalDateTime();
+			return zonedDateTime.withZoneSameInstant(
+				ZoneId.of(timeZoneId)
+			).toLocalDateTime();
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {

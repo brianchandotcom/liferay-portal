@@ -101,8 +101,8 @@ liferay-default:
     network:
         enabled: true
         timeouts:
-            request: 300s
             backendRequest: 300s
+            request: 300s
     portalBundleDenyList:
         -   com.liferay.portal.search.elasticsearch.cross.cluster.replication.impl
         -   com.liferay.portal.search.elasticsearch.monitoring.web

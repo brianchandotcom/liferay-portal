@@ -271,10 +271,10 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		for (PostalAddress postalAddress :
 				_getPostalAddresses(koroneikiAccount)) {
 
-			PostalAddress postalAddressExists = _getPostalAddress(
+			PostalAddress existingPostalAddress = _getPostalAddress(
 				account, postalAddress.getStreetAddressLine1());
 
-			if (postalAddressExists != null) {
+			if (existingPostalAddress != null) {
 				continue;
 			}
 

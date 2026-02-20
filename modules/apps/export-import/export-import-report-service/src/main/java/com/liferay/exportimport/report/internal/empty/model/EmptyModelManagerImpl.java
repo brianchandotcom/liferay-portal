@@ -60,14 +60,16 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			_exportImportReportEntryLocalService.
-				getOrAddEmptyExportImportReportEntry(
-					0L, companyId, externalReferenceCode,
-					_classNameLocalService.getClassNameId(clazz.getName()),
-					GetterUtil.getLong(
-						ExportImportThreadLocal.
-							getExportImportConfigurationId()),
-					modelNameLanguageKey);
+			if (ExportImportThreadLocal.isImportInProcess()) {
+				_exportImportReportEntryLocalService.
+					getOrAddEmptyExportImportReportEntry(
+						0L, companyId, externalReferenceCode,
+						_classNameLocalService.getClassNameId(clazz.getName()),
+						GetterUtil.getLong(
+							ExportImportThreadLocal.
+								getExportImportConfigurationId()),
+						modelNameLanguageKey);
+			}
 
 			return emptyModelUnsafeSupplier.get();
 		}
@@ -96,23 +98,25 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			return model;
 		}
 
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group != null) {
-			companyId = group.getCompanyId();
-		}
-
 		try (SafeCloseable safeCloseable =
 				EmptyModelThreadLocal.setEmptyModelWithSafeCloseable(true)) {
 
-			_exportImportReportEntryLocalService.
-				getOrAddEmptyExportImportReportEntry(
-					groupId, companyId, externalReferenceCode,
-					_classNameLocalService.getClassNameId(className),
-					GetterUtil.getLong(
-						ExportImportThreadLocal.
-							getExportImportConfigurationId()),
-					modelNameLanguageKey);
+			if (ExportImportThreadLocal.isImportInProcess()) {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if (group != null) {
+					companyId = group.getCompanyId();
+				}
+
+				_exportImportReportEntryLocalService.
+					getOrAddEmptyExportImportReportEntry(
+						groupId, companyId, externalReferenceCode,
+						_classNameLocalService.getClassNameId(className),
+						GetterUtil.getLong(
+							ExportImportThreadLocal.
+								getExportImportConfigurationId()),
+						modelNameLanguageKey);
+			}
 
 			return emptyModelUnsafeSupplier.get();
 		}

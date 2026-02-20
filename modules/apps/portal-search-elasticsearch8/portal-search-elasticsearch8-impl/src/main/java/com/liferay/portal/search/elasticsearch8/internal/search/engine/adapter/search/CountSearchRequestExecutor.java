@@ -35,6 +35,11 @@ public class CountSearchRequestExecutor {
 	}
 
 	public CountSearchResponse execute(CountSearchRequest countSearchRequest) {
+		ElasticsearchClient elasticsearchClient =
+			_elasticsearchClientResolver.getElasticsearchClient(
+				countSearchRequest.getConnectionId(),
+				countSearchRequest.isPreferLocalCluster());
+
 		SearchRequest.Builder builder = new SearchRequest.Builder();
 
 		CommonSearchRequestBuilderAssembler.INSTANCE.assemble(
@@ -55,11 +60,6 @@ public class CountSearchRequestExecutor {
 					"Stack trace for [", indexNames, "]: ",
 					DebugStringsUtil.getStackTraceString()));
 		}
-
-		ElasticsearchClient elasticsearchClient =
-			_elasticsearchClientResolver.getElasticsearchClient(
-				countSearchRequest.getConnectionId(),
-				countSearchRequest.isPreferLocalCluster());
 
 		SearchRequest searchRequest = builder.build();
 

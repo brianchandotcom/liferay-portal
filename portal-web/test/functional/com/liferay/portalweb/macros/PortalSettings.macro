@@ -275,37 +275,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro disableApplicationsMenu() {
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "Navigation",
-			configurationName = "Applications Menu",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
-
-		FormFields.disableCheckbox(fieldName = "enableApplicationsMenu");
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
-		}
-		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			AssertClick(
-				locator1 = "Button#UPDATE",
-				value1 = "Update");
-		}
-
-		Alert.viewSuccessMessage();
-
-		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
-
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
-	}
-
-	@summary = "Default summary"
 	macro editConfigurationAuthenticationFacebook(facebookApplicationSecret = null, facebookApplicationId = null) {
 		Check(locator1 = "PortalSettingsAuthentication#AUTHENTICATION_FACEBOOK_ENABLED_CHECKBOX");
 
@@ -528,42 +497,6 @@ definition {
 		AssertTextEquals(
 			locator1 = "PortalSettings#VIRTUAL_HOST_FIELD",
 			value1 = ${virtualHostName});
-	}
-
-	@summary = "Default summary"
-	macro enableApplicationsMenu() {
-		ProductMenu.gotoPortletWhenDisableApplicationsMenu(
-			category = "Configuration",
-			panel = "Control Panel",
-			portlet = "Instance Settings");
-
-		SystemSettings.gotoConfiguration(
-			configurationCategory = "Navigation",
-			configurationName = "Applications Menu",
-			configurationScope = "Virtual Instance Scope");
-
-		AssertElementPresent(locator1 = "ProductMenu#TOGGLE");
-
-		AssertElementNotPresent(locator1 = "ApplicationsMenu#TOGGLE");
-
-		FormFields.enableCheckbox(fieldName = "enableApplicationsMenu");
-
-		if (IsElementPresent(locator1 = "Button#SAVE")) {
-			AssertClick(
-				locator1 = "Button#SAVE",
-				value1 = "Save");
-		}
-		else if (IsElementPresent(locator1 = "Button#UPDATE")) {
-			AssertClick(
-				locator1 = "Button#UPDATE",
-				value1 = "Update");
-		}
-
-		Alert.viewSuccessMessage();
-
-		AssertElementNotPresent(locator1 = "ProductMenu#TOGGLE");
-
-		AssertElementPresent(locator1 = "ApplicationsMenu#TOGGLE");
 	}
 
 	@summary = "Default summary"

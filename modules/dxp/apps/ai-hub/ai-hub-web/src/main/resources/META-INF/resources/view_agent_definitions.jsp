@@ -11,8 +11,8 @@
 ViewAgentDefinitionsDisplayContext viewAgentDefinitionsDisplayContext = (ViewAgentDefinitionsDisplayContext)request.getAttribute(ViewAgentDefinitionsDisplayContext.class.getName());
 %>
 
-<div class="ai-hub-agent-definitions__list-container ml-8 mr-8 mt-5">
-	<div class="mb-5">
+<div class="ai-hub-agent-definitions__list-container align-items-center container-fluid d-flex ml-2">
+	<div class="p-3">
 		<h2><liferay-ui:message key="agents" /></h2>
 	</div>
 </div>

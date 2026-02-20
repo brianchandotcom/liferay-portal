@@ -1,6 +1,8 @@
 @import 'atlas-variables';
 
 .ai-hub-agent-definitions__list-container {
+	height: 7.625rem;
+
 	.container-fluid {
 		margin: 0;
 		padding: 0;
@@ -21,8 +23,8 @@
 		border-radius: 0.125rem;
 		border-width: 0.0625rem;
 		font-size: 0.625rem;
-		padding: 0.125rem 0.25rem;
 		min-height: 1rem;
+		padding: 0.125rem 0.25rem;
 	}
 
 	.label-danger {

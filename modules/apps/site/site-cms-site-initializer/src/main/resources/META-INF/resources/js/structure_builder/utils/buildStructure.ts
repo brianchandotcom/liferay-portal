@@ -350,21 +350,19 @@ function getFieldType(objectField: ObjectField): FieldType {
 		return 'select-from-list';
 	}
 
-	const DB_TYPE_TO_FIELD_TYPE: Record<string, FieldType> = {
-		BigDecimal: 'decimal',
+	const BUSINESS_TYPE_TO_FIELD_TYPE: Record<string, FieldType> = {
+		Attachment: 'upload',
 		Boolean: 'boolean',
-		Clob: 'long-text',
 		Date: 'date',
 		DateTime: 'datetime',
-		Double: 'decimal',
+		Decimal: 'decimal',
 		Integer: 'integer',
-		Long: 'upload',
+		LongText: 'long-text',
 		RichText: 'rich-text',
-		String: 'text',
-		Upload: 'upload',
+		Text: 'text',
 	} as const;
 
-	return DB_TYPE_TO_FIELD_TYPE[objectField.DBType];
+	return BUSINESS_TYPE_TO_FIELD_TYPE[objectField.businessType];
 }
 
 export function getSpaces(objectDefinition: ObjectDefinition) {

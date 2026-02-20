@@ -12,6 +12,8 @@ import com.liferay.client.extension.type.CET;
 import com.liferay.client.extension.type.ThemeFaviconCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -22,6 +24,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
@@ -50,10 +53,27 @@ public class FaviconUtil {
 
 		if (Validator.isNotNull(layout.getFaviconFileEntryERC())) {
 			try {
+				Long groupId = ScopeUtil.getItemGroupId(
+					layout.getCompanyId(), layout.getFaviconFileEntryScopeERC(),
+					layout.getGroupId());
+
+				if (groupId == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							StringBundler.concat(
+								"Unable to resolve group ID for favicon file ",
+								"entry in layout with PLID ", layout.getPlid(),
+								" using favicon file entry scope external ",
+								"reference code ",
+								layout.getFaviconFileEntryScopeERC()));
+					}
+
+					return StringPool.BLANK;
+				}
+
 				FileEntry fileEntry =
 					DLAppLocalServiceUtil.getFileEntryByExternalReferenceCode(
-						layout.getFaviconFileEntryERC(),
-						layout.getFaviconFileEntryGroupId());
+						layout.getFaviconFileEntryERC(), groupId);
 
 				return fileEntry.getTitle();
 			}

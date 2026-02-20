@@ -169,7 +169,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 			);
 
 			if (shipmentTableRow && shipmentTableRow.column) {
-				return shipmentTableRow.row.getByLabel('', {exact: true});
+				return shipmentTableRow.row.getByLabel('');
 			}
 
 			throw new Error(`Cannot locate shipment row with value ${value}`);

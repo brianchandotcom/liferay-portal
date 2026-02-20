@@ -22,11 +22,11 @@ const COLORS = [
 const MAX_WEEKLY_SERVER_DURATION_MILLIS = 2370 * 7 * 24 * 60 * 60 * 1000;
 
 function addReportName() {
-	var headerElement = document.getElementById('report-name');
+	let headerElement = document.getElementById('report-name');
 
 	headerElement.textContent = reportName;
 
-	var titleElement = document.getElementById('title');
+	let titleElement = document.getElementById('title');
 
 	titleElement.textContent = reportName;
 }
@@ -42,7 +42,7 @@ function addTotalColumn(tableElement) {
 
 	theadElement.appendChild(totalHeaderElement);
 
-	var rowElements = tableElement.querySelectorAll('tbody tr');
+	let rowElements = tableElement.querySelectorAll('tbody tr');
 
 	rowElements.forEach(rowElement => {
 		let totalValue = 0;
@@ -80,12 +80,12 @@ function getDynamicMax(datasets) {
         let data = dataset.data;
 
         data.forEach((dataValue, i) => {
-            const val = parseFloat(dataValue) || 0;
+            let val = parseFloat(dataValue) || 0;
             indexTotals[i] = (indexTotals[i] || 0) + val;
         });
     });
 
-    const top = Math.max(...indexTotals, 0);
+    let top = Math.max(...indexTotals, 0);
 
 	console.log(top)
 

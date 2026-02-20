@@ -205,6 +205,15 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, existentPrimaryKey
+					).put(
+						"companyId",
+						() -> {
+							if (primaryKeyColumnName.equals("groupId")) {
+								return TestPropsValues.getCompanyId();
+							}
+
+							return null;
+						}
 					).build());
 			nonexistentConfigurationId =
 				ConfigurationTestUtil.createFactoryConfiguration(
@@ -212,6 +221,15 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 						getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, nonexistentPrimaryKey
+					).put(
+						"companyId",
+						() -> {
+							if (primaryKeyColumnName.equals("groupId")) {
+								return TestPropsValues.getCompanyId();
+							}
+
+							return null;
+						}
 					).build());
 
 			upgrade();

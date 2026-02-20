@@ -15,6 +15,7 @@ import './SelectObjectDefinition.scss';
 interface SelectObjectDefinitionProps {
 	disabled?: boolean;
 	error?: string;
+	initialValue?: string;
 	label?: string;
 	objectDefinition1?: Partial<ObjectDefinition>;
 	reverseOrder: boolean;
@@ -24,12 +25,14 @@ interface SelectObjectDefinitionProps {
 export default function SelectObjectDefinition({
 	disabled,
 	error,
+	initialValue,
 	label,
 	objectDefinition1,
 	reverseOrder,
 	setValues,
 }: SelectObjectDefinitionProps) {
 	const [networkStatus, setNetworkStatus] = useState(4);
+	const [value, setValue] = useState(initialValue ?? '');
 	const [search, setSearch] = useState('');
 
 	const {
@@ -84,12 +87,15 @@ export default function SelectObjectDefinition({
 					loading: Liferay.Language.get('loading...'),
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
-				onChange={setSearch}
+				onChange={(newValue) => {
+					setValue(newValue);
+					setSearch(newValue);
+				}}
 				onItemsChange={() => {}}
 				placeholder={Liferay.Language.get(
 					'search-for-an-object-definition'
 				)}
-				value={search}
+				value={value}
 			>
 				{(item) => {
 					const label = stringUtils.getLocalizableLabel({
@@ -118,7 +124,8 @@ export default function SelectObjectDefinition({
 									});
 								}
 
-								setSearch(label);
+								setValue(label);
+								setSearch('');
 							}}
 							textValue={label}
 						>

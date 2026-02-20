@@ -105,9 +105,9 @@ test.describe('Manage object relationships through Model Builder', () => {
 			'.form-group'
 		);
 
-		await expect(objectRelationshipFormPage.manyRecordsOfInput).toHaveText(
-			objectDefinition2.label['en_US']
-		);
+		await expect(
+			objectRelationshipFormPage.manyRecordsOfSelect
+		).toHaveValue(objectDefinition2.label['en_US']);
 	});
 
 	test('can create multiple object relationships between the same objects', async ({

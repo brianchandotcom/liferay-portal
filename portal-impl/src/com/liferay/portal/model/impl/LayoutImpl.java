@@ -555,17 +555,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return portlets;
 	}
 
-	public long getFaviconFileEntryGroupId() {
-		Long groupId = ScopeUtil.getItemGroupId(
-			getCompanyId(), getFaviconFileEntryScopeERC(), getGroupId());
-
-		if (groupId == null) {
-			return 0;
-		}
-
-		return groupId;
-	}
-
 	@Override
 	public String getFaviconURL() {
 		if (_faviconURL != null) {

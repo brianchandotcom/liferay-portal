@@ -28,10 +28,15 @@ import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.item.InfoItemFieldValues;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.KeyLocalizedLabelPair;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -299,10 +304,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			publicAssetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
-			new long[] {
-				internalAssetCategory.getCategoryId(),
-				publicAssetCategory.getCategoryId()
-			});
+			internalAssetCategory.getCategoryId(),
+			publicAssetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, "categories");
@@ -328,8 +331,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
-		AssetEntry assetEntry = _addAssetEntry(
-			new long[] {assetCategory.getCategoryId()});
+		AssetEntry assetEntry = _addAssetEntry(assetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
@@ -348,8 +350,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
-		AssetEntry assetEntry = _addAssetEntry(
-			new long[] {assetCategory.getCategoryId()});
+		AssetEntry assetEntry = _addAssetEntry(assetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
@@ -364,6 +365,15 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
 			assetCategory.getTitle(LocaleUtil.ENGLISH));
+
+		_assertInfoFieldValues(
+			assetEntry.getClassPK(), keyLocalizedLabelPair,
+			StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), "__ERC__",
+				assetVocabulary.getExternalReferenceCode()),
+			StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), StringPool.UNDERLINE,
+				assetVocabulary.getVocabularyId()));
 	}
 
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
@@ -379,7 +389,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			new ServiceContext());
 	}
 
-	private AssetEntry _addAssetEntry(long[] assetCategoryIds)
+	private AssetEntry _addAssetEntry(long... assetCategoryIds)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -414,6 +424,45 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
 			null, null, visibilityTypePublic, new ServiceContext());
+	}
+
+	private void _assertInfoFieldValues(
+			long classPK, KeyLocalizedLabelPair expectedKeyLocalizedLabelPair,
+			String... fieldNames)
+		throws Exception {
+
+		InfoItemFieldValuesProvider infoItemFieldValuesProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFieldValuesProvider.class,
+				JournalArticle.class.getName());
+
+		InfoItemFieldValues infoItemFieldValues =
+			infoItemFieldValuesProvider.getInfoItemFieldValues(
+				_journalArticleLocalService.getLatestArticle(classPK));
+
+		for (String fieldName : fieldNames) {
+			InfoFieldValue<?> infoFieldValue =
+				infoItemFieldValues.getInfoFieldValue(fieldName);
+
+			Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
+
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+				(List<KeyLocalizedLabelPair>)value;
+
+			Assert.assertEquals(
+				keyLocalizedLabelPairs.toString(), 1,
+				keyLocalizedLabelPairs.size());
+
+			KeyLocalizedLabelPair actualKeyLocalizedLabelPair =
+				keyLocalizedLabelPairs.get(0);
+
+			Assert.assertEquals(
+				expectedKeyLocalizedLabelPair.getKey(),
+				actualKeyLocalizedLabelPair.getKey());
+			Assert.assertEquals(
+				expectedKeyLocalizedLabelPair.getLabel(LocaleUtil.US),
+				actualKeyLocalizedLabelPair.getLabel(LocaleUtil.US));
+		}
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
@@ -469,5 +518,11 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Inject
+	private JournalArticleLocalService _journalArticleLocalService;
 
 }

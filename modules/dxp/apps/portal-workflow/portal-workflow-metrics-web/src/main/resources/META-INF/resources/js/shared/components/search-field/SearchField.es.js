@@ -39,7 +39,7 @@ const SearchField = ({
 		const pathname = path
 			? getPathname({...routeParams, page: 1}, path)
 			: location.pathname;
-		
+
 		navigate({pathname, search: stringify(query)}, {replace: true});
 	};
 

@@ -13,11 +13,7 @@ import {useRouter} from '../../shared/hooks/useRouter.es';
 import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import RoleFilter from '../filter/RoleFilter.es';
 
-export default function Header({
-	filterKeys,
-	selectedFilters,
-	totalCount,
-}) {
+export default function Header({filterKeys, selectedFilters, totalCount}) {
 	const {
 		location: {search},
 		routeParams,

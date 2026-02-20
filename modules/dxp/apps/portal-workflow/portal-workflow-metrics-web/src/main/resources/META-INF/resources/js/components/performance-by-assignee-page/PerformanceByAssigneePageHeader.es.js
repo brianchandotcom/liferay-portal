@@ -14,14 +14,10 @@ import ProcessStepFilter from '../filter/ProcessStepFilter.es';
 import RoleFilter from '../filter/RoleFilter.es';
 import TimeRangeFilter from '../filter/TimeRangeFilter.es';
 
-export default function Header({
-	filterKeys,
-	selectedFilters,
-	totalCount,
-}) {
+export default function Header({filterKeys, selectedFilters, totalCount}) {
 	const {
 		location: {search},
-		routeParams
+		routeParams,
 	} = useRouter();
 	const showFiltersResult = search || !!selectedFilters.length;
 

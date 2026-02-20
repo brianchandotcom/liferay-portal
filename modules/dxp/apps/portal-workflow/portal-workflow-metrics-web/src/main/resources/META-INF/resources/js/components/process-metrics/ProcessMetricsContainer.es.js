@@ -77,7 +77,7 @@ export function DashboardTab() {
 			</ClayLayout.ContainerFluid>
 		</PromisesResolver>
 	);
-};
+}
 
 export function PerformanceTab() {
 	const {location, navigate, routeParams} = useRouter();
@@ -219,7 +219,7 @@ export default function ProcessMetricsContainer() {
 			filters: {taskNames: ['allSteps']},
 		});
 
-		return <Navigate replace to={{pathname, search}} />
+		return <Navigate replace to={{pathname, search}} />;
 	}
 
 	return (

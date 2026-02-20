@@ -13,8 +13,8 @@ import {
 	getCapitalizedFilterKey,
 	mergeItemsArray,
 } from '../../shared/components/filter/util/filterUtil.es';
-import {getPathname} from '../../shared/components/router/routerUtil.es';
 import {parse, stringify} from '../../shared/components/router/queryString.es';
+import {getPathname} from '../../shared/components/router/routerUtil.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
 import {useRouter} from '../../shared/hooks/useRouter.es';
 import {useRouterParams} from '../../shared/hooks/useRouterParams.es';
@@ -119,7 +119,9 @@ export default function TimeRangeFilter({
 				...filterValue,
 			};
 
-			const pathname = path ? getPathname({...routeParams, page: 1}, path) : location.pathname;
+			const pathname = path
+				? getPathname({...routeParams, page: 1}, path)
+				: location.pathname;
 
 			navigate({pathname, search: stringify(query)}, {replace: true});
 		}

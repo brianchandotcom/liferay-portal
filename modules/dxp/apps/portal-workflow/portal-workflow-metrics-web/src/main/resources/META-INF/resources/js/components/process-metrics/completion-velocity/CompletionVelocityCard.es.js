@@ -51,7 +51,7 @@ function CompletionVelocityCard({routeParams}) {
 	} = useFilter({filterKeys, prefixKeys});
 
 	const timeRange = useMemo(
-		() => 
+		() =>
 			getTimeRangeParams(
 				completionDateStart ?? getDefaultStartDate(),
 				completionDateEnd ?? getDefaultEndDate()

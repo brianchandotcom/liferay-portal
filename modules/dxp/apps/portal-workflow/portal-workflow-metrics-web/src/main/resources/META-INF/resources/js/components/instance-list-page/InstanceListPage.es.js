@@ -7,8 +7,8 @@ import React from 'react';
 
 import {useFetch} from '../../shared/hooks/useFetch.es';
 import {useFilter} from '../../shared/hooks/useFilter.es';
-import {useRouter} from '../../shared/hooks/useRouter.es';
 import {useProcessTitle} from '../../shared/hooks/useProcessTitle.es';
+import {useRouter} from '../../shared/hooks/useRouter.es';
 import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
 import {useTimeRangeFetch} from '../filter/hooks/useTimeRangeFetch.es';
 import {getTimeRangeParams} from '../filter/util/timeRangeUtil.es';

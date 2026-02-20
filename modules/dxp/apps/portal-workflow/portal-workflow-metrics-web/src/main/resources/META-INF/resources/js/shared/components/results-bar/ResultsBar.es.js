@@ -55,7 +55,14 @@ const Clear = ({filters = [], filterKeys = [], withoutRouteParams}) => {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filterState, location, navigate, routeParams, path, withoutRouteParams]);
+	}, [
+		filterState,
+		location,
+		navigate,
+		routeParams,
+		path,
+		withoutRouteParams,
+	]);
 
 	return (
 		<ClayList.ItemText className="tbar-item tbar-item-expand">
@@ -97,7 +104,14 @@ const FilterItem = ({filter, item, withoutRouteParams}) => {
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [filterState, location, navigate, routeParams, path, withoutRouteParams]);
+	}, [
+		filterState,
+		location,
+		navigate,
+		routeParams,
+		path,
+		withoutRouteParams,
+	]);
 
 	return (
 		<ClayList.ItemText className="tbar-item">

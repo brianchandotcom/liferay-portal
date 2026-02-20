@@ -4,7 +4,13 @@
  */
 
 import React from 'react';
-import {createRoutesFromElements, HashRouter, Navigate, Routes, Route} from 'react-router';
+import {
+	HashRouter,
+	Navigate,
+	Route,
+	Routes,
+	createRoutesFromElements,
+} from 'react-router';
 
 import {FilterContextProvider} from '../shared/components/filter/FilterContext.es';
 import HeaderController from '../shared/components/header/HeaderController.es';
@@ -26,31 +32,60 @@ import WorkloadByAssigneePage from './workload-by-assignee-page/WorkloadByAssign
 
 const appRoutes = (
 	<>
-		<Route path="/" element={<Navigate replace to='/processes/20/1/overdueInstanceCount:desc' />} />
+		<Route
+			element={
+				<Navigate
+					replace
+					to="/processes/20/1/overdueInstanceCount:desc"
+				/>
+			}
+			path="/"
+		/>
 
-		<Route path="/processes/:pageSize/:page/:sort" element={<ProcessListPage />} />
+		<Route
+			element={<ProcessListPage />}
+			path="/processes/:pageSize/:page/:sort"
+		/>
 
-		<Route path="/metrics/:processId" element={<ProcessMetricsContainer />}>
-			<Route path="dashboard/:pageSize/:page/:sort" element={<DashboardTab />} />
-			<Route path="performance" element={<PerformanceTab />} />
+		<Route element={<ProcessMetricsContainer />} path="/metrics/:processId">
+			<Route
+				element={<DashboardTab />}
+				path="dashboard/:pageSize/:page/:sort"
+			/>
+
+			<Route element={<PerformanceTab />} path="performance" />
 		</Route>
 
-		<Route path="/instance/:processId/:pageSize/:page/:sort" element={<InstanceListPage />} />
+		<Route
+			element={<InstanceListPage />}
+			path="/instance/:processId/:pageSize/:page/:sort"
+		/>
 
-		<Route path="/sla/:processId" element={<SLAContainer />}>
-			<Route path="list/:pageSize/:page" element={<SLAListPage />} />
-			<Route path="new" element={<SLAFormPage />} />
-			<Route path="edit/:id" element={<SLAFormPage />} />
+		<Route element={<SLAContainer />} path="/sla/:processId">
+			<Route element={<SLAListPage />} path="list/:pageSize/:page" />
+
+			<Route element={<SLAFormPage />} path="new" />
+
+			<Route element={<SLAFormPage />} path="edit/:id" />
 		</Route>
 
-		<Route path="/performance/step/:processId/:pageSize/:page/:sort" element={<PerformanceByStepPage />} />
+		<Route
+			element={<PerformanceByStepPage />}
+			path="/performance/step/:processId/:pageSize/:page/:sort"
+		/>
 
-		<Route path="/workload/assignee/:processId/:pageSize/:page/:sort" element={<WorkloadByAssigneePage />} />
+		<Route
+			element={<WorkloadByAssigneePage />}
+			path="/workload/assignee/:processId/:pageSize/:page/:sort"
+		/>
 
-		<Route path="/performance/assignee/:processId/:pageSize/:page/:sort" element={<PerformanceByAssigneePage />} />
+		<Route
+			element={<PerformanceByAssigneePage />}
+			path="/performance/assignee/:processId/:pageSize/:page/:sort"
+		/>
 
-		<Route path="/settings" element={<SettingsContainer />}>
-			<Route path="indexes" element={<IndexesPage />} />
+		<Route element={<SettingsContainer />} path="/settings">
+			<Route element={<IndexesPage />} path="indexes" />
 		</Route>
 	</>
 );
@@ -61,13 +96,13 @@ const App = (props) => {
 	return (
 		<AppContextProvider {...props}>
 			<FilterContextProvider>
-					<HashRouter>
-						<HeaderController basePath="/processes" />
+				<HashRouter>
+					<HeaderController basePath="/processes" />
 
-						<div className="portal-workflow-metrics-app">
-							<Routes>{appRoutes}</Routes>
-						</div>
-					</HashRouter>
+					<div className="portal-workflow-metrics-app">
+						<Routes>{appRoutes}</Routes>
+					</div>
+				</HashRouter>
 			</FilterContextProvider>
 		</AppContextProvider>
 	);

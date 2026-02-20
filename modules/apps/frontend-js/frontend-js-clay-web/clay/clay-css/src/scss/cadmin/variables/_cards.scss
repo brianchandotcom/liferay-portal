@@ -657,7 +657,6 @@ $cadmin-card-page-item-asset: map-deep-merge(
 		max-width: 100%,
 		padding-left: calc(#{$cadmin-grid-gutter-width} * 0.5),
 		padding-right: calc(#{$cadmin-grid-gutter-width} * 0.5),
-
 		'@container #{map-get($cadmin-card-page, container-name)} (min-width: #{map-get($cadmin-container-max-widths, sm)})':
 		(
 			flex-basis: 50%,

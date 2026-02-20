@@ -99,7 +99,7 @@
 
 %autofit-padded-no-gutters-y {
 	margin-bottom: calc(#{$cadmin-autofit-padded-col-padding-y} * -1);
-	margin-top: calc(#{$cadmin-autofit-padded-col-padding-y * -1);
+	margin-top: calc(#{$cadmin-autofit-padded-col-padding-y} * -1);
 	width: auto;
 
 	> .autofit-col {

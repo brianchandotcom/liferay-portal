@@ -939,7 +939,6 @@ $card-page-item-asset: map-deep-merge(
 		max-width: 100%,
 		padding-left: calc(#{$grid-gutter-width} * 0.5),
 		padding-right: calc(#{$grid-gutter-width} * 0.5),
-
 		'@container #{map-get($card-page, container-name)} (min-width: #{map-get($container-max-widths, sm)})':
 		(
 			flex-basis: 50%,

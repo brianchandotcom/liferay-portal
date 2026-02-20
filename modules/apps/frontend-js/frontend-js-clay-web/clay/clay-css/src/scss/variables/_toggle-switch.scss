@@ -402,7 +402,7 @@ $toggle-switch-check: map-deep-merge(
 				toggle-switch-icon-off: (
 					left:
 						calc(
-							#{$toggle-switch-bar-width-mobile} - $#{toggle-switch-bar-padding-mobile} -
+							#{$toggle-switch-bar-width-mobile} - #{$toggle-switch-bar-padding-mobile} -
 								#{$toggle-switch-button-width-mobile}
 						),
 				),

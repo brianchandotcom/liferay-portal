@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useSelector} from '@xstate/store/react';
 import ProductPurchase from '../../../../components/ProductPurchase';
 import {Section} from '../../../../components/Section/Section';
 import i18n from '../../../../i18n';
@@ -12,6 +13,7 @@ import {formatCurrency} from '../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseCDP from '../../services/ProductPurchaseCDP';
 import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
+import {productPurchaseStore} from '../../store';
 
 const OrderSummary = () => {
 	const {
@@ -25,6 +27,11 @@ const OrderSummary = () => {
 
 	const summary = productPurchaseCart.cart.summary;
 	const currencyCode = Liferay.CommerceContext.currency.currencyCode;
+
+	const {payment: paymentStore} = useSelector(
+		productPurchaseStore,
+		(state) => state.context
+	);
 
 	const valueFallBack = (value: string) => {
 		if (!value) {
@@ -56,6 +63,7 @@ const OrderSummary = () => {
 				},
 				continueButtonProps: {
 					children: i18n.translate('get-started'),
+					disabled: !paymentStore.eulaAgreement,
 					onClick: () =>
 						onSubmit(
 							form as z.infer<typeof zodSchema.cdpProvisioning>

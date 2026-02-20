@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -119,7 +120,10 @@ public class SegmentsExperienceUtil {
 					"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 				).put(
 					"segmentsEntryGroupId",
-					segmentsExperience.getSegmentsEntryGroupId()
+					ScopeUtil.getItemGroupId(
+						segmentsExperience.getCompanyId(),
+						segmentsExperience.getSegmentsEntryScopeERC(),
+						segmentsExperience.getGroupId())
 				).put(
 					"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 				).put(
@@ -160,7 +164,11 @@ public class SegmentsExperienceUtil {
 		).put(
 			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 		).put(
-			"segmentsEntryGroupId", segmentsExperience.getSegmentsEntryGroupId()
+			"segmentsEntryGroupId",
+			ScopeUtil.getItemGroupId(
+				segmentsExperience.getCompanyId(),
+				segmentsExperience.getSegmentsEntryScopeERC(),
+				segmentsExperience.getGroupId())
 		).put(
 			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 		).put(

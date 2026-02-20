@@ -40,6 +40,7 @@ import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.SegmentsEntryRetriever;
@@ -378,17 +380,33 @@ public class RenderCollectionLayoutStructureItemDisplayContext {
 				(SegmentsEntryLayoutListRetriever<ListObjectReference>)
 					layoutListRetriever;
 
-		SegmentsEntry segmentsEntry =
-			SegmentsEntryLocalServiceUtil.
-				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
 
-		if ((segmentsEntry != null) &&
-			segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
-				listObjectReference, segmentsEntry.getSegmentsEntryId())) {
+		if (groupId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to resolve group ID for segments experience ",
+						segmentsExperience.getSegmentsExperienceId(),
+						" with segments entry scope external reference code ",
+						segmentsExperience.getSegmentsEntryScopeERC()));
+			}
+		}
+		else {
+			SegmentsEntry segmentsEntry =
+				SegmentsEntryLocalServiceUtil.
+					fetchSegmentsEntryByExternalReferenceCode(
+						segmentsExperience.getSegmentsEntryERC(), groupId);
 
-			return new long[] {segmentsEntry.getSegmentsEntryId()};
+			if ((segmentsEntry != null) &&
+				segmentsEntryLayoutListRetriever.hasSegmentsEntryVariation(
+					listObjectReference, segmentsEntry.getSegmentsEntryId())) {
+
+				return new long[] {segmentsEntry.getSegmentsEntryId()};
+			}
 		}
 
 		return new long[] {

@@ -7,6 +7,7 @@ package com.liferay.headless.delivery.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.user.dto.v1_0.Segment;
 import com.liferay.headless.delivery.dto.v1_0.Experience;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -66,12 +67,20 @@ public class ExperienceDTOConverter
 							return null;
 						}
 
+						Long groupId = ScopeUtil.getItemGroupId(
+							segmentsExperience.getCompanyId(),
+							segmentsExperience.getSegmentsEntryScopeERC(),
+							segmentsExperience.getGroupId());
+
+						if (groupId == null) {
+							return null;
+						}
+
 						SegmentsEntry segmentsEntry =
 							_segmentsEntryService.
 								fetchSegmentsEntryByExternalReferenceCode(
 									segmentsExperience.getSegmentsEntryERC(),
-									segmentsExperience.
-										getSegmentsEntryGroupId());
+									groupId);
 
 						if (segmentsEntry == null) {
 							return null;

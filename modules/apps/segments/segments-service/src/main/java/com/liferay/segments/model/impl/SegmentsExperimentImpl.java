@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.model.SegmentsEntry;
@@ -78,11 +79,28 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 			return SegmentsEntryConstants.getDefaultSegmentsEntryName(locale);
 		}
 
+		Long groupId = ScopeUtil.getItemGroupId(
+			segmentsExperience.getCompanyId(),
+			segmentsExperience.getSegmentsEntryScopeERC(),
+			segmentsExperience.getGroupId());
+
+		if (groupId == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					StringBundler.concat(
+						"Unable to resolve group ID for segments experience ",
+						segmentsExperience.getSegmentsExperienceId(),
+						" with segments entry scope external reference code ",
+						segmentsExperience.getSegmentsEntryScopeERC()));
+			}
+
+			return StringPool.BLANK;
+		}
+
 		SegmentsEntry segmentsEntry =
 			SegmentsEntryLocalServiceUtil.
 				fetchSegmentsEntryByExternalReferenceCode(
-					segmentsExperience.getSegmentsEntryERC(),
-					segmentsExperience.getSegmentsEntryGroupId());
+					segmentsExperience.getSegmentsEntryERC(), groupId);
 
 		if (segmentsEntry == null) {
 			if (_log.isWarnEnabled()) {
@@ -90,8 +108,7 @@ public class SegmentsExperimentImpl extends SegmentsExperimentBaseImpl {
 					StringBundler.concat(
 						"Unable to get segments entry with external reference ",
 						"code ", segmentsExperience.getSegmentsEntryERC(),
-						" and group ID ",
-						segmentsExperience.getSegmentsEntryGroupId()));
+						" and group ID ", groupId));
 			}
 
 			return StringPool.BLANK;

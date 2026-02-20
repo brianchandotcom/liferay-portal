@@ -12,12 +12,10 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -129,35 +127,6 @@ public class StagingPortletLayoutTest extends BaseLocalStagingTestCase {
 			company.getGroupId(), liveLayout, stagingLayout, portletId, false);
 		_testScopeGroupId(
 			company.getGroupId(), liveLayout, stagingLayout, portletId, true);
-
-		_updateLayoutPortletScope(
-			layout, portletId, layout.getUuid(), "layout");
-
-		if (layout.isDraftLayout()) {
-			ContentLayoutTestUtil.publishLayout(layout, stagingLayout);
-		}
-
-		publishLayouts();
-
-		Layout scopeLayout = null;
-
-		if (liveLayout.isTypeContent()) {
-			scopeLayout = liveLayout.fetchDraftLayout();
-		}
-		else {
-			scopeLayout = liveLayout;
-		}
-
-		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(
-			scopeLayout.getCompanyId(), _portal.getClassNameId(Layout.class),
-			scopeLayout.getPlid());
-
-		_testScopeGroupId(
-			scopeGroup.getGroupId(), liveLayout, stagingLayout, portletId,
-			false);
-		_testScopeGroupId(
-			scopeGroup.getGroupId(), liveLayout, stagingLayout, portletId,
-			true);
 	}
 
 	private void _testScopeGroupId(

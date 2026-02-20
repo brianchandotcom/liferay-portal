@@ -99,23 +99,55 @@ function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
 
+function buildFilter(allowedExtensions: string) {
+	const base =
+		"(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))";
+
+	const extensions = allowedExtensions
+		.split(',')
+		.map((item) => item.trim().replace(/^\./, ''))
+		.map((item) => `'${item}'`)
+		.join(',');
+
+	return `${base} and (extension in (${extensions}))`;
+}
+
 export default function openCMSItemSelectorModal<
 	T extends Record<string, any>,
 >({
 	allowDragAndDrop = false,
+	allowedExtensions,
 	config = CMS_FILE_ITEM_SELECTOR_CONFIG,
 	fdsProps = FDS_PROPS,
 	groupId,
 	onSelect,
 }: {
 	allowDragAndDrop: boolean;
-	config: ConfigItemSelectorModal<T>;
-	fdsProps: IItemSelectorModalProps<T>['fdsProps'];
+	allowedExtensions?: string;
+	config?: ConfigItemSelectorModal<T>;
+	fdsProps?: IItemSelectorModalProps<T>['fdsProps'];
 	groupId: number;
 	onSelect: (items: Array<Record<string, any>>) => void;
 }) {
+	let finalConfig = config;
+
+	if (allowedExtensions && allowedExtensions.length) {
+		const filter = buildFilter(allowedExtensions);
+
+		const apiURL = `${location.origin}/o/search/v1.0/search?${[
+			'emptySearch=true',
+			'nestedFields=description,embedded,file.thumbnailURL',
+			`filter=${filter}`,
+		].join('&')}`;
+
+		finalConfig = {
+			...config,
+			apiURL,
+		};
+	}
+
 	openItemSelectorModal({
-		...config,
+		...finalConfig,
 		fdsProps: {
 			...fdsProps,
 			id: `CMSItemSelectorFDS_${getRandomId()}`,

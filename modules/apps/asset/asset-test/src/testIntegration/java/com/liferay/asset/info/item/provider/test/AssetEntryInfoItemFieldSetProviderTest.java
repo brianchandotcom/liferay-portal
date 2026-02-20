@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -132,9 +133,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			assetVocabulary.getName());
 
 		Assert.assertEquals(
-			StringBundler.concat(
-				AssetVocabulary.class.getSimpleName(), "__ERC__",
-				assetVocabulary.getExternalReferenceCode()),
+			_getExpectedExternalUniqueId(assetVocabulary),
 			infoFieldSetEntry.getExternalUniqueId());
 		Assert.assertEquals(
 			assetVocabulary.getName(), infoFieldSetEntry.getName());
@@ -194,13 +193,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		InfoFieldSetEntry infoFieldSetEntry = infoFieldSet.getInfoFieldSetEntry(
 			assetVocabulary.getName());
 
-		Group depotEntryGroup = _depotEntry.getGroup();
-
 		Assert.assertEquals(
-			StringBundler.concat(
-				AssetVocabulary.class.getSimpleName(), "__ERC__",
-				assetVocabulary.getExternalReferenceCode(), "__SERC__",
-				depotEntryGroup.getExternalReferenceCode()),
+			_getExpectedExternalUniqueId(assetVocabulary),
 			infoFieldSetEntry.getExternalUniqueId());
 
 		Assert.assertEquals(
@@ -304,7 +298,7 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			publicAssetVocabulary);
 
 		AssetEntry assetEntry = _addAssetEntry(
-			internalAssetCategory.getCategoryId(),
+			_group.getGroupId(), internalAssetCategory.getCategoryId(),
 			publicAssetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
@@ -331,7 +325,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 
 		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
-		AssetEntry assetEntry = _addAssetEntry(assetCategory.getCategoryId());
+		AssetEntry assetEntry = _addAssetEntry(
+			_group.getGroupId(), assetCategory.getCategoryId());
 
 		List<InfoFieldValue<Object>> filteredInfoFieldValues =
 			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
@@ -348,32 +343,25 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		AssetVocabulary assetVocabulary = _addAssetVocabulary(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC);
 
+		_testGetInfoFieldValuesJournalArticlePublicAssetVocabularyWithAssetCategory(
+			_addAssetCategory(assetVocabulary), assetVocabulary,
+			_group.getGroupId());
+
+		assetVocabulary = _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
+			RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			null, null, AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			ServiceContextTestUtil.getServiceContext(_depotEntry.getGroupId()));
+
 		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
-		AssetEntry assetEntry = _addAssetEntry(assetCategory.getCategoryId());
-
-		List<InfoFieldValue<Object>> filteredInfoFieldValues =
-			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
-
-		Assert.assertEquals(
-			filteredInfoFieldValues.toString(), 1,
-			filteredInfoFieldValues.size());
-
-		KeyLocalizedLabelPair keyLocalizedLabelPair = _getKeyLocalizedLabelPair(
-			filteredInfoFieldValues);
-
-		Assert.assertEquals(
-			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
-			assetCategory.getTitle(LocaleUtil.ENGLISH));
-
-		_assertInfoFieldValues(
-			assetEntry.getClassPK(), keyLocalizedLabelPair,
-			StringBundler.concat(
-				AssetVocabulary.class.getSimpleName(), "__ERC__",
-				assetVocabulary.getExternalReferenceCode()),
-			StringBundler.concat(
-				AssetVocabulary.class.getSimpleName(), StringPool.UNDERLINE,
-				assetVocabulary.getVocabularyId()));
+		_testGetInfoFieldValuesJournalArticlePublicAssetVocabularyWithAssetCategory(
+			assetCategory, assetVocabulary, _group.getGroupId());
+		_testGetInfoFieldValuesJournalArticlePublicAssetVocabularyWithAssetCategory(
+			assetCategory, assetVocabulary, _depotEntry.getGroupId());
 	}
 
 	private AssetCategory _addAssetCategory(AssetVocabulary assetVocabulary)
@@ -389,18 +377,17 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			new ServiceContext());
 	}
 
-	private AssetEntry _addAssetEntry(long... assetCategoryIds)
+	private AssetEntry _addAssetEntry(long groupId, long... assetCategoryIds)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
+				groupId, TestPropsValues.getUserId());
 
 		serviceContext.setAssetCategoryIds(assetCategoryIds);
 
 		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
+			groupId, 0, PortalUtil.getClassNameId(JournalArticle.class),
 			HashMapBuilder.put(
 				LocaleUtil.US, RandomTestUtil.randomString()
 			).build(),
@@ -444,6 +431,8 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			InfoFieldValue<?> infoFieldValue =
 				infoItemFieldValues.getInfoFieldValue(fieldName);
 
+			Assert.assertNotNull(fieldName, infoFieldValue);
+
 			Object value = infoFieldValue.getValue(LocaleUtil.ENGLISH);
 
 			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
@@ -463,6 +452,22 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 				expectedKeyLocalizedLabelPair.getLabel(LocaleUtil.US),
 				actualKeyLocalizedLabelPair.getLabel(LocaleUtil.US));
 		}
+	}
+
+	private String _getExpectedExternalUniqueId(AssetVocabulary assetVocabulary)
+		throws Exception {
+
+		if (assetVocabulary.getGroupId() == _group.getGroupId()) {
+			return StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), "__ERC__",
+				assetVocabulary.getExternalReferenceCode());
+		}
+
+		return StringBundler.concat(
+			AssetVocabulary.class.getSimpleName(), "__ERC__",
+			assetVocabulary.getExternalReferenceCode(), "__SERC__",
+			ScopeUtil.getItemScopeExternalReferenceCode(
+				assetVocabulary.getGroupId(), _group.getGroupId()));
 	}
 
 	private List<InfoFieldValue<Object>> _getInfoFieldValues(
@@ -488,6 +493,37 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 			(List<KeyLocalizedLabelPair>)value;
 
 		return keyLocalizedLabelPairs.get(0);
+	}
+
+	private void
+			_testGetInfoFieldValuesJournalArticlePublicAssetVocabularyWithAssetCategory(
+				AssetCategory assetCategory, AssetVocabulary assetVocabulary,
+				long groupId)
+		throws Exception {
+
+		AssetEntry assetEntry = _addAssetEntry(
+			groupId, assetCategory.getCategoryId());
+
+		List<InfoFieldValue<Object>> filteredInfoFieldValues =
+			_getInfoFieldValues(assetEntry, assetVocabulary.getName());
+
+		Assert.assertEquals(
+			filteredInfoFieldValues.toString(), 1,
+			filteredInfoFieldValues.size());
+
+		KeyLocalizedLabelPair keyLocalizedLabelPair = _getKeyLocalizedLabelPair(
+			filteredInfoFieldValues);
+
+		Assert.assertEquals(
+			keyLocalizedLabelPair.getLabel(LocaleUtil.ENGLISH),
+			assetCategory.getTitle(LocaleUtil.ENGLISH));
+
+		_assertInfoFieldValues(
+			assetEntry.getClassPK(), keyLocalizedLabelPair,
+			_getExpectedExternalUniqueId(assetVocabulary),
+			StringBundler.concat(
+				AssetVocabulary.class.getSimpleName(), StringPool.UNDERLINE,
+				assetVocabulary.getVocabularyId()));
 	}
 
 	@Inject

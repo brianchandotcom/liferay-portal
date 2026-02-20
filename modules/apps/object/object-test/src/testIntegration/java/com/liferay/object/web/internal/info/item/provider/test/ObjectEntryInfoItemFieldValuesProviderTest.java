@@ -207,6 +207,8 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 			ContentTypes.TEXT, RandomTestUtil.randomBytes(), null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
+		LocalDateTime localDateTime = LocalDateTime.of(2026, 1, 1, 23, 30);
+
 		String parentTextObjectFieldNameValue = RandomTestUtil.randomString();
 
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
@@ -218,8 +220,6 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 				"parentTextObjectFieldName", parentTextObjectFieldNameValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
-
-		LocalDateTime localDateTime = LocalDateTime.of(2026, 1, 1, 23, 30);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(),

@@ -121,12 +121,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		for (Registration registration :
-				_getActiveRegistrations(portletDataContext)) {
+		List<Registration> activeRegistrations = _getActiveRegistrations(
+			portletDataContext);
 
+		for (Registration registration : activeRegistrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
+
+			if ((activeRegistrations.size() > 1) &&
+				!portletDataContext.getBooleanParameter(
+					getPortletId(), exportImportDescriptor.getKey())) {
+
+				continue;
+			}
 
 			Map<String, String> newPrimaryKeysMap =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(

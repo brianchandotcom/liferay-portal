@@ -33,6 +33,11 @@ public class AccountEntryGroupSettingsImpl
 		try {
 			Group group = _groupLocalService.fetchGroup(groupId);
 
+			if (group == null) {
+				return AccountConstants.
+					ACCOUNT_ENTRY_TYPES_DEFAULT_ALLOWED_TYPES;
+			}
+
 			AccountEntryGroupConfiguration accountEntryGroupConfiguration =
 				_configurationProvider.getGroupConfiguration(
 					AccountEntryGroupConfiguration.class, group.getCompanyId(),
@@ -53,6 +58,10 @@ public class AccountEntryGroupSettingsImpl
 
 		try {
 			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				return;
+			}
 
 			if (allowedTypes == null) {
 				_configurationProvider.deleteGroupConfiguration(

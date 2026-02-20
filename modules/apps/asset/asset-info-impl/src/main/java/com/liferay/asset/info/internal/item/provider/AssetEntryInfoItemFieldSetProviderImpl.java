@@ -60,12 +60,13 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(AssetEntry assetEntry) {
-		return _getInfoFieldSet(_getNoninternalAssetVocabularies(assetEntry));
+		return _getInfoFieldSet(
+			_getNoninternalAssetVocabularies(assetEntry), _getScopeGroupId());
 	}
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(String itemClassName) {
-		return _getInfoFieldSet(Collections.emptyList());
+		return _getInfoFieldSet(Collections.emptyList(), _getScopeGroupId());
 	}
 
 	@Override
@@ -74,7 +75,8 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		return _getInfoFieldSet(
 			_getNoninternalAssetVocabularies(
-				itemClassName, itemClassTypeId, scopeGroupId));
+				itemClassName, itemClassTypeId, scopeGroupId),
+			scopeGroupId);
 	}
 
 	@Override
@@ -210,9 +212,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	}
 
 	private InfoFieldSet _getInfoFieldSet(
-		Collection<AssetVocabulary> assetVocabularies) {
-
-		long scopeGroupId = _getScopeGroupId();
+		Collection<AssetVocabulary> assetVocabularies, long scopeGroupId) {
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(

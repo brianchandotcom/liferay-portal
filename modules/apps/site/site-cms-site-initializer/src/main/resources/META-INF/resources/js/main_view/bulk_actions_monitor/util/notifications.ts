@@ -11,6 +11,7 @@ import {
 	BULK_ACTION_ASSIGN_DEFAULT_WORKFLOW,
 	BULK_ACTION_ASSIGN_TO,
 	BULK_ACTION_CATEGORIES,
+	BULK_ACTION_COPY,
 	BULK_ACTION_DEFAULT_PERMISSIONS,
 	BULK_ACTION_DELETE,
 	BULK_ACTION_DELETE_ASSET_VERSION,
@@ -71,6 +72,17 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 			),
 			singular: Liferay.Language.get(
 				'categories-update-action-started-for-one-asset'
+			),
+		},
+	},
+	[BULK_ACTION_COPY]: {
+		info: {
+			all: Liferay.Language.get('copy-action-started-for-all-assets'),
+			plural: Liferay.Language.get(
+				'copy-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'copy-action-started-for-one-asset'
 			),
 		},
 	},

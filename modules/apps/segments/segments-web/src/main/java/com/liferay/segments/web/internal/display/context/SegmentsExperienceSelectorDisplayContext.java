@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.model.SegmentsExperience;
@@ -149,7 +150,11 @@ public class SegmentsExperienceSelectorDisplayContext {
 		).put(
 			"segmentsEntryERC", segmentsExperience.getSegmentsEntryERC()
 		).put(
-			"segmentsEntryGroupId", segmentsExperience.getSegmentsEntryGroupId()
+			"segmentsEntryGroupId",
+			ScopeUtil.getItemGroupId(
+				segmentsExperience.getCompanyId(),
+				segmentsExperience.getSegmentsEntryScopeERC(),
+				segmentsExperience.getGroupId())
 		).put(
 			"segmentsEntryId", segmentsExperience.getSegmentsEntryId()
 		).put(
@@ -255,8 +260,15 @@ public class SegmentsExperienceSelectorDisplayContext {
 			if ((Objects.equals(
 					curSegmentsExperience.getSegmentsEntryERC(),
 					segmentsExperience.getSegmentsEntryERC()) &&
-				 (curSegmentsExperience.getSegmentsEntryGroupId() ==
-					 segmentsExperience.getSegmentsEntryGroupId())) ||
+				 Objects.equals(
+					 ScopeUtil.getItemGroupId(
+						 curSegmentsExperience.getCompanyId(),
+						 curSegmentsExperience.getSegmentsEntryScopeERC(),
+						 curSegmentsExperience.getGroupId()),
+					 ScopeUtil.getItemGroupId(
+						 segmentsExperience.getCompanyId(),
+						 segmentsExperience.getSegmentsEntryScopeERC(),
+						 segmentsExperience.getGroupId()))) ||
 				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==

@@ -16,6 +16,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -75,6 +76,15 @@ public class PageExperienceDTOConverter
 							return null;
 						}
 
+						Long groupId = ScopeUtil.getItemGroupId(
+							segmentsExperience.getCompanyId(),
+							segmentsExperience.getSegmentsEntryScopeERC(),
+							segmentsExperience.getGroupId());
+
+						if (groupId == null) {
+							return null;
+						}
+
 						return new ItemExternalReference() {
 							{
 								setClassName(SegmentsEntry.class::getName);
@@ -82,9 +92,7 @@ public class PageExperienceDTOConverter
 									segmentsExperience::getSegmentsEntryERC);
 								setScope(
 									() -> ItemScopeUtil.getItemScope(
-										segmentsExperience.
-											getSegmentsEntryGroupId(),
-										layout.getGroupId()));
+										groupId, layout.getGroupId()));
 							}
 						};
 					});

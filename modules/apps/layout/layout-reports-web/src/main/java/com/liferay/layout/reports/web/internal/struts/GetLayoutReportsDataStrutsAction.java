@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
@@ -337,8 +338,15 @@ public class GetLayoutReportsDataStrutsAction implements StrutsAction {
 			if ((Objects.equals(
 					curSegmentsExperience.getSegmentsEntryERC(),
 					segmentsExperience.getSegmentsEntryERC()) &&
-				 (curSegmentsExperience.getSegmentsEntryGroupId() ==
-					 segmentsExperience.getSegmentsEntryGroupId())) ||
+				 Objects.equals(
+					 ScopeUtil.getItemGroupId(
+						 curSegmentsExperience.getCompanyId(),
+						 curSegmentsExperience.getSegmentsEntryScopeERC(),
+						 curSegmentsExperience.getGroupId()),
+					 ScopeUtil.getItemGroupId(
+						 segmentsExperience.getCompanyId(),
+						 segmentsExperience.getSegmentsEntryScopeERC(),
+						 segmentsExperience.getGroupId()))) ||
 				curSegmentsExperience.hasDefaultSegmentsEntry()) {
 
 				if (curSegmentsExperience.getSegmentsExperienceId() ==

@@ -78,7 +78,7 @@ function getDynamicMax(datasets) {
 
     datasets.forEach(dataset => {
         let data = dataset.data;
-        
+
         data.forEach((dataValue, i) => {
             const val = parseFloat(dataValue) || 0;
             indexTotals[i] = (indexTotals[i] || 0) + val;
@@ -100,7 +100,7 @@ function createBarChartFromTable(chartTitle, dataSuffix, elementID, metricName, 
 
 	let testSuiteReport = false;
 
-	if(chartTitle == 'Daily Server Duration by Test Suite'){
+	if (chartTitle == 'Daily Server Duration by Test Suite') {
 		testSuiteReport = true;
 	}
 
@@ -160,8 +160,8 @@ function createBarChartFromTable(chartTitle, dataSuffix, elementID, metricName, 
 
 	let yAxesMax = 100;
 
-	if(testSuiteReport){
-		yAxesMax = getDynamicMax(datasets)
+	if (testSuiteReport) {
+		yAxesMax = getDynamicMax(datasets);
 	}
 
 	let barChart = new Chart(document.getElementById(elementID), {

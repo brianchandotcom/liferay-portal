@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import {Navigate, Outlet, RouterProvider, createHashRouter} from 'react-router';
+import {createRoutesFromElements, HashRouter, Navigate, Routes, Route} from 'react-router';
 
 import {FilterContextProvider} from '../shared/components/filter/FilterContext.es';
 import HeaderController from '../shared/components/header/HeaderController.es';
@@ -24,127 +24,50 @@ import SLAFormPage from './sla/form-page/SLAFormPage.es';
 import SLAListPage from './sla/list-page/SLAListPage.es';
 import WorkloadByAssigneePage from './workload-by-assignee-page/WorkloadByAssigneePage.es';
 
-const Layout = () => (
+const appRoutes = (
 	<>
-		<HeaderController basePath="/processes" />
+		<Route path="/" element={<Navigate replace to='/processes/20/1/overdueInstanceCount:desc' />} />
 
-		<div className="portal-workflow-metrics-app">
-			<Outlet />
-		</div>
+		<Route path="/processes/:pageSize/:page/:sort" element={<ProcessListPage />} />
+
+		<Route path="/metrics/:processId" element={<ProcessMetricsContainer />}>
+			<Route path="dashboard/:pageSize/:page/:sort" element={<DashboardTab />} />
+			<Route path="performance" element={<PerformanceTab />} />
+		</Route>
+
+		<Route path="/instance/:processId/:pageSize/:page/:sort" element={<InstanceListPage />} />
+
+		<Route path="/sla/:processId" element={<SLAContainer />}>
+			<Route path="list/:pageSize/:page" element={<SLAListPage />} />
+			<Route path="new" element={<SLAFormPage />} />
+			<Route path="edit/:id" element={<SLAFormPage />} />
+		</Route>
+
+		<Route path="/performance/step/:processId/:pageSize/:page/:sort" element={<PerformanceByStepPage />} />
+
+		<Route path="/workload/assignee/:processId/:pageSize/:page/:sort" element={<WorkloadByAssigneePage />} />
+
+		<Route path="/performance/assignee/:processId/:pageSize/:page/:sort" element={<PerformanceByAssigneePage />} />
+
+		<Route path="/settings" element={<SettingsContainer />}>
+			<Route path="indexes" element={<IndexesPage />} />
+		</Route>
 	</>
 );
 
-const router = createHashRouter([
-	{
-		children: [
-			{
-				element: <Navigate replace to='/processes/20/1/overdueInstanceCount:desc' />,
-				index: true,
-			},
-			{
-				element: <ProcessListPage />,
-				handle: {
-					path: '/processes/:pageSize/:page/:sort',
-				},
-				path: '/processes/:pageSize/:page/:sort',
-			},
-			{
-				children: [
-					{
-						element: <DashboardTab />,
-						handle: {
-							path: '/metrics/:processId/dashboard/:pageSize/:page/:sort',
-						},
-						path: 'dashboard/:pageSize/:page/:sort',
-					},
-					{
-						element: <PerformanceTab />,
-						handle: {
-							path: '/metrics/:processId/performance',
-						},
-						path: 'performance',
-					},
-				],
-				element: <ProcessMetricsContainer />,
-				path: '/metrics/:processId',
-			},
-			{
-				element: <InstanceListPage />,
-				handle: {
-					path: '/instance/:processId/:pageSize/:page/:sort',
-				},
-				path: '/instance/:processId/:pageSize/:page/:sort',
-			},
-			{
-				children: [
-					{
-						element: <SLAListPage />,
-						handle: {
-							path: '/sla/:processId/list/:pageSize/:page',
-						},
-						path: 'list/:pageSize/:page',
-					},
-					{
-						element: <SLAFormPage />,
-						handle: {
-							path: '/sla/:processId/new',
-						},
-						path: 'new',
-					},
-					{
-						element: <SLAFormPage />,
-						handle: {
-							path: '/sla/:processId/edit/:id',
-						},
-						path: 'edit/:id',
-					},
-				],
-				element: <SLAContainer />,
-				path: '/sla/:processId',
-			},
-			{
-				element: <PerformanceByStepPage />,
-				handle: {
-					path: '/performance/step/:processId/:pageSize/:page/:sort',
-				},
-				path: '/performance/step/:processId/:pageSize/:page/:sort',
-			},
-			{
-				element: <WorkloadByAssigneePage />,
-				handle: {
-					path: '/workload/assignee/:processId/:pageSize/:page/:sort',
-				},
-				path: '/workload/assignee/:processId/:pageSize/:page/:sort',
-			},
-			{
-				element: <PerformanceByAssigneePage />,
-				handle: {
-					path: '/performance/assignee/:processId/:pageSize/:page/:sort',
-				},
-				path: '/performance/assignee/:processId/:pageSize/:page/:sort',
-			},
-			{
-				children: [
-					{
-						element: <IndexesPage />,
-						index: true,
-						path: '/settings/indexes',
-					}
-				],
-				element: <SettingsContainer />,
-				path: '/settings',
-			},
-		],
-		element: <Layout />,
-		path: '/',
-	},
-]);
+export const appDataRoutes = createRoutesFromElements(appRoutes);
 
 const App = (props) => {
 	return (
 		<AppContextProvider {...props}>
 			<FilterContextProvider>
-				<RouterProvider router={router} />
+					<HashRouter>
+						<HeaderController basePath="/processes" />
+
+						<div className="portal-workflow-metrics-app">
+							<Routes>{appRoutes}</Routes>
+						</div>
+					</HashRouter>
 			</FilterContextProvider>
 		</AppContextProvider>
 	);

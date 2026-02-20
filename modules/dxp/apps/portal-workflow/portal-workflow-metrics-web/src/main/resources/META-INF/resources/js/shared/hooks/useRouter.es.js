@@ -3,16 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useLocation, useMatches, useNavigate, useParams} from 'react-router';
+import {matchRoutes, useLocation, useNavigate, useParams} from 'react-router';
+
+import {appDataRoutes} from '../../components/App.es';
 
 const useRouter = () => {
 	const location = useLocation();
-	const matches = useMatches();
 	const navigate = useNavigate();
 	const params = useParams();
 
-	const routeMatch = matches.findLast(({handle}) => handle?.path);
-	const path = routeMatch?.handle.path;
+	const routeMatches = matchRoutes(appDataRoutes, location.pathname);
+	const path = routeMatches.map(({route}) => route.path).join('/');
 
 	return {
 		location,

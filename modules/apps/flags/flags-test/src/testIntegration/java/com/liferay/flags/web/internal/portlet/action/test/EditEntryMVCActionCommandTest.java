@@ -16,12 +16,9 @@ import com.liferay.message.boards.service.MBCategoryLocalServiceUtil;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -42,7 +39,6 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -51,8 +47,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Ankita Malik
@@ -88,21 +82,9 @@ public class EditEntryMVCActionCommandTest {
 
 		User reporterUser = TestPropsValues.getUser();
 
-		ThemeDisplay themeDisplay = _getThemeDisplay(groupId, reporterUser);
-
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(themeDisplay, mbMessage);
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, false, LayoutConstants.TYPE_PORTLET);
-
-		mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, layouts.get(0));
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+			_getMockLiferayPortletActionRequest(
+				_getThemeDisplay(groupId, reporterUser), mbMessage);
 
 		AtomicReference<String> reporterEmailAddressRef =
 			new AtomicReference<>();

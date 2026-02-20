@@ -1462,7 +1462,8 @@ public class EditableFragmentEntryProcessorTest {
 		Assert.assertFalse(src.contains("imagePreview=1"));
 		Assert.assertEquals(
 			_dlURLHelper.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK),
+				fileEntry, fileEntry.getFileVersion(),
+				_serviceContext.getThemeDisplay(), StringPool.BLANK),
 			src);
 	}
 

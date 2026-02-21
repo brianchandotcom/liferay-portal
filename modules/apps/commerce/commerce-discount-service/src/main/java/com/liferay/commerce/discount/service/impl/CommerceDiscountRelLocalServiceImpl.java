@@ -168,22 +168,23 @@ public class CommerceDiscountRelLocalServiceImpl
 	public List<CommerceDiscountRel> getCategoriesByCommerceDiscountId(
 		long commerceDiscountId, String name, int start, int end) {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceDiscountRelTable.INSTANCE
-				).from(
-					CommerceDiscountRelTable.INSTANCE
-				).innerJoinON(
-					AssetCategoryTable.INSTANCE,
-					AssetCategoryTable.INSTANCE.categoryId.eq(
-						CommerceDiscountRelTable.INSTANCE.classPK)
-				),
-				AssetCategory.class.getName(), commerceDiscountId, name,
-				AssetCategoryTable.INSTANCE.name
-			).limit(
-				start, end
-			));
+		return _getCommerceDiscountRels(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						AssetCategoryTable.INSTANCE,
+						AssetCategoryTable.INSTANCE.categoryId.eq(
+							CommerceDiscountRelTable.INSTANCE.classPK)
+					),
+					AssetCategory.class.getName(), commerceDiscountId, name,
+					AssetCategoryTable.INSTANCE.name
+				).limit(
+					start, end
+				)));
 	}
 
 	@Override
@@ -377,22 +378,23 @@ public class CommerceDiscountRelLocalServiceImpl
 	public List<CommerceDiscountRel> getCPInstancesByCommerceDiscountId(
 		long commerceDiscountId, String sku, int start, int end) {
 
-		return dslQuery(
-			_getGroupByStep(
-				DSLQueryFactoryUtil.selectDistinct(
-					CommerceDiscountRelTable.INSTANCE
-				).from(
-					CommerceDiscountRelTable.INSTANCE
-				).innerJoinON(
-					CPInstanceTable.INSTANCE,
-					CPInstanceTable.INSTANCE.CPInstanceId.eq(
-						CommerceDiscountRelTable.INSTANCE.classPK)
-				),
-				CPInstance.class.getName(), commerceDiscountId, sku,
-				CPInstanceTable.INSTANCE.sku
-			).limit(
-				start, end
-			));
+		return _getCommerceDiscountRels(
+			dslQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						CPInstanceTable.INSTANCE,
+						CPInstanceTable.INSTANCE.CPInstanceId.eq(
+							CommerceDiscountRelTable.INSTANCE.classPK)
+					),
+					CPInstance.class.getName(), commerceDiscountId, sku,
+					CPInstanceTable.INSTANCE.sku
+				).limit(
+					start, end
+				)));
 	}
 
 	@Override

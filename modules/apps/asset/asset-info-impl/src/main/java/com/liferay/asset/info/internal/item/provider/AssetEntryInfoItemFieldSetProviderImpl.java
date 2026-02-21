@@ -85,10 +85,10 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
+		long scopeGroupId = _getScopeGroupId();
+
 		Set<AssetVocabulary> assetVocabularies =
 			_getNoninternalAssetVocabularies(assetEntry);
-
-		long scopeGroupId = _getScopeGroupId();
 
 		for (AssetVocabulary assetVocabulary : assetVocabularies) {
 			infoFieldValues.add(

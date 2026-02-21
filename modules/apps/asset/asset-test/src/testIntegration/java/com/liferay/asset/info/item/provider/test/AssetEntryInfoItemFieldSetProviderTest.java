@@ -194,7 +194,6 @@ public class AssetEntryInfoItemFieldSetProviderTest {
 		Assert.assertEquals(
 			_getExpectedExternalUniqueId(assetVocabulary),
 			infoFieldSetEntry.getExternalUniqueId());
-
 		Assert.assertEquals(
 			assetVocabulary.getName(), infoFieldSetEntry.getName());
 	}

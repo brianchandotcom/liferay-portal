@@ -43,8 +43,8 @@ public class TextEmbeddingRetrieverTest {
 			new String[] {LocaleUtil.toLanguageId(LocaleUtil.US)},
 			new String[] {BlogsEntry.class.getName()});
 		_setUpTextEmbeddingProvider();
-		_setUpTextEmbeddingRetrieverImpl();
 		_setUpTextEmbeddingProviderServiceTrackerList();
+		_setUpTextEmbeddingRetrieverImpl();
 	}
 
 	@Test

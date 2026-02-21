@@ -85,7 +85,10 @@ public class EditEntryMVCActionCommandTest {
 			new AtomicReference<>();
 		AtomicLong reporterUserIdAtomicLong = new AtomicLong();
 
-		FlagsEntryService flagsEntryService = new FlagsEntryService() {
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					_mvcActionCommand, "_flagsEntryService",
+				new FlagsEntryService() {
 
 			@Override
 			public void addEntry(
@@ -102,11 +105,7 @@ public class EditEntryMVCActionCommandTest {
 				return "";
 			}
 
-		};
-
-		try (AutoCloseable autoCloseable =
-				ReflectionTestUtil.setFieldValueWithAutoCloseable(
-					_mvcActionCommand, "_flagsEntryService", flagsEntryService);
+		});
 			CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(

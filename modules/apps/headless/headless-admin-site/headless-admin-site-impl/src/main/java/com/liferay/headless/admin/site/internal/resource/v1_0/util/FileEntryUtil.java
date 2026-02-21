@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -78,21 +80,27 @@ public class FileEntryUtil {
 					" because of unsupported protocol ", url.getProtocol()));
 		}
 
-		URLConnection urlConnection = url.openConnection();
-
-		if ((urlConnection instanceof HttpURLConnection httpURLConnection) &&
-			(httpURLConnection.getResponseCode() !=
-				HttpURLConnection.HTTP_OK)) {
-
-			throw new IllegalArgumentException(
-				"Unable to download file from " +
-					thumbnailURLReference.getUrl());
-		}
-
-		File file = FileUtil.createTempFile(
-			StreamUtil.toByteArray(urlConnection.getInputStream()));
+		File file = null;
+		URLConnection urlConnection = null;
 
 		try {
+			urlConnection = url.openConnection();
+
+			if ((urlConnection instanceof
+					HttpURLConnection httpURLConnection) &&
+				(httpURLConnection.getResponseCode() !=
+					HttpURLConnection.HTTP_OK)) {
+
+				throw new IllegalArgumentException(
+					"Unable to download file from " +
+						thumbnailURLReference.getUrl());
+			}
+
+			try (InputStream inputStream = urlConnection.getInputStream()) {
+				file = FileUtil.createTempFile(
+					StreamUtil.toByteArray(inputStream));
+			}
+
 			String mimeType = MimeTypesUtil.getContentType(file);
 
 			Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
@@ -125,9 +133,19 @@ public class FileEntryUtil {
 				resourceName + "_" + fileName, mimeType, fileName, null, null,
 				null, file, null, null, null, serviceContext);
 		}
+		catch (IOException ioException) {
+			throw new IllegalArgumentException(
+				"Unable to download file from " +
+					thumbnailURLReference.getUrl(),
+				ioException);
+		}
 		finally {
 			if (file != null) {
 				FileUtil.delete(file);
+			}
+
+			if (urlConnection instanceof HttpURLConnection httpURLConnection) {
+				httpURLConnection.disconnect();
 			}
 		}
 	}

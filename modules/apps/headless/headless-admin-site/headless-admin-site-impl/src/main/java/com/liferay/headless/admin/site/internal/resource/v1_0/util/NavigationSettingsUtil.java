@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageNavigationSettings;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
 
@@ -60,7 +61,13 @@ public class NavigationSettingsUtil {
 	}
 
 	private static String _getTarget(UnicodeProperties unicodeProperties) {
-		return unicodeProperties.getProperty("target");
+		String target = unicodeProperties.getProperty("target");
+
+		if (Validator.isNull(target)) {
+			return null;
+		}
+
+		return target;
 	}
 
 	private static boolean _isUseNewTab(UnicodeProperties unicodeProperties) {

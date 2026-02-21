@@ -29,12 +29,12 @@ end
 if (ready and (obj.status.managedServiceDetailsReady or false))
 then
 	return {
-        message = "Liferay Infrastructure is healthy.",
-        status = "Healthy"
-    }
+		message = "Liferay Infrastructure is healthy.",
+		status = "Healthy"
+	}
 end
 
 return {
-    message = progressMessage,
-    status = "Progressing"
+	message = progressMessage,
+	status = "Progressing"
 }

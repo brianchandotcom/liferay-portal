@@ -60,13 +60,11 @@ public class EditEntryMVCActionCommandTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testIgnoreTamperedReporterAndReportedUser() throws Exception {
+	public void testDoProcessAction() throws Exception {
 		User reportedUser = UserTestUtil.addUser();
 
-		long groupId = TestPropsValues.getGroupId();
-
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
+			ServiceContextTestUtil.getServiceContext(TestPropsValues.getGroupId());
 
 		MBCategory mbCategory = MBCategoryLocalServiceUtil.addCategory(
 			null, reportedUser.getUserId(),
@@ -75,7 +73,8 @@ public class EditEntryMVCActionCommandTest {
 			serviceContext);
 
 		MBMessage mbMessage = _mbMessageLocalService.addMessage(
-			reportedUser.getUserId(), reportedUser.getFullName(), groupId,
+			reportedUser.getUserId(), reportedUser.getFullName(),
+			TestPropsValues.getGroupId(),
 			mbCategory.getCategoryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), MBMessageConstants.DEFAULT_FORMAT,
 			Collections.emptyList(), false, 0, false, serviceContext);
@@ -84,7 +83,7 @@ public class EditEntryMVCActionCommandTest {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
-				_getThemeDisplay(groupId, reporterUser), mbMessage);
+				_getThemeDisplay(reporterUser), mbMessage);
 
 		AtomicReference<String> reporterEmailAddressRef =
 			new AtomicReference<>();
@@ -170,14 +169,14 @@ public class EditEntryMVCActionCommandTest {
 		return mockLiferayPortletActionRequest;
 	}
 
-	private ThemeDisplay _getThemeDisplay(long groupId, User user)
+	private ThemeDisplay _getThemeDisplay(User user)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setScopeGroupId(groupId);
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSignedIn(true);
 		themeDisplay.setUser(user);
 

@@ -55,7 +55,7 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 
 	@Override
 	public String getProviderName() {
-		return _PROVIDE_NAME;
+		return "hugging-face-inference-api";
 	}
 
 	private Double[] _getEmbedding(
@@ -120,8 +120,6 @@ public class HuggingFaceInferenceAPITextEmbeddingProvider
 
 		return options;
 	}
-
-	private static final String _PROVIDE_NAME = "hugging-face-inference-api";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HuggingFaceInferenceAPITextEmbeddingProvider.class);

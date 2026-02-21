@@ -58,7 +58,7 @@ public class VertexAITextEmbeddingProvider implements TextEmbeddingProvider {
 
 	@Override
 	public String getProviderName() {
-		return _PROVIDE_NAME;
+		return "vertex-ai";
 	}
 
 	private String _getAuthenticationToken() throws Exception {
@@ -185,8 +185,6 @@ public class VertexAITextEmbeddingProvider implements TextEmbeddingProvider {
 					MapUtil.getBoolean(attributes, "autoTruncate", true))
 			));
 	}
-
-	private static final String _PROVIDE_NAME = "vertex-ai";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		VertexAITextEmbeddingProvider.class);

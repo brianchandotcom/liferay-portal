@@ -52,7 +52,7 @@ public class OpenAITextEmbeddingProvider implements TextEmbeddingProvider {
 
 	@Override
 	public String getProviderName() {
-		return _PROVIDE_NAME;
+		return "openai";
 	}
 
 	private Double[] _getEmbedding(
@@ -127,8 +127,6 @@ public class OpenAITextEmbeddingProvider implements TextEmbeddingProvider {
 
 		return requestBodyJSONObject.toString();
 	}
-
-	private static final String _PROVIDE_NAME = "openai";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OpenAITextEmbeddingProvider.class);

@@ -50,7 +50,7 @@ public class TXTAITextEmbeddingProvider implements TextEmbeddingProvider {
 
 	@Override
 	public String getProviderName() {
-		return _PROVIDE_NAME;
+		return "txtai";
 	}
 
 	private Double[] _getEmbedding(
@@ -105,8 +105,6 @@ public class TXTAITextEmbeddingProvider implements TextEmbeddingProvider {
 
 		return options;
 	}
-
-	private static final String _PROVIDE_NAME = "txtai";
 
 	@Reference
 	private Http _http;

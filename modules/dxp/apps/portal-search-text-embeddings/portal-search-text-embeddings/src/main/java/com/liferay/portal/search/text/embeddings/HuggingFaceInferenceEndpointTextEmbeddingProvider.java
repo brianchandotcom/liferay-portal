@@ -52,7 +52,7 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 
 	@Override
 	public String getProviderName() {
-		return _PROVIDE_NAME;
+		return "hugging-face-inference-endpoint";
 	}
 
 	private Double[] _getEmbedding(
@@ -108,9 +108,6 @@ public class HuggingFaceInferenceEndpointTextEmbeddingProvider
 
 		return options;
 	}
-
-	private static final String _PROVIDE_NAME =
-		"hugging-face-inference-endpoint";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		HuggingFaceInferenceEndpointTextEmbeddingProvider.class);

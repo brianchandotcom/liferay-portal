@@ -269,6 +269,9 @@ public class PreviewImageJournalArticleContentDashboardItemActionProviderTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
@@ -277,8 +280,6 @@ public class PreviewImageJournalArticleContentDashboardItemActionProviderTest {
 
 		themeDisplay.setRequest(mockHttpServletRequest);
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setURLCurrent("http://localhost:8080/currentURL");

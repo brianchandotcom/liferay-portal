@@ -81,10 +81,6 @@ public class EditEntryMVCActionCommandTest {
 
 		User reporterUser = TestPropsValues.getUser();
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(
-				mbMessage, reporterUser);
-
 		AtomicReference<String> reporterEmailAddressRef =
 			new AtomicReference<>();
 		AtomicLong reportedUserIdRef = new AtomicLong();
@@ -129,7 +125,7 @@ public class EditEntryMVCActionCommandTest {
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "doProcessAction",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
+				_getMockLiferayPortletActionRequest(mbMessage, reporterUser),
 				new MockLiferayPortletActionResponse());
 		}
 

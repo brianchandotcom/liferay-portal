@@ -5,6 +5,7 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.XMLSourceUtil;
 
@@ -52,7 +53,7 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		if (fileName.startsWith(getBaseDirName() + "build") ||
 			fileName.matches(".*/(build|tools/).*")) {
 
-			return content;
+			return _fixEmptyLinesBetweenTagsInBuildFile(content);
 		}
 
 		if (fileName.endsWith("-log4j-ext.xml") ||
@@ -72,6 +73,36 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 			return StringUtil.replaceFirst(
 				content, "\n\n", "\n", matcher.end(1));
+		}
+
+		return content;
+	}
+
+	private String _fixEmptyLinesBetweenTagsInBuildFile(String content) {
+		Matcher matcher =
+			_emptyLineBetweenSiblingTagsInBuildFilePattern.matcher(content);
+
+		while (matcher.find()) {
+			String tabs1 = matcher.group(1);
+			String tabs2 = matcher.group(4);
+
+			if (!tabs1.equals(tabs2)) {
+				continue;
+			}
+
+			String lineBreaks = matcher.group(3);
+			String tagName2 = matcher.group(5);
+
+			if (ArrayUtil.contains(_CONDITIONAL_TAG_NAMES, tagName2)) {
+				if (lineBreaks.equals("\n\n")) {
+					return StringUtil.replaceFirst(
+						content, "\n\n", "\n", matcher.end(1));
+				}
+			}
+			else if (lineBreaks.equals("\n")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
 		}
 
 		return content;
@@ -138,6 +169,13 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
+	private static final String[] _CONDITIONAL_TAG_NAMES = {
+		"else", "elseif", "then"
+	};
+
+	private static final Pattern _emptyLineBetweenSiblingTagsInBuildFilePattern =
+		Pattern.compile(
+			"\n(\t*)</([-\\w:]+)>(\n+)(\t*)<([-\\w:]+)[> \n]");
 	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
 	private static final Pattern _emptyLineInTagPattern1 = Pattern.compile(

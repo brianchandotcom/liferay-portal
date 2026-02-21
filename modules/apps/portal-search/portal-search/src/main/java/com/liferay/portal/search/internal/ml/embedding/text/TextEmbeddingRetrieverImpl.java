@@ -179,10 +179,6 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 				_disabledProviderNames, (String[])disabledProviders);
 		}
 
-		_textEmbeddingProviderServiceTrackerList =
-			ServiceTrackerListFactory.open(
-				bundleContext, TextEmbeddingProvider.class);
-
 		_serviceRegistration = bundleContext.registerService(
 			FeatureFlagListener.class,
 			(companyId, featureFlagKey, enabled) ->
@@ -193,6 +189,9 @@ public class TextEmbeddingRetrieverImpl implements TextEmbeddingRetriever {
 			(companyId, featureFlagKey, enabled) ->
 				_devTextEmbeddingsEnabled = enabled,
 			MapUtil.singletonDictionary("feature.flag.key", "LPD-31789"));
+		_textEmbeddingProviderServiceTrackerList =
+			ServiceTrackerListFactory.open(
+				bundleContext, TextEmbeddingProvider.class);
 	}
 
 	@Deactivate

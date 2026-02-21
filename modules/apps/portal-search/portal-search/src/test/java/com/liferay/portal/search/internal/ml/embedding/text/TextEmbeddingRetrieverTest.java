@@ -266,12 +266,10 @@ public class TextEmbeddingRetrieverTest {
 		_textEmbeddingRetrieverImpl = new TextEmbeddingRetrieverImpl();
 
 		ReflectionTestUtil.setFieldValue(
+			_textEmbeddingRetrieverImpl, "_betaTextEmbeddingsEnabled", true);
+		ReflectionTestUtil.setFieldValue(
 			_textEmbeddingRetrieverImpl, "_semanticSearchConfigurationProvider",
 			_semanticSearchConfigurationProvider);
-
-		ReflectionTestUtil.setFieldValue(
-			_textEmbeddingRetrieverImpl, "_betaTextEmbeddingsEnabled", true);
-
 		ReflectionTestUtil.setFieldValue(
 			_textEmbeddingRetrieverImpl,
 			"_textEmbeddingProviderServiceTrackerList",

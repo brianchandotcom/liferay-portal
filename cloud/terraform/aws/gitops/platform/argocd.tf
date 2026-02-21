@@ -27,7 +27,7 @@ resource "helm_release" "argocd" {
 				configs={
 					cm={
 						"application.resourceTrackingMethod"="annotation"
-						"resource.customizations.health.aws.liferay.com_LiferayInfrastructure"=file("${path.module}/health_LiferayInfrastructure.lua")
+						"resource.customizations.health.aws.liferay.com_LiferayInfrastructure"=file("${path.module}/health-aws.liferay.com_LiferayInfrastructure.lua")
 						"resource.exclusions"=yamlencode(
 							[
 								{

@@ -80,10 +80,9 @@ public class EditEntryMVCActionCommandTest {
 			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
 			0, false, serviceContext);
 
-		User reporterUser = TestPropsValues.getUser();
-
 		AtomicReference<String> reporterEmailAddressAtomicReference =
 			new AtomicReference<>();
+		User reporterUser = TestPropsValues.getUser();
 		AtomicLong reporterUserIdAtomicLong = new AtomicLong();
 
 		try (AutoCloseable autoCloseable =

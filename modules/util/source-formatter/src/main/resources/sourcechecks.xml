@@ -1291,6 +1291,10 @@
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary line breaks in `.jsp` lines." />
 		</check>
+		<check name="JSPLiferayUICSPTagCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds new usages of deprecated liferay-ui:csp tag." />
+		</check>
 		<check name="JSPLogFileNameCheck">
 			<category name="Bug Prevention" />
 			<description name="Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`." />

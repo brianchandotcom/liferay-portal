@@ -83,7 +83,7 @@ public class EditEntryMVCActionCommandTest {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest(
-				_getThemeDisplay(reporterUser), mbMessage);
+				mbMessage, reporterUser);
 
 		AtomicReference<String> reporterEmailAddressRef =
 			new AtomicReference<>();
@@ -141,10 +141,19 @@ public class EditEntryMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-		ThemeDisplay themeDisplay, MBMessage mbMessage) {
+			MBMessage mbMessage, User reporterUser)
+		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
+		themeDisplay.setSignedIn(true);
+		themeDisplay.setUser(reporterUser);
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -167,20 +176,6 @@ public class EditEntryMVCActionCommandTest {
 			"reportedUserId", String.valueOf(RandomTestUtil.nextLong()));
 
 		return mockLiferayPortletActionRequest;
-	}
-
-	private ThemeDisplay _getThemeDisplay(User user)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
-		themeDisplay.setSignedIn(true);
-		themeDisplay.setUser(user);
-
-		return themeDisplay;
 	}
 
 	@Inject

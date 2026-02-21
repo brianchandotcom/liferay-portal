@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<project basedir="." default="test" name="test">
+	<target name="test">
+		<if>
+			<equals arg1="${test}" arg2="true" />
+			<then>
+				<echo>true</echo>
+			</then>
+			<else>
+				<echo>false</echo>
+			</else>
+		</if>
+
+		<delete dir="${test.dir}" />
+	</target>
+</project>

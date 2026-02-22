@@ -103,38 +103,36 @@ public class CommercePermissionUpgradeProcessTest {
 		Assert.assertEquals(
 			resourceActions.toString(), 0, resourceActions.size());
 
-		for (String actionId :
-				new String[] {
-					CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
-					CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS
-				}) {
+		_assertHasResourcePermission(
+			ActionKeys.DELETE, CPMeasurementUnit.class.getName(),
+			role.getRoleId());
+		_assertHasResourcePermission(
+			ActionKeys.PERMISSIONS, CPMeasurementUnit.class.getName(),
+			role.getRoleId());
+		_assertHasResourcePermission(
+			ActionKeys.UPDATE, CPMeasurementUnit.class.getName(),
+			role.getRoleId());
+		_assertHasResourcePermission(
+			ActionKeys.VIEW, CPMeasurementUnit.class.getName(),
+			role.getRoleId());
+		_assertHasResourcePermission(
+			CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
+			CPConstants.RESOURCE_NAME_PRODUCT, role.getRoleId());
+		_assertHasResourcePermission(
+			CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS,
+			CPConstants.RESOURCE_NAME_PRODUCT, role.getRoleId());
+	}
 
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					_serviceContext.getCompanyId(),
-					CPConstants.RESOURCE_NAME_PRODUCT,
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(_serviceContext.getCompanyId()),
-					role.getRoleId(), actionId));
-		}
+	private void _assertHasResourcePermission(
+			String actionId, String name, long roleId)
+		throws Exception {
 
-		for (String actionId :
-				new String[] {
-					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-					ActionKeys.UPDATE, ActionKeys.VIEW
-				}) {
-
-			Assert.assertNotNull(
-				_resourceActionLocalService.fetchResourceAction(
-					CPMeasurementUnit.class.getName(), actionId));
-			Assert.assertTrue(
-				_resourcePermissionLocalService.hasResourcePermission(
-					_serviceContext.getCompanyId(),
-					CPMeasurementUnit.class.getName(),
-					ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(_serviceContext.getCompanyId()),
-					role.getRoleId(), actionId));
-		}
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				_serviceContext.getCompanyId(), name,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_serviceContext.getCompanyId()), roleId,
+				actionId));
 	}
 
 	private void _runUpgrade() throws Exception {

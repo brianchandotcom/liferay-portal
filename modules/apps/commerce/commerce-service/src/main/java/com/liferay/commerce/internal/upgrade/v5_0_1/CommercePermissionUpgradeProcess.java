@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -94,23 +93,16 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 	}
 
 	private void _addResourcePermission(
-			long companyId, String name, long roleId)
+			String actionId, long companyId, String name, long roleId)
 		throws Exception {
 
-		for (String actionId :
-				new String[] {
-					ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-					ActionKeys.UPDATE, ActionKeys.VIEW
-				}) {
+		if (!_resourcePermissionLocalService.hasResourcePermission(
+				companyId, name, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), roleId, actionId)) {
 
-			if (!_resourcePermissionLocalService.hasResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), roleId, actionId)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					companyId, name, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId), roleId, actionId);
-			}
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, name, ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(companyId), roleId, actionId);
 		}
 	}
 
@@ -214,11 +206,23 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				resourcePermission.getScope(), resourcePermission.getPrimKey(),
 				resourcePermission.getRoleId(), new String[] {actionId});
 
-			if (StringUtil.equals(
-					"ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT", actionId)) {
+			if (Objects.equals(
+					actionId, "ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT")) {
 
 				_addResourcePermission(
-					resourcePermission.getCompanyId(),
+					ActionKeys.DELETE, resourcePermission.getCompanyId(),
+					CPMeasurementUnit.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.PERMISSIONS, resourcePermission.getCompanyId(),
+					CPMeasurementUnit.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.UPDATE, resourcePermission.getCompanyId(),
+					CPMeasurementUnit.class.getName(),
+					resourcePermission.getRoleId());
+				_addResourcePermission(
+					ActionKeys.VIEW, resourcePermission.getCompanyId(),
 					CPMeasurementUnit.class.getName(),
 					resourcePermission.getRoleId());
 			}

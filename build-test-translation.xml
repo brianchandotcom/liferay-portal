@@ -59,6 +59,7 @@
 				/>
 			</then>
 		</if>
+
 		<if>
 			<equals arg1="${translation.file.rename}" arg2="true" />
 			<then>

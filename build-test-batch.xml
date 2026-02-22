@@ -85,6 +85,7 @@
 					<get-database-property property.name="database.version.cmd" />
 				</then>
 			</if>
+
 			<action />
 		</sequential>
 	</macrodef>
@@ -4785,6 +4786,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 					</echo>
 				</then>
 			</if>
+
 			<if>
 				<not>
 					<resourcecontains
@@ -4824,6 +4826,7 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 					</echo>
 				</then>
 			</if>
+
 			<if>
 				<not>
 					<resourcecontains

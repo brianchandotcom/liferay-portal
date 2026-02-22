@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Igor Fabiano Nazar
@@ -26,16 +25,6 @@ public class OrganizationModelIndexerWriterContributor
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
 		_organizationLocalService = organizationLocalService;
-	}
-
-	@Override
-	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			(Organization organization) -> batchIndexingActionable.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(organization)));
 	}
 
 	@Override

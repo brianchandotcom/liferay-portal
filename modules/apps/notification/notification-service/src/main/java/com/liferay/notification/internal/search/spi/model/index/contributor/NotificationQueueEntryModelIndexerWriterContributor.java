@@ -10,7 +10,6 @@ import com.liferay.notification.service.NotificationQueueEntryLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Paulo Albuquerque
@@ -27,18 +26,6 @@ public class NotificationQueueEntryModelIndexerWriterContributor
 			dynamicQueryBatchIndexingActionableFactory;
 		_notificationQueueEntryLocalService =
 			notificationQueueEntryLocalService;
-	}
-
-	@Override
-	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			(NotificationQueueEntry notificationQueueEntry) ->
-				batchIndexingActionable.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(
-						notificationQueueEntry)));
 	}
 
 	@Override

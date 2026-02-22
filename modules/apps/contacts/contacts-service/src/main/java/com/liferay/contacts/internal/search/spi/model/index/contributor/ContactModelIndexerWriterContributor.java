@@ -10,9 +10,6 @@ import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
-
-import java.util.function.Consumer;
 
 /**
  * @author Lucas Marques de Paula
@@ -28,24 +25,6 @@ public class ContactModelIndexerWriterContributor
 		_contactLocalService = contactLocalService;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
-	}
-
-	@Override
-	public void customize(
-		final BatchIndexingActionable batchIndexingActionable,
-		final ModelIndexerWriterDocumentHelper
-			modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			new Consumer<Contact>() {
-
-				@Override
-				public void accept(Contact contact) {
-					batchIndexingActionable.addDocument(
-						modelIndexerWriterDocumentHelper.getDocument(contact));
-				}
-
-			});
 	}
 
 	@Override

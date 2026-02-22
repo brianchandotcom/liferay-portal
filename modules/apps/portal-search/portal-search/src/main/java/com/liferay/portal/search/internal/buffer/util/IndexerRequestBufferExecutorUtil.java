@@ -71,7 +71,8 @@ public class IndexerRequestBufferExecutorUtil {
 		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
 			indexerRequestBuffer.transferCopy();
 
-		AtomicReference<Future<?>> futureAtomicReference = new AtomicReference<>();
+		AtomicReference<Future<?>> futureAtomicReference =
+			new AtomicReference<>();
 
 		FutureTask<?> futureTask = new FutureTask<Void>(
 			new CompanyInheritableThreadLocalCallable<>(

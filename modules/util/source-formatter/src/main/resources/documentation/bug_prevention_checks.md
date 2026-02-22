@@ -79,7 +79,7 @@ JSPGetStaticResourceURLCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks c
 [JSPIncludeCheck](check/jsp_include_check.md#jspincludecheck) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Validates values of `include` in `.jsp` files. |
 JSPLanguageKeysCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds missing language keys in `Language.properties`. |
 JSPLanguageUtilCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |
-[JSPLiferayUICSPTagCheck](check/jsp_liferay_ui_csp_tag_check.md#jsplayerayuicsptagcheck) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds new usages of deprecated liferay-ui:csp tag. |
+[JSPLiferayUICSPTagCheck](check/jsp_liferay_uicsp_tag_check.md#jspliferayuicsptagcheck) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds new usages of deprecated liferay-ui:csp tag. |
 JSPLogFileNameCheck | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`. |
 [JSPMethodCallsCheck](check/jsp_method_calls_check.md#jspmethodcallscheck) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks that type `LiferayPortletResponse` is used to call `getNamespace()`. |
 [JSPMissingTaglibsCheck](check/jsp_missing_taglibs_check.md#jspmissingtaglibscheck) | .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Checks for missing taglibs. |

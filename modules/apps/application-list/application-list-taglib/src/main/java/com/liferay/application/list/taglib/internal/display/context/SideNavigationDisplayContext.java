@@ -200,11 +200,9 @@ public class SideNavigationDisplayContext {
 				continue;
 			}
 
-			String childPanelCategoryKey = childPanelCategory.getKey();
-
 			propsItems.add(
 				HashMapBuilder.<String, Object>put(
-					"id", childPanelCategoryKey
+					"id", childPanelCategory.getKey()
 				).put(
 					"items", childrenPropsItems
 				).put(

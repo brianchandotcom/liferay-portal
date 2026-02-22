@@ -34,15 +34,11 @@ public interface PanelCategoryKeys {
 
 	public static final String APPLICATIONS_MENU_APPLICATIONS_DESIGN =
 		"applications_menu.applications.design";
-	public static final String APPLICATIONS_MENU_APPLICATIONS_HOME =
-		"applications_menu.applications.home";
 
 	public static final String APPLICATIONS_MENU_APPLICATIONS_PUBLICATIONS =
 		"applications_menu.applications.publications";
 
 	public static final String COMMERCE = "commerce";
-
-	public static final String COMMERCE_HOME = "commerce.home";
 
 	public static final String CONTROL_PANEL = "control_panel";
 
@@ -51,8 +47,6 @@ public interface PanelCategoryKeys {
 
 	public static final String CONTROL_PANEL_CONFIGURATION =
 		PortletCategoryKeys.CONTROL_PANEL_CONFIGURATION;
-
-	public static final String CONTROL_PANEL_HOME = "control_panel.home";
 
 	public static final String CONTROL_PANEL_MARKETPLACE =
 		"control_panel.marketplace";

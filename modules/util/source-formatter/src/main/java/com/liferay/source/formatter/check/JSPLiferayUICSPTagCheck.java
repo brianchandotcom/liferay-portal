@@ -23,20 +23,20 @@ public class JSPLiferayUICSPTagCheck extends BaseFileCheck {
 			return content;
 		}
 
-		int x = -1;
+		int index = -1;
 
 		while (true) {
-			x = content.indexOf("<liferay-ui:csp", x + 1);
+			index = content.indexOf("<liferay-ui:csp", index + 1);
 
-			if (x == -1) {
+			if (index == -1) {
 				return content;
 			}
 
 			addMessage(
 				fileName,
 				"Do not use <liferay-ui:csp> tag, use a React component " +
-					"instead, see LPD-73599",
-				getLineNumber(content, x));
+					"instead",
+				getLineNumber(content, index));
 		}
 	}
 

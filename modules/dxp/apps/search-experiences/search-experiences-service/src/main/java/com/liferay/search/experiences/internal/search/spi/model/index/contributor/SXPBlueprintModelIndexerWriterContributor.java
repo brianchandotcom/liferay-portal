@@ -8,7 +8,6 @@ package com.liferay.search.experiences.internal.search.spi.model.index.contribut
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 
@@ -26,16 +25,6 @@ public class SXPBlueprintModelIndexerWriterContributor
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
 		_sxpBlueprintLocalService = sxpBlueprintLocalService;
-	}
-
-	@Override
-	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			(SXPBlueprint sxpBlueprint) -> batchIndexingActionable.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(sxpBlueprint)));
 	}
 
 	@Override

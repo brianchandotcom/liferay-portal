@@ -10,7 +10,6 @@ import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author David Truong
@@ -26,16 +25,6 @@ public class CTRemoteModelIndexerWriterContributor
 		_ctRemoteLocalService = ctRemoteLocalService;
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
-	}
-
-	@Override
-	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			(CTRemote ctRemote) -> batchIndexingActionable.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(ctRemote)));
 	}
 
 	@Override

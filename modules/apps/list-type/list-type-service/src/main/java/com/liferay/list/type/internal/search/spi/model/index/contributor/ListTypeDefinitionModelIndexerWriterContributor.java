@@ -10,7 +10,6 @@ import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Carolina Barbosa
@@ -26,18 +25,6 @@ public class ListTypeDefinitionModelIndexerWriterContributor
 		_dynamicQueryBatchIndexingActionableFactory =
 			dynamicQueryBatchIndexingActionableFactory;
 		_listTypeDefinitionLocalService = listTypeDefinitionLocalService;
-	}
-
-	@Override
-	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
-
-		batchIndexingActionable.setPerformActionMethod(
-			(ListTypeDefinition listTypeDefinition) ->
-				batchIndexingActionable.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(
-						listTypeDefinition)));
 	}
 
 	@Override

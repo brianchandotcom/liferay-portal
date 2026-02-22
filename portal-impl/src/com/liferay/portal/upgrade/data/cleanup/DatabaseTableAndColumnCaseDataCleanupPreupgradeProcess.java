@@ -162,7 +162,7 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			DataCleanupLoggingUtil.logRename(
 				_log, tableName + StringPool.PERIOD + columnName,
 				tableName + StringPool.PERIOD + expectedColumnName,
-				"it had an incorrect column name casing");
+				" because it was incorrectly cased");
 
 			int index = columnDefinition.indexOf(StringPool.SPACE);
 

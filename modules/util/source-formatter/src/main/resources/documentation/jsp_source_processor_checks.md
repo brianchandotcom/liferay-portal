@@ -47,8 +47,8 @@ JSPInlineVariableCheck | [Styling](styling_checks.md#styling-checks) | Finds cas
 JSPJavaParserCheck | [Styling](styling_checks.md#styling-checks) | Performs JavaParser on `.java` files. |
 JSPLanguageKeysCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing language keys in `Language.properties`. |
 JSPLanguageUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds incorrect use of `LanguageUtil.get` in `.jsp` files. |
+[JSPLiferayUICSPTagCheck](check/jsp_liferay_uicsp_tag_check.md#jspliferayuicsptagcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds new usages of deprecated liferay-ui:csp tag. |
 JSPLineBreakCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary line breaks in `.jsp` lines. |
-[JSPLiferayUICSPTagCheck](check/jsp_liferay_ui_csp_tag_check.md#jsplayerayuicsptagcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds new usages of deprecated liferay-ui:csp tag. |
 JSPLogFileNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Validates the value that is passed to `LogFactoryUtil.getLog` in `.jsp`. |
 [JSPMethodCallsCheck](check/jsp_method_calls_check.md#jspmethodcallscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that type `LiferayPortletResponse` is used to call `getNamespace()`. |
 [JSPMissingTaglibsCheck](check/jsp_missing_taglibs_check.md#jspmissingtaglibscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks for missing taglibs. |

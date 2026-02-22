@@ -52,49 +52,40 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			for (String actionId :
-					new String[] {
-						CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
-						CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS
-					}) {
-
-				if (!_resourcePermissionLocalService.hasResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(), actionId)) {
-
-					_resourcePermissionLocalService.addResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(), actionId);
-				}
-			}
-
-			for (String actionId :
-					new String[] {
-						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.VIEW
-					}) {
-
-				if (!_resourcePermissionLocalService.hasResourcePermission(
-						resourcePermission.getCompanyId(),
-						CPMeasurementUnit.class.getName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(resourcePermission.getCompanyId()),
-						resourcePermission.getRoleId(), actionId)) {
-
-					_resourcePermissionLocalService.addResourcePermission(
-						resourcePermission.getCompanyId(),
-						CPMeasurementUnit.class.getName(),
-						ResourceConstants.SCOPE_COMPANY,
-						String.valueOf(resourcePermission.getCompanyId()),
-						resourcePermission.getRoleId(), actionId);
-				}
-			}
+			_addResourcePermission(
+				ActionKeys.DELETE, resourcePermission.getCompanyId(),
+				CPMeasurementUnit.class.getName(),
+				String.valueOf(resourcePermission.getCompanyId()),
+				resourcePermission.getRoleId(),
+				ResourceConstants.SCOPE_COMPANY);
+			_addResourcePermission(
+				ActionKeys.PERMISSIONS, resourcePermission.getCompanyId(),
+				CPMeasurementUnit.class.getName(),
+				String.valueOf(resourcePermission.getCompanyId()),
+				resourcePermission.getRoleId(),
+				ResourceConstants.SCOPE_COMPANY);
+			_addResourcePermission(
+				ActionKeys.UPDATE, resourcePermission.getCompanyId(),
+				CPMeasurementUnit.class.getName(),
+				String.valueOf(resourcePermission.getCompanyId()),
+				resourcePermission.getRoleId(),
+				ResourceConstants.SCOPE_COMPANY);
+			_addResourcePermission(
+				ActionKeys.VIEW, resourcePermission.getCompanyId(),
+				CPMeasurementUnit.class.getName(),
+				String.valueOf(resourcePermission.getCompanyId()),
+				resourcePermission.getRoleId(),
+				ResourceConstants.SCOPE_COMPANY);
+			_addResourcePermission(
+				CPActionKeys.ADD_COMMERCE_PRODUCT_MEASUREMENT_UNIT,
+				resourcePermission.getCompanyId(), resourcePermission.getName(),
+				resourcePermission.getPrimKey(), resourcePermission.getRoleId(),
+				resourcePermission.getScope());
+			_addResourcePermission(
+				CPActionKeys.VIEW_COMMERCE_PRODUCT_MEASUREMENT_UNITS,
+				resourcePermission.getCompanyId(), resourcePermission.getName(),
+				resourcePermission.getPrimKey(), resourcePermission.getRoleId(),
+				resourcePermission.getScope());
 
 			_resourcePermissionLocalService.removeResourcePermission(
 				resourcePermission.getCompanyId(), resourcePermission.getName(),
@@ -104,6 +95,19 @@ public class CommercePermissionUpgradeProcess extends UpgradeProcess {
 		}
 
 		_resourceActionLocalService.deleteResourceAction(resourceAction);
+	}
+
+	private void _addResourcePermission(
+			String actionId, long companyId, String name, String primKey,
+			long roleId, int scope)
+		throws Exception {
+
+		if (!_resourcePermissionLocalService.hasResourcePermission(
+				companyId, name, scope, primKey, roleId, actionId)) {
+
+			_resourcePermissionLocalService.addResourcePermission(
+				companyId, name, scope, primKey, roleId, actionId);
+		}
 	}
 
 	private final ResourceActionLocalService _resourceActionLocalService;

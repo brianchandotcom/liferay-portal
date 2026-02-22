@@ -34,11 +34,6 @@ public class AccountEntryModelIndexerWriterContributor
 				_accountEntryLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AccountEntry accountEntry) {
-		return accountEntry.getCompanyId();
-	}
-
 	private final AccountEntryLocalService _accountEntryLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

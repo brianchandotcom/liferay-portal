@@ -37,11 +37,6 @@ public class CPTaxCategoryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CPTaxCategory cpTaxCategory) {
-		return cpTaxCategory.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(CPTaxCategory cpTaxCategory) {
 		return IndexerWriterMode.UPDATE;
 	}

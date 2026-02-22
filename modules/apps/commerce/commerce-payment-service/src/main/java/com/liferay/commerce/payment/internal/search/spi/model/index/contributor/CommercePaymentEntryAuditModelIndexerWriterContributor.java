@@ -39,13 +39,6 @@ public class CommercePaymentEntryAuditModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(
-		CommercePaymentEntryAudit commercePaymentEntryAudit) {
-
-		return commercePaymentEntryAudit.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CommercePaymentEntryAudit commercePaymentEntryAudit) {
 

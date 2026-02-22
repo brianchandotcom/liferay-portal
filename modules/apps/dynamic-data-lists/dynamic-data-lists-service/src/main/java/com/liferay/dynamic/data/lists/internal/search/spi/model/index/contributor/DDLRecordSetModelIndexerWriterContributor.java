@@ -38,11 +38,6 @@ public class DDLRecordSetModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(DDLRecordSet ddlRecordSet) {
-		return ddlRecordSet.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(DDLRecordSet ddlRecordSet) {
 		_ddlRecordBatchReindexer.reindex(
 			ddlRecordSet.getRecordSetId(), ddlRecordSet.getCompanyId());

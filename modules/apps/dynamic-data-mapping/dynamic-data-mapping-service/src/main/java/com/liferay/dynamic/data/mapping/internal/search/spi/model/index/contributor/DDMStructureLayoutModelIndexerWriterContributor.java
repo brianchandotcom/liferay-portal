@@ -35,11 +35,6 @@ public class DDMStructureLayoutModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DDMStructureLayout ddmStructureLayout) {
-		return ddmStructureLayout.getCompanyId();
-	}
-
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory

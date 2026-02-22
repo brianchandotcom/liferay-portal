@@ -53,11 +53,6 @@ public class DLFolderModelIndexerWriterContributor
 				_dlFolderLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DLFolder dlFolder) {
-		return dlFolder.getCompanyId();
-	}
-
 	private final DLFolderLocalService _dlFolderLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

@@ -35,11 +35,6 @@ public class ObjectValidationRuleModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectValidationRule objectValidationRule) {
-		return objectValidationRule.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectValidationRuleLocalService

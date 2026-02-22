@@ -87,11 +87,6 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DDMFormInstanceRecord ddmFormInstanceRecord) {
-		return ddmFormInstanceRecord.getCompanyId();
-	}
-
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private final DDMFormInstanceRecordLocalService
 		_ddmFormInstanceRecordLocalService;

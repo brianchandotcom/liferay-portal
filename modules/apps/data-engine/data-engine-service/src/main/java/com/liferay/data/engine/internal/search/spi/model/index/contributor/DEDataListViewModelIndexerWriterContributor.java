@@ -35,11 +35,6 @@ public class DEDataListViewModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DEDataListView deDataListView) {
-		return deDataListView.getCompanyId();
-	}
-
 	private final DEDataListViewLocalService _deDataListViewLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

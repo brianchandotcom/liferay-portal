@@ -34,11 +34,6 @@ public class UserGroupModelIndexerWriterContributor
 				_userGroupLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(UserGroup userGroup) {
-		return userGroup.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final UserGroupLocalService _userGroupLocalService;

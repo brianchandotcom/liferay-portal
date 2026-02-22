@@ -37,11 +37,6 @@ public class ObjectRelationshipModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectRelationship objectRelationship) {
-		return objectRelationship.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectRelationshipLocalService

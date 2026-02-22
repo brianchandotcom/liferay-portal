@@ -34,11 +34,6 @@ public class KaleoLogModelIndexerWriterContributor
 				_kaleoLogLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(KaleoLog kaleoLog) {
-		return kaleoLog.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final KaleoLogLocalService _kaleoLogLocalService;

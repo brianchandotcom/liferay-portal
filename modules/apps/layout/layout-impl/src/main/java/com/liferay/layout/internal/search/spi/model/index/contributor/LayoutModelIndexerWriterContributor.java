@@ -36,11 +36,6 @@ public class LayoutModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(Layout layout) {
-		return layout.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(Layout layout) {
 		return IndexerWriterMode.UPDATE;
 	}

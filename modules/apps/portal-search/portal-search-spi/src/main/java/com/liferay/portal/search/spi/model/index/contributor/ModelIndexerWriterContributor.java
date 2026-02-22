@@ -26,8 +26,6 @@ public interface ModelIndexerWriterContributor<T extends BaseModel<?>> {
 
 	public BatchIndexingActionable getBatchIndexingActionable();
 
-	public long getCompanyId(T baseModel);
-
 	public default IndexerWriterMode getIndexerWriterMode(T baseModel) {
 		return null;
 	}

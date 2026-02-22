@@ -40,11 +40,6 @@ public class DDMFormInstanceModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(DDMFormInstance ddmFormInstance) {
-		return ddmFormInstance.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(DDMFormInstance ddmFormInstance) {
 		_ddmFormInstanceRecordBatchReindexer.reindex(
 			ddmFormInstance.getFormInstanceId(),

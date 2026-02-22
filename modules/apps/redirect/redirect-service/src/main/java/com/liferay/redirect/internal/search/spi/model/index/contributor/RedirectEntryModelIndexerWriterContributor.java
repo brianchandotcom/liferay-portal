@@ -37,11 +37,6 @@ public class RedirectEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(RedirectEntry redirectEntry) {
-		return redirectEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(RedirectEntry redirectEntry) {
 		return IndexerWriterMode.UPDATE;
 	}

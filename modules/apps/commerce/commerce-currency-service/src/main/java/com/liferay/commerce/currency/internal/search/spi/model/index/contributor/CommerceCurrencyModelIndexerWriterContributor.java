@@ -37,11 +37,6 @@ public class CommerceCurrencyModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CommerceCurrency commerceCurrency) {
-		return commerceCurrency.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CommerceCurrency commerceCurrency) {
 

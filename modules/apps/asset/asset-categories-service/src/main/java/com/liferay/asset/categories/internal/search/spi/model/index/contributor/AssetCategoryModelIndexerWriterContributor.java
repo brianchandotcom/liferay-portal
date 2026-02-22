@@ -36,11 +36,6 @@ public class AssetCategoryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AssetCategory assetCategory) {
-		return assetCategory.getCompanyId();
-	}
-
 	private final AssetCategoryLocalService _assetCategoryLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

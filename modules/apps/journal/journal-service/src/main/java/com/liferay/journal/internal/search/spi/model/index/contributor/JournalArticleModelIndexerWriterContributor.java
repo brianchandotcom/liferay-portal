@@ -144,11 +144,6 @@ public class JournalArticleModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(JournalArticle journalArticle) {
-		return journalArticle.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		JournalArticle journalArticle) {
 

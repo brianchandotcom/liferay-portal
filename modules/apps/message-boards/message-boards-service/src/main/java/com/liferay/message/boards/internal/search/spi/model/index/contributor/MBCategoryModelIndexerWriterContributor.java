@@ -74,11 +74,6 @@ public class MBCategoryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(MBCategory mbCategory) {
-		return mbCategory.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(MBCategory mbCategory) {
 		int status = mbCategory.getStatus();
 

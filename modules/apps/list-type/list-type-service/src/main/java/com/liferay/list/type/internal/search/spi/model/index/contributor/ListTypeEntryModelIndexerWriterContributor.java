@@ -35,11 +35,6 @@ public class ListTypeEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ListTypeEntry listTypeEntry) {
-		return listTypeEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;

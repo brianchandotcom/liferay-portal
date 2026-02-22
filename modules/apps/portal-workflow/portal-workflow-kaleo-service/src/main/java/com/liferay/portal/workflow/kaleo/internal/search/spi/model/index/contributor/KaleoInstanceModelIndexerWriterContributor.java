@@ -35,11 +35,6 @@ public class KaleoInstanceModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(KaleoInstance kaleoInstance) {
-		return kaleoInstance.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final KaleoInstanceLocalService _kaleoInstanceLocalService;

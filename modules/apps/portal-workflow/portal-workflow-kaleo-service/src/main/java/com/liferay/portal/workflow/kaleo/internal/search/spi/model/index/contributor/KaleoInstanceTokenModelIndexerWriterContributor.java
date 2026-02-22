@@ -45,11 +45,6 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(KaleoInstanceToken kaleoInstanceToken) {
-		return kaleoInstanceToken.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(KaleoInstanceToken kaleoInstanceToken) {
 		Indexer<KaleoInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			KaleoInstance.class);

@@ -38,11 +38,6 @@ public class CalendarModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(Calendar calendar) {
-		return calendar.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(Calendar calendar) {
 		_calendarBookingBatchReindexer.reindex(
 			calendar.getCalendarId(), calendar.getCompanyId());

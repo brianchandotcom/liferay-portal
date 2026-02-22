@@ -37,11 +37,6 @@ public class RedirectNotFoundEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(RedirectNotFoundEntry redirectNotFoundEntry) {
-		return redirectNotFoundEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		RedirectNotFoundEntry redirectNotFoundEntry) {
 

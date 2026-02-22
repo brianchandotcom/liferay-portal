@@ -34,11 +34,6 @@ public class SXPElementModelIndexerWriterContributor
 				_sxpElementLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(SXPElement sxpElement) {
-		return sxpElement.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final SXPElementLocalService _sxpElementLocalService;

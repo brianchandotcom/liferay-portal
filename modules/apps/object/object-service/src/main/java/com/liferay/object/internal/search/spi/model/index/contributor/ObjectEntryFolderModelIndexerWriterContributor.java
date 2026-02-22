@@ -35,11 +35,6 @@ public class ObjectEntryFolderModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectEntryFolder objectEntryFolder) {
-		return objectEntryFolder.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;

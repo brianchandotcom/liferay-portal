@@ -85,11 +85,6 @@ public class DDLRecordModelIndexerWriterContributor
 				_ddlRecordLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DDLRecord ddlRecord) {
-		return ddlRecord.getCompanyId();
-	}
-
 	private static final int[] _SCOPES = {
 		DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,

@@ -34,11 +34,6 @@ public class ContactModelIndexerWriterContributor
 				_contactLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(Contact contact) {
-		return contact.getCompanyId();
-	}
-
 	private final ContactLocalService _contactLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

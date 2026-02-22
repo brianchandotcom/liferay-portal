@@ -35,11 +35,6 @@ public class UserNotificationEventModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(UserNotificationEvent userNotificationEvent) {
-		return userNotificationEvent.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final UserNotificationEventLocalService

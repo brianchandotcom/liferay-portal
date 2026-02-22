@@ -36,11 +36,6 @@ public class KaleoTaskInstanceTokenModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(KaleoTaskInstanceToken kaleoTaskInstanceToken) {
-		return kaleoTaskInstanceToken.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final KaleoTaskInstanceTokenLocalService

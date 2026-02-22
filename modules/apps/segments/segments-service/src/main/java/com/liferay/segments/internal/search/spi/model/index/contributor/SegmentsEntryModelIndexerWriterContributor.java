@@ -35,11 +35,6 @@ public class SegmentsEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(SegmentsEntry segmentsEntry) {
-		return segmentsEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final SegmentsEntryLocalService _segmentsEntryLocalService;

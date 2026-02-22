@@ -37,11 +37,6 @@ public class CSDiagramEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CSDiagramEntry csDiagramEntry) {
-		return csDiagramEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CSDiagramEntry csDiagramEntry) {
 

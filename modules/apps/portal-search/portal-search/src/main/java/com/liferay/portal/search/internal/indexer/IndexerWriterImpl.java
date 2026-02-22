@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.search.Document;
@@ -97,9 +98,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			return;
 		}
 
-		delete(
-			_modelIndexerWriterContributor.getCompanyId(baseModel),
-			_uidFactory.getUID(baseModel));
+		delete(_getCompanyId(baseModel), _uidFactory.getUID(baseModel));
 
 		_modelIndexerWriterContributor.modelDeleted(baseModel);
 	}
@@ -244,12 +243,10 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 			Document document = _indexerDocumentBuilder.getDocument(baseModel);
 
 			_updateDocumentIndexWriter.updateDocument(
-				_modelIndexerWriterContributor.getCompanyId(baseModel),
-				document);
+				_getCompanyId(baseModel), document);
 		}
 		else if (indexerWriterMode == IndexerWriterMode.DELETE) {
-			long companyId = _modelIndexerWriterContributor.getCompanyId(
-				baseModel);
+			long companyId = _getCompanyId(baseModel);
 			String uid = _indexerDocumentBuilder.getDocumentUID(baseModel);
 
 			delete(companyId, uid);
@@ -273,8 +270,13 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	@Override
 	public void updatePermissionFields(T baseModel) {
 		_searchPermissionIndexWriter.updatePermissionFields(
-			baseModel, _modelIndexerWriterContributor.getCompanyId(baseModel),
-			false);
+			baseModel, _getCompanyId(baseModel), false);
+	}
+
+	private long _getCompanyId(T baseModel) {
+		ShardedModel shardedModel = (ShardedModel)baseModel;
+
+		return shardedModel.getCompanyId();
 	}
 
 	private List<Long> _getCTCollectionIds(long companyId) {

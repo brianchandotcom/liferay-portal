@@ -182,7 +182,12 @@ public class SideNavigationDisplayContext {
 
 		PanelCategory panelCategory = _getPanelCategory();
 
-		boolean firstPanelCategory = true;
+		List<Map<String, Object>> homePropsItems = _getPropsItems(
+			panelCategory);
+
+		if (!homePropsItems.isEmpty()) {
+			propsItems.addAll(homePropsItems);
+		}
 
 		for (PanelCategory childPanelCategory :
 				_panelCategoryHelper.getChildPanelCategories(
@@ -196,16 +201,6 @@ public class SideNavigationDisplayContext {
 			}
 
 			String childPanelCategoryKey = childPanelCategory.getKey();
-
-			if (firstPanelCategory) {
-				firstPanelCategory = false;
-
-				if (childPanelCategoryKey.endsWith(".home")) {
-					propsItems.addAll(childrenPropsItems);
-
-					continue;
-				}
-			}
 
 			propsItems.add(
 				HashMapBuilder.<String, Object>put(

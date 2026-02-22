@@ -597,7 +597,7 @@ test('Can/not view Export menu item in Application menu depending on permissions
 test(
 	'Reset date filters when exporting',
 	{tag: '@LPD-78925'},
-	async ({exportImportPage, page}) => {
+	async ({exportImportPage}) => {
 		await exportImportPage.goToExport();
 
 		await exportImportPage.newExportButton.click();
@@ -624,12 +624,6 @@ test(
 
 		await exportImportPage.refreshCountsLink.click();
 
-		page.waitForResponse(
-			(response) =>
-				response.status() === 200 &&
-				response.request().method() === 'GET'
-		);
-
 		await expect(exportImportPage.rangeDateRangeEndDate).toBeEnabled();
 		await expect(exportImportPage.rangeDateRangeEndDate).toHaveValue(
 			toDateRangeDate(endDate)
@@ -643,24 +637,22 @@ test(
 
 		await exportImportPage.refreshCountsLink.click();
 
-		page.waitForResponse(
-			(response) =>
-				response.status() === 200 &&
-				response.request().method() === 'GET'
-		);
-
+		await expect(exportImportPage.rangeDateRangeEndDate).toBeEnabled();
 		await expect(exportImportPage.rangeDateRangeEndDate).not.toHaveValue(
 			toDateRangeDate(endDate)
 		);
+		await expect(exportImportPage.rangeDateRangeStartDate).toBeEnabled();
 		await expect(exportImportPage.rangeDateRangeStartDate).not.toHaveValue(
 			toDateRangeDate(endDate)
 		);
 
 		await exportImportPage.rangeDateRangeRadioButton.click();
 
+		await expect(exportImportPage.rangeDateRangeEndDate).toBeEnabled();
 		await expect(exportImportPage.rangeDateRangeEndDate).not.toHaveValue(
 			toDateRangeDate(endDate)
 		);
+		await expect(exportImportPage.rangeDateRangeStartDate).toBeEnabled();
 		await expect(exportImportPage.rangeDateRangeStartDate).not.toHaveValue(
 			toDateRangeDate(endDate)
 		);

@@ -15,9 +15,14 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  */
 public interface ModelIndexerWriterContributor<T extends BaseModel<?>> {
 
-	public void customize(
+	public default void customize(
 		BatchIndexingActionable batchIndexingActionable,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper);
+		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+
+		batchIndexingActionable.setPerformActionMethod(
+			(T t) -> batchIndexingActionable.addDocument(
+				modelIndexerWriterDocumentHelper.getDocument(t)));
+	}
 
 	public BatchIndexingActionable getBatchIndexingActionable();
 

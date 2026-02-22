@@ -34,11 +34,6 @@ public class DDMStructureModelIndexerWriterContributor
 				_ddmStructureLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(DDMStructure ddmStructure) {
-		return ddmStructure.getCompanyId();
-	}
-
 	private final DDMStructureLocalService _ddmStructureLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

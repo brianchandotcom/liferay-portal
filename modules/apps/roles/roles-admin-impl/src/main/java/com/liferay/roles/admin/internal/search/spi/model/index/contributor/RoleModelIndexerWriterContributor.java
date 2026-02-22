@@ -36,11 +36,6 @@ public class RoleModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(Role role) {
-		return role.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(Role role) {
 		return IndexerWriterMode.UPDATE;
 	}

@@ -56,11 +56,6 @@ public class CTProcessModelIndexerWriterContributor
 			getBatchIndexingActionable(indexableActionableDynamicQuery);
 	}
 
-	@Override
-	public long getCompanyId(CTProcess ctProcess) {
-		return ctProcess.getCompanyId();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTProcessModelIndexerWriterContributor.class);
 

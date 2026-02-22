@@ -35,11 +35,6 @@ public class AssetTagModelIndexerWriterContributor
 				_assetTagLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AssetTag assetTag) {
-		return assetTag.getCompanyId();
-	}
-
 	private final AssetTagLocalService _assetTagLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

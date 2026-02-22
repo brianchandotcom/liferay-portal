@@ -36,11 +36,6 @@ public class NotificationQueueEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(NotificationQueueEntry notificationQueueEntry) {
-		return notificationQueueEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final NotificationQueueEntryLocalService

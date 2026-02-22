@@ -37,11 +37,6 @@ public class CPSpecificationOptionModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CPSpecificationOption cpSpecificationOption) {
-		return cpSpecificationOption.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CPSpecificationOption cpSpecificationOption) {
 

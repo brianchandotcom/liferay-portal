@@ -35,11 +35,6 @@ public class ObjectDefinitionModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectDefinition objectDefinition) {
-		return objectDefinition.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

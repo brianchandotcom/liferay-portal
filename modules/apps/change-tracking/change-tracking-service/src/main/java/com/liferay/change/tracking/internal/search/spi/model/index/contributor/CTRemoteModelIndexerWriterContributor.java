@@ -34,11 +34,6 @@ public class CTRemoteModelIndexerWriterContributor
 				_ctRemoteLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(CTRemote ctRemote) {
-		return ctRemote.getCompanyId();
-	}
-
 	private final CTRemoteLocalService _ctRemoteLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

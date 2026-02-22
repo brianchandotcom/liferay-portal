@@ -34,11 +34,6 @@ public class AddressModelIndexerWriterContributor
 				_addressLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(Address address) {
-		return address.getCompanyId();
-	}
-
 	private final AddressLocalService _addressLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

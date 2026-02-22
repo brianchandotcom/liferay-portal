@@ -34,11 +34,6 @@ public class OrganizationModelIndexerWriterContributor
 				_organizationLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(Organization organization) {
-		return organization.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final OrganizationLocalService _organizationLocalService;

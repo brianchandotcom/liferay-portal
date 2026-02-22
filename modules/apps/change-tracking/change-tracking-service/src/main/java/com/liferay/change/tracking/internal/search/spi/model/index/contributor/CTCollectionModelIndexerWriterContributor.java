@@ -56,11 +56,6 @@ public class CTCollectionModelIndexerWriterContributor
 			getBatchIndexingActionable(indexableActionableDynamicQuery);
 	}
 
-	@Override
-	public long getCompanyId(CTCollection ctCollection) {
-		return ctCollection.getCompanyId();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTCollectionModelIndexerWriterContributor.class);
 

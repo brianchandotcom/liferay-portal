@@ -42,11 +42,6 @@ public class KaleoDefinitionModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(KaleoDefinition kaleoDefinition) {
-		return kaleoDefinition.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(KaleoDefinition kaleoDefinition) {
 		Indexer<KaleoDefinitionVersion> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(

@@ -34,11 +34,6 @@ public class ObjectLayoutModelIndexerWriterContributor
 				_objectLayoutLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectLayout objectLayout) {
-		return objectLayout.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectLayoutLocalService _objectLayoutLocalService;

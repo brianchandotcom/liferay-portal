@@ -37,11 +37,6 @@ public class ExportImportReportEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ExportImportReportEntry exportImportReportEntry) {
-		return exportImportReportEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ExportImportReportEntryLocalService

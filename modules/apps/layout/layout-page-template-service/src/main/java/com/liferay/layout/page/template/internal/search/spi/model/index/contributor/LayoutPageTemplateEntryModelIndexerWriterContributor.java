@@ -37,11 +37,6 @@ public class LayoutPageTemplateEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(LayoutPageTemplateEntry layoutPageTemplateEntry) {
-		return layoutPageTemplateEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final LayoutPageTemplateEntryLocalService

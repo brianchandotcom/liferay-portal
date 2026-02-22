@@ -39,13 +39,6 @@ public class CPDefinitionGroupedEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(
-		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
-
-		return cpDefinitionGroupedEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CPDefinitionGroupedEntry cpDefinitionGroupedEntry) {
 

@@ -34,11 +34,6 @@ public class AccountGroupModelIndexerWriterContributor
 				_accountGroupLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AccountGroup accountGroup) {
-		return accountGroup.getCompanyId();
-	}
-
 	private final AccountGroupLocalService _accountGroupLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

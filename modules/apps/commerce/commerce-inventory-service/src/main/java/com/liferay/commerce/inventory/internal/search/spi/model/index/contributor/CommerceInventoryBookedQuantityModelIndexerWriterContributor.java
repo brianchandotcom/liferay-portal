@@ -39,13 +39,6 @@ public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(
-		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
-
-		return commerceInventoryBookedQuantity.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CommerceInventoryBookedQuantity commerceInventoryBookedQuantity) {
 

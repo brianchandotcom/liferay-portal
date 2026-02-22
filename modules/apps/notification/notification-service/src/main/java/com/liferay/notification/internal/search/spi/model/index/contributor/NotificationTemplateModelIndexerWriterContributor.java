@@ -35,11 +35,6 @@ public class NotificationTemplateModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(NotificationTemplate notificationTemplate) {
-		return notificationTemplate.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final NotificationTemplateLocalService

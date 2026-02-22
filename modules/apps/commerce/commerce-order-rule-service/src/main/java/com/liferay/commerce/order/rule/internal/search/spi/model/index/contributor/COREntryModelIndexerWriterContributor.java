@@ -36,11 +36,6 @@ public class COREntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(COREntry corEntry) {
-		return corEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(COREntry corEntry) {
 		return IndexerWriterMode.UPDATE;
 	}

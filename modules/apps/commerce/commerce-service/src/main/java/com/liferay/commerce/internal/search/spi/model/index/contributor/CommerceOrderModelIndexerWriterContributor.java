@@ -37,11 +37,6 @@ public class CommerceOrderModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CommerceOrder commerceOrder) {
-		return commerceOrder.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(CommerceOrder commerceOrder) {
 		return IndexerWriterMode.UPDATE;
 	}

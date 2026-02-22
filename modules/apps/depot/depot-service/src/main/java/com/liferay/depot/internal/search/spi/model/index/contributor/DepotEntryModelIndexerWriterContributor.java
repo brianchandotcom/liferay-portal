@@ -36,11 +36,6 @@ public class DepotEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(DepotEntry depotEntry) {
-		return depotEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(DepotEntry depotEntry) {
 		return IndexerWriterMode.UPDATE;
 	}

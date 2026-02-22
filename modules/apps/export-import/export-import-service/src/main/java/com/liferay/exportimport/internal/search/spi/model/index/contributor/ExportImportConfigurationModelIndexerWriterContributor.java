@@ -39,13 +39,6 @@ public class ExportImportConfigurationModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(
-		ExportImportConfiguration exportImportConfiguration) {
-
-		return exportImportConfiguration.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ExportImportConfigurationLocalService

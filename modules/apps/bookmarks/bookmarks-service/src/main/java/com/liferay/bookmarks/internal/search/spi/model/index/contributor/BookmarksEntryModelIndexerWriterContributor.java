@@ -71,11 +71,6 @@ public class BookmarksEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(BookmarksEntry bookmarksEntry) {
-		return bookmarksEntry.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(BookmarksEntry bookmarksEntry) {
 		_bookmarksFolderBatchReindexer.reindex(
 			bookmarksEntry.getFolderId(), bookmarksEntry.getCompanyId());

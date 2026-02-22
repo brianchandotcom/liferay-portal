@@ -36,11 +36,6 @@ public class AssetVocabularyModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AssetVocabulary assetVocabulary) {
-		return assetVocabulary.getCompanyId();
-	}
-
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

@@ -34,11 +34,6 @@ public class SXPBlueprintModelIndexerWriterContributor
 				_sxpBlueprintLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(SXPBlueprint sxpBlueprint) {
-		return sxpBlueprint.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final SXPBlueprintLocalService _sxpBlueprintLocalService;

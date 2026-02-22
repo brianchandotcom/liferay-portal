@@ -97,11 +97,6 @@ public class ObjectEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(ObjectEntry objectEntry) {
-		return objectEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(ObjectEntry objectEntry) {
 		return IndexerWriterMode.UPDATE;
 	}

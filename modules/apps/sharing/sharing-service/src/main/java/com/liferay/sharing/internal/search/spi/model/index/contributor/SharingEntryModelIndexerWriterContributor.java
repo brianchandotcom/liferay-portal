@@ -34,11 +34,6 @@ public class SharingEntryModelIndexerWriterContributor
 				_sharingEntryLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(SharingEntry sharingEntry) {
-		return sharingEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final SharingEntryLocalService _sharingEntryLocalService;

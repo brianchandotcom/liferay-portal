@@ -36,11 +36,6 @@ public class KaleoDefinitionVersionModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(KaleoDefinitionVersion kaleoDefinitionVersion) {
-		return kaleoDefinitionVersion.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final KaleoDefinitionVersionLocalService

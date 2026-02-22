@@ -35,11 +35,6 @@ public class BookmarksFolderModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(BookmarksFolder bookmarksFolder) {
-		return bookmarksFolder.getCompanyId();
-	}
-
 	private final BookmarksFolderLocalService _bookmarksFolderLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

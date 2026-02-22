@@ -58,11 +58,6 @@ public class UserModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(User user) {
-		return user.getCompanyId();
-	}
-
-	@Override
 	public void modelIndexed(User user) {
 		Contact contact = user.fetchContact();
 

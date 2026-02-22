@@ -35,11 +35,6 @@ public class SiteNavigationMenuModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(SiteNavigationMenu siteNavigationMenu) {
-		return siteNavigationMenu.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final SiteNavigationMenuLocalService

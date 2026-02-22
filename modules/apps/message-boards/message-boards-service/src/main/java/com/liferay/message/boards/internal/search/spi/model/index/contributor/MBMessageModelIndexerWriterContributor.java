@@ -90,11 +90,6 @@ public class MBMessageModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(MBMessage mbMessage) {
-		return mbMessage.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(MBMessage mbMessage) {
 		int status = mbMessage.getStatus();
 

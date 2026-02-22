@@ -37,11 +37,6 @@ public class DLFileEntryTypeModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(DLFileEntryType dlFileEntryType) {
-		return dlFileEntryType.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		DLFileEntryType dlFileEntryType) {
 

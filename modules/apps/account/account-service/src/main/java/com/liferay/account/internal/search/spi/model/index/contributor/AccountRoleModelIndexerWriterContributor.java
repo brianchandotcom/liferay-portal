@@ -34,11 +34,6 @@ public class AccountRoleModelIndexerWriterContributor
 				_accountRoleLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(AccountRole accountRole) {
-		return accountRole.getCompanyId();
-	}
-
 	private final AccountRoleLocalService _accountRoleLocalService;
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;

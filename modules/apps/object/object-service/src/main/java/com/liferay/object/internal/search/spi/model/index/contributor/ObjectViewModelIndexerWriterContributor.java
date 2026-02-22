@@ -34,11 +34,6 @@ public class ObjectViewModelIndexerWriterContributor
 				_objectViewLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectView objectView) {
-		return objectView.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectViewLocalService _objectViewLocalService;

@@ -34,11 +34,6 @@ public class ObjectActionModelIndexerWriterContributor
 				_objectActionLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(ObjectAction objectAction) {
-		return objectAction.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectActionLocalService _objectActionLocalService;

@@ -68,11 +68,6 @@ public class MBThreadModelIndexerWriterContributor
 				_mbThreadLocalService.getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(MBThread mbThread) {
-		return mbThread.getCompanyId();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadModelIndexerWriterContributor.class);
 

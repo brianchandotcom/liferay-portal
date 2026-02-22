@@ -37,11 +37,6 @@ public class CPConfigurationEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CPConfigurationEntry cpConfigurationEntry) {
-		return cpConfigurationEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CPConfigurationEntry cpConfigurationEntry) {
 

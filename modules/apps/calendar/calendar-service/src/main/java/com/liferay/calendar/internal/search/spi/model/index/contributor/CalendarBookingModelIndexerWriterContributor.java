@@ -65,11 +65,6 @@ public class CalendarBookingModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(CalendarBooking calendarBooking) {
-		return calendarBooking.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CalendarBooking calendarBooking) {
 

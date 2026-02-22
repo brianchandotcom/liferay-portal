@@ -35,11 +35,6 @@ public class JournalFolderModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(JournalFolder journalFolder) {
-		return journalFolder.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final JournalFolderLocalService _journalFolderLocalService;

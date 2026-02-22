@@ -35,11 +35,6 @@ public class TranslationEntryModelIndexerWriterContributor
 					getIndexableActionableDynamicQuery());
 	}
 
-	@Override
-	public long getCompanyId(TranslationEntry translationEntry) {
-		return translationEntry.getCompanyId();
-	}
-
 	private final DynamicQueryBatchIndexingActionableFactory
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final TranslationEntryLocalService _translationEntryLocalService;

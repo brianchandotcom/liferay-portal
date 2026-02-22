@@ -36,11 +36,6 @@ public class BlogsEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public long getCompanyId(BlogsEntry blogsEntry) {
-		return blogsEntry.getCompanyId();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(BlogsEntry blogsEntry) {
 		if (blogsEntry.isApproved() || blogsEntry.isDraft() ||
 			blogsEntry.isInTrash() || blogsEntry.isPending() ||

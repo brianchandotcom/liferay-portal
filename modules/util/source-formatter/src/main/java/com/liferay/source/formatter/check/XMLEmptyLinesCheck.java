@@ -83,25 +83,23 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 			_emptyLineBetweenSiblingTagsInBuildFilePattern.matcher(content);
 
 		while (matcher.find()) {
-			String tabs1 = matcher.group(1);
-			String tabs2 = matcher.group(4);
+			String lineBreaks = matcher.group(3);
 
-			if (!tabs1.equals(tabs2)) {
+			String tagName = matcher.group(2);
+
+			if (!ArrayUtil.contains(_CONDITIONAL_TAG_NAMES, tagName)) {
 				continue;
 			}
 
-			String lineBreaks = matcher.group(3);
-			String tagName2 = matcher.group(5);
-
-			if (ArrayUtil.contains(_CONDITIONAL_TAG_NAMES, tagName2)) {
-				if (lineBreaks.equals("\n\n")) {
+			if (tagName.equals("if")) {
+				if (lineBreaks.equals("\n")) {
 					return StringUtil.replaceFirst(
-						content, "\n\n", "\n", matcher.end(1));
+						content, "\n", "\n\n", matcher.start(3));
 				}
 			}
-			else if (lineBreaks.equals("\n")) {
+			else if (lineBreaks.equals("\n\n")) {
 				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.end(1));
+					content, "\n\n", "\n", matcher.start(3));
 			}
 		}
 
@@ -170,12 +168,12 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 	}
 
 	private static final String[] _CONDITIONAL_TAG_NAMES = {
-		"else", "elseif", "then"
+		"else", "elseif", "if", "then"
 	};
 
-	private static final Pattern _emptyLineBetweenSiblingTagsInBuildFilePattern =
-		Pattern.compile(
-			"\n(\t*)</([-\\w:]+)>(\n+)(\t*)<([-\\w:]+)[> \n]");
+	private static final Pattern
+		_emptyLineBetweenSiblingTagsInBuildFilePattern = Pattern.compile(
+			"\n(\t*)</([-\\w:]+)>(\n+)\\1<[-\\w:]+[> \n]");
 	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");
 	private static final Pattern _emptyLineInTagPattern1 = Pattern.compile(

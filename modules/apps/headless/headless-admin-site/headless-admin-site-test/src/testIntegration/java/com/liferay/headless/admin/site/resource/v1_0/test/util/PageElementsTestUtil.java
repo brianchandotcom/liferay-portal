@@ -116,7 +116,7 @@ public class PageElementsTestUtil {
 		ContentPageSpecification expectedPublishedPageSpecification =
 			(ContentPageSpecification)expectedPageSpecifications[0];
 
-		_assertFieldKeysWithTemplateEntries(
+		_assertPageExperience(
 			actualPublishedPageSpecification.getPageExperiences()[0],
 			expectedPublishedPageSpecification.getPageExperiences()[0]);
 
@@ -125,7 +125,7 @@ public class PageElementsTestUtil {
 		ContentPageSpecification expectedDraftPageSpecification =
 			(ContentPageSpecification)expectedPageSpecifications[1];
 
-		_assertFieldKeysWithTemplateEntries(
+		_assertPageExperience(
 			actualDraftPageSpecification.getPageExperiences()[0],
 			expectedDraftPageSpecification.getPageExperiences()[0]);
 	}
@@ -331,25 +331,25 @@ public class PageElementsTestUtil {
 		int position = 0;
 
 		return new PageElement[] {
-			_getBasicFragmentPageElement(
+			_getBasicFragmentInstancePageElement(
 				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry1",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId),
-			_getBasicFragmentPageElement(
+			_getBasicFragmentInstancePageElement(
 				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry1",
 						scopeGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId),
-			_getBasicFragmentPageElement(
+			_getBasicFragmentInstancePageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry2",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId),
-			_getBasicFragmentPageElement(
+			_getBasicFragmentInstancePageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry2",
@@ -755,34 +755,34 @@ public class PageElementsTestUtil {
 
 		if (expectedFieldKey.contains("__ERC__")) {
 			Assert.assertEquals(expectedFieldKey, actualFieldKey);
+
+			return;
 		}
-		else {
-			long templateEntryId = GetterUtil.getLong(
-				expectedFieldKey.substring(
-					"ddmTemplate__ddmTemplate_".length()));
 
-			TemplateEntry templateEntry =
-				TemplateEntryLocalServiceUtil.getTemplateEntry(templateEntryId);
+		long templateEntryId = GetterUtil.getLong(
+			expectedFieldKey.substring("ddmTemplate__ddmTemplate_".length()));
 
-			Company company = CompanyLocalServiceUtil.getCompany(
-				TestPropsValues.getCompanyId());
+		TemplateEntry templateEntry =
+			TemplateEntryLocalServiceUtil.getTemplateEntry(templateEntryId);
 
-			if (templateEntry.getGroupId() == company.getGroupId()) {
-				Assert.assertEquals(
-					_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-						templateEntry),
-					actualFieldKey);
-			}
-			else {
-				Assert.assertEquals(
-					_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-						templateEntry),
-					actualFieldKey);
-			}
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		if (templateEntry.getGroupId() == company.getGroupId()) {
+			Assert.assertEquals(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+					templateEntry),
+				actualFieldKey);
+
+			return;
 		}
+
+		Assert.assertEquals(
+			_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(templateEntry),
+			actualFieldKey);
 	}
 
-	private static void _assertFieldKeysWithTemplateEntries(
+	private static void _assertPageElement(
 			PageElement actualPageElement, PageElement expectedPageElement)
 		throws PortalException {
 
@@ -816,13 +816,13 @@ public class PageElementsTestUtil {
 			actualPageElementDefinition instanceof
 				CollectionItemPageElementDefinition) {
 
-			_assertFieldKeysWithTemplateEntries(
+			_assertPageElement(
 				actualPageElement.getPageElements()[0],
 				expectedPageElement.getPageElements()[0]);
 		}
 	}
 
-	private static void _assertFieldKeysWithTemplateEntries(
+	private static void _assertPageExperience(
 			PageExperience actualPageExperience,
 			PageExperience expectedPageExperience)
 		throws PortalException {
@@ -842,12 +842,11 @@ public class PageElementsTestUtil {
 			actualPageElements.length);
 
 		for (int i = 0; i < expectedPageElements.length; i++) {
-			_assertFieldKeysWithTemplateEntries(
-				actualPageElements[i], expectedPageElements[i]);
+			_assertPageElement(actualPageElements[i], expectedPageElements[i]);
 		}
 	}
 
-	private static PageElement _getBasicFragmentPageElement(
+	private static PageElement _getBasicFragmentInstancePageElement(
 		String className,
 		FragmentMappedValueItemContextReference.ContextSource contextSource,
 		String externalReferenceCode, String fieldKey, String fragmentKey,
@@ -866,11 +865,11 @@ public class PageElementsTestUtil {
 				fragmentEditableElements, Boolean.FALSE, scopeGroupId));
 	}
 
-	private static PageElement _getBasicFragmentPageElement(
+	private static PageElement _getBasicFragmentInstancePageElement(
 		String fieldKey, String fragmentKey, JournalArticle journalArticle,
 		int position, long scopeGroupId) {
 
-		PageElement pageElement = _getBasicFragmentPageElement(
+		PageElement pageElement = _getBasicFragmentInstancePageElement(
 			"com.liferay.journal.model.JournalArticle", null,
 			journalArticle.getExternalReferenceCode(), fieldKey, fragmentKey,
 			"L_GLOBAL", scopeGroupId);
@@ -922,7 +921,7 @@ public class PageElementsTestUtil {
 		throws Exception {
 
 		PageElement[] pageElements = {
-			_getBasicFragmentPageElement(
+			_getBasicFragmentInstancePageElement(
 				null,
 				FragmentMappedValueItemContextReference.ContextSource.
 					COLLECTION_ITEM,
@@ -1033,7 +1032,7 @@ public class PageElementsTestUtil {
 	private static PageElement _getDisplayPageItemPageElement(
 		String fieldKey, String fragmentKey, int position, long scopeGroupId) {
 
-		PageElement pageElement = _getBasicFragmentPageElement(
+		PageElement pageElement = _getBasicFragmentInstancePageElement(
 			null,
 			FragmentMappedValueItemContextReference.ContextSource.
 				DISPLAY_PAGE_ITEM,

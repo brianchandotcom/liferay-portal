@@ -33,6 +33,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryService;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -71,7 +72,11 @@ public class PageSpecificationResourceImpl
 			String pageSpecificationExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _getLayout(
 			GroupUtil.getGroupId(
@@ -281,7 +286,11 @@ public class PageSpecificationResourceImpl
 			PageSpecification pageSpecification)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long groupId = GroupUtil.getGroupId(
 			true, true, contextCompany.getCompanyId(),

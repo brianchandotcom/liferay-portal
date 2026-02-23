@@ -88,9 +88,6 @@ public class AssetDisplayPageStagedModelDataHandler
 		String layoutPageTemplateEntryERC = element.attributeValue(
 			"layoutPageTemplateEntryERC");
 
-		AssetDisplayPageEntry importedAssetDisplayPageEntry =
-			(AssetDisplayPageEntry)assetDisplayPageEntry.clone();
-
 		long layoutPageTemplateEntryId = 0;
 
 		if (Validator.isNotNull(layoutPageTemplateEntryERC)) {
@@ -103,6 +100,9 @@ public class AssetDisplayPageStagedModelDataHandler
 			layoutPageTemplateEntryId =
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId();
 		}
+
+		AssetDisplayPageEntry importedAssetDisplayPageEntry =
+			(AssetDisplayPageEntry)assetDisplayPageEntry.clone();
 
 		Map<Long, Long> plids =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

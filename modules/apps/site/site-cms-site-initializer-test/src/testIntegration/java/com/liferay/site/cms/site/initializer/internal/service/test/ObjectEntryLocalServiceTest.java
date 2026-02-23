@@ -89,6 +89,7 @@ public class ObjectEntryLocalServiceTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
+
 		_group = CMSTestUtil.getOrAddGroup(ObjectEntryLocalServiceTest.class);
 
 		ObjectFolder objectFolder =

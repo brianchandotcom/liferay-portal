@@ -11,7 +11,7 @@ import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {formatStorage, sub} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Accept, ErrorCode, useDropzone} from 'react-dropzone';
 
 import DragZoneBackground from './DragZoneBackground';
@@ -71,14 +71,12 @@ export default function MultipleFileUploader({
 	uploadRequest,
 	validExtensions = '*',
 }: MultipleFileUploaderProps) {
-	const [filesToUpload, setFilesToUpload] = useState<FileData[]>(
-		initialFilesToUpload || []
-	);
+	const [filesToUpload, setFilesToUpload] = useState<FileData[]>([]);
 	const [failedFiles, setFailedFiles] = useState<FailedFile[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [dropErrorMessage, setDropErrorMessage] = useState('');
 
-	const CLIENT_ERRORS = useMemo(
+	const FILE_ERRORS = useMemo(
 		() => ({
 			[ErrorCode.FileInvalidType]: sub(
 				Liferay.Language.get(
@@ -97,6 +95,40 @@ export default function MultipleFileUploader({
 		[maxFileSize, validExtensions]
 	);
 
+	useEffect(() => {
+		if (!initialFilesToUpload) {
+			return;
+		}
+
+		if (!maxFileSize && validExtensions === '*') {
+			setFilesToUpload(initialFilesToUpload);
+
+			return;
+		}
+
+		setFilesToUpload(
+			initialFilesToUpload.filter((file) => {
+				const extension = file.name.split('.').pop()?.toLowerCase();
+
+				const extensionValid =
+					validExtensions === '*' ||
+					(extension && validExtensions.indexOf(extension) >= 0);
+
+				const sizeValid = !maxFileSize || file.size <= maxFileSize;
+
+				if (!extensionValid) {
+					setDropErrorMessage(FILE_ERRORS[ErrorCode.FileInvalidType]);
+				}
+
+				if (!sizeValid) {
+					setDropErrorMessage(FILE_ERRORS[ErrorCode.FileTooLarge]);
+				}
+
+				return extensionValid && sizeValid;
+			})
+		);
+	}, [FILE_ERRORS, initialFilesToUpload, maxFileSize, validExtensions]);
+
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		accept:
 			validExtensions === '*'
@@ -105,10 +137,9 @@ export default function MultipleFileUploader({
 		maxSize: maxFileSize,
 		multiple: true,
 		noKeyboard: true,
-		onDragEnter: () => {
-			setDropErrorMessage('');
-		},
 		onDropAccepted: (acceptedFiles) => {
+			setDropErrorMessage('');
+
 			const newFilesToUpload = acceptedFiles.map((file) => ({
 				errorMessage: '',
 				failed: false,
@@ -130,7 +161,7 @@ export default function MultipleFileUploader({
 		},
 		onDropRejected: (rejectedFiled) => {
 			setDropErrorMessage(
-				CLIENT_ERRORS[rejectedFiled?.[0]?.errors?.[0]?.code] || ''
+				FILE_ERRORS[rejectedFiled?.[0]?.errors?.[0]?.code] || ''
 			);
 		},
 	});

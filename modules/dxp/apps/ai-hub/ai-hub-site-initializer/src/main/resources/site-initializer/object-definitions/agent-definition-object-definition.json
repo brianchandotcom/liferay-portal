@@ -1,6 +1,6 @@
 {
 	"accountEntryRestricted": true,
-	"accountEntryRestrictedObjectFieldName": "r_accountToAgentDefinitions_accountEntryERC",
+	"accountEntryRestrictedObjectFieldName": "r_accountToAgentDefinitions_accountEntryId",
 	"className": "com.liferay.object.model.ObjectDefinition#P8M2",
 	"enableFormContainer": false,
 	"enableIndexSearch": true,
@@ -130,7 +130,7 @@
 			"label": {
 				"en_US": "Account to Agent Definitions"
 			},
-			"name": "r_accountToAgentDefinitions_accountEntryERC",
+			"name": "r_accountToAgentDefinitions_accountEntryId",
 			"objectDefinitionExternalReferenceCode1": "L_ACCOUNT",
 			"objectFieldSettings": [
 				{
@@ -145,6 +145,7 @@
 			"objectRelationshipExternalReferenceCode": "L_ACCOUNT_TO_L_AI_HUB_AGENT_DEFINITIONS",
 			"readOnly": "false",
 			"relationshipType": "oneToMany",
+			"required": true,
 			"system": true,
 			"type": "Long"
 		}

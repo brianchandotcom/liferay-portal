@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search;
 
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor.KaleoDefinitionVersionModelIndexerWriterContributor;
@@ -39,13 +38,8 @@ public class KaleoDefinitionVersionModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new KaleoDefinitionVersionModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_kaleoDefinitionVersionLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private KaleoDefinitionVersionLocalService

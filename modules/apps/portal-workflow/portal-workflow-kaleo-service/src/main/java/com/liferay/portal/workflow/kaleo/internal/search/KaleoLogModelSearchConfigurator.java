@@ -6,7 +6,6 @@
 package com.liferay.portal.workflow.kaleo.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor.KaleoLogModelIndexerWriterContributor;
@@ -47,14 +46,8 @@ public class KaleoLogModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new KaleoLogModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
-				_kaleoLogLocalService);
+			new KaleoLogModelIndexerWriterContributor(_kaleoLogLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private KaleoLogLocalService _kaleoLogLocalService;

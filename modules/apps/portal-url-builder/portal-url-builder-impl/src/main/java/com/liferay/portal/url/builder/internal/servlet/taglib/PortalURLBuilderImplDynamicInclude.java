@@ -42,10 +42,6 @@ public class PortalURLBuilderImplDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = httpServletResponse.getWriter();
 
-		AbsolutePortalURLBuilder absolutePortalURLBuilder =
-			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
-				httpServletRequest);
-
 		printWriter.print("<script");
 		printWriter.print(
 			ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(
@@ -63,6 +59,10 @@ public class PortalURLBuilderImplDynamicInclude extends BaseDynamicInclude {
 		}
 
 		printWriter.print(" data-senna-track=\"permanent\" src=\"");
+
+		AbsolutePortalURLBuilder absolutePortalURLBuilder =
+			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
+				httpServletRequest);
 
 		WebContextScriptAbsolutePortalURLBuilder
 			webContextScriptAbsolutePortalURLBuilder =

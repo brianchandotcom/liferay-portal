@@ -1,10 +1,9 @@
 {{- $search := .Values.search.elasticsearch | default dict -}}
 {{- if $search.enabled -}}
-{{- $name := $search.name | default (printf "%s-es" .Release.Name) -}}
 apiVersion: elasticsearch.k8s.elastic.co/v1
 kind: Elasticsearch
 metadata:
-    name: {{ $name }}
+    name: {{ include "elasticsearch.name" . }}
     namespace: {{ .Release.Namespace }}
 spec:
     http:
@@ -76,7 +75,7 @@ metadata:
     name: elasticsearch-connection-details
 type: Opaque
 stringData:
-    ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ $name }}-es-elastic-user"
+    ELASTICSEARCH_DEFAULT_PASSWORD_SECRET_NAME: "{{ include "elasticsearch.name" . }}-es-elastic-user"
     ELASTICSEARCH_DEFAULT_USERNAME: "elastic"
-    ELASTICSEARCH_URL: "http://{{ $name }}-es-http.{{ .Release.Namespace }}.svc:9200"
+    ELASTICSEARCH_URL: "http://{{ include "elasticsearch.name" . }}-es-http.{{ .Release.Namespace }}.svc:9200"
 {{- end -}}

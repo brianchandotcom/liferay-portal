@@ -1,6 +1,7 @@
 {{- if .Values.enabled -}}
+{{- $elasticsearch := .Values.search.elasticsearch | default dict -}}
 {{- $overlay := .Values.overlay | default dict -}}
-{{- $search := .Values.search.opensearch | default dict -}}
+{{- $opensearch := .Values.search.opensearch | default dict -}}
 {{- $storage := .Values.storage | default dict -}}
 {{- $storageBlue := $storage.blue | default dict -}}
 {{- $storageGreen := $storage.green | default dict -}}
@@ -23,10 +24,19 @@ spec:
         region: {{ $overlay.region | default "us-west-2" | quote }}
     projectId: {{ .Values.projectId }}
     search:
-        engineVersion: {{ $search.engineVersion | default "OpenSearch_2.15" | quote }}
-        instanceCount: {{ $search.instanceCount | default 2 }}
-        instanceType: {{ $search.instanceType | default "t3.small.search" | quote }}
-        region: {{ $search.region | default "us-west-2" | quote }}
-        username: {{ $search.username | default "liferay_search_admin" | quote }}
+        opensearch:
+            engineVersion: {{ $opensearch.engineVersion | default "OpenSearch_2.15" | quote }}
+            instanceCount: {{ $opensearch.instanceCount | default 2 }}
+            instanceType: {{ $opensearch.instanceType | default "t3.small.search" | quote }}
+            region: {{ $opensearch.region | default "us-west-2" | quote }}
+            username: {{ $opensearch.username | default "liferay_search_admin" | quote }}
+        {{- if $elasticsearch.enabled }}
+        elasticsearch:
+            maxMapCount: {{ $elasticsearch.maxMapCount }}
+            name: {{ include "elasticsearch.name" . }}
+            nodeCount: {{ $elasticsearch.nodeCount }}
+            version: {{ $elasticsearch.version | quote }}
+            volumeSize: {{ $elasticsearch.volumeSize | quote }}
+        {{- end }}
     storage: {{ .Values.storage | toYaml | nindent 8 }}
 {{- end -}}

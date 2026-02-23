@@ -89,8 +89,6 @@ public class OpenAPIResourceImpl {
 
 			add(DisplayPageTemplateFolderResourceImpl.class);
 
-			add(FragmentCompositionResourceImpl.class);
-
 			add(FriendlyUrlHistoryResourceImpl.class);
 
 			add(MasterPageResourceImpl.class);
@@ -100,12 +98,6 @@ public class OpenAPIResourceImpl {
 			add(PageElementResourceImpl.class);
 
 			add(PageExperienceResourceImpl.class);
-
-			add(PageRuleResourceImpl.class);
-
-			add(PageRuleActionResourceImpl.class);
-
-			add(PageRuleConditionResourceImpl.class);
 
 			add(PageSpecificationResourceImpl.class);
 
@@ -120,8 +112,6 @@ public class OpenAPIResourceImpl {
 			add(StyleBookResourceImpl.class);
 
 			add(UtilityPageResourceImpl.class);
-
-			add(WidgetPageWidgetInstanceResourceImpl.class);
 
 			add(OpenAPIResourceImpl.class);
 		}

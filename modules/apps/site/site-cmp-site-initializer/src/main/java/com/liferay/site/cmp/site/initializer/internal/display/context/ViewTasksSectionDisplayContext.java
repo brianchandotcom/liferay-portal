@@ -266,7 +266,7 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 						"view"
 					).setLabel(
 						LanguageUtil.get(httpServletRequest, "view")
-					).setMethod(
+					).setPermissionKey(
 						"get"
 					).setVisibilityFilters(
 						HashMapBuilder.<String, Object>put(
@@ -316,8 +316,10 @@ public class ViewTasksSectionDisplayContext extends BaseSectionDisplayContext {
 					),
 					FDSActionDropdownItemBuilder.setLabel(
 						LanguageUtil.get(httpServletRequest, "assign-to-...")
-					).setPermissionKey(
+					).setMethod(
 						"get"
+					).setPermissionKey(
+						"update"
 					).setVisibilityFilters(
 						HashMapBuilder.<String, Object>put(
 							"entryClassName", objectDefinition.getClassName()

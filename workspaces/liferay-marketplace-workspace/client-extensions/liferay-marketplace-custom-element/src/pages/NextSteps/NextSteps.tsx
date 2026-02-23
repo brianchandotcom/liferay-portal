@@ -281,7 +281,7 @@ export function NextSteps() {
 
 	if (
 		productTypeCategory === ProductTypeVocabulary.LIFERAY_SERVICE &&
-		solutionTypeSpecificationValue === SolutionTypes.CONTENT_DATA_PLATFORM
+		solutionTypeSpecificationValue === SolutionTypes.LIFERAY_DATA_PLATFORM
 	) {
 		return (
 			<LDPNextSteps

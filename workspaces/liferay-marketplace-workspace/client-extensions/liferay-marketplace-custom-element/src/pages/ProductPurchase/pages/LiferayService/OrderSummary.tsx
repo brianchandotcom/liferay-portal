@@ -11,7 +11,7 @@ import {Liferay} from '../../../../liferay/liferay';
 import zodSchema, {z} from '../../../../schema/zod';
 import {formatCurrency} from '../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
-import ProductPurchaseCDP from '../../services/ProductPurchaseCDP';
+import ProductPurchaseLDP from '../../services/ProductPurchaseLDP';
 import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 import {productPurchaseStore} from '../../store';
 
@@ -42,9 +42,9 @@ const OrderSummary = () => {
 	};
 
 	const onSubmit = async (
-		form: z.infer<typeof zodSchema.cdpProvisioning>
+		form: z.infer<typeof zodSchema.ldpProvisioning>
 	) => {
-		const productPurchase = new ProductPurchaseCDP(
+		const productPurchase = new ProductPurchaseLDP(
 			selectedAccount,
 			product
 		);
@@ -66,7 +66,7 @@ const OrderSummary = () => {
 					disabled: !paymentStore.eulaAgreement,
 					onClick: () =>
 						onSubmit(
-							form as z.infer<typeof zodSchema.cdpProvisioning>
+							form as z.infer<typeof zodSchema.ldpProvisioning>
 						),
 				},
 			}}

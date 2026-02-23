@@ -27,16 +27,59 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 	protected void doUpgrade() throws Exception {
 		DBInspector dbInspector = new DBInspector(connection);
 
-		if (dbInspector.hasColumn("DDMContent", "data_")) {
-			_cleanUp("data_", dbInspector, "DDMContent");
+		for (int charCode : _ILLEGAL_CHARACTER_CODES) {
+			if (dbInspector.hasColumn("DDMContent", "data_")) {
+				_cleanUp(charCode, "data_", dbInspector, "DDMContent");
+			}
+
+			if (dbInspector.hasColumn("DDMContent", "xml")) {
+				_cleanUp(charCode, "xml", dbInspector, "DDMContent");
+			}
+
+			if (dbInspector.hasColumn("JournalArticle", "content")) {
+				_cleanUp(charCode, "content", dbInspector, "JournalArticle");
+			}
 		}
 
-		if (dbInspector.hasColumn("JournalArticle", "content")) {
-			_cleanUp("content", dbInspector, "JournalArticle");
-		}
+		_cleanUpNullUnicode("content", dbInspector, "JournalArticle");
+		_cleanUpNullUnicode("data_", dbInspector, "DDMContent");
 	}
 
 	private void _cleanUp(
+			int charCode, String columnName, DBInspector dbInspector,
+			String tableName)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		String charSentence = "CHAR(";
+
+		if ((db.getDBType() == DBType.DB2) ||
+			(db.getDBType() == DBType.ORACLE) ||
+			(db.getDBType() == DBType.SQLSERVER)) {
+
+			charSentence = "CHR(";
+		}
+
+		charSentence = charSentence + charCode + ")";
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"update ", tableName, " set ", columnName, " = replace(",
+					columnName, ", ", charSentence, ", '') where INSTR( ",
+					columnName, ", ", charSentence, ") > 0"))) {
+
+			int count = preparedStatement.executeUpdate();
+
+			DataCleanupLoggingUtil.logUpdate(
+				_log, count, dbInspector.normalizeName(tableName),
+				dbInspector.normalizeName(columnName), null,
+				"it had invalid character " +
+					String.format("0x%02X", charCode));
+		}
+	}
+
+	private void _cleanUpNullUnicode(
 			String columnName, DBInspector dbInspector, String tableName)
 		throws Exception {
 
@@ -68,6 +111,11 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 				"it had invalid characters");
 		}
 	}
+
+	private static final int[] _ILLEGAL_CHARACTER_CODES = {
+		0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22,
+		23, 24, 25, 26, 27, 28, 29, 30, 31
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		IllegalCharactersContentDataCleanupPreupgradeProcess.class);

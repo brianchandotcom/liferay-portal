@@ -2026,14 +2026,14 @@
 		},
 		{
 			"properties": {
-				"cachingLevel": {
+				"cachingStrategy": {
 					"default": "do-not-use-hashes",
 					"description": "Set the balance between caching span and size of the import maps (which affect the size of the page's HTML). \"Do not use hashes\" makes import maps smaller at the expense of a time limited caching span. \"Use one hash per file\" makes the import maps bigger but files can be cached infinitely.",
 					"enum": [
 						"do-not-use-hashes",
 						"use-one-hash-per-file"
 					],
-					"title": "Caching Level",
+					"title": "Caching Strategy",
 					"type": "string"
 				},
 				"cssStyleSheetsMaxAge": {
@@ -3343,12 +3343,12 @@
 			"title": "Portal Cross-Origin Resource Sharing (CORS)"
 		},
 		{
-			"description": "Configure third party providers and other settings to index and search text embeddings. Semantic Search is a beta feature: enable it in Instance Settings > Feature Flags.",
+			"description": "Configure third party providers and other settings to index and search text embeddings. You can enable additional providers for Semantic Search in Instance Settings > Feature Flags > Beta.",
 			"properties": {
 				"pid": {
 					"const": "com.liferay.portal.search.configuration.SemanticSearchConfiguration",
-					"description": "Configure third party providers and other settings to index and search text embeddings. Semantic Search is a beta feature: enable it in Instance Settings > Feature Flags.",
-					"title": "Semantic Search (Beta)"
+					"description": "Configure third party providers and other settings to index and search text embeddings. You can enable additional providers for Semantic Search in Instance Settings > Feature Flags > Beta.",
+					"title": "Semantic Search"
 				},
 				"textEmbeddingCacheTimeout": {
 					"default": 604800,
@@ -3372,7 +3372,7 @@
 			"required": [
 				"pid"
 			],
-			"title": "Semantic Search (Beta)"
+			"title": "Semantic Search"
 		},
 		{
 			"properties": {

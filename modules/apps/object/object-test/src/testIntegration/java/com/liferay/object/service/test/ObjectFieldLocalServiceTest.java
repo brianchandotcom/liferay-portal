@@ -581,7 +581,7 @@ public class ObjectFieldLocalServiceTest {
 		}
 
 		_assertFailureAttachmentObjectFieldSettingNameNotAllowedNames(
-			ObjectFieldSettingConstants.VALUE_DEPOT_FILES,
+			ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT,
 			SetUtil.fromArray(
 				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
@@ -733,7 +733,7 @@ public class ObjectFieldLocalServiceTest {
 								ObjectFieldSettingConstants.NAME_FILE_SOURCE
 							).value(
 								ObjectFieldSettingConstants.
-									VALUE_USER_COMPUTER_TO_DEPOT_FILES
+									VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
 							).build(),
 							new ObjectFieldSettingBuilder(
 							).name(
@@ -2053,7 +2053,7 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldSettingConstants.NAME_FILE_SOURCE
 				).value(
 					ObjectFieldSettingConstants.
-						VALUE_USER_COMPUTER_TO_DEPOT_FILES
+						VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -2074,7 +2074,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
 			).put(
 				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DEPOT_FILES
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).put(
@@ -2104,7 +2105,7 @@ public class ObjectFieldLocalServiceTest {
 					ObjectFieldSettingConstants.NAME_FILE_SOURCE
 				).value(
 					ObjectFieldSettingConstants.
-						VALUE_USER_COMPUTER_TO_DEPOT_FILES
+						VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -2137,7 +2138,8 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
 			).put(
 				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DEPOT_FILES
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).put(
@@ -2164,7 +2166,7 @@ public class ObjectFieldLocalServiceTest {
 				).name(
 					ObjectFieldSettingConstants.NAME_FILE_SOURCE
 				).value(
-					ObjectFieldSettingConstants.VALUE_DEPOT_FILES
+					ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT
 				).build(),
 				new ObjectFieldSettingBuilder(
 				).name(
@@ -2179,7 +2181,7 @@ public class ObjectFieldLocalServiceTest {
 				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS, "png"
 			).put(
 				ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-				ObjectFieldSettingConstants.VALUE_DEPOT_FILES
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT
 			).put(
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE, "10"
 			).build());

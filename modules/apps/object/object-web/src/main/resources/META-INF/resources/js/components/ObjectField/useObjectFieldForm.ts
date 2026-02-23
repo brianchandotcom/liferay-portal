@@ -208,7 +208,7 @@ export function useObjectFieldForm({
 			}
 			else if (
 				settings.showFilesInLibrary &&
-				(settings.fileSource === 'userComputerToDepotFiles' ||
+				(settings.fileSource === 'userComputerToCMSBasicDocument' ||
 					settings.fileSource === 'userComputerToDocumentsAndMedia')
 			) {
 				if (
@@ -229,7 +229,7 @@ export function useObjectFieldForm({
 				}
 
 				if (
-					settings.fileSource === 'userComputerToDepotFiles' &&
+					settings.fileSource === 'userComputerToCMSBasicDocument' &&
 					invalidateRequired(
 						settings.storageDepotGroup as string | undefined
 					)

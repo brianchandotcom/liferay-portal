@@ -60,13 +60,13 @@ export function AttachmentFormBase({
 							Liferay.Language.get(
 								'upload-directly-from-users-computer'
 							) + ` (${Liferay.Language.get('cms-files')})`,
-						value: 'userComputerToDepotFiles',
+						value: 'userComputerToCMSBasicDocument',
 					},
 					{
 						label: Liferay.Language.get(
 							'upload-or-select-from-cms-files'
 						),
-						value: 'depotFiles',
+						value: 'CMSBasicDocument',
 					},
 				]
 			: []),
@@ -87,7 +87,7 @@ export function AttachmentFormBase({
 		settings.fileSource === 'userComputerToDocumentsAndMedia';
 
 	const isUserComputerDepotUpload =
-		settings.fileSource === 'userComputerToDepotFiles';
+		settings.fileSource === 'userComputerToCMSBasicDocument';
 
 	const allowsLibraryStorage =
 		isUserComputerDMUpload || isUserComputerDepotUpload;
@@ -144,7 +144,9 @@ export function AttachmentFormBase({
 					value: `/${objectDefinitionName}`,
 				});
 			}
-			else if (settings.fileSource === 'userComputerToDepotFiles') {
+			else if (
+				settings.fileSource === 'userComputerToCMSBasicDocument'
+			) {
 				updatedSettings.push(
 					{
 						name: 'storageDLFolderPath',

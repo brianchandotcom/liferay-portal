@@ -120,14 +120,14 @@ export default function AttachmentBase({
 
 	const DEFAULT_FOLDER_ERC = 'L_FILES';
 
-	const isDepotFiles =
-		Liferay.FeatureFlags['LPD-74813'] && fileSource === 'depotFiles';
+	const isCMSBasicDocument =
+		Liferay.FeatureFlags['LPD-74813'] && fileSource === 'CMSBasicDocument';
 
 	const isDocumentsAndMedia = fileSource === 'documentsAndMedia';
 
 	const isUserComputerDepotUpload =
 		Liferay.FeatureFlags['LPD-74813'] &&
-		fileSource === 'userComputerToDepotFiles';
+		fileSource === 'userComputerToCMSBasicDocument';
 
 	const isUserComputerDMUpload =
 		fileSource === 'userComputerToDocumentsAndMedia';
@@ -438,7 +438,7 @@ export default function AttachmentBase({
 									filePicker.click();
 								}
 							}
-							else if (isDepotFiles) {
+							else if (isCMSBasicDocument) {
 								spaceItemSelectorOpenChange(true);
 							}
 						}}
@@ -455,7 +455,7 @@ export default function AttachmentBase({
 				/>
 			</div>
 
-			{isDepotFiles && (
+			{isCMSBasicDocument && (
 				<CMSFilesItemSelectorModal
 					items={cmsFiles}
 					observer={spaceItemSelectorObserver}

@@ -73,9 +73,9 @@ describe('AttachmentProperties', () => {
 		expect(input).toBeInTheDocument();
 	});
 
-	it('renders depot storage inputs when showFilesInLibrary is enabled for userComputerToDepot upload', () => {
+	it('renders depot storage inputs when showFilesInLibrary is enabled for userComputerToCMSBasicDocument upload', () => {
 		renderComponent([
-			{name: 'fileSource', value: 'userComputerToDepotFiles'},
+			{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
 			{name: 'showFilesInLibrary', value: true},
 		]);
 

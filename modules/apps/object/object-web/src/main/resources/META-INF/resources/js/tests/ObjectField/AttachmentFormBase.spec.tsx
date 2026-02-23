@@ -95,9 +95,11 @@ describe('The AttachmentFormBase component', () => {
 		});
 	});
 
-	it('does not render library toggle for depotFile file source', () => {
+	it('does not render library toggle for CMSBasicDocument file source', () => {
 		renderComponent({
-			objectFieldSettings: [{name: 'fileSource', value: 'depotFiles'}],
+			objectFieldSettings: [
+				{name: 'fileSource', value: 'CMSBasicDocument'},
+			],
 		});
 
 		expect(
@@ -129,10 +131,10 @@ describe('The AttachmentFormBase component', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders library toggle for userComputerToDepotFiles file source', () => {
+	it('renders library toggle for userComputerToCMSBasicDocument file source', () => {
 		renderComponent({
 			objectFieldSettings: [
-				{name: 'fileSource', value: 'userComputerToDepotFiles'},
+				{name: 'fileSource', value: 'userComputerToCMSBasicDocument'},
 			],
 		});
 

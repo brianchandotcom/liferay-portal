@@ -296,7 +296,8 @@ public class AttachmentObjectFieldBusinessType
 		if ((FeatureFlagManagerUtil.isEnabled(
 				objectField.getCompanyId(), "LPD-74813") &&
 			 Objects.equals(
-				 fileSource, ObjectFieldSettingConstants.VALUE_DEPOT_FILES)) ||
+				 fileSource,
+				 ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT)) ||
 			Objects.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
@@ -312,7 +313,7 @@ public class AttachmentObjectFieldBusinessType
 				 Objects.equals(
 					 fileSource,
 					 ObjectFieldSettingConstants.
-						 VALUE_USER_COMPUTER_TO_DEPOT_FILES)) {
+						 VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT)) {
 
 			validateRelatedObjectFieldSettings(
 				objectField,
@@ -449,7 +450,8 @@ public class AttachmentObjectFieldBusinessType
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 
 		if (Objects.equals(
-				fileSource, ObjectFieldSettingConstants.VALUE_DEPOT_FILES) ||
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
 			Objects.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) ||
 			GetterUtil.getBoolean(

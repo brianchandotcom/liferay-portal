@@ -49,9 +49,10 @@ public class ObjectFieldSettingUtil {
 	public static Set<String> getAllowedFileSources(long companyId) {
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-74813")) {
 			return SetUtil.fromArray(
-				ObjectFieldSettingConstants.VALUE_DEPOT_FILES,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT,
 				ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA,
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER_TO_DEPOT_FILES,
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT,
 				ObjectFieldSettingConstants.
 					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA);
 		}

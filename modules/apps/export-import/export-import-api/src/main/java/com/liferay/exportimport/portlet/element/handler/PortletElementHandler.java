@@ -24,7 +24,7 @@ public interface PortletElementHandler {
 
 	public Portlet getPortlet(long companyId);
 
-	public String getPortletConfiguration();
+	public String[] getPortletConfiguration();
 
 	public String getPortletDataHandlerKey();
 
@@ -50,7 +50,7 @@ public interface PortletElementHandler {
 
 	public void setPath(String path);
 
-	public void setPortletConfiguration(String portletConfiguration);
+	public void setPortletConfiguration(String[] configurationPortletOptions);
 
 	public void setPortletData(boolean portletData);
 

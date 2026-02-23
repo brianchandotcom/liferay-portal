@@ -539,29 +539,22 @@ public class PortletExportControllerImpl implements PortletExportController {
 		portletElementHandler.setPath(path);
 		portletElementHandler.setSourcePortletId(portlet.getPortletId());
 
-		StringBundler configurationOptionsSB = new StringBundler(6);
-
-		if (exportPortletSetup) {
-			configurationOptionsSB.append("setup");
-			configurationOptionsSB.append(StringPool.COMMA);
-		}
+		List<String> configurationPortletOptions = new ArrayList<>(3);
 
 		if (exportPortletArchivedSetups) {
-			configurationOptionsSB.append("archived-setups");
-			configurationOptionsSB.append(StringPool.COMMA);
+			configurationPortletOptions.add("archived-setups");
+		}
+
+		if (exportPortletSetup) {
+			configurationPortletOptions.add("setup");
 		}
 
 		if (exportPortletUserPreferences) {
-			configurationOptionsSB.append("user-preferences");
-			configurationOptionsSB.append(StringPool.COMMA);
-		}
-
-		if (configurationOptionsSB.index() > 0) {
-			configurationOptionsSB.setIndex(configurationOptionsSB.index() - 1);
+			configurationPortletOptions.add("user-preferences");
 		}
 
 		portletElementHandler.setPortletConfiguration(
-			configurationOptionsSB.toString());
+			configurationPortletOptions.toArray(new String[0]));
 		portletElementHandler.setPortletData(
 			exportPortletData || portletDataHandler.isHidden());
 		portletElementHandler.setSchemaVersion(

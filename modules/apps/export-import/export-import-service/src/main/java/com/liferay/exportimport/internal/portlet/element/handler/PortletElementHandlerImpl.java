@@ -10,6 +10,7 @@ import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -53,8 +54,9 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	}
 
 	@Override
-	public String getPortletConfiguration() {
-		return _portletElement.attributeValue(_PORTLET_CONFIGURATION);
+	public String[] getPortletConfiguration() {
+		return StringUtil.split(
+			_portletElement.attributeValue(_PORTLET_CONFIGURATION));
 	}
 
 	@Override
@@ -135,9 +137,10 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	}
 
 	@Override
-	public void setPortletConfiguration(String portletConfiguration) {
+	public void setPortletConfiguration(String[] configurationPortletOptions) {
 		_portletElement.addAttribute(
-			_PORTLET_CONFIGURATION, portletConfiguration);
+			_PORTLET_CONFIGURATION,
+			StringUtil.merge(configurationPortletOptions));
 	}
 
 	@Override

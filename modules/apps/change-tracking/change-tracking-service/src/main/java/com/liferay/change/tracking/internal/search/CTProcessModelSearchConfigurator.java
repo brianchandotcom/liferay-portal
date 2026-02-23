@@ -9,7 +9,6 @@ import com.liferay.change.tracking.internal.search.spi.model.index.contributor.C
 import com.liferay.change.tracking.model.CTProcess;
 import com.liferay.change.tracking.service.CTProcessLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -52,17 +51,11 @@ public class CTProcessModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new CTProcessModelIndexerWriterContributor(
-				_ctProcessLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+			new CTProcessModelIndexerWriterContributor(_ctProcessLocalService);
 	}
 
 	@Reference
 	private CTProcessLocalService _ctProcessLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CTProcess>
 		_modelIndexWriterContributor;

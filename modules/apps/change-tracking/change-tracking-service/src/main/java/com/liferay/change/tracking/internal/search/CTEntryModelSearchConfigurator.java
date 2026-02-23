@@ -9,7 +9,6 @@ import com.liferay.change.tracking.internal.search.spi.model.index.contributor.C
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -52,15 +51,11 @@ public class CTEntryModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor = new CTEntryModelIndexerWriterContributor(
-			_ctEntryLocalService, _dynamicQueryBatchIndexingActionableFactory);
+			_ctEntryLocalService);
 	}
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CTEntry> _modelIndexWriterContributor;
 

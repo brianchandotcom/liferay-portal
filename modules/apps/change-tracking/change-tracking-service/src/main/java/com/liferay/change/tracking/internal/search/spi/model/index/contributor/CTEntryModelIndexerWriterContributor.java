@@ -13,8 +13,6 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -24,17 +22,15 @@ public class CTEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CTEntry> {
 
 	public CTEntryModelIndexerWriterContributor(
-		CTEntryLocalService ctEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CTEntryLocalService ctEntryLocalService) {
 
 		_ctEntryLocalService = ctEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_ctEntryLocalService.getIndexableActionableDynamicQuery();
 
@@ -52,15 +48,12 @@ public class CTEntryModelIndexerWriterContributor
 					RestrictionsFactoryUtil.eq("ctCollectionId", -1L)));
 		}
 
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(indexableActionableDynamicQuery);
+		return indexableActionableDynamicQuery;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CTEntryModelIndexerWriterContributor.class);
 
 	private final CTEntryLocalService _ctEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

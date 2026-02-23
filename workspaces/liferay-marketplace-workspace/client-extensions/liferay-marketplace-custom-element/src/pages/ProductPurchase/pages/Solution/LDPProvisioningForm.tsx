@@ -7,7 +7,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import {zodResolver} from '@hookform/resolvers/zod';
 import classNames from 'classnames';
-import {useMemo, useState} from 'react';
+import {useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 
@@ -26,85 +26,6 @@ type MultiSelectValue = {
 	key: string;
 	label: string;
 	value: string;
-};
-
-function ContactSalesLink() {
-	return (
-		<a
-			href="https://www.liferay.com/contact-sales"
-			rel="noopener noreferrer"
-			target="_blank"
-		>
-			Sales Department
-		</a>
-	);
-}
-
-function SupportLink(props: {children: React.ReactNode}) {
-	return (
-		<a
-			href="https://support.liferay.com"
-			referrerPolicy="no-referrer"
-			target="_blank"
-		>
-			{props.children}
-		</a>
-	);
-}
-
-const paragraphProps = {
-	align: 'left',
-};
-
-const emptyStateMessages = {
-	UNABLE_TO_PROVISION: {
-		description: (
-			<>
-				<p {...paragraphProps} className="px-5">
-					Analytics Cloud requires an active Liferay Enterprise
-					subscription and we could not find any associated with your
-					account.
-				</p>
-
-				<p>
-					To resolve this, please follow the steps below that apply to
-					your situation:
-				</p>
-
-				<ul {...paragraphProps}>
-					<li>
-						If your company has an active DXP subscription, please
-						contact your Account Administrator and ask them to add
-						your user to the company account.
-					</li>
-
-					<li>
-						If you do not yet have an active enterprise
-						subscription, please contact our <ContactSalesLink /> to
-						get started.
-					</li>
-
-					<li>
-						If neither of the above situations applies to you, or
-						you are experiencing a technical issue not covered here,
-						please contact our{' '}
-						<SupportLink>Support Team</SupportLink> for assistance.
-					</li>
-				</ul>
-			</>
-		),
-		title: 'We could not find an Enterprise Subscription related to your Account',
-	},
-	WORKSPACE_ALREADY_EXISTS: {
-		description: (
-			<>
-				Your account is already linked to an existing Analytics Cloud
-				workspace. If you cannot access your workspace please contact{' '}
-				<SupportLink>support</SupportLink>.
-			</>
-		),
-		title: 'This account already has an active\n Analytics Cloud workspace',
-	},
 };
 
 const LDPProvisioning = () => {

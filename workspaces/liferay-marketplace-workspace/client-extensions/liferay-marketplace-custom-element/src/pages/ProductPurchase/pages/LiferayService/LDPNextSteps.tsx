@@ -4,10 +4,10 @@
  */
 
 import React from 'react';
-import Loading from '../../../../components/Loading';
 
-import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
+import Loading from '../../../../components/Loading';
 import {OrderStatus} from '../../../../enums/Order';
+import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 
 import './LDPNextSteps.scss';
 
@@ -23,8 +23,8 @@ const Content = ({
 	return (
 		<div className="ldp-background">
 			<div className="d-flex justify-content-center w-100">
-				<div className="align-items-center d-flex flex-column justify-content-center col-3 mt-9">
-					<div className="loading-overlay ldp-next-steps">
+				<div className="align-items-center col-3 d-flex flex-column justify-content-center mt-9">
+					<div className="ldp-next-steps loading-overlay">
 						<div className="loading-container">
 							{showLoading && <Loading className="mb-6" />}
 							<span className="mt-4">
@@ -41,10 +41,14 @@ const Content = ({
 	);
 };
 
+function sendRedirect(link: string) {
+	window.location.href = link;
+}
+
 const LDPNextSteps: React.FC<{
 	description: string;
 	title: string;
-}> = ({title, description}) => {
+}> = ({description, title}) => {
 	const urlParams = new URLSearchParams(window.location.search);
 	const orderId = urlParams.get('orderId');
 
@@ -53,7 +57,7 @@ const LDPNextSteps: React.FC<{
 	});
 
 	if (order?.orderStatusInfo.label === OrderStatus.COMPLETED) {
-		window.location.href = `/liferay-service/launch?orderId=${orderId}`;
+		sendRedirect(`/liferay-service/launch?orderId=${orderId}`);
 	}
 
 	if (error) {

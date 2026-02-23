@@ -5,7 +5,6 @@
 
 package com.liferay.source.formatter.check;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.XMLSourceUtil;
 
@@ -50,24 +49,9 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
-	private String _fixEmptyLinesBetweenTags(String fileName, String content) {
-		if (fileName.endsWith("-log4j-ext.xml") ||
-			fileName.endsWith("-log4j.xml") ||
-			fileName.endsWith("-logback.xml") ||
-			fileName.endsWith("/ivy.xml") ||
-			fileName.endsWith("/struts-config.xml") ||
-			fileName.endsWith("/tiles-defs.xml")) {
-
-			return fixEmptyLinesBetweenTags(content);
-		}
-
-
-		return content;
-	}
-
 	private String _fixEmptyLinesAroundConditionalTags(String content) {
-		Matcher matcher =
-			_emptyLineBetweenAroundConditionalTagsPattern.matcher(content);
+		Matcher matcher = _emptyLineAroundConditionalTagsPattern.matcher(
+			content);
 
 		while (matcher.find()) {
 			if (XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
@@ -78,23 +62,31 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 			String tagName = matcher.group(2);
 
-
-			if (lineBreaks.equals("\n")) {
-				if (tagName.equals("if")) {
-					return StringUtil.replaceFirst(
-							content, "\n", "\n\n", matcher.start(3));
-
-				}
+			if (lineBreaks.equals("\n") && tagName.equals("if")) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start(3));
 			}
-			else if (lineBreaks.equals("\n\n")) {
-				if (tagName.equals("else")||tagName.equals("elseif")||tagName.equals("then")) {
-					return StringUtil.replaceFirst(
-							content, "\n\n", "\n", matcher.start(3));
+			else if (lineBreaks.equals("\n\n") &&
+					 (tagName.equals("else") || tagName.equals("elseif") ||
+					  tagName.equals("then"))) {
 
-				}
+				return StringUtil.replaceFirst(
+					content, "\n\n", "\n", matcher.start(3));
 			}
+		}
 
+		return content;
+	}
 
+	private String _fixEmptyLinesBetweenTags(String fileName, String content) {
+		if (fileName.endsWith("-log4j-ext.xml") ||
+			fileName.endsWith("-log4j.xml") ||
+			fileName.endsWith("-logback.xml") ||
+			fileName.endsWith("/ivy.xml") ||
+			fileName.endsWith("/struts-config.xml") ||
+			fileName.endsWith("/tiles-defs.xml")) {
+
+			return fixEmptyLinesBetweenTags(content);
 		}
 
 		return content;
@@ -161,15 +153,8 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
-	private static final String[] _CONDITIONAL_TAG_NAMES = {
-		"else", "elseif", "if", "then"
-	};
-
-	private static final Pattern
-			_emptyLineBetweenAroundConditionalTagsPattern = Pattern.compile(
-			"\n(\t*)</([-\\w:]+)>(\n+)\\1<[-\\w:]+[> \n]");
-	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
-		"\n(\t*)([\\w/].*[^-])\n\n\t*<(\\w)");
+	private static final Pattern _emptyLineAroundConditionalTagsPattern =
+		Pattern.compile("\n(\t*)</([-\\w:]+)>(\n+)\\1<[-\\w:]+[> \n]");
 	private static final Pattern _emptyLineInTagPattern1 = Pattern.compile(
 		">\n\n\t*+(?!<)");
 	private static final Pattern _emptyLineInTagPattern2 = Pattern.compile(

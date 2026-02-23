@@ -25,13 +25,13 @@ import FragmentService from '../services/FragmentService';
 import addFragmentComposition from '../thunks/addFragmentComposition';
 
 export default async function openFragmentCompositionModal({
+	collections,
 	dispatch,
-	fragments,
 	itemId,
 	segmentsExperienceId,
 }: {
+	collections: FragmentSet[];
 	dispatch: Dispatch;
-	fragments: FragmentSet[];
 	itemId: LayoutDataItem['itemId'];
 	segmentsExperienceId: State['segmentsExperienceId'];
 }) {
@@ -69,8 +69,8 @@ export default async function openFragmentCompositionModal({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			SaveFragmentCompositionModal({
 				closeModal,
+				collections,
 				dispatch,
-				fragments,
 				itemId,
 			}),
 		size: 'lg',
@@ -79,13 +79,13 @@ export default async function openFragmentCompositionModal({
 
 function SaveFragmentCompositionModal({
 	closeModal,
+	collections,
 	dispatch,
-	fragments,
 	itemId,
 }: {
 	closeModal: () => void;
+	collections: FragmentSet[];
 	dispatch: Dispatch;
-	fragments: FragmentSet[];
 	itemId: LayoutDataItem['itemId'];
 }) {
 	const [name, setName] = useState<string | undefined>(undefined);
@@ -94,7 +94,7 @@ function SaveFragmentCompositionModal({
 	const [saveInlineContent, setSaveInlineContent] = useState(false);
 
 	const [fragmentCollectionId, setFragmentCollectionId] = useState(
-		fragments.length ? fragments[0].fragmentCollectionId : ''
+		collections.length ? collections[0].fragmentCollectionId : ''
 	);
 
 	const [saveMappingConfiguration, setSaveMappingConfiguration] =
@@ -290,7 +290,7 @@ function SaveFragmentCompositionModal({
 						</ClayForm.Group>
 
 						<ClayForm.Group>
-							{fragments.length ? (
+							{collections.length ? (
 								<>
 									<p className="sheet-tertiary-title">
 										{Liferay.Language.get(
@@ -299,7 +299,7 @@ function SaveFragmentCompositionModal({
 									</p>
 
 									<ClayLayout.Row>
-										{fragments.map((collection) => (
+										{collections.map((collection) => (
 											<ClayLayout.Col
 												key={
 													collection.fragmentCollectionId

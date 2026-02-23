@@ -148,7 +148,7 @@ const ActionList = ({item, setActive}) => {
 
 	const selectItems = selectMultipleItems;
 
-	const {fragmentEntryLinks, fragments, layoutData, selectedViewportSize} =
+	const {collections, fragmentEntryLinks, layoutData, selectedViewportSize} =
 		useSelector((state) => state);
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -246,8 +246,8 @@ const ActionList = ({item, setActive}) => {
 			items.push({
 				action: () =>
 					openFragmentCompositionModal({
+						collections,
 						dispatch,
-						fragments,
 						itemId: item.id,
 						segmentsExperienceId,
 					}),
@@ -424,7 +424,7 @@ const ActionList = ({item, setActive}) => {
 		hasRequiredChild,
 		selectItem,
 		setText,
-		fragments,
+		collections,
 		segmentsExperienceId,
 		setClipboard,
 		selectItems,

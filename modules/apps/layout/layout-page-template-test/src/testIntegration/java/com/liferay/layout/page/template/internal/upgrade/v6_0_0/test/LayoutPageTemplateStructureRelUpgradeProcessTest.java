@@ -95,6 +95,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 		_objectDefinitionSettingLocalService.deleteObjectDefinitionSetting(
 			_objectDefinitionSetting);
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 

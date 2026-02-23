@@ -11,7 +11,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -59,14 +59,16 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	}
 
 	@Override
-	public CachingLevel getCachingLevel(HttpServletRequest httpServletRequest) {
+	public CachingStrategy getCachingStrategy(
+		HttpServletRequest httpServletRequest) {
+
 		FrontendCachingConfiguration frontendCachingConfiguration =
 			FrontendJsWebUtil.getFrontendCachingConfiguration(
 				_portal.getCompanyId(httpServletRequest),
 				_configurationProvider);
 
-		return CachingLevel.fromValue(
-			frontendCachingConfiguration.cachingLevel());
+		return CachingStrategy.fromValue(
+			frontendCachingConfiguration.cachingStrategy());
 	}
 
 	public String getHashedFileURI(String unhashedFileURI) {

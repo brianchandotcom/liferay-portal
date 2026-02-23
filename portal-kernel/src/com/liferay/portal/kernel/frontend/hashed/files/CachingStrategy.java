@@ -8,15 +8,15 @@ package com.liferay.portal.kernel.frontend.hashed.files;
 /**
  * @author Iván Zaera Avellón
  */
-public enum CachingLevel {
+public enum CachingStrategy {
 
 	DO_NOT_USE_HASHES("do-not-use-hashes"),
 	USE_ONE_HASH_PER_FILE("use-one-hash-per-file");
 
-	public static CachingLevel fromValue(String value) {
-		for (CachingLevel cachingLevel : values()) {
-			if (value.equals(cachingLevel.getValue())) {
-				return cachingLevel;
+	public static CachingStrategy fromValue(String value) {
+		for (CachingStrategy cachingStrategy : values()) {
+			if (value.equals(cachingStrategy.getValue())) {
+				return cachingStrategy;
 			}
 		}
 
@@ -27,7 +27,7 @@ public enum CachingLevel {
 		return _value;
 	}
 
-	private CachingLevel(String value) {
+	private CachingStrategy(String value) {
 		_value = value;
 	}
 

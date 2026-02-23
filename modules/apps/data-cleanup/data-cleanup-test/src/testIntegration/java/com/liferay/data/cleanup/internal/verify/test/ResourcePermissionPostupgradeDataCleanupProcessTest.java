@@ -57,8 +57,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 
 				Assert.assertTrue(messages.toString(), messages.isEmpty());
 
-				Assert.assertTrue(
-					_hasResourcePermission(resourcePermissionId));
+				Assert.assertTrue(_hasResourcePermission(resourcePermissionId));
 			},
 			() -> _deleteResourcePermission(resourcePermissionId),
 			() -> _addResourcePermission(
@@ -120,8 +119,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 
 				Assert.assertTrue(messages.toString(), messages.isEmpty());
 
-				Assert.assertTrue(
-					_hasResourcePermission(resourcePermissionId));
+				Assert.assertTrue(_hasResourcePermission(resourcePermissionId));
 			},
 			() -> _deleteResourcePermission(resourcePermissionId),
 			() -> _addResourcePermission(

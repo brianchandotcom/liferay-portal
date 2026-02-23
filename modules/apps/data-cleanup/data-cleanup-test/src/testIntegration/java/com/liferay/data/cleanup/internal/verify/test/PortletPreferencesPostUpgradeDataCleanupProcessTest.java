@@ -651,9 +651,7 @@ public class PortletPreferencesPostUpgradeDataCleanupProcessTest
 		}
 	}
 
-	private boolean _hasPortletPreference(String portletId)
-		throws Exception {
-
+	private boolean _hasPortletPreference(String portletId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select * from PortletPreferences where portletId = ?")) {
 

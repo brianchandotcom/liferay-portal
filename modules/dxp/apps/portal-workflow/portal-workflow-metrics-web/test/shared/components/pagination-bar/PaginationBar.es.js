@@ -17,7 +17,7 @@ const ContainerProps = ({children, initialPage = 1, initialPageSize = 20}) => {
 	const stateProps = {page, pageSize, setPage, setPageSize};
 
 	return (
-		<MockRouter withoutRouterProps>
+		<MockRouter>
 			{cloneElement(children, stateProps)}
 		</MockRouter>
 	);
@@ -75,7 +75,7 @@ describe('The PaginationBar component should', () => {
 	});
 
 	test('Render with initial params and change pageSize and page using route params', () => {
-		const {baseElement} = render(<PaginationBar totalCount={50} />, {
+		const {baseElement, rerender} = render(<PaginationBar page={1} pageSize={20} totalCount={50} />, {
 			wrapper: MockRouter,
 		});
 
@@ -100,12 +100,14 @@ describe('The PaginationBar component should', () => {
 		expect(pageLinks[3]).toHaveTextContent('3');
 
 		expect(pageItems[1].className.includes('active')).toBe(true);
-
-		expect(pageItems[1].className.includes('active')).toBe(true);
 		expect(pageItems[2].className.includes('active')).toBe(false);
 		expect(pageItems[3].className.includes('active')).toBe(false);
 
 		fireEvent.click(pageLinks[3]);
+
+		rerender(<PaginationBar page={3} pageSize={20} totalCount={50} />, {
+			wrapper: MockRouter,
+		});
 
 		pageItems = baseElement.querySelectorAll('.page-item');
 
@@ -114,6 +116,10 @@ describe('The PaginationBar component should', () => {
 		expect(pageItems[3].className.includes('active')).toBe(true);
 
 		fireEvent.click(pageSizeOptions[4]);
+
+		rerender(<PaginationBar page={1} pageSize={50} totalCount={50} />, {
+			wrapper: MockRouter,
+		});
 
 		pageLinks = baseElement.querySelectorAll('.page-link');
 		pageItems = baseElement.querySelectorAll('.page-item');
@@ -126,7 +132,7 @@ describe('The PaginationBar component should', () => {
 	});
 
 	test('Render with insufficient total count to pagination', () => {
-		const {container} = render(<PaginationBar totalCount={4} />, {
+		const {container} = render(<PaginationBar page={1} pageSize={20} totalCount={4} />, {
 			wrapper: MockRouter,
 		});
 

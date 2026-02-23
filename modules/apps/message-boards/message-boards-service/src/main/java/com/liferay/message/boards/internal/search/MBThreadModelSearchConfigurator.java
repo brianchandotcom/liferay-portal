@@ -9,7 +9,6 @@ import com.liferay.message.boards.internal.search.spi.model.index.contributor.MB
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -47,14 +46,8 @@ public class MBThreadModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new MBThreadModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
-				_mbThreadLocalService);
+			new MBThreadModelIndexerWriterContributor(_mbThreadLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;

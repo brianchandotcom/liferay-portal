@@ -13,7 +13,6 @@ import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -70,17 +69,12 @@ public class MBMessageModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new MBMessageModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_mbMessageLocalService, _mbThreadLocalService);
 		_modelSummaryContributor = new MBMessageModelSummaryContributor(
 			_localization);
 		_modelVisibilityContributor = new MBMessageModelVisibilityContributor(
 			_mbMessageLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private Localization _localization;

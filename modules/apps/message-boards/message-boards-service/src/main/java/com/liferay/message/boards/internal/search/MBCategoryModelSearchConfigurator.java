@@ -9,7 +9,6 @@ import com.liferay.message.boards.internal.search.spi.model.index.contributor.MB
 import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -49,13 +48,8 @@ public class MBCategoryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new MBCategoryModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_mbCategoryLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private MBCategoryLocalService _mbCategoryLocalService;

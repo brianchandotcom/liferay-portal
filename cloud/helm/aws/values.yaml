@@ -39,8 +39,6 @@ liferay-default:
                         -   bash
                         -   -c
                         -   |
-                            set -e
-
                             function download_module {
                                 {{- if eq .image.tag "latest" }}
                                 local product_version="nightly"

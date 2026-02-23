@@ -9,7 +9,6 @@ import com.liferay.list.type.internal.search.spi.model.index.contributor.ListTyp
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,13 +52,8 @@ public class ListTypeDefinitionModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new ListTypeDefinitionModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_listTypeDefinitionLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

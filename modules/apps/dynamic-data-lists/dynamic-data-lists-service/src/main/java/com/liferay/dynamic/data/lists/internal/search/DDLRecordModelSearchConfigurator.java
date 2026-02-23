@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -64,8 +63,7 @@ public class DDLRecordModelSearchConfigurator
 		_modelIndexWriterContributor =
 			new DDLRecordModelIndexerWriterContributor(
 				_ddlRecordLocalService, _ddlRecordSetLocalService,
-				_ddlRecordVersionLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_ddlRecordVersionLocalService);
 		_modelSummaryContributor = new DDLRecordModelSummaryContributor(
 			_ddlRecordSetLocalService, _language);
 	}
@@ -78,10 +76,6 @@ public class DDLRecordModelSearchConfigurator
 
 	@Reference
 	private DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private Language _language;

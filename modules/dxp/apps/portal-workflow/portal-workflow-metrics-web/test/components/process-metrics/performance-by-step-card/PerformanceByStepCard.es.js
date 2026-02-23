@@ -82,12 +82,12 @@ describe('The performance by step card component should', () => {
 		beforeAll(async () => {
 			fetch
 				.mockResolvedValueOnce({
-					json: () => Promise.resolve(processVersions),
-					ok: true,
-				})
-				.mockResolvedValue({
 					json: () =>
 						Promise.resolve({items, totalCount: items.length}),
+					ok: true,
+				})
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processVersions),
 					ok: true,
 				});
 
@@ -131,11 +131,11 @@ describe('The performance by step card component should', () => {
 		beforeEach(async () => {
 			fetch
 				.mockResolvedValueOnce({
-					json: () => Promise.resolve(processVersions),
+					json: () => Promise.resolve({items: [], totalCount: 0}),
 					ok: true,
 				})
-				.mockResolvedValue({
-					json: () => Promise.resolve({items: [], totalCount: 0}),
+				.mockResolvedValueOnce({
+					json: () => Promise.resolve(processVersions),
 					ok: true,
 				});
 

@@ -13,6 +13,7 @@ import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregate;
 import co.elastic.clients.elasticsearch.core.search.Hit;
 import co.elastic.clients.elasticsearch.core.search.HitsMetadata;
+import co.elastic.clients.elasticsearch.core.search.InnerHitsResult;
 import co.elastic.clients.elasticsearch.core.search.ResponseBody;
 import co.elastic.clients.elasticsearch.core.search.TotalHits;
 import co.elastic.clients.json.JsonData;
@@ -91,6 +92,30 @@ public class SearchResponseTranslator {
 			_statsTranslator.translateResponse(aggregates, _translate(stats)));
 	}
 
+	private void _addInnerHitsSnippets(
+		Document document, Hit<JsonData> hit, Locale locale) {
+
+		Map<String, InnerHitsResult> innerHits = hit.innerHits();
+
+		if (MapUtil.isEmpty(innerHits)) {
+			return;
+		}
+
+		for (InnerHitsResult innerHitsResult : innerHits.values()) {
+			HitsMetadata<JsonData> hitsMetadata = innerHitsResult.hits();
+
+			if ((hitsMetadata == null) ||
+				ListUtil.isEmpty(hitsMetadata.hits())) {
+
+				continue;
+			}
+
+			for (Hit<JsonData> innerHit : hitsMetadata.hits()) {
+				_addSnippets(document, innerHit, locale);
+			}
+		}
+	}
+
 	private void _addSnippets(
 		Document document, Hit<JsonData> hit, Locale locale) {
 
@@ -100,6 +125,8 @@ public class SearchResponseTranslator {
 			hit.highlight(),
 			(fieldName, fragments) -> _addSnippets(
 				document, fieldName, highlights, locale));
+
+		_addInnerHitsSnippets(document, hit, locale);
 	}
 
 	private void _addSnippets(
@@ -123,11 +150,18 @@ public class SearchResponseTranslator {
 			return;
 		}
 
-		document.add(
-			new Field(
-				StringBundler.concat(
-					Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName),
-				StringUtil.merge(fragments, StringPool.TRIPLE_PERIOD)));
+		String snippetName = StringBundler.concat(
+			Field.SNIPPET, StringPool.UNDERLINE, snippetFieldName);
+		String snippetValue = StringUtil.merge(
+			fragments, StringPool.TRIPLE_PERIOD);
+
+		if (document.getField(snippetName) != null) {
+			snippetValue = StringBundler.concat(
+				document.get(snippetName), StringPool.TRIPLE_PERIOD,
+				snippetValue);
+		}
+
+		document.add(new Field(snippetName, snippetValue));
 	}
 
 	private FacetCollector _getFacetCollector(

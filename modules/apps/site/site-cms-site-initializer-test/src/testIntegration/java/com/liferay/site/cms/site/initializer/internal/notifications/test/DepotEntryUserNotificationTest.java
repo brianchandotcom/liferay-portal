@@ -247,6 +247,16 @@ public class DepotEntryUserNotificationTest {
 		serviceContext.setLanguageId("en_US");
 		serviceContext.setPortalURL("http://localhost:8080");
 
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		serviceContext.setRequest(themeDisplay.getRequest());
+
+		serviceContext.setUserId(user.getUserId());
+
+		return serviceContext;
+	}
+
+	private ThemeDisplay _getThemeDisplay() {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPathFriendlyURLPublic("/path-friendly-url-public");
@@ -257,11 +267,7 @@ public class DepotEntryUserNotificationTest {
 
 		themeDisplay.setRequest(httpServletRequest);
 
-		serviceContext.setRequest(themeDisplay.getRequest());
-
-		serviceContext.setUserId(user.getUserId());
-
-		return serviceContext;
+		return themeDisplay;
 	}
 
 	private UserNotificationFeedEntry _getUserNotificationFeedEntry(

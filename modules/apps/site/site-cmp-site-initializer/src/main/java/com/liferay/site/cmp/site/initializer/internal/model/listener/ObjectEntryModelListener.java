@@ -189,15 +189,25 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 	}
 
 	private void _updateGroup(ObjectEntry objectEntry) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-58677")) {
+
+			return;
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
 				objectEntry.getObjectDefinitionId());
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-58677") ||
-			!StringUtil.equals(
+		if (!StringUtil.equals(
 				objectDefinition.getExternalReferenceCode(), "L_CMP_PROJECT")) {
 
+			return;
+		}
+
+		String title = MapUtil.getString(objectEntry.getValues(), "title");
+
+		if (Validator.isNull(title)) {
 			return;
 		}
 
@@ -210,11 +220,7 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			group.getDefaultLanguageId());
 
-		String title = MapUtil.getString(objectEntry.getValues(), "title");
-
-		if (Validator.isNull(title) ||
-			StringUtil.equals(group.getName(defaultLocale), title)) {
-
+		if (StringUtil.equals(group.getName(defaultLocale), title)) {
 			return;
 		}
 

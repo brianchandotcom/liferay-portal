@@ -10,7 +10,6 @@ import com.liferay.organizations.internal.search.spi.model.result.contributor.Or
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -61,13 +60,8 @@ public class OrganizationModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new OrganizationModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_organizationLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<Organization>
 		_modelIndexWriterContributor;

@@ -12,6 +12,11 @@ import {ModalContext} from '../../../src/main/resources/META-INF/resources/js/co
 import {MockRouter} from '../../mock/MockRouter.es';
 import FetchMock, {fetchMockResponse} from '../../mock/fetch.es';
 
+const mockProps = {
+	initialPath: '/instance/12345/20/1/title%3Aasc',
+	path: '/instance/:processId/:page/:pageSize/:sort',
+};
+
 const instances = [
 	{
 		assetTitle: 'New Post 1',
@@ -52,7 +57,7 @@ describe('The instance list table should', () => {
 		fetchMock.mock();
 
 		const renderResult = render(
-			<MockRouter>
+			<MockRouter {...mockProps}>
 				<InstanceListContext.Provider
 					value={{setInstanceId: jest.fn()}}
 				>

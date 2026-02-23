@@ -1,0 +1,44 @@
+<svg fill="none" height="651" viewBox="0 0 320 651" width="320" xmlns="http://www.w3.org/2000/svg">
+	<path d="M12 28C12 25.7909 13.7909 24 16 24H40C42.2091 24 44 25.7909 44 28V52C44 54.2091 42.2091 56 40 56H16C13.7909 56 12 54.2091 12 52V28Z" fill="#E7E7ED" />
+	<rect fill="#E7E7ED" height="18" rx="4" width="131.911" x="52" y="31" />
+	<rect fill="#E7E7ED" height="20" rx="4" width="20" x="241" y="30" />
+	<rect fill="#E7E7ED" height="20" rx="4" width="20" x="282" y="30" />
+	<rect fill="#E7E7ED" height="30.75" rx="4" width="288" x="16" y="85" />
+	<rect fill="#E7E7ED" height="24" rx="4" width="24" x="16" y="154.75" />
+	<rect fill="#E7E7ED" height="18" rx="4" width="58.687" x="48" y="157.75" />
+	<rect fill="#E7E7ED" height="18" rx="4" width="74.2454" x="16" y="202.75" />
+	<mask height="7" id="mask0_6102_38008" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="10" x="291" y="208">
+		<path d="M296.672 214.309L300.722 210.199C301.515 209.356 300.437 208.21 299.659 209.035L296 212.758L292.3 209.013C291.578 208.245 290.518 209.428 291.243 210.199L295.302 214.319C295.792 214.851 296.089 214.939 296.672 214.309Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#mask0_6102_38008)">
+		<rect fill="#E7E7ED" height="16" width="16" x="288" y="203.75" />
+	</g>
+	<rect fill="#E7E7ED" height="24" opacity="0.95" rx="4" width="24" x="16" y="244.75" />
+	<rect fill="#E7E7ED" height="18" opacity="0.95" rx="4" width="198.939" x="48" y="247.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.95" height="24" rx="4" width="24" x="16" y="288.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.95" height="18" rx="4" width="176" x="48" y="291.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.75" height="24" rx="4" width="24" x="16" y="332.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.75" height="18" rx="4" width="256" x="48" y="335.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.65" height="24" rx="4" width="24" x="16" y="376.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.65" height="18" rx="4" width="219.064" x="48" y="379.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.55" height="24" rx="4" width="24" x="16" y="420.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.55" height="18" rx="4" width="256" x="48" y="423.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.45" height="18" rx="4" width="100" x="16" y="465.75" />
+	<mask height="7" id="mask1_6102_38008" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="10" x="291" y="471">
+		<path d="M296.672 477.309L300.722 473.199C301.515 472.356 300.437 471.21 299.659 472.035L296 475.758L292.3 472.013C291.578 471.245 290.518 472.428 291.243 473.199L295.302 477.319C295.792 477.851 296.089 477.939 296.672 477.309Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#mask1_6102_38008)">
+		<rect fill="#E7E7ED" height="16" width="16" x="288" y="466.75" />
+	</g>
+	<rect fill="#E7E7ED" fill-opacity="0.35" height="24" rx="4" width="24" x="16" y="507.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.35" height="18" rx="4" width="138.715" x="48" y="510.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.85" height="18" opacity="0.25" rx="4" width="100" x="16" y="552.75" />
+	<mask height="7" id="mask2_6102_38008" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="10" x="291" y="558">
+		<path d="M296.672 564.309L300.722 560.199C301.515 559.356 300.437 558.21 299.659 559.035L296 562.758L292.3 559.013C291.578 558.245 290.518 559.428 291.243 560.199L295.302 564.319C295.792 564.851 296.089 564.939 296.672 564.309Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#mask2_6102_38008)">
+		<rect fill="#E7E7ED" height="16" opacity="0.25" width="16" x="288" y="553.75" />
+	</g>
+	<rect fill="#E7E7ED" fill-opacity="0.15" height="24" rx="4" width="24" x="16" y="594.75" />
+	<rect fill="#E7E7ED" fill-opacity="0.15" height="18" rx="4" width="176" x="48" y="597.75" />
+</svg>

@@ -1339,11 +1339,11 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(
 				PageElementsTestUtil.getDisplayPageTemplatePageElements(
-					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					testGroup.getGroupId()),
+					testCompany, fragmentEntry.getFragmentEntryKey(),
+					journalArticle, testGroup.getGroupId()),
 				PageElementsTestUtil.getDisplayPageTemplatePageElements(
-					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					testGroup.getGroupId()));
+					testCompany, fragmentEntry.getFragmentEntryKey(),
+					journalArticle, testGroup.getGroupId()));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
@@ -1655,11 +1655,11 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(
 				PageElementsTestUtil.getDisplayPageTemplatePageElements(
-					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					testGroup.getGroupId()),
+					testCompany, fragmentEntry.getFragmentEntryKey(),
+					journalArticle, testGroup.getGroupId()),
 				PageElementsTestUtil.getDisplayPageTemplatePageElements(
-					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					testGroup.getGroupId()));
+					testCompany, fragmentEntry.getFragmentEntryKey(),
+					journalArticle, testGroup.getGroupId()));
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(

@@ -318,14 +318,9 @@ public class PageElementsTestUtil {
 	}
 
 	public static PageElement[] getDisplayPageTemplatePageElements(
-			String fragmentKey, JournalArticle journalArticle,
+			Company company, String fragmentKey, JournalArticle journalArticle,
 			long scopeGroupId)
 		throws Exception {
-
-		List<PageElement> pageElements = new ArrayList<>();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
 
 		ServiceContext companyGroupServiceContext =
 			ServiceContextTestUtil.getServiceContext(company.getGroupId());
@@ -335,92 +330,84 @@ public class PageElementsTestUtil {
 
 		int position = 0;
 
-		pageElements.add(
+		return new PageElement[] {
 			_getBasicFragmentPageElement(
 				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry1",
 						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId),
 			_getBasicFragmentPageElement(
 				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry1",
 						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId),
 			_getBasicFragmentPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry2",
 						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId),
 			_getBasicFragmentPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry2",
 						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId),
 			_getCollectionDisplayPageElement(
 				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry3",
 						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId,
+				companyGroupServiceContext),
 			_getCollectionDisplayPageElement(
 				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry3",
 						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId,
+				companyGroupServiceContext),
 			_getCollectionDisplayPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry4",
 						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId,
+				companyGroupServiceContext),
 			_getCollectionDisplayPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry4",
 						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, journalArticle, position++, scopeGroupId,
+				companyGroupServiceContext),
 			_getDisplayPageItemPageElement(
 				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry5",
 						companyGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, position++, scopeGroupId),
 			_getDisplayPageItemPageElement(
 				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry5",
 						scopeGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, position++, scopeGroupId),
 			_getDisplayPageItemPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry6",
 						companyGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
+				fragmentKey, position++, scopeGroupId),
 			_getDisplayPageItemPageElement(
 				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry6",
 						scopeGroupServiceContext)),
-				fragmentKey, position, scopeGroupId));
-
-		return pageElements.toArray(new PageElement[0]);
+				fragmentKey, position, scopeGroupId)
+		};
 	}
 
 	public static PageElement getDropZonePageElement(
@@ -644,16 +631,13 @@ public class PageElementsTestUtil {
 	}
 
 	private static AssetListEntry _addAssetListEntry(
-			long groupId, JournalArticle journalArticle)
+			JournalArticle journalArticle, ServiceContext serviceContext)
 		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
 
 		AssetListEntry assetListEntry =
 			AssetListEntryLocalServiceUtil.addAssetListEntry(
 				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-				groupId, RandomTestUtil.randomString(),
+				serviceContext.getScopeGroupId(), RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_MANUAL, serviceContext);
 
 		AssetRendererFactory<?> assetRendererFactory =
@@ -924,7 +908,7 @@ public class PageElementsTestUtil {
 
 	private static PageElement _getCollectionDisplayPageElement(
 			String fieldKey, String fragmentKey, JournalArticle journalArticle,
-			int position, long scopeGroupId)
+			int position, long scopeGroupId, ServiceContext serviceContext)
 		throws Exception {
 
 		PageElement[] pageElements = {
@@ -935,11 +919,8 @@ public class PageElementsTestUtil {
 				null, fieldKey, fragmentKey, null, scopeGroupId)
 		};
 
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
 		AssetListEntry assetListEntry = _addAssetListEntry(
-			company.getGroupId(), journalArticle);
+			journalArticle, serviceContext);
 
 		CollectionItemExternalReference collectionItemExternalReference =
 			new CollectionItemExternalReference();

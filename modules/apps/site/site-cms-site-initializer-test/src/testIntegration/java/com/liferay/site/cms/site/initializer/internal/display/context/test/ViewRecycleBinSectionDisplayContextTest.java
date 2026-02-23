@@ -253,11 +253,10 @@ public class ViewRecycleBinSectionDisplayContextTest
 	}
 
 	private String _getExpectedFilterString(long... groupIds) {
-		String groupIdsString = StringUtil.merge(groupIds, StringPool.COMMA);
-
 		return StringBundler.concat(
-			"status eq ", WorkflowConstants.STATUS_IN_TRASH,
-			" and groupIds/any(g:g in (", groupIdsString, "))");
+			"groupIds/any(g:g in (",
+			StringUtil.merge(groupIds, StringPool.COMMA), ")) and status eq ",
+			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	private void _setTrashEnabledGroupProperty(Group group, String value)

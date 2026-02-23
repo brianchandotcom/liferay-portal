@@ -8,7 +8,6 @@ package com.liferay.roles.admin.internal.search;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -59,12 +58,8 @@ public class RoleModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor = new RoleModelIndexerWriterContributor(
-			_dynamicQueryBatchIndexingActionableFactory, _roleLocalService);
+			_roleLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<Role> _modelIndexWriterContributor;
 	private final ModelSummaryContributor _modelSummaryContributor =

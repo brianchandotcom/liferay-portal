@@ -20,7 +20,7 @@ import java.sql.PreparedStatement;
 /**
  * @author Luis Ortiz
  */
-public class NullUnicodeContentDataCleanupPreupgradeProcess
+public class IllegalCharactersContentDataCleanupPreupgradeProcess
 	extends DataCleanupPreupgradeProcess {
 
 	@Override
@@ -70,6 +70,6 @@ public class NullUnicodeContentDataCleanupPreupgradeProcess
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		NullUnicodeContentDataCleanupPreupgradeProcess.class);
+		IllegalCharactersContentDataCleanupPreupgradeProcess.class);
 
 }

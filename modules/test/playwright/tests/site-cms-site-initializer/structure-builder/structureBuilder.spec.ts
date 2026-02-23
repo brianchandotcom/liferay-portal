@@ -51,6 +51,12 @@ test(
 			name: label,
 		});
 
+		// Check tree node has correct id
+
+		const span = page.locator('.treeview-link').getByText(label);
+
+		await expect(span).toHaveAttribute('id');
+
 		// Add fields and check they are selected by default
 
 		await structureBuilderPage.addField('Text');

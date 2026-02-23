@@ -11,7 +11,6 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -61,16 +60,11 @@ public class BookmarksEntryModelSearchConfigurator
 			new BookmarksEntryModelIndexerWriterContributor(
 				_bookmarksEntryLocalService,
 				new BookmarksFolderBatchReindexer(
-					_indexerDocumentBuilder, _indexerWriter),
-				_dynamicQueryBatchIndexingActionableFactory);
+					_indexerDocumentBuilder, _indexerWriter));
 	}
 
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.bookmarks.model.BookmarksFolder)"

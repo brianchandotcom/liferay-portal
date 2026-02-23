@@ -24,16 +24,6 @@ portletDisplay.setURLBack(redirect);
 OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
 
 renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(request, "new-oauth-client-as-local-metadata") : LanguageUtil.get(request, "edit-oauth-client-as-local-metadata"));
-
-JSONObject metadataJSONObject = JSONUtil.put(
-	"authorizationEndpoint", ""
-).put(
-	"issuer", ""
-).put(
-	"jwks_uri", ""
-).put(
-	"tokenEndpoint", ""
-);
 %>
 
 <portlet:actionURL name="/oauth_client_admin/update_oauth_client_as_local_metadata" var="updateOAuthClientASLocalMetadataURL">
@@ -82,6 +72,18 @@ JSONObject metadataJSONObject = JSONUtil.put(
 					<aui:input checked="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="enabledLocalWellKnown" type="checkbox" />
 
 					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\" %>" />
+
+					<%
+					JSONObject metadataJSONObject = JSONUtil.put(
+						"authorizationEndpoint", ""
+					).put(
+						"issuer", ""
+					).put(
+						"jwks_uri", ""
+					).put(
+						"tokenEndpoint", ""
+					);
+					%>
 
 					<aui:input helpMessage="oauth-client-as-local-metadata-json-oauth-authorization-server-help" label="oauth-client-as-local-metadata-json-oauth-authorization-server" name="oAuthASMetadataJSON" readonly="true" style="min-height: 600px;" type="textarea" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASMetadataJSON() : metadataJSONObject.toString() %>" />
 				</aui:fieldset>

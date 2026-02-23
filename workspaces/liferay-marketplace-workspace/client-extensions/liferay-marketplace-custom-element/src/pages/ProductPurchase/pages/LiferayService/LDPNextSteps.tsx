@@ -11,9 +11,39 @@ import {OrderStatus} from '../../../../enums/Order';
 
 import './LDPNextSteps.scss';
 
-const LDPNextSteps: React.FC<{
-	title: string;
+const Content = ({
+	description,
+	showLoading,
+	title,
+}: {
 	description: string;
+	showLoading: boolean;
+	title: string;
+}) => {
+	return (
+		<div className="ldp-background">
+			<div className="d-flex justify-content-center w-100">
+				<div className="align-items-center d-flex flex-column justify-content-center col-3 mt-9">
+					<div className="loading-overlay ldp-next-steps">
+						<div className="loading-container">
+							{showLoading && <Loading className="mb-6" />}
+							<span className="mt-4">
+								<h1>{title}</h1>
+								<div className="my-5 text-center">
+									<span>{description}</span>
+								</div>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const LDPNextSteps: React.FC<{
+	description: string;
+	title: string;
 }> = ({title, description}) => {
 	const urlParams = new URLSearchParams(window.location.search);
 	const orderId = urlParams.get('orderId');
@@ -28,46 +58,16 @@ const LDPNextSteps: React.FC<{
 
 	if (error) {
 		return (
-			<div className="ldp-background">
-				<div className="d-flex justify-content-center w-100">
-					<div className="align-items-center d-flex flex-column justify-content-center col-3 mt-9">
-						<div className="loading-overlay ldp-next-steps">
-							<div className="loading-container">
-								<span className="mt-4">
-									<h1>Something went wrong</h1>
-									<div className="my-5 text-center">
-										<span>
-											We couldn't set up your environment.
-											Please contact support.
-										</span>
-									</div>
-								</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+			<Content
+				description="We couldn't set up your environment. Please contact support."
+				showLoading={false}
+				title="Something went wrong"
+			/>
 		);
 	}
 
 	return (
-		<div className="ldp-background">
-			<div className="d-flex justify-content-center w-100">
-				<div className="align-items-center d-flex flex-column justify-content-center col-3 mt-9">
-					<div className="loading-overlay ldp-next-steps">
-						<div className="loading-container">
-							<Loading className="mb-6" />
-							<span className="mt-4">
-								<h1>{title}</h1>
-								<div className="my-5 text-center">
-									<span>{description}</span>
-								</div>
-							</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		<Content description={description} showLoading={true} title={title} />
 	);
 };
 

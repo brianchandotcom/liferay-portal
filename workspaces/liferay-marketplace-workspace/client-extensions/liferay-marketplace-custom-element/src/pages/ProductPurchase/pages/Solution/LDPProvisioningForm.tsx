@@ -107,7 +107,7 @@ const emptyStateMessages = {
 	},
 };
 
-const CDPProvisioning = () => {
+const LDPProvisioning = () => {
 	const [incidentReportContactsText, setIncidentReportContactsText] =
 		useState('');
 
@@ -127,7 +127,7 @@ const CDPProvisioning = () => {
 	const accountKey = selectedAccount.externalReferenceCode;
 
 	const {formState, handleSubmit, register, setValue, watch} = useForm<
-		z.infer<typeof zodSchema.cdpProvisioning>
+		z.infer<typeof zodSchema.ldpProvisioning>
 	>({
 		defaultValues: {
 			_refAllowedEmailDomains: [],
@@ -139,13 +139,13 @@ const CDPProvisioning = () => {
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
 		},
 		mode: 'all',
-		resolver: zodResolver(zodSchema.cdpProvisioning),
+		resolver: zodResolver(zodSchema.ldpProvisioning),
 	});
 
 	const _refIncidentReportContacts = watch('_refIncidentReportContacts');
 
 	const onSubmit = async (
-		form: z.infer<typeof zodSchema.cdpProvisioning>
+		form: z.infer<typeof zodSchema.ldpProvisioning>
 	) => {
 		setForm(form);
 		productPurchaseCart.addCart(Number(product.id), product.skus[0].id);
@@ -295,4 +295,4 @@ const CDPProvisioning = () => {
 	);
 };
 
-export default CDPProvisioning;
+export default LDPProvisioning;

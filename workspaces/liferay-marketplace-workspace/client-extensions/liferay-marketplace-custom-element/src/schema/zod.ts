@@ -198,31 +198,7 @@ const zodSchema = {
 			.min(3, {message: 'Request Description is required'}),
 	}),
 	billingAddress,
-	cdpProvisioning: z.object({
-		_refAllowedEmailDomains: z.array(z.any()),
-		_refIncidentReportContacts: z.array(z.any()),
-		acceptTerms: z.boolean().refine((value) => value, {
-			message: 'You must agree with the terms',
-		}),
-		allowedEmailDomains: z
-			.array(z.string())
-			.optional()
-			.default([])
-			.refine(
-				(values) =>
-					values.length
-						? values.every((value) => domainRegex.test(value))
-						: true,
-				'One of the chosen domains is invalid.'
-			),
-		dataCenterLocation: z.string(),
-		friendlyWorkspaceURL: z.string().optional(),
-		incidentReportContacts: z.array(z.string().email()).min(1),
-		productKey: z.string().optional(),
-		productPurchaseKey: z.string().optional(),
-		workspaceName: z.string().min(3),
-		workspaceOwnerEmail: z.string().email(),
-	}),
+
 	contactSales: z.object({
 		accountName: z
 			.string()
@@ -279,6 +255,31 @@ const zodSchema = {
 		firstName: z.string().min(3, 'Please enter member name'),
 		lastName: z.string().min(3, 'Last name is required'),
 		roles: z.string().array().min(5, 'Please select at least one role'),
+	}),
+	ldpProvisioning: z.object({
+		_refAllowedEmailDomains: z.array(z.any()),
+		_refIncidentReportContacts: z.array(z.any()),
+		acceptTerms: z.boolean().refine((value) => value, {
+			message: 'You must agree with the terms',
+		}),
+		allowedEmailDomains: z
+			.array(z.string())
+			.optional()
+			.default([])
+			.refine(
+				(values) =>
+					values.length
+						? values.every((value) => domainRegex.test(value))
+						: true,
+				'One of the chosen domains is invalid.'
+			),
+		dataCenterLocation: z.string(),
+		friendlyWorkspaceURL: z.string().optional(),
+		incidentReportContacts: z.array(z.string().email()).min(1),
+		productKey: z.string().optional(),
+		productPurchaseKey: z.string().optional(),
+		workspaceName: z.string().min(3),
+		workspaceOwnerEmail: z.string().email(),
 	}),
 	solutionPublishing: {
 		company: z

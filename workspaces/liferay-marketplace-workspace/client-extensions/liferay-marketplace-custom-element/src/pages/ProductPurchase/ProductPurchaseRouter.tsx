@@ -32,7 +32,7 @@ import OrderSummary from './pages/LiferayService/OrderSummary';
 import ProjectSelection from './pages/LiferayService/Project';
 import NextSteps from './pages/NextSteps';
 import SolutionProvisioningForm from './pages/Solution';
-import CDPProvisioning from './pages/Solution/CDPProvisioningForm';
+import LDPProvisioning from './pages/Solution/LDPProvisioningForm';
 
 export const productTypeRoutes = {
 	[ProductTypeVocabulary.APP]: {
@@ -94,7 +94,7 @@ export const productTypeRoutes = {
 			},
 
 			{
-				element: CDPProvisioning,
+				element: LDPProvisioning,
 				path: 'provisioning',
 				title: i18n.translate('provisioning'),
 			},

@@ -52,10 +52,8 @@ const Pages = React.forwardRef(
 
 		return (
 			<div
-				aria-labelledby={`${portletNamespace}header`}
 				className={classNames({sheet: view === 'fieldSets'})}
 				ref={containerElementRef}
-				role="group"
 			>
 				<input
 					key={portletNamespace + 'activePage'}

@@ -194,9 +194,13 @@ public class GroupFragmentEntryLinkDisplayContext {
 		DSLQuery dslQuery = DSLQueryFactoryUtil.select(
 			FragmentEntryLinkTable.INSTANCE.groupId,
 			DSLFunctionFactoryUtil.countDistinct(
-				FragmentEntryLinkTable.INSTANCE.fragmentEntryLinkId
+				DSLFunctionFactoryUtil.concat(
+					DSLFunctionFactoryUtil.castText(
+						FragmentEntryLinkTable.INSTANCE.classNameId),
+					DSLFunctionFactoryUtil.castText(
+						FragmentEntryLinkTable.INSTANCE.classPK))
 			).as(
-				"fragmentEntryLinkIdCount"
+				"allUsageCount"
 			)
 		).from(
 			FragmentEntryLinkTable.INSTANCE

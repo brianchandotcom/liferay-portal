@@ -12,13 +12,12 @@ spec:
             selfSignedCertificate:
                 disabled: true
     nodeSets:
-        -   count: {{ $search.nodeCount | default 3 }}
+        -   count: {{ $search.nodeCount }}
             name: default
             podTemplate:
                 spec:
                     containers:
-                        -   #
-                            env:
+                        -   env:
                             {{- if or $search.env $search.customEnv }}
                                 {{- with $search.env }}
                                 {{- toYaml . | nindent 32 }}
@@ -46,7 +45,7 @@ spec:
                         -   command:
                                 -   sh
                                 -   -c
-                                -   sysctl -w vm.max_map_count={{ $search.maxMapCount | default 262144 }}
+                                -   sysctl -w vm.max_map_count={{ $search.maxMapCount }}
                             name: configure-memory-map
                             securityContext:
                                 privileged: true
@@ -68,8 +67,8 @@ spec:
                             -   ReadWriteOnce
                         resources:
                             requests:
-                                storage: {{ $search.volumeSize | default "10Gi" }}
-    version: {{ $search.version | default "8.12.0" }}
+                                storage: {{ $search.volumeSize }}
+    version: {{ $search.version }}
 ---
 apiVersion: v1
 kind: Secret

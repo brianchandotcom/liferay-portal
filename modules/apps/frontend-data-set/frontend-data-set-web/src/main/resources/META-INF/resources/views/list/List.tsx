@@ -98,7 +98,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			path: selectedItemsKey,
 		});
 
-		const accessibleName = title || description || '';
+		const accessibleName = selectedItemsKey || title || description || '';
 
 		return (
 			<ClayList.Item

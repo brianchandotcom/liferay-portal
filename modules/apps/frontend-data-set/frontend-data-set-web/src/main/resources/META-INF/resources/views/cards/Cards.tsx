@@ -180,7 +180,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			return processedActions;
 		};
 
-		const accessibleName = title || description || '';
+		const accessibleName = selectedItemsKey || title || description || '';
 
 		const props = {
 			actions: formattedActions && getDropdownActions(formattedActions),

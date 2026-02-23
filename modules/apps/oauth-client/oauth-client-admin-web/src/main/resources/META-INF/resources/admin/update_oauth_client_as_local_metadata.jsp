@@ -12,13 +12,13 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String authorizationEndpoint = (String)request.getAttribute("authorizationEndpoint");
-String jwksURI = (String)request.getAttribute("jwksURI");
-String supportedGrantTypes = (String)request.getAttribute("supportedGrantTypes");
-String supportedScopes = (String)request.getAttribute("supportedScopes");
-String supportedSubjectTypes = (String)request.getAttribute("supportedSubjectTypes");
-String tokenEndpoint = (String)request.getAttribute("tokenEndpoint");
-String userInfoEndpoint = (String)request.getAttribute("userInfoEndpoint");
+String authorizationEndpoint = (String)request.getAttribute(OAuthClientWebKeys.AUTHORIZATION_ENDPOINT);
+String jwksURI = (String)request.getAttribute(OAuthClientWebKeys.JWKS_URI);
+String supportedGrantTypes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_GRANT_TYPES);
+String supportedScopes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_SCOPES);
+String supportedSubjectTypes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES);
+String tokenEndpoint = (String)request.getAttribute(OAuthClientWebKeys.TOKEN_ENDPOINT);
+String userInfoEndpoint = (String)request.getAttribute(OAuthClientWebKeys.USER_INFO_ENDPOINT);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

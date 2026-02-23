@@ -7,8 +7,7 @@ package com.liferay.account.internal.search.spi.model.index.contributor;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,24 +17,18 @@ public class AccountGroupModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AccountGroup> {
 
 	public AccountGroupModelIndexerWriterContributor(
-		AccountGroupLocalService accountGroupLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		AccountGroupLocalService accountGroupLocalService) {
 
 		_accountGroupLocalService = accountGroupLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_accountGroupLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _accountGroupLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	private final AccountGroupLocalService _accountGroupLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

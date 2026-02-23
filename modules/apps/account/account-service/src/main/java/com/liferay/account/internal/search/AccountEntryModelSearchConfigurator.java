@@ -9,7 +9,6 @@ import com.liferay.account.internal.search.spi.model.index.contributor.AccountEn
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,16 +52,11 @@ public class AccountEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new AccountEntryModelIndexerWriterContributor(
-				_accountEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_accountEntryLocalService);
 	}
 
 	@Reference
 	private AccountEntryLocalService _accountEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<AccountEntry>
 		_modelIndexWriterContributor;

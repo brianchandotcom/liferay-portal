@@ -10,7 +10,6 @@ import com.liferay.account.internal.search.spi.model.result.contributor.AccountG
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -60,16 +59,11 @@ public class AccountGroupModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new AccountGroupModelIndexerWriterContributor(
-				_accountGroupLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_accountGroupLocalService);
 	}
 
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<AccountGroup>
 		_modelIndexWriterContributor;

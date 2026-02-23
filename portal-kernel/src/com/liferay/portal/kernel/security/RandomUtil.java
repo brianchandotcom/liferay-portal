@@ -15,9 +15,9 @@ import java.util.function.Supplier;
 public class RandomUtil {
 
 	public static int nextInt(int n) {
-		Supplier<Random> supplier = _supplier.get();
+		Random random = _supplier.get();
 
-		return supplier.nextInt(n);
+		return random.nextInt(n);
 	}
 
 	public static int[] nextInts(int n, int size) {

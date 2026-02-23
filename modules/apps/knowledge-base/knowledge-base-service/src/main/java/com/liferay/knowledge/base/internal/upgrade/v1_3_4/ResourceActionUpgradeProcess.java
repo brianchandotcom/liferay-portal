@@ -34,13 +34,14 @@ public class ResourceActionUpgradeProcess extends UpgradeProcess {
 
 	private boolean _hasViewFeedbackResourceAction() throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from ResourceAction where actionId = ?")) {
+				"select count(*) count as from ResourceAction where actionId " +
+					"= ?")) {
 
 			preparedStatement.setString(1, _ACTION_ID_VIEW_KB_FEEDBACK);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					if (resultSet.getInt(1) > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 

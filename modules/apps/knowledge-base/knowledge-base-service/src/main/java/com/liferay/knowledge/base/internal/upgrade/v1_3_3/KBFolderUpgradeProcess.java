@@ -44,19 +44,13 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from KBFolder where KBFolder.urlTitle like " +
-					"?")) {
+				"select count(*) as count from KBFolder where KBFolder." +
+					"urlTitle like ?")) {
 
 			preparedStatement.setString(1, urlTitle + "%");
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (!resultSet.next()) {
-					return urlTitle;
-				}
-
-				int kbFolderCount = resultSet.getInt(1);
-
-				if (kbFolderCount == 0) {
+				if (!resultSet.next() || (resultSet.getInt("count") == 0)) {
 					return urlTitle;
 				}
 
@@ -69,17 +63,17 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select kbFolderId, name from KBFolder where " +
-					"(KBFolder.urlTitle is null) or (KBFolder.urlTitle = '')");
+				"select kbFolderId, name from KBFolder where (KBFolder." +
+					"urlTitle is null) or (KBFolder.urlTitle = '')");
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			Map<Long, String> urlTitles = new HashMap<>();
 
 			while (resultSet.next()) {
-				long kbFolderId = resultSet.getLong(1);
-				String name = resultSet.getString(2);
+				long kbFolderId = resultSet.getLong("kbFolderId");
 
-				String urlTitle = _getUrlTitle(kbFolderId, name);
+				String urlTitle = _getUrlTitle(
+					kbFolderId, resultSet.getString("name"));
 
 				urlTitles.put(kbFolderId, urlTitle);
 			}
@@ -118,8 +112,8 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"update KBFolder set KBFolder.urlTitle = ? where " +
-					"KBFolder.kbFolderId = ?")) {
+				"update KBFolder set KBFolder.urlTitle = ? where KBFolder." +
+					"kbFolderId = ?")) {
 
 			preparedStatement.setString(1, urlTitle);
 			preparedStatement.setLong(2, kbFolderId);

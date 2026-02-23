@@ -317,6 +317,112 @@ public class PageElementsTestUtil {
 			scopeGroupId);
 	}
 
+	public static PageElement[] getDisplayPageTemplatePageElements(
+			String fragmentKey, JournalArticle journalArticle,
+			long scopeGroupId)
+		throws Exception {
+
+		List<PageElement> pageElements = new ArrayList<>();
+
+		Company company = CompanyLocalServiceUtil.getCompany(
+			TestPropsValues.getCompanyId());
+
+		ServiceContext companyGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(company.getGroupId());
+
+		ServiceContext scopeGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(scopeGroupId);
+
+		int position = 0;
+
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry1",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry1",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry2",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getBasicFragmentPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry2",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry3",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry3",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry4",
+						companyGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getCollectionDisplayPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry4",
+						scopeGroupServiceContext)),
+				fragmentKey, journalArticle, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry5",
+						companyGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry5",
+						scopeGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry6",
+						companyGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry6",
+						scopeGroupServiceContext)),
+				fragmentKey, position, scopeGroupId));
+
+		return pageElements.toArray(new PageElement[0]);
+	}
+
 	public static PageElement getDropZonePageElement(
 			String externalReferenceCode, long groupId)
 		throws PortalException {
@@ -533,112 +639,6 @@ public class PageElementsTestUtil {
 				getPageElementDefinition(
 					PageElementDefinition.Type.WIDGET, scopeGroupId),
 				StringPool.BLANK, position));
-
-		return pageElements.toArray(new PageElement[0]);
-	}
-
-	public static PageElement[] getDisplayPageTemplatePageElements(
-		String fragmentKey, JournalArticle journalArticle,
-		long scopeGroupId)
-		throws Exception {
-
-		List<PageElement> pageElements = new ArrayList<>();
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		ServiceContext companyGroupServiceContext =
-			ServiceContextTestUtil.getServiceContext(company.getGroupId());
-
-		ServiceContext scopeGroupServiceContext =
-			ServiceContextTestUtil.getServiceContext(scopeGroupId);
-
-		int position = 0;
-
-		pageElements.add(
-			_getBasicFragmentPageElement(
-				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry1",
-						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getBasicFragmentPageElement(
-				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry1",
-						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getBasicFragmentPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry2",
-						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getBasicFragmentPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry2",
-						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getCollectionDisplayPageElement(
-				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry3",
-						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getCollectionDisplayPageElement(
-				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry3",
-						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getCollectionDisplayPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry4",
-						companyGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getCollectionDisplayPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry4",
-						scopeGroupServiceContext)),
-				fragmentKey, journalArticle, position++, scopeGroupId));
-		pageElements.add(
-			_getDisplayPageItemPageElement(
-				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry5",
-						companyGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
-			_getDisplayPageItemPageElement(
-				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry5",
-						scopeGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
-			_getDisplayPageItemPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "companyGroupTemplateEntry6",
-						companyGroupServiceContext)),
-				fragmentKey, position++, scopeGroupId));
-		pageElements.add(
-			_getDisplayPageItemPageElement(
-				_getTemplateEntryUniqueIdFieldKey(
-					_getTemplateEntry(
-						journalArticle, "scopeGroupTemplateEntry6",
-						scopeGroupServiceContext)),
-				fragmentKey, position, scopeGroupId));
 
 		return pageElements.toArray(new PageElement[0]);
 	}

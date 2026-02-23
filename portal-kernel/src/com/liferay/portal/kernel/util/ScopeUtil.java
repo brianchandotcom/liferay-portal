@@ -8,6 +8,8 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 
 /**
  * @author Georgel Pop
@@ -63,6 +65,31 @@ public class ScopeUtil {
 		}
 
 		return itemScopeExternalReferenceCode;
+	}
+
+	public static long getScopeGroupId(long scopeGroupId) {
+		if (scopeGroupId > 0) {
+			return scopeGroupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if ((serviceContext != null) &&
+			(serviceContext.getScopeGroupId() > 0)) {
+
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
 	}
 
 }

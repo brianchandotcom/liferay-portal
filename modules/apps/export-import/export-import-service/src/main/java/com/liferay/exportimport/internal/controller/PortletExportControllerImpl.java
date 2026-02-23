@@ -535,9 +535,9 @@ public class PortletExportControllerImpl implements PortletExportController {
 				parentElement.addElement("portlet"));
 
 		portletElementHandler.setDisplayName(portlet.getDisplayName());
-		portletElementHandler.setSourcePortletId(portlet.getPortletId());
 		portletElementHandler.setLayoutId(layoutId);
 		portletElementHandler.setPath(path);
+		portletElementHandler.setSourcePortletId(portlet.getPortletId());
 
 		StringBundler configurationOptionsSB = new StringBundler(6);
 
@@ -564,6 +564,8 @@ public class PortletExportControllerImpl implements PortletExportController {
 			configurationOptionsSB.toString());
 		portletElementHandler.setPortletData(
 			exportPortletData || portletDataHandler.isHidden());
+		portletElementHandler.setSchemaVersion(
+			portletDataHandler.getSchemaVersion());
 
 		if ((portletDataHandler instanceof
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler) &&
@@ -575,9 +577,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletElementHandler.setRank(
 				batchEnginePortletDataHandler.getRank());
 		}
-
-		portletElementHandler.setSchemaVersion(
-			portletDataHandler.getSchemaVersion());
 
 		if (portletDataContext.isValidateExistingDataHandler()) {
 			portletElementHandler.setValidateExistingDataHandler(true);

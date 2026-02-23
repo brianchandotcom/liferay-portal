@@ -8,7 +8,6 @@ package com.liferay.commerce.internal.search;
 import com.liferay.commerce.internal.search.spi.model.index.contributor.CommerceShipmentModelIndexerWriterContributor;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -44,16 +43,11 @@ public class CommerceShipmentModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CommerceShipmentModelIndexerWriterContributor(
-				_commerceShipmentLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_commerceShipmentLocalService);
 	}
 
 	@Reference
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CommerceShipment>
 		_modelIndexWriterContributor;

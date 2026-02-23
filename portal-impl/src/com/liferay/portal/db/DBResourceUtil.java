@@ -11,7 +11,6 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,7 +28,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,8 +54,8 @@ public class DBResourceUtil {
 		Set<String> liferayTableNames = new TreeSet<>(
 			String.CASE_INSENSITIVE_ORDER);
 
-		liferayTableNames.addAll(getModuleTableNames(connection));
-		liferayTableNames.addAll(getPortalTableNames(connection));
+		liferayTableNames.addAll(getModuleTableNames());
+		liferayTableNames.addAll(getPortalTableNames());
 		liferayTableNames.addAll(
 			getServiceComponentModuleTableNames(connection));
 		liferayTableNames.addAll(
@@ -74,12 +72,8 @@ public class DBResourceUtil {
 		return _read(bundle, "/META-INF/sql/sequences.sql");
 	}
 
-	public static Set<String> getModuleTableNames(Connection connection)
-		throws Exception {
-
-		Set<String> tableNames = new HashSet<>();
-
-		DBInspector dbInspector = new DBInspector(connection);
+	public static Set<String> getModuleTableNames() {
+		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
 
@@ -98,7 +92,7 @@ public class DBResourceUtil {
 				continue;
 			}
 
-			tableNames.addAll(parseCreateTableSQL(dbInspector, tableSQL));
+			tableNames.addAll(parseCreateTableSQL(tableSQL));
 		}
 
 		return tableNames;
@@ -160,17 +154,12 @@ public class DBResourceUtil {
 			"/com/liferay/portal/tools/sql/dependencies/indexes.sql");
 	}
 
-	public static Set<String> getPortalTableNames(Connection connection)
-		throws Exception {
-
+	public static Set<String> getPortalTableNames() {
 		if (_portalTableNames != null) {
 			return _portalTableNames;
 		}
 
-		DBInspector dbInspector = new DBInspector(connection);
-
-		_portalTableNames = parseCreateTableSQL(
-			dbInspector, getPortalTablesSQL());
+		_portalTableNames = parseCreateTableSQL(getPortalTablesSQL());
 
 		return _portalTableNames;
 	}
@@ -221,16 +210,13 @@ public class DBResourceUtil {
 				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME + "'");
 	}
 
-	public static Set<String> parseCreateTableSQL(
-			DBInspector dbInspector, String createTableSQL)
-		throws SQLException {
-
-		Set<String> tableNames = new HashSet<>();
+	public static Set<String> parseCreateTableSQL(String createTableSQL) {
+		Set<String> tableNames = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 		Matcher matcher = _createTablePattern.matcher(createTableSQL);
 
 		while (matcher.find()) {
-			tableNames.add(dbInspector.normalizeName(matcher.group(1)));
+			tableNames.add(matcher.group(1));
 		}
 
 		return tableNames;
@@ -266,11 +252,8 @@ public class DBResourceUtil {
 				_SQL_SERVICE_COMPONENT + sqlCondition);
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
-			DBInspector dbInspector = new DBInspector(connection);
-
 			while (resultSet.next()) {
-				tableNames.addAll(
-					parseCreateTableSQL(dbInspector, resultSet.getString(1)));
+				tableNames.addAll(parseCreateTableSQL(resultSet.getString(1)));
 			}
 		}
 

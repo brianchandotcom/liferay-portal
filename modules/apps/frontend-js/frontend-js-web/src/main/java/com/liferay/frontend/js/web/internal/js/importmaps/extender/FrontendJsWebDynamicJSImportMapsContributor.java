@@ -9,7 +9,7 @@ import com.liferay.frontend.js.importmaps.extender.DynamicJSImportMapsContributo
 import com.liferay.frontend.js.web.internal.resource.handler.LanguageFrontendResourceRequestHandler;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -48,8 +48,8 @@ public class FrontendJsWebDynamicJSImportMapsContributor
 			LanguageFrontendResourceRequestHandler.LANGUAGE_URI_PREFIX);
 		writer.write(StringPool.QUOTE);
 
-		if (_hashedFilesRegistry.getCachingLevel(httpServletRequest) ==
-				CachingLevel.DO_NOT_USE_HASHES) {
+		if (_hashedFilesRegistry.getCachingStrategy(httpServletRequest) ==
+				CachingStrategy.DO_NOT_USE_HASHES) {
 
 			return;
 		}

@@ -46,6 +46,9 @@
 		"setupFiles": [
 			"<rootDir>/jest.config.js"
 		],
+		"setupFilesAfterEnv": [
+			"<rootDir>/jest-setup.config.js"
+		],
 		"testPathIgnorePatterns": [
 			"<rootDir>/test/mock"
 		],

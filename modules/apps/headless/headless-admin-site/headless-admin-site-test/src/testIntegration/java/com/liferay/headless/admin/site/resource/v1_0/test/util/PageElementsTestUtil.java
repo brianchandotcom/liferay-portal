@@ -337,7 +337,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static PageElementDefinition getPageElementDefinition(
-		Boolean curHidden, PageElementDefinition.Type type, long scopeGroupId) {
+		Boolean hidden, PageElementDefinition.Type type, long scopeGroupId) {
 
 		if (Objects.equals(
 				type, PageElementDefinition.Type.COLLECTION_DISPLAY)) {
@@ -355,28 +355,9 @@ public class PageElementsTestUtil {
 					setCollectionDisplayListStyle(
 						_getCollectionDisplayListStyle());
 					setCollectionDisplayViewports(
-						new CollectionDisplayViewport[] {
-							new CollectionDisplayViewport() {
-								{
-									setCollectionDisplayViewportDefinition(
-										() ->
-											new CollectionDisplayViewportDefinition() {
-												{
-													setHidden(curHidden);
-													setNumberOfColumns(1);
-												}
-											});
-									setId(Id.DESKTOP);
-								}
-							}
-						});
+						() -> _getDesktopCollectionDisplayViewports(hidden));
 					setCollectionSettings(
-						() -> new CollectionSettings() {
-							{
-								setCollectionReference(
-									() -> classNameReference);
-							}
-						});
+						() -> _getCollectionSettings(classNameReference));
 					setDisplayAllItems(Boolean.FALSE);
 					setDisplayAllPages(Boolean.TRUE);
 					setNumberOfItems(5);
@@ -1013,32 +994,15 @@ public class PageElementsTestUtil {
 
 	private static CollectionDisplayPageElementDefinition
 		_getCollectionDisplayPageElementDefinition(
-			CollectionReference curCollectionReference, Boolean curHidden) {
+			CollectionReference collectionReference, Boolean hidden) {
 
 		return new CollectionDisplayPageElementDefinition() {
 			{
 				setCollectionDisplayListStyle(_getCollectionDisplayListStyle());
 				setCollectionDisplayViewports(
-					new CollectionDisplayViewport[] {
-						new CollectionDisplayViewport() {
-							{
-								setCollectionDisplayViewportDefinition(
-									new CollectionDisplayViewportDefinition() {
-										{
-											setHidden(curHidden);
-											setNumberOfColumns(1);
-										}
-									});
-								setId(Id.DESKTOP);
-							}
-						}
-					});
+					() -> _getDesktopCollectionDisplayViewports(hidden));
 				setCollectionSettings(
-					new CollectionSettings() {
-						{
-							setCollectionReference(curCollectionReference);
-						}
-					});
+					() -> _getCollectionSettings(collectionReference));
 				setDisplayAllItems(Boolean.FALSE);
 				setDisplayAllPages(Boolean.TRUE);
 				setNumberOfItems(5);
@@ -1048,6 +1012,39 @@ public class PageElementsTestUtil {
 				setType(Type.COLLECTION_DISPLAY);
 			}
 		};
+	}
+
+	private static CollectionSettings _getCollectionSettings(
+		CollectionReference collectionReference) {
+
+		CollectionSettings collectionSettings = new CollectionSettings();
+
+		collectionSettings.setCollectionReference(collectionReference);
+
+		return collectionSettings;
+	}
+
+	private static CollectionDisplayViewport[]
+		_getDesktopCollectionDisplayViewports(Boolean hidden) {
+
+		CollectionDisplayViewportDefinition
+			collectionDisplayViewportDefinition =
+				new CollectionDisplayViewportDefinition();
+
+		collectionDisplayViewportDefinition.setHidden(hidden);
+		collectionDisplayViewportDefinition.setNumberOfColumns(1);
+
+		CollectionDisplayViewport collectionDisplayViewport =
+			new CollectionDisplayViewport() {
+				{
+					setId(Id.DESKTOP);
+				}
+			};
+
+		collectionDisplayViewport.setCollectionDisplayViewportDefinition(
+			collectionDisplayViewportDefinition);
+
+		return new CollectionDisplayViewport[] {collectionDisplayViewport};
 	}
 
 	private static PageElement _getDisplayPageItemPageElement(

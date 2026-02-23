@@ -1689,8 +1689,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				PortletElementHandler portletElementHandler =
 					_portletElementHandlerFactory.create(element);
 
-				String[] configurationPortletOptions = StringUtil.split(
-					portletElementHandler.getPortletConfiguration());
+				String[] configurationPortletOptions =
+					portletElementHandler.getConfigurationPortletOptions();
 
 				String portletId = portletElementHandler.getSourcePortletId();
 

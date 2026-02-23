@@ -25,7 +25,7 @@ public class HashedFilesRegistryUtil {
 		hashedFilesRegistry.forEach(biConsumer);
 	}
 
-	public static CachingLevel getCachingLevel(
+	public static CachingStrategy getCachingLevel(
 		HttpServletRequest httpServletRequest) {
 
 		HashedFilesRegistry hashedFilesRegistry =

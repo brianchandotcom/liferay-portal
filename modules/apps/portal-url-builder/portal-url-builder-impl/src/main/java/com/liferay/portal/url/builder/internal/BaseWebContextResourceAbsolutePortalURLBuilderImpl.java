@@ -7,7 +7,7 @@ package com.liferay.portal.url.builder.internal;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.url.builder.facet.BuildableAbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.facet.CDNAwareAbsolutePortalURLBuilder;
@@ -40,7 +40,7 @@ public abstract class BaseWebContextResourceAbsolutePortalURLBuilderImpl<T>
 		String prefix = pathModule + webContextPath;
 
 		if (hashedFilesRegistry.getCachingLevel(httpServletRequest) ==
-				CachingLevel.USE_ONE_HASH_PER_FILE) {
+				CachingStrategy.USE_ONE_HASH_PER_FILE) {
 
 			String hashedFileURI = hashedFilesRegistry.getHashedFileURI(
 				prefix + resourcePath);

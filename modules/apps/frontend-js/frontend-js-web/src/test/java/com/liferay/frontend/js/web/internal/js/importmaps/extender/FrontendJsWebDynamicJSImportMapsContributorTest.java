@@ -8,7 +8,7 @@ package com.liferay.frontend.js.web.internal.js.importmaps.extender;
 import com.liferay.frontend.js.web.internal.util.FrontendJsWebUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -72,7 +72,7 @@ public class FrontendJsWebDynamicJSImportMapsContributorTest {
 		Mockito.when(
 			hashedFilesRegistry.getCachingLevel(Mockito.any())
 		).thenReturn(
-			CachingLevel.USE_ONE_HASH_PER_FILE
+			CachingStrategy.USE_ONE_HASH_PER_FILE
 		);
 
 		return hashedFilesRegistry;

@@ -18,7 +18,8 @@ public interface HashedFilesRegistry {
 
 	public void forEach(BiConsumer<String, String> biConsumer);
 
-	public CachingLevel getCachingLevel(HttpServletRequest httpServletRequest);
+	public CachingStrategy getCachingLevel(
+		HttpServletRequest httpServletRequest);
 
 	/**
 	 * Get the URI of the hashed file associated to an unhashed file URI.

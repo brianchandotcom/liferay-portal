@@ -206,7 +206,7 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 		String[] pathArray = StringUtil.split(
 			_getObjectEntryFolderPath(httpServletRequest), StringPool.SLASH);
 
-		long classNameId = _portal.getClassNameId(ObjectEntryFolder.class);
+		long classNameId = portal.getClassNameId(ObjectEntryFolder.class);
 
 		if (classNameId != GetterUtil.getLong(pathArray[0])) {
 			throw new RuntimeException();
@@ -270,11 +270,7 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 			ZipWriter zipWriter)
 		throws IOException, PortalException {
 
-		User user = _portal.getUser(httpServletRequest);
-
-		if (user == null) {
-			throw new RuntimeException();
-		}
+		User user = portal.getUser(httpServletRequest);
 
 		String search = ParamUtil.getString(httpServletRequest, "search");
 
@@ -418,9 +414,6 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference
 	private Searcher _searcher;

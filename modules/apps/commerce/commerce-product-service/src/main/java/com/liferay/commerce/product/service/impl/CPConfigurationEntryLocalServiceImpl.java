@@ -195,6 +195,7 @@ public class CPConfigurationEntryLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CPConfigurationEntry deleteCPConfigurationEntry(
 			CPConfigurationEntry cpConfigurationEntry)
@@ -204,6 +205,7 @@ public class CPConfigurationEntryLocalServiceImpl
 			cpConfigurationEntry, false);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CPConfigurationEntry deleteCPConfigurationEntry(

@@ -1,7 +1,7 @@
 {{- if .Values.enabled -}}
 {{- $elasticsearch := .Values.search.elasticsearch | default dict -}}
-{{- $overlay := .Values.overlay | default dict -}}
 {{- $opensearch := .Values.search.opensearch | default dict -}}
+{{- $overlay := .Values.overlay | default dict -}}
 {{- $storage := .Values.storage | default dict -}}
 apiVersion: aws.liferay.com/v1alpha1
 kind: LiferayInfrastructure

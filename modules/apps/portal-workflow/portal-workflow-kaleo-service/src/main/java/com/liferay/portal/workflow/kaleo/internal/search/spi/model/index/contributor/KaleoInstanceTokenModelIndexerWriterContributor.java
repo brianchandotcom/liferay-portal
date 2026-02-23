@@ -5,13 +5,12 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor;
 
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
@@ -25,23 +24,19 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<KaleoInstanceToken> {
 
 	public KaleoInstanceTokenModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		KaleoInstanceLocalService kaleoInstanceLocalService,
 		KaleoInstanceTokenLocalService kaleoInstanceTokenLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_kaleoInstanceLocalService = kaleoInstanceLocalService;
 		_kaleoInstanceTokenLocalService = kaleoInstanceTokenLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_kaleoInstanceTokenLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _kaleoInstanceTokenLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -62,8 +57,6 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 		}
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final KaleoInstanceLocalService _kaleoInstanceLocalService;
 	private final KaleoInstanceTokenLocalService
 		_kaleoInstanceTokenLocalService;

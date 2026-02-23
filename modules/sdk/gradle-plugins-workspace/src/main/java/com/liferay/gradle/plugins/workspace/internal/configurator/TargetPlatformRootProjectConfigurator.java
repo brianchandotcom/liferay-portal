@@ -65,27 +65,24 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 		String bomArtifactId = null;
 		String bomCompileOnlyArtifactId = null;
+		String bomTestArtifactId = null;
 		String bomThirdPartyArtifactId = null;
 
 		if (VersionUtil.isDXPVersion(targetPlatformVersion)) {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY;
+			bomTestArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM_TEST;
 			bomThirdPartyArtifactId = _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY;
 		}
 		else {
 			bomArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM;
 			bomCompileOnlyArtifactId =
 				_ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY;
+			bomTestArtifactId = _ARTIFACT_ID_RELEASE_PORTAL_BOM_TEST;
 			bomThirdPartyArtifactId =
 				_ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY;
 		}
-
-		GradleUtil.addDependency(
-			project,
-			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
-			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
-			targetPlatformVersion);
 
 		GradleUtil.addDependency(
 			project,
@@ -96,6 +93,17 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 			project,
 			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
 			_GROUP_ID_LIFERAY_PORTAL, bomCompileOnlyArtifactId,
+			targetPlatformVersion);
+
+		GradleUtil.addDependency(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+			_GROUP_ID_LIFERAY_PORTAL, bomTestArtifactId, targetPlatformVersion);
+
+		GradleUtil.addDependency(
+			project,
+			TargetPlatformPlugin.TARGET_PLATFORM_BOMS_CONFIGURATION_NAME,
+			_GROUP_ID_LIFERAY_PORTAL, bomThirdPartyArtifactId,
 			targetPlatformVersion);
 	}
 
@@ -137,18 +145,6 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 				@Override
 				public boolean isSatisfiedBy(Project project) {
-					String projectName = project.getName();
-
-					return !projectName.endsWith("-test");
-				}
-
-			});
-
-		targetPlatformExtension.resolveOnlyIf(
-			new Spec<Project>() {
-
-				@Override
-				public boolean isSatisfiedBy(Project project) {
 					PluginContainer pluginContainer = project.getPlugins();
 
 					return pluginContainer.hasPlugin(LiferayOSGiPlugin.class);
@@ -163,6 +159,9 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_COMPILE_ONLY =
 		"release.dxp.bom.compile.only";
 
+	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_TEST =
+		"release.dxp.bom.test";
+
 	private static final String _ARTIFACT_ID_RELEASE_DXP_BOM_THIRD_PARTY =
 		"release.dxp.bom.third.party";
 
@@ -174,6 +173,9 @@ public class TargetPlatformRootProjectConfigurator implements Plugin<Project> {
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_COMPILE_ONLY =
 		"release.portal.bom.compile.only";
+
+	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_TEST =
+		"release.portal.bom.test";
 
 	private static final String _ARTIFACT_ID_RELEASE_PORTAL_BOM_THIRD_PARTY =
 		"release.portal.bom.third.party";

@@ -5,11 +5,11 @@
 
 import React, {useMemo} from 'react';
 
-import slaStatusConstants from './SLAStatusConstants.es';
 import Filter from '../../shared/components/filter/Filter.es';
 import {useFilterName} from '../../shared/components/filter/hooks/useFilterName.es';
 import {useFilterStatic} from '../../shared/components/filter/hooks/useFilterStatic.es';
 import filterConstants from '../../shared/components/filter/util/filterConstants.es';
+import slaStatusConstants from './SLAStatusConstants.es';
 
 const slaStatuses = [
 	{

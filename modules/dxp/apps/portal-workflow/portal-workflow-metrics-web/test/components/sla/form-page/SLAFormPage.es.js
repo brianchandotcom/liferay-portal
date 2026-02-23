@@ -141,7 +141,10 @@ describe('The SLAFormPage component should', () => {
 			});
 
 			renderResult = render(
-				<MockRouter initialPath="/sla/5678/new" path="/sla/:processId/new">
+				<MockRouter
+					initialPath="/sla/5678/new"
+					path="/sla/:processId/new"
+				>
 					<ToasterProvider>
 						<SLAContext.Provider value={{}}>
 							<SLAFormPage />
@@ -390,7 +393,10 @@ describe('The SLAFormPage component should', () => {
 			});
 
 			renderResult = render(
-				<MockRouter initialPath="/sla/5678/edit/1234" path="/sla/:processId/edit/:id">
+				<MockRouter
+					initialPath="/sla/5678/edit/1234"
+					path="/sla/:processId/edit/:id"
+				>
 					<ToasterProvider>
 						<SLAContext.Provider value={contextMock}>
 							<SLAFormPage />
@@ -523,7 +529,10 @@ describe('The SLAFormPage component should', () => {
 			});
 
 			renderResult = render(
-				<MockRouter initialPath="/sla/35901/edit/37741" path="/sla/:processId/edit/:id">
+				<MockRouter
+					initialPath="/sla/35901/edit/37741"
+					path="/sla/:processId/edit/:id"
+				>
 					<ToasterProvider>
 						<SLAContext.Provider value={{}}>
 							<SLAFormPage />

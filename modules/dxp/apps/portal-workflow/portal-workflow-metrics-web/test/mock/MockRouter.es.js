@@ -51,7 +51,7 @@ const MockRouter = ({
 	);
 
 	const content = useMemo(() => {
-		if (!children) return null;
+		if (!children) {return null;}
 
 		if (isValidElement(children)) {
 			return children;
@@ -59,6 +59,7 @@ const MockRouter = ({
 
 		if (typeof children === 'function') {
 			const Component = children;
+
 			return <Component />;
 		}
 
@@ -70,7 +71,7 @@ const MockRouter = ({
 			<FilterContextProvider>
 				<MemoryRouter initialEntries={initialEntries}>
 					<Routes>
-						<Route path={path} element={content} />
+						<Route element={content} path={path} />
 					</Routes>
 				</MemoryRouter>
 			</FilterContextProvider>

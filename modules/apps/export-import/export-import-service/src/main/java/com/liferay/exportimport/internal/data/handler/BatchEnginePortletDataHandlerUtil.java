@@ -302,7 +302,7 @@ public class BatchEnginePortletDataHandlerUtil {
 			portletDataContext.getParameterMap(), "changesetCollectionId");
 
 		if (changesetCollectionId == 0) {
-			return null;
+			return "dateModified ge " + _format.format(new Date());
 		}
 
 		Set<String> externalReferenceCodes = new HashSet<>();

@@ -51,70 +51,70 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 			long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 				renderRequest, "oAuthClientASLocalMetadataId");
 
-			if (oAuthClientASLocalMetadataId > 0) {
-				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-					_oAuthClientASLocalMetadataService.
-						fetchOAuthClientASLocalMetadata(
-							oAuthClientASLocalMetadataId);
+			if (!(oAuthClientASLocalMetadataId > 0)) {
+				return _getRenderJSP();
+			}
 
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				_oAuthClientASLocalMetadataService.
+					fetchOAuthClientASLocalMetadata(
+						oAuthClientASLocalMetadataId);
+
+			renderRequest.setAttribute(
+				OAuthClientASLocalMetadata.class.getName(),
+				oAuthClientASLocalMetadata);
+
+			OIDCProviderMetadata oidcProviderMetadata =
+				OIDCProviderMetadata.parse(
+					oAuthClientASLocalMetadata.getMetadataJSON());
+
+			URI authorizationEndpointURI =
+				oidcProviderMetadata.getAuthorizationEndpointURI();
+
+			if (authorizationEndpointURI != null) {
 				renderRequest.setAttribute(
-					OAuthClientASLocalMetadata.class.getName(),
-					oAuthClientASLocalMetadata);
+					"authorizationEndpoint",
+					authorizationEndpointURI.toString());
+			}
 
-				OIDCProviderMetadata oidcProviderMetadata =
-					OIDCProviderMetadata.parse(
-						oAuthClientASLocalMetadata.getMetadataJSON());
+			if (oidcProviderMetadata.getGrantTypes() != null) {
+				renderRequest.setAttribute(
+					"supportedGrantTypes",
+					StringUtil.merge(oidcProviderMetadata.getGrantTypes()));
+			}
 
-				URI authorizationEndpointURI =
-					oidcProviderMetadata.getAuthorizationEndpointURI();
+			URI jwksURI = oidcProviderMetadata.getJWKSetURI();
 
-				if (authorizationEndpointURI != null) {
-					renderRequest.setAttribute(
-						"authorizationEndpoint",
-						authorizationEndpointURI.toString());
-				}
+			if (jwksURI != null) {
+				renderRequest.setAttribute("jwksURI", jwksURI.toString());
+			}
 
-				if (oidcProviderMetadata.getGrantTypes() != null) {
-					renderRequest.setAttribute(
-						"supportedGrantTypes",
-						StringUtil.merge(oidcProviderMetadata.getGrantTypes()));
-				}
+			Scope supportedScopes = oidcProviderMetadata.getScopes();
 
-				URI jwksURI = oidcProviderMetadata.getJWKSetURI();
+			if (supportedScopes != null) {
+				renderRequest.setAttribute(
+					"supportedScopes", supportedScopes.toString());
+			}
 
-				if (jwksURI != null) {
-					renderRequest.setAttribute("jwksURI", jwksURI.toString());
-				}
+			if (oidcProviderMetadata.getSubjectTypes() != null) {
+				renderRequest.setAttribute(
+					"supportedSubjectTypes",
+					StringUtil.merge(oidcProviderMetadata.getSubjectTypes()));
+			}
 
-				Scope supportedScopes = oidcProviderMetadata.getScopes();
+			URI tokenEndpointURI = oidcProviderMetadata.getTokenEndpointURI();
 
-				if (supportedScopes != null) {
-					renderRequest.setAttribute(
-						"supportedScopes", supportedScopes.toString());
-				}
+			if (tokenEndpointURI != null) {
+				renderRequest.setAttribute(
+					"tokenEndpoint", tokenEndpointURI.toString());
+			}
 
-				if (oidcProviderMetadata.getSubjectTypes() != null) {
-					renderRequest.setAttribute(
-						"supportedSubjectTypes",
-						StringUtil.merge(
-							oidcProviderMetadata.getSubjectTypes()));
-				}
+			URI userInfoEndpointURI =
+				oidcProviderMetadata.getUserInfoEndpointURI();
 
-				URI tokenEndpointURI =
-					oidcProviderMetadata.getTokenEndpointURI();
-
-				if (tokenEndpointURI != null) {
-					renderRequest.setAttribute(
-						"tokenEndpoint", tokenEndpointURI.toString());
-				}
-
-				URI userInfoEndpointURI =
-					oidcProviderMetadata.getUserInfoEndpointURI();
-
-				if (userInfoEndpointURI != null) {
-					renderRequest.setAttribute(
-						"userInfoEndpoint", userInfoEndpointURI.toString());
-				}
+			if (userInfoEndpointURI != null) {
+				renderRequest.setAttribute(
+					"userInfoEndpoint", userInfoEndpointURI.toString());
 			}
 		}
 		catch (PortalException portalException) {
@@ -126,6 +126,10 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 			throw new RuntimeException(parseException);
 		}
 
+		return _getRenderJSP();
+	}
+
+	private String _getRenderJSP() {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
 

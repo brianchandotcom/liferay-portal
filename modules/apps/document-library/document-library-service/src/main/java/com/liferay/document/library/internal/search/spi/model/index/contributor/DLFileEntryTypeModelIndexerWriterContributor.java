@@ -7,8 +7,7 @@ package com.liferay.document.library.internal.search.spi.model.index.contributor
 
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,21 +18,17 @@ public class DLFileEntryTypeModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFileEntryType> {
 
 	public DLFileEntryTypeModelIndexerWriterContributor(
-		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DLFileEntryTypeLocalService dlFileEntryTypeLocalService) {
 
 		_dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_dlFileEntryTypeLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _dlFileEntryTypeLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -44,7 +39,5 @@ public class DLFileEntryTypeModelIndexerWriterContributor
 	}
 
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

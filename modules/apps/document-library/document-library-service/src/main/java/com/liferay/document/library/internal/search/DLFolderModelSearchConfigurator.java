@@ -10,7 +10,6 @@ import com.liferay.document.library.internal.search.spi.model.result.contributor
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -54,17 +53,11 @@ public class DLFolderModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new DLFolderModelIndexerWriterContributor(
-				_dlFolderLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+			new DLFolderModelIndexerWriterContributor(_dlFolderLocalService);
 	}
 
 	@Reference
 	private DLFolderLocalService _dlFolderLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DLFolder>
 		_modelIndexWriterContributor;

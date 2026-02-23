@@ -9,7 +9,6 @@ import com.liferay.document.library.internal.search.spi.model.index.contributor.
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -49,16 +48,11 @@ public class DLFileEntryTypeModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new DLFileEntryTypeModelIndexerWriterContributor(
-				_dlFileEntryTypeLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_dlFileEntryTypeLocalService);
 	}
 
 	@Reference
 	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DLFileEntryType>
 		_modelIndexWriterContributor;

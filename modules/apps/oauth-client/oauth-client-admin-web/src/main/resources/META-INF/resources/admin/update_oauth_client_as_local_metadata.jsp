@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
+
 String redirect = ParamUtil.getString(request, "redirect");
 
 String authorizationEndpoint = (String)request.getAttribute("authorizationEndpoint");
@@ -20,8 +22,6 @@ String userInfoEndpoint = (String)request.getAttribute("userInfoEndpoint");
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
-
-OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetadata)request.getAttribute(OAuthClientASLocalMetadata.class.getName());
 
 renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(request, "new-oauth-client-as-local-metadata") : LanguageUtil.get(request, "edit-oauth-client-as-local-metadata"));
 %>

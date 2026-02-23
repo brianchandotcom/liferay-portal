@@ -20,5 +20,9 @@ search:
         nodeCount: 3
         version: 8.12.0
         volumeSize: 10Gi
-storage:
-    region: us-west-2
+    opensearch:
+        engineVersino: OpenSearch_2.15
+        instanceCount: 2
+        instanceType: t3.small.search
+        region: us-west-2
+        username: liferay_search_admin

@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.IllegalCharactersContentDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,8 +36,8 @@ import org.junit.runner.RunWith;
  * @author Luis Ortiz
  */
 @RunWith(Arquillian.class)
-public class NullUnicodeContentDataCleanupPreupgradeProcessTest
-	extends NullUnicodeContentDataCleanupPreupgradeProcess {
+public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
+	extends IllegalCharactersContentDataCleanupPreupgradeProcess {
 
 	@ClassRule
 	@Rule
@@ -102,7 +102,8 @@ public class NullUnicodeContentDataCleanupPreupgradeProcessTest
 		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				NullUnicodeContentDataCleanupPreupgradeProcess.class.getName(),
+				IllegalCharactersContentDataCleanupPreupgradeProcess.class.
+					getName(),
 				LoggerTestUtil.INFO)) {
 
 			upgrade();

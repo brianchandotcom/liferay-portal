@@ -100,13 +100,13 @@ public class DataCleanupPreupgradeProcessSuite {
 			new DLFileEntryDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess groupDataCleanupPreupgradeProcess =
 			new GroupDataCleanupPreupgradeProcess();
+		DataCleanupPreupgradeProcess
+			illegalCharactersContentDataCleanupPreupgradeProcess =
+				new IllegalCharactersContentDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess journalDataCleanupPreupgradeProcess =
 			new JournalDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess layoutDataCleanupPreupgradeProcess =
 			new LayoutDataCleanupPreupgradeProcess();
-		DataCleanupPreupgradeProcess
-			nullUnicodeContentDataCleanupPreupgradeProcess =
-				new NullUnicodeContentDataCleanupPreupgradeProcess();
 		DataCleanupPreupgradeProcess
 			portalPreferencesDataCleanupPreupgradeProcess =
 				new PortalPreferencesDataCleanupPreupgradeProcess();
@@ -170,7 +170,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					groupDataCleanupPreupgradeProcess,
 					journalDataCleanupPreupgradeProcess,
 					layoutDataCleanupPreupgradeProcess,
-					nullUnicodeContentDataCleanupPreupgradeProcess,
+					illegalCharactersContentDataCleanupPreupgradeProcess,
 					portalPreferencesDataCleanupPreupgradeProcess,
 					portletPreferencesDataCleanupPreupgradeProcess,
 					quartzJobDetailsDataCleanupPreupgradeProcess,
@@ -204,6 +204,11 @@ public class DataCleanupPreupgradeProcessSuite {
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
 			).put(
+				illegalCharactersContentDataCleanupPreupgradeProcess,
+				DataCleanupPreupgradeProcess.dependsOn(
+					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
+					ddmDataCleanupPreupgradeProcess)
+			).put(
 				journalDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
 					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
@@ -214,11 +219,6 @@ public class DataCleanupPreupgradeProcessSuite {
 					companyDataCleanupPreupgradeProcess,
 					groupDataCleanupPreupgradeProcess,
 					userDataCleanupPreupgradeProcess)
-			).put(
-				nullUnicodeContentDataCleanupPreupgradeProcess,
-				DataCleanupPreupgradeProcess.dependsOn(
-					databaseTableAndColumnCaseDataCleanupPreupgradeProcess,
-					ddmDataCleanupPreupgradeProcess)
 			).put(
 				portalPreferencesDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
@@ -247,7 +247,7 @@ public class DataCleanupPreupgradeProcessSuite {
 					groupDataCleanupPreupgradeProcess,
 					journalDataCleanupPreupgradeProcess,
 					layoutDataCleanupPreupgradeProcess,
-					nullUnicodeContentDataCleanupPreupgradeProcess,
+					illegalCharactersContentDataCleanupPreupgradeProcess,
 					portalPreferencesDataCleanupPreupgradeProcess,
 					portletPreferencesDataCleanupPreupgradeProcess,
 					quartzJobDetailsDataCleanupPreupgradeProcess,

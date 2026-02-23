@@ -93,9 +93,9 @@ import com.liferay.portal.upgrade.data.cleanup.DDMStorageLinkDataCleanupPreupgra
 import com.liferay.portal.upgrade.data.cleanup.DLFileEntryDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.DataCleanupPreupgradeProcessSuite;
 import com.liferay.portal.upgrade.data.cleanup.GroupDataCleanupPreupgradeProcess;
+import com.liferay.portal.upgrade.data.cleanup.IllegalCharactersContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.JournalDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.LayoutDataCleanupPreupgradeProcess;
-import com.liferay.portal.upgrade.data.cleanup.NullUnicodeContentDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.PortalPreferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupgradeProcess;
 import com.liferay.portal.upgrade.data.cleanup.RoleDataCleanupPreupgradeProcess;
@@ -584,14 +584,14 @@ public class DataCleanupRegistrator {
 		).put(
 			GroupDataCleanupPreupgradeProcess.class, "remove-group-orphan-data"
 		).put(
+			IllegalCharactersContentDataCleanupPreupgradeProcess.class,
+			"remove-illegal-characters-content-data"
+		).put(
 			JournalDataCleanupPreupgradeProcess.class,
 			"remove-journal-orphan-data"
 		).put(
 			LayoutDataCleanupPreupgradeProcess.class,
 			"remove-layout-orphan-data"
-		).put(
-			NullUnicodeContentDataCleanupPreupgradeProcess.class,
-			"remove-null-unicode-content-data"
 		).put(
 			PortalPreferencesDataCleanupPreupgradeProcess.class,
 			"remove-portal-preferences-orphan-data"

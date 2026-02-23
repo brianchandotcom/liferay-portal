@@ -23,7 +23,7 @@ export class TaxCategoriesPage extends CommerceDNDTablePage {
 			'#_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoriesSearchContainer'
 		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.deleteMenuItem = page.getByRole('link', {
+		this.deleteMenuItem = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
 		this.newButton = page.getByRole('link', {name: 'Add Tax Category'});

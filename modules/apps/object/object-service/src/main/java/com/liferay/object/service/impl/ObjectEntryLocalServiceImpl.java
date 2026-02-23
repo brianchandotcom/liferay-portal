@@ -30,6 +30,7 @@ import com.liferay.dynamic.data.mapping.expression.DDMExpression;
 import com.liferay.dynamic.data.mapping.expression.DDMExpressionFactory;
 import com.liferay.dynamic.data.mapping.util.NumberUtil;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
@@ -2314,11 +2315,25 @@ public class ObjectEntryLocalServiceImpl
 			return objectEntry;
 		}
 
-		if ((status == WorkflowConstants.STATUS_APPROVED) &&
-			(displayDate != null) && date.before(displayDate)) {
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
 
-			status = WorkflowConstants.STATUS_SCHEDULED;
-		}
+		int finalStatus = status;
+
+		status = EmptyModelManagerUtil.solveEmptyModel(
+			objectEntry.getExternalReferenceCode(),
+			objectDefinition.getClassName(), objectEntry.getCompanyId(),
+			objectEntry.getGroupId(), objectEntry.getStatus(),
+			() -> {
+				if ((finalStatus == WorkflowConstants.STATUS_APPROVED) &&
+					(displayDate != null) && date.before(displayDate)) {
+
+					return WorkflowConstants.STATUS_SCHEDULED;
+				}
+
+				return finalStatus;
+			});
 
 		Date expirationDate = objectEntry.getExpirationDate();
 
@@ -2356,10 +2371,6 @@ public class ObjectEntryLocalServiceImpl
 		else {
 			objectEntry = objectEntryPersistence.update(objectEntry);
 		}
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
 
 		if (serviceContext.isStrictAdd()) {
 			boolean indexingEnabled = serviceContext.isIndexingEnabled();

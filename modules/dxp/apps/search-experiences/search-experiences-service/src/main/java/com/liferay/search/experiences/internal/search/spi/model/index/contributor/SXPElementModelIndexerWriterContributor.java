@@ -5,8 +5,7 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -18,24 +17,18 @@ public class SXPElementModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<SXPElement> {
 
 	public SXPElementModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		SXPElementLocalService sxpElementLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_sxpElementLocalService = sxpElementLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_sxpElementLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _sxpElementLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final SXPElementLocalService _sxpElementLocalService;
 
 }

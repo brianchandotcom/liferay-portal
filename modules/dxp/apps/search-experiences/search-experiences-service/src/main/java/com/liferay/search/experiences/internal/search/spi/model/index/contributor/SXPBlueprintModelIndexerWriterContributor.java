@@ -5,8 +5,7 @@
 
 package com.liferay.search.experiences.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
@@ -18,24 +17,18 @@ public class SXPBlueprintModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<SXPBlueprint> {
 
 	public SXPBlueprintModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		SXPBlueprintLocalService sxpBlueprintLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_sxpBlueprintLocalService = sxpBlueprintLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_sxpBlueprintLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _sxpBlueprintLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final SXPBlueprintLocalService _sxpBlueprintLocalService;
 
 }

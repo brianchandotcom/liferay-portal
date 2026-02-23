@@ -321,28 +321,14 @@ public class FragmentEditableElementTestUtil {
 		TextFragmentEditableElementValue textFragmentEditableElementValue =
 			new TextFragmentEditableElementValue();
 
-		FragmentMappedValue fragmentMappedValue = null;
-
-		if (contextSource == null) {
-			fragmentMappedValue =
-				FragmentMappedValueTestUtil.getFragmentMappedValue(
-					className, externalReferenceCode, fieldKey,
-					scopeExternalReferenceCode);
-		}
-		else {
-			fragmentMappedValue =
-				FragmentMappedValueTestUtil.getFragmentMappedValue(
-					contextSource, fieldKey,
-					FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
-		}
-
-		TextFragmentMappedValue textFragmentMappedValue =
-			getTextFragmentMappedValue(fragmentMappedValue);
-
 		textFragmentEditableElementValue.setFragmentLinkTextValue(
 			new FragmentLinkTextValue() {
 				{
-					setTextFragmentValue(textFragmentMappedValue);
+					setTextFragmentValue(
+						() -> getTextFragmentMappedValue(
+							FragmentMappedValueTestUtil.getFragmentMappedValue(
+								className, contextSource, externalReferenceCode,
+								fieldKey, scopeExternalReferenceCode)));
 				}
 			});
 

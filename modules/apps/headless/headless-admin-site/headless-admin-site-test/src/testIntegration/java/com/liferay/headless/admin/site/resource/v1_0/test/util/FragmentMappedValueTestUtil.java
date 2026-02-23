@@ -30,6 +30,23 @@ public class FragmentMappedValueTestUtil {
 	}
 
 	public static FragmentMappedValue getFragmentMappedValue(
+		String className,
+		FragmentMappedValueItemContextReference.ContextSource contextSource,
+		String externalReferenceCode, String fieldKey,
+		String scopeExternalReferenceCode) {
+
+		if (contextSource == null) {
+			return getFragmentMappedValue(
+				className, externalReferenceCode, fieldKey,
+				scopeExternalReferenceCode);
+		}
+
+		return getFragmentMappedValue(
+			contextSource, fieldKey,
+			FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE);
+	}
+
+	public static FragmentMappedValue getFragmentMappedValue(
 		String fieldKey,
 		FragmentMappedValueItemReference fragmentMappedValueItemReference) {
 

@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.DateTestUtil;
-import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -62,8 +61,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
-import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -296,23 +293,11 @@ public class FileEntryStagedModelDataHandlerTest
 		_testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntry();
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-35443"), @FeatureFlag("LPD-35914")}
-	)
 	@Test
 	public void testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntryWithBatch()
 		throws Exception {
 
-		try {
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), true, "LPD-35914");
-
-			_testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntry();
-		}
-		finally {
-			FeatureFlagTestUtil.invokeFeatureFlagListeners(
-				TestPropsValues.getCompanyId(), false, "LPD-35914");
-		}
+		_testExportImportFileEntryFriendlyURLEntriesUpdatingFileEntry();
 	}
 
 	@Test

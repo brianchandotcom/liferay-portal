@@ -7,8 +7,7 @@ package com.liferay.notification.internal.search.spi.model.index.contributor;
 
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,25 +17,19 @@ public class NotificationTemplateModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<NotificationTemplate> {
 
 	public NotificationTemplateModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		NotificationTemplateLocalService notificationTemplateLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_notificationTemplateLocalService = notificationTemplateLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_notificationTemplateLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _notificationTemplateLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final NotificationTemplateLocalService
 		_notificationTemplateLocalService;
 

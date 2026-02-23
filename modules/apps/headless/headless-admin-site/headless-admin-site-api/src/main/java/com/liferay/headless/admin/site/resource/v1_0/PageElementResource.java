@@ -5,7 +5,6 @@
 
 package com.liferay.headless.admin.site.resource.v1_0;
 
-import com.liferay.headless.admin.site.dto.v1_0.FragmentComposition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -85,15 +84,6 @@ public interface PageElementResource {
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode,
 			String pageExperienceExternalReferenceCode, PageElement pageElement)
-		throws Exception;
-
-	public PageElement
-			postSitePageSpecificationPageExperiencePageElementFragmentComposition(
-				String siteExternalReferenceCode,
-				String pageSpecificationExternalReferenceCode,
-				String pageExperienceExternalReferenceCode,
-				String pageElementExternalReferenceCode, Integer position,
-				FragmentComposition fragmentComposition)
 		throws Exception;
 
 	public PageElement putSitePageSpecificationPageExperiencePageElement(

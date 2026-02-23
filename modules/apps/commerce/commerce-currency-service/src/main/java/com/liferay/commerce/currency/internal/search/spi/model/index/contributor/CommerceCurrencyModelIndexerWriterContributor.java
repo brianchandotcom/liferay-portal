@@ -7,8 +7,7 @@ package com.liferay.commerce.currency.internal.search.spi.model.index.contributo
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,21 +18,17 @@ public class CommerceCurrencyModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceCurrency> {
 
 	public CommerceCurrencyModelIndexerWriterContributor(
-		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CommerceCurrencyLocalService commerceCurrencyLocalService) {
 
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_commerceCurrencyLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceCurrencyLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -44,7 +39,5 @@ public class CommerceCurrencyModelIndexerWriterContributor
 	}
 
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

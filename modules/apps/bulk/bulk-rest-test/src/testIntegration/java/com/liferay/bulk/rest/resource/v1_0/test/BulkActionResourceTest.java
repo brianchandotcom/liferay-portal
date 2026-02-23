@@ -569,12 +569,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		AssignStructureDefaultWorkflowBulkAction bulkAction =
 			new AssignStructureDefaultWorkflowBulkAction();
 
-		bulkAction.setType(
-			BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION);
-
 		bulkAction.setBulkActionItems(
 			_toBulkActionItems(_cmsBulkActionTaskObjectDefinition));
-
+		bulkAction.setType(
+			BulkAction.Type.ASSIGN_STRUCTURE_DEFAULT_WORKFLOW_BULK_ACTION);
 		bulkAction.setWorkflow("Single Approver");
 
 		_postBulkAction(bulkAction);

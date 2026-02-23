@@ -2,13 +2,14 @@ import {EntityTypes} from '../constants';
 import {Map, Record} from 'immutable';
 
 interface IIndividual {
-	accountNames: string[] | null;
+	accountName: string | null;
 	activitiesCount: number;
 	dateCreated: string;
 	demographics: Map<string, any>;
 	firstActivityDate: string;
 	id: string;
 	lastActivityDate: string;
+	lastSessionCountry: string;
 	name: string;
 	properties: Map<string, any>;
 	type: EntityTypes.Individual;
@@ -16,25 +17,27 @@ interface IIndividual {
 
 export default class Individual
 	extends Record({
-		accountNames: null,
+		accountName: null,
 		activitiesCount: 0,
 		dateCreated: null,
 		demographics: Map(),
 		firstActivityDate: null,
 		id: null,
 		lastActivityDate: null,
+		lastSessionCountry: null,
 		name: '',
 		properties: Map(),
 		type: EntityTypes.Individual
 	})
 	implements IIndividual {
-	accountNames: string[] | null;
+	accountName: string | null;
 	activitiesCount: number;
 	dateCreated: string;
 	demographics: Map<string, any>;
 	firstActivityDate: string;
 	id: string;
 	lastActivityDate: string;
+	lastSessionCountry: string | null;
 	name: string;
 	properties: Map<string, any>;
 	type: EntityTypes.Individual;

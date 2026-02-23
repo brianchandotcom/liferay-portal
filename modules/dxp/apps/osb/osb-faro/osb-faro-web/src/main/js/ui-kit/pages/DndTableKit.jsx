@@ -39,7 +39,7 @@ const DndTableKit = () => {
 			}
 		},
 		{
-			accountNames: ['Kertzmann, Kilback and Watsica'],
+			accountName: 'Kertzmann, Kilback and Watsica',
 			activitiesCount: 8,
 			draggable: false,
 			id: '379649805739722238',

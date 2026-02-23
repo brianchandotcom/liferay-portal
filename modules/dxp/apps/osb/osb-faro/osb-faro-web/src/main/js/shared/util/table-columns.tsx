@@ -586,8 +586,8 @@ export const eventListColumns = {
  * Individuals List Columns
  */
 export const individualsListColumns = {
-	accountNames: {
-		accessor: 'accountNames',
+	accountName: {
+		accessor: 'accountName',
 		cellRenderer: AccountNames,
 		label: Liferay.Language.get('account-names'),
 		sortable: false

@@ -11,7 +11,7 @@ describe('AccountNames', () => {
 		const {container} = render(
 			<AccountNames
 				data={{
-					accountNames: ['foo', 'bar', 'baz']
+					accountName: 'foo'
 				}}
 			/>,
 			{container: document.body.appendChild(tableRow)}
@@ -24,7 +24,7 @@ describe('AccountNames', () => {
 		const {getByText} = render(
 			<AccountNames
 				data={{
-					accountNames: []
+					accountName: null
 				}}
 			/>,
 			{container: document.body.appendChild(tableRow)}

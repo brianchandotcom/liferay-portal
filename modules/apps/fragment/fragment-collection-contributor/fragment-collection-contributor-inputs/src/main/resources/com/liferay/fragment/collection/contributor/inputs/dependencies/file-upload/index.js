@@ -32,6 +32,10 @@ if (
 
 let previousFiles = null;
 
+function mbToBytes(mb) {
+	return mb * 1024 * 1024;
+}
+
 function onInputChange() {
 	if (!fileInput.files.length && previousFiles) {
 		const dataTransfer = new DataTransfer();
@@ -80,6 +84,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 					allowDragAndDrop: true,
 					allowedExtensions: input.attributes.allowedFileExtensions,
 					groupId: input.attributes.groupId,
+					maxFileSize: mbToBytes(input.attributes.maxFileSize),
 					onSelect(items) {
 						if (items.length) {
 							const {id, title} = items[0].embedded;

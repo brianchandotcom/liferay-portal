@@ -4,14 +4,15 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import {sub} from 'frontend-js-web';
-import React, {useState} from 'react';
-import {Accept, useDropzone} from 'react-dropzone';
+import {formatStorage, sub} from 'frontend-js-web';
+import React, {useMemo, useState} from 'react';
+import {Accept, ErrorCode, useDropzone} from 'react-dropzone';
 
 import DragZoneBackground from './DragZoneBackground';
 import FailedFilesMessages from './FailedFilesMessages';
@@ -42,6 +43,7 @@ interface MultipleFileUploaderProps {
 	description?: string;
 	filesToUpload?: FileData[];
 	formValidation?: () => Promise<boolean>;
+	maxFileSize?: number;
 	messages?: Partial<UploadMessages>;
 	onModalClose: () => void;
 	onUploadComplete: ({
@@ -61,6 +63,7 @@ export default function MultipleFileUploader({
 	description,
 	filesToUpload: initialFilesToUpload,
 	formValidation,
+	maxFileSize,
 	messages,
 	onModalClose,
 	onUploadComplete,
@@ -73,14 +76,38 @@ export default function MultipleFileUploader({
 	);
 	const [failedFiles, setFailedFiles] = useState<FailedFile[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
+	const [dropErrorMessage, setDropErrorMessage] = useState('');
+
+	const CLIENT_ERRORS = useMemo(
+		() => ({
+			[ErrorCode.FileInvalidType]: sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-extension-x'
+				),
+				[validExtensions]
+			),
+
+			[ErrorCode.FileTooLarge]: sub(
+				Liferay.Language.get(
+					'please-enter-a-file-with-a-valid-file-size-no-larger-than-x'
+				),
+				[formatStorage(maxFileSize)]
+			),
+		}),
+		[maxFileSize, validExtensions]
+	);
 
 	const {getInputProps, getRootProps, isDragActive} = useDropzone({
 		accept:
 			validExtensions === '*'
 				? undefined
 				: (validExtensions as unknown as Accept),
+		maxSize: maxFileSize,
 		multiple: true,
 		noKeyboard: true,
+		onDragEnter: () => {
+			setDropErrorMessage('');
+		},
 		onDropAccepted: (acceptedFiles) => {
 			const newFilesToUpload = acceptedFiles.map((file) => ({
 				errorMessage: '',
@@ -100,6 +127,11 @@ export default function MultipleFileUploader({
 
 				return [...prevFilesToUpload, ...uniqueNewFiles];
 			});
+		},
+		onDropRejected: (rejectedFiled) => {
+			setDropErrorMessage(
+				CLIENT_ERRORS[rejectedFiled?.[0]?.errors?.[0]?.code] || ''
+			);
 		},
 	});
 
@@ -220,6 +252,16 @@ export default function MultipleFileUploader({
 
 							<DragZoneBackground />
 						</div>
+
+						{dropErrorMessage && (
+							<ClayForm.FeedbackGroup className="has-error">
+								<ClayForm.FeedbackItem>
+									<ClayForm.FeedbackIndicator symbol="exclamation-full" />
+
+									{dropErrorMessage}
+								</ClayForm.FeedbackItem>
+							</ClayForm.FeedbackGroup>
+						)}
 
 						{scopeSelectorElement}
 

@@ -120,6 +120,7 @@ export default function openCMSItemSelectorModal<
 	config = CMS_FILE_ITEM_SELECTOR_CONFIG,
 	fdsProps = FDS_PROPS,
 	groupId,
+	maxFileSize,
 	onSelect,
 }: {
 	allowDragAndDrop: boolean;
@@ -127,6 +128,7 @@ export default function openCMSItemSelectorModal<
 	config?: ConfigItemSelectorModal<T>;
 	fdsProps?: IItemSelectorModalProps<T>['fdsProps'];
 	groupId: number;
+	maxFileSize?: number;
 	onSelect: (items: Array<Record<string, any>>) => void;
 }) {
 	let finalConfig = config;
@@ -148,6 +150,7 @@ export default function openCMSItemSelectorModal<
 
 	openItemSelectorModal({
 		...finalConfig,
+		allowedExtensions,
 		fdsProps: {
 			...fdsProps,
 			id: `CMSItemSelectorFDS_${getRandomId()}`,
@@ -157,6 +160,7 @@ export default function openCMSItemSelectorModal<
 			: undefined,
 		groupId,
 		itemTypeLabel: Liferay.Language.get('files'),
+		maxFileSize,
 		onItemsChange: onSelect,
 	});
 }

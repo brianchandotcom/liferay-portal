@@ -13,8 +13,10 @@ import React from 'react';
 import {FilesUploaderComponent} from '../item_selector/ItemSelectorModal';
 
 const CMSFileUploaderComponent: FilesUploaderComponent = function ({
+	allowedExtensions,
 	files,
 	groupId,
+	maxFileSize,
 	onCloseUploadView,
 }) {
 	const uploadRequest: UploadRequestCallback = async ({fileData}) => {
@@ -62,9 +64,11 @@ const CMSFileUploaderComponent: FilesUploaderComponent = function ({
 	return (
 		<MultipleFileUploader
 			filesToUpload={files}
+			maxFileSize={maxFileSize}
 			onModalClose={onCloseUploadView}
 			onUploadComplete={onUploadComplete}
 			uploadRequest={uploadRequest}
+			validExtensions={allowedExtensions}
 		/>
 	);
 };

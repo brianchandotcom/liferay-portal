@@ -29,8 +29,8 @@
 		>
 			<portlet:renderURL var="editURL">
 				<portlet:param name="mvcRenderCommandName" value="/oauth_client_admin/update_oauth_client_as_local_metadata" />
-				<portlet:param name="oAuthClientASLocalMetadataId" value="<%= String.valueOf(oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId()) %>" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="oAuthClientASLocalMetadataId" value="<%= String.valueOf(oAuthClientASLocalMetadata.getOAuthClientASLocalMetadataId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text

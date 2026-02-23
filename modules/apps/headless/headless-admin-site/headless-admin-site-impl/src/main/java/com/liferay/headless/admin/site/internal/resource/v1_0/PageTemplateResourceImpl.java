@@ -26,7 +26,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageTemplateSetUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -96,7 +96,7 @@ public class PageTemplateResourceImpl
 			String pageTemplateExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		_layoutPageTemplateEntryService.deleteLayoutPageTemplateEntry(
 			pageTemplateExternalReferenceCode,
@@ -158,7 +158,7 @@ public class PageTemplateResourceImpl
 			String pageTemplateSetExternalReferenceCode, Boolean flatten)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -198,7 +198,7 @@ public class PageTemplateResourceImpl
 			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
@@ -237,7 +237,7 @@ public class PageTemplateResourceImpl
 			PageTemplate pageTemplate)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionService.
@@ -266,7 +266,7 @@ public class PageTemplateResourceImpl
 			String pageTemplateExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
@@ -302,7 +302,7 @@ public class PageTemplateResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, true, contextCompany.getCompanyId(),
@@ -339,7 +339,7 @@ public class PageTemplateResourceImpl
 			String siteExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _addPageTemplate(
 			GroupUtil.getStagingAwareGroupId(
@@ -354,7 +354,7 @@ public class PageTemplateResourceImpl
 			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			_isTypeWidgetPageTemplate(pageTemplate),

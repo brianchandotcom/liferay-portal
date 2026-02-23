@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.model.Company;
 /**
  * @author Alejandro Tardín
  */
-public class EnableUtil {
+public class EnabledUtil {
 
 	public static void checkEnabled(Company company) {
 		if (!(LazyReferencingThreadLocal.isEnabled() ||

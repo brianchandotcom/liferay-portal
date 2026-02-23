@@ -11,7 +11,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContex
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.PageTemplateSetEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageTemplateSetUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageTemplateSetResource;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -55,7 +55,7 @@ public class PageTemplateSetResourceImpl
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		_layoutPageTemplateCollectionService.deleteLayoutPageTemplateCollection(
 			pageTemplateSetExternalReferenceCode,
@@ -112,7 +112,7 @@ public class PageTemplateSetResourceImpl
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _toPageTemplateSet(
 			_layoutPageTemplateCollectionService.
@@ -130,7 +130,7 @@ public class PageTemplateSetResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -164,7 +164,7 @@ public class PageTemplateSetResourceImpl
 			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _toPageTemplateSet(
 			PageTemplateSetUtil.addLayoutPageTemplateCollection(
@@ -180,7 +180,7 @@ public class PageTemplateSetResourceImpl
 			PageTemplateSet pageTemplateSet)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

@@ -35,7 +35,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -118,7 +118,7 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -247,7 +247,7 @@ public class SitePageResourceImpl
 			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -278,7 +278,7 @@ public class SitePageResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return super.read(filter, pagination, sorts, parameters, search);
 	}
@@ -289,7 +289,7 @@ public class SitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutService.getLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -582,7 +582,7 @@ public class SitePageResourceImpl
 	}
 
 	private void _checkEnabled(Boolean privateLayout) {
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-38869") &&

@@ -11,7 +11,7 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContex
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -51,7 +51,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageExperienceExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -82,7 +82,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageExperienceExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _toPageExperience(
 			_segmentsExperienceService.
@@ -99,7 +99,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageSpecificationExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode,
@@ -126,7 +126,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			PageExperience pageExperience)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -149,7 +149,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			PageExperience pageExperience)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

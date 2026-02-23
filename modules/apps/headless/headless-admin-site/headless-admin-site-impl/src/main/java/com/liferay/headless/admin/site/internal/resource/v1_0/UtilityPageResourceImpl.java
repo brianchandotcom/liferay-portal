@@ -19,7 +19,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.UtilityPageResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -76,7 +76,7 @@ public class UtilityPageResourceImpl
 			String utilityPageExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		_layoutUtilityPageEntryService.deleteLayoutUtilityPageEntry(
 			utilityPageExternalReferenceCode,
@@ -138,7 +138,7 @@ public class UtilityPageResourceImpl
 			ContentPageSpecification contentPageSpecification)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.
@@ -168,7 +168,7 @@ public class UtilityPageResourceImpl
 			String utilityPageExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryService.
@@ -194,7 +194,7 @@ public class UtilityPageResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -230,7 +230,7 @@ public class UtilityPageResourceImpl
 			String siteExternalReferenceCode, UtilityPage utilityPage)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		return _addLayoutUtilityPageEntry(
 			GroupUtil.getStagingAwareGroupId(
@@ -244,7 +244,7 @@ public class UtilityPageResourceImpl
 			String utilityPageExternalReferenceCode, UtilityPage utilityPage)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

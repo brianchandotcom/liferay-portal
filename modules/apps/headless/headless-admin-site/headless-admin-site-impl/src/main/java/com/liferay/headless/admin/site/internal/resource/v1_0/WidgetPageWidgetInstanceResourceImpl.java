@@ -9,7 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
-import com.liferay.headless.admin.site.internal.util.EnableUtil;
+import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
@@ -48,7 +48,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -90,7 +90,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -127,7 +127,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -168,7 +168,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -203,7 +203,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		EnableUtil.checkEnabled(contextCompany);
+		EnabledUtil.checkEnabled(contextCompany);
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,

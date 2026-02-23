@@ -50,12 +50,6 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 	}
 
 	private String _fixEmptyLinesBetweenTags(String fileName, String content) {
-		if (fileName.startsWith(getBaseDirName() + "build") ||
-			fileName.matches(".*/(build|tools/).*")) {
-
-			return _fixEmptyLinesBetweenTagsInBuildFile(content);
-		}
-
 		if (fileName.endsWith("-log4j-ext.xml") ||
 			fileName.endsWith("-log4j.xml") ||
 			fileName.endsWith("-logback.xml") ||
@@ -65,6 +59,15 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 			return fixEmptyLinesBetweenTags(content);
 		}
+
+		content = _fixEmptyLinesAroundConditionalTags(content);
+
+		if (fileName.startsWith(getBaseDirName() + "build") ||
+				fileName.matches(".*/(build|tools/).*")) {
+
+			return content;
+		}
+
 
 		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
 
@@ -78,9 +81,9 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 		return content;
 	}
 
-	private String _fixEmptyLinesBetweenTagsInBuildFile(String content) {
+	private String _fixEmptyLinesAroundConditionalTags(String content) {
 		Matcher matcher =
-			_emptyLineBetweenSiblingTagsInBuildFilePattern.matcher(content);
+			_emptyLineBetweenAroundConditionalTagsPattern.matcher(content);
 
 		while (matcher.find()) {
 			String lineBreaks = matcher.group(3);
@@ -172,7 +175,7 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 	};
 
 	private static final Pattern
-		_emptyLineBetweenSiblingTagsInBuildFilePattern = Pattern.compile(
+			_emptyLineBetweenAroundConditionalTagsPattern = Pattern.compile(
 			"\n(\t*)</([-\\w:]+)>(\n+)\\1<[-\\w:]+[> \n]");
 	private static final Pattern _emptyLineBetweenTagsPattern = Pattern.compile(
 		"\n(\t*)<[\\w/].*[^-]>(\n\n)(\t*)<(\\w)");

@@ -123,11 +123,11 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 		String requestURI = StringUtil.trimTrailing(
 			httpServletRequest.getRequestURI(), StringPool.SLASH.charAt(0));
 
-		String basePath =
+		String path =
 			httpServletRequest.getContextPath() +
 				"/.well-known/oauth-authorization-server";
 
-		if (requestURI.length() <= basePath.length()) {
+		if (requestURI.length() <= path.length()) {
 			return null;
 		}
 

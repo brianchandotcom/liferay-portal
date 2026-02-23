@@ -61,12 +61,12 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 					OAuthClientASLocalMetadata.class.getName(),
 					oAuthClientASLocalMetadata);
 
-				OIDCProviderMetadata authorizationServerMetadata =
+				OIDCProviderMetadata oidcProviderMetadata =
 					OIDCProviderMetadata.parse(
 						oAuthClientASLocalMetadata.getMetadataJSON());
 
 				URI authorizationEndpointURI =
-					authorizationServerMetadata.getAuthorizationEndpointURI();
+					oidcProviderMetadata.getAuthorizationEndpointURI();
 
 				if (authorizationEndpointURI != null) {
 					renderRequest.setAttribute(
@@ -74,35 +74,34 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 						authorizationEndpointURI.toString());
 				}
 
-				if (authorizationServerMetadata.getGrantTypes() != null) {
+				if (oidcProviderMetadata.getGrantTypes() != null) {
 					renderRequest.setAttribute(
 						"supportedGrantTypes",
-						StringUtil.merge(
-							authorizationServerMetadata.getGrantTypes()));
+						StringUtil.merge(oidcProviderMetadata.getGrantTypes()));
 				}
 
-				URI jwksURI = authorizationServerMetadata.getJWKSetURI();
+				URI jwksURI = oidcProviderMetadata.getJWKSetURI();
 
 				if (jwksURI != null) {
 					renderRequest.setAttribute("jwksURI", jwksURI.toString());
 				}
 
-				Scope supportedScopes = authorizationServerMetadata.getScopes();
+				Scope supportedScopes = oidcProviderMetadata.getScopes();
 
 				if (supportedScopes != null) {
 					renderRequest.setAttribute(
 						"supportedScopes", supportedScopes.toString());
 				}
 
-				if (authorizationServerMetadata.getSubjectTypes() != null) {
+				if (oidcProviderMetadata.getSubjectTypes() != null) {
 					renderRequest.setAttribute(
 						"supportedSubjectTypes",
 						StringUtil.merge(
-							authorizationServerMetadata.getSubjectTypes()));
+							oidcProviderMetadata.getSubjectTypes()));
 				}
 
 				URI tokenEndpointURI =
-					authorizationServerMetadata.getTokenEndpointURI();
+					oidcProviderMetadata.getTokenEndpointURI();
 
 				if (tokenEndpointURI != null) {
 					renderRequest.setAttribute(
@@ -110,7 +109,7 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 				}
 
 				URI userInfoEndpointURI =
-					authorizationServerMetadata.getUserInfoEndpointURI();
+					oidcProviderMetadata.getUserInfoEndpointURI();
 
 				if (userInfoEndpointURI != null) {
 					renderRequest.setAttribute(

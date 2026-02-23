@@ -11,7 +11,7 @@ import ChildLink from '../../../shared/components/router/ChildLink.es';
 import {getFormattedPercentage} from '../../../shared/util/util.es';
 import {AppContext} from '../../AppContext.es';
 import {processStatusConstants} from '../../filter/ProcessStatusFilter.es';
-import {slaStatusConstants} from '../../filter/SLAStatusFilter.es';
+import slaStatusConstants from '../../filter/SLAStatusConstants.es';
 
 function Item({
 	assignee: {id, name},

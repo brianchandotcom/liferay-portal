@@ -322,8 +322,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_updatePortletDataHandlerControls();
 	}
 
-	public void unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-		String batchEngineClassName, String taskItemDelegateName) {
+	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+		unregisterExportImportVulcanBatchEngineTaskItemDelegate(
+			String batchEngineClassName, String taskItemDelegateName) {
 
 		Iterator<Registration> iterator = _registrations.iterator();
 
@@ -342,9 +343,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				_updateDeletionSystemEventStagedModelTypes();
 				_updatePortletDataHandlerControls();
 
-				return;
+				return registration.getExportImportDescriptor();
 			}
 		}
+
+		return null;
 	}
 
 	@Override

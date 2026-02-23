@@ -161,7 +161,9 @@ testWithBatchStagingFF(
 			);
 
 		await stagingPage.goto(site.name);
-		await stagingPage.enableLocalStaging([StageableEntities.CATEGORIES]);
+		await stagingPage.enableLocalStaging({
+			stagedPortlets: [StageableEntities.CATEGORIES],
+		});
 
 		const stagingSite = await apiHelpers.headlessSite.getSite(
 			`${site.key}-staging`
@@ -806,5 +808,31 @@ testWithBatchStagingFF(
 				)
 			).externalReferenceCode
 		).toBe(layout.externalReferenceCode);
+	}
+);
+
+testWithBatchStagingFF(
+	'Content selection is empty after initial publication to live when using the From Last Publish Date option',
+	async ({apiHelpers, stagingPage}) => {
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'site-' + getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		await apiHelpers.headlessAdminSite.createPage(
+			site.externalReferenceCode,
+			{
+				name_i18n: {en_US: getRandomString()},
+				type: 'WidgetPage',
+			}
+		);
+
+		await stagingPage.goto(site.name);
+		await stagingPage.enableLocalStaging({stagedPortlets: 'all'});
+
+		const contentItems = await stagingPage.getContentItems();
+
+		expect(contentItems.size).toEqual(0);
 	}
 );

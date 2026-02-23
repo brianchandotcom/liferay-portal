@@ -17,9 +17,7 @@ import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 
 import java.util.Objects;
 
@@ -108,7 +106,8 @@ public abstract class BaseInfoItemDetailsProvider
 	@Override
 	public InfoItemDetails getInfoItemDetails(T model) {
 		return getInfoItemDetails(
-			_getGroupId(), ClassPKInfoItemIdentifier.class, model);
+			ScopeUtil.getScopeGroupId(0), ClassPKInfoItemIdentifier.class,
+			model);
 	}
 
 	public interface InfoItemIdentifierFactory<T> {
@@ -138,25 +137,6 @@ public abstract class BaseInfoItemDetailsProvider
 
 	protected abstract InfoItemIdentifierFactory<T>
 		getInfoItemIdentifierFactory();
-
-	private long _getGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
-	}
 
 	private String _getModelClassName() {
 		InfoItemClassDetails infoItemClassDetails = getInfoItemClassDetails();

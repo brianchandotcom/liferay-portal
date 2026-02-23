@@ -31,9 +31,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
@@ -61,12 +58,14 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 	@Override
 	public InfoFieldSet getInfoFieldSet(AssetEntry assetEntry) {
 		return _getInfoFieldSet(
-			_getNoninternalAssetVocabularies(assetEntry), _getScopeGroupId());
+			_getNoninternalAssetVocabularies(assetEntry),
+			ScopeUtil.getScopeGroupId(0));
 	}
 
 	@Override
 	public InfoFieldSet getInfoFieldSet(String itemClassName) {
-		return _getInfoFieldSet(Collections.emptyList(), _getScopeGroupId());
+		return _getInfoFieldSet(
+			Collections.emptyList(), ScopeUtil.getScopeGroupId(0));
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 		return _getInfoFieldSet(
 			_getNoninternalAssetVocabularies(
 				itemClassName, itemClassTypeId, scopeGroupId),
-			scopeGroupId);
+			ScopeUtil.getScopeGroupId(scopeGroupId));
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		long scopeGroupId = _getScopeGroupId();
+		long scopeGroupId = ScopeUtil.getScopeGroupId(0);
 
 		Set<AssetVocabulary> assetVocabularies =
 			_getNoninternalAssetVocabularies(assetEntry);
@@ -336,27 +335,6 @@ public class AssetEntryInfoItemFieldSetProviderImpl
 			assetVocabulary ->
 				!(assetVocabulary.getVisibilityType() ==
 					AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
-	}
-
-	private long _getScopeGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			(serviceContext.getScopeGroupId() > 0)) {
-
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
 	}
 
 	private List<String> _getTags(List<AssetTag> assetTags) {

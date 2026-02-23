@@ -17,7 +17,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -32,7 +32,7 @@ public abstract class BaseLayoutDisplayPageProvider<T>
 			InfoItemReference infoItemReference) {
 
 		return getLayoutDisplayPageObjectProvider(
-			_getGroupId(), infoItemReference);
+			ScopeUtil.getScopeGroupId(0), infoItemReference);
 	}
 
 	@Override
@@ -80,25 +80,6 @@ public abstract class BaseLayoutDisplayPageProvider<T>
 		throw new IllegalStateException(
 			"Neither company thread local nor service context thread local " +
 				"are initialized");
-	}
-
-	private long _getGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if (serviceContext != null) {
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
 	}
 
 	private long _getGroupId(

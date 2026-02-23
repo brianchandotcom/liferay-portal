@@ -52,18 +52,16 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -180,8 +178,8 @@ public class FragmentEntryProcessorHelperImpl
 
 		return _getFileEntryId(
 			infoItemReference.getClassName(),
-			_getInfoItem(_getGroupId(0), infoItemReference), fieldName, 0,
-			locale);
+			_getInfoItem(ScopeUtil.getScopeGroupId(0), infoItemReference),
+			fieldName, 0, locale);
 	}
 
 	@Override
@@ -313,7 +311,7 @@ public class FragmentEntryProcessorHelperImpl
 			return _getFileEntryId(
 				className,
 				infoItemObjectProvider.getInfoItem(
-					_getGroupId(groupId), infoItemIdentifier),
+					ScopeUtil.getScopeGroupId(groupId), infoItemIdentifier),
 				fieldName, groupId, locale);
 		}
 		catch (NoSuchInfoItemException noSuchInfoItemException) {
@@ -820,7 +818,7 @@ public class FragmentEntryProcessorHelperImpl
 			return 0;
 		}
 
-		long scopeGroupId = _getGroupId(groupId);
+		long scopeGroupId = ScopeUtil.getScopeGroupId(groupId);
 
 		try {
 			Object infoItem = infoItemObjectProvider.getInfoItem(
@@ -996,31 +994,6 @@ public class FragmentEntryProcessorHelperImpl
 		WebImage webImage = (WebImage)value;
 
 		return _getFileEntryId(groupId, webImage.getInfoItemReference());
-	}
-
-	private long _getGroupId(long scopeGroupId) {
-		if (scopeGroupId > 0) {
-			return scopeGroupId;
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			(serviceContext.getScopeGroupId() > 0)) {
-
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
 	}
 
 	private InfoCollectionTextFormatter<Object> _getInfoCollectionTextFormatter(

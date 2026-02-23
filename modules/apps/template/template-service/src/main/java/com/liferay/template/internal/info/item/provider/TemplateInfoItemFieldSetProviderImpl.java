@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -64,7 +63,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 	public InfoFieldSet getInfoFieldSet(
 		String infoItemClassName, String infoItemFormVariationKey) {
 
-		long scopeGroupId = _getScopeGroupId();
+		long scopeGroupId = ScopeUtil.getScopeGroupId(0);
 
 		return InfoFieldSet.builder(
 		).infoFieldSetEntry(
@@ -90,7 +89,7 @@ public class TemplateInfoItemFieldSetProviderImpl
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		long scopeGroupId = _getScopeGroupId();
+		long scopeGroupId = ScopeUtil.getScopeGroupId(0);
 
 		for (TemplateEntry templateEntry :
 				_getTemplateEntries(
@@ -163,27 +162,6 @@ public class TemplateInfoItemFieldSetProviderImpl
 				ddmTemplate.getNameMap()
 			).build()
 		).build();
-	}
-
-	private long _getScopeGroupId() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			(serviceContext.getScopeGroupId() > 0)) {
-
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-				"initialized");
 	}
 
 	private List<TemplateEntry> _getTemplateEntries(

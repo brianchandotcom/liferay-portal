@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
+import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientWebKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,32 +74,34 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 
 			if (authorizationEndpointURI != null) {
 				renderRequest.setAttribute(
-					"authorizationEndpoint",
+					OAuthClientWebKeys.AUTHORIZATION_ENDPOINT,
 					authorizationEndpointURI.toString());
 			}
 
 			if (oidcProviderMetadata.getGrantTypes() != null) {
 				renderRequest.setAttribute(
-					"supportedGrantTypes",
+					OAuthClientWebKeys.SUPPORTED_GRANT_TYPES,
 					StringUtil.merge(oidcProviderMetadata.getGrantTypes()));
 			}
 
 			URI jwksURI = oidcProviderMetadata.getJWKSetURI();
 
 			if (jwksURI != null) {
-				renderRequest.setAttribute("jwksURI", jwksURI.toString());
+				renderRequest.setAttribute(
+					OAuthClientWebKeys.JWKS_URI, jwksURI.toString());
 			}
 
 			Scope supportedScopes = oidcProviderMetadata.getScopes();
 
 			if (supportedScopes != null) {
 				renderRequest.setAttribute(
-					"supportedScopes", supportedScopes.toString());
+					OAuthClientWebKeys.SUPPORTED_SCOPES,
+					supportedScopes.toString());
 			}
 
 			if (oidcProviderMetadata.getSubjectTypes() != null) {
 				renderRequest.setAttribute(
-					"supportedSubjectTypes",
+					OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES,
 					StringUtil.merge(oidcProviderMetadata.getSubjectTypes()));
 			}
 
@@ -106,7 +109,8 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 
 			if (tokenEndpointURI != null) {
 				renderRequest.setAttribute(
-					"tokenEndpoint", tokenEndpointURI.toString());
+					OAuthClientWebKeys.TOKEN_ENDPOINT,
+					tokenEndpointURI.toString());
 			}
 
 			URI userInfoEndpointURI =
@@ -114,7 +118,8 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 
 			if (userInfoEndpointURI != null) {
 				renderRequest.setAttribute(
-					"userInfoEndpoint", userInfoEndpointURI.toString());
+					OAuthClientWebKeys.USER_INFO_ENDPOINT,
+					userInfoEndpointURI.toString());
 			}
 		}
 		catch (PortalException portalException) {

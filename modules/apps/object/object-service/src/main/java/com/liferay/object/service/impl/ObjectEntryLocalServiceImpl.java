@@ -2315,15 +2315,6 @@ public class ObjectEntryLocalServiceImpl
 			return objectEntry;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(
-				objectEntry.getObjectDefinitionId());
-
-		EmptyModelManagerUtil.solveEmptyModel(
-			objectEntry.getExternalReferenceCode(),
-			objectDefinition.getClassName(), objectEntry.getCompanyId(),
-			objectEntry.getGroupId(), objectEntry.getStatus(), () -> 0);
-
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
 			(displayDate != null) && date.before(displayDate)) {
 
@@ -2366,6 +2357,10 @@ public class ObjectEntryLocalServiceImpl
 		else {
 			objectEntry = objectEntryPersistence.update(objectEntry);
 		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(
+				objectEntry.getObjectDefinitionId());
 
 		if (serviceContext.isStrictAdd()) {
 			boolean indexingEnabled = serviceContext.isIndexingEnabled();
@@ -2430,6 +2425,12 @@ public class ObjectEntryLocalServiceImpl
 				objectDefinition, objectEntry, originalObjectEntry,
 				serviceContext.getLanguageId(), user);
 		}
+
+		EmptyModelManagerUtil.solveEmptyModel(
+			originalObjectEntry.getExternalReferenceCode(),
+			objectDefinition.getClassName(), originalObjectEntry.getCompanyId(),
+			originalObjectEntry.getGroupId(), originalObjectEntry.getStatus(),
+			() -> 0);
 
 		return objectEntry;
 	}

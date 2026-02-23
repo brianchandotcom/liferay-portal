@@ -44,15 +44,16 @@ import org.json.JSONObject;
 public class MarketplaceMessageReceiver implements MessageReceiver {
 
 	public MarketplaceMessageReceiver(
-		Channel channel, KoroneikiService koroneikiService,
+		KoroneikiService koroneikiService,
 		MarketplaceService marketplaceService, List<String> productKeysList,
 		String topicName) {
 
-		_channel = channel;
 		_koroneikiService = koroneikiService;
 		_marketplaceService = marketplaceService;
 		_productKeysList = productKeysList;
 		_topicName = topicName;
+
+		_initializeChannel();
 	}
 
 	@Override
@@ -145,6 +146,16 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 
 		return null;
+	}
+
+	private void _initializeChannel() {
+		try {
+			_channel = _marketplaceService.getChannelByExternalReferenceCode(
+				"MARKETPLACE-CHANNEL");
+		}
+		catch (Exception exception) {
+			_log.error("Could not initialize channel", exception);
+		}
 	}
 
 	private void _processKoroneikiAccountUpdate(
@@ -283,7 +294,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);
 
-	private final Channel _channel;
+	private Channel _channel;
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
 	private final List<String> _productKeysList;

@@ -34,6 +34,32 @@ function DetailViewDefinitionCol({
 	);
 }
 
+function openStackTraceModal(stackTraceMessage?: string) {
+	openModal({
+		bodyHTML: `
+				<div class="bg-dark border border-light p-4 rounded">
+					<p class="text-white">
+						${stackTraceMessage || Liferay.Language.get('this-error-was-detected-as-a-controlled-validation-error-during-the-import-process-and-did-not-originate-from-a-system-exception.-because-of-this-no-stack-trace-was-generated')}
+					</p>
+				</div>
+			`,
+		buttons: [
+			{
+				displayType: 'secondary',
+				label: Liferay.Language.get('close'),
+				onClick: ({processClose}: {processClose: Function}) => {
+					processClose();
+				},
+			},
+		],
+		size: stackTraceMessage ? 'full-screen' : undefined,
+		status: stackTraceMessage ? undefined : 'info',
+		title: stackTraceMessage
+			? Liferay.Language.get('stack-trace')
+			: Liferay.Language.get('no-stack-trace-available'),
+	});
+}
+
 interface ReportEntryDetail {
 	classExternalReferenceCode: string;
 	classPK: number;
@@ -81,33 +107,6 @@ export function ViewImportReportEntryDetail({
 			});
 		});
 	}, [apiURL]);
-
-	function openStackTraceModal({
-		stackTraceMessage,
-	}: {
-		stackTraceMessage: string;
-	}) {
-		openModal({
-			bodyHTML: `
-				<div class="bg-dark border border-light p-4 rounded">
-					<p class="text-white">
-                        ${stackTraceMessage}
-					</p>
-				</div>
-			`,
-			buttons: [
-				{
-					displayType: 'secondary',
-					label: Liferay.Language.get('close'),
-					onClick: ({processClose}: {processClose: Function}) => {
-						processClose();
-					},
-				},
-			],
-			size: 'full-screen',
-			title: Liferay.Language.get('stack-trace'),
-		});
-	}
 
 	const {
 		classExternalReferenceCode,
@@ -186,10 +185,9 @@ export function ViewImportReportEntryDetail({
 										<ClayButton
 											displayType="secondary"
 											onClick={() =>
-												openStackTraceModal({
-													stackTraceMessage:
-														errorStacktrace,
-												})
+												openStackTraceModal(
+													errorStacktrace
+												)
 											}
 										>
 											{Liferay.Language.get(

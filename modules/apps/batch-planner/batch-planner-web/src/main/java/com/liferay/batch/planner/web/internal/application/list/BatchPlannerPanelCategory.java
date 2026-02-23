@@ -8,11 +8,7 @@ package com.liferay.batch.planner.web.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -44,18 +40,6 @@ public class BatchPlannerPanelCategory extends BasePanelCategory {
 			"content.Language", locale, getClass());
 
 		return _language.get(resourceBundle, "data-migration");
-	}
-
-	public boolean isShow(PermissionChecker permissionChecker, Group group)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "COMMERCE-8087")) {
-
-			return false;
-		}
-
-		return super.isShow(permissionChecker, group);
 	}
 
 	@Reference

@@ -5,6 +5,7 @@
 
 export {default as CustomAssignee} from './components/CustomAssignee';
 export {default as EditorToolbar} from './components/EditorToolbar';
+export {default as ProjectSelector} from './components/ProjectSelector';
 export {default as StateSelector} from './components/StateSelector';
 export {default as Tags} from './components/Tags';
 export {default as ProjectHistory} from './components/project/ProjectHistory';

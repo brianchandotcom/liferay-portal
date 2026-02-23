@@ -293,20 +293,10 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "INPUTS-select-from-list"
-															},
-															"fragmentConfig": {
-																"inputFieldId": "ObjectField_r_cmpProjectToCMPTasks_c_cmpProjectId",
-																"inputLabel": {
-																	"en_US": "Project"
-																},
-																"inputReadOnly": false
+																"key": "com.liferay.site.cmp.site.initializer.internal.fragment.renderer.ProjectSelectorComponentSectionFragmentRenderer"
 															},
 															"fragmentFields": [
 															],
-															"fragmentStyle": {
-																"marginBottom": "3"
-															},
 															"indexed": true
 														},
 														"type": "Fragment"

@@ -9,7 +9,6 @@ import com.liferay.commerce.currency.internal.search.spi.model.index.contributor
 import com.liferay.commerce.currency.internal.search.spi.model.result.contributor.CommerceCurrencyModelSummaryContributor;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -51,8 +50,7 @@ public class CommerceCurrencyModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CommerceCurrencyModelIndexerWriterContributor(
-				_commerceCurrencyLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_commerceCurrencyLocalService);
 
 		_modelSummaryContributor =
 			new CommerceCurrencyModelSummaryContributor();
@@ -60,10 +58,6 @@ public class CommerceCurrencyModelSearchConfigurator
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CommerceCurrency>
 		_modelIndexWriterContributor;

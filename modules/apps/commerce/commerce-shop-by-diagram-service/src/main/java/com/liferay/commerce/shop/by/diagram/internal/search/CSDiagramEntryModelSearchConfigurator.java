@@ -11,7 +11,6 @@ import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.result.con
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -62,8 +61,7 @@ public class CSDiagramEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CSDiagramEntryModelIndexerWriterContributor(
-				_csDiagramEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_csDiagramEntryLocalService);
 		_modelVisibilityContributor =
 			new CSDiagramEntryModelVisibilityContributor(
 				_csDiagramEntryLocalService);
@@ -71,10 +69,6 @@ public class CSDiagramEntryModelSearchConfigurator
 
 	@Reference
 	private CSDiagramEntryLocalService _csDiagramEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CSDiagramEntry>
 		_modelIndexWriterContributor;

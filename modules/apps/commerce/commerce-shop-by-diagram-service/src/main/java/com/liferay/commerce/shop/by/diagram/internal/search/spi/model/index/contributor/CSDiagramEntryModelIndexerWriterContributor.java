@@ -7,8 +7,7 @@ package com.liferay.commerce.shop.by.diagram.internal.search.spi.model.index.con
 
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,21 +18,16 @@ public class CSDiagramEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CSDiagramEntry> {
 
 	public CSDiagramEntryModelIndexerWriterContributor(
-		CSDiagramEntryLocalService csDiagramEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CSDiagramEntryLocalService csDiagramEntryLocalService) {
 
 		_csDiagramEntryLocalService = csDiagramEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_csDiagramEntryLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _csDiagramEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -44,7 +38,5 @@ public class CSDiagramEntryModelIndexerWriterContributor
 	}
 
 	private final CSDiagramEntryLocalService _csDiagramEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

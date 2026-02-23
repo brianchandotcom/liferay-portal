@@ -7,8 +7,7 @@ package com.liferay.commerce.internal.search.spi.model.index.contributor;
 
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,21 +18,17 @@ public class CommerceOrderItemModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CommerceOrderItem> {
 
 	public CommerceOrderItemModelIndexerWriterContributor(
-		CommerceOrderItemLocalService commerceOrderItemLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CommerceOrderItemLocalService commerceOrderItemLocalService) {
 
 		_commerceOrderItemLocalService = commerceOrderItemLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_commerceOrderItemLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceOrderItemLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -44,7 +39,5 @@ public class CommerceOrderItemModelIndexerWriterContributor
 	}
 
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

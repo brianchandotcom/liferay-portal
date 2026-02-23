@@ -8,7 +8,6 @@ import React from 'react';
 
 import '@testing-library/jest-dom';
 
-import {slaStatusConstants} from '../../../../src/main/resources/META-INF/resources/js/components/filter/SLAStatusFilter.es';
 import SummaryCard from '../../../../src/main/resources/META-INF/resources/js/components/process-metrics/process-items/SummaryCard.es';
 import {MockRouter} from '../../../mock/MockRouter.es';
 
@@ -22,7 +21,7 @@ describe('The SummaryCard component should', () => {
 		iconColor: 'danger',
 		iconName: 'exclamation-circle',
 		processId: 12345,
-		slaStatusFilter: slaStatusConstants.overdue,
+		slaStatusFilter: 'Overdue',
 		total: false,
 		totalValue: 858000,
 		value: 156403,
@@ -148,7 +147,7 @@ describe('The SummaryCard component should', () => {
 		iconColor: 'success',
 		iconName: 'check-circle',
 		processId: 12345,
-		slaStatusFilter: slaStatusConstants.ontime,
+		slaStatusFilter: 'OnTime',
 		total: false,
 		totalValue: 55,
 		value: undefined,

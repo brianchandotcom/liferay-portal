@@ -12,7 +12,7 @@ import ChildLink from '../../shared/components/router/ChildLink.es';
 import UserAvatar from '../../shared/components/user-avatar/UserAvatar.es';
 import {AppContext} from '../AppContext.es';
 import {processStatusConstants} from '../filter/ProcessStatusFilter.es';
-import {slaStatusConstants} from '../filter/SLAStatusFilter.es';
+import slaStatusConstants from '../filter/SLAStatusConstants.es';
 
 function Item({
 	assignee: {id, image, name},

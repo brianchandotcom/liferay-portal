@@ -18,11 +18,19 @@ import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
+import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 
+import java.math.BigDecimal;
+
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.logging.Log;
@@ -36,11 +44,14 @@ import org.json.JSONObject;
 public class MarketplaceMessageReceiver implements MessageReceiver {
 
 	public MarketplaceMessageReceiver(
-		KoroneikiService koroneikiService,
-		MarketplaceService marketplaceService, String topicName) {
+		Channel channel, KoroneikiService koroneikiService,
+		MarketplaceService marketplaceService, List<String> productKeysList,
+		String topicName) {
 
+		_channel = channel;
 		_koroneikiService = koroneikiService;
 		_marketplaceService = marketplaceService;
+		_productKeysList = productKeysList;
 		_topicName = topicName;
 	}
 
@@ -79,10 +90,14 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			else if (Objects.equals(
 						_topicName,
 						MarketplaceConstants.
-							PUBSUB_TOPIC_NAME_KORONEIKI_ENTITLEMENT_CREATE)) {
+							PUBSUB_TOPIC_NAME_KORONEIKI_PRODUCTPURCHASE_CREATE)) {
 
-				// TODO
+				ProductPurchase productPurchase = ProductPurchase.toDTO(
+					jsonObject.getJSONObject(
+						"productPurchase"
+					).toString());
 
+				_processKoroneikiProductPurchaseCreate(productPurchase);
 			}
 
 			ackReplyConsumer.ack();
@@ -223,11 +238,55 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 	}
 
+	private void _processKoroneikiProductPurchaseCreate(
+			ProductPurchase productPurchase)
+		throws Exception {
+
+		for (String productKey : _productKeysList) {
+			if (Objects.equals(productKey, productPurchase.getProductKey())) {
+				return;
+			}
+		}
+
+		Product product = productPurchase.getProduct();
+
+		_marketplaceService.postOrder(
+			new Order() {
+				{
+					setAccountExternalReferenceCode(
+						productPurchase::getAccountKey);
+					setChannelId(_channel::getId);
+					setCurrencyCode(() -> "USD");
+
+					setExternalReferenceCode(productPurchase::getKey);
+					setOrderItems(
+						() -> new OrderItem[] {
+							new OrderItem() {
+								{
+									setQuantity(() -> BigDecimal.ONE);
+									setSkuExternalReferenceCode(
+										product::getKey);
+								}
+							}
+						});
+					setOrderStatus(
+						() -> MarketplaceConstants.ORDER_STATUS_COMPLETED);
+					setOrderTypeExternalReferenceCode(() -> "SALESFORCE-ORDER");
+					setPaymentStatus(
+						() ->
+							MarketplaceConstants.
+								ORDER_PAYMENT_STATUS_COMPLETED);
+				}
+			});
+	}
+
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);
 
+	private final Channel _channel;
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
+	private final List<String> _productKeysList;
 	private final String _topicName;
 
 }

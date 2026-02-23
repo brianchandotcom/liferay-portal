@@ -9,7 +9,6 @@ import com.liferay.commerce.payment.internal.search.spi.model.index.contributor.
 import com.liferay.commerce.payment.internal.search.spi.model.result.contributor.CommercePaymentEntryModelSummaryContributor;
 import com.liferay.commerce.payment.model.CommercePaymentEntry;
 import com.liferay.commerce.payment.service.CommercePaymentEntryLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -51,8 +50,7 @@ public class CommercePaymentEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CommercePaymentEntryModelIndexerWriterContributor(
-				_commercePaymentEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_commercePaymentEntryLocalService);
 
 		_modelSummaryContributor =
 			new CommercePaymentEntryModelSummaryContributor();
@@ -60,10 +58,6 @@ public class CommercePaymentEntryModelSearchConfigurator
 
 	@Reference
 	private CommercePaymentEntryLocalService _commercePaymentEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CommercePaymentEntry>
 		_modelIndexWriterContributor;

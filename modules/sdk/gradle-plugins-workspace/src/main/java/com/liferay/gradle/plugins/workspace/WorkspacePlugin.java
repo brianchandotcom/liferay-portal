@@ -211,8 +211,25 @@ public class WorkspacePlugin implements Plugin<Settings> {
 
 		String bundleUrl = workspaceExtension.getBundleUrl();
 
-		if (Objects.nonNull(bundleUrl) && bundleUrl.contains("7.0.")) {
-			GradleUtil.setProperty(project, "portal.version", "7.0.x");
+		if (Objects.isNull(bundleUrl)) {
+			return;
+		}
+
+		if (bundleUrl.contains("7.0.")) {
+			GradleUtil.setProperty(
+				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.0.x");
+		}
+		else if (bundleUrl.contains("7.1.")) {
+			GradleUtil.setProperty(
+				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.1.x");
+		}
+		else if (bundleUrl.contains("7.2.")) {
+			GradleUtil.setProperty(
+				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.2.x");
+		}
+		else if (bundleUrl.contains("7.3.")) {
+			GradleUtil.setProperty(
+				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.3.x");
 		}
 	}
 

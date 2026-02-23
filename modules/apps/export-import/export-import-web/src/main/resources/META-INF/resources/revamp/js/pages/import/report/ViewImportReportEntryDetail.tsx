@@ -35,14 +35,22 @@ function DetailViewDefinitionCol({
 }
 
 function openStackTraceModal(stackTraceMessage?: string) {
+	const modalProps = stackTraceMessage
+		? {
+				bodyHTML: `<div class="bg-dark border border-light p-4 rounded"><p class="text-white">${stackTraceMessage}</p></div>`,
+				size: 'full-screen' as const,
+				title: Liferay.Language.get('stack-trace'),
+			}
+		: {
+				bodyHTML: Liferay.Language.get(
+					'this-error-was-detected-as-a-controlled-validation-error-during-the-import-process-and-did-not-originate-from-a-system-exception.-because-of-this-no-stack-trace-was-generated'
+				),
+				status: 'info' as const,
+				title: Liferay.Language.get('no-stack-trace-available'),
+			};
+
 	openModal({
-		bodyHTML: `
-				<div class="bg-dark border border-light p-4 rounded">
-					<p class="text-white">
-						${stackTraceMessage || Liferay.Language.get('this-error-was-detected-as-a-controlled-validation-error-during-the-import-process-and-did-not-originate-from-a-system-exception.-because-of-this-no-stack-trace-was-generated')}
-					</p>
-				</div>
-			`,
+		...modalProps,
 		buttons: [
 			{
 				displayType: 'secondary',
@@ -52,11 +60,6 @@ function openStackTraceModal(stackTraceMessage?: string) {
 				},
 			},
 		],
-		size: stackTraceMessage ? 'full-screen' : undefined,
-		status: stackTraceMessage ? undefined : 'info',
-		title: stackTraceMessage
-			? Liferay.Language.get('stack-trace')
-			: Liferay.Language.get('no-stack-trace-available'),
 	});
 }
 

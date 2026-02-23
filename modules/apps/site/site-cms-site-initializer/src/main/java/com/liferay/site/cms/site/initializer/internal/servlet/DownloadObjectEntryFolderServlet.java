@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,21 +32,14 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.searcher.SearchRequestBuilder;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.SearchResponse;
-import com.liferay.portal.search.searcher.Searcher;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
@@ -270,30 +262,7 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 			ZipWriter zipWriter)
 		throws IOException, PortalException {
 
-		User user = portal.getUser(httpServletRequest);
-
-		String search = ParamUtil.getString(httpServletRequest, "search");
-
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).emptySearchEnabled(
-				true
-			).withSearchContext(
-				searchContext -> _populateSearchContext(
-					_toFilter(
-						ParamUtil.getString(httpServletRequest, "filter"),
-						user.getLocale()),
-					search, searchContext, user)
-			);
-
-		if (!Validator.isBlank(search)) {
-			searchRequestBuilder.queryString(search);
-		}
-
-		SearchResponse searchResponse = _searcher.search(
-			searchRequestBuilder.build());
-
-		SearchHits searchHits = searchResponse.getSearchHits();
+		SearchHits searchHits = getSelectAllSearchHits(httpServletRequest);
 
 		for (SearchHit searchHit : searchHits.getSearchHits()) {
 			Document document = searchHit.getDocument();
@@ -414,12 +383,6 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

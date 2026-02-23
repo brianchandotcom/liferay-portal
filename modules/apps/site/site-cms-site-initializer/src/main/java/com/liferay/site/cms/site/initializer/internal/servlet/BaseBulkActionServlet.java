@@ -26,14 +26,21 @@ import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParser;
 import com.liferay.portal.odata.filter.FilterParserProvider;
+import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.rest.util.FilterUtil;
+import com.liferay.portal.search.searcher.SearchRequestBuilder;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -74,6 +81,36 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 		super.service(httpServletRequest, httpServletResponse);
 	}
 
+	protected SearchHits getSelectAllSearchHits(
+			HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = portal.getUser(httpServletRequest);
+
+		String search = ParamUtil.getString(httpServletRequest, "search");
+
+		SearchRequestBuilder searchRequestBuilder =
+			searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
+			).withSearchContext(
+				searchContext -> _populateSearchContext(
+					_toFilter(
+						ParamUtil.getString(httpServletRequest, "filter"),
+						user.getLocale()),
+					search, searchContext, user)
+			);
+
+		if (!Validator.isBlank(search)) {
+			searchRequestBuilder.queryString(search);
+		}
+
+		SearchResponse searchResponse = searcher.search(
+			searchRequestBuilder.build());
+
+		return searchResponse.getSearchHits();
+	}
+
 	@Reference(target = "(entity.model.name=BulkAction)")
 	protected EntityModel entityModel;
 
@@ -87,6 +124,12 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected Searcher searcher;
+
+	@Reference
+	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
 	private void _createContext(
 		HttpServletRequest httpServletRequest,

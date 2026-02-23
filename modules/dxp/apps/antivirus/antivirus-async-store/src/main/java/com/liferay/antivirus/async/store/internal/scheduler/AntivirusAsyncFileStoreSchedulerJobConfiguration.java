@@ -163,11 +163,12 @@ public class AntivirusAsyncFileStoreSchedulerJobConfiguration
 						dlFileEntry.getName(),
 						AntivirusAsyncUtil.getJobName(
 							dlFileEntry.getCompanyId(),
-							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getDataRepositoryId(),
 							dlFileEntry.getFileName(),
 							dlFileVersion.getStoreFileName()),
-						dlFileEntry.getRepositoryId(), dlFileEntry.getSize(),
-						dlFileEntry.getFileName(), dlFileEntry.getUserId(),
+						dlFileEntry.getDataRepositoryId(),
+						dlFileEntry.getSize(), dlFileEntry.getFileName(),
+						dlFileEntry.getUserId(),
 						dlFileVersion.getStoreFileName());
 				});
 

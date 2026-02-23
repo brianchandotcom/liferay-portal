@@ -9,7 +9,6 @@ import com.liferay.commerce.inventory.internal.search.spi.model.index.contributo
 import com.liferay.commerce.inventory.internal.search.spi.model.result.contributor.CommerceInventoryBookedQuantityModelSummaryContributor;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -51,8 +50,7 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CommerceInventoryBookedQuantityModelIndexerWriterContributor(
-				_commerceInventoryBookedQuantityLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_commerceInventoryBookedQuantityLocalService);
 
 		_modelSummaryContributor =
 			new CommerceInventoryBookedQuantityModelSummaryContributor();
@@ -61,10 +59,6 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 	@Reference
 	private CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CommerceInventoryBookedQuantity>
 		_modelIndexWriterContributor;

@@ -7,8 +7,7 @@ package com.liferay.commerce.inventory.internal.search.spi.model.index.contribut
 
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -20,22 +19,18 @@ public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 
 	public CommerceInventoryBookedQuantityModelIndexerWriterContributor(
 		CommerceInventoryBookedQuantityLocalService
-			commerceInventoryBookedQuantityLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+			commerceInventoryBookedQuantityLocalService) {
 
 		_commerceInventoryBookedQuantityLocalService =
 			commerceInventoryBookedQuantityLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_commerceInventoryBookedQuantityLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commerceInventoryBookedQuantityLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -47,7 +42,5 @@ public class CommerceInventoryBookedQuantityModelIndexerWriterContributor
 
 	private final CommerceInventoryBookedQuantityLocalService
 		_commerceInventoryBookedQuantityLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

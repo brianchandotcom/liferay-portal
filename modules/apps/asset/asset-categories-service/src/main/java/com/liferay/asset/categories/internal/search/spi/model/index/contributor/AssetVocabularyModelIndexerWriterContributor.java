@@ -7,8 +7,7 @@ package com.liferay.asset.categories.internal.search.spi.model.index.contributor
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -19,25 +18,19 @@ public class AssetVocabularyModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<AssetVocabulary> {
 
 	public AssetVocabularyModelIndexerWriterContributor(
-		AssetVocabularyLocalService assetVocabularyLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		AssetVocabularyLocalService assetVocabularyLocalService) {
 
 		_assetVocabularyLocalService = assetVocabularyLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_assetVocabularyLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _assetVocabularyLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private final AssetVocabularyLocalService _assetVocabularyLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

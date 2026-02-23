@@ -5810,152 +5810,104 @@ public class CPDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_G_S_STATUS_2 =
 		"cpDefinition.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_V;
-	private FinderPath _finderPathWithoutPaginationFindByC_V;
-	private FinderPath _finderPathCountByC_V;
+	private FinderPath _finderPathFetchByC_V;
 
 	/**
-	 * Returns all the cp definitions where CProductId = &#63; and version = &#63;.
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or throws a <code>NoSuchCPDefinitionException</code> if it could not be found.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @return the matching cp definitions
+	 * @return the matching cp definition
+	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
 	 */
 	@Override
-	public List<CPDefinition> findByC_V(long CProductId, int version) {
-		return findByC_V(
-			CProductId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public CPDefinition findByC_V(long CProductId, int version)
+		throws NoSuchCPDefinitionException {
+
+		CPDefinition cpDefinition = fetchByC_V(CProductId, version);
+
+		if (cpDefinition == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("CProductId=");
+			sb.append(CProductId);
+
+			sb.append(", version=");
+			sb.append(version);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchCPDefinitionException(sb.toString());
+		}
+
+		return cpDefinition;
 	}
 
 	/**
-	 * Returns a range of all the cp definitions where CProductId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @return the range of matching cp definitions
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	@Override
-	public List<CPDefinition> findByC_V(
-		long CProductId, int version, int start, int end) {
-
-		return findByC_V(CProductId, version, start, end, null);
+	public CPDefinition fetchByC_V(long CProductId, int version) {
+		return fetchByC_V(CProductId, version, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
+	 * Returns the cp definition where CProductId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching cp definitions
-	 */
-	@Override
-	public List<CPDefinition> findByC_V(
-		long CProductId, int version, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		return findByC_V(
-			CProductId, version, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the cp definitions where CProductId = &#63; and version = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CPDefinitionModelImpl</code>.
-	 * </p>
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @param start the lower bound of the range of cp definitions
-	 * @param end the upper bound of the range of cp definitions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching cp definitions
+	 * @return the matching cp definition, or <code>null</code> if a matching cp definition could not be found
 	 */
 	@Override
-	public List<CPDefinition> findByC_V(
-		long CProductId, int version, int start, int end,
-		OrderByComparator<CPDefinition> orderByComparator,
-		boolean useFinderCache) {
+	public CPDefinition fetchByC_V(
+		long CProductId, int version, boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
 					CPDefinition.class)) {
 
-			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-
-				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByC_V;
-					finderArgs = new Object[] {CProductId, version};
-				}
-			}
-			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByC_V;
-				finderArgs = new Object[] {
-					CProductId, version, start, end, orderByComparator
-				};
+			if (useFinderCache) {
+				finderArgs = new Object[] {CProductId, version};
 			}
 
-			List<CPDefinition> list = null;
+			Object result = null;
 
 			if (useFinderCache) {
-				list = (List<CPDefinition>)finderCache.getResult(
-					finderPath, finderArgs, this);
+				result = finderCache.getResult(
+					_finderPathFetchByC_V, finderArgs, this);
+			}
 
-				if ((list != null) && !list.isEmpty()) {
-					for (CPDefinition cpDefinition : list) {
-						if ((CProductId != cpDefinition.getCProductId()) ||
-							(version != cpDefinition.getVersion())) {
+			if (result instanceof CPDefinition) {
+				CPDefinition cpDefinition = (CPDefinition)result;
 
-							list = null;
+				if ((CProductId != cpDefinition.getCProductId()) ||
+					(version != cpDefinition.getVersion())) {
 
-							break;
-						}
-					}
+					result = null;
 				}
 			}
 
-			if (list == null) {
-				StringBundler sb = null;
-
-				if (orderByComparator != null) {
-					sb = new StringBundler(
-						4 + (orderByComparator.getOrderByFields().length * 2));
-				}
-				else {
-					sb = new StringBundler(4);
-				}
+			if (result == null) {
+				StringBundler sb = new StringBundler(4);
 
 				sb.append(_SQL_SELECT_CPDEFINITION_WHERE);
 
 				sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
 
 				sb.append(_FINDER_COLUMN_C_V_VERSION_2);
-
-				if (orderByComparator != null) {
-					appendOrderByComparator(
-						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
-				}
-				else {
-					sb.append(CPDefinitionModelImpl.ORDER_BY_JPQL);
-				}
 
 				String sql = sb.toString();
 
@@ -5972,13 +5924,20 @@ public class CPDefinitionPersistenceImpl
 
 					queryPos.add(version);
 
-					list = (List<CPDefinition>)QueryUtil.list(
-						query, getDialect(), start, end);
+					List<CPDefinition> list = query.list();
 
-					cacheResult(list);
+					if (list.isEmpty()) {
+						if (useFinderCache) {
+							finderCache.putResult(
+								_finderPathFetchByC_V, finderArgs, list);
+						}
+					}
+					else {
+						CPDefinition cpDefinition = list.get(0);
 
-					if (useFinderCache) {
-						finderCache.putResult(finderPath, finderArgs, list);
+						result = cpDefinition;
+
+						cacheResult(cpDefinition);
 					}
 				}
 				catch (Exception exception) {
@@ -5989,309 +5948,29 @@ public class CPDefinitionPersistenceImpl
 				}
 			}
 
-			return list;
+			if (result instanceof List<?>) {
+				return null;
+			}
+			else {
+				return (CPDefinition)result;
+			}
 		}
 	}
 
 	/**
-	 * Returns the first cp definition in the ordered set where CProductId = &#63; and version = &#63;.
+	 * Removes the cp definition where CProductId = &#63; and version = &#63; from the database.
 	 *
 	 * @param CProductId the c product ID
 	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
+	 * @return the cp definition that was removed
 	 */
 	@Override
-	public CPDefinition findByC_V_First(
-			long CProductId, int version,
-			OrderByComparator<CPDefinition> orderByComparator)
+	public CPDefinition removeByC_V(long CProductId, int version)
 		throws NoSuchCPDefinitionException {
 
-		CPDefinition cpDefinition = fetchByC_V_First(
-			CProductId, version, orderByComparator);
+		CPDefinition cpDefinition = findByC_V(CProductId, version);
 
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the first cp definition in the ordered set where CProductId = &#63; and version = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByC_V_First(
-		long CProductId, int version,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		List<CPDefinition> list = findByC_V(
-			CProductId, version, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and version = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition
-	 * @throws NoSuchCPDefinitionException if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition findByC_V_Last(
-			long CProductId, int version,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = fetchByC_V_Last(
-			CProductId, version, orderByComparator);
-
-		if (cpDefinition != null) {
-			return cpDefinition;
-		}
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		sb.append("CProductId=");
-		sb.append(CProductId);
-
-		sb.append(", version=");
-		sb.append(version);
-
-		sb.append("}");
-
-		throw new NoSuchCPDefinitionException(sb.toString());
-	}
-
-	/**
-	 * Returns the last cp definition in the ordered set where CProductId = &#63; and version = &#63;.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching cp definition, or <code>null</code> if a matching cp definition could not be found
-	 */
-	@Override
-	public CPDefinition fetchByC_V_Last(
-		long CProductId, int version,
-		OrderByComparator<CPDefinition> orderByComparator) {
-
-		int count = countByC_V(CProductId, version);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CPDefinition> list = findByC_V(
-			CProductId, version, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the cp definitions before and after the current cp definition in the ordered set where CProductId = &#63; and version = &#63;.
-	 *
-	 * @param CPDefinitionId the primary key of the current cp definition
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next cp definition
-	 * @throws NoSuchCPDefinitionException if a cp definition with the primary key could not be found
-	 */
-	@Override
-	public CPDefinition[] findByC_V_PrevAndNext(
-			long CPDefinitionId, long CProductId, int version,
-			OrderByComparator<CPDefinition> orderByComparator)
-		throws NoSuchCPDefinitionException {
-
-		CPDefinition cpDefinition = findByPrimaryKey(CPDefinitionId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CPDefinition[] array = new CPDefinitionImpl[3];
-
-			array[0] = getByC_V_PrevAndNext(
-				session, cpDefinition, CProductId, version, orderByComparator,
-				true);
-
-			array[1] = cpDefinition;
-
-			array[2] = getByC_V_PrevAndNext(
-				session, cpDefinition, CProductId, version, orderByComparator,
-				false);
-
-			return array;
-		}
-		catch (Exception exception) {
-			throw processException(exception);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CPDefinition getByC_V_PrevAndNext(
-		Session session, CPDefinition cpDefinition, long CProductId,
-		int version, OrderByComparator<CPDefinition> orderByComparator,
-		boolean previous) {
-
-		StringBundler sb = null;
-
-		if (orderByComparator != null) {
-			sb = new StringBundler(
-				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			sb = new StringBundler(4);
-		}
-
-		sb.append(_SQL_SELECT_CPDEFINITION_WHERE);
-
-		sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
-
-		sb.append(_FINDER_COLUMN_C_V_VERSION_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields =
-				orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				sb.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(WHERE_GREATER_THAN);
-					}
-					else {
-						sb.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			sb.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				sb.append(_ORDER_BY_ENTITY_ALIAS);
-				sb.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						sb.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						sb.append(ORDER_BY_ASC);
-					}
-					else {
-						sb.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			sb.append(CPDefinitionModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = sb.toString();
-
-		Query query = session.createQuery(sql);
-
-		query.setFirstResult(0);
-		query.setMaxResults(2);
-
-		QueryPos queryPos = QueryPos.getInstance(query);
-
-		queryPos.add(CProductId);
-
-		queryPos.add(version);
-
-		if (orderByComparator != null) {
-			for (Object orderByConditionValue :
-					orderByComparator.getOrderByConditionValues(cpDefinition)) {
-
-				queryPos.add(orderByConditionValue);
-			}
-		}
-
-		List<CPDefinition> list = query.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the cp definitions where CProductId = &#63; and version = &#63; from the database.
-	 *
-	 * @param CProductId the c product ID
-	 * @param version the version
-	 */
-	@Override
-	public void removeByC_V(long CProductId, int version) {
-		for (CPDefinition cpDefinition :
-				findByC_V(
-					CProductId, version, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-					null)) {
-
-			remove(cpDefinition);
-		}
+		return remove(cpDefinition);
 	}
 
 	/**
@@ -6303,55 +5982,13 @@ public class CPDefinitionPersistenceImpl
 	 */
 	@Override
 	public int countByC_V(long CProductId, int version) {
-		try (SafeCloseable safeCloseable =
-				ctPersistenceHelper.setCTCollectionIdWithSafeCloseable(
-					CPDefinition.class)) {
+		CPDefinition cpDefinition = fetchByC_V(CProductId, version);
 
-			FinderPath finderPath = _finderPathCountByC_V;
-
-			Object[] finderArgs = new Object[] {CProductId, version};
-
-			Long count = (Long)finderCache.getResult(
-				finderPath, finderArgs, this);
-
-			if (count == null) {
-				StringBundler sb = new StringBundler(3);
-
-				sb.append(_SQL_COUNT_CPDEFINITION_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_V_CPRODUCTID_2);
-
-				sb.append(_FINDER_COLUMN_C_V_VERSION_2);
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(CProductId);
-
-					queryPos.add(version);
-
-					count = (Long)query.uniqueResult();
-
-					finderCache.putResult(finderPath, finderArgs, count);
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			return count.intValue();
+		if (cpDefinition == null) {
+			return 0;
 		}
+
+		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_C_V_CPRODUCTID_2 =
@@ -7524,6 +7161,13 @@ public class CPDefinitionPersistenceImpl
 					cpDefinition.getUuid(), cpDefinition.getGroupId()
 				},
 				cpDefinition);
+
+			finderCache.putResult(
+				_finderPathFetchByC_V,
+				new Object[] {
+					cpDefinition.getCProductId(), cpDefinition.getVersion()
+				},
+				cpDefinition);
 		}
 	}
 
@@ -7614,6 +7258,14 @@ public class CPDefinitionPersistenceImpl
 
 			finderCache.putResult(
 				_finderPathFetchByUUID_G, args, cpDefinitionModelImpl);
+
+			args = new Object[] {
+				cpDefinitionModelImpl.getCProductId(),
+				cpDefinitionModelImpl.getVersion()
+			};
+
+			finderCache.putResult(
+				_finderPathFetchByC_V, args, cpDefinitionModelImpl);
 		}
 	}
 
@@ -8353,6 +8005,8 @@ public class CPDefinitionPersistenceImpl
 			CTColumnResolutionType.STRICT, ctStrictColumnNames);
 
 		_uniqueIndexColumnNames.add(new String[] {"uuid_", "groupId"});
+
+		_uniqueIndexColumnNames.add(new String[] {"CProductId", "version"});
 	}
 
 	/**
@@ -8527,24 +8181,10 @@ public class CPDefinitionPersistenceImpl
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"groupId", "status"}, false);
 
-		_finderPathWithPaginationFindByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_V",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			},
-			new String[] {"CProductId", "version"}, true);
-
-		_finderPathWithoutPaginationFindByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_V",
+		_finderPathFetchByC_V = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_V",
 			new String[] {Long.class.getName(), Integer.class.getName()},
 			new String[] {"CProductId", "version"}, true);
-
-		_finderPathCountByC_V = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_V",
-			new String[] {Long.class.getName(), Integer.class.getName()},
-			new String[] {"CProductId", "version"}, false);
 
 		_finderPathWithPaginationFindByC_S = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_S",

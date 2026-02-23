@@ -45,8 +45,8 @@ create index IX_8DA57014 on CPDSpecificationOptionValue (groupId);
 create unique index IX_1E581E2E on CPDSpecificationOptionValue (uuid_[$COLUMN_LENGTH:75$], ctCollectionId, groupId);
 
 create index IX_3D5A0021 on CPDefinition (CPTaxCategoryId);
+create unique index IX_71A91E09 on CPDefinition (CProductId, ctCollectionId, version);
 create index IX_1F4B9C67 on CPDefinition (CProductId, status);
-create index IX_F1AEC8A7 on CPDefinition (CProductId, version);
 create index IX_217AF702 on CPDefinition (companyId);
 create index IX_419350EA on CPDefinition (groupId, status);
 create index IX_99C4ED10 on CPDefinition (groupId, subscriptionEnabled);

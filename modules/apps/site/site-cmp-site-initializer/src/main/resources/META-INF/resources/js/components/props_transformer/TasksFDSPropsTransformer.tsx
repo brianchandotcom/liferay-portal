@@ -175,7 +175,18 @@ export default function TasksFDSPropsTransformer({
 							_CLASS_NAME_KALEO_TASK_INSTANCE_TOKEN
 						) {
 							if (itemData.embedded?.assigneePerson) {
-								return itemData.embedded.assigneePerson.name;
+								return (
+									<AssigneeRenderer
+										image={
+											itemData.embedded.assigneePerson
+												.image
+										}
+										name={
+											itemData.embedded.assigneePerson
+												.name
+										}
+									/>
+								);
 							}
 
 							return itemData.embedded?.assigneeRoles

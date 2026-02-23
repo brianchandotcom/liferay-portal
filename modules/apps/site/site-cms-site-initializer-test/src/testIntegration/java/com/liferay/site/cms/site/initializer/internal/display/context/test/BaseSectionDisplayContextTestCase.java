@@ -334,6 +334,7 @@ public abstract class BaseSectionDisplayContextTestCase
 
 		_depotEntryLocalService.deleteDepotEntry(depotEntry1);
 		_depotEntryLocalService.deleteDepotEntry(depotEntry2);
+
 		_userLocalService.deleteUser(user);
 	}
 

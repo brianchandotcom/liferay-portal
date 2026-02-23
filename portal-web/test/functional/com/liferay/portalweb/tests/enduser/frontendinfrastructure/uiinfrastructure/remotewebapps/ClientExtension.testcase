@@ -72,6 +72,8 @@ definition {
 	@description = "LPS-182184. Verify when the user clicks on Clear button the JSON field becomes empty"
 	@priority = 4
 	test CanClearJSONFileField {
+		property browser.chrome.version = "139.0";
+
 		task ("Create a Custom Element client extension") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
@@ -138,6 +140,8 @@ definition {
 	@description = "LPS-182184. Verify the option to export a client extension is displayed."
 	@priority = 4
 	test CanExportCustomElement {
+		property browser.chrome.version = "139.0";
+
 		task ("Create a Custom Element client extension") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementHtmlName = "vanilla-counter",
@@ -184,6 +188,7 @@ definition {
 	@description = "LPS-182184. Verify it's possible to import a client extension."
 	@priority = 5
 	test CanImportClientExtension {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		task ("Create a Custom Element client extension") {
@@ -244,6 +249,8 @@ definition {
 	@description = "LPS-182184. Verify it's not possible to import an invalid file."
 	@priority = 3
 	test CanNotImportAnInvalidFile {
+		property browser.chrome.version = "139.0";
+
 		task ("Given the admin page of client extensions") {
 			ClientExtensionGeneral.goToRemoteAppsPortlet();
 		}
@@ -281,6 +288,7 @@ definition {
 	@priority = 4
 	test CustomElementCanBeCreatedInNonRootContext {
 		property app.server.types = "tomcat";
+		property browser.chrome.version = "139.0";
 		property database.types = "mysql";
 		property portal.context = "liferay";
 		property skip.clean-app-server-deploy-dir = "true";
@@ -350,6 +358,8 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can be instanceable in a Content Page"
 	@priority = 3
 	test CustomElementCanBeInstanceable {
+		property browser.chrome.version = "139.0";
+
 		task ("Add a public page with JSON") {
 			JSONLayout.addPublicLayout(
 				groupName = "Guest",
@@ -409,6 +419,8 @@ definition {
 	@description = "LPS-139377. Verify that remote app of type Custom Element can displayed properties in HTML"
 	@priority = 3
 	test CustomElementCanInjectHTMLProperties {
+		property browser.chrome.version = "139.0";
+
 		task ("When create custom element remote application with property QAuser") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "http://remote-component-test.wincent.com/index.css",
@@ -437,6 +449,8 @@ definition {
 	@description = "LPS-159013. ES module custom element portlets render incorrect script node when dragged in the UI"
 	@priority = 4
 	test CustomElementRendersCorrectlyWhenPlacedOnWidgetPage {
+		property browser.chrome.version = "139.0";
+
 		task ("Given a custom element with "Use ES Modules" option created") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "https://liferay.github.io/liferay-frontend-projects/index.css",
@@ -479,6 +493,8 @@ definition {
 	@description = "LPS-154725. Verify that the UI label is present when a client extension is not created through osgi"
 	@priority = 3
 	test UILabelIsPresent {
+		property browser.chrome.version = "139.0";
+
 		task ("Given a created Client Extension") {
 			JSONClientExtension.addCustomElementRemoteAppEntry(
 				customElementCssurl = "/documents/d/guest/main",

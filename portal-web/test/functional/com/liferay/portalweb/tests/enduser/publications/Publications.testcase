@@ -998,6 +998,8 @@ definition {
 	@description = "LPS-197275 - Assert client extension changes can display in publications"
 	@priority = 3
 	test ClientExtensionChangesCanDisplayInPublications {
+		property browser.chrome.version = "139.0";
+
 		JSONPublications.addPublication(publicationName = "Publication Name");
 
 		JSONPublications.selectPublication(publicationName = "Publication Name");

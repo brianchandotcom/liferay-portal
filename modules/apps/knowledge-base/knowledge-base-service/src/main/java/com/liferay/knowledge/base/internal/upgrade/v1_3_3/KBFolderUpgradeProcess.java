@@ -72,10 +72,9 @@ public class KBFolderUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				long kbFolderId = resultSet.getLong("kbFolderId");
 
-				String urlTitle = _getUrlTitle(
-					kbFolderId, resultSet.getString("name"));
-
-				urlTitles.put(kbFolderId, urlTitle);
+				urlTitles.put(
+					kbFolderId,
+					_getUrlTitle(kbFolderId, resultSet.getString("name")));
 			}
 
 			return urlTitles;

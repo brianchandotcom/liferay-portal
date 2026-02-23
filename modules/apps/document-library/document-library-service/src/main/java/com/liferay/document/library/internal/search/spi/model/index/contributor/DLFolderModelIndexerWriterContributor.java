@@ -7,10 +7,9 @@ package com.liferay.document.library.internal.search.spi.model.index.contributor
 
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
@@ -21,40 +20,34 @@ public class DLFolderModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DLFolder> {
 
 	public DLFolderModelIndexerWriterContributor(
-		DLFolderLocalService dlFolderLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DLFolderLocalService dlFolderLocalService) {
 
 		_dlFolderLocalService = dlFolderLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property property = PropertyFactoryUtil.forName("mountPoint");
 
 				dynamicQuery.add(property.eq(false));
 			});
-		batchIndexingActionable.setPerformActionMethod(
-			(DLFolder dlFolder) -> batchIndexingActionable.addDocument(
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			(DLFolder dlFolder) -> indexableActionableDynamicQuery.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(dlFolder)));
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_dlFolderLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _dlFolderLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	private final DLFolderLocalService _dlFolderLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

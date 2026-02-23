@@ -12,7 +12,6 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -64,8 +63,7 @@ public class DLFileEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new DLFileEntryModelIndexerWriterContributor(
-				_dlFileEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_dlFileEntryLocalService);
 		_modelVisibilityContributor = new DLFileEntryModelVisibilityContributor(
 			_dlAppLocalService);
 	}
@@ -75,10 +73,6 @@ public class DLFileEntryModelSearchConfigurator
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DLFileEntry>
 		_modelIndexWriterContributor;

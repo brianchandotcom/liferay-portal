@@ -1287,13 +1287,13 @@
 			<description name="Finds incorrect use of `LanguageUtil.get` in `.jsp` files." />
 			<property name="enabled" value="false" />
 		</check>
-		<check name="JSPLineBreakCheck">
-			<category name="Styling" />
-			<description name="Finds missing and unnecessary line breaks in `.jsp` lines." />
-		</check>
 		<check name="JSPLiferayUICSPTagCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds new usages of deprecated liferay-ui:csp tag." />
+		</check>
+		<check name="JSPLineBreakCheck">
+			<category name="Styling" />
+			<description name="Finds missing and unnecessary line breaks in `.jsp` lines." />
 		</check>
 		<check name="JSPLogFileNameCheck">
 			<category name="Bug Prevention" />

@@ -7,8 +7,7 @@ package com.liferay.data.engine.internal.search.spi.model.index.contributor;
 
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,25 +17,18 @@ public class DEDataListViewModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DEDataListView> {
 
 	public DEDataListViewModelIndexerWriterContributor(
-		DEDataListViewLocalService deDataListViewLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DEDataListViewLocalService deDataListViewLocalService) {
 
 		_deDataListViewLocalService = deDataListViewLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_deDataListViewLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _deDataListViewLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	private final DEDataListViewLocalService _deDataListViewLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

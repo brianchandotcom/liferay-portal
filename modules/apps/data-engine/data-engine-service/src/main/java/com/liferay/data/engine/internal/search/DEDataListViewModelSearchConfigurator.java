@@ -9,7 +9,6 @@ import com.liferay.data.engine.internal.search.spi.model.index.contributor.DEDat
 import com.liferay.data.engine.model.DEDataListView;
 import com.liferay.data.engine.service.DEDataListViewLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,16 +52,11 @@ public class DEDataListViewModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new DEDataListViewModelIndexerWriterContributor(
-				_deDataListViewLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_deDataListViewLocalService);
 	}
 
 	@Reference
 	private DEDataListViewLocalService _deDataListViewLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DEDataListView>
 		_modelIndexWriterContributor;

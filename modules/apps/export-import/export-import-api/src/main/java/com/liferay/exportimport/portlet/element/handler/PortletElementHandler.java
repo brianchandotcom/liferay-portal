@@ -16,6 +16,8 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface PortletElementHandler {
 
+	public String[] getConfigurationPortletOptions();
+
 	public String getDisplayName();
 
 	public long getLayoutId();
@@ -23,8 +25,6 @@ public interface PortletElementHandler {
 	public String getPath();
 
 	public Portlet getPortlet(long companyId);
-
-	public String getPortletConfiguration();
 
 	public String getPortletDataHandlerKey();
 
@@ -42,6 +42,9 @@ public interface PortletElementHandler {
 
 	public boolean isValidateExistingDataHandler();
 
+	public void setConfigurationPortletOptions(
+		String[] configurationPortletOptions);
+
 	public void setDisplayName(String displayName);
 
 	public void setLayoutId(long layoutId);
@@ -49,8 +52,6 @@ public interface PortletElementHandler {
 	public void setMissingPortletSupported(boolean missingPortletSupported);
 
 	public void setPath(String path);
-
-	public void setPortletConfiguration(String portletConfiguration);
 
 	public void setPortletData(boolean portletData);
 

@@ -534,36 +534,31 @@ public class PortletExportControllerImpl implements PortletExportController {
 			_portletElementHandlerFactory.create(
 				parentElement.addElement("portlet"));
 
-		portletElementHandler.setDisplayName(portlet.getDisplayName());
-		portletElementHandler.setSourcePortletId(portlet.getPortletId());
-		portletElementHandler.setLayoutId(layoutId);
-		portletElementHandler.setPath(path);
-
-		StringBundler configurationOptionsSB = new StringBundler(6);
-
-		if (exportPortletSetup) {
-			configurationOptionsSB.append("setup");
-			configurationOptionsSB.append(StringPool.COMMA);
-		}
+		List<String> configurationPortletOptions = new ArrayList<>(3);
 
 		if (exportPortletArchivedSetups) {
-			configurationOptionsSB.append("archived-setups");
-			configurationOptionsSB.append(StringPool.COMMA);
+			configurationPortletOptions.add("archived-setups");
+		}
+
+		if (exportPortletSetup) {
+			configurationPortletOptions.add("setup");
 		}
 
 		if (exportPortletUserPreferences) {
-			configurationOptionsSB.append("user-preferences");
-			configurationOptionsSB.append(StringPool.COMMA);
+			configurationPortletOptions.add("user-preferences");
 		}
 
-		if (configurationOptionsSB.index() > 0) {
-			configurationOptionsSB.setIndex(configurationOptionsSB.index() - 1);
-		}
+		portletElementHandler.setConfigurationPortletOptions(
+			configurationPortletOptions.toArray(new String[0]));
 
-		portletElementHandler.setPortletConfiguration(
-			configurationOptionsSB.toString());
+		portletElementHandler.setDisplayName(portlet.getDisplayName());
+		portletElementHandler.setLayoutId(layoutId);
+		portletElementHandler.setPath(path);
 		portletElementHandler.setPortletData(
 			exportPortletData || portletDataHandler.isHidden());
+		portletElementHandler.setSchemaVersion(
+			portletDataHandler.getSchemaVersion());
+		portletElementHandler.setSourcePortletId(portlet.getPortletId());
 
 		if ((portletDataHandler instanceof
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler) &&
@@ -575,9 +570,6 @@ public class PortletExportControllerImpl implements PortletExportController {
 			portletElementHandler.setRank(
 				batchEnginePortletDataHandler.getRank());
 		}
-
-		portletElementHandler.setSchemaVersion(
-			portletDataHandler.getSchemaVersion());
 
 		if (portletDataContext.isValidateExistingDataHandler()) {
 			portletElementHandler.setValidateExistingDataHandler(true);

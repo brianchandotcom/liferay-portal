@@ -10,6 +10,7 @@ import com.liferay.exportimport.portlet.element.handler.PortletElementHandler;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -23,6 +24,12 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 		_portletElement = portletElement;
 		_portletLocalService = portletLocalService;
+	}
+
+	@Override
+	public String[] getConfigurationPortletOptions() {
+		return StringUtil.split(
+			_portletElement.attributeValue(_PORTLET_CONFIGURATION));
 	}
 
 	@Override
@@ -50,11 +57,6 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 		}
 
 		return portlet;
-	}
-
-	@Override
-	public String getPortletConfiguration() {
-		return _portletElement.attributeValue(_PORTLET_CONFIGURATION);
 	}
 
 	@Override
@@ -113,6 +115,15 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	}
 
 	@Override
+	public void setConfigurationPortletOptions(
+		String[] configurationPortletOptions) {
+
+		_portletElement.addAttribute(
+			_PORTLET_CONFIGURATION,
+			StringUtil.merge(configurationPortletOptions));
+	}
+
+	@Override
 	public void setDisplayName(String displayName) {
 		_portletElement.addAttribute(_DISPLAY_NAME, displayName);
 	}
@@ -132,12 +143,6 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	@Override
 	public void setPath(String path) {
 		_portletElement.addAttribute(_PATH, path);
-	}
-
-	@Override
-	public void setPortletConfiguration(String portletConfiguration) {
-		_portletElement.addAttribute(
-			_PORTLET_CONFIGURATION, portletConfiguration);
 	}
 
 	@Override

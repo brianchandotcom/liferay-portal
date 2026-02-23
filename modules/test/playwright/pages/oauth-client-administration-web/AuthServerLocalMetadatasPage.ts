@@ -40,7 +40,7 @@ export class AuthServerLocalMetadatasPage {
 		});
 		this.authorizationEndpoint = page.getByLabel('Authorization Endpoint');
 		this.enabledField = page.getByText('Enabled', {exact: true});
-		this.issuer = page.getByLabel('Issuer Required The issuer');
+		this.issuer = page.getByLabel('Issuer Required Issuer must');
 		this.grantTypes = page.getByLabel('Grant Types');
 		this.jwkUri = page.getByLabel('JWK URI');
 		this.oAuthAuthorizatoinServerTab = page.getByRole('link', {

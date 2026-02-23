@@ -7,8 +7,7 @@ package com.liferay.commerce.payment.internal.search.spi.model.index.contributor
 
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -20,22 +19,18 @@ public class CommercePaymentEntryAuditModelIndexerWriterContributor
 
 	public CommercePaymentEntryAuditModelIndexerWriterContributor(
 		CommercePaymentEntryAuditLocalService
-			commercePaymentEntryAuditLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+			commercePaymentEntryAuditLocalService) {
 
 		_commercePaymentEntryAuditLocalService =
 			commercePaymentEntryAuditLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_commercePaymentEntryAuditLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _commercePaymentEntryAuditLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -47,7 +42,5 @@ public class CommercePaymentEntryAuditModelIndexerWriterContributor
 
 	private final CommercePaymentEntryAuditLocalService
 		_commercePaymentEntryAuditLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

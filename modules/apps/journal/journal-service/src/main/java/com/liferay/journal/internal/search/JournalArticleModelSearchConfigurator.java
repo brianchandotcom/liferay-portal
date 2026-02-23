@@ -14,7 +14,6 @@ import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -78,7 +77,6 @@ public class JournalArticleModelSearchConfigurator
 		_modelIndexerWriterContributor =
 			new JournalArticleModelIndexerWriterContributor(
 				_batchIndexingHelper, _configurationProvider,
-				_dynamicQueryBatchIndexingActionableFactory,
 				_journalArticleLocalService,
 				_journalArticleResourceLocalService);
 		_modelVisibilityContributor =
@@ -91,10 +89,6 @@ public class JournalArticleModelSearchConfigurator
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

@@ -17,7 +17,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
@@ -185,10 +184,7 @@ public class JournalArticleModelIndexerWriterContributorTest {
 			journalArticleModelIndexerWriterContributor =
 				new JournalArticleModelIndexerWriterContributor(
 					Mockito.mock(BatchIndexingHelper.class),
-					_configurationProvider,
-					Mockito.mock(
-						DynamicQueryBatchIndexingActionableFactory.class),
-					_journalArticleLocalService,
+					_configurationProvider, _journalArticleLocalService,
 					Mockito.mock(JournalArticleResourceLocalService.class));
 
 		journalArticleModelIndexerWriterContributor.modelDeleted(

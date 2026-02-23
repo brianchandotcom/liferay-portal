@@ -351,8 +351,91 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportCompanyObjectEntriesWithIndividualDeletions()
 		throws Exception {
 
-		_testExportCompanyObjectEntriesWithIndividualDeletions();
-		_testImportCompanyObjectEntriesWithIndividualDeletions();
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		ObjectDefinition objectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectEntry[] objectEntries = _addObjectEntries(
+			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
+
+		File larFile1 = new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectEntries(
+			objectDefinition
+		).executeExport();
+
+		_deleteObjectEntries(objectEntries[0], objectEntries[1]);
+
+		File larFile2 = new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			group.getGroupId()
+		).withObjectEntries(
+			objectDefinition
+		).executeExport();
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				objectEntries[0], objectEntries[1]
+			).toString(),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition.getExternalReferenceCode(), larFile2,
+				group.getGroupId()
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+			).toString(),
+			_getClassExternalReferenceCodesJSONArray(
+				larFile2, group.getGroupId()
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_deleteObjectEntries(objectEntries[2]);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile1
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
+
+		new ExportImportExecutor(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries);
+
+		new ExportImportExecutor(
+		).withDeletions(
+		).withGroupId(
+			group.getGroupId()
+		).withLARFile(
+			larFile2
+		).withObjectEntries(
+			objectDefinition
+		).executeImport();
+
+		_assertObjectEntries(
+			false, objectDefinition.getObjectDefinitionId(), objectEntries[2]);
+		_assertNull(
+			objectDefinition.getObjectDefinitionId(), objectEntries[0],
+			objectEntries[1]);
+
 		_testExportImportObjectEntriesWithIndividualDeletionsAndMissingPortlet(
 			_stagingGroupHelper.fetchCompanyGroup(
 				TestPropsValues.getCompanyId()),
@@ -1210,6 +1293,23 @@ public class BatchEnginePortletDataHandlerTest {
 		).withObjectEntries(
 			objectDefinition
 		).executeExport();
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				objectEntries[0], objectEntries[1]
+			).toString(),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition.getExternalReferenceCode(), larFile2,
+				group.getGroupId()
+			).toString(),
+			JSONCompareMode.LENIENT);
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+			).toString(),
+			_getClassExternalReferenceCodesJSONArray(
+				larFile2, group.getGroupId()
+			).toString(),
+			JSONCompareMode.STRICT);
 
 		_deleteObjectEntries(objectEntries[2]);
 
@@ -2635,17 +2735,6 @@ public class BatchEnginePortletDataHandlerTest {
 		return parameterMap;
 	}
 
-	private String[] _getExternalReferenceCodes(ObjectEntry... objectEntries) {
-		String[] externalReferenceCodes = new String[objectEntries.length];
-
-		for (int i = 0; i < objectEntries.length; i++) {
-			externalReferenceCodes[i] =
-				objectEntries[i].getExternalReferenceCode();
-		}
-
-		return externalReferenceCodes;
-	}
-
 	private JSONArray _getExternalReferenceCodesJSONArray(
 			String fileNamePrefix, File file, long groupId)
 		throws Exception {
@@ -2810,125 +2899,6 @@ public class BatchEnginePortletDataHandlerTest {
 			objectDefinition.getCompanyId(), group.getGroupId(),
 			TestPropsValues.getUserId(), objectDefinition.getClassName(), 0L,
 			ContentTypes.TEXT_HTML, content);
-	}
-
-	private void _testExportCompanyObjectEntriesWithIndividualDeletions()
-		throws Exception {
-
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		ObjectDefinition objectDefinition1 = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition1);
-
-		_deleteObjectEntries(objectEntries);
-
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				Collections.singletonList(
-					ObjectFieldUtil.createObjectField(
-						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
-						false)),
-				ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition2,
-			RandomTestUtil.randomString());
-
-		_deleteObjectEntries(objectEntry);
-
-		File larFile = new ExportImportExecutor(
-		).withDeletions(
-		).withGroupId(
-			group.getGroupId()
-		).withObjectEntries(
-			objectDefinition1
-		).executeExport();
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				_getExternalReferenceCodes(objectEntries)
-			).toString(),
-			_getExternalReferenceCodesJSONArray(
-				objectDefinition1.getExternalReferenceCode(), larFile,
-				group.getGroupId()
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-			).toString(),
-			_getClassExternalReferenceCodesJSONArray(
-				larFile, group.getGroupId()
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		larFile = new ExportImportExecutor(
-		).withDeletions(
-		).withGroupId(
-			group.getGroupId()
-		).withObjectEntries(
-			objectDefinition2
-		).withPrivateLayouts(
-		).executeExport();
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				objectEntry.getExternalReferenceCode()
-			).toString(),
-			_getExternalReferenceCodesJSONArray(
-				objectDefinition2.getExternalReferenceCode(), larFile,
-				group.getGroupId()
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-			).toString(),
-			_getClassExternalReferenceCodesJSONArray(
-				larFile, group.getGroupId()
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		larFile = new ExportImportExecutor(
-		).withDeletions(
-		).withGroupId(
-			group.getGroupId()
-		).withObjectEntries(
-			objectDefinition1
-		).withObjectEntries(
-			objectDefinition2
-		).executeExport();
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				_getExternalReferenceCodes(objectEntries)
-			).toString(),
-			_getExternalReferenceCodesJSONArray(
-				objectDefinition1.getExternalReferenceCode(), larFile,
-				group.getGroupId()
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				objectEntry.getExternalReferenceCode()
-			).toString(),
-			_getExternalReferenceCodesJSONArray(
-				objectDefinition2.getExternalReferenceCode(), larFile,
-				group.getGroupId()
-			).toString(),
-			JSONCompareMode.LENIENT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-			).toString(),
-			_getClassExternalReferenceCodesJSONArray(
-				larFile, group.getGroupId()
-			).toString(),
-			JSONCompareMode.STRICT);
 	}
 
 	private void _testExportImportCompanyObjectEntriesWithRichTextAndURLs(
@@ -3619,78 +3589,6 @@ public class BatchEnginePortletDataHandlerTest {
 							new Date(System.currentTimeMillis() - 10000),
 							new Date(System.currentTimeMillis() - 5000), null),
 					portletDataHandler)));
-	}
-
-	private void _testImportCompanyObjectEntriesWithIndividualDeletions()
-		throws Exception {
-
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		ObjectDefinition objectDefinition = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-
-		ObjectEntry[] objectEntries = _addObjectEntries(
-			3, GroupConstants.DEFAULT_PARENT_GROUP_ID, objectDefinition);
-
-		File larFile1 = new ExportImportExecutor(
-		).withGroupId(
-			group.getGroupId()
-		).withObjectEntries(
-			objectDefinition
-		).executeExport();
-
-		_deleteObjectEntries(objectEntries[0], objectEntries[1]);
-
-		File larFile2 = new ExportImportExecutor(
-		).withDeletions(
-		).withGroupId(
-			group.getGroupId()
-		).withObjectEntries(
-			objectDefinition
-		).executeExport();
-
-		_deleteObjectEntries(objectEntries[2]);
-
-		new ExportImportExecutor(
-		).withGroupId(
-			group.getGroupId()
-		).withLARFile(
-			larFile1
-		).withObjectEntries(
-			objectDefinition
-		).executeImport();
-
-		_assertObjectEntries(
-			false, objectDefinition.getObjectDefinitionId(), objectEntries);
-
-		new ExportImportExecutor(
-		).withGroupId(
-			group.getGroupId()
-		).withLARFile(
-			larFile2
-		).withObjectEntries(
-			objectDefinition
-		).executeImport();
-
-		_assertObjectEntries(
-			false, objectDefinition.getObjectDefinitionId(), objectEntries);
-
-		new ExportImportExecutor(
-		).withDeletions(
-		).withGroupId(
-			group.getGroupId()
-		).withLARFile(
-			larFile2
-		).withObjectEntries(
-			objectDefinition
-		).executeImport();
-
-		_assertObjectEntries(
-			false, objectDefinition.getObjectDefinitionId(), objectEntries[2]);
-		_assertNull(
-			objectDefinition.getObjectDefinitionId(), objectEntries[0],
-			objectEntries[1]);
 	}
 
 	private void _testIsConfigurationEnabled(boolean stagingSupported)

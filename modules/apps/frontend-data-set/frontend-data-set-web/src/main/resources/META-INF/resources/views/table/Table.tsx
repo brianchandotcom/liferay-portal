@@ -389,10 +389,8 @@ const Body = ({
 											item,
 											item[accessibleNameField]
 										)?.value
-									: getLocalizedValue(
-												item,
-												selectedItemsKey
-										  )?.value
+									: getLocalizedValue(item, selectedItemsKey)
+												?.value
 										? getLocalizedValue(
 												item,
 												selectedItemsKey

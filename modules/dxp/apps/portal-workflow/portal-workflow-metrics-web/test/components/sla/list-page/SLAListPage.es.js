@@ -103,7 +103,7 @@ describe('The SLAListPage component should', () => {
 			});
 
 			const renderResult = render(
-				<MockRouter  {...mockProps}>
+				<MockRouter {...mockProps}>
 					<ToasterProvider>
 						<SLAContext.Provider value={contextMock}>
 							<SLAListPage />
@@ -309,7 +309,7 @@ describe('The SLAListPage component should', () => {
 			}));
 
 			const renderResult = render(
-				<MockRouter  {...mockProps}>
+				<MockRouter {...mockProps}>
 					<ToasterProvider>
 						<SLAContext.Provider value={{}}>
 							<SLAListPage />

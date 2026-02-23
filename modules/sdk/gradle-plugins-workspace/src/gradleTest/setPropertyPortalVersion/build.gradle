@@ -1,0 +1,29 @@
+import java.util.jar.Attributes
+import java.util.jar.JarFile
+
+task runGradleTest
+
+runGradleTest {
+	dependsOn ":modules:foo-portlet:jar"
+
+	doLast {
+		Project project = project(":modules:foo-portlet")
+
+		assert project.findProperty("portal.version") == "7.3.x"
+
+		File file = project.file("build/libs/com.liferay.foo.portlet-1.0.0.jar")
+
+		assert file.exists()
+
+		JarFile jarFile = new JarFile(file)
+
+		jarFile.withCloseable {
+			Attributes attributes = jarFile.manifest.mainAttributes
+
+			String provideCapabilityValue = attributes.getValue("Provide-Capability")
+
+			assert provideCapabilityValue.contains("liferay.resource.bundle")
+			assert !provideCapabilityValue.contains("liferay.language.resources")
+		}
+	}
+}

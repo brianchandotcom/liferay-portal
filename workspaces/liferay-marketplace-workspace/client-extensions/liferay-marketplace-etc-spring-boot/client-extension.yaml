@@ -23,6 +23,7 @@ liferay-marketplace-etc-spring-boot-oahs:
         -   Liferay.Headless.Admin.User.everything
         -   Liferay.Headless.Admin.Workflow.everything
         -   Liferay.Headless.Commerce.Admin.Catalog.everything
+        -   Liferay.Headless.Commerce.Admin.Channel.everything
         -   Liferay.Headless.Commerce.Admin.Order.everything
         -   Liferay.Headless.Commerce.Delivery.Catalog.everything
         -   Liferay.Headless.Delivery.everything

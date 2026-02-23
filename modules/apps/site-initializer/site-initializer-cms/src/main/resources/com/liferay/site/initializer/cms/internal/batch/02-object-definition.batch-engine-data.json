@@ -25,7 +25,19 @@
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMS_BASIC_DOCUMENT",
 			"label": {
-				"en_US": "Basic Document"
+				"ar_SA": "مستند أساسي",
+				"ca_ES": "Document bàsic",
+				"de_DE": "Einfaches Dokument",
+				"en_US": "Basic Document",
+				"es_ES": "Documento básico",
+				"fi_FI": "Perus asiakirja",
+				"fr_FR": "Document de base",
+				"hu_HU": "Alapvető dokumentum",
+				"ja_JP": "基本ドキュメント",
+				"nl_NL": "Basisdocument",
+				"pt_BR": "Documento básico",
+				"sv_SE": "Vanligt dokument",
+				"zh_CN": "基本文档"
 			},
 			"modifiable": true,
 			"name": "CMSBasicDocument",
@@ -131,7 +143,19 @@
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMS_BASIC_WEB_CONTENT",
 			"label": {
-				"en_US": "Basic Web Content"
+				"ar_SA": "تحرير محتوى",
+				"ca_ES": "Contigut web bàsic",
+				"de_DE": "Einfacher Webcontent",
+				"en_US": "Basic Web Content",
+				"es_ES": "Contenido web básico",
+				"fi_FI": "Tavallinen web-sisältö",
+				"fr_FR": "Contenu web basique",
+				"hu_HU": "Alapvető webtartalom",
+				"ja_JP": "基本Webコンテンツ",
+				"nl_NL": "Basiswebcontent",
+				"pt_BR": "Conteúdo Web básico",
+				"sv_SE": "Vanligt innehåll",
+				"zh_CN": "基本 Web 内容"
 			},
 			"modifiable": true,
 			"name": "CMSBasicWebContent",
@@ -216,7 +240,19 @@
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMS_BLOG",
 			"label": {
-				"en_US": "Blog"
+				"ar_SA": "المدوّنات",
+				"ca_ES": "Bloc",
+				"de_DE": "Blog",
+				"en_US": "Blog",
+				"es_ES": "Blog",
+				"fi_FI": "Blogi",
+				"fr_FR": "Blogue",
+				"hu_HU": "Blog",
+				"ja_JP": "ブログ",
+				"nl_NL": "Blog",
+				"pt_BR": "Blog",
+				"sv_SE": "Blogg",
+				"zh_CN": "博客"
 			},
 			"modifiable": true,
 			"name": "CMSBlog",
@@ -832,7 +868,19 @@
 			"enableObjectEntryVersioning": true,
 			"externalReferenceCode": "L_CMS_EXTERNAL_VIDEO",
 			"label": {
-				"en_US": "External Video"
+				"ar_SA": "فيديو خارجي",
+				"ca_ES": "Vídeo extern",
+				"de_DE": "Externes Video",
+				"en_US": "External Video",
+				"es_ES": "Vídeo externo",
+				"fi_FI": "Ulkoinen Video",
+				"fr_FR": "Video externe",
+				"hu_HU": "Külső videó",
+				"ja_JP": "外部動画",
+				"nl_NL": "Externe video",
+				"pt_BR": "Vídeo externo",
+				"sv_SE": "Extern video",
+				"zh_CN": "外部视频"
 			},
 			"modifiable": true,
 			"name": "CMSExternalVideo",

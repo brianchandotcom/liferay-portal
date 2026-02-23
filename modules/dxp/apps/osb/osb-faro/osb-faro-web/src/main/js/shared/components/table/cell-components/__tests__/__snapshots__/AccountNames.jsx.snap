@@ -8,7 +8,7 @@ exports[`AccountNames should render 1`] = `
     <div
       class="text-truncate"
     >
-      foo, bar, baz
+      foo
     </div>
   </td>
 </tr>

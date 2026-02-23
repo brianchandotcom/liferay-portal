@@ -82,13 +82,14 @@ Immutable.Record {
 
 exports[`Records should return an Individual Record 1`] = `
 Immutable.Record {
-  "accountNames": null,
+  "accountName": null,
   "activitiesCount": 0,
   "dateCreated": null,
   "demographics": Immutable.Map {},
   "firstActivityDate": null,
   "id": null,
   "lastActivityDate": null,
+  "lastSessionCountry": null,
   "name": "",
   "properties": Immutable.Map {},
   "type": 2,

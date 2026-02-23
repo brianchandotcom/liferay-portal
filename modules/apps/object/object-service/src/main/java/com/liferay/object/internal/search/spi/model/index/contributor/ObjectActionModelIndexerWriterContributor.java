@@ -7,8 +7,7 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.service.ObjectActionLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,24 +17,18 @@ public class ObjectActionModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectAction> {
 
 	public ObjectActionModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		ObjectActionLocalService objectActionLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_objectActionLocalService = objectActionLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_objectActionLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _objectActionLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectActionLocalService _objectActionLocalService;
 
 }

@@ -7,8 +7,7 @@ package com.liferay.object.internal.search.spi.model.index.contributor;
 
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,24 +17,18 @@ public class ObjectFieldModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<ObjectField> {
 
 	public ObjectFieldModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		ObjectFieldLocalService objectFieldLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_objectFieldLocalService = objectFieldLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_objectFieldLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _objectFieldLocalService.getIndexableActionableDynamicQuery();
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 
 }

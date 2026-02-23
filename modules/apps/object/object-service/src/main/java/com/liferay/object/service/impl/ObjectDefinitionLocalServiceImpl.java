@@ -184,7 +184,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
@@ -1136,8 +1135,7 @@ public class ObjectDefinitionLocalServiceImpl
 				_accountEntryLocalService,
 				_accountEntryOrganizationRelLocalService,
 				_assetEntryLocalService, _bundleContext,
-				_dlFileEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory, _groupLocalService,
+				_dlFileEntryLocalService, _groupLocalService,
 				_kaleoDefinitionLocalService, _listTypeLocalService,
 				_objectActionLocalService, objectDefinitionLocalService,
 				_objectDefinitionSettingLocalService,
@@ -3843,10 +3841,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private EmptyModelManager _emptyModelManager;

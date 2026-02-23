@@ -92,7 +92,6 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -133,8 +132,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		AssetEntryLocalService assetEntryLocalService,
 		BundleContext bundleContext,
 		DLFileEntryLocalService dlFileEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		GroupLocalService groupLocalService,
 		KaleoDefinitionLocalService kaleoDefinitionLocalService,
 		ListTypeLocalService listTypeLocalService,
@@ -170,8 +167,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_assetEntryLocalService = assetEntryLocalService;
 		_bundleContext = bundleContext;
 		_dlFileEntryLocalService = dlFileEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_groupLocalService = groupLocalService;
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
 		_listTypeLocalService = listTypeLocalService;
@@ -303,7 +298,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			ObjectEntryModelIndexerWriterContributor
 				objectEntryModelIndexerWriterContributor =
 					new ObjectEntryModelIndexerWriterContributor(
-						_dynamicQueryBatchIndexingActionableFactory,
 						objectDefinition, _objectDefinitionLocalService,
 						_objectEntryLocalService, _objectFieldLocalService,
 						_objectFolderLocalService);
@@ -644,8 +638,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final AssetEntryLocalService _assetEntryLocalService;
 	private final BundleContext _bundleContext;
 	private final DLFileEntryLocalService _dlFileEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final GroupLocalService _groupLocalService;
 	private final KaleoDefinitionLocalService _kaleoDefinitionLocalService;
 	private final ListTypeLocalService _listTypeLocalService;

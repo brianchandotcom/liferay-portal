@@ -9,7 +9,6 @@ import com.liferay.object.internal.search.spi.model.index.contributor.ObjectVali
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,13 +52,8 @@ public class ObjectValidationRuleModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new ObjectValidationRuleModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_objectValidationRuleLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<ObjectValidationRule>
 		_modelIndexWriterContributor;

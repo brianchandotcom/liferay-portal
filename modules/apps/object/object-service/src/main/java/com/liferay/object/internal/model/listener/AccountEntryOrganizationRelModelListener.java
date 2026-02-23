@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 
 import org.osgi.framework.BundleContext;
@@ -123,7 +122,6 @@ public class AccountEntryOrganizationRelModelListener
 
 			ObjectEntryBatchReindexer objectEntryBatchReindexer =
 				new ObjectEntryBatchReindexer(
-					_dynamicQueryBatchIndexingActionableFactory,
 					_objectEntryLocalService, objectDefinition);
 
 			IndexerDocumentBuilder indexerDocumentBuilder =
@@ -136,10 +134,6 @@ public class AccountEntryOrganizationRelModelListener
 				accountEntryOrganizationRel.getCompanyId());
 		}
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"

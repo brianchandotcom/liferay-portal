@@ -58,57 +58,15 @@ public class CountryResourcePermissionUpgradeProcess extends UpgradeProcess {
 				continue;
 			}
 
-			if (!_resourcePermissionLocalService.hasResourcePermission(
-					resourcePermission.getCompanyId(), PortletKeys.PORTAL,
-					resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(), ActionKeys.ADD_COUNTRY)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(), PortletKeys.PORTAL,
-					resourcePermission.getScope(),
-					resourcePermission.getPrimKey(),
-					resourcePermission.getRoleId(), ActionKeys.ADD_COUNTRY);
-			}
-
-			if (!_resourcePermissionLocalService.hasResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.DELETE)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.DELETE);
-			}
-
-			if (!_resourcePermissionLocalService.hasResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.PERMISSIONS)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.PERMISSIONS);
-			}
-
-			if (!_resourcePermissionLocalService.hasResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.UPDATE)) {
-
-				_resourcePermissionLocalService.addResourcePermission(
-					resourcePermission.getCompanyId(), Country.class.getName(),
-					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getCompanyId()),
-					resourcePermission.getRoleId(), ActionKeys.UPDATE);
-			}
+			_addResourcePermission(
+				ActionKeys.ADD_COUNTRY, PortletKeys.PORTAL, resourcePermission);
+			_addResourcePermission(
+				ActionKeys.DELETE, Country.class.getName(), resourcePermission);
+			_addResourcePermission(
+				ActionKeys.PERMISSIONS, Country.class.getName(),
+				resourcePermission);
+			_addResourcePermission(
+				ActionKeys.UPDATE, Country.class.getName(), resourcePermission);
 
 			_resourcePermissionLocalService.removeResourcePermission(
 				resourcePermission.getCompanyId(), resourcePermission.getName(),
@@ -143,6 +101,22 @@ public class CountryResourcePermissionUpgradeProcess extends UpgradeProcess {
 						false, false);
 				}
 			});
+	}
+
+	private void _addResourcePermission(
+			String actionId, String name, ResourcePermission resourcePermission)
+		throws Exception {
+
+		if (!_resourcePermissionLocalService.hasResourcePermission(
+				resourcePermission.getCompanyId(), name,
+				resourcePermission.getScope(), resourcePermission.getPrimKey(),
+				resourcePermission.getRoleId(), actionId)) {
+
+			_resourcePermissionLocalService.addResourcePermission(
+				resourcePermission.getCompanyId(), name,
+				resourcePermission.getScope(), resourcePermission.getPrimKey(),
+				resourcePermission.getRoleId(), actionId);
+		}
 	}
 
 	private final CompanyLocalService _companyLocalService;

@@ -13,7 +13,6 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalServic
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -65,8 +64,7 @@ public class DDMFormInstanceRecordModelSearchConfigurator
 			new DDMFormInstanceRecordModelIndexerWriterContributor(
 				_ddmFormInstanceLocalService,
 				_ddmFormInstanceRecordLocalService,
-				_ddmFormInstanceRecordVersionLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_ddmFormInstanceRecordVersionLocalService);
 
 		_modelSummaryContributor =
 			new DDMFormInstanceRecordModelSummaryContributor(
@@ -83,10 +81,6 @@ public class DDMFormInstanceRecordModelSearchConfigurator
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private Language _language;

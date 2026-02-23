@@ -7,9 +7,9 @@ package com.liferay.dynamic.data.mapping.internal.search;
 
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 
@@ -29,24 +29,29 @@ public class DDMFormInstanceRecordBatchReindexer {
 	}
 
 	public void reindex(long formInstanceId, long companyId) {
-		BatchIndexingActionable batchIndexingActionable =
-			_indexerWriter.getBatchIndexingActionable();
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_indexerWriter.getIndexableActionableDynamicQuery();
 
-		batchIndexingActionable.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property formInstanceIdProperty = PropertyFactoryUtil.forName(
 					"formInstanceId");
 
 				dynamicQuery.add(formInstanceIdProperty.eq(formInstanceId));
 			});
-		batchIndexingActionable.setCompanyId(companyId);
-		batchIndexingActionable.setPerformActionMethod(
+		indexableActionableDynamicQuery.setCompanyId(companyId);
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				batchIndexingActionable.addDocument(
+				indexableActionableDynamicQuery.addDocument(
 					_indexerDocumentBuilder.getDocument(
 						ddmFormInstanceRecord)));
 
-		batchIndexingActionable.performActions();
+		try {
+			indexableActionableDynamicQuery.performActions();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
+		}
 	}
 
 	private final DDMFormInstanceRecordLocalService

@@ -8,8 +8,7 @@ package com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contrib
 import com.liferay.dynamic.data.mapping.internal.search.DDMFormInstanceRecordBatchReindexer;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -20,23 +19,20 @@ public class DDMFormInstanceModelIndexerWriterContributor
 
 	public DDMFormInstanceModelIndexerWriterContributor(
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
-		DDMFormInstanceRecordBatchReindexer ddmFormInstanceRecordBatchReindexer,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DDMFormInstanceRecordBatchReindexer
+			ddmFormInstanceRecordBatchReindexer) {
 
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordBatchReindexer =
 			ddmFormInstanceRecordBatchReindexer;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_ddmFormInstanceLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _ddmFormInstanceLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -49,7 +45,5 @@ public class DDMFormInstanceModelIndexerWriterContributor
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private final DDMFormInstanceRecordBatchReindexer
 		_ddmFormInstanceRecordBatchReindexer;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -9,7 +9,6 @@ import com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contribu
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,16 +52,11 @@ public class DDMTemplateModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new DDMTemplateModelIndexerWriterContributor(
-				_ddmTemplateLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_ddmTemplateLocalService);
 	}
 
 	@Reference
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DDMTemplate>
 		_modelIndexWriterContributor;

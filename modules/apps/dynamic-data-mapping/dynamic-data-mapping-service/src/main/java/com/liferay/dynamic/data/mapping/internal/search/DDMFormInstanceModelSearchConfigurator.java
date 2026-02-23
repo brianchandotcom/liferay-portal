@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -60,16 +59,11 @@ public class DDMFormInstanceModelSearchConfigurator
 				_ddmFormInstanceLocalService,
 				new DDMFormInstanceRecordBatchReindexer(
 					_formInstanceRecordLocalService, _indexerDocumentBuilder,
-					_indexerWriter),
-				_dynamicQueryBatchIndexingActionableFactory);
+					_indexerWriter));
 	}
 
 	@Reference
 	private DDMFormInstanceLocalService _ddmFormInstanceLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private DDMFormInstanceRecordLocalService _formInstanceRecordLocalService;

@@ -9,7 +9,6 @@ import com.liferay.layout.page.template.internal.search.spi.model.index.contribu
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -48,13 +47,8 @@ public class LayoutPageTemplateCollectionModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new LayoutPageTemplateCollectionModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_layoutPageTemplateCollectionLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private LayoutPageTemplateCollectionLocalService

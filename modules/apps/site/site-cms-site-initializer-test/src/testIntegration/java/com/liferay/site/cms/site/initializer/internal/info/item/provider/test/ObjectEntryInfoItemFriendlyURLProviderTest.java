@@ -78,7 +78,6 @@ public class ObjectEntryInfoItemFriendlyURLProviderTest {
 			).build(),
 			DepotConstants.TYPE_SPACE,
 			ServiceContextTestUtil.getServiceContext());
-
 		_group = CMSTestUtil.getOrAddGroup(
 			ObjectEntryInfoItemFriendlyURLProviderTest.class);
 

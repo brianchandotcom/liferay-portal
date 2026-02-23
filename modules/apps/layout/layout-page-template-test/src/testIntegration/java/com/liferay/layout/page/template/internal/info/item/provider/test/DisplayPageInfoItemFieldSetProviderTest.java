@@ -262,15 +262,12 @@ public class DisplayPageInfoItemFieldSetProviderTest {
 
 		List<InfoFieldValue<Object>> sortedInfoFieldValues = ListUtil.sort(
 			infoFieldValues,
-			(infoFieldValue1, infoFieldValue2) -> {
-				InfoField infoField1 = infoFieldValue1.getInfoField();
-				InfoField infoField2 = infoFieldValue2.getInfoField();
+			Comparator.comparing(
+				infoFieldValue -> {
+					InfoField infoField = infoFieldValue.getInfoField();
 
-				String name1 = infoField1.getName();
-				String name2 = infoField2.getName();
-
-				return name1.compareTo(name2);
-			});
+					return infoField.getName();
+				}));
 
 		_assertInfoFieldValue(
 			JournalArticle.class.getSimpleName() + "_displayPageURL",

@@ -13,13 +13,10 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -29,42 +26,24 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.odata.entity.EntityModel;
-import com.liferay.portal.odata.filter.ExpressionConvert;
-import com.liferay.portal.odata.filter.FilterParser;
-import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
 import com.liferay.portal.search.hits.SearchHits;
-import com.liferay.portal.search.rest.util.FilterUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -72,7 +51,6 @@ import com.liferay.portal.search.searcher.Searcher;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -83,7 +61,6 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -100,15 +77,13 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = Servlet.class
 )
-public class DownloadObjectEntryFolderServlet extends HttpServlet {
+public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 
 	@Override
 	public void service(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
-
-		_createContext(httpServletRequest, httpServletResponse);
 
 		super.service(httpServletRequest, httpServletResponse);
 	}
@@ -138,23 +113,6 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		}
 		catch (PortalException portalException) {
 			throw new ServletException(portalException);
-		}
-	}
-
-	private void _createContext(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		try {
-			EventsProcessorUtil.process(
-				PropsKeys.SERVLET_SERVICE_EVENTS_PRE,
-				PropsValues.SERVLET_SERVICE_EVENTS_PRE, httpServletRequest,
-				httpServletResponse);
-		}
-		catch (ActionException actionException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(actionException);
-			}
 		}
 	}
 
@@ -295,33 +253,6 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		}
 	}
 
-	private BooleanClause<Query> _getBooleanClause(
-		UnsafeConsumer<BooleanQuery, Exception> booleanQueryUnsafeConsumer,
-		Filter filter) {
-
-		BooleanQuery booleanQuery = new BooleanQueryImpl() {
-			{
-				add(new MatchAllQuery(), BooleanClauseOccur.MUST);
-
-				BooleanFilter booleanFilter = new BooleanFilter();
-
-				booleanFilter.add(filter, BooleanClauseOccur.MUST);
-
-				setPreBooleanFilter(booleanFilter);
-			}
-		};
-
-		try {
-			booleanQueryUnsafeConsumer.accept(booleanQuery);
-
-			return BooleanClauseFactoryUtil.create(
-				booleanQuery, BooleanClauseOccur.MUST.getName());
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
-	}
-
 	private String _getObjectEntryFolderPath(
 		HttpServletRequest httpServletRequest) {
 
@@ -332,34 +263,6 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 				httpServletRequest.getServletPath();
 
 		return requestURI.substring(path.length() + 1);
-	}
-
-	private void _populateSearchContext(
-		Filter filter, String search, SearchContext searchContext, User user) {
-
-		int[] statuses = FilterUtil.getStatuses(filter);
-
-		if (ArrayUtil.isNotEmpty(statuses)) {
-			searchContext.setAttribute("status", statuses);
-		}
-
-		if (filter != null) {
-			searchContext.setBooleanClauses(
-				new BooleanClause[] {
-					_getBooleanClause(
-						booleanQuery -> {
-						},
-						filter)
-				});
-		}
-
-		searchContext.setCompanyId(user.getCompanyId());
-		searchContext.setEnd(QueryUtil.ALL_POS);
-		searchContext.setKeywords(search);
-		searchContext.setLocale(user.getLocale());
-		searchContext.setStart(QueryUtil.ALL_POS);
-		searchContext.setTimeZone(user.getTimeZone());
-		searchContext.setUserId(user.getUserId());
 	}
 
 	private void _selectAllDownload(
@@ -402,25 +305,6 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 			_zipEntry(
 				document.getString("entryClassName"),
 				document.getLong("entryClassPK"), themeDisplay, zipWriter);
-		}
-	}
-
-	private Filter _toFilter(String filterString, Locale locale) {
-		try {
-			FilterParser filterParser = _filterParserProvider.provide(
-				_entityModel);
-
-			com.liferay.portal.odata.filter.Filter oDataFilter =
-				new com.liferay.portal.odata.filter.Filter(
-					filterParser.parse(filterString));
-
-			return _expressionConvert.convert(
-				oDataFilter.getExpression(), locale, _entityModel);
-		}
-		catch (Exception exception) {
-			_log.error("Invalid filter " + filterString, exception);
-
-			return null;
 		}
 	}
 
@@ -522,17 +406,6 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 
 	@Reference
 	private DLAppLocalService _dlAppLocalService;
-
-	@Reference(target = "(entity.model.name=BulkAction)")
-	private EntityModel _entityModel;
-
-	@Reference(
-		target = "(result.class.name=com.liferay.portal.kernel.search.filter.Filter)"
-	)
-	private ExpressionConvert<Filter> _expressionConvert;
-
-	@Reference
-	private FilterParserProvider _filterParserProvider;
 
 	@Reference
 	private JSONFactory _jsonFactory;

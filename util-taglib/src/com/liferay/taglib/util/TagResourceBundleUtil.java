@@ -116,8 +116,8 @@ public class TagResourceBundleUtil {
 		}
 
 		return new AggregateResourceBundleLoader(
-			resourceBundleLoader,
-			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
+			ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
+			resourceBundleLoader);
 	}
 
 	protected static ResourceBundle getPortletResourceBundle(

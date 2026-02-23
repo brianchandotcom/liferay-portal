@@ -20,7 +20,7 @@ describe('The sla status filter component should', () => {
 	afterEach(cleanup);
 
 	beforeEach(() => {
-		render(<SLAStatusFilter processId={12345} />, {
+		render(<SLAStatusFilter />, {
 			wrapper,
 		});
 	});

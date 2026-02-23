@@ -14,6 +14,11 @@ import ToasterProvider from '../../../../src/main/resources/META-INF/resources/j
 import {MockRouter} from '../../../mock/MockRouter.es';
 import FetchMock, {fetchMockResponse} from '../../../mock/fetch.es';
 
+const mockProps = {
+	initialPath: '/sla/36001/list/20/1',
+	path: '/sla/:processId/list/:pageSize/:page',
+};
+
 describe('The SLAListPage component should', () => {
 	describe('Be rendered correctly with no items', () => {
 		let getByTitle;
@@ -26,14 +31,10 @@ describe('The SLAListPage component should', () => {
 			}));
 
 			const renderResult = render(
-				<MockRouter>
+				<MockRouter {...mockProps}>
 					<ToasterProvider>
 						<SLAContext.Provider value={{}}>
-							<SLAListPage
-								page="1"
-								pageSize="1"
-								processId="36001"
-							/>
+							<SLAListPage />
 						</SLAContext.Provider>
 					</ToasterProvider>
 				</MockRouter>
@@ -102,14 +103,10 @@ describe('The SLAListPage component should', () => {
 			});
 
 			const renderResult = render(
-				<MockRouter>
+				<MockRouter  {...mockProps}>
 					<ToasterProvider>
 						<SLAContext.Provider value={contextMock}>
-							<SLAListPage
-								page="1"
-								pageSize="1"
-								processId="36001"
-							/>
+							<SLAListPage />
 						</SLAContext.Provider>
 					</ToasterProvider>
 				</MockRouter>
@@ -312,14 +309,10 @@ describe('The SLAListPage component should', () => {
 			}));
 
 			const renderResult = render(
-				<MockRouter>
+				<MockRouter  {...mockProps}>
 					<ToasterProvider>
 						<SLAContext.Provider value={{}}>
-							<SLAListPage
-								page="1"
-								pageSize="1"
-								processId="36001"
-							/>
+							<SLAListPage />
 						</SLAContext.Provider>
 					</ToasterProvider>
 				</MockRouter>

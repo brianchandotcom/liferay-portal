@@ -558,56 +558,56 @@ public class PageElementsTestUtil {
 
 		pageElements.add(
 			_getBasicFragmentPageElement(
-				_getExternalGlobalGroupTemplateFieldKey(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry1",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getBasicFragmentPageElement(
-				_getExternalScopeGroupTemplateFieldKey(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry1",
 						scopeGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getBasicFragmentPageElement(
-				_getInternalTemplateFieldKey(
+				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry2",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getBasicFragmentPageElement(
-				_getInternalTemplateFieldKey(
+				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry2",
 						scopeGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getCollectionDisplayPageElement(
-				_getExternalGlobalGroupTemplateFieldKey(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry3",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getCollectionDisplayPageElement(
-				_getExternalScopeGroupTemplateFieldKey(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry3",
 						scopeGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getCollectionDisplayPageElement(
-				_getInternalTemplateFieldKey(
+				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "companyGroupTemplateEntry4",
 						companyGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
 		pageElements.add(
 			_getCollectionDisplayPageElement(
-				_getInternalTemplateFieldKey(
+				_getTemplateEntryUniqueIdFieldKey(
 					_getTemplateEntry(
 						journalArticle, "scopeGroupTemplateEntry4",
 						scopeGroupServiceContext)),
@@ -618,28 +618,28 @@ public class PageElementsTestUtil {
 
 			pageElements.add(
 				_getDisplayPageItemPageElement(
-					_getExternalGlobalGroupTemplateFieldKey(
+					_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 						_getTemplateEntry(
 							journalArticle, "companyGroupTemplateEntry5",
 							companyGroupServiceContext)),
 					fragmentKey, position++, scopeGroupId));
 			pageElements.add(
 				_getDisplayPageItemPageElement(
-					_getExternalScopeGroupTemplateFieldKey(
+					_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 						_getTemplateEntry(
 							journalArticle, "scopeGroupTemplateEntry5",
 							scopeGroupServiceContext)),
 					fragmentKey, position++, scopeGroupId));
 			pageElements.add(
 				_getDisplayPageItemPageElement(
-					_getInternalTemplateFieldKey(
+					_getTemplateEntryUniqueIdFieldKey(
 						_getTemplateEntry(
 							journalArticle, "companyGroupTemplateEntry6",
 							companyGroupServiceContext)),
 					fragmentKey, position++, scopeGroupId));
 			pageElements.add(
 				_getDisplayPageItemPageElement(
-					_getInternalTemplateFieldKey(
+					_getTemplateEntryUniqueIdFieldKey(
 						_getTemplateEntry(
 							journalArticle, "scopeGroupTemplateEntry6",
 							scopeGroupServiceContext)),
@@ -823,12 +823,14 @@ public class PageElementsTestUtil {
 				if (templateEntry.getGroupId() == company.getGroupId()) {
 					Assert.assertEquals(
 						actualFieldKey,
-						_getExternalGlobalGroupTemplateFieldKey(templateEntry));
+						_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+							templateEntry));
 				}
 				else {
 					Assert.assertEquals(
 						actualFieldKey,
-						_getExternalScopeGroupTemplateFieldKey(templateEntry));
+						_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+							templateEntry));
 				}
 			}
 		}
@@ -1059,14 +1061,14 @@ public class PageElementsTestUtil {
 		return pageElement;
 	}
 
-	private static String _getExternalGlobalGroupTemplateFieldKey(
+	private static String _getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
 		TemplateEntry templateEntry) {
 
 		return "ddmTemplate__ddmTemplate__ERC__" +
 			templateEntry.getExternalReferenceCode() + "__SERC__L_GLOBAL";
 	}
 
-	private static String _getExternalScopeGroupTemplateFieldKey(
+	private static String _getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
 		TemplateEntry templateEntry) {
 
 		return "ddmTemplate__ddmTemplate__ERC__" +
@@ -1294,7 +1296,7 @@ public class PageElementsTestUtil {
 		return gridViewport;
 	}
 
-	private static String _getInternalTemplateFieldKey(
+	private static String _getTemplateEntryUniqueIdFieldKey(
 		TemplateEntry templateEntry) {
 
 		return "ddmTemplate__ddmTemplate_" + templateEntry.getTemplateEntryId();

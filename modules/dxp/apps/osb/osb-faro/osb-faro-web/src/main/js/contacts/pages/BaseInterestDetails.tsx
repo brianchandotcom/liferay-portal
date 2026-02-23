@@ -48,7 +48,7 @@ const IndividualsList: React.FC<IIndividualListProps> = ({
 			columns={[
 				individualsListColumns.getName({channelId, groupId}),
 				individualsListColumns.email,
-				individualsListColumns.accountNames
+				individualsListColumns.accountName
 			]}
 			dataSourceFn={API.individuals.search}
 			delta={delta}

@@ -4,20 +4,16 @@ import React from 'react';
 interface IAccountNamesProps {
 	className?: string;
 	data: {
-		accountNames: string[];
+		accountName: string;
 	};
 }
 
 const AccountNames: React.FC<IAccountNamesProps> = ({
 	className,
-	data: {accountNames}
+	data: {accountName}
 }) => (
 	<td className={getCN('name-cell-root', className)}>
-		<div className='text-truncate'>
-			{accountNames && accountNames.length
-				? accountNames.join(', ')
-				: '-'}
-		</div>
+		<div className='text-truncate'>{accountName || '-'}</div>
 	</td>
 );
 

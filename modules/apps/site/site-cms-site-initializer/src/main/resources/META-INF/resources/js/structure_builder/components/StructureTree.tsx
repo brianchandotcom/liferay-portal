@@ -358,7 +358,7 @@ export default function StructureTree({search}: {search: string}) {
 	);
 }
 
-function ItemContent({item}: {item: TreeItem}) {
+function ItemContent({id, item}: {id?: string; item: TreeItem}) {
 	const isBeingRenamed = useIsBeingRenamed();
 
 	if (isBeingRenamed(item.id)) {
@@ -368,7 +368,7 @@ function ItemContent({item}: {item: TreeItem}) {
 	return (
 		<div className="align-items-center c-gap-2 d-flex ml-1">
 			<span>
-				<ItemLabel item={item} />
+				<ItemLabel id={id} item={item} />
 
 				<ItemStatus item={item} />
 			</span>
@@ -401,13 +401,14 @@ function ItemContent({item}: {item: TreeItem}) {
 	);
 }
 
-function ItemLabel({item}: {item: TreeItem}) {
+function ItemLabel({id, item}: {id?: string; item: TreeItem}) {
 	const dispatch = useStateDispatch();
 
 	const structure = useSelector(selectStructure);
 
 	return (
 		<span
+			id={id}
 			onDoubleClick={() => {
 				if (isRenamable({structure, uuid: item.id})) {
 					dispatch({type: 'set-renaming-item-uuid', uuid: item.id});

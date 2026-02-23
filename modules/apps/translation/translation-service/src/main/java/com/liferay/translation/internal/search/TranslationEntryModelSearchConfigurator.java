@@ -6,7 +6,6 @@
 package com.liferay.translation.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.translation.internal.search.spi.model.index.contributor.TranslationEntryModelIndexerWriterContributor;
@@ -48,13 +47,8 @@ public class TranslationEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new TranslationEntryModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_translationEntryLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<TranslationEntry>
 		_modelIndexWriterContributor;

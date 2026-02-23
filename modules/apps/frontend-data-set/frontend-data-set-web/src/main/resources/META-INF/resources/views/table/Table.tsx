@@ -384,12 +384,20 @@ const Body = ({
 					return (
 						<Row
 							accessibleName={
-								accessibleNameField
+								(accessibleNameField
 									? getLocalizedValue(
 											item,
 											item[accessibleNameField]
-										)
-									: item[fields[0].fieldName]
+										)?.value
+									: getLocalizedValue(
+												item,
+												selectedItemsKey
+										  )?.value
+										? getLocalizedValue(
+												item,
+												selectedItemsKey
+											)?.value
+										: Liferay.Language.get('item')) ?? ''
 							}
 							active={
 								allItemsSelectedActive ||

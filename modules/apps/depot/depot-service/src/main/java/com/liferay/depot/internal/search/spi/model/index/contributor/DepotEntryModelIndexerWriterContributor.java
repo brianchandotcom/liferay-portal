@@ -7,8 +7,7 @@ package com.liferay.depot.internal.search.spi.model.index.contributor;
 
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,20 +18,16 @@ public class DepotEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DepotEntry> {
 
 	public DepotEntryModelIndexerWriterContributor(
-		DepotEntryLocalService depotEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DepotEntryLocalService depotEntryLocalService) {
 
 		_depotEntryLocalService = depotEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_depotEntryLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _depotEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -41,7 +36,5 @@ public class DepotEntryModelIndexerWriterContributor
 	}
 
 	private final DepotEntryLocalService _depotEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

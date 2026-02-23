@@ -9,7 +9,6 @@ import com.liferay.depot.internal.search.spi.model.index.contributor.DepotEntryM
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -54,16 +53,11 @@ public class DepotEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new DepotEntryModelIndexerWriterContributor(
-				_depotEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_depotEntryLocalService);
 	}
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<DepotEntry>
 		_modelIndexWriterContributor;

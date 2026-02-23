@@ -32,11 +32,11 @@ const ProjectSelection = () => {
 		selectedAccount,
 	} = useProductPurchaseOutletContext();
 
-	const accountERC = selectedAccount?.externalReferenceCode;
+	const accountKey = selectedAccount?.externalReferenceCode;
 
 	const {data: childAccounts, isLoading} = useSWR(
-		`/account/${accountERC}/child-accounts`,
-		() => koroneikiOAuth2.getChildAccounts(accountERC)
+		`/account/${accountKey}/child-accounts`,
+		() => koroneikiOAuth2.getChildAccounts(accountKey)
 	);
 
 	const noChildAccount = !childAccounts?.items?.length;

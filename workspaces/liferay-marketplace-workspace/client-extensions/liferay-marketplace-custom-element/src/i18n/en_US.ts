@@ -319,6 +319,8 @@ export default {
 	'go-to-trial': 'Go to Trial',
 	'got-it': 'Got it',
 	'header': 'Header',
+	'hold-tight-we-re-preparing-your-environment-so-you-can-start-using-your-liferay-data-platform-this-will-only-take-a-moment':
+		'Hold tight. We’re preparing your environment so you can start using your Liferay Data Platform. This will only take a moment!',
 	'host-name': 'Host Name',
 	'i-certify-that-the-instances-activated-with-the-selected-activation-keys-have-been-shut-down-and-that-there-is-no-liferay-software-installed-deployed-used-or-executed-that-is-activated-with-the-selected-activation-key':
 		'I certify that the instances activated with the selected activation keys have been shut down and that there is no Liferay software installed, deployed, used or executed that is activated with the selected activation key.',
@@ -501,6 +503,8 @@ export default {
 		'Please note that since there is no cloud project associated with your instance, you will not be able to install Cloud Apps.',
 	'please-review-before-submitting-once-sent-you-will-not-be-able-to-edit-any-information-until-this-submission-is-completely-reviewed-by-liferay':
 		'Please review before submitting. Once sent, you will not be able to edit any information until this submission is fully reviewed by Liferay.',
+	'please-review-the-order-summary-below-and-flag-the-checkbox-to-complete-your-purchase':
+		'Please review the order summary below and flag the checkbox to complete your purchase',
 	'please-select-the-account-you-wish-to-link-to-your-liferay-dxp-below':
 		'Please select the account you wish to link to your Liferay DXP below.',
 	'price': 'Price',
@@ -614,6 +618,7 @@ export default {
 	'send-request': 'Send Request',
 	'set-the-users-role-ssa-users-can-create-trials-while-ssa-admins-can-manage-users-roles-and-trials':
 		'Set the user’s role: SSA Users can create trials, while SSA Admins can manage users, roles, and trials.',
+	'setting-up-your-free-version-ldp': 'Setting up your Free Version LDP 🚀',
 	'showing-x-to-x-of-x': 'Showing {0} to {1} of {2}',
 	'sign-in-with-a-different-account': 'Sign in with a Different Account',
 	'site-initializer': 'Site Initializer',
@@ -625,6 +630,7 @@ export default {
 	'solution-x-submitted': 'Solution <b>{0}</b> submitted.',
 	'solutions': 'Solutions',
 	'solutions-info': 'Solutions Info',
+	'something-went-wrong': 'Something went wrong.',
 	'sorry-there-are-no-results-found': 'Sorry, there are no results found.',
 	'specify-your-apps-version-this-will-help-the-user-understand-the-latest-version-of-your-app-offered-on-the-marketplace':
 		'Specify your app’s version. This will help the user understand the latest version of your app offered on the Marketplace.',
@@ -788,6 +794,8 @@ export default {
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our customers in the Marketplace and access is invite only. If you are an existing Liferay customer, please keep an eye out for an announcement related to the new Marketplace in the coming months!',
 	'we-are-happy-to-have-you-interested-in-the-liferay-marketplace-at-the-moment-we-are-working-on-enhancing-the-experience-for-our-publishers-in-the-marketplace-if-you-are-an-existing-liferay-developer-or-partner-you-can-choose-to-join-our-pilot-group-of-publishers-to-submit-apps-to-the-marketplace-continue-to-request-a-publisher-account':
 		'We are happy to have you interested in the Liferay Marketplace. At the moment, we are working on enhancing the experience for our publishers in the Marketplace.  If you are an existing Liferay developer or partner, you can choose to join our pilot group of publishers to submit apps to the Marketplace.  Continue to request a publisher account.',
+	'we-couldnt-set-up-your-environment-please-contact-support':
+		'We couldn’t set up your environment. Please contact support.',
 	'website': 'Website',
 	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
 		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',

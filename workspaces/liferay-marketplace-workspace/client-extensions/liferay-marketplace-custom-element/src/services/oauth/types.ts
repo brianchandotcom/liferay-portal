@@ -131,8 +131,8 @@ export type KoroneikiChildAccounts = {
 	contacts: null;
 	customerContacts: null;
 	dataRegion: string;
-	dateCreated: string; // ISO date string
-	dateModified: string; // ISO date string
+	dateCreated: string;
+	dateModified: string;
 	description: string;
 	entitlements: Entitlement[];
 	externalLinks: ExternalLink[];
@@ -175,7 +175,7 @@ export type PostalAddress = {
 };
 
 export type AccountProperties = {
-	allowComplimentary: string; // kept as string because source is "true"/"false"
+	allowComplimentary: string;
 	allowPermanentLicenses: string;
 	allowSelfProvisioning: string;
 };

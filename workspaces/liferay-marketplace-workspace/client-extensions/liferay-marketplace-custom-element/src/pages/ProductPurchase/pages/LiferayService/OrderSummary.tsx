@@ -73,8 +73,9 @@ const OrderSummary = () => {
 			}}
 			subtitle={
 				<small className="text-black-50">
-					Please review the order summary below and flag the checkbox
-					to complete your purchase
+					{i18n.translate(
+						'please-review-the-order-summary-below-and-flag-the-checkbox-to-complete-your-purchase'
+					)}
 				</small>
 			}
 			title={i18n.translate('summary')}

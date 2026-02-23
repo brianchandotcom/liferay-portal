@@ -10,14 +10,15 @@ import {OrderStatus} from '../../../../enums/Order';
 import {usePlacedOrder} from '../../../../hooks/data/usePlacedOrder';
 
 import './LDPNextSteps.scss';
+import i18n from '../../../../i18n';
 
 const Content = ({
 	description,
-	showLoading,
+	loading,
 	title,
 }: {
 	description: string;
-	showLoading: boolean;
+	loading?: boolean;
 	title: string;
 }) => {
 	return (
@@ -26,7 +27,7 @@ const Content = ({
 				<div className="align-items-center col-3 d-flex flex-column justify-content-center mt-9">
 					<div className="ldp-next-steps loading-overlay">
 						<div className="loading-container">
-							{showLoading && <Loading className="mb-6" />}
+							{loading && <Loading className="mb-6" />}
 							<span className="mt-4">
 								<h1>{title}</h1>
 								<div className="my-5 text-center">
@@ -63,16 +64,15 @@ const LDPNextSteps: React.FC<{
 	if (error) {
 		return (
 			<Content
-				description="We couldn't set up your environment. Please contact support."
-				showLoading={false}
-				title="Something went wrong"
+				description={i18n.translate(
+					'we-couldnt-set-up-your-environment-please-contact-support'
+				)}
+				title={i18n.translate('something-went-wrong')}
 			/>
 		);
 	}
 
-	return (
-		<Content description={description} showLoading={true} title={title} />
-	);
+	return <Content description={description} loading title={title} />;
 };
 
 export default LDPNextSteps;

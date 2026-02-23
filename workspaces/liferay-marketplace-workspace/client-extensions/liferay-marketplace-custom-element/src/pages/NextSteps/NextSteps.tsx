@@ -285,8 +285,10 @@ export function NextSteps() {
 	) {
 		return (
 			<LDPNextSteps
-				description="Hold tight. We’re preparing your environment so you can start using your Liferay Data Platform. This will only take a moment!"
-				title="Setting up your Free Version LDP 🚀"
+				description={i18n.translate(
+					'hold-tight-we-re-preparing-your-environment-so-you-can-start-using-your-liferay-data-platform-this-will-only-take-a-moment'
+				)}
+				title={i18n.translate('setting-up-your-free-version-ldp')}
 			/>
 		);
 	}

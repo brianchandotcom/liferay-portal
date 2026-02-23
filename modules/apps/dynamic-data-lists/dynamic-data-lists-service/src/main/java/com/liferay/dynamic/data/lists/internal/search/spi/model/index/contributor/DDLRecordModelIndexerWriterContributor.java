@@ -11,11 +11,10 @@ import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
@@ -28,23 +27,19 @@ public class DDLRecordModelIndexerWriterContributor
 	public DDLRecordModelIndexerWriterContributor(
 		DDLRecordLocalService ddlRecordLocalService,
 		DDLRecordSetLocalService ddlRecordSetLocalService,
-		DDLRecordVersionLocalService ddlRecordVersionLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
 
 		_ddlRecordLocalService = ddlRecordLocalService;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property recordIdProperty = PropertyFactoryUtil.forName(
 					"recordId");
@@ -73,16 +68,16 @@ public class DDLRecordModelIndexerWriterContributor
 
 				dynamicQuery.add(recordSetProperty.in(recordSetDynamicQuery));
 			});
-		batchIndexingActionable.setPerformActionMethod(
-			(DDLRecord record) -> batchIndexingActionable.addDocument(
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			(DDLRecord record) -> indexableActionableDynamicQuery.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(record)));
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_ddlRecordLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _ddlRecordLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	private static final int[] _SCOPES = {
@@ -95,7 +90,5 @@ public class DDLRecordModelIndexerWriterContributor
 	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDLRecordVersionLocalService _ddlRecordVersionLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

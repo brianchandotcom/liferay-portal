@@ -10,7 +10,6 @@ import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -58,16 +57,11 @@ public class DDLRecordSetModelSearchConfigurator
 			new DDLRecordSetModelIndexerWriterContributor(
 				new DDLRecordBatchReindexer(
 					_indexerDocumentBuilder, _indexerWriter),
-				_ddlRecordSetLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_ddlRecordSetLocalService);
 	}
 
 	@Reference
 	private DDLRecordSetLocalService _ddlRecordSetLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.dynamic.data.lists.model.DDLRecord)"

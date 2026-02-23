@@ -9,7 +9,6 @@ import com.liferay.contacts.internal.search.spi.model.index.contributor.ContactM
 import com.liferay.contacts.internal.search.spi.model.result.contributor.ContactModelSummaryContributor;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.service.ContactLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -45,15 +44,11 @@ public class ContactModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor = new ContactModelIndexerWriterContributor(
-			_contactLocalService, _dynamicQueryBatchIndexingActionableFactory);
+			_contactLocalService);
 	}
 
 	@Reference
 	private ContactLocalService _contactLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<Contact> _modelIndexWriterContributor;
 	private final ModelSummaryContributor _modelSummaryContributor =

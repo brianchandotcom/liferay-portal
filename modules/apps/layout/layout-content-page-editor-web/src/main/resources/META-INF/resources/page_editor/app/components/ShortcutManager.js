@@ -74,7 +74,7 @@ export default function ShortcutManager() {
 
 	const {onRedo, onUndo} = useUndoRedoActions();
 
-	const fragments = useSelector((state) => state.fragments);
+	const collections = useSelector((state) => state.collections);
 	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
@@ -294,8 +294,8 @@ export default function ShortcutManager() {
 		save: {
 			action: () =>
 				openFragmentCompositionModal({
+					collections,
 					dispatch,
-					fragments,
 					itemId: activeItemIds[0],
 					segmentsExperienceId,
 				}),

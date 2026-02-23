@@ -63,7 +63,7 @@ export default function TopperItemActions({disabled, item}) {
 
 	const canManageFragments = useSelector(selectCanManageFragmentEntries);
 
-	const {fragmentEntryLinks, fragments, layoutData, selectedViewportSize} =
+	const {collections, fragmentEntryLinks, layoutData, selectedViewportSize} =
 		useSelector((state) => state);
 
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -160,8 +160,8 @@ export default function TopperItemActions({disabled, item}) {
 			items.push({
 				action: () =>
 					openFragmentCompositionModal({
+						collections,
 						dispatch,
-						fragments,
 						itemId: item.itemId,
 						segmentsExperienceId,
 					}),
@@ -289,7 +289,7 @@ export default function TopperItemActions({disabled, item}) {
 		dispatch,
 		selectedViewportSize,
 		hasRequiredChild,
-		fragments,
+		collections,
 		segmentsExperienceId,
 		setClipboard,
 		selectItems,

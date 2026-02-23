@@ -28,7 +28,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ThumbnailURLReference;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
-import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
@@ -43,7 +42,9 @@ import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
+import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -1016,6 +1017,18 @@ public class DisplayPageTemplateResourceTest
 			draftLayout.getTypeSettingsProperty("published"));
 	}
 
+	private JournalArticle _randomCompanyGroupJournalArticle()
+		throws Exception {
+
+		ServiceContext companyGroupServiceContext =
+			ServiceContextTestUtil.getServiceContext(testCompany.getGroupId());
+
+		return JournalTestUtil.addArticle(
+			testCompany.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			companyGroupServiceContext);
+	}
+
 	private DisplayPageTemplate _randomDisplayPageTemplate(
 			Boolean markedAsDefault)
 		throws Exception {
@@ -1322,8 +1335,7 @@ public class DisplayPageTemplateResourceTest
 			FragmentEntryTestUtil.
 				addCompanyGroupFragmentEntryWithTextEditable();
 
-		JournalArticle journalArticle =
-			AssetTestUtil.randomCompanyGroupJournalArticle();
+		JournalArticle journalArticle = _randomCompanyGroupJournalArticle();
 
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(
@@ -1641,8 +1653,7 @@ public class DisplayPageTemplateResourceTest
 			FragmentEntryTestUtil.
 				addCompanyGroupFragmentEntryWithTextEditable();
 
-		JournalArticle journalArticle =
-			AssetTestUtil.randomCompanyGroupJournalArticle();
+		JournalArticle journalArticle = _randomCompanyGroupJournalArticle();
 
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(

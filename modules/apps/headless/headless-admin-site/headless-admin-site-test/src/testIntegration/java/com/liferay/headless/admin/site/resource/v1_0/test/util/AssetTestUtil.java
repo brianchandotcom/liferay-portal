@@ -13,18 +13,12 @@ import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.scope.Scope;
-import com.liferay.journal.constants.JournalFolderConstants;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -37,21 +31,6 @@ import java.util.List;
  * @author Lourdes Fernández Besada
  */
 public class AssetTestUtil {
-
-	public static JournalArticle randomCompanyGroupJournalArticle()
-		throws Exception {
-
-		Company company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		ServiceContext companyGroupServiceContext =
-			ServiceContextTestUtil.getServiceContext(company.getGroupId());
-
-		return JournalTestUtil.addArticle(
-			company.getGroupId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			companyGroupServiceContext);
-	}
 
 	public static String[] randomKeywords(ServiceContext serviceContext)
 		throws Exception {

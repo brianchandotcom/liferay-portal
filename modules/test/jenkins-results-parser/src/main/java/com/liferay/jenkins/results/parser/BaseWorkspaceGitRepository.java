@@ -1023,16 +1023,10 @@ public abstract class BaseWorkspaceGitRepository
 				jobName.equals("forward-pullrequest") ||
 				jobName.equals("publish-testray-report") ||
 				jobName.equals("test-portal-source-format") ||
-				jobName.contains("validation")) {
-
-				return true;
-			}
-
-			if (jobName.contains("master") &&
-				!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-				(jobVariant.contains("modules-unit") ||
-				 jobVariant.contains("rest-builder") ||
-				 jobVariant.contains("service-builder"))) {
+				jobName.contains("validation") ||
+				jobVariant.contains("modules-unit") ||
+				jobVariant.contains("rest-builder") ||
+				jobVariant.contains("service-builder")) {
 
 				return true;
 			}

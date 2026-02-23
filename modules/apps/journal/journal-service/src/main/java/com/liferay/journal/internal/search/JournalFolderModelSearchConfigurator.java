@@ -10,7 +10,6 @@ import com.liferay.journal.internal.search.spi.model.result.contributor.JournalF
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -65,13 +64,8 @@ public class JournalFolderModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new JournalFolderModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_journalFolderLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private JournalFolderLocalService _journalFolderLocalService;

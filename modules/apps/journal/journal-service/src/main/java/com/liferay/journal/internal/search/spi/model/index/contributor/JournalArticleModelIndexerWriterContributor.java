@@ -15,6 +15,7 @@ import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -28,9 +29,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
@@ -47,15 +46,11 @@ public class JournalArticleModelIndexerWriterContributor
 	public JournalArticleModelIndexerWriterContributor(
 		BatchIndexingHelper batchIndexingHelper,
 		ConfigurationProvider configurationProvider,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		JournalArticleLocalService journalArticleLocalService,
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {
 
 		_batchIndexingHelper = batchIndexingHelper;
 		_configurationProvider = configurationProvider;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_journalArticleLocalService = journalArticleLocalService;
 		_journalArticleResourceLocalService =
 			journalArticleResourceLocalService;
@@ -63,11 +58,11 @@ public class JournalArticleModelIndexerWriterContributor
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
 		if (_isIndexAllArticleVersions()) {
-			batchIndexingActionable.setAddCriteriaMethod(
+			indexableActionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
 					Property property = PropertyFactoryUtil.forName(
 						"classNameId");
@@ -76,17 +71,17 @@ public class JournalArticleModelIndexerWriterContributor
 						property.ne(
 							PortalUtil.getClassNameId(DDMStructure.class)));
 				});
-			batchIndexingActionable.setInterval(
+			indexableActionableDynamicQuery.setInterval(
 				_batchIndexingHelper.getBulkSize(
 					JournalArticle.class.getName()));
-			batchIndexingActionable.setPerformActionMethod(
+			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticle journalArticle) ->
-					batchIndexingActionable.addDocument(
+					indexableActionableDynamicQuery.addDocument(
 						modelIndexerWriterDocumentHelper.getDocument(
 							journalArticle)));
 		}
 		else {
-			batchIndexingActionable.setAddCriteriaMethod(
+			indexableActionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
 					Property resourcePrimKeyProperty =
 						PropertyFactoryUtil.forName("resourcePrimKey");
@@ -108,10 +103,10 @@ public class JournalArticleModelIndexerWriterContributor
 						resourcePrimKeyProperty.notIn(
 							journalArticleDynamicQuery));
 				});
-			batchIndexingActionable.setInterval(
+			indexableActionableDynamicQuery.setInterval(
 				_batchIndexingHelper.getBulkSize(
 					JournalArticleResource.class.getName()));
-			batchIndexingActionable.setPerformActionMethod(
+			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticleResource articleResource) -> {
 					JournalArticle latestIndexableArticle =
 						_fetchLatestIndexableArticleVersion(
@@ -121,7 +116,7 @@ public class JournalArticleModelIndexerWriterContributor
 						return;
 					}
 
-					batchIndexingActionable.addDocument(
+					indexableActionableDynamicQuery.addDocument(
 						modelIndexerWriterDocumentHelper.getDocument(
 							latestIndexableArticle));
 				});
@@ -129,18 +124,16 @@ public class JournalArticleModelIndexerWriterContributor
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
 		if (_isIndexAllArticleVersions()) {
-			return _dynamicQueryBatchIndexingActionableFactory.
-				getBatchIndexingActionable(
-					_journalArticleLocalService.
-						getIndexableActionableDynamicQuery());
+			return _journalArticleLocalService.
+				getIndexableActionableDynamicQuery();
 		}
 
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_journalArticleResourceLocalService.
-					getIndexableActionableDynamicQuery());
+		return _journalArticleResourceLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -294,8 +287,6 @@ public class JournalArticleModelIndexerWriterContributor
 
 	private final BatchIndexingHelper _batchIndexingHelper;
 	private final ConfigurationProvider _configurationProvider;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final JournalArticleLocalService _journalArticleLocalService;
 	private final JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;

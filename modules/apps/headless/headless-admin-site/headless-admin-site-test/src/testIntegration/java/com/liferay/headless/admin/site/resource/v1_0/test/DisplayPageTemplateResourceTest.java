@@ -45,6 +45,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -100,6 +101,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -984,7 +986,7 @@ public class DisplayPageTemplateResourceTest
 	}
 
 	private String _getRenderDisplayPageTemplate(
-			String externalReferenceCode, JournalArticle journalArticle)
+			JournalArticle journalArticle, Layout layout)
 		throws Exception {
 
 		return ContentLayoutTestUtil.getRenderLayoutHTML(
@@ -998,10 +1000,13 @@ public class DisplayPageTemplateResourceTest
 						new ERCInfoItemIdentifier(
 							journalArticle.getExternalReferenceCode(),
 							"L_GLOBAL")))
+			).put(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+				_getLayoutDisplayPageObjectProvider(journalArticle)
 			).build(),
-			externalReferenceCode, testGroup,
-			_getLayoutDisplayPageObjectProvider(journalArticle),
-			_layoutServiceContextHelper, _layoutStructureProvider);
+			layout, _layoutServiceContextHelper, _layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layout.getPlid()));
 	}
 
 	private boolean _isPublished(Layout layout) {
@@ -1656,8 +1661,10 @@ public class DisplayPageTemplateResourceTest
 
 		PageElementsTestUtil.assertRenderedLayoutHTMLWithTemplateEntries(
 			_getRenderDisplayPageTemplate(
-				postDisplayPageTemplate.getExternalReferenceCode(),
-				journalArticle));
+				journalArticle,
+				_layoutLocalService.getLayoutByExternalReferenceCode(
+					postDisplayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId())));
 	}
 
 	private void _testPostSiteDisplayPageTemplateWithPageSpecifications()
@@ -2427,6 +2434,9 @@ public class DisplayPageTemplateResourceTest
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;

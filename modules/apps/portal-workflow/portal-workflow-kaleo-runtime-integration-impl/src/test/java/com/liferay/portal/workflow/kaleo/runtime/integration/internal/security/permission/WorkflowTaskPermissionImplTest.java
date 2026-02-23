@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskAssignee;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.workflow.kaleo.runtime.integration.internal.WorkflowTaskManagerImpl;
+import com.liferay.portal.workflow.kaleo.service.KaleoTaskInstanceTokenLocalService;
 import com.liferay.portal.workflow.security.permission.WorkflowTaskPermission;
 
 import java.io.Serializable;
@@ -46,6 +46,8 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 
+import org.springframework.test.util.ReflectionTestUtils;
+
 /**
  * @author Adam Brandizzi
  */
@@ -61,7 +63,7 @@ public class WorkflowTaskPermissionImplTest {
 		_setUpGroupLocalService();
 		_setUpWorkflowHandlerRegistryUtil();
 
-		_mockWorkflowTaskManager(false, Collections.emptyList());
+		_mockKaleoTaskInstanceTokenLocalService();
 	}
 
 	@Test
@@ -201,32 +203,6 @@ public class WorkflowTaskPermissionImplTest {
 	}
 
 	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnCompletedTaskWithNotification() {
-		_mockAssetRendererHasViewPermission(true);
-		_mockWorkflowTaskManager(true, Collections.emptyList());
-
-		Assert.assertTrue(
-			_workflowTaskPermissionChecker.contains(
-				_mockPermissionChecker(
-					RandomTestUtil.randomLong(), new long[0], false, false,
-					false),
-				_mockCompletedWorkflowTask(), RandomTestUtil.randomLong()));
-	}
-
-	@Test
-	public void testNotContentReviewerWithAssetViewPermissionHasPermissionOnPendingTaskWithNotification() {
-		_mockAssetRendererHasViewPermission(true);
-		_mockWorkflowTaskManager(true, Collections.emptyList());
-
-		Assert.assertTrue(
-			_workflowTaskPermissionChecker.contains(
-				_mockPermissionChecker(
-					RandomTestUtil.randomLong(), new long[0], false, false,
-					false),
-				_mockWorkflowTask(), RandomTestUtil.randomLong()));
-	}
-
-	@Test
 	public void testNotContentReviewerWithoutAssetViewPermissionHasNoPermissionOnCompletedTask() {
 		_mockAssetRendererHasViewPermission(false);
 
@@ -332,6 +308,16 @@ public class WorkflowTaskPermissionImplTest {
 		return _mockPermissionChecker(userId, roleIds, false, true, false);
 	}
 
+	private void _mockKaleoTaskInstanceTokenLocalService() {
+		KaleoTaskInstanceTokenLocalService kaleoTaskInstanceTokenLocalService =
+			Mockito.mock(KaleoTaskInstanceTokenLocalService.class);
+
+		ReflectionTestUtils.setField(
+			_workflowTaskPermissionChecker,
+			"_kaleoTaskInstanceTokenLocalService",
+			kaleoTaskInstanceTokenLocalService);
+	}
+
 	private PermissionChecker _mockOmniadminPermissionChecker() {
 		return _mockPermissionChecker(
 			RandomTestUtil.randomLong(), new long[0], false, false, true);
@@ -428,28 +414,6 @@ public class WorkflowTaskPermissionImplTest {
 			}
 
 		};
-	}
-
-	private void _mockWorkflowTaskManager(
-		boolean notifiableUser, List<User> users) {
-
-		ReflectionTestUtil.setFieldValue(
-			_workflowTaskPermissionChecker, "_workflowTaskManager",
-			new WorkflowTaskManagerImpl() {
-
-				@Override
-				public List<User> getAssignableUsers(long workflowTaskId) {
-					return users;
-				}
-
-				@Override
-				public boolean isNotifiableUser(
-					long userId, long workflowTaskId) {
-
-					return notifiableUser;
-				}
-
-			});
 	}
 
 	private long[] _randomPermissionCheckerRoleIds() {

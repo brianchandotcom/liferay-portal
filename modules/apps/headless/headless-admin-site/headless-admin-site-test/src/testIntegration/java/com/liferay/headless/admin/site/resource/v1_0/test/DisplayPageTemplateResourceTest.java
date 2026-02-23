@@ -46,6 +46,8 @@ import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
@@ -87,7 +89,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -903,58 +904,19 @@ public class DisplayPageTemplateResourceTest
 		return displayPageTemplate;
 	}
 
-	private LayoutDisplayPageObjectProvider<Object>
+	private LayoutDisplayPageObjectProvider<?>
 		_getLayoutDisplayPageObjectProvider(JournalArticle journalArticle) {
 
-		return new LayoutDisplayPageObjectProvider<>() {
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					journalArticle.getCompanyId(),
+					JournalArticle.class.getName());
 
-			@Override
-			public long getClassNameId() {
-				return PortalUtil.getClassNameId(
-					"com.liferay.journal.model.JournalArticle");
-			}
-
-			@Override
-			public long getClassPK() {
-				return GetterUtil.getLong(journalArticle.getArticleId());
-			}
-
-			@Override
-			public long getClassTypeId() {
-				return 0;
-			}
-
-			@Override
-			public String getDescription(Locale locale) {
-				return "";
-			}
-
-			@Override
-			public Object getDisplayObject() {
-				return journalArticle;
-			}
-
-			@Override
-			public long getGroupId() {
-				return journalArticle.getGroupId();
-			}
-
-			@Override
-			public String getKeywords(Locale locale) {
-				return "";
-			}
-
-			@Override
-			public String getTitle(Locale locale) {
-				return "";
-			}
-
-			@Override
-			public String getURLTitle(Locale locale) {
-				return "";
-			}
-
-		};
+		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(
+				JournalArticle.class.getName(),
+				journalArticle.getResourcePrimKey()));
 	}
 
 	private String _getLayoutPageTemplateCollectionExternalReferenceCode(
@@ -1664,6 +1626,9 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(
 				testGroup.getExternalReferenceCode(), displayPageTemplate);
+
+		assertEquals(displayPageTemplate, postDisplayPageTemplate);
+		assertValid(postDisplayPageTemplate);
 
 		PageElementsTestUtil.assertRenderedLayoutHTMLWithTemplateEntries(
 			_getRenderDisplayPageTemplate(
@@ -2412,6 +2377,10 @@ public class DisplayPageTemplateResourceTest
 
 	@Inject
 	private JSONFactory _jsonFactory;
+
+	@Inject
+	private LayoutDisplayPageProviderRegistry
+		_layoutDisplayPageProviderRegistry;
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;

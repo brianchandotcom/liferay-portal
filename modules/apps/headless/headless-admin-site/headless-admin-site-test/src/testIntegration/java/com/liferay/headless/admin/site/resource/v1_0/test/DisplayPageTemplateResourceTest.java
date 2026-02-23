@@ -49,7 +49,6 @@ import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
@@ -1339,13 +1338,11 @@ public class DisplayPageTemplateResourceTest
 
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(
-				PageElementsTestUtil.getPageElementsWithTemplateEntries(
+				PageElementsTestUtil.getDisplayPageTemplatePageElements(
 					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					testGroup.getGroupId()),
-				PageElementsTestUtil.getPageElementsWithTemplateEntries(
+				PageElementsTestUtil.getDisplayPageTemplatePageElements(
 					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					testGroup.getGroupId()));
 
 		DisplayPageTemplate postDisplayPageTemplate =
@@ -1657,13 +1654,11 @@ public class DisplayPageTemplateResourceTest
 
 		DisplayPageTemplate displayPageTemplate =
 			_getDisplayPageTemplateWithPageElements(
-				PageElementsTestUtil.getPageElementsWithTemplateEntries(
+				PageElementsTestUtil.getDisplayPageTemplatePageElements(
 					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					testGroup.getGroupId()),
-				PageElementsTestUtil.getPageElementsWithTemplateEntries(
+				PageElementsTestUtil.getDisplayPageTemplatePageElements(
 					fragmentEntry.getFragmentEntryKey(), journalArticle,
-					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					testGroup.getGroupId()));
 
 		DisplayPageTemplate postDisplayPageTemplate =

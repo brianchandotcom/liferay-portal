@@ -67,7 +67,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElement
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -538,9 +537,9 @@ public class PageElementsTestUtil {
 		return pageElements.toArray(new PageElement[0]);
 	}
 
-	public static PageElement[] getPageElementsWithTemplateEntries(
-			String fragmentKey, JournalArticle journalArticle,
-			int layoutPageTemplateEntryType, long scopeGroupId)
+	public static PageElement[] getDisplayPageTemplatePageElements(
+		String fragmentKey, JournalArticle journalArticle,
+		long scopeGroupId)
 		throws Exception {
 
 		List<PageElement> pageElements = new ArrayList<>();
@@ -612,39 +611,34 @@ public class PageElementsTestUtil {
 						journalArticle, "scopeGroupTemplateEntry4",
 						scopeGroupServiceContext)),
 				fragmentKey, journalArticle, position++, scopeGroupId));
-
-		if (layoutPageTemplateEntryType ==
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
-
-			pageElements.add(
-				_getDisplayPageItemPageElement(
-					_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-						_getTemplateEntry(
-							journalArticle, "companyGroupTemplateEntry5",
-							companyGroupServiceContext)),
-					fragmentKey, position++, scopeGroupId));
-			pageElements.add(
-				_getDisplayPageItemPageElement(
-					_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-						_getTemplateEntry(
-							journalArticle, "scopeGroupTemplateEntry5",
-							scopeGroupServiceContext)),
-					fragmentKey, position++, scopeGroupId));
-			pageElements.add(
-				_getDisplayPageItemPageElement(
-					_getTemplateEntryUniqueIdFieldKey(
-						_getTemplateEntry(
-							journalArticle, "companyGroupTemplateEntry6",
-							companyGroupServiceContext)),
-					fragmentKey, position++, scopeGroupId));
-			pageElements.add(
-				_getDisplayPageItemPageElement(
-					_getTemplateEntryUniqueIdFieldKey(
-						_getTemplateEntry(
-							journalArticle, "scopeGroupTemplateEntry6",
-							scopeGroupServiceContext)),
-					fragmentKey, position, scopeGroupId));
-		}
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry5",
+						companyGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry5",
+						scopeGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "companyGroupTemplateEntry6",
+						companyGroupServiceContext)),
+				fragmentKey, position++, scopeGroupId));
+		pageElements.add(
+			_getDisplayPageItemPageElement(
+				_getTemplateEntryUniqueIdFieldKey(
+					_getTemplateEntry(
+						journalArticle, "scopeGroupTemplateEntry6",
+						scopeGroupServiceContext)),
+				fragmentKey, position, scopeGroupId));
 
 		return pageElements.toArray(new PageElement[0]);
 	}

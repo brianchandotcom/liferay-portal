@@ -404,8 +404,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return _assignStructureDefaultWorkflowBulkSelectionAction;
 		}
-
-		if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
+		else if (BulkAction.Type.ASSIGN_TO_BULK_ACTION.equals(type)) {
 			return _assignToObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.COPY_BULK_ACTION.equals(type)) {

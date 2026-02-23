@@ -85,7 +85,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcessTest
 							"Table ",
 							dbInspector.normalizeName("ResourcePermission"),
 							", 2 rows deleted because \"", portletName,
-							"\" has not been found")));
+							"\" was not found")));
 
 				Assert.assertFalse(
 					_existsResourcePermission(resourcePermissionId1));

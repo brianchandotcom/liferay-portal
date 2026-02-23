@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -77,6 +78,10 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 		catch (PortalException portalException) {
 			throw new ServletException(portalException);
 		}
+
+		httpServletResponse.addHeader(
+			HttpHeaders.CACHE_CONTROL,
+			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 		super.service(httpServletRequest, httpServletResponse);
 	}

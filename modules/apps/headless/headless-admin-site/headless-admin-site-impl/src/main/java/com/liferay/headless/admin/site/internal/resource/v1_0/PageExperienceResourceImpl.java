@@ -11,7 +11,6 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContex
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
-import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -20,6 +19,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -51,7 +51,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageExperienceExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -82,7 +86,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageExperienceExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toPageExperience(
 			_segmentsExperienceService.
@@ -99,7 +107,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			String pageSpecificationExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			pageSpecificationExternalReferenceCode,
@@ -126,7 +138,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			PageExperience pageExperience)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -149,7 +165,11 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			PageExperience pageExperience)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);

@@ -6,9 +6,11 @@
 package com.liferay.site.cms.site.initializer.internal.servlet;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
@@ -22,7 +24,9 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -55,6 +59,18 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 
 		_createContext(httpServletRequest, httpServletResponse);
 
+		try {
+			User user = portal.getUser(httpServletRequest);
+
+			if ((user == null) || user.isGuestUser()) {
+				throw new PrincipalException.MustBeAuthenticated(
+					StringPool.BLANK);
+			}
+		}
+		catch (PortalException portalException) {
+			throw new ServletException(portalException);
+		}
+
 		super.service(httpServletRequest, httpServletResponse);
 	}
 
@@ -68,6 +84,9 @@ public abstract class BaseBulkActionServlet extends HttpServlet {
 
 	@Reference
 	protected FilterParserProvider filterParserProvider;
+
+	@Reference
+	protected Portal portal;
 
 	private void _createContext(
 		HttpServletRequest httpServletRequest,

@@ -134,8 +134,6 @@ public class SiteNavigationMenuExportImportTest
 				_siteNavigationMenu, childLayout1,
 				parentSiteNavigationMenuItem.getSiteNavigationMenuItemId());
 
-		_publishAllLayouts();
-
 		Layout childLayout2 = LayoutTestUtil.addTypePortletLayout(
 			_stagingGroup);
 
@@ -148,8 +146,8 @@ public class SiteNavigationMenuExportImportTest
 
 		childSiteNavigationMenuItem2 =
 			_siteNavigationMenuItemLocalService.
-				getSiteNavigationMenuItemByUuidAndGroupId(
-					childSiteNavigationMenuItem2.getUuid(),
+				getSiteNavigationMenuItemByExternalReferenceCode(
+					childSiteNavigationMenuItem2.getExternalReferenceCode(),
 					_liveGroup.getGroupId());
 
 		childSiteNavigationMenuItem1 =
@@ -262,7 +260,7 @@ public class SiteNavigationMenuExportImportTest
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.FALSE.toString()});
+			new String[] {Boolean.TRUE.toString()});
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
@@ -279,7 +277,7 @@ public class SiteNavigationMenuExportImportTest
 			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.FALSE.toString()});
+			new String[] {Boolean.TRUE.toString()});
 
 		StagingUtil.publishLayouts(
 			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),

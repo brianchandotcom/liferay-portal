@@ -693,6 +693,95 @@ public class PageElementsTestUtil {
 		return fragmentItemExternalReference;
 	}
 
+	private static void _assertBasicFragmentInstancePageElementDefinition(
+			BasicFragmentInstancePageElementDefinition
+				actualBasicFragmentInstancePageElementDefinition,
+			BasicFragmentInstancePageElementDefinition
+				expectedBasicFragmentInstancePageElementDefinition)
+		throws PortalException {
+
+		FragmentInstance actualFragmentInstance =
+			actualBasicFragmentInstancePageElementDefinition.
+				getFragmentInstance();
+		FragmentInstance expectedFragmentInstance =
+			expectedBasicFragmentInstancePageElementDefinition.
+				getFragmentInstance();
+
+		FragmentEditableElement[] actualFragmentEditableElements =
+			actualFragmentInstance.getFragmentEditableElements();
+		FragmentEditableElement[] expectedFragmentEditableElements =
+			expectedFragmentInstance.getFragmentEditableElements();
+
+		FragmentEditableElementValue actualFragmentEditableElementValue =
+			actualFragmentEditableElements[0].getFragmentEditableElementValue();
+		FragmentEditableElementValue expectedFragmentEditableElementValue =
+			expectedFragmentEditableElements[0].
+				getFragmentEditableElementValue();
+
+		TextFragmentEditableElementValue
+			actualTextFragmentEditableElementValue =
+				(TextFragmentEditableElementValue)
+					actualFragmentEditableElementValue;
+		TextFragmentEditableElementValue
+			expectedTextFragmentEditableElementValue =
+				(TextFragmentEditableElementValue)
+					expectedFragmentEditableElementValue;
+
+		FragmentLinkTextValue actualFragmentLinkTextValue =
+			actualTextFragmentEditableElementValue.getFragmentLinkTextValue();
+		FragmentLinkTextValue expectedFragmentLinkTextValue =
+			expectedTextFragmentEditableElementValue.getFragmentLinkTextValue();
+
+		TextFragmentValue actualTextFragmentValue =
+			actualFragmentLinkTextValue.getTextFragmentValue();
+		TextFragmentValue expectedTextFragmentValue =
+			expectedFragmentLinkTextValue.getTextFragmentValue();
+
+		TextFragmentMappedValue actualTextFragmentMappedValue =
+			(TextFragmentMappedValue)actualTextFragmentValue;
+		TextFragmentMappedValue expectedTextFragmentMappedValue =
+			(TextFragmentMappedValue)expectedTextFragmentValue;
+
+		FragmentMappedValue actualFragmentMappedValue =
+			actualTextFragmentMappedValue.getFragmentMappedValue();
+		FragmentMappedValue expectedFragmentMappedValue =
+			expectedTextFragmentMappedValue.getFragmentMappedValue();
+
+		Mapping actualMapping = actualFragmentMappedValue.getMapping();
+		Mapping expectedMapping = expectedFragmentMappedValue.getMapping();
+
+		String actualFieldKey = actualMapping.getFieldKey();
+		String expectedFieldKey = expectedMapping.getFieldKey();
+
+		if (expectedFieldKey.contains("__ERC__")) {
+			Assert.assertEquals(expectedFieldKey, actualFieldKey);
+		}
+		else {
+			long templateEntryId = GetterUtil.getLong(
+				expectedFieldKey.substring(
+					"ddmTemplate__ddmTemplate_".length()));
+
+			TemplateEntry templateEntry =
+				TemplateEntryLocalServiceUtil.getTemplateEntry(templateEntryId);
+
+			Company company = CompanyLocalServiceUtil.getCompany(
+				TestPropsValues.getCompanyId());
+
+			if (templateEntry.getGroupId() == company.getGroupId()) {
+				Assert.assertEquals(
+					_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+						templateEntry),
+					actualFieldKey);
+			}
+			else {
+				Assert.assertEquals(
+					_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+						templateEntry),
+					actualFieldKey);
+			}
+		}
+	}
+
 	private static void _assertFieldKeysWithTemplateEntries(
 			PageElement actualPageElement, PageElement expectedPageElement)
 		throws PortalException {
@@ -715,90 +804,11 @@ public class PageElementsTestUtil {
 					(BasicFragmentInstancePageElementDefinition)
 						expectedPageElementDefinition;
 
-			FragmentInstance actualFragmentInstance =
-				actualBasicFragmentInstancePageElementDefinition.
-					getFragmentInstance();
-			FragmentInstance expectedFragmentInstance =
-				expectedBasicFragmentInstancePageElementDefinition.
-					getFragmentInstance();
+			_assertBasicFragmentInstancePageElementDefinition(
+				actualBasicFragmentInstancePageElementDefinition,
+				expectedBasicFragmentInstancePageElementDefinition);
 
-			FragmentEditableElement[] actualFragmentEditableElements =
-				actualFragmentInstance.getFragmentEditableElements();
-			FragmentEditableElement[] expectedFragmentEditableElements =
-				expectedFragmentInstance.getFragmentEditableElements();
-
-			FragmentEditableElementValue actualFragmentEditableElementValue =
-				actualFragmentEditableElements[0].
-					getFragmentEditableElementValue();
-			FragmentEditableElementValue expectedFragmentEditableElementValue =
-				expectedFragmentEditableElements[0].
-					getFragmentEditableElementValue();
-
-			TextFragmentEditableElementValue
-				actualTextFragmentEditableElementValue =
-					(TextFragmentEditableElementValue)
-						actualFragmentEditableElementValue;
-			TextFragmentEditableElementValue
-				expectedTextFragmentEditableElementValue =
-					(TextFragmentEditableElementValue)
-						expectedFragmentEditableElementValue;
-
-			FragmentLinkTextValue actualFragmentLinkTextValue =
-				actualTextFragmentEditableElementValue.
-					getFragmentLinkTextValue();
-			FragmentLinkTextValue expectedFragmentLinkTextValue =
-				expectedTextFragmentEditableElementValue.
-					getFragmentLinkTextValue();
-
-			TextFragmentValue actualTextFragmentValue =
-				actualFragmentLinkTextValue.getTextFragmentValue();
-			TextFragmentValue expectedTextFragmentValue =
-				expectedFragmentLinkTextValue.getTextFragmentValue();
-
-			TextFragmentMappedValue actualTextFragmentMappedValue =
-				(TextFragmentMappedValue)actualTextFragmentValue;
-			TextFragmentMappedValue expectedTextFragmentMappedValue =
-				(TextFragmentMappedValue)expectedTextFragmentValue;
-
-			FragmentMappedValue actualFragmentMappedValue =
-				actualTextFragmentMappedValue.getFragmentMappedValue();
-			FragmentMappedValue expectedFragmentMappedValue =
-				expectedTextFragmentMappedValue.getFragmentMappedValue();
-
-			Mapping actualMapping = actualFragmentMappedValue.getMapping();
-			Mapping expectedMapping = expectedFragmentMappedValue.getMapping();
-
-			String actualFieldKey = actualMapping.getFieldKey();
-			String expectedFieldKey = expectedMapping.getFieldKey();
-
-			if (expectedFieldKey.contains("__ERC__")) {
-				Assert.assertEquals(expectedFieldKey, actualFieldKey);
-			}
-			else {
-				long templateEntryId = GetterUtil.getLong(
-					expectedFieldKey.substring(
-						"ddmTemplate__ddmTemplate_".length()));
-
-				TemplateEntry templateEntry =
-					TemplateEntryLocalServiceUtil.getTemplateEntry(
-						templateEntryId);
-
-				Company company = CompanyLocalServiceUtil.getCompany(
-					TestPropsValues.getCompanyId());
-
-				if (templateEntry.getGroupId() == company.getGroupId()) {
-					Assert.assertEquals(
-						_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-							templateEntry),
-						actualFieldKey);
-				}
-				else {
-					Assert.assertEquals(
-						_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-							templateEntry),
-						actualFieldKey);
-				}
-			}
+			return;
 		}
 
 		if (actualPageElementDefinition instanceof

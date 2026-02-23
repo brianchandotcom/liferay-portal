@@ -29,6 +29,8 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductS
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductVirtualSettingsFileEntryResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductVirtualSettingsResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
@@ -213,6 +215,27 @@ public class MarketplaceService extends BaseService {
 		CatalogResource catalogResource = _getCatalogResource();
 
 		return catalogResource.getCatalog(catalogId);
+	}
+
+	public Channel getChannelByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception {
+
+		ChannelResource channelResource = getChannelResource();
+
+		return channelResource.getChannelByExternalReferenceCode(
+			externalReferenceCode);
+	}
+
+	public ChannelResource getChannelResource() throws Exception {
+		return ChannelResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
 	}
 
 	public CurrencyResource getCurrencyResource() throws Exception {
@@ -594,6 +617,12 @@ public class MarketplaceService extends BaseService {
 					externalReferenceCode,
 				exception);
 		}
+	}
+
+	public void postOrder(Order order) throws Exception {
+		OrderResource orderResource = getOrderResource();
+
+		orderResource.postOrder(order);
 	}
 
 	public void postProductAttachment(

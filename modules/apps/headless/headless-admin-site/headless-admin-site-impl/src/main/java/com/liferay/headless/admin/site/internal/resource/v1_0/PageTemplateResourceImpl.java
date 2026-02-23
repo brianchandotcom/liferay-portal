@@ -187,13 +187,7 @@ public class PageTemplateResourceImpl
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				layoutPageTemplateEntry -> _pageTemplateDTOConverter.toDTO(
-					DTOConverterContextUtil.getDTOConverterContext(
-						contextAcceptLanguage, _dtoConverterRegistry,
-						contextHttpServletRequest,
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						contextUriInfo, contextUser),
-					layoutPageTemplateEntry)));
+				this::_toPageTemplate));
 	}
 
 	@Override
@@ -291,13 +285,7 @@ public class PageTemplateResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageTemplateDTOConverter.toDTO(
-			DTOConverterContextUtil.getDTOConverterContext(
-				contextAcceptLanguage, _dtoConverterRegistry,
-				contextHttpServletRequest,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				contextUriInfo, contextUser),
-			layoutPageTemplateEntry);
+		return _toPageTemplate(layoutPageTemplateEntry);
 	}
 
 	@Override
@@ -323,13 +311,7 @@ public class PageTemplateResourceImpl
 					},
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
-				layoutPageTemplateEntry -> _pageTemplateDTOConverter.toDTO(
-					DTOConverterContextUtil.getDTOConverterContext(
-						contextAcceptLanguage, _dtoConverterRegistry,
-						contextHttpServletRequest,
-						layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-						contextUriInfo, contextUser),
-					layoutPageTemplateEntry)),
+				this::_toPageTemplate),
 			pagination,
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
 				groupId,
@@ -528,13 +510,7 @@ public class PageTemplateResourceImpl
 					contentPageTemplate.getPageSpecifications()),
 				serviceContext);
 
-		return _pageTemplateDTOConverter.toDTO(
-			DTOConverterContextUtil.getDTOConverterContext(
-				contextAcceptLanguage, _dtoConverterRegistry,
-				contextHttpServletRequest,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				contextUriInfo, contextUser),
-			layoutPageTemplateEntry);
+		return _toPageTemplate(layoutPageTemplateEntry);
 	}
 
 	private PageTemplate _addPageTemplate(
@@ -654,13 +630,7 @@ public class PageTemplateResourceImpl
 				widgetPageTemplate.getPageTemplateSettings()),
 			serviceContext, widgetPageSpecification);
 
-		return _pageTemplateDTOConverter.toDTO(
-			DTOConverterContextUtil.getDTOConverterContext(
-				contextAcceptLanguage, _dtoConverterRegistry,
-				contextHttpServletRequest,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				contextUriInfo, contextUser),
-			layoutPageTemplateEntry);
+		return _toPageTemplate(layoutPageTemplateEntry);
 	}
 
 	private PageTemplate _addPageTemplate(
@@ -849,6 +819,19 @@ public class PageTemplateResourceImpl
 		}
 	}
 
+	private PageTemplate _toPageTemplate(
+			LayoutPageTemplateEntry layoutPageTemplateEntry)
+		throws Exception {
+
+		return _pageTemplateDTOConverter.toDTO(
+			DTOConverterContextUtil.getDTOConverterContext(
+				contextAcceptLanguage, _dtoConverterRegistry,
+				contextHttpServletRequest,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				contextUriInfo, contextUser),
+			layoutPageTemplateEntry);
+	}
+
 	private PageTemplate _updatePageTemplate(
 			ContentPageTemplate contentPageTemplate,
 			LayoutPageTemplateEntry layoutPageTemplateEntry)
@@ -877,12 +860,7 @@ public class PageTemplateResourceImpl
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		try {
-			return _pageTemplateDTOConverter.toDTO(
-				DTOConverterContextUtil.getDTOConverterContext(
-					contextAcceptLanguage, _dtoConverterRegistry,
-					contextHttpServletRequest,
-					layoutPageTemplateEntry.getPlid(), contextUriInfo,
-					contextUser),
+			return _toPageTemplate(
 				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 					contentPageTemplate.getName()));
@@ -942,12 +920,7 @@ public class PageTemplateResourceImpl
 			PageSpecificationUtil.getWidgetPageSpecification(
 				widgetPageTemplate.getPageSpecifications()));
 
-		return _pageTemplateDTOConverter.toDTO(
-			DTOConverterContextUtil.getDTOConverterContext(
-				contextAcceptLanguage, _dtoConverterRegistry,
-				contextHttpServletRequest,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				contextUriInfo, contextUser),
+		return _toPageTemplate(
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 	}

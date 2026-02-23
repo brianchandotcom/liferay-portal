@@ -25,13 +25,13 @@ public class HashedFilesRegistryUtil {
 		hashedFilesRegistry.forEach(biConsumer);
 	}
 
-	public static CachingLevel getCachingLevel(
+	public static CachingStrategy getCachingStrategy(
 		HttpServletRequest httpServletRequest) {
 
 		HashedFilesRegistry hashedFilesRegistry =
 			_hashedFilesRegistrySnapshot.get();
 
-		return hashedFilesRegistry.getCachingLevel(httpServletRequest);
+		return hashedFilesRegistry.getCachingStrategy(httpServletRequest);
 	}
 
 	public static String getHashedFileURI(String unhashedFileURI) {

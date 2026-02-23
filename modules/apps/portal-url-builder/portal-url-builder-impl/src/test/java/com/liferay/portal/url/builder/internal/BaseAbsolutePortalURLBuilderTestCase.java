@@ -8,7 +8,7 @@ package com.liferay.portal.url.builder.internal;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.hashed.files.CachingLevel;
+import com.liferay.portal.kernel.frontend.hashed.files.CachingStrategy;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
 import com.liferay.portal.kernel.model.Theme;
@@ -78,9 +78,9 @@ public abstract class BaseAbsolutePortalURLBuilderTestCase {
 			HashedFilesRegistry.class);
 
 		Mockito.when(
-			hashedFilesRegistry.getCachingLevel(Mockito.any())
+			hashedFilesRegistry.getCachingStrategy(Mockito.any())
 		).thenReturn(
-			CachingLevel.USE_ONE_HASH_PER_FILE
+			CachingStrategy.USE_ONE_HASH_PER_FILE
 		);
 
 		Mockito.when(

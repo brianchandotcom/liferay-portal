@@ -7,8 +7,7 @@ package com.liferay.commerce.order.rule.internal.search.spi.model.index.contribu
 
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,20 +18,16 @@ public class COREntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<COREntry> {
 
 	public COREntryModelIndexerWriterContributor(
-		COREntryLocalService corEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		COREntryLocalService corEntryLocalService) {
 
 		_corEntryLocalService = corEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_corEntryLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _corEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -41,7 +36,5 @@ public class COREntryModelIndexerWriterContributor
 	}
 
 	private final COREntryLocalService _corEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -11,7 +11,6 @@ import com.liferay.commerce.order.rule.internal.search.spi.model.result.contribu
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -61,19 +60,13 @@ public class COREntryModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new COREntryModelIndexerWriterContributor(
-				_corEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+			new COREntryModelIndexerWriterContributor(_corEntryLocalService);
 		_modelVisibilityContributor = new COREntryModelVisibilityContributor(
 			_corEntryLocalService);
 	}
 
 	@Reference
 	private COREntryLocalService _corEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<COREntry>
 		_modelIndexWriterContributor;

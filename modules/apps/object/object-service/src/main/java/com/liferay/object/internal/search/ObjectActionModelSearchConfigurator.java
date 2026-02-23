@@ -9,7 +9,6 @@ import com.liferay.object.internal.search.spi.model.index.contributor.ObjectActi
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -53,13 +52,8 @@ public class ObjectActionModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new ObjectActionModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_objectActionLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<ObjectAction>
 		_modelIndexWriterContributor;

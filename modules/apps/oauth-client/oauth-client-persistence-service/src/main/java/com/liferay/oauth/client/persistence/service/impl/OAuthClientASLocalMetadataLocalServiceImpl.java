@@ -472,16 +472,16 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		throws PortalException {
 
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63415")) {
-			_validateHttpsUrl(authorizationEndpoint);
+			_validateURL(authorizationEndpoint);
 
 			if (Validator.isNull(issuer)) {
 				throw new OAuthClientASLocalMetadataIssuerException();
 			}
 
-			_validateHttpsUrl(issuer);
-			_validateHttpsUrl(jwksURI);
-			_validateHttpsUrl(tokenEndpoint);
-			_validateHttpsUrl(userInfoEndpoint);
+			_validateURL(issuer);
+			_validateURL(jwksURI);
+			_validateURL(tokenEndpoint);
+			_validateURL(userInfoEndpoint);
 		}
 
 		if (oldOAuthClientASLocalMetadata == null) {
@@ -505,7 +505,7 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 		}
 	}
 
-	private void _validateHttpsUrl(String urlString) throws PortalException {
+	private void _validateURL(String urlString) throws PortalException {
 		if (Validator.isNull(urlString)) {
 			return;
 		}

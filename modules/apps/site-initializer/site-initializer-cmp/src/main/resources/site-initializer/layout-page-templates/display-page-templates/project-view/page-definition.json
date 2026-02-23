@@ -22,7 +22,7 @@
 					},
 					"fragmentConfig": {
 						"numberOfTabs": 3,
-						"persistSelectedTab": false
+						"persistSelectedTab": true
 					},
 					"fragmentFields": [
 						{

@@ -11,7 +11,6 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -72,16 +71,11 @@ public class CalendarModelSearchConfigurator
 			new CalendarModelIndexerWriterContributor(
 				new CalendarBookingBatchReindexer(
 					_indexerDocumentBuilder, _indexerWriter),
-				_calendarLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_calendarLocalService);
 	}
 
 	@Reference
 	private CalendarLocalService _calendarLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.calendar.model.CalendarBooking)"

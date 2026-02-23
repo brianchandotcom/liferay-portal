@@ -8,11 +8,10 @@ package com.liferay.calendar.internal.search.spi.model.index.contributor;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.workflow.constants.CalendarBookingWorkflowConstants;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
@@ -24,21 +23,17 @@ public class CalendarBookingModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CalendarBooking> {
 
 	public CalendarBookingModelIndexerWriterContributor(
-		CalendarBookingLocalService calendarBookingLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CalendarBookingLocalService calendarBookingLocalService) {
 
 		_calendarBookingLocalService = calendarBookingLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 
@@ -49,19 +44,19 @@ public class CalendarBookingModelIndexerWriterContributor
 							CalendarBookingWorkflowConstants.STATUS_MAYBE
 						}));
 			});
-		batchIndexingActionable.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CalendarBooking calendarBooking) ->
-				batchIndexingActionable.addDocument(
+				indexableActionableDynamicQuery.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						calendarBooking)));
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_calendarBookingLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _calendarBookingLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -81,7 +76,5 @@ public class CalendarBookingModelIndexerWriterContributor
 	}
 
 	private final CalendarBookingLocalService _calendarBookingLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

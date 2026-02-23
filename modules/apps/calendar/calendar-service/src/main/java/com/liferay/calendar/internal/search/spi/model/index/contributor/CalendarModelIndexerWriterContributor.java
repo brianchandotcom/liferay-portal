@@ -8,8 +8,7 @@ package com.liferay.calendar.internal.search.spi.model.index.contributor;
 import com.liferay.calendar.internal.search.CalendarBookingBatchReindexer;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.CalendarLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -20,21 +19,17 @@ public class CalendarModelIndexerWriterContributor
 
 	public CalendarModelIndexerWriterContributor(
 		CalendarBookingBatchReindexer calendarBookingBatchReindexer,
-		CalendarLocalService calendarLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CalendarLocalService calendarLocalService) {
 
 		_calendarBookingBatchReindexer = calendarBookingBatchReindexer;
 		_calendarLocalService = calendarLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_calendarLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _calendarLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -45,7 +40,5 @@ public class CalendarModelIndexerWriterContributor
 
 	private final CalendarBookingBatchReindexer _calendarBookingBatchReindexer;
 	private final CalendarLocalService _calendarLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

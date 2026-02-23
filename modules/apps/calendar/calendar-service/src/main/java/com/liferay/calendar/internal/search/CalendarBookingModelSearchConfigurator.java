@@ -11,7 +11,6 @@ import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.HtmlParser;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -62,18 +61,13 @@ public class CalendarBookingModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CalendarBookingModelIndexerWriterContributor(
-				_calendarBookingLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_calendarBookingLocalService);
 		_modelSummaryContributor = new CalendarBookingModelSummaryContributor(
 			_summaryHelper, _htmlParser);
 	}
 
 	@Reference
 	private CalendarBookingLocalService _calendarBookingLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private HtmlParser _htmlParser;

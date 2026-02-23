@@ -13,6 +13,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
 import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
@@ -104,15 +104,17 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		BatchIndexingActionable batchIndexingActionable =
-			_modelIndexerWriterContributor.getBatchIndexingActionable();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		batchIndexingActionable.setInterval(
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			_modelIndexerWriterContributor.getIndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setInterval(
 			_batchIndexingHelper.getBulkSize(
 				_modelSearchSettings.getClassName()));
 
-		return batchIndexingActionable;
+		return indexableActionableDynamicQuery;
 	}
 
 	@Override
@@ -192,19 +194,20 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 								setCTCollectionIdWithSafeCloseable(
 									ctCollectionId)) {
 
-						BatchIndexingActionable batchIndexingActionable =
-							getBatchIndexingActionable();
+						IndexableActionableDynamicQuery
+							indexableActionableDynamicQuery =
+								getIndexableActionableDynamicQuery();
 
-						batchIndexingActionable.setCompanyId(companyId);
+						indexableActionableDynamicQuery.setCompanyId(companyId);
 
 						_modelIndexerWriterContributor.customize(
-							batchIndexingActionable,
+							indexableActionableDynamicQuery,
 							new ModelIndexerWriterDocumentHelperImpl(
 								_modelSearchSettings.getClassName(),
 								_indexerDocumentBuilder));
 
 						try {
-							batchIndexingActionable.performActions();
+							indexableActionableDynamicQuery.performActions();
 						}
 						catch (Exception exception) {
 							if (_log.isWarnEnabled()) {

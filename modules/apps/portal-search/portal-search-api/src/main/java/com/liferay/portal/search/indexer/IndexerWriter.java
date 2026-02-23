@@ -5,8 +5,8 @@
 
 package com.liferay.portal.search.indexer;
 
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
 
 import java.util.Collection;
 
@@ -22,7 +22,7 @@ public interface IndexerWriter<T extends BaseModel<?>> {
 
 	public void delete(T baseModel);
 
-	public BatchIndexingActionable getBatchIndexingActionable();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	public boolean isEnabled();
 

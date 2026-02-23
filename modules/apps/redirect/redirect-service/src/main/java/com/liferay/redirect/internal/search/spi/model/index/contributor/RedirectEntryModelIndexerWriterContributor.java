@@ -5,8 +5,7 @@
 
 package com.liferay.redirect.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.redirect.model.RedirectEntry;
@@ -19,21 +18,16 @@ public class RedirectEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<RedirectEntry> {
 
 	public RedirectEntryModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		RedirectEntryLocalService redirectEntryLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_redirectEntryLocalService = redirectEntryLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_redirectEntryLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _redirectEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -41,8 +35,6 @@ public class RedirectEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final RedirectEntryLocalService _redirectEntryLocalService;
 
 }

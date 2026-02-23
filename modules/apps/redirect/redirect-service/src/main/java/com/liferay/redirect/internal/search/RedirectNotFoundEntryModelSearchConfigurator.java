@@ -6,7 +6,6 @@
 package com.liferay.redirect.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.redirect.internal.search.spi.model.index.contributor.RedirectNotFoundEntryModelIndexerWriterContributor;
@@ -48,13 +47,8 @@ public class RedirectNotFoundEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new RedirectNotFoundEntryModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_redirectNotFoundEntryLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<RedirectNotFoundEntry>
 		_modelIndexWriterContributor;

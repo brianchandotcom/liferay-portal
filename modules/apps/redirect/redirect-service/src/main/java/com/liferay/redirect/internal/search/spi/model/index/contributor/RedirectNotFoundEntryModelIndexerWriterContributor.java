@@ -5,8 +5,7 @@
 
 package com.liferay.redirect.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.redirect.model.RedirectNotFoundEntry;
@@ -19,21 +18,17 @@ public class RedirectNotFoundEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<RedirectNotFoundEntry> {
 
 	public RedirectNotFoundEntryModelIndexerWriterContributor(
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		RedirectNotFoundEntryLocalService redirectNotFoundEntryLocalService) {
 
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_redirectNotFoundEntryLocalService = redirectNotFoundEntryLocalService;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_redirectNotFoundEntryLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _redirectNotFoundEntryLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -43,8 +38,6 @@ public class RedirectNotFoundEntryModelIndexerWriterContributor
 		return IndexerWriterMode.UPDATE;
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final RedirectNotFoundEntryLocalService
 		_redirectNotFoundEntryLocalService;
 

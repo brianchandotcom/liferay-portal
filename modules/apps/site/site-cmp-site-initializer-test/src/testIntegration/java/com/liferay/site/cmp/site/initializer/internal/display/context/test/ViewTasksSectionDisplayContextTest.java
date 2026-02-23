@@ -163,8 +163,31 @@ public class ViewTasksSectionDisplayContextTest
 
 	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
+		List<FDSActionDropdownItem> groupFDSActionDropdownItems =
 			getFDSActionDropdownItems(_assetEntry);
+
+		Assert.assertEquals(
+			groupFDSActionDropdownItems.toString(), 2,
+			groupFDSActionDropdownItems.size());
+
+		FDSActionDropdownItem fdsActionDropdownItem =
+			groupFDSActionDropdownItems.get(0);
+
+		List<FDSActionDropdownItem> fdsActionDropdownItems =
+			(List<FDSActionDropdownItem>)fdsActionDropdownItem.get("items");
+
+		Assert.assertEquals(
+			fdsActionDropdownItems.toString(), 1,
+			fdsActionDropdownItems.size());
+
+		assertFDSActionDropdownItem(
+			null, "workflow-transition", null, null,
+			fdsActionDropdownItems.get(0));
+
+		fdsActionDropdownItem = groupFDSActionDropdownItems.get(1);
+
+		fdsActionDropdownItems =
+			(List<FDSActionDropdownItem>)fdsActionDropdownItem.get("items");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems.toString(), 10,

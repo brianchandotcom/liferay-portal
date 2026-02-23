@@ -107,7 +107,9 @@ public class OAuth2WellKnownAuthorizationServerServlet extends HttpServlet {
 				oAuthClientASLocalMetadata.isLocalWellKnownEnabled()) {
 
 				if (_log.isDebugEnabled()) {
-					_log.debug("OAuthClientASLocalMetadata is enabled");
+					_log.debug(
+						"OAuth client authorization server local metadata is " +
+							"enabled");
 				}
 
 				httpServletResponse.setStatus(HttpServletResponse.SC_OK);

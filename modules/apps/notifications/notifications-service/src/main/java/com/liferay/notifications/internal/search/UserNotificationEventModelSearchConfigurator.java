@@ -9,7 +9,6 @@ import com.liferay.notifications.internal.search.spi.model.index.contributor.Use
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -48,13 +47,8 @@ public class UserNotificationEventModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new UserNotificationEventModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_userNotificationEventLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<UserNotificationEvent>
 		_modelIndexWriterContributor;

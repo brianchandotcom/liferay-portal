@@ -6,7 +6,6 @@
 package com.liferay.trash.web.internal.portlet;
 
 import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.TrashPermissionException;
@@ -352,31 +351,23 @@ public class TrashPortlet extends MVCPortlet {
 
 		long trashEntryId = ParamUtil.getLong(renderRequest, "trashEntryId");
 
-		if (trashEntryId > 0) {
-			TrashEntry entry = _trashEntryLocalService.getTrashEntry(
-				trashEntryId);
+		if (trashEntryId == 0) {
+			return;
+		}
 
-			String className = entry.getClassName();
-			long classPK = entry.getClassPK();
+		TrashEntry trashEntry = _trashEntryLocalService.getTrashEntry(
+			trashEntryId);
 
-			AssetEntry assetEntry = _assetEntryService.getEntry(
-				className, classPK);
+		AssetEntry assetEntry = _assetEntryService.getEntry(
+			trashEntry.getClassName(), trashEntry.getClassPK());
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
-			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
-			if ((themeDisplay.getScopeGroupId() != assetEntry.getGroupId()) ||
-				(assetRenderer == null) ||
-				!assetRenderer.hasViewPermission(
-					themeDisplay.getPermissionChecker()
-				)) {
-
-				throw new PrincipalException.MustHavePermission(
-					themeDisplay.getUserId(), className, classPK,
-					ActionKeys.VIEW);
-			}
+		if ((themeDisplay.getScopeGroupId() != assetEntry.getGroupId())) {
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getUserId(), trashEntry.getClassName(),
+				trashEntry.getClassPK(), ActionKeys.VIEW);
 		}
 	}
 

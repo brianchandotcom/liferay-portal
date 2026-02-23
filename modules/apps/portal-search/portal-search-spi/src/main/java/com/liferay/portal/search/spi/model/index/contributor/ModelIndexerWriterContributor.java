@@ -5,8 +5,8 @@
 
 package com.liferay.portal.search.spi.model.index.contributor;
 
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
@@ -16,15 +16,15 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
 public interface ModelIndexerWriterContributor<T extends BaseModel<?>> {
 
 	public default void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setPerformActionMethod(
-			(T t) -> batchIndexingActionable.addDocument(
+		indexableActionableDynamicQuery.setPerformActionMethod(
+			(T t) -> indexableActionableDynamicQuery.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(t)));
 	}
 
-	public BatchIndexingActionable getBatchIndexingActionable();
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	public default IndexerWriterMode getIndexerWriterMode(T baseModel) {
 		return null;

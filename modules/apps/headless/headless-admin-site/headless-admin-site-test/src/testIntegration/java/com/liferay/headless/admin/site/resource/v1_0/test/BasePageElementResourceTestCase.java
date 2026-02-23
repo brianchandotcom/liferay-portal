@@ -699,29 +699,6 @@ public abstract class BasePageElementResourceTestCase {
 	}
 
 	@Test
-	public void testPostSitePageSpecificationPageExperiencePageElementFragmentComposition()
-		throws Exception {
-
-		PageElement randomPageElement = randomPageElement();
-
-		PageElement postPageElement =
-			testPostSitePageSpecificationPageExperiencePageElementFragmentComposition_addPageElement(
-				randomPageElement);
-
-		assertEquals(randomPageElement, postPageElement);
-		assertValid(postPageElement);
-	}
-
-	protected PageElement
-			testPostSitePageSpecificationPageExperiencePageElementFragmentComposition_addPageElement(
-				PageElement pageElement)
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testPutSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 

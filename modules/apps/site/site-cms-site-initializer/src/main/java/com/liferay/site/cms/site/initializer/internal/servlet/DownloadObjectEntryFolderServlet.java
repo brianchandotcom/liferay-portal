@@ -113,10 +113,6 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, PortalException {
 
-		httpServletResponse.addHeader(
-			HttpHeaders.CACHE_CONTROL,
-			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-
 		JSONObject jsonObject = null;
 
 		try {
@@ -225,10 +221,6 @@ public class DownloadObjectEntryFolderServlet extends BaseBulkActionServlet {
 
 			try (InputStream inputStream = new FileInputStream(
 					zipWriter.getFile())) {
-
-				httpServletResponse.addHeader(
-					HttpHeaders.CACHE_CONTROL,
-					HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
 				ServletResponseUtil.sendFile(
 					httpServletRequest, httpServletResponse, zipFileName,

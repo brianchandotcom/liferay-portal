@@ -10,7 +10,6 @@ import com.liferay.exportimport.internal.search.spi.model.result.contributor.Exp
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -57,16 +56,11 @@ public class ExportImportConfigurationModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new ExportImportConfigurationModelIndexerWriterContributor(
-				_dynamicQueryBatchIndexingActionableFactory,
 				_exportImportConfigurationLocalService);
 
 		_modelSummaryContributor =
 			new ExportImportConfigurationModelSummaryContributor();
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference
 	private ExportImportConfigurationLocalService

@@ -47,75 +47,77 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		long oAuthClientASLocalMetadataId = ParamUtil.getLong(
+			renderRequest, "oAuthClientASLocalMetadataId");
+
+		if (oAuthClientASLocalMetadataId <= 0) {
+			return _getJSPPath();
+		}
+
 		try {
-			long oAuthClientASLocalMetadataId = ParamUtil.getLong(
-				renderRequest, "oAuthClientASLocalMetadataId");
+			OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
+				_oAuthClientASLocalMetadataService.
+					fetchOAuthClientASLocalMetadata(
+						oAuthClientASLocalMetadataId);
 
-			if (oAuthClientASLocalMetadataId > 0) {
-				OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
-					_oAuthClientASLocalMetadataService.
-						fetchOAuthClientASLocalMetadata(
-							oAuthClientASLocalMetadataId);
+			renderRequest.setAttribute(
+				OAuthClientASLocalMetadata.class.getName(),
+				oAuthClientASLocalMetadata);
 
+			OIDCProviderMetadata authorizationServerMetadata =
+				OIDCProviderMetadata.parse(
+					oAuthClientASLocalMetadata.getMetadataJSON());
+
+			URI authorizationEndpointURI =
+				authorizationServerMetadata.getAuthorizationEndpointURI();
+
+			if (authorizationEndpointURI != null) {
 				renderRequest.setAttribute(
-					OAuthClientASLocalMetadata.class.getName(),
-					oAuthClientASLocalMetadata);
+					"authorizationEndpoint",
+					authorizationEndpointURI.toString());
+			}
 
-				OIDCProviderMetadata authorizationServerMetadata =
-					OIDCProviderMetadata.parse(
-						oAuthClientASLocalMetadata.getMetadataJSON());
+			if (authorizationServerMetadata.getGrantTypes() != null) {
+				renderRequest.setAttribute(
+					"supportedGrantTypes",
+					StringUtil.merge(
+						authorizationServerMetadata.getGrantTypes()));
+			}
 
-				URI authorizationEndpointURI =
-					authorizationServerMetadata.getAuthorizationEndpointURI();
+			URI jwksURI = authorizationServerMetadata.getJWKSetURI();
 
-				if (authorizationEndpointURI != null) {
-					renderRequest.setAttribute(
-						"authorizationEndpoint",
-						authorizationEndpointURI.toString());
-				}
+			if (jwksURI != null) {
+				renderRequest.setAttribute("jwksURI", jwksURI.toString());
+			}
 
-				if (authorizationServerMetadata.getGrantTypes() != null) {
-					renderRequest.setAttribute(
-						"supportedGrantTypes",
-						StringUtil.merge(
-							authorizationServerMetadata.getGrantTypes()));
-				}
+			Scope supportedScopes = authorizationServerMetadata.getScopes();
 
-				URI jwksURI = authorizationServerMetadata.getJWKSetURI();
+			if (supportedScopes != null) {
+				renderRequest.setAttribute(
+					"supportedScopes", supportedScopes.toString());
+			}
 
-				if (jwksURI != null) {
-					renderRequest.setAttribute("jwksURI", jwksURI.toString());
-				}
+			if (authorizationServerMetadata.getSubjectTypes() != null) {
+				renderRequest.setAttribute(
+					"supportedSubjectTypes",
+					StringUtil.merge(
+						authorizationServerMetadata.getSubjectTypes()));
+			}
 
-				Scope supportedScopes = authorizationServerMetadata.getScopes();
+			URI tokenEndpointURI =
+				authorizationServerMetadata.getTokenEndpointURI();
 
-				if (supportedScopes != null) {
-					renderRequest.setAttribute(
-						"supportedScopes", supportedScopes.toString());
-				}
+			if (tokenEndpointURI != null) {
+				renderRequest.setAttribute(
+					"tokenEndpoint", tokenEndpointURI.toString());
+			}
 
-				if (authorizationServerMetadata.getSubjectTypes() != null) {
-					renderRequest.setAttribute(
-						"supportedSubjectTypes",
-						StringUtil.merge(
-							authorizationServerMetadata.getSubjectTypes()));
-				}
+			URI userInfoEndpointURI =
+				authorizationServerMetadata.getUserInfoEndpointURI();
 
-				URI tokenEndpointURI =
-					authorizationServerMetadata.getTokenEndpointURI();
-
-				if (tokenEndpointURI != null) {
-					renderRequest.setAttribute(
-						"tokenEndpoint", tokenEndpointURI.toString());
-				}
-
-				URI userInfoEndpointURI =
-					authorizationServerMetadata.getUserInfoEndpointURI();
-
-				if (userInfoEndpointURI != null) {
-					renderRequest.setAttribute(
-						"userInfoEndpoint", userInfoEndpointURI.toString());
-				}
+			if (userInfoEndpointURI != null) {
+				renderRequest.setAttribute(
+					"userInfoEndpoint", userInfoEndpointURI.toString());
 			}
 		}
 		catch (PortalException portalException) {
@@ -127,6 +129,10 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 			throw new RuntimeException(parseException);
 		}
 
+		return _getJSPPath();
+	}
+
+	private String _getJSPPath() {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-63415")) {
 

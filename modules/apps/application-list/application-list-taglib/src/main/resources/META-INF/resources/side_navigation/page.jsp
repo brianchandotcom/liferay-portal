@@ -13,7 +13,7 @@ SideNavigationDisplayContext sideNavigationDisplayContext = new SideNavigationDi
 
 <div class="side-navigation-container c-slideout-container<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-push-start" : "" %>" id="com_liferay_application_list_taglib_side_navigation_container">
 	<div class="c-slideout c-slideout-fixed c-slideout-push c-slideout-start<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-shown" : "" %>">
-		<section class="sidebar sidebar-light<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-show" : "" %>">
+		<section class="skeleton sidebar sidebar-light<%= sideNavigationDisplayContext.isVisible() ? " c-slideout-show" : "" %>">
 			<img alt="" src="<%= String.format("%s/skeletons/homes_side_navigation.svg", themeDisplay.getPathThemeImages()) %>" />
 		</section>
 	</div>

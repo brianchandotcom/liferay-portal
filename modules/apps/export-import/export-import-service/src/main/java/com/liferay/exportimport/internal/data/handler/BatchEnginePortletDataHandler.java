@@ -296,7 +296,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		setPublishToLiveByDefault(true);
 		_updateDeletionSystemEventStagedModelTypes();
-		_updateExportPortletDataHandlerControls();
+		_updatePortletDataHandlerControls();
 	}
 
 	public void unregisterExportImportVulcanBatchEngineTaskItemDelegate(
@@ -317,7 +317,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				iterator.remove();
 
 				_updateDeletionSystemEventStagedModelTypes();
-				_updateExportPortletDataHandlerControls();
+				_updatePortletDataHandlerControls();
 
 				return;
 			}
@@ -869,7 +869,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.class));
 	}
 
-	private void _updateExportPortletDataHandlerControls() {
+	private void _updatePortletDataHandlerControls() {
 		if (_registrations.size() > 1) {
 			setEmptyControlsAllowed(false);
 			setExportPortletDataHandlerControls(

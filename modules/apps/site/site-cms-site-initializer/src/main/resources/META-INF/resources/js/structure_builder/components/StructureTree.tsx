@@ -408,6 +408,9 @@ function ItemLabel({id, item}: {id?: string; item: TreeItem}) {
 
 	return (
 		<span
+			aria-label={
+				item.label ? undefined : Liferay.Language.get('untitled')
+			}
 			id={id}
 			onDoubleClick={() => {
 				if (isRenamable({structure, uuid: item.id})) {

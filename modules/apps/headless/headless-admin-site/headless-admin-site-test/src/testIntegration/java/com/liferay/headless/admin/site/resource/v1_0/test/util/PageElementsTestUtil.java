@@ -1024,6 +1024,13 @@ public class PageElementsTestUtil {
 		return collectionSettings;
 	}
 
+	private static String _getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate__ERC__" +
+			templateEntry.getExternalReferenceCode() + "__SERC__L_GLOBAL";
+	}
+
 	private static CollectionDisplayViewport[]
 		_getDesktopCollectionDisplayViewports(Boolean hidden) {
 
@@ -1059,20 +1066,6 @@ public class PageElementsTestUtil {
 		pageElement.setPosition(position);
 
 		return pageElement;
-	}
-
-	private static String _getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-		TemplateEntry templateEntry) {
-
-		return "ddmTemplate__ddmTemplate__ERC__" +
-			templateEntry.getExternalReferenceCode() + "__SERC__L_GLOBAL";
-	}
-
-	private static String _getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-		TemplateEntry templateEntry) {
-
-		return "ddmTemplate__ddmTemplate__ERC__" +
-			templateEntry.getExternalReferenceCode();
 	}
 
 	private static FragmentInstance _getFragmentInstance(
@@ -1296,12 +1289,6 @@ public class PageElementsTestUtil {
 		return gridViewport;
 	}
 
-	private static String _getTemplateEntryUniqueIdFieldKey(
-		TemplateEntry templateEntry) {
-
-		return "ddmTemplate__ddmTemplate_" + templateEntry.getTemplateEntryId();
-	}
-
 	private static ModulePageElementDefinition _getModulePageElementDefinition(
 		ModuleViewport[] moduleViewports) {
 
@@ -1363,6 +1350,13 @@ public class PageElementsTestUtil {
 		return _types.get(RandomTestUtil.randomInt(0, _types.size() - 1));
 	}
 
+	private static String _getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate__ERC__" +
+			templateEntry.getExternalReferenceCode();
+	}
+
 	private static TemplateEntry _getTemplateEntry(
 			JournalArticle journalArticle, String text,
 			ServiceContext serviceContext)
@@ -1374,6 +1368,12 @@ public class PageElementsTestUtil {
 			RandomTestUtil.randomString(),
 			TemplateTestUtil.getSampleScriptFTL("JournalArticle_title", text),
 			serviceContext);
+	}
+
+	private static String _getTemplateEntryUniqueIdFieldKey(
+		TemplateEntry templateEntry) {
+
+		return "ddmTemplate__ddmTemplate_" + templateEntry.getTemplateEntryId();
 	}
 
 	private static WidgetInstance _getWidgetInstance() {

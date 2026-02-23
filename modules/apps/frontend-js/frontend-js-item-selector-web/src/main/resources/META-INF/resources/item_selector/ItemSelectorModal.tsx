@@ -31,6 +31,7 @@ type IItemSelectorModalFDSProps = Omit<
 >;
 
 export type FilesUploaderComponent = React.ComponentType<{
+	allowedExtensions?: string;
 
 	/**
 	 * List of files that will represent the initial state of files to upload.
@@ -42,6 +43,8 @@ export type FilesUploaderComponent = React.ComponentType<{
 	 */
 	groupId?: number;
 
+	maxFileSize?: number;
+
 	/**
 	 * Callback for when upload is done in both cases: by success, or user cancelation.
 	 */
@@ -49,6 +52,7 @@ export type FilesUploaderComponent = React.ComponentType<{
 }>;
 
 export interface IItemSelectorModalProps<T> {
+	allowedExtensions?: string;
 
 	/**
 	 * The URL that will be fetched to return the items.
@@ -106,6 +110,8 @@ export interface IItemSelectorModalProps<T> {
 		value: string;
 	};
 
+	maxFileSize?: number;
+
 	/**
 	 * Represents a customizable message that can be rendered as a React node.
 	 * It will show up above the Frontend Data Set.
@@ -151,6 +157,7 @@ const EMPTY_STATE_PROPS = {
 };
 
 function ItemSelectorModal<T extends Record<string, any>>({
+	allowedExtensions,
 	apiURL,
 	breadcrumbs,
 	breadcrumbsLabel = true,
@@ -165,6 +172,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		label: 'title',
 		value: 'id',
 	},
+	maxFileSize,
 	message,
 	multiSelect = false,
 	observer,
@@ -287,8 +295,10 @@ function ItemSelectorModal<T extends Record<string, any>>({
 
 				{view === 'upload' && FilesUploaderComponent && (
 					<FilesUploaderComponent
+						allowedExtensions={allowedExtensions}
 						files={filesToUpload}
 						groupId={groupId}
+						maxFileSize={maxFileSize}
 						onCloseUploadView={() => {
 							setViewType('fds');
 							setFilesToUpload([]);

@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.tags.internal.search.spi.model.index.contributor.AssetTagModelIndexerWriterContributor;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
@@ -48,17 +47,11 @@ public class AssetTagModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor =
-			new AssetTagModelIndexerWriterContributor(
-				_assetTagLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+			new AssetTagModelIndexerWriterContributor(_assetTagLocalService);
 	}
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<AssetTag>
 		_modelIndexWriterContributor;

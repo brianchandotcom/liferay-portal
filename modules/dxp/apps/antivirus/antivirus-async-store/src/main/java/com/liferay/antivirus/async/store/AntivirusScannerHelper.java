@@ -13,7 +13,7 @@ import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.Store;
@@ -149,10 +149,12 @@ public class AntivirusScannerHelper {
 						String version = _getVersion(versionLabel);
 
 						if (fileVersionsCount <= 1) {
-							_dlAppService.deleteFileEntry(classPK);
+							_dlAppLocalService.deleteFileEntry(classPK);
 						}
 						else {
-							_dlAppService.deleteFileVersion(classPK, version);
+							_dlFileEntryLocalService.deleteFileVersion(
+								dlFileEntry.getUserId(),
+								dlFileEntry.getFileEntryId(), version);
 						}
 
 						_store.deleteFile(
@@ -260,15 +262,11 @@ public class AntivirusScannerHelper {
 	}
 
 	private String _getVersion(String versionLabel) {
-		String version = "";
-
-		String[] versionParts = StringUtil.split(versionLabel, "~");
-
-		if (versionParts.length > 0) {
-			version = versionParts[0];
+		if (versionLabel == null) {
+			return StringPool.BLANK;
 		}
 
-		return version;
+		return StringUtil.split(versionLabel, StringPool.TILDE)[0];
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -285,7 +283,7 @@ public class AntivirusScannerHelper {
 	private AuditRouter _auditRouter;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;

@@ -51,7 +51,7 @@ global.Liferay = {
 	},
 };
 
-const MOCK_FRAGMENTS = [
+const MOCK_COLLECTIONS = [
 	{fragmentCollectionId: '1', name: 'Collection A'},
 	{fragmentCollectionId: '2', name: 'Collection B'},
 ];
@@ -67,16 +67,16 @@ const MOCK_DISPATCH = jest.fn((action) => {
 const MOCK_ON_CLOSE = jest.fn();
 
 const openAndRenderModal = async (
-	{dispatch, fragments, itemId, segmentsExperienceId} = {
+	{collections, dispatch, itemId, segmentsExperienceId} = {
+		collections: MOCK_COLLECTIONS,
 		dispatch: MOCK_DISPATCH,
-		fragments: MOCK_FRAGMENTS,
 		itemId: 'item-1',
 		segmentsExperienceId: 'experience-1',
 	}
 ) => {
 	await openFragmentCompositionModal({
+		collections,
 		dispatch,
-		fragments,
 		itemId,
 		segmentsExperienceId,
 	});
@@ -118,8 +118,8 @@ describe('openFragmentCompositionModal', () => {
 		});
 
 		await openFragmentCompositionModal({
+			collections: MOCK_COLLECTIONS,
 			dispatch: MOCK_DISPATCH,
-			fragments: MOCK_FRAGMENTS,
 			itemId: 'item-1',
 			segmentsExperienceId: 'experience-1',
 		});

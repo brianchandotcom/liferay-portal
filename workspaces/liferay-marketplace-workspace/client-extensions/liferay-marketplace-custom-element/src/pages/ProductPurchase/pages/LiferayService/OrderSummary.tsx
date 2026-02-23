@@ -4,6 +4,7 @@
  */
 
 import {useSelector} from '@xstate/store/react';
+
 import ProductPurchase from '../../../../components/ProductPurchase';
 import {Section} from '../../../../components/Section/Section';
 import i18n from '../../../../i18n';
@@ -12,8 +13,8 @@ import zodSchema, {z} from '../../../../schema/zod';
 import {formatCurrency} from '../../../../utils/currencies';
 import {useProductPurchaseOutletContext} from '../../ProductPurchaseOutlet';
 import ProductPurchaseLDP from '../../services/ProductPurchaseLDP';
-import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 import {productPurchaseStore} from '../../store';
+import LicenseTermsCheckbox from '../App/License/LicenseTermsCheckbox';
 
 const OrderSummary = () => {
 	const {

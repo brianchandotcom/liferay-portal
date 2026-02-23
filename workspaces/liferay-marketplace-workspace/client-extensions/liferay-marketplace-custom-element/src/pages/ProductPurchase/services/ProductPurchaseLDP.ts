@@ -35,6 +35,8 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 			customFields: {
 				...baseCart?.customFields,
 				[OrderCustomFields.ORDER_METADATA]: JSON.stringify({
+					productKey,
+					productPurchaseKey,
 					provisioning: {
 						corpProjectName: this.form?.workspaceName,
 						corpProjectUuid: this.account.externalReferenceCode,
@@ -48,8 +50,6 @@ export default class ProductPurchaseLDP extends ProductPurchase {
 						ownerEmailAddress: this.form?.workspaceOwnerEmail,
 						serverLocation: this.form?.dataCenterLocation,
 					},
-					productKey,
-					productPurchaseKey,
 				}),
 			},
 		} as Cart;

@@ -31,11 +31,11 @@ import {getAccountImage} from '../../utils/util';
 import ProductPurchaseNextSteps from '../ProductPurchase/pages/NextSteps';
 
 import './NextSteps.scss';
+import {MarketplaceCategories} from '../../enums/Categories';
 import {
 	getProductCategoriesByVocabularyName,
 	getProductSpecification,
 } from '../../utils/productUtils';
-import {MarketplaceCategories} from '../../enums/Categories';
 import LDPNextSteps from '../ProductPurchase/pages/LiferayService/LDPNextSteps';
 
 type NextStepsBodyProps = ReturnType<typeof useGetProductByOrderId>['data'];

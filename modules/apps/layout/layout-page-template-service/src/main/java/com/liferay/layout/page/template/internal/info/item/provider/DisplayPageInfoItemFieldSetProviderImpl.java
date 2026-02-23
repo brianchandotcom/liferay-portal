@@ -37,13 +37,11 @@ import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -70,7 +68,7 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		).infoFieldSetEntries(
 			_getInfoFieldSetEntries(
 				itemClassName, infoItemFormVariationKey, namespace,
-				_getGroupId(scopeGroupId))
+				ScopeUtil.getScopeGroupId(scopeGroupId))
 		).labelInfoLocalizedValue(
 			InfoLocalizedValue.localize(getClass(), "display-page")
 		).name(
@@ -205,31 +203,6 @@ public class DisplayPageInfoItemFieldSetProviderImpl
 		return StringBundler.concat(
 			LayoutPageTemplateEntry.class.getSimpleName(), "__ERC__",
 			externalReferenceCode);
-	}
-
-	private long _getGroupId(long scopeGroupId) {
-		if (scopeGroupId > 0) {
-			return scopeGroupId;
-		}
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		if ((serviceContext != null) &&
-			(serviceContext.getScopeGroupId() > 0)) {
-
-			return serviceContext.getScopeGroupId();
-		}
-
-		Long groupId = GroupThreadLocal.getGroupId();
-
-		if (groupId != null) {
-			return groupId;
-		}
-
-		throw new IllegalStateException(
-			"Neither service context thread local nor group thread local are " +
-			"initialized");
 	}
 
 	private List<InfoFieldSetEntry> _getInfoFieldSetEntries(

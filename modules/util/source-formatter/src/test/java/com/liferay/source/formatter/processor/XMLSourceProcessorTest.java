@@ -19,7 +19,6 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 		test("IncorrectEmptyLines3.testxml");
 	}
 
-
 	@Test
 	public void testIncorrectMessageInEchoTag() throws Exception {
 		test(

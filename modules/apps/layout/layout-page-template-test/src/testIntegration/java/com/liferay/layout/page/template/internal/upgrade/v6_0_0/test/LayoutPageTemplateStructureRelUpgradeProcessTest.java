@@ -158,7 +158,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			String key = collectionJSONObject.getString("key");
 
 			if (StringUtil.startsWith(
-					key, _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX) &&
+					key, _PACKAGE_NAME) &&
 				StringUtil.endsWith(key, "_" + keySuffix)) {
 
 				return key;
@@ -170,7 +170,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 	private void _testUpgrade(String relationshipType) throws Exception {
 		String key1 = StringBundler.concat(
-			_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+			_PACKAGE_NAME, relationshipType,
 			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_C_",
 			RandomTestUtil.randomString(), "_", _KEY_SUFFIX_1);
 
@@ -186,7 +186,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			_segmentsExperienceId);
 
 		String key2 = StringBundler.concat(
-			_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+			_PACKAGE_NAME, relationshipType,
 			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_C_",
 			RandomTestUtil.randomString(), "_", _KEY_SUFFIX_2);
 
@@ -227,16 +227,16 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 		_assertCollectionKey(
 			StringBundler.concat(
-				_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+				_PACKAGE_NAME, relationshipType,
 				"RelatedInfoCollectionProvider_",
 				_objectDefinition.getClassName(), "_", _KEY_SUFFIX_1),
 			StringBundler.concat(
-				_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+				_PACKAGE_NAME, relationshipType,
 				"RelatedInfoCollectionProvider_",
 				_objectDefinition.getClassName(), "_", _KEY_SUFFIX_2));
 	}
 
-	private static final String _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX =
+	private static final String _PACKAGE_NAME =
 		"com.liferay.object.internal.info.collection.provider.";
 
 	private static final String _KEY_SUFFIX_1 = RandomTestUtil.randomString();

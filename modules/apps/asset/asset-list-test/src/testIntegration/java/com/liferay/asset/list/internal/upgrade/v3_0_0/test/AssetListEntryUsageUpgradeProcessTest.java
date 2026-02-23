@@ -75,7 +75,7 @@ public class AssetListEntryUsageUpgradeProcessTest {
 		String keySuffix = RandomTestUtil.randomString();
 
 		String key = StringBundler.concat(
-			_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+			_PACKAGE_NAME, relationshipType,
 			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_",
 			_objectDefinition.getName(), "_", keySuffix);
 
@@ -105,13 +105,13 @@ public class AssetListEntryUsageUpgradeProcessTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
-				_INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX, relationshipType,
+				_PACKAGE_NAME, relationshipType,
 				"RelatedInfoCollectionProvider_",
 				_objectDefinition.getClassName(), "_", keySuffix),
 			assetListEntryUsage.getKey());
 	}
 
-	private static final String _INFO_COLLECTION_PROVIDER_CLASS_NAME_PREFIX =
+	private static final String _PACKAGE_NAME =
 		"com.liferay.object.internal.info.collection.provider.";
 
 	@Inject

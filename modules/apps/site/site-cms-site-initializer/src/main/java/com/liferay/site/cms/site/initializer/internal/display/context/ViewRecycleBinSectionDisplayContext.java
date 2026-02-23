@@ -189,7 +189,7 @@ public class ViewRecycleBinSectionDisplayContext
 	protected String getCMSSectionFilterString() {
 		String filterString =
 			"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq " +
-				"'files') and status eq ";
+				"'files')";
 
 		List<Long> groupIds = null;
 
@@ -203,17 +203,19 @@ public class ViewRecycleBinSectionDisplayContext
 					portalException);
 			}
 
-			return filterString + WorkflowConstants.STATUS_ANY;
+			return filterString + " and status eq " +
+				WorkflowConstants.STATUS_ANY;
 		}
 
 		if (groupIds.isEmpty()) {
-			return filterString + WorkflowConstants.STATUS_ANY;
+			return filterString + " and status eq " +
+				WorkflowConstants.STATUS_ANY;
 		}
 
 		return StringBundler.concat(
-			filterString, WorkflowConstants.STATUS_IN_TRASH,
-			" and groupIds/any(g:g in (", StringUtil.merge(groupIds, ","),
-			"))");
+			filterString, " and groupIds/any(g:g in (",
+			StringUtil.merge(groupIds, ","), ")) and status eq ",
+			WorkflowConstants.STATUS_IN_TRASH);
 	}
 
 	private List<Long> _getDepotGroupIds(long companyId)

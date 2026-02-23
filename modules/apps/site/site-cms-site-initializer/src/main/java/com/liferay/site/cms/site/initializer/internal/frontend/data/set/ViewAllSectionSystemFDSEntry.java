@@ -37,11 +37,11 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	public String getAdditionalAPIURLParameters(
 		HttpServletRequest httpServletRequest) {
 
-		String filterString = _sectionDisplayContextHelper.appendGroupIds(
-			_sectionDisplayContextHelper.appendStatus(
+		String filterString = _sectionDisplayContextHelper.appendStatus(
+			_sectionDisplayContextHelper.appendGroupIds(
 				"cmsKind eq 'object' and (cmsSection eq 'contents' or " +
-					"cmsSection eq 'files')"),
-			httpServletRequest);
+					"cmsSection eq 'files')",
+				httpServletRequest));
 
 		if (httpServletRequest.getParameter("q") != null) {
 			return HttpComponentsUtil.addParameters(

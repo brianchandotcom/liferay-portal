@@ -6,6 +6,7 @@
 package com.liferay.oauth.client.admin.web.internal.portlet.action;
 
 import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminPortletKeys;
+import com.liferay.oauth.client.admin.web.internal.constants.OAuthClientAdminWebKeys;
 import com.liferay.oauth.client.persistence.model.OAuthClientASLocalMetadata;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataService;
 import com.liferay.petra.string.StringPool;
@@ -77,19 +78,20 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommand
 				actionRequest, "enabledLocalWellKnown");
 
 			String authorizationEndpoint = ParamUtil.getString(
-				actionRequest, "authorizationEndpoint");
+				actionRequest, OAuthClientAdminWebKeys.AUTHORIZATION_ENDPOINT);
 			String issuer = ParamUtil.getString(actionRequest, "issuer");
-			String jwksURI = ParamUtil.getString(actionRequest, "jwksURI");
+			String jwksURI = ParamUtil.getString(
+				actionRequest, OAuthClientAdminWebKeys.JWKS_URI);
 			String supportedGrantTypes = ParamUtil.getString(
-				actionRequest, "supportedGrantTypes");
+				actionRequest, OAuthClientAdminWebKeys.SUPPORTED_GRANT_TYPES);
 			String supportedScopes = ParamUtil.getString(
-				actionRequest, "supportedScopes");
+				actionRequest, OAuthClientAdminWebKeys.SUPPORTED_SCOPES);
 			String supportedSubjectTypes = ParamUtil.getString(
-				actionRequest, "supportedSubjectTypes");
+				actionRequest, OAuthClientAdminWebKeys.SUPPORTED_SUBJECT_TYPES);
 			String tokenEndpoint = ParamUtil.getString(
-				actionRequest, "tokenEndpoint");
+				actionRequest, OAuthClientAdminWebKeys.TOKEN_ENDPOINT);
 			String userInfoEndpoint = ParamUtil.getString(
-				actionRequest, "userInfoEndpoint");
+				actionRequest, OAuthClientAdminWebKeys.USERINFO_ENDPOINT);
 
 			long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 				actionRequest, "oAuthClientASLocalMetadataId");

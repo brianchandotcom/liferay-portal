@@ -18,39 +18,40 @@ public class FragmentViewportStyleTestUtil {
 	}
 
 	public static FragmentViewportStyle getFragmentViewportStyle(
-		Boolean curHidden) {
+		Boolean hidden) {
 
-		return new FragmentViewportStyle() {
-			{
-				setBackgroundColor(RandomTestUtil::randomString);
-				setBorderColor(RandomTestUtil::randomString);
-				setBorderRadius(RandomTestUtil::randomString);
-				setBorderWidth(RandomTestUtil::randomString);
-				setFontFamily(RandomTestUtil::randomString);
-				setFontSize(RandomTestUtil::randomString);
-				setFontWeight(RandomTestUtil::randomString);
-				setHeight(RandomTestUtil::randomString);
-				setHidden(() -> curHidden);
-				setMarginBottom(RandomTestUtil::randomString);
-				setMarginLeft(RandomTestUtil::randomString);
-				setMarginRight(RandomTestUtil::randomString);
-				setMarginTop(RandomTestUtil::randomString);
-				setMaxHeight(RandomTestUtil::randomString);
-				setMaxWidth(RandomTestUtil::randomString);
-				setMinHeight(RandomTestUtil::randomString);
-				setMinWidth(RandomTestUtil::randomString);
-				setOpacity(RandomTestUtil::randomString);
-				setOverflow(RandomTestUtil::randomString);
-				setPaddingBottom(RandomTestUtil::randomString);
-				setPaddingLeft(RandomTestUtil::randomString);
-				setPaddingRight(RandomTestUtil::randomString);
-				setPaddingTop(RandomTestUtil::randomString);
-				setShadow(RandomTestUtil::randomString);
-				setTextAlign(RandomTestUtil::randomString);
-				setTextColor(RandomTestUtil::randomString);
-				setWidth(RandomTestUtil::randomString);
-			}
-		};
+		FragmentViewportStyle fragmentViewportStyle =
+			new FragmentViewportStyle();
+
+		fragmentViewportStyle.setBackgroundColor(RandomTestUtil::randomString);
+		fragmentViewportStyle.setBorderColor(RandomTestUtil::randomString);
+		fragmentViewportStyle.setBorderRadius(RandomTestUtil::randomString);
+		fragmentViewportStyle.setBorderWidth(RandomTestUtil::randomString);
+		fragmentViewportStyle.setFontFamily(RandomTestUtil::randomString);
+		fragmentViewportStyle.setFontSize(RandomTestUtil::randomString);
+		fragmentViewportStyle.setFontWeight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setHeight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setHidden(hidden);
+		fragmentViewportStyle.setMarginBottom(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMarginLeft(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMarginRight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMarginTop(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMaxHeight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMaxWidth(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMinHeight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setMinWidth(RandomTestUtil::randomString);
+		fragmentViewportStyle.setOpacity(RandomTestUtil::randomString);
+		fragmentViewportStyle.setOverflow(RandomTestUtil::randomString);
+		fragmentViewportStyle.setPaddingBottom(RandomTestUtil::randomString);
+		fragmentViewportStyle.setPaddingLeft(RandomTestUtil::randomString);
+		fragmentViewportStyle.setPaddingRight(RandomTestUtil::randomString);
+		fragmentViewportStyle.setPaddingTop(RandomTestUtil::randomString);
+		fragmentViewportStyle.setShadow(RandomTestUtil::randomString);
+		fragmentViewportStyle.setTextAlign(RandomTestUtil::randomString);
+		fragmentViewportStyle.setTextColor(RandomTestUtil::randomString);
+		fragmentViewportStyle.setWidth(RandomTestUtil::randomString);
+
+		return fragmentViewportStyle;
 	}
 
 }

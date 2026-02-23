@@ -7,8 +7,7 @@ package com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contrib
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
@@ -18,26 +17,20 @@ public class DDMStructureLayoutModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<DDMStructureLayout> {
 
 	public DDMStructureLayoutModelIndexerWriterContributor(
-		DDMStructureLayoutLocalService ddmStructureLayoutLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
 
 		_ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_ddmStructureLayoutLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _ddmStructureLayoutLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private final DDMStructureLayoutLocalService
 		_ddmStructureLayoutLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

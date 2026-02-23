@@ -10,11 +10,10 @@ import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
@@ -28,24 +27,20 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
 		DDMFormInstanceRecordLocalService ddmFormInstanceRecordLocalService,
 		DDMFormInstanceRecordVersionLocalService
-			ddmFormInstanceRecordVersionLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+			ddmFormInstanceRecordVersionLocalService) {
 
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
 		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setAddCriteriaMethod(
+		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
 				Property ddmFormInstanceRecordIdProperty =
 					PropertyFactoryUtil.forName("formInstanceRecordId");
@@ -72,19 +67,19 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 				dynamicQuery.add(
 					ddmFormInstanceProperty.in(ddmFormInstanceDynamicQuery));
 			});
-		batchIndexingActionable.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
-				batchIndexingActionable.addDocument(
+				indexableActionableDynamicQuery.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(
 						ddmFormInstanceRecord)));
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_ddmFormInstanceRecordLocalService.
-					getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _ddmFormInstanceRecordLocalService.
+			getIndexableActionableDynamicQuery();
 	}
 
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
@@ -92,7 +87,5 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 		_ddmFormInstanceRecordLocalService;
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

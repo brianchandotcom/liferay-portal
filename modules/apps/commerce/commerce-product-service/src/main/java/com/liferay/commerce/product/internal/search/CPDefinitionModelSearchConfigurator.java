@@ -11,7 +11,6 @@ import com.liferay.commerce.product.internal.search.spi.model.result.contributor
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -75,16 +74,11 @@ public class CPDefinitionModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CPDefinitionModelIndexerWriterContributor(
-				_cpDefinitionLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_cpDefinitionLocalService);
 	}
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CPDefinition>
 		_modelIndexWriterContributor;

@@ -7,8 +7,7 @@ package com.liferay.commerce.product.internal.search.spi.model.index.contributor
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,20 +18,16 @@ public class CPDefinitionModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<CPDefinition> {
 
 	public CPDefinitionModelIndexerWriterContributor(
-		CPDefinitionLocalService cpDefinitionLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		CPDefinitionLocalService cpDefinitionLocalService) {
 
 		_cpDefinitionLocalService = cpDefinitionLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_cpDefinitionLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _cpDefinitionLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -41,7 +36,5 @@ public class CPDefinitionModelIndexerWriterContributor
 	}
 
 	private final CPDefinitionLocalService _cpDefinitionLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

@@ -624,7 +624,7 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_V" return-type="Collection">
+		<finder name="C_V" return-type="CPDefinition" unique="true">
 			<finder-column name="CProductId" />
 			<finder-column name="version" />
 		</finder>

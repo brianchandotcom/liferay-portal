@@ -101,8 +101,8 @@ export default function AgentDefinitionForm({
 						agentDefinition.externalReferenceCode,
 					inputVariables: agentDefinition.inputVariables,
 					outputVariable: agentDefinition.outputVariable,
-					r_accountToAgentDefinitions_accountEntryERC:
-						agentDefinition.r_accountToAgentDefinitions_accountEntryERC,
+					r_accountToAIHubAgentDefinitions_accountEntryERC:
+						agentDefinition.r_accountToAIHubAgentDefinitions_accountEntryERC,
 					title_i18n: agentDefinition.title_i18n,
 					workflowDefinitionName:
 						agentDefinition.workflowDefinitionName,
@@ -348,7 +348,7 @@ export default function AgentDefinitionForm({
 
 										<ClayInput
 											id="account-entry-external-reference-code"
-											name="r_accountToAgentDefinitions_accountEntryERC"
+											name="r_accountToAIHubAgentDefinitions_accountEntryERC"
 											onChange={handleInputChange}
 											placeholder={Liferay.Language.get(
 												'account'
@@ -356,7 +356,7 @@ export default function AgentDefinitionForm({
 											required={true}
 											type="text"
 											value={
-												formData.r_accountToAgentDefinitions_accountEntryERC
+												formData.r_accountToAIHubAgentDefinitions_accountEntryERC
 											}
 										/>
 									</ClayForm.Group>

@@ -9,7 +9,7 @@ export type AgentDefinition = {
 	externalReferenceCode: string;
 	inputVariables: string;
 	outputVariable: string;
-	r_accountToAgentDefinitions_accountEntryERC: string;
+	r_accountToAIHubAgentDefinitions_accountEntryERC: string;
 	title_i18n: {
 		[key: string]: string;
 	};

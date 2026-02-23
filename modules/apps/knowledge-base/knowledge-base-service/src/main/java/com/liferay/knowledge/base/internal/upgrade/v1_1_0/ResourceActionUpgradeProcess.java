@@ -28,15 +28,14 @@ public class ResourceActionUpgradeProcess extends UpgradeProcess {
 
 	private boolean _hasResourceAction(String name) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"select count(*) from ResourceAction where name = ?")) {
+				"select count(*) as count from ResourceAction where name = " +
+					"?")) {
 
 			preparedStatement.setString(1, name);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int count = resultSet.getInt(1);
-
-					if (count > 0) {
+					if (resultSet.getInt("count") > 0) {
 						return true;
 					}
 				}

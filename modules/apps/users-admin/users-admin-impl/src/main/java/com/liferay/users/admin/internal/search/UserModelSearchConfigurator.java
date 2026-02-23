@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -62,13 +61,8 @@ public class UserModelSearchConfigurator
 	@Activate
 	protected void activate() {
 		_modelIndexWriterContributor = new UserModelIndexerWriterContributor(
-			_indexerDocumentBuilder, _indexWriterHelper,
-			_dynamicQueryBatchIndexingActionableFactory, _userLocalService);
+			_indexerDocumentBuilder, _indexWriterHelper, _userLocalService);
 	}
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	@Reference(
 		target = "(indexer.class.name=com.liferay.portal.kernel.model.Contact)"

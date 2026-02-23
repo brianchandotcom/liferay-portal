@@ -5,13 +5,12 @@
 
 package com.liferay.users.admin.internal.search.spi.model.index.contributor;
 
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
@@ -25,36 +24,32 @@ public class UserModelIndexerWriterContributor
 	public UserModelIndexerWriterContributor(
 		IndexerDocumentBuilder indexerDocumentBuilder,
 		IndexWriterHelper indexWriterHelper,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory,
 		UserLocalService userLocalService) {
 
 		_indexerDocumentBuilder = indexerDocumentBuilder;
 		_indexWriterHelper = indexWriterHelper;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 		_userLocalService = userLocalService;
 	}
 
 	@Override
 	public void customize(
-		BatchIndexingActionable batchIndexingActionable,
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		batchIndexingActionable.setPerformActionMethod(
+		indexableActionableDynamicQuery.setPerformActionMethod(
 			(User user) -> {
 				if (!user.isGuestUser()) {
-					batchIndexingActionable.addDocument(
+					indexableActionableDynamicQuery.addDocument(
 						modelIndexerWriterDocumentHelper.getDocument(user));
 				}
 			});
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_userLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _userLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -75,8 +70,6 @@ public class UserModelIndexerWriterContributor
 		}
 	}
 
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;
 	private final IndexWriterHelper _indexWriterHelper;
 	private final UserLocalService _userLocalService;

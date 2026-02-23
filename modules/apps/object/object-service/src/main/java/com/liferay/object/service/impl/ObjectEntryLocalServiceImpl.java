@@ -2319,21 +2319,16 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.fetchByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		int finalStatus = status;
-
-		status = EmptyModelManagerUtil.solveEmptyModel(
+		EmptyModelManagerUtil.solveEmptyModel(
 			objectEntry.getExternalReferenceCode(),
 			objectDefinition.getClassName(), objectEntry.getCompanyId(),
-			objectEntry.getGroupId(), objectEntry.getStatus(),
-			() -> {
-				if ((finalStatus == WorkflowConstants.STATUS_APPROVED) &&
-					(displayDate != null) && date.before(displayDate)) {
+			objectEntry.getGroupId(), objectEntry.getStatus(), () -> 0);
 
-					return WorkflowConstants.STATUS_SCHEDULED;
-				}
+		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(displayDate != null) && date.before(displayDate)) {
 
-				return finalStatus;
-			});
+			status = WorkflowConstants.STATUS_SCHEDULED;
+		}
 
 		Date expirationDate = objectEntry.getExpirationDate();
 

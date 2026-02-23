@@ -756,13 +756,6 @@ public class PageElementsTestUtil {
 				expectedFragmentEditableElements[0].
 					getFragmentEditableElementValue();
 
-			Assert.assertTrue(
-				actualFragmentEditableElementValue instanceof
-					TextFragmentEditableElementValue);
-			Assert.assertTrue(
-				expectedFragmentEditableElementValue instanceof
-					TextFragmentEditableElementValue);
-
 			TextFragmentEditableElementValue
 				actualTextFragmentEditableElementValue =
 					(TextFragmentEditableElementValue)
@@ -784,11 +777,6 @@ public class PageElementsTestUtil {
 			TextFragmentValue expectedTextFragmentValue =
 				expectedFragmentLinkTextValue.getTextFragmentValue();
 
-			Assert.assertTrue(
-				actualTextFragmentValue instanceof TextFragmentMappedValue);
-			Assert.assertTrue(
-				expectedTextFragmentValue instanceof TextFragmentMappedValue);
-
 			TextFragmentMappedValue actualTextFragmentMappedValue =
 				(TextFragmentMappedValue)actualTextFragmentValue;
 			TextFragmentMappedValue expectedTextFragmentMappedValue =
@@ -806,7 +794,7 @@ public class PageElementsTestUtil {
 			String expectedFieldKey = expectedMapping.getFieldKey();
 
 			if (expectedFieldKey.contains("__ERC__")) {
-				Assert.assertEquals(actualFieldKey, expectedFieldKey);
+				Assert.assertEquals(expectedFieldKey, actualFieldKey);
 			}
 			else {
 				long templateEntryId = GetterUtil.getLong(
@@ -822,15 +810,15 @@ public class PageElementsTestUtil {
 
 				if (templateEntry.getGroupId() == company.getGroupId()) {
 					Assert.assertEquals(
-						actualFieldKey,
 						_getCompanyGroupTemplateEntryExternalUniqueIdFieldKey(
-							templateEntry));
+							templateEntry),
+						actualFieldKey);
 				}
 				else {
 					Assert.assertEquals(
-						actualFieldKey,
 						_getScopeGroupTemplateEntryExternalUniqueIdFieldKey(
-							templateEntry));
+							templateEntry),
+						actualFieldKey);
 				}
 			}
 		}
@@ -851,16 +839,19 @@ public class PageElementsTestUtil {
 			PageExperience expectedPageExperience)
 		throws PortalException {
 
-		PageElement[] actualPageElements =
-			actualPageExperience.getPageElements();
 		PageElement[] expectedPageElements =
 			expectedPageExperience.getPageElements();
 
 		Assert.assertEquals(
-			Arrays.toString(actualPageElements), 12, actualPageElements.length);
-		Assert.assertEquals(
-			Arrays.toString(expectedPageElements), actualPageElements.length,
+			Arrays.toString(expectedPageElements), 12,
 			expectedPageElements.length);
+
+		PageElement[] actualPageElements =
+			actualPageExperience.getPageElements();
+
+		Assert.assertEquals(
+			Arrays.toString(actualPageElements), expectedPageElements.length,
+			actualPageElements.length);
 
 		for (int i = 0; i < expectedPageElements.length; i++) {
 			_assertFieldKeysWithTemplateEntries(

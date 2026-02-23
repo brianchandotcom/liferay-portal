@@ -7,8 +7,7 @@ package com.liferay.blogs.internal.search.spi.model.index.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.portal.search.batch.BatchIndexingActionable;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -19,20 +18,16 @@ public class BlogsEntryModelIndexerWriterContributor
 	implements ModelIndexerWriterContributor<BlogsEntry> {
 
 	public BlogsEntryModelIndexerWriterContributor(
-		BlogsEntryLocalService blogsEntryLocalService,
-		DynamicQueryBatchIndexingActionableFactory
-			dynamicQueryBatchIndexingActionableFactory) {
+		BlogsEntryLocalService blogsEntryLocalService) {
 
 		_blogsEntryLocalService = blogsEntryLocalService;
-		_dynamicQueryBatchIndexingActionableFactory =
-			dynamicQueryBatchIndexingActionableFactory;
 	}
 
 	@Override
-	public BatchIndexingActionable getBatchIndexingActionable() {
-		return _dynamicQueryBatchIndexingActionableFactory.
-			getBatchIndexingActionable(
-				_blogsEntryLocalService.getIndexableActionableDynamicQuery());
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
+		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -52,7 +47,5 @@ public class BlogsEntryModelIndexerWriterContributor
 	}
 
 	private final BlogsEntryLocalService _blogsEntryLocalService;
-	private final DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 }

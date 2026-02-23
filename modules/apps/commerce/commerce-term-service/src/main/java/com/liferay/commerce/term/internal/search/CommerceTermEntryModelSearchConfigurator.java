@@ -11,7 +11,6 @@ import com.liferay.commerce.term.internal.search.spi.model.result.contributor.Co
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
@@ -62,8 +61,7 @@ public class CommerceTermEntryModelSearchConfigurator
 	protected void activate() {
 		_modelIndexWriterContributor =
 			new CommerceTermEntryModelIndexerWriterContributor(
-				_commerceTermEntryLocalService,
-				_dynamicQueryBatchIndexingActionableFactory);
+				_commerceTermEntryLocalService);
 
 		_modelSummaryContributor =
 			new CommerceTermEntryModelSummaryContributor();
@@ -74,10 +72,6 @@ public class CommerceTermEntryModelSearchConfigurator
 
 	@Reference
 	private CommerceTermEntryLocalService _commerceTermEntryLocalService;
-
-	@Reference
-	private DynamicQueryBatchIndexingActionableFactory
-		_dynamicQueryBatchIndexingActionableFactory;
 
 	private ModelIndexerWriterContributor<CommerceTermEntry>
 		_modelIndexWriterContributor;

@@ -157,8 +157,7 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 			String key = collectionJSONObject.getString("key");
 
-			if (StringUtil.startsWith(
-					key, _PACKAGE_NAME) &&
+			if (StringUtil.startsWith(key, _PACKAGE_NAME) &&
 				StringUtil.endsWith(key, "_" + keySuffix)) {
 
 				return key;
@@ -170,9 +169,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 
 	private void _testUpgrade(String relationshipType) throws Exception {
 		String key1 = StringBundler.concat(
-			_PACKAGE_NAME, relationshipType,
-			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_C_",
-			RandomTestUtil.randomString(), "_", _KEY_SUFFIX_1);
+			_PACKAGE_NAME, relationshipType, "RelatedInfoCollectionProvider_",
+			_group.getCompanyId(), "_C_", RandomTestUtil.randomString(), "_",
+			_KEY_SUFFIX_1);
 
 		ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			JSONUtil.put(
@@ -186,9 +185,9 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 			_segmentsExperienceId);
 
 		String key2 = StringBundler.concat(
-			_PACKAGE_NAME, relationshipType,
-			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_C_",
-			RandomTestUtil.randomString(), "_", _KEY_SUFFIX_2);
+			_PACKAGE_NAME, relationshipType, "RelatedInfoCollectionProvider_",
+			_group.getCompanyId(), "_C_", RandomTestUtil.randomString(), "_",
+			_KEY_SUFFIX_2);
 
 		ContentLayoutTestUtil.addCollectionDisplayToLayout(
 			JSONUtil.put(
@@ -236,15 +235,15 @@ public class LayoutPageTemplateStructureRelUpgradeProcessTest {
 				_objectDefinition.getClassName(), "_", _KEY_SUFFIX_2));
 	}
 
-	private static final String _PACKAGE_NAME =
-		"com.liferay.object.internal.info.collection.provider.";
-
 	private static final String _KEY_SUFFIX_1 = RandomTestUtil.randomString();
 
 	private static final String _KEY_SUFFIX_2 = RandomTestUtil.randomString();
 
 	private static final String _OLD_CLASS_NAME =
 		"com.liferay.object.model.ObjectDefinition#A1B2";
+
+	private static final String _PACKAGE_NAME =
+		"com.liferay.object.internal.info.collection.provider.";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.layout.page.template.internal.upgrade.registry.LayoutPageTemplateServiceUpgradeStepRegistrator))"

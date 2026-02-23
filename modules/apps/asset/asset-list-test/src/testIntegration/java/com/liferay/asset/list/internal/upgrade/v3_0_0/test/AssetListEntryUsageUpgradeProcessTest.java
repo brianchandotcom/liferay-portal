@@ -75,9 +75,9 @@ public class AssetListEntryUsageUpgradeProcessTest {
 		String keySuffix = RandomTestUtil.randomString();
 
 		String key = StringBundler.concat(
-			_PACKAGE_NAME, relationshipType,
-			"RelatedInfoCollectionProvider_", _group.getCompanyId(), "_",
-			_objectDefinition.getName(), "_", keySuffix);
+			_PACKAGE_NAME, relationshipType, "RelatedInfoCollectionProvider_",
+			_group.getCompanyId(), "_", _objectDefinition.getName(), "_",
+			keySuffix);
 
 		AssetListEntryUsage assetListEntryUsage =
 			_assetListEntryUsageLocalService.addAssetListEntryUsage(

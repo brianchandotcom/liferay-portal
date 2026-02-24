@@ -864,7 +864,8 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 	public void testGetWorkflowDefinitionsPage() throws Exception {
 		Page<WorkflowDefinition> page =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, Pagination.of(1, 10), null);
+				null, RandomTestUtil.randomString(), Pagination.of(1, 10),
+				null);
 
 		long totalCount = page.getTotalCount();
 
@@ -877,7 +878,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 				randomWorkflowDefinition());
 
 		page = workflowDefinitionResource.getWorkflowDefinitionsPage(
-			null, Pagination.of(1, 10), null);
+			null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -909,7 +910,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> workflowDefinitionsPage =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, null, null);
+				null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			workflowDefinitionsPage.getTotalCount());
@@ -933,7 +934,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<WorkflowDefinition> page1 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null,
+					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -947,7 +948,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page2 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null,
+					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -959,7 +960,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page3 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null,
+					null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit),
@@ -972,7 +973,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 		else {
 			Page<WorkflowDefinition> page1 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, totalCount + 2), null);
+					null, null, Pagination.of(1, totalCount + 2), null);
 
 			List<WorkflowDefinition> workflowDefinitions1 =
 				(List<WorkflowDefinition>)page1.getItems();
@@ -983,7 +984,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page2 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(2, totalCount + 2), null);
+					null, null, Pagination.of(2, totalCount + 2), null);
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -996,7 +997,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> page3 =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, (int)totalCount + 3), null);
+					null, null, Pagination.of(1, (int)totalCount + 3), null);
 
 			assertContains(
 				workflowDefinition1,
@@ -1135,12 +1136,12 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 		Page<WorkflowDefinition> page =
 			workflowDefinitionResource.getWorkflowDefinitionsPage(
-				null, null, null);
+				null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<WorkflowDefinition> ascPage =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
 
 			assertContains(
@@ -1152,7 +1153,7 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 
 			Page<WorkflowDefinition> descPage =
 				workflowDefinitionResource.getWorkflowDefinitionsPage(
-					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					null, null, Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
 
 			assertContains(
@@ -1179,6 +1180,9 @@ public abstract class BaseWorkflowDefinitionResourceTestCase {
 			"workflowDefinitions",
 			new HashMap<String, Object>() {
 				{
+					put(
+						"scope",
+						getGraphQLValue(RandomTestUtil.randomString()));
 					put("page", 1);
 					put("pageSize", 10);
 				}

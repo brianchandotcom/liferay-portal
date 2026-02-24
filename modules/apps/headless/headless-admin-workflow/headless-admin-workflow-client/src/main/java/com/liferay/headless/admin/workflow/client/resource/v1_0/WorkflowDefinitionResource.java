@@ -72,11 +72,13 @@ public interface WorkflowDefinitionResource {
 		throws Exception;
 
 	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Boolean active, Pagination pagination, String sortString)
+			Boolean active, String scope, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-			Boolean active, Pagination pagination, String sortString)
+			Boolean active, String scope, Pagination pagination,
+			String sortString)
 		throws Exception;
 
 	public WorkflowDefinition postWorkflowDefinition(
@@ -120,14 +122,14 @@ public interface WorkflowDefinitionResource {
 		throws Exception;
 
 	public void postWorkflowDefinitionsPageExportBatch(
-			Boolean active, String sortString, String callbackURL,
+			Boolean active, String scope, String sortString, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postWorkflowDefinitionsPageExportBatchHttpResponse(
-				Boolean active, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+				Boolean active, String scope, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public WorkflowDefinition putWorkflowDefinition(
@@ -796,12 +798,13 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-				Boolean active, Pagination pagination, String sortString)
+				Boolean active, String scope, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWorkflowDefinitionsPageHttpResponse(
-					active, pagination, sortString);
+					active, scope, pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -863,7 +866,8 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public HttpInvoker.HttpResponse getWorkflowDefinitionsPageHttpResponse(
-				Boolean active, Pagination pagination, String sortString)
+				Boolean active, String scope, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -889,6 +893,10 @@ public interface WorkflowDefinitionResource {
 
 			if (active != null) {
 				httpInvoker.parameter("active", String.valueOf(active));
+			}
+
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
 			}
 
 			if (pagination != null) {
@@ -1455,13 +1463,14 @@ public interface WorkflowDefinitionResource {
 		}
 
 		public void postWorkflowDefinitionsPageExportBatch(
-				Boolean active, String sortString, String callbackURL,
-				String contentType, String fieldNames)
+				Boolean active, String scope, String sortString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postWorkflowDefinitionsPageExportBatchHttpResponse(
-					active, sortString, callbackURL, contentType, fieldNames);
+					active, scope, sortString, callbackURL, contentType,
+					fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1513,8 +1522,8 @@ public interface WorkflowDefinitionResource {
 
 		public HttpInvoker.HttpResponse
 				postWorkflowDefinitionsPageExportBatchHttpResponse(
-					Boolean active, String sortString, String callbackURL,
-					String contentType, String fieldNames)
+					Boolean active, String scope, String sortString,
+					String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1542,6 +1551,10 @@ public interface WorkflowDefinitionResource {
 
 			if (active != null) {
 				httpInvoker.parameter("active", String.valueOf(active));
+			}
+
+			if (scope != null) {
+				httpInvoker.parameter("scope", String.valueOf(scope));
 			}
 
 			if (sortString != null) {

@@ -236,6 +236,10 @@ public class LoadBalancerUtil {
 							_updateInterval);
 				}
 
+				if (jenkinsMasters.isEmpty()) {
+					return null;
+				}
+
 				Collections.sort(
 					jenkinsMasters,
 					new JenkinsMasterLabelComparator(labelExpression));
@@ -539,6 +543,10 @@ public class LoadBalancerUtil {
 
 	private static void _updateJenkinsMasters(
 		List<JenkinsMaster> jenkinsMasters) {
+
+		if (jenkinsMasters.isEmpty()) {
+			return;
+		}
 
 		ExecutorService executorService = Executors.newFixedThreadPool(
 			jenkinsMasters.size());

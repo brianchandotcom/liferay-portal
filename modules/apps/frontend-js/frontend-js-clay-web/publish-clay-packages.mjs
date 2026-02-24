@@ -7,7 +7,7 @@
 
 /**
  * Usage:
- *   node publish-clay-packages.js --target-version=<version>
+ *   node clay/publish-clay-packages.mjs --target-version=<version>
  *
  * Optional flags:
  *   --dry-run          Preview package changes only; skips build and publish
@@ -33,8 +33,8 @@ import {fileURLToPath} from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const ROOT_DIR = __dirname;
-const CLAY_DIR = path.join(ROOT_DIR, 'clay');
+const CLAY_DIR = __dirname;
+const ROOT_DIR = path.dirname(CLAY_DIR);
 const UNIFIED_CHANGELOG_PATH = path.join(CLAY_DIR, 'CHANGELOG.md');
 const COMMIT_LINK_BASE = 'https://github.com/liferay/liferay-portal/commit';
 
@@ -46,7 +46,7 @@ let PREVIEW_CHANGES = process.env.PREVIEW_CHANGES === 'true';
 let TARGET_VERSION = '';
 
 const usage =
-	'Usage: node publish-clay-packages.js --target-version=<version> [--dry-run] [--preview-changes]';
+	'Usage: node clay/publish-clay-packages.mjs --target-version=<version> [--dry-run] [--preview-changes]';
 
 for (const arg of process.argv.slice(2)) {
 	if (arg.startsWith('--target-version=')) {
@@ -171,11 +171,10 @@ function insertAfterUnifiedChangelogIntro(content, section) {
 }
 
 async function getClayReleaseBoundaryCommit() {
-	const history = await run(
-		'git',
-		['log', '--pretty=%H%x09%s', '--', 'clay'],
-		{cwd: ROOT_DIR, stdio: 'pipe'}
-	);
+	const history = await run('git', ['log', '--pretty=%H%x09%s', '--', CLAY_DIR], {
+		cwd: ROOT_DIR,
+		stdio: 'pipe',
+	});
 
 	const lines = (history.stdout || '')
 		.split('\n')
@@ -469,7 +468,7 @@ async function main() {
 			`Setting all clay-* package versions and @clayui/* deps to ${TARGET_VERSION}`
 		);
 
-		const dirs = [...packageDirs, __dirname];
+		const dirs = [...packageDirs, ROOT_DIR];
 
 		for (const dir of dirs) {
 			console.log(`Updating ${path.basename(dir)}`);

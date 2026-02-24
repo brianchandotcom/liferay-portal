@@ -93,7 +93,7 @@ yarn run lint
 
 -   Build logic for Clay packages is centralized in `clay/build-package-esbuild.js`.
 -   Individual `clay-*` packages call the shared build script from their package scripts; avoid invoking the build script directly unless debugging build internals.
--   Publishing is centralized in `publish-clay-packages.mjs`, which manages:
+-   Publishing is centralized in `clay/publish-clay-packages.mjs`, which manages:
     -   version alignment across publishable Clay packages
     -   internal `@clayui/*` dependency updates
     -   package build/type generation (when applicable)
@@ -115,19 +115,19 @@ Run from `modules/apps/frontend-js/frontend-js-clay-web`:
 
 ```bash
 # Preview version and dependency changes only
-node publish-clay-packages.mjs --target-version=3.160.0 --preview-changes
+node clay/publish-clay-packages.mjs --target-version=3.160.0 --preview-changes
 
 # Dry run publish (no real npm publish)
-node publish-clay-packages.mjs --target-version=3.160.0 --dry-run
+node clay/publish-clay-packages.mjs --target-version=3.160.0 --dry-run
 
 # Publish for real (default tag: latest)
-node publish-clay-packages.mjs --target-version=3.160.0
+node clay/publish-clay-packages.mjs --target-version=3.160.0
 
 # Optional: publish under next tag
-NPM_TAG=next node publish-clay-packages.mjs --target-version=3.160.0
+NPM_TAG=next node clay/publish-clay-packages.mjs --target-version=3.160.0
 
 # Optional: skip version bump (advanced)
-SKIP_VERSION_BUMP=true node publish-clay-packages.mjs --target-version=3.160.0
+SKIP_VERSION_BUMP=true node clay/publish-clay-packages.mjs --target-version=3.160.0
 ```
 
 Release notes:
@@ -221,4 +221,4 @@ Release notes:
 
 -   Prefer top-level scripts in this guide for day-to-day development.
 -   Treat package build behavior as package-driven (packages invoke the shared build script).
--   Treat publish behavior as centralized in `publish-clay-packages.mjs`.
+-   Treat publish behavior as centralized in `clay/publish-clay-packages.mjs`.

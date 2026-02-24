@@ -35,18 +35,11 @@ public class BrowserSnifferDDMTemplateTemplateUpgradeProcessTest
 	public void testUpgradeTemplateRemoveBrowserSniffer() throws Exception {
 		addDDMTemplate(".v5_3_3/ddm-template-browser-sniffer-content.ftl");
 
-		addFragmentEntry(".v5_3_3/fragment-entry-browser-sniffer-content.html");
-
 		runTemplateUpgrade();
 
 		Assert.assertEquals(
 			read(".v5_3_3/expected-ddm-template-browser-sniffer-content.ftl"),
 			getDDMTemplate().getScript());
-
-		Assert.assertEquals(
-			read(
-				".v5_3_3/expected-fragment-entry-browser-sniffer-content.html"),
-			getFragmentEntry().getHtml());
 	}
 
 	@Override

@@ -262,11 +262,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 				oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
 
 		Assert.assertEquals(
-			Issuer.parse(urlString), authorizationServerMetadata.getIssuer());
-		Assert.assertEquals(
-			Scope.parse(supportedScope),
-			authorizationServerMetadata.getScopes());
-		Assert.assertEquals(
 			url, authorizationServerMetadata.getAuthorizationEndpointURI());
 
 		List<GrantType> grantTypes =
@@ -275,7 +270,12 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 		Assert.assertEquals(
 			GrantType.parse(supportedGrantType), grantTypes.get(0));
 
+		Assert.assertEquals(
+			Issuer.parse(urlString), authorizationServerMetadata.getIssuer());
 		Assert.assertEquals(url, authorizationServerMetadata.getJWKSetURI());
+		Assert.assertEquals(
+			Scope.parse(supportedScope),
+			authorizationServerMetadata.getScopes());
 		Assert.assertEquals(
 			url, authorizationServerMetadata.getTokenEndpointURI());
 	}

@@ -75,7 +75,7 @@ public class
 					ContentDashboardConstants.
 						DefaultInternalAssetVocabularyName.values()) {
 
-			AssetVocabularyUtil.addAssetVocabulary(
+			AssetVocabularyUtil.addReservedAssetVocabulary(
 				_assetVocabularyLocalService, searchClassNameIds, company,
 				defaultInternalAssetVocabularyName.toString(),
 				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL);

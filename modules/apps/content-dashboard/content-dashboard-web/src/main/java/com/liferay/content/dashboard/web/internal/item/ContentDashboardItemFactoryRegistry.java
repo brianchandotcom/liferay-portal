@@ -113,11 +113,13 @@ public class ContentDashboardItemFactoryRegistry {
 
 				try {
 					_companyLocalService.forEachCompany(
-						company -> AssetVocabularyUtil.addAssetVocabulary(
-							_assetVocabularyLocalService,
-							Collections.singletonList(classNameId), company,
-							defaultInternalAssetVocabularyName.toString(),
-							AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL));
+						company ->
+							AssetVocabularyUtil.addReservedAssetVocabulary(
+								_assetVocabularyLocalService,
+								Collections.singletonList(classNameId), company,
+								defaultInternalAssetVocabularyName.toString(),
+								AssetVocabularyConstants.
+									VISIBILITY_TYPE_INTERNAL));
 				}
 				catch (Exception exception) {
 					_log.error(exception);

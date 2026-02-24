@@ -65,7 +65,7 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			Boolean active, long companyId, int start, int end,
+			Boolean active, long companyId, String scope, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
@@ -73,12 +73,12 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
-			long companyId, int start, int end,
+			long companyId, String scope, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 
 		return getLatestWorkflowDefinitions(
-			null, companyId, start, end, orderByComparator);
+			null, companyId, scope, start, end, orderByComparator);
 	}
 
 	public default int getLatestWorkflowDefinitionsCount(
@@ -139,7 +139,7 @@ public interface WorkflowDefinitionManager {
 	}
 
 	public default List<WorkflowDefinition> liberalGetLatestWorkflowDefinitions(
-			long companyId, int start, int end,
+			long companyId, String scope, int start, int end,
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException {
 

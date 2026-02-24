@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 
 import java.util.List;
@@ -88,7 +89,8 @@ public class WorkflowDefinitionManagerUtil {
 			_workflowDefinitionManagerSnapshot.get();
 
 		return workflowDefinitionManager.liberalGetLatestWorkflowDefinitions(
-			companyId, start, end, orderByComparator);
+			companyId, WorkflowDefinitionConstants.SCOPE_ALL, start, end,
+			orderByComparator);
 	}
 
 	public static WorkflowDefinition liberalGetWorkflowDefinition(

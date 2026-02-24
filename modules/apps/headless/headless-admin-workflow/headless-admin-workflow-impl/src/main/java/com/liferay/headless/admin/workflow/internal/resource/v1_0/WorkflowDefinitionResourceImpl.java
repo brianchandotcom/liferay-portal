@@ -152,7 +152,7 @@ public class WorkflowDefinitionResourceImpl
 
 	@Override
 	public Page<WorkflowDefinition> getWorkflowDefinitionsPage(
-			Boolean active, Pagination pagination, Sort[] sorts)
+			Boolean active, String scope, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		return Page.of(
@@ -190,6 +190,8 @@ public class WorkflowDefinitionResourceImpl
 			transform(
 				_workflowDefinitionManager.getLatestWorkflowDefinitions(
 					active, contextCompany.getCompanyId(),
+					GetterUtil.getString(
+						scope, WorkflowDefinitionConstants.SCOPE_ALL),
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					_toOrderByComparator((Sort)ArrayUtil.getValue(sorts, 0))),
 				this::_toWorkflowDefinition),

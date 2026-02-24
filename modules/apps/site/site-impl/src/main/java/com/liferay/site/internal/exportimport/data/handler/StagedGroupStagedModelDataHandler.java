@@ -663,7 +663,9 @@ public class StagedGroupStagedModelDataHandler
 				// Portlet data
 
 				if (importPortletControlsMap.get(
-						PortletDataHandlerKeys.PORTLET_DATA)) {
+						PortletDataHandlerKeys.PORTLET_DATA) ||
+					_isPortletImportable(
+						portletDataContext.getCompanyId(), portletId)) {
 
 					_portletImportController.importPortletData(
 						portletDataContext, portletDataElement);
@@ -734,6 +736,20 @@ public class StagedGroupStagedModelDataHandler
 			_portletImportController.importServicePortletPreferences(
 				portletDataContext, serviceElement);
 		}
+	}
+
+	private boolean _isPortletImportable(long companyId, String portletId) {
+		Portlet portlet = _portletLocalService.getPortletById(
+			companyId, portletId);
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (portletDataHandler == null) {
+			return false;
+		}
+
+		return portletDataHandler.isHidden();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

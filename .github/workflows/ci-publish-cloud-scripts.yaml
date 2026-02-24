@@ -52,6 +52,7 @@ jobs:
                         --file ${OUTPUT_LOCATION} \
                         --gzip \
                         --verbose \
+                        cloud/scripts/setup_aws.sh \
                         cloud/terraform/aws/eks/*.tf \
                         cloud/terraform/aws/gitops/platform/*.tf \
                         cloud/terraform/aws/gitops/resources/*.tf
@@ -65,7 +66,7 @@ on:
             -   master
         paths:
             -   .github/workflows/ci-publish-cloud-scripts.yaml
-            -   cloud/scripts/versions.json
+            -   cloud/scripts/*
             -   cloud/terraform/aws/eks/*
             -   cloud/terraform/aws/gitops/platform/*
             -   cloud/terraform/aws/gitops/resources/*

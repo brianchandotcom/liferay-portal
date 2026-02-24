@@ -20,11 +20,6 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
-import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
-import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,10 +55,9 @@ public class FragmentMappingFieldUtil {
 
 			if (Validator.isNotNull(collectionFieldId)) {
 				return _getCollectionFieldKey(
-					collectionFieldId, infoItemServiceRegistry,
-					(LayoutStructure)dtoConverterContext.getAttribute(
-						LayoutStructure.class.getName()),
-					layoutStructureItemId, scopeGroupId);
+					collectionFieldId,
+					(InfoForm)dtoConverterContext.getAttribute(
+						"collectionInfoForm"));
 			}
 
 			if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
@@ -89,62 +83,7 @@ public class FragmentMappingFieldUtil {
 	}
 
 	private static String _getCollectionFieldKey(
-		String collectionFieldId,
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		LayoutStructure layoutStructure, String layoutStructureItemId,
-		long scopeGroupId) {
-
-		if (layoutStructure == null) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutStructureItem layoutStructureItem =
-			LayoutStructureItemUtil.getAncestor(
-				layoutStructureItemId,
-				LayoutDataItemTypeConstants.TYPE_COLLECTION, layoutStructure);
-
-		if (!(layoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem)) {
-
-			return collectionFieldId;
-		}
-
-		CollectionStyledLayoutStructureItem
-			collectionStyledLayoutStructureItem =
-				(CollectionStyledLayoutStructureItem)layoutStructureItem;
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if (collectionJSONObject == null) {
-			return collectionFieldId;
-		}
-
-		String itemType = collectionJSONObject.getString("itemType");
-
-		if (itemType == null) {
-			return collectionFieldId;
-		}
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemType);
-
-		if (infoItemFormProvider == null) {
-			return collectionFieldId;
-		}
-
-		InfoForm infoForm = null;
-
-		try {
-			infoForm = infoItemFormProvider.getInfoForm(
-				collectionJSONObject.getString("itemSubtype"), scopeGroupId);
-		}
-		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFormVariationException);
-			}
-		}
+		String collectionFieldId, InfoForm infoForm) {
 
 		if (infoForm == null) {
 			return collectionFieldId;

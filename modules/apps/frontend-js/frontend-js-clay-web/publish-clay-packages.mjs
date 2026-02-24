@@ -35,6 +35,8 @@ const __dirname = path.dirname(__filename);
 
 const ROOT_DIR = __dirname;
 const CLAY_DIR = path.join(ROOT_DIR, 'clay');
+const UNIFIED_CHANGELOG_PATH = path.join(CLAY_DIR, 'CHANGELOG.md');
+const COMMIT_LINK_BASE = 'https://github.com/liferay/liferay-portal/commit';
 
 const NPM_TAG = process.env.NPM_TAG || 'latest';
 const SKIP_VERSION_BUMP = process.env.SKIP_VERSION_BUMP === 'true';
@@ -83,7 +85,8 @@ const packageDirs = fs
 		(entry) =>
 			entry.isDirectory() &&
 			entry.name.startsWith('clay-') &&
-			entry.name !== 'clay-charts'
+			entry.name !== 'clay-charts' &&
+			fs.existsSync(path.join(CLAY_DIR, entry.name, 'package.json'))
 	)
 	.map((entry) => path.join(CLAY_DIR, entry.name))
 	.sort((a, b) => a.localeCompare(b));
@@ -117,6 +120,221 @@ function readJson(filePath) {
 
 function writeJson(filePath, data) {
 	fs.writeFileSync(filePath, `${JSON.stringify(data, null, '\t')}\n`);
+}
+
+function escapeRegExp(value) {
+	return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function todayIsoDate() {
+	return new Date().toISOString().slice(0, 10);
+}
+
+function isReleaseCommitSubject(subject) {
+	const normalizedSubject = subject.trim();
+
+	return (
+		/\bRelease clay v\d+\.\d+\.\d+\b/i.test(normalizedSubject) ||
+		/\bpublish\s+v?\d+\.\d+\.\d+\b/i.test(normalizedSubject)
+	);
+}
+
+function insertAfterUnifiedChangelogIntro(content, section) {
+	const lines = content.split('\n');
+
+	if (lines[0].trim() !== '# Change Log') {
+		return `${section}\n${content}`;
+	}
+
+	let index = 1;
+
+	while (index < lines.length && lines[index].trim() === '') {
+		index += 1;
+	}
+
+	while (index < lines.length && lines[index].trim() !== '') {
+		index += 1;
+	}
+
+	while (index < lines.length && lines[index].trim() === '') {
+		index += 1;
+	}
+
+	const before = lines.slice(0, index).join('\n').replace(/\s*$/, '');
+	const after = lines.slice(index).join('\n').replace(/^\s*/, '');
+
+	if (!after) {
+		return `${before}\n\n${section}\n`;
+	}
+
+	return `${before}\n\n${section}\n\n${after}\n`;
+}
+
+async function getClayReleaseBoundaryCommit() {
+	const history = await run(
+		'git',
+		['log', '--pretty=%H%x09%s', '--', 'clay'],
+		{cwd: ROOT_DIR, stdio: 'pipe'}
+	);
+
+	const lines = (history.stdout || '')
+		.split('\n')
+		.map((line) => line.trim())
+		.filter(Boolean);
+
+	for (const line of lines) {
+		const [hash, ...subjectParts] = line.split('\t');
+		const subject = subjectParts.join('\t').trim();
+
+		if (!hash || !subject) {
+			continue;
+		}
+
+		if (isReleaseCommitSubject(subject)) {
+			return hash;
+		}
+	}
+
+	throw new Error(
+		'Unable to find prior Clay release commit in git history. Expected a commit subject containing "Release clay vX.Y.Z" or "publish X.Y.Z".'
+	);
+}
+
+async function getPackageCommitsSinceBoundary(boundaryCommitHash, packageDir) {
+	const packagePath = path.relative(ROOT_DIR, packageDir);
+	const result = await run(
+		'git',
+		[
+			'log',
+			'--reverse',
+			'--pretty=%H%x09%s',
+			`${boundaryCommitHash}..HEAD`,
+			'--',
+			packagePath,
+		],
+		{cwd: ROOT_DIR, stdio: 'pipe'}
+	);
+
+	return (result.stdout || '')
+		.split('\n')
+		.map((line) => line.trim())
+		.filter(Boolean)
+		.map((line) => {
+			const [hash, ...subjectParts] = line.split('\t');
+			const subject = subjectParts.join('\t').trim();
+
+			return {
+				hash,
+				subject,
+			};
+		})
+		.filter(({hash, subject}) => hash && subject)
+		.filter(({subject}) => !isReleaseCommitSubject(subject));
+}
+
+function renderUnifiedChangelogSection(targetVersion, packageChanges) {
+	const date = todayIsoDate();
+	const lines = [`# [${targetVersion}] (${date})`, ''];
+
+	for (const {commits, packageName} of packageChanges) {
+		lines.push(`## ${packageName}`);
+		lines.push('');
+		lines.push('### Commits');
+		lines.push('');
+
+		for (const commit of commits) {
+			const shortHash = commit.hash.slice(0, 7);
+			lines.push(
+				`- ${commit.subject} ([${shortHash}](${COMMIT_LINK_BASE}/${commit.hash}))`
+			);
+		}
+
+		lines.push('');
+	}
+
+	return lines.join('\n').trimEnd();
+}
+
+function updateUnifiedChangelog(targetVersion, section, previewOnly) {
+	if (!fs.existsSync(UNIFIED_CHANGELOG_PATH)) {
+		const createdContent =
+			'# Change Log\n\nAll notable changes to Clay packages are documented in this file.\n\n';
+
+		if (previewOnly) {
+			console.log(`PREVIEW ${UNIFIED_CHANGELOG_PATH}`);
+			console.log(section);
+
+			return;
+		}
+
+		fs.writeFileSync(UNIFIED_CHANGELOG_PATH, `${createdContent}${section}\n`);
+
+		return;
+	}
+
+	const current = fs.readFileSync(UNIFIED_CHANGELOG_PATH, 'utf8');
+	const targetVersionHeaderPattern = new RegExp(
+		`^# \\[(?:${escapeRegExp(targetVersion)})\\]`,
+		'm'
+	);
+
+	if (targetVersionHeaderPattern.test(current)) {
+		console.log(
+			`Unified changelog already contains ${targetVersion}; skipping changelog update`
+		);
+
+		return;
+	}
+
+	if (previewOnly) {
+		console.log(`PREVIEW ${UNIFIED_CHANGELOG_PATH}`);
+		console.log(section);
+
+		return;
+	}
+
+	const updated = insertAfterUnifiedChangelogIntro(current, section);
+	fs.writeFileSync(UNIFIED_CHANGELOG_PATH, updated);
+}
+
+async function updateUnifiedChangelogForTargetVersion() {
+	const boundaryCommitHash = await getClayReleaseBoundaryCommit();
+	const packageChanges = [];
+
+	for (const dir of packageDirs) {
+		const pkgPath = packageJsonPath(dir);
+		const pkg = readJson(pkgPath);
+		const packageName = pkg.name || '';
+
+		if (pkg.private || !packageName.startsWith('@clayui/')) {
+			continue;
+		}
+
+		const commits = await getPackageCommitsSinceBoundary(boundaryCommitHash, dir);
+
+		if (!commits.length) {
+			continue;
+		}
+
+		packageChanges.push({
+			commits,
+			packageName,
+		});
+	}
+
+	packageChanges.sort((a, b) => a.packageName.localeCompare(b.packageName));
+
+	if (!packageChanges.length) {
+		console.log(
+			`No package changes detected since release boundary ${boundaryCommitHash}`
+		);
+
+		return;
+	}
+
+	const section = renderUnifiedChangelogSection(TARGET_VERSION, packageChanges);
+
+	updateUnifiedChangelog(TARGET_VERSION, section, PREVIEW_CHANGES);
 }
 
 const temporaryPackageJsonBackups = new Map();
@@ -275,6 +493,9 @@ async function main() {
 			writeJson(pkgPath, pkg);
 		}
 	}
+
+	console.log(`Generating unified Clay changelog for ${TARGET_VERSION}`);
+	await updateUnifiedChangelogForTargetVersion();
 
 	if (PREVIEW_CHANGES) {
 		console.log('----');

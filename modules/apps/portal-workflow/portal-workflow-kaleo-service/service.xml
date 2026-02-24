@@ -238,7 +238,7 @@
 			<finder-column name="version" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="KaleoInstance" remote-service="false">
+	<entity local-service="true" name="KaleoInstance" remote-service="true">
 
 		<!-- PK fields -->
 

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.upgrade.v5_3_3.test;
+package com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.service.test.BaseTemplateUpgradeProcessTestCase;
@@ -21,7 +21,7 @@ import org.junit.runner.RunWith;
  * @author Albert Gomes Cabral
  */
 @RunWith(Arquillian.class)
-public class BrowserSnifferTemplateUpgradeProcessTest
+public class BrowserSnifferDDMTemplateTemplateUpgradeProcessTest
 	extends BaseTemplateUpgradeProcessTestCase {
 
 	@ClassRule
@@ -52,7 +52,7 @@ public class BrowserSnifferTemplateUpgradeProcessTest
 	@Override
 	protected String getUpgradeStepClassName() throws Exception {
 		return "com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3." +
-			"BrowserSnifferTemplateUpgradeProcess";
+			"BrowserSnifferDDMTemplateTemplateUpgradeProcess";
 	}
 
 }

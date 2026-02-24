@@ -2,7 +2,12 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "ERC-001"
+				"externalReferenceCode": "ERC-001",
+				"roleBriefs": [
+					{
+						"name": "Account Member"
+					}
+				]
 			}
 		],
 		"alternateName": "customer",
@@ -15,7 +20,12 @@
 	{
 		"accountBriefs": [
 			{
-				"externalReferenceCode": "ERC-001"
+				"externalReferenceCode": "ERC-001",
+				"roleBriefs": [
+					{
+						"name": "Account Member"
+					}
+				]
 			}
 		],
 		"alternateName": "partner",
@@ -24,5 +34,191 @@
 		"familyName": "Partner",
 		"givenName": "Partner",
 		"name": "Partner"
+	},
+	{
+		"accountBriefs": [
+			{
+				"externalReferenceCode": "ERC-001",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-002",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-003",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-004",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-005",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-006",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-007",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-008",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-009",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-010",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-011",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-012",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-013",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-014",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-015",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-016",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-017",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-018",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-019",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-020",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-021",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			},
+			{
+				"externalReferenceCode": "ERC-022",
+				"roleBriefs": [
+					{
+						"name": "Account Administrator"
+					}
+				]
+			}
+		],
+		"alternateName": "test",
+		"emailAddress": "test@liferay.com",
+		"externalReferenceCode": "USER_TEST",
+		"familyName": "Test",
+		"givenName": "Test",
+		"name": "Test Test"
 	}
 ]

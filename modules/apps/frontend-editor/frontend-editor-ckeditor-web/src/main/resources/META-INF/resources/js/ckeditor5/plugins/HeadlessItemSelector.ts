@@ -5,13 +5,20 @@
 
 import {Command, Plugin} from '@ckeditor/ckeditor5-core/dist/index.js';
 import {ButtonView} from '@ckeditor/ckeditor5-ui/dist/index.js';
+import ClayIcon from '@clayui/icon';
 import {
 	EConfigInURLBehavior,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import React from 'react';
 
+import {
+	FILE_MIME_TYPE_CSS_CLASSES,
+	FILE_MIME_TYPE_ICONS,
+} from '../utils/constants';
 import getIcon from '../utils/getIcon';
+import getMimeTypeProperty from '../utils/getMimeTypeProperty';
 
 const ALLOWED_IMAGE_FILE_EXTENSIONS = [
 	'apng',
@@ -78,11 +85,11 @@ const FDS_PROPS: IFrontendDataSetProps = {
 				item: {
 					embedded:
 						| {coverImage: {link: {href: string}}}
-						| {file: {thumbnailURL: string}};
+						| {file: {mimeType: string; thumbnailURL: string}};
 				};
 				props: object;
 			}) => {
-				const stickerProps = {
+				const stickerConfig: any = {
 					stickerProps: {
 						className: 'file-icon-color-5',
 						displayType: 'unstyled',
@@ -90,16 +97,30 @@ const FDS_PROPS: IFrontendDataSetProps = {
 				};
 
 				if ('file' in item.embedded) {
+					const mimeType = item.embedded?.file?.mimeType || '';
+
 					return {
 						...props,
 						imgProps: {src: item.embedded.file.thumbnailURL},
-						...stickerProps,
+						stickerProps: {
+							className: getMimeTypeProperty({
+								map: FILE_MIME_TYPE_CSS_CLASSES,
+								mimeType,
+							}),
+							content: React.createElement(ClayIcon, {
+								symbol: getMimeTypeProperty({
+									map: FILE_MIME_TYPE_ICONS,
+									mimeType,
+								}),
+							}),
+							displayType: 'unstyled',
+						},
 					};
 				}
 
 				return {
 					...props,
-					...stickerProps,
+					...stickerConfig,
 				};
 			},
 

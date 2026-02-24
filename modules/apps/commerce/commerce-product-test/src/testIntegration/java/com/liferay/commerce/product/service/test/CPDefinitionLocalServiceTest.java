@@ -543,7 +543,7 @@ public class CPDefinitionLocalServiceTest {
 	}
 
 	@Test
-	public void testCopyCPDefinition() throws PortalException {
+	public void testCopyCPDefinition() throws Exception {
 		frutillaRule.scenario(
 			"Copy a product"
 		).given(
@@ -560,45 +560,70 @@ public class CPDefinitionLocalServiceTest {
 			_commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, true,
 			true);
 
-		CPSpecificationOption cpSpecificationOption =
-			CPTestUtil.addCPSpecificationOption(
-				_commerceCatalog.getGroupId(), false);
+		try {
+			_cpDefinitionLocalService.copyCPDefinition(
+				cpDefinition1.getCPDefinitionId());
 
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue1 =
-				_cpDefinitionSpecificationOptionValueLocalService.
-					addCPDefinitionSpecificationOptionValue(
-						RandomTestUtil.randomString(),
-						cpDefinition1.getCPDefinitionId(),
-						cpSpecificationOption.getCPSpecificationOptionId(),
-						cpSpecificationOption.getCPOptionCategoryId(),
-						RandomTestUtil.randomDouble(),
-						RandomTestUtil.randomLocaleStringMap(), true,
-						ServiceContextTestUtil.getServiceContext(
-							_commerceCatalog.getGroupId()));
+			Assert.fail();
+		}
+		catch (UnsupportedOperationException unsupportedOperationException) {
+			Assert.assertNotNull(unsupportedOperationException);
+		}
 
-		CPDefinition cpDefinition2 = _cpDefinitionLocalService.copyCPDefinition(
-			cpDefinition1.getCPDefinitionId());
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						CProductVersionConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"enabled", true
+						).put(
+							"versionThreshold", 2
+						).build())) {
 
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				_cpDefinitionSpecificationOptionValueLocalService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinition2.getCPDefinitionId(), null,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			CPSpecificationOption cpSpecificationOption =
+				CPTestUtil.addCPSpecificationOption(
+					_commerceCatalog.getGroupId(), false);
 
-		CPDefinitionSpecificationOptionValue
-			cpDefinitionSpecificationOptionValue2 =
-				cpDefinitionSpecificationOptionValues.get(0);
+			CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue1 =
+					_cpDefinitionSpecificationOptionValueLocalService.
+						addCPDefinitionSpecificationOptionValue(
+							RandomTestUtil.randomString(),
+							cpDefinition1.getCPDefinitionId(),
+							cpSpecificationOption.getCPSpecificationOptionId(),
+							cpSpecificationOption.getCPOptionCategoryId(),
+							RandomTestUtil.randomDouble(),
+							RandomTestUtil.randomLocaleStringMap(), true,
+							ServiceContextTestUtil.getServiceContext(
+								_commerceCatalog.getGroupId()));
 
-		Assert.assertNotEquals(
-			cpDefinitionSpecificationOptionValue1.getExternalReferenceCode(),
-			cpDefinitionSpecificationOptionValue2.getExternalReferenceCode());
+			CPDefinition cpDefinition2 =
+				_cpDefinitionLocalService.copyCPDefinition(
+					cpDefinitionSpecificationOptionValue1.getCPDefinitionId());
 
-		Assert.assertNotNull(
-			_cpDefinitionInventoryLocalService.
-				fetchCPDefinitionInventoryByCPDefinitionId(
-					cpDefinition2.getCPDefinitionId()));
+			List<CPDefinitionSpecificationOptionValue>
+				cpDefinitionSpecificationOptionValues =
+					_cpDefinitionSpecificationOptionValueLocalService.
+						getCPDefinitionSpecificationOptionValues(
+							cpDefinition2.getCPDefinitionId(), null,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue2 =
+					cpDefinitionSpecificationOptionValues.get(0);
+
+			Assert.assertNotEquals(
+				cpDefinitionSpecificationOptionValue1.
+					getExternalReferenceCode(),
+				cpDefinitionSpecificationOptionValue2.
+					getExternalReferenceCode());
+
+			Assert.assertNotNull(
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						cpDefinition2.getCPDefinitionId()));
+		}
 	}
 
 	@Test

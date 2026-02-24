@@ -130,8 +130,7 @@ public class CPDefinitionVirtualSettingLocalServiceImpl
 			_cpDefinitionLocalService.isVersionable(classPK)) {
 
 			CPDefinition newCPDefinition =
-				_cpDefinitionLocalService.copyCPDefinition(
-					cpDefinitionVirtualSetting.getClassPK());
+				_cpDefinitionLocalService.copyCPDefinition(classPK);
 
 			classPK = newCPDefinition.getCPDefinitionId();
 		}

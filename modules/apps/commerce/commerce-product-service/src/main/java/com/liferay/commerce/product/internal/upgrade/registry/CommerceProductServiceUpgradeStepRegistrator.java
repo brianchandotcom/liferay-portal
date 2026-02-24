@@ -676,6 +676,8 @@ public class CommerceProductServiceUpgradeStepRegistrator
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
 
+		registry.register("6.3.0", "6.3.1", new DummyUpgradeStep());
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce product upgrade step registrator finished");
 		}

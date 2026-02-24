@@ -422,9 +422,10 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			throw new NoSuchCatalogException();
 		}
 
-		cpDefinition = _cpDefinitionService.copyCPDefinition(
+		cpDefinition = _cpDefinitionService.cloneCPDefinition(
 			cpDefinition.getCPDefinitionId(), commerceCatalog.getGroupId(),
-			WorkflowConstants.STATUS_DRAFT);
+			_serviceContextHelper.getServiceContext(
+				commerceCatalog.getGroupId()));
 
 		return _toProduct(cpDefinition.getCPDefinitionId());
 	}

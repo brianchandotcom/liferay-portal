@@ -28,12 +28,36 @@ type CMSFileItemSelectorModalConfig = {
 	multiSelect: CMSFileItemSelectorModalProps['multiSelect'];
 };
 
-const CMS_FILE_ITEM_SELECTOR_CONFIG = {
-	apiURL: `${location.origin}/o/search/v1.0/search?${[
-		'emptySearch=true',
-		'nestedFields=description,embedded,file.thumbnailURL',
-		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
-	].join('&')}`,
+function urlBuilder({
+	base = location.origin,
+	filters = [],
+	resource = '/o/search/v1.0/search',
+}: {
+	base?: string;
+	filters?: string[];
+	resource?: string;
+}) {
+	const finalURL = new URL(resource, base);
+
+	const filter = [
+		"(cmsKind eq 'object')",
+		"(cmsSection eq 'files')",
+		'(status in (0, 2, 3))',
+	]
+		.concat(filters.filter(Boolean))
+		.join('and');
+
+	finalURL.search = new URLSearchParams({
+		emptySearch: 'true',
+		filter,
+		nestedFields: 'description,embedded,file.thumbnailURL',
+	}).toString();
+
+	return finalURL.toString();
+}
+
+const CMS_FILE_ITEM_SELECTOR_CONFIG: CMSFileItemSelectorModalConfig = {
+	apiURL: urlBuilder({}),
 	items: [],
 	locator: {
 		id: 'embedded.id',
@@ -109,17 +133,19 @@ function getRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
 }
 
-function buildFilter(allowedExtensions: string) {
-	const base =
-		"(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))";
-
-	const extensions = allowedExtensions
+function normalizeExtensions(allowedExtensions: string) {
+	const cleanExtensions = allowedExtensions
 		.split(',')
 		.map((item) => item.trim().replace(/^\./, ''))
-		.map((item) => `'${item}'`)
-		.join(',');
+		.filter(Boolean);
 
-	return `${base} and (extension in (${extensions}))`;
+	if (cleanExtensions.length < 1) {
+		return '';
+	}
+
+	const extensions = cleanExtensions.map((item) => `'${item}'`).join(',');
+
+	return `(extension in (${extensions}))`;
 }
 
 export default function openCMSItemSelectorModal({
@@ -145,18 +171,11 @@ export default function openCMSItemSelectorModal({
 	};
 
 	if (allowedExtensions && allowedExtensions.length) {
-		const filter = buildFilter(allowedExtensions);
+		const extensions = normalizeExtensions(allowedExtensions);
 
-		const apiURL = `${location.origin}/o/search/v1.0/search?${[
-			'emptySearch=true',
-			'nestedFields=description,embedded,file.thumbnailURL',
-			`filter=${filter}`,
-		].join('&')}`;
-
-		finalConfig = {
-			...config,
-			apiURL,
-		};
+		finalConfig.apiURL = urlBuilder({
+			filters: [extensions],
+		});
 	}
 
 	openItemSelectorModal({

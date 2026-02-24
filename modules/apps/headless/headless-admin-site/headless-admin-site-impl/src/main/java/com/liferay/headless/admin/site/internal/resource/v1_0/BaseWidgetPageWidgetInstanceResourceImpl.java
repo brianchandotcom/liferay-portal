@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
-import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
-import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
+import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.odata.filter.ExpressionConvert;
@@ -43,7 +42,6 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import jakarta.ws.rs.NotSupportedException;
 import jakarta.ws.rs.core.MultivaluedHashMap;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.UriInfo;
@@ -63,17 +61,18 @@ import java.util.Set;
  */
 @Generated("")
 @jakarta.ws.rs.Path("/v1.0")
-public abstract class BasePageExperienceResourceImpl
-	implements EntityModelResource, PageExperienceResource,
-			   VulcanBatchEngineTaskItemDelegate<PageExperience> {
+public abstract class BaseWidgetPageWidgetInstanceResourceImpl
+	implements EntityModelResource,
+			   VulcanBatchEngineTaskItemDelegate<WidgetPageWidgetInstance>,
+			   WidgetPageWidgetInstanceResource {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes an experience of a specific page specification of a site page within a site. The default experience cannot be deleted."
+		description = "Deletes a widget instance of a specific widget page or widget page template within a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -83,52 +82,50 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageExperienceExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "widgetInstanceExternalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSitePageExperience(
+	public void deleteSiteSitePageWidgetInstance(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageExperienceExternalReferenceCode")
-			String pageExperienceExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("widgetInstanceExternalReferenceCode")
+			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves an experience of a specific page specification of a site page within a site."
+		description = "Retrieves a widget instance of a widget page or widget page template within a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -138,7 +135,11 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageExperienceExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "widgetInstanceExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -156,36 +157,42 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience getSitePageExperience(
+	public WidgetPageWidgetInstance getSiteSitePageWidgetInstance(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageExperienceExternalReferenceCode")
-			String pageExperienceExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("widgetInstanceExternalReferenceCode")
+			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 
-		return new PageExperience();
+		return null;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves all the experiences of a page specification."
+		description = "Retrieves all the widget instances of a widget page."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -195,7 +202,7 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageSpecificationExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -213,24 +220,25 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<PageExperience> getSitePageSpecificationPageExperiencesPage(
+	public Page<WidgetPageWidgetInstance> getSiteSitePageWidgetInstancesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageSpecificationExternalReferenceCode")
-			String pageSpecificationExternalReferenceCode)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode)
 		throws Exception {
 
 		return Page.of(Collections.emptyList());
@@ -239,10 +247,10 @@ public abstract class BasePageExperienceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "parentSectionId": ___, "parentWidgetInstanceExternalReferenceCode": ___, "position": ___, "type": ___, "widgetConfig": ___, "widgetInstanceId": ___, "widgetLookAndFeelConfig": ___, "widgetName": ___, "widgetPermissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
+		description = "Updates a widget instance of a widget page or widget page template within a site. Updates only the fields received in the request body, leaving any other fields untouched."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -252,7 +260,11 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageExperienceExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "widgetInstanceExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -270,73 +282,99 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience patchSitePageExperience(
+	public WidgetPageWidgetInstance patchSiteSitePageWidgetInstance(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageExperienceExternalReferenceCode")
-			String pageExperienceExternalReferenceCode,
-			PageExperience pageExperience)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("widgetInstanceExternalReferenceCode")
+			String widgetInstanceExternalReferenceCode,
+			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		PageExperience existingPageExperience = getSitePageExperience(
-			siteExternalReferenceCode, pageExperienceExternalReferenceCode);
+		WidgetPageWidgetInstance existingWidgetPageWidgetInstance =
+			getSiteSitePageWidgetInstance(
+				siteExternalReferenceCode, sitePageExternalReferenceCode,
+				widgetInstanceExternalReferenceCode);
 
-		if (pageExperience.getExternalReferenceCode() != null) {
-			existingPageExperience.setExternalReferenceCode(
-				pageExperience.getExternalReferenceCode());
+		if (widgetPageWidgetInstance.getExternalReferenceCode() != null) {
+			existingWidgetPageWidgetInstance.setExternalReferenceCode(
+				widgetPageWidgetInstance.getExternalReferenceCode());
 		}
 
-		if (pageExperience.getKey() != null) {
-			existingPageExperience.setKey(pageExperience.getKey());
+		if (widgetPageWidgetInstance.getParentSectionId() != null) {
+			existingWidgetPageWidgetInstance.setParentSectionId(
+				widgetPageWidgetInstance.getParentSectionId());
 		}
 
-		if (pageExperience.getName_i18n() != null) {
-			existingPageExperience.setName_i18n(pageExperience.getName_i18n());
+		if (widgetPageWidgetInstance.
+				getParentWidgetInstanceExternalReferenceCode() != null) {
+
+			existingWidgetPageWidgetInstance.
+				setParentWidgetInstanceExternalReferenceCode(
+					widgetPageWidgetInstance.
+						getParentWidgetInstanceExternalReferenceCode());
 		}
 
-		if (pageExperience.getPageSpecificationExternalReferenceCode() !=
-				null) {
-
-			existingPageExperience.setPageSpecificationExternalReferenceCode(
-				pageExperience.getPageSpecificationExternalReferenceCode());
+		if (widgetPageWidgetInstance.getPosition() != null) {
+			existingWidgetPageWidgetInstance.setPosition(
+				widgetPageWidgetInstance.getPosition());
 		}
 
-		if (pageExperience.getPriority() != null) {
-			existingPageExperience.setPriority(pageExperience.getPriority());
+		if (widgetPageWidgetInstance.getType() != null) {
+			existingWidgetPageWidgetInstance.setType(
+				widgetPageWidgetInstance.getType());
 		}
 
-		if (pageExperience.getUuid() != null) {
-			existingPageExperience.setUuid(pageExperience.getUuid());
+		if (widgetPageWidgetInstance.getWidgetConfig() != null) {
+			existingWidgetPageWidgetInstance.setWidgetConfig(
+				widgetPageWidgetInstance.getWidgetConfig());
 		}
 
-		preparePatch(pageExperience, existingPageExperience);
+		if (widgetPageWidgetInstance.getWidgetInstanceId() != null) {
+			existingWidgetPageWidgetInstance.setWidgetInstanceId(
+				widgetPageWidgetInstance.getWidgetInstanceId());
+		}
 
-		return putSitePageExperience(
-			siteExternalReferenceCode, pageExperienceExternalReferenceCode,
-			existingPageExperience);
+		if (widgetPageWidgetInstance.getWidgetName() != null) {
+			existingWidgetPageWidgetInstance.setWidgetName(
+				widgetPageWidgetInstance.getWidgetName());
+		}
+
+		preparePatch(
+			widgetPageWidgetInstance, existingWidgetPageWidgetInstance);
+
+		return putSiteSitePageWidgetInstance(
+			siteExternalReferenceCode, sitePageExternalReferenceCode,
+			widgetInstanceExternalReferenceCode,
+			existingWidgetPageWidgetInstance);
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances' -d $'{"externalReferenceCode": ___, "parentSectionId": ___, "parentWidgetInstanceExternalReferenceCode": ___, "position": ___, "type": ___, "widgetConfig": ___, "widgetInstanceId": ___, "widgetLookAndFeelConfig": ___, "widgetName": ___, "widgetPermissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Adds a new experience to a page specification of a site page."
+		description = "Adds a new widget instance to a widget page."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -346,7 +384,7 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageSpecificationExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -364,38 +402,40 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances"
 	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageExperience postSitePageSpecificationPageExperience(
+	public WidgetPageWidgetInstance postSiteSitePageWidgetInstance(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageSpecificationExternalReferenceCode")
-			String pageSpecificationExternalReferenceCode,
-			PageExperience pageExperience)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode,
+			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		return new PageExperience();
+		return null;
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentItemExternalReference": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "parentSectionId": ___, "parentWidgetInstanceExternalReferenceCode": ___, "position": ___, "type": ___, "widgetConfig": ___, "widgetInstanceId": ___, "widgetLookAndFeelConfig": ___, "widgetName": ___, "widgetPermissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates an experience of a specific page specification of a site page within a site."
+		description = "Updates a widget instance of a widget page or widget page template within a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -405,7 +445,11 @@ public abstract class BasePageExperienceResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "pageExperienceExternalReferenceCode"
+				name = "sitePageExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "widgetInstanceExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -423,126 +467,60 @@ public abstract class BasePageExperienceResourceImpl
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "PageExperience")
+			@io.swagger.v3.oas.annotations.tags.Tag(
+				name = "WidgetPageWidgetInstance"
+			)
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.Path(
-		"/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/site-pages/{sitePageExternalReferenceCode}/widget-instances/{widgetInstanceExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public PageExperience putSitePageExperience(
+	public WidgetPageWidgetInstance putSiteSitePageWidgetInstance(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
 			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("pageExperienceExternalReferenceCode")
-			String pageExperienceExternalReferenceCode,
-			PageExperience pageExperience)
+			@jakarta.ws.rs.PathParam("sitePageExternalReferenceCode")
+			String sitePageExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("widgetInstanceExternalReferenceCode")
+			String widgetInstanceExternalReferenceCode,
+			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		return new PageExperience();
+		return null;
 	}
 
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
-			Collection<PageExperience> pageExperiences,
+			Collection<WidgetPageWidgetInstance> widgetPageWidgetInstances,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<PageExperience, PageExperience, Exception>
-			pageExperienceUnsafeFunction = null;
-
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
-
-		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			String updateStrategy = (String)parameters.getOrDefault(
-				"updateStrategy", "UPDATE");
-
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				pageExperienceUnsafeFunction = pageExperience -> {
-					PageExperience persistedPageExperience = null;
-
-					if (parameters.containsKey("siteExternalReferenceCode")) {
-						persistedPageExperience = putSitePageExperience(
-							(String)parameters.get("siteExternalReferenceCode"),
-							pageExperience.getExternalReferenceCode(),
-							pageExperience);
-					}
-					else {
-						throw new NotSupportedException(
-							"One of the following parameters must be specified: [siteExternalReferenceCode]");
-					}
-
-					return persistedPageExperience;
-				};
-			}
-		}
-
-		if (pageExperienceUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for PageExperience");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				pageExperiences, pageExperienceUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				pageExperiences, pageExperienceUnsafeFunction::apply);
-		}
-		else {
-			for (PageExperience pageExperience : pageExperiences) {
-				pageExperienceUnsafeFunction.apply(pageExperience);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
 	public void delete(
-			Collection<PageExperience> pageExperiences,
+			Collection<WidgetPageWidgetInstance> widgetPageWidgetInstances,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<PageExperience, PageExperience, Exception>
-			pageExperienceUnsafeFunction = pageExperience -> {
-				if (parameters.containsKey("siteExternalReferenceCode")) {
-					deleteSitePageExperience(
-						(String)parameters.get("siteExternalReferenceCode"),
-						pageExperience.getExternalReferenceCode());
-
-					return pageExperience;
-				}
-
-				throw new UnsupportedOperationException(
-					"Unable to delete by external reference code or ID");
-			};
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				pageExperiences, pageExperienceUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				pageExperiences, pageExperienceUnsafeFunction::apply);
-		}
-		else {
-			for (PageExperience pageExperience : pageExperiences) {
-				pageExperienceUnsafeFunction.apply(pageExperience);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
-		return SetUtil.fromArray("UPSERT");
+		return SetUtil.fromArray();
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
@@ -558,7 +536,7 @@ public abstract class BasePageExperienceResourceImpl
 	}
 
 	public String getResourceName() {
-		return "PageExperience";
+		return "WidgetPageWidgetInstance";
 	}
 
 	public String getVersion() {
@@ -566,7 +544,7 @@ public abstract class BasePageExperienceResourceImpl
 	}
 
 	@Override
-	public Page<PageExperience> read(
+	public Page<WidgetPageWidgetInstance> read(
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts,
@@ -601,7 +579,7 @@ public abstract class BasePageExperienceResourceImpl
 
 	@Override
 	public void update(
-			Collection<PageExperience> pageExperiences,
+			Collection<WidgetPageWidgetInstance> widgetPageWidgetInstances,
 			Map<String, Serializable> parameters)
 		throws Exception {
 
@@ -622,8 +600,10 @@ public abstract class BasePageExperienceResourceImpl
 
 	public void setContextBatchUnsafeBiConsumer(
 		UnsafeBiConsumer
-			<Collection<PageExperience>,
-			 UnsafeFunction<PageExperience, PageExperience, Exception>,
+			<Collection<WidgetPageWidgetInstance>,
+			 UnsafeFunction
+				 <WidgetPageWidgetInstance, WidgetPageWidgetInstance,
+				  Exception>,
 			 Exception> contextBatchUnsafeBiConsumer) {
 
 		this.contextBatchUnsafeBiConsumer = contextBatchUnsafeBiConsumer;
@@ -631,8 +611,8 @@ public abstract class BasePageExperienceResourceImpl
 
 	public void setContextBatchUnsafeConsumer(
 		UnsafeBiConsumer
-			<Collection<PageExperience>,
-			 UnsafeConsumer<PageExperience, Exception>, Exception>
+			<Collection<WidgetPageWidgetInstance>,
+			 UnsafeConsumer<WidgetPageWidgetInstance, Exception>, Exception>
 				contextBatchUnsafeConsumer) {
 
 		this.contextBatchUnsafeConsumer = contextBatchUnsafeConsumer;
@@ -826,7 +806,8 @@ public abstract class BasePageExperienceResourceImpl
 	}
 
 	protected void preparePatch(
-		PageExperience pageExperience, PageExperience existingPageExperience) {
+		WidgetPageWidgetInstance widgetPageWidgetInstance,
+		WidgetPageWidgetInstance existingWidgetPageWidgetInstance) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(
@@ -1146,12 +1127,14 @@ public abstract class BasePageExperienceResourceImpl
 
 	protected AcceptLanguage contextAcceptLanguage;
 	protected UnsafeBiConsumer
-		<Collection<PageExperience>,
-		 UnsafeFunction<PageExperience, PageExperience, Exception>, Exception>
-			contextBatchUnsafeBiConsumer;
+		<Collection<WidgetPageWidgetInstance>,
+		 UnsafeFunction
+			 <WidgetPageWidgetInstance, WidgetPageWidgetInstance, Exception>,
+		 Exception> contextBatchUnsafeBiConsumer;
 	protected UnsafeBiConsumer
-		<Collection<PageExperience>, UnsafeConsumer<PageExperience, Exception>,
-		 Exception> contextBatchUnsafeConsumer;
+		<Collection<WidgetPageWidgetInstance>,
+		 UnsafeConsumer<WidgetPageWidgetInstance, Exception>, Exception>
+			contextBatchUnsafeConsumer;
 	protected com.liferay.portal.kernel.model.Company contextCompany;
 	protected HttpServletRequest contextHttpServletRequest;
 	protected HttpServletResponse contextHttpServletResponse;
@@ -1172,6 +1155,6 @@ public abstract class BasePageExperienceResourceImpl
 		vulcanBatchEngineImportTaskResource;
 
 	private static final com.liferay.portal.kernel.log.Log _log =
-		LogFactoryUtil.getLog(BasePageExperienceResourceImpl.class);
+		LogFactoryUtil.getLog(BaseWidgetPageWidgetInstanceResourceImpl.class);
 
 }

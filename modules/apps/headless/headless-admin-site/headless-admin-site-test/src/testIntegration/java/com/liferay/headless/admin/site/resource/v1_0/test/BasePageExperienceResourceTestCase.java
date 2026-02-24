@@ -648,14 +648,6 @@ public abstract class BasePageExperienceResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals("pageRules", additionalAssertFieldName)) {
-				if (pageExperience.getPageRules() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals(
 					"pageSpecificationExternalReferenceCode",
 					additionalAssertFieldName)) {
@@ -855,17 +847,6 @@ public abstract class BasePageExperienceResourceTestCase {
 				if (!Objects.deepEquals(
 						pageExperience1.getPageElements(),
 						pageExperience2.getPageElements())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals("pageRules", additionalAssertFieldName)) {
-				if (!Objects.deepEquals(
-						pageExperience1.getPageRules(),
-						pageExperience2.getPageRules())) {
 
 					return false;
 				}
@@ -1130,11 +1111,6 @@ public abstract class BasePageExperienceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("pageElements")) {
-			throw new IllegalArgumentException(
-				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("pageRules")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

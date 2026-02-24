@@ -109,27 +109,6 @@ public class PageExperience implements Cloneable, Serializable {
 
 	protected PageElement[] pageElements;
 
-	public PageRule[] getPageRules() {
-		return pageRules;
-	}
-
-	public void setPageRules(PageRule[] pageRules) {
-		this.pageRules = pageRules;
-	}
-
-	public void setPageRules(
-		UnsafeSupplier<PageRule[], Exception> pageRulesUnsafeSupplier) {
-
-		try {
-			pageRules = pageRulesUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected PageRule[] pageRules;
-
 	public String getPageSpecificationExternalReferenceCode() {
 		return pageSpecificationExternalReferenceCode;
 	}

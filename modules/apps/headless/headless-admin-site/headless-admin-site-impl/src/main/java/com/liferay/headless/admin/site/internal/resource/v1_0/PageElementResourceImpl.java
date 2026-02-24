@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.InfoFormUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -16,6 +17,8 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.LayoutServiceContextHelper;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
+import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
@@ -161,7 +164,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			_getDTOConverterContext(
 				layoutPageTemplateStructure.getCompanyId(),
 				layoutStructureItem.getItemId(), layout.getPlid(),
-				layoutStructure, groupId),
+				layoutStructure, layoutStructureItem, groupId),
 			layoutStructureItem);
 	}
 
@@ -214,7 +217,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
 			layoutPageTemplateStructure.getCompanyId(), null, layout.getPlid(),
-			layoutStructure, groupId);
+			layoutStructure, layoutStructureItem, groupId);
 
 		return Page.of(
 			transform(
@@ -269,7 +272,7 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
 			layoutPageTemplateStructure.getCompanyId(), null, layout.getPlid(),
-			layoutStructure, groupId);
+			layoutStructure, null, groupId);
 
 		return Page.of(
 			transform(
@@ -407,19 +410,60 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			return _pageElementDTOConverter.toDTO(
 				_getDTOConverterContext(
 					layout.getCompanyId(), layoutStructureItem.getItemId(),
-					layout.getPlid(), layoutStructure, groupId),
+					layout.getPlid(), layoutStructure, layoutStructureItem,
+					groupId),
 				layoutStructureItem);
 		}
 	}
 
+	private CollectionStyledLayoutStructureItem
+		_getCollectionStyledLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			LayoutStructureItem layoutStructureItem) {
+
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem = null;
+
+		if (layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem) {
+
+			collectionStyledLayoutStructureItem =
+				(CollectionStyledLayoutStructureItem)layoutStructureItem;
+		}
+		else if (layoutStructureItem != null) {
+			LayoutStructureItem ancestorLayoutStructureItem =
+				LayoutStructureItemUtil.getAncestor(
+					layoutStructureItem.getItemId(),
+					LayoutDataItemTypeConstants.TYPE_COLLECTION,
+					layoutStructure);
+
+			if (ancestorLayoutStructureItem instanceof
+					CollectionStyledLayoutStructureItem) {
+
+				collectionStyledLayoutStructureItem =
+					(CollectionStyledLayoutStructureItem)
+						ancestorLayoutStructureItem;
+			}
+		}
+
+		return collectionStyledLayoutStructureItem;
+	}
+
 	private DTOConverterContext _getDTOConverterContext(
 		long companyId, String itemId, long layoutPlid,
-		LayoutStructure layoutStructure, long scopeGroupId) {
+		LayoutStructure layoutStructure,
+		LayoutStructureItem layoutStructureItem, long scopeGroupId) {
 
 		return DTOConverterContextUtil.getDTOConverterContext(
 			contextAcceptLanguage,
 			HashMapBuilder.<String, Object>put(
 				LayoutStructure.class.getName(), layoutStructure
+			).put(
+				"collectionInfoForm",
+				InfoFormUtil.getCollectionInfoForm(
+					_getCollectionStyledLayoutStructureItem(
+						layoutStructure, layoutStructureItem),
+					scopeGroupId)
 			).put(
 				"companyId", companyId
 			).put(

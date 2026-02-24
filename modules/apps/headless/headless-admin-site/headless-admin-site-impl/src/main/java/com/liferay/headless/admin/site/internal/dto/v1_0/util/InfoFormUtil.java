@@ -26,6 +26,10 @@ public class InfoFormUtil {
 		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
 		long scopeGroupId) {
 
+		if (collectionStyledLayoutStructureItem == null) {
+			return null;
+		}
+
 		JSONObject collectionJSONObject =
 			collectionStyledLayoutStructureItem.getCollectionJSONObject();
 

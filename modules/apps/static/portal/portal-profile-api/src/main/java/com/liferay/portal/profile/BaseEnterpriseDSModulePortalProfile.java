@@ -106,7 +106,7 @@ public class BaseEnterpriseDSModulePortalProfile implements PortalProfile {
 
 		try {
 			classLoader.loadClass(
-				"com.liferay.portal.ee.license.EnterpriseLicenseManager");
+				"com.liferay.portal.ee.license.util.LicenseManagerHelper");
 
 			dxp = true;
 		}

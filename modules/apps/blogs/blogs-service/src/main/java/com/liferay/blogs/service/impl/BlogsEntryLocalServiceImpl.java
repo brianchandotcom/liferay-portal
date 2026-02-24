@@ -1820,7 +1820,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		String layoutFullURL = GetterUtil.getString(
 			serviceContext.getAttribute("layoutFullURL"));
 
-		if (!StringUtil.equals(layoutFullURL, StringPool.BLANK)) {
+		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL;
 		}
 

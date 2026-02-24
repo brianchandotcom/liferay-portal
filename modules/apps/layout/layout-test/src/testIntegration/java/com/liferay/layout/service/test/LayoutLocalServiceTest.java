@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
@@ -224,6 +225,41 @@ public class LayoutLocalServiceTest {
 				draftLayout1.getExternalReferenceCode(), _group.getGroupId());
 
 		Assert.assertEquals(draftLayout1, draftLayout2);
+	}
+
+	@Test
+	@TestInfo("LPD-67894")
+	public void testAddEmptyLayout() throws Exception {
+		try {
+			_layoutLocalService.addLayout(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_EMPTY, true,
+				StringPool.BLANK, _serviceContext);
+
+			Assert.fail();
+		}
+		catch (LayoutTypeException layoutTypeException) {
+			Assert.assertEquals(
+				LayoutTypeException.EMPTY, layoutTypeException.getType());
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			_serviceContext.setAttribute(
+				"layout.instanceable.allowed", Boolean.TRUE);
+
+			Layout layout = LayoutLocalServiceUtil.addLayout(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_EMPTY, true,
+				StringPool.BLANK, _serviceContext);
+
+			Assert.assertEquals(LayoutConstants.TYPE_EMPTY, layout.getType());
+		}
 	}
 
 	@Test(expected = DuplicateLayoutExternalReferenceCodeException.class)

@@ -109,8 +109,9 @@ public class IndividualDisplay implements FaroEntityDisplay {
 	}
 
 	private static final List<String> _propertyNames = Arrays.asList(
-		"country", "email", "familyName", "givenName", "image", "jobTitle",
-		"worksFor");
+		"additionalName", "birthDate", "email", "familyName", "givenName",
+		"image", "jobTitle", "languageId", "prefix", "screenName", "suffix",
+		"userId", "uuid", "worksFor");
 
 	private String _accountName;
 	private Long _activitiesCount;

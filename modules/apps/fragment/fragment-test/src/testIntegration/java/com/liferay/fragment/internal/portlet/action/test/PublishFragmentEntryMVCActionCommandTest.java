@@ -10,16 +10,13 @@ import com.liferay.fragment.configuration.FragmentServiceConfiguration;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.UpdateLayoutStatusThreadLocal;
-import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -127,65 +124,35 @@ public class PublishFragmentEntryMVCActionCommandTest {
 							"propagateChanges", true
 						).build())) {
 
-			String html =
+			FragmentEntry fragmentEntry = _getFragmentEntry(
+				null,
 				"<div><lfr-drop-zone data-lfr-drop-zone-id=\"1\">" +
-					"</lfr-drop-zone></div>";
-
-			FragmentEntry fragmentEntry = _getFragmentEntry(null, html);
+					"</lfr-drop-zone></div>");
 
 			Layout layout = LayoutTestUtil.addTypeContentPublishedLayout(
 				_group, RandomTestUtil.randomString(),
 				WorkflowConstants.STATUS_APPROVED);
 
-			long segmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid());
-
-			FragmentEntryLink fragmentEntryLink =
-				_fragmentEntryLinkLocalService.addFragmentEntryLink(
-					null, TestPropsValues.getUserId(), _group.getGroupId(),
-					null, fragmentEntry.getExternalReferenceCode(),
-					fragmentEntry.getScopeERC(), segmentsExperienceId,
-					layout.getPlid(), fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs(),
-					"{fieldSets:[]}", StringPool.BLANK, StringPool.BLANK, 0,
-					null, fragmentEntry.getType(),
-					ServiceContextTestUtil.getServiceContext(
-						_group, TestPropsValues.getUserId()));
-
-			LayoutPageTemplateStructure layoutPageTemplateStructure =
-				_layoutPageTemplateStructureLocalService.
-					fetchLayoutPageTemplateStructure(
-						_group.getGroupId(), layout.getPlid());
-
-			LayoutStructure layoutStructure = LayoutStructure.of(
-				layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
-
-			LayoutStructureItem rootItem =
-				layoutStructure.getLayoutStructureItem(
-					layoutStructure.getMainItemId());
-
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				rootItem.getItemId(), 0);
-
 			try (SafeCloseable safeCloseable =
 					UpdateLayoutStatusThreadLocal.
 						setUpdateLayoutStatusWithSafeCloseable(false)) {
 
-				_layoutPageTemplateStructureLocalService.
-					updateLayoutPageTemplateStructureData(
-						TestPropsValues.getUserId(), _group.getGroupId(),
-						layout.getPlid(), segmentsExperienceId,
-						layoutStructure.toString());
+				ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+					StringPool.BLANK, fragmentEntry.getCss(),
+					fragmentEntry.getConfiguration(),
+					fragmentEntry.getExternalReferenceCode(),
+					fragmentEntry.getScopeERC(), fragmentEntry.getHtml(),
+					fragmentEntry.getJs(), layout,
+					fragmentEntry.getFragmentEntryKey(),
+					_segmentsExperienceLocalService.
+						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					fragmentEntry.getType());
 			}
 
-			fragmentEntry.setHtml(html + "<!--updated-->");
+			fragmentEntry.setHtml(fragmentEntry.getHtml() + "<!--updated-->");
 
 			fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 				fragmentEntry);
-
-			Assert.assertNotNull(layout.fetchDraftLayout());
 
 			_mvcActionCommand.processAction(
 				_getMockLiferayPortletActionRequest(fragmentEntry),

@@ -7,6 +7,7 @@ package com.liferay.ai.hub.rest.internal.manager.v1_0;
 
 import com.liferay.account.model.AccountEntry;
 import com.liferay.ai.hub.rest.dto.v1_0.AgentDefinition;
+import com.liferay.ai.hub.rest.dto.v1_0.Status;
 import com.liferay.ai.hub.rest.dto.v1_0.Variable;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.AgentDefinitionResourceImpl;
 import com.liferay.ai.hub.rest.manager.v1_0.AgentDefinitionManager;
@@ -17,6 +18,7 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -242,6 +244,23 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 			companyId, "AIHubAgentDefinition");
 	}
 
+	private Status _getStatus(
+		DTOConverterContext dtoConverterContext,
+		WorkflowDefinition workflowDefinition) {
+
+		if (dtoConverterContext == null) {
+			return null;
+		}
+
+		Locale locale = dtoConverterContext.getLocale();
+
+		if (workflowDefinition.isActive()) {
+			return _toStatus("active", locale);
+		}
+
+		return _toStatus("inactive", locale);
+	}
+
 	private AgentDefinition _toAgentDefinition(
 			long companyId, DTOConverterContext dtoConverterContext,
 			ObjectEntry objectEntry)
@@ -323,6 +342,8 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 					() -> _toVariable(
 						GetterUtil.getString(
 							objectEntry.getPropertyValue("outputVariable"))));
+				setStatus(
+					() -> _getStatus(dtoConverterContext, workflowDefinition));
 				setTitle(
 					() -> GetterUtil.getString(
 						objectEntry.getPropertyValue("title")));
@@ -330,6 +351,15 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 				setWorkflowDefinitionName(workflowDefinition::getName);
 			}
 		};
+	}
+
+	private Status _toStatus(String label, Locale locale) {
+		Status status = new Status();
+
+		status.setLabel(() -> label);
+		status.setLabel_i18n(() -> _language.get(locale, label));
+
+		return status;
 	}
 
 	private Variable _toVariable(String variableName) {
@@ -346,6 +376,9 @@ public class AgentDefinitionManagerImpl implements AgentDefinitionManager {
 	)
 	private ModelResourcePermission<KaleoDefinition>
 		_kaleoDefinitionModelResourcePermission;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -79,6 +79,11 @@ public class FragmentEntryLinkCTDisplayRender
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(
 			DisplayContext<FragmentEntryLink> displayContext)
 		throws Exception {
@@ -94,11 +99,6 @@ public class FragmentEntryLinkCTDisplayRender
 			defaultFragmentRendererContext,
 			displayContext.getHttpServletRequest(),
 			displayContext.getHttpServletResponse());
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

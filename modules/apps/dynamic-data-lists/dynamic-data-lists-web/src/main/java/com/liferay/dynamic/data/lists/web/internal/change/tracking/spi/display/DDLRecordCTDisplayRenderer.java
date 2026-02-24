@@ -86,6 +86,11 @@ public class DDLRecordCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<DDLRecord> displayContext)
 		throws Exception {
 
@@ -119,11 +124,6 @@ public class DDLRecordCTDisplayRenderer
 		}
 
 		return null;
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

@@ -96,6 +96,11 @@ public class DDMFormInstanceCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<DDMFormInstance> displayContext)
 		throws Exception {
 
@@ -126,11 +131,6 @@ public class DDMFormInstanceCTDisplayRenderer
 
 		return DDMFormRendererUtil.render(
 			ddmFormInstance.getDDMForm(), ddmFormFieldRenderingContext);
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

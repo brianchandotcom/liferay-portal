@@ -75,6 +75,11 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<WikiPage> displayContext)
 		throws Exception {
 
@@ -135,11 +140,6 @@ public class WikiPageCTDisplayRenderer extends BaseCTDisplayRenderer<WikiPage> {
 		sb.append("</div>");
 
 		return sb.toString();
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

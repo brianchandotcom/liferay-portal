@@ -88,6 +88,11 @@ public class MBMessageCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<MBMessage> displayContext) {
 		MBMessage mbMessage = displayContext.getModel();
 
@@ -104,11 +109,6 @@ public class MBMessageCTDisplayRenderer
 		}
 
 		return mbMessage.getBody(false);
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

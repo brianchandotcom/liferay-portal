@@ -121,6 +121,11 @@ public class JournalArticleCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<JournalArticle> displayContext)
 		throws Exception {
 
@@ -193,11 +198,6 @@ public class JournalArticleCTDisplayRenderer
 				portletRequestModel, themeDisplay);
 
 		return journalArticleDisplay.getContent();
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

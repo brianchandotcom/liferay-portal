@@ -87,6 +87,11 @@ public class JournalArticleLocalizationCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(
 			DisplayContext<JournalArticleLocalization> displayContext)
 		throws Exception {
@@ -99,11 +104,6 @@ public class JournalArticleLocalizationCTDisplayRenderer
 				journalArticleLocalization.getArticlePK()),
 			LocaleUtil.fromLanguageId(
 				journalArticleLocalization.getLanguageId()));
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

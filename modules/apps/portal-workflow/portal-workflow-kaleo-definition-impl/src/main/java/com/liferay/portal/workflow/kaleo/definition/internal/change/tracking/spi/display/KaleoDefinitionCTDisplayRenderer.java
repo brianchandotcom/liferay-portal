@@ -72,6 +72,11 @@ public class KaleoDefinitionCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(DisplayContext<KaleoDefinition> displayContext)
 		throws WorkflowException {
 
@@ -81,11 +86,6 @@ public class KaleoDefinitionCTDisplayRenderer
 			"<pre>",
 			HtmlUtil.escapeAttribute(kaleoDefinition.getContentAsXML()),
 			"</pre>");
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

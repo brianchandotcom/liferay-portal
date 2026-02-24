@@ -95,6 +95,11 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(
 			DisplayContext<DDMFormInstanceRecord> displayContext)
 		throws Exception {
@@ -132,11 +137,6 @@ public class DDMFormInstanceRecordCTDisplayRenderer
 		}
 
 		return null;
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

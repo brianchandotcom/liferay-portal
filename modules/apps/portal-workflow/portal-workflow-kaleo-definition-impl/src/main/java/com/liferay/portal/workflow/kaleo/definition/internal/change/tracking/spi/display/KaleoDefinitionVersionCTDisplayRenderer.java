@@ -68,6 +68,11 @@ public class KaleoDefinitionVersionCTDisplayRenderer
 	}
 
 	@Override
+	public boolean isShowPreviewDiff() {
+		return true;
+	}
+
+	@Override
 	public String renderPreview(
 		DisplayContext<KaleoDefinitionVersion> displayContext) {
 
@@ -78,11 +83,6 @@ public class KaleoDefinitionVersionCTDisplayRenderer
 			"<pre>",
 			HtmlUtil.escapeAttribute(kaleoDefinitionVersion.getContentAsXML()),
 			"</pre>");
-	}
-
-	@Override
-	public boolean isShowPreviewDiff() {
-		return true;
 	}
 
 	@Override

@@ -101,6 +101,10 @@ public interface CTDisplayRenderer<T> {
 		return false;
 	}
 
+	public default boolean isShowPreviewDiff() {
+		return false;
+	}
+
 	/**
 	 * Renders the model with the display context.
 	 *
@@ -113,10 +117,6 @@ public interface CTDisplayRenderer<T> {
 		throws Exception {
 
 		return null;
-	}
-
-	public default boolean isShowPreviewDiff() {
-		return false;
 	}
 
 }

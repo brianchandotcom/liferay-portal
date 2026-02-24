@@ -64,6 +64,18 @@ public abstract class BaseFilesSectionDisplayContext
 			super.getBulkActionDropdownItems();
 
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"copy"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "copy-to")
+			).build(
+				"copy-to"
+			));
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				"#", "download", "download",
 				LanguageUtil.get(httpServletRequest, "download"), null, null,

@@ -365,16 +365,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElementWithWidgetPageElement();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testPostSitePageSpecificationPageExperiencePageElementFragmentComposition()
-		throws Exception {
-
-		super.
-			testPostSitePageSpecificationPageExperiencePageElementFragmentComposition();
-	}
-
 	@Override
 	@Test
 	public void testPutSitePageSpecificationPageExperiencePageElement()

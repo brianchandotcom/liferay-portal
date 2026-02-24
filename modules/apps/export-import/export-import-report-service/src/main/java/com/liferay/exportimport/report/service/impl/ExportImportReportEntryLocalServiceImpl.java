@@ -144,6 +144,30 @@ public class ExportImportReportEntryLocalServiceImpl
 	}
 
 	@Override
+	public ExportImportReportEntry getOrAddErrorExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String errorMessage, String errorStacktrace,
+		String modelNameLanguageKey) {
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntryPersistence.fetchByG_C_C_C_E_T(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				exportImportConfigurationId,
+				ExportImportReportEntryConstants.TYPE_ERROR);
+
+		if (exportImportReportEntry != null) {
+			return exportImportReportEntry;
+		}
+
+		return exportImportReportEntryLocalService.
+			addErrorExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				classPK, exportImportConfigurationId, errorMessage,
+				errorStacktrace, modelNameLanguageKey);
+	}
+
+	@Override
 	public void resolveEmptyExportImportReportEntries(
 			long groupId, long companyId, String classExternalReferenceCode,
 			long classNameId)

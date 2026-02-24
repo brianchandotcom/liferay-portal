@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useCallback, useRef, useState} from 'react';
-import {Liferay} from '~/services/liferay';
 import {IUpload} from '~/utils/types';
 
 interface IParams {
@@ -49,10 +49,13 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 			const {fileMd5, fileName, fileSize, ticketId} = params;
 
 			try {
-				const response: Response =
-					(await Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-customer-etc-spring-boot-oaua'
-					).fetch('/ticket-attachments/initiate-upload', {
+				const oauth2Client = await OAuth2.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oaua'
+				);
+
+				const response: Response = (await oauth2Client.fetch(
+					'/ticket-attachments/initiate-upload',
+					{
 						body: JSON.stringify({
 							fileName,
 							fileSize,
@@ -64,7 +67,8 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 						}),
 						method: 'POST',
 						signal: abortControllerRef.current.signal,
-					})) as unknown as Response;
+					}
+				)) as unknown as Response;
 
 				const responseJSON = await response.json();
 

@@ -4,10 +4,10 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import useCheckAttachmentAccess from '~/features/attachments/hooks/useCheckAttachmentAccess';
-import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 
 import AttachmentDownloader from '../../AttachmentDownloader';
@@ -47,10 +47,11 @@ const AttachmentDownloaderOutlet = () => {
 					? `/ticket-attachments/by-id/${ticketAttachmentId}/download`
 					: `/ticket-attachments/by-external-reference-code/${ticketAttachmentERC}/download`;
 
-				const response =
-					await Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-customer-etc-spring-boot-oaua'
-					).fetch(endpoint);
+				const oauth2Client = await OAuth2.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oaua'
+				);
+
+				const response = await oauth2Client.fetch(endpoint);
 
 				if (response.ok) {
 					setDownloadUrl(await response.text());

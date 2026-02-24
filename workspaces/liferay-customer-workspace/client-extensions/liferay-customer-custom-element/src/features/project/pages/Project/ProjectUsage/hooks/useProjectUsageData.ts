@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useAppContext} from '~/features/project/context';
-import {Liferay} from '~/services/liferay';
 import {useGetAccountSubscriptions} from '~/services/liferay/graphql/account-subscriptions';
 import i18n from '~/utils/I18n';
 
@@ -133,13 +133,14 @@ const useProjectUsageData = (
 				return setIsLoading(false);
 			}
 
-			const dataResponse =
-				await Liferay.OAuth2Client.FromUserAgentApplication(
-					'liferay-customer-etc-spring-boot-oaua'
-				)
-					.fetch(`/accounts/${project?.externalReferenceCode}/usage`)
-					.then((response: {json: () => any}) => response.json())
-					.catch(console.error);
+			const oauth2Client = await OAuth2.FromUserAgentApplication(
+				'liferay-customer-etc-spring-boot-oaua'
+			);
+
+			const dataResponse = await oauth2Client
+				.fetch(`/accounts/${project?.externalReferenceCode}/usage`)
+				.then((response: {json: () => any}) => response.json())
+				.catch(console.error);
 
 			if (dataResponse) {
 				setResponse(dataResponse);

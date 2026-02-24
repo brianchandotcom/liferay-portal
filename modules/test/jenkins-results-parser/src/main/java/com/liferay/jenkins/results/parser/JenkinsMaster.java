@@ -109,6 +109,17 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
 			labelExpression = null;
 		}
+		else {
+			for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+				if (_matchesLabels(
+						labelExpression, awsFleetCloud.getLabels())) {
+
+					labelExpression = awsFleetCloud.getPrimaryLabel();
+
+					break;
+				}
+			}
+		}
 
 		Map<Long, Integer> batchSizes = _labelBatchSizes.get(labelExpression);
 
@@ -1403,12 +1414,14 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
+		List<String> labels = _getLabels(labelExpression);
+
 		for (Map.Entry<String, Map<Long, Integer>> labelBatchSizesEntry :
 				_labelBatchSizes.entrySet()) {
 
 			String label = labelBatchSizesEntry.getKey();
 
-			if ((labelExpression != null) && !labelExpression.equals(label)) {
+			if ((labelExpression != null) && !_matchesLabels(label, labels)) {
 				continue;
 			}
 

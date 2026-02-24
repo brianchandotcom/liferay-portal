@@ -186,7 +186,7 @@ export class ExportImportPage {
 	}
 
 	async uncheckPortlets() {
-		const portletListContainer = await this.portletListContainer;
+		const portletListContainer = this.portletListContainer;
 
 		await portletListContainer.waitFor({state: 'attached'});
 
@@ -365,7 +365,7 @@ export class ExportImportPage {
 	async getExportableItems() {
 		await this.newExportButton.click();
 
-		const portletListContainer = await this.portletListContainer;
+		const portletListContainer = this.portletListContainer;
 
 		await portletListContainer.waitFor({state: 'attached'});
 

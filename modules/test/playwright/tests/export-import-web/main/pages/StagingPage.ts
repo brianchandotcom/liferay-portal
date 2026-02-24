@@ -112,7 +112,7 @@ export class StagingPage {
 	async getContentItems() {
 		await this.newPublishProcessButton.click();
 
-		const portletListContainer = await this.portletListContainer;
+		const portletListContainer = this.portletListContainer;
 
 		await portletListContainer.waitFor({state: 'attached'});
 

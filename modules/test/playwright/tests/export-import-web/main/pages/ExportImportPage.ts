@@ -58,6 +58,7 @@ export class ExportImportPage {
 	readonly rangeDateRangeStartTime: Locator;
 	readonly rangeLast: Locator;
 	readonly rangeLastRadioButton: Locator;
+	readonly refreshCountsButton: Locator;
 	readonly refreshCountsLink: Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskRow: (taskName: string) => Locator;
@@ -175,6 +176,9 @@ export class ExportImportPage {
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
 		);
 		this.rangeLastRadioButton = page.getByRole('radio', {name: 'Last'});
+		this.refreshCountsButton = page.getByRole('link', {
+			name: 'Refresh Counts',
+		});
 		this.refreshCountsLink = page.getByRole('link', {
 			name: 'Refresh Counts',
 		});

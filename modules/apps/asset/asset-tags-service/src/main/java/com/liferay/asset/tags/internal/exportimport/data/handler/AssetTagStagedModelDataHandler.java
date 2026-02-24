@@ -16,7 +16,6 @@ import com.liferay.depot.service.DepotEntryService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -161,19 +160,7 @@ public class AssetTagStagedModelDataHandler
 		AssetTag existingAssetTag = fetchExistingStagedModel(
 			assetTag, portletDataContext.getScopeGroupId());
 
-		Map<String, String[]> parameterMap =
-			portletDataContext.getParameterMap();
-
-		boolean hasMergeParameter = parameterMap.containsKey(
-			PortletDataHandlerControl.getNamespacedName(
-				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name"));
-
-		if (portletDataContext.getBooleanParameter(
-				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name",
-				false) ||
-			(!hasMergeParameter &&
-			 AssetTagsServiceConfigurationValues.STAGING_MERGE_TAGS_BY_NAME)) {
-
+		if (AssetTagsServiceConfigurationValues.STAGING_MERGE_TAGS_BY_NAME) {
 			AssetTag fetchedAssetTag = _assetTagLocalService.fetchTag(
 				portletDataContext.getScopeGroupId(), assetTag.getName());
 

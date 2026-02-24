@@ -1235,84 +1235,6 @@ components:
             description:
                 The page element definition of a form step.
             type: object
-        FragmentComposition:
-            # @review
-            description:
-                A composition of fragments that can be added to a site page.
-            properties:
-                creator:
-                    $ref: ../../headless-admin-user/headless-admin-user-impl/rest-openapi.yaml#Creator
-                    # @review
-                    description:
-                        The fragment composition's creator. It is not returned by default. It can be embedded via
-                        nestedFields.
-                    readOnly: true
-                dateCreated:
-                    description:
-                        The structured content's creation date.
-                    format: date-time
-                    type: string
-                dateModified:
-                    description:
-                        The last time any field of the structured content was changed.
-                    format: date-time
-                    type: string
-                datePublished:
-                    description:
-                        The structured content's most recent publication date.
-                    format: date-time
-                    type: string
-                description:
-                    # @review
-                    description:
-                        The description of this fragment composition.
-                    type: string
-                externalReferenceCode:
-                    # @review
-                    description:
-                        The external reference code of this fragment composition.
-                    type: string
-                fragmentSetExternalReferenceCode:
-                    # @review
-                    description:
-                        The external reference code of the fragment set this fragment composition belongs to.
-                    type: string
-                key:
-                    # @review
-                    description:
-                        The fragment composition's key.
-                    type: string
-                name:
-                    # @review
-                    description:
-                        The fragment composition's name.
-                    type: string
-                pageElement:
-                    $ref: "#/components/schemas/PageElement"
-                    # @review
-                    description:
-                        The fragment composition's page element, whose definition must be of type
-                        ContainerPageElementDefinition.
-                thumbnail:
-                    $ref: "#/components/schemas/ItemExternalReference"
-                    # @review
-                    description:
-                        The fragment composition's thumbnail.
-            type: object
-        FragmentCompositionInstancePageElementDefinition:
-            allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        fragmentComposition:
-                            $ref: "#/components/schemas/ItemExternalReference"
-                            # @review
-                            description:
-                                The reference to the fragment composition that will be used to generate the page element
-                                of type container that will be added.
-            # @review
-            description:
-                The page element definition of a fragment composition instance.
-            type: object
         FragmentConfigurationFieldValue:
             # @review
             description:
@@ -2838,7 +2760,6 @@ components:
                     FormFragment: "#/components/schemas/FormFragmentInstancePageElementDefinition"
                     FormStep: "#/components/schemas/FormStepPageElementDefinition"
                     FormStepContainer: "#/components/schemas/FormStepContainerPageElementDefinition"
-                    FragmentComposition: "#/components/schemas/FragmentCompositionInstancePageElementDefinition"
                     FragmentDropZone: "#/components/schemas/FragmentDropZonePageElementDefinition"
                     Grid: "#/components/schemas/GridPageElementDefinition"
                     Module: "#/components/schemas/ModulePageElementDefinition"
@@ -2850,7 +2771,7 @@ components:
                     description:
                         The page element definition's type (basic fragment, collection display, collection item,
                         container, drop zone, form container, form fragment, form step, form step container, fragment
-                        composition, fragment drop zone, grid,  module or widget).
+                        drop zone, grid,  module or widget).
                     enum:
                         -   BasicFragment
                         -   CollectionDisplay
@@ -2861,7 +2782,6 @@ components:
                         -   FormFragment
                         -   FormStep
                         -   FormStepContainer
-                        -   FragmentComposition
                         -   FragmentDropZone
                         -   Grid
                         -   Module

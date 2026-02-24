@@ -48,6 +48,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.sql.Connection;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -312,9 +313,20 @@ public class PreupgradeVerifyDatabaseStateTest
 			Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
 				originalData);
 
+			Set<String> normalizedTableNames = new HashSet<>();
+
+			try (Connection connection = DataAccess.getConnection()) {
+				DBInspector dbInspector = new DBInspector(connection);
+
+				for (String tableName : tableNames) {
+					normalizedTableNames.add(
+						dbInspector.normalizeName(tableName));
+				}
+			}
+
 			Assert.assertEquals(
 				"Stale tables from a previous upgrade detected: " +
-					new TreeSet<>(tableNames),
+					new TreeSet<>(normalizedTableNames),
 				exception.getMessage());
 		}
 		finally {

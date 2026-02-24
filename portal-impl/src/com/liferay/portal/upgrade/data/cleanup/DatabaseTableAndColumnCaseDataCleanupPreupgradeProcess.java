@@ -72,6 +72,8 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 		}
 
 		for (String expectedTableName : expectedTableNames) {
+			expectedTableName = dbInspector.normalizeName(expectedTableName);
+
 			String tableName = tableNames.get(expectedTableName);
 
 			if ((tableName == null) || tableName.equals(expectedTableName)) {
@@ -162,7 +164,7 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcess
 			DataCleanupLoggingUtil.logRename(
 				_log, tableName + StringPool.PERIOD + columnName,
 				tableName + StringPool.PERIOD + expectedColumnName,
-				" because it was incorrectly cased");
+				"it was incorrectly cased");
 
 			int index = columnDefinition.indexOf(StringPool.SPACE);
 

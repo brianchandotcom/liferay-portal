@@ -392,7 +392,9 @@ public class YMLDefinitionOrderCheck extends BaseFileCheck {
 			String trimmedContent2 = StringUtil.trimLeading(content2);
 
 			if (trimmedContent1.startsWith("{{") ||
-				trimmedContent2.startsWith("{{")) {
+				trimmedContent2.startsWith("{{") ||
+				(trimmedContent1.startsWith("-\n") ^
+				 trimmedContent2.startsWith("-\n"))) {
 
 				return 0;
 			}

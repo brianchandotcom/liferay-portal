@@ -9,6 +9,8 @@ import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ClassLoaderUtil;
 
 import java.io.IOException;
@@ -45,6 +47,7 @@ import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.SSLContexts;
 
+import org.elasticsearch.client.Node;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
 
@@ -60,6 +63,15 @@ public class RestClientTransportFactory {
 	public RestClientTransport newRestClientTransport() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
 			_getHttpHosts()
+		).setFailureListener(
+			new RestClient.FailureListener() {
+
+				@Override
+				public void onFailure(Node node) {
+					_log.error(new Exception("Unable to connect to " + node));
+				}
+
+			}
 		).setHttpClientConfigCallback(
 			this::_customizeHttpClient
 		).setRequestConfigCallback(
@@ -319,6 +331,9 @@ public class RestClientTransportFactory {
 		return TransformUtil.transform(
 			_networkHostAddresses, HttpHost::create, HttpHost.class);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RestClientTransportFactory.class);
 
 	private boolean _authenticationEnabled;
 	private boolean _httpSSLEnabled;

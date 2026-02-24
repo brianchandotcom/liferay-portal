@@ -8,7 +8,6 @@ package com.liferay.portal.search.elasticsearch8.internal.connection;
 import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -25,8 +24,6 @@ import com.liferay.portal.search.elasticsearch8.internal.configuration.Elasticse
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch8.internal.connection.constants.ConnectionConstants;
 
-import java.lang.reflect.Field;
-
 import java.net.InetSocketAddress;
 
 import java.util.ArrayList;
@@ -37,10 +34,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.FutureTask;
 import java.util.function.Supplier;
-
-import org.apache.http.HttpHost;
-
-import org.elasticsearch.client.RestClient;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
@@ -164,35 +157,6 @@ public class ElasticsearchConnectionManager
 					"Elasticsearch client not found.",
 					elasticsearchConnection.getConnectionId(),
 					preferLocalCluster));
-		}
-
-		try {
-			RestClientTransport restClientTransport =
-				elasticsearchConnection.getRestClientTransport();
-
-			RestClient restClient = restClientTransport.restClient();
-
-			Class<?> clazz = restClient.getClass();
-
-			Field blacklistField = clazz.getDeclaredField("blacklist");
-
-			blacklistField.setAccessible(true);
-
-			ConcurrentHashMap<HttpHost, Object> map =
-				(ConcurrentHashMap<HttpHost, Object>)blacklistField.get(
-					restClient);
-
-			for (HttpHost httpHost : map.keySet()) {
-				_log.error(
-					"The REST client network host address " +
-						httpHost.toString() + " is blacklisted");
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get REST client blacklist field", exception);
-			}
 		}
 
 		return elasticsearchClient;

@@ -264,9 +264,9 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 
 		return updateOAuthClientASLocalMetadata(
 			oAuthClientASLocalMetadataId,
-			String.valueOf(authorizationServerMetadata.getIssuer()),
 			String.valueOf(
 				authorizationServerMetadata.getAuthorizationEndpointURI()),
+			String.valueOf(authorizationServerMetadata.getIssuer()),
 			String.valueOf(authorizationServerMetadata.getJWKSetURI()), false,
 			StringUtil.split(
 				StringUtil.merge(authorizationServerMetadata.getGrantTypes()),

@@ -52,16 +52,18 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			groupId = 0;
 		}
 
-		_exportImportReportEntryLocalService.addErrorExportImportReportEntry(
-			groupId, batchEngineImportTask.getCompanyId(),
-			_getExternalReferenceCode(item),
-			_classNameLocalService.getClassNameId(
-				batchEngineImportTask.getParameterValue("modelClassName")),
-			_getId(item),
-			GetterUtil.getLong(
-				ExportImportThreadLocal.getExportImportConfigurationId()),
-			message, _getErrorStackTrace(exception),
-			batchEngineImportTask.getParameterValue("modelNameLanguageKey"));
+		_exportImportReportEntryLocalService.
+			getOrAddErrorExportImportReportEntry(
+				groupId, batchEngineImportTask.getCompanyId(),
+				_getExternalReferenceCode(item),
+				_classNameLocalService.getClassNameId(
+					batchEngineImportTask.getParameterValue("modelClassName")),
+				_getId(item),
+				GetterUtil.getLong(
+					ExportImportThreadLocal.getExportImportConfigurationId()),
+				message, _getErrorStackTrace(exception),
+				batchEngineImportTask.getParameterValue(
+					"modelNameLanguageKey"));
 	}
 
 	private String _getErrorStackTrace(Throwable throwable) {

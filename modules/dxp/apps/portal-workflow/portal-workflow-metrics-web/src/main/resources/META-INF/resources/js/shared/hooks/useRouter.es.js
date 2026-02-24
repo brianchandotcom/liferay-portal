@@ -13,6 +13,7 @@ const useRouter = () => {
 	const params = useParams();
 
 	const routeMatches = matchRoutes(appDataRoutes, location.pathname);
+
 	const path = routeMatches?.map(({route}) => route.path).join('/') ?? '';
 
 	return {

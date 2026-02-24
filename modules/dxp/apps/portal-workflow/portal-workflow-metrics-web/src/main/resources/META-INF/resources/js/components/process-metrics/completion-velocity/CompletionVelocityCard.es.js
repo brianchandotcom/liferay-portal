@@ -29,6 +29,7 @@ const getDefaultStartDate = () => {
 
 const getDefaultEndDate = () => {
 	const date = new Date();
+
 	let newDate = date.toISOString();
 	newDate = newDate.split('.')[0] + 'Z';
 

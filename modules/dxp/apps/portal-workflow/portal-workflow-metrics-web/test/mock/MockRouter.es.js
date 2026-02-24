@@ -51,7 +51,9 @@ const MockRouter = ({
 	);
 
 	const content = useMemo(() => {
-		if (!children) {return null;}
+		if (!children) {
+			return null;
+		}
 
 		if (isValidElement(children)) {
 			return children;

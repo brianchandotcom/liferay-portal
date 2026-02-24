@@ -6,12 +6,23 @@
 package com.liferay.commerce.discount.service.persistence.impl;
 
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryTable;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
+import com.liferay.commerce.discount.model.CommerceDiscountRelTable;
 import com.liferay.commerce.discount.model.impl.CommerceDiscountRelImpl;
 import com.liferay.commerce.discount.service.persistence.CommerceDiscountRelFinder;
 import com.liferay.commerce.pricing.model.CommercePricingClass;
+import com.liferay.commerce.pricing.model.CommercePricingClassTable;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLocalizationTable;
+import com.liferay.commerce.product.model.CPDefinitionTable;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
+import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.petra.sql.dsl.query.GroupByStep;
+import com.liferay.petra.sql.dsl.query.JoinStep;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -20,11 +31,13 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelper;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -51,18 +64,6 @@ public class CommerceDiscountRelFinderImpl
 		CommerceDiscountRelFinder.class.getName() +
 			".countPricingClassesByCommerceDiscountId";
 
-	public static final String FIND_CATEGORIES_BY_COMMERCE_DISCOUNT_ID =
-		CommerceDiscountRelFinder.class.getName() +
-			".findCategoriesByCommerceDiscountId";
-
-	public static final String FIND_CP_DEFINITIONS_BY_COMMERCE_DISCOUNT_ID =
-		CommerceDiscountRelFinder.class.getName() +
-			".findCPDefinitionsByCommerceDiscountId";
-
-	public static final String FIND_PRICING_CLASSES_BY_COMMERCE_DISCOUNT_ID =
-		CommerceDiscountRelFinder.class.getName() +
-			".findPricingClassesByCommerceDiscountId";
-
 	@Override
 	public int countCategoriesByCommerceDiscountId(
 		long commerceDiscountId, String name) {
@@ -84,7 +85,7 @@ public class CommerceDiscountRelFinderImpl
 				getClass(), COUNT_CATEGORIES_BY_COMMERCE_DISCOUNT_ID);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, CommerceDiscount.class.getName(),
 					"CommerceDiscount.commerceDiscountId");
 			}
@@ -159,7 +160,7 @@ public class CommerceDiscountRelFinderImpl
 				getClass(), COUNT_CP_DEFINITIONS_BY_COMMERCE_DISCOUNT_ID);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, CommerceDiscount.class.getName(),
 					"CommerceDiscount.commerceDiscountId");
 			}
@@ -234,7 +235,7 @@ public class CommerceDiscountRelFinderImpl
 				getClass(), COUNT_PRICING_CLASSES_BY_COMMERCE_DISCOUNT_ID);
 
 			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
+				sql = _inlineSQLHelper.replacePermissionCheck(
 					sql, CommerceDiscount.class.getName(),
 					"CommerceDiscount.commerceDiscountId");
 			}
@@ -306,47 +307,29 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
-			String[] keywords = _customSQL.keywords(name, true);
-
-			String sql = _customSQL.get(
-				getClass(), FIND_CATEGORIES_BY_COMMERCE_DISCOUNT_ID);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CommerceDiscount.class.getName(),
-					"CommerceDiscount.commerceDiscountId");
-			}
-
-			if (Validator.isNotNull(name)) {
-				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(AssetCategory.name)", StringPool.LIKE, true,
-					keywords);
-				sql = _customSQL.replaceAndOperator(sql, false);
-			}
-			else {
-				sql = StringUtil.removeSubstring(
-					sql,
-					" AND (LOWER(AssetCategory.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])");
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						AssetCategoryTable.INSTANCE,
+						AssetCategoryTable.INSTANCE.categoryId.eq(
+							CommerceDiscountRelTable.INSTANCE.classPK)
+					),
+					AssetCategory.class.getName(), commerceDiscountId, name,
+					AssetCategoryTable.INSTANCE.name, inlineSQLHelper
+				).limit(
+					start, end
+				));
 
 			sqlQuery.addEntity(
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(commerceDiscountId);
-			queryPos.add(_portal.getClassNameId(AssetCategory.class.getName()));
-
-			if (Validator.isNotNull(name)) {
-				queryPos.add(keywords, 2);
-			}
-
-			return (List<CommerceDiscountRel>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
+			return _getCommerceDiscountRels(
+				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -375,48 +358,38 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
-			String[] keywords = _customSQL.keywords(name, true);
-
-			String sql = _customSQL.get(
-				getClass(), FIND_CP_DEFINITIONS_BY_COMMERCE_DISCOUNT_ID);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CommerceDiscount.class.getName(),
-					"CommerceDiscount.commerceDiscountId");
-			}
-
-			if (Validator.isNotNull(name)) {
-				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CPDefinitionLocalization.name)",
-					StringPool.LIKE, true, keywords);
-				sql = _customSQL.replaceAndOperator(sql, false);
-			}
-			else {
-				sql = StringUtil.removeSubstring(
-					sql,
-					" AND (LOWER(CPDefinitionLocalization.name) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])");
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						CPDefinitionTable.INSTANCE,
+						CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+							CommerceDiscountRelTable.INSTANCE.classPK)
+					).leftJoinOn(
+						CPDefinitionLocalizationTable.INSTANCE,
+						CPDefinitionTable.INSTANCE.CPDefinitionId.eq(
+							CPDefinitionLocalizationTable.INSTANCE.
+								CPDefinitionId
+						).and(
+							CPDefinitionLocalizationTable.INSTANCE.languageId.
+								eq(languageId)
+						)
+					),
+					CPDefinition.class.getName(), commerceDiscountId, name,
+					CPDefinitionLocalizationTable.INSTANCE.name, inlineSQLHelper
+				).limit(
+					start, end
+				));
 
 			sqlQuery.addEntity(
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(languageId);
-			queryPos.add(commerceDiscountId);
-			queryPos.add(_portal.getClassNameId(CPDefinition.class.getName()));
-
-			if (Validator.isNotNull(name)) {
-				queryPos.add(keywords, 2);
-			}
-
-			return (List<CommerceDiscountRel>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
+			return _getCommerceDiscountRels(
+				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -444,48 +417,31 @@ public class CommerceDiscountRelFinderImpl
 		try {
 			session = openSession();
 
-			String[] keywords = _customSQL.keywords(title, true);
-
-			String sql = _customSQL.get(
-				getClass(), FIND_PRICING_CLASSES_BY_COMMERCE_DISCOUNT_ID);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, CommerceDiscount.class.getName(),
-					"CommerceDiscount.commerceDiscountId");
-			}
-
-			if (Validator.isNotNull(title)) {
-				sql = _customSQL.replaceKeywords(
-					sql, "(LOWER(CommercePricingClass.title)", StringPool.LIKE,
-					true, keywords);
-				sql = _customSQL.replaceAndOperator(sql, false);
-			}
-			else {
-				sql = StringUtil.removeSubstring(
-					sql,
-					" AND (LOWER(CommercePricingClass.title) LIKE ? " +
-						"[$AND_OR_NULL_CHECK$])");
-			}
-
-			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
+				_getGroupByStep(
+					DSLQueryFactoryUtil.selectDistinct(
+						CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId
+					).from(
+						CommerceDiscountRelTable.INSTANCE
+					).innerJoinON(
+						CommercePricingClassTable.INSTANCE,
+						CommercePricingClassTable.INSTANCE.
+							commercePricingClassId.eq(
+								CommerceDiscountRelTable.INSTANCE.classPK)
+					),
+					CommercePricingClass.class.getName(), commerceDiscountId,
+					title, CommercePricingClassTable.INSTANCE.title,
+					inlineSQLHelper
+				).limit(
+					start, end
+				));
 
 			sqlQuery.addEntity(
 				CommerceDiscountRelImpl.TABLE_NAME,
 				CommerceDiscountRelImpl.class);
 
-			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
-
-			queryPos.add(commerceDiscountId);
-			queryPos.add(
-				_portal.getClassNameId(CommercePricingClass.class.getName()));
-
-			if (Validator.isNotNull(title)) {
-				queryPos.add(keywords, 2);
-			}
-
-			return (List<CommerceDiscountRel>)QueryUtil.list(
-				sqlQuery, getDialect(), start, end);
+			return _getCommerceDiscountRels(
+				(List<Long>)QueryUtil.list(sqlQuery, getDialect(), start, end));
 		}
 		catch (Exception exception) {
 			throw new SystemException(exception);
@@ -495,8 +451,68 @@ public class CommerceDiscountRelFinderImpl
 		}
 	}
 
+	private List<CommerceDiscountRel> _getCommerceDiscountRels(
+		List<Long> commerceDiscountRelIds) {
+
+		if (commerceDiscountRelIds.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return dslQuery(
+			DSLQueryFactoryUtil.select(
+				CommerceDiscountRelTable.INSTANCE
+			).from(
+				CommerceDiscountRelTable.INSTANCE
+			).where(
+				CommerceDiscountRelTable.INSTANCE.commerceDiscountRelId.in(
+					commerceDiscountRelIds.toArray(new Long[0]))
+			));
+	}
+
+	private GroupByStep _getGroupByStep(
+		JoinStep joinStep, String className, Long commerceDiscountId,
+		String keywords, Expression<String> keywordsPredicateExpression,
+		boolean inlineSQLHelper) {
+
+		return joinStep.where(
+			() -> {
+				Predicate predicate =
+					CommerceDiscountRelTable.INSTANCE.commerceDiscountId.eq(
+						commerceDiscountId
+					).and(
+						CommerceDiscountRelTable.INSTANCE.classNameId.eq(
+							_classNameLocalService.getClassNameId(className))
+					);
+
+				if (Validator.isNotNull(keywords)) {
+					predicate = predicate.and(
+						Predicate.withParentheses(
+							_customSQL.getKeywordsPredicate(
+								DSLFunctionFactoryUtil.lower(
+									keywordsPredicateExpression),
+								_customSQL.keywords(keywords, true))));
+				}
+
+				if (inlineSQLHelper) {
+					predicate = predicate.and(
+						_inlineSQLHelper.getPermissionWherePredicate(
+							CommerceDiscount.class,
+							CommerceDiscountRelTable.INSTANCE.
+								commerceDiscountId));
+				}
+
+				return predicate;
+			});
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
 	@Reference
 	private CustomSQL _customSQL;
+
+	@Reference
+	private InlineSQLHelper _inlineSQLHelper;
 
 	@Reference
 	private Portal _portal;

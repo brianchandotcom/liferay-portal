@@ -368,14 +368,6 @@ public class DDMFormFieldTemplateContextFactory {
 			changedProperties = new HashMap<>();
 		}
 
-		Object value = changedProperties.get("value");
-
-		if ((value != null) &&
-			Objects.equals(StringPool.BLANK, value.toString())) {
-
-			changedProperties.remove("value");
-		}
-
 		if (Objects.equals(
 				DDMFormFieldTypeConstants.FIELDSET, ddmFormField.getType())) {
 

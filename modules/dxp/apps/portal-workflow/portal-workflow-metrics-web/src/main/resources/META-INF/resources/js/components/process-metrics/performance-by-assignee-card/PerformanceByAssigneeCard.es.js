@@ -92,7 +92,7 @@ function PerformanceByAssigneeCard({routeParams}) {
 		() =>
 			getTimeRangeParams(
 				assigneeDateStart ?? getDefaultStartDate(),
-				assigneeDateEnd ?? getDefaultEndDate
+				assigneeDateEnd ?? getDefaultEndDate()
 			),
 		[assigneeDateEnd, assigneeDateStart]
 	);

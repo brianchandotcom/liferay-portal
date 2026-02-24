@@ -33,7 +33,7 @@ definition {
 					groupName = "Global",
 					site = "true");
 
-				var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
+				var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
 					fileEntryTypeName = ${subType},
 					groupId = ${globalGroupId});
 			}
@@ -50,7 +50,7 @@ definition {
 							structureName = ${subType});
 					}
 					else if (isSet(depotDocumentType)) {
-						var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
+						var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
 							fileEntryTypeName = ${subType},
 							groupId = ${depotId});
 					}
@@ -70,7 +70,7 @@ definition {
 						groupName = "Global",
 						site = "true");
 
-					var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
+					var classTypeKey = JSONDLfileentrytype._getFileEntryTypeKey(
 						fileEntryTypeName = ${subType},
 						groupId = ${globalGroupId});
 				}

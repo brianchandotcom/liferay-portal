@@ -1,7 +1,7 @@
 definition {
 
 	@summary = "Default summary"
-	macro _getFileEntryTypeId(fileEntryTypeName = null, groupId = null) {
+	macro _getFileEntryTypeKey(fileEntryTypeName = null, groupId = null) {
 		Variables.assertDefined(parameterList = "${fileEntryTypeName},${groupId}");
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -13,17 +13,17 @@ definition {
 				-d groupIds=[${groupId}]
 		''';
 
-		var fileEntryTypeId = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${fileEntryTypeName}')]['fileEntryTypeId']");
+		var fileEntryTypeKey = JSONCurlUtil.post(${curl}, "$.[?(@['nameCurrentValue'] == '${fileEntryTypeName}')]['fileEntryTypeKey']");
 
-		if (${fileEntryTypeId} == "") {
+		if (${fileEntryTypeKey} == "") {
 			echo("The ${fileEntryTypeName} doesn't exist.");
 		}
 
-		return ${fileEntryTypeId};
+		return ${fileEntryTypeKey};
 	}
 
 	@summary = "Default summary"
-	macro _getFileEntryTypeIds(groupId = null) {
+	macro _getFileEntryTypeKeys(groupId = null) {
 		Variables.assertDefined(parameterList = ${groupId});
 
 		var portalURL = JSONCompany.getPortalURL();
@@ -35,9 +35,9 @@ definition {
 				-d groupIds=[${groupId}]
 		''';
 
-		var fileEntryTypeIds = JSONCurlUtil.post(${curl}, "$..fileEntryTypeId");
+		var fileEntryTypeKeys = JSONCurlUtil.post(${curl}, "$..fileEntryTypeKey");
 
-		return ${fileEntryTypeIds};
+		return ${fileEntryTypeKeys};
 	}
 
 }

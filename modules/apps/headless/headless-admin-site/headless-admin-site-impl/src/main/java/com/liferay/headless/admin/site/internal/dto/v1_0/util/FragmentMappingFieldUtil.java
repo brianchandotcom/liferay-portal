@@ -5,27 +5,20 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
-import com.liferay.info.exception.NoSuchFormVariationException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
-import com.liferay.info.item.InfoItemFormVariation;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
-import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -69,10 +62,9 @@ public class FragmentMappingFieldUtil {
 
 			if (Validator.isNotNull(mappedField)) {
 				return _getContextFieldKey(
-					infoItemServiceRegistry,
-					GetterUtil.getLong(
-						dtoConverterContext.getAttribute("layoutPlid")),
-					scopeGroupId, mappedField);
+					(InfoForm)dtoConverterContext.getAttribute(
+						"displayPageTemplateInfoForm"),
+					mappedField);
 			}
 		}
 		finally {
@@ -99,59 +91,7 @@ public class FragmentMappingFieldUtil {
 	}
 
 	private static String _getContextFieldKey(
-		InfoItemServiceRegistry infoItemServiceRegistry, long layoutPlid,
-		long scopeGroupId, String mappedField) {
-
-		if (layoutPlid == 0) {
-			throw new UnsupportedOperationException();
-		}
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_getLayoutPageTemplateEntry(layoutPlid);
-
-		if (layoutPageTemplateEntry == null) {
-			return mappedField;
-		}
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormProvider == null) {
-			return mappedField;
-		}
-
-		InfoForm infoForm = null;
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			infoForm = infoItemFormProvider.getInfoForm();
-		}
-		else {
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layoutPageTemplateEntry.getGroupId(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
-
-			if (infoItemFormVariation == null) {
-				return mappedField;
-			}
-
-			try {
-				infoForm = infoItemFormProvider.getInfoForm(
-					infoItemFormVariation.getKey(), scopeGroupId);
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-			}
-		}
+		InfoForm infoForm, String mappedField) {
 
 		if (infoForm == null) {
 			return mappedField;
@@ -248,27 +188,6 @@ public class FragmentMappingFieldUtil {
 		}
 
 		return infoField.getExternalUniqueId();
-	}
-
-	private static LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
-		long layoutPlid) {
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(layoutPlid);
-
-		if (layout == null) {
-			return null;
-		}
-
-		if (layout.isDraftLayout()) {
-			layout = LayoutLocalServiceUtil.fetchLayout(layout.getClassPK());
-		}
-
-		if (layout == null) {
-			return null;
-		}
-
-		return LayoutPageTemplateEntryLocalServiceUtil.
-			fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

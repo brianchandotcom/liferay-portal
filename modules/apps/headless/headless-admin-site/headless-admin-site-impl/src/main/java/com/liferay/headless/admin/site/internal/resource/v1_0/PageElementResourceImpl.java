@@ -467,6 +467,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			).put(
 				"companyId", companyId
 			).put(
+				"displayPageTemplateInfoForm",
+				InfoFormUtil.getDisplayPageTemplateInfoForm(layoutPlid)
+			).put(
 				"layoutPlid", layoutPlid
 			).put(
 				"scopeGroupId", scopeGroupId

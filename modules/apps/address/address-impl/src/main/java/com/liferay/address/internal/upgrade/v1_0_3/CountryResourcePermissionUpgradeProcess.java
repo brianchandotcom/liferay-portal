@@ -53,7 +53,9 @@ public class CountryResourcePermissionUpgradeProcess extends UpgradeProcess {
 					PortletKeys.PORTAL)) {
 
 			if (!_resourcePermissionLocalService.hasActionId(
-					resourcePermission, resourceAction)) {
+					resourcePermission, resourceAction) ||
+				(resourcePermission.getScope() ==
+					ResourceConstants.SCOPE_INDIVIDUAL)) {
 
 				continue;
 			}

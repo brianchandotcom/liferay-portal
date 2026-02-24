@@ -112,12 +112,6 @@ public class CountryResourcePermissionUpgradeProcessTest {
 				String.valueOf(_country.getCountryId())));
 		Assert.assertTrue(
 			_resourcePermissionLocalService.hasResourcePermission(
-				_serviceContext.getCompanyId(), PortletKeys.PORTAL,
-				ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(_serviceContext.getCompanyId()),
-				_role.getRoleId(), ActionKeys.ADD_COUNTRY));
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
 				_serviceContext.getCompanyId(), Country.class.getName(),
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_serviceContext.getCompanyId()),
@@ -134,6 +128,12 @@ public class CountryResourcePermissionUpgradeProcessTest {
 				ResourceConstants.SCOPE_COMPANY,
 				String.valueOf(_serviceContext.getCompanyId()),
 				_role.getRoleId(), ActionKeys.UPDATE));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				_serviceContext.getCompanyId(), PortletKeys.PORTAL,
+				ResourceConstants.SCOPE_COMPANY,
+				String.valueOf(_serviceContext.getCompanyId()),
+				_role.getRoleId(), ActionKeys.ADD_COUNTRY));
 	}
 
 	private void _runUpgrade() throws Exception {

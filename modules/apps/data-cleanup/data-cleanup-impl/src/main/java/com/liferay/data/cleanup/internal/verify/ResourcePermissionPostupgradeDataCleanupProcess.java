@@ -100,8 +100,7 @@ public class ResourcePermissionPostupgradeDataCleanupProcess
 					DataCleanupLoggingUtil.logDelete(
 						_log, count,
 						_dbInspector.normalizeName("ResourcePermission"),
-						StringBundler.concat(
-							"\"", name, "\" was not found"));
+						StringBundler.concat("\"", name, "\" was not found"));
 				}
 			}
 		}

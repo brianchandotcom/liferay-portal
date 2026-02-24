@@ -20,8 +20,8 @@ import com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.InfoFormUtil;
-import com.liferay.info.form.InfoForm;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -38,6 +38,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -251,38 +252,54 @@ public class PageElementDTOConverter
 		LayoutStructure layoutStructure,
 		LayoutStructureItem layoutStructureItem) {
 
-		InfoForm originalCollectionInfoForm =
-			(InfoForm)dtoConverterContext.getAttribute("collectionInfoForm");
+		if (!(layoutStructureItem instanceof
+				CollectionStyledLayoutStructureItem)) {
 
-		if (layoutStructureItem instanceof
-				CollectionStyledLayoutStructureItem) {
-
-			Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
-				"scopeGroupId");
-
-			if (scopeGroupId == null) {
-				throw new UnsupportedOperationException();
-			}
-
-			dtoConverterContext.setAttribute(
-				"collectionInfoForm",
-				InfoFormUtil.getCollectionInfoForm(
-					(CollectionStyledLayoutStructureItem)layoutStructureItem,
-					scopeGroupId));
+			return _getPageElements(
+				dtoConverterContext, layoutStructureItem.getChildrenItemIds(),
+				layoutStructure);
 		}
 
-		try {
-			return TransformUtil.transformToArray(
-				layoutStructureItem.getChildrenItemIds(),
-				childrenItemId -> toDTO(
-					dtoConverterContext,
-					layoutStructure.getLayoutStructureItem(childrenItemId)),
-				PageElement.class);
-		}
-		finally {
-			dtoConverterContext.setAttribute(
-				"collectionInfoForm", originalCollectionInfoForm);
-		}
+		return _getPageElements(
+			DTOConverterContextUtil.getDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(),
+				HashMapBuilder.<String, Object>put(
+					"collectionInfoForm",
+					() -> {
+						Long scopeGroupId =
+							(Long)dtoConverterContext.getAttribute(
+								"scopeGroupId");
+
+						if (scopeGroupId == null) {
+							throw new UnsupportedOperationException();
+						}
+
+						return InfoFormUtil.getCollectionInfoForm(
+							(CollectionStyledLayoutStructureItem)
+								layoutStructureItem,
+							scopeGroupId);
+					}
+				).putAll(
+					dtoConverterContext.getAttributes()
+				).build(),
+				dtoConverterContext.getDTOConverterRegistry(),
+				dtoConverterContext.getHttpServletRequest(),
+				dtoConverterContext.getId(), dtoConverterContext.getLocale(),
+				dtoConverterContext.getUriInfo(),
+				dtoConverterContext.getUser()),
+			layoutStructureItem.getChildrenItemIds(), layoutStructure);
+	}
+
+	private PageElement[] _getPageElements(
+		DTOConverterContext dtoConverterContext, List<String> itemIds,
+		LayoutStructure layoutStructure) {
+
+		return TransformUtil.transformToArray(
+			itemIds,
+			itemId -> toDTO(
+				dtoConverterContext,
+				layoutStructure.getLayoutStructureItem(itemId)),
+			PageElement.class);
 	}
 
 	private boolean _isWidgetInstance(

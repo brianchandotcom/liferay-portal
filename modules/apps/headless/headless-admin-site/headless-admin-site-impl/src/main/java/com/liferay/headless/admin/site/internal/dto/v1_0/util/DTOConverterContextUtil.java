@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -40,11 +41,22 @@ public class DTOConverterContextUtil {
 		HttpServletRequest httpServletRequest, Object id, UriInfo uriInfo,
 		User user) {
 
+		return getDTOConverterContext(
+			acceptLanguage.isAcceptAllLanguages(), attributesMap,
+			dtoConverterRegistry, httpServletRequest, id,
+			acceptLanguage.getPreferredLocale(), uriInfo, user);
+	}
+
+	public static DTOConverterContext getDTOConverterContext(
+		boolean acceptAllLanguages, Map<String, Object> attributesMap,
+		DTOConverterRegistry dtoConverterRegistry,
+		HttpServletRequest httpServletRequest, Object id, Locale locale,
+		UriInfo uriInfo, User user) {
+
 		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
-				acceptLanguage.isAcceptAllLanguages(), null,
-				dtoConverterRegistry, httpServletRequest, id,
-				acceptLanguage.getPreferredLocale(), uriInfo, user);
+				acceptAllLanguages, null, dtoConverterRegistry,
+				httpServletRequest, id, locale, uriInfo, user);
 
 		for (Map.Entry<String, Object> entry : attributesMap.entrySet()) {
 			defaultDTOConverterContext.setAttribute(

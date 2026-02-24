@@ -148,7 +148,7 @@ function normalizeExtensions(allowedExtensions: string) {
 	return `(extension in (${extensions}))`;
 }
 
-export default function openCMSItemSelectorModal({
+export default function openCMSFileSelectorModal({
 	allowDragAndDrop = false,
 	allowedExtensions,
 	config,

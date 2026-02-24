@@ -11,6 +11,6 @@ export {handleInputLengthError, showInputError} from './handleInputError';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';
 export {updateDLVideo} from './updateDLVideo';
-export {openCMSItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+export {openCMSFileSelectorModal} from '@liferay/frontend-js-item-selector-web';
 
 export {localStorage} from 'frontend-js-web';

@@ -129,6 +129,16 @@ public class SettingsSerDes {
 			sb.append("]");
 		}
 
+		if (settings.getIconImageURLReference() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"iconImageURLReference\": ");
+
+			sb.append(String.valueOf(settings.getIconImageURLReference()));
+		}
+
 		if (settings.getJavascript() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -269,6 +279,15 @@ public class SettingsSerDes {
 				String.valueOf(settings.getGlobalJSClientExtensions()));
 		}
 
+		if (settings.getIconImageURLReference() == null) {
+			map.put("iconImageURLReference", null);
+		}
+		else {
+			map.put(
+				"iconImageURLReference",
+				String.valueOf(settings.getIconImageURLReference()));
+		}
+
 		if (settings.getJavascript() == null) {
 			map.put("javascript", null);
 		}
@@ -360,6 +379,11 @@ public class SettingsSerDes {
 			}
 			else if (Objects.equals(
 						jsonParserFieldName, "globalJSClientExtensions")) {
+
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "iconImageURLReference")) {
 
 				return false;
 			}
@@ -461,6 +485,15 @@ public class SettingsSerDes {
 
 					settings.setGlobalJSClientExtensions(
 						globalJSClientExtensionsArray);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "iconImageURLReference")) {
+
+				if (jsonParserFieldValue != null) {
+					settings.setIconImageURLReference(
+						IconImageURLReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "javascript")) {

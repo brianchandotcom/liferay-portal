@@ -279,6 +279,53 @@ public class Settings implements Serializable {
 	private Supplier<ClientExtension[]> _globalJSClientExtensionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The IconImage of the page specification."
+	)
+	@Valid
+	public IconImageURLReference getIconImageURLReference() {
+		if (_iconImageURLReferenceSupplier != null) {
+			iconImageURLReference = _iconImageURLReferenceSupplier.get();
+
+			_iconImageURLReferenceSupplier = null;
+		}
+
+		return iconImageURLReference;
+	}
+
+	public void setIconImageURLReference(
+		IconImageURLReference iconImageURLReference) {
+
+		this.iconImageURLReference = iconImageURLReference;
+
+		_iconImageURLReferenceSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setIconImageURLReference(
+		UnsafeSupplier<IconImageURLReference, Exception>
+			iconImageURLReferenceUnsafeSupplier) {
+
+		_iconImageURLReferenceSupplier = () -> {
+			try {
+				return iconImageURLReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The IconImage of the page specification.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected IconImageURLReference iconImageURLReference;
+
+	@JsonIgnore
+	private Supplier<IconImageURLReference> _iconImageURLReferenceSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page specification's JavaScript."
 	)
 	public String getJavascript() {
@@ -725,6 +772,19 @@ public class Settings implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		IconImageURLReference iconImageURLReference =
+			getIconImageURLReference();
+
+		if (iconImageURLReference != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"iconImageURLReference\": ");
+
+			sb.append(String.valueOf(iconImageURLReference));
 		}
 
 		String javascript = getJavascript();

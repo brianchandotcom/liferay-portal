@@ -862,13 +862,22 @@ public class CPDefinitionLocalServiceImpl
 			long sourceCPDefinitionId, long groupId, int status)
 		throws PortalException {
 
+		CPDefinition sourceCPDefinition =
+			cpDefinitionLocalService.getCPDefinition(sourceCPDefinitionId);
+
+		CProduct sourceCProduct = sourceCPDefinition.getCProduct();
+
+		if (!cpDefinitionLocalService.isVersionable(
+				sourceCProduct.getPublishedCPDefinitionId())) {
+
+			throw new UnsupportedOperationException(
+				"Unable to perform a copy with versioning disabled");
+		}
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		User user = _userLocalService.getUser(serviceContext.getUserId());
-
-		CPDefinition sourceCPDefinition =
-			cpDefinitionLocalService.getCPDefinition(sourceCPDefinitionId);
 
 		CPDefinition targetCPDefinition =
 			(CPDefinition)sourceCPDefinition.clone();
@@ -882,17 +891,9 @@ public class CPDefinitionLocalServiceImpl
 		targetCPDefinition.setGroupId(groupId);
 		targetCPDefinition.setUserId(user.getUserId());
 		targetCPDefinition.setUserName(user.getFullName());
-
-		CProduct sourceCProduct = sourceCPDefinition.getCProduct();
-
-		if (cpDefinitionLocalService.isVersionable(
-				sourceCProduct.getPublishedCPDefinitionId())) {
-
-			targetCPDefinition.setVersion(
-				_cProductLocalService.increment(
-					sourceCPDefinition.getCProductId()));
-		}
-
+		targetCPDefinition.setVersion(
+			_cProductLocalService.increment(
+				sourceCPDefinition.getCProductId()));
 		targetCPDefinition.setStatus(status);
 
 		targetCPDefinition = cpDefinitionPersistence.update(targetCPDefinition);
@@ -1404,8 +1405,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.fetchByC_V_First(
-			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
+		return cpDefinitionPersistence.fetchByC_V(
+			cProduct.getCProductId(), cProduct.getLatestVersion());
 	}
 
 	@Override
@@ -1423,8 +1424,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.fetchByC_V_First(
-			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
+		return cpDefinitionPersistence.fetchByC_V(
+			cProduct.getCProductId(), cProduct.getLatestVersion());
 	}
 
 	@Override
@@ -1487,8 +1488,8 @@ public class CPDefinitionLocalServiceImpl
 			return cpDefinition;
 		}
 
-		return cpDefinitionPersistence.findByC_V_First(
-			cProduct.getCProductId(), cProduct.getLatestVersion(), null);
+		return cpDefinitionPersistence.findByC_V(
+			cProduct.getCProductId(), cProduct.getLatestVersion());
 	}
 
 	@Override
@@ -1690,8 +1691,7 @@ public class CPDefinitionLocalServiceImpl
 	public CPDefinition getCProductCPDefinition(long cProductId, int version)
 		throws PortalException {
 
-		return cpDefinitionPersistence.findByC_V_First(
-			cProductId, version, null);
+		return cpDefinitionPersistence.findByC_V(cProductId, version);
 	}
 
 	@Override

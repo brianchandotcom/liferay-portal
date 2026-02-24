@@ -109,10 +109,10 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				{
 					setFragmentInstance(
 						() -> _getFragmentInstance(
-							companyId, fragmentEntryLink,
+							companyId, dtoConverterContext, fragmentEntryLink,
 							fragmentStyledLayoutStructureItem,
-							freeMarkerJSONObject, layoutPlid, layoutStructure,
-							scopeGroupId, dtoConverterContext.getUser()));
+							freeMarkerJSONObject, scopeGroupId,
+							dtoConverterContext.getUser()));
 					setType(Type.BASIC_FRAGMENT);
 				}
 			};
@@ -126,10 +126,9 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						null));
 				setFragmentInstance(
 					() -> _getFragmentInstance(
-						companyId, fragmentEntryLink,
+						companyId, dtoConverterContext, fragmentEntryLink,
 						fragmentStyledLayoutStructureItem, freeMarkerJSONObject,
-						layoutPlid, layoutStructure, scopeGroupId,
-						dtoConverterContext.getUser()));
+						scopeGroupId, dtoConverterContext.getUser()));
 				setHelpText_i18n(
 					() -> _getI18nMap(freeMarkerJSONObject, "inputHelpText"));
 				setLabel_i18n(
@@ -241,19 +240,19 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 	}
 
 	private FragmentInstance _getFragmentInstance(
-		long companyId, FragmentEntryLink fragmentEntryLink,
+		long companyId, DTOConverterContext dtoConverterContext,
+		FragmentEntryLink fragmentEntryLink,
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem,
-		JSONObject freeMarkerJSONObject, long layoutPlid,
-		LayoutStructure layoutStructure, long scopeGroupId, User user) {
+		JSONObject freeMarkerJSONObject, long scopeGroupId, User user) {
 
 		return new FragmentInstance() {
 			{
 				setBackgroundImageValue(
 					() -> ImageValueUtil.toBackgroundImageValue(
-						companyId, _infoItemServiceRegistry,
+						companyId, dtoConverterContext,
+						_infoItemServiceRegistry,
 						fragmentStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						layoutPlid, layoutStructure,
 						fragmentStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setConfiguration(fragmentEntryLink::getConfiguration);
@@ -279,10 +278,9 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 				setFragmentEditableElements(
 					() ->
 						FragmentEditableElementUtil.getFragmentEditableElements(
-							companyId, fragmentEntryLink,
+							companyId, dtoConverterContext, fragmentEntryLink,
 							_fragmentEntryProcessorRegistry,
-							_infoItemServiceRegistry, layoutPlid,
-							layoutStructure,
+							_infoItemServiceRegistry,
 							fragmentStyledLayoutStructureItem.getItemId(),
 							scopeGroupId, user));
 				setFragmentInstanceExternalReferenceCode(

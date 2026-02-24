@@ -70,10 +70,10 @@ public class ContainerPageElementDefinitionDTOConverter
 			{
 				setBackgroundImageValue(
 					() -> ImageValueUtil.toBackgroundImageValue(
-						companyId, _infoItemServiceRegistry,
+						companyId, dtoConverterContext,
+						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						layoutPlid, layoutStructure,
 						containerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setContentVisibility(
@@ -103,9 +103,9 @@ public class ContainerPageElementDefinitionDTOConverter
 					});
 				setFragmentLink(
 					() -> FragmentLinkUtil.toFragmentLink(
-						companyId, _infoItemServiceRegistry,
+						companyId, dtoConverterContext,
+						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.getLinkJSONObject(),
-						layoutPlid, layoutStructure,
 						containerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setFragmentViewports(

@@ -12,7 +12,6 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -23,6 +22,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.scope.Scope;
 
 import java.util.Objects;
@@ -201,9 +201,9 @@ public class FragmentMappingUtil {
 	}
 
 	public static FragmentMappedValue toFragmentMappedValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long layoutPlid,
-			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, String layoutStructureItemId,
 			long scopeGroupId)
 		throws Exception {
 
@@ -222,9 +222,8 @@ public class FragmentMappingUtil {
 				{
 					setFieldKey(
 						() -> FragmentMappingFieldUtil.getFieldKey(
-							infoItemServiceRegistry, jsonObject, layoutPlid,
-							layoutStructure, layoutStructureItemId,
-							scopeGroupId));
+							dtoConverterContext, infoItemServiceRegistry,
+							jsonObject, layoutStructureItemId, scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});

@@ -62,10 +62,10 @@ public class FormStepContainerPageElementDefinitionDTOConverter
 			{
 				setBackgroundImageValue(
 					() -> ImageValueUtil.toBackgroundImageValue(
-						companyId, _infoItemServiceRegistry,
+						companyId, dtoConverterContext,
+						_infoItemServiceRegistry,
 						formStepContainerStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						layoutPlid, layoutStructure,
 						formStepContainerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setCssClasses(

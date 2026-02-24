@@ -12,12 +12,12 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 /**
  * @author Mikel Lorza
@@ -25,8 +25,8 @@ import com.liferay.portal.kernel.util.Validator;
 public class FragmentLinkUtil {
 
 	public static FragmentLink toFragmentLink(
-		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject, long layoutPlid, LayoutStructure layoutStructure,
+		long companyId, DTOConverterContext dtoConverterContext,
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
 		String layoutStructureItemId, long scopeGroupId) {
 
 		if (jsonObject == null) {
@@ -60,9 +60,9 @@ public class FragmentLinkUtil {
 					});
 				setValue(
 					() -> _toFragmentLinkValue(
-						companyId, infoItemServiceRegistry, jsonObject,
-						layoutPlid, layoutStructure, layoutStructureItemId,
-						mappedValue, scopeGroupId));
+						companyId, dtoConverterContext, infoItemServiceRegistry,
+						jsonObject, layoutStructureItemId, mappedValue,
+						scopeGroupId));
 			}
 		};
 	}
@@ -117,9 +117,9 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long layoutPlid,
-			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, String layoutStructureItemId,
 			long scopeGroupId)
 		throws Exception {
 
@@ -139,9 +139,8 @@ public class FragmentLinkUtil {
 				{
 					setFieldKey(
 						() -> FragmentMappingFieldUtil.getFieldKey(
-							infoItemServiceRegistry, jsonObject, layoutPlid,
-							layoutStructure, layoutStructureItemId,
-							scopeGroupId));
+							dtoConverterContext, infoItemServiceRegistry,
+							jsonObject, layoutStructureItemId, scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});
@@ -152,16 +151,16 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkValue _toFragmentLinkValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long layoutPlid,
-			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, String layoutStructureItemId,
 			boolean mappedValue, long scopeGroupId)
 		throws Exception {
 
 		if (mappedValue) {
 			return _toFragmentLinkMappedValue(
-				companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
-				layoutStructure, layoutStructureItemId, scopeGroupId);
+				companyId, dtoConverterContext, infoItemServiceRegistry,
+				jsonObject, layoutStructureItemId, scopeGroupId);
 		}
 
 		FragmentLinkInlineValue fragmentLinkInlineValue =

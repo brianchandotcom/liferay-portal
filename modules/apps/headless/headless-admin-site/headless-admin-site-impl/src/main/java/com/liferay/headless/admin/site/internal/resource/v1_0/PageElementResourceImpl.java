@@ -212,14 +212,16 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutStructure.getLayoutStructureItem(
 				pageElementExternalReferenceCode);
 
+		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
+			layoutPageTemplateStructure.getCompanyId(), null, layout.getPlid(),
+			layoutStructure, groupId);
+
 		return Page.of(
 			transform(
 				LayoutStructureItemUtil.getChildrenItemIds(
 					layoutStructureItem.getItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
-					_getDTOConverterContext(
-						layoutPageTemplateStructure.getCompanyId(), itemId,
-						layout.getPlid(), layoutStructure, groupId),
+					dtoConverterContext,
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
 
@@ -265,14 +267,16 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceId()));
 
+		DTOConverterContext dtoConverterContext = _getDTOConverterContext(
+			layoutPageTemplateStructure.getCompanyId(), null, layout.getPlid(),
+			layoutStructure, groupId);
+
 		return Page.of(
 			transform(
 				LayoutStructureItemUtil.getChildrenItemIds(
 					layoutStructure.getMainItemId(), layoutStructure),
 				itemId -> _pageElementDTOConverter.toDTO(
-					_getDTOConverterContext(
-						layoutPageTemplateStructure.getCompanyId(), itemId,
-						layout.getPlid(), layoutStructure, groupId),
+					dtoConverterContext,
 					layoutStructure.getLayoutStructureItem(itemId))));
 	}
 

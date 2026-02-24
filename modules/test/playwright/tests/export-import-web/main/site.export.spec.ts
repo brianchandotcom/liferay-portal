@@ -14,6 +14,7 @@ import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import getRandomString from '../../../utils/getRandomString';
+import {normalizeRestPath} from '../../../utils/normalizeRestPath';
 import {getTempDir} from '../../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
@@ -159,3 +160,71 @@ testWithHeadlessContentPagesFF(
 		).not.toBeVisible();
 	}
 );
+
+test('Can see deletion counts at site level', async ({
+	apiHelpers,
+	exportImportPage,
+	uiElementsPage,
+}) => {
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			scope: 'site',
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+
+	const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+		{textField: objectDefinition.name},
+		applicationName + '/scopes/Guest'
+	);
+
+	const objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+		{textField: objectDefinition.name},
+		applicationName + '/scopes/Guest'
+	);
+
+	await exportImportPage.goToExport();
+	await uiElementsPage.clickNewButton();
+
+	await exportImportPage.deletionsLabel.check();
+
+	await expect(
+		exportImportPage.page.getByText(`${objectDefinition.name} 2 Items`)
+	).toBeVisible();
+
+	await apiHelpers.objectEntry.deleteObjectEntry(
+		applicationName,
+		String(objectEntry1.id)
+	);
+
+	await exportImportPage.refreshCountsButton.click();
+
+	await expect(
+		exportImportPage.page.getByText(
+			`${objectDefinition.name} 1 Items 1 Deletions`
+		)
+	).toBeVisible();
+
+	await apiHelpers.objectEntry.deleteObjectEntry(
+		applicationName,
+		String(objectEntry2.id)
+	);
+
+	await exportImportPage.refreshCountsButton.click();
+
+	await expect(
+		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)
+	).toBeVisible();
+
+	await exportImportPage.deletionsLabel.uncheck();
+
+	await expect(
+		exportImportPage.page.getByText(`${objectDefinition.name} 2 Deletions`)
+	).not.toBeVisible();
+});

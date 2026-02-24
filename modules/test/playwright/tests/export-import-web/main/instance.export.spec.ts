@@ -658,3 +658,77 @@ test(
 		);
 	}
 );
+
+test('Can see deletion counts at instance level', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	companyExportImportPage,
+	uiElementsPage,
+}) => {
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+
+	const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+		{textField: objectDefinition.name},
+		applicationName
+	);
+
+	const objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+		{textField: objectDefinition.name},
+		applicationName
+	);
+
+	await applicationsMenuPage.goToExport();
+	await uiElementsPage.clickNewButton();
+
+	await companyExportImportPage.exportImportPage.deletionsLabel.check();
+
+	await expect(
+		companyExportImportPage.page.getByText(
+			`${objectDefinition.name} 2 Items`
+		)
+	).toBeVisible();
+
+	await apiHelpers.objectEntry.deleteObjectEntry(
+		applicationName,
+		String(objectEntry1.id)
+	);
+
+	await companyExportImportPage.exportImportPage.refreshCountsButton.click();
+
+	await expect(
+		companyExportImportPage.page.getByText(
+			`${objectDefinition.name} 1 Items 1 Deletions`
+		)
+	).toBeVisible();
+
+	await apiHelpers.objectEntry.deleteObjectEntry(
+		applicationName,
+		String(objectEntry2.id)
+	);
+
+	await companyExportImportPage.exportImportPage.refreshCountsButton.click();
+
+	await expect(
+		companyExportImportPage.page.getByText(
+			`${objectDefinition.name} 2 Deletions`
+		)
+	).toBeVisible();
+
+	await companyExportImportPage.exportImportPage.deletionsLabel.uncheck();
+
+	await expect(
+		companyExportImportPage.page.getByText(
+			`${objectDefinition.name} 2 Deletions`
+		)
+	).not.toBeVisible();
+});

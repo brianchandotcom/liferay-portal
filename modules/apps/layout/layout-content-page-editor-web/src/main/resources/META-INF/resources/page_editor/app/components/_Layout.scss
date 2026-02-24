@@ -135,21 +135,21 @@ html#{$cadmin-selector} {
 
 		&__row.align-bottom,
 		&__row.align-middle {
-			.page-editor__col .page-editor__col__border {
+			> .page-editor__col > .page-editor__col__border {
 				display: flex;
 				flex-direction: column;
 			}
 		}
 
-		&__row.align-middle .page-editor__col .page-editor__col__border {
+		&__row.align-middle > .page-editor__col > .page-editor__col__border {
 			justify-content: center;
 		}
 
-		&__row.align-bottom .page-editor__col .page-editor__col__border {
+		&__row.align-bottom > .page-editor__col > .page-editor__col__border {
 			justify-content: flex-end;
 		}
 
-		&__row.align-top .page-editor__col .page-editor__col__border {
+		&__row.align-top > .page-editor__col > .page-editor__col__border {
 			justify-content: flex-start;
 		}
 

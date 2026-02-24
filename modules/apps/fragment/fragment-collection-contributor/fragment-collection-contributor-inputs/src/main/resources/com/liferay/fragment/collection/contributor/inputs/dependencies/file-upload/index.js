@@ -92,8 +92,8 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 
 	if (input.attributes.isCMS) {
 		import('@liferay/fragment-impl/api').then(
-			({openCMSItemSelectorModal}) => {
-				openCMSItemSelectorModal({
+			({openCMSFileSelectorModal}) => {
+				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
 					allowedExtensions: input.attributes.allowedFileExtensions,
 					groupId: input.attributes.groupId,

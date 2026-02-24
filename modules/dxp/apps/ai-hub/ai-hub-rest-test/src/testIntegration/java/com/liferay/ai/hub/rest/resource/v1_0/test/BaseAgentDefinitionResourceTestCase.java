@@ -813,6 +813,14 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (agentDefinition.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (agentDefinition.getTitle() == null) {
 					valid = false;
@@ -1033,6 +1041,17 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						agentDefinition1.getOutputVariable(),
 						agentDefinition2.getOutputVariable())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("status", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						agentDefinition1.getStatus(),
+						agentDefinition2.getStatus())) {
 
 					return false;
 				}
@@ -1296,6 +1315,11 @@ public abstract class BaseAgentDefinitionResourceTestCase {
 		}
 
 		if (entityFieldName.equals("outputVariable")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("status")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

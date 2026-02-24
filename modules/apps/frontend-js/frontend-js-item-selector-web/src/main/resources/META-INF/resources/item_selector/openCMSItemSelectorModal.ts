@@ -7,11 +7,25 @@ import CMSFileUploaderComponent from '../item_selector_file_uploader/CMSFileUplo
 import {IItemSelectorModalProps} from './ItemSelectorModal';
 import openItemSelectorModal from './openItemSelectorModal';
 
-type ConfigItemSelectorModal<T> = {
-	apiURL: IItemSelectorModalProps<T>['apiURL'];
-	items: IItemSelectorModalProps<T>['items'];
-	locator?: IItemSelectorModalProps<T>['locator'];
-	multiSelect?: IItemSelectorModalProps<T>['multiSelect'];
+interface CMSFile {
+	description: string;
+	embedded: {
+		file: {
+			thumbnailURL: string;
+		};
+		id: number;
+		title: string;
+	};
+	title: string;
+}
+
+type CMSFileItemSelectorModalProps = IItemSelectorModalProps<CMSFile>;
+
+type CMSFileItemSelectorModalConfig = {
+	apiURL: CMSFileItemSelectorModalProps['apiURL'];
+	items: CMSFileItemSelectorModalProps['items'];
+	locator: CMSFileItemSelectorModalProps['locator'];
+	multiSelect: CMSFileItemSelectorModalProps['multiSelect'];
 };
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
@@ -29,7 +43,7 @@ const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 	multiSelect: false,
 };
 
-const FDS_PROPS = {
+const FDS_PROPS: Omit<CMSFileItemSelectorModalProps['fdsProps'], 'id'> = {
 	filters: [
 		{
 			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
@@ -42,7 +56,7 @@ const FDS_PROPS = {
 			type: 'selection',
 		},
 	],
-	id: '',
+	items: [],
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
@@ -62,11 +76,7 @@ const FDS_PROPS = {
 				item,
 				props,
 			}: {
-				item: {
-					embedded:
-						| {coverImage: {link: {href: string}}}
-						| {file: {thumbnailURL: string}};
-				};
+				item: {embedded: {file: {thumbnailURL: string}}};
 				props: object;
 			}) => {
 				const stickerProps = {
@@ -112,26 +122,27 @@ function buildFilter(allowedExtensions: string) {
 	return `${base} and (extension in (${extensions}))`;
 }
 
-export default function openCMSItemSelectorModal<
-	T extends Record<string, any>,
->({
+export default function openCMSItemSelectorModal({
 	allowDragAndDrop = false,
 	allowedExtensions,
-	config = CMS_FILE_ITEM_SELECTOR_CONFIG,
-	fdsProps = FDS_PROPS,
+	config,
+	fdsProps,
 	groupId,
 	maxFileSize,
 	onSelect,
 }: {
 	allowDragAndDrop: boolean;
 	allowedExtensions?: string;
-	config?: ConfigItemSelectorModal<T>;
-	fdsProps?: IItemSelectorModalProps<T>['fdsProps'];
+	config?: Partial<CMSFileItemSelectorModalConfig>;
+	fdsProps?: Partial<CMSFileItemSelectorModalProps['fdsProps']>;
 	groupId: number;
 	maxFileSize?: number;
-	onSelect: (items: Array<Record<string, any>>) => void;
+	onSelect: (items: Array<CMSFile>) => void;
 }) {
-	let finalConfig = config;
+	const finalConfig = {
+		...CMS_FILE_ITEM_SELECTOR_CONFIG,
+		...config,
+	};
 
 	if (allowedExtensions && allowedExtensions.length) {
 		const filter = buildFilter(allowedExtensions);
@@ -152,6 +163,7 @@ export default function openCMSItemSelectorModal<
 		...finalConfig,
 		allowedExtensions,
 		fdsProps: {
+			...FDS_PROPS,
 			...fdsProps,
 			id: `CMSItemSelectorFDS_${getRandomId()}`,
 		},

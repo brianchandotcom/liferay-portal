@@ -28,8 +28,22 @@ rules:
             -   patch
             -   watch
     -   apiGroups: ["argoproj.io"]
-        resources: ["workflowtaskresults"]
+        resources: ["applications", "workflowtaskresults"]
         verbs:
             -   create
+            -   get
+            -   list
             -   patch
+            -   update
+            -   watch
+    -   apiGroups: ["aws.liferay.com"]
+        resources: ["liferayinfrastructures"]
+        verbs:
+            -   get
+            -   list
+    -   apiGroups: ["s3.aws.m.upbound.io"]
+        resources: ["buckets"]
+        verbs:
+            -   get
+            -   list
 {{- end }}

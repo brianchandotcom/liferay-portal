@@ -12,6 +12,7 @@ export default defineConfig({
 		assetsDir: 'static',
 		outDir: 'build',
 		rollupOptions: {
+			external: ['@liferay/oauth2-provider-web/client'],
 			output: {
 				assetFileNames: 'static/[name].[hash][extname]',
 				chunkFileNames: 'static/[name].[hash].js',
@@ -25,6 +26,7 @@ export default defineConfig({
 				global: 'globalThis',
 			},
 		},
+		exclude: ['@liferay/oauth2-provider-web/client'],
 	},
 	plugins: [react()],
 	resolve: {

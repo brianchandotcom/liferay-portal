@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useCallback, useEffect, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
-import {Liferay} from '~/services/liferay';
 
 import {
 	FILTER_MAP,
@@ -149,14 +149,15 @@ const useJiraSearch = (defaultParams?: IProps) => {
 			);
 
 			try {
-				const response: IJiraResponse =
-					await Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-customer-etc-spring-boot-oaua'
+				const oauth2Client = await OAuth2.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oaua'
+				);
+
+				const response: IJiraResponse = await oauth2Client
+					.fetch(
+						`/jira/security-vulnerabilities/search?${queryString}`
 					)
-						.fetch(
-							`/jira/security-vulnerabilities/search?${queryString}`
-						)
-						.then((response: {json: () => any}) => response.json());
+					.then((response: {json: () => any}) => response.json());
 
 				setJiraSearch(response);
 			}

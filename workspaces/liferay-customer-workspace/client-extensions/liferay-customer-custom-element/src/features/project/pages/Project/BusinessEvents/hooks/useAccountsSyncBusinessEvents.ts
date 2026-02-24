@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useMemo} from 'react';
-import {Liferay} from '~/services/liferay';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {IBusinessEvent} from '~/utils/types';
 
@@ -72,18 +72,19 @@ export default function useAccountsSyncBusinessEvents(
 			});
 		}
 
-		const response: Response =
-			await Liferay.OAuth2Client.FromUserAgentApplication(
-				'liferay-customer-etc-spring-boot-oaua'
-			).fetch(
-				`/accounts/${accountExternalReferenceCode}/sync-business-events`,
-				{
-					body: JSON.stringify({
-						businessEvents: formattedBusinessEvents,
-					}),
-					method: 'POST',
-				}
-			);
+		const oauth2Client = await OAuth2.FromUserAgentApplication(
+			'liferay-customer-etc-spring-boot-oaua'
+		);
+
+		const response: Response = await oauth2Client.fetch(
+			`/accounts/${accountExternalReferenceCode}/sync-business-events`,
+			{
+				body: JSON.stringify({
+					businessEvents: formattedBusinessEvents,
+				}),
+				method: 'POST',
+			}
+		);
 
 		if (!response.ok) {
 			throw new Error(`Failed to update Org: ${response.statusText}`);

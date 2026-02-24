@@ -15,19 +15,6 @@ export const Liferay = window.Liferay || {
 		TABLET: 0,
 	},
 	FeatureFlags: {},
-	OAuth2Client: {
-		FromUserAgentApplication: (
-			_userAgentApplicationId: string
-		): {
-			_getOrRequestToken: () => Promise<string>;
-			fetch: (_url: string, _options?: RequestInit) => Promise<Response>;
-		} => {
-			return {
-				_getOrRequestToken: () => Promise.resolve(''),
-				fetch: (_url, _options = {}) => Promise.resolve(new Response()),
-			};
-		},
-	},
 	ThemeDisplay: {
 		getBCP47LanguageId: () => 'en-US',
 		getCanonicalURL: () => window.location.href,

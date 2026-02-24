@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import * as OAuth2 from '@liferay/oauth2-provider-web/client';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {Liferay} from '~/services/liferay';
@@ -86,16 +87,17 @@ export default function useCheckAttachmentAccess(): IResponse {
 					? `/tickets/${jiraIssueKey}/ticket-attachments/download-access-check`
 					: `/tickets/${jiraIssueKey}/ticket-attachments/upload-access-check`;
 
-				const response =
-					await Liferay.OAuth2Client.FromUserAgentApplication(
-						'liferay-customer-etc-spring-boot-oaua'
-					).fetch(endpoint, {
-						headers: {
-							'Content-Type': 'application/json',
-						},
-						method: 'GET',
-						signal: controller.signal,
-					});
+				const oauth2Client = await OAuth2.FromUserAgentApplication(
+					'liferay-customer-etc-spring-boot-oaua'
+				);
+
+				const response = await oauth2Client.fetch(endpoint, {
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					method: 'GET',
+					signal: controller.signal,
+				});
 
 				if (response.ok) {
 					setHasAccess(true);

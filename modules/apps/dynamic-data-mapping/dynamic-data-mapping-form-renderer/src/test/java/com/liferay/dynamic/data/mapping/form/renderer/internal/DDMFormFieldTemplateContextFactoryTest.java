@@ -227,8 +227,6 @@ public class DDMFormFieldTemplateContextFactoryTest {
 						).put(
 							"valid", true
 						).put(
-							"value", ""
-						).put(
 							"visible", true
 						).build()
 					).build();

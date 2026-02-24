@@ -639,7 +639,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				long modelDeletionCount =
 					_exportImportHelper.getModelDeletionCount(
 						portletDataContext,
-						new StagedModelType(modelClassName));
+						new StagedModelType(
+							modelClassName,
+							StagedModelType.REFERRER_CLASS_NAME_ALL));
 
 				manifestSummary.addModelDeletionCount(
 					modelClassName, modelDeletionCount);
@@ -914,7 +916,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private void _updateDeletionSystemEventStagedModelTypes() {
 		setDeletionSystemEventStagedModelTypes(
 			TransformUtil.transformToArray(
-				Arrays.asList(getClassNames()), StagedModelType::new,
+				Arrays.asList(getClassNames()),
+				className -> new StagedModelType(
+					className, StagedModelType.REFERRER_CLASS_NAME_ALL),
 				StagedModelType.class));
 	}
 

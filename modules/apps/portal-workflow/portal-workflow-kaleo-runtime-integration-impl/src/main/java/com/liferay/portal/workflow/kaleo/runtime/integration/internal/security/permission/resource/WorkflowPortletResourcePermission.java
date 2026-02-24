@@ -53,7 +53,8 @@ public class WorkflowPortletResourcePermission
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, WorkflowConstants.RESOURCE_NAME, actionId);
+				permissionChecker, WorkflowConstants.RESOURCE_NAME, 0,
+				actionId);
 		}
 	}
 

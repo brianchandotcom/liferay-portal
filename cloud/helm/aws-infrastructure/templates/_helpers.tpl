@@ -26,3 +26,4 @@
 {{- else }}
 {{- printf "liferay/licenses/%s" $trimmed -}}
 {{- end }}
+{{- end -}}

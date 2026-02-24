@@ -10043,6 +10043,8 @@ public class DefaultObjectEntryManagerImplTest
 			ObjectEntry objectEntry, ObjectDefinition objectDefinition)
 		throws Exception {
 
+		boolean hasExportImportReportEntry = false;
+
 		for (ExportImportReportEntry exportImportReportEntry :
 				_exportImportReportEntryLocalService.
 					getExportImportReportEntries(
@@ -10062,8 +10064,12 @@ public class DefaultObjectEntryManagerImplTest
 
 				Assert.assertEquals(
 					expectedStatus, exportImportReportEntry.getStatus());
+
+				hasExportImportReportEntry = true;
 			}
 		}
+
+		Assert.assertTrue(hasExportImportReportEntry);
 	}
 
 	private void _assertFailureWithStatusInTrash(

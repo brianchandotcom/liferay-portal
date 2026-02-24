@@ -89,7 +89,7 @@ const FDS_PROPS: IFrontendDataSetProps = {
 				};
 				props: object;
 			}) => {
-				const stickerConfig: any = {
+				const stickerConfig = {
 					stickerProps: {
 						className: 'file-icon-color-5',
 						displayType: 'unstyled',

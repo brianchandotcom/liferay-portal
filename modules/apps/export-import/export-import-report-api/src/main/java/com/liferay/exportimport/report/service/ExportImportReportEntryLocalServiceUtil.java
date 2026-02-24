@@ -306,6 +306,18 @@ public class ExportImportReportEntryLocalServiceUtil {
 			exportImportConfigurationId, modelNameLanguageKey);
 	}
 
+	public static ExportImportReportEntry getOrAddErrorExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String errorMessage, String errorStacktrace,
+		String modelNameLanguageKey) {
+
+		return getService().getOrAddErrorExportImportReportEntry(
+			groupId, companyId, classExternalReferenceCode, classNameId,
+			classPK, exportImportConfigurationId, errorMessage, errorStacktrace,
+			modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

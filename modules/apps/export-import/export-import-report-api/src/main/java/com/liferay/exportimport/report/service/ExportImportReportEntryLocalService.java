@@ -260,6 +260,13 @@ public interface ExportImportReportEntryLocalService
 		long classNameId, long exportImportConfigurationId,
 		String modelNameLanguageKey);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportImportReportEntry getOrAddErrorExportImportReportEntry(
+		long groupId, long companyId, String classExternalReferenceCode,
+		long classNameId, long classPK, long exportImportConfigurationId,
+		String errorMessage, String errorStacktrace,
+		String modelNameLanguageKey);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

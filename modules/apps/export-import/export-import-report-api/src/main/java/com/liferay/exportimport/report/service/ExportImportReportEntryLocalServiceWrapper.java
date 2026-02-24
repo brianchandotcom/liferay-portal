@@ -355,6 +355,21 @@ public class ExportImportReportEntryLocalServiceWrapper
 				exportImportConfigurationId, modelNameLanguageKey);
 	}
 
+	@Override
+	public com.liferay.exportimport.report.model.ExportImportReportEntry
+		getOrAddErrorExportImportReportEntry(
+			long groupId, long companyId, String classExternalReferenceCode,
+			long classNameId, long classPK, long exportImportConfigurationId,
+			String errorMessage, String errorStacktrace,
+			String modelNameLanguageKey) {
+
+		return _exportImportReportEntryLocalService.
+			getOrAddErrorExportImportReportEntry(
+				groupId, companyId, classExternalReferenceCode, classNameId,
+				classPK, exportImportConfigurationId, errorMessage,
+				errorStacktrace, modelNameLanguageKey);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

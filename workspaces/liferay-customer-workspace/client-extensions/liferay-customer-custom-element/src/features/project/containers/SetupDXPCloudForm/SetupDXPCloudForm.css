@@ -1,9 +1,13 @@
+.cp-btn-add-lxc-sm .inline-item {
+	width: 10px;
+}
+
 .lxc-sm-project-name {
 	width: 262px;
 }
 
-.cp-btn-add-lxc-sm {
-	.inline-item {
-		width: 10px;
-	}
+.modal .form-group > label {
+	margin-left: 0;
+	margin-right: 0;
+	width: 100%;
 }

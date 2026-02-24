@@ -69,7 +69,6 @@ const SetupDXPCloudPage = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [dxpVersions, setDxpVersions] = useState([]);
-	const [selectedVersion, setSelectedVersion] = useState(dxpVersion || '');
 	const {data} = useQuery(getDXPCloudPageInfo, {
 		variables: {
 			accountSubscriptionsFilter: `(accountKey eq '${project.accountKey}') and (hasDisasterDataCenterRegion eq true or (name eq '${HA_DR_FILTER}' or name eq '${STD_DR_FILTER}'))`,
@@ -109,9 +108,16 @@ const SetupDXPCloudPage = ({
 				const sortedItems = sortLiferayVersions([...items]);
 				setDxpVersions(sortedItems);
 
-				setSelectedVersion(
+				const latestLTS = sortedItems.find((item) =>
+					item.name.includes('LTS')
+				);
+
+				setFieldValue(
+					'dxp.version',
 					sortedItems.find((item) => item.name === dxpVersion)
-						?.name || sortedItems[0].name
+						?.name ||
+						latestLTS?.name ||
+						sortedItems[0].name
 				);
 			}
 		};
@@ -278,7 +284,7 @@ const SetupDXPCloudPage = ({
 									? `Primary Disaster Center Region - ${dxp?.disasterDataCenterRegion}`
 									: '',
 							'[%PROJECT_ID%]': dxp?.projectId,
-							'[%PROJECT_VERSION%]': selectedVersion,
+							'[%PROJECT_VERSION%]': dxp?.version,
 							'[%PROJECT_ADMIN_INFO%]': adminInfo.join(''),
 						}
 					);
@@ -366,7 +372,7 @@ const SetupDXPCloudPage = ({
 
 	return featureFlags.includes('LPS-159127') ? (
 		<Layout
-			className="pt-1 px-3"
+			className="pt-1 px-4"
 			footerProps={{
 				leftButton: (
 					<Button
@@ -404,213 +410,16 @@ const SetupDXPCloudPage = ({
 			}}
 		>
 			{step === 1 && (
-				<div>
-					<FieldArray
-						name="dxp.admins"
-						render={({pop, push}) => (
-							<>
-								<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-									<div className="mr-4 pr-2">
-										<label>
-											{i18n.translate('project-name')}
-										</label>
+				<FieldArray
+					name="dxp.admins"
+					render={({pop, push}) => (
+						<>
+							<div className="mb-4">
+								<label className="font-weight-bold text-neutral-10">
+									{i18n.translate('project-name')}
+								</label>
 
-										<p className="lxc-sm-project-name text-neutral-6 text-paragraph-lg">
-											<strong>
-												{project.name.length >
-												MAXIMUM_NUMBER_OF_CHARACTERS
-													? project.name.substring(
-															0,
-															MAXIMUM_NUMBER_OF_CHARACTERS
-														) + '...'
-													: project.name}
-											</strong>
-										</p>
-									</div>
-
-									<div className="flex-fill">
-										<label>
-											{i18n.translate(
-												'liferay-dxp-version'
-											)}
-										</label>
-
-										<div className="position-relative">
-											<ClayIcon
-												className="select-icon"
-												symbol="caret-bottom"
-											/>
-
-											<ClaySelect
-												className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
-												onChange={({target}) => {
-													setSelectedVersion(
-														target.value
-													);
-												}}
-												value={selectedVersion}
-											>
-												{dxpVersions.map((version) => (
-													<ClaySelect.Option
-														className="font-weight-bold options"
-														key={version.key}
-														label={version.name}
-													/>
-												))}
-											</ClaySelect>
-										</div>
-									</div>
-								</div>
-								<ClayForm.Group className="mb-0">
-									<ClayForm.Group className="mb-0 pb-1">
-										<Input
-											groupStyle="pb-1"
-											helper={i18n.translate(
-												'lowercase-letters-and-numbers-only-the-project-id-cannot-be-changed'
-											)}
-											label={i18n.translate('project-id')}
-											name="dxp.projectId"
-											required
-											type="text"
-											validations={[
-												(value) =>
-													isLowercaseAndNumbers(
-														value
-													),
-											]}
-										/>
-
-										<Select
-											groupStyle="mb-0"
-											label={i18n.translate(
-												'primary-data-center-region'
-											)}
-											name="dxp.dataCenterRegion"
-											options={dXPCDataCenterRegions.map(
-												(option) => ({
-													...option,
-													disabled:
-														option.value ===
-														values.dxp
-															.disasterDataCenterRegion,
-												})
-											)}
-											required
-										/>
-
-										{!!hasDisasterRecovery && (
-											<Select
-												groupStyle="mb-0 pt-2"
-												id="disasterRecovery"
-												label="Disaster Recovery Data Center Region"
-												name="dxp.disasterDataCenterRegion"
-												options={dXPCDataCenterRegions.map(
-													(option) => ({
-														...option,
-														disabled:
-															option.value ===
-															values.dxp
-																.dataCenterRegion,
-													})
-												)}
-												required
-											/>
-										)}
-									</ClayForm.Group>
-
-									{values.dxp.admins.map((admin, index) => (
-										<AdminInputs
-											admin={admin}
-											id={index}
-											key={index}
-										/>
-									))}
-								</ClayForm.Group>
-								{values?.dxp?.admins?.length >
-									INITIAL_SETUP_ADMIN_COUNT && (
-									<Button
-										className="ml-3 my-2 text-brandy-secondary"
-										displayType="secondary"
-										onClick={() => {
-											pop();
-											setBaseButtonDisabled(false);
-										}}
-										prependIcon="hr"
-										small
-									>
-										{i18n.translate('remove-this-admin')}
-									</Button>
-								)}
-								<Button
-									className="btn-outline-primary cp-btn-add-lxc-sm ml-3 my-2 rounded-xs"
-									disabled={baseButtonDisabled}
-									onClick={() => {
-										push(
-											getInitialDXPAdmin(
-												values?.dxp?.admins
-											)
-										);
-										setBaseButtonDisabled(true);
-									}}
-									prependIcon="plus"
-									small
-								>
-									{i18n.translate('add-another-admin')}
-								</Button>
-							</>
-						)}
-					/>
-				</div>
-			)}
-
-			{step === 2 && (
-				<div>
-					<SetupHighPriorityContactForm
-						addContactList={setAddHighPriorityContact}
-						disableSubmit={updateMultiSelectEmpty}
-						filter={
-							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
-						}
-						removedContactList={setRemoveHighPriorityContact}
-					/>
-				</div>
-			)}
-		</Layout>
-	) : (
-		<Layout
-			className="pt-1 px-3"
-			footerProps={{
-				leftButton: (
-					<Button borderless onClick={() => handlePage()}>
-						{leftButton}
-					</Button>
-				),
-				middleButton: (
-					<Button
-						disabled={baseButtonDisabled}
-						displayType="primary"
-						onClick={() => handleSubmit()}
-					>
-						{i18n.translate('submit')}
-					</Button>
-				),
-			}}
-			headerProps={{
-				helper: i18n.translate(
-					'we-ll-need-a-few-details-to-finish-building-your-liferay-paas-environment'
-				),
-				title: i18n.translate('set-up-liferay-paas'),
-			}}
-		>
-			<FieldArray
-				name="dxp.admins"
-				render={({pop, push}) => (
-					<>
-						<div className="d-flex justify-content-between mb-2 pb-1 pl-3">
-							<div className="mr-4 pr-2">
-								<label>{i18n.translate('project-name')}</label>
-
-								<p className="lxc-sm-project-name text-neutral-6 text-paragraph-lg">
+								<p className="lxc-sm-project-name mb-0 text-neutral-6 text-paragraph-lg">
 									<strong>
 										{project.name.length >
 										MAXIMUM_NUMBER_OF_CHARACTERS
@@ -623,39 +432,8 @@ const SetupDXPCloudPage = ({
 								</p>
 							</div>
 
-							<div className="flex-fill">
-								<label>
-									{i18n.translate('liferay-dxp-version')}
-								</label>
-
-								<div className="position-relative">
-									<ClayIcon
-										className="select-icon"
-										symbol="caret-bottom"
-									/>
-
-									<ClaySelect
-										className="bg-neutral-1 border-0 font-weight-bold mr-2 pr-6"
-										onChange={({target}) => {
-											setSelectedVersion(target.value);
-										}}
-										value={selectedVersion}
-									>
-										{dxpVersions.map((version) => (
-											<ClaySelect.Option
-												className="font-weight-bold options"
-												key={version.key}
-												label={version.name}
-											/>
-										))}
-									</ClaySelect>
-								</div>
-							</div>
-						</div>
-						<ClayForm.Group className="mb-0">
-							<ClayForm.Group className="mb-0 pb-1">
+							<ClayForm.Group>
 								<Input
-									groupStyle="pb-1"
 									helper={i18n.translate(
 										'lowercase-letters-and-numbers-only-the-project-id-cannot-be-changed'
 									)}
@@ -664,12 +442,26 @@ const SetupDXPCloudPage = ({
 									required
 									type="text"
 									validations={[
-										(value) => isLowercaseAndNumbers(value),
+										(value) =>
+											isLowercaseAndNumbers(value),
 									]}
 								/>
 
 								<Select
-									groupStyle="mb-0"
+									label={i18n.translate(
+										'liferay-dxp-version'
+									)}
+									name="dxp.version"
+									options={dxpVersions.map(
+										(version) => ({
+											label: version.name,
+											value: version.name,
+										})
+									)}
+									required
+								/>
+
+								<Select
 									label={i18n.translate(
 										'primary-data-center-region'
 									)}
@@ -688,7 +480,6 @@ const SetupDXPCloudPage = ({
 
 								{!!hasDisasterRecovery && (
 									<Select
-										groupStyle="mb-0 pt-2"
 										id="disasterRecovery"
 										label="Disaster Recovery Data Center Region"
 										name="dxp.disasterDataCenterRegion"
@@ -703,7 +494,170 @@ const SetupDXPCloudPage = ({
 										required
 									/>
 								)}
+
+								{values.dxp.admins.map((admin, index) => (
+									<AdminInputs
+										admin={admin}
+										id={index}
+										key={index}
+									/>
+								))}
 							</ClayForm.Group>
+
+							{values?.dxp?.admins?.length >
+								INITIAL_SETUP_ADMIN_COUNT && (
+								<Button
+									className="ml-0 my-2 text-brandy-secondary"
+									displayType="secondary"
+									onClick={() => {
+										pop();
+										setBaseButtonDisabled(false);
+									}}
+									prependIcon="hr"
+									small
+								>
+									{i18n.translate('remove-this-admin')}
+								</Button>
+							)}
+
+							<Button
+								className="btn-outline-primary cp-btn-add-lxc-sm ml-0 my-2 rounded-xs"
+								disabled={baseButtonDisabled}
+								onClick={() => {
+									push(
+										getInitialDXPAdmin(values?.dxp?.admins)
+									);
+									setBaseButtonDisabled(true);
+								}}
+								prependIcon="plus"
+								small
+							>
+								{i18n.translate('add-another-admin')}
+							</Button>
+						</>
+					)}
+				/>
+			)}
+
+			{step === 2 && (
+				<div>
+					<SetupHighPriorityContactForm
+						addContactList={setAddHighPriorityContact}
+						disableSubmit={updateMultiSelectEmpty}
+						filter={
+							HIGH_PRIORITY_CONTACT_CATEGORIES.criticalIncident
+						}
+						removedContactList={setRemoveHighPriorityContact}
+					/>
+				</div>
+			)}
+		</Layout>
+	) : (
+		<Layout
+			className="pt-1 px-4"
+			footerProps={{
+				leftButton: (
+					<Button borderless onClick={() => handlePage()}>
+						{leftButton}
+					</Button>
+				),
+				middleButton: (
+					<Button
+						disabled={baseButtonDisabled}
+						displayType="primary"
+						isLoading={isLoadingSubmitButton}
+						onClick={() => handleSubmit()}
+					>
+						{i18n.translate('submit')}
+					</Button>
+				),
+			}}
+			headerProps={{
+				helper: i18n.translate(
+					'we-ll-need-a-few-details-to-finish-building-your-liferay-paas-environment'
+				),
+				title: i18n.translate('set-up-liferay-paas'),
+			}}
+		>
+			<FieldArray
+				name="dxp.admins"
+				render={({pop, push}) => (
+					<>
+						<div className="mb-4">
+							<label className="font-weight-bold text-neutral-10">
+								{i18n.translate('project-name')}
+							</label>
+
+							<p className="lxc-sm-project-name mb-0 text-neutral-6 text-paragraph-lg">
+								<strong>
+									{project.name.length >
+									MAXIMUM_NUMBER_OF_CHARACTERS
+										? project.name.substring(
+												0,
+												MAXIMUM_NUMBER_OF_CHARACTERS
+											) + '...'
+										: project.name}
+								</strong>
+							</p>
+						</div>
+
+						<ClayForm.Group>
+							<Input
+								helper={i18n.translate(
+									'lowercase-letters-and-numbers-only-the-project-id-cannot-be-changed'
+								)}
+								label={i18n.translate('project-id')}
+								name="dxp.projectId"
+								required
+								type="text"
+								validations={[
+									(value) => isLowercaseAndNumbers(value),
+								]}
+							/>
+
+							<Select
+								label={i18n.translate('liferay-dxp-version')}
+								name="dxp.version"
+								options={dxpVersions.map((version) => ({
+									label: version.name,
+									value: version.name,
+								}))}
+								required
+							/>
+
+							<Select
+								label={i18n.translate(
+									'primary-data-center-region'
+								)}
+								name="dxp.dataCenterRegion"
+								options={dXPCDataCenterRegions.map(
+									(option) => ({
+										...option,
+										disabled:
+											option.value ===
+											values.dxp
+												.disasterDataCenterRegion,
+									})
+								)}
+								required
+							/>
+
+							{!!hasDisasterRecovery && (
+								<Select
+									id="disasterRecovery"
+									label="Disaster Recovery Data Center Region"
+									name="dxp.disasterDataCenterRegion"
+									options={dXPCDataCenterRegions.map(
+										(option) => ({
+											...option,
+											disabled:
+												option.value ===
+												values.dxp.dataCenterRegion,
+										})
+									)}
+									required
+								/>
+							)}
 
 							{values.dxp.admins.map((admin, index) => (
 								<AdminInputs
@@ -713,10 +667,11 @@ const SetupDXPCloudPage = ({
 								/>
 							))}
 						</ClayForm.Group>
+
 						{values?.dxp?.admins?.length >
 							INITIAL_SETUP_ADMIN_COUNT && (
 							<Button
-								className="ml-3 my-2 text-brandy-secondary"
+								className="ml-0 my-2 text-brandy-secondary"
 								displayType="secondary"
 								onClick={() => {
 									pop();
@@ -728,8 +683,9 @@ const SetupDXPCloudPage = ({
 								{i18n.translate('remove-this-admin')}
 							</Button>
 						)}
+
 						<Button
-							className="btn-outline-primary cp-btn-add-lxc-sm ml-3 my-2 rounded-xs"
+							className="btn-outline-primary cp-btn-add-lxc-sm ml-0 my-2 rounded-xs"
 							disabled={baseButtonDisabled}
 							onClick={() => {
 								push(getInitialDXPAdmin(values?.dxp?.admins));
@@ -756,6 +712,7 @@ const SetupDXPCloudForm = (props) => {
 					dataCenterRegion: '',
 					disasterDataCenterRegion: '',
 					projectId: '',
+					version: props.dxpVersion || '',
 				},
 			}}
 			validateOnChange

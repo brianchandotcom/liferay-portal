@@ -915,8 +915,6 @@ while (manageableCalendarsIterator.hasNext()) {
 						'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "submit-for-workflow")) %>';
 				}
 				else {
-					approvalProcessAlert.classList.toggle('hide');
-
 					publishButton.innerHTML =
 						'<%= HtmlUtil.escapeJS(LanguageUtil.get(request, "publish")) %>';
 				}

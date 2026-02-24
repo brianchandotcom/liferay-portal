@@ -230,9 +230,6 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 
 		Assert.assertEquals(urlString, oAuthClientASLocalMetadata.getIssuer());
 		Assert.assertTrue(oAuthClientASLocalMetadata.isLocalWellKnownEnabled());
-		Assert.assertEquals(
-			urlString + "/o/.well-known/oauth-authorization-server",
-			oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI());
 
 		OIDCProviderMetadata oidcProviderMetadata = OIDCProviderMetadata.parse(
 			oAuthClientASLocalMetadata.getMetadataJSON());
@@ -255,6 +252,10 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 
 		Assert.assertEquals(url, oidcProviderMetadata.getTokenEndpointURI());
 		Assert.assertEquals(url, oidcProviderMetadata.getUserInfoEndpointURI());
+
+		Assert.assertEquals(
+			urlString + "/o/.well-known/oauth-authorization-server",
+			oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI());
 
 		AuthorizationServerMetadata authorizationServerMetadata =
 			AuthorizationServerMetadata.parse(

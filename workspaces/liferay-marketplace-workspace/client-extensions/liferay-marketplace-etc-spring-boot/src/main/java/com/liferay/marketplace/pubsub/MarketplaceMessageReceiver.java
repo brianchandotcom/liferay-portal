@@ -253,10 +253,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			ProductPurchase productPurchase)
 		throws Exception {
 
-		for (String productKey : _productKeysList) {
-			if (Objects.equals(productKey, productPurchase.getProductKey())) {
-				return;
-			}
+		if (!_productKeysList.contains(productPurchase.getProductKey())) {
+			return;
 		}
 
 		Product product = productPurchase.getProduct();

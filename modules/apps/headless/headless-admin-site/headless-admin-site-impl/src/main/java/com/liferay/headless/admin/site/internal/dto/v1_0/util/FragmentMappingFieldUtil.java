@@ -62,7 +62,7 @@ public class FragmentMappingFieldUtil {
 
 			if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
 				return _getInstanceFieldKey(
-					infoItemServiceRegistry, jsonObject, scopeGroupId);
+					infoItemServiceRegistry, jsonObject);
 			}
 
 			String mappedField = jsonObject.getString("mappedField");
@@ -113,9 +113,57 @@ public class FragmentMappingFieldUtil {
 			return mappedField;
 		}
 
-		return _toExternalUniqueId(
-			layoutPageTemplateEntry.getClassName(), infoItemServiceRegistry,
-			mappedField, null, layoutPageTemplateEntry, scopeGroupId);
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		if (infoItemFormProvider == null) {
+			return mappedField;
+		}
+
+		InfoForm infoForm = null;
+		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormVariationsProvider.class,
+				layoutPageTemplateEntry.getClassName());
+
+		if (infoItemFormVariationsProvider == null) {
+			infoForm = infoItemFormProvider.getInfoForm();
+		}
+		else {
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					layoutPageTemplateEntry.getGroupId(),
+					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+			if (infoItemFormVariation == null) {
+				return mappedField;
+			}
+
+			try {
+				infoForm = infoItemFormProvider.getInfoForm(
+					infoItemFormVariation.getKey(), scopeGroupId);
+			}
+			catch (NoSuchFormVariationException noSuchFormVariationException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchFormVariationException);
+				}
+			}
+		}
+
+		if (infoForm == null) {
+			return mappedField;
+		}
+
+		InfoField<?> infoField = infoForm.getInfoField(mappedField);
+
+		if (infoField == null) {
+			return mappedField;
+		}
+
+		return infoField.getExternalUniqueId();
 	}
 
 	private static Object _getInfoItem(
@@ -151,8 +199,8 @@ public class FragmentMappingFieldUtil {
 	}
 
 	private static String _getInstanceFieldKey(
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long scopeGroupId) {
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONObject jsonObject) {
 
 		InfoItemReference infoItemReference = null;
 
@@ -171,11 +219,35 @@ public class FragmentMappingFieldUtil {
 					jsonObject.getString("scopeExternalReferenceCode")));
 		}
 
-		return _toExternalUniqueId(
-			jsonObject.getString("className"), infoItemServiceRegistry,
-			jsonObject.getString("fieldId"),
-			_getInfoItem(infoItemReference, infoItemServiceRegistry), null,
-			scopeGroupId);
+		Object infoItem = _getInfoItem(
+			infoItemReference, infoItemServiceRegistry);
+
+		if (infoItem == null) {
+			return jsonObject.getString("fieldId");
+		}
+
+		String fieldName = jsonObject.getString("fieldId");
+		InfoItemFormProvider<Object> infoItemFormProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, jsonObject.getString("className"));
+
+		if (infoItemFormProvider == null) {
+			return fieldName;
+		}
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(infoItem);
+
+		if (infoForm == null) {
+			return fieldName;
+		}
+
+		InfoField<?> infoField = infoForm.getInfoField(fieldName);
+
+		if (infoField == null) {
+			return fieldName;
+		}
+
+		return infoField.getExternalUniqueId();
 	}
 
 	private static LayoutPageTemplateEntry _getLayoutPageTemplateEntry(
@@ -197,84 +269,6 @@ public class FragmentMappingFieldUtil {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			fetchLayoutPageTemplateEntryByPlid(layout.getPlid());
-	}
-
-	private static String _toExternalUniqueId(
-		String className, InfoItemServiceRegistry infoItemServiceRegistry,
-		String fieldName, Object infoItem,
-		LayoutPageTemplateEntry layoutPageTemplateEntry, long scopeGroupId) {
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, className);
-
-		if (infoItemFormProvider == null) {
-			return fieldName;
-		}
-
-		InfoForm infoForm = null;
-
-		if (infoItem != null) {
-			infoForm = infoItemFormProvider.getInfoForm(infoItem);
-
-			if (infoForm == null) {
-				return fieldName;
-			}
-
-			InfoField<?> infoField = infoForm.getInfoField(fieldName);
-
-			if (infoField == null) {
-				return fieldName;
-			}
-
-			return infoField.getExternalUniqueId();
-		}
-
-		if (layoutPageTemplateEntry == null) {
-			return fieldName;
-		}
-
-		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormVariationsProvider.class,
-				layoutPageTemplateEntry.getClassName());
-
-		if (infoItemFormVariationsProvider == null) {
-			infoForm = infoItemFormProvider.getInfoForm();
-		}
-		else {
-			InfoItemFormVariation infoItemFormVariation =
-				infoItemFormVariationsProvider.getInfoItemFormVariation(
-					layoutPageTemplateEntry.getGroupId(),
-					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
-
-			if (infoItemFormVariation == null) {
-				return fieldName;
-			}
-
-			try {
-				infoForm = infoItemFormProvider.getInfoForm(
-					infoItemFormVariation.getKey(), scopeGroupId);
-			}
-			catch (NoSuchFormVariationException noSuchFormVariationException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(noSuchFormVariationException);
-				}
-			}
-		}
-
-		if (infoForm == null) {
-			return fieldName;
-		}
-
-		InfoField<?> infoField = infoForm.getInfoField(fieldName);
-
-		if (infoField == null) {
-			return fieldName;
-		}
-
-		return infoField.getExternalUniqueId();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

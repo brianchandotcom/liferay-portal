@@ -11,7 +11,6 @@ import com.liferay.jenkins.results.parser.aws.AWSFleetCloud;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -1360,29 +1359,29 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 		Set<String> labels = new HashSet<>();
 
-		labels.addAll(getAssignedLabels());
+		if (_matchesLabels(labelExpression, getAssignedLabels())) {
+			labels.addAll(getAssignedLabels());
+		}
 
 		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
 			if (jenkinsSlave.isEC2FleetNodeComputer()) {
 				continue;
 			}
 
-			labels.addAll(jenkinsSlave.getAssignedLabels());
-		}
+			if (_matchesLabels(
+					labelExpression, jenkinsSlave.getAssignedLabels())) {
 
-		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
-			labels.addAll(awsFleetCloud.getLabels());
-		}
-
-		List<String> matchingLabels = new ArrayList<>();
-
-		for (String label : labels) {
-			if (_matchesLabels(labelExpression, Arrays.asList(label))) {
-				matchingLabels.add(label);
+				labels.addAll(jenkinsSlave.getAssignedLabels());
 			}
 		}
 
-		_labelExpressionLabels.put(labelExpression, matchingLabels);
+		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+			if (_matchesLabels(labelExpression, awsFleetCloud.getLabels())) {
+				labels.addAll(awsFleetCloud.getLabels());
+			}
+		}
+
+		_labelExpressionLabels.put(labelExpression, new ArrayList<>(labels));
 
 		return _labelExpressionLabels.get(labelExpression);
 	}

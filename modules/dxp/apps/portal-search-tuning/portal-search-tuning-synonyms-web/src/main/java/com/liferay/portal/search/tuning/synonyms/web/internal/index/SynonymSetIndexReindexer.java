@@ -66,9 +66,11 @@ public class SynonymSetIndexReindexer implements IndexReindexer {
 			}
 
 			try {
-				_synonymSetIndexCreator.deleteIfExists(synonymSetIndexName);
+				synchronized (synonymSetIndexNameBuilder) {
+					_synonymSetIndexCreator.deleteIfExists(synonymSetIndexName);
 
-				_synonymSetIndexCreator.create(synonymSetIndexName);
+					_synonymSetIndexCreator.create(synonymSetIndexName);
+				}
 			}
 			catch (RuntimeException runtimeException) {
 				_log.error(

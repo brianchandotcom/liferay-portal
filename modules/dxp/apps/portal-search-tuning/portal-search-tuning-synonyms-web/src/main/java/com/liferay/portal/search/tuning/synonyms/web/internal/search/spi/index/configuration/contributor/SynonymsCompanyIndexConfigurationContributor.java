@@ -54,13 +54,15 @@ public class SynonymsCompanyIndexConfigurationContributor
 			SynonymSetIndexReader synonymSetIndexReader =
 				new SynonymSetIndexReader(_searchEngineAdapter);
 
-			settingsHelper.loadFromSource(
-				_buildSettings(
-					TransformUtil.transformToArray(
-						synonymSetIndexReader.search(
-							_synonymSetIndexNameBuilder.getSynonymSetIndexName(
-								companyId)),
-						SynonymSet::getSynonyms, String.class)));
+			synchronized (_synonymSetIndexNameBuilder) {
+				settingsHelper.loadFromSource(
+					_buildSettings(
+						TransformUtil.transformToArray(
+							synonymSetIndexReader.search(
+								_synonymSetIndexNameBuilder.
+									getSynonymSetIndexName(companyId)),
+							SynonymSet::getSynonyms, String.class)));
+			}
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

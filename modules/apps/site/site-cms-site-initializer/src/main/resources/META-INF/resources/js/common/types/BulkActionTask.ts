@@ -101,7 +101,7 @@ export interface IBulkActionTaskType {
 		externalReferenceCode: string;
 		name: string;
 	};
-	CopyBulkAction:{};
+	CopyBulkAction: {};
 	DefaultPermissionBulkAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;

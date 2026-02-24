@@ -56,7 +56,7 @@ public class
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
 		Company company = _companyLocalService.getCompany(companyId);
 
-		_addAssetVocabulary(company);
+		_addDefaultAssetVocabulary(company);
 
 		Set<Long> searchClassNameIds = new HashSet<>();
 
@@ -81,7 +81,7 @@ public class
 		}
 	}
 
-	private void _addAssetVocabulary(Company company) throws Exception {
+	private void _addDefaultAssetVocabulary(Company company) throws Exception {
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyLocalService.fetchGroupVocabulary(
 				company.getGroupId(),

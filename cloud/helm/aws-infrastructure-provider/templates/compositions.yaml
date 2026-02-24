@@ -353,7 +353,7 @@ spec:
                                         projectId: {{ $projectId }}
                                 engine: {{ $databaseSpec.engine | quote }}
                                 engineVersion: {{ $databaseSpec.engineVersion | quote }}
-                                identifier: {{ $baseName }}-database-{{ $slot }}
+                                identifier: {{ $baseName }}-database-{{ $dataPlane }}
                                 instanceClass: {{ $databaseSpec.instanceClass }}
                                 multiAz: false
                                 passwordSecretRef:

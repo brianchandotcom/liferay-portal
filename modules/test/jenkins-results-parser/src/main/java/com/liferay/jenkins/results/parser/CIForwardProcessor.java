@@ -121,7 +121,7 @@ public class CIForwardProcessor {
 							_pullRequest.getGitHubRemoteGitRepository();
 
 						gitHubRemoteGitRepository.addLabel(
-							_GREEN_HEXADECIMAL, "", forwardLabel);
+							"bcf5db", "", forwardLabel);
 
 						GitHubRemoteGitRepository.Label ciForwardForceLabel =
 							gitHubRemoteGitRepository.getLabel(forwardLabel);
@@ -724,8 +724,6 @@ public class CIForwardProcessor {
 
 		return failedRequiredPassingTestSuiteNames.isEmpty();
 	}
-
-	private static final String _GREEN_HEXADECIMAL = "bcf5db";
 
 	private static final long _RETRY_PERIOD = 1000L * 60L;
 

@@ -301,25 +301,23 @@ public class BatchEnginePortletDataHandlerUtil {
 		long changesetCollectionId = MapUtil.getLong(
 			portletDataContext.getParameterMap(), "changesetCollectionId");
 
-		if (changesetCollectionId == 0) {
-			return "dateModified ge " + _format.format(new Date());
-		}
-
 		Set<String> externalReferenceCodes = new HashSet<>();
 
 		externalReferenceCodes.add("");
 
-		List<ChangesetEntry> changesetEntries =
-			changesetEntryLocalService.getChangesetEntries(
-				changesetCollectionId,
-				classNameLocalService.getClassNameId(modelClassName));
+		if (changesetCollectionId > 0) {
+			List<ChangesetEntry> changesetEntries =
+				changesetEntryLocalService.getChangesetEntries(
+					changesetCollectionId,
+					classNameLocalService.getClassNameId(modelClassName));
 
-		for (ChangesetEntry changesetEntry : changesetEntries) {
-			if (!Validator.isBlank(
-					changesetEntry.getClassExternalReferenceCode())) {
+			for (ChangesetEntry changesetEntry : changesetEntries) {
+				if (!Validator.isBlank(
+						changesetEntry.getClassExternalReferenceCode())) {
 
-				externalReferenceCodes.add(
-					changesetEntry.getClassExternalReferenceCode());
+					externalReferenceCodes.add(
+						changesetEntry.getClassExternalReferenceCode());
+				}
 			}
 		}
 

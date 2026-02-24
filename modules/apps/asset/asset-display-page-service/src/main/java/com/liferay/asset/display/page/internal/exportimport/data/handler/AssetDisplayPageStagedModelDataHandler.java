@@ -82,13 +82,13 @@ public class AssetDisplayPageStagedModelDataHandler
 			AssetDisplayPageEntry assetDisplayPageEntry)
 		throws Exception {
 
+		long layoutPageTemplateEntryId = 0;
+
 		Element element = portletDataContext.getImportDataStagedModelElement(
 			assetDisplayPageEntry);
 
 		String layoutPageTemplateEntryERC = element.attributeValue(
 			"layoutPageTemplateEntryERC");
-
-		long layoutPageTemplateEntryId = 0;
 
 		if (Validator.isNotNull(layoutPageTemplateEntryERC)) {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =

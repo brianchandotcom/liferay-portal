@@ -138,6 +138,16 @@ public class AgentDefinitionSerDes {
 			sb.append(String.valueOf(agentDefinition.getOutputVariable()));
 		}
 
+		if (agentDefinition.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(String.valueOf(agentDefinition.getStatus()));
+		}
+
 		if (agentDefinition.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -252,6 +262,13 @@ public class AgentDefinitionSerDes {
 				String.valueOf(agentDefinition.getOutputVariable()));
 		}
 
+		if (agentDefinition.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(agentDefinition.getStatus()));
+		}
+
 		if (agentDefinition.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -314,6 +331,9 @@ public class AgentDefinitionSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "outputVariable")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -387,6 +407,12 @@ public class AgentDefinitionSerDes {
 				if (jsonParserFieldValue != null) {
 					agentDefinition.setOutputVariable(
 						VariableSerDes.toDTO((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					agentDefinition.setStatus(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

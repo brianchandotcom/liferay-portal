@@ -258,7 +258,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					group.getExternalReferenceCode())));
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSitePageTemplatesPageWithSortDateTime()
@@ -267,14 +266,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		super.testGetSitePageTemplatesPageWithSortDateTime();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSitePageTemplatesPageWithSortDouble() throws Exception {
 		super.testGetSitePageTemplatesPageWithSortDouble();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGetSitePageTemplatesPageWithSortInteger() throws Exception {

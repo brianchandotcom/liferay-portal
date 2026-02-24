@@ -41,7 +41,7 @@ spec:
                 minReplicas: 3
             envoyService:
                 annotations:
-                    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: DeploymentName={{ .Values.deploymentName | quote }}
+                    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: DeploymentName={{ .Values.deploymentName }}
                     service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
                     service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /ready
                     service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "19003"

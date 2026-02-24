@@ -10,6 +10,7 @@ module "envoy_proxy_role" {
 			provider_arn=local.oidc_provider_arn
 		}
 	}
+	policy_name="${var.deployment_name}-AWS-Gateway-Controller"
 	source="terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts"
 	use_name_prefix=false
 	version="6.4.0"

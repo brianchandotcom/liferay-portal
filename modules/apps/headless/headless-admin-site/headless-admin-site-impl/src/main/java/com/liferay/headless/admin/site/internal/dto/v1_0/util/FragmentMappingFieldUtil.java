@@ -240,26 +240,27 @@ public class FragmentMappingFieldUtil {
 				layoutPageTemplateEntry.getClassName());
 
 		if (infoItemFormVariationsProvider == null) {
-			return fieldName;
+			infoForm = infoItemFormProvider.getInfoForm();
 		}
+		else {
+			InfoItemFormVariation infoItemFormVariation =
+				infoItemFormVariationsProvider.getInfoItemFormVariation(
+					layoutPageTemplateEntry.getGroupId(),
+					String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
-		InfoItemFormVariation infoItemFormVariation =
-			infoItemFormVariationsProvider.getInfoItemFormVariation(
-				layoutPageTemplateEntry.getGroupId(),
-				String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+			if (infoItemFormVariation == null) {
+				return fieldName;
+			}
 
-		if (infoItemFormVariation == null) {
-			return fieldName;
-		}
-
-		try {
-			infoForm = infoItemFormProvider.getInfoForm(
-				infoItemFormVariation.getKey(), scopeGroupId);
-		}
-		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFormVariationException);
+			try {
+				infoForm = infoItemFormProvider.getInfoForm(
+					infoItemFormVariation.getKey(), scopeGroupId);
+			}
+			catch (NoSuchFormVariationException noSuchFormVariationException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(noSuchFormVariationException);
+				}
 			}
 		}
 

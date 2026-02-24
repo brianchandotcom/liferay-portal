@@ -27,6 +27,7 @@ import openResetAssetPermissionModal from '../default_permission/ResetPermission
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ExportTranslationModalContent from '../modal/ExportTranslationModalContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
+import copyBulkAction from './actions/copyBulkAction';
 import ACTIONS from './actions/creationMenuActions';
 import deleteAssetEntriesBulkAction, {
 	executeBulkDeleteAction,
@@ -589,6 +590,14 @@ export default function AssetsFDSPropsTransformer({
 							selectedData,
 						});
 					},
+				});
+			}
+			else if (action?.data.id === 'copy-to') {
+				copyBulkAction({
+					additionalProps,
+					apiURL: otherProps.apiURL,
+					dataSetId: otherProps.id,
+					selectedData,
 				});
 			}
 		},

@@ -13,11 +13,10 @@ const AdminInputs = ({admin, id}) => {
 	const bannedDomains = useBannedDomains(admin?.email, 500);
 
 	return (
-		<ClayForm.Group className="mb-0 pb-1">
+		<ClayForm.Group>
 			<hr className="mb-4 mt-4 mx-3" />
 
 			<Input
-				groupStyle="pt-1"
 				label={i18n.translate('system-admin-s-email-address')}
 				name={`dxp.admins[${id}].email`}
 				placeholder="email@example.com"
@@ -26,8 +25,10 @@ const AdminInputs = ({admin, id}) => {
 				validations={[(value) => isValidEmail(value, bannedDomains)]}
 			/>
 
-			<ClayInput.Group className="mb-0">
-				<ClayInput.GroupItem className="m-0">
+			<ClayInput.Group
+				className="m-0"
+			>
+				<ClayInput.GroupItem>
 					<Input
 						label={i18n.translate('system-admin-s-first-name')}
 						name={`dxp.admins[${id}].firstName`}
@@ -36,7 +37,7 @@ const AdminInputs = ({admin, id}) => {
 					/>
 				</ClayInput.GroupItem>
 
-				<ClayInput.GroupItem className="m-0">
+				<ClayInput.GroupItem>
 					<Input
 						label={i18n.translate('system-admin-s-last-name')}
 						name={`dxp.admins[${id}].lastName`}
@@ -47,7 +48,6 @@ const AdminInputs = ({admin, id}) => {
 			</ClayInput.Group>
 
 			<Input
-				groupStyle="mb-0"
 				label={i18n.translate('system-admin-s-github-username')}
 				name={`dxp.admins[${id}].github`}
 				required

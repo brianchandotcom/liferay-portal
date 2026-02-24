@@ -3681,8 +3681,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					getDisplayPageActionInteraction(),
 				FragmentEditableElementTestUtil.getTextFragmentMappedValue(
 					FragmentMappedValueTestUtil.getFragmentMappedValue(
-						JournalArticle.class.getName(), "JournalArticle_title",
-						journalArticle.getExternalReferenceCode(), null))),
+						JournalArticle.class.getName(),
+						journalArticle.getExternalReferenceCode(),
+						"JournalArticle_title", null))),
 			FragmentEditableElementTestUtil.getActionFragmentEditableElement(
 				FragmentEditableElementTestUtil.
 					getNotificationActionInteraction(),
@@ -3800,14 +3801,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						layout, testGroup.getGroupId())),
 				FragmentMappedValueTestUtil.getFragmentMappedValue(
 					JournalArticle.class.getName(),
-					"JournalArticle_displayPageURL",
-					journalArticle.getExternalReferenceCode(), null),
+					journalArticle.getExternalReferenceCode(),
+					"JournalArticle_displayPageURL", null),
 				"element-action1",
 				FragmentEditableElementTestUtil.getNoneActionInteraction(),
 				FragmentEditableElementTestUtil.getTextFragmentMappedValue(
 					FragmentMappedValueTestUtil.getFragmentMappedValue(
-						FileEntry.class.getName(), "FileEntry_title",
+						FileEntry.class.getName(),
 						fileEntry2.getExternalReferenceCode(),
+						"FileEntry_title",
 						irrelevantGroup.getExternalReferenceCode()))),
 			FragmentEditableElementTestUtil.getActionFragmentEditableElement(
 				FragmentEditableElementTestUtil.getURLActionInteraction(),
@@ -3918,8 +3920,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null,
 				FragmentMappedValueTestUtil.getFragmentMappedValue(
 					JournalArticle.class.getName(),
-					"JournalArticle_displayPageURL",
-					journalArticle.getExternalReferenceCode(), null),
+					journalArticle.getExternalReferenceCode(),
+					"JournalArticle_displayPageURL", null),
 				"element-action1",
 				FragmentEditableElementTestUtil.getURLActionInteraction(),
 				null),
@@ -3927,8 +3929,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, null, "element-action2", null,
 				FragmentEditableElementTestUtil.getTextFragmentMappedValue(
 					FragmentMappedValueTestUtil.getFragmentMappedValue(
-						FileEntry.class.getName(), "FileEntry_title",
-						fileEntry1.getExternalReferenceCode(), null))),
+						FileEntry.class.getName(),
+						fileEntry1.getExternalReferenceCode(),
+						"FileEntry_title", null))),
 			FragmentEditableElementTestUtil.
 				getBackgroundImageFragmentEditableElement(
 					ImageValueTestUtil.getMappedFragmentImageValue(
@@ -4000,8 +4003,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							null,
 							FragmentMappedValueTestUtil.getFragmentMappedValue(
 								JournalArticle.class.getName(),
-								"JournalArticle_displayPageURL",
-								RandomTestUtil.randomString(), null),
+								RandomTestUtil.randomString(),
+								"JournalArticle_displayPageURL", null),
 							"element-action1",
 							FragmentEditableElementTestUtil.
 								getPageActionInteraction(
@@ -4017,9 +4020,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 									FragmentMappedValueTestUtil.
 										getFragmentMappedValue(
 											FileEntry.class.getName(),
-											"FileEntry_title",
 											fileEntry1.
 												getExternalReferenceCode(),
+											"FileEntry_title",
 											RandomTestUtil.randomString()))),
 					FragmentEditableElementTestUtil.
 						getBackgroundImageFragmentEditableElement(

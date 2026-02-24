@@ -34,31 +34,40 @@
 	table {
 		table-layout: auto !important;
 
-		.dnd-th-resizer {
+		.dnd-th-resizer::after {
 			background: $info;
-			cursor: col-resize;
+			content: '';
 			display: block;
 			height: 100%;
 			opacity: 0;
+			transition: background-color 0.1s ease-in;
+			width: 4px;
+		}
+
+		.dnd-th-resizer:hover::after {
+			opacity: 1;
+		}
+
+		.dnd-th-resizer.is-active::after {
+			background-color: $danger;
+			opacity: 1;
+		}
+
+		.dnd-th-resizer.is-active.is-allowed::after {
+			background-color: $primary;
+		}
+
+		.dnd-th-resizer {
+			cursor: col-resize;
+			display: block;
+			height: 100%;
+			margin: 0 -12px;
+			padding: 0 12px;
 			position: absolute;
 			right: 0;
 			top: 0;
-			transition: background-color 0.1s ease-in;
 			width: 4px;
 			z-index: 1;
-
-			&:hover {
-				opacity: 1;
-			}
-
-			&.is-active {
-				background: $danger;
-				opacity: 1;
-
-				&.is-allowed {
-					background: $primary;
-				}
-			}
 		}
 	}
 }

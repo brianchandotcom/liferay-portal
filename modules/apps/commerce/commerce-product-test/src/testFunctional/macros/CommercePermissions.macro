@@ -110,7 +110,32 @@ definition {
 
 		if (${tax} == "true") {
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "MANAGE_COMMERCE_PRODUCT_TAX_CATEGORIES",
+				resourceAction = "DELETE",
+				resourceName = "com.liferay.commerce.product.model.CPTaxCategory",
+				roleTitle = ${roleTitle});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "PERMISSIONS",
+				resourceName = "com.liferay.commerce.product.model.CPTaxCategory",
+				roleTitle = ${roleTitle});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "UPDATE",
+				resourceName = "com.liferay.commerce.product.model.CPTaxCategory",
+				roleTitle = ${roleTitle});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW",
+				resourceName = "com.liferay.commerce.product.model.CPTaxCategory",
+				roleTitle = ${roleTitle});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "ADD_COMMERCE_PRODUCT_TAX_CATEGORIES",
+				resourceName = "com.liferay.commerce.tax",
+				roleTitle = ${roleTitle});
+
+			Permissions.definePermissionViaJSONAPI(
+				resourceAction = "VIEW_COMMERCE_PRODUCT_TAX_CATEGORIES",
 				resourceName = "com.liferay.commerce.tax",
 				roleTitle = ${roleTitle});
 		}

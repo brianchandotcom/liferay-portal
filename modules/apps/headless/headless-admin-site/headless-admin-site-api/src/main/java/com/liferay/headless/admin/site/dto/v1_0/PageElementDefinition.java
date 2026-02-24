@@ -81,10 +81,6 @@ import java.util.function.Supplier;
 			value = FormStepContainerPageElementDefinition.class
 		),
 		@JsonSubTypes.Type(
-			name = "FragmentComposition",
-			value = FragmentCompositionInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
 			name = "FragmentDropZone",
 			value = FragmentDropZonePageElementDefinition.class
 		),
@@ -116,7 +112,7 @@ public abstract class PageElementDefinition implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element definition's type (basic fragment, collection display, collection item, container, drop zone, form container, form fragment, form step, form step container, fragment composition, fragment drop zone, grid,  module or widget)."
+		description = "The page element definition's type (basic fragment, collection display, collection item, container, drop zone, form container, form fragment, form step, form step container, fragment drop zone, grid,  module or widget)."
 	)
 	@JsonGetter("type")
 	@Valid
@@ -163,7 +159,7 @@ public abstract class PageElementDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page element definition's type (basic fragment, collection display, collection item, container, drop zone, form container, form fragment, form step, form step container, fragment composition, fragment drop zone, grid,  module or widget)."
+		description = "The page element definition's type (basic fragment, collection display, collection item, container, drop zone, form container, form fragment, form step, form step container, fragment drop zone, grid,  module or widget)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
@@ -234,7 +230,6 @@ public abstract class PageElementDefinition implements Serializable {
 		DROP_ZONE("DropZone"), FORM_CONTAINER("FormContainer"),
 		FORM_FRAGMENT("FormFragment"), FORM_STEP("FormStep"),
 		FORM_STEP_CONTAINER("FormStepContainer"),
-		FRAGMENT_COMPOSITION("FragmentComposition"),
 		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
 		WIDGET("Widget");
 

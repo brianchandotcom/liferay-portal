@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageRule;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -99,26 +98,6 @@ public class PageExperienceSerDes {
 				sb.append(String.valueOf(pageExperience.getPageElements()[i]));
 
 				if ((i + 1) < pageExperience.getPageElements().length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		if (pageExperience.getPageRules() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"pageRules\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < pageExperience.getPageRules().length; i++) {
-				sb.append(String.valueOf(pageExperience.getPageRules()[i]));
-
-				if ((i + 1) < pageExperience.getPageRules().length) {
 					sb.append(", ");
 				}
 			}
@@ -232,13 +211,6 @@ public class PageExperienceSerDes {
 				String.valueOf(pageExperience.getPageElements()));
 		}
 
-		if (pageExperience.getPageRules() == null) {
-			map.put("pageRules", null);
-		}
-		else {
-			map.put("pageRules", String.valueOf(pageExperience.getPageRules()));
-		}
-
 		if (pageExperience.getPageSpecificationExternalReferenceCode() ==
 				null) {
 
@@ -306,9 +278,6 @@ public class PageExperienceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "pageElements")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "pageRules")) {
-				return false;
-			}
 			else if (Objects.equals(
 						jsonParserFieldName,
 						"pageSpecificationExternalReferenceCode")) {
@@ -366,22 +335,6 @@ public class PageExperienceSerDes {
 					}
 
 					pageExperience.setPageElements(pageElementsArray);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "pageRules")) {
-				if (jsonParserFieldValue != null) {
-					Object[] jsonParserFieldValues =
-						(Object[])jsonParserFieldValue;
-
-					PageRule[] pageRulesArray =
-						new PageRule[jsonParserFieldValues.length];
-
-					for (int i = 0; i < pageRulesArray.length; i++) {
-						pageRulesArray[i] = PageRuleSerDes.toDTO(
-							(String)jsonParserFieldValues[i]);
-					}
-
-					pageExperience.setPageRules(pageRulesArray);
 				}
 			}
 			else if (Objects.equals(

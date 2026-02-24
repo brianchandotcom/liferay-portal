@@ -14,7 +14,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementD
 import com.liferay.headless.admin.site.client.dto.v1_0.FormFragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentCompositionInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
@@ -108,13 +107,6 @@ public class PageElementDefinitionSerDes {
 				return FormStepContainerPageElementDefinitionSerDes.toJSON(
 					(FormStepContainerPageElementDefinition)
 						pageElementDefinition);
-			}
-
-			if (typeString.equals("FragmentComposition")) {
-				return FragmentCompositionInstancePageElementDefinitionSerDes.
-					toJSON(
-						(FragmentCompositionInstancePageElementDefinition)
-							pageElementDefinition);
 			}
 
 			if (typeString.equals("FragmentDropZone")) {
@@ -238,11 +230,6 @@ public class PageElementDefinitionSerDes {
 
 				if (typeString.equals("FormStepContainer")) {
 					return FormStepContainerPageElementDefinition.toDTO(json);
-				}
-
-				if (typeString.equals("FragmentComposition")) {
-					return FragmentCompositionInstancePageElementDefinition.
-						toDTO(json);
 				}
 
 				if (typeString.equals("FragmentDropZone")) {

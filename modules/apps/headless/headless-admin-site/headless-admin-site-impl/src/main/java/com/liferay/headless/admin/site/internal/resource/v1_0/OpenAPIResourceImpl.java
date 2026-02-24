@@ -113,6 +113,8 @@ public class OpenAPIResourceImpl {
 
 			add(UtilityPageResourceImpl.class);
 
+			add(WidgetPageWidgetInstanceResourceImpl.class);
+
 			add(OpenAPIResourceImpl.class);
 		}
 	};

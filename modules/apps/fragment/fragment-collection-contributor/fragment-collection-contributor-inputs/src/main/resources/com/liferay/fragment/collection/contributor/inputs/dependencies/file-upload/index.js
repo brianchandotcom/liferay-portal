@@ -77,6 +77,19 @@ function onRemoveFile() {
 function onSelectFile(event, onChange, setTranslationInputValue) {
 	event.preventDefault();
 
+	const updateInputData = ({title, value}) => {
+		if (onChange) {
+			setTranslationInputValue({fileName: title, value});
+
+			onChange();
+		}
+
+		fileInput.value = value;
+		fileName.innerText = title;
+
+		showRemoveButton();
+	};
+
 	if (input.attributes.isCMS) {
 		import('@liferay/fragment-impl/api').then(
 			({openCMSItemSelectorModal}) => {
@@ -89,19 +102,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 						if (items.length) {
 							const {id, title} = items[0].embedded;
 
-							if (onChange) {
-								setTranslationInputValue({
-									fileName: title,
-									value: id,
-								});
-
-								onChange();
-							}
-
-							fileInput.value = id;
-							fileName.innerText = title;
-
-							showRemoveButton();
+							updateInputData({title, value: id});
 						}
 					},
 				});
@@ -115,19 +116,7 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 		onSelect(selectedItem) {
 			const {fileEntryId, title} = JSON.parse(selectedItem.value);
 
-			if (onChange) {
-				setTranslationInputValue({
-					fileName: title,
-					value: fileEntryId,
-				});
-
-				onChange();
-			}
-
-			fileInput.value = fileEntryId;
-			fileName.innerText = title;
-
-			showRemoveButton();
+			updateInputData({title, value: fileEntryId});
 		},
 		selectEventName: `${fragmentNamespace}selectFileEntry`,
 		url: input.attributes.selectFromDocumentLibraryURL,

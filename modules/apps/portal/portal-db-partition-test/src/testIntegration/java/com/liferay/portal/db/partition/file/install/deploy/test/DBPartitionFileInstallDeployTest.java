@@ -11,6 +11,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFacto
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
@@ -18,9 +19,13 @@ import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.file.install.FileInstaller;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.test.rule.Inject;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -78,6 +83,13 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 		}
 
 		_dataSource = InfrastructureUtil.getDataSource();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					COMPANY_IDS[1])) {
+
+			_group = _groupLocalService.getCompanyGroup(COMPANY_IDS[1]);
+		}
 	}
 
 	@AfterClass
@@ -104,14 +116,31 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 	public void testGroupScopedConfiguration() throws Exception {
 		_testGroupScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
-			RandomTestUtil.randomLong());
+			_group.getGroupId());
 	}
 
 	@Test
 	public void testGroupScopedPortableKeyConfiguration() throws Exception {
 		_testGroupScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.GROUP.getPortablePropertyKey(),
-			RandomTestUtil.randomLong());
+			StringBundler.concat(
+				"Test", COMPANY_IDS[1], "--", _group.getGroupKey()));
+	}
+
+	@Test
+	public void testInvalidGroupScopedConfiguration() throws Exception {
+		_testScopedConfiguration(
+			ExtendedObjectClassDefinition.Scope.GROUP.getPropertyKey(),
+			_group.getGroupId(), () -> _checkConfigurationNotExists(),
+			() -> _checkConfigurationNotExists(),
+			illegalArgumentException -> Assert.assertEquals(
+				StringBundler.concat(
+					"Unable to process group scoped configuration ",
+					_CONFIGURATION_FACTORY_PID,
+					".config because required property \"companyId\" is ",
+					"missing"),
+				illegalArgumentException.getMessage()),
+			false);
 	}
 
 	@Test
@@ -140,7 +169,42 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_1),
 			() -> _checkConfigurationExists(
 				PortalInstancePool.getDefaultCompanyId(), _TEST_VALUE_2),
-			unsupportedOperationException -> Assert.fail(), true);
+			illegalArgumentException -> Assert.fail(), true);
+	}
+
+	private String _addConfigContent(
+		String testValue, String dictionaryKey, Object dictionaryValue,
+		boolean supportedConfiguration) {
+
+		StringBundler sb = new StringBundler(13);
+
+		sb.append(_TEST_KEY);
+		sb.append(StringPool.EQUAL);
+		sb.append(StringPool.QUOTE);
+		sb.append(testValue);
+		sb.append(StringPool.QUOTE);
+
+		if (dictionaryKey != null) {
+			if (supportedConfiguration &&
+				dictionaryKey.equals(
+					ExtendedObjectClassDefinition.Scope.GROUP.
+						getPropertyKey())) {
+
+				sb.append(StringPool.RETURN_NEW_LINE);
+				sb.append(
+					ExtendedObjectClassDefinition.Scope.COMPANY.
+						getPropertyKey());
+				sb.append(StringPool.EQUAL);
+				sb.append(_convertDictionaryValue(COMPANY_IDS[1]));
+			}
+
+			sb.append(StringPool.RETURN_NEW_LINE);
+			sb.append(dictionaryKey);
+			sb.append(StringPool.EQUAL);
+			sb.append(_convertDictionaryValue(dictionaryValue));
+		}
+
+		return sb.toString();
 	}
 
 	private void _checkConfiguration(
@@ -209,7 +273,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			dictionaryKey, dictionaryValue,
 			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_1),
 			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2),
-			unsupportedOperationException -> Assert.fail(), true);
+			illegalArgumentException -> Assert.fail(), true);
 	}
 
 	private void _testGroupScopedConfiguration(
@@ -218,13 +282,9 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 		_testScopedConfiguration(
 			dictionaryKey, dictionaryValue,
-			() -> _checkConfigurationNotExists(),
-			() -> _checkConfigurationNotExists(),
-			unsupportedOperationException -> Assert.assertEquals(
-				"Group scoped configuration files do not support database " +
-					"partitioning",
-				unsupportedOperationException.getMessage()),
-			false);
+			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_1),
+			() -> _checkConfigurationExists(COMPANY_IDS[1], _TEST_VALUE_2),
+			illegalArgumentException -> Assert.fail(), true);
 	}
 
 	private void _testPortletInstanceScopedConfiguration(
@@ -236,8 +296,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			() -> _checkConfigurationNotExists(),
 			() -> _checkConfigurationNotExists(),
 			unsupportedOperationException -> Assert.assertEquals(
-				"Portlet-instance scoped configuration files do not support " +
-					"database partitioning",
+				"Scope PORTLET_INSTANCE does not support database partition",
 				unsupportedOperationException.getMessage()),
 			false);
 	}
@@ -246,8 +305,7 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 			String dictionaryKey, Object dictionaryValue,
 			UnsafeRunnable<Exception> addValidatorRunnable,
 			UnsafeRunnable<Exception> updateValidatorRunnable,
-			UnsafeConsumer<UnsupportedOperationException, Exception>
-				exceptionValidatorConsumer,
+			UnsafeConsumer<Exception, Exception> exceptionValidatorConsumer,
 			boolean supportedConfiguration)
 		throws Exception {
 
@@ -259,16 +317,9 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 		try {
 			try {
-				String content = StringBundler.concat(
-					_TEST_KEY, StringPool.EQUAL, StringPool.QUOTE,
-					_TEST_VALUE_1, StringPool.QUOTE);
-
-				if (dictionaryKey != null) {
-					content = StringBundler.concat(
-						content, StringPool.RETURN_NEW_LINE, dictionaryKey,
-						StringPool.EQUAL,
-						_convertDictionaryValue(dictionaryValue));
-				}
+				String content = _addConfigContent(
+					_TEST_VALUE_1, dictionaryKey, dictionaryValue,
+					supportedConfiguration);
 
 				Files.write(path, content.getBytes());
 
@@ -278,26 +329,18 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 					Assert.fail();
 				}
 			}
-			catch (UnsupportedOperationException
-						unsupportedOperationException) {
+			catch (IllegalArgumentException | UnsupportedOperationException
+						exception) {
 
-				exceptionValidatorConsumer.accept(
-					unsupportedOperationException);
+				exceptionValidatorConsumer.accept(exception);
 			}
 
 			addValidatorRunnable.run();
 
 			try {
-				String content = StringBundler.concat(
-					_TEST_KEY, StringPool.EQUAL, StringPool.QUOTE,
-					_TEST_VALUE_2, StringPool.QUOTE);
-
-				if (dictionaryKey != null) {
-					content = StringBundler.concat(
-						content, StringPool.RETURN_NEW_LINE, dictionaryKey,
-						StringPool.EQUAL,
-						_convertDictionaryValue(dictionaryValue));
-				}
+				String content = _addConfigContent(
+					_TEST_VALUE_2, dictionaryKey, dictionaryValue,
+					supportedConfiguration);
 
 				Files.write(path, content.getBytes());
 
@@ -307,11 +350,10 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 					Assert.fail();
 				}
 			}
-			catch (UnsupportedOperationException
-						unsupportedOperationException) {
+			catch (IllegalArgumentException | UnsupportedOperationException
+						exception) {
 
-				exceptionValidatorConsumer.accept(
-					unsupportedOperationException);
+				exceptionValidatorConsumer.accept(exception);
 			}
 
 			updateValidatorRunnable.run();
@@ -355,5 +397,9 @@ public class DBPartitionFileInstallDeployTest extends BaseDBPartitionTestCase {
 
 	private static DataSource _dataSource;
 	private static FileInstaller _fileInstaller;
+	private static Group _group;
+
+	@Inject
+	private static GroupLocalService _groupLocalService;
 
 }

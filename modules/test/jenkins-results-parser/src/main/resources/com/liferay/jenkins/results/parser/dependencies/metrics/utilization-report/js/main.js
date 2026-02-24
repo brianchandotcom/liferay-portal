@@ -76,7 +76,7 @@ if ((typeof categoryTableData !== 'undefined') && categoryTableData) {
 	window.onload = function () {
 		triggerEvent(getElementByXpath('//th[contains(.,"Category")]'), 'click');
 
-		createBarChartFromTable('Weekly Node Utilization by Job Category', 'utilization-canvas', 'Utilization Percentage', categoryTableDataElement, '%');
+		createBarChartFromTable('Weekly Node Utilization by Job Category', '%', 'utilization-canvas', 'Utilization Percentage', categoryTableDataElement);
 	}
 }
 

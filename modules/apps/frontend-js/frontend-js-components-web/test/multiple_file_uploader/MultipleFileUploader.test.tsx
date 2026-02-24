@@ -15,6 +15,7 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import MultipleFileUploader from '../../src/main/resources/META-INF/resources/multiple_file_uploader/MultipleFileUploader';
 
 jest.mock('frontend-js-web', () => ({
+	formatStorage: (str: string) => `${str} MB`,
 	sub: (str: string, arg: string) => str.replace('x', arg),
 }));
 
@@ -363,5 +364,74 @@ describe('MultipleFileUploader', () => {
 		expect(getByRole('button', {name: 'Import'})).toBeInTheDocument();
 
 		expect(getByText('files-to-import')).toBeInTheDocument();
+	});
+
+	it('filters initial files to upload by extension', async () => {
+		const file1 = createFile('image1.png', 1024);
+		const file2 = createFile('document1.pdf', 2048);
+
+		const file1Data = {
+			file: file1,
+			name: file1.name,
+			size: file1.size,
+		};
+
+		const file2Data = {
+			file: file2,
+			name: file2.name,
+			size: file2.size,
+		};
+
+		const {findByText, getByRole, getByText} = render(
+			<MultipleFileUploader
+				{...DEFAULT_PROPS}
+				filesToUpload={[file1Data, file2Data]}
+				validExtensions=".png"
+			/>
+		);
+
+		expect(await findByText('image1.png')).toBeInTheDocument();
+
+		expect(
+			getByText('please-enter-a-file-with-a-valid-e.pngtension-x')
+		).toBeInTheDocument();
+
+		expect(getByRole('button', {name: 'upload-(1)'})).toBeInTheDocument();
+	});
+
+	it('filters initial files to upload by max size', async () => {
+		const file1 = createFile('image1.png', 1024);
+		const file2 = createFile('image2.png', 3072);
+
+		const file1Data = {
+			file: file1,
+			name: file1.name,
+			size: file1.size,
+		};
+
+		const file2Data = {
+			file: file2,
+			name: file2.name,
+			size: file2.size,
+		};
+
+		const {findByText, getByRole, getByText} = render(
+			<MultipleFileUploader
+				{...DEFAULT_PROPS}
+				filesToUpload={[file1Data, file2Data]}
+				maxFileSize={2000}
+				validExtensions=".png"
+			/>
+		);
+
+		expect(await findByText('image1.png')).toBeInTheDocument();
+
+		expect(
+			getByText(
+				'please-enter-a-file-with-a-valid-file-size-no-larger-than-2000 MB'
+			)
+		).toBeInTheDocument();
+
+		expect(getByRole('button', {name: 'upload-(1)'})).toBeInTheDocument();
 	});
 });

@@ -21,7 +21,6 @@ module.exports = {
 		'@clayui/breadcrumb',
 		'@clayui/button',
 		'@clayui/card',
-		'@clayui/charts',
 		'@clayui/color-picker',
 		'@clayui/core',
 		'@clayui/data-provider',

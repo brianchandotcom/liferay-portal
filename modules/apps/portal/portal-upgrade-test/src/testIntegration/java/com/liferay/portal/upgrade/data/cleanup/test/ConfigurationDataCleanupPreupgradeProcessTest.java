@@ -216,7 +216,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					).put(
 						secondaryKeyColumnName, secondaryKey
 					).build();
-
 				nonexistentDictionary =
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, nonexistentPrimaryKey
@@ -229,7 +228,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, existentPrimaryKey
 					).build();
-
 				nonexistentDictionary =
 					HashMapDictionaryBuilder.<String, Object>put(
 						primaryKeyColumnName, nonexistentPrimaryKey
@@ -241,7 +239,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
 						getName(),
 					existentDictionary);
-
 			nonexistentConfigurationId =
 				ConfigurationTestUtil.createFactoryConfiguration(
 					ConfigurationDataCleanupPreupgradeProcessTest.class.
@@ -265,7 +262,6 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 						existentPrimaryKey, " that was not found in ",
 						_dbInspector.normalizeName(tableName), ".",
 						_dbInspector.normalizeName(primaryKeyColumnName))));
-
 			Assert.assertTrue(
 				logContext,
 				messages.contains(

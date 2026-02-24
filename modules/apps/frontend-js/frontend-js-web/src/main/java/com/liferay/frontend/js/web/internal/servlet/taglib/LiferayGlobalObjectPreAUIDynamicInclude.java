@@ -610,6 +610,8 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 		_renderMethod(
 			"getLanguageId", sb, _language.getLanguageId(httpServletRequest));
 		_renderMethod("getParentGroupId", sb, themeDisplay.getSiteGroupId());
+		_renderMethod(
+			"getParentSiteGroupId", sb, themeDisplay.getParentSiteGroupId());
 		_renderMethod("getPathContext", sb, themeDisplay.getPathContext());
 		_renderMethod("getPathImage", sb, themeDisplay.getPathImage());
 		_renderMethod(

@@ -5,8 +5,14 @@
 
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_3_3;
 
-import com.liferay.dynamic.data.mapping.internal.upgrade.BaseTemplateUpgradeProcess;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.upgrade.BaseTemplateUpgradeProcess;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.regex.Pattern;
 
 /**
  * @author Albert Gomes Cabral
@@ -14,6 +20,11 @@ import com.liferay.petra.string.StringPool;
  */
 public class BrowserSnifferTemplateUpgradeProcess
 	extends BaseTemplateUpgradeProcess {
+
+	@Override
+	public void doUpgrade() throws Exception {
+		_upgradeDDMTemplates();
+	}
 
 	@Override
 	protected String getContextVariable() {
@@ -28,6 +39,41 @@ public class BrowserSnifferTemplateUpgradeProcess
 	@Override
 	protected String getDeprecatedClassReplacement() {
 		return StringPool.BLANK;
+	}
+
+	private void _upgradeDDMTemplates() throws Exception {
+		try (PreparedStatement selectPreparedStatement =
+				connection.prepareStatement(
+					"select ctCollectionId, templateId, script from " +
+						"DDMTemplate");
+			PreparedStatement updatePreparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update DDMTemplate set script = ? where ctCollectionId " +
+						"= ? and templateId = ?")) {
+
+			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					if (resultSet.getString("script") == null) {
+						continue;
+					}
+
+					updatePreparedStatement.setString(
+						1,
+						replaceDeprecatedClass(
+							Pattern.compile("\\<\\#assign\\s*\\/?\\>"),
+							resultSet.getString("script")));
+					updatePreparedStatement.setLong(
+						2, resultSet.getLong("ctCollectionId"));
+					updatePreparedStatement.setLong(
+						3, resultSet.getLong("templateId"));
+
+					updatePreparedStatement.addBatch();
+				}
+			}
+
+			updatePreparedStatement.executeBatch();
+		}
 	}
 
 }

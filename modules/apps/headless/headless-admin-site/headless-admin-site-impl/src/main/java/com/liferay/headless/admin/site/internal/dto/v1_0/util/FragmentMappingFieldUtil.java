@@ -35,40 +35,27 @@ public class FragmentMappingFieldUtil {
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
 		long scopeGroupId) {
 
-		ServiceContext serviceContext = new ServiceContext();
+		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
-		serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
-		serviceContext.setScopeGroupId(scopeGroupId);
-
-		ServiceContextThreadLocal.pushServiceContext(serviceContext);
-
-		try {
-			String collectionFieldId = jsonObject.getString(
-				"collectionFieldId");
-
-			if (Validator.isNotNull(collectionFieldId)) {
-				return _getCollectionFieldKey(
-					collectionFieldId,
-					(InfoForm)dtoConverterContext.getAttribute(
-						"collectionInfoForm"));
-			}
-
-			if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
-				return _getInstanceFieldKey(
-					infoItemServiceRegistry, jsonObject);
-			}
-
-			String mappedField = jsonObject.getString("mappedField");
-
-			if (Validator.isNotNull(mappedField)) {
-				return _getContextFieldKey(
-					(InfoForm)dtoConverterContext.getAttribute(
-						"displayPageTemplateInfoForm"),
-					mappedField);
-			}
+		if (Validator.isNotNull(collectionFieldId)) {
+			return _getCollectionFieldKey(
+				collectionFieldId,
+				(InfoForm)dtoConverterContext.getAttribute(
+					"collectionInfoForm"));
 		}
-		finally {
-			ServiceContextThreadLocal.popServiceContext();
+
+		if (Validator.isNotNull(jsonObject.getString("fieldId"))) {
+			return _getInstanceFieldKey(
+				infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNotNull(mappedField)) {
+			return _getContextFieldKey(
+				(InfoForm)dtoConverterContext.getAttribute(
+					"displayPageTemplateInfoForm"),
+				mappedField);
 		}
 
 		return null;
@@ -139,8 +126,8 @@ public class FragmentMappingFieldUtil {
 	}
 
 	private static String _getInstanceFieldKey(
-		InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONObject jsonObject) {
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
 
 		InfoItemReference infoItemReference = null;
 
@@ -175,7 +162,21 @@ public class FragmentMappingFieldUtil {
 			return fieldName;
 		}
 
-		InfoForm infoForm = infoItemFormProvider.getInfoForm(infoItem);
+		InfoForm infoForm = null;
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(CompanyThreadLocal.getCompanyId());
+		serviceContext.setScopeGroupId(scopeGroupId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			infoForm = infoItemFormProvider.getInfoForm(infoItem);
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 
 		if (infoForm == null) {
 			return fieldName;

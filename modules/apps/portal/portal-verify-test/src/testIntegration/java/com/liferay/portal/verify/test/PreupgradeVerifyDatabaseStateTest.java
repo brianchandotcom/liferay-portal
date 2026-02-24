@@ -309,17 +309,13 @@ public class PreupgradeVerifyDatabaseStateTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			try (Connection connection = DataAccess.getConnection()) {
-				DBInspector dbInspector = new DBInspector(connection);
+			Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
+				originalData);
 
-				Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
-					dbInspector, originalData);
-
-				Assert.assertEquals(
-					"Stale tables from a previous upgrade detected: " +
-						new TreeSet<>(tableNames),
-					exception.getMessage());
-			}
+			Assert.assertEquals(
+				"Stale tables from a previous upgrade detected: " +
+					new TreeSet<>(tableNames),
+				exception.getMessage());
 		}
 		finally {
 			serviceComponent.setData(originalData);

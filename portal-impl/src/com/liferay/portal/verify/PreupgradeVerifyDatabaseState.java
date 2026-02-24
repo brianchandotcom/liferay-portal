@@ -150,10 +150,9 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 		}
 
 		Set<String> targetVersionNewTableNames =
-			DBResourceUtil.getModuleTableNames(connection);
+			DBResourceUtil.getModuleTableNames();
 
-		targetVersionNewTableNames.addAll(
-			DBResourceUtil.getPortalTableNames(connection));
+		targetVersionNewTableNames.addAll(DBResourceUtil.getPortalTableNames());
 
 		targetVersionNewTableNames.removeAll(tableNames);
 

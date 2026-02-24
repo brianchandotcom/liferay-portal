@@ -48,27 +48,24 @@ public class SideNavigationDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_portletId = _themeDisplay.getPpid();
+
+		_panelCategory = _getActivePanelCategory(
+			PanelCategoryKeys.APPLICATIONS_MENU);
 	}
 
 	public Map<String, Object> getProps() throws Exception {
-		PanelCategory panelCategory = _getPanelCategory();
-
-		if (panelCategory == null) {
-			return Collections.emptyMap();
-		}
-
 		String itemSelectedEventName = String.format(
 			"_%s_selectSite",
 			ProductNavigationProductMenuPortletKeys.
 				PRODUCT_NAVIGATION_PRODUCT_MENU);
 
 		return HashMapBuilder.<String, Object>put(
-			"canonicalName", panelCategory.getLabel(LocaleUtil.ENGLISH)
+			"canonicalName", _panelCategory.getLabel(LocaleUtil.ENGLISH)
 		).put(
 			"categoryImageUrl",
 			String.format(
 				"%s/product_icons/%s_sm.svg",
-				_themeDisplay.getPathThemeImages(), panelCategory.getKey())
+				_themeDisplay.getPathThemeImages(), _panelCategory.getKey())
 		).put(
 			"expandedKeys", _getExpandedKeys()
 		).put(
@@ -76,7 +73,7 @@ public class SideNavigationDisplayContext {
 		).put(
 			"items", _getPropsItems()
 		).put(
-			"label", panelCategory.getLabel(_themeDisplay.getLocale())
+			"label", _panelCategory.getLabel(_themeDisplay.getLocale())
 		).put(
 			"portletId", _portletId
 		).put(
@@ -141,15 +138,9 @@ public class SideNavigationDisplayContext {
 			return expandedKeys;
 		}
 
-		PanelCategory panelCategory = _getPanelCategory();
-
-		if (panelCategory == null) {
-			return expandedKeys;
-		}
-
 		List<PanelCategory> childPanelCategories =
 			_panelCategoryHelper.getChildPanelCategories(
-				panelCategory.getKey(), _themeDisplay);
+				_panelCategory.getKey(), _themeDisplay);
 
 		for (PanelCategory childPanelCategory : childPanelCategories) {
 			expandedKeys.add(childPanelCategory.getKey());
@@ -159,34 +150,19 @@ public class SideNavigationDisplayContext {
 	}
 
 	private String _getExpandedKeysSessionKey() {
-		PanelCategory panelCategory = _getPanelCategory();
-
 		return String.format(
 			"com_liferay_application_list_taglib_SideNavigationExpanded_%sKeys",
-			panelCategory.getKey());
-	}
-
-	private PanelCategory _getPanelCategory() {
-		if (_panelCategory != null) {
-			return _panelCategory;
-		}
-
-		_panelCategory = _getActivePanelCategory(
-			PanelCategoryKeys.APPLICATIONS_MENU);
-
-		return _panelCategory;
+			_panelCategory.getKey());
 	}
 
 	private List<Map<String, Object>> _getPropsItems() throws Exception {
 		List<Map<String, Object>> propsItems = new ArrayList<>();
 
-		PanelCategory panelCategory = _getPanelCategory();
-
-		propsItems.addAll(_getPropsItems(panelCategory));
+		propsItems.addAll(_getPropsItems(_panelCategory));
 
 		for (PanelCategory childPanelCategory :
 				_panelCategoryHelper.getChildPanelCategories(
-					panelCategory.getKey(), _themeDisplay)) {
+					_panelCategory.getKey(), _themeDisplay)) {
 
 			List<Map<String, Object>> childrenPropsItems = _getPropsItems(
 				childPanelCategory);
@@ -249,7 +225,7 @@ public class SideNavigationDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final PanelAppRegistry _panelAppRegistry;
-	private PanelCategory _panelCategory;
+	private final PanelCategory _panelCategory;
 	private final PanelCategoryHelper _panelCategoryHelper;
 	private final String _portletId;
 	private final ThemeDisplay _themeDisplay;

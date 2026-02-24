@@ -3,6 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import React, {SetStateAction} from 'react';
+
+export interface IAccount {
+	externalReferenceCode: string;
+	id: number;
+	logoURL: string | undefined;
+	name: string;
+	status: number;
+	type: string;
+}
+
+export interface IAccounts {
+	items: Array<IAccount>;
+	lastPage: number;
+	page: number;
+	pageSize: number;
+	totalCount: number;
+}
+
 export interface IRoom {
 	actions: {
 		[action: string]: {
@@ -15,6 +34,40 @@ export interface IRoom {
 	embedded: IRoomObjectEntry;
 	entryClassName: string;
 	score: number;
+}
+
+export interface IRoomContext {
+	dataContext: IRoomDataContext;
+	loading: boolean;
+	setDataContext: React.Dispatch<React.SetStateAction<IRoomDataContext>>;
+	setLoading?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface IRoomDataContext {
+	accountId?: number;
+	accountName?: string;
+	description?: string;
+	errors: {
+		accountId?: null | string;
+		description?: null | string;
+		friendlyURL?: null | string;
+		roomName?: null | string;
+		share?: null | string;
+	};
+	friendlyURL: string;
+	roomName: string;
+	share?: {
+		emailAddresses: Array<string>;
+		roleKey?: string;
+	};
+	templateKey?: string;
+}
+
+export interface IRoomInitializerProps {
+	closeModal: () => void;
+	createRedirectURL?: string;
+	numberOfSteps?: number;
+	siteTemplates?: Array<ISiteTemplate>;
 }
 
 export interface IRoomObjectEntry {
@@ -49,4 +102,21 @@ export interface IRoomObjectEntry {
 		label: string;
 		label_i18n: string;
 	};
+}
+
+export interface IRoomStepProps {
+	setHandleStepSubmit(
+		callback: SetStateAction<(event: Event) => Promise<boolean>>
+	): void;
+	numberOfSteps: number;
+	showHeader?: boolean;
+	siteTemplates?: Array<ISiteTemplate>;
+	step?: number;
+}
+
+export interface ISiteTemplate {
+	description: string;
+	friendlyURL: string;
+	name: string;
+	uuid: string;
 }

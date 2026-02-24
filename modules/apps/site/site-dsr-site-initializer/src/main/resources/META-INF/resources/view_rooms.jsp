@@ -14,6 +14,7 @@ ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext = (ViewRoomsSectio
 <div>
 	<div class="cms-section custom-empty-state">
 		<frontend-data-set:headless-display
+			additionalProps="<%= viewRoomsSectionDisplayContext.getAdditionalProps() %>"
 			apiURL="<%= viewRoomsSectionDisplayContext.getAPIURL() %>"
 			creationMenu="<%= viewRoomsSectionDisplayContext.getCreationMenu() %>"
 			fdsActionDropdownItems="<%= viewRoomsSectionDisplayContext.getFDSActionDropdownItems() %>"

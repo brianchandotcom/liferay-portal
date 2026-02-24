@@ -26,6 +26,9 @@ components:
                     type: array
                 outputVariable:
                     $ref: "#/components/schemas/Variable"
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
                 title:
                     type: string
                 version:
@@ -55,6 +58,16 @@ components:
         Scope:
             properties:
                 externalReferenceCode:
+                    type: string
+            type: object
+        Status:
+            properties:
+                code:
+                    format: int32
+                    type: integer
+                label:
+                    type: string
+                label_i18n:
                     type: string
             type: object
         Task:

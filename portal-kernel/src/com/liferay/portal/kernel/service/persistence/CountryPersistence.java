@@ -160,6 +160,62 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid(String uuid);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid(
+		String uuid, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid(
+		String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param uuid the uuid
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByUuid_PrevAndNext(
+			long countryId, String uuid,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -173,6 +229,14 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByUuid(String uuid);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where uuid = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByUuid(String uuid);
 
 	/**
 	 * Returns all the countries where uuid = &#63; and companyId = &#63;.
@@ -312,6 +376,67 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid_C(
+		String uuid, long companyId);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByUuid_C(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByUuid_C_PrevAndNext(
+			long countryId, String uuid, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where uuid = &#63; and companyId = &#63; from the database.
 	 *
 	 * @param uuid the uuid
@@ -327,6 +452,15 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByUuid_C(String uuid, long companyId);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where uuid = &#63; and companyId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByUuid_C(String uuid, long companyId);
 
 	/**
 	 * Returns all the countries where companyId = &#63;.
@@ -457,6 +591,62 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByCompanyId(long companyId);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByCompanyId(
+		long companyId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByCompanyId_PrevAndNext(
+			long countryId, long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -470,6 +660,14 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByCompanyId(long companyId);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByCompanyId(long companyId);
 
 	/**
 	 * Returns all the countries where active = &#63;.
@@ -600,6 +798,62 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByActive(boolean active);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByActive(
+		boolean active, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByActive(
+		boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where active = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByActive_PrevAndNext(
+			long countryId, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where active = &#63; from the database.
 	 *
 	 * @param active the active
@@ -613,6 +867,14 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByActive(boolean active);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where active = &#63;.
+	 *
+	 * @param active the active
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByActive(boolean active);
 
 	/**
 	 * Returns the country where companyId = &#63; and a2 = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -853,6 +1115,67 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_Active(
+		long companyId, boolean active);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_Active(
+		long companyId, boolean active, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where companyId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_Active(
+		long companyId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByC_Active_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -868,6 +1191,15 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_Active(long companyId, boolean active);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where companyId = &#63; and active = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_Active(long companyId, boolean active);
 
 	/**
 	 * Returns the country where companyId = &#63; and name = &#63; or throws a <code>NoSuchCountryException</code> if it could not be found.
@@ -1121,6 +1453,74 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B(
+		long companyId, boolean active, boolean billingAllowed);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B(
+		long companyId, boolean active, boolean billingAllowed, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B(
+		long companyId, boolean active, boolean billingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByC_A_B_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			boolean billingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; and billingAllowed = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1139,6 +1539,17 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_A_B(
+		long companyId, boolean active, boolean billingAllowed);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where companyId = &#63; and active = &#63; and billingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_A_B(
 		long companyId, boolean active, boolean billingAllowed);
 
 	/**
@@ -1293,6 +1704,74 @@ public interface CountryPersistence
 		throws NoSuchCountryException;
 
 	/**
+	 * Returns all the countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
+	 * Returns the countries before and after the current country in the ordered set of countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the primary key of the current country
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next country
+	 * @throws NoSuchCountryException if a country with the primary key could not be found
+	 */
+	public Country[] filterFindByC_A_S_PrevAndNext(
+			long countryId, long companyId, boolean active,
+			boolean shippingAllowed,
+			com.liferay.portal.kernel.util.OrderByComparator<Country>
+				orderByComparator)
+		throws NoSuchCountryException;
+
+	/**
 	 * Removes all the countries where companyId = &#63; and active = &#63; and shippingAllowed = &#63; from the database.
 	 *
 	 * @param companyId the company ID
@@ -1311,6 +1790,17 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_A_S(
+		long companyId, boolean active, boolean shippingAllowed);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where companyId = &#63; and active = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param active the active
+	 * @param shippingAllowed the shipping allowed
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_A_S(
 		long companyId, boolean active, boolean shippingAllowed);
 
 	/**
@@ -1460,6 +1950,60 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
+	 * Returns all the countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
 	 * Removes all the countries where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -1481,6 +2025,19 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_A_B_G(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_A_B_G(
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled);
 
@@ -1631,6 +2188,60 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
+	 * Returns all the countries that the user has permission to view where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_G_S(
+		long countryId, boolean active, boolean groupFilterEnabled,
+		boolean shippingAllowed);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_G_S(
+		long countryId, boolean active, boolean groupFilterEnabled,
+		boolean shippingAllowed, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_G_S(
+		long countryId, boolean active, boolean groupFilterEnabled,
+		boolean shippingAllowed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
 	 * Removes all the countries where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -1652,6 +2263,19 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_A_G_S(
+		long countryId, boolean active, boolean groupFilterEnabled,
+		boolean shippingAllowed);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where countryId = &#63; and active = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_A_G_S(
 		long countryId, boolean active, boolean groupFilterEnabled,
 		boolean shippingAllowed);
 
@@ -1811,6 +2435,64 @@ public interface CountryPersistence
 			orderByComparator);
 
 	/**
+	 * Returns all the countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @return the matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G_S(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, boolean shippingAllowed);
+
+	/**
+	 * Returns a range of all the countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @return the range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G_S(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, boolean shippingAllowed, int start,
+		int end);
+
+	/**
+	 * Returns an ordered range of all the countries that the user has permissions to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CountryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @param start the lower bound of the range of countries
+	 * @param end the upper bound of the range of countries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching countries that the user has permission to view
+	 */
+	public java.util.List<Country> filterFindByC_A_B_G_S(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, boolean shippingAllowed, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Country>
+			orderByComparator);
+
+	/**
 	 * Removes all the countries where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63; from the database.
 	 *
 	 * @param countryId the country ID
@@ -1834,6 +2516,20 @@ public interface CountryPersistence
 	 * @return the number of matching countries
 	 */
 	public int countByC_A_B_G_S(
+		long countryId, boolean active, boolean billingAllowed,
+		boolean groupFilterEnabled, boolean shippingAllowed);
+
+	/**
+	 * Returns the number of countries that the user has permission to view where countryId = &#63; and active = &#63; and billingAllowed = &#63; and groupFilterEnabled = &#63; and shippingAllowed = &#63;.
+	 *
+	 * @param countryId the country ID
+	 * @param active the active
+	 * @param billingAllowed the billing allowed
+	 * @param groupFilterEnabled the group filter enabled
+	 * @param shippingAllowed the shipping allowed
+	 * @return the number of matching countries that the user has permission to view
+	 */
+	public int filterCountByC_A_B_G_S(
 		long countryId, boolean active, boolean billingAllowed,
 		boolean groupFilterEnabled, boolean shippingAllowed);
 

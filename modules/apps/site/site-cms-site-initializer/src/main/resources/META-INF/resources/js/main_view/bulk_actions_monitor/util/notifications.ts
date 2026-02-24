@@ -78,11 +78,14 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_COPY]: {
 		info: {
 			all: Liferay.Language.get('copy-action-started-for-all-assets'),
-			plural: Liferay.Language.get(
-				'copy-action-started-for-x-assets'
-			),
+			plural: Liferay.Language.get('copy-action-started-for-x-assets'),
+			singular: Liferay.Language.get('copy-action-started-for-one-asset'),
+		},
+		success: {
+			all: Liferay.Language.get('copy-action-finished-for-all-assets'),
+			plural: Liferay.Language.get('copy-action-finished-for-x-assets'),
 			singular: Liferay.Language.get(
-				'copy-action-started-for-one-asset'
+				'copy-action-finished-for-one-asset'
 			),
 		},
 	},

@@ -9,11 +9,11 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.DTOConverterContextUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
-import com.liferay.headless.admin.site.internal.util.EnabledUtil;
 import com.liferay.headless.admin.site.resource.v1_0.WidgetPageWidgetInstanceResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchPortletException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutType;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -52,7 +52,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -94,7 +98,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String widgetInstanceExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -131,7 +139,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -172,7 +184,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,
@@ -207,7 +223,11 @@ public class WidgetPageWidgetInstanceResourceImpl
 			WidgetPageWidgetInstance widgetPageWidgetInstance)
 		throws Exception {
 
-		EnabledUtil.checkEnabled(contextCompany);
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-74328")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			sitePageExternalReferenceCode,

@@ -28,7 +28,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rubén Pulido
  */
-@FeatureFlag("LPD-35443")
+@FeatureFlag("LPD-74328")
 @RunWith(Arquillian.class)
 public class WidgetPageWidgetInstanceResourceTest
 	extends BaseWidgetPageWidgetInstanceResourceTestCase {

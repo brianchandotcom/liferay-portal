@@ -13,6 +13,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LayoutTypeException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -110,7 +110,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToContentLayoutWithMasterLayoutPlid()
 		throws Exception {
 
-		Layout emptyLayout = _addEmptyLayout();
+		Layout emptyLayout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -137,7 +137,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToContentLayoutWithPageTemplateEntryId()
 		throws Exception {
 
-		Layout emptyLayout = _addEmptyLayout();
+		Layout emptyLayout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -197,7 +197,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToPortletLayoutWithoutPermissions()
 		throws Exception {
 
-		Layout emptyLayout = _addEmptyLayout();
+		Layout emptyLayout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		User user = _userLocalService.getDefaultUser(_group.getCompanyId());
 
@@ -221,7 +221,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	public void testConvertEmptyLayoutToPortletLayoutWithPageTemplateEntryId()
 		throws Exception {
 
-		Layout emptyLayout = _addEmptyLayout();
+		Layout emptyLayout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
@@ -255,15 +255,6 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 		Assert.assertEquals(
 			layoutPageTemplateEntry.getExternalReferenceCode(),
 			layout.getPortletLayoutPageTemplateEntryERC());
-	}
-
-	private Layout _addEmptyLayout() throws Exception {
-		return _layoutLocalService.addLayout(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
-			LayoutConstants.TYPE_EMPTY, true, StringPool.BLANK,
-			_serviceContext);
 	}
 
 	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
@@ -321,7 +312,7 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 	}
 
 	private void _testCannotConvertEmptyLayout(String type) throws Exception {
-		Layout emptyLayout = _addEmptyLayout();
+		Layout emptyLayout = LayoutTestUtil.addTypeEmptyLayout(_group);
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			new MockLiferayPortletActionResponse();

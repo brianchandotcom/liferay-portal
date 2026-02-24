@@ -1,4 +1,4 @@
-# ClayUI Contributor Guide
+# AGENTS.md
 
 This file provides guidance for AI agents and contributors working on ClayUI in this repository.
 

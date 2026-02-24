@@ -447,6 +447,8 @@ test('verify that the user can order the results inside Assigned to My Roles by 
 
 		await workflowTasksPage.updateDueDate(webContent1.title, '10/02');
 
+		await workflowTasksPage.goToAssignedToMyRoles();
+
 		await workflowTasksPage.updateDueDate(webContent2.title, '09/01');
 
 		await page.getByLabel('Order').click();
@@ -454,6 +456,8 @@ test('verify that the user can order the results inside Assigned to My Roles by 
 		await page.getByRole('menuitem', {name: 'Due Date'}).click();
 
 		await page.waitForLoadState('networkidle');
+
+		await workflowTasksPage.goToAssignedToMyRoles();
 
 		const rowWebContent1 = page.getByRole('row', {name: webContent1.title});
 

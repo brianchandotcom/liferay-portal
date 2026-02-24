@@ -61,10 +61,13 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -74,6 +77,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -946,6 +950,65 @@ public class DDMFormEvaluatorHelperTest {
 	}
 
 	@Test
+	@TestInfo("LPD-80263")
+	public void testSetVisibleFunction() throws Exception {
+		DDMForm ddmForm = new DDMForm();
+
+		ddmForm.addDDMFormField(
+			_createDDMFormField("text1", "text", FieldConstants.STRING));
+
+		DDMFormField ddmFormField = _createDDMFormField(
+			"text2", "text", FieldConstants.STRING);
+
+		ddmFormField.setVisibilityExpression("FALSE");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Collections.singletonList("setVisible(\"text2\", true)"),
+				"equals(getValue(\"text1\"), \"value1\")"));
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Collections.singletonList("setVisible(\"text2\", true)"),
+				"equals(getValue(\"text1\"), \"value2\")"));
+
+		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
+			ddmForm);
+
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text1_instanceId", "text1", new UnlocalizedValue("value1")));
+		ddmFormValues.addDDMFormFieldValue(
+			DDMFormValuesTestUtil.createDDMFormFieldValue(
+				"text2_instanceId", "text2",
+				new UnlocalizedValue(RandomTestUtil.randomString())));
+
+		DDMFormEvaluatorEvaluateResponse ddmFormEvaluatorEvaluateResponse =
+			evaluate(ddmForm, ddmFormValues);
+
+		Map<DDMFormEvaluatorFieldContextKey, Map<String, Object>>
+			ddmFormFieldsPropertyChanges =
+				ddmFormEvaluatorEvaluateResponse.
+					getDDMFormFieldsPropertyChanges();
+
+		Assert.assertEquals(
+			ddmFormFieldsPropertyChanges.toString(), 1,
+			ddmFormFieldsPropertyChanges.size());
+
+		Map<String, Object> ddmFormFieldPropertyChanges =
+			ddmFormFieldsPropertyChanges.get(
+				new DDMFormEvaluatorFieldContextKey(
+					"text2", "text2_instanceId"));
+
+		Assert.assertEquals(
+			ddmFormFieldPropertyChanges.toString(), 1,
+			ddmFormFieldPropertyChanges.size());
+
+		Assert.assertTrue((Boolean)ddmFormFieldPropertyChanges.get("visible"));
+	}
+
+	@Test
 	public void testShowHideAndEnableDisableRules() throws Exception {
 		DDMForm ddmForm = new DDMForm();
 
@@ -1002,9 +1065,11 @@ public class DDMFormEvaluatorHelperTest {
 					"field1", "field1_instanceId"));
 
 		Assert.assertEquals(
-			ddmFormFieldPropertyChanges.toString(), 1,
+			ddmFormFieldPropertyChanges.toString(), 2,
 			ddmFormFieldPropertyChanges.size());
 
+		Assert.assertTrue(
+			Validator.isNull(ddmFormFieldPropertyChanges.get("value")));
 		Assert.assertFalse((boolean)ddmFormFieldPropertyChanges.get("visible"));
 
 		// Field 2
@@ -1767,23 +1832,26 @@ public class DDMFormEvaluatorHelperTest {
 			DDMFormValues ddmFormValues, Locale locale)
 		throws Exception {
 
-		DDMFormEvaluatorEvaluateRequest.Builder builder =
-			DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
-				ddmForm, ddmFormValues, locale);
-
-		builder.withCompanyId(
-			1L
-		).withDDMFormLayout(
-			ddmFormLayout
-		).withGroupId(
-			1L
-		).withUserId(
-			1L
-		);
-
 		DDMFormEvaluatorHelper ddmFormEvaluatorHelper =
 			new DDMFormEvaluatorHelper(
-				_ddmExpressionFactory, builder.build(),
+				_ddmExpressionFactory,
+				DDMFormEvaluatorEvaluateRequest.Builder.newBuilder(
+					ddmForm, ddmFormValues, locale
+				).withCompanyId(
+					RandomTestUtil.randomLong()
+				).withDDMFormInstanceId(
+					RandomTestUtil.randomLong()
+				).withDDMFormLayout(
+					ddmFormLayout
+				).withEditingFieldValue(
+					true
+				).withGroupId(
+					RandomTestUtil.randomLong()
+				).withUserId(
+					RandomTestUtil.randomLong()
+				).withViewMode(
+					true
+				).build(),
 				_mockDDMFormFieldTypeServicesRegistry(),
 				_mockDDMFormPageChangeRegistry());
 

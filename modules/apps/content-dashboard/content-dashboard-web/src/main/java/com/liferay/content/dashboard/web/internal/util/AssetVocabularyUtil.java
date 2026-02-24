@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Collection;
@@ -118,8 +119,9 @@ public class AssetVocabularyUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		assetVocabularyLocalService.addVocabulary(
-			null, user.getUserId(), company.getGroupId(), assetVocabularyName,
-			StringPool.BLANK, titleMap, Collections.emptyMap(),
+			_toExternalReferenceCode(assetVocabularyName), user.getUserId(),
+			company.getGroupId(), assetVocabularyName, StringPool.BLANK,
+			titleMap, Collections.emptyMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType,
 			serviceContext);
 	}
@@ -159,6 +161,10 @@ public class AssetVocabularyUtil {
 			classTypePKs, requireds);
 
 		return assetVocabularySettingsHelper;
+	}
+
+	private static String _toExternalReferenceCode(String title) {
+		return "L_" + TextFormatter.format(title, TextFormatter.A);
 	}
 
 }

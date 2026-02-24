@@ -843,7 +843,31 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public boolean matchesLabelExpression(String labelExpression) {
-		return _matchesLabels(labelExpression, getAssignedLabels());
+		if (_matchesLabels(labelExpression, getAssignedLabels())) {
+			return true;
+		}
+
+		for (JenkinsSlave jenkinsSlave : getJenkinsSlaves()) {
+			if (jenkinsSlave.isEC2FleetNodeComputer() ||
+				jenkinsSlave.isOffline()) {
+
+				continue;
+			}
+
+			if (_matchesLabels(
+					labelExpression, jenkinsSlave.getAssignedLabels())) {
+
+				return true;
+			}
+		}
+
+		for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+			if (_matchesLabels(labelExpression, awsFleetCloud.getLabels())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

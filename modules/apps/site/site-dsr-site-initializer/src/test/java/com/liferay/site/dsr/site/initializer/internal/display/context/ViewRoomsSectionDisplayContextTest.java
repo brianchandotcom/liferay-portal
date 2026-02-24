@@ -12,9 +12,18 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -22,6 +31,7 @@ import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +47,9 @@ import org.junit.Test;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
@@ -50,7 +63,7 @@ public class ViewRoomsSectionDisplayContextTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() {
+	public void setUp() throws PortalException {
 		_languageUtilMockedStatic.when(
 			() -> LanguageUtil.get(
 				Mockito.any(HttpServletRequest.class), Mockito.eq("delete"))
@@ -71,6 +84,43 @@ public class ViewRoomsSectionDisplayContextTest {
 				Mockito.eq("new-digital-sales-room"))
 		).thenReturn(
 			"New Digital Sales Room"
+		);
+
+		_layoutSetPrototypeLocalServiceUtilMockedStatic.when(
+			() -> LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypes(
+				Mockito.anyLong())
+		).thenReturn(
+			Collections.singletonList(_layoutSetPrototype)
+		);
+
+		Mockito.when(
+			_group.getDisplayURL(Mockito.any(), Mockito.anyBoolean())
+		).thenReturn(
+			"groupDisplayURL"
+		);
+
+		Mockito.when(
+			_layoutSetPrototype.getDescription(Mockito.any(Locale.class))
+		).thenReturn(
+			"siteTemplateDescription"
+		);
+
+		Mockito.when(
+			_layoutSetPrototype.getGroup()
+		).thenReturn(
+			_group
+		);
+
+		Mockito.when(
+			_layoutSetPrototype.getName(Mockito.any(Locale.class))
+		).thenReturn(
+			"siteTemplateName"
+		);
+
+		Mockito.when(
+			_layoutSetPrototype.getUuid()
+		).thenReturn(
+			"siteTemplateUuid"
 		);
 
 		Mockito.when(
@@ -107,6 +157,37 @@ public class ViewRoomsSectionDisplayContextTest {
 	@After
 	public void tearDown() {
 		_languageUtilMockedStatic.close();
+		_layoutSetPrototypeLocalServiceUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testGetAdditionalProps() throws Exception {
+		ViewRoomsSectionDisplayContext viewRoomsSectionDisplayContext =
+			new ViewRoomsSectionDisplayContext(
+				_getMockHttpServletRequest(), _objectDefinition,
+				Mockito.mock(ObjectEntryService.class));
+
+		_assertEquals(
+			viewRoomsSectionDisplayContext.getAdditionalProps(),
+			HashMapBuilder.<String, Object>put(
+				"createRedirectURL",
+				StringBundler.concat(
+					DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId=",
+					"{siteId}")
+			).put(
+				"siteTemplates",
+				ListUtil.fromCollection(
+					Collections.singletonList(
+						JSONUtil.put(
+							"description", "siteTemplateDescription"
+						).put(
+							"friendlyURL", "groupDisplayURL"
+						).put(
+							"name", "siteTemplateName"
+						).put(
+							"uuid", "siteTemplateUuid"
+						)))
+			).build());
 	}
 
 	@Test
@@ -200,6 +281,22 @@ public class ViewRoomsSectionDisplayContextTest {
 			fdsActionDropdownItems.get(1));
 	}
 
+	private void _assertEquals(
+		Map<String, ?> expectedMap, Map<String, ?> actualMap) {
+
+		Assert.assertEquals(
+			actualMap.toString(), expectedMap.size(), actualMap.size());
+
+		JSONObject expectedJSONObject = JSONFactoryUtil.createJSONObject(
+			expectedMap);
+		JSONObject actualJSONObject = JSONFactoryUtil.createJSONObject(
+			actualMap);
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(), actualJSONObject.toString(),
+			JSONCompareMode.STRICT);
+	}
+
 	private void _assertFDSActionDropdownItem(
 		String expectedHref, String expectedIcon, String expectedId,
 		String expectedLabel, String expectedMethod,
@@ -230,8 +327,14 @@ public class ViewRoomsSectionDisplayContextTest {
 		return mockHttpServletRequest;
 	}
 
+	private final Group _group = Mockito.mock(Group.class);
 	private final MockedStatic<LanguageUtil> _languageUtilMockedStatic =
 		Mockito.mockStatic(LanguageUtil.class);
+	private final LayoutSetPrototype _layoutSetPrototype = Mockito.mock(
+		LayoutSetPrototype.class);
+	private final MockedStatic<LayoutSetPrototypeLocalServiceUtil>
+		_layoutSetPrototypeLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			LayoutSetPrototypeLocalServiceUtil.class);
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);

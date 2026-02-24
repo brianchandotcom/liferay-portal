@@ -231,6 +231,10 @@ public class WorkspacePlugin implements Plugin<Settings> {
 			GradleUtil.setProperty(
 				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.3.x");
 		}
+		else {
+			GradleUtil.setProperty(
+				project, PortalTools.PORTAL_VERSION_PROPERTY_NAME, "7.4.x");
+		}
 	}
 
 	private static final Logger _logger = Logging.getLogger(

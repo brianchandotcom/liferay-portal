@@ -12,6 +12,7 @@ import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.Http;
@@ -40,6 +41,10 @@ public class ExportImportAttachmentManagerImpl
 
 	@Override
 	public String getFileURL(DLFileEntry dlFileEntry) throws Exception {
+		if (dlFileEntry == null) {
+			return null;
+		}
+
 		PortletDataContext portletDataContext =
 			PortletDataContextThreadLocal.getPortletDataContext();
 
@@ -68,6 +73,39 @@ public class ExportImportAttachmentManagerImpl
 
 			return _PROTOCOL + ":" + fileKey;
 		}
+	}
+
+	@Override
+	public String getFileURL(Image image) throws Exception {
+		if (image == null) {
+			return null;
+		}
+
+		PortletDataContext portletDataContext =
+			PortletDataContextThreadLocal.getPortletDataContext();
+
+		if ((portletDataContext == null) ||
+			(portletDataContext.getZipWriter() == null)) {
+
+			Company company = _companyLocalService.getCompany(
+				image.getCompanyId());
+
+			boolean secure = _isSecure();
+
+			String portalURL = _portal.getPortalURL(
+				company.getVirtualHostname(),
+				_portal.getPortalServerPort(secure), secure);
+
+			return portalURL + "/image/layout_icon?img_id=" +
+				image.getImageId();
+		}
+
+		String fileKey = image.getExternalReferenceCode();
+
+		portletDataContext.addZipEntry(
+			_getZipPath(fileKey), image.getTextObj());
+
+		return _PROTOCOL + ":" + fileKey;
 	}
 
 	@Override

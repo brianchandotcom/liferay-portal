@@ -6,6 +6,7 @@
 package com.liferay.exportimport.attachment;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.portal.kernel.model.Image;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,6 +17,8 @@ import java.net.URL;
 public interface ExportImportAttachmentManager {
 
 	public String getFileURL(DLFileEntry dlFileEntry) throws Exception;
+
+	public String getFileURL(Image image) throws Exception;
 
 	public URL getURL(String url) throws MalformedURLException;
 

@@ -80,6 +80,9 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -112,6 +115,7 @@ public class SitePageResourceImpl
 	implements ExportImportVulcanBatchEngineTaskItemDelegate<SitePage> {
 
 	@Override
+	@Tags({@Tag(description = "[BETA]", name = "SitePage")})
 	public void deleteSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode)

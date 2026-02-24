@@ -48,6 +48,9 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +70,7 @@ public class PageSpecificationResourceImpl
 	extends BasePageSpecificationResourceImpl {
 
 	@Override
+	@Tags({@Tag(description = "[DEV]", name = "PageSpecification")})
 	public void deleteSitePageSpecification(
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode)

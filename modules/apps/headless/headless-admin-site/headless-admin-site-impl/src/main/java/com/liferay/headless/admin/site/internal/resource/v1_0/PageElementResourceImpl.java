@@ -31,6 +31,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -45,6 +48,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 	@Override
+	@Tags({@Tag(description = "[DEV]", name = "PageElement")})
 	public void deleteSitePageSpecificationPageExperiencePageElement(
 			String siteExternalReferenceCode,
 			String pageSpecificationExternalReferenceCode,

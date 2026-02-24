@@ -27,6 +27,9 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.tags.Tags;
+
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
@@ -52,6 +55,7 @@ public class DisplayPageTemplateFolderResourceImpl
 		<DisplayPageTemplateFolder> {
 
 	@Override
+	@Tags({@Tag(description = "[BETA]", name = "DisplayPageTemplateFolder")})
 	public void deleteSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode)

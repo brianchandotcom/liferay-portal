@@ -2896,13 +2896,6 @@ components:
                     items:
                         $ref: "#/components/schemas/PageElement"
                     type: array
-                pageRules:
-                    # @review
-                    description:
-                        The page rules in the experience.
-                    items:
-                        $ref: "#/components/schemas/PageRule"
-                    type: array
                 pageSpecificationExternalReferenceCode:
                     # @review
                     description:
@@ -2941,94 +2934,6 @@ components:
                 title:
                     description:
                         The title or name of the entity that this navigation menu item is set to.
-                    type: string
-            type: object
-        PageRule:
-            # @review
-            description:
-                The definition of a page rule.
-            properties:
-                conditionType:
-                    # @review
-                    description:
-                        The custom name of a Page rule.
-                    enum: [All, Any]
-                    type: string
-                externalReferenceCode:
-                    # @review
-                    description:
-                        The page rule external reference code.
-                    type: string
-                name:
-                    # @review
-                    description:
-                        The custom name of a page rule.
-                    type: string
-                pageRuleActions:
-                    # @review
-                    description:
-                        A list of actions of a page rule.
-                    items:
-                        $ref: "#/components/schemas/PageRuleAction"
-                    type: array
-                pageRuleConditions:
-                    # @review
-                    description:
-                        A list of conditions of a page rule.
-                    items:
-                        $ref: "#/components/schemas/PageRuleCondition"
-                    type: array
-            type: object
-        PageRuleAction:
-            # @review
-            description:
-                The definition of a page rule action.
-            properties:
-                action:
-                    # @review
-                    description:
-                        The page rule action's action.
-                    type: string
-                externalReferenceCode:
-                    # @review
-                    description:
-                        The page rule action's external reference code.
-                    type: string
-                itemId:
-                    # @review
-                    description:
-                        The page rule action's item ID.
-                    type: string
-                type:
-                    # @review
-                    description:
-                        The page rule action's type.
-                    type: string
-            type: object
-        PageRuleCondition:
-            # @review
-            description:
-                The definition of a Page Rule Condition.
-            properties:
-                condition:
-                    # @review
-                    description:
-                        The page rule condition's description.
-                    type: string
-                externalReferenceCode:
-                    # @review
-                    description:
-                        The page rule condition's external reference code.
-                    type: string
-                type:
-                    # @review
-                    description:
-                        The page rule condition's type.
-                    type: string
-                value:
-                    # @review
-                    description:
-                        The page rule condition's value.
                     type: string
             type: object
         PageSetPageSettings:

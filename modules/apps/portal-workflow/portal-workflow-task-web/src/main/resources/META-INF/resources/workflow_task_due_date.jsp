@@ -72,7 +72,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 			method: 'POST',
 		}).then(() => {
 			Liferay.Util.getOpener().<portlet:namespace />refreshPortlet(
-				'<%= PortalUtil.escapeRedirect(redirect.toString()) %>'
+				'<%= HtmlUtil.escape(redirect.toString()) %>'
 			);
 			Liferay.Util.getWindow('<portlet:namespace />updateDialog').destroy();
 		});

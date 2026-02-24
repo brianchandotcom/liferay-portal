@@ -1,0 +1,140 @@
+@import 'atlas-variables';
+
+.dsr-container-wrapper {
+	background-color: #fff;
+	flex: 0 0 calc(10 / 12 * 100%);
+	max-width: calc(10 / 12 * 100%);
+	padding: 2rem;
+
+	&.dsr-settings {
+		background-color: transparent;
+		display: flex;
+		flex: auto;
+		max-width: 100%;
+		padding: 0;
+		width: 100%;
+
+		& > .row {
+			margin: 0;
+			width: 100%;
+
+			& > .col-lg-2 {
+				padding: 2rem;
+			}
+
+			& > .col-lg-10 {
+				background-color: #fff;
+				padding: 2rem;
+			}
+		}
+	}
+
+	.menubar-vertical-expand-lg {
+		max-width: 100%;
+	}
+}
+
+.dsr-select-template-modal {
+	.list-group-header {
+		background-color: transparent;
+		border: 0;
+		border-bottom: 1px solid $gray-200;
+		margin-bottom: 0;
+		padding-bottom: 1rem;
+	}
+
+	.list-group-item {
+		border: 0;
+		border-radius: 0.5rem;
+	}
+
+	.modal-body {
+		display: flex;
+		height: 70vh;
+		min-height: 500px;
+
+		& > .row {
+			flex: 1;
+		}
+	}
+
+	.col-8 {
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.dsr-site-role-input {
+	.dsr-site-role-trigger-button {
+		background-color: transparent;
+		border: 0;
+		bottom: 0.5rem;
+		position: absolute;
+		right: 2.5rem;
+	}
+
+	.input-group-item-shrink {
+		padding-left: 2.5rem;
+	}
+}
+
+.dsr-room-management {
+	.cell-modifiedDate {
+		white-space: nowrap;
+	}
+
+	.cell-name {
+		max-width: 37rem;
+	}
+}
+
+.dsr-template-preview {
+	background: $gray-200 url(../images/success_state.svg) no-repeat center
+		center;
+	background-size: 16rem;
+	border: 1px solid $gray-200;
+	border-radius: 0.5rem;
+	flex: 1;
+	min-height: 400px;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+
+	iframe {
+		border: 0;
+		height: 100%;
+		width: 100%;
+		z-index: 1;
+	}
+
+	.iframe-wrapper {
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+	}
+}
+
+.form-group.has-error {
+	.form-control {
+		border-color: $danger;
+		padding-right: 2.5rem;
+	}
+
+	.form-feedback-item {
+		color: $danger;
+	}
+}
+
+.portlet-digital-sales-room-management {
+	background-color: #fff;
+	border: 1px solid $gray-200;
+	border-radius: 0.5rem;
+	padding: 0.25rem 0;
+
+	.navbar-form > * {
+		padding-left: 0;
+	}
+}

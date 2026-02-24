@@ -12,13 +12,21 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectEntryService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.dsr.site.initializer.internal.constants.DSRConstants;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Stefano Motta
@@ -31,6 +39,21 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 		ObjectEntryService objectEntryService) {
 
 		super(httpServletRequest, objectDefinition, objectEntryService);
+	}
+
+	public Map<String, Object> getAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"createRedirectURL",
+			() -> StringBundler.concat(
+				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+				DSRConstants.DSR_FRIENDLY_URL, "/edit_room?siteId={siteId}")
+		).put(
+			"siteTemplates",
+			() -> TransformUtil.transform(
+				LayoutSetPrototypeLocalServiceUtil.getLayoutSetPrototypes(
+					objectDefinition.getCompanyId()),
+				this::_getLayoutSetPrototypeJSONObject)
+		).build();
 	}
 
 	@Override
@@ -98,6 +121,26 @@ public class ViewRoomsSectionDisplayContext extends BaseSectionDisplayContext {
 			).build(
 				"delete"
 			));
+	}
+
+	private JSONObject _getLayoutSetPrototypeJSONObject(
+		LayoutSetPrototype layoutSetPrototype) {
+
+		return JSONUtil.put(
+			"description",
+			() -> layoutSetPrototype.getDescription(themeDisplay.getLocale())
+		).put(
+			"friendlyURL",
+			() -> {
+				Group group = layoutSetPrototype.getGroup();
+
+				return group.getDisplayURL(themeDisplay, true);
+			}
+		).put(
+			"name", () -> layoutSetPrototype.getName(themeDisplay.getLocale())
+		).put(
+			"uuid", layoutSetPrototype.getUuid()
+		);
 	}
 
 }

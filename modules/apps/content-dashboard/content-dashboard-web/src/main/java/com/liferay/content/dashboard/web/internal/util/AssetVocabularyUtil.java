@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public class AssetVocabularyUtil {
 
-	public static void addAssetVocabulary(
+	public static void addReservedAssetVocabulary(
 			AssetVocabularyLocalService assetVocabularyLocalService,
 			Collection<Long> classNameIds, Company company,
 			String assetVocabularyName, int visibilityType)

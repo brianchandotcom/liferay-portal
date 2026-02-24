@@ -20,10 +20,8 @@ import com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetInstancePageElementDefinition;
-import com.liferay.info.exception.NoSuchFormVariationException;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.InfoFormUtil;
 import com.liferay.info.form.InfoForm;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFormProvider;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -40,8 +38,6 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
@@ -119,44 +115,6 @@ public class PageElementDTOConverter
 					});
 			}
 		};
-	}
-
-	private InfoForm _getCollectionInfoForm(
-		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
-		long scopeGroupId) {
-
-		JSONObject collectionJSONObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if (collectionJSONObject == null) {
-			return null;
-		}
-
-		String itemType = collectionJSONObject.getString("itemType");
-
-		if (itemType == null) {
-			return null;
-		}
-
-		InfoItemFormProvider<Object> infoItemFormProvider =
-			_infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFormProvider.class, itemType);
-
-		if (infoItemFormProvider == null) {
-			return null;
-		}
-
-		try {
-			return infoItemFormProvider.getInfoForm(
-				collectionJSONObject.getString("itemSubtype"), scopeGroupId);
-		}
-		catch (NoSuchFormVariationException noSuchFormVariationException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchFormVariationException);
-			}
-		}
-
-		return null;
 	}
 
 	private PageElementDefinition _getPageElementDefinition(
@@ -308,7 +266,7 @@ public class PageElementDTOConverter
 
 			dtoConverterContext.setAttribute(
 				"collectionInfoForm",
-				_getCollectionInfoForm(
+				InfoFormUtil.getCollectionInfoForm(
 					(CollectionStyledLayoutStructureItem)layoutStructureItem,
 					scopeGroupId));
 		}
@@ -346,9 +304,6 @@ public class PageElementDTOConverter
 
 		return true;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		PageElementDTOConverter.class);
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.CollectionDisplayPageElementDefinitionDTOConverter)"
@@ -411,9 +366,6 @@ public class PageElementDTOConverter
 	private DTOConverter
 		<RowStyledLayoutStructureItem, GridPageElementDefinition>
 			_gridPageElementDefinitionDTOConverter;
-
-	@Reference
-	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.ModulePageElementDefinitionDTOConverter)"

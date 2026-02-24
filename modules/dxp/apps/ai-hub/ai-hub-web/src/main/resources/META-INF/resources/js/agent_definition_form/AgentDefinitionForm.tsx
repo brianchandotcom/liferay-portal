@@ -11,6 +11,7 @@ import React, {useEffect, useState} from 'react';
 import './AgentDefinitionForm.scss';
 
 import Button from '@clayui/button';
+import {Option, Picker} from '@clayui/core';
 import Icon from '@clayui/icon';
 import Link from '@clayui/link';
 import {Provider} from '@clayui/provider';
@@ -22,7 +23,9 @@ import {
 	getAgentDefinition,
 	putAgentDefinition,
 } from './services/AgentDefinitionService';
+import {getWorkflowDefinitions} from './services/WorkflowDefinitionService';
 import {AgentDefinition} from './types/AgentDefinition';
+import {WorkflowDefinition} from './types/WorkflowDefinition';
 
 export default function AgentDefinitionForm({
 	backURL,
@@ -38,6 +41,9 @@ export default function AgentDefinitionForm({
 	const [formData, setFormData] = useState<AgentDefinition>(
 		{} as AgentDefinition
 	);
+	const [workflowDefinitions, setWorkflowDefinitions] = useState<
+		WorkflowDefinition[]
+	>([]);
 
 	const handleActive = () => {
 		setFormData((prev) => ({
@@ -90,7 +96,11 @@ export default function AgentDefinitionForm({
 	};
 
 	useEffect(() => {
-		async function fetchAgentDefinition() {
+		async function _setFormData() {
+			if (!externalReferenceCode) {
+				return;
+			}
+
 			try {
 				const agentDefinition = await getAgentDefinition(
 					externalReferenceCode
@@ -118,9 +128,27 @@ export default function AgentDefinitionForm({
 			}
 		}
 
-		if (externalReferenceCode) {
-			fetchAgentDefinition();
+		async function _setWorkflowDefinitions() {
+			try {
+				const response = await getWorkflowDefinitions();
+
+				setWorkflowDefinitions(response.items || []);
+			}
+			catch (error) {
+				console.error(error);
+
+				openToast({
+					message: Liferay.Language.get(
+						'failed-to-load-workflow-definitions'
+					),
+					type: 'danger',
+				});
+			}
 		}
+
+		_setFormData();
+
+		_setWorkflowDefinitions();
 	}, [externalReferenceCode]);
 
 	return (
@@ -331,20 +359,34 @@ export default function AgentDefinitionForm({
 											</span>
 										</label>
 
-										<ClayInput
-											disabled={readonly}
-											id="workflow-definition-name"
-											name="workflowDefinitionName"
-											onChange={handleInputChange}
+										<Picker
+											items={workflowDefinitions.map(
+												(workflowDefinition) => ({
+													label: workflowDefinition.title,
+													value: workflowDefinition.name,
+												})
+											)}
+											onSelectionChange={(value) => {
+												setFormData((prev) => ({
+													...prev,
+													workflowDefinitionName:
+														value as string,
+												}));
+											}}
 											placeholder={Liferay.Language.get(
 												'workflow-definition'
 											)}
 											required={true}
-											type="text"
 											value={
 												formData.workflowDefinitionName
 											}
-										/>
+										>
+											{({label, value}) => (
+												<Option key={value}>
+													{label}
+												</Option>
+											)}
+										</Picker>
 									</ClayForm.Group>
 
 									<ClayForm.Group>

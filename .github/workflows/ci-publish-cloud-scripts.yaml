@@ -1,0 +1,73 @@
+defaults:
+    run:
+        shell: bash
+jobs:
+    publish-liferay-aws-bootstrap:
+        if: ${{github.repository == 'liferay/liferay-portal'}}
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout code
+                uses: actions/checkout@v4
+            -   name: Authenticate to Google Cloud
+                uses: google-github-actions/auth@v2
+                with:
+                    workload_identity_provider: ${GCP_WORKLOAD_IDENTITY_PROVIDER}
+                    service_account: ${GCP_SA}
+            -   name: Set up gcloud CLI
+                uses: google-github-actions/setup-gcloud@v2
+                with:
+                    project_id: ${GCP_PROJECT_ID}
+            -   name: Set up variables
+                run: |
+                    CURRENT_VERSION="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"
+                    GCS_BASE_PATH="liferay-cloud-native-bootstrapd/bootstrap"
+                    PACKAGE_NAME="liferay-aws-bootstrap"
+                    GCS_PATH="gs://${GCS_BASE_PATH}/${PACKAGE_NAME}/${PACKAGE_NAME}-${CURRENT_VERSION}.tar.gz"
+
+                    echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_ENV
+                    echo "GCS_BASE_PATH=${GCS_BASE_PATH}" >> $GITHUB_ENV
+                    echo "PACKAGE_NAME=${PACKAGE_NAME}" >> $GITHUB_ENV
+                    echo "GCS_PATH=${GCS_PATH}" >> $GITHUB_ENV
+            -   id: verify_version
+                name: Verify version
+                run: |
+                    if ! gsutil --quiet stat ${GCS_PATH}
+                    then
+                        echo "Verified version ${CURRENT_VERSION}."
+
+                        echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
+
+                        echo "should_publish=true" >> ${GITHUB_OUTPUT}
+                    else
+                        echo "Version ${CURRENT_VERSION} already exists. Skipping publish."
+                    fi
+            -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
+                name: Package and push AWS bootstrap scripts
+                run: |
+                    OUTPUT_FILENAME="liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
+                    OUTPUT_LOCATION="/tmp/${OUTPUT_FILENAME}"
+
+                    tar \
+                        --create \
+                        --file ${OUTPUT_LOCATION} \
+                        --gzip \
+                        --verbose \
+                        cloud/terraform/aws/eks/*.tf \
+                        cloud/terraform/aws/gitops/platform/*.tf \
+                        cloud/terraform/aws/gitops/resources/*.tf
+
+                    gcloud storage cp \
+                        ${OUTPUT_LOCATION} \
+                        ${GCS_PATH}
+on:
+    push:
+        branches:
+            -   master
+        paths:
+            -   .github/workflows/ci-publish-cloud-scripts.yaml
+            -   cloud/scripts/versions.json
+            -   cloud/terraform/aws/eks/*
+            -   cloud/terraform/aws/gitops/platform/*
+            -   cloud/terraform/aws/gitops/resources/*
+permissions:
+    id-token: write

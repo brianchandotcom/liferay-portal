@@ -8,7 +8,9 @@ package com.liferay.portal.kernel.theme;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistryUtil;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -28,6 +30,26 @@ public class ThemeDisplayTest {
 
 	@Before
 	public void setUp() {
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getParentGroupId()
+		).thenReturn(
+			_PARENT_GROUP_ID
+		);
+
+		Mockito.when(
+			group.isSite()
+		).thenReturn(
+			true
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.getGroup(_GROUP_ID)
+		).thenReturn(
+			group
+		);
+
 		_hashedFilesRegistryUtilMockedStatic.when(
 			() -> HashedFilesRegistryUtil.getHashedFileURI(Mockito.anyString())
 		).thenAnswer(
@@ -40,6 +62,7 @@ public class ThemeDisplayTest {
 
 	@After
 	public void tearDown() {
+		_groupLocalServiceUtilMockedStatic.close();
 		_hashedFilesRegistryUtilMockedStatic.close();
 		_portalUtilMockedStatic.close();
 	}
@@ -243,6 +266,14 @@ public class ThemeDisplayTest {
 	}
 
 	@Test
+	public void testGetParentSiteGroupId() {
+		_themeDisplay.setSiteGroupId(_GROUP_ID);
+
+		Assert.assertEquals(
+			_PARENT_GROUP_ID, _themeDisplay.getParentSiteGroupId());
+	}
+
+	@Test
 	public void testRTLGetClayCSSURL() {
 		_mockPortalUtil(
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, true);
@@ -320,8 +351,15 @@ public class ThemeDisplayTest {
 		return theme;
 	}
 
+	private static final long _GROUP_ID = 1;
+
 	private static final String _HASH = RandomTestUtil.randomString(8);
 
+	private static final long _PARENT_GROUP_ID = 2;
+
+	private final MockedStatic<GroupLocalServiceUtil>
+		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			GroupLocalServiceUtil.class);
 	private final MockedStatic<HashedFilesRegistryUtil>
 		_hashedFilesRegistryUtilMockedStatic = Mockito.mockStatic(
 			HashedFilesRegistryUtil.class);

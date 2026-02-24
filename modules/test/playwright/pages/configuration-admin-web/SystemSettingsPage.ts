@@ -99,6 +99,8 @@ export class SystemSettingsPage {
 
 	async resetToDefaultValues() {
 		await this.clickOnAction('Reset Default Values');
+
+		await waitForAlert(this.page);
 	}
 
 	async saveAndWaitForAlert({

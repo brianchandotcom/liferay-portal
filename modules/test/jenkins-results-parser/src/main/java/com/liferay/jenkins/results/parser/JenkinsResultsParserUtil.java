@@ -3786,13 +3786,7 @@ public class JenkinsResultsParserUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		if (isCloudCINode()) {
-			sb.append(jenkinsMaster.getRemoteURL());
-		}
-		else {
-			sb.append(jenkinsMaster.getURL());
-		}
-
+		sb.append(jenkinsMaster.getRemoteURL());
 		sb.append("job/");
 		sb.append(jenkinsJobName);
 		sb.append("/buildWithParameters?");

@@ -894,7 +894,7 @@ public class BatchTestEntityExportImportTest {
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal.strategy." +
+				"com.liferay.batch.engine.internal." +
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 

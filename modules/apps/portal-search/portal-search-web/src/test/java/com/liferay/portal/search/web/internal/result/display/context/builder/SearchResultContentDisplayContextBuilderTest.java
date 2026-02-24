@@ -110,6 +110,25 @@ public class SearchResultContentDisplayContextBuilderTest {
 	}
 
 	@Test
+	public void testEditPermissionFalseFromURLEdit() throws Exception {
+		Mockito.doReturn(
+			null
+		).when(
+			_assetRenderer
+		).getURLEdit(
+			Mockito.any(), Mockito.any()
+		);
+
+		SearchResultContentDisplayContext searchResultContentDisplayContext =
+			_buildDisplayContext();
+
+		Assert.assertFalse(
+			searchResultContentDisplayContext.hasEditPermission());
+
+		_assertIconMissing(searchResultContentDisplayContext);
+	}
+
+	@Test
 	public void testVisible() throws Exception {
 		SearchResultContentDisplayContext searchResultContentDisplayContext =
 			_buildDisplayContext();

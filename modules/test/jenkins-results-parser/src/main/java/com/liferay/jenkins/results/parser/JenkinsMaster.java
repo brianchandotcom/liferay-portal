@@ -890,12 +890,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			return;
 		}
 
+		_labelExpressionLabels.clear();
+
 		if (!isAvailable()) {
 			_assignedLabels.clear();
 			_buildURLs.clear();
 			_jenkinsSlavesMap.clear();
 			_labelBatchSizes.clear();
-			_labelExpressionLabels.clear();
 
 			return;
 		}

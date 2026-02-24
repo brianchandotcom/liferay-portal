@@ -8,11 +8,13 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
+import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.FavIconClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.FavIconItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.IconImageURLReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToPagePageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.LinkToURLPageSpecification;
@@ -282,6 +284,8 @@ public class PageSpecificationDTOConverter
 					() -> _getClientExtensions(
 						classNameId, layout.getPlid(),
 						ClientExtensionEntryConstants.TYPE_GLOBAL_JS));
+				setIconImageURLReference(
+					() -> _getIconImageURLReference(layout));
 				setJavascript(
 					() -> unicodeProperties.getProperty("javascript", null));
 				setMasterPageItemExternalReference(
@@ -349,6 +353,24 @@ public class PageSpecificationDTOConverter
 						classNameId, layout.getPlid(),
 						ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 			}
+
+			private IconImageURLReference _getIconImageURLReference(
+				Layout layout) {
+
+				if (Validator.isNull(layout.getIconImageERC())) {
+					return null;
+				}
+
+				return new IconImageURLReference() {
+					{
+						setExternalReferenceCode(layout::getIconImageERC);
+						setUrl(
+							() -> ExportImportAttachmentManagerUtil.getFileURL(
+								layout.getIconImage()));
+					}
+				};
+			}
+
 		};
 	}
 

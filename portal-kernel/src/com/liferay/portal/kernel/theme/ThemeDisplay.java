@@ -593,6 +593,10 @@ public class ThemeDisplay
 		return _navItems;
 	}
 
+	public long getParentSiteGroupId() {
+		return _parentSiteGroupId;
+	}
+
 	public String getPathApplet() {
 		return _pathApplet;
 	}
@@ -1812,11 +1816,16 @@ public class ThemeDisplay
 	}
 
 	public void setSiteGroupId(long siteGroupId) {
+		_parentSiteGroupId = 0;
 		_siteGroupId = siteGroupId;
 
 		if (_siteGroupId > 0) {
 			try {
 				_siteGroup = GroupLocalServiceUtil.getGroup(_siteGroupId);
+
+				if (_siteGroup.isSite()) {
+					_parentSiteGroupId = _siteGroup.getParentGroupId();
+				}
 			}
 			catch (Exception exception) {
 				_log.error(exception);
@@ -2073,6 +2082,7 @@ public class ThemeDisplay
 	private String _mainCSSURL;
 	private String _mainJSURL;
 	private List<NavItem> _navItems;
+	private long _parentSiteGroupId;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
 	private String _pathControlPanelSpritemap = StringPool.BLANK;

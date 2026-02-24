@@ -8,8 +8,8 @@ package com.liferay.commerce.discount.service.persistence.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.discount.constants.CommerceDiscountConstants;
 import com.liferay.commerce.discount.model.CommerceDiscount;
 import com.liferay.commerce.discount.model.CommerceDiscountRel;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -38,7 +39,6 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,19 +72,6 @@ public class CommerceDiscountRelFinderTest {
 		_calendar = CalendarFactoryUtil.getCalendar(_user.getTimeZone());
 	}
 
-	@After
-	public void tearDown() throws Exception {
-		if (_commerceDiscountRel != null) {
-			_commerceDiscountRelLocalService.deleteCommerceDiscountRel(
-				_commerceDiscountRel);
-		}
-
-		if (_commerceDiscount != null) {
-			_commerceDiscountLocalService.deleteCommerceDiscount(
-				_commerceDiscount.getCommerceDiscountId());
-		}
-	}
-
 	@Test
 	public void testFindCategoriesByCommerceDiscountId()
 		throws PortalException {
@@ -103,11 +90,11 @@ public class CommerceDiscountRelFinderTest {
 			true, _serviceContext);
 
 		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.addVocabulary(
+			_assetVocabularyLocalService.addVocabulary(
 				_user.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), _serviceContext);
 
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
 			_user.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
 			_serviceContext);
@@ -165,12 +152,21 @@ public class CommerceDiscountRelFinderTest {
 			commerceDiscountRelList.size());
 	}
 
+	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
 	private Calendar _calendar;
+
+	@DeleteAfterTestRun
 	private CommerceDiscount _commerceDiscount;
 
 	@Inject
 	private CommerceDiscountLocalService _commerceDiscountLocalService;
 
+	@DeleteAfterTestRun
 	private CommerceDiscountRel _commerceDiscountRel;
 
 	@Inject

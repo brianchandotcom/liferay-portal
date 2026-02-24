@@ -379,7 +379,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
-				objectEntries[0], objectEntries[1]
+				objectEntries[0].getExternalReferenceCode(),
+				objectEntries[1].getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
 				objectDefinition.getExternalReferenceCode(), larFile2,
@@ -1296,7 +1297,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
-				objectEntries[0], objectEntries[1]
+				objectEntries[0].getExternalReferenceCode(),
+				objectEntries[1].getExternalReferenceCode()
 			).toString(),
 			_getExternalReferenceCodesJSONArray(
 				objectDefinition.getExternalReferenceCode(), larFile2,

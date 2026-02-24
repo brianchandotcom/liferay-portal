@@ -4,6 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import {NetworkStatus} from '@clayui/data-provider';
 import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
@@ -38,10 +39,15 @@ export default function CategorizationSpaces({
 }) {
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
 	const [checkbox, setCheckbox] = useState(true);
+	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState<Space[]>([]);
 	const [initialSelectedSpaces, setInitialSelectedSpaces] = useState<
 		number[]
 	>([]);
+
+	const loadingState = !availableSpaces.length
+		? NetworkStatus.Polling
+		: undefined;
 
 	useEffect(() => {
 		SpaceService.getSpaces().then((response) => {
@@ -117,16 +123,21 @@ export default function CategorizationSpaces({
 		setSpaceInputError,
 	]);
 
+	const _getAvailableSpaces = (items: Space[]) => {
+		return availableSpaces.filter((availableItem) =>
+			items.some((item) => availableItem.value === item.value)
+		);
+	};
+
 	const _handleChangeAllSpaces = () => {
 		setSelectedItems([]);
 		setSelectedSpaces([]);
+		setQuery('');
 		setCheckbox((checkbox) => !checkbox);
 	};
 
 	const _handleChangeSpaces = (items: Space[]) => {
-		setSelectedItems(
-			availableSpaces.filter((item) => items.includes(item))
-		);
+		setSelectedItems(_getAvailableSpaces(items));
 
 		setSelectedSpaces(items.map((item) => item.scopeKey));
 	};
@@ -147,12 +158,14 @@ export default function CategorizationSpaces({
 					disabled={checkbox}
 					id="multiSelect"
 					items={selectedItems}
-					loadingState={3}
-					onItemsChange={(items: Space[]) => {
-						_handleChangeSpaces(items);
-					}}
+					key={availableSpaces.length}
+					loadingState={loadingState}
+					onChange={setQuery}
+					onItemsChange={_handleChangeSpaces}
 					sourceItems={availableSpaces}
-					value={checkbox ? Liferay.Language.get('all-spaces') : ''}
+					value={
+						checkbox ? Liferay.Language.get('all-spaces') : query
+					}
 				>
 					{(item) => (
 						<ClayMultiSelect.Item

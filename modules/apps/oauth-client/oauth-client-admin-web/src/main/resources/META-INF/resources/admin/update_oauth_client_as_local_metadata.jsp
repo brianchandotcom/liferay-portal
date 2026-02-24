@@ -12,14 +12,6 @@ OAuthClientASLocalMetadata oAuthClientASLocalMetadata = (OAuthClientASLocalMetad
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-String authorizationEndpoint = (String)request.getAttribute(OAuthClientWebKeys.AUTHORIZATION_ENDPOINT);
-String jwksURI = (String)request.getAttribute(OAuthClientWebKeys.JWKS_URI);
-String supportedGrantTypes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_GRANT_TYPES);
-String supportedScopes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_SCOPES);
-String supportedSubjectTypes = (String)request.getAttribute(OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES);
-String tokenEndpoint = (String)request.getAttribute(OAuthClientWebKeys.TOKEN_ENDPOINT);
-String userInfoEndpoint = (String)request.getAttribute(OAuthClientWebKeys.USER_INFO_ENDPOINT);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
@@ -57,15 +49,16 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 
 				<aui:fieldset label="general">
 					<aui:input helpMessage="oauth-client-as-local-metadata-issuer-help" label="oauth-client-as-local-metadata-issuer" name="issuer" required="<%= true %>" type="text" />
-					<aui:input helpMessage="oauth-client-as-local-metadata-supported-scopes-help" label="oauth-client-as-local-metadata-supported-scopes" name="supportedScopes" type="text" value="<%= supportedScopes %>" />
 
-					<aui:input helpMessage="oauth-client-as-local-metadata-supported-grant-types-help" label="oauth-client-as-local-metadata-supported-grant-types" name="supportedGrantTypes" type="text" value="<%= supportedGrantTypes %>" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-supported-scopes-help" label="oauth-client-as-local-metadata-supported-scopes" name="supportedScopes" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.SUPPORTED_SCOPES) %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-authorization-endpoint" name="authorizationEndpoint" type="text" value="<%= authorizationEndpoint %>" />
+					<aui:input helpMessage="oauth-client-as-local-metadata-supported-grant-types-help" label="oauth-client-as-local-metadata-supported-grant-types" name="supportedGrantTypes" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.SUPPORTED_GRANT_TYPES) %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-jwks-uri" name="jwksURI" type="text" value="<%= jwksURI %>" />
+					<aui:input label="oauth-client-as-local-metadata-authorization-endpoint" name="authorizationEndpoint" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.AUTHORIZATION_ENDPOINT) %>" />
 
-					<aui:input label="oauth-client-as-local-metadata-token-endpoint" name="tokenEndpoint" type="text" value="<%= tokenEndpoint %>" />
+					<aui:input label="oauth-client-as-local-metadata-jwks-uri" name="jwksURI" type="text" value="<%= (String)request.getAttribute(OAuthClientWebKeys.JWKS_URI) %>" />
+
+					<aui:input label="oauth-client-as-local-metadata-token-endpoint" name="tokenEndpoint" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.TOKEN_ENDPOINT) %>" />
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local-oauth-authorization-server">
@@ -89,9 +82,9 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 				</aui:fieldset>
 
 				<aui:fieldset label="oauth-client-as-local-openid-configuration">
-					<aui:input label="oauth-client-as-local-metadata-supported-subject-types" name="supportedSubjectTypes" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? supportedSubjectTypes : "public" %>' />
+					<aui:input label="oauth-client-as-local-metadata-supported-subject-types" name="supportedSubjectTypes" type="text" value='<%= (oAuthClientASLocalMetadata != null) ? request.getAttribute(OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES) : "public" %>' />
 
-					<aui:input label="oauth-client-as-local-metadata-userinfo-endpoint" name="userInfoEndpoint" type="text" value="<%= userInfoEndpoint %>" />
+					<aui:input label="oauth-client-as-local-metadata-userinfo-endpoint" name="userInfoEndpoint" type="text" value="<%= request.getAttribute(OAuthClientWebKeys.USER_INFO_ENDPOINT) %>" />
 
 					<aui:input helpMessage="oauth-client-as-local-well-known-uri-openid-configuration-help" label="oauth-client-as-local-well-known-uri-openid-configuration" name="localWellKnownURI" readonly="true" type="text" />
 

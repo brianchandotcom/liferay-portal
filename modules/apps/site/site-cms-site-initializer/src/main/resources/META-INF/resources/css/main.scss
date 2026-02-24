@@ -29,6 +29,7 @@
 }
 
 .cms-related-assets {
+	padding-top: 1px;
 	position: relative;
 
 	.cms-related-assets-header {
@@ -61,7 +62,7 @@
 	.fds {
 		.data-set-wrapper {
 			.c-empty-state {
-				margin: 0;
+				margin: 4rem 0 0;
 			}
 
 			&.drop-target {

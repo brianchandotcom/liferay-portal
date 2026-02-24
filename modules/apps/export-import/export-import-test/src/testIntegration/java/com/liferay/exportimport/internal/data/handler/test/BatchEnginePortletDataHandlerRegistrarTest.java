@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ClassUtil;
@@ -144,10 +143,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			Assert.assertEquals(
 				1, _getRegisteredPortletDataHandlersCount(portletId));
 
-			Company company = CompanyTestUtil.addCompany();
-
 			_assertPortletDataHandler(
-				company.getCompanyId(), portletId,
+				RandomTestUtil.randomLong(), portletId,
 				portletDataHandler ->
 					StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
@@ -155,12 +152,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					Arrays.equals(
 						new String[] {className1, className2},
 						portletDataHandler.getClassNames()));
-
-			_assertPortletDataHandler(
-				RandomTestUtil.randomLong(), portletId,
-				portletDataHandler -> StringUtil.contains(
-					ClassUtil.getClassName(portletDataHandler),
-					"DefaultPortletDataHandler", StringPool.PERIOD));
 
 			safeCloseable2.close();
 

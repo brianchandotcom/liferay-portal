@@ -1,101 +1,62 @@
-{{- define "liferayAWSBackupRestore.script.applyTerraformModule" -}}
+{{- define "liferayAWSBackupRestore.script.getCurrentInfrastructureState" -}}
 #!/bin/sh
 
 set -eu
 
 function main {
-	cp /mnt/.git-credentials /tmp/.git-credentials
+	local liferay_infrastructure_json
 
-	git config --global credential.helper "store --file /tmp/.git-credentials"
-	git config --global user.email "{{ .Values.git.user.emailAddress }}"
-	git config --global user.name "{{ .Values.git.user.name }}"
+	liferay_infrastructure_json=$( \
+		kubectl \
+			get \
+			liferayinfrastructure \
+			--output json \
+			| jq ".items[0]")
 
-	git pull origin {{ .Values.git.repository.branch }}
-
-	echo '{{ "{{" }}inputs.parameters.tfvars-content}}' > {{ .Values.tfvarsOverrideFileName }}
-
-	git add {{ .Values.tfvarsOverrideFileName }}
-
-	if ! git diff --staged --quiet
+	if [ $(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.database.snapshotIdentifier") != "null" ]
 	then
-		git commit --message "{{ "{{" }}inputs.parameters.commit-message}}"
-
-		git push origin HEAD:{{ .Values.git.repository.branch }}
-	fi
-
-	terraform init -input=false
-
-	terraform apply -auto-approve -input=false
-}
-
-main
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.script.checkoutGitRepository" -}}
-#!/bin/sh
-
-set -eu
-
-function main {
-	cp /mnt/.git-credentials /tmp/.git-credentials
-
-	git config --global credential.helper "store --file /tmp/.git-credentials"
-
-	git \
-		clone \
-		--branch "{{ .Values.git.repository.branch }}" \
-		--depth 1 \
-		--filter blob:none \
-		--no-checkout \
-		"{{ .Values.git.repository.url }}" \
-		/src
-
-	cd /src
-
-	git sparse-checkout set --no-cone "{{ .Values.git.repository.paths.sparseCheckout }}"
-
-	git checkout
-}
-
-main
-{{- end -}}
-
-{{- define "liferayAWSBackupRestore.script.getDependenciesModuleOutputs" -}}
-#!/bin/sh
-
-set -eu
-
-function main {
-	terraform init -input=false
-
-	terraform plan -detailed-exitcode -input=false
-
-	local db_restore_snapshot_identifier
-
-	db_restore_snapshot_identifier=$( \
-		terraform \
-			output \
-			-raw \
-			db_restore_snapshot_identifier 2>/dev/null || echo "")
-
-	if [ -n "${db_restore_snapshot_identifier}" ]
-	then
-		echo "Terraform output \"db_restore_snapshot_identifier\" is not empty. A restore may already be in progress." >&2
+		echo "LiferayInfrastructure spec.database.snapshotIdentifier is not empty. A restore may already be in progress." >&2
 
 		exit 1
 	fi
 
-	if [ $(terraform output -raw is_restoring) = "true" ];
+	if [ $(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.database.isRestoring") = "true" ]
 	then
-		echo "Terraform output \"is_restoring\" is set to \"true\". A restore may already be in progress." >&2
+		echo "LiferayInfrastructure spec.database.isRestoring is set to true. A restore may already be in progress." >&2
 
 		exit 1
 	fi
 
-	terraform output -raw data_active > /tmp/data-active.txt
-	terraform output -raw data_inactive > /tmp/data-inactive.txt
-	terraform output -raw s3_bucket_id_active > /tmp/s3-bucket-id-active.txt
-	terraform output -raw s3_bucket_id_inactive > /tmp/s3-bucket-id-inactive.txt
+	local data_active
+
+	data_active=$(echo "${liferay_infrastructure_json}" | jq --raw-output ".spec.activeDataPlane")
+
+	echo "${data_active}" > /tmp/data-active.txt
+
+	kubectl \
+		get \
+		buckets.s3.aws.m.upbound.io \
+		--output jsonpath="{.items[0].metadata.name}" \
+		--selector "dataPlane=${data_active}" \
+		> /tmp/s3-bucket-id-active.txt
+
+	local data_inactive
+
+	if [ "${data_active}" = "blue" ]
+	then
+		data_inactive="green"
+	else
+		data_inactive="blue"
+	fi
+
+	echo "${data_inactive}" > /tmp/data-inactive.txt
+
+	kubectl \
+		get \
+		buckets.s3.aws.m.upbound.io \
+		--output jsonpath="{.items[0].metadata.name}" \
+		--selector "dataPlane=${data_inactive}" \
+		> /tmp/s3-bucket-id-inactive.txt
 }
 
 main
@@ -205,6 +166,70 @@ function main {
 main
 {{- end -}}
 
+{{- define "liferayAWSBackupRestore.script.gitCheckout" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+	cp /mnt/.git-credentials /tmp/.git-credentials
+
+	git config --global credential.helper "store --file /tmp/.git-credentials"
+
+	git \
+		clone \
+		--branch "{{ .Values.git.infrastructureRepository.branch }}" \
+		--depth 1 \
+		"{{ .Values.git.infrastructureRepository.url }}" \
+		/src
+}
+
+main
+{{- end -}}
+
+{{- define "liferayAWSBackupRestore.script.gitPull" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+	cp /mnt/.git-credentials /tmp/.git-credentials
+
+	git config --global credential.helper "store --file /tmp/.git-credentials"
+
+	git pull origin {{ .Values.git.infrastructureRepository.branch }}
+}
+
+main
+{{- end -}}
+
+{{- define "liferayAWSBackupRestore.script.gitPush" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+	cp /mnt/.git-credentials /tmp/.git-credentials
+
+	git config --global credential.helper "store --file /tmp/.git-credentials"
+	git config --global user.email "{{ .Values.git.user.emailAddress }}"
+	git config --global user.name "{{ .Values.git.user.name }}"
+
+	local pathInfrastructureValues="{{ default (printf "liferay/projects/%s/environments/%s/liferay.yaml" .Values.global.projectId .Values.global.environmentId) .Values.git.infrastructureRepository.paths.infrastructureValues }}"
+
+	git add "${pathInfrastructureValues}"
+
+	if ! git diff --staged --quiet
+	then
+		git commit --message "{{ "{{" }}inputs.parameters.commit-message}}"
+
+		git push origin HEAD:{{ .Values.git.infrastructureRepository.branch }}
+	fi
+}
+
+main
+{{- end -}}
+
 {{- define "liferayAWSBackupRestore.script.restoreS3Bucket" -}}
 #!/bin/sh
 
@@ -266,6 +291,52 @@ function main {
 	echo "The restore timed out." >&2
 
 	exit 1
+}
+
+main
+{{- end -}}
+
+{{- define "liferayAWSBackupRestore.script.waitObservedGeneration" -}}
+#!/bin/sh
+
+set -eu
+
+function main {
+	local generation
+
+	generation=$( \
+		kubectl \
+			get \
+			liferayinfrastructure \
+			--output jsonpath="{.items[0].metadata.generation}")
+
+	local attempt=0
+	local max_attempts=60
+
+	while [ $attempt -lt $max_attempts ]; do
+		local observed_generation
+
+		observed_generation=$( \
+			kubectl \
+				get \
+				liferayinfrastructure \
+				--output jsonpath="{.items[0].status.conditions[?(@.type=="Ready")].observedGeneration}" 2>/dev/null || echo 0)
+
+		if [ $observed_generation -ge $generation ]
+		then
+		  break
+		fi
+
+		sleep 5
+		attempt=$((attempt + 1))
+	done
+
+	if [ $attempt = $max_attempts ]
+	then
+		echo "The system timed out waiting for the observed generation to match the current generation." >&2
+
+		exit 1
+	fi
 }
 
 main

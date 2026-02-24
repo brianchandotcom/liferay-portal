@@ -139,6 +139,8 @@ public class DDMFormEvaluatorHelper {
 
 		_evaluateDDMFormRules(ddmFormRules, true);
 
+		_resetInvisibleFieldValue();
+
 		_validateFields();
 
 		_localizeNumericDDMFormFieldValues();
@@ -342,8 +344,6 @@ public class DDMFormEvaluatorHelper {
 
 				_evaluateDDMFormRule(
 					ddmFormRule, ddmFormRuleConditionEvaluationResult);
-
-				_resetInvisibleFieldValue();
 			}
 		}
 	}

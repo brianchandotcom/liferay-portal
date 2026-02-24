@@ -2,6 +2,7 @@ variable "arn_partition" {
 	default="aws"
 }
 variable "deployment_name" {
+	type=string
 	validation {
 		condition=can(regex("^[a-z0-9-]*$", var.deployment_name))
 		error_message="The deployment_name must contain only lowercase letters, numbers, and hyphens."

@@ -83,7 +83,7 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 				companyId, dtoConverterContext, _infoItemServiceRegistry,
 				fragmentStyledLayoutStructureItem.
 					getBackgroundImageJSONObject(),
-				fragmentStyledLayoutStructureItem.getItemId(), scopeGroupId));
+				scopeGroupId));
 		widgetInstancePageElementDefinition.setCssClasses(
 			() -> {
 				Set<String> cssClasses =

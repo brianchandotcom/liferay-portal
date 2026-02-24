@@ -5,16 +5,21 @@
 
 package com.liferay.portal.search.internal.background.task;
 
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.index.ConcurrentReindexManager;
 import com.liferay.portal.search.index.SyncReindexManager;
 import com.liferay.portal.search.internal.SearchEngineInitializer;
@@ -27,6 +32,7 @@ import java.util.concurrent.Future;
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -46,7 +52,16 @@ public class ReindexPortalBackgroundTaskExecutor
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			bundleContext, (Class<Indexer<?>>)(Class<?>)Indexer.class, null,
+			(serviceReference, emitter) -> emitter.emit(
+				GetterUtil.getBoolean(
+					serviceReference.getProperty("system.index"))));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
 	@Override
@@ -62,6 +77,9 @@ public class ReindexPortalBackgroundTaskExecutor
 
 		try (SafeCloseable safeCloseable = SearchContext.openBatchMode()) {
 			for (long companyId : companyIds) {
+				List<Indexer<?>> indexers = _serviceTrackerMap.getService(
+					companyId == CompanyConstants.SYSTEM);
+
 				futures.add(
 					executorService.submit(
 						() -> {
@@ -81,7 +99,7 @@ public class ReindexPortalBackgroundTaskExecutor
 								SearchEngineInitializer
 									searchEngineInitializer =
 										new SearchEngineInitializer(
-											_bundleContext, companyId,
+											indexers, companyId,
 											_concurrentReindexManagerSnapshot.
 												get(),
 											executionMode,
@@ -131,9 +149,9 @@ public class ReindexPortalBackgroundTaskExecutor
 			ReindexPortalBackgroundTaskExecutor.class, SyncReindexManager.class,
 			null, true);
 
-	private BundleContext _bundleContext;
-
 	@Reference
 	private PortalExecutorManager _portalExecutorManager;
+
+	private ServiceTrackerMap<Boolean, List<Indexer<?>>> _serviceTrackerMap;
 
 }

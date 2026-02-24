@@ -1,4 +1,4 @@
-/*Source Sans 3*/
+/* ---------- Source sans 3 ---------- */
 @font-face {
 	font-display: swap;
 	font-family: 'Source Sans 3';
@@ -14,14 +14,60 @@
 	border-top-left-radius: 2px;
 	border-top-right-radius: 2px;
 	display: inline-block;
-	font-size: 11px;
+	font-size: 13px;
 	font-weight: 600;
 	height: 20px;
-	line-height: 20px;
-	padding: 0 8px;
+	padding: 4px 10px;
+	position: absolute;
+	right: 32px;
+	top: -10px;
+	width: 80;
+}
+
+
+/* ---------- App type badge base ---------- */
+.app-type-badge {
 	position: absolute;
 	right: 32px;
 	top: -6px;
+
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 8px;
+
+	font-size: 11px;
+	font-weight: 600;
+
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+}
+
+/* ---------- App type variants ---------- */
+.app-type-badge.payment-methods {
+	--badge-color: #4b9bff;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.theme {
+	--badge-color: #af78ff;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.site-initializer {
+	--badge-color: #50d2a0;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
+}
+
+.app-type-badge.fragments {
+	--badge-color: #ff5f5f;
+	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
+	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
 .app-type-badge.batch {
@@ -36,32 +82,8 @@
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
 
-.app-type-badge.fragments {
-	--badge-color: #ff5f5f;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
 .app-type-badge.object-definition {
 	--badge-color: #5fc8ff;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.payment-methods {
-	--badge-color: #4b9bff;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.site-initializer {
-	--badge-color: #50d2a0;
-	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
-	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-}
-
-.app-type-badge.theme {
-	--badge-color: #af78ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
 }
@@ -70,16 +92,17 @@
 	--badge-color: #7785ff;
 	background-color: color-mix(in srgb, var(--badge-color) 70%, white 60%);
 	color: color-mix(in srgb, var(--badge-color) 70%, black 50%);
-	src: url(/documents/d/marketplace/sourcesans3-regular-ttf);
 }
 
+/* ---------- Cards ---------- */
 .card.main-image {
 	border-radius: 10px !important;
 }
 
+/* ---------- Dropdowns ---------- */
 .child-menu.dropdown-menu {
 	border-radius: 8px !important;
-	padding: 0px !important;
+	padding: 0 !important;
 }
 
 .lfr-cookie-banner-text {
@@ -87,11 +110,13 @@
 	margin-bottom: 6px;
 }
 
+/* ---------- Facets ---------- */
 .lfr-layout-structure-item-com-liferay-portal-search-web-category-facet-portlet-categoryfacetportlet,
 .lfr-layout-structure-item-com-liferay-commerce-product-content-search-web-internal-portlet-cpspecificationoptionfacetsportlet {
 	border-radius: 10px;
 }
 
+/* ---------- Navigation ---------- */
 .lfr-nav-item.nav-item {
 	border-radius: 8px;
 	margin-right: 0.5rem;
@@ -107,9 +132,7 @@
 	font-weight: none !important;
 }
 
-.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected)
-	.nav-link {
-	border-bottom: #004AD7 solid 3px !important;
+.lfr-nav-item.nav-item.dropdown:has(.child-menu.dropdown-menu .active.selected) .nav-link {
 	color: #0053F0 !important;
 	font-weight: 600;
 }
@@ -120,6 +143,13 @@
 	font-weight: 600;
 }
 
+.lfr-nav-item.nav-item.selected.active .nav-link:hover {
+	background-color: #ffffff !important;
+	border-bottom: #004AD7 solid 3px !important;
+	font-weight: 600;
+}
+
+/* ---------- Product gallery arrows ---------- */
 .product-gallery .arrow.next {
 	border-bottom-right-radius: 10px;
 	border-top-right-radius: 10px;

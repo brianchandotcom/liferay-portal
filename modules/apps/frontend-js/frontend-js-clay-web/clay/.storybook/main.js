@@ -73,7 +73,6 @@ const config = {
 			),
 			'@clayui/button': path.resolve(__dirname, '../clay-button/src'),
 			'@clayui/card': path.resolve(__dirname, '../clay-card/src'),
-			'@clayui/charts': path.resolve(__dirname, '../clay-charts/src'),
 			'@clayui/color-picker': path.resolve(
 				__dirname,
 				'../clay-color-picker/src'

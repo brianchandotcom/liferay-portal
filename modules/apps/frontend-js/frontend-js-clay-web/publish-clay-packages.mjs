@@ -196,10 +196,6 @@ function updatePackageVersions(pkg) {
 				continue;
 			}
 
-			if (depName.startsWith('@clayui/charts')) {
-				continue;
-			}
-
 			if (deps[depName] !== TARGET_VERSION) {
 				changes.push(
 					`${field}.${depName}: ${deps[depName]} -> ^${TARGET_VERSION}`

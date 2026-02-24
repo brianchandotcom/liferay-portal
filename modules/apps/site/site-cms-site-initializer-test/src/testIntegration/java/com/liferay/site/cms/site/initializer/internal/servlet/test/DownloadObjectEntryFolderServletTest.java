@@ -337,7 +337,11 @@ public class DownloadObjectEntryFolderServletTest {
 			_getMockHttpServletRequest(
 				_jsonFactory.createJSONObject(
 				).put(
-					"selectAll", true
+					"selectionScope",
+					_jsonFactory.createJSONObject(
+					).put(
+						"selectAll", true
+					)
 				).put(
 					"type", "DownloadBulkAction"
 				).toString(

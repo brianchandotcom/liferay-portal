@@ -202,7 +202,12 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-		if (jsonObject.getBoolean("selectAll")) {
+		JSONObject selectionScopeJSONObject = jsonObject.getJSONObject(
+			"selectionScope");
+
+		if ((selectionScopeJSONObject != null) &&
+			selectionScopeJSONObject.getBoolean("selectAll")) {
+
 			_selectAllDownload(httpServletRequest, themeDisplay, zipWriter);
 		}
 		else {

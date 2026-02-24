@@ -15,7 +15,7 @@ definition {
 		var classNameId = JSONLayoutpagetemplateSetter.setClassNameId(contentType = ${contentType});
 
 		if ((${subType} == "Basic Document") || (${contentType} == "Blogs Entry") || (${contentType} == "Category") || (${contentType} == "Order") || (${contentType} == "Product") || (${contentType} == "Knowledge Base Article")) {
-			var classTypeId = 0;
+			var classTypeKey = "";
 		}
 		else {
 			if (${subType} == "Basic Web Content") {
@@ -23,7 +23,7 @@ definition {
 					groupName = "Global",
 					site = "true");
 
-				var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+				var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
 					classNameId = ${classNameId},
 					groupId = ${globalGroupId},
 					structureName = ${subType});
@@ -33,7 +33,7 @@ definition {
 					groupName = "Global",
 					site = "true");
 
-				var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+				var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
 					fileEntryTypeName = ${subType},
 					groupId = ${globalGroupId});
 			}
@@ -44,13 +44,13 @@ definition {
 						site = "false");
 
 					if (isSet(depotStructure)) {
-						var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+						var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
 							classNameId = ${classNameId},
 							groupId = ${depotId},
 							structureName = ${subType});
 					}
 					else if (isSet(depotDocumentType)) {
-						var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+						var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
 							fileEntryTypeName = ${subType},
 							groupId = ${depotId});
 					}
@@ -60,7 +60,7 @@ definition {
 						groupName = "Global",
 						site = "true");
 
-					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+					var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
 						classNameId = ${classNameId},
 						groupId = ${globalGroupId},
 						structureName = ${subType});
@@ -70,12 +70,12 @@ definition {
 						groupName = "Global",
 						site = "true");
 
-					var classTypeId = JSONDLfileentrytype._getFileEntryTypeId(
+					var classTypeKey = JSONDLfileentrytype._getFileEntryTypeId(
 						fileEntryTypeName = ${subType},
 						groupId = ${globalGroupId});
 				}
 				else {
-					var classTypeId = JSONLayoutpagetemplateSetter.setClassTypeId(
+					var classTypeKey = JSONLayoutpagetemplateSetter.setClassTypeKey(
 						classNameId = ${classNameId},
 						groupId = ${groupId},
 						structureName = ${subType});
@@ -106,7 +106,7 @@ definition {
 
 		JSONLayoutpagetemplateAPI._addDisplayPageTemplateEntry(
 			classNameId = ${classNameId},
-			classTypeId = ${classTypeId},
+			classTypeKey = ${classTypeKey},
 			displayPageTemplateEntryName = ${displayPageTemplateEntryName},
 			groupId = ${groupId},
 			masterLayoutPlid = ${masterLayoutPlid},

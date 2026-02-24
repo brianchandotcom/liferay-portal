@@ -35,15 +35,15 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro setClassTypeId(structureName = null, groupId = null, classNameId = null) {
+	macro setClassTypeKey(structureName = null, groupId = null, classNameId = null) {
 		Variables.assertDefined(parameterList = "${classNameId},${groupId},${structureName}");
 
-		var classTypeId = JSONDDMstructureAPI._getStructureId(
+		var classTypeKey = JSONDDMstructureAPI._getStructureId(
 			classNameId = ${classNameId},
 			groupId = ${groupId},
 			structureName = ${structureName});
 
-		return ${classTypeId};
+		return ${classTypeKey};
 	}
 
 	@summary = "Default summary"

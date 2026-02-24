@@ -73,10 +73,8 @@ public class ExportImportReportEntryLocalServiceTest {
 			modelNameLanguageKey,
 			exportImportReportEntry.getModelNameLanguageKey());
 		Assert.assertEquals(
-			StringBundler.concat(
-				"The ", modelNameLanguageKey, " with external reference code ",
-				classExternalReferenceCode,
-				" was not found. An empty shell was created."),
+			_getEmptyReportEntryErrorMessage(
+				classExternalReferenceCode, modelNameLanguageKey),
 			exportImportReportEntry.getErrorMessage());
 		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
@@ -222,7 +220,10 @@ public class ExportImportReportEntryLocalServiceTest {
 		Assert.assertEquals(
 			exportImportConfigurationId,
 			exportImportReportEntry.getExportImportConfigurationId());
-		Assert.assertNull(exportImportReportEntry.getErrorMessage());
+		Assert.assertEquals(
+			_getEmptyReportEntryErrorMessage(
+				classExternalReferenceCode, modelNameLanguageKey),
+			exportImportReportEntry.getErrorMessage());
 		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
 			modelNameLanguageKey,
@@ -369,6 +370,15 @@ public class ExportImportReportEntryLocalServiceTest {
 			actualExportImportReportEntry.getMvccVersion());
 
 		Assert.assertEquals(status, actualExportImportReportEntry.getStatus());
+	}
+
+	private String _getEmptyReportEntryErrorMessage(
+		String classExternalReferenceCode, String modelNameLanguageKey) {
+
+		return StringBundler.concat(
+			"The ", modelNameLanguageKey, " with external reference code ",
+			classExternalReferenceCode,
+			" was not found. An empty shell was created.");
 	}
 
 	private ExportImportReportEntry _updateStatusResolved(

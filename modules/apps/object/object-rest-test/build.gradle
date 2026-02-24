@@ -14,6 +14,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:document-library:document-library-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-test-util")
 	testIntegrationImplementation project(":apps:expando:expando-test-util")
+	testIntegrationImplementation project(":apps:export-import:export-import-report-api")
 	testIntegrationImplementation project(":apps:headless:headless-admin-taxonomy:headless-admin-taxonomy-client")
 	testIntegrationImplementation project(":apps:headless:headless-admin-user:headless-admin-user-api")
 	testIntegrationImplementation project(":apps:headless:headless-batch-engine:headless-batch-engine-client")

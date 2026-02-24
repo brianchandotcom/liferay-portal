@@ -40,6 +40,9 @@ import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
+import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
+import com.liferay.exportimport.report.model.ExportImportReportEntry;
+import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -190,6 +193,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -10030,6 +10034,34 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	private void _assertExportImportReportEntriesStatus(
+			int expectedStatus, long exportImportConfigurationId,
+			ObjectEntry objectEntry, ObjectDefinition objectDefinition)
+		throws Exception {
+
+		for (ExportImportReportEntry exportImportReportEntry :
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntries(
+						TestPropsValues.getCompanyId(),
+						exportImportConfigurationId)) {
+
+			if (Objects.equals(
+					objectEntry.getExternalReferenceCode(),
+					exportImportReportEntry.getClassExternalReferenceCode()) &&
+				Objects.equals(
+					_portal.getClassNameId(objectDefinition.getClassName()),
+					exportImportReportEntry.getClassNameId()) &&
+				(objectEntry.getScopeId() ==
+					exportImportReportEntry.getGroupId()) &&
+				(ExportImportReportEntryConstants.TYPE_EMPTY ==
+					exportImportReportEntry.getType())) {
+
+				Assert.assertEquals(
+					expectedStatus, exportImportReportEntry.getStatus());
+			}
+		}
+	}
+
 	private void _assertFailureWithStatusInTrash(
 			UnsafeConsumer<String, Exception> unsafeConsumer)
 		throws Exception {
@@ -10904,8 +10936,14 @@ public class DefaultObjectEntryManagerImplTest
 				_simpleDTOConverterContext, parentExternalReferenceCode,
 				parentObjectDefinition, scopeKey));
 
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			ExportImportThreadLocal.setPortletImportInProcess(true);
+			ExportImportThreadLocal.setExportImportConfigurationId(
+				exportImportConfigurationId);
 
 			_addObjectEntry(
 				childObjectDefinition,
@@ -10917,6 +10955,10 @@ public class DefaultObjectEntryManagerImplTest
 				},
 				scopeKey);
 		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+			ExportImportThreadLocal.setExportImportConfigurationId(0);
+		}
 
 		ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
 			TestPropsValues.getCompanyId(), _simpleDTOConverterContext,
@@ -10925,6 +10967,10 @@ public class DefaultObjectEntryManagerImplTest
 		AssertUtils.assertEquals(groupId, objectEntry.getScopeId());
 
 		_assertObjectEntryStatus(WorkflowConstants.STATUS_EMPTY, objectEntry);
+
+		_assertExportImportReportEntriesStatus(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportConfigurationId, objectEntry, parentObjectDefinition);
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			parentObjectDefinition.getCompanyId(), _simpleDTOConverterContext,
@@ -10940,6 +10986,10 @@ public class DefaultObjectEntryManagerImplTest
 
 		_assertObjectEntryStatus(
 			WorkflowConstants.STATUS_APPROVED, objectEntry);
+
+		_assertExportImportReportEntriesStatus(
+			ExportImportReportEntryConstants.STATUS_RESOLVED,
+			exportImportConfigurationId, objectEntry, parentObjectDefinition);
 	}
 
 	private void _testAddRelatedObjectEntry(
@@ -12091,6 +12141,10 @@ public class DefaultObjectEntryManagerImplTest
 	private DLURLHelper _dlURLHelper;
 
 	@Inject
+	private ExportImportReportEntryLocalService
+		_exportImportReportEntryLocalService;
+
+	@Inject
 	private GroupLocalService _groupLocalService;
 
 	private String _listTypeEntryKey1;
@@ -12158,6 +12212,9 @@ public class DefaultObjectEntryManagerImplTest
 	private OrganizationLocalService _organizationLocalService;
 
 	private NestedFieldsContext _originalNestedFieldsContext;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private ResourceActions _resourceActions;

@@ -18,6 +18,7 @@ import com.liferay.portal.configuration.metatype.definitions.ExtendedAttributeDe
 import com.liferay.portal.configuration.metatype.definitions.ExtendedObjectClassDefinition;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.language.LanguageImpl;
@@ -577,6 +578,33 @@ public class ConfigurationModelToDDMFormConverterTest extends Mockito {
 		Assert.assertEquals("string", ddmFormField.getDataType());
 		Assert.assertFalse(ddmFormField.isRepeatable());
 		Assert.assertTrue(ddmFormField.isRequired());
+	}
+
+	@Test
+	public void testSplit() {
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter =
+				new ConfigurationModelToDDMFormConverter(
+					null, _enLocale, new EmptyResourceBundle());
+
+		Assert.assertArrayEquals(
+			new String[0],
+			ReflectionTestUtil.<String[]>invoke(
+				configurationModelToDDMFormConverter, "_split",
+				new Class<?>[] {String.class, String.class}, null, null));
+
+		Assert.assertArrayEquals(
+			new String[] {"argument"},
+			ReflectionTestUtil.<String[]>invoke(
+				configurationModelToDDMFormConverter, "_split",
+				new Class<?>[] {String.class, String.class}, "argument", null));
+
+		Assert.assertArrayEquals(
+			new String[] {"argument1", "argument2"},
+			ReflectionTestUtil.<String[]>invoke(
+				configurationModelToDDMFormConverter, "_split",
+				new Class<?>[] {String.class, String.class},
+				"argument1,argument2", ","));
 	}
 
 	protected void whenGetAttributeDefinitions(

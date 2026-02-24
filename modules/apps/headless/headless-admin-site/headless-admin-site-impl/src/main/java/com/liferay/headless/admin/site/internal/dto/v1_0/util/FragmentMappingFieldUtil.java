@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 /**
  * @author Rubén Pulido
@@ -42,8 +43,8 @@ import com.liferay.portal.kernel.util.Validator;
 public class FragmentMappingFieldUtil {
 
 	public static String getFieldKey(
+		DTOConverterContext dtoConverterContext,
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long layoutPlid, LayoutStructure layoutStructure,
 		String layoutStructureItemId, long scopeGroupId) {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -59,7 +60,9 @@ public class FragmentMappingFieldUtil {
 
 			if (Validator.isNotNull(collectionFieldId)) {
 				return _getCollectionFieldKey(
-					collectionFieldId, infoItemServiceRegistry, layoutStructure,
+					collectionFieldId, infoItemServiceRegistry,
+					(LayoutStructure)dtoConverterContext.getAttribute(
+						LayoutStructure.class.getName()),
 					layoutStructureItemId, scopeGroupId);
 			}
 
@@ -72,8 +75,10 @@ public class FragmentMappingFieldUtil {
 
 			if (Validator.isNotNull(mappedField)) {
 				return _getContextFieldKey(
-					infoItemServiceRegistry, layoutPlid, scopeGroupId,
-					mappedField);
+					infoItemServiceRegistry,
+					GetterUtil.getLong(
+						dtoConverterContext.getAttribute("layoutPlid")),
+					scopeGroupId, mappedField);
 			}
 		}
 		finally {
@@ -88,6 +93,10 @@ public class FragmentMappingFieldUtil {
 		InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutStructure layoutStructure, String layoutStructureItemId,
 		long scopeGroupId) {
+
+		if (layoutStructure == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutStructureItem layoutStructureItem =
 			LayoutStructureItemUtil.getAncestor(
@@ -153,6 +162,10 @@ public class FragmentMappingFieldUtil {
 	private static String _getContextFieldKey(
 		InfoItemServiceRegistry infoItemServiceRegistry, long layoutPlid,
 		long scopeGroupId, String mappedField) {
+
+		if (layoutPlid == 0) {
+			throw new UnsupportedOperationException();
+		}
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_getLayoutPageTemplateEntry(layoutPlid);

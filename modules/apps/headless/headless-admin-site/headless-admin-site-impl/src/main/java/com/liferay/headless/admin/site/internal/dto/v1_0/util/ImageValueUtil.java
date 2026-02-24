@@ -18,7 +18,6 @@ import com.liferay.headless.admin.site.dto.v1_0.MappedFragmentImageValue;
 import com.liferay.headless.admin.site.dto.v1_0.URLImageValue;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Map;
 import java.util.Objects;
@@ -36,17 +36,17 @@ import java.util.Objects;
 public class ImageValueUtil {
 
 	public static BackgroundImageValue toBackgroundImageValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long layoutPlid,
-			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, String layoutStructureItemId,
 			long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
-					layoutStructure, layoutStructureItemId, scopeGroupId);
+					companyId, dtoConverterContext, infoItemServiceRegistry,
+					jsonObject, layoutStructureItemId, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;
@@ -113,17 +113,17 @@ public class ImageValueUtil {
 	}
 
 	public static FragmentImageValue toFragmentImageValue(
-			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long layoutPlid,
-			LayoutStructure layoutStructure, String layoutStructureItemId,
+			long companyId, DTOConverterContext dtoConverterContext,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, String layoutStructureItemId,
 			long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
-					companyId, infoItemServiceRegistry, jsonObject, layoutPlid,
-					layoutStructure, layoutStructureItemId, scopeGroupId);
+					companyId, dtoConverterContext, infoItemServiceRegistry,
+					jsonObject, layoutStructureItemId, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;

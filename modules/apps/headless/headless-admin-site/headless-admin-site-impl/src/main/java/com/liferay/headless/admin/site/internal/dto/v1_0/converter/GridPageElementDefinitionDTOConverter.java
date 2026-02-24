@@ -72,10 +72,10 @@ public class GridPageElementDefinitionDTOConverter
 			{
 				setBackgroundImageValue(
 					() -> ImageValueUtil.toBackgroundImageValue(
-						companyId, _infoItemServiceRegistry,
+						companyId, dtoConverterContext,
+						_infoItemServiceRegistry,
 						rowStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						layoutPlid, layoutStructure,
 						rowStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setCssClasses(

@@ -45,7 +45,7 @@ function urlBuilder({
 		'(status in (0, 2, 3))',
 	]
 		.concat(filters.filter(Boolean))
-		.join('and');
+		.join(' and ');
 
 	finalURL.search = new URLSearchParams({
 		emptySearch: 'true',

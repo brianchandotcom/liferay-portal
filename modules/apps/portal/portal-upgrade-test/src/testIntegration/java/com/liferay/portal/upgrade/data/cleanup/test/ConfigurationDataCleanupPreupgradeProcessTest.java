@@ -211,8 +211,8 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 				ConfigurationDataCleanupPreupgradeProcess.class.getName(),
 				LoggerTestUtil.INFO)) {
 
-			Dictionary<String, Object> existentDictionary;
-			Dictionary<String, Object> nonexistentDictionary;
+			Dictionary<String, Object> existentDictionary = null;
+			Dictionary<String, Object> nonexistentDictionary = null;
 
 			if ((secondaryKey != null) && (secondaryKeyColumnName != null)) {
 				existentDictionary =

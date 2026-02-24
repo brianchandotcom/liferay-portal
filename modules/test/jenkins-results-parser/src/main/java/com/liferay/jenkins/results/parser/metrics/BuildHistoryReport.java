@@ -329,7 +329,7 @@ public class BuildHistoryReport {
 	}
 
 	private static String _getGeneratedDateJavaScriptVariable() {
-		return "var dataGeneratedDate = " +
+		return "var dataGeneratedDate = new Date(" +
 			JenkinsResultsParserUtil.getCurrentTimeMillis() + ";\n";
 	}
 

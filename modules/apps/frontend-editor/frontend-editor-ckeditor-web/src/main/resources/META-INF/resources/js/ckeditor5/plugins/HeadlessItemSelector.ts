@@ -11,14 +11,10 @@ import {
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
 import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
+import {mimeTypeUtils} from 'frontend-js-web';
 import React from 'react';
 
-import {
-	FILE_MIME_TYPE_CSS_CLASSES,
-	FILE_MIME_TYPE_ICONS,
-} from '../utils/constants';
 import getIcon from '../utils/getIcon';
-import getMimeTypeProperty from '../utils/getMimeTypeProperty';
 
 const ALLOWED_IMAGE_FILE_EXTENSIONS = [
 	'apng',
@@ -103,15 +99,14 @@ const FDS_PROPS: IFrontendDataSetProps = {
 						...props,
 						imgProps: {src: item.embedded.file.thumbnailURL},
 						stickerProps: {
-							className: getMimeTypeProperty({
-								map: FILE_MIME_TYPE_CSS_CLASSES,
-								mimeType,
-							}),
+							className:
+								mimeTypeUtils.getClassNameFromMimeType(
+									mimeType
+								),
 							content: React.createElement(ClayIcon, {
-								symbol: getMimeTypeProperty({
-									map: FILE_MIME_TYPE_ICONS,
-									mimeType,
-								}),
+								symbol: mimeTypeUtils.getIconFromMimeType(
+									mimeType
+								),
 							}),
 							displayType: 'unstyled',
 						},

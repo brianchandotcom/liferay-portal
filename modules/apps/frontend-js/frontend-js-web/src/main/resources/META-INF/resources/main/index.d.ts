@@ -874,6 +874,7 @@ export {loadModule} from './utils/client_extensions/loadModule';
  * Utils
  */
 export {default as dateUtils} from './utils/dateUtils';
+export {default as mimeTypeUtils} from './utils/mime_type';
 export {getObjectValueFromPath} from './utils/object/getObjectValueFromPath';
 export {default as pkceChallenge} from './utils/pkceChallenge';
 export {getFileAsBase64} from './utils/string/getFileAsBase64';

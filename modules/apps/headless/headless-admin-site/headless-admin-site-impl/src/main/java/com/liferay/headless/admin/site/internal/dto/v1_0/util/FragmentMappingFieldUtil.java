@@ -246,7 +246,8 @@ public class FragmentMappingFieldUtil {
 		InfoItemFormVariation infoItemFormVariation =
 			infoItemFormVariationsProvider.getInfoItemFormVariation(
 				layoutPageTemplateEntry.getGroupId(),
-				String.valueOf(layoutPageTemplateEntry.getClassTypeId()));
+				String.valueOf(layoutPageTemplateEntry.getClassTypeId()),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
 
 		if (infoItemFormVariation == null) {
 			return fieldName;

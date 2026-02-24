@@ -74,7 +74,6 @@ public class ContainerPageElementDefinitionDTOConverter
 						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						containerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setContentVisibility(
 					() -> {
@@ -106,7 +105,6 @@ public class ContainerPageElementDefinitionDTOConverter
 						companyId, dtoConverterContext,
 						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.getLinkJSONObject(),
-						containerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setFragmentViewports(
 					() -> FragmentViewportUtil.toFragmentViewports(

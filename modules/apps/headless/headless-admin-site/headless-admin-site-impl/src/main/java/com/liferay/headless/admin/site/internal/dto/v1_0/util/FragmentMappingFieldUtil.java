@@ -40,7 +40,7 @@ public class FragmentMappingFieldUtil {
 	public static String getFieldKey(
 		DTOConverterContext dtoConverterContext,
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		String layoutStructureItemId, long scopeGroupId) {
+		long scopeGroupId) {
 
 		ServiceContext serviceContext = new ServiceContext();
 

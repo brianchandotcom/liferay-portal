@@ -66,7 +66,6 @@ public class FormStepContainerPageElementDefinitionDTOConverter
 						_infoItemServiceRegistry,
 						formStepContainerStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						formStepContainerStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setCssClasses(
 					() -> {

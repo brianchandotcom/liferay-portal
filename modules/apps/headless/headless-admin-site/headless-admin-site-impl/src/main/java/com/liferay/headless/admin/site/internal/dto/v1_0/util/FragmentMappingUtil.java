@@ -203,8 +203,7 @@ public class FragmentMappingUtil {
 	public static FragmentMappedValue toFragmentMappedValue(
 			long companyId, DTOConverterContext dtoConverterContext,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, String layoutStructureItemId,
-			long scopeGroupId)
+			JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
@@ -223,7 +222,7 @@ public class FragmentMappingUtil {
 					setFieldKey(
 						() -> FragmentMappingFieldUtil.getFieldKey(
 							dtoConverterContext, infoItemServiceRegistry,
-							jsonObject, layoutStructureItemId, scopeGroupId));
+							jsonObject, scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});

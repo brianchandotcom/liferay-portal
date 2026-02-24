@@ -38,15 +38,14 @@ public class ImageValueUtil {
 	public static BackgroundImageValue toBackgroundImageValue(
 			long companyId, DTOConverterContext dtoConverterContext,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, String layoutStructureItemId,
-			long scopeGroupId)
+			JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
 					companyId, dtoConverterContext, infoItemServiceRegistry,
-					jsonObject, layoutStructureItemId, scopeGroupId);
+					jsonObject, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;
@@ -115,15 +114,14 @@ public class ImageValueUtil {
 	public static FragmentImageValue toFragmentImageValue(
 			long companyId, DTOConverterContext dtoConverterContext,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, String layoutStructureItemId,
-			long scopeGroupId)
+			JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		if (FragmentMappingUtil.isMappedValue(jsonObject)) {
 			FragmentMappedValue fragmentMappedValue =
 				FragmentMappingUtil.toFragmentMappedValue(
 					companyId, dtoConverterContext, infoItemServiceRegistry,
-					jsonObject, layoutStructureItemId, scopeGroupId);
+					jsonObject, scopeGroupId);
 
 			if (fragmentMappedValue == null) {
 				return null;

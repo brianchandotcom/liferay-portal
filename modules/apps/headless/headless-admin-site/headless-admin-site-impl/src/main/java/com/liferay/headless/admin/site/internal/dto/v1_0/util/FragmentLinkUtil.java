@@ -27,7 +27,7 @@ public class FragmentLinkUtil {
 	public static FragmentLink toFragmentLink(
 		long companyId, DTOConverterContext dtoConverterContext,
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		String layoutStructureItemId, long scopeGroupId) {
+		long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;
@@ -61,8 +61,7 @@ public class FragmentLinkUtil {
 				setValue(
 					() -> _toFragmentLinkValue(
 						companyId, dtoConverterContext, infoItemServiceRegistry,
-						jsonObject, layoutStructureItemId, mappedValue,
-						scopeGroupId));
+						jsonObject, mappedValue, scopeGroupId));
 			}
 		};
 	}
@@ -119,8 +118,7 @@ public class FragmentLinkUtil {
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(
 			long companyId, DTOConverterContext dtoConverterContext,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, String layoutStructureItemId,
-			long scopeGroupId)
+			JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
@@ -140,7 +138,7 @@ public class FragmentLinkUtil {
 					setFieldKey(
 						() -> FragmentMappingFieldUtil.getFieldKey(
 							dtoConverterContext, infoItemServiceRegistry,
-							jsonObject, layoutStructureItemId, scopeGroupId));
+							jsonObject, scopeGroupId));
 					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});
@@ -153,14 +151,13 @@ public class FragmentLinkUtil {
 	private static FragmentLinkValue _toFragmentLinkValue(
 			long companyId, DTOConverterContext dtoConverterContext,
 			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, String layoutStructureItemId,
-			boolean mappedValue, long scopeGroupId)
+			JSONObject jsonObject, boolean mappedValue, long scopeGroupId)
 		throws Exception {
 
 		if (mappedValue) {
 			return _toFragmentLinkMappedValue(
 				companyId, dtoConverterContext, infoItemServiceRegistry,
-				jsonObject, layoutStructureItemId, scopeGroupId);
+				jsonObject, scopeGroupId);
 		}
 
 		FragmentLinkInlineValue fragmentLinkInlineValue =

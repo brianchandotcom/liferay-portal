@@ -253,7 +253,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						_infoItemServiceRegistry,
 						fragmentStyledLayoutStructureItem.
 							getBackgroundImageJSONObject(),
-						fragmentStyledLayoutStructureItem.getItemId(),
 						scopeGroupId));
 				setConfiguration(fragmentEntryLink::getConfiguration);
 				setCss(fragmentEntryLink::getCss);
@@ -280,9 +279,7 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 						FragmentEditableElementUtil.getFragmentEditableElements(
 							companyId, dtoConverterContext, fragmentEntryLink,
 							_fragmentEntryProcessorRegistry,
-							_infoItemServiceRegistry,
-							fragmentStyledLayoutStructureItem.getItemId(),
-							scopeGroupId, user));
+							_infoItemServiceRegistry, scopeGroupId, user));
 				setFragmentInstanceExternalReferenceCode(
 					fragmentEntryLink::getExternalReferenceCode);
 				setFragmentReference(

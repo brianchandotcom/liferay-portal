@@ -69,7 +69,8 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 		return "/admin/update_oauth_client_as_local_metadata.jsp";
 	}
 
-	private void _render(RenderRequest renderRequest) {
+	private void _render(RenderRequest renderRequest)
+		throws ParseException, PortalException {
 		long oAuthClientASLocalMetadataId = ParamUtil.getLong(
 			renderRequest, "oAuthClientASLocalMetadataId");
 

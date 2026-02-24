@@ -695,3 +695,32 @@ test('event with weekly recurrence has default value for repeat on field and has
 
 	await expect(calendarWidgetPage.successAlert).toBeVisible();
 });
+
+test('update on calendar does not trigger workflow alert if there is no workflow assigned', async ({
+	calendarWidgetPage,
+	page,
+}) => {
+	await calendarWidgetPage.addEvent({
+		allDay: true,
+		publishEvent: true,
+		title: 'Event' + getRandomString(),
+	});
+
+	await page
+		.frameLocator('iframe')
+		.getByRole('button', {name: 'Details'})
+		.click();
+
+	await page
+		.frameLocator('iframe')
+		.getByRole('combobox', {name: 'Calendar'})
+		.selectOption('Test Test');
+
+	await expect(
+		page
+			.frameLocator('iframe')
+			.getByText(
+				'This Calendar Event is approved. Publishing these changes will cause it to be unpublished and go through the approval process again.'
+			)
+	).toBeHidden();
+});

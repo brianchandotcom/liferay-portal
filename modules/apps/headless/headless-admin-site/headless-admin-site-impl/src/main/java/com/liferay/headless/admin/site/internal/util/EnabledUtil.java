@@ -16,11 +16,22 @@ import com.liferay.portal.kernel.model.Company;
 public class EnabledUtil {
 
 	public static void checkEnabled(Company company) {
-		if (!(LazyReferencingThreadLocal.isEnabled() ||
-			  ExportImportThreadLocal.isExportInProcess() ||
-			  ExportImportThreadLocal.isImportInProcess()) &&
-			!FeatureFlagManagerUtil.isEnabled(
-				company.getCompanyId(), "LPD-35443")) {
+		checkEnabled(company, false);
+	}
+
+	public static void checkEnabled(Company company, boolean privateLayout) {
+		if (LazyReferencingThreadLocal.isEnabled() ||
+			ExportImportThreadLocal.isExportInProcess() ||
+			ExportImportThreadLocal.isImportInProcess()) {
+
+			return;
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				company.getCompanyId(), "LPD-35443") ||
+			(privateLayout &&
+			 !FeatureFlagManagerUtil.isEnabled(
+				 company.getCompanyId(), "LPD-38869"))) {
 
 			throw new UnsupportedOperationException();
 		}

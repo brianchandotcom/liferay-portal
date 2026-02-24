@@ -48,7 +48,6 @@ import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
@@ -309,7 +308,7 @@ public class SitePageResourceImpl
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		_checkEnabled(privateLayout);
+		EnabledUtil.checkEnabled(contextCompany, privateLayout);
 
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -364,7 +363,7 @@ public class SitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		_checkEnabled(privateLayout);
+		EnabledUtil.checkEnabled(contextCompany, privateLayout);
 
 		return _toSitePage(
 			_addLayout(
@@ -382,7 +381,7 @@ public class SitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		_checkEnabled(privateLayout);
+		EnabledUtil.checkEnabled(contextCompany, privateLayout);
 
 		long groupId = GroupUtil.getStagingAwareGroupId(
 			contextCompany.getCompanyId(), siteExternalReferenceCode);
@@ -579,17 +578,6 @@ public class SitePageResourceImpl
 		}
 
 		return layout;
-	}
-
-	private void _checkEnabled(Boolean privateLayout) {
-		EnabledUtil.checkEnabled(contextCompany);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-38869") &&
-			privateLayout) {
-
-			throw new UnsupportedOperationException();
-		}
 	}
 
 	private CustomMetaTag[] _getCustomMetaTags(PageSettings pageSettings) {

@@ -140,6 +140,8 @@ public class OpenIdConnectAuthenticationHandlerImpl
 				oAuthClientEntry.getMetadataCacheInSeconds(),
 				oAuthClientEntry.getOAuthClientEntryId());
 
+		int timeout = 0;
+
 		Dictionary<String, Object> properties =
 			OpenIdConnectProviderUtil.
 				getOpenIdConnectProviderConfigurationProperties(
@@ -149,8 +151,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 					_configurationAdmin,
 					String.valueOf(oidcProviderMetadata.getIssuer()),
 					String.valueOf(oidcProviderMetadata.getTokenEndpointURI()));
-
-		int timeout = 0;
 
 		if (properties != null) {
 			timeout = GetterUtil.getInteger(

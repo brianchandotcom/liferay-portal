@@ -198,10 +198,10 @@ public class OpenIdConnectTokenRequestUtilTest {
 	private HTTPRequest _setUpHttpRequest() throws Exception {
 		HTTPRequest httpRequest = Mockito.mock(HTTPRequest.class);
 
-		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
-
 		MockServerClient mockServerClient = new MockServerClient(
 			"localhost", 63636);
+
+		HTTPResponse httpResponse = Mockito.mock(HTTPResponse.class);
 
 		mockServerClient.when(
 			HttpRequest.request(

@@ -45,6 +45,7 @@ definition {
 	@description = "LPS-150905. Walkthrough does not show when disabled."
 	@priority = 5
 	test CanBeDisabled {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -73,6 +74,7 @@ definition {
 	@description = "LPS-150905. Can enable walkthrough in System Settings."
 	@priority = 5
 	test CanBeEnabled {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -93,6 +95,7 @@ definition {
 	@description = "LPS-150905. JSON can be configured on System Settings."
 	@priority = 5
 	test JSONCanBeConfigured {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -115,6 +118,7 @@ definition {
 	@description = "LPS-150905. JSON can be updated."
 	@priority = 5
 	test JSONCanBeUpdated {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -145,6 +149,7 @@ definition {
 	@description = "LPS-150905. Walkthrough displays when defined for a site."
 	@priority = 5
 	test WillDisplayWhenDefinedForSite {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");
@@ -182,6 +187,7 @@ definition {
 	@description = "LPS-150905. Walkthrough will not display when not defined for a site."
 	@priority = 5
 	test WillNotDisplayWhenNotDefinedForSite {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "false";
 
 		var portalURL = PropsUtil.get("portal.url");

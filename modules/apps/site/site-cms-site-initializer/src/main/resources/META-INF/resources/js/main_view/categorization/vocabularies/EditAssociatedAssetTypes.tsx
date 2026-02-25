@@ -66,7 +66,13 @@ export default function EditAssociatedAssetTypes({
 	useEffect(() => {
 		if (vocabulary.assetTypes.length) {
 			if (vocabulary.assetTypes[0].typeId === 0) {
-				setSelectedItems(ALL_STRUCTURES);
+				setSelectedItems([
+					{
+						label: Liferay.Language.get('all-asset-types'),
+						required: vocabulary.assetTypes[0].required,
+						value: 0,
+					},
+				]);
 			}
 			else {
 				setAllAssetTypesSelected(false);

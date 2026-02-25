@@ -47,15 +47,13 @@ public class EditVocabularyDisplayContext {
 							EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES,
 						ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 					}),
-				objectDefinition -> HashMapBuilder.put(
-					"required", Boolean.FALSE.toString()
+				objectDefinition -> HashMapBuilder.<String, Object>put(
+					"required", Boolean.FALSE
 				).put(
 					"type", objectDefinition.getLabelCurrentValue()
 				).put(
 					"typeId",
-					String.valueOf(
-						PortalUtil.getClassNameId(
-							objectDefinition.getClassName()))
+					PortalUtil.getClassNameId(objectDefinition.getClassName())
 				).build())
 		).put(
 			"backURL",

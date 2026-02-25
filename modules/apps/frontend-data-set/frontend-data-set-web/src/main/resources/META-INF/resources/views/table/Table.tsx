@@ -163,7 +163,6 @@ const Row = ({
 	items,
 	itemsActions,
 	onItemSelectionChange,
-	schema,
 	selectionType,
 	...otherProps
 }: {
@@ -175,7 +174,6 @@ const Row = ({
 	items: any[];
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
-	schema: ITableSchema;
 	selectionType?: 'single' | 'multiple';
 }) => {
 	const {itemsChanges, selectedItemsKey, updateItem} = useContext(
@@ -223,7 +221,6 @@ const Row = ({
 											onItemSelectionChange={
 												onItemSelectionChange
 											}
-											schema={schema}
 										/>
 									)
 								)}
@@ -421,7 +418,6 @@ const Body = ({
 							items={items}
 							itemsActions={itemsActions}
 							onItemSelectionChange={onItemSelectionChange}
-							schema={schema}
 							selectionType={selectionType}
 						/>
 					);

@@ -5,7 +5,6 @@ import {ENABLE_CDP} from 'shared/util/constants';
 import {Individual} from 'shared/util/records';
 import {pickBy} from 'lodash';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
-import {SectionHeader} from '../components/SectionHeader';
 import {useHistory} from 'react-router-dom';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
@@ -35,11 +34,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 
 	return (
 		<>
-			<SectionHeader
-				icon='analytics'
-				title={Liferay.Language.get('interaction-history')}
-			/>
-
 			<BaseCard
 				className='individual-profile-card-root page-display'
 				description={

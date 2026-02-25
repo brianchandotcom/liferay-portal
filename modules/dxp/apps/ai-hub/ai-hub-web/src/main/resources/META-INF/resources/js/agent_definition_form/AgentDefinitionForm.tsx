@@ -27,10 +27,12 @@ import {AgentDefinition} from './types/AgentDefinition';
 export default function AgentDefinitionForm({
 	backURL,
 	externalReferenceCode,
+	readonly,
 	workflowDefinitionURL,
 }: {
 	backURL: string;
 	externalReferenceCode: string;
+	readonly: boolean;
 	workflowDefinitionURL: string;
 }) {
 	const [formData, setFormData] = useState<AgentDefinition>(
@@ -145,6 +147,7 @@ export default function AgentDefinitionForm({
 						aria-labelledby="saveButton"
 						data-title="Save Button"
 						data-title-set-as-html
+						disabled={readonly}
 						onClick={handleSubmit}
 						size="sm"
 					>
@@ -157,6 +160,7 @@ export default function AgentDefinitionForm({
 				<ClayForm>
 					<div className="agent-definition-header">
 						<ClayToggle
+							disabled={readonly}
 							label={Liferay.Language.get('enable-agent')}
 							name="active-toggle"
 							onBlur={(
@@ -194,6 +198,7 @@ export default function AgentDefinitionForm({
 
 									<ClayForm.Group>
 										<InputLocalized
+											disabled={readonly}
 											id="title"
 											label={Liferay.Language.get(
 												'title'
@@ -229,6 +234,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
+											disabled={readonly}
 											id="externalReferenceCode"
 											name="externalReferenceCode"
 											onChange={handleInputChange}
@@ -256,6 +262,7 @@ export default function AgentDefinitionForm({
 
 										<textarea
 											className="form-control"
+											disabled={readonly}
 											id="description"
 											name="description"
 											onChange={handleInputChange}
@@ -279,6 +286,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
+											disabled={readonly}
 											id="input-variables"
 											name="inputVariables"
 											onChange={handleInputChange}
@@ -301,6 +309,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
+											disabled={readonly}
 											id="output-variable"
 											name="outputVariable"
 											onChange={handleInputChange}
@@ -323,6 +332,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
+											disabled={readonly}
 											id="workflow-definition-name"
 											name="workflowDefinitionName"
 											onChange={handleInputChange}
@@ -347,6 +357,7 @@ export default function AgentDefinitionForm({
 										</label>
 
 										<ClayInput
+											disabled={readonly}
 											id="account-entry-external-reference-code"
 											name="r_accountToAIHubAgentDefinitions_accountEntryERC"
 											onChange={handleInputChange}

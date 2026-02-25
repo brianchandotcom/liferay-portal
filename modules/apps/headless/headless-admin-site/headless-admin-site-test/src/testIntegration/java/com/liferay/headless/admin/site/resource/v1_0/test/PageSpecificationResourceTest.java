@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -64,7 +65,11 @@ import org.junit.runner.RunWith;
 /**
  * @author Rubén Pulido
  */
-@FeatureFlag("LPD-74328")
+@FeatureFlags(
+	featureFlags = {
+		@FeatureFlag(value = "LPD-35443"), @FeatureFlag(value = "LPD-74328")
+	}
+)
 @RunWith(Arquillian.class)
 public class PageSpecificationResourceTest
 	extends BasePageSpecificationResourceTestCase {

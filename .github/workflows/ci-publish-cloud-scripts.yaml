@@ -20,8 +20,7 @@ jobs:
             -   name: Set up variables
                 run: |
                     CURRENT_VERSION="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"
-                    PACKAGE_NAME="liferay-aws-bootstrap"
-                    GCS_PATH="gs://liferay-cloud-native-bootstrapd/bootstrap/${PACKAGE_NAME}/${PACKAGE_NAME}-${CURRENT_VERSION}.tar.gz"
+                    GCS_PATH="gs://liferay-cloud-native-bootstrapd/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
 
                     echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
                     echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}

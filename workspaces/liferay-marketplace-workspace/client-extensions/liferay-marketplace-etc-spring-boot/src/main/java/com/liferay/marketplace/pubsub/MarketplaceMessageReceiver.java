@@ -19,6 +19,7 @@ import com.liferay.headless.admin.user.client.pagination.Pagination;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.admin.user.client.resource.v1_0.PostalAddressResource;
 import com.liferay.headless.commerce.admin.channel.client.dto.v1_0.Channel;
+import com.liferay.headless.commerce.admin.channel.client.resource.v1_0.ChannelResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
@@ -51,8 +52,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		_marketplaceService = marketplaceService;
 		_productKeysList = productKeysList;
 		_topicName = topicName;
-
-		_initializeChannel();
 	}
 
 	@Override
@@ -145,16 +144,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		}
 
 		return null;
-	}
-
-	private void _initializeChannel() {
-		try {
-			_channel = _marketplaceService.getChannelByExternalReferenceCode(
-				"MARKETPLACE-CHANNEL");
-		}
-		catch (Exception exception) {
-			_log.error("Could not initialize channel", exception);
-		}
 	}
 
 	private void _processKoroneikiAccountUpdate(
@@ -256,12 +245,18 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
+		ChannelResource channelResource =
+			_marketplaceService.getChannelResource();
+
+		Channel channel = channelResource.getChannelByExternalReferenceCode(
+				"MARKETPLACE-CHANNEL");
+
 		_marketplaceService.postOrder(
 			new Order() {
 				{
 					setAccountExternalReferenceCode(
 						productPurchase::getAccountKey);
-					setChannelId(_channel::getId);
+					setChannelId(channel::getId);
 					setCurrencyCode(() -> "USD");
 					setExternalReferenceCode(productPurchase::getKey);
 					setOrderItems(
@@ -290,7 +285,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceMessageReceiver.class);
 
-	private Channel _channel;
 	private final KoroneikiService _koroneikiService;
 	private final MarketplaceService _marketplaceService;
 	private final List<String> _productKeysList;

@@ -7,7 +7,6 @@ package com.liferay.blogs.internal.search.spi.model.index.contributor;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 
@@ -15,19 +14,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWrite
  * @author Luan Maoski
  */
 public class BlogsEntryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<BlogsEntry> {
+	extends ModelIndexerWriterContributor<BlogsEntry> {
 
 	public BlogsEntryModelIndexerWriterContributor(
 		BlogsEntryLocalService blogsEntryLocalService) {
 
-		_blogsEntryLocalService = blogsEntryLocalService;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _blogsEntryLocalService.getIndexableActionableDynamicQuery();
+		super(blogsEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -45,7 +37,5 @@ public class BlogsEntryModelIndexerWriterContributor
 
 		return IndexerWriterMode.DELETE;
 	}
-
-	private final BlogsEntryLocalService _blogsEntryLocalService;
 
 }

@@ -812,7 +812,6 @@ test(
 		]);
 
 		await (await teamsPage.teamsTable.cellLink(newTeam.teamName)).click();
-
 		await teamsPage.userGroupTab.click();
 
 		await expect(userGroupsPage.userGroupsTable.searchInput).toBeEnabled();

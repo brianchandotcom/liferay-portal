@@ -21,7 +21,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
-import {ApiHelpers, DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
@@ -1231,7 +1231,7 @@ test('Can import object with different classname via portlet', async ({
 		);
 	});
 
-	let virtualInstanceApiHelpers: ApiHelpers;
+	let virtualInstanceApiHelpers: DataApiHelpers;
 
 	await test.step('Create and Configure Virtual Instance (Able)', async () => {
 		const virtualInstance =

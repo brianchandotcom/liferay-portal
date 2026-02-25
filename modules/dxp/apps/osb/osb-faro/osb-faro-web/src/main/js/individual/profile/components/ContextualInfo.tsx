@@ -74,7 +74,7 @@ interface IContextualInfoProps {
 const INFO_LANGUAGE_MAP: Record<string, string> = {
 	browserName: Liferay.Language.get('browser'),
 	city: Liferay.Language.get('city'),
-	contactId: Liferay.Language.get('contact-id'),
+	contactId: 'contactId',
 	country: Liferay.Language.get('country'),
 	devicePixelRatio: Liferay.Language.get('device-pixel-ratio'),
 	deviceType: Liferay.Language.get('device-type'),
@@ -85,7 +85,7 @@ const INFO_LANGUAGE_MAP: Record<string, string> = {
 	screenWidth: Liferay.Language.get('screen-width'),
 	timeZoneOffset: Liferay.Language.get('time-zone'),
 	userAgent: Liferay.Language.get('user-agent'),
-	userId: Liferay.Language.get('user-id'),
+	userId: 'userId',
 	uuid: 'UUID'
 };
 
@@ -116,7 +116,7 @@ const ContextualInfo: React.FC<IContextualInfoProps> = ({
 		<>
 			<SectionHeader
 				icon='sites'
-				title={Liferay.Language.get('contextual-info')}
+				title={Liferay.Language.get('contextual-information')}
 			/>
 
 			{showEmptyState ? (

@@ -5,7 +5,6 @@
 
 package com.liferay.notification.internal.search;
 
-import com.liferay.notification.internal.search.spi.model.index.contributor.NotificationTemplateModelIndexerWriterContributor;
 import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,9 @@ public class NotificationTemplateModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new NotificationTemplateModelIndexerWriterContributor(
-				_notificationTemplateLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_notificationTemplateLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<NotificationTemplate>

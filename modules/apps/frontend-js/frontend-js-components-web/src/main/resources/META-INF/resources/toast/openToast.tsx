@@ -195,9 +195,8 @@ function openToast({
 		rootElement
 	);
 
-	const alertElement = rootElement.querySelector(
-		'[role="alert"]'
-	) as HTMLElement | null;
+	const alertElement =
+		rootElement.querySelector<HTMLElement>('[role="alert"]');
 
 	if (alertElement) {
 		alertElement.setAttribute('tabindex', '-1');

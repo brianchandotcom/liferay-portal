@@ -2328,12 +2328,12 @@ components:
                     items:
                         type: permission
                     type: array
-                taxonomyCategoryItemExternalReferences:
+                taxonomyCategoryBriefs:
                     # @review
                     description:
-                        The external references to the associated categories.
+                        The taxonomy categories associated with this page.
                     items:
-                        $ref: "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     type: array
                 thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
@@ -3045,12 +3045,12 @@ components:
                     items:
                         type: permission
                     type: array
-                taxonomyCategoryItemExternalReferences:
+                taxonomyCategoryBriefs:
                     # @review
                     description:
-                        The external references to the associated categories.
+                        The taxonomy categories associated with this page.
                     items:
-                        $ref: "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     type: array
                 thumbnailURLReference:
                     $ref: "#/components/schemas/ThumbnailURLReference"
@@ -3554,12 +3554,12 @@ components:
                     items:
                         type: permission
                     type: array
-                taxonomyCategoryItemExternalReferences:
+                taxonomyCategoryBriefs:
                     # @review
                     description:
-                        The external references to the associated categories.
+                        The taxonomy categories associated with this page.
                     items:
-                        $ref: "#/components/schemas/ItemExternalReference"
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
                     type: array
                 type:
                     enum:
@@ -3760,6 +3760,41 @@ components:
                         The localized success notification message.
                 showNotification:
                     type: boolean
+            type: object
+        TaxonomyCategoryBrief:
+            # @review
+            properties:
+                parentTaxonomyCategory:
+                    description:
+                        The category's parent category.
+                    properties:
+                        externalReferenceCode:
+                            # @review
+                            description:
+                                The parent taxonomy category's external reference code.
+                            type: string
+                    type: object
+                parentTaxonomyVocabulary:
+                    description:
+                        The parent category's `TaxonomyVocabulary`.
+                    properties:
+                        externalReferenceCode:
+                            # @review
+                            description:
+                                The parent category's `TaxonomyVocabulary` external reference code.
+                            type: string
+                    type: object
+                scope:
+                    type: scope
+                taxonomyCategoryExternalReferenceCode:
+                    # @review
+                    description:
+                        The category's external reference code.
+                    type:
+                        string
+            required:
+                -   parentTaxonomyVocabulary
+                -   taxonomyCategoryExternalReferenceCode
             type: object
         TemplateListStyle:
             # @review

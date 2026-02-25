@@ -378,14 +378,14 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_buildEmptyReportEntryErrorMessage(
+			_getEmptyReportEntryErrorMessage(
 				externalReferenceCode1, "CompanyTestEntity"),
 			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_buildEmptyReportEntryErrorMessage(
+			_getEmptyReportEntryErrorMessage(
 				externalReferenceCode2, "CompanyTestEntity"),
 			externalReferenceCode2, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(1));
@@ -520,7 +520,7 @@ public class BatchTestEntityExportImportTest {
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
 				CompanyTestEntity.class.getName(),
-			_buildEmptyReportEntryErrorMessage(
+			_getEmptyReportEntryErrorMessage(
 				externalReferenceCode1, "CompanyTestEntity"),
 			externalReferenceCode1, ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
@@ -871,7 +871,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 
-	private String _buildEmptyReportEntryErrorMessage(
+	private String _getEmptyReportEntryErrorMessage(
 		String externalReferenceCode, String modelNameLanguageKey) {
 
 		return StringBundler.concat(

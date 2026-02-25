@@ -5,9 +5,14 @@
 
 package com.liferay.change.tracking.internal.search;
 
-import com.liferay.change.tracking.internal.search.spi.model.index.contributor.CTCollectionModelIndexerWriterContributor;
 import com.liferay.change.tracking.model.CTCollection;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
@@ -50,10 +55,33 @@ public class CTCollectionModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CTCollectionModelIndexerWriterContributor(
-				_ctCollectionLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			() -> {
+				IndexableActionableDynamicQuery
+					indexableActionableDynamicQuery =
+						_ctCollectionLocalService.
+							getIndexableActionableDynamicQuery();
+
+				if (!CTCollectionThreadLocal.isProductionMode()) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Restricting indexable results of ",
+								CTCollection.class.getName(), " because this ",
+								"can only be performed in production mode"));
+					}
+
+					indexableActionableDynamicQuery.setAddCriteriaMethod(
+						dynamicQuery -> dynamicQuery.add(
+							RestrictionsFactoryUtil.eq("ctCollectionId", -1L)));
+				}
+
+				return indexableActionableDynamicQuery;
+			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTCollectionModelSearchConfigurator.class);
 
 	@Reference
 	private CTCollectionLocalService _ctCollectionLocalService;

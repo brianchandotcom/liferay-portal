@@ -125,11 +125,13 @@ boolean limitToOneSubmissionPerUser = DDMFormInstanceSubmissionLimitStatusUtil.i
 
 						<%
 						String redirectURL = ddmFormDisplayContext.getRedirectURL();
+
+						if (Validator.isNull(redirectURL)) {
+							redirectURL = ParamUtil.getString(request, "redirect", currentURL);
+						}
 						%>
 
-						<c:if test="<%= Validator.isNull(redirectURL) %>">
-							<aui:input name="redirect" type="hidden" value='<%= ParamUtil.getString(request, "redirect", currentURL) %>' />
-						</c:if>
+						<aui:input name="redirect" type="hidden" value="<%= redirectURL %>" />
 
 						<aui:input name="groupId" type="hidden" value="<%= formInstance.getGroupId() %>" />
 						<aui:input name="formInstanceId" type="hidden" value="<%= formInstance.getFormInstanceId() %>" />

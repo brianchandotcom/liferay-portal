@@ -5,11 +5,11 @@
 
 package com.liferay.commerce.inventory.internal.search;
 
-import com.liferay.commerce.inventory.internal.search.spi.model.index.contributor.CommerceInventoryBookedQuantityModelIndexerWriterContributor;
 import com.liferay.commerce.inventory.internal.search.spi.model.result.contributor.CommerceInventoryBookedQuantityModelSummaryContributor;
 import com.liferay.commerce.inventory.model.CommerceInventoryBookedQuantity;
 import com.liferay.commerce.inventory.service.CommerceInventoryBookedQuantityLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -48,9 +48,10 @@ public class CommerceInventoryBookedQuantityModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CommerceInventoryBookedQuantityModelIndexerWriterContributor(
-				_commerceInventoryBookedQuantityLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_commerceInventoryBookedQuantityLocalService::
+				getIndexableActionableDynamicQuery);
 
 		_modelSummaryContributor =
 			new CommerceInventoryBookedQuantityModelSummaryContributor();

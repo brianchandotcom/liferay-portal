@@ -5,6 +5,7 @@ import {ENABLE_CDP} from 'shared/util/constants';
 import {Individual} from 'shared/util/records';
 import {pickBy} from 'lodash';
 import {removeUriQueryParam, setUriQueryValues} from 'shared/util/router';
+import {SectionHeader} from '../components/SectionHeader';
 import {useHistory} from 'react-router-dom';
 import {useStatefulPagination} from 'shared/hooks/useStatefulPagination';
 
@@ -33,71 +34,78 @@ const ProfileCard: React.FC<IProfileCardProps> = ({tabId, ...props}) => {
 	});
 
 	return (
-		<BaseCard
-			className='individual-profile-card-root page-display'
-			description={
-				ENABLE_CDP
-					? Liferay.Language.get(
-							'displays-a-chronological-timeline-of-events-within-the-selected-timeframe-including-session-context'
-					  )
-					: ''
-			}
-			headerProps={{
-				showRangeKey: ENABLE_CDP,
-				tabId
-			}}
-			label={Liferay.Language.get('individual-events')}
-			legacyDropdownRangeKey={false}
-			showInterval={ENABLE_CDP}
-		>
-			{({
-				interval,
-				onChangeInterval,
-				onRangeSelectorsChange,
-				rangeSelectors
-			}) => (
-				<ProfileCardWithData
-					{...props}
-					delta={delta}
-					interval={interval}
-					onChangeInterval={onChangeInterval}
-					onDeltaChange={onDeltaChange}
-					onPageChange={onPageChange}
-					onQueryChange={query => {
-						history.push(
-							setUriQueryValues(
-								pickBy({query}),
-								removeUriQueryParam(
-									window.location.href,
-									'query'
-								)
-							)
-						);
+		<>
+			<SectionHeader
+				icon='analytics'
+				title={Liferay.Language.get('interaction-history')}
+			/>
 
-						onQueryChange(query);
-					}}
-					onRangeSelectorsChange={rangeSelectors => {
-						history.push(
-							setUriQueryValues(
-								pickBy(rangeSelectors),
-								removeUriQueryParam(
-									window.location.href,
-									'rangeEnd',
-									'rangeStart'
+			<BaseCard
+				className='individual-profile-card-root page-display'
+				description={
+					ENABLE_CDP
+						? Liferay.Language.get(
+								'displays-a-chronological-timeline-of-events-within-the-selected-timeframe-including-session-context'
+						  )
+						: ''
+				}
+				headerProps={{
+					showRangeKey: ENABLE_CDP,
+					tabId
+				}}
+				label={Liferay.Language.get('individual-events')}
+				legacyDropdownRangeKey={false}
+				showInterval={ENABLE_CDP}
+			>
+				{({
+					interval,
+					onChangeInterval,
+					onRangeSelectorsChange,
+					rangeSelectors
+				}) => (
+					<ProfileCardWithData
+						{...props}
+						delta={delta}
+						interval={interval}
+						onChangeInterval={onChangeInterval}
+						onDeltaChange={onDeltaChange}
+						onPageChange={onPageChange}
+						onQueryChange={query => {
+							history.push(
+								setUriQueryValues(
+									pickBy({query}),
+									removeUriQueryParam(
+										window.location.href,
+										'query'
+									)
 								)
-							)
-						);
+							);
 
-						onRangeSelectorsChange(rangeSelectors);
-					}}
-					page={page}
-					query={query}
-					rangeSelectors={rangeSelectors}
-					resetPage={resetPage}
-					tabId={tabId}
-				/>
-			)}
-		</BaseCard>
+							onQueryChange(query);
+						}}
+						onRangeSelectorsChange={rangeSelectors => {
+							history.push(
+								setUriQueryValues(
+									pickBy(rangeSelectors),
+									removeUriQueryParam(
+										window.location.href,
+										'rangeEnd',
+										'rangeStart'
+									)
+								)
+							);
+
+							onRangeSelectorsChange(rangeSelectors);
+						}}
+						page={page}
+						query={query}
+						rangeSelectors={rangeSelectors}
+						resetPage={resetPage}
+						tabId={tabId}
+					/>
+				)}
+			</BaseCard>
+		</>
 	);
 };
 

@@ -5,7 +5,6 @@
 
 package com.liferay.list.type.internal.search;
 
-import com.liferay.list.type.internal.search.spi.model.index.contributor.ListTypeDefinitionModelIndexerWriterContributor;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,9 @@ public class ListTypeDefinitionModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ListTypeDefinitionModelIndexerWriterContributor(
-				_listTypeDefinitionLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_listTypeDefinitionLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

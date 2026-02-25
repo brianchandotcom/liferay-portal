@@ -37,7 +37,7 @@ liferay-marketplace-etc-spring-boot-oaua:
 liferay-marketplace-etc-spring-boot-object-action-product-purchase:
     name: Liferay Marketplace Etc Spring Boot Object Action Product Purchase
     oAuth2ApplicationExternalReferenceCode: liferay-marketplace-etc-spring-boot-oaua
-    resourcePath: /object/action/product-purchase
+    resourcePath: /object/action/product/purchase
     type: objectAction
 liferay-marketplace-etc-spring-boot-trial-provisioning:
     name: Liferay Marketplace Etc Spring Boot Trial Provisioning

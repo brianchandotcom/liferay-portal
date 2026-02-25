@@ -8,18 +8,17 @@ import {sub} from 'frontend-js-web';
 
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
-import {
-	displayCreateTaskErrorToast,
-	displayCreateTaskSuccessToast,
-} from '../../../common/utils/toastUtil';
+import {displayCreateTaskSuccessToast} from '../../../common/utils/toastUtil';
 import {getBulkActionTaskMessage} from '../../bulk_actions_monitor/util/notifications';
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
 function getBulkDeleteMessage(
+	isSingleVersion: boolean,
+	selectedData: IBulkActionFDSData,
 	objectEntryTitle: string,
-	selectedData: IBulkActionFDSData
+	versions: number[]
 ) {
-	const {items = [], selectAll} = selectedData;
+	const {selectAll} = selectedData;
 
 	if (selectAll) {
 		return {
@@ -30,11 +29,29 @@ function getBulkDeleteMessage(
 			title: Liferay.Language.get('delete-versions'),
 		};
 	}
-	else if (items?.length > 1) {
+	else if (isSingleVersion) {
+		return {
+			confirmationMessage: sub(
+				Liferay.Language.get('delete-current-version-info'),
+				objectEntryTitle
+			),
+			title: Liferay.Language.get('delete-version'),
+		};
+	}
+	else if (!versions.length) {
+		return {
+			confirmationMessage: sub(
+				Liferay.Language.get('current-asset-version-cannot-be-deleted'),
+				objectEntryTitle
+			),
+			title: Liferay.Language.get('delete-version'),
+		};
+	}
+	else if (versions.length > 1) {
 		return {
 			confirmationMessage: sub(
 				Liferay.Language.get('delete-versions-confirmation'),
-				items?.length,
+				versions.length,
 				objectEntryTitle
 			),
 			title: Liferay.Language.get('delete-versions'),
@@ -44,7 +61,7 @@ function getBulkDeleteMessage(
 	return {
 		confirmationMessage: sub(
 			Liferay.Language.get('delete-version-confirmation'),
-			`<strong>${sub(Liferay.Language.get('version-x'), items?.[0]?.systemProperties?.version.number)}</strong>`,
+			`<strong>${sub(Liferay.Language.get('version-x'), versions[0])}</strong>`,
 			objectEntryTitle
 		),
 		title: Liferay.Language.get('delete-version'),
@@ -53,22 +70,39 @@ function getBulkDeleteMessage(
 
 export default function deleteAssetVersionBulkAction({
 	apiURL,
+	className,
+	classPK,
 	dataSetId,
 	entryClassName,
 	objectEntryCurrentVersion,
 	objectEntryTitle,
+	objectEntryVersionsCount,
 	selectedData,
 }: {
 	apiURL?: string;
+	className: string;
+	classPK: string;
 	dataSetId?: string;
 	entryClassName?: string;
 	objectEntryCurrentVersion: number;
 	objectEntryTitle: string;
+	objectEntryVersionsCount: number;
 	selectedData: any;
 }) {
+	const versions = (selectedData.keyValues || []).filter(
+		(version: number) => version !== objectEntryCurrentVersion
+	);
+
+	const isSingleVersion = objectEntryVersionsCount === 1;
+
+	const isNotDeletableVersion =
+		!selectedData.selectAll && (isSingleVersion || !versions.length);
+
 	const {confirmationMessage, title} = getBulkDeleteMessage(
+		isSingleVersion,
+		selectedData,
 		objectEntryTitle,
-		selectedData
+		versions
 	);
 
 	openModal({
@@ -89,25 +123,14 @@ export default function deleteAssetVersionBulkAction({
 				type: 'cancel',
 			},
 			{
-				displayType: 'danger',
-				label: Liferay.Language.get('delete'),
+				displayType: isNotDeletableVersion ? 'info' : 'danger',
+				label: isNotDeletableVersion
+					? Liferay.Language.get('ok')
+					: Liferay.Language.get('delete'),
 				onClick: async ({processClose}) => {
-					const versions = selectedData.keyValues.filter(
-						(version: number) =>
-							version !== objectEntryCurrentVersion
-					);
-
 					const type = 'DeleteAssetVersionBulkAction';
 
-					if (!versions.length) {
-						const message = getBulkActionTaskMessage(
-							type,
-							'danger',
-							selectedData
-						);
-
-						displayCreateTaskErrorToast(message);
-
+					if (isNotDeletableVersion) {
 						processClose();
 
 						return;
@@ -116,7 +139,11 @@ export default function deleteAssetVersionBulkAction({
 					triggerAssetBulkAction({
 						apiURL,
 						dataSetId,
-						keyValues: {versions},
+						keyValues: {
+							className,
+							classPK: parseInt(classPK, 10),
+							versions,
+						},
 						onCreateSuccess: () => {
 							const message = getBulkActionTaskMessage(
 								type,
@@ -127,9 +154,7 @@ export default function deleteAssetVersionBulkAction({
 							displayCreateTaskSuccessToast(
 								selectedData.selectAll
 									? message
-									: sub(message, [
-											selectedData?.items?.length || 0,
-										])
+									: sub(message, [versions.length || 0])
 							);
 						},
 						overrideDefaultSuccessToast: true,
@@ -150,7 +175,7 @@ export default function deleteAssetVersionBulkAction({
 			},
 		],
 		center: true,
-		status: 'danger',
+		status: isNotDeletableVersion ? 'info' : 'danger',
 		title,
 	});
 }

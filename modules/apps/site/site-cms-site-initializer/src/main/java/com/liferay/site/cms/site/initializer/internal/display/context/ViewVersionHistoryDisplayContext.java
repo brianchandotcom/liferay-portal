@@ -14,6 +14,7 @@ import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectEntryVersionLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -136,12 +137,20 @@ public class ViewVersionHistoryDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(_httpServletRequest, "backURL")
 		).put(
+			"className", ObjectEntry.class.getName()
+		).put(
+			"classPK", _objectEntry.getObjectEntryId()
+		).put(
 			"entryClassName", _objectDefinition.getClassName()
 		).put(
 			"objectEntryCurrentVersion", _objectEntry.getVersion()
 		).put(
 			"objectEntryTitle",
 			_objectEntry.getTitleValue(_themeDisplay.getLanguageId())
+		).put(
+			"objectEntryVersionsCount",
+			ObjectEntryVersionLocalServiceUtil.getObjectEntryVersionsCount(
+				_objectEntry.getObjectEntryId())
 		).put(
 			"title",
 			StringBundler.concat(

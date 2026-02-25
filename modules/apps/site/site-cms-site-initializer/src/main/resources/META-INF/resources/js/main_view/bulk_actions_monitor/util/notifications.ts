@@ -97,11 +97,6 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 		},
 	},
 	[BULK_ACTION_DELETE_ASSET_VERSION]: {
-		danger: {
-			singular: Liferay.Language.get(
-				'current-asset-version-cannot-be-deleted'
-			),
-		},
 		info: {
 			all: Liferay.Language.get(
 				'delete-asset-versions-action-started-for-all-versions'

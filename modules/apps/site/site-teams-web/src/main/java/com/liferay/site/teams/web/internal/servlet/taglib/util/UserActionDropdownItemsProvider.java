@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.TeamLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import jakarta.portlet.RenderRequest;
@@ -24,7 +23,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -46,7 +44,7 @@ public class UserActionDropdownItemsProvider {
 	}
 
 	public List<DropdownItem> getActionDropdownItems() {
-		if (_isInheritedUser()) {
+		if (!TeamLocalServiceUtil.hasUserTeam(_user.getUserId(), _teamId)) {
 			return Collections.emptyList();
 		}
 
@@ -76,13 +74,6 @@ public class UserActionDropdownItemsProvider {
 			dropdownItem.setLabel(
 				LanguageUtil.get(_httpServletRequest, "delete"));
 		};
-	}
-
-	private boolean _isInheritedUser() {
-		Set<Long> userIds = SetUtil.fromArray(
-			TeamLocalServiceUtil.getUserPrimaryKeys(_teamId));
-
-		return !userIds.contains(_user.getUserId());
 	}
 
 	private final HttpServletRequest _httpServletRequest;

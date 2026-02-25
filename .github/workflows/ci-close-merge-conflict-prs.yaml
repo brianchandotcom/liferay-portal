@@ -1,54 +1,91 @@
-name: Close PRs with merge conflicts
+jobs:
+  close-merge-conflicts:
+    env:
+      AUTHORIZED_OWNERS_LIST: "pyoo47"
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          set -e
+          
+          CURRENT_REPOSITORY_OWNER="${{ github.repository_owner }}"
+          REPOSITORY_NAME="${{ github.event.repository.name }}"
+          
+          IS_AUTHORIZED_USER=false
+
+          for OWNER_ENTRY in ${AUTHORIZED_OWNERS_LIST}
+          do
+            if [[ "${OWNER_ENTRY}" == "${CURRENT_REPOSITORY_OWNER}" ]]
+            then
+              IS_AUTHORIZED_USER=true
+
+              break
+            fi
+          done
+
+          if [[ "${IS_AUTHORIZED_USER}" == "false" ]]
+          then
+            echo "Execution skipped: ${CURRENT_REPOSITORY_OWNER} is not authorized."
+
+            exit 0
+          fi
+
+          echo "Checking open pull requests in ${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}..."
+
+          PR_DATA_LIST=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+            "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls?state=open" \
+            | jq -r '.[] | "\(.number)\t\(.html_url)"')
+
+          echo "${PR_DATA_LIST}" | while IFS=$'\t' read -r PR_IDENTIFIER PULL_REQUEST_URL
+          do
+            if [[ -z "${PR_IDENTIFIER}" ]]
+            then
+              continue
+            fi
+
+            MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+              "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}" \
+              | jq -r '.mergeable_state')
+
+            MAX_POLLING_ATTEMPTS=6
+            POLLING_ATTEMPTS=0
+            
+            while [[ "${MERGEABLE_STATE}" == "unknown" || "${MERGEABLE_STATE}" == "null" ]] &&
+                  [[ ${POLLING_ATTEMPTS} -lt ${MAX_POLLING_ATTEMPTS} ]]
+            do
+              CURRENT_ATTEMPT_DISPLAY=$(expr ${POLLING_ATTEMPTS} + 1)
+              
+              echo "Pull request ${PULL_REQUEST_URL} state is unknown."
+              echo "Waiting 5s (Attempt ${CURRENT_ATTEMPT_DISPLAY}/${MAX_POLLING_ATTEMPTS})..."
+              
+              sleep 5
+              
+              MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}" \
+                | jq -r '.mergeable_state')
+                
+              POLLING_ATTEMPTS=$(expr ${POLLING_ATTEMPTS} + 1)
+            done
+
+            if [[ "${MERGEABLE_STATE}" == "dirty" ]]
+            then
+              echo "[ACTION] Closing pull request: ${PULL_REQUEST_URL} due to conflicts."
+              
+              curl -s -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/issues/${PR_IDENTIFIER}/comments"
+
+              curl -s -X PATCH -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+                -d '{"state": "closed"}' \
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}"
+            else
+              echo "[SKIP] Pull request: ${PULL_REQUEST_URL} is currently: ${MERGEABLE_STATE}"
+            fi
+          done
 on:
   schedule:
-    - cron: '0 * * * *' # Runs every hour
-  workflow_dispatch:   # Allows you to run it manually from the Actions tab
-
-jobs:
-  close-conflicts:
-    if: github.repository == 'pyoo47/liferay-portal'
-    runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
-      issues: write
-
-    steps:
-      - name: Close PRs with merge conflicts
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const { data: pullRequests } = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              state: 'open',
-            });
-
-            console.log(`Checking ${pullRequests.length} open pull requests...`);
-
-            for (const pr of pullRequests) {
-              const { data: details } = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: pr.number,
-              });
-
-              if (details.mergeable_state === 'dirty') {
-                console.log(`[ACTION] Closing PR #${pr.number} due to conflicts.`);
-                
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: pr.number,
-                  body: "⚠️ **Auto-notice:** This PR has merge conflicts and has been closed to keep the fork queue clean. Please resolve conflicts locally and re-open."
-                });
-
-                await github.rest.pulls.update({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  pull_number: pr.number,
-                  state: 'closed',
-                });
-              } else {
-                console.log(`[SKIP] PR #${pr.number} in ${context.repo.owner}/${context.repo.repo}: NO CONFLICT (State: ${details.mergeable_state})`);
-              }
-            }
+    - cron: '*/15 * * * *'
+  workflow_dispatch:

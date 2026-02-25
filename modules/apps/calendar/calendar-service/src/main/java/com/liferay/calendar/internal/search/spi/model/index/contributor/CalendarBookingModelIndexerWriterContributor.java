@@ -20,12 +20,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Michael C. Han
  */
 public class CalendarBookingModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<CalendarBooking> {
+	extends ModelIndexerWriterContributor<CalendarBooking> {
 
 	public CalendarBookingModelIndexerWriterContributor(
 		CalendarBookingLocalService calendarBookingLocalService) {
 
-		_calendarBookingLocalService = calendarBookingLocalService;
+		super(calendarBookingLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -52,14 +52,6 @@ public class CalendarBookingModelIndexerWriterContributor
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _calendarBookingLocalService.
-			getIndexableActionableDynamicQuery();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		CalendarBooking calendarBooking) {
 
@@ -74,7 +66,5 @@ public class CalendarBookingModelIndexerWriterContributor
 
 		return IndexerWriterMode.DELETE;
 	}
-
-	private final CalendarBookingLocalService _calendarBookingLocalService;
 
 }

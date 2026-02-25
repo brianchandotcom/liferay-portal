@@ -25,8 +25,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.product.analytics.web.internal.constants.ProductAnalyticsWebKeys" %><%@
 page import="com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsBannerDisplayContext" %><%@
 page import="com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsConfigurationDisplayContext" %><%@
-page import="com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsConsentPanelDisplayContext" %><%@
-page import="com.liferay.users.admin.constants.UsersAdminPortletKeys" %>
+page import="com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsConsentPanelDisplayContext" %>
 
 <%@ page import="jakarta.portlet.PortletURL" %>
 

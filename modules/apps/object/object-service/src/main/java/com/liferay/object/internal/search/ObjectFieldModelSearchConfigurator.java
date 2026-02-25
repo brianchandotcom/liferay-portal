@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.search;
 
-import com.liferay.object.internal.search.spi.model.index.contributor.ObjectFieldModelIndexerWriterContributor;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,8 @@ public class ObjectFieldModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ObjectFieldModelIndexerWriterContributor(
-				_objectFieldLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_objectFieldLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<ObjectField>

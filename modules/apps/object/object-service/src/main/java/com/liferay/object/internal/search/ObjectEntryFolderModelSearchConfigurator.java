@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.search;
 
-import com.liferay.object.internal.search.spi.model.index.contributor.ObjectEntryFolderModelIndexerWriterContributor;
 import com.liferay.object.internal.search.spi.model.result.contributor.ObjectEntryFolderModelSummaryContributor;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
@@ -57,9 +56,8 @@ public class ObjectEntryFolderModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ObjectEntryFolderModelIndexerWriterContributor(
-				_objectEntryFolderLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_objectEntryFolderLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<ObjectEntryFolder>

@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.search;
 
-import com.liferay.object.internal.search.spi.model.index.contributor.ObjectDefinitionModelIndexerWriterContributor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -45,9 +44,8 @@ public class ObjectDefinitionModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ObjectDefinitionModelIndexerWriterContributor(
-				_objectDefinitionLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_objectDefinitionLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<ObjectDefinition>

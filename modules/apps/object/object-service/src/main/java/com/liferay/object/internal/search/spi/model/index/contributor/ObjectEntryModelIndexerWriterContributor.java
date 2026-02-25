@@ -37,7 +37,7 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class ObjectEntryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<ObjectEntry> {
+	extends ModelIndexerWriterContributor<ObjectEntry> {
 
 	public ObjectEntryModelIndexerWriterContributor(
 		ObjectDefinition objectDefinition,
@@ -46,8 +46,11 @@ public class ObjectEntryModelIndexerWriterContributor
 		ObjectFieldLocalService objectFieldLocalService,
 		ObjectFolderLocalService objectFolderLocalService) {
 
+		super(
+			IndexerWriterMode.UPDATE,
+			objectEntryLocalService::getIndexableActionableDynamicQuery);
+
 		_objectDefinitionLocalService = objectDefinitionLocalService;
-		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFolderLocalService = objectFolderLocalService;
 
@@ -82,18 +85,6 @@ public class ObjectEntryModelIndexerWriterContributor
 				indexableActionableDynamicQuery.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(objectEntry));
 			});
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _objectEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
-	public IndexerWriterMode getIndexerWriterMode(ObjectEntry objectEntry) {
-		return IndexerWriterMode.UPDATE;
 	}
 
 	@Override
@@ -185,7 +176,6 @@ public class ObjectEntryModelIndexerWriterContributor
 	private final long _companyId;
 	private final Long _objectDefinitionId;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
-	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFolderLocalService _objectFolderLocalService;
 

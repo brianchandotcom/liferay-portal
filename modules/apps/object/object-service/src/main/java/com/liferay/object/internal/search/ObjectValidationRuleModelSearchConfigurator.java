@@ -5,7 +5,6 @@
 
 package com.liferay.object.internal.search;
 
-import com.liferay.object.internal.search.spi.model.index.contributor.ObjectValidationRuleModelIndexerWriterContributor;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,9 @@ public class ObjectValidationRuleModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ObjectValidationRuleModelIndexerWriterContributor(
-				_objectValidationRuleLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_objectValidationRuleLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<ObjectValidationRule>

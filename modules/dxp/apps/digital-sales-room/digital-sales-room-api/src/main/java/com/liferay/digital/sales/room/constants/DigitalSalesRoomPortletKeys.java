@@ -10,10 +10,6 @@ package com.liferay.digital.sales.room.constants;
  */
 public class DigitalSalesRoomPortletKeys {
 
-	public static final String DIGITAL_SALES_ROOM_INVITE_MEMBER =
-		"com_liferay_digital_sales_room_web_internal_portlet_" +
-			"DigitalSalesRoomInviteMemberPortlet";
-
 	public static final String DIGITAL_SALES_ROOM_MANAGEMENT =
 		"com_liferay_digital_sales_room_web_internal_portlet_" +
 			"DigitalSalesRoomManagementPortlet";

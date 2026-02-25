@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.digital.sales.room.constants;
+package com.liferay.site.dsr.site.initializer.constants;
 
 /**
  * @author Stefano Motta
  */
-public class DigitalSalesRoomTicketConstants {
+public class DSRTicketConstants {
 
 	public static final int TYPE_INVITE_MEMBER = 6;
 

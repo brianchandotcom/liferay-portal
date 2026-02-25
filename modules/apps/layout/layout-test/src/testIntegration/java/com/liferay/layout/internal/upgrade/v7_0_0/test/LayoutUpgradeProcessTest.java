@@ -117,11 +117,11 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 					RandomTestUtil.randomString(),
 					RandomTestUtil.randomString());
 
-			Image image2;
-			Image image3;
-			Layout layout2;
-			Layout layout3;
-			Layout layout4;
+			Image image2 = null;
+			Image image3 = null;
+			Layout layout2 = null;
+			Layout layout3 = null;
+			Layout layout4 = null;
 
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

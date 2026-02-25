@@ -32,7 +32,7 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	<div class="col-sm-12 form-group">
 		<div class="form-group__inner">
 			<clay:checkbox
-				checked="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() || cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingExplicitConsentMode() %>"
+				checked="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingExplicitConsentMode() %>"
 				disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>"
 				id='<%= liferayPortletResponse.getNamespace() + "explicitConsentMode" %>'
 				label="cookie-explicit-consent-mode"

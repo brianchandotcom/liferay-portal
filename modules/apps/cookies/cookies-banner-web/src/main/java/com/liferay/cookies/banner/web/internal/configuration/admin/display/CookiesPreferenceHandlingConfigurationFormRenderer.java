@@ -52,14 +52,92 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		String portletId = PortalUtil.getPortletId(
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAKARTA_PORTLET_REQUEST));
+
+		int consentRenewalPeriod = ParamUtil.getInteger(
+			httpServletRequest, "consentRenewalPeriod", 12);
+
+		int cookiesConfigurationProviderConsentRenewalPeriod =
+			_cookiesConfigurationProvider.
+				getCookiesPreferenceHandlingConsentRenewalPeriod(
+					ExtendedObjectClassDefinition.Scope.COMPANY,
+					themeDisplay.getCompanyId());
+
+		if (portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
+			cookiesConfigurationProviderConsentRenewalPeriod =
+				_cookiesConfigurationProvider.
+					getCookiesPreferenceHandlingConsentRenewalPeriod(
+						ExtendedObjectClassDefinition.Scope.SYSTEM, 0L);
+		}
+		else if (portletId.equals(
+					ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
+
+			cookiesConfigurationProviderConsentRenewalPeriod =
+				_cookiesConfigurationProvider.
+					getCookiesPreferenceHandlingConsentRenewalPeriod(
+						ExtendedObjectClassDefinition.Scope.GROUP,
+						themeDisplay.getScopeGroupId());
+		}
+
+		boolean enabled = ParamUtil.getBoolean(httpServletRequest, "enabled");
+
+		if (!enabled &&
+			(consentRenewalPeriod !=
+				cookiesConfigurationProviderConsentRenewalPeriod)) {
+
+			consentRenewalPeriod =
+				cookiesConfigurationProviderConsentRenewalPeriod;
+		}
+
+		if ((consentRenewalPeriod < 1) || (consentRenewalPeriod > 12)) {
+			consentRenewalPeriod = 12;
+		}
+
+		boolean cookiesConfigurationProviderExplicitConsentMode =
+			_cookiesConfigurationProvider.
+				isCookiesPreferenceHandlingExplicitConsentMode(
+					ExtendedObjectClassDefinition.Scope.COMPANY,
+					themeDisplay.getCompanyId());
+
+		if (portletId.equals(ConfigurationAdminPortletKeys.SYSTEM_SETTINGS)) {
+			cookiesConfigurationProviderExplicitConsentMode =
+				_cookiesConfigurationProvider.
+					isCookiesPreferenceHandlingExplicitConsentMode(
+						ExtendedObjectClassDefinition.Scope.SYSTEM, 0L);
+		}
+		else if (portletId.equals(
+					ConfigurationAdminPortletKeys.SITE_SETTINGS)) {
+
+			cookiesConfigurationProviderExplicitConsentMode =
+				_cookiesConfigurationProvider.
+					isCookiesPreferenceHandlingExplicitConsentMode(
+						ExtendedObjectClassDefinition.Scope.GROUP,
+						themeDisplay.getScopeGroupId());
+		}
+
+		boolean explicitConsentMode = ParamUtil.getBoolean(
+			httpServletRequest, "explicitConsentMode");
+
+		if (!enabled &&
+			(cookiesConfigurationProviderExplicitConsentMode !=
+				explicitConsentMode)) {
+
+			explicitConsentMode =
+				cookiesConfigurationProviderExplicitConsentMode;
+		}
+
 		return HashMapBuilder.<String, Object>put(
-			"consentRenewalPeriod",
-			ParamUtil.getInteger(httpServletRequest, "consentRenewalPeriod", 12)
+			"consentRenewalPeriod", consentRenewalPeriod
 		).put(
-			"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
+			"enabled", enabled
 		).put(
-			"explicitConsentMode",
-			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
+			"explicitConsentMode", explicitConsentMode
 		).put(
 			"modifiedDate",
 			() -> {

@@ -2727,7 +2727,7 @@ public class CustomFieldsUtilTest {
 
 		Assert.assertEquals(
 			exportImportReportEntries.toString(),
-			exportImportReportEntries.size(), 21);
+			21, exportImportReportEntries.size());
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntries.get(0);

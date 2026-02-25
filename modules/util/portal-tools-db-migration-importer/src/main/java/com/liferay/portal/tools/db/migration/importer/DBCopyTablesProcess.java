@@ -7,6 +7,7 @@ package com.liferay.portal.tools.db.migration.importer;
 
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.jdbc.postgresql.PostgreSQLJDBCUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
@@ -383,7 +384,7 @@ public class DBCopyTablesProcess {
 			if ((targetType == Types.LONGNVARCHAR) ||
 				(targetType == Types.VARCHAR)) {
 
-				preparedStatement.setString(index, value);
+				preparedStatement.setString(index, _getSanitizedString(value));
 
 				return;
 			}
@@ -425,6 +426,10 @@ public class DBCopyTablesProcess {
 		}
 
 		_setColumn(index, preparedStatement, targetType, valueString);
+	}
+
+	private String _getSanitizedString(String value) {
+		return StringUtil.removeSubstring(value, StringPool.NULL_CHAR);
 	}
 
 	private Set<String> _getViews(DataSource dataSource) throws Exception {
@@ -512,7 +517,7 @@ public class DBCopyTablesProcess {
 		else if ((targetType == Types.LONGVARCHAR) ||
 				 (targetType == Types.VARCHAR)) {
 
-			preparedStatement.setString(index, value);
+			preparedStatement.setString(index, _getSanitizedString(value));
 		}
 		else if (targetType == Types.DOUBLE) {
 			preparedStatement.setDouble(index, GetterUtil.getDouble(value));

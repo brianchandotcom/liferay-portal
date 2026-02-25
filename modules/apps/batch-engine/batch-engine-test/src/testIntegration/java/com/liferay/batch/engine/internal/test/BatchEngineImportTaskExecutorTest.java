@@ -134,7 +134,7 @@ public class BatchEngineImportTaskExecutorTest
 
 	@Test
 	public void testCreateBlogPostingsFromInvalidJSONFile() throws Exception {
-		ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
 
 		int exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -174,13 +174,13 @@ public class BatchEngineImportTaskExecutorTest
 					getExportImportReportEntriesCount());
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 
 	@Test
 	public void testCreateBlogPostingsFromInvalidJSONLFile() throws Exception {
-		ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
 
 		int exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -216,13 +216,13 @@ public class BatchEngineImportTaskExecutorTest
 					getExportImportReportEntriesCount());
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 
 	@Test
 	public void testCreateBlogPostingsFromInvalidXLSFile() throws Exception {
-		ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
 
 		int exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -257,7 +257,7 @@ public class BatchEngineImportTaskExecutorTest
 					getExportImportReportEntriesCount());
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 	}
 
@@ -337,7 +337,7 @@ public class BatchEngineImportTaskExecutorTest
 	public void testCreateBlogPostingsWithInvalidCSVFileAndOnErrorContinue()
 		throws Exception {
 
-		ExportImportThreadLocal.setLayoutImportInProcess(true);
+		ExportImportThreadLocal.setPortletImportInProcess(true);
 
 		int exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -399,7 +399,7 @@ public class BatchEngineImportTaskExecutorTest
 					getExportImportReportEntriesCount());
 		}
 		finally {
-			ExportImportThreadLocal.setLayoutImportInProcess(false);
+			ExportImportThreadLocal.setPortletImportInProcess(false);
 		}
 
 		_assertInvalidFileImportWithOnErrorContinueStrategy(

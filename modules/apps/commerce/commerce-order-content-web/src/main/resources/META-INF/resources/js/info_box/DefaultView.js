@@ -118,7 +118,8 @@ const DefaultView = ({
 					!readOnly &&
 					isEditable(field, isOpen) ? (
 						<ClayButton
-							aria-controls={`${namespace}infoBoxModal`}
+							aria-expanded={isOpen}
+							aria-haspopup="dialog"
 							aria-label={
 								value
 									? sub(Liferay.Language.get('edit-x'), label)
@@ -149,7 +150,7 @@ const DefaultView = ({
 					) : (
 						<ClayButton
 							aria-label={Liferay.Language.get('not-set')}
-							className="border-bottom border-dashed btn-sm p-0 small text-black-50 text-decoration-none"
+							className="border-bottom border-dashed btn-sm p-0 small text-decoration-none text-secondary"
 							displayType="link"
 							onClick={() =>
 								hasUpdatePermission &&

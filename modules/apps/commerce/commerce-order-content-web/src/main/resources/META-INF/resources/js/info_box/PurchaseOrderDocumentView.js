@@ -134,7 +134,8 @@ const PurchaseOrderDocumentView = ({
 				!value &&
 				isEditable(field, isOpen) ? (
 					<ClayButton
-						aria-controls={`${namespace}infoBoxFileChooser`}
+						aria-expanded={isOpen}
+						aria-haspopup="dialog"
 						aria-label={sub(Liferay.Language.get('add-x'), label)}
 						className="ml-2"
 						data-qa-id={`${field}-infoBoxButton`}

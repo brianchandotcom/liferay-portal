@@ -128,7 +128,7 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 									<c:choose>
 										<c:when test="<%= Validator.isNull(note) %>">
 											<c:if test='<%= Objects.equals(commerceReturn.getReturnStatus(), "draft") %>'>
-												<span class="text-muted">
+												<span class="text-secondary">
 													<liferay-ui:message key="click-add-to-insert" />
 												</span>
 											</c:if>

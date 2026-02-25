@@ -21,7 +21,6 @@ long accountEntryId = accountEntryDisplay.getAccountEntryId();
 	direction="left-side"
 	icon="<%= StringPool.BLANK %>"
 	markupView="lexicon"
-	message="<%= StringPool.BLANK %>"
 	showWhenSingleIcon="<%= true %>"
 >
 	<c:if test="<%= AccountEntryPermission.contains(permissionChecker, accountEntryId, ActionKeys.UPDATE) %>">

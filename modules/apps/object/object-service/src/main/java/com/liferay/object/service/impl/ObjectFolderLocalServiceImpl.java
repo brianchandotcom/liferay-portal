@@ -6,6 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
+import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.exception.ObjectFolderLabelException;
 import com.liferay.object.exception.ObjectFolderNameException;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -58,7 +60,9 @@ public class ObjectFolderLocalServiceImpl
 
 		_validateName(user.getCompanyId(), name);
 
-		return _addObjectFolder(externalReferenceCode, user, labelMap, name);
+		return _addObjectFolder(
+			externalReferenceCode, user, labelMap, name,
+			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override
@@ -171,7 +175,7 @@ public class ObjectFolderLocalServiceImpl
 				externalReferenceCode, _userLocalService.getUser(userId),
 				Collections.singletonMap(
 					LocaleUtil.getDefault(), externalReferenceCode),
-				externalReferenceCode),
+				externalReferenceCode, WorkflowConstants.STATUS_EMPTY),
 			externalReferenceCode,
 			this::fetchObjectFolderByExternalReferenceCode,
 			this::getObjectFolderByExternalReferenceCode,
@@ -196,13 +200,18 @@ public class ObjectFolderLocalServiceImpl
 
 		objectFolder.setExternalReferenceCode(externalReferenceCode);
 		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
+		objectFolder.setStatus(
+			EmptyModelManagerUtil.solveEmptyModel(
+				externalReferenceCode, objectFolder.getModelClassName(),
+				objectFolder.getCompanyId(), 0, objectFolder.getStatus(),
+				() -> WorkflowConstants.STATUS_APPROVED));
 
 		return objectFolderPersistence.update(objectFolder);
 	}
 
 	private ObjectFolder _addObjectFolder(
 			String externalReferenceCode, User user,
-			Map<Locale, String> labelMap, String name)
+			Map<Locale, String> labelMap, String name, int status)
 		throws PortalException {
 
 		ObjectFolder objectFolder = objectFolderPersistence.create(
@@ -214,6 +223,7 @@ public class ObjectFolderLocalServiceImpl
 		objectFolder.setUserName(user.getFullName());
 		objectFolder.setLabelMap(labelMap, LocaleUtil.getSiteDefault());
 		objectFolder.setName(name);
+		objectFolder.setStatus(status);
 
 		objectFolder = objectFolderPersistence.update(objectFolder);
 

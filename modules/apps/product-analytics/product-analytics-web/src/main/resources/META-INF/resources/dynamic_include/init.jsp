@@ -8,4 +8,6 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
 
-<%@ page import="com.liferay.product.analytics.web.internal.constants.ProductAnalyticsPortletKeys" %>
+<%@ page import="com.liferay.product.analytics.web.internal.constants.ProductAnalyticsPortletKeys" %><%@
+page import="com.liferay.product.analytics.web.internal.constants.ProductAnalyticsWebKeys" %><%@
+page import="com.liferay.product.analytics.web.internal.display.context.ProductAnalyticsConfigurationDisplayContext" %>

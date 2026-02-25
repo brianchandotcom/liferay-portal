@@ -217,16 +217,6 @@ public class MarketplaceService extends BaseService {
 		return catalogResource.getCatalog(catalogId);
 	}
 
-	public Channel getChannelByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception {
-
-		ChannelResource channelResource = getChannelResource();
-
-		return channelResource.getChannelByExternalReferenceCode(
-			externalReferenceCode);
-	}
-
 	public ChannelResource getChannelResource() throws Exception {
 		return ChannelResource.builder(
 		).header(

@@ -330,7 +330,7 @@ public class BuildHistoryReport {
 
 	private static String _getGeneratedDateJavaScriptVariable() {
 		return "var dataGeneratedDate = new Date(" +
-			JenkinsResultsParserUtil.getCurrentTimeMillis() + ";\n";
+			JenkinsResultsParserUtil.getCurrentTimeMillis() + ");\n";
 	}
 
 	private static LocalDateTime _getLocalDateTime(String startDateString) {

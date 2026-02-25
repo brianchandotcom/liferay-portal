@@ -5,11 +5,11 @@
 
 package com.liferay.document.library.internal.search;
 
-import com.liferay.document.library.internal.search.spi.model.index.contributor.DLFileEntryTypeModelIndexerWriterContributor;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
 import org.osgi.service.component.annotations.Activate;
@@ -46,9 +46,9 @@ public class DLFileEntryTypeModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new DLFileEntryTypeModelIndexerWriterContributor(
-				_dlFileEntryTypeLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_dlFileEntryTypeLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

@@ -17,12 +17,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Michael C. Han
  */
 public class DLFolderModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DLFolder> {
+	extends ModelIndexerWriterContributor<DLFolder> {
 
 	public DLFolderModelIndexerWriterContributor(
 		DLFolderLocalService dlFolderLocalService) {
 
-		_dlFolderLocalService = dlFolderLocalService;
+		super(dlFolderLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -40,14 +40,5 @@ public class DLFolderModelIndexerWriterContributor
 			(DLFolder dlFolder) -> indexableActionableDynamicQuery.addDocument(
 				modelIndexerWriterDocumentHelper.getDocument(dlFolder)));
 	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _dlFolderLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	private final DLFolderLocalService _dlFolderLocalService;
 
 }

@@ -199,6 +199,18 @@ public class AssetCategoryServiceUtil {
 			externalReferenceCode, groupId);
 	}
 
+	public static AssetCategory getOrAddEmptyCategoryWithAncestors(
+			String externalReferenceCode, long userId, long groupId,
+			String parentCategoryExternalReferenceCode,
+			String vocabularyExternalReferenceCode)
+		throws PortalException {
+
+		return getService().getOrAddEmptyCategoryWithAncestors(
+			externalReferenceCode, userId, groupId,
+			parentCategoryExternalReferenceCode,
+			vocabularyExternalReferenceCode);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

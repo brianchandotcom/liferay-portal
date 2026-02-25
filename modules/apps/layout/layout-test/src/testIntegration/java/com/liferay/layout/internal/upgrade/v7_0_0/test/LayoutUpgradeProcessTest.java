@@ -103,7 +103,6 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 			Image image0 = _addImage(_counterLocalService.increment());
 
 			Image image1 = _addImage(_counterLocalService.increment());
-
 			Layout layout1 = LayoutTestUtil.addTypePortletLayout(_group);
 
 			_updateLayoutLegacyColumn(
@@ -161,11 +160,9 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 					CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 						ctCollection.getCtCollectionId())) {
 
-				_assertLayoutIconImage(true, image2, layout1.getPlid());
-
-				_assertLayoutIconImage(true, image3, layout3.getPlid());
-
 				_assertLayoutIconImage(false, image0, layout4.getPlid());
+				_assertLayoutIconImage(true, image2, layout1.getPlid());
+				_assertLayoutIconImage(true, image3, layout3.getPlid());
 			}
 
 			Assert.assertFalse(_dbInspector.hasColumn("Layout", "iconImageId"));
@@ -264,8 +261,8 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
-				"UPDATE Layout SET iconImageId = ?, iconImageERC = null " +
-					"WHERE ctCollectionId = ? AND plid = ?")) {
+				"update Layout set iconImageId = ?, iconImageERC = null " +
+					"where ctCollectionId = ? AND plid = ?")) {
 
 			preparedStatement.setLong(1, iconImageId);
 			preparedStatement.setLong(2, ctCollectionId);

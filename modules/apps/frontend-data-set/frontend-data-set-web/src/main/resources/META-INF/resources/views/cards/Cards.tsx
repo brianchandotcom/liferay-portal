@@ -180,7 +180,13 @@ const Card = forwardRef<HTMLDivElement, any>(
 			return processedActions;
 		};
 
-		const accessibleName = selectedItemsKey || title || description || '';
+		const {accessibleNameField} = schema;
+
+		const accessibleName =
+			accessibleNameField ||
+			title ||
+			description ||
+			Liferay.Language.get('card');
 
 		const props = {
 			actions: formattedActions && getDropdownActions(formattedActions),

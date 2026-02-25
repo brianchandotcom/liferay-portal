@@ -34,6 +34,8 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddBlogsEntryWithImageViaBlogsImages {
+		property browser.chrome.version = "139.0";
+
 		JSONLayout.addPublicLayout(
 			groupName = "WYSIWYG Site Name",
 			layoutName = ${pageName});
@@ -87,6 +89,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanAddHyperlinkToExistingText {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -116,6 +119,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDisplayContentLeftToRight {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -147,6 +151,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanDisplayContentRightToLeft {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		JSONLayout.addPublicLayout(
@@ -194,6 +199,7 @@ definition {
 	@priority = 4
 	@refactordone
 	test CanPreviewSourceContent {
+		property browser.chrome.version = "139.0";
 		property portal.acceptance = "true";
 
 		JSONWebcontent.addWebContent(
@@ -237,6 +243,7 @@ definition {
 	@refactordone
 	test CanViewSourceCodeFormattedInTextView {
 		property app.server.types = "tomcat";
+		property browser.chrome.version = "139.0";
 		property database.types = "mysql";
 		property environment.acceptance = "false";
 		property operating.system.types = "alpine,amazonlinux,centos,debian,fedora,orcllinux,osx,redhat,rockylinux,solaris,suse,ubuntu,windows";
@@ -274,6 +281,8 @@ definition {
 	@priority = 3
 	@refactorneeded
 	test DMCanFormatTextWithEditorToolbar {
+		property browser.chrome.version = "139.0";
+
 		DMNavigator.openDocumentTypesAdmin(siteURLKey = "wysiwyg-site-name");
 
 		DMDocumentType.add(

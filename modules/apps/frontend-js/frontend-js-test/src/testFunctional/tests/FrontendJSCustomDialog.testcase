@@ -40,6 +40,8 @@ definition {
 	@description = "LPS-165263: This test validates that the liferay custom alert modal dialog can render."
 	@priority = 3
 	test CanRenderOpenAlertModal {
+		property browser.chrome.version = "139.0";
+
 		task ("When: run JS code: Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})") {
 			ExecuteJavaScript(value1 = "Liferay.Util.openAlertModal({message: 'Test Alert Modal', onConfirm: ()=>{}})");
 		}
@@ -54,6 +56,8 @@ definition {
 	@description = "LPS-165262"
 	@priority = 3
 	test CanRenderOpenConfirmModal {
+		property browser.chrome.version = "139.0";
+
 		ExecuteJavaScript(value1 = "Liferay.Util.openConfirmModal({message: 'Test Confirm Modal', onConfirm: ()=>{}})");
 	}
 

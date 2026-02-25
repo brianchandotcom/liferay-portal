@@ -50,7 +50,7 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 
 				<span className='secondary-info'>
 					{Liferay.Language.get(
-						'lists-all-the-segments-that-the-customer-is-currently-associated-with-in-the-last-30-days'
+						'list-all-the-segments-that-the-customer-is-currently-associated-with-in-the-last-30-days'
 					)}
 				</span>
 

@@ -9,7 +9,6 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
-import com.liferay.segments.internal.search.spi.model.index.contributor.SegmentsEntryModelIndexerWriterContributor;
 import com.liferay.segments.internal.search.spi.model.result.contributor.SegmentsEntryModelSummaryContributor;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -58,9 +57,8 @@ public class SegmentsEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new SegmentsEntryModelIndexerWriterContributor(
-				_segmentsEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_segmentsEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<SegmentsEntry>

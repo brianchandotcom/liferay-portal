@@ -81,6 +81,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 		} = useContext(FrontendDataSetContext);
 
 		const {
+			accessibleNameField,
 			description,
 			image,
 			sticker,
@@ -98,7 +99,11 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			path: selectedItemsKey,
 		});
 
-		const accessibleName = selectedItemsKey || title || description || '';
+		const accessibleName =
+			accessibleNameField ||
+			title ||
+			description ||
+			Liferay.Language.get('item');
 
 		return (
 			<ClayList.Item
@@ -191,6 +196,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							itemId={itemId}
 							items={items}
 							onItemSelectionChange={onItemSelectionChange}
+							schema={schema}
 						/>
 					</ClayList.ItemField>
 				)}

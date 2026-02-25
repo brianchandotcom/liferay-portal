@@ -163,6 +163,7 @@ const Row = ({
 	items,
 	itemsActions,
 	onItemSelectionChange,
+	schema,
 	selectionType,
 	...otherProps
 }: {
@@ -174,6 +175,7 @@ const Row = ({
 	items: any[];
 	itemsActions: Array<IItemsActions>;
 	onItemSelectionChange: Function;
+	schema: ITableSchema;
 	selectionType?: 'single' | 'multiple';
 }) => {
 	const {itemsChanges, selectedItemsKey, updateItem} = useContext(
@@ -221,6 +223,7 @@ const Row = ({
 											onItemSelectionChange={
 												onItemSelectionChange
 											}
+											schema={schema}
 										/>
 									)
 								)}
@@ -389,11 +392,13 @@ const Body = ({
 											item,
 											item[accessibleNameField]
 										)?.value
-									: getLocalizedValue(item, selectedItemsKey)
-												?.value
+									: getLocalizedValue(
+												item,
+												fields[0].fieldName
+										  )?.value
 										? getLocalizedValue(
 												item,
-												selectedItemsKey
+												fields[0].fieldName
 											)?.value
 										: Liferay.Language.get('item')) ?? ''
 							}
@@ -416,6 +421,7 @@ const Body = ({
 							items={items}
 							itemsActions={itemsActions}
 							onItemSelectionChange={onItemSelectionChange}
+							schema={schema}
 							selectionType={selectionType}
 						/>
 					);

@@ -19,13 +19,14 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Luan Maoski
  */
 public class BookmarksEntryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<BookmarksEntry> {
+	extends ModelIndexerWriterContributor<BookmarksEntry> {
 
 	public BookmarksEntryModelIndexerWriterContributor(
 		BookmarksEntryLocalService bookmarksEntryLocalService,
 		BookmarksFolderBatchReindexer bookmarksFolderBatchReindexer) {
 
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+		super(bookmarksEntryLocalService::getIndexableActionableDynamicQuery);
+
 		_bookmarksFolderBatchReindexer = bookmarksFolderBatchReindexer;
 	}
 
@@ -58,19 +59,11 @@ public class BookmarksEntryModelIndexerWriterContributor
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _bookmarksEntryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
 	public void modelIndexed(BookmarksEntry bookmarksEntry) {
 		_bookmarksFolderBatchReindexer.reindex(
 			bookmarksEntry.getFolderId(), bookmarksEntry.getCompanyId());
 	}
 
-	private final BookmarksEntryLocalService _bookmarksEntryLocalService;
 	private final BookmarksFolderBatchReindexer _bookmarksFolderBatchReindexer;
 
 }

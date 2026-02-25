@@ -466,9 +466,9 @@ public class PageTemplateResourceImpl
 				pageTemplate::getPageTemplateSet);
 		}
 
-		if (pageTemplate.getTaxonomyCategoryItemExternalReferences() != null) {
-			existingPageTemplate.setTaxonomyCategoryItemExternalReferences(
-				pageTemplate::getTaxonomyCategoryItemExternalReferences);
+		if (pageTemplate.getTaxonomyCategoryBriefs() != null) {
+			existingPageTemplate.setTaxonomyCategoryBriefs(
+				pageTemplate::getTaxonomyCategoryBriefs);
 		}
 
 		if (pageTemplate.getThumbnailURLReference() != null) {
@@ -738,7 +738,7 @@ public class PageTemplateResourceImpl
 		}
 
 		return ServiceContextUtil.createServiceContext(
-			pageTemplate.getTaxonomyCategoryItemExternalReferences(),
+			pageTemplate.getTaxonomyCategoryBriefs(),
 			contextCompany.getCompanyId(), pageTemplate.getDateCreated(),
 			groupId, contextHttpServletRequest, pageTemplate.getKeywords(),
 			pageTemplate.getDateModified(), contextUser.getUserId(), uuid);

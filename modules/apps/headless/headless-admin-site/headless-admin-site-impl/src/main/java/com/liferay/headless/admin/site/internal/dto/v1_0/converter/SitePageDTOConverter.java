@@ -144,8 +144,8 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 						return parentLayout.getExternalReferenceCode();
 					});
-				setTaxonomyCategoryItemExternalReferences(
-					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
+				setTaxonomyCategoryBriefs(
+					() -> AssetUtil.getTaxonomyCategoryBriefs(
 						Layout.class.getName(), layout.getPlid(),
 						layout.getGroupId()));
 				setType(

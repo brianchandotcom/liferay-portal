@@ -5,7 +5,6 @@
 
 package com.liferay.layout.page.template.internal.search;
 
-import com.liferay.layout.page.template.internal.search.spi.model.index.contributor.LayoutPageTemplateEntryModelIndexerWriterContributor;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,9 @@ public class LayoutPageTemplateEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new LayoutPageTemplateEntryModelIndexerWriterContributor(
-				_layoutPageTemplateEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_layoutPageTemplateEntryLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

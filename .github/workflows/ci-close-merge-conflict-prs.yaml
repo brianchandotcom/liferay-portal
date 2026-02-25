@@ -1,7 +1,7 @@
 jobs:
   close-merge-conflicts:
     env:
-      AUTHORIZED_OWNERS_LIST: "brianchandotcom"
+      AUTHORIZED_OWNERS_LIST: "pyoo47"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       issues: write
@@ -35,39 +35,37 @@ jobs:
 
           echo "Checking open pull requests in ${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}..."
 
-          PR_DATA_LIST=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
+          PR_LIST=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
             "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls?state=open" \
             | jq -r '.[] | "\(.number)\t\(.html_url)"')
 
-          echo "${PR_DATA_LIST}" | while IFS=$'\t' read -r PR_IDENTIFIER PULL_REQUEST_URL
+          echo "${PR_LIST}" | while IFS=$'\t' read -r PULL_REQUEST_NUMBER PULL_REQUEST_URL
           do
-            if [[ -z "${PR_IDENTIFIER}" ]]
+            if [[ -z "${PULL_REQUEST_NUMBER}" ]]
             then
               continue
             fi
 
             MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-              "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}" \
+              "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}" \
               | jq -r '.mergeable_state')
 
-            MAX_POLLING_ATTEMPTS=6
-            POLLING_ATTEMPTS=0
+            MAX_RETRIES=6
+            RETRY_COUNT=0
             
             while [[ "${MERGEABLE_STATE}" == "unknown" || "${MERGEABLE_STATE}" == "null" ]] &&
-                  [[ ${POLLING_ATTEMPTS} -lt ${MAX_POLLING_ATTEMPTS} ]]
+                  [[ ${RETRY_COUNT} -lt ${MAX_RETRIES} ]]
             do
-              CURRENT_ATTEMPT_DISPLAY=$(expr ${POLLING_ATTEMPTS} + 1)
-              
               echo "Pull request ${PULL_REQUEST_URL} state is unknown."
-              echo "Waiting 5s (Attempt ${CURRENT_ATTEMPT_DISPLAY}/${MAX_POLLING_ATTEMPTS})..."
+              echo "Waiting 5s (Attempt $((RETRY_COUNT + 1)) of ${MAX_RETRIES})..."
               
               sleep 5
               
               MERGEABLE_STATE=$(curl -s -H "Authorization: Bearer ${GITHUB_TOKEN}" \
-                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}" \
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}" \
                 | jq -r '.mergeable_state')
                 
-              POLLING_ATTEMPTS=$(expr ${POLLING_ATTEMPTS} + 1)
+              RETRY_COUNT=$(expr ${RETRY_COUNT} + 1)
             done
 
             if [[ "${MERGEABLE_STATE}" == "dirty" ]]
@@ -76,11 +74,11 @@ jobs:
               
               curl -s -X POST -H "Authorization: Bearer ${GITHUB_TOKEN}" \
                 -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
-                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/issues/${PR_IDENTIFIER}/comments"
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/issues/${PULL_REQUEST_NUMBER}/comments"
 
               curl -s -X PATCH -H "Authorization: Bearer ${GITHUB_TOKEN}" \
                 -d '{"state": "closed"}' \
-                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PR_IDENTIFIER}"
+                "https://api.github.com/repos/${CURRENT_REPOSITORY_OWNER}/${REPOSITORY_NAME}/pulls/${PULL_REQUEST_NUMBER}"
             else
               echo "[SKIP] Pull request: ${PULL_REQUEST_URL} is currently: ${MERGEABLE_STATE}"
             fi

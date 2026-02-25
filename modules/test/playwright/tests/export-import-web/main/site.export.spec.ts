@@ -33,13 +33,6 @@ export const test = mergeTests(
 	})
 );
 
-export const testWithExportImportAtInstanceLevelFF = mergeTests(
-	baseTest,
-	featureFlagsTest({
-		'LPD-35443': {enabled: true},
-	})
-);
-
 export const testWithHeadlessContentPagesFF = mergeTests(
 	baseTest,
 	featureFlagsTest({
@@ -74,7 +67,7 @@ test('can export at site level with custom export task name', async ({
 	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}MyExport-`));
 });
 
-testWithExportImportAtInstanceLevelFF(
+test(
 	'can export at site level with new file name',
 	async ({exportImportPage}) => {
 		await expectExportName(exportImportPage, 'Export');

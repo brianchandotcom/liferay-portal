@@ -15,7 +15,6 @@ import {
 	SimpleActionLinkRenderer,
 	UpdateDueDateModalContent,
 	addOnClickToCreationMenuItems,
-	deleteAssetEntriesBulkAction,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
 import {sub} from 'frontend-js-web';
@@ -28,6 +27,7 @@ import BulkEditDueDateModalContent from '../modal/BulkEditDueDateModalContent';
 import BulkEditStateModalContent from '../modal/BulkEditStateModalContent';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
+import deleteBulkAction from './actions/deleteBulkAction';
 import {cmpTasksFDSAtom} from './atoms';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
 import KanbanView from './views/kanban_view/KanbanView';
@@ -387,7 +387,7 @@ export default function TasksFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				deleteAssetEntriesBulkAction({
+				deleteBulkAction({
 					apiURL: otherProps.apiURL,
 					dataSetId: id,
 					selectedData,

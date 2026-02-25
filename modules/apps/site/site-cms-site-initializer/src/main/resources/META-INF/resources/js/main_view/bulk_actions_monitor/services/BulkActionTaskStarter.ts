@@ -71,13 +71,13 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 		this.type = type;
 	}
 
-	public onCreateSuccess(response: RequestResult<IBulkActionTaskPage>): void {
+	public onCreateSuccess(response: any): void {
 		if (this.onCreateTaskSuccess && this.overrideDefaultSuccessToast) {
 			this.onCreateTaskSuccess(response);
 		}
 		else {
 			const message = getBulkActionTaskMessage(
-				response.data.type,
+				response.data.type || this.type,
 				'info',
 				this.selectedData,
 				this.additionalData

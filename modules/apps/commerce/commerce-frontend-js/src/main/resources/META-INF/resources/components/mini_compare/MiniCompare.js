@@ -70,7 +70,11 @@ function Item(props) {
 				/>
 			</ClaySticker>
 
-			<button className="mini-compare-delete" onClick={props.onDelete}>
+			<button
+				aria-label={Liferay.Language.get('delete-item')}
+				className="mini-compare-delete"
+				onClick={props.onDelete}
+			>
 				<ClayIcon symbol="times" />
 			</button>
 		</div>
@@ -170,8 +174,8 @@ function MiniCompare(props) {
 		});
 	}, [items, props.itemsLimit]);
 
-	return triggerCheckCookieConsent() ? null : (
-		<div className={classnames('mini-compare', !!items.length && 'active')}>
+	return !items.length || triggerCheckCookieConsent() ? null : (
+		<div className={classnames('mini-compare', 'active')}>
 			{Array(props.itemsLimit)
 				.fill(null)
 				.map((_el, i) => {

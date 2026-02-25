@@ -32,9 +32,10 @@ function OrdersListView({
 	const ordersListRef = useRef();
 
 	return (
-		<ClayDropDown.ItemList className="orders-list-container">
+		<ClayDropDown.ItemList className="orders-list-container" role="none">
 			<ClayDropDown.Section className="item-list-head">
 				<ClayButtonWithIcon
+					aria-label={Liferay.Language.get('back-to-accounts')}
 					displayType="unstyled"
 					onClick={() => setCurrentView(VIEWS.ACCOUNTS_LIST)}
 					symbol="angle-left-small"
@@ -80,7 +81,7 @@ function OrdersListView({
 
 			<ClayDropDown.Divider />
 
-			<ClayDropDown.ItemList className="orders-list">
+			<ClayDropDown.ItemList className="orders-list" role="none">
 				<ClayDropDown.Section>
 					<div ref={ordersListRef} />
 				</ClayDropDown.Section>

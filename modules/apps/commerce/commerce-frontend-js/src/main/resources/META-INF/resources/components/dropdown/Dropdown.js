@@ -59,6 +59,7 @@ function Dropdown(props) {
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
+					aria-label={Liferay.Language.get('actions')}
 					className="component-action dropdown-toggle"
 					displayType="unstyled"
 				>

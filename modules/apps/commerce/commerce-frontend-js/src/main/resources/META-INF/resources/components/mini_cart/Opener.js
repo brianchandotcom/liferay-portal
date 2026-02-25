@@ -71,6 +71,7 @@ function Opener({disabled = false}) {
 
 	return (
 		<button
+			aria-label={Liferay.Language.get('open-mini-cart')}
 			className={classnames({
 				'has-badge': numberOfItems > 0,
 				'mini-cart-opener': true,

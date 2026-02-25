@@ -29,6 +29,7 @@ function AddToWishList({iconOnly, isInWishList, large, ...productInfo}) {
 	 */
 	return (
 		<ClayButton
+			aria-label={Liferay.Language.get('add-to-list')}
 			className={`btn-outline-borderless btn-${large ? 'lg' : 'sm'}`}
 			displayType="secondary"
 			onClick={toggleInWishList}

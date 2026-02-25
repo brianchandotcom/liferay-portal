@@ -371,6 +371,7 @@ export default function CartQuickAdd() {
 
 				<ClayInput.GroupItem shrink>
 					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('add-to-cart')}
 						data-qa-id="quickAddToCartButton"
 						disabled={!selectedSKUs.length || quickAddToCartError}
 						onClick={handleAddToCartClick}

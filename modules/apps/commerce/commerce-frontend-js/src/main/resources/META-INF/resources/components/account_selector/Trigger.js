@@ -15,6 +15,7 @@ import Sticker from './Sticker';
 const Trigger = React.forwardRef(
 	({active, currentAccount, currentOrder, ...props}, ref) => (
 		<ClayButton
+			aria-label={Liferay.Language.get('account-selector')}
 			{...props}
 			className={classnames(
 				'btn-account-selector',

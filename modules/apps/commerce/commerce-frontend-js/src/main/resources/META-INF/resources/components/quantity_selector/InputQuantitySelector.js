@@ -253,6 +253,7 @@ const InputQuantitySelector = forwardRef(
 				})}
 			>
 				<ClayInput
+					aria-label={Liferay.Language.get('quantity-selector')}
 					className={className}
 					data-qa-id={props['data-qa-id']}
 					disabled={disabled}

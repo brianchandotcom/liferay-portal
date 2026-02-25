@@ -23,15 +23,19 @@ function Header() {
 		<div className="mini-cart-header">
 			<div className="mini-cart-header-block">
 				<div className="mini-cart-header-title">
-					<h3>
+					<h2>
 						{!itemsCount
 							? labels[ORDER_IS_EMPTY]
 							: labels[YOUR_ORDER]}
-					</h3>
+					</h2>
 				</div>
 
 				{toggleable && (
-					<button className="mini-cart-close" onClick={closeCart}>
+					<button
+						aria-label={Liferay.Language.get('close-mini-cart')}
+						className="mini-cart-close"
+						onClick={closeCart}
+					>
 						<ClayIcon symbol="times" />
 					</button>
 				)}

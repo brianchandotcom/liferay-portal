@@ -459,9 +459,9 @@ public class SitePageResourceImpl
 				sitePage::getPageSpecifications);
 		}
 
-		if (sitePage.getTaxonomyCategoryItemExternalReferences() != null) {
-			existingSitePage.setTaxonomyCategoryItemExternalReferences(
-				sitePage::getTaxonomyCategoryItemExternalReferences);
+		if (sitePage.getTaxonomyCategoryBriefs() != null) {
+			existingSitePage.setTaxonomyCategoryBriefs(
+				sitePage::getTaxonomyCategoryBriefs);
 		}
 	}
 
@@ -680,11 +680,10 @@ public class SitePageResourceImpl
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceContextUtil.createServiceContext(
-			sitePage.getTaxonomyCategoryItemExternalReferences(),
-			contextCompany.getCompanyId(), sitePage.getDateCreated(), groupId,
-			contextHttpServletRequest, sitePage.getKeywords(),
-			sitePage.getDateModified(), contextUser.getUserId(),
-			sitePage.getUuid());
+			sitePage.getTaxonomyCategoryBriefs(), contextCompany.getCompanyId(),
+			sitePage.getDateCreated(), groupId, contextHttpServletRequest,
+			sitePage.getKeywords(), sitePage.getDateModified(),
+			contextUser.getUserId(), sitePage.getUuid());
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			if (sitePage.getPageSpecifications() == null) {

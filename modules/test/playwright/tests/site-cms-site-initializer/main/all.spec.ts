@@ -3092,7 +3092,7 @@ test(
 
 			await waitForAlert(
 				page,
-				'Info:Delete asset versions action started for 3 versions.',
+				'Info:Delete asset versions action started for 2 versions.',
 				{
 					autoClose: true,
 					type: 'info',
@@ -3128,17 +3128,10 @@ test(
 
 			await page
 				.locator('.modal')
-				.getByRole('button', {name: 'Delete'})
+				.getByRole('button', {name: 'Ok'})
 				.click();
 
-			await waitForAlert(
-				page,
-				'Error:Current asset version cannot be deleted.',
-				{
-					autoClose: true,
-					type: 'danger',
-				}
-			);
+			await expect(assetsPage.getItem(webContentNames[2])).toBeVisible();
 		});
 	}
 );

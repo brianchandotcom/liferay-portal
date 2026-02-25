@@ -37,4 +37,9 @@ public class MaintenanceInfoMessageProductNavigationControlMenuEntry
 			MAINTENANCE;
 	}
 
+	@Override
+	protected boolean isDark() {
+		return false;
+	}
+
 }

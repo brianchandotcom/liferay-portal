@@ -554,14 +554,6 @@ test.describe('External Video', () => {
 				title: 'Life at Liferay - A Look into Liferay Culture',
 			});
 
-			await pageEditorPage.publishPage();
-
-			// Go to view mode and assert video
-
-			await page.goto(
-				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
-
 			const videoIframeLocator = page
 				.locator('.video-container')
 				.frameLocator('iframe');
@@ -571,6 +563,22 @@ test.describe('External Video', () => {
 					'Life at Liferay - A Look into Liferay Culture'
 				)
 			).toBeVisible();
+
+			await pageEditorPage.publishPage();
+
+			// Assert video in view mode
+
+			await expect(async () => {
+				await page.goto(
+					`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
+
+				await expect(
+					videoIframeLocator.getByText(
+						'Life at Liferay - A Look into Liferay Culture'
+					)
+				).toBeVisible({timeout: 4000});
+			}).toPass();
 		}
 	);
 

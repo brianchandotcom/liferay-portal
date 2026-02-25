@@ -534,19 +534,18 @@ test.describe('File Upload Fragment', () => {
 
 			const fileUploadInput = page.locator('.file-upload');
 
-			await fileUploadInput
-				.getByText('Select File', {exact: true})
-				.click();
-
-			// Assert jpg files are not present
-
 			const dialogIFrame = page.frameLocator('iframe');
 
-			await expect(
-				dialogIFrame.getByText(
+			await clickAndExpectToBeVisible({
+				target: dialogIFrame.getByText(
 					'Drag & Drop Your Files or Browse to Upload'
-				)
-			).toBeVisible();
+				),
+				trigger: fileUploadInput.getByText('Select File', {
+					exact: true,
+				}),
+			});
+
+			// Assert jpg files are not present
 
 			await expect(
 				dialogIFrame.getByText('balinese.jpg')

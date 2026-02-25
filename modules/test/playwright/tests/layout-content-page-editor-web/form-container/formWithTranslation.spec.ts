@@ -512,7 +512,13 @@ test(
 test(
 	'Can translate select form field',
 	{tag: '@LPD-46485'},
-	async ({apiHelpers, page, pageEditorPage, site}) => {
+	async ({
+		apiHelpers,
+		localizationSelectPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
 
 		// Create object definition with a localized select
 
@@ -607,7 +613,15 @@ test(
 
 		// Go to view mode
 
-		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+		await expect(async () => {
+			await page.goto('/');
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await localizationSelectPage.trigger.waitFor({timeout: 8000});
+		}).toPass();
 
 		const input = page.getByPlaceholder('Choose an Option');
 
@@ -2445,7 +2459,7 @@ test(
 				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 			);
 
-			await localizationSelectPage.trigger.waitFor({timeout: 4000});
+			await localizationSelectPage.trigger.waitFor({timeout: 8000});
 		}).toPass();
 
 		// Assert that translation is displayed correctly

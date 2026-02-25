@@ -111,6 +111,8 @@ test('Smoke', async ({
 	await test.step('When the admin user creates three widget pages for the site', async () => {
 		await applicationsMenuPage.goToSite(siteName);
 
+		await page.locator('.control-menu').getByText('Style Books').waitFor();
+
 		await productMenuPage.goToPages();
 
 		await page.waitForSelector('h1.taglib-empty-result-message-title', {

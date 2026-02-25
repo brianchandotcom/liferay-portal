@@ -1158,6 +1158,8 @@ public interface PropsKeys {
 	public static final String INDEX_DATE_FORMAT_PATTERN =
 		"index.date.format.pattern";
 
+	public static final String INDEX_INTERVAL = "index.interval";
+
 	public static final String INDEX_ON_STARTUP = "index.on.startup";
 
 	public static final String INDEX_ON_STARTUP_DELAY =

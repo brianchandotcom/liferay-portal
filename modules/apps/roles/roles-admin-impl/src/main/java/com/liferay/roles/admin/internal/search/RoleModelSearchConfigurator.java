@@ -9,9 +9,9 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
-import com.liferay.roles.admin.internal.search.spi.model.index.contributor.RoleModelIndexerWriterContributor;
 import com.liferay.roles.admin.internal.search.spi.model.result.contributor.RoleModelSummaryContributor;
 
 import org.osgi.service.component.annotations.Activate;
@@ -57,8 +57,9 @@ public class RoleModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor = new RoleModelIndexerWriterContributor(
-			_roleLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_roleLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<Role> _modelIndexWriterContributor;

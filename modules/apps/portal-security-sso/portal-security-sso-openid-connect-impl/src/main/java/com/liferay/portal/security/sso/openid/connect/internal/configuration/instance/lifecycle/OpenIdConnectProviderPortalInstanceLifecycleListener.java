@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -500,6 +501,12 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 
 	private final Map<String, Dictionary<String, ?>> _properties =
 		new ConcurrentHashMap<>();
+
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.oauth.client.persistence.service)(&(release.schema.version>=1.4.1)))"
+	)
+	private Release _release;
+
 	private ServiceRegistration<ManagedServiceFactory> _serviceRegistration;
 
 	@Reference

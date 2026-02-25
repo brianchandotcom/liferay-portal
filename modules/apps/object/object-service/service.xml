@@ -612,6 +612,7 @@
 
 		<column localized="true" name="label" type="String" />
 		<column name="name" type="String" />
+		<column name="status" type="int" />
 
 		<!-- Finder methods -->
 

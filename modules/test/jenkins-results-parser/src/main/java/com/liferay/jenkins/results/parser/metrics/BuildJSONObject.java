@@ -7,7 +7,10 @@ package com.liferay.jenkins.results.parser.metrics;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.HashMap;
@@ -79,11 +82,18 @@ public class BuildJSONObject extends JSONObject {
 	public long getStartTime() {
 		String jobName = getJobName();
 
+		long startTime = optLong("startTime");
+
 		if (jobName.equals("maintenance-daily")) {
-			return optLong("startTime") + optLong("queueDuration");
+			startTime += optLong("queueDuration");
 		}
 
-		return optLong("startTime");
+		ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(
+			Instant.ofEpochMilli(startTime), ZoneId.of("America/Los_Angeles"));
+
+		Instant instant = zonedDateTime.toInstant();
+
+		return instant.toEpochMilli();
 	}
 
 	public String getTestrayBuildURL() {

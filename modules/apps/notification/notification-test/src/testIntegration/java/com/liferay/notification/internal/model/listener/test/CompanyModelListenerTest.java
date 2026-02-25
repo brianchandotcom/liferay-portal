@@ -61,9 +61,33 @@ public class CompanyModelListenerTest {
 
 	@Test
 	public void testOnBeforeRemove() throws Exception {
-		NotificationQueueEntry notificationQueueEntry = null;
+		NotificationRecipientSetting notificationRecipientSetting =
+			NotificationRecipientSettingUtil.createNotificationRecipientSetting(
+				"userScreenName", "[%CURRENT_USER_EMAIL_ADDRESS%]");
+
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(),
+			notificationRecipientSetting.getCompanyId());
+
+		NotificationContext notificationContext =
+			NotificationTemplateUtil.createNotificationContext(
+				Collections.singletonList(notificationRecipientSetting),
+				NotificationConstants.TYPE_USER_NOTIFICATION);
+
+		NotificationQueueEntry notificationQueueEntry =
+			_notificationQueueEntryLocalService.addNotificationQueueEntry(
+				notificationContext);
+
+		Assert.assertEquals(
+			TestPropsValues.getCompanyId(),
+			notificationQueueEntry.getCompanyId());
+
+		Assert.assertEquals(
+			1,
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount());
+
 		NotificationRecipient notificationRecipient = null;
-		NotificationRecipientSetting notificationRecipientSetting = null;
 		NotificationTemplate notificationTemplate = null;
 
 		try (SafeCloseable safeCloseable =
@@ -77,7 +101,7 @@ public class CompanyModelListenerTest {
 			Assert.assertEquals(
 				_companyId, notificationRecipientSetting.getCompanyId());
 
-			NotificationContext notificationContext =
+			notificationContext =
 				NotificationTemplateUtil.createNotificationContext(
 					Collections.singletonList(notificationRecipientSetting),
 					NotificationConstants.TYPE_USER_NOTIFICATION);
@@ -88,6 +112,11 @@ public class CompanyModelListenerTest {
 
 			Assert.assertEquals(
 				_companyId, notificationQueueEntry.getCompanyId());
+
+			Assert.assertEquals(
+				2,
+				_notificationQueueEntryLocalService.
+					getNotificationQueueEntriesCount());
 
 			notificationTemplate =
 				_notificationTemplateLocalService.addNotificationTemplate(
@@ -110,6 +139,11 @@ public class CompanyModelListenerTest {
 					TestPropsValues.getCompanyId()));
 
 		_companyLocalService.deleteCompany(_companyId);
+
+		Assert.assertEquals(
+			1,
+			_notificationQueueEntryLocalService.
+				getNotificationQueueEntriesCount());
 
 		Assert.assertNotNull(
 			_notificationTemplateLocalService.

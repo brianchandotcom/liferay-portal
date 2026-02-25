@@ -2,7 +2,7 @@
 	"general": {
 		"en_US": {
 			"message": "Help me configure a CDN.",
-			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/using-a-cdn"
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/using-a-cdn"
 		}
 	}
 }

@@ -2,7 +2,7 @@
 	"general": {
 		"en_US": {
 			"message": "Tell me about this store.",
-			"url": "https://learn.liferay.com/w/dxp/system-administration/file-storage/other-file-store-types/amazon-s3-store"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/file-storage/other-file-store-types/amazon-s3-store"
 		}
 	}
 }

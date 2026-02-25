@@ -2,13 +2,13 @@
 	"download-app": {
 		"en_US": {
 			"message": "How can I download an app?",
-			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/installing-apps/downloading-apps"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/installing-and-managing-apps/installing-apps/downloading-apps"
 		}
 	},
 	"purchase-app": {
 		"en_US": {
 			"message": "How can I purchase an app?",
-			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/using-marketplace"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/installing-and-managing-apps/using-marketplace"
 		}
 	}
 }

@@ -7,6 +7,9 @@ package com.liferay.jenkins.results.parser.metrics;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -493,9 +496,17 @@ public class BuildHistory {
 		String dateString = buildJSONObject.getStartDateString();
 
 		_addData(_dailyInvokedBuilds, dateString, 1L);
+
+		long millisInDay = TimeUnit.DAYS.toMillis(1);
+		long startTime = buildJSONObject.getStartTime();
+
+		long startDateRemainingMillis = millisInDay - (startTime % millisInDay);
+
+		long duration = buildJSONObject.getDuration();
+
 		_addData(
 			_dailyTotalBuildDurations, dateString,
-			buildJSONObject.getDuration());
+			Math.min(duration, startDateRemainingMillis));
 
 		if (buildJSONObject.isTopLevelBuild()) {
 			_topLevelBuildURLs.add(buildJSONObject.getURL());
@@ -509,10 +520,31 @@ public class BuildHistory {
 			_addData(_dailyInvokedTopLevelBuilds, dateString, 1L);
 			_addData(
 				_dailyTotalTopLevelBuildDurations, dateString,
-				buildJSONObject.getDuration());
+				Math.min(duration, startDateRemainingMillis));
 			_addData(
 				_dailyTotalTopLevelQueueTime, dateString,
 				buildJSONObject.getQueueDuration());
+		}
+
+		if (duration > startDateRemainingMillis) {
+			LocalDate localDate = JenkinsResultsParserUtil.getLocalDate(
+				getStartTime());
+
+			localDate = localDate.plusDays(1);
+
+			String nextDateString = localDate.format(
+				DateTimeFormatter.ofPattern("yyyyMMdd"));
+
+			long nextDateDuration = duration - startDateRemainingMillis;
+
+			_addData(
+				_dailyTotalBuildDurations, nextDateString, nextDateDuration);
+
+			if (buildJSONObject.isTopLevelBuild()) {
+				_addData(
+					_dailyTotalTopLevelBuildDurations, nextDateString,
+					nextDateDuration);
+			}
 		}
 	}
 

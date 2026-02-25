@@ -41,7 +41,7 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class JournalArticleModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<JournalArticle> {
+	extends ModelIndexerWriterContributor<JournalArticle> {
 
 	public JournalArticleModelIndexerWriterContributor(
 		BatchIndexingHelper batchIndexingHelper,
@@ -49,11 +49,20 @@ public class JournalArticleModelIndexerWriterContributor
 		JournalArticleLocalService journalArticleLocalService,
 		JournalArticleResourceLocalService journalArticleResourceLocalService) {
 
+		super(
+			() -> {
+				if (_isIndexAllArticleVersions(configurationProvider)) {
+					return journalArticleLocalService.
+						getIndexableActionableDynamicQuery();
+				}
+
+				return journalArticleResourceLocalService.
+					getIndexableActionableDynamicQuery();
+			});
+
 		_batchIndexingHelper = batchIndexingHelper;
 		_configurationProvider = configurationProvider;
 		_journalArticleLocalService = journalArticleLocalService;
-		_journalArticleResourceLocalService =
-			journalArticleResourceLocalService;
 	}
 
 	@Override
@@ -61,7 +70,7 @@ public class JournalArticleModelIndexerWriterContributor
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
 		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
 
-		if (_isIndexAllArticleVersions()) {
+		if (_isIndexAllArticleVersions(_configurationProvider)) {
 			indexableActionableDynamicQuery.setAddCriteriaMethod(
 				dynamicQuery -> {
 					Property property = PropertyFactoryUtil.forName(
@@ -124,19 +133,6 @@ public class JournalArticleModelIndexerWriterContributor
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		if (_isIndexAllArticleVersions()) {
-			return _journalArticleLocalService.
-				getIndexableActionableDynamicQuery();
-		}
-
-		return _journalArticleResourceLocalService.
-			getIndexableActionableDynamicQuery();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(
 		JournalArticle journalArticle) {
 
@@ -146,7 +142,7 @@ public class JournalArticleModelIndexerWriterContributor
 			return IndexerWriterMode.DELETE;
 		}
 
-		if (_isIndexAllArticleVersions()) {
+		if (_isIndexAllArticleVersions(_configurationProvider)) {
 			if ((journalArticle.getCtCollectionId() == 0) &&
 				!CTCollectionThreadLocal.isProductionMode()) {
 
@@ -175,7 +171,7 @@ public class JournalArticleModelIndexerWriterContributor
 
 	@Override
 	public void modelDeleted(JournalArticle journalArticle) {
-		if (_isIndexAllArticleVersions()) {
+		if (_isIndexAllArticleVersions(_configurationProvider)) {
 			_reindexOtherArticleVersions(journalArticle);
 
 			return;
@@ -195,7 +191,7 @@ public class JournalArticleModelIndexerWriterContributor
 
 	@Override
 	public void modelIndexed(JournalArticle journalArticle) {
-		if (_isIndexAllArticleVersions()) {
+		if (_isIndexAllArticleVersions(_configurationProvider)) {
 			_reindexOtherArticleVersions(journalArticle);
 
 			return;
@@ -211,6 +207,24 @@ public class JournalArticleModelIndexerWriterContributor
 
 			_reindexOtherArticleVersions(journalArticle);
 		}
+	}
+
+	private static boolean _isIndexAllArticleVersions(
+		ConfigurationProvider configurationProvider) {
+
+		try {
+			JournalServiceConfiguration journalServiceConfiguration =
+				configurationProvider.getCompanyConfiguration(
+					JournalServiceConfiguration.class,
+					CompanyThreadLocal.getCompanyId());
+
+			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
+
+		return false;
 	}
 
 	private JournalArticle _fetchLatestIndexableArticleVersion(
@@ -230,24 +244,6 @@ public class JournalArticleModelIndexerWriterContributor
 		}
 
 		return latestIndexableArticle;
-	}
-
-	private boolean _isIndexAllArticleVersions() {
-		JournalServiceConfiguration journalServiceConfiguration = null;
-
-		try {
-			journalServiceConfiguration =
-				_configurationProvider.getCompanyConfiguration(
-					JournalServiceConfiguration.class,
-					CompanyThreadLocal.getCompanyId());
-
-			return journalServiceConfiguration.indexAllArticleVersionsEnabled();
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-
-		return false;
 	}
 
 	private void _reindexOtherArticleVersions(JournalArticle journalArticle) {
@@ -288,7 +284,5 @@ public class JournalArticleModelIndexerWriterContributor
 	private final BatchIndexingHelper _batchIndexingHelper;
 	private final ConfigurationProvider _configurationProvider;
 	private final JournalArticleLocalService _journalArticleLocalService;
-	private final JournalArticleResourceLocalService
-		_journalArticleResourceLocalService;
 
 }

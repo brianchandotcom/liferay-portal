@@ -5,7 +5,6 @@
 
 package com.liferay.contacts.internal.search;
 
-import com.liferay.contacts.internal.search.spi.model.index.contributor.ContactModelIndexerWriterContributor;
 import com.liferay.contacts.internal.search.spi.model.result.contributor.ContactModelSummaryContributor;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.service.ContactLocalService;
@@ -43,8 +42,8 @@ public class ContactModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor = new ContactModelIndexerWriterContributor(
-			_contactLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_contactLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

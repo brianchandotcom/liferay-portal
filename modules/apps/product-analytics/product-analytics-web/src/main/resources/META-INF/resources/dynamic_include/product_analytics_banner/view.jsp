@@ -7,6 +7,10 @@
 
 <%@ include file="/dynamic_include/init.jsp" %>
 
+<%
+ProductAnalyticsConfigurationDisplayContext productAnalyticsConfigurationDisplayContext = (ProductAnalyticsConfigurationDisplayContext)request.getAttribute(ProductAnalyticsWebKeys.PRODUCT_ANALYTICS_CONFIGURATION_DISPLAY_CONTEXT);
+%>
+
 <liferay-portlet:runtime
 	portletName="<%= ProductAnalyticsPortletKeys.PRODUCT_ANALYTICS_BANNER %>"
 />
@@ -15,8 +19,10 @@
 
 <aui:script type="module">
 	window.productAnalyticsScript = new window.productAnalyticsScript({
-		consentRenewalPeriod: 12,
-		lastModified: 0,
+		consentRenewalPeriod:
+			'<%= productAnalyticsConfigurationDisplayContext.getConsentRenewalPeriod() %>',
+		lastModified:
+			'<%= productAnalyticsConfigurationDisplayContext.getLastModified() %>',
 	});
 
 	window.productAnalyticsScript.startTrackingJourney();

@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -22,7 +23,6 @@ import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -58,12 +58,10 @@ public class EditAgentDefinitionDisplayContext {
 			"readonly",
 			() -> {
 				if ((workflowDefinitionName != null) &&
-					Arrays.asList(
+					ArrayUtil.contains(
 						WorkflowDefinitionConstants.
-							SYSTEM_WORKFLOW_DEFINITION_NAMES
-					).contains(
-						workflowDefinitionName
-					)) {
+							SYSTEM_WORKFLOW_DEFINITION_NAMES,
+						workflowDefinitionName)) {
 
 					return true;
 				}

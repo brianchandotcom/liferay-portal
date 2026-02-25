@@ -51,8 +51,8 @@ public class LayoutUpgradeProcess extends UpgradeProcess {
 					continue;
 				}
 
-				lastPlid = plid;
 				lastCtCollectionId = ctCollectionId;
+				lastPlid = plid;
 
 				preparedStatement2.setString(1, resultSet.getString(1));
 				preparedStatement2.setLong(2, ctCollectionId);

@@ -5,11 +5,11 @@
 
 package com.liferay.commerce.internal.search;
 
-import com.liferay.commerce.internal.search.spi.model.index.contributor.CommerceOrderModelIndexerWriterContributor;
 import com.liferay.commerce.internal.search.spi.model.result.contributor.CommerceOrderModelSummaryContributor;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -48,9 +48,9 @@ public class CommerceOrderModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CommerceOrderModelIndexerWriterContributor(
-				_commerceOrderLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_commerceOrderLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

@@ -5,10 +5,10 @@
 
 package com.liferay.commerce.internal.search;
 
-import com.liferay.commerce.internal.search.spi.model.index.contributor.CommerceShipmentModelIndexerWriterContributor;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.CommerceShipmentLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 
 import org.osgi.service.component.annotations.Activate;
@@ -41,9 +41,9 @@ public class CommerceShipmentModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CommerceShipmentModelIndexerWriterContributor(
-				_commerceShipmentLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_commerceShipmentLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

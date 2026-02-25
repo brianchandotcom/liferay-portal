@@ -14,7 +14,6 @@ import com.liferay.headless.admin.site.internal.dto.v1_0.util.ImageValueUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
-import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -55,16 +54,10 @@ public class GridPageElementDefinitionDTOConverter
 		throws Exception {
 
 		Long companyId = (Long)dtoConverterContext.getAttribute("companyId");
-		Long layoutPlid = (Long)dtoConverterContext.getAttribute("layoutPlid");
-		LayoutStructure layoutStructure =
-			(LayoutStructure)dtoConverterContext.getAttribute(
-				LayoutStructure.class.getName());
 		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
 			"scopeGroupId");
 
-		if ((companyId == null) || (layoutPlid == null) ||
-			(layoutStructure == null) || (scopeGroupId == null)) {
-
+		if ((companyId == null) || (scopeGroupId == null)) {
 			throw new UnsupportedOperationException();
 		}
 

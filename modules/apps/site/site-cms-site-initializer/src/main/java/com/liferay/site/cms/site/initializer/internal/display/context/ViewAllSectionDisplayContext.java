@@ -76,6 +76,18 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 			super.getBulkActionDropdownItems();
 
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"copy"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "copy-to")
+			).build(
+				"copy-to"
+			));
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "download", "download",
 				LanguageUtil.get(_httpServletRequest, "download"), null, null,

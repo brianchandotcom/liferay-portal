@@ -145,6 +145,19 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			super.getBulkActionDropdownItems();
 
 		fdsBulkActionDropdownItems.add(
+			FDSActionDropdownItemBuilder.setHighlighted(
+				true
+			).setHref(
+				"#"
+			).setIcon(
+				"copy"
+			).setLabel(
+				LanguageUtil.get(httpServletRequest, "copy-to")
+			).build(
+				"copy-to"
+			));
+
+		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
 				"#", "password-policies", "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), null, null,

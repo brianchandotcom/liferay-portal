@@ -69,13 +69,17 @@ EditSiteTeamAssignmentsUsersDisplayContext editSiteTeamAssignmentsUsersDisplayCo
 
 						<%
 						UserActionDropdownItemsProvider userActionDropdownItemsProvider = new UserActionDropdownItemsProvider(user2, editSiteTeamAssignmentsUsersDisplayContext.getTeamId(), renderRequest, renderResponse);
+
+						List<DropdownItem> dropdownItems = userActionDropdownItemsProvider.getActionDropdownItems();
 						%>
 
-						<clay:dropdown-actions
-							aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
-							dropdownItems="<%= userActionDropdownItemsProvider.getActionDropdownItems() %>"
-							propsTransformer="{UserDropdownDefaultPropsTransformer} from site-teams-web"
-						/>
+						<c:if test="<%= ListUtil.isNotEmpty(dropdownItems) %>">
+							<clay:dropdown-actions
+								aria-label='<%= LanguageUtil.get(request, "show-actions") %>'
+								dropdownItems="<%= dropdownItems %>"
+								propsTransformer="{UserDropdownDefaultPropsTransformer} from site-teams-web"
+							/>
+						</c:if>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:otherwise>

@@ -17,6 +17,7 @@ dependencies {
 	compileOnly project(":apps:frontend-taglib:frontend-taglib-react")
 	compileOnly project(":apps:login:login-web-api")
 	compileOnly project(":apps:object:object-api")
+	compileOnly project(":apps:site:site-dsr-site-initializer-api")
 	compileOnly project(":apps:user:user-taglib")
 	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-lang")

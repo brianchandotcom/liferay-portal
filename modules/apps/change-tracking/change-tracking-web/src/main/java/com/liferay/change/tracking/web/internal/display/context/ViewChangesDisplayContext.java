@@ -1452,12 +1452,19 @@ public class ViewChangesDisplayContext {
 	}
 
 	private Map<Long, List<Long>> _getRootPKsMap(CTClosure ctClosure) {
-		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
-			return CTClosureUtil.getFamilyPKsMap(
-				ctClosure, _modelClassNameId, _modelClassPK);
+		if (_rootPKsMap != null) {
+			return _rootPKsMap;
 		}
 
-		return ctClosure.getRootPKsMap();
+		if ((_modelClassNameId > 0) && (_modelClassPK > 0)) {
+			_rootPKsMap = CTClosureUtil.getFamilyPKsMap(
+				ctClosure, _modelClassNameId, _modelClassPK);
+		}
+		else {
+			_rootPKsMap = ctClosure.getRootPKsMap();
+		}
+
+		return _rootPKsMap;
 	}
 
 	private <T extends BaseModel<T>> String _getTitle(
@@ -1842,6 +1849,7 @@ public class ViewChangesDisplayContext {
 	private Map<String, Object> _reactData;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private Map<Long, List<Long>> _rootPKsMap;
 	private final ThemeDisplay _themeDisplay;
 	private Map<String, Object> _toolbarReactData;
 	private final User _user;

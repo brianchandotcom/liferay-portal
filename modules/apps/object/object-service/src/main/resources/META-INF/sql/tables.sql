@@ -220,7 +220,8 @@ create table ObjectFolder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	label STRING null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	status INTEGER
 );
 
 create table ObjectFolderItem (

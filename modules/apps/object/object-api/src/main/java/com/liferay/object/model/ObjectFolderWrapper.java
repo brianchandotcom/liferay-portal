@@ -45,6 +45,7 @@ public class ObjectFolderWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("label", getLabel());
 		attributes.put("name", getName());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -116,6 +117,12 @@ public class ObjectFolderWrapper
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
 		}
 	}
 
@@ -288,6 +295,16 @@ public class ObjectFolderWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the status of this object folder.
+	 *
+	 * @return the status of this object folder
+	 */
+	@Override
+	public int getStatus() {
+		return model.getStatus();
 	}
 
 	/**
@@ -497,6 +514,16 @@ public class ObjectFolderWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the status of this object folder.
+	 *
+	 * @param status the status of this object folder
+	 */
+	@Override
+	public void setStatus(int status) {
+		model.setStatus(status);
 	}
 
 	/**

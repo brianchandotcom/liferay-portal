@@ -331,6 +331,20 @@ public interface ObjectFolderModel
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the status of this object folder.
+	 *
+	 * @return the status of this object folder
+	 */
+	public int getStatus();
+
+	/**
+	 * Sets the status of this object folder.
+	 *
+	 * @param status the status of this object folder
+	 */
+	public void setStatus(int status);
+
 	@Override
 	public String[] getAvailableLanguageIds();
 

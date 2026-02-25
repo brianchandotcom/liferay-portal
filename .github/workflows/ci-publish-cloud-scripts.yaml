@@ -25,7 +25,6 @@ jobs:
 
                     echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
                     echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
-                    echo "PACKAGE_NAME=${PACKAGE_NAME}" >> ${GITHUB_ENV}
             -   id: verify_version
                 name: Verify version
                 run: |

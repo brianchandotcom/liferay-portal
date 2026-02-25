@@ -21,7 +21,7 @@ import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../../fixtures/wikiPagesTest';
-import {DataApiHelpers} from '../../../helpers/ApiHelpers';
+import {ApiHelpers, DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {normalizeRestPath} from '../../../utils/normalizeRestPath';
@@ -1231,6 +1231,8 @@ test('Can import object with different classname via portlet', async ({
 		);
 	});
 
+	let virtualInstanceApiHelpers: ApiHelpers;
+
 	await test.step('Create and Configure Virtual Instance (Able)', async () => {
 		const virtualInstance =
 			await apiHelpers.headlessPortalInstance.addVirtualInstance({
@@ -1250,7 +1252,7 @@ test('Can import object with different classname via portlet', async ({
 			screenName: 'test',
 		});
 
-		const virtualInstanceApiHelpers = new DataApiHelpers(
+		virtualInstanceApiHelpers = new DataApiHelpers(
 			page,
 			'http://www.able.com:8080'
 		);
@@ -1299,11 +1301,25 @@ test('Can import object with different classname via portlet', async ({
 			trigger: page.getByLabel('Options'),
 		});
 
+		const {totalCount: beforeImportingTotalCount} =
+			await virtualInstanceApiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/' + objectDefinition.name.toLowerCase() + 's'
+			);
+
+		expect(beforeImportingTotalCount).toBe(0);
+
 		await portletExportImportPage.importLARFile(objectEntryFilePath);
 		await expect(
 			portletExportImportPage.frame
 				.getByRole('cell', {name: 'Successful'})
 				.first()
 		).toBeVisible();
+
+		const {totalCount: afterImportingTotalCount} =
+			await virtualInstanceApiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/' + objectDefinition.name.toLowerCase() + 's'
+			);
+
+		expect(afterImportingTotalCount).toBe(1);
 	});
 });

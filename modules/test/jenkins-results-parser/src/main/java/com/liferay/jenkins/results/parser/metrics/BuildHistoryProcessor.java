@@ -702,6 +702,10 @@ public class BuildHistoryProcessor {
 
 			String jobName = buildJSONObject.getJobName();
 
+			jobName = jobName.replace("-batch", "");
+			jobName = jobName.replace("-downstream", "");
+			jobName = jobName.replace("-validation", "");
+
 			if (jobName.contains("maintenance") ||
 				jobName.contains("verification")) {
 

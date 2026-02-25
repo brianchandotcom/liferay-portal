@@ -53,6 +53,7 @@ const copyBulkAction = ({
 			action: 'copy',
 			apiURL,
 			assetLibraries: additionalProps.assetLibraries,
+			dataSetId,
 			isBulk: true,
 			itemData: {
 				...selectedData,
@@ -65,10 +66,7 @@ const copyBulkAction = ({
 				additionalProps.objectEntryFolderExternalReferenceCode,
 			rootObjectEntryFolderExternalReferenceCode:
 				additionalProps.rootObjectEntryFolderExternalReferenceCode,
-			selectedData: {
-				...selectedData,
-				id: dataSetId,
-			},
+			selectedData,
 		},
 		document.createElement('div')
 	);

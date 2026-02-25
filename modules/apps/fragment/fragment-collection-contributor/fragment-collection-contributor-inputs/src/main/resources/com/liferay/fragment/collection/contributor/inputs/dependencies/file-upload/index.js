@@ -100,9 +100,9 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 					maxFileSize: mbToBytes(input.attributes.maxFileSize),
 					onSelect(items) {
 						if (items.length) {
-							const {id, title} = items[0].embedded;
+							const {file, title} = items[0].embedded;
 
-							updateInputData({title, value: id});
+							updateInputData({title, value: file.id});
 						}
 					},
 				});

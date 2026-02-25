@@ -536,7 +536,8 @@ public class DDMFormDisplayContext {
 		DDMFormInstanceSettings ddmFormInstanceSettings =
 			ddmFormInstance.getSettingsModel();
 
-		return ddmFormInstanceSettings.redirectURL();
+		return PortalUtil.addPreservedParameters(
+			getThemeDisplay(), ddmFormInstanceSettings.redirectURL());
 	}
 
 	public String getSubmitLabel() throws PortalException {

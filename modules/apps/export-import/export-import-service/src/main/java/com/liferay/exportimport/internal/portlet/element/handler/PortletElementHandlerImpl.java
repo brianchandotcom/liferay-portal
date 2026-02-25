@@ -29,7 +29,8 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	@Override
 	public String[] getConfigurationPortletOptions() {
 		return StringUtil.split(
-			_portletElement.attributeValue(_ATTRIBUTE_NAME_PORTLET_CONFIGURATION));
+			_portletElement.attributeValue(
+				_ATTRIBUTE_NAME_PORTLET_CONFIGURATION));
 	}
 
 	@Override
@@ -39,7 +40,8 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public long getLayoutId() {
-		return GetterUtil.getLong(_portletElement.attributeValue(_ATTRIBUTE_NAME_LAYOUT_ID));
+		return GetterUtil.getLong(
+			_portletElement.attributeValue(_ATTRIBUTE_NAME_LAYOUT_ID));
 	}
 
 	@Override
@@ -61,13 +63,15 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public String getPortletDataHandlerKey() {
-		return _portletElement.attributeValue(_ATTRIBUTE_NAME_PORTLET_DATA_HANDLER_KEY);
+		return _portletElement.attributeValue(
+			_ATTRIBUTE_NAME_PORTLET_DATA_HANDLER_KEY);
 	}
 
 	@Override
 	public int getRank() {
 		return GetterUtil.getInteger(
-			_portletElement.attributeValue(_ATTRIBUTE_NAME_PORTLET_DATA_HANDLER_RANK));
+			_portletElement.attributeValue(
+				_ATTRIBUTE_NAME_PORTLET_DATA_HANDLER_RANK));
 	}
 
 	@Override
@@ -99,7 +103,8 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	@Override
 	public boolean isMissingPortletSupported() {
 		return GetterUtil.getBoolean(
-			_portletElement.attributeValue(_ATTRIBUTE_NAME_MISSING_PORTLET_SUPPORTED));
+			_portletElement.attributeValue(
+				_ATTRIBUTE_NAME_MISSING_PORTLET_SUPPORTED));
 	}
 
 	@Override
@@ -111,7 +116,8 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 	@Override
 	public boolean isValidateExistingDataHandler() {
 		return GetterUtil.getBoolean(
-			_portletElement.attributeValue(_ATTRIBUTE_NAME_VALIDATE_EXISTING_DATA_HANDLER));
+			_portletElement.attributeValue(
+				_ATTRIBUTE_NAME_VALIDATE_EXISTING_DATA_HANDLER));
 	}
 
 	@Override
@@ -130,7 +136,8 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public void setLayoutId(long layoutId) {
-		_portletElement.addAttribute(_ATTRIBUTE_NAME_LAYOUT_ID, String.valueOf(layoutId));
+		_portletElement.addAttribute(
+			_ATTRIBUTE_NAME_LAYOUT_ID, String.valueOf(layoutId));
 	}
 
 	@Override
@@ -165,12 +172,14 @@ public class PortletElementHandlerImpl implements PortletElementHandler {
 
 	@Override
 	public void setSchemaVersion(String schemaVersion) {
-		_portletElement.addAttribute(_ATTRIBUTE_NAME_SCHEMA_VERSION, schemaVersion);
+		_portletElement.addAttribute(
+			_ATTRIBUTE_NAME_SCHEMA_VERSION, schemaVersion);
 	}
 
 	@Override
 	public void setSourcePortletId(String sourcePortletId) {
-		_portletElement.addAttribute(_ATTRIBUTE_NAME_PORTLET_ID, sourcePortletId);
+		_portletElement.addAttribute(
+			_ATTRIBUTE_NAME_PORTLET_ID, sourcePortletId);
 	}
 
 	@Override

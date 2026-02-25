@@ -72,6 +72,22 @@ export function mockIndividual(seed = 0, properties) {
 	return {
 		activitiesCount: 1000,
 		colorId: String(seed),
+		context: {
+			browserName: 'Chrome',
+			city: 'Los Angeles',
+			contactId: `contact-${seed}`,
+			country: 'United States',
+			devicePixelRatio: '2',
+			deviceType: 'Desktop',
+			languageId: 'en_US',
+			platformName: 'Mac OS X',
+			region: 'California',
+			screenHeight: '1080',
+			screenWidth: '1920',
+			timeZoneOffset: '-04:00',
+			userAgent: 'Mozilla/5.0',
+			userId: `user-${seed}`
+		},
 		dateCreated: getTimestamp(-2),
 		firstActivityDate: getTimestamp(-1),
 		id: String(seed),

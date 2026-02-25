@@ -136,7 +136,8 @@ public class NotificationQueueEntryLocalServiceImpl
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> RestrictionsFactoryUtil.eq("companyId", companyId));
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
 		actionableDynamicQuery.setPerformActionMethod(
 			(NotificationQueueEntry notificationQueueEntry) ->
 				deleteNotificationQueueEntry(notificationQueueEntry));

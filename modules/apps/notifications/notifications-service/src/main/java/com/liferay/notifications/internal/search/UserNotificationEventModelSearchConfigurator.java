@@ -5,7 +5,6 @@
 
 package com.liferay.notifications.internal.search;
 
-import com.liferay.notifications.internal.search.spi.model.index.contributor.UserNotificationEventModelIndexerWriterContributor;
 import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
@@ -45,9 +44,9 @@ public class UserNotificationEventModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new UserNotificationEventModelIndexerWriterContributor(
-				_userNotificationEventLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_userNotificationEventLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<UserNotificationEvent>

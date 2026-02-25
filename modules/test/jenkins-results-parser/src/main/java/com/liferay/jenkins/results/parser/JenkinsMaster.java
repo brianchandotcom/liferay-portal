@@ -1407,11 +1407,11 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	private synchronized int _getRecentBatchSizesTotal(String labelExpression) {
 		int recentBatchSizesTotal = 0;
 
+		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
+
 		if (JenkinsResultsParserUtil.isNullOrEmpty(labelExpression)) {
 			labelExpression = null;
 		}
-
-		long currentTimestamp = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
 		List<String> labels = _getLabels(labelExpression);
 

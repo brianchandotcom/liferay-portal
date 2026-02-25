@@ -1578,7 +1578,9 @@ test(
 
 		await contentsPage.editContent(title);
 
-		await expect(page.getByText('Option 1')).toBeVisible();
+		await expect(
+			page.getByRole('combobox', {name: 'Select from List'})
+		).toBeVisible();
 	}
 );
 

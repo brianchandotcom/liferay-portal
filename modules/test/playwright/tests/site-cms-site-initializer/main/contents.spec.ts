@@ -317,9 +317,9 @@ test(
 
 			await contentsPage.saveContent();
 
-			await expect(
-				page.getByRole('link', {name: fileName})
-			).toBeVisible();
+			await page.getByLabel(contentTitle).click();
+
+			await expect(page.getByText(fileName)).toBeVisible();
 		});
 
 		await test.step('Delete file', async () => {

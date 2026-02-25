@@ -19,16 +19,17 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Luan Maoski
  */
 public class UserModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<User> {
+	extends ModelIndexerWriterContributor<User> {
 
 	public UserModelIndexerWriterContributor(
 		IndexerDocumentBuilder indexerDocumentBuilder,
 		IndexWriterHelper indexWriterHelper,
 		UserLocalService userLocalService) {
 
+		super(userLocalService::getIndexableActionableDynamicQuery);
+
 		_indexerDocumentBuilder = indexerDocumentBuilder;
 		_indexWriterHelper = indexWriterHelper;
-		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -43,13 +44,6 @@ public class UserModelIndexerWriterContributor
 						modelIndexerWriterDocumentHelper.getDocument(user));
 				}
 			});
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _userLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -72,6 +66,5 @@ public class UserModelIndexerWriterContributor
 
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;
 	private final IndexWriterHelper _indexWriterHelper;
-	private final UserLocalService _userLocalService;
 
 }

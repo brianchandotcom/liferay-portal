@@ -8,7 +8,6 @@ package com.liferay.translation.internal.search;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
-import com.liferay.translation.internal.search.spi.model.index.contributor.TranslationEntryModelIndexerWriterContributor;
 import com.liferay.translation.model.TranslationEntry;
 import com.liferay.translation.service.TranslationEntryLocalService;
 
@@ -45,9 +44,8 @@ public class TranslationEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new TranslationEntryModelIndexerWriterContributor(
-				_translationEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_translationEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<TranslationEntry>

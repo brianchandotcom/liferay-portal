@@ -40,39 +40,39 @@ public class ImageServiceUpgradeStepRegistrator
 			"0.0.1", "0.0.2",
 			new ImageCompanyIdUpgradeProcess<>(
 				_companyLocalService::getActionableDynamicQuery,
-				Company::getCompanyId, Company::getLogoId, null));
+				Company::getCompanyId, null, Company::getLogoId));
 
 		registry.register(
 			"0.0.2", "0.0.3",
 			new ImageCompanyIdUpgradeProcess<>(
 				_ddmTemplateLocalService::getActionableDynamicQuery,
-				DDMTemplate::getCompanyId, DDMTemplate::getSmallImageId, null));
+				DDMTemplate::getCompanyId, null, DDMTemplate::getSmallImageId));
 
 		registry.register(
 			"0.0.3", "0.0.4",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutLocalService::getActionableDynamicQuery,
-				Layout::getCompanyId, null, Layout::getIconImageERC));
+				Layout::getCompanyId, Layout::getIconImageERC, null));
 
 		registry.register(
 			"0.0.4", "0.0.5",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetLocalService::getActionableDynamicQuery,
-				LayoutSet::getCompanyId, LayoutSet::getLogoId, null));
+				LayoutSet::getCompanyId, null, LayoutSet::getLogoId));
 
 		registry.register(
 			"0.0.5", "0.0.6",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetBranchLocalService::getActionableDynamicQuery,
-				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLogoId,
-				null));
+				LayoutSetBranch::getCompanyId, null,
+				LayoutSetBranch::getLogoId));
 
 		registry.register(
 			"0.0.6", "0.0.7",
 			new ImageCompanyIdUpgradeProcess<>(
 				_layoutSetBranchLocalService::getActionableDynamicQuery,
-				LayoutSetBranch::getCompanyId, LayoutSetBranch::getLiveLogoId,
-				null));
+				LayoutSetBranch::getCompanyId, null,
+				LayoutSetBranch::getLiveLogoId));
 
 		registry.register(
 			"0.0.7", "1.0.0",

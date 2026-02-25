@@ -11,7 +11,7 @@
 		<div>
 			[#assign groupId = themeDisplay.getScopeGroupId() /]
 			<div>
-				[#assign response = restClient.get("/headless-digital-sales-room/v1.0/digital-sales-rooms/${groupId}") /]
+				[#assign response = restClient.get("/digital-sales-room/rooms/${groupId}") /]
 
 				<div class="dsr-header-banner">
 					<img alt="" data-lfr-editable-id="banner" data-lfr-editable-type="image" src="[resources:banner.png]" />

@@ -683,6 +683,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.25.1", "10.26.0",
 			UpgradeProcessFactory.dropColumns(
 				"ObjectDefinition", "enableLocalization"));
+
+		registry.register(
+			"10.26.0", "10.27.0",
+			UpgradeProcessFactory.addColumns("ObjectFolder", "status INTEGER"),
+			UpgradeProcessFactory.runSQL("update ObjectFolder set status = 0"));
 	}
 
 	@Reference

@@ -87,9 +87,7 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 						)}
 						<ClayLink
 							className='d-block'
-							href={
-								URLConstants.IndividualProfilesDocumentSegments
-							}
+							href={URLConstants.CreateSegments}
 							key='DOCUMENTATION'
 							target='_blank'
 						>

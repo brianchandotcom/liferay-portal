@@ -14,6 +14,7 @@ enum URLConstants {
 	AssetsWebContentListDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/assets-analytics/web-content-analytics',
 	ContactSales = 'https://www.liferay.com/products/analytics-cloud#contact-sales',
 	CreateProperty = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-settings/scoping-sites-and-individuals-using-properties',
+	CreateSegments = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/people/segments-analytics/creating-segments',
 	CustomEventsDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/touchpoints/events-analytics/tracking-events',
 	DataSourceConnection = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-data/managing-data-sources',
 	DefinitionsForEventsDocumentation = 'https://learn.liferay.com/w/dxp/personalization/analytics-cloud/workspace-data/definitions#custom-events',

@@ -248,7 +248,8 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		ChannelResource channelResource =
 			_marketplaceService.getChannelResource();
 
-		Channel marketplaceChannel = channelResource.getChannelByExternalReferenceCode(
+		Channel marketplaceChannel =
+			channelResource.getChannelByExternalReferenceCode(
 				"MARKETPLACE-CHANNEL");
 
 		_marketplaceService.postOrder(

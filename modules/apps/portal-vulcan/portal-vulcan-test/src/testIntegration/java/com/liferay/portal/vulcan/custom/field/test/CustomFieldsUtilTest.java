@@ -2726,8 +2726,8 @@ public class CustomFieldsUtilTest {
 				TestPropsValues.getCompanyId(), exportImportConfigurationId);
 
 		Assert.assertEquals(
-			exportImportReportEntries.toString(),
-			21, exportImportReportEntries.size());
+			exportImportReportEntries.toString(), 21,
+			exportImportReportEntries.size());
 
 		ExportImportReportEntry exportImportReportEntry =
 			exportImportReportEntries.get(0);

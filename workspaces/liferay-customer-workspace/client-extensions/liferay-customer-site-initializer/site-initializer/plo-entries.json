@@ -448,7 +448,7 @@
 		"value": {
 			"en-US": "Welcome, {0}",
 			"es-ES": "Te damos la bienvenida, {0}",
-			"ja-JP": "ようこそ、○○さん {0}",
+			"ja-JP": "ようこそ、{0}さん",
 			"pt-BR": "Boas-vindas, {0}"
 		}
 	},

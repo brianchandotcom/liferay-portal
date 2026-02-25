@@ -10,6 +10,7 @@ import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -69,8 +70,11 @@ public class BuildJSONObject extends JSONObject {
 
 	public String getStartDateString() {
 		if (_startDateString == null) {
-			LocalDate startDate = JenkinsResultsParserUtil.getLocalDate(
-				getStartTime());
+			Instant instant = Instant.ofEpochMilli(getStartTime());
+
+			ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
+
+			LocalDate startDate = zonedDateTime.toLocalDate();
 
 			_startDateString = startDate.format(
 				DateTimeFormatter.ofPattern("yyyyMMdd"));

@@ -10,13 +10,13 @@ import {
 	IBulkActionFDSDataItemTransformed,
 	IBulkActionTaskStarter,
 	IBulkActionTaskStarterDTO,
-	IBulkActionTaskType,
+	IBulkActionType,
 } from '../../../common/types/BulkActionTask';
 import {displayErrorToast} from '../../../common/utils/toastUtil';
 import {BulkActionTaskStarter} from '../../bulk_actions_monitor/services/BulkActionTaskStarter';
 
 export async function triggerAssetDownloadBulkAction(
-	dto: IBulkActionTaskStarterDTO<keyof IBulkActionTaskType>
+	dto: IBulkActionTaskStarterDTO<keyof IBulkActionType>
 ): Promise<void> {
 	const bulkAction: IBulkActionTaskStarter = new BulkActionTaskStarter({
 		...dto,

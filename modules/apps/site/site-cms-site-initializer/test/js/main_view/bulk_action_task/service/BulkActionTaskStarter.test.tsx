@@ -6,7 +6,7 @@
 import {ISearchAssetObjectEntry} from '../../../../../src/main/resources/META-INF/resources/js/common/types/AssetType';
 import {
 	IBulkActionTaskStarterDTO,
-	IBulkActionTaskType,
+	IBulkActionType,
 } from '../../../../../src/main/resources/META-INF/resources/js/common/types/BulkActionTask';
 import {
 	displayCreateTaskErrorToast,
@@ -50,7 +50,7 @@ const MOCK_CLASS_NAME_ID = 12345;
 
 const getStarterDTO = (
 	overrides = {}
-): IBulkActionTaskStarterDTO<keyof IBulkActionTaskType> & {
+): IBulkActionTaskStarterDTO<keyof IBulkActionType> & {
 	apiURL: string;
 	classNameId: number;
 } => ({

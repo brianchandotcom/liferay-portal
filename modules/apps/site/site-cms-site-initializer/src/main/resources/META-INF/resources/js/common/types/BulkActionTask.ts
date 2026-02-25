@@ -74,14 +74,12 @@ export interface IBulkActionTaskStarter {
 	get type(): string;
 }
 
-export interface IBulkActionTaskStarterDTO<
-	T extends keyof IBulkActionTaskType,
-> {
+export interface IBulkActionTaskStarterDTO<T extends keyof IBulkActionType> {
 	additionalData?: Record<string, any>;
 	apiURL?: string;
 	dataSetId?: string;
 	entryClassName?: string;
-	keyValues?: IBulkActionTaskType[T];
+	keyValues?: IBulkActionType[T];
 	onCreateError?:
 		| ((response: RequestResult<IBulkActionTaskPage>) => void)
 		| null;
@@ -91,10 +89,10 @@ export interface IBulkActionTaskStarterDTO<
 	overrideDefaultErrorToast?: boolean;
 	overrideDefaultSuccessToast?: boolean;
 	selectedData: IBulkActionFDSData;
-	type: keyof IBulkActionTaskType;
+	type: keyof IBulkActionType;
 }
 
-export interface IBulkActionTaskType {
+export interface IBulkActionType {
 	AssignStructureDefaultWorkflowBulkAction: {
 		workflow?: string;
 	};
@@ -115,7 +113,9 @@ export interface IBulkActionTaskType {
 	DeleteAssetVersionBulkAction: {
 		versions?: number[];
 	};
-	DeleteBulkAction: {};
+	DeleteBulkAction: {
+		className?: string;
+	};
 	DownloadBulkAction: {};
 	DueDateBulkAction: {
 		dueDate?: string;
@@ -144,6 +144,25 @@ export interface IBulkActionTaskType {
 	};
 }
 
+export interface IBulkActionTaskType {
+	AssignStructureDefaultWorkflowBulkAction: string;
+	AssignToBulkAction: string;
+	CopyBulkAction: string;
+	DefaultPermissionBulkAction: string;
+	DeleteAssetVersionBulkAction: string;
+	DeleteBulkAction: string;
+	DeleteTaskBulkAction: string;
+	DownloadBulkAction: string;
+	DueDateBulkAction: string;
+	ExpireBulkAction: string;
+	KeywordBulkAction: string;
+	MoveBulkAction: string;
+	PermissionBulkAction: string;
+	ResetPermissionBulkAction: string;
+	StatusBulkAction: string;
+	TaxonomyCategoryBulkAction: string;
+}
+
 export type TBulkActionTaskDTO = {
 	bulkActionItems: IBulkActionFDSDataItemTransformed[] | [];
 	selectAll?: IBulkActionFDSData['selectAll'];
@@ -151,6 +170,6 @@ export type TBulkActionTaskDTO = {
 		selectAll: IBulkActionFDSData['selectAll'];
 		[k: string]: any;
 	};
-	type: keyof IBulkActionTaskType;
+	type: keyof IBulkActionType;
 	versions?: number[] | [];
-} & IBulkActionTaskType[keyof IBulkActionTaskType];
+} & IBulkActionType[keyof IBulkActionType];

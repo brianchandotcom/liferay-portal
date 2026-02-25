@@ -5,11 +5,11 @@
 
 import {
 	IBulkActionTaskStarterDTO,
-	IBulkActionTaskType,
+	IBulkActionType,
 } from '../../../common/types/BulkActionTask';
 import {START_TASK} from '../../../common/utils/events';
 
-export function triggerAssetBulkAction<T extends keyof IBulkActionTaskType>(
+export function triggerAssetBulkAction<T extends keyof IBulkActionType>(
 	dto: IBulkActionTaskStarterDTO<T>
 ): void {
 	Liferay.fire(START_TASK, dto);

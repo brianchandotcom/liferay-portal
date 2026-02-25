@@ -8,7 +8,7 @@ import {
 	IBulkActionFDSData,
 	IBulkActionFDSDataItemTransformed,
 	IBulkActionTask,
-	IBulkActionTaskType,
+	IBulkActionType,
 	TBulkActionTaskDTO,
 } from '../../../common/types/BulkActionTask';
 import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
@@ -58,8 +58,8 @@ export function composeCreateTaskURL(
 }
 
 export function composeCreateTaskDTO(
-	type: keyof IBulkActionTaskType,
-	keyValues: IBulkActionTaskType[keyof IBulkActionTaskType] = {},
+	type: keyof IBulkActionType,
+	keyValues: IBulkActionType[keyof IBulkActionType] = {},
 	{items = [], selectAll = false}: IBulkActionFDSData
 ): TBulkActionTaskDTO {
 	return {

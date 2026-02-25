@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Luan Maoski
@@ -46,7 +46,7 @@ public class MBMessageModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -75,7 +75,7 @@ public class MBMessageModelIndexerWriterContributor
 				}
 
 				indexableActionableDynamicQuery.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(mbMessage));
+					indexerDocumentBuilder.getDocument(mbMessage));
 			});
 	}
 

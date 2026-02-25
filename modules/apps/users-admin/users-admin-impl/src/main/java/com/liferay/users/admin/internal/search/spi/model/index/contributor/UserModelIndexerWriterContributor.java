@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Luan Maoski
@@ -35,13 +34,13 @@ public class UserModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(User user) -> {
 				if (!user.isGuestUser()) {
 					indexableActionableDynamicQuery.addDocument(
-						modelIndexerWriterDocumentHelper.getDocument(user));
+						indexerDocumentBuilder.getDocument(user));
 				}
 			});
 	}

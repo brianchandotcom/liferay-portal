@@ -14,8 +14,8 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Rafael Praxedes
@@ -41,7 +41,7 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -73,8 +73,7 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDMFormInstanceRecord ddmFormInstanceRecord) ->
 				indexableActionableDynamicQuery.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(
-						ddmFormInstanceRecord)));
+					indexerDocumentBuilder.getDocument(ddmFormInstanceRecord)));
 	}
 
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;

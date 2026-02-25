@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -61,7 +61,7 @@ public class ObjectEntryModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -83,7 +83,7 @@ public class ObjectEntryModelIndexerWriterContributor
 				objectEntry.setObjectDefinition(objectDefinition);
 
 				indexableActionableDynamicQuery.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(objectEntry));
+					indexerDocumentBuilder.getDocument(objectEntry));
 			});
 	}
 

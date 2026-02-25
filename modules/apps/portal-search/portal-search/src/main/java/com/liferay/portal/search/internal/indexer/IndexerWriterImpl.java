@@ -37,7 +37,6 @@ import com.liferay.portal.search.index.UpdateDocumentIndexWriter;
 import com.liferay.portal.search.indexer.BaseModelRetriever;
 import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.indexer.IndexerWriter;
-import com.liferay.portal.search.internal.index.contributor.helper.ModelIndexerWriterDocumentHelperImpl;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.permission.SearchPermissionIndexWriter;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
@@ -202,9 +201,7 @@ public class IndexerWriterImpl<T extends BaseModel<?>>
 
 						_modelIndexerWriterContributor.customize(
 							indexableActionableDynamicQuery,
-							new ModelIndexerWriterDocumentHelperImpl(
-								_modelSearchSettings.getClassName(),
-								_indexerDocumentBuilder));
+							_indexerDocumentBuilder);
 
 						try {
 							indexableActionableDynamicQuery.performActions();

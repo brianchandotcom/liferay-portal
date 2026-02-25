@@ -17,7 +17,7 @@ exports[`AccountAssociatedSegments should render 1`] = `
         <span
           class="secondary-info"
         >
-          Lists all the segments that the customer is currently associated with in the last 30 days.
+          List all the segments that the customer is currently associated with in the last 30 days.
         </span>
         <div
           class="secondary-info"

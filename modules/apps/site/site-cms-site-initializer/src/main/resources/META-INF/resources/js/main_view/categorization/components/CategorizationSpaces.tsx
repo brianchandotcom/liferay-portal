@@ -38,6 +38,7 @@ export default function CategorizationSpaces({
 	spaceInputError: string;
 }) {
 	const [availableSpaces, setAvailableSpaces] = useState<Space[]>([]);
+	const [availableSpacesKey, setAvailableSpacesKey] = useState(0);
 	const [checkbox, setCheckbox] = useState(true);
 	const [query, setQuery] = useState('');
 	const [selectedItems, setSelectedItems] = useState<Space[]>([]);
@@ -59,6 +60,7 @@ export default function CategorizationSpaces({
 			}));
 
 			setAvailableSpaces(spaces);
+			setAvailableSpacesKey((key) => key + 1);
 
 			const initialSpaces = assetLibraries?.map(
 				(item: {name: string}) =>
@@ -158,7 +160,7 @@ export default function CategorizationSpaces({
 					disabled={checkbox}
 					id="multiSelect"
 					items={selectedItems}
-					key={availableSpaces.length}
+					key={availableSpacesKey}
 					loadingState={loadingState}
 					onChange={setQuery}
 					onItemsChange={_handleChangeSpaces}

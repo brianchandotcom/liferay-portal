@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManager;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
@@ -440,6 +441,17 @@ public class LiferayGlobalObjectPreAUIDynamicInclude
 				WebKeys.THEME_DISPLAY);
 
 		sb.append("FeatureFlags: {\n");
+
+		for (FeatureFlag featureFlag :
+				_featureFlagManager.getFeatureFlags(
+					CompanyConstants.SYSTEM, null)) {
+
+			sb.append(StringPool.APOSTROPHE);
+			sb.append(featureFlag.getKey());
+			sb.append("': ");
+			sb.append(featureFlag.isEnabled());
+			sb.append(",\n");
+		}
 
 		for (FeatureFlag featureFlag :
 				_featureFlagManager.getFeatureFlags(

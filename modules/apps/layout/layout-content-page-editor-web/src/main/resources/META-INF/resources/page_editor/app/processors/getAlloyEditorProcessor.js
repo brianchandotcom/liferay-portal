@@ -258,11 +258,13 @@ export default function getAlloyEditorProcessor(
 
 		/**
 		 */
-		destroyEditor: (element, editableConfig) => {
+		destroyEditor: (element, editableConfig, saveChanges) => {
 			if (_editor) {
 				const lastValue = _editor.get('nativeEditor').getData();
 
-				_callbacks.changeCallback(lastValue);
+				if (saveChanges) {
+					_callbacks.changeCallback(lastValue);
+				}
 
 				_editor.destroy();
 

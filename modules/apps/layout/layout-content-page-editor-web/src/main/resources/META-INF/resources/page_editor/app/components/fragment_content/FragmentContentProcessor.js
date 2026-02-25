@@ -59,7 +59,8 @@ export default function FragmentContentProcessor({
 
 			editable.processor.destroyEditor(
 				editable.element,
-				editableValue.config
+				editableValue.config,
+				true
 			);
 
 			navigate(event.path);

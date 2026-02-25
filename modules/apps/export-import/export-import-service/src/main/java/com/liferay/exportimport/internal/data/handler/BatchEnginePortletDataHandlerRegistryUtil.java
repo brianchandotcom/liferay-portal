@@ -77,7 +77,7 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 
 	protected static void registerBatchEnginePortletDataHandler(
 		BatchEnginePortletDataHandler batchEnginePortletDataHandler,
-		Long companyId, String portletId) {
+		long companyId, String portletId) {
 
 		if (_isAllCompanies(companyId)) {
 			_allCompaniesPortletIds.add(portletId);
@@ -95,7 +95,7 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	protected static void registerKey(
-		Long companyId, String key, String portletId) {
+		long companyId, String key, String portletId) {
 
 		if (_isAllCompanies(companyId)) {
 			_allCompaniesKeyPortletIdsMap.put(key, portletId);
@@ -109,7 +109,7 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		}
 	}
 
-	protected static void unregister(Long companyId, String portletId) {
+	protected static void unregister(long companyId, String portletId) {
 		if (_isAllCompanies(companyId)) {
 			_allCompaniesPortletIds.remove(portletId);
 		}
@@ -123,7 +123,7 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	}
 
 	protected static void unregisterKey(
-		Long companyId, String key, String portletId) {
+		long companyId, String key, String portletId) {
 
 		if (_isAllCompanies(companyId)) {
 			_allCompaniesKeyPortletIdsMap.remove(key, portletId);
@@ -143,8 +143,8 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		}
 	}
 
-	private static boolean _isAllCompanies(Long companyId) {
-		if ((companyId == null) || (companyId == 0)) {
+	private static boolean _isAllCompanies(long companyId) {
+		if (companyId == 0) {
 			return true;
 		}
 

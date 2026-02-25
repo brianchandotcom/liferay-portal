@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
-import com.liferay.search.experiences.internal.search.spi.model.index.contributor.SXPElementModelIndexerWriterContributor;
 import com.liferay.search.experiences.internal.search.spi.model.result.contributor.SXPElementModelSummaryContributor;
 import com.liferay.search.experiences.model.SXPElement;
 import com.liferay.search.experiences.service.SXPElementLocalService;
@@ -59,9 +58,8 @@ public class SXPElementModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new SXPElementModelIndexerWriterContributor(
-				_sxpElementLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_sxpElementLocalService::getIndexableActionableDynamicQuery);
 		_modelSummaryContributor = new SXPElementModelSummaryContributor(
 			_localization);
 	}

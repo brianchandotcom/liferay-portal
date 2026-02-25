@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
-import com.liferay.search.experiences.internal.search.spi.model.index.contributor.SXPBlueprintModelIndexerWriterContributor;
 import com.liferay.search.experiences.internal.search.spi.model.result.contributor.SXPBlueprintModelSummaryContributor;
 import com.liferay.search.experiences.model.SXPBlueprint;
 import com.liferay.search.experiences.service.SXPBlueprintLocalService;
@@ -59,9 +58,8 @@ public class SXPBlueprintModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new SXPBlueprintModelIndexerWriterContributor(
-				_sxpBlueprintLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_sxpBlueprintLocalService::getIndexableActionableDynamicQuery);
 		_modelSummaryContributor = new SXPBlueprintModelSummaryContributor(
 			_localization);
 	}

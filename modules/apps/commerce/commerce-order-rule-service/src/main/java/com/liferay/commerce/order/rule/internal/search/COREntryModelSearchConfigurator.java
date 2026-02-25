@@ -5,13 +5,13 @@
 
 package com.liferay.commerce.order.rule.internal.search;
 
-import com.liferay.commerce.order.rule.internal.search.spi.model.index.contributor.COREntryModelIndexerWriterContributor;
 import com.liferay.commerce.order.rule.internal.search.spi.model.result.contributor.COREntryModelSummaryContributor;
 import com.liferay.commerce.order.rule.internal.search.spi.model.result.contributor.COREntryModelVisibilityContributor;
 import com.liferay.commerce.order.rule.model.COREntry;
 import com.liferay.commerce.order.rule.service.COREntryLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
@@ -59,8 +59,9 @@ public class COREntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new COREntryModelIndexerWriterContributor(_corEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_corEntryLocalService::getIndexableActionableDynamicQuery);
 		_modelVisibilityContributor = new COREntryModelVisibilityContributor(
 			_corEntryLocalService);
 	}

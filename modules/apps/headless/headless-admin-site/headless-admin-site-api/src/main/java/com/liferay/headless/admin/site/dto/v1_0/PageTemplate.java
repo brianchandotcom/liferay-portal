@@ -606,38 +606,35 @@ public abstract class PageTemplate implements Serializable {
 		_permissionsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The external references to the associated categories."
+		description = "The taxonomy categories associated with this page."
 	)
 	@Valid
-	public ItemExternalReference[] getTaxonomyCategoryItemExternalReferences() {
-		if (_taxonomyCategoryItemExternalReferencesSupplier != null) {
-			taxonomyCategoryItemExternalReferences =
-				_taxonomyCategoryItemExternalReferencesSupplier.get();
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
 
-			_taxonomyCategoryItemExternalReferencesSupplier = null;
+			_taxonomyCategoryBriefsSupplier = null;
 		}
 
-		return taxonomyCategoryItemExternalReferences;
+		return taxonomyCategoryBriefs;
 	}
 
-	public void setTaxonomyCategoryItemExternalReferences(
-		ItemExternalReference[] taxonomyCategoryItemExternalReferences) {
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
 
-		this.taxonomyCategoryItemExternalReferences =
-			taxonomyCategoryItemExternalReferences;
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
 
-		_taxonomyCategoryItemExternalReferencesSupplier = null;
+		_taxonomyCategoryBriefsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setTaxonomyCategoryItemExternalReferences(
-		UnsafeSupplier<ItemExternalReference[], Exception>
-			taxonomyCategoryItemExternalReferencesUnsafeSupplier) {
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
 
-		_taxonomyCategoryItemExternalReferencesSupplier = () -> {
+		_taxonomyCategoryBriefsSupplier = () -> {
 			try {
-				return taxonomyCategoryItemExternalReferencesUnsafeSupplier.
-					get();
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -649,14 +646,13 @@ public abstract class PageTemplate implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The external references to the associated categories."
+		description = "The taxonomy categories associated with this page."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference[] taxonomyCategoryItemExternalReferences;
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference[]>
-		_taxonomyCategoryItemExternalReferencesSupplier;
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's thumbnail."
@@ -1035,25 +1031,22 @@ public abstract class PageTemplate implements Serializable {
 			sb.append("]");
 		}
 
-		ItemExternalReference[] taxonomyCategoryItemExternalReferences =
-			getTaxonomyCategoryItemExternalReferences();
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
 
-		if (taxonomyCategoryItemExternalReferences != null) {
+		if (taxonomyCategoryBriefs != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"taxonomyCategoryItemExternalReferences\": ");
+			sb.append("\"taxonomyCategoryBriefs\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < taxonomyCategoryItemExternalReferences.length;
-				 i++) {
+			for (int i = 0; i < taxonomyCategoryBriefs.length; i++) {
+				sb.append(String.valueOf(taxonomyCategoryBriefs[i]));
 
-				sb.append(
-					String.valueOf(taxonomyCategoryItemExternalReferences[i]));
-
-				if ((i + 1) < taxonomyCategoryItemExternalReferences.length) {
+				if ((i + 1) < taxonomyCategoryBriefs.length) {
 					sb.append(", ");
 				}
 			}

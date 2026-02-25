@@ -899,6 +899,11 @@ AUI.add(
 					const instance = this;
 
 					const contentNode = instance.byId('content_' + portletId);
+
+					if (!contentNode) {
+						return;
+					}
+
 					const portletDataNode = instance.byId(
 						'PORTLET_DATA_' + portletId
 					);

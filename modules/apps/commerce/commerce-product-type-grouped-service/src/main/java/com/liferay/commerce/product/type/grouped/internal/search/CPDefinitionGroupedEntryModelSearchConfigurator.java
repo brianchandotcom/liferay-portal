@@ -5,11 +5,11 @@
 
 package com.liferay.commerce.product.type.grouped.internal.search;
 
-import com.liferay.commerce.product.type.grouped.internal.search.spi.model.index.contributor.CPDefinitionGroupedEntryModelIndexerWriterContributor;
 import com.liferay.commerce.product.type.grouped.internal.search.spi.model.result.contributor.CPDefinitionGroupedEntryModelSummaryContributor;
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -48,9 +48,10 @@ public class CPDefinitionGroupedEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CPDefinitionGroupedEntryModelIndexerWriterContributor(
-				_cpDefinitionGroupedEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_cpDefinitionGroupedEntryLocalService::
+				getIndexableActionableDynamicQuery);
 
 		_modelSummaryContributor =
 			new CPDefinitionGroupedEntryModelSummaryContributor();

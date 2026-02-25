@@ -2,13 +2,13 @@
 	"basic-configuration": {
 		"en_US": {
 			"message": "Want some tips?",
-			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/installing-liferay/running-liferay-for-the-first-time"
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/installing-liferay-on-a-local-server/running-liferay-for-the-first-time"
 		}
 	},
 	"database-configuration": {
 		"en_US": {
 			"message": "Need to set up a database?",
-			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/reference/database-configurations"
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/reference/database-configurations"
 		}
 	}
 }

@@ -2,13 +2,13 @@
 	"mail": {
 		"en_US": {
 			"message": "Help me connect to a mail server.",
-			"url": "https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/configuring-mail/alternative-email-configuration-methods"
+			"url": "https://learn.liferay.com/w/dxp/self-hosted-installation-and-upgrades/setting-up-liferay/configuring-mail"
 		}
 	},
 	"script-console": {
 		"en_US": {
 			"message": "What can I do in the Script Console?",
-			"url": "https://learn.liferay.com/w/dxp/system-administration/using-the-script-engine"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/using-the-script-engine"
 		}
 	}
 }

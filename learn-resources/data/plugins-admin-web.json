@@ -2,11 +2,11 @@
 	"general": {
 		"en_US": {
 			"message": "How can I configure permissions?",
-			"url": "https://learn.liferay.com/w/dxp/system-administration/installing-and-managing-apps/managing-apps/configuring-portlets-themes-and-layout-templates"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/installing-and-managing-apps/managing-apps/configuring-portlets-themes-and-layout-templates"
 		},
 		"ja_JP": {
 			"message": "権限の設定方法は？",
-			"url": "https://learn.liferay.com/ja/w/dxp/system-administration/installing-and-managing-apps/managing-apps/configuring-portlets-themes-and-layout-templates"
+			"url": "https://learn.liferay.com/w/dxp/security-and-administration/administration/installing-and-managing-apps/managing-apps/configuring-portlets-themes-and-layout-templates"
 		}
 	}
 }

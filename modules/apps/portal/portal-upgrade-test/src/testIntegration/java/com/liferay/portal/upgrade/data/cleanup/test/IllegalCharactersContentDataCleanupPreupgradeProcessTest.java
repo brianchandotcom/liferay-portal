@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -112,19 +113,23 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 
 			Assert.assertEquals(messages.toString(), 2, messages.size());
 			Assert.assertTrue(
+				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DDMContent"),
 						", 1 row updated column ",
 						_dbInspector.normalizeName("data_"),
-						" because it had invalid characters")));
+						" because it had invalid '\\u0000' character ",
+						"sequence")));
 			Assert.assertTrue(
+				messages.toString(),
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("JournalArticle"),
 						", 1 row updated column ",
 						_dbInspector.normalizeName("content"),
-						" because it had invalid characters")));
+						" because it had invalid '\\u0000' character ",
+						"sequence")));
 		}
 
 		try (PreparedStatement preparedStatement = _connection.prepareStatement(
@@ -148,6 +153,102 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcessTest
 				Assert.assertTrue(resultSet.next());
 
 				Assert.assertEquals(cleanContent, resultSet.getString(1));
+			}
+		}
+	}
+
+	@Test
+	public void testUpgradeIllegalCharacters() throws Exception {
+		int[] illegalCharacters = ReflectionTestUtil.getFieldValue(
+			IllegalCharactersContentDataCleanupPreupgradeProcess.class,
+			"_ILLEGAL_CHARACTER_CODES");
+
+		for (int charCode : illegalCharacters) {
+			String cleanContent =
+				RandomTestUtil.randomString() +
+					"äëïöüÄËÏÖÜàèìòùÀÈÌÒÙáéíóúÁÉÍÓÚâêîôûÂÊÎÔÛ";
+
+			String content = StringBundler.concat(
+				"'", cleanContent, (char)charCode, "'");
+
+			if (_db.getDBType() == DBType.SQLSERVER) {
+				content = "N" + content;
+			}
+
+			_contentId = RandomTestUtil.nextLong();
+
+			runSQL(
+				_connection,
+				StringBundler.concat(
+					"insert into DDMContent (",
+					"mvccVersion, ctCollectionId, contentId, groupId, data_) ",
+					"values (0, 0, ", _contentId, ", ",
+					RandomTestUtil.nextLong(), ", ", content, ")"));
+
+			_journalId = RandomTestUtil.nextLong();
+
+			runSQL(
+				_connection,
+				StringBundler.concat(
+					"insert into JournalArticle (mvccVersion, ctCollectionId, ",
+					"id_, groupId, content) values (0, 0, ", _journalId, ", ",
+					RandomTestUtil.nextLong(), ", ", content, ")"));
+
+			try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+					IllegalCharactersContentDataCleanupPreupgradeProcess.class.
+						getName(),
+					LoggerTestUtil.INFO)) {
+
+				upgrade();
+
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertEquals(messages.toString(), 2, messages.size());
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Table ", _dbInspector.normalizeName("DDMContent"),
+							", 1 row updated column ",
+							_dbInspector.normalizeName("data_"),
+							" because it had invalid character ",
+							String.format("0x%02X", charCode))));
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"Table ",
+							_dbInspector.normalizeName("JournalArticle"),
+							", 1 row updated column ",
+							_dbInspector.normalizeName("content"),
+							" because it had invalid character ",
+							String.format("0x%02X", charCode))));
+			}
+
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"select data_ from DDMContent where contentId = ?")) {
+
+				preparedStatement.setLong(1, _contentId);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Assert.assertTrue(resultSet.next());
+
+					Assert.assertEquals(cleanContent, resultSet.getString(1));
+				}
+			}
+
+			try (PreparedStatement preparedStatement =
+					_connection.prepareStatement(
+						"select content from JournalArticle where id_ = ?")) {
+
+				preparedStatement.setLong(1, _journalId);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					Assert.assertTrue(resultSet.next());
+
+					Assert.assertEquals(cleanContent, resultSet.getString(1));
+				}
 			}
 		}
 	}

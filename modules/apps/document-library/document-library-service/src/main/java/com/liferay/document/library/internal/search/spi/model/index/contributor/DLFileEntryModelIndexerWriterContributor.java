@@ -9,7 +9,6 @@ import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -21,19 +20,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWrite
  * @author Michael C. Han
  */
 public class DLFileEntryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DLFileEntry> {
+	extends ModelIndexerWriterContributor<DLFileEntry> {
 
 	public DLFileEntryModelIndexerWriterContributor(
 		DLFileEntryLocalService dlFileEntryLocalService) {
 
-		_dlFileEntryLocalService = dlFileEntryLocalService;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _dlFileEntryLocalService.getIndexableActionableDynamicQuery();
+		super(dlFileEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -68,7 +60,5 @@ public class DLFileEntryModelIndexerWriterContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryModelIndexerWriterContributor.class);
-
-	private final DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

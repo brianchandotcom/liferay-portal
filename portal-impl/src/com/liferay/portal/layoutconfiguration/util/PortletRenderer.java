@@ -96,7 +96,7 @@ public class PortletRenderer {
 			String attributeName = enumeration.nextElement();
 
 			if (attributeName.contains(
-					"jakarta.portlet.faces.renderResponseOutput")) {
+					"com.liferay.faces.renderResponseOutput")) {
 
 				headerRequestAttributes.put(
 					attributeName,

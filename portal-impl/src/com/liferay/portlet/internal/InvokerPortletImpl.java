@@ -112,7 +112,7 @@ public class InvokerPortletImpl
 		Class<? extends Portlet> portletClass = portlet.getClass();
 
 		if (ClassUtil.isSubclass(
-				portletClass, "jakarta.portlet.faces.GenericFacesPortlet")) {
+				portletClass, "com.liferay.faces.GenericFacesPortlet")) {
 
 			facesPortlet = true;
 		}

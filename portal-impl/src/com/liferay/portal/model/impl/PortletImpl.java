@@ -4205,7 +4205,7 @@ public class PortletImpl extends PortletBaseImpl {
 
 		if (Objects.equals(
 				portletClassName,
-				"jakarta.portlet.faces.GenericFacesPortlet")) {
+				"com.liferay.faces.GenericFacesPortlet")) {
 
 			return true;
 		}
@@ -4227,7 +4227,7 @@ public class PortletImpl extends PortletBaseImpl {
 
 			if (ClassUtil.isSubclass(
 					portletClass,
-					"jakarta.portlet.faces.GenericFacesPortlet")) {
+					"com.liferay.faces.GenericFacesPortlet")) {
 
 				return true;
 			}

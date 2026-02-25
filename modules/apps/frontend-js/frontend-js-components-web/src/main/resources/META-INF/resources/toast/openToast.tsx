@@ -183,6 +183,7 @@ function openToast({
 			variant={variant}
 			{...toastProps}
 			className={classNames('mb-3', toastProps?.className)}
+			role="alert"
 		>
 			<div
 				dangerouslySetInnerHTML={{
@@ -194,9 +195,14 @@ function openToast({
 		rootElement
 	);
 
-	rootElement.setAttribute('role', 'alert');
-	rootElement.setAttribute('tabindex', '-1');
-	rootElement.focus();
+	const alertElement = rootElement.querySelector(
+		'[role="alert"]'
+	) as HTMLElement | null;
+
+	if (alertElement) {
+		alertElement.setAttribute('tabindex', '-1');
+		alertElement.focus();
+	}
 
 	rootsMap.set(id, root);
 }

@@ -252,7 +252,7 @@ export class ExportImportPage {
 			await this.uncheckPortlets();
 
 			for (const portletLabel of portletLabels) {
-				await this.page.getByLabel(portletLabel, {exact: true}).check();
+				await this.page.getByLabel(portletLabel).check();
 			}
 		}
 

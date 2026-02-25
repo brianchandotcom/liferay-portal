@@ -24,7 +24,6 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
-import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Product;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.petra.string.StringBundler;
 
@@ -257,8 +256,6 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 			return;
 		}
 
-		Product product = productPurchase.getProduct();
-
 		_marketplaceService.postOrder(
 			new Order() {
 				{
@@ -266,15 +263,16 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 						productPurchase::getAccountKey);
 					setChannelId(_channel::getId);
 					setCurrencyCode(() -> "USD");
-
 					setExternalReferenceCode(productPurchase::getKey);
 					setOrderItems(
 						() -> new OrderItem[] {
 							new OrderItem() {
 								{
-									setQuantity(() -> BigDecimal.ONE);
+									setQuantity(
+										() -> new BigDecimal(
+											productPurchase.getQuantity()));
 									setSkuExternalReferenceCode(
-										product::getKey);
+										productPurchase::getProductKey);
 								}
 							}
 						});

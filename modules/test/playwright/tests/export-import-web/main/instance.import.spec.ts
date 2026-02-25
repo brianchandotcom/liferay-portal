@@ -1181,8 +1181,8 @@ test('Can import object with different classname via portlet', async ({
 }) => {
 	test.slow();
 	let objectDefinition: ObjectDefinition;
-	let objectDefinitionFilePath: string;
-	let objectEntryFilePath: string;
+	let objectDefinitionsFilePath: string;
+	let objectEntriesFilePath: string;
 
 	await test.step('Create and download Object Definition LAR', async () => {
 		objectDefinition =
@@ -1206,7 +1206,7 @@ test('Can import object with different classname via portlet', async ({
 			trigger: viewObjectDefinitionsPage.page.getByLabel('Options'),
 		});
 
-		objectDefinitionFilePath = await portletExportImportPage.exportLARFile(
+		objectDefinitionsFilePath = await portletExportImportPage.exportLARFile(
 			/Objects-\d+\.portlet\.lar/
 		);
 	});
@@ -1226,7 +1226,7 @@ test('Can import object with different classname via portlet', async ({
 			trigger: page.getByLabel('Options'),
 		});
 
-		objectEntryFilePath = await portletExportImportPage.exportLARFile(
+		objectEntriesFilePath = await portletExportImportPage.exportLARFile(
 			/ObjectDefinition\d+-\d+\.portlet\.lar/
 		);
 	});
@@ -1279,7 +1279,7 @@ test('Can import object with different classname via portlet', async ({
 			trigger: page.getByLabel('Options'),
 		});
 
-		await portletExportImportPage.importLARFile(objectDefinitionFilePath);
+		await portletExportImportPage.importLARFile(objectDefinitionsFilePath);
 		await expect(
 			portletExportImportPage.frame
 				.getByRole('cell', {name: 'Successful'})
@@ -1308,7 +1308,7 @@ test('Can import object with different classname via portlet', async ({
 
 		expect(beforeImportingTotalCount).toBe(0);
 
-		await portletExportImportPage.importLARFile(objectEntryFilePath);
+		await portletExportImportPage.importLARFile(objectEntriesFilePath);
 		await expect(
 			portletExportImportPage.frame
 				.getByRole('cell', {name: 'Successful'})

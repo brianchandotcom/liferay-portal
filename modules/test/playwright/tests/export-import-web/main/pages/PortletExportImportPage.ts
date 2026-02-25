@@ -19,20 +19,18 @@ export class PortletExportImportPage {
 	async exportLARFile(fileNamePattern: RegExp): Promise<string> {
 		await this.frame.getByRole('button', {name: 'Export'}).click();
 
-		const downloadCell = this.frame
+		const downloadLink = this.frame
 			.getByRole('cell', {name: fileNamePattern})
-			.first();
-		await downloadCell.waitFor();
-
-		const downloadLink = downloadCell.getByRole('link');
-		const rawText = await downloadLink.innerText();
-
-		const fileName = rawText.split('(')[0].trim();
-		const filePath = `${getTempDir()}/${fileName}`;
+			.first()
+			.getByRole('link');
 
 		const downloadPromise = this.page.waitForEvent('download');
+
 		await downloadLink.click();
+
 		const download = await downloadPromise;
+
+		const filePath = `${getTempDir()}/${download.suggestedFilename()}`;
 
 		await download.saveAs(filePath);
 
@@ -41,10 +39,10 @@ export class PortletExportImportPage {
 
 	async importLARFile(filePath: string): Promise<void> {
 		await this.frame.getByRole('link', {name: 'Import'}).click();
+
 		await this.frame.locator('input[type="file"]').setInputFiles(filePath);
 		await this.frame.getByRole('button', {name: 'Continue'}).click();
 
-		await this.frame.getByText(/The import LAR file is deleted/).waitFor();
 		await this.frame.getByRole('button', {name: 'Import'}).click();
 	}
 }

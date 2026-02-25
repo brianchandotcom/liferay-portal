@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.report.internal.search;
 
-import com.liferay.exportimport.report.internal.search.spi.model.index.contributor.ExportImportReportEntryModelIndexerWriterContributor;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -45,9 +44,9 @@ public class ExportImportReportEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ExportImportReportEntryModelIndexerWriterContributor(
-				_exportImportReportEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_exportImportReportEntryLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

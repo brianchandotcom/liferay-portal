@@ -5,7 +5,6 @@
 
 package com.liferay.organizations.internal.search;
 
-import com.liferay.organizations.internal.search.spi.model.index.contributor.OrganizationModelIndexerWriterContributor;
 import com.liferay.organizations.internal.search.spi.model.result.contributor.OrganizationModelSummaryContributor;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.Field;
@@ -58,9 +57,8 @@ public class OrganizationModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new OrganizationModelIndexerWriterContributor(
-				_organizationLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_organizationLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<Organization>

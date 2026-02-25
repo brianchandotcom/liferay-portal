@@ -252,7 +252,6 @@ test('Can import custom and system objects entries at instance level using date 
 	applicationsMenuPage,
 	companyExportImportPage,
 	exportImportPage,
-	page,
 }) => {
 	const objectDefinition =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -264,9 +263,11 @@ test('Can import custom and system objects entries at instance level using date 
 		type: 'objectDefinition',
 	});
 
+	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
+
 	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 		{externalReferenceCode: '', textField: objectDefinition.name},
-		`${normalizeRestPath(objectDefinition.restContextPath)}`
+		applicationName
 	);
 
 	const {
@@ -276,16 +277,12 @@ test('Can import custom and system objects entries at instance level using date 
 		`${apiHelpers.baseUrl}functional-cookies-entries/`
 	);
 
-	const applicationName = `${normalizeRestPath(objectDefinition.restContextPath)}`;
-
 	const {
 		dateCreated: cookiesObjectEntryCreationDate,
 		id: cookiesObjectEntryId,
 	} = cookiesObjectEntries[0];
 
-	await test.step('export functional cookie entries using date reange filter', async () => {
-		await applicationsMenuPage.goToExport();
-
+	await test.step('export functional cookie entries using date range filter', async () => {
 		const startDate = new Date(cookiesObjectEntryCreationDate);
 
 		startDate.setUTCDate(startDate.getUTCDate() - 1);
@@ -293,10 +290,6 @@ test('Can import custom and system objects entries at instance level using date 
 		const endDate = new Date(cookiesObjectEntryCreationDate);
 
 		endDate.setUTCMinutes(endDate.getUTCMinutes() + 1);
-
-		await page.getByTestId('creationMenuNewButton').nth(1).click();
-
-		await page.getByLabel('Export Individual Deletions:').check();
 
 		await applicationsMenuPage.goToExport();
 

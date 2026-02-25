@@ -7,8 +7,8 @@ package com.liferay.redirect.internal.search;
 
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
-import com.liferay.redirect.internal.search.spi.model.index.contributor.RedirectEntryModelIndexerWriterContributor;
 import com.liferay.redirect.model.RedirectEntry;
 import com.liferay.redirect.service.RedirectEntryLocalService;
 
@@ -45,9 +45,9 @@ public class RedirectEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new RedirectEntryModelIndexerWriterContributor(
-				_redirectEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_redirectEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<RedirectEntry>

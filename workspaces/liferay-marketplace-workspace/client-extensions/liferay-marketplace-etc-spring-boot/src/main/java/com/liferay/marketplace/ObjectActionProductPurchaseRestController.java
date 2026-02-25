@@ -42,7 +42,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ObjectActionProductPurchaseRestController
 	extends BaseRestController {
 
-	@PostMapping("/object/action/product-purchase")
+	@PostMapping("/object/action/product/purchase")
 	public void post(@AuthenticationPrincipal Jwt jwt, @RequestBody String json)
 		throws Exception {
 

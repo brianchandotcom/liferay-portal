@@ -4,4 +4,8 @@ Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.cookies.configuration,\
 	com.liferay.cookies.configuration.banner,\
-	com.liferay.cookies.configuration.consent
+	com.liferay.cookies.configuration.consent,\
+	com.liferay.cookies.exception,\
+	com.liferay.cookies.model,\
+	com.liferay.cookies.service,\
+	com.liferay.cookies.service.persistence

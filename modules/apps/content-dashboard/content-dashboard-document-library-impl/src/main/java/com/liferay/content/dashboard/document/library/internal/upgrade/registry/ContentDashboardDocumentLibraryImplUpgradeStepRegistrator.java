@@ -6,7 +6,7 @@
 package com.liferay.content.dashboard.document.library.internal.upgrade.registry;
 
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
-import com.liferay.content.dashboard.document.library.internal.upgrade.registry.v_1_17.AssetVocabularyUpgradeProcess;
+import com.liferay.content.dashboard.document.library.internal.upgrade.v1_0_17.AssetVocabularyUpgradeProcess;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;

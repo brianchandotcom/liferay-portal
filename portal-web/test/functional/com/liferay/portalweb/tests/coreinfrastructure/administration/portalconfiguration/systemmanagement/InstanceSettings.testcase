@@ -1,6 +1,7 @@
 @component-name = "portal-platform-experience"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property portal.release = "true";
 	property portal.upstream = "true";
 	property test.assert.warning.exceptions = "true";

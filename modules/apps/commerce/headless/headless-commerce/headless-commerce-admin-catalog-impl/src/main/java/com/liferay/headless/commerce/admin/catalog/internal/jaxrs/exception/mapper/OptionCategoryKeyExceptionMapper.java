@@ -9,6 +9,7 @@ import com.liferay.commerce.product.exception.CPOptionCategoryKeyException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,8 @@ public class OptionCategoryKeyExceptionMapper
 	protected Problem getProblem(
 		CPOptionCategoryKeyException cpOptionCategoryKeyException) {
 
-		return new Problem(cpOptionCategoryKeyException);
+		return new Problem(
+			Response.Status.BAD_REQUEST, "The Option Category Key is invalid");
 	}
 
 }

@@ -23,6 +23,7 @@ export class TeamsPage {
 	readonly saveButton: Locator;
 	readonly teamsTable: DataTablePage;
 	readonly userGroupTab: Locator;
+	readonly usersTab: Locator;
 
 	constructor(page: Page) {
 		this.backButton = page.getByRole('link', {name: 'Go to Teams'});
@@ -45,6 +46,7 @@ export class TeamsPage {
 			)
 		);
 		this.userGroupTab = page.getByRole('link', {name: 'User Groups'});
+		this.usersTab = page.getByRole('link', {name: 'Users'});
 	}
 
 	async goTo(siteUrl?: string) {

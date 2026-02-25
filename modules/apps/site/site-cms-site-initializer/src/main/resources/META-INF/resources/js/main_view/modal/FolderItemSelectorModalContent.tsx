@@ -26,6 +26,7 @@ export type TFolderItemSelectorModalContent = {
 	action: Action;
 	apiURL?: string;
 	assetLibraries: AssetLibrary[];
+	dataSetId?: string;
 	isBulk?: boolean;
 	itemData: ItemData;
 	loadData: () => {};
@@ -123,17 +124,25 @@ const displayToast = (
 	}
 };
 
-function executeBulkCopyAction(
-	apiURL: string | undefined,
-	folder: Folder,
-	onClose: () => void,
-	selectedData: any
-) {
+function executeBulkCopyAction({
+	apiURL,
+	dataSetId,
+	folder,
+	onClose,
+	selectedData,
+}: {
+	apiURL: string | undefined;
+	dataSetId?: string;
+	folder: Folder;
+	onClose: () => void;
+	selectedData: any;
+}) {
 	triggerAssetBulkAction({
 		additionalData: {
 			targetName: folder.title,
 		},
 		apiURL,
+		dataSetId,
 		keyValues: {
 			objectEntryFolderId: folder.id,
 		},
@@ -230,6 +239,7 @@ function FolderItemSelectorModalContent({
 	action,
 	apiURL,
 	assetLibraries,
+	dataSetId,
 	isBulk = false,
 	itemData,
 	loadData,
@@ -297,12 +307,13 @@ function FolderItemSelectorModalContent({
 
 	const handleOnItemsChange = (folder: Folder) => {
 		if (isBulk) {
-			executeBulkCopyAction(
+			executeBulkCopyAction({
 				apiURL,
+				dataSetId,
 				folder,
-				() => onOpenChange(false),
-				selectedData
-			);
+				onClose: () => onOpenChange(false),
+				selectedData,
+			});
 		}
 		else if (itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME) {
 			FolderService.searchFolder(

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.4.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_4_0.dtd">
+
+<service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.cookies">
+	<namespace>Cookies</namespace>
+	<entity local-service="false" name="ConsentPreference" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="consentPreferenceId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+
+		<!-- Other fields -->
+
+		<column name="domain" type="String" />
+		<column name="expirationDate" type="Date" />
+		<column name="name" type="String" />
+		<column name="value" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="consentPreferenceId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="ExpirationDate" return-type="Collection">
+			<finder-column name="expirationDate" />
+		</finder>
+		<finder name="U_D" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="domain" />
+		</finder>
+		<finder name="U_D_N" return-type="ConsentPreference" unique="true">
+			<finder-column name="userId" />
+			<finder-column name="domain" />
+			<finder-column name="name" />
+		</finder>
+	</entity>
+</service-builder>

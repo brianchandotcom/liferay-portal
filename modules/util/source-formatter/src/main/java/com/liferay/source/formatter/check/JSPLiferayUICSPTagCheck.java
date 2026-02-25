@@ -41,7 +41,7 @@ public class JSPLiferayUICSPTagCheck extends BaseFileCheck {
 				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath));
 
 		for (String line : lines) {
-			if ((content.indexOf("<liferay-ui:csp") == -1) ||
+			if ((line.indexOf("<liferay-ui:csp") == -1) ||
 				!line.startsWith(StringPool.PLUS)) {
 
 				continue;

@@ -13,6 +13,7 @@ import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.CopyBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.DeleteAssetVersionBulkAction;
+import com.liferay.bulk.rest.dto.v1_0.DeleteBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.DueDateBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
@@ -150,7 +151,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 		BulkAction.Type type = bulkAction.getType();
 
-		BulkActionTask bulkActionTask = _addBulkActionTask(type);
+		BulkActionTask bulkActionTask = _addBulkActionTask(bulkAction);
 
 		_bulkSelectionRunner.run(
 			contextUser, bulkSelection, _getBulkSelectionAction(type),
@@ -236,7 +237,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			filter, pagination, search, sorts[0]);
 	}
 
-	private BulkActionTask _addBulkActionTask(BulkAction.Type type)
+	private BulkActionTask _addBulkActionTask(BulkAction bulkAction)
 		throws Exception {
 
 		if (BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(type)) {
@@ -247,7 +248,29 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BULK_ACTION_TASK", contextCompany.getCompanyId());
+
+		BulkAction.Type type = bulkAction.getType();
+
 		String typeString = type.toString();
+
+		if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
+			DeleteBulkAction deleteBulkAction = (DeleteBulkAction)bulkAction;
+
+			if (!Validator.isBlank(deleteBulkAction.getClassName())) {
+				ObjectDefinition bulkActionObjectDefinition =
+					_objectDefinitionLocalService.
+						getObjectDefinitionByClassName(
+							objectDefinition.getCompanyId(),
+							deleteBulkAction.getClassName());
+
+				if (StringUtil.equals(
+						bulkActionObjectDefinition.getExternalReferenceCode(),
+						"L_CMP_TASK")) {
+
+					typeString = "DeleteTaskBulkAction";
+				}
+			}
+		}
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			0, contextUser.getUserId(),
@@ -263,9 +286,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build(),
 			new ServiceContext());
 
+		Map<String, Serializable> values = objectEntry.getValues();
+
 		return new BulkActionTask() {
 			{
-				setActionName(() -> GetterUtil.getString(typeString));
+				setActionName(
+					() -> GetterUtil.getString(values.get("actionName")));
 				setAuthor(objectEntry::getUserName);
 				setCreatedDate(objectEntry::getCreateDate);
 				setExecuteStatus(
@@ -273,7 +299,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 						BulkSelectionActionStatusConstants.INITIAL));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
-				setType(() -> GetterUtil.getString(typeString));
+				setType(() -> GetterUtil.getString(values.get("type")));
 			}
 		};
 	}

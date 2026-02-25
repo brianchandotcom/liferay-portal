@@ -100,24 +100,30 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	const sitesSelected = dataSourceData?.items[0]?.sitesSelected;
 
+	const EMPTY_STATE_FRAGMENT = (
+		<OverviewCDPEmptyState
+			authorized={authorized}
+			dataSourceData={dataSourceData}
+			dataSourceLoading={dataSourceLoading}
+			groupId={groupId}
+		/>
+	);
+
 	return (
 		<div className='overview-column-main'>
-			<OverviewCDPEmptyState
-				authorized={authorized}
-				dataSourceData={dataSourceData}
-				dataSourceLoading={dataSourceLoading}
+			<ContextualInfo showEmptyState={!sitesSelected}>
+				{EMPTY_STATE_FRAGMENT}
+			</ContextualInfo>
+			<IndividualProfileCard
+				channelId={channelId}
+				entity={individual}
 				groupId={groupId}
-			/>
-			<ContextualInfo />
-			{sitesSelected && (
-				<IndividualProfileCard
-					channelId={channelId}
-					entity={individual}
-					groupId={groupId}
-					tabId={tabId}
-					timeZoneId={timeZoneId}
-				/>
-			)}
+				showEmptyState={!sitesSelected}
+				tabId={tabId}
+				timeZoneId={timeZoneId}
+			>
+				{EMPTY_STATE_FRAGMENT}
+			</IndividualProfileCard>
 		</div>
 	);
 };

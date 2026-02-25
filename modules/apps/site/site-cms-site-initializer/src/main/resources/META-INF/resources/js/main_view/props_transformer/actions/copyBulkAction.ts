@@ -6,6 +6,9 @@
 import {render} from '@liferay/frontend-js-react-web';
 import {sub} from 'frontend-js-web';
 
+import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
+import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../../common/utils/constants';
+import {openActionNotAllowedModal} from '../../../common/utils/openActionNotAllowedModal';
 import FolderItemSelectorModalContent from '../../modal/FolderItemSelectorModalContent';
 import {AdditionalProps} from '../AssetsFDSPropsTransformer';
 
@@ -18,12 +21,28 @@ const copyBulkAction = ({
 	additionalProps: AdditionalProps;
 	apiURL?: string;
 	dataSetId?: string;
-	selectedData: any;
+	selectedData: Required<IBulkActionFDSData>;
 }) => {
 	const title =
 		selectedData.items.length === 1
 			? selectedData.items[0].title
 			: sub(Liferay.Language.get('x-items'), [selectedData.items.length]);
+
+	const hasFileOrFolder = selectedData.items.some(
+		(item) =>
+			item.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME ||
+			item.embedded?.objectEntryFolderExternalReferenceCode === 'L_FILES'
+	);
+
+	const hasContent = selectedData.items.some(
+		(item) =>
+			item.embedded?.objectEntryFolderExternalReferenceCode ===
+			'L_CONTENTS'
+	);
+
+	if (hasFileOrFolder && hasContent) {
+		return openActionNotAllowedModal();
+	}
 
 	return render(
 

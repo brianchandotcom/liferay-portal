@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.db.migration.importer.DBCopyTablesProcess;
 import com.liferay.portal.tools.db.migration.importer.jdbc.AutoBatchPreparedStatementUtil;
 
@@ -92,7 +93,8 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testBigDecimalColumn() throws Exception {
 		_testColumnTypeOf(
-			"BIGDECIMAL", RandomTestUtil::nextDouble, GetterUtil::getDouble);
+			"BIGDECIMAL", RandomTestUtil::nextDouble, Function.identity(),
+			GetterUtil::getDouble);
 	}
 
 	@Test
@@ -132,31 +134,45 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testBooleanColumn() throws Exception {
 		_testColumnTypeOf(
-			"BOOLEAN", RandomTestUtil::randomBoolean, Function.identity());
+			"BOOLEAN", RandomTestUtil::randomBoolean, Function.identity(),
+			Function.identity());
 	}
 
 	@Test
 	public void testDateColumn() throws Exception {
 		_testColumnTypeOf(
-			"DATE", RandomTestUtil::nextTimestamp, Function.identity());
+			"DATE", RandomTestUtil::nextTimestamp, Function.identity(),
+			Function.identity());
 	}
 
 	@Test
 	public void testDoubleColumn() throws Exception {
 		_testColumnTypeOf(
-			"DOUBLE", RandomTestUtil::nextDouble, GetterUtil::getDouble);
+			"DOUBLE", RandomTestUtil::nextDouble, Function.identity(),
+			GetterUtil::getDouble);
 	}
 
 	@Test
 	public void testIntegerColumn() throws Exception {
 		_testColumnTypeOf(
-			"INTEGER", RandomTestUtil::nextInt, Function.identity());
+			"INTEGER", RandomTestUtil::nextInt, Function.identity(),
+			Function.identity());
 	}
 
 	@Test
 	public void testLongColumn() throws Exception {
 		_testColumnTypeOf(
-			"LONG", RandomTestUtil::nextLong, Function.identity());
+			"LONG", RandomTestUtil::nextLong, Function.identity(),
+			Function.identity());
+	}
+
+	@Test
+	public void testNullChar() throws Exception {
+		_testColumnTypeOf(
+			"VARCHAR(20)", () -> "Test\\u0000Test",
+			object -> StringUtil.removeSubstring(
+				(String)object, StringPool.NULL_CHAR),
+			Function.identity());
 	}
 
 	@Test
@@ -194,24 +210,27 @@ public class DBCopyTablesProcessTest {
 	@Test
 	public void testStringColumn() throws Exception {
 		_testColumnTypeOf(
-			"STRING", RandomTestUtil::randomString, Function.identity());
+			"STRING", RandomTestUtil::randomString, Function.identity(),
+			Function.identity());
 	}
 
 	@Test
 	public void testTextColumn() throws Exception {
 		_testColumnTypeOf(
-			"TEXT", RandomTestUtil::randomString, Function.identity());
+			"TEXT", RandomTestUtil::randomString, Function.identity(),
+			Function.identity());
 	}
 
 	@Test
 	public void testVarcharColumn() throws Exception {
 		_testColumnTypeOf(
 			"VARCHAR(10)", () -> RandomTestUtil.randomString(10),
-			Function.identity());
+			Function.identity(), Function.identity());
 	}
 
 	private void _assertValues(
-			Object[] expectedValues, Function<Object, Object> function)
+			Object[] expectedValues, Function<Object, Object> expectedFunction,
+			Function<Object, Object> getFunction)
 		throws Exception {
 
 		int total = 0;
@@ -224,8 +243,8 @@ public class DBCopyTablesProcessTest {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					Assert.assertEquals(
-						expectedValues[total++],
-						function.apply(resultSet.getObject(1)));
+						expectedFunction.apply(expectedValues[total++]),
+						getFunction.apply(resultSet.getObject(1)));
 				}
 			}
 		}
@@ -302,6 +321,7 @@ public class DBCopyTablesProcessTest {
 
 	private void _testColumnTypeOf(
 			String type, Supplier<Object> valueSupplier,
+			Function<Object, Object> expectedFunction,
 			Function<Object, Object> getFunction)
 		throws Exception {
 
@@ -317,7 +337,7 @@ public class DBCopyTablesProcessTest {
 
 		_copyTable();
 
-		_assertValues(values, getFunction);
+		_assertValues(values, expectedFunction, getFunction);
 	}
 
 	private static final int _TABLE_SIZE = 5000;

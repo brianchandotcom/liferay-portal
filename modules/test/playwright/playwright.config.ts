@@ -160,6 +160,7 @@ import {config as pageManagementSiteTeardownConfig} from './tests/setup/page-man
 import {config as siteCmsSiteConfig} from './tests/setup/site-cms-site/main/config';
 import {config as siteCmsSiteTeardownConfig} from './tests/setup/site-cms-site/teardown/config';
 import {config as siteAdminWebConfig} from './tests/site-admin-web/main/config';
+import {config as siteCmpSiteInitializerConfig} from './tests/site-cmp-site-initializer/main/config';
 import {config as siteCmsSiteInitializerConfig} from './tests/site-cms-site-initializer/main/config';
 import {config as siteCmsSiteInitializerPermissionsConfig} from './tests/site-cms-site-initializer/permissions/config';
 import {config as siteCmsSiteInitializerStructureBuilderConfig} from './tests/site-cms-site-initializer/structure-builder/config';
@@ -356,6 +357,7 @@ export default defineConfig({
 		segmentExperimentWebConfig,
 		segmentsWebConfig,
 		siteAdminWebConfig,
+		siteCmpSiteInitializerConfig,
 		siteCmsSiteInitializerConfig,
 		siteCmsSiteInitializerPermissionsConfig,
 		siteCmsSiteInitializerStructureBuilderConfig,

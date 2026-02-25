@@ -33,6 +33,10 @@ public class BuildJSONObject extends JSONObject {
 		_topLevelBuildURL = _getTopLevelBuildURL();
 	}
 
+	public String getBuiltOn() {
+		return optString("builtOn");
+	}
+
 	public long getDuration() {
 		return optLong("duration");
 	}

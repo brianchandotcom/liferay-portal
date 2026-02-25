@@ -1,13 +1,9 @@
 {{- if .Values.enabled -}}
-{{- $elasticsearch := .Values.search.elasticsearch | default dict -}}
-{{- $opensearch := .Values.search.opensearch | default dict -}}
-{{- $overlay := .Values.overlay | default dict -}}
-{{- $storage := .Values.storage | default dict -}}
 apiVersion: aws.liferay.com/v1alpha1
 kind: LiferayInfrastructure
 metadata:
     annotations:
-        argocd.argoproj.io/sync-wave: -20
+        argocd.argoproj.io/sync-wave: "-20"
     name: {{ .Release.Name }}
     namespace: {{ .Release.Namespace }}
 spec:
@@ -16,15 +12,11 @@ spec:
         EnvironmentId: {{ .Values.environmentId }}
         ProjectId: {{ .Values.projectId }}
     database: {{ .Values.database | toYaml | nindent 8 }}
-    deletionProtection: {{ .Values.deletionProtection | default false }}
+    deletionProtection: {{ .Values.deletionProtection }}
     environmentId: {{ .Values.environmentId }}
-    overlay:
-        region: {{ $overlay.region | default "us-west-2" | quote }}
+    overlay: {{ .Values.overlay | toYaml | nindent 8 }}
     projectId: {{ .Values.projectId }}
-    search:
-        {{- if $elasticsearch.enabled }}
-        elasticsearch: {{ $elasticsearch | toYaml | nindent 12 }}
-        {{- end }}
-        opensearch: {{ $opensearch | toYaml | nindent 12 }}
+    region: {{ .Values.region }}
+    search: {{ .Values.search | toYaml | nindent 8 }}
     storage: {{ .Values.storage | toYaml | nindent 8 }}
 {{- end -}}

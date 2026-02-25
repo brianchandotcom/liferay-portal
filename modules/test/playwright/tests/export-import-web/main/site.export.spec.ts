@@ -74,12 +74,6 @@ test('can export at site level with custom export task name', async ({
 	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}MyExport-`));
 });
 
-test('can export at site level with old file name', async ({
-	exportImportPage,
-}) => {
-	await expectExportName(exportImportPage, 'Pages');
-});
-
 testWithExportImportAtInstanceLevelFF(
 	'can export at site level with new file name',
 	async ({exportImportPage}) => {

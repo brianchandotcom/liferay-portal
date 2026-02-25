@@ -551,6 +551,12 @@ public class BuildHistoryProcessor {
 		implements Function<BuildJSONObject, String> {
 
 		public String apply(BuildJSONObject buildJSONObject) {
+			String builtOn = buildJSONObject.getBuiltOn();
+
+			if (builtOn.isEmpty()) {
+				return TestBatchType.JENKINS_MASTER_BUILD.toString();
+			}
+
 			String jobName = buildJSONObject.getJobName();
 
 			if (jobName.contains("maintenance-") ||
@@ -627,9 +633,11 @@ public class BuildHistoryProcessor {
 
 		private enum TestBatchType {
 
-			INTEGRATION("Integration"), MAINTENANCE("Maintenance"),
-			MINIMAL("Minimal"), MODULES_COMPILE("Modules Compile"),
-			OTHER("Other"), PLAYWRIGHT("Playwright"),
+			INTEGRATION("Integration"),
+			JENKINS_MASTER_BUILD("Jenkins Master Build"),
+			MAINTENANCE("Maintenance"), MINIMAL("Minimal"),
+			MODULES_COMPILE("Modules Compile"), OTHER("Other"),
+			PLAYWRIGHT("Playwright"),
 			PORTAL_BUNDLE_BUILD("Portal Bundle Build"), POSHI("Poshi"),
 			REST_BUILDER("Rest Builder"),
 			SEMANTIC_VERSIONING("Semantic Versioning"),
@@ -694,12 +702,6 @@ public class BuildHistoryProcessor {
 		implements Function<BuildJSONObject, String> {
 
 		public String apply(BuildJSONObject buildJSONObject) {
-			String builtOn = buildJSONObject.getBuiltOn();
-
-			if (builtOn.isEmpty()) {
-				return Category.CI_JENKINS_MASTER_MAINTENANCE.toString();
-			}
-
 			String jobName = buildJSONObject.getJobName();
 
 			jobName = jobName.replace("-batch", "");
@@ -709,7 +711,7 @@ public class BuildHistoryProcessor {
 			if (jobName.contains("maintenance") ||
 				jobName.contains("verification")) {
 
-				return Category.CI_JENKINS_NODE_MAINTENANCE.toString();
+				return Category.MAINTENANCE.toString();
 			}
 
 			if (jobName.equals("test-portal-acceptance-pullrequest(master)")) {
@@ -739,9 +741,7 @@ public class BuildHistoryProcessor {
 
 		private enum Category {
 
-			CI_JENKINS_MASTER_MAINTENANCE("Jenkins Master Maintenance"),
-			CI_JENKINS_NODE_MAINTENANCE("Jenkins Node Maintenance"),
-			OTHER("Other"),
+			MAINTENANCE("Maintenance"), OTHER("Other"),
 			PORTAL_MASTER_PULLREQUEST("liferay-portal/master PR's"),
 			PORTAL_MASTER_UPSTREAM("liferay-portal/master Upstream"),
 			PORTAL_OTHER("liferay-portal-ee PR's & Upstream"),

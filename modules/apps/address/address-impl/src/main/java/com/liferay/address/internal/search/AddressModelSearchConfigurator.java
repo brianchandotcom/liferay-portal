@@ -5,7 +5,6 @@
 
 package com.liferay.address.internal.search;
 
-import com.liferay.address.internal.search.spi.model.index.contributor.AddressModelIndexerWriterContributor;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.AddressLocalService;
@@ -50,8 +49,8 @@ public class AddressModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor = new AddressModelIndexerWriterContributor(
-			_addressLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_addressLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

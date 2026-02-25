@@ -17,6 +17,6 @@ test('Check timeout toast has focus', {tag: '@LPD-79043'}, async ({page}) => {
 	await expect(page.getByText('Due to inactivity')).toBeVisible();
 
 	await expect(
-		page.locator('.lfr-tooltip-scope:has(#sessionToast)')
+		page.locator('#sessionToast').locator('.alert-autofit-row')
 	).toBeFocused();
 });

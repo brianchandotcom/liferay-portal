@@ -9,6 +9,11 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
 import com.liferay.object.admin.rest.dto.v1_0.util.ObjectDefinitionUtil;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
 import com.liferay.object.constants.ObjectPortletKeys;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.object.tree.Node;
+import com.liferay.object.tree.ObjectDefinitionTreeFactory;
+import com.liferay.object.tree.Tree;
 import com.liferay.object.web.internal.util.JSONObjectSanitizerUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -24,12 +29,13 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.portlet.ResourceRequest;
 import jakarta.portlet.ResourceResponse;
 
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,20 +78,30 @@ public class ExportBoundObjectDefinitionsMVCResourceCommand
 		ObjectDefinition rootObjectDefinition =
 			objectDefinitionResource.getObjectDefinition(objectDefinitionId);
 
-		Page<ObjectDefinition> page =
-			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null,
-				objectDefinitionResource.toFilter(
-					StringBundler.concat(
-						"rootObjectDefinitionExternalReferenceCode eq '",
-						rootObjectDefinition.getExternalReferenceCode(), "'")),
-				null, null);
+		ObjectDefinitionTreeFactory objectDefinitionTreeFactory =
+			new ObjectDefinitionTreeFactory(
+				_objectDefinitionLocalService, _objectRelationshipLocalService);
 
-		Collection<ObjectDefinition> objectDefinitions = page.getItems();
+		Tree tree = objectDefinitionTreeFactory.create(
+			rootObjectDefinition.getId());
+
+		Iterator<Node> iterator = tree.iterator();
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
+		Set<Long> objectDefinitionIds = new HashSet<>();
+
+		while (iterator.hasNext()) {
+			Node node = iterator.next();
+
+			if (!objectDefinitionIds.add(node.getPrimaryKey())) {
+				continue;
+			}
+
+			ObjectDefinition objectDefinition =
+				objectDefinitionResource.getObjectDefinition(
+					node.getPrimaryKey());
+
 			ObjectDefinitionUtil.prepareObjectDefinitionForExport(
 				_jsonFactory, objectDefinition);
 
@@ -122,6 +138,12 @@ public class ExportBoundObjectDefinitionsMVCResourceCommand
 	private JSONFactory _jsonFactory;
 
 	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
 	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
+
+	@Reference
+	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 }

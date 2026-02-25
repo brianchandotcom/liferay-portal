@@ -637,6 +637,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			ModelResourcePermissionUtil.check(
 				_objectEntryFolderModelResourcePermission, permissionChecker,
 				groupId, objectEntryFolderId, ActionKeys.ADD_ENTRY);
+
+			return;
 		}
 
 		ObjectEntry rootObjectEntry = _getRootObjectEntry(

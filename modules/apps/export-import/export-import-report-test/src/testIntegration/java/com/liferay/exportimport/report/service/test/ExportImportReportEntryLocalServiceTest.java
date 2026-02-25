@@ -260,6 +260,79 @@ public class ExportImportReportEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testGetOrAddErrorExportImportReportEntry() throws Exception {
+		int count =
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount();
+
+		long groupId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
+		String classExternalReferenceCode = RandomTestUtil.randomString();
+		long classNameId = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
+		long exportImportConfigurationId = RandomTestUtil.randomLong();
+		String errorMessage = RandomTestUtil.randomString();
+		String errorStackTrace = RandomTestUtil.randomString();
+		String modelNameLanguageKey = RandomTestUtil.randomString();
+
+		ExportImportReportEntry exportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddErrorExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					classPK, exportImportConfigurationId, errorMessage,
+					errorStackTrace, modelNameLanguageKey);
+
+		Assert.assertEquals(groupId, exportImportReportEntry.getGroupId());
+		Assert.assertEquals(companyId, exportImportReportEntry.getCompanyId());
+		Assert.assertEquals(
+			classExternalReferenceCode,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			classNameId, exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(classPK, exportImportReportEntry.getClassPK());
+		Assert.assertEquals(
+			exportImportConfigurationId,
+			exportImportReportEntry.getExportImportConfigurationId());
+		Assert.assertEquals(
+			errorMessage, exportImportReportEntry.getErrorMessage());
+		Assert.assertEquals(
+			errorStackTrace, exportImportReportEntry.getErrorStacktrace());
+		Assert.assertEquals(
+			modelNameLanguageKey,
+			exportImportReportEntry.getModelNameLanguageKey());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.ORIGIN_STAGING,
+			exportImportReportEntry.getOrigin());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_ERROR,
+			exportImportReportEntry.getType());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.STATUS_UNRESOLVED,
+			exportImportReportEntry.getStatus());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+
+		ExportImportReportEntry getExportImportReportEntry =
+			_exportImportReportEntryLocalService.
+				getOrAddErrorExportImportReportEntry(
+					groupId, companyId, classExternalReferenceCode, classNameId,
+					classPK, exportImportConfigurationId, errorMessage,
+					errorStackTrace, modelNameLanguageKey);
+
+		Assert.assertEquals(
+			exportImportReportEntry.getExportImportReportEntryId(),
+			getExportImportReportEntry.getExportImportReportEntryId());
+
+		Assert.assertEquals(
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
+	}
+
+	@Test
 	public void testResolveEmptyExportImportReportEntries() throws Exception {
 		String classExternalReferenceCode = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();

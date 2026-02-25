@@ -45,6 +45,8 @@ definition {
 
 		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
 
+		SelectFrameTop();
+
 		AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(
 			key_certificateUsage = ${certificateUsage},
 			locator1 = "CPSAMLAdmin#DOWNLOAD_CERTIFICATE");
@@ -186,6 +188,10 @@ definition {
 		Click(locator1 = "CPSAMLAdmin#CERTIFICATE_AND_PRIVATE_KEY_KEYSTORE_ALIAS_RADIO");
 
 		Button.clickImport();
+
+		WaitForElementNotPresent(locator1 = "IFrame#MODAL_BODY");
+
+		SelectFrameTop();
 
 		if (${certificateUsage} == "SIGNING") {
 			AssertElementPresent.assertElementPresentNoWaitForSPAReFresh(

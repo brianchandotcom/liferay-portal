@@ -19,9 +19,11 @@ import Body from './CompletionVelocityCardBody.es';
 
 const getDefaultStartDate = () => {
 	const date = new Date();
+
 	date.setDate(date.getDate() - 30);
 
 	let newDate = date.toISOString();
+
 	newDate = newDate.split('.')[0] + 'Z';
 
 	return newDate;
@@ -31,6 +33,7 @@ const getDefaultEndDate = () => {
 	const date = new Date();
 
 	let newDate = date.toISOString();
+	
 	newDate = newDate.split('.')[0] + 'Z';
 
 	return newDate;

@@ -60,7 +60,7 @@ import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -278,7 +278,7 @@ public class DDMFormFieldTemplateContextFactory {
 		Map<String, List<DDMFormFieldValue>> nestedDDMFormFieldValuesMap =
 			parentDDMFormFieldValue.getNestedDDMFormFieldValuesMap();
 
-		Set<String> ddmFormFieldValueNames = new HashSet<>();
+		Set<String> ddmFormFieldValueNames = new LinkedHashSet<>();
 
 		for (DDMFormFieldValue ddmFormFieldValue :
 				parentDDMFormFieldValue.getNestedDDMFormFieldValues()) {

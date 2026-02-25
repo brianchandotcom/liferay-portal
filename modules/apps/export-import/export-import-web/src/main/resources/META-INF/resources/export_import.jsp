@@ -8,6 +8,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+Group group = themeDisplay.getScopeGroup();
+
 String tabs2 = ParamUtil.getString(request, "tabs2", "export");
 
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
@@ -60,7 +62,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			/>
 		</c:if>
 
-		<div class="portlet-export-import-container" id="<portlet:namespace />exportImportPortletContainer">
+		<div class="portlet-export-import-container <%= group.isCMS() ? "site-cms-export-import-dialog" : "" %>" id="<portlet:namespace />exportImportPortletContainer">
 			<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />
 
 			<c:choose>

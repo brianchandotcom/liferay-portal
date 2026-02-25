@@ -5,7 +5,6 @@
 
 package com.liferay.account.internal.search;
 
-import com.liferay.account.internal.search.spi.model.index.contributor.AccountEntryModelIndexerWriterContributor;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,8 @@ public class AccountEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new AccountEntryModelIndexerWriterContributor(
-				_accountEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_accountEntryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

@@ -5,7 +5,6 @@
 
 package com.liferay.account.internal.search;
 
-import com.liferay.account.internal.search.spi.model.index.contributor.AccountRoleModelIndexerWriterContributor;
 import com.liferay.account.model.AccountRole;
 import com.liferay.account.service.AccountRoleLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,9 +49,8 @@ public class AccountRoleModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new AccountRoleModelIndexerWriterContributor(
-				_accountRoleLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_accountRoleLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

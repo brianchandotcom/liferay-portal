@@ -5,7 +5,6 @@
 
 package com.liferay.account.internal.search;
 
-import com.liferay.account.internal.search.spi.model.index.contributor.AccountGroupModelIndexerWriterContributor;
 import com.liferay.account.internal.search.spi.model.result.contributor.AccountGroupModelSummaryContributor;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
@@ -57,9 +56,8 @@ public class AccountGroupModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new AccountGroupModelIndexerWriterContributor(
-				_accountGroupLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_accountGroupLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

@@ -70,7 +70,7 @@ public class SanitizeLanguageTopLevelBuild
 		PullRequest pullRequest = getPullRequest();
 
 		Workspace workspace = WorkspaceFactory.newWorkspace(
-			"liferay-portal", getParameterValue("UPSTREAM_BRANCH_NAME"),
+			"liferay-portal", getParameterValue("GITHUB_UPSTREAM_BRANCH_NAME"),
 			"sanitize-language");
 
 		if (workspace instanceof PortalWorkspace) {
@@ -110,7 +110,7 @@ public class SanitizeLanguageTopLevelBuild
 	}
 
 	private String _getUpstreamBranchSHA() {
-		String upstreamBranchSHA = getParameterValue("UPSTREAM_BRANCH_SHA");
+		String upstreamBranchSHA = getParameterValue("GITHUB_UPSTREAM_BRANCH_SHA");
 
 		if (JenkinsResultsParserUtil.isSHA(upstreamBranchSHA)) {
 			return upstreamBranchSHA;

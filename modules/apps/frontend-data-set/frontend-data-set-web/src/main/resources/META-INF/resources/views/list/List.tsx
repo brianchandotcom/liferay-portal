@@ -196,7 +196,6 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							itemId={itemId}
 							items={items}
 							onItemSelectionChange={onItemSelectionChange}
-							schema={schema}
 						/>
 					</ClayList.ItemField>
 				)}

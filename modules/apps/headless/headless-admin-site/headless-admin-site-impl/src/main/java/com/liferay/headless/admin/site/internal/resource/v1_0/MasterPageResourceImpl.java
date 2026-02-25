@@ -379,9 +379,9 @@ public class MasterPageResourceImpl
 				masterPage::getPageSpecifications);
 		}
 
-		if (masterPage.getTaxonomyCategoryItemExternalReferences() != null) {
-			existingMasterPage.setTaxonomyCategoryItemExternalReferences(
-				masterPage::getTaxonomyCategoryItemExternalReferences);
+		if (masterPage.getTaxonomyCategoryBriefs() != null) {
+			existingMasterPage.setTaxonomyCategoryBriefs(
+				masterPage::getTaxonomyCategoryBriefs);
 		}
 
 		if (masterPage.getThumbnailURLReference() != null) {
@@ -455,7 +455,7 @@ public class MasterPageResourceImpl
 		throws Exception {
 
 		return ServiceContextUtil.createServiceContext(
-			masterPage.getTaxonomyCategoryItemExternalReferences(),
+			masterPage.getTaxonomyCategoryBriefs(),
 			contextCompany.getCompanyId(), masterPage.getDateCreated(), groupId,
 			contextHttpServletRequest, masterPage.getKeywords(),
 			masterPage.getDateModified(), contextUser.getUserId(),

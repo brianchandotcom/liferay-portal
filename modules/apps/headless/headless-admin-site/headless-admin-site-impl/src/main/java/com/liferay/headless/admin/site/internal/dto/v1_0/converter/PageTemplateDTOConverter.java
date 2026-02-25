@@ -116,8 +116,8 @@ public class PageTemplateDTOConverter
 							setType(Type.CONTENT_PAGE_TEMPLATE_SETTINGS);
 						}
 					});
-				setTaxonomyCategoryItemExternalReferences(
-					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
+				setTaxonomyCategoryBriefs(
+					() -> AssetUtil.getTaxonomyCategoryBriefs(
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
@@ -217,8 +217,8 @@ public class PageTemplateDTOConverter
 						dtoConverterContext, layoutPageTemplateEntry));
 				setPageTemplateSettings(
 					() -> _getWidgetPageTemplateSettings(layout));
-				setTaxonomyCategoryItemExternalReferences(
-					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
+				setTaxonomyCategoryBriefs(
+					() -> AssetUtil.getTaxonomyCategoryBriefs(
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));

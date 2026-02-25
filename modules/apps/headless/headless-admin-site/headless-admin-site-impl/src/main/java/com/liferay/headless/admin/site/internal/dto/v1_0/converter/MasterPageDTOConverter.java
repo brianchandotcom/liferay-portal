@@ -75,8 +75,8 @@ public class MasterPageDTOConverter
 						layoutPageTemplateEntry.getPlid()));
 				setMarkedAsDefault(layoutPageTemplateEntry::isDefaultTemplate);
 				setName(layoutPageTemplateEntry::getName);
-				setTaxonomyCategoryItemExternalReferences(
-					() -> AssetUtil.getTaxonomyCategoryItemExternalReferences(
+				setTaxonomyCategoryBriefs(
+					() -> AssetUtil.getTaxonomyCategoryBriefs(
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));

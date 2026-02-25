@@ -9,10 +9,10 @@ import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchClientResolver;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.query.ElasticsearchQueryVisitor;
 import com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.ccr.ElasticsearchCCRRequestExecutor;
@@ -159,7 +159,7 @@ public class ElasticsearchSearchEngineAdapterImpl
 			}
 
 			ExecutorService executorService =
-				SystemExecutorServiceUtil.getExecutorService();
+				SearchEngineHelperUtil.getDocumentsConsumerExecutorService();
 
 			BulkDocumentRequest transferCopyBulkDocumentRequest =
 				bulkDocumentRequest.transferCopy();

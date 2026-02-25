@@ -7,10 +7,26 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.module.service.Snapshot;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author Michael C. Han
  */
 public class SearchEngineHelperUtil {
+
+	public static ExecutorService getDocumentsConsumerExecutorService() {
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		return searchEngineHelper.getDocumentsConsumerExecutorService();
+	}
+
+	public static ExecutorService getDocumentsProducerExecutorService() {
+		SearchEngineHelper searchEngineHelper =
+			_searchEngineHelperSnapshot.get();
+
+		return searchEngineHelper.getDocumentsProducerExecutorService();
+	}
 
 	public static String[] getEntryClassNames() {
 		SearchEngineHelper searchEngineHelper =

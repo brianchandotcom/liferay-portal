@@ -24,9 +24,24 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface SearchEngineHelperConfiguration {
 
 	@Meta.AD(
+		deflt = "-1", name = "documents-consumer-max-pool-size",
+		required = false
+	)
+	public int documentsConsumerMaxPoolSize();
+
+	@Meta.AD(
+		deflt = "-1", name = "documents-producer-max-pool-size",
+		required = false
+	)
+	public int documentsProducerMaxPoolSize();
+
+	@Meta.AD(
 		deflt = "com.liferay.asset.kernel.model.AssetCategory|com.liferay.asset.kernel.model.AssetEntry|com.liferay.asset.kernel.model.AssetVocabulary|com.liferay.calendar.model.Calendar|com.liferay.configuration.admin.web.model.ConfigurationModel|com.liferay.document.library.kernel.model.DLFileEntryMetadata|com.liferay.exportimport.kernel.model.ExportImportConfiguration|com.liferay.message.boards.model.MBThread|com.liferay.portal.kernel.model.Contact|com.liferay.portal.kernel.model.Organization|com.liferay.portal.kernel.model.UserGroup|com.liferay.portal.kernel.plugin.PluginPackage|com.liferay.trash.model.TrashEntry|com.liferay.wiki.model.WikiNode",
 		name = "excluded-entry-class-names", required = false
 	)
 	public String[] excludedEntryClassNames();
+
+	@Meta.AD(deflt = "60000", name = "shutdown-timeout", required = false)
+	public long shutdownTimeout();
 
 }

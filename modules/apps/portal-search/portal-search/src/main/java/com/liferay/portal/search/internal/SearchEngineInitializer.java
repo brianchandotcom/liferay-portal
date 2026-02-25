@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.internal;
 
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
@@ -42,15 +41,14 @@ public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
 		long companyId, ConcurrentReindexManager concurrentReindexManager,
-		String executionMode, List<Indexer<?>> indexers,
-		PortalExecutorManager portalExecutorManager,
-		SyncReindexManager syncReindexManager) {
+		String executionMode, ExecutorService executorService,
+		List<Indexer<?>> indexers, SyncReindexManager syncReindexManager) {
 
 		_companyId = companyId;
 		_concurrentReindexManager = concurrentReindexManager;
 		_executionMode = executionMode;
+		_executorService = executorService;
 		_indexers = indexers;
-		_portalExecutorManager = portalExecutorManager;
 		_syncReindexManager = syncReindexManager;
 	}
 
@@ -189,10 +187,6 @@ public class SearchEngineInitializer implements Runnable {
 				}
 			}
 			else {
-				ExecutorService executorService =
-					_portalExecutorManager.getPortalExecutor(
-						SearchEngineInitializer.class.getName());
-
 				long backgroundTaskId =
 					BackgroundTaskThreadLocal.getBackgroundTaskId();
 				List<FutureTask<Void>> futureTasks = new ArrayList<>();
@@ -224,7 +218,7 @@ public class SearchEngineInitializer implements Runnable {
 
 						});
 
-					executorService.submit(futureTask);
+					_executorService.submit(futureTask);
 
 					futureTasks.add(futureTask);
 				}
@@ -270,9 +264,9 @@ public class SearchEngineInitializer implements Runnable {
 	private final long _companyId;
 	private final ConcurrentReindexManager _concurrentReindexManager;
 	private final String _executionMode;
+	private final ExecutorService _executorService;
 	private boolean _finished;
 	private final List<Indexer<?>> _indexers;
-	private final PortalExecutorManager _portalExecutorManager;
 	private final SyncReindexManager _syncReindexManager;
 
 }

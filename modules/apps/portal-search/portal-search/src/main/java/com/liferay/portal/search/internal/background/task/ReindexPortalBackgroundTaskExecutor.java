@@ -7,7 +7,6 @@ package com.liferay.portal.search.internal.background.task;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
@@ -17,6 +16,7 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
 import com.liferay.portal.kernel.search.background.task.ReindexBackgroundTaskConstants;
 import com.liferay.portal.kernel.search.background.task.ReindexStatusMessageSenderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,8 +70,7 @@ public class ReindexPortalBackgroundTaskExecutor
 		throws Exception {
 
 		ExecutorService executorService =
-			_portalExecutorManager.getPortalExecutor(
-				ReindexPortalBackgroundTaskExecutor.class.getName());
+			_searchEngineHelper.getDocumentsProducerExecutorService();
 
 		List<Future<?>> futures = new ArrayList<>();
 
@@ -102,8 +101,8 @@ public class ReindexPortalBackgroundTaskExecutor
 											companyId,
 											_concurrentReindexManagerSnapshot.
 												get(),
-											executionMode, indexers,
-											_portalExecutorManager,
+											executionMode, executorService,
+											indexers,
 											_syncReindexManagerSnapshot.get());
 
 								searchEngineInitializer.reindex();
@@ -150,7 +149,7 @@ public class ReindexPortalBackgroundTaskExecutor
 			null, true);
 
 	@Reference
-	private PortalExecutorManager _portalExecutorManager;
+	private SearchEngineHelper _searchEngineHelper;
 
 	private ServiceTrackerMap<Boolean, List<Indexer<?>>> _serviceTrackerMap;
 

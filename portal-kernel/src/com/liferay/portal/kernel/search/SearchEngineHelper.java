@@ -5,10 +5,16 @@
 
 package com.liferay.portal.kernel.search;
 
+import java.util.concurrent.ExecutorService;
+
 /**
  * @author Michael C. Han
  */
 public interface SearchEngineHelper {
+
+	public ExecutorService getDocumentsConsumerExecutorService();
+
+	public ExecutorService getDocumentsProducerExecutorService();
 
 	public String[] getEntryClassNames();
 

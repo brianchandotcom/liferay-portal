@@ -85,7 +85,7 @@ String myWorkflowTasksPortletNamespace = PortalUtil.getPortletNamespace(PortletK
 
 					<c:if test="<%= Validator.isNotNull(externalReferenceCode) || Validator.isNotNull(externalReferenceCodeEditURL) %>">
 						<div class="align-items-center c-mt-n2 d-flex py-1">
-							<span class="header-info-title text-black-50">
+							<span class="header-info-title text-secondary">
 								<liferay-ui:message key="erc" />
 							</span>
 

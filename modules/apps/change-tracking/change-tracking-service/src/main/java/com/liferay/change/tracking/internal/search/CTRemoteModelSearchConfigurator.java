@@ -5,7 +5,6 @@
 
 package com.liferay.change.tracking.internal.search;
 
-import com.liferay.change.tracking.internal.search.spi.model.index.contributor.CTRemoteModelIndexerWriterContributor;
 import com.liferay.change.tracking.model.CTRemote;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -50,8 +49,8 @@ public class CTRemoteModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CTRemoteModelIndexerWriterContributor(_ctRemoteLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_ctRemoteLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

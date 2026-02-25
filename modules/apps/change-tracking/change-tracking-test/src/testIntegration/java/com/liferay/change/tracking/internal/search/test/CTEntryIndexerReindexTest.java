@@ -85,8 +85,8 @@ public class CTEntryIndexerReindexTest {
 		}
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.change.tracking.internal.search.spi.model.index." +
-					"contributor.CTEntryModelIndexerWriterContributor",
+				"com.liferay.change.tracking.internal.search." +
+					"CTEntryModelSearchConfigurator",
 				LoggerTestUtil.DEBUG)) {
 
 			_indexWriterHelper.reindex(

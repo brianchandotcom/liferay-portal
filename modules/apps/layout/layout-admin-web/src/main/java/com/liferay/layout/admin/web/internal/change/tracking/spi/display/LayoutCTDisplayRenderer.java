@@ -153,34 +153,25 @@ public class LayoutCTDisplayRenderer extends BaseCTDisplayRenderer<Layout> {
 			previewLayout = layout.fetchDraftLayout();
 		}
 
-		String url = HttpComponentsUtil.addParameter(
-			themeDisplay.getPathMain() + "/portal/update_language", "p_l_id",
-			previewLayout.getPlid());
+		String languageId = LocaleUtil.toLanguageId(displayContext.getLocale());
 
-		String redirect = HttpComponentsUtil.addParameter(
-			_portal.getLayoutFriendlyURL(previewLayout, themeDisplay),
-			"p_l_mode", "preview");
-
-		redirect = HttpComponentsUtil.addParameter(
-			redirect, "previewCTCollectionId", layout.getCtCollectionId());
+		String url = HttpComponentsUtil.addParameters(
+			themeDisplay.getPathMain() + "/portal/get_page_preview",
+			"languageId", languageId, "p_l_mode", Constants.PREVIEW,
+			"p_p_state", "undefined", "previewCTCollectionId",
+			layout.getCtCollectionId());
 
 		long segmentsExperienceId = ParamUtil.getLong(
 			httpServletRequest, "segmentsExperienceId");
 
 		if (segmentsExperienceId > 0) {
-			redirect = HttpComponentsUtil.addParameter(
-				redirect, "segmentsExperienceId", segmentsExperienceId);
+			url = HttpComponentsUtil.addParameter(
+				url, "segmentsExperienceId", segmentsExperienceId);
 		}
 
-		url = HttpComponentsUtil.addParameter(url, "redirect", redirect);
-
-		String languageId = LocaleUtil.toLanguageId(displayContext.getLocale());
-
-		url = HttpComponentsUtil.addParameter(url, "languageId", languageId);
-
-		url = HttpComponentsUtil.addParameter(url, "persistState", "false");
 		url = HttpComponentsUtil.addParameter(
-			url, "previewCTCollectionId", layout.getCtCollectionId());
+			url, "selPlid", previewLayout.getPlid());
+
 		url = HttpComponentsUtil.addParameter(
 			url, "showUserLocaleOptionsMessage", "false");
 

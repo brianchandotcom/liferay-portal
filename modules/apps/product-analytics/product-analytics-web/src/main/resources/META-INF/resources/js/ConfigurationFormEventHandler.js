@@ -15,15 +15,22 @@ export default function ({namespace}) {
 				`input[type='number'][name='${namespace}consentRenewalPeriod']`
 			);
 
+			const consentRenewalPeriodLabel = document.querySelector(
+				`label[for='${namespace}consentRenewalPeriod']`
+			);
+
 			if (event.delegateTarget.id === `${namespace}enabled`) {
 				if (event.delegateTarget.checked) {
+					consentRenewalPeriod.classList.remove('disabled');
 					consentRenewalPeriod.removeAttribute('disabled');
 					consentRenewalPeriod.required = true;
+					consentRenewalPeriodLabel?.classList.remove('disabled');
 				}
 				else {
+					consentRenewalPeriod.classList.add('disabled');
 					consentRenewalPeriod.required = false;
 					consentRenewalPeriod.setAttribute('disabled', '');
-					consentRenewalPeriod.value = 12;
+					consentRenewalPeriodLabel?.classList.add('disabled');
 				}
 			}
 		}

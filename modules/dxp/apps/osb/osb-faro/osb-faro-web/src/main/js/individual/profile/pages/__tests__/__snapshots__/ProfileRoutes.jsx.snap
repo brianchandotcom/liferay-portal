@@ -177,33 +177,7 @@ exports[`IndividualProfileRoutes should render 1`] = `
     >
       <span
         class="children-wrapper"
-      >
-        <div
-          class="mb-3"
-        >
-          <span
-            class="mr-2"
-          >
-            <span
-              class="text-4 text-secondary"
-            >
-              <svg
-                class="lexicon-icon lexicon-icon-analytics"
-                role="presentation"
-              >
-                <use
-                  href="#analytics"
-                />
-              </svg>
-            </span>
-          </span>
-          <span
-            class="text-4 text-secondary font-weight-semi-bold"
-          >
-            INTERACTION HISTORY
-          </span>
-        </div>
-      </span>
+      />
     </div>
   </div>
 </div>

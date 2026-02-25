@@ -9,6 +9,7 @@ import com.liferay.commerce.product.exception.CPOptionCategoryTitleException;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.BaseExceptionMapper;
 import com.liferay.portal.vulcan.jaxrs.exception.mapper.Problem;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.ExceptionMapper;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,9 @@ public class OptionCategoryTitleExceptionMapper
 	protected Problem getProblem(
 		CPOptionCategoryTitleException cpOptionCategoryTitleException) {
 
-		return new Problem(cpOptionCategoryTitleException);
+		return new Problem(
+			Response.Status.BAD_REQUEST,
+			"The Option Category Title is invalid");
 	}
 
 }

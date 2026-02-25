@@ -96,7 +96,7 @@ public class SpecificationResourceTest
 		};
 	}
 
-	protected Specification randomSpecificationWithRandomOptionCategory()
+	protected Specification randomSpecificationWithOptionCategory()
 		throws Exception {
 
 		return new Specification() {
@@ -197,7 +197,7 @@ public class SpecificationResourceTest
 		throws Exception {
 
 		Specification randomSpecification =
-			randomSpecificationWithRandomOptionCategory();
+			randomSpecificationWithOptionCategory();
 
 		Specification postSpecification =
 			specificationResource.postSpecification(randomSpecification);
@@ -207,11 +207,10 @@ public class SpecificationResourceTest
 
 		OptionCategory optionCategory = postSpecification.getOptionCategory();
 
-		Assert.assertNotNull(optionCategory);
 		Assert.assertEquals(
-			"External Reference Code",
 			optionCategory.getExternalReferenceCode(),
-			_cpOptionCategory.getExternalReferenceCode());
+			_cpOptionCategory.getExternalReferenceCode(),
+			optionCategory.getExternalReferenceCode());
 	}
 
 	@DeleteAfterTestRun

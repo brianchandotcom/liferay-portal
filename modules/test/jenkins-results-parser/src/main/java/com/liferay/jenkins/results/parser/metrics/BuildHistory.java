@@ -612,6 +612,10 @@ public class BuildHistory {
 			return value1;
 		}
 
+		if (value2 == 0L) {
+			return 0L;
+		}
+
 		return value1 / value2;
 	}
 

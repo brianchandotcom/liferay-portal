@@ -11,10 +11,6 @@ import com.liferay.jenkins.results.parser.ParallelExecutor;
 import java.io.File;
 import java.io.IOException;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -698,72 +694,54 @@ public class BuildHistoryProcessor {
 		implements Function<BuildJSONObject, String> {
 
 		public String apply(BuildJSONObject buildJSONObject) {
-			String jobName = buildJSONObject.getJobName();
+			String builtOn = buildJSONObject.getBuiltOn();
 
-			LocalDate localDate = LocalDate.parse(
-				buildJSONObject.getStartDateString(),
-				DateTimeFormatter.ofPattern("yyyyMMdd"));
-
-			DayOfWeek dayOfWeek = localDate.getDayOfWeek();
-
-			boolean weekday = false;
-
-			if (dayOfWeek.getValue() <= 5) {
-				weekday = true;
+			if (builtOn.isEmpty()) {
+				return Category.CI_JENKINS_MASTER_MAINTENANCE.toString();
 			}
+
+			String jobName = buildJSONObject.getJobName();
 
 			if (jobName.contains("maintenance") ||
 				jobName.contains("verification")) {
 
-				if (weekday) {
-					return Category.MAINTENANCE_AND_VERIFICATION_WEEKDAYS.
-						toString();
-				}
-
-				return Category.MAINTENANCE_AND_VERIFICATION_WEEKENDS.
-					toString();
+				return Category.CI_JENKINS_NODE_MAINTENANCE.toString();
 			}
 
-			if (jobName.contains("test-portal-acceptance-pullrequest")) {
-				if (weekday) {
-					return Category.PORTAL_PULLREQUEST_WEEKDAYS.toString();
-				}
-
-				return Category.PORTAL_PULLREQUEST_WEEKENDS.toString();
+			if (jobName.equals("test-portal-acceptance-pullrequest(master)")) {
+				return Category.PORTAL_MASTER_PULLREQUEST.toString();
 			}
 
-			if (jobName.contains("portal") &&
-				(jobName.contains("release") || jobName.contains("upstream"))) {
+			if (jobName.equals("test-portal-acceptance-upstream(master)") ||
+				jobName.equals("test-portal-acceptance-upstream-dxp(master)") ||
+				jobName.equals("test-portal-testsuite-upstream(master)")) {
 
-				if (weekday) {
-					return Category.PORTAL_RELEASE_AND_UPSTREAM_WEEKDAYS.
-						toString();
-				}
-
-				return Category.PORTAL_RELEASE_AND_UPSTREAM_WEEKENDS.toString();
+				return Category.PORTAL_MASTER_UPSTREAM.toString();
 			}
 
-			if (weekday) {
-				return Category.OTHER_WEEKDAYS.toString();
+			if (jobName.equals("test-portal-fixpack-release") ||
+				jobName.equals("test-portal-hotfix-release") ||
+				jobName.equals("test-portal-release")) {
+
+				return Category.PORTAL_RELEASE.toString();
 			}
 
-			return Category.OTHER_WEEKENDS.toString();
+			if (jobName.contains("test-portal-")) {
+				return Category.PORTAL_OTHER.toString();
+			}
+
+			return Category.OTHER.toString();
 		}
 
 		private enum Category {
 
-			MAINTENANCE_AND_VERIFICATION_WEEKDAYS(
-				"Maintenance & Verification (Weekdays)"),
-			MAINTENANCE_AND_VERIFICATION_WEEKENDS(
-				"Maintenance & Verification (Weekends)"),
-			OTHER_WEEKDAYS("Other (Weekdays)"),
-			OTHER_WEEKENDS("Other (Weekends)"),
-			PORTAL_PULLREQUEST_WEEKDAYS("Portal Pull Requests (Weekdays)"),
-			PORTAL_PULLREQUEST_WEEKENDS("Portal Pull Requests (Weekends)"),
-			PORTAL_RELEASE_AND_UPSTREAM_WEEKDAYS(
-				"Portal Release & Upstream (Weekdays)"),
-			PORTAL_RELEASE_AND_UPSTREAM_WEEKENDS(
-				"Portal Release & Upstream (Weekends)");
+			CI_JENKINS_MASTER_MAINTENANCE("Jenkins Master Maintenance"),
+			CI_JENKINS_NODE_MAINTENANCE("Jenkins Node Maintenance"),
+			OTHER("Other"),
+			PORTAL_MASTER_PULLREQUEST("liferay-portal/master PR's"),
+			PORTAL_MASTER_UPSTREAM("liferay-portal/master Upstream"),
+			PORTAL_OTHER("liferay-portal-ee PR's & Upstream"),
+			PORTAL_RELEASE("Portal Release");
 
 			@Override
 			public String toString() {

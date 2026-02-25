@@ -106,30 +106,51 @@ public class ElasticsearchDocumentFactoryUtil {
 				return;
 			}
 
-			List<String> fieldValues = new ArrayList<>(values.length);
+			if (values.length == 1) {
+				String value = values[0];
 
-			for (String value : values) {
 				if (value == null) {
-					continue;
+					return;
 				}
 
-				fieldValues.add(value.trim());
+				value = value.trim();
+
+				_addLegacyField(field, name, translatedFields, value);
+
+				if (field.isSortable()) {
+					_addLegacyField(
+						field,
+						com.liferay.portal.kernel.search.Field.
+							getSortableFieldName(name),
+						translatedFields, value);
+				}
 			}
+			else {
+				List<String> fieldValues = new ArrayList<>(values.length);
 
-			if (fieldValues.isEmpty()) {
-				return;
-			}
+				for (String value : values) {
+					if (value == null) {
+						continue;
+					}
 
-			values = fieldValues.toArray(new String[0]);
+					fieldValues.add(value.trim());
+				}
 
-			_addLegacyField(field, name, translatedFields, values);
+				if (fieldValues.isEmpty()) {
+					return;
+				}
 
-			if (field.isSortable()) {
-				_addLegacyField(
-					field,
-					com.liferay.portal.kernel.search.Field.getSortableFieldName(
-						name),
-					translatedFields, values);
+				values = fieldValues.toArray(new String[0]);
+
+				_addLegacyField(field, name, translatedFields, values);
+
+				if (field.isSortable()) {
+					_addLegacyField(
+						field,
+						com.liferay.portal.kernel.search.Field.
+							getSortableFieldName(name),
+						translatedFields, values);
+				}
 			}
 		}
 		else {
@@ -172,6 +193,24 @@ public class ElasticsearchDocumentFactoryUtil {
 
 	private static void _addLegacyField(
 			com.liferay.portal.kernel.search.Field field, String fieldName,
+			Map<String, Object> translatedFields, String value)
+		throws IOException {
+
+		com.liferay.portal.kernel.search.geolocation.GeoLocationPoint
+			geoLocationPoint = field.getGeoLocationPoint();
+
+		if (geoLocationPoint == null) {
+			translatedFields.put(
+				fieldName, _translateLegacyValue(field, value));
+		}
+		else {
+			translatedFields.put(
+				fieldName, _translateGeoLocationPoint(geoLocationPoint));
+		}
+	}
+
+	private static void _addLegacyField(
+			com.liferay.portal.kernel.search.Field field, String fieldName,
 			Map<String, Object> translatedFields, String... values)
 		throws IOException {
 
@@ -184,7 +223,7 @@ public class ElasticsearchDocumentFactoryUtil {
 			fieldValues.add(_translateGeoLocationPoint(geoLocationPoint));
 		}
 		else if (field.isDate()) {
-			Collections.addAll(fieldValues, field.getValues());
+			Collections.addAll(fieldValues, values);
 		}
 		else {
 			for (String value : values) {

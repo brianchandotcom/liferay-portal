@@ -514,7 +514,8 @@ public class OAuthClientASLocalMetadataLocalServiceImpl
 			URL url = new URL(urlString);
 
 			if (!Http.HTTPS.equalsIgnoreCase(url.getProtocol())) {
-				throw new OAuthClientASLocalMetadataLocalWellKnownURIException();
+				throw new OAuthClientASLocalMetadataLocalWellKnownURIException(
+					urlString);
 			}
 		}
 		catch (MalformedURLException malformedURLException) {

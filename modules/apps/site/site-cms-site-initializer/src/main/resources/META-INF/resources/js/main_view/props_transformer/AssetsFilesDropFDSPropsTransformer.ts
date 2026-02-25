@@ -46,5 +46,6 @@ export default function AssetsFilesDropFDSPropsTransformer({
 				fileDropAction(additionalProps, droppedFiles, dropTarget),
 		},
 		hideManagementBarInEmptyState: true,
+		snapshotsEnabled: true,
 	};
 }

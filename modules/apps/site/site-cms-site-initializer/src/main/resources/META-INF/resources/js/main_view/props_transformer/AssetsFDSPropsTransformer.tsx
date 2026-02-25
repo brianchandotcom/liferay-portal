@@ -592,6 +592,7 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 		},
+		snapshotsEnabled: true,
 		views: transformViewsItemsProps({
 			fileMimeTypeCssClasses: additionalProps.fileMimeTypeCssClasses,
 			fileMimeTypeIcons: additionalProps.fileMimeTypeIcons,

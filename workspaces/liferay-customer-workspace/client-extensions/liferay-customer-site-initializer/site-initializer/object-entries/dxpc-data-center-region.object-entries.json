@@ -7,28 +7,28 @@
 		},
 		{
 			"externalReferenceCode": "CP_REGION_02",
+			"name": "Delhi, India",
+			"value": "Delhi, India"
+		},
+		{
+			"externalReferenceCode": "CP_REGION_03",
 			"name": "Doha, Qatar",
 			"value": "Doha, Qatar"
 		},
 		{
-			"externalReferenceCode": "CP_REGION_03",
+			"externalReferenceCode": "CP_REGION_04",
 			"name": "Frankfurt, Germany",
 			"value": "Frankfurt, Germany"
 		},
 		{
-			"externalReferenceCode": "CP_REGION_04",
+			"externalReferenceCode": "CP_REGION_05",
 			"name": "Hamina, Finland",
 			"value": "Hamina, Finland"
 		},
 		{
-			"externalReferenceCode": "CP_REGION_05",
+			"externalReferenceCode": "CP_REGION_06",
 			"name": "Iowa, USA",
 			"value": "Iowa, USA"
-		},
-		{
-			"externalReferenceCode": "CP_REGION_06",
-			"name": "Jurong West, Singapore",
-			"value": "Jurong West, Singapore"
 		},
 		{
 			"externalReferenceCode": "CP_REGION_07",

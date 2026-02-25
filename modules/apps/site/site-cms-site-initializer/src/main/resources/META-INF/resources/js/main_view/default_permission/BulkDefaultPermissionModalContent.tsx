@@ -16,6 +16,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
 import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
+import {openActionNotAllowedModal} from '../../common/utils/openActionNotAllowedModal';
 import {openCMSModal} from '../../common/utils/openCMSModal';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
@@ -67,22 +68,7 @@ export function defaultPermissionsBulkAction({
 				(item: any) => item.entryClassName !== className
 			))
 	) {
-		return openCMSModal({
-			bodyHTML: Liferay.Language.get(
-				'this-action-is-not-available-for-the-item-you-have-selected'
-			),
-			buttons: [
-				{
-					autoFocus: true,
-					displayType: 'warning',
-					label: Liferay.Language.get('ok'),
-					type: 'cancel',
-				},
-			],
-			center: true,
-			status: 'warning',
-			title: Liferay.Language.get('action-not-allowed'),
-		});
+		return openActionNotAllowedModal();
 	}
 
 	return openCMSModal({

@@ -29,7 +29,9 @@
 			<a class="${nav_item_css_class}" href="${nav_item_href!""}" ${navItem.getTarget()}>
 				<div class="main-link__icon">
 					<#if nav_item_layout.iconImageId != 0>
-						<@liferay_theme["layout-icon"] layout=nav_item_layout />
+						<span aria-hidden="true">
+		   					<@liferay_theme["layout-icon"] layout=nav_item_layout />
+	   					</span>
 					</#if>
 				</div>
 

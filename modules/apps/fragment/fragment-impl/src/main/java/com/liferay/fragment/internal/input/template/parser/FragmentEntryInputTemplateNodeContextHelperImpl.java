@@ -814,6 +814,26 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		return null;
 	}
 
+	private InfoFieldValue<?> _getInfoFieldValue(
+		List<InfoFieldValue<Object>> infoFieldValues) {
+
+		if (ListUtil.isEmpty(infoFieldValues)) {
+			return null;
+		}
+
+		for (InfoFieldValue<Object> infoFieldValue : infoFieldValues) {
+			InfoField infoField = infoFieldValue.getInfoField();
+
+			String uniqueId = infoField.getUniqueId();
+
+			if (!uniqueId.contains(StringPool.POUND)) {
+				return infoFieldValue;
+			}
+		}
+
+		return null;
+	}
+
 	private Object _getInfoParameterMapValue(
 		InfoField infoField, Map<String, String> infoFormParameterMap,
 		HttpServletRequest httpServletRequest) {
@@ -1068,8 +1088,10 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			infoItemFieldValues.getInfoFieldValue(infoField.getUniqueId());
 
 		if (infoFieldValue == null) {
-			infoFieldValue = infoItemFieldValues.getInfoFieldValue(
-				infoField.getName());
+			infoFieldValue = _getInfoFieldValue(
+				new ArrayList<>(
+					infoItemFieldValues.getInfoFieldValues(
+						infoField.getName())));
 		}
 
 		if (infoFieldValue == null) {

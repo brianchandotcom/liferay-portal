@@ -6,8 +6,6 @@
 package com.liferay.digital.sales.room.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.digital.sales.room.test.util.DigitalSalesRoomTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.exception.NoSuchTicketException;
@@ -42,6 +40,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -99,8 +99,7 @@ public class InviteMemberMVCActionCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
 				"emailAddress", emailAddress
 			).put(
@@ -157,7 +156,7 @@ public class InviteMemberMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.PORTLET_ID,
-			DigitalSalesRoomPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER);
+			DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER);
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

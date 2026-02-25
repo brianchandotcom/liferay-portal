@@ -5,8 +5,8 @@
 
 package com.liferay.digital.sales.room.web.internal.portlet;
 
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
 
 import jakarta.portlet.Portlet;
 
@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 		"jakarta.portlet.expiration-cache=0",
 		"jakarta.portlet.init-param.template-path=/META-INF/resources/",
 		"jakarta.portlet.init-param.view-template=/room/invite_member.jsp",
-		"jakarta.portlet.name=" + DigitalSalesRoomPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER,
+		"jakarta.portlet.name=" + DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER,
 		"jakarta.portlet.resource-bundle=content.Language",
 		"jakarta.portlet.security-role-ref=guest,power-user,user",
 		"jakarta.portlet.version=4.0"

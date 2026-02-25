@@ -6,8 +6,6 @@
 package com.liferay.digital.sales.room.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.digital.sales.room.test.util.DigitalSalesRoomTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.login.web.constants.LoginPortletKeys;
@@ -36,6 +34,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -106,8 +106,7 @@ public class InviteMemberMVCRenderCommandTest {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
 				"emailAddress", RandomTestUtil.randomString() + "@liferay.com"
 			).toString(),
@@ -138,8 +137,7 @@ public class InviteMemberMVCRenderCommandTest {
 
 		ticket = _ticketLocalService.addTicket(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			group.getGroupId(),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER,
+			group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
 				"emailAddress", user.getEmailAddress()
 			).toString(),
@@ -209,14 +207,12 @@ public class InviteMemberMVCRenderCommandTest {
 				@Override
 				public Portlet getPortlet() {
 					return _portletLocalService.getPortletById(
-						DigitalSalesRoomPortletKeys.
-							DIGITAL_SALES_ROOM_INVITE_MEMBER);
+						DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER);
 				}
 
 				@Override
 				public String getPortletName() {
-					return DigitalSalesRoomPortletKeys.
-						DIGITAL_SALES_ROOM_INVITE_MEMBER;
+					return DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER;
 				}
 
 				{

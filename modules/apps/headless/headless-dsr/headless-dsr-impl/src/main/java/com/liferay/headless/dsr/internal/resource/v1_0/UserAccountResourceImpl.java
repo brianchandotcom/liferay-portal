@@ -5,8 +5,6 @@
 
 package com.liferay.headless.dsr.internal.resource.v1_0;
 
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.headless.dsr.dto.v1_0.UserAccount;
 import com.liferay.headless.dsr.internal.dto.v1_0.converter.UserAccountDTOConverterContext;
 import com.liferay.headless.dsr.resource.v1_0.UserAccountResource;
@@ -49,6 +47,8 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import jakarta.portlet.PortletMode;
 import jakarta.portlet.PortletRequest;
@@ -222,7 +222,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 		Ticket ticket = _ticketLocalService.addTicket(
 			companyId, Group.class.getName(), group.getGroupId(),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER,
+			DSRTicketConstants.TYPE_INVITE_MEMBER,
 			JSONUtil.put(
 				"emailAddress", userAccount.getEmailAddress()
 			).put(
@@ -267,8 +267,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 						return PortletURLBuilder.create(
 							PortletURLFactoryUtil.create(
 								contextHttpServletRequest,
-								DigitalSalesRoomPortletKeys.
-									DIGITAL_SALES_ROOM_INVITE_MEMBER,
+								DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER,
 								_portal.getPlidFromPortletId(
 									group.getGroupId(), LoginPortletKeys.LOGIN),
 								PortletRequest.RENDER_PHASE)

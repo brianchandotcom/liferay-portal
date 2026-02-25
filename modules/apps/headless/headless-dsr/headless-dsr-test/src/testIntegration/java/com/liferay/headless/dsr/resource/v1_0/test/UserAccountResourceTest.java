@@ -6,7 +6,6 @@
 package com.liferay.headless.dsr.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.headless.dsr.client.dto.v1_0.UserAccount;
 import com.liferay.notification.constants.NotificationConstants;
 import com.liferay.notification.constants.NotificationQueueEntryConstants;
@@ -36,6 +35,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 import com.liferay.site.dsr.site.initializer.test.util.DSRTestUtil;
 
 import java.io.Serializable;
@@ -162,8 +162,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		List<Ticket> tickets = _ticketLocalService.getTickets(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_getGroupId(_objectEntry),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER);
+			_getGroupId(_objectEntry), DSRTicketConstants.TYPE_INVITE_MEMBER);
 
 		Assert.assertEquals(tickets.toString(), 2, tickets.size());
 
@@ -219,8 +218,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 		tickets = _ticketLocalService.getTickets(
 			TestPropsValues.getCompanyId(), Group.class.getName(),
-			_getGroupId(_objectEntry),
-			DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER);
+			_getGroupId(_objectEntry), DSRTicketConstants.TYPE_INVITE_MEMBER);
 
 		Assert.assertEquals(tickets.toString(), 3, tickets.size());
 		Assert.assertTrue(

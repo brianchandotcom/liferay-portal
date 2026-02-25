@@ -5,8 +5,6 @@
 
 package com.liferay.digital.sales.room.web.internal.portlet.action;
 
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomPortletKeys;
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.digital.sales.room.web.internal.display.context.InviteMemberDisplayContext;
 import com.liferay.login.web.constants.LoginPortletKeys;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -29,6 +27,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRPortletKeys;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import jakarta.portlet.PortletException;
 import jakarta.portlet.PortletRequest;
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"jakarta.portlet.name=" + DigitalSalesRoomPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER,
+		"jakarta.portlet.name=" + DSRPortletKeys.DIGITAL_SALES_ROOM_INVITE_MEMBER,
 		"mvc.command.name=/digital_sales_room/invite_member",
 		"portlet.add.default.resource.check.whitelist.mvc.action=true"
 	},
@@ -152,8 +152,7 @@ public class InviteMemberMVCRenderCommand implements MVCRenderCommand {
 		Ticket ticket = _ticketLocalService.fetchTicket(ticketKey);
 
 		if ((ticket == null) ||
-			(ticket.getType() !=
-				DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER)) {
+			(ticket.getType() != DSRTicketConstants.TYPE_INVITE_MEMBER)) {
 
 			return null;
 		}

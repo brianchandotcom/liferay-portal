@@ -5,7 +5,6 @@
 
 package com.liferay.headless.dsr.internal.resource.v1_0;
 
-import com.liferay.digital.sales.room.constants.DigitalSalesRoomTicketConstants;
 import com.liferay.headless.dsr.dto.v1_0.InvitedMember;
 import com.liferay.headless.dsr.resource.v1_0.InvitedMemberResource;
 import com.liferay.object.model.ObjectEntry;
@@ -21,6 +20,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.site.dsr.site.initializer.constants.DSRTicketConstants;
 
 import java.io.Serializable;
 
@@ -78,8 +78,7 @@ public class InvitedMemberResourceImpl extends BaseInvitedMemberResourceImpl {
 			transform(
 				_ticketLocalService.getTickets(
 					group.getCompanyId(), Group.class.getName(),
-					group.getGroupId(),
-					DigitalSalesRoomTicketConstants.TYPE_INVITE_MEMBER),
+					group.getGroupId(), DSRTicketConstants.TYPE_INVITE_MEMBER),
 				this::_toInvitedMember));
 	}
 

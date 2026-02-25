@@ -21,12 +21,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Luan Maoski
  */
 public class MBThreadModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<MBThread> {
+	extends ModelIndexerWriterContributor<MBThread> {
 
 	public MBThreadModelIndexerWriterContributor(
 		MBThreadLocalService mbThreadLocalService) {
 
-		_mbThreadLocalService = mbThreadLocalService;
+		super(mbThreadLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -56,16 +56,7 @@ public class MBThreadModelIndexerWriterContributor
 			});
 	}
 
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _mbThreadLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadModelIndexerWriterContributor.class);
-
-	private final MBThreadLocalService _mbThreadLocalService;
 
 }

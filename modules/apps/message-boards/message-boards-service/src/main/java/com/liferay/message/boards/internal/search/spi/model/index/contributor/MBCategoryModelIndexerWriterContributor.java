@@ -22,12 +22,12 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Javier Gamarra
  */
 public class MBCategoryModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<MBCategory> {
+	extends ModelIndexerWriterContributor<MBCategory> {
 
 	public MBCategoryModelIndexerWriterContributor(
 		MBCategoryLocalService mbCategoryLocalService) {
 
-		_mbCategoryLocalService = mbCategoryLocalService;
+		super(mbCategoryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Override
@@ -62,13 +62,6 @@ public class MBCategoryModelIndexerWriterContributor
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _mbCategoryLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	@Override
 	public IndexerWriterMode getIndexerWriterMode(MBCategory mbCategory) {
 		int status = mbCategory.getStatus();
 
@@ -83,7 +76,5 @@ public class MBCategoryModelIndexerWriterContributor
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBCategoryModelIndexerWriterContributor.class);
-
-	private final MBCategoryLocalService _mbCategoryLocalService;
 
 }

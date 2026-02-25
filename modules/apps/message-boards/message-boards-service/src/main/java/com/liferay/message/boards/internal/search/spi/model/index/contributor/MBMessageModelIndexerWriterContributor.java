@@ -31,11 +31,13 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Luan Maoski
  */
 public class MBMessageModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<MBMessage> {
+	extends ModelIndexerWriterContributor<MBMessage> {
 
 	public MBMessageModelIndexerWriterContributor(
 		MBMessageLocalService mbMessageLocalService,
 		MBThreadLocalService mbThreadLocalService) {
+
+		super(mbMessageLocalService::getIndexableActionableDynamicQuery);
 
 		_mbMessageLocalService = mbMessageLocalService;
 		_mbThreadLocalService = mbThreadLocalService;
@@ -75,13 +77,6 @@ public class MBMessageModelIndexerWriterContributor
 				indexableActionableDynamicQuery.addDocument(
 					modelIndexerWriterDocumentHelper.getDocument(mbMessage));
 			});
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _mbMessageLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override

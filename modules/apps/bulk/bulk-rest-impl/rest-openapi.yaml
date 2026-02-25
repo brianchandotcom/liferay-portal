@@ -144,6 +144,9 @@ components:
         DeleteBulkAction:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
+                -   properties:
+                        className:
+                            type: string
         DocumentBulkSelection:
             properties:
                 documentIds:

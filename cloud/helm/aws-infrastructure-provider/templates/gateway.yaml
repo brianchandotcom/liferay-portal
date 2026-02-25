@@ -43,11 +43,9 @@ spec:
                 annotations:
                     service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: DeploymentName={{ .Values.deploymentName }}
                     service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
-                    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /ready
-                    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "19003"
-                    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: HTTP
+                    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: TCP
+                    service.beta.kubernetes.io/aws-load-balancer-manage-backend-security-group-rules: "false"
                     service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-                    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
                     service.beta.kubernetes.io/aws-load-balancer-scheme: {{ $loadBalancerScheme }}
                     service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
                     service.beta.kubernetes.io/aws-load-balancer-type: external

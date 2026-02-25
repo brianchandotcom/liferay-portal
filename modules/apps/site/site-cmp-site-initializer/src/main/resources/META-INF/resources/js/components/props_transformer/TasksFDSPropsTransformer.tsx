@@ -15,6 +15,7 @@ import {
 	SimpleActionLinkRenderer,
 	UpdateDueDateModalContent,
 	addOnClickToCreationMenuItems,
+	deleteAssetEntriesBulkAction,
 	deleteItemAction,
 } from '@liferay/site-cms-site-initializer';
 import {sub} from 'frontend-js-web';
@@ -27,7 +28,6 @@ import BulkEditDueDateModalContent from '../modal/BulkEditDueDateModalContent';
 import BulkEditStateModalContent from '../modal/BulkEditStateModalContent';
 import EditAssigneeModalContent from '../modal/EditAssigneeModalContent';
 import ACTIONS from './actions/creationMenuActions';
-import deleteBulkAction from './actions/deleteBulkAction';
 import {cmpTasksFDSAtom} from './atoms';
 import AssigneeRenderer from './cell_renderers/AssigneeRenderer';
 import KanbanView from './views/kanban_view/KanbanView';
@@ -387,9 +387,37 @@ export default function TasksFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				deleteBulkAction({
+				deleteAssetEntriesBulkAction({
 					apiURL: otherProps.apiURL,
 					dataSetId: id,
+					getCustomBulkDeleteMessage: (selectedData) => {
+						if (selectedData.selectAll) {
+							return {
+								confirmationMessage: Liferay.Language.get(
+									'delete-tasks-confirmation'
+								),
+								title: Liferay.Language.get('delete-all-tasks'),
+							};
+						}
+						else if (selectedData.items.length > 1) {
+							return {
+								confirmationMessage: Liferay.Language.get(
+									'delete-tasks-confirmation'
+								),
+								title: sub(
+									Liferay.Language.get('delete-x-tasks'),
+									[selectedData.items.length]
+								),
+							};
+						}
+
+						return {
+							confirmationMessage: Liferay.Language.get(
+								'delete-tasks-confirmation'
+							),
+							title: Liferay.Language.get('delete-task'),
+						};
+					},
 					selectedData,
 				});
 			}

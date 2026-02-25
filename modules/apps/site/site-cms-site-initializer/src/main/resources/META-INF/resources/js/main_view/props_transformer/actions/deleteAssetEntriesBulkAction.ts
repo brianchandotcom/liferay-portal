@@ -24,6 +24,11 @@ export function executeBulkDeleteAction(
 	triggerAssetBulkAction({
 		apiURL,
 		dataSetId,
+		keyValues: {
+			className: selectedData.items
+				? selectedData.items[0]?.entryClassName
+				: '',
+		},
 		onCreateSuccess: () => {
 			processClose?.();
 		},
@@ -35,11 +40,23 @@ export function executeBulkDeleteAction(
 /**
  * Returns the confirmation message and title for bulk delete modal.
  */
-function getBulkDeleteMessage(selectedData: any): {
+function getBulkDeleteMessage(
+	selectedData: any,
+	allEntriesHaveTrashEnabled: boolean,
+	someEntriesHaveTrashEnabled: boolean
+): {
 	confirmationMessage: string;
 	title: string;
 } {
-	if (selectedData.selectAll) {
+	if (someEntriesHaveTrashEnabled && !allEntriesHaveTrashEnabled) {
+		return {
+			confirmationMessage: Liferay.Language.get(
+				'bulk-delete-cms-entries-confirmation'
+			),
+			title: Liferay.Language.get('delete-entries'),
+		};
+	}
+	else if (selectedData.selectAll) {
 		return {
 			confirmationMessage: Liferay.Language.get(
 				'delete-all-entries-confirmation'
@@ -86,10 +103,12 @@ async function getEntriesSpaces(
 async function handleBulkDeletion({
 	apiURL,
 	dataSetId,
+	getCustomBulkDeleteMessage,
 	selectedData,
 }: {
 	apiURL: string;
 	dataSetId: string;
+	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
 }): Promise<void> {
 	const spaces = await getEntriesSpaces(selectedData?.items || []);
@@ -99,36 +118,20 @@ async function handleBulkDeletion({
 	const allEntriesHaveTrashEnabled = spaces.every(
 		(space) => space.settings.trashEnabled
 	);
-	const noEntriesHaveTrashEnabled = spaces.every(
-		(space) => !space.settings.trashEnabled
-	);
 	const someEntriesHaveTrashEnabled = spaces.some(
 		(space) => space.settings.trashEnabled
 	);
 
-	const {confirmationMessage, title} = getBulkDeleteMessage(selectedData);
+	const bulkDeleteMessage =
+		getCustomBulkDeleteMessage ?? getBulkDeleteMessage;
 
-	// Scenario 1: All spaces have trash disabled
+	const {confirmationMessage, title} = bulkDeleteMessage(
+		selectedData,
+		allEntriesHaveTrashEnabled,
+		someEntriesHaveTrashEnabled
+	);
 
-	if (noEntriesHaveTrashEnabled) {
-		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
-	}
-
-	// Scenario 2: Some spaces have trash enabled, but not all
-
-	else if (someEntriesHaveTrashEnabled && !allEntriesHaveTrashEnabled) {
-		showModal(
-			apiURL,
-			Liferay.Language.get('bulk-delete-cms-entries-confirmation'),
-			Liferay.Language.get('delete-entries'),
-			dataSetId,
-			selectedData
-		);
-	}
-
-	// Scenario 3: All spaces have trash enabled
-
-	else if (allEntriesHaveTrashEnabled) {
+	if (allEntriesHaveTrashEnabled) {
 		if (!isFromRecycleBin(selectedData)) {
 			executeBulkDeleteAction(apiURL, dataSetId, selectedData);
 		}
@@ -141,6 +144,9 @@ async function handleBulkDeletion({
 				selectedData
 			);
 		}
+	}
+	else {
+		showModal(apiURL, confirmationMessage, dataSetId, title, selectedData);
 	}
 }
 
@@ -198,11 +204,18 @@ async function showModal(
 export default async function deleteAssetEntriesBulkAction({
 	apiURL = '',
 	dataSetId = '',
+	getCustomBulkDeleteMessage,
 	selectedData,
 }: {
 	apiURL?: string;
 	dataSetId?: string;
+	getCustomBulkDeleteMessage?: typeof getBulkDeleteMessage;
 	selectedData: IBulkActionFDSData;
 }): Promise<void> {
-	await handleBulkDeletion({apiURL, dataSetId, selectedData});
+	await handleBulkDeletion({
+		apiURL,
+		dataSetId,
+		getCustomBulkDeleteMessage,
+		selectedData,
+	});
 }

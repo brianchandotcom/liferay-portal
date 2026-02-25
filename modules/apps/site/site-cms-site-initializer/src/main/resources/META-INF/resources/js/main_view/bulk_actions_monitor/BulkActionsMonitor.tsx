@@ -40,6 +40,16 @@ function BulkActionsMonitor() {
 		new Set([TASK_REPORT_FDS_ID])
 	);
 	const [processingTasks, setProcessingTask] = useState(0);
+	const [taskContext, setTaskContext] = useState<Record<string, any>>(() => {
+		try {
+			return JSON.parse(
+				sessionStorage.getItem('cms_bulk_action_context') || '{}'
+			);
+		}
+		catch (error) {
+			return {};
+		}
+	});
 	const [tasks, setTasks] = useState<IBulkActionTask[]>([]);
 	const [tasksLoading, setTasksLoading] = useState<boolean>(false);
 
@@ -48,6 +58,13 @@ function BulkActionsMonitor() {
 	const processingTasksRef = useRef(0);
 
 	const isFetchingRef = useRef(false);
+
+	useEffect(() => {
+		sessionStorage.setItem(
+			'cms_bulk_action_context',
+			JSON.stringify(taskContext)
+		);
+	}, [taskContext]);
 
 	const getTasks = useCallback(async () => {
 		if (isFetchingRef.current) {
@@ -75,21 +92,32 @@ function BulkActionsMonitor() {
 					oldTask.executionStatus.key !== 'completed' &&
 					newTask.executionStatus.key === 'completed'
 				) {
+					const context = taskContext[newTask.id] || {};
+					const itemsCount =
+						context.itemCount ||
+						newTask.numberOfSuccessfulItems ||
+						0;
+
 					const message = getBulkActionTaskMessage(
 						newTask.type,
 						'success',
 						{
-							items: new Array(newTask.numberOfItems || 0),
-							selectAll: false,
-						}
+							items: new Array(itemsCount),
+							selectAll: context.selectAll || false,
+						},
+						context
 					);
 
 					if (message) {
-						openToast({
-							message,
-							type: 'success',
-						});
+						openToast({message, type: 'success'});
 					}
+
+					setTaskContext((prevContext) => {
+						const newContext = {...prevContext};
+						delete newContext[newTask.id];
+
+						return newContext;
+					});
 				}
 			});
 
@@ -103,7 +131,7 @@ function BulkActionsMonitor() {
 			isFetchingRef.current = false;
 			setTasksLoading(false);
 		}
-	}, []);
+	}, [taskContext]);
 
 	const onActiveChange = useCallback(
 		(active: boolean) => {
@@ -185,6 +213,32 @@ function BulkActionsMonitor() {
 
 				if (response.data) {
 					bulkAction.onCreateSuccess(response);
+
+					const newTask = response.data as any;
+
+					if (newTask) {
+						const {additionalData, selectedData} = bulkActionDTO;
+						let assetName: string;
+
+						if (
+							selectedData.items &&
+							selectedData.items.length === 1
+						) {
+							assetName = selectedData.items[0].title;
+						}
+
+						setTaskContext((prevContext) => ({
+							...prevContext,
+							[newTask.id]: {
+								assetName,
+								itemCount: selectedData.items
+									? selectedData.items.length
+									: 0,
+								selectAll: selectedData.selectAll,
+								targetName: additionalData?.targetName,
+							},
+						}));
+					}
 
 					getTasks();
 

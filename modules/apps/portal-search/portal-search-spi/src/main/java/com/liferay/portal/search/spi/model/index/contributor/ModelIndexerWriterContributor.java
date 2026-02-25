@@ -7,8 +7,8 @@ package com.liferay.portal.search.spi.model.index.contributor;
 
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.model.BaseModel;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 import java.util.function.Supplier;
 
@@ -33,11 +33,11 @@ public class ModelIndexerWriterContributor<T extends BaseModel<?>> {
 
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(T t) -> indexableActionableDynamicQuery.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(t)));
+				indexerDocumentBuilder.getDocument(t)));
 	}
 
 	public IndexableActionableDynamicQuery

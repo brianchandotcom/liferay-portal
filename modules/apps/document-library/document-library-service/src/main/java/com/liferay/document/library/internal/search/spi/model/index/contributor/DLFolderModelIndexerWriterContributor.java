@@ -10,8 +10,8 @@ import com.liferay.document.library.kernel.service.DLFolderLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Michael C. Han
@@ -28,7 +28,7 @@ public class DLFolderModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -38,7 +38,7 @@ public class DLFolderModelIndexerWriterContributor
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DLFolder dlFolder) -> indexableActionableDynamicQuery.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(dlFolder)));
+				indexerDocumentBuilder.getDocument(dlFolder)));
 	}
 
 }

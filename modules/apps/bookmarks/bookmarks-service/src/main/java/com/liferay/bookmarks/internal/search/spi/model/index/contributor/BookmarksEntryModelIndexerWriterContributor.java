@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Luan Maoski
@@ -33,7 +33,7 @@ public class BookmarksEntryModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -49,8 +49,7 @@ public class BookmarksEntryModelIndexerWriterContributor
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(BookmarksEntry bookmarksEntry) -> {
 				indexableActionableDynamicQuery.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(
-						bookmarksEntry));
+					indexerDocumentBuilder.getDocument(bookmarksEntry));
 
 				_bookmarksFolderBatchReindexer.reindex(
 					bookmarksEntry.getFolderId(),

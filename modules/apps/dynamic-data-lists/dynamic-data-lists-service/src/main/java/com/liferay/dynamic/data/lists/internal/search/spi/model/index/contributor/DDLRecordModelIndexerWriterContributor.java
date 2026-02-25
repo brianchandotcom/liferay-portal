@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Marcela Cunha
@@ -38,7 +38,7 @@ public class DDLRecordModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -71,7 +71,7 @@ public class DDLRecordModelIndexerWriterContributor
 			});
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(DDLRecord record) -> indexableActionableDynamicQuery.addDocument(
-				modelIndexerWriterDocumentHelper.getDocument(record)));
+				indexerDocumentBuilder.getDocument(record)));
 	}
 
 	private static final int[] _SCOPES = {

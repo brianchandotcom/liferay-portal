@@ -12,9 +12,9 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 /**
  * @author Michael C. Han
@@ -31,7 +31,7 @@ public class CalendarBookingModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
@@ -47,8 +47,7 @@ public class CalendarBookingModelIndexerWriterContributor
 		indexableActionableDynamicQuery.setPerformActionMethod(
 			(CalendarBooking calendarBooking) ->
 				indexableActionableDynamicQuery.addDocument(
-					modelIndexerWriterDocumentHelper.getDocument(
-						calendarBooking)));
+					indexerDocumentBuilder.getDocument(calendarBooking)));
 	}
 
 	@Override

@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.batch.BatchIndexingHelper;
+import com.liferay.portal.search.indexer.IndexerDocumentBuilder;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
-import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexerWriterDocumentHelper;
 
 import java.util.List;
 import java.util.Objects;
@@ -68,7 +68,7 @@ public class JournalArticleModelIndexerWriterContributor
 	@Override
 	public void customize(
 		IndexableActionableDynamicQuery indexableActionableDynamicQuery,
-		ModelIndexerWriterDocumentHelper modelIndexerWriterDocumentHelper) {
+		IndexerDocumentBuilder indexerDocumentBuilder) {
 
 		if (_isIndexAllArticleVersions(_configurationProvider)) {
 			indexableActionableDynamicQuery.setAddCriteriaMethod(
@@ -86,8 +86,7 @@ public class JournalArticleModelIndexerWriterContributor
 			indexableActionableDynamicQuery.setPerformActionMethod(
 				(JournalArticle journalArticle) ->
 					indexableActionableDynamicQuery.addDocument(
-						modelIndexerWriterDocumentHelper.getDocument(
-							journalArticle)));
+						indexerDocumentBuilder.getDocument(journalArticle)));
 		}
 		else {
 			indexableActionableDynamicQuery.setAddCriteriaMethod(
@@ -126,7 +125,7 @@ public class JournalArticleModelIndexerWriterContributor
 					}
 
 					indexableActionableDynamicQuery.addDocument(
-						modelIndexerWriterDocumentHelper.getDocument(
+						indexerDocumentBuilder.getDocument(
 							latestIndexableArticle));
 				});
 		}

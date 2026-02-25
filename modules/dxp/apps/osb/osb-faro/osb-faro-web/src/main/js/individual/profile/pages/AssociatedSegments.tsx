@@ -1,5 +1,7 @@
 import * as API from 'shared/api';
 import AssociatedSegmentsList from 'contacts/components/AssociatedSegmentsList';
+import Card from 'shared/components/Card';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useState} from 'react';
@@ -12,6 +14,7 @@ import {
 } from 'shared/util/pagination';
 import {EntityTypes, Sizes} from 'shared/util/constants';
 import {RootState} from 'shared/store';
+import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 
 const fetchAssociatedSegments = ({
@@ -74,6 +77,57 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 			}
 		);
 
+	const renderNoResults = () => (
+		<Card className='associated-segments-list-root' pageDisplay>
+			<NoResultsDisplay
+				description={
+					<>
+						{Liferay.Language.get(
+							'this-individual-does-not-belong-to-a-segment-create-one-to-get-started'
+						)}
+						<ClayLink
+							className='d-block'
+							href={
+								URLConstants.IndividualProfilesDocumentSegments
+							}
+							key='DOCUMENTATION'
+							target='_blank'
+						>
+							{Liferay.Language.get('learn-more-about-segments')}
+							<ClayIcon
+								aria-label={Liferay.Language.get(
+									'learn-more-about-data-sources'
+								)}
+								className='ml-1'
+								fontSize={8}
+								symbol='shortcut'
+							/>
+						</ClayLink>
+					</>
+				}
+				icon={{
+					border: false,
+					size: Sizes.XXXLarge,
+					symbol: 'ac_satellite'
+				}}
+				title={Liferay.Language.get('there-are-no-segments-found')}
+			>
+				<ClayLink
+					button
+					className='button-root'
+					displayType='primary'
+					href={toRoute(Routes.CONTACTS_LIST_SEGMENT, {
+						channelId,
+						groupId,
+						type: SEGMENTS
+					})}
+				>
+					{Liferay.Language.get('create-segment')}
+				</ClayLink>
+			</NoResultsDisplay>
+		</Card>
+	);
+
 	return (
 		<AssociatedSegmentsList
 			channelId={channelId}
@@ -81,36 +135,7 @@ const AssociatedSegments: React.FC<IAssociatedSegmentsProps> = ({
 			delta={delta}
 			groupId={groupId}
 			id={id}
-			noResultsRenderer={() => (
-				<NoResultsDisplay
-					description={
-						<>
-							{Liferay.Language.get(
-								'create-a-segment-to-get-started'
-							)}
-
-							<ClayLink
-								className='d-block'
-								href={
-									URLConstants.IndividualProfilesDocumentSegments
-								}
-								key='DOCUMENTATION'
-								target='_blank'
-							>
-								{Liferay.Language.get(
-									'learn-more-about-segments'
-								)}
-							</ClayLink>
-						</>
-					}
-					icon={{
-						border: false,
-						size: Sizes.XXXLarge,
-						symbol: 'ac_satellite'
-					}}
-					title={Liferay.Language.get('there-are-no-segments-found')}
-				/>
-			)}
+			noResultsRenderer={renderNoResults}
 			orderIOMap={orderIOMap}
 			page={page}
 			query={query}

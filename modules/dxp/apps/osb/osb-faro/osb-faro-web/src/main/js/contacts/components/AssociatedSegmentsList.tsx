@@ -3,6 +3,7 @@ import getCN from 'classnames';
 import React from 'react';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
 import {DATE_CREATED, NAME} from 'shared/util/pagination';
+import {ENABLE_CDP} from 'shared/util/constants';
 import {getPluralMessage} from 'shared/util/lang';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
@@ -41,31 +42,51 @@ const AssociatedSegmentsList: React.FC<IAssociatedSegmentsListProps> = ({
 		className={getCN('associated-segments-list-root', className)}
 		pageDisplay
 	>
-		<Card.Header>
-			<Card.Title>
-				{Liferay.Language.get('associated-segments')}
-			</Card.Title>
+		<Card.Header className='d-flex align-items-start justify-content-between'>
+			<div>
+				<Card.Title>
+					{Liferay.Language.get('associated-segments')}
+				</Card.Title>
 
-			<div className='secondary-info'>
-				{getPluralMessage(
-					Liferay.Language.get('x-segment'),
-					Liferay.Language.get('x-segments'),
-					total,
-					false,
-					[<b key='SEGMENT_TOTAL'>{total.toLocaleString()}</b>]
-				)}
+				<span className='secondary-info'>
+					{Liferay.Language.get(
+						'lists-all-the-segments-that-the-customer-is-currently-associated-with-in-the-last-30-days'
+					)}
+				</span>
+
+				<div className='secondary-info'>
+					{getPluralMessage(
+						Liferay.Language.get('x-segment'),
+						Liferay.Language.get('x-segments'),
+						total,
+						false,
+						[<b key='SEGMENT_TOTAL'>{total.toLocaleString()}</b>]
+					)}
+				</div>
+			</div>
+
+			<div className='text-right'>
+				<span className='text-secondary text-uppercase'>
+					<small>
+						<strong>{Liferay.Language.get('last-30-days')}</strong>
+					</small>
+				</span>
 			</div>
 		</Card.Header>
 
 		<SearchableEntityTable
 			columns={[
 				segmentsListColumns.getName({channelId, groupId}),
+				...(ENABLE_CDP
+					? [segmentsListColumns.getSegmentType(ENABLE_CDP)]
+					: []),
 				segmentsListColumns.individualAddedDate,
 				segmentsListColumns.getDateCreated(timeZoneId)
 			]}
 			dataSourceFn={dataSourceFn}
 			dataSourceParams={{channelId, groupId, id}}
 			delta={delta}
+			enableClearSearch
 			entityLabel={Liferay.Language.get('associated-segments')}
 			noResultsRenderer={noResultsRenderer}
 			orderByOptions={[

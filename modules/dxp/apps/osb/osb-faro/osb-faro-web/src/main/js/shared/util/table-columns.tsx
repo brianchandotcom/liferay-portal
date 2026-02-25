@@ -1052,6 +1052,23 @@ export const segmentsListColumns = {
 		cellRendererProps: {timeZoneId},
 		label: Liferay.Language.get('last-modified')
 	}),
+	getSegmentType: ENABLE_CDP => {
+		if (!ENABLE_CDP) return null;
+
+		return {
+			accessor: 'segmentType',
+			cellRenderer: ({data}) => {
+				const segmentTypeMap = {
+					BATCH: Liferay.Language.get('batch'),
+					REAL_TIME: Liferay.Language.get('real-time')
+				};
+
+				return <td>{segmentTypeMap[data.segmentType]}</td>;
+			},
+			label: Liferay.Language.get('type'),
+			sortable: false
+		};
+	},
 	individualAddedDate: {
 		cellRenderer: DateCell,
 		cellRendererProps: {

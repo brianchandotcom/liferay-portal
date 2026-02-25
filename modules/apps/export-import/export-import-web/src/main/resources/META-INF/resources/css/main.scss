@@ -1,3 +1,5 @@
+@import 'cadmin-variables';
+
 @mixin default-label {
 	color: #869cad;
 	font-size: 14px;
@@ -343,5 +345,82 @@
 .export-import-options {
 	.alert-dismissible {
 		z-index: 100000;
+	}
+}
+
+html#{$cadmin-selector} {
+	.cadmin {
+		.site-cms-export-import-dialog {
+			.export-dialog-tree {
+				a.configuration-link,
+				a.content-link,
+				a.options-link,
+				a.refresh-link {
+					color: #000;
+					font-style: italic;
+					text-decoration: underline;
+				}
+
+				.content-options legend {
+					border-top: solid #e5e5e5;
+					border-width: 1px 0 0;
+					font-size: 16px;
+					font-weight: normal;
+					line-height: 1em;
+					margin-bottom: 0.5em;
+					padding-top: 0.75em;
+				}
+
+				.lfr-tree li {
+					margin-bottom: 2px;
+					padding-left: 0;
+
+					&.tree-item {
+						ul {
+							margin-left: 0;
+							margin-top: 5px;
+						}
+
+						li {
+							padding-left: 20px;
+						}
+					}
+				}
+
+				.options-group {
+					.options {
+						margin-top: 20px;
+					}
+
+					.select-options {
+						margin-left: 20px;
+						margin-top: 20px;
+					}
+				}
+
+				.portlet-list {
+					margin-left: 20px;
+					padding: 10px 0;
+				}
+
+				.selected-labels {
+					color: #999;
+					font-style: italic;
+					margin-left: 0.5em;
+					margin-right: 0.5em;
+				}
+			}
+
+			.form-inline.input-checkbox-wrapper {
+				label {
+					display: flex;
+					gap: 0.3125rem;
+				}
+			}
+
+			.range-options {
+				margin-right: 5%;
+			}
+		}
 	}
 }

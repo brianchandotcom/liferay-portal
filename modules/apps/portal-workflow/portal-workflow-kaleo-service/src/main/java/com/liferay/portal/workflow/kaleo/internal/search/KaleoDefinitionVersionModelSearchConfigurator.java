@@ -7,7 +7,6 @@ package com.liferay.portal.workflow.kaleo.internal.search;
 
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
-import com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor.KaleoDefinitionVersionModelIndexerWriterContributor;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
@@ -36,9 +35,9 @@ public class KaleoDefinitionVersionModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new KaleoDefinitionVersionModelIndexerWriterContributor(
-				_kaleoDefinitionVersionLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_kaleoDefinitionVersionLocalService::
+				getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

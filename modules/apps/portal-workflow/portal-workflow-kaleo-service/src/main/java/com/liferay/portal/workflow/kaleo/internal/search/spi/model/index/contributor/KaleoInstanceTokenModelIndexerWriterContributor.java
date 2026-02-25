@@ -5,7 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.internal.search.spi.model.index.contributor;
 
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
@@ -21,22 +20,16 @@ import com.liferay.portal.workflow.kaleo.service.KaleoInstanceTokenLocalService;
  * @author István András Dézsi
  */
 public class KaleoInstanceTokenModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<KaleoInstanceToken> {
+	extends ModelIndexerWriterContributor<KaleoInstanceToken> {
 
 	public KaleoInstanceTokenModelIndexerWriterContributor(
 		KaleoInstanceLocalService kaleoInstanceLocalService,
 		KaleoInstanceTokenLocalService kaleoInstanceTokenLocalService) {
 
+		super(
+			kaleoInstanceTokenLocalService::getIndexableActionableDynamicQuery);
+
 		_kaleoInstanceLocalService = kaleoInstanceLocalService;
-		_kaleoInstanceTokenLocalService = kaleoInstanceTokenLocalService;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _kaleoInstanceTokenLocalService.
-			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -58,7 +51,5 @@ public class KaleoInstanceTokenModelIndexerWriterContributor
 	}
 
 	private final KaleoInstanceLocalService _kaleoInstanceLocalService;
-	private final KaleoInstanceTokenLocalService
-		_kaleoInstanceTokenLocalService;
 
 }

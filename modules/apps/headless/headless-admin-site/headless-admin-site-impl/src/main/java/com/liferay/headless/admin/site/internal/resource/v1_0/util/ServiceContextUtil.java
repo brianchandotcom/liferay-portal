@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
@@ -148,7 +149,13 @@ public class ServiceContextUtil {
 		if (Validator.isNull(
 				siteTemplatePageSpecificationExternalReferenceCode)) {
 
-			return;
+			if (MergeLayoutPrototypesThreadLocal.isInProgress()) {
+				siteTemplatePageSpecificationExternalReferenceCode =
+					pageSpecification.getExternalReferenceCode();
+			}
+			else {
+				return;
+			}
 		}
 
 		boolean privateLayout = Boolean.FALSE;
@@ -183,7 +190,6 @@ public class ServiceContextUtil {
 						getDraftContentPageSpecificationExternalReferenceCode())) {
 
 				draftLayout = Boolean.TRUE;
-				privateLayout = Boolean.TRUE;
 			}
 		}
 

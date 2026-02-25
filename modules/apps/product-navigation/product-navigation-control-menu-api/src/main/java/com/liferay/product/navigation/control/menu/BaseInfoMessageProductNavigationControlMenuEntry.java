@@ -45,7 +45,7 @@ public abstract class BaseInfoMessageProductNavigationControlMenuEntry
 
 		FeatureIndicatorTag featureIndicatorTag = new FeatureIndicatorTag();
 
-		featureIndicatorTag.setDark(true);
+		featureIndicatorTag.setDark(isDark());
 		featureIndicatorTag.setInteractive(true);
 		featureIndicatorTag.setPageContext(
 			PageContextFactoryUtil.create(
@@ -89,5 +89,9 @@ public abstract class BaseInfoMessageProductNavigationControlMenuEntry
 	protected abstract String getPortletName();
 
 	protected abstract String getType();
+
+	protected boolean isDark() {
+		return true;
+	}
 
 }

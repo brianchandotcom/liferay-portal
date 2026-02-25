@@ -22,14 +22,15 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Marcela Cunha
  */
 public class DDLRecordModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DDLRecord> {
+	extends ModelIndexerWriterContributor<DDLRecord> {
 
 	public DDLRecordModelIndexerWriterContributor(
 		DDLRecordLocalService ddlRecordLocalService,
 		DDLRecordSetLocalService ddlRecordSetLocalService,
 		DDLRecordVersionLocalService ddlRecordVersionLocalService) {
 
-		_ddlRecordLocalService = ddlRecordLocalService;
+		super(ddlRecordLocalService::getIndexableActionableDynamicQuery);
+
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
 		_ddlRecordVersionLocalService = ddlRecordVersionLocalService;
 	}
@@ -73,13 +74,6 @@ public class DDLRecordModelIndexerWriterContributor
 				modelIndexerWriterDocumentHelper.getDocument(record)));
 	}
 
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _ddlRecordLocalService.getIndexableActionableDynamicQuery();
-	}
-
 	private static final int[] _SCOPES = {
 		DDLRecordSetConstants.SCOPE_DATA_ENGINE,
 		DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS,
@@ -87,7 +81,6 @@ public class DDLRecordModelIndexerWriterContributor
 		DDLRecordSetConstants.SCOPE_KALEO_FORMS
 	};
 
-	private final DDLRecordLocalService _ddlRecordLocalService;
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 	private final DDLRecordVersionLocalService _ddlRecordVersionLocalService;
 

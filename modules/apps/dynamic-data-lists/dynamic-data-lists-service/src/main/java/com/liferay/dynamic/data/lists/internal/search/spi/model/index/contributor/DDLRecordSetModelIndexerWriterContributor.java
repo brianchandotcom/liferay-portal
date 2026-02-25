@@ -8,28 +8,21 @@ package com.liferay.dynamic.data.lists.internal.search.spi.model.index.contribut
 import com.liferay.dynamic.data.lists.internal.search.DDLRecordBatchReindexer;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
  * @author Marcela Cunha
  */
 public class DDLRecordSetModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DDLRecordSet> {
+	extends ModelIndexerWriterContributor<DDLRecordSet> {
 
 	public DDLRecordSetModelIndexerWriterContributor(
 		DDLRecordBatchReindexer ddlRecordBatchReindexer,
 		DDLRecordSetLocalService ddlRecordSetLocalService) {
 
+		super(ddlRecordSetLocalService::getIndexableActionableDynamicQuery);
+
 		_ddlRecordBatchReindexer = ddlRecordBatchReindexer;
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _ddlRecordSetLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -39,6 +32,5 @@ public class DDLRecordSetModelIndexerWriterContributor
 	}
 
 	private final DDLRecordBatchReindexer _ddlRecordBatchReindexer;
-	private final DDLRecordSetLocalService _ddlRecordSetLocalService;
 
 }

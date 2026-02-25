@@ -5,7 +5,6 @@
 
 package com.liferay.asset.categories.internal.search;
 
-import com.liferay.asset.categories.internal.search.spi.model.index.contributor.AssetCategoryModelIndexerWriterContributor;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.portal.kernel.search.Field;
@@ -46,9 +45,8 @@ public class AssetCategoryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new AssetCategoryModelIndexerWriterContributor(
-				_assetCategoryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_assetCategoryLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

@@ -6,6 +6,7 @@
 package com.liferay.site.navigation.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -102,26 +104,19 @@ public class SiteNavigationMenuItemServiceTest {
 		}
 
 		_testAddSiteNavigationMenuItem(_user);
-	}
 
-	@Test(
-		expected = DuplicateSiteNavigationMenuItemExternalReferenceCodeException.class
-	)
-	public void testAddSiteNavigationMenuItemWithExistingExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.randomString();
-
-		_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-			externalReferenceCode, _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-		_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-			externalReferenceCode, _group.getGroupId(),
-			_siteNavigationMenu.getSiteNavigationMenuId(), 0,
-			SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		AssertUtils.assertFailure(
+			DuplicateSiteNavigationMenuItemExternalReferenceCodeException.class,
+			StringBundler.concat(
+				"Duplicate site navigation menu item with external reference ",
+				"code ", _siteNavigationMenuItem.getExternalReferenceCode(),
+				" and group ", _group.getGroupId()),
+			() -> _siteNavigationMenuItemService.addSiteNavigationMenuItem(
+				_siteNavigationMenuItem.getExternalReferenceCode(),
+				_group.getGroupId(),
+				_siteNavigationMenu.getSiteNavigationMenuId(), 0,
+				SiteNavigationMenuItemTypeConstants.LAYOUT, StringPool.BLANK,
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId())));
 	}
 
 	@Test
@@ -141,6 +136,23 @@ public class SiteNavigationMenuItemServiceTest {
 		}
 
 		_testDeleteSiteNavigationMenuItem(_user);
+
+		try {
+			_testDeleteSiteNavigationMenuItemByExternalReferenceCode(
+				_guestUser);
+
+			Assert.fail();
+		}
+		catch (PrincipalException.MustHavePermission principalException) {
+			String message = principalException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					"User " + _guestUser.getUserId() +
+						" must have UPDATE permission for"));
+		}
+
+		_testDeleteSiteNavigationMenuItemByExternalReferenceCode(_user);
 	}
 
 	@Test
@@ -164,28 +176,6 @@ public class SiteNavigationMenuItemServiceTest {
 	}
 
 	@Test
-	public void testDeleteSiteNavigationMenuItemWithExternalReferenceCode()
-		throws Exception {
-
-		try {
-			_testDeleteSiteNavigationMenuItemByExternalReferenceCode(
-				_guestUser);
-
-			Assert.fail();
-		}
-		catch (PrincipalException.MustHavePermission principalException) {
-			String message = principalException.getMessage();
-
-			Assert.assertTrue(
-				message.contains(
-					"User " + _guestUser.getUserId() +
-						" must have UPDATE permission for"));
-		}
-
-		_testDeleteSiteNavigationMenuItemByExternalReferenceCode(_user);
-	}
-
-	@Test
 	public void testGetSiteNavigationMenuItems() throws Exception {
 		try {
 			_testGetSiteNavigationMenuItems(_guestUser);
@@ -205,7 +195,7 @@ public class SiteNavigationMenuItemServiceTest {
 	}
 
 	@Test
-	public void testUpdateSiteNavigationMenuItemOrder() throws Exception {
+	public void testUpdateSiteNavigationMenuItem() throws Exception {
 		try {
 			_testUpdateSiteNavigationMenuItemOrder(_guestUser);
 
@@ -221,10 +211,7 @@ public class SiteNavigationMenuItemServiceTest {
 		}
 
 		_testUpdateSiteNavigationMenuItemOrder(_user);
-	}
 
-	@Test
-	public void testUpdateSiteNavigationMenuItemParent() throws Exception {
 		try {
 			_testUpdateSiteNavigationMenuItemParent(_guestUser);
 

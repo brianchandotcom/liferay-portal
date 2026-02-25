@@ -8,31 +8,23 @@ package com.liferay.dynamic.data.mapping.internal.search.spi.model.index.contrib
 import com.liferay.dynamic.data.mapping.internal.search.DDMFormInstanceRecordBatchReindexer;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
-import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 
 /**
  * @author Rafael Praxedes
  */
 public class DDMFormInstanceModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DDMFormInstance> {
+	extends ModelIndexerWriterContributor<DDMFormInstance> {
 
 	public DDMFormInstanceModelIndexerWriterContributor(
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
 		DDMFormInstanceRecordBatchReindexer
 			ddmFormInstanceRecordBatchReindexer) {
 
-		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
+		super(ddmFormInstanceLocalService::getIndexableActionableDynamicQuery);
+
 		_ddmFormInstanceRecordBatchReindexer =
 			ddmFormInstanceRecordBatchReindexer;
-	}
-
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _ddmFormInstanceLocalService.
-			getIndexableActionableDynamicQuery();
 	}
 
 	@Override
@@ -42,7 +34,6 @@ public class DDMFormInstanceModelIndexerWriterContributor
 			ddmFormInstance.getCompanyId());
 	}
 
-	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
 	private final DDMFormInstanceRecordBatchReindexer
 		_ddmFormInstanceRecordBatchReindexer;
 

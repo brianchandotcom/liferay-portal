@@ -21,7 +21,7 @@ import com.liferay.portal.search.spi.model.index.contributor.helper.ModelIndexer
  * @author Rafael Praxedes
  */
 public class DDMFormInstanceRecordModelIndexerWriterContributor
-	implements ModelIndexerWriterContributor<DDMFormInstanceRecord> {
+	extends ModelIndexerWriterContributor<DDMFormInstanceRecord> {
 
 	public DDMFormInstanceRecordModelIndexerWriterContributor(
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
@@ -29,8 +29,11 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 		DDMFormInstanceRecordVersionLocalService
 			ddmFormInstanceRecordVersionLocalService) {
 
+		super(
+			ddmFormInstanceRecordLocalService::
+				getIndexableActionableDynamicQuery);
+
 		_ddmFormInstanceLocalService = ddmFormInstanceLocalService;
-		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
 	}
@@ -74,17 +77,7 @@ public class DDMFormInstanceRecordModelIndexerWriterContributor
 						ddmFormInstanceRecord)));
 	}
 
-	@Override
-	public IndexableActionableDynamicQuery
-		getIndexableActionableDynamicQuery() {
-
-		return _ddmFormInstanceRecordLocalService.
-			getIndexableActionableDynamicQuery();
-	}
-
 	private final DDMFormInstanceLocalService _ddmFormInstanceLocalService;
-	private final DDMFormInstanceRecordLocalService
-		_ddmFormInstanceRecordLocalService;
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 

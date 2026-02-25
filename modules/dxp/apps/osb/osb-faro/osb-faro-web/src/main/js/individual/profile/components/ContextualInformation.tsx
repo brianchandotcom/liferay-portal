@@ -3,6 +3,7 @@ import {
 	DataDrivenConfig,
 	GeneralInfoSection
 } from 'shared/components/GeneralInfoSection';
+import {Map} from 'immutable';
 import {SectionHeader} from './SectionHeader';
 
 const contextualInfoConfig: DataDrivenConfig = [
@@ -47,25 +48,8 @@ function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
 	}`.trim();
 }
 
-type ContextualInformationData = {
-	browserName?: string;
-	city?: string;
-	country?: string;
-	contactId?: string;
-	devicePixelRatio?: string;
-	deviceType?: string;
-	languageId?: string;
-	platformName?: string;
-	region?: string;
-	screenHeight?: string;
-	screenWidth?: string;
-	timeZoneOffset?: string;
-	userAgent?: string;
-	userId?: string;
-};
-
 interface IContextualInfoProps {
-	contextData: ContextualInformationData;
+	contextData: Map<string, any>;
 	email?: string;
 	showEmptyState?: boolean;
 	uuid?: string;
@@ -101,7 +85,8 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 		if (key === 'uuid') return uuid;
 
 		if (key === 'timeZoneOffset') {
-			const {region, timeZoneOffset} = contextData || {};
+			const region = contextData?.get('region');
+			const timeZoneOffset = contextData?.get('timeZoneOffset');
 
 			if (timeZoneOffset || region) {
 				return formatTimeZoneOffset(timeZoneOffset, region);
@@ -109,9 +94,7 @@ const ContextualInformation: React.FC<IContextualInfoProps> = ({
 			return undefined;
 		}
 
-		return (
-			contextData?.[key as keyof ContextualInformationData] || undefined
-		);
+		return contextData?.get(key) || undefined;
 	};
 
 	return (

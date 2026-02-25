@@ -4,6 +4,7 @@ import {Map, Record} from 'immutable';
 interface IIndividual {
 	accountName: string | null;
 	activitiesCount: number;
+	context: Map<string, any>;
 	dateCreated: string;
 	demographics: Map<string, any>;
 	firstActivityDate: string;
@@ -19,6 +20,7 @@ export default class Individual
 	extends Record({
 		accountName: null,
 		activitiesCount: 0,
+		context: Map(),
 		dateCreated: null,
 		demographics: Map(),
 		firstActivityDate: null,
@@ -32,6 +34,7 @@ export default class Individual
 	implements IIndividual {
 	accountName: string | null;
 	activitiesCount: number;
+	context: Map<string, any>;
 	dateCreated: string;
 	demographics: Map<string, any>;
 	firstActivityDate: string;

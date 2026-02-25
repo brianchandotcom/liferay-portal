@@ -5,6 +5,12 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.GitUtil;
+import com.liferay.source.formatter.SourceFormatterArgs;
+import com.liferay.source.formatter.processor.SourceProcessor;
+
 /**
  * @author Marco Leo
  */
@@ -17,30 +23,37 @@ public class JSPLiferayUICSPTagCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		if (isExcludedPath(_LIFERAY_UI_CSP_EXCLUDES, absolutePath)) {
+		SourceProcessor sourceProcessor = getSourceProcessor();
+
+		SourceFormatterArgs sourceFormatterArgs =
+			sourceProcessor.getSourceFormatterArgs();
+
+		if (!sourceFormatterArgs.isFormatCurrentBranch()) {
 			return content;
 		}
 
-		int index = -1;
+		String[] lines = StringUtil.splitLines(
+			GitUtil.getCurrentBranchFileDiff(
+				sourceFormatterArgs.getBaseDirName(),
+				sourceFormatterArgs.getGitWorkingBranchName(), absolutePath));
 
-		while (true) {
-			index = content.indexOf("<liferay-ui:csp", index + 1);
+		for (String line : lines) {
+			if ((content.indexOf("<liferay-ui:csp") == -1) ||
+				!line.startsWith(StringPool.PLUS)) {
 
-			if (index == -1) {
-				return content;
+				continue;
 			}
 
 			addMessage(
 				fileName,
 				"Do not use <liferay-ui:csp> tag, use a React component " +
-					"instead",
-				getLineNumber(content, index));
+					"instead");
 		}
-	}
 
-	private static final String _LIFERAY_UI_CSP_EXCLUDES =
-		"liferay.ui.csp.excludes";
+		return content;
+	}
 
 }

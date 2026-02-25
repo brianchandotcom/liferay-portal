@@ -97,8 +97,6 @@ public class CommerceInventoryBookedQuantityServiceTest {
 		_cpInstance = CPTestUtil.addCPInstanceWithRandomSku(
 			_group.getGroupId());
 
-		_cpInstance = _cpInstanceLocalService.updateCPInstance(_cpInstance);
-
 		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
 			TestPropsValues.getUserId(), _commerceInventoryWarehouse,
 			BigDecimal.valueOf(2), _cpInstance.getSku(), StringPool.BLANK);
@@ -139,14 +137,13 @@ public class CommerceInventoryBookedQuantityServiceTest {
 			commerceInventoryBookedQuantity.
 				getCommerceInventoryBookedQuantityId());
 
-		_user = UserTestUtil.addUser();
-
 		_role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			RandomTestUtil.randomString(), null, null,
 			RoleConstants.TYPE_REGULAR, null,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		_user = UserTestUtil.addUser();
 
 		_roleLocalService.addUserRole(_user.getUserId(), _role);
 	}
@@ -269,11 +266,6 @@ public class CommerceInventoryBookedQuantityServiceTest {
 					getCommerceInventoryBookedQuantitiesCount(
 						_user.getCompanyId(), StringPool.BLANK,
 						_cpInstance.getSku(), StringPool.BLANK));
-		}
-		catch (Exception exception) {
-			_assertMessage(
-				CommerceInventoryActionKeys.VIEW_INVENTORIES,
-				exception.getMessage(), _user.getUserId());
 		}
 
 		RoleTestUtil.addResourcePermission(

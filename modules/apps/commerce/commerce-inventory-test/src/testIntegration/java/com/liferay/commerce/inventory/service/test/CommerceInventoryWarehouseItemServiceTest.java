@@ -72,14 +72,13 @@ public class CommerceInventoryWarehouseItemServiceTest {
 			TestPropsValues.getUserId(), _commerceInventoryWarehouse,
 			BigDecimal.TEN, _cpInstance.getSku(), StringPool.BLANK);
 
-		_user = UserTestUtil.addUser();
-
 		_role = _roleLocalService.addRole(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
 			RandomTestUtil.randomString(), null, null,
 			RoleConstants.TYPE_REGULAR, null,
 			ServiceContextTestUtil.getServiceContext(
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
+		_user = UserTestUtil.addUser();
 
 		_roleLocalService.addUserRole(_user.getUserId(), _role);
 	}

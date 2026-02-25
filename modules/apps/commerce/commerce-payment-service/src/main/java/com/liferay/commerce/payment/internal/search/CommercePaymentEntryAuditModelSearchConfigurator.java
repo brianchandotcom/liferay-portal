@@ -5,11 +5,11 @@
 
 package com.liferay.commerce.payment.internal.search;
 
-import com.liferay.commerce.payment.internal.search.spi.model.index.contributor.CommercePaymentEntryAuditModelIndexerWriterContributor;
 import com.liferay.commerce.payment.internal.search.spi.model.result.contributor.CommercePaymentEntryAuditModelSummaryContributor;
 import com.liferay.commerce.payment.model.CommercePaymentEntryAudit;
 import com.liferay.commerce.payment.service.CommercePaymentEntryAuditLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -43,9 +43,10 @@ public class CommercePaymentEntryAuditModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CommercePaymentEntryAuditModelIndexerWriterContributor(
-				_commercePaymentEntryAuditLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_commercePaymentEntryAuditLocalService::
+				getIndexableActionableDynamicQuery);
 
 		_modelSummaryContributor =
 			new CommercePaymentEntryAuditModelSummaryContributor();

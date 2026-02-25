@@ -6,12 +6,12 @@
 package com.liferay.commerce.product.internal.search;
 
 import com.liferay.commerce.product.constants.CPField;
-import com.liferay.commerce.product.internal.search.spi.model.index.contributor.CPDefinitionModelIndexerWriterContributor;
 import com.liferay.commerce.product.internal.search.spi.model.result.contributor.CPDefinitionModelSummaryContributor;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 
@@ -72,9 +72,9 @@ public class CPDefinitionModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CPDefinitionModelIndexerWriterContributor(
-				_cpDefinitionLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_cpDefinitionLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	@Reference

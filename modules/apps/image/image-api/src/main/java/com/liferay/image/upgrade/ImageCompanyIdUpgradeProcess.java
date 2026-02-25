@@ -26,13 +26,14 @@ public class ImageCompanyIdUpgradeProcess<T> extends UpgradeProcess {
 
 	public ImageCompanyIdUpgradeProcess(
 		Supplier<ActionableDynamicQuery> actionableDynamicQuerySupplier,
-		Function<T, Long> companyIdFunction, Function<T, Long> imageIdFunction,
-		Function<T, String> imageERCFunction) {
+		Function<T, Long> companyIdFunction,
+		Function<T, String> imageERCFunction,
+		Function<T, Long> imageIdFunction) {
 
 		_actionableDynamicQuerySupplier = actionableDynamicQuerySupplier;
 		_companyIdFunction = companyIdFunction;
-		_imageIdFunction = imageIdFunction;
 		_imageERCFunction = imageERCFunction;
+		_imageIdFunction = imageIdFunction;
 	}
 
 	@Override

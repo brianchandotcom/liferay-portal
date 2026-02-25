@@ -32,15 +32,15 @@ public class CommerceImageServiceUpgradeStepRegistrator
 			new ImageCompanyIdUpgradeProcess<>(
 				_commercePaymentMethodGroupRelLocalService::
 					getActionableDynamicQuery,
-				CommercePaymentMethodGroupRel::getCompanyId,
-				CommercePaymentMethodGroupRel::getImageId, null));
+				CommercePaymentMethodGroupRel::getCompanyId, null,
+				CommercePaymentMethodGroupRel::getImageId));
 
 		registry.register(
 			"0.0.2", "1.0.0",
 			new ImageCompanyIdUpgradeProcess<>(
 				_commerceShippingMethodLocalService::getActionableDynamicQuery,
-				CommerceShippingMethod::getCompanyId,
-				CommerceShippingMethod::getImageId, null));
+				CommerceShippingMethod::getCompanyId, null,
+				CommerceShippingMethod::getImageId));
 	}
 
 	@Reference

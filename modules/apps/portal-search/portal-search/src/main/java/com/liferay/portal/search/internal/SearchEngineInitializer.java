@@ -41,15 +41,15 @@ import org.apache.commons.lang.time.StopWatch;
 public class SearchEngineInitializer implements Runnable {
 
 	public SearchEngineInitializer(
-		List<Indexer<?>> indexers, long companyId,
-		ConcurrentReindexManager concurrentReindexManager, String executionMode,
+		long companyId, ConcurrentReindexManager concurrentReindexManager,
+		String executionMode, List<Indexer<?>> indexers,
 		PortalExecutorManager portalExecutorManager,
 		SyncReindexManager syncReindexManager) {
 
-		_indexers = indexers;
 		_companyId = companyId;
 		_concurrentReindexManager = concurrentReindexManager;
 		_executionMode = executionMode;
+		_indexers = indexers;
 		_portalExecutorManager = portalExecutorManager;
 		_syncReindexManager = syncReindexManager;
 	}

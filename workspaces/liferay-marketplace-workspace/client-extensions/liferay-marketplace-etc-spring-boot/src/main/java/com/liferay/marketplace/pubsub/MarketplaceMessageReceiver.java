@@ -248,7 +248,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 		ChannelResource channelResource =
 			_marketplaceService.getChannelResource();
 
-		Channel channel = channelResource.getChannelByExternalReferenceCode(
+		Channel marketplaceChannel = channelResource.getChannelByExternalReferenceCode(
 				"MARKETPLACE-CHANNEL");
 
 		_marketplaceService.postOrder(
@@ -256,7 +256,7 @@ public class MarketplaceMessageReceiver implements MessageReceiver {
 				{
 					setAccountExternalReferenceCode(
 						productPurchase::getAccountKey);
-					setChannelId(channel::getId);
+					setChannelId(marketplaceChannel::getId);
 					setCurrencyCode(() -> "USD");
 					setExternalReferenceCode(productPurchase::getKey);
 					setOrderItems(

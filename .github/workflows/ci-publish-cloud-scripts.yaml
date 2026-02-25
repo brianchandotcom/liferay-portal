@@ -11,12 +11,12 @@ jobs:
             -   name: Authenticate to Google Cloud
                 uses: google-github-actions/auth@v2
                 with:
-                    service_account: ${GCP_SA}
-                    workload_identity_provider: ${GCP_WORKLOAD_IDENTITY_PROVIDER}
+                    service_account: ${{secrets.GCP_SA}}
+                    workload_identity_provider: ${{secrets.GCP_WORKLOAD_IDENTITY_PROVIDER}}
             -   name: Set up Google Cloud CLI
                 uses: google-github-actions/setup-gcloud@v2
                 with:
-                    project_id: ${GCP_PROJECT_ID}
+                    project_id: ${{secrets.GCP_PROJECT_ID}}
             -   name: Set up variables
                 run: |
                     CURRENT_VERSION="$(jq -r '."liferay-aws-bootstrap"' ./cloud/scripts/versions.json)"

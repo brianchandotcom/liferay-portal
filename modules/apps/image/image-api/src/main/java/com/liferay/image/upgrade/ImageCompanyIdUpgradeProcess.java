@@ -94,7 +94,7 @@ public class ImageCompanyIdUpgradeProcess<T> extends UpgradeProcess {
 					catch (Exception exception) {
 						_log.error(
 							StringBundler.concat(
-								"Cannot update image ", identifier,
+								"Unable to update image ", identifier,
 								" to company ID ", companyId),
 							exception);
 					}

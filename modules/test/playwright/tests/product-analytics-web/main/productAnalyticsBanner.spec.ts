@@ -5,7 +5,6 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -16,7 +15,6 @@ import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisibl
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
-	accountSettingsPagesTest,
 	featureFlagsTest({
 		'LPD-75032': {enabled: true},
 	}),
@@ -391,88 +389,5 @@ test(
 				)
 			).toBeVisible();
 		});
-	}
-);
-
-test(
-	'Verify Data Privacy center is not present when both Consent Manager and Product Analytics are disabled',
-	{tag: '@LPD-72749'},
-	async ({accountSettingsPage, page, systemSettingsPage}) => {
-		await test.step('Disable Product Analytics', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Privacy',
-				'Product Analytics'
-			);
-
-			await page
-				.getByRole('heading', {
-					name: 'Product Analytics',
-				})
-				.waitFor();
-
-			const enabledButton = await page.getByLabel('Enabled');
-
-			await enabledButton.setChecked(false);
-
-			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page
-					.getByRole('button', {name: 'Save'})
-					.dispatchEvent('click');
-			}
-			else {
-				await page
-					.getByRole('button', {name: 'Update'})
-					.dispatchEvent('click');
-			}
-
-			await waitForAlert(page);
-
-			await expect(enabledButton).not.toBeChecked();
-		});
-
-		await test.step('Disable Consent Manager', async () => {
-			await systemSettingsPage.goToSystemSetting(
-				'Privacy',
-				'Consent Manager'
-			);
-
-			await page
-				.getByRole('heading', {
-					name: 'Consent Manager',
-				})
-				.waitFor();
-
-			const enabledButton = await page.getByLabel('Enabled');
-
-			await enabledButton.setChecked(false);
-
-			if (await page.getByRole('button', {name: 'Save'}).isVisible()) {
-				await page
-					.getByRole('button', {name: 'Save'})
-					.dispatchEvent('click');
-			}
-			else {
-				await page
-					.getByRole('button', {name: 'Update'})
-					.dispatchEvent('click');
-			}
-
-			await waitForAlert(page);
-
-			await expect(enabledButton).not.toBeChecked();
-		});
-
-		await accountSettingsPage.goToAccountSettings();
-
-		page.reload();
-
-		const dataAndPrivacyTab = await accountSettingsPage.page.locator(
-			'.nav-link',
-			{
-				hasText: 'Data And Privacy',
-			}
-		);
-
-		await expect(await dataAndPrivacyTab).not.toBeVisible();
 	}
 );

@@ -2270,6 +2270,8 @@ public class CustomFieldsUtilTest {
 		ExportImportThreadLocal.setExportImportConfigurationId(
 			exportImportConfigurationId);
 
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
+
 		int initialExpandoColumnsCount =
 			_expandoColumnLocalService.getColumnsCount(
 				TestPropsValues.getCompanyId(),
@@ -2326,6 +2328,8 @@ public class CustomFieldsUtilTest {
 
 		ExportImportThreadLocal.setExportImportConfigurationId(
 			exportImportConfigurationId);
+
+		ExportImportThreadLocal.setLayoutImportInProcess(true);
 
 		int initialExpandoColumnsCount =
 			_expandoColumnLocalService.getColumnsCount(

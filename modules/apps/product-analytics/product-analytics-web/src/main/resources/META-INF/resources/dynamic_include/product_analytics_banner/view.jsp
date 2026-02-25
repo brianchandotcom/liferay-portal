@@ -12,3 +12,18 @@
 />
 
 <aui:script src="https://storage.googleapis.com/liferaycloud-cdn-product-experience-manager-assets-prd/self-hosted-script/product-analytics-script.umd.min.js" type="text/javascript"></aui:script>
+
+<aui:script type="module">
+	window.productAnalyticsScript = new window.productAnalyticsScript({
+		consentRenewalPeriod: 12,
+		lastModified: 0,
+	});
+
+	window.productAnalyticsScript.startTrackingJourney();
+
+	Liferay.on('endNavigate', () => {
+		window.productAnalyticsScript.dispose();
+
+		window.productAnalyticsScript.startTrackingJourney();
+	});
+</aui:script>

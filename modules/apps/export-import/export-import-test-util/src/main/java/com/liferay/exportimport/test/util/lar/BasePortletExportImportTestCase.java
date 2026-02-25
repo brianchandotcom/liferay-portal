@@ -363,8 +363,7 @@ public abstract class BasePortletExportImportTestCase
 
 	protected void exportImportPortlet(String portletId) throws Exception {
 		exportImportPortlet(
-			portletId, new LinkedHashMap<String, String[]>(),
-			new LinkedHashMap<String, String[]>(), true);
+			portletId, new LinkedHashMap<>(), new LinkedHashMap<>(), true);
 	}
 
 	protected void exportImportPortlet(
@@ -372,8 +371,8 @@ public abstract class BasePortletExportImportTestCase
 		throws Exception {
 
 		exportImportPortlet(
-			portletId, new LinkedHashMap<String, String[]>(),
-			new LinkedHashMap<String, String[]>(), portletStagingInProcess);
+			portletId, new LinkedHashMap<>(), new LinkedHashMap<>(),
+			portletStagingInProcess);
 	}
 
 	protected void exportImportPortlet(
@@ -474,8 +473,7 @@ public abstract class BasePortletExportImportTestCase
 	protected void exportPortlet(String portletId, Layout layout)
 		throws Exception {
 
-		exportPortlet(
-			portletId, new LinkedHashMap<String, String[]>(), false, layout);
+		exportPortlet(portletId, new LinkedHashMap<>(), false, layout);
 	}
 
 	protected void exportPortlet(
@@ -552,8 +550,7 @@ public abstract class BasePortletExportImportTestCase
 	protected void importPortlet(String portletId, Layout layout)
 		throws Exception {
 
-		importPortlet(
-			portletId, new LinkedHashMap<String, String[]>(), false, layout);
+		importPortlet(portletId, new LinkedHashMap<>(), false, layout);
 	}
 
 	protected void importPortlet(

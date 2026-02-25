@@ -23,7 +23,7 @@ jobs:
 
                     echo "CURRENT_VERSION=${CURRENT_VERSION}" >> ${GITHUB_ENV}
 
-                    GCS_PATH="gs://liferay-cloud-native-bootstrapd/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
+                    GCS_PATH="gs://liferay-cloud-native-bootstrap/bootstrap/liferay-aws-bootstrap/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz"
 
                     echo "GCS_PATH=${GCS_PATH}" >> ${GITHUB_ENV}
             -   id: verify_version

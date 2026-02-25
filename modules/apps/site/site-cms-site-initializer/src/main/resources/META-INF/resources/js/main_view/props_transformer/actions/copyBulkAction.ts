@@ -4,6 +4,7 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
+import {sub} from 'frontend-js-web';
 
 import FolderItemSelectorModalContent from '../../modal/FolderItemSelectorModalContent';
 import {AdditionalProps} from '../AssetsFDSPropsTransformer';
@@ -19,6 +20,11 @@ const copyBulkAction = ({
 	dataSetId?: string;
 	selectedData: any;
 }) => {
+	const title =
+		selectedData.items.length === 1
+			? selectedData.items[0].title
+			: sub(Liferay.Language.get('x-items'), [selectedData.items.length]);
+
 	return render(
 
 		// @ts-ignore
@@ -34,7 +40,7 @@ const copyBulkAction = ({
 				embedded: {
 					...selectedData.items[0].embedded,
 				},
-				title: `${selectedData.items.length} items`,
+				title,
 			},
 			objectEntryFolderExternalReferenceCode:
 				additionalProps.objectEntryFolderExternalReferenceCode,

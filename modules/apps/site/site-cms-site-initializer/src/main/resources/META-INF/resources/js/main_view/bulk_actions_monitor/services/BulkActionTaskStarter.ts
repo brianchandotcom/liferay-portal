@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {sub} from 'frontend-js-web';
-
 import {RequestResult} from '../../../common/services/ApiHelper';
 import {
 	IBulkActionFDSData,
@@ -29,6 +27,7 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 		| ((response: RequestResult<IBulkActionTaskPage>) => void)
 		| null;
 	private readonly selectedData: IBulkActionFDSData;
+	private readonly additionalData?: Record<string, any>;
 
 	public readonly overrideDefaultErrorToast: boolean;
 	public readonly overrideDefaultSuccessToast: boolean;
@@ -37,6 +36,7 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 	public readonly type: keyof IBulkActionTaskType;
 
 	constructor({
+		additionalData,
 		apiURL,
 		keyValues,
 		onCreateError = null,
@@ -49,6 +49,8 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 		if (!apiURL) {
 			throw new Error('Cannot POST bulk action task.');
 		}
+
+		this.additionalData = additionalData;
 
 		this.onCreateTaskError = onCreateError;
 		this.onCreateTaskSuccess = onCreateSuccess;
@@ -76,14 +78,11 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			const message = getBulkActionTaskMessage(
 				this.type,
 				'info',
-				this.selectedData
+				this.selectedData,
+				this.additionalData
 			);
 
-			displayCreateTaskSuccessToast(
-				this.selectedData.selectAll
-					? message
-					: sub(message, [this.selectedData?.items?.length || 0])
-			);
+			displayCreateTaskSuccessToast(message);
 
 			if (this.onCreateTaskSuccess) {
 				this.onCreateTaskSuccess(response);

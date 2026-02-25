@@ -130,6 +130,9 @@ function executeBulkCopyAction(
 	selectedData: any
 ) {
 	triggerAssetBulkAction({
+		additionalData: {
+			targetName: folder.title,
+		},
 		apiURL,
 		keyValues: {
 			objectEntryFolderId: folder.id,

@@ -46,7 +46,8 @@ export interface IBulkActionTask {
 	};
 	id: number;
 	numberOfFailedItems: number;
-	numberOfItems: number;
+	numberOfItems: string | number;
+	numberOfSuccessfulItems: number;
 	taskResult: string;
 	totalCount: number;
 	type: keyof IBulkActionTaskType;
@@ -76,6 +77,7 @@ export interface IBulkActionTaskStarter {
 export interface IBulkActionTaskStarterDTO<
 	T extends keyof IBulkActionTaskType,
 > {
+	additionalData?: Record<string, any>;
 	apiURL?: string;
 	dataSetId?: string;
 	entryClassName?: string;
@@ -101,7 +103,9 @@ export interface IBulkActionTaskType {
 		externalReferenceCode: string;
 		name: string;
 	};
-	CopyBulkAction: {};
+	CopyBulkAction: {
+		objectEntryFolderId: number;
+	};
 	DefaultPermissionBulkAction: {
 		defaultPermissions: string;
 		depotGroupId?: number;

@@ -5,13 +5,13 @@
 
 package com.liferay.commerce.shop.by.diagram.internal.search;
 
-import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.index.contributor.CSDiagramEntryModelIndexerWriterContributor;
 import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.result.contributor.CSDiagramEntryModelSummaryContributor;
 import com.liferay.commerce.shop.by.diagram.internal.search.spi.model.result.contributor.CSDiagramEntryModelVisibilityContributor;
 import com.liferay.commerce.shop.by.diagram.model.CSDiagramEntry;
 import com.liferay.commerce.shop.by.diagram.service.CSDiagramEntryLocalService;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
+import com.liferay.portal.search.spi.model.index.contributor.helper.IndexerWriterMode;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
 import com.liferay.portal.search.spi.model.result.contributor.ModelVisibilityContributor;
@@ -59,9 +59,9 @@ public class CSDiagramEntryModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new CSDiagramEntryModelIndexerWriterContributor(
-				_csDiagramEntryLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			IndexerWriterMode.UPDATE,
+			_csDiagramEntryLocalService::getIndexableActionableDynamicQuery);
 		_modelVisibilityContributor =
 			new CSDiagramEntryModelVisibilityContributor(
 				_csDiagramEntryLocalService);

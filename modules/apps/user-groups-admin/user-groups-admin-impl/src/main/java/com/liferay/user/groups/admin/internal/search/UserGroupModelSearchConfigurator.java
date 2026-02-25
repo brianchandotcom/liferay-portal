@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchConfigurator;
 import com.liferay.portal.search.spi.model.result.contributor.ModelSummaryContributor;
-import com.liferay.user.groups.admin.internal.search.spi.model.index.contributor.UserGroupModelIndexerWriterContributor;
 import com.liferay.user.groups.admin.internal.search.spi.model.result.contributor.UserGroupModelSummaryContributor;
 
 import org.osgi.service.component.annotations.Activate;
@@ -52,8 +51,8 @@ public class UserGroupModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new UserGroupModelIndexerWriterContributor(_userGroupLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_userGroupLocalService::getIndexableActionableDynamicQuery);
 	}
 
 	private ModelIndexerWriterContributor<UserGroup>

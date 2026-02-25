@@ -258,7 +258,7 @@ public interface ElasticsearchConfiguration {
 	public String[] sidecarModuleNames();
 
 	@Meta.AD(
-		deflt = "10000", description = "sidecar-shutdown-timeout-help",
+		deflt = "60000", description = "sidecar-shutdown-timeout-help",
 		name = "sidecar-shutdown-timeout", required = false
 	)
 	public long sidecarShutdownTimeout();

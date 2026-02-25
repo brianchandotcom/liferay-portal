@@ -247,6 +247,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="label" type="String" />
 		<field name="name" type="String" />
+		<field name="status" type="int" />
 	</model>
 	<model name="com.liferay.object.model.ObjectFolderItem">
 		<field name="mvccVersion" type="long" />

@@ -68,7 +68,7 @@ public class ObjectFolderCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -92,6 +92,8 @@ public class ObjectFolderCacheModel
 		sb.append(label);
 		sb.append(", name=");
 		sb.append(name);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -156,6 +158,8 @@ public class ObjectFolderCacheModel
 			objectFolderImpl.setName(name);
 		}
 
+		objectFolderImpl.setStatus(status);
+
 		objectFolderImpl.resetOriginalValues();
 
 		return objectFolderImpl;
@@ -177,6 +181,8 @@ public class ObjectFolderCacheModel
 		modifiedDate = objectInput.readLong();
 		label = objectInput.readUTF();
 		name = objectInput.readUTF();
+
+		status = objectInput.readInt();
 	}
 
 	@Override
@@ -226,6 +232,8 @@ public class ObjectFolderCacheModel
 		else {
 			objectOutput.writeUTF(name);
 		}
+
+		objectOutput.writeInt(status);
 	}
 
 	public long mvccVersion;
@@ -239,5 +247,6 @@ public class ObjectFolderCacheModel
 	public long modifiedDate;
 	public String label;
 	public String name;
+	public int status;
 
 }

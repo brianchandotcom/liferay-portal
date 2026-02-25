@@ -162,9 +162,7 @@ public class LayoutUpgradeProcessTest extends BaseCTUpgradeProcessTestCase {
 						ctCollection.getCtCollectionId())) {
 
 				_assertLayoutIconImage(true, image2, layout1.getPlid());
-
 				_assertLayoutIconImage(true, image3, layout3.getPlid());
-
 				_assertLayoutIconImage(false, image0, layout4.getPlid());
 			}
 

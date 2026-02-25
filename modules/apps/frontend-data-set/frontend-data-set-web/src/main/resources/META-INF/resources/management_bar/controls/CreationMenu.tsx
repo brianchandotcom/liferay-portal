@@ -22,10 +22,10 @@ const MEDIUM_BREAKPOINT = 768;
 const DropdownTrigger = React.forwardRef(
 	(
 		{
-			hideManagementBarInEmptyState,
+			hideManagementBarInEmptyState = false,
 			inEmptyState,
 			...otherProps
-		}: {hideManagementBarInEmptyState: boolean; inEmptyState: boolean},
+		}: {hideManagementBarInEmptyState?: boolean; inEmptyState: boolean},
 		ref: Ref<HTMLButtonElement>
 	) => {
 		const {width} = useWindowSize();
@@ -77,11 +77,11 @@ const DropdownTrigger = React.forwardRef(
 );
 
 const DropDown = ({
-	hideManagementBarInEmptyState,
+	hideManagementBarInEmptyState = false,
 	inEmptyState,
 	primaryItems,
 }: {
-	hideManagementBarInEmptyState: boolean;
+	hideManagementBarInEmptyState?: boolean;
 	inEmptyState: boolean;
 	primaryItems: Array<ICreationActionItem>;
 }) => {
@@ -223,11 +223,11 @@ function CreationButton({
 }
 
 function CreationMenu({
-	hideManagementBarInEmptyState,
+	hideManagementBarInEmptyState = false,
 	inEmptyState,
 	primaryItems,
 }: {
-	hideManagementBarInEmptyState: boolean;
+	hideManagementBarInEmptyState?: boolean;
 	inEmptyState: boolean;
 	primaryItems: Array<ICreationActionItem>;
 }) {

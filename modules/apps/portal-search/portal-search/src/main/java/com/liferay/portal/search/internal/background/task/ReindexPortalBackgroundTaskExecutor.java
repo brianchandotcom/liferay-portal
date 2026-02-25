@@ -99,10 +99,10 @@ public class ReindexPortalBackgroundTaskExecutor
 								SearchEngineInitializer
 									searchEngineInitializer =
 										new SearchEngineInitializer(
-											indexers, companyId,
+											companyId,
 											_concurrentReindexManagerSnapshot.
 												get(),
-											executionMode,
+											executionMode, indexers,
 											_portalExecutorManager,
 											_syncReindexManagerSnapshot.get());
 

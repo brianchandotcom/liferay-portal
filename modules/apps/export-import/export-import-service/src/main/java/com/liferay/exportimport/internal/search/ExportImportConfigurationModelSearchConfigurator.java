@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.internal.search;
 
-import com.liferay.exportimport.internal.search.spi.model.index.contributor.ExportImportConfigurationModelIndexerWriterContributor;
 import com.liferay.exportimport.internal.search.spi.model.result.contributor.ExportImportConfigurationModelSummaryContributor;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
@@ -54,9 +53,9 @@ public class ExportImportConfigurationModelSearchConfigurator
 
 	@Activate
 	protected void activate() {
-		_modelIndexWriterContributor =
-			new ExportImportConfigurationModelIndexerWriterContributor(
-				_exportImportConfigurationLocalService);
+		_modelIndexWriterContributor = new ModelIndexerWriterContributor<>(
+			_exportImportConfigurationLocalService::
+				getIndexableActionableDynamicQuery);
 
 		_modelSummaryContributor =
 			new ExportImportConfigurationModelSummaryContributor();

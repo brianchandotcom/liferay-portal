@@ -228,17 +228,17 @@ export class WidgetPagePage {
 	}
 
 	async toggleControls(state: 'visible' | 'hidden') {
-		const isOpen = await this.toggleControlsButton
-			.locator('svg')
-			.evaluate((element) =>
-				element.classList.contains('lexicon-icon-view')
-			);
+		const body = this.page.locator('body');
 
-		if (
-			(state === 'visible' && !isOpen) ||
-			(state === 'hidden' && isOpen)
-		) {
-			await this.toggleControlsButton.click();
-		}
+		const targetClass =
+			state === 'visible' ? 'controls-visible' : 'controls-hidden';
+
+		await expect(async () => {
+			await this.toggleControlsButton.click({timeout: 2000});
+
+			await expect(body).toHaveClass(new RegExp(`\\b${targetClass}\\b`), {
+				timeout: 3000,
+			});
+		}).toPass();
 	}
 }

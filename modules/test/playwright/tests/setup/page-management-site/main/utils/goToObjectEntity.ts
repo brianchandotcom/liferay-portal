@@ -1,4 +1,4 @@
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 
 import {expandSection} from '../../../../../utils/expandSection';
 import {openProductMenu} from '../../../../../utils/productMenu';
@@ -26,26 +26,34 @@ export async function goToObjectEntity({
 
 	// Go to entity
 
-	if (siteScope) {
-		await page
-			.getByRole('button', {name: 'Open Applications Menu'})
-			.click();
+	await expect(async () => {
+		if (siteScope) {
+			await page
+				.getByRole('button', {name: 'Open Applications Menu'})
+				.click({timeout: 2000});
 
-		await page.getByRole('tab', {name: siteScope}).click();
+			await page
+				.getByRole('tab', {name: siteScope})
+				.click({timeout: 2000});
 
-		await page.getByRole('menuitem', {name: pluralName}).click();
-	}
-	else {
-		await openProductMenu(page);
+			await page
+				.getByRole('menuitem', {name: pluralName})
+				.click({timeout: 2000});
+		}
+		else {
+			await openProductMenu(page);
 
-		const sectionButton = page.getByRole('menuitem', {
-			name: 'Content & Data',
-		});
+			const sectionButton = page.getByRole('menuitem', {
+				name: 'Content & Data',
+			});
 
-		await expandSection(sectionButton);
+			await expandSection(sectionButton);
 
-		await page.getByRole('menuitem', {name: pluralName}).click();
-	}
+			await page
+				.getByRole('menuitem', {name: pluralName})
+				.click({timeout: 2000});
+		}
 
-	await page.locator('.fds tbody').waitFor();
+		await page.locator('.fds tbody').waitFor({timeout: 2000});
+	}).toPass();
 }

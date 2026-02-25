@@ -701,6 +701,7 @@ export class ApplicationsMenuPage {
 
 	async goToSite(name: string = 'Liferay DXP', checkTabVisibility = true) {
 		await this.goto(checkTabVisibility);
+
 		await this.page.getByRole('link', {exact: true, name}).click();
 	}
 

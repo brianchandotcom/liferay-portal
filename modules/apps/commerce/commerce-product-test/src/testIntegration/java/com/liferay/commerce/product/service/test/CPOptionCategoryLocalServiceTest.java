@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -46,7 +45,6 @@ public class CPOptionCategoryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -60,11 +58,11 @@ public class CPOptionCategoryLocalServiceTest {
 		frutillaRule.scenario(
 			"Add Option Category"
 		).given(
-			"There is no option category"
+			"There is no Option Category"
 		).when(
 			"Option Category is added without required key field"
 		).then(
-			"Option category should not be created"
+			"Option Category should not be created"
 		);
 
 		_cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
@@ -81,11 +79,11 @@ public class CPOptionCategoryLocalServiceTest {
 		frutillaRule.scenario(
 			"Add Option Category"
 		).given(
-			"There is no option category"
+			"There is no Option Category"
 		).when(
 			"Option Category is added without required title field"
 		).then(
-			"Option category should not be created"
+			"Option Category should not be created"
 		);
 
 		_cpOptionCategoryLocalService.addOrUpdateCPOptionCategory(
@@ -101,9 +99,7 @@ public class CPOptionCategoryLocalServiceTest {
 	@Inject
 	private CPOptionCategoryLocalService _cpOptionCategoryLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
-
 	private ServiceContext _serviceContext;
 	private User _user;
 

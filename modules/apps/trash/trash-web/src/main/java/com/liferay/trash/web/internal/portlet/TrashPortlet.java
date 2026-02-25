@@ -361,10 +361,10 @@ public class TrashPortlet extends MVCPortlet {
 		AssetEntry assetEntry = _assetEntryService.getEntry(
 			trashEntry.getClassName(), trashEntry.getClassPK());
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		if ((themeDisplay.getScopeGroupId() != assetEntry.getGroupId())) {
+		if (themeDisplay.getScopeGroupId() != assetEntry.getGroupId()) {
 			throw new PrincipalException.MustHavePermission(
 				themeDisplay.getUserId(), trashEntry.getClassName(),
 				trashEntry.getClassPK(), ActionKeys.VIEW);

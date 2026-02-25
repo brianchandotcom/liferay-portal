@@ -18,6 +18,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIconClientExtension;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIconItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.IconImageURLReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.Settings;
@@ -289,6 +290,29 @@ public class SettingsTestUtil {
 			Objects.deepEquals(
 				expectedSettings.getThemeSpritemapClientExtension(),
 				actualSettings.getThemeSpritemapClientExtension()));
+
+		IconImageURLReference expectedIconImageURLReference =
+			expectedSettings.getIconImageURLReference();
+		IconImageURLReference actualIconImageURLReference =
+			actualSettings.getIconImageURLReference();
+
+		if (expectedIconImageURLReference != null) {
+			Assert.assertNotNull(actualIconImageURLReference);
+			Assert.assertEquals(
+				expectedIconImageURLReference.getExternalReferenceCode(),
+				actualIconImageURLReference.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertNull(actualIconImageURLReference);
+		}
+	}
+
+	public static IconImageURLReference getIconImageURLReference() {
+		return new IconImageURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+			}
+		};
 	}
 
 	public static ItemExternalReference getMasterPageItemExternalReference(
@@ -537,6 +561,9 @@ public class SettingsTestUtil {
 				_getClientExtension(
 					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 		}
+
+		settings.setIconImageURLReference(
+			SettingsTestUtil::getIconImageURLReference);
 	}
 
 	private static void _assertClientExtension(

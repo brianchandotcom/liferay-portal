@@ -264,16 +264,16 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 						<div class="commerce-panel__content">
 							<div class="row">
 								<div class="col-md-6">
-									<dl class="commerce-list">
+									<div class="commerce-list">
 										<c:choose>
 											<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
-												<aui:input cssClass="commerce-input" inlineField="<%= true %>" label="" name="name" wrappedField="<%= false %>" />
+												<aui:input cssClass="commerce-input" inlineField="<%= true %>" label="name" labelCssClass="sr-only" name="name" wrappedField="<%= false %>" />
 											</c:when>
 											<c:otherwise>
 												<%= HtmlUtil.escape(commerceOrder.getName()) %>
 											</c:otherwise>
 										</c:choose>
-									</dl>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -293,8 +293,8 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 							<c:if test="<%= commerceOrderContentDisplayContext.hasViewBillingAddressPermission(permissionChecker, accountEntry) %>">
 								<c:choose>
 									<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
-										<dl class="commerce-list">
-											<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
+										<div class="commerce-list">
+											<aui:select aria-label='<%= LanguageUtil.get(request, "billing-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="billingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
 
 												<%
 												for (CommerceAddress commerceAddress : billingAddresses) {
@@ -307,7 +307,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 												%>
 
 											</aui:select>
-										</dl>
+										</div>
 									</c:when>
 									<c:otherwise>
 										<c:if test="<%= billingCommerceAddress != null %>">
@@ -340,8 +340,8 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 						<div class="col-md-12">
 							<c:choose>
 								<c:when test="<%= commerceOrderContentDisplayContext.hasModelPermission(commerceOrder, ActionKeys.UPDATE) %>">
-									<dl class="commerce-list">
-										<aui:select cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
+									<div class="commerce-list">
+										<aui:select aria-label='<%= LanguageUtil.get(request, "shipping-address") %>' cssClass="commerce-input" inlineField="<%= true %>" label="" name="shippingAddressId" showEmptyOption="<%= true %>" wrappedField="<%= false %>">
 
 											<%
 											for (CommerceAddress commerceAddress : shippingAddresses) {
@@ -354,7 +354,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 											%>
 
 										</aui:select>
-									</dl>
+									</div>
 								</c:when>
 								<c:otherwise>
 									<c:if test="<%= shippingCommerceAddress != null %>">
@@ -383,7 +383,6 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 		direction="right"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
 		showWhenSingleIcon="<%= true %>"
 		triggerCssClass="btn btn-lg btn-monospaced btn-primary position-fixed thumb-menu"
 	>

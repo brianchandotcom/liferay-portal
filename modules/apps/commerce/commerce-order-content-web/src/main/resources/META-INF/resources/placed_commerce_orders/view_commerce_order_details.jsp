@@ -404,7 +404,6 @@ if (commerceOrder != null) {
 		direction="right"
 		icon="<%= StringPool.BLANK %>"
 		markupView="lexicon"
-		message="<%= StringPool.BLANK %>"
 		showWhenSingleIcon="<%= true %>"
 		triggerCssClass="btn btn-lg btn-monospaced btn-primary position-fixed thumb-menu"
 	>

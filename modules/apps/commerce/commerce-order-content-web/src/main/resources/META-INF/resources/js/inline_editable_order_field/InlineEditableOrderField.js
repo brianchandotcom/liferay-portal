@@ -63,7 +63,7 @@ const InlineEditableOrderField = ({
 				className="align-items-center d-flex"
 				id={`${namespace}inlineEditableOrderField`}
 			>
-				<span className="text-black-50">{label && `${label}`}</span>
+				<span className="text-secondary">{label && `${label}`}</span>
 
 				{currentValue ? (
 					<span className="font-weight-bold ml-2">
@@ -72,7 +72,7 @@ const InlineEditableOrderField = ({
 				) : (
 					<ClayButton
 						aria-label={Liferay.Language.get('not-set')}
-						className="border-bottom border-dashed btn-sm ml-2 p-0 small text-black-50 text-decoration-none"
+						className="border-bottom border-dashed btn-sm ml-2 p-0 small text-decoration-none text-secondary"
 						displayType="link"
 						onClick={() =>
 							hasPermission &&

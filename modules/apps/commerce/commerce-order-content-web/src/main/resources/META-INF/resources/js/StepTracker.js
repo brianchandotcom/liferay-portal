@@ -51,7 +51,10 @@ const StepTracker = ({isOpen, orderId, stepModels}) => {
 	return steps.length <= 1 ? (
 		<></>
 	) : (
-		<ClayMultiStepNav indicatorLabel="top">
+		<ClayMultiStepNav
+			indicatorLabel="top"
+			{...{'aria-hidden': true, 'tabindex': -1}}
+		>
 			{steps.map(({label, state}, i) => {
 				const complete = state === 'completed';
 
@@ -66,6 +69,9 @@ const StepTracker = ({isOpen, orderId, stepModels}) => {
 
 						<ClayMultiStepNav.Indicator
 							complete={complete}
+							innerRef={(ref) => {
+								ref?.setAttribute('tabindex', '-1');
+							}}
 							subTitle={label}
 						/>
 					</ClayMultiStepNav.Item>

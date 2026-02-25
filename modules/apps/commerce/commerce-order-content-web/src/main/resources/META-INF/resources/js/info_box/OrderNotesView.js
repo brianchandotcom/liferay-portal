@@ -17,6 +17,7 @@ const OrderNotesView = ({
 	elementId,
 	hasManageOrderRestrictedNotesPermission,
 	hasViewPermission,
+	isOpen,
 	label,
 	namespace,
 	orderId,
@@ -131,7 +132,8 @@ const OrderNotesView = ({
 
 					{hasViewPermission ? (
 						<ClayButton
-							aria-controls={`${namespace}InfoBoxModalNotes`}
+							aria-expanded={isOpen}
+							aria-haspopup="dialog"
 							className="ml-2"
 							data-qa-id={`${label}-infoBoxButton`}
 							displayType={buttonDisplayType}

@@ -16,7 +16,9 @@ public class FrontendESMUtil {
 	public static String buildExportsURL(
 		ThemeDisplay themeDisplay, String contextPath, String exportModule) {
 
-		return buildURL(themeDisplay, contextPath, "exports/" + exportModule);
+		return buildURL(
+			themeDisplay, contextPath,
+			"exports/" + exportModule.replaceAll("/", "\\$"));
 	}
 
 	public static String buildURL(

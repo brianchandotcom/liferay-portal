@@ -22,6 +22,7 @@ import jakarta.portlet.WindowState;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -45,11 +46,30 @@ public class EditAgentDefinitionDisplayContext {
 		String portalURL = company.getPortalURL(
 			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
+		String workflowDefinitionName = _httpServletRequest.getParameter(
+			"workflowDefinitionName");
+
 		return HashMapBuilder.<String, Object>put(
 			"backURL", portalURL + "/web/ai-hub/agents"
 		).put(
 			"externalReferenceCode",
 			_httpServletRequest.getParameter("externalReferenceCode")
+		).put(
+			"readonly",
+			() -> {
+				if ((workflowDefinitionName != null) &&
+					Arrays.asList(
+						WorkflowDefinitionConstants.
+							SYSTEM_WORKFLOW_DEFINITION_NAMES
+					).contains(
+						workflowDefinitionName
+					)) {
+
+					return true;
+				}
+
+				return false;
+			}
 		).put(
 			"workflowDefinitionURL",
 			() -> {
@@ -62,9 +82,6 @@ public class EditAgentDefinitionDisplayContext {
 						LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
 					GroupConstants.CONTROL_PANEL_FRIENDLY_URL,
 					PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
-
-				String workflowDefinitionName =
-					_httpServletRequest.getParameter("workflowDefinitionName");
 
 				if (workflowDefinitionName != null) {
 					url = HttpComponentsUtil.addParameter(

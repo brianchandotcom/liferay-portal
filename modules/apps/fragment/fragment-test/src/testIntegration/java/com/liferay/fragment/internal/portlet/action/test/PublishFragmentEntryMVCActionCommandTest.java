@@ -49,14 +49,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import jakarta.portlet.ActionRequest;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import jakarta.portlet.ActionRequest;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -96,8 +96,7 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			new MockLiferayPortletActionResponse();
 
 		_mvcActionCommand.processAction(
-			_getActionRequest(fragmentEntry),
-			mockLiferayPortletActionResponse);
+			_getActionRequest(fragmentEntry), mockLiferayPortletActionResponse);
 
 		MockHttpServletResponse mockHttpServletResponse =
 			(MockHttpServletResponse)
@@ -168,21 +167,6 @@ public class PublishFragmentEntryMVCActionCommandTest {
 		}
 	}
 
-	private FragmentEntry _getFragmentEntry(String configuration, String html)
-		throws PortalException {
-
-		return _fragmentEntryLocalService.addFragmentEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(),
-			_fragmentCollection.getFragmentCollectionId(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
-			false, configuration, null, 0, false, false,
-			FragmentConstants.TYPE_COMPONENT, null,
-			WorkflowConstants.STATUS_DRAFT,
-			ServiceContextTestUtil.getServiceContext(
-				_group, TestPropsValues.getUserId()));
-	}
-
 	private ActionRequest _getActionRequest(FragmentEntry fragmentEntry)
 		throws Exception {
 
@@ -196,6 +180,21 @@ public class PublishFragmentEntryMVCActionCommandTest {
 			String.valueOf(fragmentEntry.getFragmentEntryId()));
 
 		return mockLiferayPortletActionRequest;
+	}
+
+	private FragmentEntry _getFragmentEntry(String configuration, String html)
+		throws PortalException {
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), html, RandomTestUtil.randomString(),
+			false, configuration, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_DRAFT,
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId()));
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {

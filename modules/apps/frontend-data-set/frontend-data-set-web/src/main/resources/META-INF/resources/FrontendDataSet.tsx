@@ -1588,6 +1588,9 @@ const FrontendDataSetContent = ({
 					<EmptyState
 						creationMenu={creationMenu}
 						emptyStateConfiguration={emptyState}
+						hideManagementBarInEmptyState={
+							hideManagementBarInEmptyState
+						}
 						onClearFilters={onClearFilters}
 					/>
 				)}

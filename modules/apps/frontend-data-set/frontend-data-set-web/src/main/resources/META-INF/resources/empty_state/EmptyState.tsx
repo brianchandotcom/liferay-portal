@@ -14,6 +14,7 @@ import {IFrontendDataSetProps} from '../utils/types';
 interface IEmptyStateProps {
 	creationMenu?: IFrontendDataSetProps['creationMenu'];
 	emptyStateConfiguration?: IFrontendDataSetProps['emptyState'];
+	hideManagementBarInEmptyState?: boolean;
 	onClearFilters: () => void;
 }
 
@@ -27,6 +28,7 @@ const getImgSrc = (image: string) =>
 const EmptyState = ({
 	creationMenu,
 	emptyStateConfiguration,
+	hideManagementBarInEmptyState = false,
 	onClearFilters,
 }: IEmptyStateProps) => {
 	const {globalFDSState} = useContext(FrontendDataSetContext);
@@ -129,7 +131,15 @@ const EmptyState = ({
 				Liferay.Language.get('no-results-found')
 			}
 		>
-			{creationMenu && <CreationMenu {...creationMenu} inEmptyState />}
+			{creationMenu && (
+				<CreationMenu
+					{...creationMenu}
+					hideManagementBarInEmptyState={
+						hideManagementBarInEmptyState
+					}
+					inEmptyState={true}
+				/>
+			)}
 		</ClayEmptyState>
 	);
 };

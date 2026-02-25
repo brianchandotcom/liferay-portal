@@ -47,7 +47,7 @@ function formatTimeZoneOffset(timeZoneOffset?: string, region?: string) {
 	}`.trim();
 }
 
-type ContextualInfoData = {
+type ContextualInformationData = {
 	browserName?: string;
 	city?: string;
 	country?: string;
@@ -65,7 +65,7 @@ type ContextualInfoData = {
 };
 
 interface IContextualInfoProps {
-	contextualInfo: ContextualInfoData;
+	contextData: ContextualInformationData;
 	email?: string;
 	showEmptyState?: boolean;
 	uuid?: string;
@@ -89,9 +89,9 @@ const INFO_LANGUAGE_MAP: Record<string, string> = {
 	uuid: 'UUID'
 };
 
-const ContextualInfo: React.FC<IContextualInfoProps> = ({
+const ContextualInformation: React.FC<IContextualInfoProps> = ({
 	children: emptyState,
-	contextualInfo,
+	contextData,
 	email,
 	showEmptyState = false,
 	uuid
@@ -101,7 +101,7 @@ const ContextualInfo: React.FC<IContextualInfoProps> = ({
 		if (key === 'uuid') return uuid;
 
 		if (key === 'timeZoneOffset') {
-			const {region, timeZoneOffset} = contextualInfo || {};
+			const {region, timeZoneOffset} = contextData || {};
 
 			if (timeZoneOffset || region) {
 				return formatTimeZoneOffset(timeZoneOffset, region);
@@ -109,7 +109,9 @@ const ContextualInfo: React.FC<IContextualInfoProps> = ({
 			return undefined;
 		}
 
-		return contextualInfo?.[key as keyof ContextualInfoData] || undefined;
+		return (
+			contextData?.[key as keyof ContextualInformationData] || undefined
+		);
 	};
 
 	return (
@@ -132,4 +134,4 @@ const ContextualInfo: React.FC<IContextualInfoProps> = ({
 	);
 };
 
-export default ContextualInfo;
+export default ContextualInformation;

@@ -2,7 +2,7 @@ import * as API from 'shared/api';
 import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ContextualInfo from '../components/ContextualInfo';
+import ContextualInformation from '../components/ContextualInformation';
 import IndividualProfileCard from '../hoc/ProfileCard';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -111,9 +111,9 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	return (
 		<div className='overview-column-main'>
-			<ContextualInfo showEmptyState={!sitesSelected}>
+			<ContextualInformation showEmptyState={!sitesSelected}>
 				{EMPTY_STATE_FRAGMENT}
-			</ContextualInfo>
+			</ContextualInformation>
 			<IndividualProfileCard
 				channelId={channelId}
 				entity={individual}

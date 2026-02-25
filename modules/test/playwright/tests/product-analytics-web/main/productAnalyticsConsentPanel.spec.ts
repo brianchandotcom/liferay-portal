@@ -265,7 +265,7 @@ test(
 
 		await test.step('Verify Customize button displays Consent Panel', async () => {
 			await expectProductAnalyticsConsentPanelButtons(
-				await productAnalyticsConsentPanelPage.consentPanelFormLocator
+				await productAnalyticsConsentPanelPage.consentPanel
 			);
 		});
 	}
@@ -404,7 +404,7 @@ test(
 		await test.step('AC3: Verify Product Analytics Account Settings', async () => {
 			await accountSettingsPage.goToDataAndPrivacy();
 
-			await productAnalyticsConsentPanelPage.consentPanelFormLocator.waitFor();
+			await productAnalyticsConsentPanelPage.consentPanel.waitFor();
 		});
 
 		await test.step('Verify all cookie types are present and accepted', async () => {
@@ -415,8 +415,7 @@ test(
 			)) {
 				const toggle =
 					await productAnalyticsConsentPanelPage.getCookieTypeToggle(
-						optionalProductAnalyticsCookieType,
-						false
+						optionalProductAnalyticsCookieType
 					);
 
 				await expect(await toggle).toBeChecked();

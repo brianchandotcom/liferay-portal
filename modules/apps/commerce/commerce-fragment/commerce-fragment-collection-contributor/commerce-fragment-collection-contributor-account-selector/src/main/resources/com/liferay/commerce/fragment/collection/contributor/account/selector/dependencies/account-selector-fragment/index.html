@@ -37,14 +37,14 @@
 	[/@]
 
 	<div class="account-selector-container" id="${fragmentEntryLinkNamespace}-account-selector-container">
-		<div class="account-selector-cta-container"[#if layoutMode != 'edit'] data-toggle="liferay-dropdown"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-cta-container">
+		<div class="account-selector-cta-container"[#if layoutMode != 'edit'] data-toggle="liferay-dropdown"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-cta-container" role="button">
 			<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
 		</div>
 
 		<div class="[#if layoutMode != 'edit']dropdown-menu[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
 			<div class="account-selector-dropdown-panel">
 				<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-active-panel-key="${configuration.defaultPanelKey}"[#if layoutMode == 'edit'] data-step="0"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
-					<button class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
+					<button aria-label="${languageUtil.get(locale, "back-to-accounts")}" class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
 						<svg class="lexicon-icon lexicon-icon-angle-left-small" focusable="false" role="presentation">
 							<use href="/o/admin-theme/images/clay/icons.svg#angle-left-small"></use>
 						</svg>
@@ -56,7 +56,7 @@
 						</span>
 					</span>
 
-					<button class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-next-button" type="button">
+					<button aria-label="${languageUtil.get(locale, "back-to-orders")}" class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-next-button" type="button">
 						<svg class="lexicon-icon lexicon-icon-angle-right-small" focusable="false" role="presentation">
 							<use href="/o/admin-theme/images/clay/icons.svg#angle-right-small"></use>
 						</svg>

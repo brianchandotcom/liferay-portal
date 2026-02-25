@@ -42,19 +42,6 @@ export const testWithHeadlessContentPagesFF = mergeTests(
 	pageTemplatesPagesTest
 );
 
-async function expectExportName(exportImportPage, taskName: string) {
-	await exportImportPage.goToExport();
-
-	await exportImportPage.newExportButton.click();
-
-	await exportImportPage.exportButton.click();
-
-	const exportFilePath =
-		await exportImportPage.downloadExportProcess(taskName);
-
-	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}${taskName}-`));
-}
-
 test('can export at site level with custom export task name', async ({
 	exportImportPage,
 }) => {
@@ -67,10 +54,19 @@ test('can export at site level with custom export task name', async ({
 	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}MyExport-`));
 });
 
-test('can export at site level with new file name', async ({
+test('can export at site level with the default file name', async ({
 	exportImportPage,
 }) => {
-	await expectExportName(exportImportPage, 'Export');
+	await exportImportPage.goToExport();
+
+	await exportImportPage.newExportButton.click();
+
+	await exportImportPage.exportButton.click();
+
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess('Export');
+
+	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}Export-`));
 });
 
 test('can see corresponding elements at site level', async ({

@@ -16,6 +16,7 @@ export class EditVocabularyPage {
 
 	readonly assetTypeCheckbox: Locator;
 	readonly assetTypeSelector: Locator;
+	readonly assetTypeToggle: Locator;
 	readonly assetTypesButton: Locator;
 	readonly generalButton: Locator;
 	readonly multiSelectToggle: Locator;
@@ -32,6 +33,7 @@ export class EditVocabularyPage {
 			name: 'Make this vocabulary available in all asset types',
 		});
 		this.assetTypeSelector = this.page.getByLabel('Asset Type Selector');
+		this.assetTypeToggle = this.page.getByLabel('toggle-asset-type');
 		this.assetTypesButton = this.page.getByRole('menuitem', {
 			name: 'Associated Asset Types',
 		});

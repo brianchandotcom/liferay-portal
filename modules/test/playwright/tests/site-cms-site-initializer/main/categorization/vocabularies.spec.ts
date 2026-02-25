@@ -174,6 +174,8 @@ test(
 
 		await editVocabularyPage.selectAssetTypes('Blog');
 
+		await editVocabularyPage.assetTypeToggle.check();
+
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
 				`Success:${name} was published successfully.`
@@ -220,6 +222,8 @@ test(
 		const assetTypesInputLocator = page.locator('div[role="grid"] > span');
 
 		await expect(assetTypesInputLocator).toContainText(['Blog']);
+
+		await expect(editVocabularyPage.assetTypeToggle).toBeChecked();
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText(

@@ -1937,8 +1937,9 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
 
-		return updateObjectEntry(
-			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+		return _updateObjectEntry(
+			true, objectEntryFolderId, objectEntryId, false, serviceContext,
+			userId, values);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -1977,8 +1978,8 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryFolderId, objectEntryId, true, serviceContext, userId,
-			values);
+			false, objectEntryFolderId, objectEntryId, true, serviceContext,
+			userId, values);
 	}
 
 	@Override
@@ -2188,8 +2189,8 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		return _updateObjectEntry(
-			objectEntryFolderId, objectEntryId, false, serviceContext, userId,
-			values);
+			false, objectEntryFolderId, objectEntryId, false, serviceContext,
+			userId, values);
 	}
 
 	@Override
@@ -6620,8 +6621,8 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private ObjectEntry _updateObjectEntry(
-			long objectEntryFolderId, long objectEntryId, boolean partialUpdate,
-			ServiceContext serviceContext, long userId,
+			boolean move, long objectEntryFolderId, long objectEntryId,
+			boolean partialUpdate, ServiceContext serviceContext, long userId,
 			Map<String, Serializable> values)
 		throws PortalException {
 
@@ -6664,9 +6665,11 @@ public class ObjectEntryLocalServiceImpl
 
 		int workflowAction = serviceContext.getWorkflowAction();
 
-		_validateWorkflowAction(
-			objectDefinition.isEnableObjectEntryDraft(), objectDefinition,
-			objectEntry.getStatus(), workflowAction);
+		if (!move) {
+			_validateWorkflowAction(
+				objectDefinition.isEnableObjectEntryDraft(), objectDefinition,
+				objectEntry.getStatus(), workflowAction);
+		}
 
 		Map<String, Serializable> transientValues = objectEntry.getValues();
 
@@ -6694,13 +6697,17 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 
-		_setDisplayDate(objectDefinition.getCompanyId(), objectEntry, values);
-		_setExpirationDate(
-			objectDefinition.getCompanyId(), objectEntry, values);
-		_setReviewDate(objectDefinition.getCompanyId(), objectEntry, values);
+		if (!move) {
+			_setDisplayDate(
+				objectDefinition.getCompanyId(), objectEntry, values);
+			_setExpirationDate(
+				objectDefinition.getCompanyId(), objectEntry, values);
+			_setReviewDate(
+				objectDefinition.getCompanyId(), objectEntry, values);
+		}
 
 		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
-			!objectEntry.isPending()) {
+			!objectEntry.isPending() && !move) {
 
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());
@@ -6728,6 +6735,10 @@ public class ObjectEntryLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds(),
 			serviceContext.getAssetPriority(), serviceContext);
+
+		if (move) {
+			return objectEntry;
+		}
 
 		_addFriendlyURLEntry(
 			objectDefinition, objectEntry, serviceContext, values);

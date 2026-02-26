@@ -74,9 +74,9 @@ public class BuildJSONObject extends JSONObject {
 
 			ZonedDateTime zonedDateTime = instant.atZone(ZoneOffset.UTC);
 
-			LocalDate startDate = zonedDateTime.toLocalDate();
+			LocalDate localDate = zonedDateTime.toLocalDate();
 
-			_startDateString = startDate.format(
+			_startDateString = localDate.format(
 				DateTimeFormatter.ofPattern("yyyyMMdd"));
 		}
 

@@ -78,7 +78,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata1 =
 			_oAuthClientASLocalMetadataLocalService.
 				addOAuthClientASLocalMetadata(
-					TestPropsValues.getUserId(), url1, url1, url1, false,
+					TestPropsValues.getUserId(), url1, url1, url1, false, url1,
 					new String[] {supported1}, new String[] {supported1},
 					new String[] {"public"}, url1, url1);
 
@@ -104,7 +104,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 				updateOAuthClientASLocalMetadata(
 					oAuthClientASLocalMetadata1.
 						getOAuthClientASLocalMetadataId(),
-					url1, url1, url1, true, new String[] {supported1},
+					url1, url1, url1, true, url1, new String[] {supported1},
 					new String[] {supported1}, new String[] {"public"}, url1,
 					url1);
 
@@ -131,7 +131,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata2 =
 			_oAuthClientASLocalMetadataLocalService.
 				addOAuthClientASLocalMetadata(
-					TestPropsValues.getUserId(), url2, url2, url2, true,
+					TestPropsValues.getUserId(), url2, url2, url2, true, url2,
 					new String[] {supported2}, new String[] {supported2},
 					new String[] {"public"}, url2, url2);
 
@@ -148,7 +148,7 @@ public class OAuth2WellKnownAuthorizationServerServletTest {
 		_oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadata1.getOAuthClientASLocalMetadataId(),
-				url1, url1, url1, false, new String[] {supported1},
+				url1, url1, url1, false, url1, new String[] {supported1},
 				new String[] {supported1}, new String[] {"public"}, url1, url1);
 
 		responseJSON = HttpUtil.URLtoString(options);

@@ -253,6 +253,10 @@ public class SettingsTestUtil {
 			Objects.deepEquals(
 				expectedSettings.getGlobalJSClientExtensions(),
 				actualSettings.getGlobalJSClientExtensions()));
+		Assert.assertTrue(
+			Objects.deepEquals(
+				expectedSettings.getIconImageURLReference(),
+				actualSettings.getIconImageURLReference()));
 		Assert.assertEquals(
 			expectedSettings.getJavascript(), actualSettings.getJavascript());
 		Assert.assertTrue(
@@ -290,10 +294,6 @@ public class SettingsTestUtil {
 			Objects.deepEquals(
 				expectedSettings.getThemeSpritemapClientExtension(),
 				actualSettings.getThemeSpritemapClientExtension()));
-		Assert.assertTrue(
-			Objects.deepEquals(
-				expectedSettings.getIconImageURLReference(),
-				actualSettings.getIconImageURLReference()));
 	}
 
 	public static ItemExternalReference getMasterPageItemExternalReference(

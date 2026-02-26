@@ -214,6 +214,36 @@ test(
 );
 
 test(
+	'Verify alert only appears if changing the value',
+	{tag: '@LPD-79710'},
+	async ({page}) => {
+		const enabledButton = await page.getByLabel('Enabled');
+
+		await enabledButton.setChecked(true);
+
+		const consentRenewalPeriodField = await page.getByLabel(
+			'Consent Renewal Period'
+		);
+
+		await consentRenewalPeriodField.fill('12');
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		await consentRenewalPeriodField.fill('11');
+
+		await page.getByRole('button', {name: 'Update'}).click();
+
+		page.once('dialog', async (dialogWindow) => {
+			await expect(dialogWindow.message()).toContain(
+				'You are about to change the consent renewal period'
+			);
+
+			await dialogWindow.dismiss();
+		});
+	}
+);
+
+test(
 	'Verify Consent Renewal Period correctly sets cookie expiration',
 	{tag: '@LPD-68504'},
 	async ({page, productAnalyticsBannerPage}) => {

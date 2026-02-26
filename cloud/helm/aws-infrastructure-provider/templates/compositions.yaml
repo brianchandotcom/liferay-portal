@@ -832,7 +832,7 @@ spec:
                         {{- end }}
 
                         {{- $searchName := printf "%.21s-search" $baseName -}}
-                        {{- $searchSpec := $xr.spec.search }}
+                        {{- $searchSpec := $xr.spec.search.opensearch }}
 
                         ---
                         apiVersion: opensearch.aws.m.upbound.io/v1beta1

@@ -1816,8 +1816,9 @@ public class ThemeDisplay
 	}
 
 	public void setSiteGroupId(long siteGroupId) {
-		_parentSiteGroupId = 0;
 		_siteGroupId = siteGroupId;
+
+		_parentSiteGroupId = 0;
 
 		if (_siteGroupId > 0) {
 			try {

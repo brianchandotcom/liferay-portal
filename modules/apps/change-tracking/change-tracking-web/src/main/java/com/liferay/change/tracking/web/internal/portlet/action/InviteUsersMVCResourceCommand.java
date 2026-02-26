@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -105,8 +107,33 @@ public class InviteUsersMVCResourceCommand
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			resourceRequest);
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long ctCollectionId = ParamUtil.getLong(
 			resourceRequest, "ctCollectionId");
+
+		try {
+			AuthTokenUtil.checkCSRFToken(
+				httpServletRequest,
+				InviteUsersMVCResourceCommand.class.getName());
+
+			CTCollectionPermission.contains(
+				themeDisplay.getPermissionChecker(), ctCollectionId,
+				CTActionKeys.INVITE_USERS);
+		}
+		catch (PrincipalException principalException) {
+			JSONPortletResponseUtil.writeJSON(
+				resourceRequest, resourceResponse,
+				JSONUtil.put(
+					"errorMessage",
+					_language.get(
+						httpServletRequest,
+						"you-do-not-have-permission-to-invite-users-to-this-" +
+							"publication")));
+
+			return;
+		}
 
 		CTCollection ctCollection = _ctCollectionLocalService.fetchCTCollection(
 			ctCollectionId);
@@ -121,26 +148,6 @@ public class InviteUsersMVCResourceCommand
 					_language.get(
 						httpServletRequest,
 						"this-publication-no-longer-exists")));
-
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if ((ctCollection != null) &&
-			!CTCollectionPermission.contains(
-				themeDisplay.getPermissionChecker(), ctCollection,
-				CTActionKeys.INVITE_USERS)) {
-
-			JSONPortletResponseUtil.writeJSON(
-				resourceRequest, resourceResponse,
-				JSONUtil.put(
-					"errorMessage",
-					_language.get(
-						httpServletRequest,
-						"you-do-not-have-permission-to-invite-users-to-this-" +
-							"publication")));
 
 			return;
 		}

@@ -7,11 +7,8 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
-import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ThumbnailURLReference;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.petra.io.StreamUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -23,14 +20,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -69,37 +60,11 @@ public class FileEntryUtil {
 			ThumbnailURLReference thumbnailURLReference, long userId)
 		throws Exception {
 
-		URL url = ExportImportAttachmentManagerUtil.getURL(
-			thumbnailURLReference.getUrl());
-
-		if (Objects.equals(url.getProtocol(), "file")) {
-			throw new UnsupportedOperationException(
-				StringBundler.concat(
-					"Unable to download file from ",
-					thumbnailURLReference.getUrl(),
-					" because of unsupported protocol ", url.getProtocol()));
-		}
-
 		File file = null;
-		URLConnection urlConnection = null;
 
 		try {
-			urlConnection = url.openConnection();
-
-			if ((urlConnection instanceof
-					HttpURLConnection httpURLConnection) &&
-				(httpURLConnection.getResponseCode() !=
-					HttpURLConnection.HTTP_OK)) {
-
-				throw new IllegalArgumentException(
-					"Unable to download file from " +
-						thumbnailURLReference.getUrl());
-			}
-
-			try (InputStream inputStream = urlConnection.getInputStream()) {
-				file = FileUtil.createTempFile(
-					StreamUtil.toByteArray(inputStream));
-			}
+			file = FileUtil.createTempFile(
+				URLUtil.getByteArray(thumbnailURLReference.getUrl()));
 
 			String mimeType = MimeTypesUtil.getContentType(file);
 
@@ -142,10 +107,6 @@ public class FileEntryUtil {
 		finally {
 			if (file != null) {
 				FileUtil.delete(file);
-			}
-
-			if (urlConnection instanceof HttpURLConnection httpURLConnection) {
-				httpURLConnection.disconnect();
 			}
 		}
 	}

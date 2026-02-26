@@ -338,7 +338,7 @@ local.bundles.backup.file=${liferay.home.parent.dir}/bundles-master-${git.commit
 		<replaceregexp
 			file="${project.dir}/test.properties"
 			flags="g"
-			match="(test\.batch\.names\[portal-release-acceptance\]=)\\(\n*.*?)*release-osgi-state-lpkg-test-postgresql155"
+			match="(test\.batch\.names\[portal-release-acceptance\]=)\\(\n*.*?)*release-osgi-state-lpkg-test-postgresql163"
 			replace="\1{test.batch.names[portal-release-acceptance]}"
 		/>
 

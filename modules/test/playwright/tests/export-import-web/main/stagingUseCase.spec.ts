@@ -255,7 +255,8 @@ testWithBatchStagingFF(
 		);
 
 		await stagingPage.goto(site.name);
-		await stagingPage.enableLocalStaging([StageableEntities.CATEGORIES]);
+		await stagingPage.enableLocalStaging(
+			{stagedPortlets: [StageableEntities.CATEGORIES]});
 
 		await stagingPage.goto(`${site.name}-staging`);
 

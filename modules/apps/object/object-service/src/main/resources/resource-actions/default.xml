@@ -68,6 +68,7 @@
 		<permissions>
 			<supports>
 				<action-key>ADD_ENTRY</action-key>
+				<action-key>ADD_OBJECT_ENTRY_FOLDER</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
@@ -79,6 +80,7 @@
 			</site-member-defaults>
 			<guest-unsupported>
 				<action-key>ADD_ENTRY</action-key>
+				<action-key>ADD_OBJECT_ENTRY_FOLDER</action-key>
 				<action-key>DELETE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>

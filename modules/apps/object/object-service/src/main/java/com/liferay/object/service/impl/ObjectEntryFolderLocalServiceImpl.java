@@ -12,6 +12,7 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
+import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.entry.folder.subscription.util.ObjectEntryFolderSubscriptionUtil;
@@ -699,10 +700,12 @@ public class ObjectEntryFolderLocalServiceImpl
 
 				modelPermissions.addRolePermissions(
 					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-					ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+					ActionKeys.ADD_ENTRY,
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.VIEW);
 				modelPermissions.addRolePermissions(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-					ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+					ActionKeys.ADD_ENTRY,
+					ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER, ActionKeys.VIEW);
 				modelPermissions.addRolePermissions(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER, ActionKeys.VIEW);
 
@@ -714,7 +717,9 @@ public class ObjectEntryFolderLocalServiceImpl
 					if (depotEntry.getType() == DepotConstants.TYPE_SPACE) {
 						modelPermissions.addRolePermissions(
 							RoleConstants.CMS_ADMINISTRATOR,
-							ActionKeys.ADD_ENTRY, ActionKeys.VIEW);
+							ActionKeys.ADD_ENTRY,
+							ObjectActionKeys.ADD_OBJECT_ENTRY_FOLDER,
+							ActionKeys.VIEW);
 					}
 				}
 			}

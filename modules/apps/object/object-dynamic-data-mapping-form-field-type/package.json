@@ -7,8 +7,10 @@
 		"@clayui/form": "^3.159.0",
 		"@clayui/icon": "^3.159.0",
 		"@clayui/loading-indicator": "^3.159.0",
+		"@clayui/modal": "^3.159.0",
 		"@clayui/shared": "^3.159.0",
 		"@liferay/frontend-data-set-web": "*",
+		"@liferay/frontend-js-item-selector-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"classnames": "2.3.1",
 		"data-engine-js-components-web": "*",
@@ -16,7 +18,8 @@
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
-		"react-dom": "18.2.0"
+		"react-dom": "18.2.0",
+		"uuid": "9.0.0"
 	},
 	"jest": {
 		"setupFiles": [

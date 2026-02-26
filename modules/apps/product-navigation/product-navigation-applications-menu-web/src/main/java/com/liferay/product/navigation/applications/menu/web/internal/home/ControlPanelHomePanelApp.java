@@ -45,8 +45,7 @@ public class ControlPanelHomePanelApp extends BasePanelApp {
 	}
 
 	@Reference(
-		target = "(jakarta.portlet.name=" +
-			ProductNavigationApplicationsMenuPortletKeys.CONTROL_PANEL_HOME + ")"
+		target = "(jakarta.portlet.name=" + ProductNavigationApplicationsMenuPortletKeys.CONTROL_PANEL_HOME + ")"
 	)
 	private Portlet _portlet;
 

@@ -467,6 +467,12 @@ public class SettingsTestUtil {
 				});
 		}
 
+		settings.setIconImageURLReference(() -> new IconImageURLReference() {
+			{
+				setExternalReferenceCode(RandomTestUtil.randomString());
+			}
+		});
+
 		if (Validator.isNotNull(settings.getJavascript())) {
 			settings.setJavascript(() -> null);
 		}
@@ -553,12 +559,6 @@ public class SettingsTestUtil {
 				_getClientExtension(
 					ClientExtensionEntryConstants.TYPE_THEME_SPRITEMAP));
 		}
-
-		settings.setIconImageURLReference(() -> new IconImageURLReference() {
-			{
-				setExternalReferenceCode(RandomTestUtil.randomString());
-			}
-		});
 	}
 
 	private static void _assertClientExtension(

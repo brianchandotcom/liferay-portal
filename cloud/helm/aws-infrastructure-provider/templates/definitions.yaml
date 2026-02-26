@@ -31,6 +31,7 @@ spec:
                                 backup:
                                     properties:
                                         enabled:
+                                            default: false
                                             type: boolean
                                         region:
                                             type: string
@@ -73,6 +74,7 @@ spec:
                                             default: db.t3.medium
                                             type: string
                                         isRestoring:
+                                            default: false
                                             type: boolean
                                         region:
                                             type: string
@@ -86,6 +88,7 @@ spec:
                                             type: string
                                     type: object
                                 deletionProtection:
+                                    default: false
                                     type: boolean
                                 environmentId:
                                     type: string
@@ -132,6 +135,7 @@ spec:
                         status:
                             properties:
                                 managedServiceDetailsReady:
+                                    default: false
                                     type: boolean
                             type: object
                     type: object

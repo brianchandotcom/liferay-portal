@@ -70,12 +70,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return true;
 		}
 
-		public default boolean isApplicableExternalReferenceCode(
-			String externalReferenceCode) {
-
-			return true;
-		}
-
 		public default boolean isApplicableModel(T t) {
 			return true;
 		}

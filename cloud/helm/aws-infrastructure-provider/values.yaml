@@ -1,5 +1,14 @@
 aws: {}
 crossplaneNamespace: crossplane-system
+eck-operator:
+    installCRDs: true
+    resources:
+        limits:
+            cpu: 1
+            memory: 512Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
 gateway:
     internetFacing: true
     namespace: envoy-gateway-system

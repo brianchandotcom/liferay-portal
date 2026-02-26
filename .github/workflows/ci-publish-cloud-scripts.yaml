@@ -48,9 +48,9 @@ jobs:
                         --gzip \
                         --verbose \
                         cloud/scripts/setup_aws.sh \
-                        cloud/terraform/aws/eks/*.tf \
-                        cloud/terraform/aws/gitops/platform/*.tf \
-                        cloud/terraform/aws/gitops/resources/*.tf
+                        cloud/terraform/aws/eks/* \
+                        cloud/terraform/aws/gitops/platform/* \
+                        cloud/terraform/aws/gitops/resources/*
 
                     gcloud storage cp \
                         /tmp/liferay-aws-bootstrap-${CURRENT_VERSION}.tar.gz \

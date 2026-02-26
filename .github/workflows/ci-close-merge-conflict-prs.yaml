@@ -13,15 +13,11 @@ jobs:
 
                 function main {
                     local authorizedOwner
-                    local authorizedOwners="${AUTHORIZED_OWNERS}"
-                    local currentOwner="${{ github.repository_owner }}"
-                    local githubToken="${GITHUB_TOKEN}"
                     local isAuthorizedUser=false
-                    local repositoryName="${{ github.event.repository.name }}"
 
-                    for authorizedOwner in ${authorizedOwners}
+                    for authorizedOwner in ${AUTHORIZED_OWNERS}
                     do
-                        if [[ "${authorizedOwner}" == "${currentOwner}" ]]
+                        if [[ "${authorizedOwner}" == "${{ github.repository_owner }}" ]]
                         then
                             isAuthorizedUser=true
 
@@ -31,18 +27,18 @@ jobs:
 
                     if [[ "${isAuthorizedUser}" == "false" ]]
                     then
-                        echo "${currentOwner} is not authorized."
+                        echo "${{ github.repository_owner }} is not authorized."
 
                         exit 0
                     fi
 
-                    echo "Checking open pull requests in ${currentOwner}/${repositoryName}..."
+                    echo "Checking open pull requests in ${{ github.repository_owner }}/${{ github.event.repository.name }}..."
 
                     local prJSON=$( \
                         curl \
-                            --header "Authorization: Bearer ${githubToken}" \
+                            --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                             --silent \
-                            "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls?state=open")
+                            "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls?state=open")
 
                     local prList=$( \
                         echo "${prJSON}" | \
@@ -69,9 +65,9 @@ jobs:
 
                         local prDetailsJSON=$( \
                             curl \
-                                --header "Authorization: Bearer ${githubToken}" \
+                                --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                 --silent \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}")
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${prNumber}")
 
                         local mergeableState=$( \
                             echo "${prDetailsJSON}" | \
@@ -92,9 +88,9 @@ jobs:
 
                             prDetailsJSON=$( \
                                 curl \
-                                    --header "Authorization: Bearer ${githubToken}" \
+                                    --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                     --silent \
-                                    "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}")
+                                    "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${prNumber}")
 
                             mergeableState=$( \
                                 echo "${prDetailsJSON}" | \
@@ -111,19 +107,19 @@ jobs:
 
                             curl \
                                 --data "{\"body\": \"This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send.\"}" \
-                                --header "Authorization: Bearer ${githubToken}" \
+                                --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                 --output /dev/null \
                                 --request POST \
                                 --silent \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/issues/${prNumber}/comments"
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/issues/${prNumber}/comments"
 
                             curl \
                                 --data "{\"state\": \"closed\"}" \
-                                --header "Authorization: Bearer ${githubToken}" \
+                                --header "Authorization: Bearer ${GITHUB_TOKEN}" \
                                 --output /dev/null \
                                 --request PATCH \
                                 --silent \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}"
+                                "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${prNumber}"
                         else
                             echo "[SKIP] Pull request: ${prURL} is currently: ${mergeableState}"
                         fi

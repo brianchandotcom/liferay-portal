@@ -47,24 +47,37 @@ export default function Attachment({
 	const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
 	const deleteFileEntry = useCallback(async () => {
-		if (!attachment || !deleteURL) {
+		if (!attachment) {
 			return;
 		}
 
-		const {fileEntryId} = attachment;
+		const {fileEntryId, source} = attachment;
 
 		if (!fileEntryId) {
 			return;
 		}
 
-		const formData = new FormData();
+		if (source === 'cms') {
+			await fetch(`/o/cms/basic-documents/${fileEntryId}`, {
+				headers: {
+					Accept: 'application/json',
+				},
+				method: 'DELETE',
+			});
 
-		formData.append(`${portletNamespace}fileEntryId`, fileEntryId);
+			return;
+		}
 
-		await fetch(deleteURL, {
-			body: formData,
-			method: 'POST',
-		});
+		if (deleteURL) {
+			const formData = new FormData();
+
+			formData.append(`${portletNamespace}fileEntryId`, fileEntryId);
+
+			await fetch(deleteURL, {
+				body: formData,
+				method: 'POST',
+			});
+		}
 	}, [attachment, deleteURL, portletNamespace]);
 
 	useEffect(() => {

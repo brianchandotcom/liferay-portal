@@ -53,6 +53,14 @@ public class ObjectEntryFolderModelSummaryContributorTest {
 			document, LocaleUtil.FRANCE, "");
 
 		Assert.assertEquals("label", summary.getTitle());
+
+		document.addText("snippet_title", "Label");
+		document.addText("title", "Label");
+
+		summary = modelSummaryContributor.getSummary(
+			document, LocaleUtil.US, "Label");
+
+		Assert.assertEquals("Label", summary.getTitle());
 	}
 
 	@Inject(

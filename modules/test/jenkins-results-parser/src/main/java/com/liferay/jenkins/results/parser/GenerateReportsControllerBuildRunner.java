@@ -65,8 +65,6 @@ public class GenerateReportsControllerBuildRunner
 
 		List<String> groupedReportNames = new ArrayList<>();
 
-		Collections.sort(reportNames);
-
 		for (String reportName : reportNames) {
 			if (reportName.startsWith("Flaky Test")) {
 				Map<String, String> invocationParameters = new HashMap<>();
@@ -231,6 +229,8 @@ public class GenerateReportsControllerBuildRunner
 				_selectedReportNames.add(reportName);
 			}
 		}
+
+		Collections.sort(_selectedReportNames);
 
 		return _selectedReportNames;
 	}

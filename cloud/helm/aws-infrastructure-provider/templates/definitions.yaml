@@ -103,20 +103,23 @@ spec:
                                     type: string
                                 search:
                                     properties:
-                                        engineVersion:
-                                            default: OpenSearch_2.15
-                                            type: string
-                                        instanceCount:
-                                            default: 2
-                                            type: integer
-                                        instanceType:
-                                            default: t3.small.search
-                                            type: string
-                                        region:
-                                            type: string
-                                        username:
-                                            default: liferay_search_admin
-                                            type: string
+                                        opensearch:
+                                            properties:
+                                                engineVersion:
+                                                    default: OpenSearch_2.15
+                                                    type: string
+                                                instanceCount:
+                                                    default: 2
+                                                    type: integer
+                                                instanceType:
+                                                    default: t3.small.search
+                                                    type: string
+                                                region:
+                                                    type: string
+                                                username:
+                                                    default: liferay_search_admin
+                                                    type: string
+                                            type: object
                                     type: object
                                 storage:
                                     properties:

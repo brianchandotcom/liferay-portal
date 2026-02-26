@@ -5,15 +5,19 @@
 
 package com.liferay.object.internal.search.spi.model.query.contributor;
 
+import com.liferay.object.constants.ObjectEntrySearchConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.bag.ObjectFieldBag;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectViewLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.MatchQuery;
 import com.liferay.portal.kernel.search.NestedQuery;
 import com.liferay.portal.kernel.search.Query;
@@ -22,17 +26,24 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.language.LanguageImpl;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.query.contributor.helper.KeywordQueryContributorHelper;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.LocalizationImpl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,6 +61,17 @@ public class ObjectEntryKeywordQueryContributorTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(new LanguageImpl());
+
+		LocalizationUtil localizationUtil = new LocalizationUtil();
+
+		localizationUtil.setLocalization(new LocalizationImpl());
+	}
 
 	@Test
 	public void testContributeWithAssigneeObjectField() throws Exception {
@@ -178,16 +200,86 @@ public class ObjectEntryKeywordQueryContributorTest {
 		Assert.assertEquals(1, _countNestedQueries(queries));
 	}
 
-	private SearchContext _buildSearchContext() {
+	@Test
+	public void testContributeWithNonlocalizedField() throws Exception {
+		ObjectDefinition objectDefinition = _mockObjectDefinition(false);
+
+		Mockito.when(
+			objectDefinition.getDefaultLanguageId()
+		).thenReturn(
+			"en_US"
+		);
+
+		_mockObjectFields(objectDefinition.getObjectFieldBag());
+
+		ArgumentCaptor<Query> argumentCaptor = ArgumentCaptor.forClass(
+			Query.class);
+
+		BooleanQuery booleanQuery = _mockBooleanQuery(argumentCaptor);
+
+		ObjectEntryKeywordQueryContributor contributor =
+			_createObjectEntryKeywordQueryContributor(objectDefinition);
+
+		contributor.contribute(
+			RandomTestUtil.randomString(), booleanQuery,
+			_mockKeywordQueryContributorHelper(LocaleUtil.SPAIN));
+
+		Set<String> matchQueryFields = new HashSet<>();
+
+		for (Query query : argumentCaptor.getAllValues()) {
+			if (query instanceof NestedQuery) {
+				NestedQuery nestedQuery = (NestedQuery)query;
+
+				_collectMatchQueryFields(
+					nestedQuery.getQuery(), matchQueryFields);
+			}
+		}
+
+		String localizedNestedFieldArrayValue = Field.getLocalizedName(
+			LocaleUtil.US, ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE);
+
+		Assert.assertTrue(
+			StringBundler.concat(
+				"Expected ", matchQueryFields, " to contain ",
+				localizedNestedFieldArrayValue),
+			matchQueryFields.contains(localizedNestedFieldArrayValue));
+
+		Assert.assertFalse(
+			StringBundler.concat(
+				"Expected ", matchQueryFields, " not to contain ",
+				ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT),
+			matchQueryFields.contains(
+				ObjectEntrySearchConstants.NESTED_FIELD_ARRAY_VALUE_TEXT));
+	}
+
+	private SearchContext _buildSearchContext(Locale locale) {
 		SearchContext searchContext = new SearchContext();
 
 		searchContext.setAndSearch(false);
 		searchContext.setAttribute("searchByObjectView", Boolean.FALSE);
-		searchContext.setLocale(LocaleUtil.US);
+		searchContext.setLocale(locale);
 
 		searchContext.getQueryConfig();
 
 		return searchContext;
+	}
+
+	private void _collectMatchQueryFields(
+		Query query, Set<String> matchQueryFields) {
+
+		if (query instanceof MatchQuery) {
+			MatchQuery matchQuery = (MatchQuery)query;
+
+			matchQueryFields.add(matchQuery.getField());
+		}
+		else if (query instanceof BooleanQuery) {
+			BooleanQuery booleanQuery = (BooleanQuery)query;
+
+			for (BooleanClause<Query> booleanClause : booleanQuery.clauses()) {
+				_collectMatchQueryFields(
+					booleanClause.getClause(), matchQueryFields);
+			}
+		}
 	}
 
 	private int _countNestedQueries(List<Query> queries) {
@@ -277,13 +369,19 @@ public class ObjectEntryKeywordQueryContributorTest {
 	}
 
 	private KeywordQueryContributorHelper _mockKeywordQueryContributorHelper() {
+		return _mockKeywordQueryContributorHelper(LocaleUtil.US);
+	}
+
+	private KeywordQueryContributorHelper _mockKeywordQueryContributorHelper(
+		Locale locale) {
+
 		KeywordQueryContributorHelper keywordQueryContributorHelper =
 			Mockito.mock(KeywordQueryContributorHelper.class);
 
 		Mockito.when(
 			keywordQueryContributorHelper.getSearchContext()
 		).thenReturn(
-			_buildSearchContext()
+			_buildSearchContext(locale)
 		);
 
 		return keywordQueryContributorHelper;

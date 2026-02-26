@@ -169,7 +169,9 @@ function DSRRoomUsersStep({
 				message:
 					emails.length === 1
 						? Liferay.Language.get('user-was-invited-successfully')
-						: Liferay.Language.get('users-were-invited-successfully'),
+						: Liferay.Language.get(
+								'users-were-invited-successfully'
+							),
 				type: 'success',
 			});
 
@@ -209,7 +211,9 @@ function DSRRoomUsersStep({
 				);
 
 				openToast({
-					message: Liferay.Language.get('role-was-updated-successfully'),
+					message: Liferay.Language.get(
+						'role-was-updated-successfully'
+					),
 					type: 'success',
 				});
 

@@ -779,6 +779,30 @@ AUI.add(
 					);
 				},
 
+				hidePopover() {
+					const instance = this;
+					const selectedEvent = instance._selectedEvent;
+					const target = document.activeElement;
+
+					instance.popover.hide();
+
+					if (selectedEvent) {
+						selectedEvent.setAttribute('aria-expanded', false);
+					}
+
+					const isTargetVisible =
+						target &&
+						document.body.contains(target) &&
+						target.offsetWidth > 0;
+
+					if (isTargetVisible && target !== selectedEvent) {
+						target.focus();
+					}
+					else if (selectedEvent) {
+						selectedEvent.focus();
+					}
+				},
+
 				initializer() {
 					const instance = this;
 

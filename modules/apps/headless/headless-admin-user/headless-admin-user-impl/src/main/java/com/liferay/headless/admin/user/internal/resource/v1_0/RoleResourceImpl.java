@@ -168,8 +168,10 @@ public class RoleResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<com.liferay.portal.kernel.model.Role>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -182,8 +184,8 @@ public class RoleResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return com.liferay.portal.kernel.model.Role.class.getName();
+			public Class<com.liferay.portal.kernel.model.Role> getModelClass() {
+				return com.liferay.portal.kernel.model.Role.class;
 			}
 
 			@Override

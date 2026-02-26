@@ -318,8 +318,8 @@ public class AccountResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<AccountEntry> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -332,8 +332,8 @@ public class AccountResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return AccountEntry.class.getName();
+			public Class<AccountEntry> getModelClass() {
+				return AccountEntry.class;
 			}
 
 			@Override

@@ -156,8 +156,8 @@ public class KeywordResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<AssetTag> getExportImportDescriptor() {
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -170,8 +170,8 @@ public class KeywordResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return AssetTag.class.getName();
+			public Class<AssetTag> getModelClass() {
+				return AssetTag.class;
 			}
 
 			@Override

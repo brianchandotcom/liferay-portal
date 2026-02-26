@@ -3,9 +3,9 @@ import Card from 'shared/components/Card';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ContextualInformation from '../components/ContextualInformation';
-import IndividualProfileCard from '../hoc/ProfileCard';
 import Loading from 'shared/components/Loading';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
+import ProfileCardCDP from '../hoc/ProfileCardCDP';
 import React from 'react';
 import URLConstants from 'shared/util/url-constants';
 import {connect} from 'react-redux';
@@ -18,7 +18,8 @@ const OverviewCDPEmptyState = ({
 	authorized,
 	dataSourceData,
 	dataSourceLoading,
-	groupId
+	groupId,
+	pageDisplay = true
 }) => {
 	if (dataSourceLoading) {
 		return (
@@ -34,51 +35,59 @@ const OverviewCDPEmptyState = ({
 
 	if (noSitesSelected) {
 		return (
-			<Card pageDisplay>
-				<NoResultsDisplay
-					description={
-						<>
-							{authorized
-								? Liferay.Language.get(
-										'connect-a-data-source-containing-site-data'
-								  )
-								: Liferay.Language.get(
-										'contact-an-administrator-to-connect-a-data-source-containing-site-data'
-								  )}
+			<Card pageDisplay={pageDisplay}>
+				<Card.Body>
+					<NoResultsDisplay
+						description={
+							<>
+								{authorized
+									? Liferay.Language.get(
+											'connect-a-data-source-containing-site-data'
+									  )
+									: Liferay.Language.get(
+											'contact-an-administrator-to-connect-a-data-source-containing-site-data'
+									  )}
 
+								<ClayLink
+									className='d-block mb-3'
+									decoration='underline'
+									href={URLConstants.DataSourceConnection}
+									key='DOCUMENTATION'
+									target='_blank'
+								>
+									{Liferay.Language.get(
+										'learn-more-about-data-sources'
+									)}
+
+									<span className='inline-item inline-item-after'>
+										<ClayIcon
+											fontSize={8}
+											symbol='shortcut'
+										/>
+									</span>
+								</ClayLink>
+							</>
+						}
+						primary
+						title={Liferay.Language.get('no-site-data-synced')}
+					>
+						{authorized && (
 							<ClayLink
-								className='d-block mb-3'
-								decoration='underline'
-								href={URLConstants.DataSourceConnection}
-								key='DOCUMENTATION'
-								target='_blank'
-							>
-								{Liferay.Language.get(
-									'learn-more-about-data-sources'
+								button
+								className='button-root mt-1'
+								displayType='primary'
+								href={toRoute(
+									Routes.SETTINGS_DATA_SOURCE_LIST,
+									{
+										groupId
+									}
 								)}
-
-								<span className='inline-item inline-item-after'>
-									<ClayIcon fontSize={8} symbol='shortcut' />
-								</span>
+							>
+								{Liferay.Language.get('connect-data-source')}
 							</ClayLink>
-						</>
-					}
-					primary
-					title={Liferay.Language.get('no-site-data-synced')}
-				>
-					{authorized && (
-						<ClayLink
-							button
-							className='button-root mt-1'
-							displayType='primary'
-							href={toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
-								groupId
-							})}
-						>
-							{Liferay.Language.get('connect-data-source')}
-						</ClayLink>
-					)}
-				</NoResultsDisplay>
+						)}
+					</NoResultsDisplay>
+				</Card.Body>
 			</Card>
 		);
 	}
@@ -88,6 +97,7 @@ const OverviewCDPEmptyState = ({
 
 const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 	const currentUser = useCurrentUser();
+
 	const authorized = currentUser.isAdmin();
 
 	const {data: dataSourceData, loading: dataSourceLoading} = useRequest({
@@ -100,21 +110,19 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 
 	const sitesSelected = dataSourceData?.items[0]?.sitesSelected;
 
-	const EMPTY_STATE_FRAGMENT = (
-		<OverviewCDPEmptyState
-			authorized={authorized}
-			dataSourceData={dataSourceData}
-			dataSourceLoading={dataSourceLoading}
-			groupId={groupId}
-		/>
-	);
-
 	return (
 		<div className='overview-column-main'>
 			<ContextualInformation showEmptyState={!sitesSelected}>
-				{EMPTY_STATE_FRAGMENT}
+				<OverviewCDPEmptyState
+					authorized={authorized}
+					dataSourceData={dataSourceData}
+					dataSourceLoading={dataSourceLoading}
+					groupId={groupId}
+					pageDisplay={false}
+				/>
 			</ContextualInformation>
-			<IndividualProfileCard
+
+			<ProfileCardCDP
 				channelId={channelId}
 				entity={individual}
 				groupId={groupId}
@@ -122,8 +130,13 @@ const Overview = ({channelId, groupId, individual, tabId, timeZoneId}) => {
 				tabId={tabId}
 				timeZoneId={timeZoneId}
 			>
-				{EMPTY_STATE_FRAGMENT}
-			</IndividualProfileCard>
+				<OverviewCDPEmptyState
+					authorized={authorized}
+					dataSourceData={dataSourceData}
+					dataSourceLoading={dataSourceLoading}
+					groupId={groupId}
+				/>
+			</ProfileCardCDP>
 		</div>
 	);
 };

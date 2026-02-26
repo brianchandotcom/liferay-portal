@@ -1,12 +1,12 @@
 import ActivitiesChart from 'contacts/components/ActivitiesChart';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import EventMetricQuery, {
 	EventMetricsData,
 	EventMetricsVariables
 } from 'shared/queries/EventMetricQuery';
-import IntervalSelector from 'shared/components/IntervalSelector';
 import Loading from 'shared/components/Loading';
 import moment from 'moment';
 import NoResultsDisplay from 'shared/components/NoResultsDisplay';
@@ -27,13 +27,11 @@ import {
 	getDateRangeLabelFromDate,
 	getEndDate
 } from 'shared/util/date';
-import {DropdownRangeKey} from 'shared/components/dropdown-range-key/DropdownRangeKey';
 import {fetchPolicyDefinition} from 'shared/util/graphql';
 import {formatSessions, getActivityLabel} from 'shared/util/activities';
 import {getSafeRangeSelectors} from 'shared/util/util';
 import {Individual} from 'shared/util/records';
 import {Interval, RangeSelectors, SafeRangeSelectors} from 'shared/types';
-import {isHourlyRangeKey} from 'shared/util/time';
 import {isNil} from 'lodash';
 import {mapListResultsToProps} from 'shared/util/mappers';
 import {
@@ -63,7 +61,8 @@ const PaginatedVerticalTimeline = compose<any>(
 	withEmpty()
 )(VerticalTimeline);
 
-interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
+interface IProfileCardWithDataCDPProps
+	extends React.HTMLAttributes<HTMLElement> {
 	channelId: string;
 	delta: number;
 	entity: Individual;
@@ -81,16 +80,14 @@ interface IProfileCardProps extends React.HTMLAttributes<HTMLElement> {
 	timeZoneId?: string;
 }
 
-const ProfileCard: React.FC<IProfileCardProps> = ({
+const ProfileCardWithDataCDP: React.FC<IProfileCardWithDataCDPProps> = ({
 	channelId,
 	delta,
 	entity: {id: entityId},
 	interval,
-	onChangeInterval,
 	onDeltaChange,
 	onPageChange,
 	onQueryChange,
-	onRangeSelectorsChange,
 	page,
 	query,
 	rangeSelectors,
@@ -263,13 +260,15 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 				<NoResultsDisplay
 					description={
 						<>
-							<span className='mr-1'>
+							<span>
 								{Liferay.Language.get(
-									'check-back-later-to-verify-if-data-has-been-received-from-your-data-sources'
+									'check-back-later-to-see-if-data-has-been-received-from-your-data-sources,-or-try-a-different-date-range'
 								)}
 							</span>
 
 							<ClayLink
+								className='d-block mb-3'
+								decoration='underline'
 								href={URLConstants.IndividualProfilesDocument}
 								key='DOCUMENTATION'
 								target='_blank'
@@ -277,11 +276,15 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 								{Liferay.Language.get(
 									'learn-more-about-individuals'
 								)}
+
+								<span className='inline-item inline-item-after'>
+									<ClayIcon fontSize={8} symbol='shortcut' />
+								</span>
 							</ClayLink>
 						</>
 					}
 					spacer
-					title={Liferay.Language.get('there-are-no-events-found')}
+					title={Liferay.Language.get('there-is-no-data-found')}
 				/>
 			);
 		}
@@ -300,38 +303,6 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 			pageDisplay={false}
 		>
 			<Card.Body>
-				<div className='align-items-center d-flex justify-content-end mt-3'>
-					<SearchInput
-						autoFocus
-						className='search-input mr-3'
-						onChange={setSearchValue}
-						onSubmit={handleQuery}
-						placeholder={Liferay.Language.get('search')}
-						value={searchValue}
-					/>
-
-					<IntervalSelector
-						activeInterval={interval}
-						className='mr-3'
-						disabled={isHourlyRangeKey(rangeSelectors.rangeKey)}
-						onChange={(interval: Interval) => {
-							onChangeInterval(interval);
-
-							handleChangeSelection(null);
-						}}
-					/>
-
-					<DropdownRangeKey
-						legacy={false}
-						onRangeSelectorChange={rangeSelectors => {
-							onRangeSelectorsChange(rangeSelectors);
-
-							handleChangeSelection(null);
-						}}
-						rangeSelectors={rangeSelectors}
-					/>
-				</div>
-
 				<div className='individuals-activities-chart'>
 					<ActivitiesChart
 						alwaysShowSelectedTooltip
@@ -345,13 +316,12 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 
 					<div className='selected-info'>
 						<div className='activities-date d-flex align-items-baseline'>
-							<div className='h4'>
+							<div className='text-4 text-secondary'>
 								{activityHistory?.length
 									? sub(
 											Liferay.Language.get(
-												'individuals-events-x'
+												'the-individual-performed-the-events-during-x'
 											),
-
 											[date]
 									  )
 									: Liferay.Language.get(
@@ -371,15 +341,30 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 									)}
 								</ClayButton>
 							)}
+
+							<>
+								<span className='events-count-circle ml-auto'></span>
+
+								<div className='ml-2'>
+									{getActivityLabel(
+										(selected
+											? totalEvents
+											: activityTotal
+										)?.toLocaleString()
+									)}
+								</div>
+							</>
 						</div>
 
-						<div className='details'>
-							{getActivityLabel(
-								(selected
-									? totalEvents
-									: activityTotal
-								)?.toLocaleString()
-							)}
+						<div className='mt-4'>
+							<SearchInput
+								autoFocus
+								className='search-input mr-3'
+								onChange={setSearchValue}
+								onSubmit={handleQuery}
+								placeholder={Liferay.Language.get('search')}
+								value={searchValue}
+							/>
 						</div>
 					</div>
 				</div>
@@ -409,4 +394,4 @@ const ProfileCard: React.FC<IProfileCardProps> = ({
 	);
 };
 
-export default ProfileCard;
+export default ProfileCardWithDataCDP;

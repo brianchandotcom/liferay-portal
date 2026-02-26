@@ -26,12 +26,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -71,13 +71,14 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
 		try {
 			JSONObject jsonObject = _getJSONObject(
-				JSONUtil.put(
-					"bcp47LanguageId", _language.getBCP47LanguageId(locale)
-				).put(
-					"locale", locale
-				).put(
-					"name", name
-				),
+				_jsonFactory.createJSONObject(
+					HashMapBuilder.<String, Object>put(
+						"bcp47LanguageId", _language.getBCP47LanguageId(locale)
+					).put(
+						"locale", locale
+					).put(
+						"name", name
+					).build()),
 				"option-label");
 
 			return jsonObject.getString("name");
@@ -113,7 +114,11 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	public String getDescription(Locale locale) {
 		try {
 			JSONObject jsonObject = _getJSONObject(
-				JSONUtil.put("locale", locale), "description");
+				_jsonFactory.createJSONObject(
+					HashMapBuilder.put(
+						"locale", locale
+					).build()),
+				"description");
 
 			return jsonObject.getString("description");
 		}
@@ -153,7 +158,11 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 	public String getName(Locale locale) {
 		try {
 			JSONObject jsonObject = _getJSONObject(
-				JSONUtil.put("locale", locale), "name");
+				_jsonFactory.createJSONObject(
+					HashMapBuilder.put(
+						"locale", locale
+					).build()),
+				"name");
 
 			return jsonObject.getString("name");
 		}
@@ -401,11 +410,12 @@ public class FunctionCommerceShippingEngine implements CommerceShippingEngine {
 		typeSettingsUnicodeProperties.forEach(
 			(key, value) -> typeSettingsJSONObject.put(key, value));
 
-		return JSONUtil.put(
-			"order", _getCommerceOrderJSONObject(commerceOrder)
-		).put(
-			"typeSettings", typeSettingsJSONObject
-		);
+		return _jsonFactory.createJSONObject(
+			HashMapBuilder.put(
+				"order", _getCommerceOrderJSONObject(commerceOrder)
+			).put(
+				"typeSettings", typeSettingsJSONObject
+			).build());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

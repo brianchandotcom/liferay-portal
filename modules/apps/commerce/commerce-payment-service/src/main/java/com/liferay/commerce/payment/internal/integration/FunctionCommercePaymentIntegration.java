@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -247,14 +247,15 @@ public class FunctionCommercePaymentIntegration
 				"model.resource." + className)
 		);
 
-		return JSONUtil.put(
-			"commercePaymentEntry", commercePaymentEntryJSONObject
-		).put(
-			"httpServletRequestParameterMap",
-			httpServletRequest.getParameterMap()
-		).put(
-			"typeSettings", typeSettingsJSONObject
-		);
+		return _jsonFactory.createJSONObject(
+			HashMapBuilder.<String, Object>put(
+				"commercePaymentEntry", commercePaymentEntryJSONObject
+			).put(
+				"httpServletRequestParameterMap",
+				httpServletRequest.getParameterMap()
+			).put(
+				"typeSettings", typeSettingsJSONObject
+			).build());
 	}
 
 	private CommercePaymentEntry _setCommercePaymentEntry(

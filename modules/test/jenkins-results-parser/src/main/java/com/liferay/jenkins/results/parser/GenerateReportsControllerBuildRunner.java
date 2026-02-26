@@ -91,7 +91,7 @@ public class GenerateReportsControllerBuildRunner
 		Collections.sort(reportNames);
 
 		for (String reportName : reportNames) {
-			if (reportName.startsWith("flaky-test-report")) {
+			if (reportName.startsWith("Flaky Test")) {
 				invocationParameters.put("SLAVE_LABEL", "slave");
 			}
 		}

@@ -103,7 +103,7 @@ jobs:
 
                             if [[ "${mergeableState}" == "dirty" ]]
                             then
-                                echo "[ACTION] Closing pull request: ${prURL} due to conflicts."
+                                echo "Closing pull request: ${prURL} due to conflicts."
 
                                 curl \
                                     --data "{\"body\": \"This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send.\"}" \

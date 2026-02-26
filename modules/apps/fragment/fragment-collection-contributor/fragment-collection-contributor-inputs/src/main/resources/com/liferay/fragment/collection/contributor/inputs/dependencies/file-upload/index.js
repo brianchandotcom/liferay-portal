@@ -93,16 +93,37 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 	if (input.attributes.isCMS) {
 		import('@liferay/fragment-impl/api').then(
 			({openCMSFileSelectorModal}) => {
+				const items = [];
+
+				if (fileInput.value) {
+					items.push({
+						embedded: {
+							file: {
+								id: Number(fileInput.value),
+								name: fileName.innerText,
+							},
+						},
+					});
+				}
+
 				openCMSFileSelectorModal({
 					allowDragAndDrop: true,
 					allowedExtensions: input.attributes.allowedFileExtensions,
+					config: {
+						items,
+						locator: {
+							id: 'embedded.file.id',
+							label: 'embedded.file.name',
+							value: 'embedded.file.id',
+						},
+					},
 					groupId: input.attributes.groupId,
 					maxFileSize: mbToBytes(input.attributes.maxFileSize),
 					onSelect(items) {
 						if (items.length) {
-							const {file, title} = items[0].embedded;
+							const {file} = items[0].embedded;
 
-							updateInputData({title, value: file.id});
+							updateInputData({title: file.name, value: file.id});
 						}
 					},
 				});

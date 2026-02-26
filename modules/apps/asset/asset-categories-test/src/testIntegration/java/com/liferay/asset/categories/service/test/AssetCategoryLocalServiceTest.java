@@ -813,8 +813,11 @@ public class AssetCategoryLocalServiceTest {
 						parentCategoryExternalReferenceCode,
 						_group.getGroupId());
 
+			long previousParentAssetCategoryId =
+				parentAssetCategory.getCategoryId();
+
 			Assert.assertEquals(
-				parentAssetCategory.getCategoryId(),
+				previousParentAssetCategoryId,
 				assetCategory.getParentCategoryId());
 
 			assetVocabulary =
@@ -822,9 +825,42 @@ public class AssetCategoryLocalServiceTest {
 					fetchAssetVocabularyByExternalReferenceCode(
 						vocabularyExternalReferenceCode, _group.getGroupId());
 
+			long previousVocabularyId = assetVocabulary.getVocabularyId();
+
 			Assert.assertEquals(
-				assetVocabulary.getVocabularyId(),
-				assetCategory.getVocabularyId());
+				previousVocabularyId, assetCategory.getVocabularyId());
+
+			assetCategory = _assetCategoryLocalService.getOrAddEmptyCategory(
+				RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId());
+
+			Assert.assertNotEquals(
+				previousParentAssetCategoryId,
+				assetCategory.getParentCategoryId());
+			Assert.assertNotEquals(
+				previousVocabularyId, assetCategory.getVocabularyId());
+
+			assetCategory = _assetCategoryLocalService.moveCategory(
+				assetCategory.getCategoryId(),
+				assetCategory.getParentCategoryId(), previousVocabularyId,
+				new ServiceContext());
+
+			Assert.assertEquals(
+				previousVocabularyId, assetCategory.getVocabularyId());
+
+			assetCategory =
+				_assetCategoryLocalService.getOrAddEmptyCategoryWithAncestors(
+					assetCategory.getExternalReferenceCode(),
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					parentCategoryExternalReferenceCode,
+					vocabularyExternalReferenceCode);
+
+			Assert.assertEquals(
+				previousParentAssetCategoryId,
+				assetCategory.getParentCategoryId());
+
+			Assert.assertEquals(
+				previousVocabularyId, assetCategory.getVocabularyId());
 
 			try {
 				_assetCategoryLocalService.getOrAddEmptyCategoryWithAncestors(

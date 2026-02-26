@@ -172,7 +172,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 							"batch.engine.task.item.delegate.class.name"),
 						() -> (String)serviceReference.getProperty(
 							"batch.engine.entity.class.name")),
-					exportImportDescriptor,
+					_bundleContext, exportImportDescriptor,
 					(String)serviceReference.getProperty(
 						"batch.engine.task.item.delegate.name"));
 

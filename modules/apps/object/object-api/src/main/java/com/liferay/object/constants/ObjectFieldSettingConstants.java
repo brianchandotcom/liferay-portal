@@ -44,10 +44,12 @@ public class ObjectFieldSettingConstants {
 
 	public static final String NAME_SHOW_COUNTER = "showCounter";
 
-	public static final String NAME_SHOW_FILES_IN_DOCS_AND_MEDIA =
-		"showFilesInDocumentsAndMedia";
+	public static final String NAME_SHOW_FILES_IN_LIBRARY =
+		"showFilesInLibrary";
 
 	public static final String NAME_STATE_FLOW = "stateFlow";
+
+	public static final String NAME_STORAGE_DEPOT_GROUP = "storageDepotGroup";
 
 	public static final String NAME_STORAGE_DL_FOLDER_PATH =
 		"storageDLFolderPath";
@@ -59,6 +61,8 @@ public class ObjectFieldSettingConstants {
 	public static final String NAME_UNIQUE_VALUES = "uniqueValues";
 
 	public static final String VALUE_AVERAGE = "AVERAGE";
+
+	public static final String VALUE_CMS_BASIC_DOCUMENT = "CMSBasicDocument";
 
 	public static final String VALUE_CONVERT_TO_UTC = "convertToUTC";
 
@@ -78,6 +82,10 @@ public class ObjectFieldSettingConstants {
 
 	public static final String VALUE_USE_INPUT_AS_ENTERED = "useInputAsEntered";
 
-	public static final String VALUE_USER_COMPUTER = "userComputer";
+	public static final String VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT =
+		"userComputerToCMSBasicDocument";
+
+	public static final String VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA =
+		"userComputerToDocumentsAndMedia";
 
 }

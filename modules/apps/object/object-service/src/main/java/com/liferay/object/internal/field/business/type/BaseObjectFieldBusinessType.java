@@ -160,41 +160,7 @@ public abstract class BaseObjectFieldBusinessType
 		}
 	}
 
-	protected void validateRelatedObjectFieldSettings(
-			ObjectField objectField, String objectFieldSettingName1,
-			String objectFieldSettingName2,
-			Map<String, String> objectFieldSettingsValues)
-		throws PortalException {
-
-		validateBooleanObjectFieldSetting(
-			objectField.getName(), objectFieldSettingName1,
-			objectFieldSettingsValues);
-
-		if (StringUtil.equalsIgnoreCase(
-				objectFieldSettingsValues.get(objectFieldSettingName1),
-				StringPool.TRUE)) {
-
-			_validateObjectFieldSettingValue(
-				objectField, objectFieldSettingName2,
-				objectFieldSettingsValues);
-		}
-		else {
-			validateNotAllowedObjectFieldSettingNames(
-				SetUtil.fromArray(objectFieldSettingName2),
-				objectField.getName(), objectFieldSettingsValues);
-		}
-	}
-
-	@Reference
-	protected DDMExpressionFactory ddmExpressionFactory;
-
-	@Reference
-	protected JSONFactory jsonFactory;
-
-	@Reference
-	protected ObjectFieldSettingLocalService objectFieldSettingLocalService;
-
-	private void _validateObjectFieldSettingValue(
+	protected void validateObjectFieldSettingValue(
 			ObjectField objectField, String objectFieldSettingName,
 			Map<String, String> objectFieldSettingsValues)
 		throws PortalException {
@@ -244,5 +210,39 @@ public abstract class BaseObjectFieldBusinessType
 			}
 		}
 	}
+
+	protected void validateRelatedObjectFieldSettings(
+			ObjectField objectField, String objectFieldSettingName1,
+			String objectFieldSettingName2,
+			Map<String, String> objectFieldSettingsValues)
+		throws PortalException {
+
+		validateBooleanObjectFieldSetting(
+			objectField.getName(), objectFieldSettingName1,
+			objectFieldSettingsValues);
+
+		if (StringUtil.equalsIgnoreCase(
+				objectFieldSettingsValues.get(objectFieldSettingName1),
+				StringPool.TRUE)) {
+
+			validateObjectFieldSettingValue(
+				objectField, objectFieldSettingName2,
+				objectFieldSettingsValues);
+		}
+		else {
+			validateNotAllowedObjectFieldSettingNames(
+				SetUtil.fromArray(objectFieldSettingName2),
+				objectField.getName(), objectFieldSettingsValues);
+		}
+	}
+
+	@Reference
+	protected DDMExpressionFactory ddmExpressionFactory;
+
+	@Reference
+	protected JSONFactory jsonFactory;
+
+	@Reference
+	protected ObjectFieldSettingLocalService objectFieldSettingLocalService;
 
 }

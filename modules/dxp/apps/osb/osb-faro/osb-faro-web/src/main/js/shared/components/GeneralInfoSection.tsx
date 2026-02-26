@@ -1,8 +1,9 @@
 import Card from './Card';
 import classNames from 'classnames';
+import Icon from '@clayui/icon';
 import React from 'react';
 import Sticker from '@clayui/sticker';
-import {Icon, Text} from '@clayui/core';
+import {Text} from '@clayui/core';
 
 export type DataDrivenConfig = {
 	columnClass: string;

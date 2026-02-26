@@ -38,9 +38,15 @@ jobs:
 
                     echo "Checking open pull requests in ${currentOwner}/${repositoryName}..."
 
-                    local prList=$(curl -s -H "Authorization: Bearer ${githubToken}" \
-                        "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls?state=open" \
-                        | jq -r '.[] | "\(.number)\t\(.html_url)"')
+                    local prJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                        "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls?state=open")
+
+                    local prList=$( \
+                        echo "${prJson}" | \
+                        jq \
+                            --raw-output \
+                            ".[]
+                            | \"\(.number)\t\(.html_url)\"")
 
                     echo "${prList}" | while IFS=$'\t' read -r pullRequestNumber pullRequestUrl
                     do
@@ -49,9 +55,14 @@ jobs:
                             continue
                         fi
 
-                        local mergeableState=$(curl -s -H "Authorization: Bearer ${githubToken}" \
-                            "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}" \
-                            | jq -r '.mergeable_state')
+                        local prDetailsJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                            "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}")
+
+                        local mergeableState=$( \
+                            echo "${prDetailsJson}" | \
+                            jq \
+                                --raw-output \
+                                ".mergeable_state")
 
                         local maxRetries=6
                         local retryCount=0
@@ -64,9 +75,14 @@ jobs:
 
                             sleep 5
 
-                            mergeableState=$(curl -s -H "Authorization: Bearer ${githubToken}" \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}" \
-                                | jq -r '.mergeable_state')
+                            prDetailsJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}")
+
+                            mergeableState=$( \
+                                echo "${prDetailsJson}" | \
+                                jq \
+                                    --raw-output \
+                                    ".mergeable_state")
 
                             retryCount=$(expr ${retryCount} + 1)
                         done

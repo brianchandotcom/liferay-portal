@@ -125,6 +125,27 @@ test.describe('Event creation pop-up', () => {
 		await expect(eventTitle).toHaveAttribute('aria-haspopup', 'dialog');
 		await expect(eventTitle).toHaveAttribute('aria-expanded', 'true');
 	});
+
+	test('returns focus to event popover when it is closed through tab navigation', async ({
+		calendarWidgetPage,
+		page,
+	}) => {
+		await calendarWidgetPage.addEventOnGrid();
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		const eventTitle = page.getByTitle('e.g. Meeting');
+
+		await eventTitle.click();
+
+		for (let i = 0; i < 6; i++) {
+			await page.keyboard.press('Tab');
+		}
+
+		await page.keyboard.press('Enter');
+
+		await expect(eventTitle).toBeFocused();
+	});
 });
 
 test('assert that the screen reader reads the event date', async ({

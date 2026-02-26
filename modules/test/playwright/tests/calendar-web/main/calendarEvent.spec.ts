@@ -663,6 +663,33 @@ test('event ending at midnight does not render on the next day', async ({
 	await expect(page.locator('.lfr-busy-day')).toHaveCount(1);
 });
 
+test('event popover does not trap focus to it', async ({
+	calendarWidgetPage,
+	page,
+}) => {
+	const title = getRandomInt().toString();
+
+	await calendarWidgetPage.addEvent({
+		allDay: false,
+		publishEvent: true,
+		title,
+	});
+
+	await calendarWidgetPage.closeModalEvent();
+
+	if (!(await page.locator('[id$="siteCalendarList"]').isVisible())) {
+		await page.locator('[id$="columnToggler"]').click();
+	}
+
+	await calendarWidgetPage.clickEvent(title);
+
+	const addCalendarInput = page.getByPlaceholder('Add other calendars');
+
+	await addCalendarInput.click();
+
+	await expect(addCalendarInput).toBeFocused();
+});
+
 test('event with weekly recurrence has default value for repeat on field and has at least one value for repeat on options', async ({
 	calendarWidgetPage,
 	modalRecurrencePage,

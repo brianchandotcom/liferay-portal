@@ -471,17 +471,7 @@ public class AssetCategoryLocalServiceImpl
 				_assetVocabularyLocalService.getOrAddEmptyVocabulary(
 					vocabularyExternalReferenceCode, userId, groupId);
 
-			long vocabularyId = assetVocabulary.getVocabularyId();
-
-			if ((assetCategory.getVocabularyId() !=
-					AssetVocabularyConstants.EMPTY_VOCABULARY_ID) &&
-				(vocabularyId != assetCategory.getVocabularyId())) {
-
-				throw new DuplicateCategoryException(
-					"Category exists in a different vocabulary");
-			}
-
-			assetCategory.setVocabularyId(vocabularyId);
+			assetCategory.setVocabularyId(assetVocabulary.getVocabularyId());
 		}
 
 		if (Validator.isNotNull(parentCategoryExternalReferenceCode)) {

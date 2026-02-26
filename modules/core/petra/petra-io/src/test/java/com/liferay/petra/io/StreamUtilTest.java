@@ -140,11 +140,43 @@ public class StreamUtilTest {
 
 		Assert.assertNull(StreamUtil.toString(null));
 
-		// UTF8 encoding
+		// Empty input stream
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StreamUtil.toString(new UnsyncByteArrayInputStream(new byte[0])));
 
 		String s = "Hello World";
 
 		byte[] uft8EncodedBytes = s.getBytes(StringPool.UTF8);
+
+		// Input stream with untrustable available
+
+		Assert.assertEquals(
+			s,
+			StreamUtil.toString(
+				new UnsyncByteArrayInputStream(uft8EncodedBytes) {
+
+					@Override
+					public int available() {
+						return 0;
+					}
+
+				}));
+
+		Assert.assertEquals(
+			s,
+			StreamUtil.toString(
+				new UnsyncByteArrayInputStream(uft8EncodedBytes) {
+
+					@Override
+					public int available() {
+						return 100;
+					}
+
+				}));
+
+		// UTF8 encoding
 
 		Assert.assertEquals(
 			s,

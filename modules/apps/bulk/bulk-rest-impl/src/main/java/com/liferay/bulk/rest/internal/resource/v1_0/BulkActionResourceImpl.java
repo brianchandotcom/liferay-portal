@@ -129,8 +129,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				bulkAction.getType()) &&
 			 !FeatureFlagManagerUtil.isEnabled(
 				 contextCompany.getCompanyId(), "LPD-69713")) ||
-			!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-17564")) {
+			(!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564") &&
+			 !BulkAction.Type.DELETE_OBJECT_ENTRY_BULK_ACTION.equals(
+				 bulkAction.getType()))) {
 
 			throw new UnsupportedOperationException();
 		}

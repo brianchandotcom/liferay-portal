@@ -971,8 +971,8 @@ public class PreupgradeVerifyProperties extends PreupgradeVerifyProcess {
 		// Frontend
 
 		{
-			"global.object.disable.get.remote.methods", "disable-get-remote-methods",
-			"com.liferay.frontend.js.web"
+			"global.object.disable.get.remote.methods",
+			"disable-get-remote-methods", "com.liferay.frontend.js.web"
 		},
 		{
 			"session.timeout.auto.extend", "auto-extend",

@@ -45,10 +45,10 @@ test('User is able to propagate pages separately on site templates', async ({
 	sitesPage,
 	widgetPagePage,
 }) => {
-	const homePageName: string = 'Home';
-	const pageName: string = 'Page-' + getRandomString();
-	const siteTemplateName: string = 'Template-' + getRandomString();
-	const siteName: string = 'Site-' + getRandomString();
+	const homePageName = 'Home';
+	const pageName = `page-${getRandomString()}`;
+	const siteTemplateName = `template-${getRandomString()}`;
+	const siteName = `site-${getRandomString()}`;
 
 	const layoutSetPrototype = await createSiteTemplate({
 		apiHelpers,
@@ -170,7 +170,7 @@ test(
 		productMenuPage,
 		sitesPage,
 	}) => {
-		const siteTemplateName: string = 'template-' + getRandomString();
+		const siteTemplateName = `template-${getRandomString()}`;
 
 		const layoutSetPrototype = await createSiteTemplate({
 			apiHelpers,
@@ -191,7 +191,7 @@ test(
 				layoutSetPrototype.layoutSetPrototypeId
 			);
 
-		const masterPageName: string = 'masterPage-' + getRandomString();
+		const masterPageName = `masterPage-${getRandomString()}`;
 		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
 			{
 				groupId: layoutSetPrototypeGroup.groupId,
@@ -202,7 +202,7 @@ test(
 
 		await productMenuPage.goToPages();
 
-		const pageName: string = 'page-' + getRandomString();
+		const pageName = `page-${getRandomString()}`;
 		await pagesAdminPage.createNewPage({
 			draft: false,
 			name: pageName,
@@ -211,7 +211,7 @@ test(
 
 		await applicationsMenuPage.goToSites();
 
-		const siteName: string = 'site-' + getRandomString();
+		const siteName = `site-${getRandomString()}`;
 		const siteId = await sitesPage.createSite({
 			isCustom: true,
 			siteName,

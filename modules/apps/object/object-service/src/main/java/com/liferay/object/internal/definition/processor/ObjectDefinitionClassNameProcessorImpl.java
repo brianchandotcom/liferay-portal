@@ -68,12 +68,9 @@ public class ObjectDefinitionClassNameProcessorImpl
 		String objectDefinitionSettingValue) {
 
 		ObjectDefinitionSetting objectDefinitionSetting =
-			objectDefinitionSetting =
-				objectDefinitionSettingLocalService.
-					fetchObjectDefinitionSetting(
-						CompanyThreadLocal.getCompanyId(),
-						objectDefinitionSettingName,
-						objectDefinitionSettingValue);
+			objectDefinitionSettingLocalService.fetchObjectDefinitionSetting(
+				CompanyThreadLocal.getCompanyId(), objectDefinitionSettingName,
+				objectDefinitionSettingValue);
 
 		if (objectDefinitionSetting == null) {
 			return null;

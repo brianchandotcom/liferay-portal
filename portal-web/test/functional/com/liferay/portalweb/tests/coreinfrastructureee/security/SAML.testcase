@@ -1722,10 +1722,9 @@ definition {
 		}
 
 		task ("Open able.com:9080 and add LDAP server") {
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				specificURL = "http://www.able.com:9080",
-				userEmailAddress = "test@liferay.com");
+			Navigator.openSpecificURL(url = "http://www.able.com:9080");
+
+			SAML.loginIfProductMenuNotOpened();
 
 			PortalSettings.addLDAPServer(
 				baseURL = "http://www.able.com:9080",

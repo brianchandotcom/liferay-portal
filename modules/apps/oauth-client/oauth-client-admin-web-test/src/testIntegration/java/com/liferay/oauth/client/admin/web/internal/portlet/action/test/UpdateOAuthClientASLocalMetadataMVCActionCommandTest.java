@@ -113,6 +113,16 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 			HashMapBuilder.put(
 				"issuer", new String[] {issuer}
 			).put(
+				"registrationEndpoint",
+				new String[] {RandomTestUtil.randomString()}
+			).build());
+
+		_assertOAuthClientASLocalMetadata(mockLiferayPortletActionRequest);
+
+		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
+			HashMapBuilder.put(
+				"issuer", new String[] {issuer}
+			).put(
 				"tokenEndpoint", new String[] {RandomTestUtil.randomString()}
 			).build());
 
@@ -211,6 +221,8 @@ public class UpdateOAuthClientASLocalMetadataMVCActionCommandTest {
 						new String[] {
 							String.valueOf(oAuthClientASLocalMetadataId)
 						}
+					).put(
+						"registrationEndpoint", new String[] {urlString}
 					).put(
 						"supportedGrantTypes", new String[] {supportedGrantType}
 					).put(

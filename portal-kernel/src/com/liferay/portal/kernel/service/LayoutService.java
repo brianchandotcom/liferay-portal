@@ -693,6 +693,9 @@ public interface LayoutService extends BaseService {
 	public Layout updateIconImage(long plid, byte[] bytes)
 		throws PortalException;
 
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException;
+
 	/**
 	 * Updates the layout with additional parameters.
 	 *

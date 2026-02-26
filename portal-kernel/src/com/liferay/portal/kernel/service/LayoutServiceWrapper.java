@@ -923,6 +923,13 @@ public class LayoutServiceWrapper
 		return _layoutService.updateIconImage(plid, bytes);
 	}
 
+	@Override
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.updateIconImageId(plid, iconImageId);
+	}
+
 	/**
 	 * Updates the layout with additional parameters.
 	 *

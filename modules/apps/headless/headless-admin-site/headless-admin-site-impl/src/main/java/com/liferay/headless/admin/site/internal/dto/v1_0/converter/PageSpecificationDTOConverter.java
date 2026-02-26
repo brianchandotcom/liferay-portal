@@ -8,7 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.client.extension.constants.ClientExtensionEntryConstants;
 import com.liferay.client.extension.model.ClientExtensionEntryRel;
 import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
-import com.liferay.exportimport.attachment.ExportImportAttachmentManagerUtil;
+import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.headless.admin.site.dto.v1_0.ClientExtension;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.EmbeddedPageSpecification;
@@ -38,10 +38,12 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -357,16 +359,24 @@ public class PageSpecificationDTOConverter
 			private IconImageURLReference _getIconImageURLReference(
 				Layout layout) {
 
-				if (Validator.isNull(layout.getIconImageERC())) {
+				if (layout.getIconImageId() <= 0) {
+					return null;
+				}
+
+				Image image = _imageLocalService.fetchImage(
+					layout.getIconImageId());
+
+				if (image == null) {
 					return null;
 				}
 
 				return new IconImageURLReference() {
 					{
-						setExternalReferenceCode(layout::getIconImageERC);
+						setExternalReferenceCode(
+							image::getExternalReferenceCode);
 						setUrl(
-							() -> ExportImportAttachmentManagerUtil.getFileURL(
-								layout.getIconImage()));
+							() -> _exportImportAttachmentManager.getImageURL(
+								image));
 					}
 				};
 			}
@@ -554,6 +564,12 @@ public class PageSpecificationDTOConverter
 	@Reference
 	private ClientExtensionEntryRelLocalService
 		_clientExtensionEntryRelLocalService;
+
+	@Reference
+	private ExportImportAttachmentManager _exportImportAttachmentManager;
+
+	@Reference
+	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

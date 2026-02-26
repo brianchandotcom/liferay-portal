@@ -229,13 +229,22 @@ testWithBatchStagingFF(
 			type: 'site',
 		});
 
+		await stagingPage.goto(site.key);
+		await stagingPage.enableLocalStaging({
+			stagedPortlets: [StageableEntities.CATEGORIES],
+		});
+
+		const stagingSite = await apiHelpers.headlessSite.getSite(
+			`${site.key}-staging`
+		);
+
 		const taxonomyVocabularyAPIClient = await apiHelpers.buildRestClient(
 			TaxonomyVocabularyAPI
 		);
 
 		const {body: taxonomyVocabulary} =
 			await taxonomyVocabularyAPIClient.postSiteTaxonomyVocabulary(
-				Number(site.id),
+				Number(stagingSite.id),
 				{
 					externalReferenceCode: getRandomString(),
 					name: getRandomString(),
@@ -246,7 +255,7 @@ testWithBatchStagingFF(
 			await apiHelpers.buildRestClient(TaxonomyCategoryAPI);
 
 		await taxonomyCategoryAPIClient.postSiteTaxonomyCategory(
-			Number(site.id),
+			Number(stagingSite.id),
 			{
 				externalReferenceCode: getRandomString(),
 				name: getRandomString(),
@@ -254,12 +263,7 @@ testWithBatchStagingFF(
 			}
 		);
 
-		await stagingPage.goto(site.name);
-		await stagingPage.enableLocalStaging({
-			stagedPortlets: [StageableEntities.CATEGORIES],
-		});
-
-		await stagingPage.goto(`${site.name}-staging`);
+		await stagingPage.goto(stagingSite.key);
 
 		await uiElementsPage.newButton.click();
 

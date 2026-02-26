@@ -7,6 +7,7 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -33,6 +34,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+
 /**
  * @author Guilherme Sá
  */
@@ -49,6 +53,80 @@ public class BoundObjectDefinitionsExportImportTest
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testExportBoundObjectDefinitions() throws Exception {
+		JSONArray jsonArray = JSONUtil.putAll(
+			jsonFactory.createJSONObject(
+				defaultObjectDefinitionJSON
+			).put(
+				"externalReferenceCode", "TESTOBJECTDEFINITION1"
+			).put(
+				"name", "TestObjectDefinition1"
+			),
+			jsonFactory.createJSONObject(
+				defaultObjectDefinitionJSON
+			).put(
+				"externalReferenceCode", "TESTOBJECTDEFINITION2"
+			).put(
+				"name", "TestObjectDefinition2"
+			));
+
+		importJSON(
+			"TESTOBJECTDEFINITION1", jsonArray.toString(),
+			"TestObjectDefinition1");
+
+		ObjectRelationshipResource.Builder builder =
+			_objectRelationshipResourceFactory.create();
+
+		ObjectRelationshipResource objectRelationshipResource = builder.user(
+			user
+		).build();
+
+		objectRelationshipResource.
+			postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+				"TESTOBJECTDEFINITION1",
+				com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship.toDTO(
+					JSONUtil.toString(
+						createOneToManyObjectRelationship(
+							"TESTOBJECTDEFINITION1", "TESTOBJECTDEFINITION2",
+							"TestObjectDefinition2",
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							"objectRelationship1"))));
+
+		JSONObject jsonObject = jsonArray.getJSONObject(1);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				jsonFactory.createJSONObject(
+					jsonArray.getString(0)
+				).put(
+					"objectRelationships",
+					JSONUtil.put(
+						createOneToManyObjectRelationship(
+							"TESTOBJECTDEFINITION1", "TESTOBJECTDEFINITION2",
+							"TestObjectDefinition2",
+							ObjectDefinitionConstants.SCOPE_COMPANY,
+							"objectRelationship1"))
+				),
+				jsonFactory.createJSONObject(
+					jsonObject.toString()
+				).put(
+					"objectFields",
+					JSONUtil.concat(
+						jsonObject.getJSONArray("objectFields"),
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"name",
+								"r_objectRelationship1_c" +
+									"_testObjectDefinition1Id")))
+				)
+			).toString(),
+			getExportJSON("TestObjectDefinition1"), JSONCompareMode.LENIENT);
+
+		_deleteObjectDefinition("TESTOBJECTDEFINITION1", "objectRelationship1");
+		_deleteObjectDefinition("TESTOBJECTDEFINITION2", null);
+	}
 
 	@Test
 	public void testExportImportBoundObjectDefinitions() throws Exception {
@@ -332,5 +410,9 @@ public class BoundObjectDefinitionsExportImportTest
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private ObjectRelationshipResource.Factory
+		_objectRelationshipResourceFactory;
 
 }

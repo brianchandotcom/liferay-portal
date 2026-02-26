@@ -8,7 +8,11 @@ package com.liferay.product.navigation.control.panel.internal.application.list;
 import com.liferay.application.list.BasePanelCategory;
 import com.liferay.application.list.PanelCategory;
 import com.liferay.application.list.constants.PanelCategoryKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import java.util.Locale;
 
@@ -36,6 +40,14 @@ public class ApplicationsDesignPanelCategory extends BasePanelCategory {
 	public String getLabel(Locale locale) {
 		return _language.get(
 			locale, "category.applications_menu.applications.design");
+	}
+
+	@Override
+	public boolean isShow(PermissionChecker permissionChecker, Group group)
+		throws PortalException {
+
+		return FeatureFlagManagerUtil.isEnabled(
+			permissionChecker.getCompanyId(), "LPD-57283");
 	}
 
 	@Reference

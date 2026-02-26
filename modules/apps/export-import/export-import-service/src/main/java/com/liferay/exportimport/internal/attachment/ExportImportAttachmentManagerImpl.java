@@ -11,6 +11,7 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -93,12 +94,12 @@ public class ExportImportAttachmentManagerImpl
 
 			boolean secure = _isSecure();
 
-			String portalURL = _portal.getPortalURL(
-				company.getVirtualHostname(),
-				_portal.getPortalServerPort(secure), secure);
-
-			return portalURL + "/image/layout_icon?img_id=" +
-				image.getImageId();
+			return StringBundler.concat(
+				_portal.getPortalURL(
+					company.getVirtualHostname(),
+					_portal.getPortalServerPort(secure), secure),
+				_portal.getPathImage(), "/layout_icon?img_id=",
+				image.getImageId());
 		}
 
 		try (InputStream inputStream = _imageLocalService.getImageInputStream(

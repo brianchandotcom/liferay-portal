@@ -871,15 +871,6 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 
-	private String _getEmptyReportEntryErrorMessage(
-		String externalReferenceCode, String modelNameLanguageKey) {
-
-		return StringBundler.concat(
-			"The ", modelNameLanguageKey, " with external reference code ",
-			externalReferenceCode,
-			" was not found. An empty shell was created.");
-	}
-
 	private File _exportLayout(boolean deletions) throws Exception {
 		return _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
@@ -901,6 +892,15 @@ public class BatchTestEntityExportImportTest {
 									_CLASS_NAME,
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
+	}
+
+	private String _getEmptyReportEntryErrorMessage(
+		String externalReferenceCode, String modelNameLanguageKey) {
+
+		return StringBundler.concat(
+			"The ", modelNameLanguageKey, " with external reference code ",
+			externalReferenceCode,
+			" was not found. An empty shell was created.");
 	}
 
 	private ExportImportConfiguration _importLayout(

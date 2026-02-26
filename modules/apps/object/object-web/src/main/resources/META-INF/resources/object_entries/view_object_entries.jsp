@@ -50,7 +50,7 @@ ObjectDefinition objectDefinition = viewObjectEntriesDisplayContext.getObjectDef
 			portletURL="<%= liferayPortletResponse.createRenderURL() %>"
 			propsTransformer="{ViewObjectEntriesFDSPropsTransformer} from object-web"
 			selectionType='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69713") ? "multiple" : "" %>'
-			showSelectAll="<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69713") %>"
+			showSelectAll='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-69713") %>'
 			style="fluid"
 		/>
 

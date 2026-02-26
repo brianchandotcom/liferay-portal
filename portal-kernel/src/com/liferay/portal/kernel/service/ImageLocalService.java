@@ -75,6 +75,10 @@ public interface ImageLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Image addImage(Image image);
 
+	public Image addImage(
+			String externalReferenceCode, long companyId, byte[] bytes)
+		throws PortalException;
+
 	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *

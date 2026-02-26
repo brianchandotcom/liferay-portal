@@ -1656,6 +1656,12 @@ public class LayoutLocalServiceUtil {
 		return getService().updateIconImage(plid, bytes);
 	}
 
+	public static Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException {
+
+		return getService().updateIconImageId(plid, iconImageId);
+	}
+
 	/**
 	 * Updates the layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

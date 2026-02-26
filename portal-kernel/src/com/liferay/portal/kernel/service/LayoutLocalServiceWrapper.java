@@ -1812,6 +1812,13 @@ public class LayoutLocalServiceWrapper
 		return _layoutLocalService.updateIconImage(plid, bytes);
 	}
 
+	@Override
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutLocalService.updateIconImageId(plid, iconImageId);
+	}
+
 	/**
 	 * Updates the layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

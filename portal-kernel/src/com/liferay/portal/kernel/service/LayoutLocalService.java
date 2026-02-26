@@ -1347,6 +1347,9 @@ public interface LayoutLocalService
 	public Layout updateIconImage(long plid, byte[] bytes)
 		throws PortalException;
 
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException;
+
 	/**
 	 * Updates the layout in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

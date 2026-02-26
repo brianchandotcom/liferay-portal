@@ -51,6 +51,13 @@ public class ImageLocalServiceUtil {
 		return getService().addImage(image);
 	}
 
+	public static Image addImage(
+			String externalReferenceCode, long companyId, byte[] bytes)
+		throws PortalException {
+
+		return getService().addImage(externalReferenceCode, companyId, bytes);
+	}
+
 	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *

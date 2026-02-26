@@ -866,6 +866,12 @@ public class LayoutServiceUtil {
 		return getService().updateIconImage(plid, bytes);
 	}
 
+	public static Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException {
+
+		return getService().updateIconImageId(plid, iconImageId);
+	}
+
 	/**
 	 * Updates the layout with additional parameters.
 	 *

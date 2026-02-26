@@ -43,6 +43,15 @@ public class ImageLocalServiceWrapper
 		return _imageLocalService.addImage(image);
 	}
 
+	@Override
+	public Image addImage(
+			String externalReferenceCode, long companyId, byte[] bytes)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _imageLocalService.addImage(
+			externalReferenceCode, companyId, bytes);
+	}
+
 	/**
 	 * Creates a new image with the primary key. Does not add the image to the database.
 	 *

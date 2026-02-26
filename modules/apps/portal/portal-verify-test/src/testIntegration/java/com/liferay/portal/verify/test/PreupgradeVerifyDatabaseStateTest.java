@@ -225,7 +225,7 @@ public class PreupgradeVerifyDatabaseStateTest
 		catch (Exception exception) {
 			Assert.assertEquals(
 				"Missing tables detected: [" +
-					objectDefinition.getDBTableName() + "]",
+					_getNormalizedName(objectDefinition.getDBTableName()) + "]",
 				exception.getMessage());
 		}
 		finally {
@@ -242,7 +242,7 @@ public class PreupgradeVerifyDatabaseStateTest
 			_serviceComponentLocalService.createServiceComponent(
 				RandomTestUtil.nextLong());
 
-		String tableName = _getNormalizedName("TestTable");
+		String tableName = "TestTable";
 
 		serviceComponent.setMvccVersion(0);
 		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
@@ -258,7 +258,8 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 		catch (Exception exception) {
 			Assert.assertEquals(
-				"Missing tables detected: [" + tableName + "]",
+				"Missing tables detected: [" + _getNormalizedName(tableName) +
+					"]",
 				exception.getMessage());
 		}
 		finally {

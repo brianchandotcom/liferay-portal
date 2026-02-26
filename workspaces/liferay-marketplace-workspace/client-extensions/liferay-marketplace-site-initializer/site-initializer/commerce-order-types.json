@@ -50,9 +50,21 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order contains a free or paid DXP app."
+			"en_US": "Designates that the order is an dxp."
 		},
 		"displayOrder": 4,
+		"externalReferenceCode": "DXP",
+		"name": {
+			"en_US": "DXP"
+		},
+		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order contains a free or paid DXP app."
+		},
+		"displayOrder": 5,
 		"externalReferenceCode": "DXP_APP",
 		"name": {
 			"en_US": "DXP App"
@@ -64,7 +76,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a free or paid low code configuration."
 		},
-		"displayOrder": 5,
+		"displayOrder": 6,
 		"externalReferenceCode": "LOW_CODE_CONFIGURATION",
 		"name": {
 			"en_US": "Low-Code Configuration"
@@ -76,7 +88,7 @@
 		"description": {
 			"en_US": "Designates that the order includes a free or paid application that does not fit standard categories."
 		},
-		"displayOrder": 6,
+		"displayOrder": 7,
 		"externalReferenceCode": "OTHER",
 		"name": {
 			"en_US": "Other"

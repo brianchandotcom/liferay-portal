@@ -12,6 +12,7 @@ export function normalizeFieldSettings(
 			| NameValueObject[]
 			| ObjectFieldFilterSetting[]
 			| ObjectFieldPicklistSetting
+			| Space
 			| boolean
 			| number
 			| string;

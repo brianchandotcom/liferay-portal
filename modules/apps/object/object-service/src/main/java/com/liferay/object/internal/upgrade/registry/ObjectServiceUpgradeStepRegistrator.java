@@ -688,6 +688,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.26.0", "10.27.0",
 			UpgradeProcessFactory.addColumns("ObjectFolder", "status INTEGER"),
 			UpgradeProcessFactory.runSQL("update ObjectFolder set status = 0"));
+
+		registry.register(
+			"10.27.0", "11.0.0",
+			new com.liferay.object.internal.upgrade.v11_0_0.
+				ObjectFieldSettingUpgradeProcess());
 	}
 
 	@Reference

@@ -1243,4 +1243,69 @@ test.describe('Manage object relationships through Objects Admin UI', () => {
 			page.frameLocator('iframe').getByLabel('ParameterMandatory')
 		).toHaveText(objectRelationship1.label['en_US']);
 	});
+
+	test('object relationship autocomplete field filters object definition by label', async ({
+		apiHelpers,
+		objectRelationshipsPage,
+		page,
+	}) => {
+		for (let i = 1; i <= 21; i++) {
+			const objectDefinition =
+				await apiHelpers.objectAdmin.postRandomObjectDefinition({
+					objectDefinitionExternalReferenceCode: `ObjectDefinition${i}`,
+					status: {code: 0},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+		}
+
+		await objectRelationshipsPage.goto('Account');
+
+		await objectRelationshipsPage.addObjectRelationshipButton.click();
+
+		const objectRelationshipFormPage = new ObjectRelationshipFormPage(
+			page,
+			'.modal-content'
+		);
+
+		await objectRelationshipFormPage.labelInput.fill(
+			'objectRelationShipLabel' + getRandomInt()
+		);
+
+		await objectRelationshipFormPage.selectType('One to Many');
+
+		const manyRecordsInput = page.getByRole('combobox', {
+			name: 'Many Records Of',
+		});
+
+		await manyRecordsInput.fill('ObjectDefinition');
+
+		const options = page.getByRole('option');
+
+		await expect(options).toHaveCount(20);
+
+		await expect(
+			page.getByRole('option', {name: 'ObjectDefinition21'})
+		).toHaveCount(0);
+
+		await manyRecordsInput.fill('ObjectDefinition21');
+
+		await page.getByRole('option', {name: 'ObjectDefinition21'}).click();
+
+		await expect(manyRecordsInput).toHaveValue('ObjectDefinition21');
+
+		await objectRelationshipFormPage.reverseOrderButton.click();
+
+		await expect(page.getByLabel('Many Records Of')).toHaveValue('Account');
+
+		await objectRelationshipFormPage.saveButton.click();
+
+		await waitForAlert(
+			page,
+			'Success:Relationship was created successfully.'
+		);
+	});
 });

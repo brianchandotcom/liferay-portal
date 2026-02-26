@@ -37,7 +37,7 @@ public class GenerateReportsControllerBuildRunner
 
 	@Override
 	public void run() {
-		invokeGenerateReportsBuild();
+		invokeGenerateReportsBuilds();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class GenerateReportsControllerBuildRunner
 		super(buildData);
 	}
 
-	protected void invokeGenerateReportsBuild() {
+	protected void invokeGenerateReportsBuilds() {
 		List<String> reportNames = _getSelectedReportNames();
 
 		if (reportNames.isEmpty()) {

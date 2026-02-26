@@ -335,10 +335,7 @@ public class DownloadObjectEntryFolderServletTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
 				JSONUtil.put(
-					"selectionScope",
-					JSONUtil.put(
-						"selectAll", true
-					)
+					"selectionScope", JSONUtil.put("selectAll", true)
 				).put(
 					"type", "DownloadBulkAction"
 				).toString(

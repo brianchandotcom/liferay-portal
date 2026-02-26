@@ -664,7 +664,8 @@ public class StagedGroupStagedModelDataHandler
 
 				if (importPortletControlsMap.get(
 						PortletDataHandlerKeys.PORTLET_DATA) ||
-					_isHidden(portletDataContext.getCompanyId(), portletId)) {
+					_isHidden(
+						portletDataContext.getCompanyId(), targetPortletId)) {
 
 					_portletImportController.importPortletData(
 						portletDataContext, portletDataElement);

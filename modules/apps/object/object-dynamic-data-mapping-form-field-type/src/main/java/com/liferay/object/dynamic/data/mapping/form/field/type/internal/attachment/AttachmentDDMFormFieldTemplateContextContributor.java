@@ -20,9 +20,11 @@ import com.liferay.object.configuration.ObjectConfiguration;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
+import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -30,11 +32,13 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -160,6 +164,24 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				getLocalizationParameters(
 					ddmFormField, ddmForm.getDefaultLocale())
 		).build();
+
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
+			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")));
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectField.getCompanyId(), "LPD-74813")) {
+
+			parameters.put(
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
+				_getGroupExternalReferenceCode(objectField));
+			parameters.put(
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+					objectField));
+		}
+
+		return parameters;
 	}
 
 	@Activate
@@ -258,6 +280,20 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 			return new HashMap<>();
 		}
+	}
+
+	private String _getGroupExternalReferenceCode(ObjectField objectField) {
+		String groupId = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP, objectField);
+
+		Group group = _groupLocalService.fetchGroup(
+			GetterUtil.getLong(groupId));
+
+		if (group != null) {
+			return group.getExternalReferenceCode();
+		}
+
+		return null;
 	}
 
 	private long _getGroupId(

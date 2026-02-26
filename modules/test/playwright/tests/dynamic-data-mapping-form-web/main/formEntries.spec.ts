@@ -278,7 +278,7 @@ test('can submit txt file as guest user in a mapped form', async ({
 					},
 					{
 						name: 'fileSource',
-						value: 'userComputer',
+						value: 'userComputerToDocumentsAndMedia',
 					},
 					{
 						name: 'maximumFileSize',

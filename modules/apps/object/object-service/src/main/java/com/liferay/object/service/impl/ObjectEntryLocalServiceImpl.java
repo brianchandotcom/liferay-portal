@@ -2545,9 +2545,12 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		String fileSource = ObjectFieldSettingUtil.getValue(
-			"fileSource", objectField.getObjectFieldSettings());
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+			objectField.getObjectFieldSettings());
 
-		if (Objects.equals(fileSource, "documentsAndMedia")) {
+		if (Objects.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
+
 			return;
 		}
 
@@ -3277,16 +3280,20 @@ public class ObjectEntryLocalServiceImpl
 
 			ObjectFieldSetting objectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
-					objectField.getObjectFieldId(), "fileSource");
+					objectField.getObjectFieldId(),
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
 			if (!Objects.equals(
-					objectFieldSetting.getValue(), "userComputer")) {
+					objectFieldSetting.getValue(),
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 				continue;
 			}
 
 			objectFieldSetting = _objectFieldSettingPersistence.fetchByOFI_N(
-				objectField.getObjectFieldId(), "showFilesInDocumentsAndMedia");
+				objectField.getObjectFieldId(),
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY);
 
 			if ((objectFieldSetting != null) &&
 				GetterUtil.getBoolean(objectFieldSetting.getValue())) {

@@ -396,7 +396,7 @@ type ObjectFieldSettingName =
 	| 'output'
 	| 'script'
 	| 'showCounter'
-	| 'showFilesInDocumentsAndMedia'
+	| 'showFilesInLibrary'
 	| 'stateFlow'
 	| 'storageDLFolderPath'
 	| 'timeStorage'

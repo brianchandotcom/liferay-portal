@@ -53,7 +53,7 @@ definition {
 				fieldLabelName = "Upload",
 				fieldName = "upload",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = ${objectName});
 
@@ -127,7 +127,7 @@ definition {
 				fieldLabelName = "Upload",
 				fieldName = "upload",
 				fieldType = "Long",
-				fileSource = "userComputer",
+				fileSource = "userComputerToDocumentsAndMedia",
 				isRequired = "false",
 				objectName = ${objectName});
 

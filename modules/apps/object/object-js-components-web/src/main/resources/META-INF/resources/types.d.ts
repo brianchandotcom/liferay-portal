@@ -126,7 +126,7 @@ type ObjectFieldSettingName =
 	| 'maximumFileSize'
 	| 'maxLength'
 	| 'showCounter'
-	| 'showFilesInDocumentsAndMedia'
+	| 'showFilesInLibrary'
 	| 'storageDLFolderPath'
 	| 'relationship'
 	| 'function'

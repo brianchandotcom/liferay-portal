@@ -18,7 +18,7 @@ import Input from '../Input';
 const FILE_SOURCE_OPTIONS = [
 	{
 		label: Liferay.Language.get('upload-directly-from-users-computer'),
-		value: 'userComputer',
+		value: 'userComputerToDocumentsAndMedia',
 	},
 	{
 		label: Liferay.Language.get(
@@ -100,12 +100,12 @@ function FirstSectionComponent({
 				</Picker>
 			</ClayForm.Group>
 
-			{uploadField.settings.fileSource === 'userComputer' ? (
+			{uploadField.settings.fileSource ===
+			'userComputerToDocumentsAndMedia' ? (
 				<ClayForm.Group className="mb-3">
 					<ClayCheckbox
 						checked={
-							uploadField.settings.showFilesInDocumentsAndMedia ||
-							false
+							uploadField.settings.showFilesInLibrary || false
 						}
 						disabled={disabled || isPublished}
 						label={Liferay.Language.get(
@@ -115,8 +115,7 @@ function FirstSectionComponent({
 							dispatch({
 								settings: {
 									...uploadField.settings,
-									showFilesInDocumentsAndMedia:
-										event.target.checked,
+									showFilesInLibrary: event.target.checked,
 									storageDLFolderPath:
 										'/' + Liferay.Language.get('new'),
 								},
@@ -128,7 +127,7 @@ function FirstSectionComponent({
 				</ClayForm.Group>
 			) : null}
 
-			{uploadField.settings.showFilesInDocumentsAndMedia ? (
+			{uploadField.settings.showFilesInLibrary ? (
 				<Input
 					disabled={disabled || isPublished}
 					helpMessage={sub(

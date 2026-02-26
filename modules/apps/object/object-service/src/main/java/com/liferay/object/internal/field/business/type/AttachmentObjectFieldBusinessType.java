@@ -221,7 +221,7 @@ public class AttachmentObjectFieldBusinessType
 			objectField, objectFieldRenderingContext);
 
 		properties.remove(
-			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA);
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY);
 		properties.remove(
 			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 
@@ -380,15 +380,17 @@ public class AttachmentObjectFieldBusinessType
 	private String _getFileURL(DLFileEntry dlFileEntry, ObjectField objectField)
 		throws Exception {
 
-		if (!Objects.equals(
-				ObjectFieldSettingConstants.VALUE_USER_COMPUTER,
-				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-					objectField)) ||
+		String fileSource = ObjectFieldSettingUtil.getValue(
+			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
+
+		if (Objects.equals(
+				fileSource,
+				ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT) ||
+			Objects.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) ||
 			GetterUtil.getBoolean(
 				ObjectFieldSettingUtil.getValue(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 					objectField.getObjectFieldSettings()))) {
 
 			return null;

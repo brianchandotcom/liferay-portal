@@ -42,8 +42,7 @@ public class ObjectFieldSettingUtil {
 		else if (objectFieldSetting.compareName(
 					ObjectFieldSettingConstants.NAME_SHOW_COUNTER) ||
 				 objectFieldSetting.compareName(
-					 ObjectFieldSettingConstants.
-						 NAME_SHOW_FILES_IN_DOCS_AND_MEDIA) ||
+					 ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY) ||
 				 objectFieldSetting.compareName(
 					 ObjectFieldSettingConstants.NAME_UNIQUE_VALUES)) {
 

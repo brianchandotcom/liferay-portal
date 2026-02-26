@@ -208,12 +208,19 @@ public class LayoutImportBackgroundTaskExecutorTest {
 						).name(
 							ObjectFieldSettingConstants.NAME_FILE_SOURCE
 						).value(
-							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							"100"
 						).build(),
 						new ObjectFieldSettingBuilder(
 						).name(
 							ObjectFieldSettingConstants.
-								NAME_SHOW_FILES_IN_DOCS_AND_MEDIA
+								NAME_SHOW_FILES_IN_LIBRARY
 						).value(
 							Boolean.TRUE.toString()
 						).build(),
@@ -223,12 +230,6 @@ public class LayoutImportBackgroundTaskExecutorTest {
 								NAME_STORAGE_DL_FOLDER_PATH
 						).value(
 							StringPool.SLASH + objectDefinitionName
-						).build(),
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
-						).value(
-							"100"
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
@@ -248,7 +249,8 @@ public class LayoutImportBackgroundTaskExecutorTest {
 						).name(
 							ObjectFieldSettingConstants.NAME_FILE_SOURCE
 						).value(
-							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+							ObjectFieldSettingConstants.
+								VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA
 						).build(),
 						new ObjectFieldSettingBuilder(
 						).name(

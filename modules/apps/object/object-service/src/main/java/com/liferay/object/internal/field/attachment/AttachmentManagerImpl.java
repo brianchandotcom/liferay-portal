@@ -51,6 +51,7 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -90,12 +91,17 @@ public class AttachmentManagerImpl implements AttachmentManager {
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			objectFieldId);
 
-		boolean showFilesInDocumentsAndMedia = GetterUtil.getBoolean(
-			ObjectFieldSettingUtil.getValue(
-				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
-				objectField.getObjectFieldSettings()));
+		if (Objects.equals(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_FILE_SOURCE,
+					objectField.getObjectFieldSettings()),
+				ObjectFieldSettingConstants.
+					VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA) &&
+			GetterUtil.getBoolean(
+				ObjectFieldSettingUtil.getValue(
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+					objectField.getObjectFieldSettings()))) {
 
-		if (showFilesInDocumentsAndMedia) {
 			String storageDLFolderPath = ObjectFieldSettingUtil.getValue(
 				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectField.getObjectFieldSettings());

@@ -384,7 +384,7 @@ type ObjectFieldSettingName =
 	| 'prefix'
 	| 'script'
 	| 'showCounter'
-	| 'showFilesInDocumentsAndMedia'
+	| 'showFilesInLibrary'
 	| 'stateFlow'
 	| 'storageDLFolderPath'
 	| 'storageDepotGroup'

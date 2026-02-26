@@ -61,10 +61,10 @@ export const mockedObjectFields: any = {
 			},
 			{
 				name: 'fileSource',
-				value: 'userComputer',
+				value: 'userComputerToDocumentsAndMedia',
 			},
 			{
-				name: 'showFilesInDocumentsAndMedia',
+				name: 'showFilesInLibrary',
 				value: false,
 			},
 		],

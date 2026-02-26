@@ -5906,7 +5906,8 @@ public class DataFactory {
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
 					objectFieldId, ObjectFieldSettingConstants.NAME_FILE_SOURCE,
-					ObjectFieldSettingConstants.VALUE_USER_COMPUTER));
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
 					objectFieldId,
@@ -5914,8 +5915,7 @@ public class DataFactory {
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(
 					objectFieldId,
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 					Boolean.TRUE.toString()));
 			objectFieldSettingModels.add(
 				newObjectFieldSettingModel(

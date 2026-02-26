@@ -24,11 +24,11 @@ public class ExportImportAttachmentManagerUtil {
 		return exportImportAttachmentManager.getFileURL(dlFileEntry);
 	}
 
-	public static String getFileURL(Image image) throws Exception {
+	public static String getImageURL(Image image) throws Exception {
 		ExportImportAttachmentManager exportImportAttachmentManager =
 			_serviceSnapshot.get();
 
-		return exportImportAttachmentManager.getFileURL(image);
+		return exportImportAttachmentManager.getImageURL(image);
 	}
 
 	public static URL getURL(String urlString) throws MalformedURLException {

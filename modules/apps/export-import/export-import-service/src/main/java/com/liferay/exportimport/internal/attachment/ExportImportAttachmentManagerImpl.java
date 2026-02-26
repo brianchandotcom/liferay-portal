@@ -76,7 +76,7 @@ public class ExportImportAttachmentManagerImpl
 	}
 
 	@Override
-	public String getFileURL(Image image) throws Exception {
+	public String getImageURL(Image image) throws Exception {
 		if (image == null) {
 			return null;
 		}

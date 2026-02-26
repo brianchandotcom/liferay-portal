@@ -18,7 +18,7 @@ public interface ExportImportAttachmentManager {
 
 	public String getFileURL(DLFileEntry dlFileEntry) throws Exception;
 
-	public String getFileURL(Image image) throws Exception;
+	public String getImageURL(Image image) throws Exception;
 
 	public URL getURL(String url) throws MalformedURLException;
 

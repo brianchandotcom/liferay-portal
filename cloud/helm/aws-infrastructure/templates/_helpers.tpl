@@ -5,7 +5,7 @@
 {{- define "liferay.k8sFriendlyString" -}}
 {{- $sanitized := . | lower | replace "/" "-" | replace "_" "-" | trimPrefix "-" | trunc 63 | trimSuffix "-" -}}
 {{- if or (empty $sanitized) (not (regexMatch "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$" $sanitized)) -}}
-{{- fail (printf "invalid name: '%s' (must be DNS-1123 compliant: lowercase, alphanumeric, dots, hyphens)" .) -}}
+{{- fail (printf "Name is not DNS-1123 compliant: %s" .) -}}
 {{- end -}}
 {{- $sanitized -}}
 {{- end -}}

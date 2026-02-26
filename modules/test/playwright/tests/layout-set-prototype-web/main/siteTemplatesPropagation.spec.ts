@@ -180,7 +180,7 @@ test(
 			templateName: siteTemplateName,
 		});
 
-		await apiHelpers.data.push({
+		apiHelpers.data.push({
 			id: layoutSetPrototype.layoutSetPrototypeId,
 			type: 'layoutSetPrototype',
 		});
@@ -218,7 +218,7 @@ test(
 			templateName: siteTemplateName,
 		});
 
-		await apiHelpers.data.push({id: siteId, type: 'site'});
+		apiHelpers.data.push({id: siteId, type: 'site'});
 
 		const newSiteURL = `/web/${siteName}`;
 
@@ -242,7 +242,7 @@ test(
 			.click();
 		await page.getByRole('menuitem', {name: 'Permissions'}).click();
 
-		const permissionsFrameLocator = await page.frameLocator(
+		const permissionsFrameLocator = page.frameLocator(
 			'iframe[title="Permissions"]'
 		);
 

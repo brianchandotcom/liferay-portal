@@ -657,7 +657,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext, _servletContext);
 	}
 
-	private void _addAccounts(ServiceContext serviceContext) throws Exception {
+	private void _addAccounts(
+			ServiceContext serviceContext,
+			Map<String, String> stringUtilReplaceValues)
+		throws Exception {
+
 		String json = SiteInitializerUtil.read(
 			"/site-initializer/accounts.json", _servletContext);
 
@@ -683,8 +687,21 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			accountResource.putAccountByExternalReferenceCode(
+			account = accountResource.putAccountByExternalReferenceCode(
 				account.getExternalReferenceCode(), account);
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.
+					getAccountEntryByExternalReferenceCode(
+						account.getExternalReferenceCode(),
+						serviceContext.getCompanyId());
+
+			Group group = _groupLocalService.getGroup(
+				accountEntry.getAccountEntryGroupId());
+
+			stringUtilReplaceValues.put(
+				"ACCOUNT_ENTRY_GROUP_ERC:" + account.getExternalReferenceCode(),
+				group.getExternalReferenceCode());
 		}
 	}
 
@@ -4939,11 +4956,13 @@ public class BundleSiteInitializer implements SiteInitializer {
 			).build();
 
 		for (String resourcePath : resourcePaths) {
+			String json = _replace(
+				SiteInitializerUtil.read(
+					resourcePath + "workflow-definition.json", _servletContext),
+				stringUtilReplaceValues);
+
 			JSONObject workflowDefinitionJSONObject =
-				_jsonFactory.createJSONObject(
-					SiteInitializerUtil.read(
-						resourcePath + "workflow-definition.json",
-						_servletContext));
+				_jsonFactory.createJSONObject(json);
 
 			workflowDefinitionJSONObject.put(
 				"content",
@@ -5094,7 +5113,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		R addAccountGroupsR = new R(
 			"addAccountGroups", () -> _addAccountGroups(serviceContext));
 		R addAccountsR = new R(
-			"addAccounts", () -> _addAccounts(serviceContext));
+			"addAccounts",
+			() -> _addAccounts(serviceContext, stringUtilReplaceValues));
 		R addAccountsOrganizationsR = new R(
 			"addAccountsOrganizations",
 			() -> _addAccountsOrganizations(serviceContext));
@@ -5419,7 +5439,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		).put(
 			addUserRolesR, _dependsOn(addOrUpdateRolesR, addUserAccountsR)
 		).put(
-			addWorkflowDefinitionsR, _dependsOn(addOrUpdateRolesR)
+			addWorkflowDefinitionsR, _dependsOn(addAccountsR, addOrUpdateRolesR)
 		).put(
 			publishObjectDefinitionsR, _dependsOn(addOrUpdateObjectFieldsR)
 		).put(

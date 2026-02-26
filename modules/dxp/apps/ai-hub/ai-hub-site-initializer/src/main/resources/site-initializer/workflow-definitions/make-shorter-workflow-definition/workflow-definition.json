@@ -1,6 +1,7 @@
 {
 	"active": true,
 	"externalReferenceCode": "L_MAKE_SHORTER",
+	"groupExternalReferenceCode": "[$ACCOUNT_ENTRY_GROUP_ERC:L_AI_HUB$]",
 	"name": "Make Shorter",
 	"scope": "ai",
 	"title": "Make Shorter",

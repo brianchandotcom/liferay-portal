@@ -134,6 +134,7 @@ export function BasicInfoContainer({
 						}
 						onSettingsChange={handleSettingsChange}
 						onSubmit={onSubmit}
+						values={values}
 					/>
 				)}
 

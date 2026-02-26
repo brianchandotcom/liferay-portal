@@ -13,14 +13,15 @@ database:
     region: us-west-2
     storageGB: 20
     username: liferay_database_admin
+deletionProtection: false
 enabled: true
 gateway: {}
 license: {}
+overlay: {}
 search:
     engineVersion: OpenSearch_2.15
     instanceCount: 2
     instanceType: t3.small.search
     region: us-west-2
     username: liferay_search_admin
-storage:
-    region: us-west-2
+storage: {}

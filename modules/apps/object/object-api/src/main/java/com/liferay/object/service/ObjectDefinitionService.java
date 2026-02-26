@@ -64,11 +64,6 @@ public interface ObjectDefinitionService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public ObjectDefinition addObjectDefinition(
-			String externalReferenceCode, long objectFolderId,
-			boolean modifiable, String scope, boolean system)
-		throws PortalException;
-
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, boolean enableComments,

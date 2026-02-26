@@ -152,9 +152,11 @@ public class AntivirusScannerHelper {
 							_dlAppLocalService.deleteFileEntry(classPK);
 						}
 						else {
-							_dlFileEntryLocalService.deleteFileVersion(
-								dlFileEntry.getUserId(),
-								dlFileEntry.getFileEntryId(), version);
+							if (!version.contains("PWC")) {
+								_dlFileEntryLocalService.deleteFileVersion(
+									dlFileEntry.getUserId(),
+									dlFileEntry.getFileEntryId(), version);
+							}
 						}
 
 						_store.deleteFile(
@@ -194,7 +196,6 @@ public class AntivirusScannerHelper {
 						ServiceContext serviceContext = new ServiceContext();
 
 						serviceContext.setCompanyId(companyId);
-
 						serviceContext.setUuid(dlFileEntry.getUuid());
 
 						_userNotificationEventLocalService.

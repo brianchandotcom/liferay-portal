@@ -77,6 +77,26 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 	}
 
 	@Test
+	public void testUpgradeWithLongServiceComponentTableName()
+		throws Exception {
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		String invalidColumnName = _getName(
+			"testCOLUMN", databaseMetaData.getMaxColumnNameLength());
+		String invalidTableName = _getName(
+			"testTABLE", databaseMetaData.getMaxTableNameLength());
+
+		String testColumnName = _getName(
+			"testColumn", databaseMetaData.getMaxColumnNameLength());
+		String testTableName = _getName(
+			"TestTable", databaseMetaData.getMaxTableNameLength());
+
+		_testUpgradeWithServiceComponentTable(
+			invalidColumnName, invalidTableName, testColumnName, testTableName);
+	}
+
+	@Test
 	public void testUpgradeWithObjectDefinitionDBTable() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition();
@@ -144,17 +164,32 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 						")"));
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> _db.runSQL(
-					"DROP_TABLE_IF_EXISTS(" + objectDefinitionDBTableName +
-						"_temp)"));
+					StringBundler.concat(
+						"DROP_TABLE_IF_EXISTS(", objectDefinitionDBTableName,
+						_TEMP_SUFFIX, ")")));
 		}
 	}
 
 	@Test
 	public void testUpgradeWithServiceComponentTable() throws Exception {
-		DBInspector dbInspector = new DBInspector(_connection);
+		_testUpgradeWithServiceComponentTable(
+			"testCOLUMN", "testTABLE", "testColumn", "TestTable");
+	}
 
-		String invalidColumnName = "testCOLUMN";
-		String invalidTableName = "testTABLE";
+	private String _getName(String baseName, int targetLength) {
+		if (baseName.length() >= targetLength) {
+			return baseName.substring(0, targetLength);
+		}
+
+		return baseName + "a".repeat(targetLength - baseName.length());
+	}
+
+	private void _testUpgradeWithServiceComponentTable(
+			String invalidColumnName, String invalidTableName,
+			String testColumnName, String testTableName)
+		throws Exception {
+
+		DBInspector dbInspector = new DBInspector(_connection);
 
 		ServiceComponent serviceComponent =
 			_serviceComponentLocalService.createServiceComponent(
@@ -162,9 +197,6 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 
 		serviceComponent.setMvccVersion(0);
 		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
-
-		String testColumnName = "testColumn";
-		String testTableName = "TestTable";
 
 		serviceComponent.setData(
 			StringBundler.concat(
@@ -236,6 +268,25 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 			_serviceComponentLocalService.deleteServiceComponent(
 				serviceComponent);
 
+			DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+			int maxTableNameLength = databaseMetaData.getMaxTableNameLength();
+
+			String tempTableName;
+
+			if ((maxTableNameLength > 0) &&
+				((testTableName.length() + _TEMP_SUFFIX.length()) >
+					maxTableNameLength)) {
+
+				String truncatedTableName = testTableName.substring(
+					0, maxTableNameLength - _TEMP_SUFFIX.length());
+
+				tempTableName = truncatedTableName + _TEMP_SUFFIX;
+			}
+			else {
+				tempTableName = testTableName + _TEMP_SUFFIX;
+			}
+
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> _db.runSQL(
 					"DROP_TABLE_IF_EXISTS(" + invalidTableName + ")"));
@@ -244,9 +295,11 @@ public class DatabaseTableAndColumnCaseDataCleanupPreupgradeProcessTest
 					"DROP_TABLE_IF_EXISTS(" + testTableName + ")"));
 			DBPartitionUtil.forEachCompanyId(
 				companyId -> _db.runSQL(
-					"DROP_TABLE_IF_EXISTS(" + testTableName + "_temp)"));
+					"DROP_TABLE_IF_EXISTS(" + tempTableName + ")"));
 		}
 	}
+
+	private static final String _TEMP_SUFFIX = "_temp";
 
 	private Connection _connection;
 	private DB _db;

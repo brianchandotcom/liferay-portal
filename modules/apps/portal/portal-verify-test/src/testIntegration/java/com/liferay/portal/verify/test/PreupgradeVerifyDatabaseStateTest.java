@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -48,7 +49,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.sql.Connection;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -311,22 +311,14 @@ public class PreupgradeVerifyDatabaseStateTest
 			Assert.fail();
 		}
 		catch (Exception exception) {
-			Set<String> normalizedTableNames = new HashSet<>();
-
-			try (Connection connection = DataAccess.getConnection()) {
-				DBInspector dbInspector = new DBInspector(connection);
-
-				for (String tableName :
-						DBResourceUtil.parseCreateTableSQL(originalData)) {
-
-					normalizedTableNames.add(
-						dbInspector.normalizeName(tableName));
-				}
-			}
+			Set<String> tableNames = DBResourceUtil.parseCreateTableSQL(
+				originalData);
 
 			Assert.assertEquals(
 				"Stale tables from a previous upgrade detected: " +
-					new TreeSet<>(normalizedTableNames),
+					new TreeSet<>(
+						TransformUtil.transform(
+							tableNames, this::_getNormalizedName)),
 				exception.getMessage());
 		}
 		finally {

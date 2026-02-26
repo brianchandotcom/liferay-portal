@@ -56,6 +56,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.systemevent.SystemEventExtraDataContributor;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -79,9 +80,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 
 /**
  * @author Vendel Toreki
@@ -291,10 +296,39 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void registerExportImportVulcanBatchEngineTaskItemDelegate(
-		String batchEngineClassName,
+		String batchEngineClassName, BundleContext bundleContext,
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
 		String taskItemDelegateName) {
+
+		Class<?> modelClass = exportImportDescriptor.getModelClass();
+
+		if (modelClass != null) {
+			SystemEventExtraDataContributor systemEventExtraDataContributor =
+				(baseModel, extraData) -> {
+					if ((baseModel == null) ||
+						!StringUtil.equals(
+							modelClass.getName(),
+							baseModel.getModelClassName()) ||
+						!exportImportDescriptor.isApplicableModel(baseModel)) {
+
+						return extraData;
+					}
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						extraData);
+
+					jsonObject.put("type", exportImportDescriptor.getKey());
+
+					return jsonObject.toString();
+				};
+
+			_serviceRegistrations.put(
+				exportImportDescriptor.getKey(),
+				bundleContext.registerService(
+					SystemEventExtraDataContributor.class,
+					systemEventExtraDataContributor, null));
+		}
 
 		_registrations.add(
 			new Registration() {
@@ -361,6 +395,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					key,
 					registration.getExportImportDescriptor(
 					).getKey())) {
+
+				ServiceRegistration<?> serviceRegistration =
+					_serviceRegistrations.remove(
+						registration.getExportImportDescriptor(
+						).getKey());
+
+				if (serviceRegistration != null) {
+					serviceRegistration.unregister();
+				}
 
 				iterator.remove();
 
@@ -954,6 +997,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final GroupLocalService _groupLocalService;
 	private final LayoutLocalService _layoutLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();
+	private final Map<String, ServiceRegistration<?>> _serviceRegistrations =
+		new ConcurrentHashMap<>();
 	private final StagingGroupHelper _stagingGroupHelper;
 
 	private interface Registration {

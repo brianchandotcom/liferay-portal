@@ -215,7 +215,7 @@ public class CollectionUtil {
 		).put(
 			"scopeExternalReferenceCode",
 			ItemScopeUtil.getItemScopeExternalReferenceCode(
-				collectionItemExternalReference.getScope(), groupId)
+				collectionItemExternalReference.getScope(), scopeGroupId)
 		).put(
 			"title", assetListEntry.getTitle()
 		).put(

@@ -183,19 +183,21 @@ public class CPDefinitionServiceWrapper
 
 	@Override
 	public CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+			String externalReferenceCode, long companyId, boolean excludeDraft)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpDefinitionService.
 			fetchCPDefinitionByCProductExternalReferenceCode(
-				externalReferenceCode, companyId);
+				externalReferenceCode, companyId, excludeDraft);
 	}
 
 	@Override
-	public CPDefinition fetchCPDefinitionByCProductId(long cProductId)
+	public CPDefinition fetchCPDefinitionByCProductId(
+			long cProductId, boolean excludeDraft)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _cpDefinitionService.fetchCPDefinitionByCProductId(cProductId);
+		return _cpDefinitionService.fetchCPDefinitionByCProductId(
+			cProductId, excludeDraft);
 	}
 
 	@Override

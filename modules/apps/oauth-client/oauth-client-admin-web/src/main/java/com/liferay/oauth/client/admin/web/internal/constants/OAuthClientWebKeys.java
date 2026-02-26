@@ -14,6 +14,8 @@ public class OAuthClientWebKeys {
 
 	public static final String JWKS_URI = "jwksURI";
 
+	public static final String REGISTRATION_ENDPOINT = "registrationEndpoint";
+
 	public static final String SUPPORTED_GRANT_TYPES = "supportedGrantTypes";
 
 	public static final String SUPPORTED_SCOPES = "supportedScopes";

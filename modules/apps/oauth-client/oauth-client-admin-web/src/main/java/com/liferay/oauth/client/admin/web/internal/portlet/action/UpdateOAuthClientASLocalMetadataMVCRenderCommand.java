@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import com.nimbusds.oauth2.sdk.ParseException;
 import com.nimbusds.oauth2.sdk.Scope;
+import com.nimbusds.oauth2.sdk.as.AuthorizationServerMetadata;
 import com.nimbusds.openid.connect.sdk.op.OIDCProviderMetadata;
 
 import jakarta.portlet.RenderRequest;
@@ -87,11 +88,12 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 			OAuthClientASLocalMetadata.class.getName(),
 			oAuthClientASLocalMetadata);
 
-		OIDCProviderMetadata oidcProviderMetadata = OIDCProviderMetadata.parse(
-			oAuthClientASLocalMetadata.getMetadataJSON());
+		AuthorizationServerMetadata authorizationServerMetadata =
+			AuthorizationServerMetadata.parse(
+				oAuthClientASLocalMetadata.getOAuthASMetadataJSON());
 
 		URI authorizationEndpointURI =
-			oidcProviderMetadata.getAuthorizationEndpointURI();
+			authorizationServerMetadata.getAuthorizationEndpointURI();
 
 		if (authorizationEndpointURI != null) {
 			renderRequest.setAttribute(
@@ -99,20 +101,29 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 				authorizationEndpointURI.toString());
 		}
 
-		if (oidcProviderMetadata.getGrantTypes() != null) {
+		if (authorizationServerMetadata.getGrantTypes() != null) {
 			renderRequest.setAttribute(
 				OAuthClientWebKeys.SUPPORTED_GRANT_TYPES,
-				StringUtil.merge(oidcProviderMetadata.getGrantTypes()));
+				StringUtil.merge(authorizationServerMetadata.getGrantTypes()));
 		}
 
-		URI jwksURI = oidcProviderMetadata.getJWKSetURI();
+		URI jwksURI = authorizationServerMetadata.getJWKSetURI();
 
 		if (jwksURI != null) {
 			renderRequest.setAttribute(
 				OAuthClientWebKeys.JWKS_URI, jwksURI.toString());
 		}
 
-		Scope supportedScopes = oidcProviderMetadata.getScopes();
+		URI registrationEndpointURI =
+			authorizationServerMetadata.getRegistrationEndpointURI();
+
+		if (registrationEndpointURI != null) {
+			renderRequest.setAttribute(
+				OAuthClientWebKeys.REGISTRATION_ENDPOINT,
+				registrationEndpointURI.toString());
+		}
+
+		Scope supportedScopes = authorizationServerMetadata.getScopes();
 
 		if (supportedScopes != null) {
 			renderRequest.setAttribute(
@@ -120,13 +131,17 @@ public class UpdateOAuthClientASLocalMetadataMVCRenderCommand
 				supportedScopes.toString());
 		}
 
+		OIDCProviderMetadata oidcProviderMetadata = OIDCProviderMetadata.parse(
+			oAuthClientASLocalMetadata.getMetadataJSON());
+
 		if (oidcProviderMetadata.getSubjectTypes() != null) {
 			renderRequest.setAttribute(
 				OAuthClientWebKeys.SUPPORTED_SUBJECT_TYPES,
 				StringUtil.merge(oidcProviderMetadata.getSubjectTypes()));
 		}
 
-		URI tokenEndpointURI = oidcProviderMetadata.getTokenEndpointURI();
+		URI tokenEndpointURI =
+			authorizationServerMetadata.getTokenEndpointURI();
 
 		if (tokenEndpointURI != null) {
 			renderRequest.setAttribute(

@@ -13,11 +13,7 @@ import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
-const test = mergeTests(
-	dataApiHelpersTest,
-	blogsPagesTest,
-	loginTest()
-);
+const test = mergeTests(dataApiHelpersTest, blogsPagesTest, loginTest());
 
 test(
 	'Cannot view trash entry from another site in current site recycle bin',
@@ -40,7 +36,7 @@ test(
 
 		await test.step('Create a new blog in first Site', async () => {
 			blog = await apiHelpers.headlessDelivery.postBlog(siteOne.id, {
-				headline: blogName
+				headline: blogName,
 			});
 		});
 
@@ -74,29 +70,27 @@ test(
 			});
 		});
 
-		await test.step(
-			'Create new site administrator user for second Site and login as site administrator',
-			async () => {
-				user = await apiHelpers.headlessAdminUser.postUserAccount();
+		await test.step('Create new site administrator user for second Site and login as site administrator', async () => {
+			user = await apiHelpers.headlessAdminUser.postUserAccount();
 
-				userData[user.alternateName] = {
-					name: user.givenName,
-					password: 'test',
-					surname: user.familyName,
-				};
+			userData[user.alternateName] = {
+				name: user.givenName,
+				password: 'test',
+				surname: user.familyName,
+			};
 
-				const siteAdminRole =
-					await apiHelpers.headlessAdminUser.getRoleByName(
-						'Site Administrator'
-					);
-
-				await apiHelpers.headlessAdminUser.assignUserToSite(
-					siteAdminRole.id,
-					siteTwo.id,
-					user.id
+			const siteAdminRole =
+				await apiHelpers.headlessAdminUser.getRoleByName(
+					'Site Administrator'
 				);
 
-				await performUserSwitch(page, user.alternateName);
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				siteAdminRole.id,
+				siteTwo.id,
+				user.id
+			);
+
+			await performUserSwitch(page, user.alternateName);
 		});
 
 		await test.step('Go to the deleted content in Recycle Bin of second site and try to view the deleted content', async () => {

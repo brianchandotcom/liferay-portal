@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2026 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -52,22 +52,46 @@ public class IllegalCharactersContentDataCleanupPreupgradeProcess
 
 		DB db = DBManagerUtil.getDB();
 
-		String charSentence = "CHAR(";
+		String charModificator = "";
 
-		if ((db.getDBType() == DBType.DB2) ||
-			(db.getDBType() == DBType.ORACLE) ||
-			(db.getDBType() == DBType.SQLSERVER)) {
-
-			charSentence = "CHR(";
+		if (db.getDBType() == DBType.POSTGRESQL) {
+			charModificator = "::bytea";
 		}
 
-		charSentence = charSentence + charCode + ")";
+		String charSentence = "CHAR(" + charCode + ")";
+
+		if (db.getDBType() == DBType.DB2) {
+			charSentence = StringBundler.concat(
+				"CAST(CHR(", charCode, ") AS VARCHAR(", charCode,
+				") FOR BIT DATA");
+		}
+		else if ((db.getDBType() == DBType.ORACLE) ||
+				 (db.getDBType() == DBType.SQLSERVER)) {
+
+			charSentence = "CHR(" + charCode + ")";
+		}
+
+		String columnModificator = "";
+
+		if ((db.getDBType() == DBType.MARIADB) ||
+			(db.getDBType() == DBType.MYSQL)) {
+
+			columnModificator = " COLLATE utf8mb4_bin";
+		}
+		else if (db.getDBType() == DBType.POSTGRESQL) {
+			columnModificator = "::bytea";
+		}
+		else if (db.getDBType() == DBType.SQLSERVER) {
+			columnModificator = " COLLATE Latin1_General_100_BIN2";
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"update ", tableName, " set ", columnName, " = replace(",
-					columnName, ", ", charSentence, ", '') where INSTR( ",
-					columnName, ", ", charSentence, ") > 0"))) {
+					columnName, columnModificator, ", ", charSentence,
+					charModificator, ", ''", charModificator, ") where INSTR( ",
+					columnName, columnModificator, ", ", charSentence,
+					charModificator, ") > 0"))) {
 
 			int count = preparedStatement.executeUpdate();
 

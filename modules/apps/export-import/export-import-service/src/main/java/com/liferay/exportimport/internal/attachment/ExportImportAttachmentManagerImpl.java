@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Image;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ImageLocalService;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -100,12 +101,15 @@ public class ExportImportAttachmentManagerImpl
 				image.getImageId();
 		}
 
-		String fileKey = image.getExternalReferenceCode();
+		try (InputStream inputStream = _imageLocalService.getImageInputStream(
+				image.getCompanyId(), image.getImageId(), image.getType())) {
 
-		portletDataContext.addZipEntry(
-			_getZipPath(fileKey), image.getTextObj());
+			String key = String.valueOf(image.getImageId());
 
-		return _PROTOCOL + ":" + fileKey;
+			portletDataContext.addZipEntry(_getZipPath(key), inputStream);
+
+			return _PROTOCOL + ":" + key;
+		}
 	}
 
 	@Override
@@ -168,6 +172,9 @@ public class ExportImportAttachmentManagerImpl
 
 	@Reference
 	private DLURLHelper _dlurlHelper;
+
+	@Reference
+	private ImageLocalService _imageLocalService;
 
 	@Reference
 	private Portal _portal;

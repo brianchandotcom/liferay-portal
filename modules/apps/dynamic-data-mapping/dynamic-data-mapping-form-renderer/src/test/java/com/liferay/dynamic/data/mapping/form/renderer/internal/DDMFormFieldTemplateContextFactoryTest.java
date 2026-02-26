@@ -11,6 +11,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.BaseDDMFormFieldRenderer
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldRenderer;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesRegistry;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.constants.LanguageConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.template.TemplateResource;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlParser;
@@ -40,6 +42,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +70,68 @@ public class DDMFormFieldTemplateContextFactoryTest {
 	public static void setUpClass() {
 		_setUpDDMFormTemplateContextFactoryUtil();
 		setUpLanguageUtil();
+	}
+
+	@Test
+	public void testCreateNestedFields() {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"fieldset", DDMFormFieldTypeConstants.FIELDSET);
+
+		ddmFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createLocalizableTextDDMFormField("textField1"));
+		ddmFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createLocalizableTextDDMFormField("textField2"));
+		ddmFormField.addNestedDDMFormField(
+			DDMFormTestUtil.createLocalizableTextDDMFormField("textField3"));
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		DDMFormFieldValue ddmFormFieldValue =
+			DDMFormValuesTestUtil.createDDMFormFieldValue("fieldset", null);
+
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				"textField1", RandomTestUtil.randomString()));
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				"textField2", RandomTestUtil.randomString()));
+		ddmFormFieldValue.addNestedDDMFormFieldValue(
+			DDMFormValuesTestUtil.createLocalizedDDMFormFieldValue(
+				"textField3", RandomTestUtil.randomString()));
+
+		DDMFormFieldTemplateContextFactory ddmFormFieldTemplateContextFactory =
+			_createDDMFormFieldTemplateContextFactory(
+				ddmForm, ddmFormField.getName(), Collections.emptyMap(),
+				Collections.singletonList(ddmFormFieldValue), false,
+				_getTextDDMFormFieldRenderer(),
+				_getTextDDMFormFieldTemplateContextContributor());
+
+		List<Object> fields = ddmFormFieldTemplateContextFactory.create();
+
+		Assert.assertEquals(fields.toString(), 1, fields.size());
+
+		Map<String, Object> fieldTemplateContext =
+			(Map<String, Object>)fields.get(0);
+
+		List<Object> nestedFields = (List<Object>)fieldTemplateContext.get(
+			"nestedFields");
+
+		Assert.assertEquals(nestedFields.toString(), 3, nestedFields.size());
+
+		Assert.assertEquals(
+			"textField1",
+			MapUtil.getString(
+				(Map<String, Object>)nestedFields.get(0), "fieldName"));
+		Assert.assertEquals(
+			"textField2",
+			MapUtil.getString(
+				(Map<String, Object>)nestedFields.get(1), "fieldName"));
+		Assert.assertEquals(
+			"textField3",
+			MapUtil.getString(
+				(Map<String, Object>)nestedFields.get(2), "fieldName"));
 	}
 
 	@Test

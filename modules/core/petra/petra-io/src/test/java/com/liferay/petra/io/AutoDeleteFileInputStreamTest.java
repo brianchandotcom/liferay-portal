@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.SwappableSecurityManager;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.File;
@@ -82,6 +83,8 @@ public class AutoDeleteFileInputStreamTest {
 		Assert.assertFalse(_tempFile.exists());
 	}
 
+	@NewEnv(type = NewEnv.Type.JVM)
+	@NewEnv.JVMArgsLine("-Djava.security.manager=allow")
 	@Test
 	public void testUnableToDeleteOnClose() throws IOException {
 		try (SwappableSecurityManager autoCloseSwappableSecurityManager =

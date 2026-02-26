@@ -185,13 +185,56 @@ export function useObjectFieldForm({
 				);
 			}
 
-			if (settings.showFilesInDocumentsAndMedia) {
+			if (
+				settings.showFilesInLibrary &&
+				settings.fileSource === 'userComputerToDocumentsAndMedia'
+			) {
 				if (
 					invalidateRequired(
 						settings.storageDLFolderPath as string | undefined
 					)
 				) {
 					errors.storageDLFolderPath = constantsUtils.REQUIRED_MSG;
+				}
+				else {
+					const sourceFolderError = getSourceFolderError(
+						settings.storageDLFolderPath as string
+					);
+
+					if (sourceFolderError !== null) {
+						errors.storageDLFolderPath = sourceFolderError;
+					}
+				}
+			}
+			else if (
+				settings.showFilesInLibrary &&
+				(settings.fileSource === 'userComputerToCMSBasicDocument' ||
+					settings.fileSource === 'userComputerToDocumentsAndMedia')
+			) {
+				if (
+					invalidateRequired(
+						settings.storageDLFolderPath as string | undefined
+					)
+				) {
+					errors.storageDLFolderPath = constantsUtils.REQUIRED_MSG;
+				}
+				else {
+					const sourceFolderError = getSourceFolderError(
+						settings.storageDLFolderPath as string
+					);
+
+					if (sourceFolderError !== null) {
+						errors.storageDLFolderPath = sourceFolderError;
+					}
+				}
+
+				if (
+					settings.fileSource === 'userComputerToCMSBasicDocument' &&
+					invalidateRequired(
+						settings.storageDepotGroup as string | undefined
+					)
+				) {
+					errors.storageDepotGroup = constantsUtils.REQUIRED_MSG;
 				}
 				else {
 					const sourceFolderError = getSourceFolderError(

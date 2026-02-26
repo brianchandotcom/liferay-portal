@@ -64,7 +64,7 @@ import getFormElement from './util/form/get_form_element.es';
 import objectToFormData from './util/form/object_to_form_data.es';
 import postForm from './util/form/post_form.es';
 import setFormValues from './util/form/set_form_values.es';
-import formatStorage from './util/format_storage.es';
+import formatStorage from './util/format_storage';
 import formatXML from './util/format_xml.es';
 import {
 	getCheckedCheckboxes,

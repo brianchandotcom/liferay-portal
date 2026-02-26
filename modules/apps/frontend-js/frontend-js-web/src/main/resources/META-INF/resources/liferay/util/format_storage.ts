@@ -20,7 +20,10 @@ const DEFAULT_OPTIONS = {
  * @return {String} formattedStorage Final formatted storage outputted as a String
  * @review
  */
-export default function formatStorage(size, options = {}) {
+export default function formatStorage(
+	size?: number,
+	options: Partial<typeof DEFAULT_OPTIONS> = {}
+): string {
 	const {
 		addSpaceBeforeSuffix,
 		decimalSeparator,

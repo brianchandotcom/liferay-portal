@@ -13,6 +13,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -29,6 +30,7 @@ import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -336,13 +338,20 @@ public class HttpServletEndpointController {
 						DTOConstants.FAILURE_REASON_VALIDATION_FAILED);
 				}
 
+				Bundle bundle = serviceReference.getBundle();
+
+				Dictionary<String, String> headers = bundle.getHeaders();
+
+				boolean webServiceTracking = GetterUtil.getBoolean(
+					headers.get("Web-ServiceTracking"), true);
+
 				return new LiferayContextController(
 					_bundleContext, serviceReference,
 					new ServletContextHelperDataContext(
 						contextName, _parentServletContext,
 						_parentServletContextTempDir),
 					HttpServletEndpointController.this, contextName,
-					contextPath);
+					contextPath, webServiceTracking);
 			}
 			catch (Exception exception) {
 				_log.error(exception);

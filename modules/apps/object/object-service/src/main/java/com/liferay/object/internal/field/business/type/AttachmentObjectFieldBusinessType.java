@@ -33,6 +33,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -84,7 +85,8 @@ public class AttachmentObjectFieldBusinessType
 	@Override
 	public Set<String> getAllowedObjectFieldSettingsNames() {
 		return SetUtil.fromArray(
-			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+			ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+			ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 			ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH);
 	}
 
@@ -291,23 +293,51 @@ public class AttachmentObjectFieldBusinessType
 		String fileSource = objectFieldSettingsValues.get(
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE);
 
-		if (Objects.equals(
+		if ((FeatureFlagManagerUtil.isEnabled(
+				objectField.getCompanyId(), "LPD-74813") &&
+			 Objects.equals(
+				 fileSource,
+				 ObjectFieldSettingConstants.VALUE_CMS_BASIC_DOCUMENT)) ||
+			Objects.equals(
 				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
 
 			validateNotAllowedObjectFieldSettingNames(
 				SetUtil.fromArray(
-					ObjectFieldSettingConstants.
-						NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+					ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
 					ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH),
 				objectField.getName(), objectFieldSettingsValues);
 		}
-		else if (Objects.equals(
-					fileSource,
-					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+		else if (FeatureFlagManagerUtil.isEnabled(
+					objectField.getCompanyId(), "LPD-74813") &&
+				 Objects.equals(
+					 fileSource,
+					 ObjectFieldSettingConstants.
+						 VALUE_USER_COMPUTER_TO_CMS_BASIC_DOCUMENT)) {
 
 			validateRelatedObjectFieldSettings(
 				objectField,
-				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_DOCS_AND_MEDIA,
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
+				objectFieldSettingsValues);
+			validateRelatedObjectFieldSettings(
+				objectField,
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
+				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
+				objectFieldSettingsValues);
+		}
+		else if (Objects.equals(
+					fileSource,
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
+
+			validateNotAllowedObjectFieldSettingNames(
+				SetUtil.fromArray(
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP),
+				objectField.getName(), objectFieldSettingsValues);
+			validateRelatedObjectFieldSettings(
+				objectField,
+				ObjectFieldSettingConstants.NAME_SHOW_FILES_IN_LIBRARY,
 				ObjectFieldSettingConstants.NAME_STORAGE_DL_FOLDER_PATH,
 				objectFieldSettingsValues);
 		}
@@ -336,6 +366,40 @@ public class AttachmentObjectFieldBusinessType
 				ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE,
 				objectFieldSettingsValues.get(
 					ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE));
+		}
+	}
+
+	@Override
+	protected void validateObjectFieldSettingValue(
+			ObjectField objectField, String objectFieldSettingName,
+			Map<String, String> objectFieldSettingsValues)
+		throws PortalException {
+
+		super.validateObjectFieldSettingValue(
+			objectField, objectFieldSettingName, objectFieldSettingsValues);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectField.getCompanyId(), "LPD-74813")) {
+
+			return;
+		}
+
+		String objectFieldSettingValue = objectFieldSettingsValues.get(
+			objectFieldSettingName);
+
+		if (Objects.equals(
+				objectFieldSettingName,
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP)) {
+
+			Group group = _groupLocalService.fetchGroup(
+				GetterUtil.getLong(objectFieldSettingValue));
+
+			if ((group == null) || !group.isDepot()) {
+				throw new ObjectFieldSettingValueException.InvalidValue(
+					objectField.getName(),
+					ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP,
+					objectFieldSettingValue);
+			}
 		}
 	}
 

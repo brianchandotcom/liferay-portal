@@ -85,9 +85,6 @@ public interface PatcherConfiguration {
 	public String patcherLiferayPortalRepository();
 
 	@Meta.AD(deflt = "", required = false)
-	public String patcherPubsubCredentialFilePath();
-
-	@Meta.AD(deflt = "", required = false)
 	public String patcherPubsubProjectId();
 
 	@Meta.AD(deflt = "", required = false)

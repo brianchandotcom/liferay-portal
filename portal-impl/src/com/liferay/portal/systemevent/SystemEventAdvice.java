@@ -6,6 +6,8 @@
 package com.liferay.portal.systemevent;
 
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.aop.AopMethodInvocation;
@@ -14,6 +16,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mass.delete.MassDeleteCacheThreadLocal;
 import com.liferay.portal.kernel.model.AuditedModel;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
@@ -21,9 +24,11 @@ import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.TypedModel;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.systemevent.SystemEventExtraDataContributor;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 
@@ -121,6 +126,12 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		SystemEventHierarchyEntry systemEventHierarchyEntry =
 			SystemEventHierarchyEntryThreadLocal.peek();
 
+		BaseModel<?> baseModel = null;
+
+		if (arguments[0] instanceof BaseModel<?>) {
+			baseModel = (BaseModel<?>)arguments[0];
+		}
+
 		if ((systemEventHierarchyEntry != null) &&
 			systemEventHierarchyEntry.hasTypedModel(className, classPK)) {
 
@@ -130,7 +141,8 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 					systemEventHierarchyEntry.getClassName(), classPK,
 					systemEventHierarchyEntry.getUuid(), referrerClassName,
 					systemEvent.type(),
-					systemEventHierarchyEntry.getExtraData());
+					_getExtraData(
+						baseModel, systemEventHierarchyEntry.getExtraData()));
 			}
 			else {
 				SystemEventLocalServiceUtil.addSystemEvent(
@@ -138,20 +150,21 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 					systemEventHierarchyEntry.getClassName(), classPK,
 					systemEventHierarchyEntry.getUuid(), referrerClassName,
 					systemEvent.type(),
-					systemEventHierarchyEntry.getExtraData());
+					_getExtraData(
+						baseModel, systemEventHierarchyEntry.getExtraData()));
 			}
 		}
 		else if (group != null) {
 			SystemEventLocalServiceUtil.addSystemEvent(
 				0, groupId, classExternalReferenceCode, className, classPK,
 				getUuid(classedModel), referrerClassName, systemEvent.type(),
-				StringPool.BLANK);
+				_getExtraData(baseModel, StringPool.BLANK));
 		}
 		else {
 			SystemEventLocalServiceUtil.addSystemEvent(
 				getCompanyId(classedModel), classExternalReferenceCode,
 				className, classPK, getUuid(classedModel), referrerClassName,
-				systemEvent.type(), StringPool.BLANK);
+				systemEvent.type(), _getExtraData(baseModel, StringPool.BLANK));
 		}
 	}
 
@@ -353,6 +366,19 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 		return true;
 	}
 
+	private String _getExtraData(BaseModel<?> baseModel, String extraData)
+		throws Exception {
+
+		for (SystemEventExtraDataContributor systemEventExtraDataContributor :
+				_systemEventExtraDataContributors) {
+
+			extraData = systemEventExtraDataContributor.contribute(
+				baseModel, extraData);
+		}
+
+		return extraData;
+	}
+
 	private static final int _PHASE_AFTER_RETURNING = 1;
 
 	private static final int _PHASE_BEFORE = 0;
@@ -361,6 +387,15 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SystemEventAdvice.class);
+
+	private static final ServiceTrackerList<SystemEventExtraDataContributor>
+		_systemEventExtraDataContributors;
+
+	static {
+		_systemEventExtraDataContributors = ServiceTrackerListFactory.open(
+			SystemBundleUtil.getBundleContext(),
+			SystemEventExtraDataContributor.class);
+	}
 
 	private final Set<String> _noUUIDClassNames = Collections.newSetFromMap(
 		new ConcurrentHashMap<>());

@@ -118,6 +118,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
@@ -753,18 +754,28 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testAddObjectDefinition() throws Exception {
-		AssertUtils.assertFailure(
-			ObjectDefinitionModifiableException.MustBeModifiable.class,
-			"A modifiable object definition is required",
-			() -> _objectDefinitionLocalService.addObjectDefinition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				false, ObjectDefinitionConstants.SCOPE_COMPANY, false));
-		AssertUtils.assertFailure(
-			ObjectDefinitionModifiableException.MustBeModifiable.class,
-			"A modifiable object definition is required",
-			() -> _objectDefinitionLocalService.addObjectDefinition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				false, ObjectDefinitionConstants.SCOPE_COMPANY, true));
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			AssertUtils.assertFailure(
+				ObjectDefinitionModifiableException.MustBeModifiable.class,
+				"A modifiable object definition is required",
+				() ->
+					_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+						RandomTestUtil.randomString(),
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), 0, false,
+						ObjectDefinitionConstants.SCOPE_COMPANY, false));
+			AssertUtils.assertFailure(
+				ObjectDefinitionModifiableException.MustBeModifiable.class,
+				"A modifiable object definition is required",
+				() ->
+					_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+						RandomTestUtil.randomString(),
+						TestPropsValues.getCompanyId(),
+						TestPropsValues.getUserId(), 0, false,
+						ObjectDefinitionConstants.SCOPE_COMPANY, true));
+		}
 
 		_testAddObjectDefinition(true, false);
 		_testAddObjectDefinition(true, true);
@@ -1423,36 +1434,53 @@ public class ObjectDefinitionLocalServiceTest {
 				RandomTestUtil.randomString(),
 				ObjectDefinitionTestUtil.getRandomName()));
 
-		ObjectDefinition objectDefinition2 =
-			_objectDefinitionLocalService.addObjectDefinition(
-				ObjectDefinitionTestUtil.getRandomName(),
-				TestPropsValues.getUserId(), 0, true,
-				ObjectDefinitionConstants.SCOPE_COMPANY, false);
-
-		Assert.assertTrue(Validator.isNull(objectDefinition2.getClassName()));
-
-		String className2 =
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomString();
-
-		objectDefinition2 = _updateCustomObjectDefinition(
-			className2, objectDefinition2);
-
-		Assert.assertEquals(className2, objectDefinition2.getClassName());
-
-		ObjectDefinition objectDefinition3 = _addCustomObjectDefinition(
-			null, ObjectDefinitionTestUtil.getRandomName());
-
-		Assert.assertTrue(
-			StringUtil.startsWith(
-				objectDefinition3.getClassName(),
-				ObjectDefinitionConstants.
-					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
-
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
+
+		ObjectDefinition objectDefinition2 = null;
+		ObjectDefinition objectDefinition3 = null;
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			objectDefinition2 =
+				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+					ObjectDefinitionTestUtil.getRandomName(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					0, true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+
+			Assert.assertTrue(
+				Validator.isNull(objectDefinition2.getClassName()));
+
+			String className2 =
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+						RandomTestUtil.randomString();
+
+			objectDefinition2 = _updateCustomObjectDefinition(
+				className2, objectDefinition2);
+
+			Assert.assertEquals(className2, objectDefinition2.getClassName());
+
+			objectDefinition3 = _addCustomObjectDefinition(
+				null, ObjectDefinitionTestUtil.getRandomName());
+
+			Assert.assertTrue(
+				StringUtil.startsWith(
+					objectDefinition3.getClassName(),
+					ObjectDefinitionConstants.
+						CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+		}
+		finally {
+			if (objectDefinition2 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition2);
+			}
+
+			if (objectDefinition3 != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition3);
+			}
+		}
 	}
 
 	@Test
@@ -2807,31 +2835,44 @@ public class ObjectDefinitionLocalServiceTest {
 
 	@Test
 	public void testEnableAccountRestricted() throws Exception {
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addObjectDefinition(
-				RandomTestUtil.randomString(), TestPropsValues.getUserId(), 0,
-				true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
+		ObjectDefinition objectDefinition = null;
 
-		objectDefinition =
-			_objectDefinitionLocalService.enableAccountEntryRestricted(
-				_objectRelationshipLocalService.addObjectRelationship(
-					null, TestPropsValues.getUserId(),
-					_objectDefinitionLocalService.fetchSystemObjectDefinition(
-						TestPropsValues.getCompanyId(), "AccountEntry"
-					).getObjectDefinitionId(),
-					objectDefinition.getObjectDefinitionId(), 0,
-					ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					StringUtil.randomId(), false,
-					ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		Assert.assertTrue(
-			objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
-		Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition.isSystem());
+			objectDefinition =
+				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					0, true, ObjectDefinitionConstants.SCOPE_COMPANY, false);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+			objectDefinition =
+				_objectDefinitionLocalService.enableAccountEntryRestricted(
+					_objectRelationshipLocalService.addObjectRelationship(
+						null, TestPropsValues.getUserId(),
+						_objectDefinitionLocalService.
+							fetchSystemObjectDefinition(
+								TestPropsValues.getCompanyId(), "AccountEntry"
+							).getObjectDefinitionId(),
+						objectDefinition.getObjectDefinitionId(), 0,
+						ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+						false,
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString()),
+						StringUtil.randomId(), false,
+						ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null));
+
+			Assert.assertTrue(
+				objectDefinition.getAccountEntryRestrictedObjectFieldId() > 0);
+			Assert.assertTrue(objectDefinition.isAccountEntryRestricted());
+			Assert.assertFalse(objectDefinition.isSystem());
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionAccountEntryRestrictedException.class,
@@ -2992,11 +3033,13 @@ public class ObjectDefinitionLocalServiceTest {
 
 		long exportImportConfigurationId = RandomTestUtil.randomLong();
 
+		ObjectDefinition objectDefinition = null;
+
 		try (AutoCloseable autoCloseable =
 				new ExportImportConfigurationTemporarySwapper(
 					exportImportConfigurationId)) {
 
-			ObjectDefinition objectDefinition =
+			objectDefinition =
 				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
 					externalReferenceCode, companyId, userId,
 					_defaultObjectFolder.getObjectFolderId(), true,
@@ -3074,6 +3117,12 @@ public class ObjectDefinitionLocalServiceTest {
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED,
 				objectDefinition.getStatus());
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
 		}
 	}
 
@@ -4312,50 +4361,64 @@ public class ObjectDefinitionLocalServiceTest {
 		throws Exception {
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-		User user = TestPropsValues.getUser();
+		ObjectDefinition objectDefinition = null;
 		ObjectFolder objectFolder = _addObjectFolder();
+		User user = TestPropsValues.getUser();
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.addObjectDefinition(
-				externalReferenceCode, user.getUserId(),
-				objectFolder.getObjectFolderId(), modifiable,
-				ObjectDefinitionConstants.SCOPE_COMPANY, system);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
 
-		_assertLabelAndPluralLabel(
-			objectDefinition, externalReferenceCode, externalReferenceCode);
+			objectDefinition =
+				_objectDefinitionLocalService.getOrAddEmptyObjectDefinition(
+					externalReferenceCode, user.getCompanyId(),
+					user.getUserId(), objectFolder.getObjectFolderId(),
+					modifiable, ObjectDefinitionConstants.SCOPE_COMPANY,
+					system);
 
-		Assert.assertEquals(
-			externalReferenceCode, objectDefinition.getExternalReferenceCode());
-		Assert.assertEquals(
-			TestPropsValues.getCompanyId(), objectDefinition.getCompanyId());
-		Assert.assertEquals(user.getUserId(), objectDefinition.getUserId());
-		Assert.assertEquals(user.getFullName(), objectDefinition.getUserName());
-		Assert.assertEquals(
-			objectFolder.getObjectFolderId(),
-			objectDefinition.getObjectFolderId());
-		Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
-		Assert.assertFalse(objectDefinition.isActive());
-		Assert.assertEquals(
-			StringPool.BLANK, objectDefinition.getDBTableName());
-		Assert.assertFalse(objectDefinition.isEnableCategorization());
-		Assert.assertFalse(objectDefinition.isEnableComments());
-		Assert.assertFalse(objectDefinition.isEnableIndexSearch());
-		Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
-		Assert.assertEquals(modifiable, objectDefinition.isModifiable());
-		Assert.assertEquals(externalReferenceCode, objectDefinition.getName());
-		Assert.assertEquals(
-			ObjectDefinitionConstants.SCOPE_COMPANY,
-			objectDefinition.getScope());
-		Assert.assertEquals(
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			objectDefinition.getStorageType());
-		Assert.assertEquals(system, objectDefinition.isSystem());
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_EMPTY, objectDefinition.getStatus());
+			_assertLabelAndPluralLabel(
+				objectDefinition, externalReferenceCode, externalReferenceCode);
 
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+			Assert.assertEquals(
+				externalReferenceCode,
+				objectDefinition.getExternalReferenceCode());
+			Assert.assertEquals(
+				TestPropsValues.getCompanyId(),
+				objectDefinition.getCompanyId());
+			Assert.assertEquals(user.getUserId(), objectDefinition.getUserId());
+			Assert.assertEquals(
+				user.getFullName(), objectDefinition.getUserName());
+			Assert.assertEquals(
+				objectFolder.getObjectFolderId(),
+				objectDefinition.getObjectFolderId());
+			Assert.assertFalse(objectDefinition.isAccountEntryRestricted());
+			Assert.assertFalse(objectDefinition.isActive());
+			Assert.assertEquals(
+				StringPool.BLANK, objectDefinition.getDBTableName());
+			Assert.assertFalse(objectDefinition.isEnableCategorization());
+			Assert.assertFalse(objectDefinition.isEnableComments());
+			Assert.assertFalse(objectDefinition.isEnableIndexSearch());
+			Assert.assertFalse(objectDefinition.isEnableObjectEntryHistory());
+			Assert.assertEquals(modifiable, objectDefinition.isModifiable());
+			Assert.assertEquals(
+				externalReferenceCode, objectDefinition.getName());
+			Assert.assertEquals(
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				objectDefinition.getScope());
+			Assert.assertEquals(
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectDefinition.getStorageType());
+			Assert.assertEquals(system, objectDefinition.isSystem());
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_EMPTY, objectDefinition.getStatus());
 
-		_objectFolderLocalService.deleteObjectFolder(objectFolder);
+			_objectFolderLocalService.deleteObjectFolder(objectFolder);
+		}
+		finally {
+			if (objectDefinition != null) {
+				_objectDefinitionLocalService.deleteObjectDefinition(
+					objectDefinition);
+			}
+		}
 	}
 
 	private void _testDeleteCustomObjectDefinitionWithAssetListEntry()

@@ -224,18 +224,13 @@ test(
 
 		// Go to the site when it is available
 
-		await expect
-			.poll(
-				async () => {
-					await page.goto(newSiteURL);
+		await expect(async () => {
+			await page.goto(newSiteURL);
 
-					return page.getByText('Page Not Found Go Back').isVisible();
-				},
-				{
-					timeout: 6000,
-				}
-			)
-			.toBe(false);
+			await expect(page.getByText('Page Not Found Go Back')).toBeHidden();
+		}).toPass({
+			timeout: 6000,
+		});
 
 		await productMenuPage.goToPages();
 

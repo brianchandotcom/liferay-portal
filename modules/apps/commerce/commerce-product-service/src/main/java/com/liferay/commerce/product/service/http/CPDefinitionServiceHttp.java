@@ -422,7 +422,7 @@ public class CPDefinitionServiceHttp {
 	public static com.liferay.commerce.product.model.CPDefinition
 			fetchCPDefinitionByCProductExternalReferenceCode(
 				HttpPrincipal httpPrincipal, String externalReferenceCode,
-				long companyId)
+				long companyId, boolean excludeDraft)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -432,7 +432,7 @@ public class CPDefinitionServiceHttp {
 				_fetchCPDefinitionByCProductExternalReferenceCodeParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, externalReferenceCode, companyId);
+				methodKey, externalReferenceCode, companyId, excludeDraft);
 
 			Object returnObj = null;
 
@@ -464,7 +464,8 @@ public class CPDefinitionServiceHttp {
 
 	public static com.liferay.commerce.product.model.CPDefinition
 			fetchCPDefinitionByCProductId(
-				HttpPrincipal httpPrincipal, long cProductId)
+				HttpPrincipal httpPrincipal, long cProductId,
+				boolean excludeDraft)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -473,7 +474,7 @@ public class CPDefinitionServiceHttp {
 				_fetchCPDefinitionByCProductIdParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, cProductId);
+				methodKey, cProductId, excludeDraft);
 
 			Object returnObj = null;
 
@@ -1465,10 +1466,10 @@ public class CPDefinitionServiceHttp {
 		new Class[] {long.class};
 	private static final Class<?>[]
 		_fetchCPDefinitionByCProductExternalReferenceCodeParameterTypes7 =
-			new Class[] {String.class, long.class};
+			new Class[] {String.class, long.class, boolean.class};
 	private static final Class<?>[]
 		_fetchCPDefinitionByCProductIdParameterTypes8 = new Class[] {
-			long.class
+			long.class, boolean.class
 		};
 	private static final Class<?>[] _getCPDefinitionParameterTypes9 =
 		new Class[] {long.class};

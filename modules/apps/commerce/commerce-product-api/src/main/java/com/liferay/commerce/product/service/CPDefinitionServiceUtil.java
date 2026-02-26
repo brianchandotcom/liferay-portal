@@ -179,17 +179,19 @@ public class CPDefinitionServiceUtil {
 	}
 
 	public static CPDefinition fetchCPDefinitionByCProductExternalReferenceCode(
-			String externalReferenceCode, long companyId)
+			String externalReferenceCode, long companyId, boolean excludeDraft)
 		throws PortalException {
 
 		return getService().fetchCPDefinitionByCProductExternalReferenceCode(
-			externalReferenceCode, companyId);
+			externalReferenceCode, companyId, excludeDraft);
 	}
 
-	public static CPDefinition fetchCPDefinitionByCProductId(long cProductId)
+	public static CPDefinition fetchCPDefinitionByCProductId(
+			long cProductId, boolean excludeDraft)
 		throws PortalException {
 
-		return getService().fetchCPDefinitionByCProductId(cProductId);
+		return getService().fetchCPDefinitionByCProductId(
+			cProductId, excludeDraft);
 	}
 
 	public static CPDefinition getCPDefinition(long cpDefinitionId)

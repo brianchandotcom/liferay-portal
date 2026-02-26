@@ -38,28 +38,36 @@ jobs:
 
                     echo "Checking open pull requests in ${currentOwner}/${repositoryName}..."
 
-                    local prJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                    local prJSON=$(curl -s -H "Authorization: Bearer ${githubToken}" \
                         "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls?state=open")
 
                     local prList=$( \
-                        echo "${prJson}" | \
+                        echo "${prJSON}" | \
                         jq \
                             --raw-output \
                             ".[]
                             | \"\(.number)\t\(.html_url)\"")
 
-                    echo "${prList}" | while IFS=$'\t' read -r pullRequestNumber pullRequestUrl
+                    local oldIFS="${IFS}"
+                    IFS=$'\n'
+
+                    for prEntry in ${prList}
                     do
-                        if [[ -z "${pullRequestNumber}" ]]
+                        IFS="${oldIFS}"
+
+                        local prNumber=$(echo "${prEntry}" | cut -f1)
+                        local prURL=$(echo "${prEntry}" | cut -f2)
+
+                        if [[ -z "${prNumber}" ]]
                         then
                             continue
                         fi
 
-                        local prDetailsJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
-                            "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}")
+                        local prDetailsJSON=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                            "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}")
 
                         local mergeableState=$( \
-                            echo "${prDetailsJson}" | \
+                            echo "${prDetailsJSON}" | \
                             jq \
                                 --raw-output \
                                 ".mergeable_state")
@@ -70,16 +78,16 @@ jobs:
                         while [[ "${mergeableState}" == "unknown" || "${mergeableState}" == "null" ]] &&
                               [[ ${retryCount} -lt ${maxRetries} ]]
                         do
-                            echo "Pull request ${pullRequestUrl} state is unknown."
+                            echo "Pull request ${prURL} state is unknown."
                             echo "Waiting 5s (Attempt $((retryCount + 1)) of ${maxRetries})..."
 
                             sleep 5
 
-                            prDetailsJson=$(curl -s -H "Authorization: Bearer ${githubToken}" \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}")
+                            prDetailsJSON=$(curl -s -H "Authorization: Bearer ${githubToken}" \
+                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}")
 
                             mergeableState=$( \
-                                echo "${prDetailsJson}" | \
+                                echo "${prDetailsJSON}" | \
                                 jq \
                                     --raw-output \
                                     ".mergeable_state")
@@ -89,19 +97,23 @@ jobs:
 
                         if [[ "${mergeableState}" == "dirty" ]]
                         then
-                            echo "[ACTION] Closing pull request: ${pullRequestUrl} due to conflicts."
+                            echo "[ACTION] Closing pull request: ${prURL} due to conflicts."
 
                             curl -s -o /dev/null -X POST -H "Authorization: Bearer ${githubToken}" \
                                 -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/issues/${pullRequestNumber}/comments"
+                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/issues/${prNumber}/comments"
 
                             curl -s -o /dev/null -X PATCH -H "Authorization: Bearer ${githubToken}" \
                                 -d '{"state": "closed"}' \
-                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}"
+                                "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${prNumber}"
                         else
-                            echo "[SKIP] Pull request: ${pullRequestUrl} is currently: ${mergeableState}"
+                            echo "[SKIP] Pull request: ${prURL} is currently: ${mergeableState}"
                         fi
+
+                        IFS=$'\n'
                     done
+
+                    IFS="${oldIFS}"
                 }
 
                 main

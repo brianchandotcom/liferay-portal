@@ -1823,7 +1823,7 @@ public class ThemeDisplay
 			try {
 				_siteGroup = GroupLocalServiceUtil.getGroup(_siteGroupId);
 
-				if (_siteGroup.isSite()) {
+				if ((_siteGroup != null) && _siteGroup.isSite()) {
 					_parentSiteGroupId = _siteGroup.getParentGroupId();
 				}
 			}

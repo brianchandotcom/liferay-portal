@@ -22,9 +22,7 @@ const AssociatedSegments = lazy(
 			/* webpackChunkName: "IndividualAssociatedSegments" */ './AssociatedSegments'
 		)
 );
-const Details = lazy(
-	() => import(/* webpackChunkName: "IndividualDetails" */ './Details')
-);
+
 const InterestDetails = lazy(
 	() =>
 		import(
@@ -34,15 +32,28 @@ const InterestDetails = lazy(
 const Interests = lazy(
 	() => import(/* webpackChunkName: "IndividualInterests" */ './Interests')
 );
-const Overview = lazy(
-	() => import(/* webpackChunkName: "IndividualOverview" */ './Overview')
+
+const OverviewCDP = lazy(
+	() => import(/* webpackChunkName: "IndividualOverview" */ './OverviewCDP')
 );
 
-const NAV_ITEMS = [
+const IndividualProfileCDP = lazy(
+	() =>
+		import(
+			/* webpackChunkName: "IndividualProfileCDP" */ './IndividualProfileCDP'
+		)
+);
+
+const NAV_ITEMS_CDP = [
 	{
 		exact: true,
-		label: Liferay.Language.get('overview'),
+		label: Liferay.Language.get('activities'),
 		route: Routes.CONTACTS_INDIVIDUAL
+	},
+	{
+		exact: true,
+		label: Liferay.Language.get('profile'),
+		route: Routes.CONTACTS_INDIVIDUAL_DETAILS
 	},
 	{
 		exact: false,
@@ -53,15 +64,10 @@ const NAV_ITEMS = [
 		exact: true,
 		label: Liferay.Language.get('segments'),
 		route: Routes.CONTACTS_INDIVIDUAL_SEGMENTS
-	},
-	{
-		exact: true,
-		label: Liferay.Language.get('details'),
-		route: Routes.CONTACTS_INDIVIDUAL_DETAILS
 	}
 ];
 
-export const IndividualProfileRoutes = ({
+export const IndividualProfileRoutesCDP = ({
 	channelId,
 	className,
 	groupId,
@@ -72,7 +78,7 @@ export const IndividualProfileRoutes = ({
 
 	const {selectedChannel} = useContext(ChannelContext);
 
-	const matchedRoute = getMatchedRoute(NAV_ITEMS);
+	const matchedRoute = getMatchedRoute(NAV_ITEMS_CDP);
 
 	const componentProps = {individual};
 
@@ -115,12 +121,12 @@ export const IndividualProfileRoutes = ({
 				/>
 
 				<BasePage.Header.NavBar
-					items={NAV_ITEMS}
+					items={NAV_ITEMS_CDP}
 					routeParams={{channelId, groupId, id}}
 				/>
 			</BasePage.Header>
 
-			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_INDIVIDUAL &&
+			{getMatchedRoute(NAV_ITEMS_CDP) === Routes.CONTACTS_INDIVIDUAL &&
 				dataSourceData?.total > 0 && (
 					<BasePage.SubHeader>
 						<div className='d-flex justify-content-end w-100'>
@@ -146,7 +152,7 @@ export const IndividualProfileRoutes = ({
 
 						<BundleRouter
 							componentProps={componentProps}
-							data={Details}
+							data={IndividualProfileCDP}
 							exact
 							path={Routes.CONTACTS_INDIVIDUAL_DETAILS}
 						/>
@@ -167,7 +173,7 @@ export const IndividualProfileRoutes = ({
 
 						<BundleRouter
 							componentProps={componentProps}
-							data={Overview}
+							data={OverviewCDP}
 							exact
 							path={Routes.CONTACTS_INDIVIDUAL}
 						/>
@@ -180,4 +186,4 @@ export const IndividualProfileRoutes = ({
 	);
 };
 
-export default compose(withRouter, withIndividual)(IndividualProfileRoutes);
+export default compose(withRouter, withIndividual)(IndividualProfileRoutesCDP);

@@ -49,6 +49,10 @@ public interface AssetVocabularyGroupRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelsByGroupId(
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetVocabularyGroupRel>
 			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
 		throws PortalException;

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import {Col, Row} from '@clayui/layout';
 import ClaySticker from '@clayui/sticker';
@@ -121,14 +120,13 @@ function AccountSelectorButton({
 
 	return (
 		<>
-			<ClayButton
+			<div
 				{...props}
 				className={classnames(
 					'align-items-center btn-account-selector d-flex',
 					currentAccount?.id === ACCOUNT_ENTRY_ID_DEFAULT &&
 						'account-selected'
 				)}
-				displayType="unstyled"
 			>
 				{currentAccount?.id ? (
 					<>
@@ -208,7 +206,7 @@ function AccountSelectorButton({
 						symbol="angle-down"
 					/>
 				) : null}
-			</ClayButton>
+			</div>
 
 			{!!availableAccounts.length &&
 			AccountUtils.shouldSelectAccount(

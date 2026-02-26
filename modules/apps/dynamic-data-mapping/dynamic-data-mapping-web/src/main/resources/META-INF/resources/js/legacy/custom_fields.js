@@ -607,8 +607,7 @@ AUI.add(
 
 					const webContentSelectorParameters = {
 						'0_json': JSON.stringify(criterionJSON),
-						'criteria':
-							'com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion',
+						'criteria': 'infoitem',
 						'itemSelectedEventName':
 							portletNamespace + 'selectDocumentLibrary',
 						'p_auth': Liferay.authToken,

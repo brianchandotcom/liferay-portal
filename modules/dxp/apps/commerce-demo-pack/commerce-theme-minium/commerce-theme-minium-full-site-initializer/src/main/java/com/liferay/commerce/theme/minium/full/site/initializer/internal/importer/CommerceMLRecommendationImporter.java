@@ -96,8 +96,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					productExternalReferenceCode,
-					serviceContext.getCompanyId());
+					productExternalReferenceCode, serviceContext.getCompanyId(),
+					true);
 
 		if (cpDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -119,7 +119,7 @@ public class CommerceMLRecommendationImporter {
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					recommendedProductExternalReferenceCode,
-					serviceContext.getCompanyId());
+					serviceContext.getCompanyId(), true);
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -168,8 +168,8 @@ public class CommerceMLRecommendationImporter {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					productExternalReferenceCode,
-					serviceContext.getCompanyId());
+					productExternalReferenceCode, serviceContext.getCompanyId(),
+					true);
 
 		if (cpDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -191,7 +191,7 @@ public class CommerceMLRecommendationImporter {
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					recommendedProductExternalReferenceCode,
-					serviceContext.getCompanyId());
+					serviceContext.getCompanyId(), true);
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {
@@ -260,7 +260,7 @@ public class CommerceMLRecommendationImporter {
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					recommendedProductExternalReferenceCode,
-					serviceContext.getCompanyId());
+					serviceContext.getCompanyId(), true);
 
 		if (recommendedCPDefinition == null) {
 			if (_log.isDebugEnabled()) {

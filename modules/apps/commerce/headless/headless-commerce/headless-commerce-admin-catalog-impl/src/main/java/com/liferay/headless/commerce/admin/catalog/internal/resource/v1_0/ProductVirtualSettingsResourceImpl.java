@@ -40,7 +40,8 @@ public class ProductVirtualSettingsResourceImpl
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -58,7 +59,7 @@ public class ProductVirtualSettingsResourceImpl
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

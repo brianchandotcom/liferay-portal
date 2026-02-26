@@ -51,7 +51,8 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -69,7 +70,8 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -111,7 +113,8 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -132,7 +135,8 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -159,13 +163,13 @@ public class GroupedProductResourceImpl extends BaseGroupedProductResourceImpl {
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						groupedProduct.getEntryProductExternalReferenceCode(),
-						contextCompany.getCompanyId());
+						contextCompany.getCompanyId(), false);
 		}
 
 		if (entryCPDefinition == null) {
 			entryCPDefinition =
 				_cpDefinitionService.fetchCPDefinitionByCProductId(
-					groupedProduct.getEntryProductId());
+					groupedProduct.getEntryProductId(), false);
 		}
 
 		if (entryCPDefinition == null) {

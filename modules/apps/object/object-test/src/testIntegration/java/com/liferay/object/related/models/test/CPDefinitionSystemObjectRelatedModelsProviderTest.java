@@ -159,7 +159,7 @@ public class CPDefinitionSystemObjectRelatedModelsProviderTest
 	@Override
 	protected Object fetchBaseModel(long primaryKey) {
 		return _cpDefinitionLocalService.fetchCPDefinitionByCProductId(
-			primaryKey);
+			primaryKey, false);
 	}
 
 	@Override

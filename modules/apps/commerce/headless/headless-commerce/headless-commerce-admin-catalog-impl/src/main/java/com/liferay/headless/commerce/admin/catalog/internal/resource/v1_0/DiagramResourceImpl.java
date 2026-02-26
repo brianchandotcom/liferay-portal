@@ -48,7 +48,8 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -67,7 +68,8 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 	@Override
 	public Diagram getProductIdDiagram(Long productId) throws Exception {
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -109,7 +111,8 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -133,7 +136,8 @@ public class DiagramResourceImpl extends BaseDiagramResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

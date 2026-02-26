@@ -42,7 +42,7 @@ public class RelatedProductUtil {
 				cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						relatedProduct.getProductExternalReferenceCode(),
-						serviceContext.getCompanyId());
+						serviceContext.getCompanyId(), false);
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException(
@@ -52,7 +52,7 @@ public class RelatedProductUtil {
 		}
 		else {
 			cpDefinition = cpDefinitionService.fetchCPDefinitionByCProductId(
-				relatedProduct.getProductId());
+				relatedProduct.getProductId(), false);
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException(

@@ -67,7 +67,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -92,7 +93,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -110,7 +112,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -131,7 +134,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -169,7 +173,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -193,7 +198,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

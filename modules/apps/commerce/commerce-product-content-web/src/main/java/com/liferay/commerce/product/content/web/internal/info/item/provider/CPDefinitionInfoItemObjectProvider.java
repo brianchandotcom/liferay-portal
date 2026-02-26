@@ -114,7 +114,7 @@ public class CPDefinitionInfoItemObjectProvider
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					group.getCompanyId());
+					group.getCompanyId(), true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchInfoItemException(

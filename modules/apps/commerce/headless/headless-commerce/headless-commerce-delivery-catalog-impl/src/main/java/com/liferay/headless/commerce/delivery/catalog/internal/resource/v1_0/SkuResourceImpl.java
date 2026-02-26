@@ -125,7 +125,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				productId, true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCProductException();
@@ -170,7 +171,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				productId, true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCProductException();
@@ -268,7 +270,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				productId, true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCProductException();

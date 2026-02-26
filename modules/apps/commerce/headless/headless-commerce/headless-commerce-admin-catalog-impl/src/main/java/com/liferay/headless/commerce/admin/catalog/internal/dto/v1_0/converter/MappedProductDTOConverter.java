@@ -48,7 +48,7 @@ public class MappedProductDTOConverter
 
 		CPDefinition cpDefinition =
 			_cpDefinitionService.fetchCPDefinitionByCProductId(
-				csDiagramEntry.getCProductId());
+				csDiagramEntry.getCProductId(), false);
 
 		return new MappedProduct() {
 			{

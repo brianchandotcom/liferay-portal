@@ -69,7 +69,7 @@ public class ProductsLimitCOREntryFDSDataProvider
 								TYPE_PRODUCTS_LIMIT_FIELD_PRODUCT_IDS)),
 					cProductId ->
 						_cpDefinitionService.fetchCPDefinitionByCProductId(
-							Long.valueOf(cProductId))),
+							Long.valueOf(cProductId), false)),
 				cpDefinition -> cpDefinition != null),
 			filteredCPDefinition -> {
 				ThemeDisplay themeDisplay =
@@ -104,7 +104,7 @@ public class ProductsLimitCOREntryFDSDataProvider
 				try {
 					CPDefinition cpDefinition =
 						_cpDefinitionService.fetchCPDefinitionByCProductId(
-							Long.valueOf(cProductId));
+							Long.valueOf(cProductId), false);
 
 					return cpDefinition != null;
 				}

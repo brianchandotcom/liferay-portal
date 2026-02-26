@@ -149,7 +149,7 @@ public class CPDefinitionLayoutDisplayPageProvider
 			_cpDefinitionLocalService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					serviceContext.getCompanyId());
+					serviceContext.getCompanyId(), true);
 
 		if ((cpDefinition == null) ||
 			(cpDefinition.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {

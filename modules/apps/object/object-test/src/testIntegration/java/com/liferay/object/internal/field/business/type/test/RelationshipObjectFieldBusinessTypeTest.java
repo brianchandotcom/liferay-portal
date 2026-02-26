@@ -92,7 +92,8 @@ public class RelationshipObjectFieldBusinessTypeTest {
 				).build()));
 
 		Assert.assertNotNull(
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(value));
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				value, false));
 	}
 
 	@Inject

@@ -84,7 +84,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -110,7 +111,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -150,7 +152,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -165,7 +168,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 	@Override
 	public Pin postProductIdPin(Long productId, Pin pin) throws Exception {
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(
+				productId, false);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -200,7 +204,7 @@ public class PinResourceImpl extends BasePinResourceImpl {
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						mappedProduct.getProductExternalReferenceCode(),
-						contextCompany.getCompanyId());
+						contextCompany.getCompanyId(), false);
 
 			if (cpDefinition != null) {
 				productId = cpDefinition.getCProductId();

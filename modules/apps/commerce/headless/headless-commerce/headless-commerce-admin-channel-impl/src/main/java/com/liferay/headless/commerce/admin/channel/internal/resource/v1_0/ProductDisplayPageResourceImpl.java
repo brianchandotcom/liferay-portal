@@ -138,7 +138,7 @@ public class ProductDisplayPageResourceImpl
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						productDisplayPage.getProductExternalReferenceCode(),
-						contextCompany.getCompanyId());
+						contextCompany.getCompanyId(), false);
 
 			if (cpDefinition == null) {
 				classPK = cpDisplayLayout.getClassPK();
@@ -185,7 +185,7 @@ public class ProductDisplayPageResourceImpl
 				_cpDefinitionService.
 					fetchCPDefinitionByCProductExternalReferenceCode(
 						productDisplayPage.getProductExternalReferenceCode(),
-						contextCompany.getCompanyId());
+						contextCompany.getCompanyId(), false);
 
 			if (cpDefinition == null) {
 				throw new NoSuchCPDefinitionException();

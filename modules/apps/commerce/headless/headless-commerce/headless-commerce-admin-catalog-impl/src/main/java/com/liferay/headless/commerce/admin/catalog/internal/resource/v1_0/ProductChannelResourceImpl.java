@@ -50,7 +50,8 @@ public class ProductChannelResourceImpl extends BaseProductChannelResourceImpl {
 		CPDefinition cpDefinition =
 			_cpDefinitionService.
 				fetchCPDefinitionByCProductExternalReferenceCode(
-					externalReferenceCode, contextCompany.getCompanyId());
+					externalReferenceCode, contextCompany.getCompanyId(),
+					false);
 
 		if (cpDefinition == null) {
 			return Page.of(Collections.emptyList());
@@ -73,7 +74,7 @@ public class ProductChannelResourceImpl extends BaseProductChannelResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionService.fetchCPDefinitionByCProductId(id);
+			_cpDefinitionService.fetchCPDefinitionByCProductId(id, false);
 
 		if (cpDefinition == null) {
 			return Page.of(Collections.emptyList());

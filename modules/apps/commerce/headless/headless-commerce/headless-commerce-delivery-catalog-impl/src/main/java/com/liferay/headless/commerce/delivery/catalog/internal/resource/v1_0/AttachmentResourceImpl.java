@@ -53,7 +53,8 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				productId, true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(
@@ -76,7 +77,8 @@ public class AttachmentResourceImpl extends BaseAttachmentResourceImpl {
 		throws Exception {
 
 		CPDefinition cpDefinition =
-			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(productId);
+			_cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+				productId, true);
 
 		if (cpDefinition == null) {
 			throw new NoSuchCPDefinitionException(

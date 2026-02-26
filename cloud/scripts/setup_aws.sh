@@ -1,6 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -euo pipefail
+set -o errexit
+set -o nounset
+set -o pipefail
 
 SCRIPTS_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 ROOT_CLOUD_DIR=$(cd "${SCRIPTS_DIR}/.." && pwd)
@@ -9,35 +11,41 @@ function generate_tfvars {
 	local json_file="$1"
 	local tfvars_file="$2"
 
-	if ! command -v jq &> /dev/null; then
-		echo "Error: jq is not installed. Please ensure jq is installed and available in your PATH."
+	if [ ! -f "$json_file" ]
+	then
+		echo "No JSON file not found at: ${json_file}"
+
 		exit 1
 	fi
 
-	if [ ! -f "$json_file" ]; then
-		echo "Error: JSON file not found at: ${json_file}"
-		exit 1
-	fi
+	if ! jq -e '.variables | objects' "$json_file" > /dev/null
+	then
+		echo "The JSON file must contain a root object named 'variables'."
 
-	if ! jq -e '.variables | objects' "$json_file" > /dev/null; then
-		echo "Error: The JSON file must contain a root object named 'variables'."
 		exit 1
 	fi
 
 	echo "Generating ${tfvars_file} from ${json_file}..."
 
 	local tfvars_content
-	tfvars_content=$(jq --raw-output '.variables | to_entries[] |
-		if (.value | type) == "string" then
-			"\(.key) = \"\(.value)\""
-		elif (.value | type) == "array" or (.value | type) == "object" then
-			"\(.key) = \(.value | @json)"
-		else
-			"\(.key) = \(.value)"
-		end' "$json_file")
 
-	if [ -z "$tfvars_content" ]; then
-		echo "Warning: The 'variables' object in the JSON is empty. You will be prompted for all required variables."
+	tfvars_content=$(
+		jq --raw-output '.variables
+		| to_entries[]
+		| if (.value | type) == "string"
+			then
+				"\(.key) = \"\(.value)\""
+			elif (.value | type) == "array" or (.value | type) == "object"
+			then
+				"\(.key) = \(.value | @json)"
+			else
+				"\(.key) = \(.value)"
+			end' "$json_file")
+
+	if [ -z "$tfvars_content" ]
+	then
+		echo "The 'variables' object in the JSON file is empty. You will be prompted for all required variables."
+
 		> "${tfvars_file}"
 	else
 		echo "${tfvars_content}" > "${tfvars_file}"
@@ -47,8 +55,10 @@ function generate_tfvars {
 }
 
 function main {
-	if [ "$#" -ne 1 ]; then
+	if [ "$#" -ne 1 ]
+	then
 		echo "Usage: $0 <path_to_config_json_file>"
+
 		exit 1
 	fi
 
@@ -66,19 +76,30 @@ function main {
 }
 
 function port_forward_argocd {
-  _pushd "${ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
+	_pushd "${ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 
-  local argocd_namespace=$(terraform output -raw argocd_namespace)
+	local argocd_namespace=$(terraform output -raw argocd_namespace)
 
-	local argocd_password=$(kubectl get secret argocd-initial-admin-secret --namespace ${argocd_namespace} --output jsonpath="{.data.password}" | base64 --decode)
+	local argocd_password=$( \
+		kubectl \
+			get \
+			secret \
+			argocd-initial-admin-secret \
+			--namespace ${argocd_namespace} \
+			--output jsonpath="{.data.password}" \
+		| base64 --decode)
 
 	echo "Port-forwarding the ArgoCD service at http://localhost:8080...."
 	echo "Login with Username: admin and Password: ${argocd_password} to continue monitoring setup."
 	echo "Use CTRL+C to exit when finished."
 
-	kubectl port-forward --namespace ${argocd_namespace} service/argocd-server 8080:443
+	kubectl \
+		port-forward \
+		--namespace ${argocd_namespace} \
+		service/argocd-server \
+		8080:443
 
-  _popd
+	_popd
 }
 
 function setup_aws_eks {
@@ -88,10 +109,11 @@ function setup_aws_eks {
 
 	terraform_init_and_apply "."
 
-	local region=$(terraform output -raw region)
-	local cluster_name=$(terraform output -raw cluster_name)
-
-	aws eks update-kubeconfig --name "${cluster_name}" --region "${region}"
+	aws \
+		eks \
+		update-kubeconfig \
+		--name "$(terraform output -raw cluster_name)" \
+		--region "$(terraform output -raw region)"
 
 	echo "AWS EKS cluster setup complete."
 

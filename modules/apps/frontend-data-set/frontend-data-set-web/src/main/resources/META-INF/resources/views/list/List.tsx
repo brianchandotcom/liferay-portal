@@ -99,10 +99,11 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			path: selectedItemsKey,
 		});
 
+		const accessibleNameItemKey =
+			accessibleNameField || title || description;
+
 		const accessibleName =
-			accessibleNameField ||
-			title ||
-			description ||
+			getLocalizedValue(item, accessibleNameItemKey)?.value ||
 			Liferay.Language.get('item');
 
 		return (
@@ -119,7 +120,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 						<SelectionInput
 							aria-label={sub(
 								Liferay.Language.get('select-x'),
-								getLocalizedValue(item, accessibleName)?.value
+								accessibleName
 							)}
 							checked={
 								selectedItemsValue
@@ -191,6 +192,7 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 				{(itemsActions || item.actionDropdownItems) && (
 					<ClayList.ItemField>
 						<Actions
+							accessibleName={accessibleName}
 							actions={itemsActions || item.actionDropdownItems}
 							itemData={item}
 							itemId={itemId}

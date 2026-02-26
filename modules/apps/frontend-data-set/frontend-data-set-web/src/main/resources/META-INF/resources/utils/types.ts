@@ -93,6 +93,7 @@ export interface IInlineEditingSettings {
 }
 
 export interface IActionsDropdown extends IBaseActions {
+	accessibleName?: string;
 	loading: boolean;
 	menuActive?: boolean;
 	onClick: Function;
@@ -143,6 +144,7 @@ export enum EItemActionsType {
 }
 
 export interface IItemsActions {
+	accessibleName?: string;
 	className?: string;
 	data?: IItemActionsData;
 	disabled?: boolean;

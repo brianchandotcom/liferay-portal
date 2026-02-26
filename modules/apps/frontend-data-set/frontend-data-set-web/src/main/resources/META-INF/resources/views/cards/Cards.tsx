@@ -62,8 +62,16 @@ const Card = forwardRef<HTMLDivElement, any>(
 			toggleItemInlineEdit,
 		}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 
-		const {description, image, labels, link, sticker, symbol, title} =
-			schema;
+		const {
+			accessibleNameField,
+			description,
+			image,
+			labels,
+			link,
+			sticker,
+			symbol,
+			title,
+		} = schema;
 
 		const [viewsContext] = useContext(ViewsContext);
 
@@ -180,12 +188,11 @@ const Card = forwardRef<HTMLDivElement, any>(
 			return processedActions;
 		};
 
-		const {accessibleNameField} = schema;
+		const accessibleNameItemKey =
+			accessibleNameField || title || description;
 
 		const accessibleName =
-			accessibleNameField ||
-			title ||
-			description ||
+			getLocalizedValue(item, accessibleNameItemKey)?.value ||
 			Liferay.Language.get('card');
 
 		const props = {
@@ -193,10 +200,16 @@ const Card = forwardRef<HTMLDivElement, any>(
 			checkboxProps: {
 				'aria-label': sub(
 					Liferay.Language.get('select-x'),
-					getLocalizedValue(item, accessibleName)?.value
+					accessibleName
 				),
 			},
 			description: getLocalizedValue(item, description)?.value,
+			dropDownTriggerProps: {
+				'aria-label': sub(
+					Liferay.Language.get('x-actions'),
+					accessibleName
+				),
+			},
 			href: (link && item[link]) || null,
 			imgProps:
 				image &&
@@ -230,7 +243,7 @@ const Card = forwardRef<HTMLDivElement, any>(
 			radioProps: {
 				'aria-label': sub(
 					Liferay.Language.get('select-x'),
-					getLocalizedValue(item, accessibleName)?.value
+					accessibleName
 				),
 			},
 			selectableType: selectionType === 'single' ? 'radio' : 'checkbox',

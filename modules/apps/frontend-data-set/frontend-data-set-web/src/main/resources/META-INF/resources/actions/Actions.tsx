@@ -18,12 +18,14 @@ import QuickActions from './QuickActions';
 const QUICK_ACTIONS_MAX_NUMBER = 3;
 
 function Actions({
+	accessibleName,
 	actions,
 	itemData,
 	itemId,
 	items,
 	onItemSelectionChange,
 }: {
+	accessibleName?: string;
 	actions: Array<IItemsActions>;
 	itemData: any;
 	itemId: string | number;
@@ -138,6 +140,7 @@ function Actions({
 				)}
 
 			<ActionsDropdown
+				accessibleName={accessibleName}
 				actions={formattedActions}
 				itemData={itemData}
 				itemId={itemId}

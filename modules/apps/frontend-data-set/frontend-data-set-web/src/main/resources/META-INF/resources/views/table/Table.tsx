@@ -211,6 +211,7 @@ const Row = ({
 										item.actionDropdownItems?.length >
 											0) && (
 										<Actions
+											accessibleName={accessibleName}
 											actions={
 												itemsActions ||
 												item.actionDropdownItems

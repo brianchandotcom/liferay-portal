@@ -10,6 +10,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {useContext, useMemo} from 'react';
 
 import FrontendDataSetContext, {
@@ -33,6 +34,7 @@ function isDefined(value: any) {
 }
 
 function ActionsDropdown({
+	accessibleName,
 	actions,
 	itemData,
 	itemId,
@@ -263,7 +265,10 @@ function ActionsDropdown({
 						<ClayIcon symbol="ellipsis-v" />
 
 						<span className="sr-only">
-							{Liferay.Language.get('actions')}
+							{sub(
+								Liferay.Language.get('x-actions'),
+								accessibleName
+							)}
 						</span>
 					</ClayButton>
 				}

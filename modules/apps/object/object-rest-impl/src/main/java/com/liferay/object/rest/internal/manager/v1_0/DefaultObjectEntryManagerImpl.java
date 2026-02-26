@@ -179,6 +179,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -2934,14 +2935,13 @@ public class DefaultObjectEntryManagerImpl
 			return 0;
 		}
 
+		Set<String> allowedFileSources =
+			ObjectFieldSettingUtil.getAllowedFileSources(
+				objectField.getCompanyId());
 		String fileSource = ObjectFieldSettingUtil.getValue(
 			ObjectFieldSettingConstants.NAME_FILE_SOURCE, objectField);
 
-		if (!StringUtil.equals(
-				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA) &&
-			!StringUtil.equals(
-				fileSource, ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
-
+		if (!allowedFileSources.contains(fileSource)) {
 			throw new UnsupportedOperationException(
 				"File source " + fileSource + " is not supported");
 		}
@@ -3031,10 +3031,7 @@ public class DefaultObjectEntryManagerImpl
 				fileEntry.getName(), folderExternalReferenceCode, folderGroupId,
 				objectField.getObjectFieldId(), serviceContext);
 		}
-		else if (StringUtil.equals(
-					fileSource,
-					ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
-
+		else {
 			serviceBuilderFileEntry = _attachmentManager.getOrAddFileEntry(
 				objectField.getCompanyId(),
 				fileEntry.getExternalReferenceCode(), fileContent,

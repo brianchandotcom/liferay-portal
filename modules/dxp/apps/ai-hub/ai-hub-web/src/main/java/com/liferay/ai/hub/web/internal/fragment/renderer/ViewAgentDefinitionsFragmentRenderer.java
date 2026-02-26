@@ -58,7 +58,8 @@ public class ViewAgentDefinitionsFragmentRenderer
 	protected ViewAgentDefinitionsDisplayContext getDisplayContext(
 		HttpServletRequest httpServletRequest) {
 
-		return new ViewAgentDefinitionsDisplayContext(httpServletRequest);
+		return new ViewAgentDefinitionsDisplayContext(
+			_groupLocalService, httpServletRequest);
 	}
 
 	@Override

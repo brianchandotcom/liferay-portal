@@ -94,8 +94,10 @@ public class UtilityPageResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutUtilityPageEntry>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -108,8 +110,8 @@ public class UtilityPageResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutUtilityPageEntry.class.getName();
+			public Class<LayoutUtilityPageEntry> getModelClass() {
+				return LayoutUtilityPageEntry.class;
 			}
 
 			@Override

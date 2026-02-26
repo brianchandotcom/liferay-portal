@@ -538,6 +538,11 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
+			public Class<?> getModelClass() {
+				return null;
+			}
+
+			@Override
 			public String getModelClassName() {
 				return _objectDefinition.getClassName();
 			}

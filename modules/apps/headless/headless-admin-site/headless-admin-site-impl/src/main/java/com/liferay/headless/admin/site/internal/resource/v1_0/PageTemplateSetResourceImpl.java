@@ -73,9 +73,11 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutPageTemplateCollection>
+		getExportImportDescriptor() {
+
 		return new ExportImportVulcanBatchEngineTaskItemDelegate.
-			ExportImportDescriptor() {
+			ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -88,8 +90,8 @@ public class PageTemplateSetResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutPageTemplateCollection.class.getName();
+			public Class<LayoutPageTemplateCollection> getModelClass() {
+				return LayoutPageTemplateCollection.class;
 			}
 
 			@Override

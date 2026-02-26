@@ -193,8 +193,10 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<com.liferay.object.model.ObjectEntryFolder>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -207,9 +209,10 @@ public class ObjectEntryFolderResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return com.liferay.object.model.ObjectEntryFolder.class.
-					getName();
+			public Class<com.liferay.object.model.ObjectEntryFolder>
+				getModelClass() {
+
+				return com.liferay.object.model.ObjectEntryFolder.class;
 			}
 
 			@Override

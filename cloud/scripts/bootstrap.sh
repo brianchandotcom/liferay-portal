@@ -55,7 +55,7 @@ function _download_and_extract_files {
 
 	local temp_dir=""
 
-	temp_dir=$(mktemp --tmpdir liferay-bootstrap.XXXXXX)
+	temp_dir=$(mktemp --directory --tmpdir liferay-bootstrap.XXXXXX)
 
 	local output_location=""
 
@@ -136,9 +136,9 @@ function main {
 
 	extracted_dir=$(_download_and_extract_files "${provider}")
 
-	trap 'rm --force --recursive "${extracted_dir}"' EXIT
+	trap "rm --force --recursive \"${extracted_dir}\"" EXIT
 
-	"${extracted_dir}/cloud/scripts/setup_${provider}" "${@}"
+	"${extracted_dir}/cloud/scripts/setup_${provider}.sh" "${@}"
 }
 
 main "${@}"

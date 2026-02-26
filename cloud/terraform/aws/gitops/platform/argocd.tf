@@ -27,6 +27,7 @@ resource "helm_release" "argocd" {
 					cm={
 						"application.resourceTrackingMethod"="annotation"
 						"controller.diff.timeout"="120s"
+						"kustomize.buildOptions"="--enable-helm"
 						"resource.customizations.health.aws.liferay.com_LiferayInfrastructure"=file("${path.module}/health-aws.liferay.com_LiferayInfrastructure.lua")
 						"resource.customizations.ignoreDifferences.all"=yamlencode(
 							{

@@ -146,6 +146,10 @@ resource "kubernetes_manifest" "infrastructure_appproject" {
 			description="ArgoCD Project for Liferay Cloud Native infrastructure."
 			destinations=[
 				{
+					namespace="elastic-system"
+					server="https://kubernetes.default.svc"
+				},
+				{
 					namespace="liferay-*"
 					server="https://kubernetes.default.svc"
 				},

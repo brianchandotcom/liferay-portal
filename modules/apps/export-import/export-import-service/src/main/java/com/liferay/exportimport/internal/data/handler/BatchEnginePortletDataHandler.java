@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.SystemEvent;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -60,6 +61,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.portlet.PortletPreferences;
@@ -86,9 +88,6 @@ import java.util.zip.ZipOutputStream;
  * @author Alejandro Tardín
  */
 public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
-
-	public static final String BATCH_DELETE_CLASS_NAME_POSTFIX =
-		"_batchDeleteExternalReferenceCodes";
 
 	public static final String SCHEMA_VERSION = "4.0.0";
 
@@ -117,7 +116,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void exportDeletionSystemEvents(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			List<SystemEvent> systemEvents)
 		throws Exception {
 
 		List<Registration> activeRegistrations = _getActiveRegistrations(
@@ -135,16 +135,25 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				continue;
 			}
 
-			Map<String, String> newPrimaryKeysMap =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					exportImportDescriptor.getModelClassName() +
-						BATCH_DELETE_CLASS_NAME_POSTFIX);
+			List<String> externalReferenceCodes = TransformUtil.transform(
+				systemEvents,
+				systemEvent -> {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+						systemEvent.getExtraData());
 
-			List<String> applicableExternalReferenceCodes = ListUtil.filter(
-				ListUtil.fromCollection(newPrimaryKeysMap.keySet()),
-				exportImportDescriptor::isApplicableExternalReferenceCode);
+					String type = jsonObject.getString("type");
 
-			if (applicableExternalReferenceCodes.isEmpty()) {
+					if (Validator.isNull(type) ||
+						StringUtil.equals(
+							type, exportImportDescriptor.getKey())) {
+
+						return systemEvent.getClassExternalReferenceCode();
+					}
+
+					return null;
+				});
+
+			if (externalReferenceCodes.isEmpty()) {
 				continue;
 			}
 
@@ -153,7 +162,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					registration.getDeletionsFileName(),
 					portletDataContext.getScopeGroupId()),
 				JSONUtil.toJSONArray(
-					applicableExternalReferenceCodes,
+					externalReferenceCodes,
 					externalReferenceCode -> JSONUtil.put(
 						"externalReferenceCode", externalReferenceCode)
 				).toString());
@@ -164,7 +173,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				manifestSummary.addModelDeletionCount(
 					exportImportDescriptor.getKey(),
-					applicableExternalReferenceCodes.size());
+					externalReferenceCodes.size());
 			}
 		}
 	}

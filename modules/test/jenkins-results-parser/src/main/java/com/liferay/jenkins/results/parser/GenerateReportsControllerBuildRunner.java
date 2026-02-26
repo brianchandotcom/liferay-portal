@@ -59,12 +59,9 @@ public class GenerateReportsControllerBuildRunner
 			return;
 		}
 
-		Map<String, String> invocationParameters = new HashMap<>();
-
 		BuildData buildData = getBuildData();
 
-		invocationParameters.put(
-			"JENKINS_GITHUB_URL", buildData.getJenkinsGitHubURL());
+		String jenkinsGitHubURL = buildData.getJenkinsGitHubURL();
 
 		List<String> groupedReportNames = new ArrayList<>();
 
@@ -72,6 +69,11 @@ public class GenerateReportsControllerBuildRunner
 
 		for (String reportName : reportNames) {
 			if (reportName.startsWith("Flaky Test")) {
+				Map<String, String> invocationParameters = new HashMap<>();
+
+				invocationParameters.put(
+					"JENKINS_GITHUB_URL", jenkinsGitHubURL);
+
 				invocationParameters.put("REPORT_NAMES", reportName);
 				invocationParameters.put("SLAVE_LABEL", "slave");
 
@@ -84,6 +86,10 @@ public class GenerateReportsControllerBuildRunner
 		}
 
 		if (!groupedReportNames.isEmpty()) {
+			Map<String, String> invocationParameters = new HashMap<>();
+
+			invocationParameters.put("JENKINS_GITHUB_URL", jenkinsGitHubURL);
+
 			invocationParameters.put(
 				"REPORT_NAMES", String.join(",", groupedReportNames));
 

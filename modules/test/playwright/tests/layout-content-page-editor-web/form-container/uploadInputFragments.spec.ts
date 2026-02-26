@@ -693,10 +693,10 @@ test.describe('Drag and Drop Upload Fragment', () => {
 							} as any,
 							{
 								name: 'fileSource',
-								value: 'userComputer',
+								value: 'userComputerToDocumentsAndMedia',
 							} as any,
 							{
-								name: 'showFilesInDocumentsAndMedia',
+								name: 'showFilesInLibrary',
 								value: false,
 							} as any,
 						],
@@ -967,10 +967,10 @@ test.describe('Drag and Drop Upload Fragment', () => {
 							} as any,
 							{
 								name: 'fileSource',
-								value: 'userComputer',
+								value: 'userComputerToDocumentsAndMedia',
 							} as any,
 							{
-								name: 'showFilesInDocumentsAndMedia',
+								name: 'showFilesInLibrary',
 								value: false,
 							} as any,
 						],

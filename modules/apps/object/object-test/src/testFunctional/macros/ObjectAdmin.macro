@@ -191,7 +191,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addObjectFieldViaAPI(externalReferenceCode = null, fieldName = null, fieldBusinessType = null, fieldLabelName = null, fieldType = null, fileSource = null, formulaScript = null, indexed = null, indexedAsKeyword = null, indexedLanguageId = null, isReadOnly = null, isRequired = null, objectName = null, outputOption = null, picklistName = null, readOnlyExpression = null, showFilesInDocumentsAndMedia = null, timeStorageOption = null, userEmailAddress = null, userPassword = null) {
+	macro addObjectFieldViaAPI(externalReferenceCode = null, fieldName = null, fieldBusinessType = null, fieldLabelName = null, fieldType = null, fileSource = null, formulaScript = null, indexed = null, indexedAsKeyword = null, indexedLanguageId = null, isReadOnly = null, isRequired = null, objectName = null, outputOption = null, picklistName = null, readOnlyExpression = null, showFilesInLibrary = null, timeStorageOption = null, userEmailAddress = null, userPassword = null) {
 		if ((${fieldBusinessType} == "Formula") || (${fieldBusinessType} == "Aggregation")) {
 			var indexed = "false";
 		}
@@ -215,7 +215,7 @@ definition {
 			picklistName = ${picklistName},
 			prefix = ${prefix},
 			readOnlyExpression = ${readOnlyExpression},
-			showFilesInDocumentsAndMedia = ${showFilesInDocumentsAndMedia},
+			showFilesInLibrary = ${showFilesInLibrary},
 			suffix = ${suffix},
 			timeStorageOption = ${timeStorageOption},
 			userEmailAddress = ${userEmailAddress},

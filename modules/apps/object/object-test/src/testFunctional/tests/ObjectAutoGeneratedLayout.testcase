@@ -160,7 +160,7 @@ definition {
 			fieldLabelName = "Custom Attachment",
 			fieldName = "customObjectField",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = "CustomObject151578");
 
@@ -204,7 +204,7 @@ definition {
 			fieldLabelName = "Custom Attachment",
 			fieldName = "customObjectField",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = "CustomObject151574");
 
@@ -244,7 +244,7 @@ definition {
 			fieldLabelName = "Custom Attachment",
 			fieldName = "customObjectField",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = "CustomObject151575");
 
@@ -323,7 +323,7 @@ definition {
 			fieldLabelName = "Custom Attachment",
 			fieldName = "customObjectField",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = "CustomObject151576");
 
@@ -368,7 +368,7 @@ definition {
 			fieldLabelName = "Custom Attachment",
 			fieldName = "customObjectField",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = "CustomObject151576");
 

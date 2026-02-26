@@ -3598,10 +3598,10 @@ test.describe('Manage object entries through View Object Entries', () => {
 						},
 						{
 							name: 'fileSource',
-							value: 'userComputer',
+							value: 'userComputerToDocumentsAndMedia',
 						},
 						{
-							name: 'showFilesInDocumentsAndMedia',
+							name: 'showFilesInLibrary',
 							value: false,
 						},
 					],

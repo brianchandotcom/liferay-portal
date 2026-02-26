@@ -888,7 +888,7 @@ definition {
 			fieldLabelName = "customAttachment",
 			fieldName = "customAttachment",
 			fieldType = "Long",
-			fileSource = "userComputer",
+			fileSource = "userComputerToDocumentsAndMedia",
 			isRequired = "false",
 			objectName = ${objectDefinitionName});
 

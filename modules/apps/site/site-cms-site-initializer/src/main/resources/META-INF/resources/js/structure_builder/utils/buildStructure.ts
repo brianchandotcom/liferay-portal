@@ -311,9 +311,11 @@ function getFieldSettings(objectField: ObjectField): Field['settings'] {
 		settings.fileSource = objectFieldSettings.fileSource;
 		settings.maximumFileSize = objectFieldSettings.maximumFileSize;
 
-		if (objectFieldSettings.fileSource === 'userComputer') {
-			settings.showFilesInDocumentsAndMedia =
-				objectFieldSettings.showFilesInDocumentsAndMedia;
+		if (
+			objectFieldSettings.fileSource === 'userComputerToDocumentsAndMedia'
+		) {
+			settings.showFilesInLibrary =
+				objectFieldSettings.showFilesInLibrary;
 			settings.storageDLFolderPath =
 				objectFieldSettings.storageDLFolderPath;
 		}

@@ -92,15 +92,18 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 		DDMForm ddmForm = ddmFormField.getDDMForm();
 
-		return HashMapBuilder.<String, Object>put(
-			"acceptedFileExtensions",
-			ddmFormField.getProperty("acceptedFileExtensions")
+		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+			ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS,
+			ddmFormField.getProperty(
+				ObjectFieldSettingConstants.NAME_ACCEPTED_FILE_EXTENSIONS)
 		).put(
 			"deleteURL",
 			() -> {
 				if (!Objects.equals(
-						ddmFormField.getProperty("fileSource"),
-						ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+						ddmFormField.getProperty(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE),
+						ObjectFieldSettingConstants.
+							VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
 
 					return null;
 				}
@@ -139,7 +142,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			_language.format(
 				themeDisplay.getLocale(), "upload-a-x-no-larger-than-x",
 				new Object[] {
-					ddmFormField.getProperty("acceptedFileExtensions"),
+					ddmFormField.getProperty(
+						ObjectFieldSettingConstants.
+							NAME_ACCEPTED_FILE_EXTENSIONS),
 					_language.formatStorageSize(
 						maximumFileSize, themeDisplay.getLocale())
 				})
@@ -317,12 +322,15 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		}
 
 		String fileSource = GetterUtil.getString(
-			ddmFormField.getProperty("fileSource"));
+			ddmFormField.getProperty(
+				ObjectFieldSettingConstants.NAME_FILE_SOURCE));
 
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
 			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
-		if (Objects.equals(fileSource, "documentsAndMedia")) {
+		if (Objects.equals(
+				fileSource, ObjectFieldSettingConstants.VALUE_DOCS_AND_MEDIA)) {
+
 			return _getItemSelectorURL(
 				_getGroupId(
 					ddmFormField, ddmFormFieldRenderingContext,
@@ -330,7 +338,11 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				ddmFormFieldRenderingContext.getPortletNamespace(),
 				requestBackedPortletURLFactory);
 		}
-		else if (Objects.equals(fileSource, "userComputer")) {
+		else if (Objects.equals(
+					fileSource,
+					ObjectFieldSettingConstants.
+						VALUE_USER_COMPUTER_TO_DOCS_AND_MEDIA)) {
+
 			return PortletURLBuilder.create(
 				requestBackedPortletURLFactory.createActionURL(
 					GetterUtil.getString(ddmFormField.getProperty("portletId")))

@@ -38,9 +38,19 @@ public class CommerceShipmentTableFDSView extends BaseTableFDSView {
 		).add(
 			"id", "shipment-number"
 		).add(
+			"estimatedShippingDate", "estimated-shipping-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"date")
+		).add(
+			"estimatedDeliveryDate", "estimated-delivery-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"date")
+		).add(
 			"carrier", "carrier"
 		).add(
 			"trackingNumber", "tracking-number"
+		).add(
+			"trackingURL", "tracking-url"
 		).add(
 			"quantity", "quantity"
 		).build();

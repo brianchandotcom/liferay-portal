@@ -32,6 +32,10 @@ public class ShipmentEntityModel implements EntityModel {
 				"expectedDate",
 				locale -> Field.getSortableFieldName("expectedDate"),
 				locale -> "expectedDate"),
+			new DateTimeEntityField(
+				"shippingDate",
+				locale -> Field.getSortableFieldName("shippingDate"),
+				locale -> "shippingDate"),
 			new IntegerEntityField(
 				"id",
 				locale -> Field.getSortableFieldName(Field.ENTRY_CLASS_PK)),

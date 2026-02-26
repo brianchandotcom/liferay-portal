@@ -43,6 +43,13 @@ public class PlacedCommerceOrderShipmentFragmentTableFDSView
 				true
 			)
 		).add(
+			"shippingDate", "estimated-shipping-date",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"date"
+			).setSortable(
+				true
+			)
+		).add(
 			"expectedDate", "estimated-delivery-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"date"
@@ -57,7 +64,9 @@ public class PlacedCommerceOrderShipmentFragmentTableFDSView
 			"carrier", "carrier",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"trackingNumber", "tracking"
+			"trackingNumber", "tracking-number"
+		).add(
+			"trackingURL", "tracking-url"
 		).add(
 			"status", "status",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

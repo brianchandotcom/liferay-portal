@@ -84,6 +84,8 @@ public class CommerceShipmentModelDocumentContributor
 						commerceAddress));
 			}
 
+			document.addDateSortable(
+				"expectedDate", commerceShipment.getExpectedDate());
 			document.addKeyword(
 				"trackingNumber", commerceShipment.getTrackingNumber());
 		}

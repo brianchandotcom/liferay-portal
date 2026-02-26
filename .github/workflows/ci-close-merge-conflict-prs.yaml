@@ -78,8 +78,8 @@ jobs:
                             local maxRetries=6
                             local retryCount=0
 
-                            while [["${mergeableState}" == "unknown" || "${mergeableState}" == "null"]] &&
-                                  [["${retryCount}" -lt "${maxRetries}"]]
+                            while [[ "${mergeableState}" == "unknown" || "${mergeableState}" == "null" ]] &&
+                                  [[ "${retryCount}" -lt "${maxRetries}" ]]
                             do
                                 echo "Pull request ${prURL} state is unknown."
                                 echo "Waiting 5s (Attempt $((retryCount + 1)) of ${maxRetries})..."

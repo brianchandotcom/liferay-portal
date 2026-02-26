@@ -11,6 +11,7 @@ import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.service.AssetCategoryPropertyLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryLimitException;
 import com.liferay.asset.kernel.exception.AssetCategoryNameException;
+import com.liferay.asset.kernel.exception.AssetCategoryParentCategoryIdException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.exception.DuplicateCategoryExternalReferenceCodeException;
 import com.liferay.asset.kernel.exception.NoSuchCategoryException;
@@ -824,6 +825,21 @@ public class AssetCategoryLocalServiceTest {
 			Assert.assertEquals(
 				assetVocabulary.getVocabularyId(),
 				assetCategory.getVocabularyId());
+
+			try {
+				_assetCategoryLocalService.getOrAddEmptyCategoryWithAncestors(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					_group.getGroupId(),
+					assetCategory.getExternalReferenceCode(),
+					RandomTestUtil.randomString());
+
+				Assert.fail();
+			}
+			catch (AssetCategoryParentCategoryIdException
+						assetCategoryParentCategoryIdException) {
+
+				Assert.assertNotNull(assetCategoryParentCategoryIdException);
+			}
 		}
 	}
 

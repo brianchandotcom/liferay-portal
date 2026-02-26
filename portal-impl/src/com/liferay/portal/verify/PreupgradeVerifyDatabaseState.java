@@ -143,12 +143,6 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 						String.valueOf(
 							CompanyThreadLocal.getNonsystemCompanyId())));
 			}
-
-			if (!missingTableNames.isEmpty()) {
-				throw new VerifyException(
-					"Missing tables detected: " +
-						new TreeSet<>(missingTableNames));
-			}
 		}
 
 		if (serviceComponentPortalTableNames.isEmpty()) {

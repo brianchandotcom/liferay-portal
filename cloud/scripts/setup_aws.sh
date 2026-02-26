@@ -66,13 +66,19 @@ function main {
 }
 
 function port_forward_argocd {
-	local argocd_password=$(kubectl get secret argocd-initial-admin-secret --namespace argocd --output jsonpath="{.data.password}" | base64 --decode)
+  _pushd "${ROOT_CLOUD_DIR}/terraform/aws/gitops/platform"
 
-	echo "Port-forwarding the ArgoCD service at localhost:8080...."
+  local argocd_namespace=$(terraform output -raw argocd_namespace)
+
+	local argocd_password=$(kubectl get secret argocd-initial-admin-secret --namespace ${argocd_namespace} --output jsonpath="{.data.password}" | base64 --decode)
+
+	echo "Port-forwarding the ArgoCD service at http://localhost:8080...."
 	echo "Login with Username: admin and Password: ${argocd_password} to continue monitoring setup."
 	echo "Use CTRL+C to exit when finished."
 
-	kubectl port-forward --namespace argocd service/argocd-server 8080:443
+	kubectl port-forward --namespace ${argocd_namespace} service/argocd-server 8080:443
+
+  _popd
 }
 
 function setup_aws_eks {

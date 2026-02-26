@@ -26,22 +26,11 @@ import org.json.JSONObject;
  */
 public class PortalTestSuiteUpstreamControllerBuildRunner
 	<S extends PortalTestSuiteUpstreamControllerBuildData>
-		extends BaseBuildRunner<S> {
-
-	@Override
-	public Workspace getWorkspace() {
-		if (_workspace != null) {
-			return _workspace;
-		}
-
-		_workspace = WorkspaceFactory.newWorkspace();
-
-		return _workspace;
-	}
+		extends BasePortalControllerBuildRunner<S> {
 
 	@Override
 	public void run() {
-		invokeTestSuiteBuilds();
+		invokeBuilds();
 	}
 
 	@Override
@@ -50,18 +39,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	protected PortalTestSuiteUpstreamControllerBuildRunner(S buildData) {
 		super(buildData);
-	}
-
-	protected String getInvocationCohortName() {
-		String invocationCohortName = System.getenv("INVOCATION_COHORT_NAME");
-
-		if ((invocationCohortName != null) && !invocationCohortName.isEmpty()) {
-			return invocationCohortName;
-		}
-
-		BuildData buildData = getBuildData();
-
-		return buildData.getCohortName();
 	}
 
 	protected String getInvocationJobName() {
@@ -147,7 +124,8 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 			"portal.testsuite.upstream.testray.slack.username", testSuite);
 	}
 
-	protected void invokeTestSuiteBuilds() {
+	@Override
+	protected void invokeBuilds() {
 		List<String> testSuiteNames = _getSelectedTestSuiteNames();
 
 		if (testSuiteNames.isEmpty()) {
@@ -316,7 +294,7 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 		sb.append("\">");
 
-		sb.append(_getPortalBranchAbbreviatedSHA());
+		sb.append(getPortalBranchAbbreviatedSHA());
 
 		sb.append("</a>");
 
@@ -408,14 +386,6 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 		}
 
 		return latestTestSuiteStartTimes;
-	}
-
-	private String _getPortalBranchAbbreviatedSHA() {
-		S buildData = getBuildData();
-
-		String portalBranchSHA = buildData.getPortalBranchSHA();
-
-		return portalBranchSHA.substring(0, 7);
 	}
 
 	private JSONObject _getPreviousTestSuiteBuildJSONObject(
@@ -554,6 +524,5 @@ public class PortalTestSuiteUpstreamControllerBuildRunner
 
 	private final List<String> _invokedTestSuiteNames = new ArrayList<>();
 	private List<String> _selectedTestSuiteNames;
-	private Workspace _workspace;
 
 }

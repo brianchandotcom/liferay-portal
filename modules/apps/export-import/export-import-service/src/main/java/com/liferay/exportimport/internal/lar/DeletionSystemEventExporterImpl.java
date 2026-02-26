@@ -17,6 +17,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.lar.DeletionSystemEventExporter;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
@@ -64,7 +65,7 @@ public class DeletionSystemEventExporterImpl
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		List<Long> exportedSystemEventIds = null;
+		List<SystemEvent> systemEvents = null;
 
 		Document document = SAXReaderUtil.createDocument();
 
@@ -86,15 +87,14 @@ public class DeletionSystemEventExporterImpl
 					new StagedModelType(Layout.class));
 			}
 
-			exportedSystemEventIds = _exportDeletionSystemEvents(
-				portletDataContext, rootElement,
-				deletionSystemEventStagedModelTypes);
+			systemEvents = _getDeletionSystemEvents(
+				portletDataContext, deletionSystemEventStagedModelTypes);
 		}
 
-		if (exportedSystemEventIds != null) {
-			for (Long systemEventId : exportedSystemEventIds) {
-				SystemEvent systemEvent =
-					_systemEventLocalService.fetchSystemEvent(systemEventId);
+		if (systemEvents != null) {
+			for (SystemEvent systemEvent : systemEvents) {
+				_exportDeletionSystemEvent(
+					rootElement, portletDataContext, systemEvent);
 
 				JSONObject jsonObject = _jsonFactory.createJSONObject(
 					systemEvent.getExtraData());
@@ -143,12 +143,14 @@ public class DeletionSystemEventExporterImpl
 			}
 		}
 
-		if (ListUtil.isNotEmpty(exportedSystemEventIds) &&
+		if (ListUtil.isNotEmpty(systemEvents) &&
 			ExportImportThreadLocal.isStagingInProcess()) {
 
 			_exportImportProcessCallbackRegistry.registerCallback(
 				portletDataContext.getExportImportProcessId(),
-				new DeleteSystemEventsCallable(exportedSystemEventIds));
+				new DeleteSystemEventsCallable(
+					TransformUtil.transform(
+						systemEvents, SystemEvent::getSystemEventId)));
 		}
 	}
 
@@ -331,12 +333,12 @@ public class DeletionSystemEventExporterImpl
 				systemEvent.getReferrerClassNameId()));
 	}
 
-	private List<Long> _exportDeletionSystemEvents(
-			PortletDataContext portletDataContext, Element rootElement,
+	private List<SystemEvent> _getDeletionSystemEvents(
+			PortletDataContext portletDataContext,
 			Set<StagedModelType> deletionSystemEventStagedModelTypes)
 		throws Exception {
 
-		List<Long> systemEventIds = new ArrayList<>();
+		List<SystemEvent> systemEvents = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			_systemEventLocalService.getActionableDynamicQuery();
@@ -347,16 +349,11 @@ public class DeletionSystemEventExporterImpl
 				dynamicQuery));
 		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 		actionableDynamicQuery.setPerformActionMethod(
-			(SystemEvent systemEvent) -> {
-				_exportDeletionSystemEvent(
-					rootElement, portletDataContext, systemEvent);
-
-				systemEventIds.add(systemEvent.getSystemEventId());
-			});
+			(SystemEvent systemEvent) -> systemEvents.add(systemEvent));
 
 		actionableDynamicQuery.performActions();
 
-		return systemEventIds;
+		return systemEvents;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

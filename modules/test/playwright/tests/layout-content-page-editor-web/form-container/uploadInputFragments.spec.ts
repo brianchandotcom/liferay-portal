@@ -598,34 +598,40 @@ test.describe('File Upload Fragment', () => {
 				title: getRandomString(),
 			});
 
-			// Go to view mode
+			// Go to view mode and select file from computer
 
-			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
-			);
+			await expect(async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+				);
 
-			// Select file from computer
+				const fileChooserPromise = page.waitForEvent('filechooser', {
+					timeout: 3000,
+				});
 
-			const fileChooserPromise = page.waitForEvent('filechooser');
+				const fileUploadInput = page.locator('.file-upload');
 
-			const fileUploadInput = page.locator('.file-upload');
+				await fileUploadInput
+					.getByText('Select File', {exact: true})
+					.click({
+						timeout: 2000,
+					});
 
-			await fileUploadInput
-				.getByText('Select File', {exact: true})
-				.click();
+				const fileChooser = await fileChooserPromise;
 
-			const fileChooser = await fileChooserPromise;
+				await fileChooser.setFiles(
+					path.join(
+						__dirname,
+						'../main/dependencies/high_resolution_image.jpg'
+					)
+				);
 
-			await fileChooser.setFiles(
-				path.join(
-					__dirname,
-					'../main/dependencies/high_resolution_image.jpg'
-				)
-			);
-
-			await expect(
-				fileUploadInput.getByText('high_resolution_image')
-			).toBeVisible();
+				await expect(
+					fileUploadInput.getByText('high_resolution_image')
+				).toBeVisible({
+					timeout: 2000,
+				});
+			}).toPass();
 
 			// Submit form
 

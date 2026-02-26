@@ -625,13 +625,17 @@ test(
 
 		const input = page.getByPlaceholder('Choose an Option');
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option', {
+		await expect(async () => {
+			const option = page.getByRole('option', {
 				name: 'Italy',
-			}),
-			trigger: input,
-		});
+			});
+
+			await input.click({timeout: 2000});
+
+			await expect(option).toBeVisible({timeout: 2000});
+
+			await option.click({timeout: 2000});
+		}).toPass();
 
 		const valueInput = page.locator('[name="ObjectField_selectCountry"]');
 

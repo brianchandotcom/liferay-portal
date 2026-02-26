@@ -5,6 +5,8 @@
 
 package com.liferay.ai.hub.site.initializer.internal.test;
 
+import com.liferay.account.model.AccountEntry;
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -106,7 +108,18 @@ public class AIHubSiteInitializerTest {
 				externalReferenceCode, TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(name, workflowDefinition.getName());
+
+		AccountEntry accountEntry =
+			_accountEntryLocalService.getAccountEntryByExternalReferenceCode(
+				"L_AI_HUB", TestPropsValues.getCompanyId());
+
+		Assert.assertEquals(
+			accountEntry.getAccountEntryGroupId(),
+			workflowDefinition.getGroupId());
 	}
+
+	@Inject
+	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

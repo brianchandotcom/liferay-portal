@@ -6,23 +6,23 @@
 import {Page, expect} from '@playwright/test';
 import path from 'path';
 
-import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {openFieldset} from '../../../../utils/openFieldset';
 import {ExportImportPage, taskStatus} from './ExportImportPage';
 
 export class CompanyExportImportPage {
 	readonly page: Page;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly exportImportPage: ExportImportPage;
 
 	constructor(page: Page) {
 		this.page = page;
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.exportImportPage = new ExportImportPage(page);
 	}
 
 	async goToImportOptions(filePath: string) {
-		await this.applicationsMenuPage.goToImport();
+		await this.globalMenuPage.goToApplications('Import');
 
 		await this.exportImportPage.newImportButton.click();
 
@@ -44,7 +44,7 @@ export class CompanyExportImportPage {
 		taskStatus?: taskStatus;
 		useCurrentUser?: boolean;
 	}): Promise<{fileName: string}> {
-		await this.applicationsMenuPage.goToImport();
+		await this.globalMenuPage.goToApplications('Import');
 
 		await this.exportImportPage.newImportButton.click();
 

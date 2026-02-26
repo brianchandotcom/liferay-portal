@@ -25,6 +25,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPD-78863': {enabled: true, system: true},
 	}),
 	pageEditorPagesTest,

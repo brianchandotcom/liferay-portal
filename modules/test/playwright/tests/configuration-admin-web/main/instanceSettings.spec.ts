@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 import {readFile} from 'fs/promises';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -15,6 +16,9 @@ import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
 	isolatedSiteTest,
 	loginTest(),

@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CommercePaymentsPage {
 	readonly addCommentButton: Locator;
 	readonly amountInput: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly backLink: Locator;
 	readonly commentInput: Locator;
 	readonly commentSubmitButton: Locator;
@@ -31,7 +31,7 @@ export class CommercePaymentsPage {
 			name: 'Add',
 		});
 		this.amountInput = page.getByLabel('Amount');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.backLink = page.locator('span[title="Back"]');
 		this.commentInput = page
 			.frameLocator('iframe[title="Comment"]')
@@ -54,7 +54,7 @@ export class CommercePaymentsPage {
 		this.saveButton = page.getByRole('link', {exact: true, name: 'Save'});
 	}
 
-	async goto(checkTabVisibility = true) {
-		await this.applicationsMenuPage.goToPayments(checkTabVisibility);
+	async goto() {
+		await this.globalMenuPage.goToCommerce('Payments');
 	}
 }

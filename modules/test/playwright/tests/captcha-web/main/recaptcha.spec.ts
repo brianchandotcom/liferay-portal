@@ -6,12 +6,19 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
 import {performLogout} from '../../../utils/performLogin';
 import {reCaptchaConfig} from './config';
 
-export const test = mergeTests(loginTest(), captchaConfigPageTest);
+export const test = mergeTests(
+	loginTest(),
+	captchaConfigPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	})
+);
 
 test('LPD-32888 Check reCaptcha has a label for textarea', async ({
 	captchaConfigPage,

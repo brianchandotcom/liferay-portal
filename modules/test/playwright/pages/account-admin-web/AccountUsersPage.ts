@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 import {DataTablePage} from './DataTablePage';
 
 export class AccountUsersPage {
 	readonly activateButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly assignRolesMenuItem: Locator;
 	readonly assignUserMenuItem: Locator;
 	readonly deactivateButton: Locator;
@@ -30,7 +30,7 @@ export class AccountUsersPage {
 					name: 'Activate',
 				})
 			);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.assignRolesMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Roles',
 		});
@@ -87,6 +87,10 @@ export class AccountUsersPage {
 	}
 
 	async goto(forceReload = true) {
-		await this.applicationsMenuPage.goToAccountUsers(forceReload);
+		if (forceReload) {
+			await this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('Account Users');
 	}
 }

@@ -6,12 +6,12 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
 
 export class CommerceAdminChannelsPage {
 	readonly addButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly buyerOrderApprovalWorkflow: Locator;
 	readonly channelsTable: Locator;
 	readonly channelsTableRow: (
@@ -46,7 +46,7 @@ export class CommerceAdminChannelsPage {
 		this.addButton = page
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.buyerOrderApprovalWorkflow = page.getByLabel(
 			'Buyer Order Approval Workflow'
 		);
@@ -136,7 +136,7 @@ export class CommerceAdminChannelsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceChannels();
+		await this.globalMenuPage.goToCommerce('Channels');
 	}
 
 	async changeCommerceChannelBuyerOrderApprovalWorkflow(

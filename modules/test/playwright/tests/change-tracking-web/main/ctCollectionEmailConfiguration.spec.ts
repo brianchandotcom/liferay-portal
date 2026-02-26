@@ -6,9 +6,16 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 
-export const test = mergeTests(changeTrackingPagesTest, loginTest());
+export const test = mergeTests(
+	changeTrackingPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	loginTest()
+);
 
 test('LPD-28802 Verify email notification checkbox is displayed', async ({
 	page,

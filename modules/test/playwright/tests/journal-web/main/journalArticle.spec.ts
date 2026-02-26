@@ -53,6 +53,9 @@ const translateNameAndMetadataFields = async (
 const baseTest = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedSiteTest,
 	journalPagesTest,
 	loginTest(),

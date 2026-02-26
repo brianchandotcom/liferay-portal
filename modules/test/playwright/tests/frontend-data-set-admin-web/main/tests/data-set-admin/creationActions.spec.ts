@@ -24,6 +24,7 @@ export const test = mergeTests(
 	actionsPageTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-164563': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -80,30 +81,24 @@ test(
 				'Modal',
 				'Side Panel',
 			]);
-
 			await form.typeSelect.selectOption('Modal');
-
 			expect(await getSelectOptionLabels(form.variantSelect)).toEqual([
 				'Full Screen',
 				'Large',
 				'Small',
 			]);
 		});
-
 		await test.step('Check localizable inputs', async () => {
 			await checkLocalized({
 				formElements: [form.labelInput],
 				page,
 			});
-
 			await form.typeSelect.selectOption('Modal');
-
 			await checkLocalized({
 				formElements: [form.titleInput],
 				page,
 			});
 		});
-
 		await test.step('Check helper tooltips', async () => {
 			await checkHelperTooltip({
 				formElement: form.headlessActionKeyInput,
@@ -111,27 +106,20 @@ test(
 				text: "This key is used to display the action if the user has the permission for it by checking if the key is present in the data item's actions array.",
 			});
 		});
-
 		await test.step('Validate entire form on save', async () => {
 			await form.typeSelect.selectOption('Link');
-
 			await form.saveButton.click();
-
 			await checkRequired({
 				formElements: [form.labelInput, form.urlInput],
 				page,
 			});
 		});
-
 		await test.step('Validate required form elements individually', async () => {
 			await form.typeSelect.selectOption('Link');
-
 			await form.labelInput.fill(getRandomString());
 			await form.labelInput.clear();
-
 			await form.urlInput.fill(getRandomString());
 			await form.urlInput.clear();
-
 			await checkRequired({
 				formElements: [form.labelInput, form.urlInput],
 				page,

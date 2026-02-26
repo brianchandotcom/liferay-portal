@@ -9,7 +9,6 @@ import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {LayoutSetPrototype} from '../../../../helpers/json-web-services/JSONWebServicesLayoutSetPrototypeApiHelper';
 import {WebContentDisplayPage} from '../../../../pages/journal-content-web/WebContentDisplayPage';
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {UIElementsPage} from '../../../../pages/uielements/UIElementsPage';
 import {LayoutSetPrototypePage} from '../pages/LayoutSetPrototypePage';
@@ -28,7 +27,6 @@ export default async function createSiteTemplateWithWebContentOnHomePage({
 	webContentName,
 }: {
 	apiHelpers: ApiHelpers;
-	applicationsMenuPage: ApplicationsMenuPage;
 	layoutSetPrototypePage: LayoutSetPrototypePage;
 	page: Page;
 	pageEditorPage: PageEditorPage;

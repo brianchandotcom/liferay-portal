@@ -7,4 +7,7 @@ export const config = {
 	name: 'portal-security-ldap.main',
 	testDir: 'tests/portal-security-ldap/main',
 	timeout: 180 * 1000,
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

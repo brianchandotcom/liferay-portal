@@ -6,4 +6,7 @@
 export const config = {
 	name: 'login-web.main',
 	testDir: 'tests/login-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

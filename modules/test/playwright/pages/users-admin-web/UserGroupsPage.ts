@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export const searchTableRowByValue = async function (
 	tableLocator: Locator,
@@ -39,7 +39,6 @@ export class UserGroupsPage {
 	readonly addUsersIFrame: FrameLocator;
 	readonly addUsersIFrameAddButton: Locator;
 	readonly addUsersTable: DataTablePage;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assignMembersMenuItem: Locator;
 	readonly creationMenuNewButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
@@ -49,6 +48,7 @@ export class UserGroupsPage {
 	readonly exportButton: Locator;
 	readonly exportImportFrame: FrameLocator;
 	readonly exportImportMenuItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly goToDashboardPagesMenuItem: Locator;
 	readonly goToProfilePagesMenuItem: Locator;
 	readonly managePagesMenuItem: Locator;
@@ -95,7 +95,6 @@ export class UserGroupsPage {
 				'#_com_liferay_item_selector_web_portlet_ItemSelectorPortlet_entriesSearchContainer'
 			)
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assignMembersMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Members',
 		});
@@ -129,6 +128,7 @@ export class UserGroupsPage {
 		this.exportImportMenuItem = page.getByRole('menuitem', {
 			name: 'Export / Import',
 		});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.goToDashboardPagesMenuItem = page.getByRole('menuitem', {
 			name: 'Go to Dashboard Pages',
 		});
@@ -253,10 +253,15 @@ export class UserGroupsPage {
 	}
 
 	async goto(forceReload?: boolean) {
-		await this.applicationsMenuPage.goToUserGroups(forceReload);
+		if (forceReload) {
+			await this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('User Groups');
 	}
 
 	async goToWithLimitedAccess() {
-		await this.applicationsMenuPage.goToUserGroupsWithLimitedAccess();
+		await this.globalMenuPage.goToHome();
+		await this.globalMenuPage.goToControlPanel('User Groups');
 	}
 }

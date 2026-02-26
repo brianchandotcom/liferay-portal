@@ -6,4 +6,7 @@
 export const config = {
 	name: 'cookies-banner-web.main',
 	testDir: 'tests/cookies-banner-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

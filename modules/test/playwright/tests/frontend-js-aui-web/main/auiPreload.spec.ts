@@ -5,10 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 
-const test = mergeTests(loginTest(), systemSettingsPageTest);
+const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	loginTest(),
+	systemSettingsPageTest
+);
 
 test('AUI modules can be enabled to preload', async ({systemSettingsPage}) => {
 	await systemSettingsPage.goToSystemSetting('Third Party', 'AUI');

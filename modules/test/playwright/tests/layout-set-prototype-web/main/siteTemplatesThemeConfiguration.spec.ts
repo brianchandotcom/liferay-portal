@@ -5,8 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -14,8 +15,11 @@ import getRandomString from '../../../utils/getRandomString';
 import {layoutSetPrototypePageTest} from './fixtures/layoutSetPrototypePageTest';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	displayPageTemplatesPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	layoutSetPrototypePageTest,
 	pageEditorPagesTest,
 	loginTest(),
@@ -28,8 +32,8 @@ test(
 		tag: '@LPD-44632',
 	},
 	async ({
-		applicationsMenuPage,
 		displayPageTemplatesPage,
+		globalMenuPage,
 		layoutSetPrototypePage,
 		page,
 		pagesAdminPage,
@@ -39,9 +43,9 @@ test(
 
 		const siteTemplateName: string = getRandomString();
 
-		await applicationsMenuPage.goToSiteTemplates();
+		await globalMenuPage.goToControlPanel('Site Templates');
 		await layoutSetPrototypePage.addSiteTemplate(siteTemplateName);
-		await applicationsMenuPage.goToSiteTemplates();
+		await globalMenuPage.goToControlPanel('Site Templates');
 
 		// Go to Site Template Configuration and configure a new theme for public pages
 

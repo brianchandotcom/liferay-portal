@@ -5,7 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {userGroupsPageTest} from '../../../fixtures/userGroupsPageTest';
@@ -13,7 +14,6 @@ import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganiza
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
 import {VirtualInstancesPage} from '../../../pages/portal-instances-web/VirtualInstancesPage';
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 import {SCIMConfigurationPage} from '../../../pages/scim-configuraiton-web/SCIMConfigurationPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
@@ -21,7 +21,10 @@ import {newScimUser} from './utils/newScimUserUtil';
 
 export const test = mergeTests(
 	loginTest(),
-	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	serverAdministrationPageTest,
 	userGroupsPageTest,
 	usersAndOrganizationsPagesTest
@@ -94,6 +97,7 @@ test('LPD-23255 AC3 TC3: Verify that clicking the “Reset SCIM Client provision
 });
 
 test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provisioning data“ button revokes the generated OAuth2 token and deletes the OAuth2 Application.', async ({
+	globalMenuPage,
 	page,
 }) => {
 	const scimConfigurationPage = new SCIMConfigurationPage(page);
@@ -113,16 +117,14 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 		await apiHelper.scim.getUsersWithOAuth(accessToken);
 	expect(authorizedResponse.status()).toBe(200);
 
-	const applicationsMenuPage = new ApplicationsMenuPage(page);
-
-	await applicationsMenuPage.goToOauth2Administration();
+	await globalMenuPage.goToControlPanel('OAuth 2 Administration');
 	await page.waitForTimeout(1000);
 
 	const scimOAuthClientRow = await page.getByRole('cell', {
 		exact: true,
 		name: 'Test SCIM Client',
 	});
-	expect(await scimOAuthClientRow).toBeVisible();
+	await expect(scimOAuthClientRow).toBeVisible();
 
 	await scimConfigurationPage.goTo();
 
@@ -132,10 +134,10 @@ test('LPD-23255 AC3 TC4: Verify that clicking the “Reset SCIM Client provision
 		await apiHelper.scim.getUsersWithOAuth(accessToken);
 	expect(unauthorizedResponse.status()).toBe(401);
 
-	await applicationsMenuPage.goToOauth2Administration();
+	await globalMenuPage.goToControlPanel('OAuth 2 Administration');
 	await page.waitForTimeout(1000);
 
-	expect(await scimOAuthClientRow).not.toBeVisible();
+	await expect(scimOAuthClientRow).not.toBeVisible();
 });
 
 test('LPD-23255 AC3 TC5: Verify that clicking the “Reset SCIM Client provisioning data“ button unbinds users', async ({
@@ -338,7 +340,7 @@ test('LPS-190119 (TC-2 & TC-5). Admin User can Generate and Revoke SCIM Access T
 });
 
 test('LPD-34644: Check if the token expiration warning message appears in the SCIM configuration UI.', async ({
-	applicationsMenuPage,
+	globalMenuPage,
 	page,
 	serverAdministrationPage,
 }) => {
@@ -352,7 +354,7 @@ test('LPD-34644: Check if the token expiration warning message appears in the SC
 
 	// Execute script to change the expiration date of the SCIM client access token to 10 days from current day
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const script = `
 		import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -440,7 +442,7 @@ test('LPD-37452 verify expando field is not visible for group added to SCIM', as
 
 	await userGroupsPage.editUserGroupMenuItem.click();
 
-	await expect(await page.getByLabel('Scimclientid')).not.toBeVisible();
+	await expect(page.getByLabel('Scimclientid')).not.toBeVisible();
 
 	await scimConfigurationPage.goTo();
 	await scimConfigurationPage.resetClientData();

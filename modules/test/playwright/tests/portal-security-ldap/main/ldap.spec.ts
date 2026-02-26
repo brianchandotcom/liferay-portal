@@ -6,6 +6,7 @@
 import {Locator, Page, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {ldapConfigurationPagesTest} from '../../../fixtures/ldapConfigurationPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -20,7 +21,7 @@ import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/Insta
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {LdapConfigurationPage} from '../../../pages/portal-security-ldap/LdapConfigurationPage';
 import {LdapServerPage} from '../../../pages/portal-security-ldap/LdapServerPage';
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {ServerAdministrationPage} from '../../../pages/server-admin-web/ServerAdministrationPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
@@ -29,6 +30,9 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	instanceSettingsPagesTest,
 	ldapConfigurationPagesTest,
@@ -1084,9 +1088,9 @@ async function invokeLdapImport(page: Page, ldapServer?: TLdapServer) {
 	}
 
 	await test.step('Manually trigger bulk import', async () => {
-		const applicationsMenuPage = new ApplicationsMenuPage(page);
+		const globalMenuPage = new GlobalMenuPage(page);
 
-		await applicationsMenuPage.goToServerAdministration();
+		await globalMenuPage.goToControlPanel('Server Administration');
 
 		const script = `
 			import com.liferay.portal.kernel.module.util.SystemBundleUtil;

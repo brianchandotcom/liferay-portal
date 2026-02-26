@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
@@ -15,6 +16,9 @@ const MOCKED_IMAGE_PATH =
 
 const test = mergeTests(
 	documentLibraryPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest()
 );

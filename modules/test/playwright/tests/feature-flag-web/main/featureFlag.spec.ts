@@ -18,6 +18,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		[DEPENDENCY_FEATURE_FLAG]: {enabled: false},
 		[DEPENDENT_FEATURE_FLAG]: {enabled: false},
+		'LPD-36105': {enabled: true},
 	}),
 	loginTest()
 );

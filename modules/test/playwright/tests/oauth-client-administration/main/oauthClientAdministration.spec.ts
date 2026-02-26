@@ -20,6 +20,7 @@ const test = mergeTests(
 	customFieldsPagesTest,
 	oauthClientAdminPagesTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPD-49855': {enabled: true},
 		'LPD-63415': {enabled: true},
 	}),
@@ -80,7 +81,9 @@ test.describe('Enable Configuration of oauth-authorization-server Well-Known URI
 			if (
 				await authServerLocalMetadatasPage.oAuthAuthorizatoinServerTab.isHidden()
 			) {
-				await authServerLocalMetadatasPage.applicationsMenuPage.goToOAuthClientAdministration();
+				await authServerLocalMetadatasPage.globalMenuPage.goToControlPanel(
+					'OAuth Client Administration'
+				);
 			}
 
 			await authServerLocalMetadatasPage.authServerLocalMetadataTab.click();

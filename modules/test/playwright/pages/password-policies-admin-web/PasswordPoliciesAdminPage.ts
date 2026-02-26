@@ -6,11 +6,11 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class PasswordPoliciesAdminPage {
 	readonly allowDictionaryWordsToggle: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly changeableToggle: Locator;
 	readonly checkSyntaxToggle: Locator;
 	readonly description: Locator;
@@ -36,7 +36,7 @@ export class PasswordPoliciesAdminPage {
 			"Allow Dictionary Words If this is checked, common dictionary words are allowed as the user's passwords.",
 			{exact: true}
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.changeableToggle = page.getByLabel(
 			'Changeable If this is checked, the user can change their password.',
 			{exact: true}
@@ -210,7 +210,7 @@ export class PasswordPoliciesAdminPage {
 	}
 
 	async goTo() {
-		await this.applicationsMenuPage.goToPasswordPolicies();
+		await this.globalMenuPage.goToControlPanel('Password Policies');
 	}
 
 	async resetDefaultPasswordPolicy() {

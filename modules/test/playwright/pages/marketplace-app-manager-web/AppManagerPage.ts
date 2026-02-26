@@ -7,12 +7,12 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class AppManagerPage {
 	readonly activateLink: Locator;
 	readonly activeFilterMenuItem: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly appLink: (appName: string) => Locator;
 	readonly appRow: (appName: string) => Locator;
 	readonly appRowOptionsMenu: (appName: string) => Locator;
@@ -40,7 +40,6 @@ export class AppManagerPage {
 		this.activeFilterMenuItem = page.getByRole('menuitem', {
 			name: 'Active',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.appLink = (appName) =>
 			page
 				.getByRole('link', {name: appName})
@@ -67,6 +66,7 @@ export class AppManagerPage {
 			);
 		this.deactivateLink = page.getByRole('link', {name: 'Deactivate'});
 		this.filterButton = page.getByLabel('Filter', {exact: true});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.installedFilterMenuItem = page.getByRole('menuitem', {
 			name: 'Installed',
 		});
@@ -112,7 +112,7 @@ export class AppManagerPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToAppManager();
+		await this.globalMenuPage.goToControlPanel('App Manager');
 	}
 
 	async activateApp(identifier: string, useSymbolicName: boolean = false) {

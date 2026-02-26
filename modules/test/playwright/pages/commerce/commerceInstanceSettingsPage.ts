@@ -5,10 +5,10 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CommerceInstanceSettingsPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly catalogLink: Locator;
 	readonly checkboxPlacedOrders: (checkboxName: string) => Locator;
 	readonly page: Page;
@@ -17,7 +17,7 @@ export class CommerceInstanceSettingsPage {
 	readonly submitConfigurationButton: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.catalogLink = page.getByRole('link', {
 			exact: true,
 			name: 'Catalog',
@@ -37,7 +37,7 @@ export class CommerceInstanceSettingsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToInstanceSettings();
+		await this.globalMenuPage.goToControlPanel('Instance Settings');
 	}
 
 	async goToInstanceSetting(categoryKey: string, configurationName: string) {

@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {doAndGoBack} from '../../../utils/doAndGoBack';
@@ -15,6 +16,9 @@ import {assertUnderlinedLinksValue} from './utils/assertUnderlinedLinksValue';
 
 const test = mergeTests(
 	accessibilityMenuPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
 	loginTest()
 );

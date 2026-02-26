@@ -8,9 +8,10 @@ import path from 'path';
 
 import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
@@ -26,9 +27,12 @@ import {tagsPagesTest} from '../../asset-tags-admin-web/main/fixtures/tagsAdminP
 export const test = mergeTests(
 	accountsPagesTest,
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	customFieldsPagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	loginTest(),
 	serverAdministrationPageTest,
 	tagsPagesTest,
@@ -313,14 +317,14 @@ test('LPD-32045 All account entry can be seen by admin user', async ({
 test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	accountsPage,
 	apiHelpers,
-	applicationsMenuPage,
 	editAccountPage,
+	globalMenuPage,
 	page,
 	serverAdministrationPage,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount();
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const emailAddress = getRandomString() + '@liferay.com';
 
@@ -339,7 +343,7 @@ test('LPD-33636 Email address is not deleted by saving in the UI', async ({
 	await editAccountPage.saveButton.click();
 	await waitForAlert(page);
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const fetchScript = `
 		import com.liferay.account.model.*; 

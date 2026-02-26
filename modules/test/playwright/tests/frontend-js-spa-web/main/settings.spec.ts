@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
@@ -12,6 +13,9 @@ import isSPAEnabled from '../../../utils/isSPAEnabled';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedLayoutTest({publish: false}),
 	loginTest(),
 	systemSettingsPageTest

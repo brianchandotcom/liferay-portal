@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -23,10 +23,10 @@ import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdmin
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest(),
 	pageEditorPagesTest,
 	pageViewModePagesTest,
@@ -46,7 +46,7 @@ test.afterEach(async ({sitesAdminPage, sitesPage}) => {
 
 test('Smoke', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	globalMenuPage,
 	page,
 	pageEditorPage,
 	pagesAdminPage,
@@ -81,7 +81,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin user creates a new blank site', async () => {
-		await applicationsMenuPage.goToSites(false);
+		await globalMenuPage.goToControlPanel('Sites');
 
 		siteName = getRandomString();
 
@@ -97,7 +97,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('Then the created site should be visible in the sites page with the correct membership, status, and options', async () => {
-		await applicationsMenuPage.goToSites(false);
+		await globalMenuPage.goToControlPanel('Sites');
 
 		const row = page.getByRole('row').filter({hasText: siteName});
 

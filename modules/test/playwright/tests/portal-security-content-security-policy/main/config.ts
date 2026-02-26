@@ -6,4 +6,7 @@
 export const config = {
 	name: 'portal-security-content-security-policy.main',
 	testDir: 'tests/portal-security-content-security-policy/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

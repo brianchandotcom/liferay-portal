@@ -7,11 +7,12 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
 import {DisplayPageTemplatesPage} from '../../../../pages/layout-page-template-admin-web/DisplayPageTemplatesPage';
-import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {ProductMenuPage} from '../../../../pages/product-navigation-control-menu-web/ProductMenuPage';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../utils/getRandomString';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {openProductMenu} from '../../../../utils/productMenu';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class NavigationMenusPage {
@@ -48,7 +49,7 @@ export class NavigationMenusPage {
 	readonly urlModal: FrameLocator;
 	readonly vocabulariesModal: FrameLocator;
 
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly productMenuPage: ProductMenuPage;
 
 	constructor(page: Page) {
@@ -139,7 +140,7 @@ export class NavigationMenusPage {
 			'iframe[title="Select Vocabularies"]'
 		);
 
-		this.applicationsMenuPage = new ApplicationsMenuPage(this.page);
+		this.globalMenuPage = new GlobalMenuPage(this.page);
 		this.productMenuPage = new ProductMenuPage(this.page);
 	}
 
@@ -481,11 +482,11 @@ export class NavigationMenusPage {
 	}
 
 	async gotoGlobalSiteNavigationMenuPortlet() {
-		await this.applicationsMenuPage.goToApplicationsMenu();
+		await this.productMenuPage.goToSite('Global');
 
-		await this.applicationsMenuPage.goToGlobalSite();
+		await openProductMenu(this.page);
 
-		await this.productMenuPage.openProductMenuIfClosed();
+		await this.productMenuPage.siteBuilderButton.waitFor();
 
 		await this.productMenuPage.siteBuilderButton.click();
 

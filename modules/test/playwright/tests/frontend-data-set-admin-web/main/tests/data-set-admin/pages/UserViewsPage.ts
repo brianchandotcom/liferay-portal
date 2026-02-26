@@ -5,13 +5,13 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {clickAndExpectToBeVisible} from '../../../../../../utils/clickAndExpectToBeVisible';
 
 export class UserViewsPage {
 	readonly adminOptionsDropdown: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly emptyStateTitle: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly manageUserViewsMenuItem: Locator;
 	readonly page: Page;
 	readonly pageContainer: Locator;
@@ -25,8 +25,8 @@ export class UserViewsPage {
 		this.adminOptionsDropdown = page.locator(
 			'button[data-qa-id="fdsAdminOptionsMenu"]'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.emptyStateTitle = page.getByText('No Results Found');
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.manageUserViewsMenuItem = page.getByRole('menuitem', {
 			name: 'Manage User Views',
 		});
@@ -43,7 +43,7 @@ export class UserViewsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToDataSetManager();
+		await this.globalMenuPage.goToControlPanel('Data Sets');
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,

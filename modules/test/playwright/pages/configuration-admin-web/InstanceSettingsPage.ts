@@ -9,11 +9,13 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {waitForPageToBeLoaded} from '../../utils/waitForPageToBeLoaded';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
 export class InstanceSettingsPage {
 	readonly actionsButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
 	readonly saveButton: Locator;
@@ -21,6 +23,7 @@ export class InstanceSettingsPage {
 	constructor(page: Page) {
 		this.actionsButton = page.getByRole('button', {name: 'Actions'});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.saveButton = page
@@ -40,7 +43,11 @@ export class InstanceSettingsPage {
 			});
 		}
 		else {
-			await this.applicationsMenuPage.goToInstanceSettings(forceReload);
+			if (forceReload) {
+				await this.globalMenuPage.goToHome();
+			}
+
+			await this.globalMenuPage.goToControlPanel('Instance Settings');
 		}
 	}
 

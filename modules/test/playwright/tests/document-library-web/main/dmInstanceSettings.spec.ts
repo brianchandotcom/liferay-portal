@@ -5,11 +5,19 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {dmSettingsPagesTest} from './fixtures/dmSettingsPagesTest';
 
-const test = mergeTests(dmSettingsPagesTest, isolatedSiteTest, loginTest());
+const test = mergeTests(
+	dmSettingsPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	isolatedSiteTest,
+	loginTest()
+);
 
 test(
 	'Updating Maximum File Upload Size at Instance level, not overrides site configuration',

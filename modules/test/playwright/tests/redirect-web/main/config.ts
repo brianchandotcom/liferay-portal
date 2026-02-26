@@ -6,4 +6,7 @@
 export const config = {
 	name: 'redirect-web.main',
 	testDir: 'tests/redirect-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

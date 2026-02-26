@@ -19,6 +19,7 @@ const VIRTUAL_INSTANCE_FULL_URL = `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`
 export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPD-39304': {enabled: true},
 	}),
 	loginTest(),

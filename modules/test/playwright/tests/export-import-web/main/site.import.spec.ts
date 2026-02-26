@@ -9,11 +9,11 @@ import * as path from 'path';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -41,7 +41,6 @@ import {openImportFieldset} from './utils/openImportFieldset';
 export const test = mergeTests(
 	accountSettingsPagesTest,
 	accountsPagesTest,
-	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
 	depotAdminPageTest,
@@ -50,10 +49,12 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
 		'LPD-35443': {enabled: false},
+		'LPD-36105': {enabled: true},
 		'LPD-44307': {enabled: true},
 		'LPD-44771': {enabled: true},
 		'LPD-45276': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest,
@@ -72,6 +73,7 @@ const testWithDeprecationFFDisabled = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: false},
+		'LPD-36105': {enabled: true},
 		'LPD-44307': {enabled: false},
 		'LPD-44771': {enabled: false},
 	}),
@@ -84,6 +86,7 @@ const testWithDeprecationFF = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: false},
+		'LPD-36105': {enabled: true},
 		'LPD-44307': {enabled: true},
 		'LPD-44771': {enabled: true},
 	}),
@@ -149,8 +152,8 @@ test('Can export and import custom object entries at site level', async ({
 
 test('Cannot import an instance scoped lar file', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	exportImportPage,
+	globalMenuPage,
 	page,
 }) => {
 	const objectDefinition =
@@ -170,7 +173,7 @@ test('Cannot import an instance scoped lar file', async ({
 
 	const homePage = new HomePage(page);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const exportFilePath = await exportImportPage.export({
 		portletLabels: [`${objectDefinition.name} 1 Items`],

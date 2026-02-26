@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {instanceSettingsPagesTest} from '../../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
@@ -38,10 +38,11 @@ import {
 } from '../../utils/date';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	globalMenuPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
@@ -314,9 +315,9 @@ test(
 	{tag: ['@COMMERCE-12610', '@LPD-39379']},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		commerceAdminChannelsPage,
 		commerceAdminProductPage,
+		globalMenuPage,
 		page,
 		placedOrderPage,
 		placedOrdersPage,
@@ -562,7 +563,7 @@ test(
 			}
 		);
 
-		await applicationsMenuPage.goToProducts();
+		await globalMenuPage.goToCommerce('Products');
 
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			'ProductBundle'
@@ -1533,10 +1534,10 @@ test('LPD-33658 Global Settings for order date configuration', async ({
 
 test('LPD-41952 Reorder from placed orders details page with different currency enabled', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAccountManagementPage,
 	commerceAdminOrderDetailsPage,
 	commerceChannelDefaultsPage,
+	globalMenuPage,
 	page,
 	placedOrdersPage,
 }) => {
@@ -1620,7 +1621,7 @@ test('LPD-41952 Reorder from placed orders details page with different currency 
 		shippingAddressId: address.id,
 	});
 
-	await applicationsMenuPage.goToAccounts();
+	await globalMenuPage.goToControlPanel('Accounts');
 
 	await commerceAccountManagementPage
 		.accountsTableRowLink(account.id)

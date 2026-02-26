@@ -11,6 +11,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -36,6 +37,10 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	loginTest(),
 	instanceSettingsPagesTest,
 	pageViewModePagesTest,
@@ -184,12 +189,12 @@ test(
 
 test('Check if local staging can be enabled', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	globalMenuPage,
 	stagingConfigurationPage,
 }) => {
 	const siteName: string = getRandomString();
 
-	await applicationsMenuPage.goToSites();
+	await globalMenuPage.goToControlPanel('Sites');
 
 	const site = await apiHelpers.headlessSite.createSite({
 		name: siteName,
@@ -207,7 +212,6 @@ test(
 	{tag: ['@LPS-89116']},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		journalPage,
 		page,
 		pagesAdminPage,
@@ -220,7 +224,7 @@ test(
 
 		apiHelpers.data.push({id: site.id, type: 'site'});
 
-		await applicationsMenuPage.goToSite(site.name);
+		await productMenuPage.goToSite(site.name);
 		await productMenuPage.goToPages();
 
 		await pagesAdminPage.createNewPage({

@@ -6,7 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../fixtures/notificationPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
@@ -15,9 +16,12 @@ import retryGetWorkflowTasksBySubmittingUser from '../../../utils/retryGetWorkfl
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	globalMenuPagesTest,
 	apiHelpersTest,
 	blogsPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	notificationPagesTest,
 	workflowPagesTest
@@ -59,8 +63,8 @@ test.afterEach(async ({apiHelpers, configurationTabPage, page}) => {
 test('view workload distribution for all assignees', async ({
 	allItemsPage,
 	apiHelpers,
-	applicationsMenuPage,
 	configurationTabPage,
+	globalMenuPage,
 	metricsPage,
 	page,
 }) => {
@@ -120,7 +124,7 @@ test('view workload distribution for all assignees', async ({
 		);
 	}
 
-	await applicationsMenuPage.goToMetrics();
+	await globalMenuPage.goToApplications('Metrics');
 
 	await metricsPage.chooseProcess(WORKFLOW_DEFINITION_NAME);
 

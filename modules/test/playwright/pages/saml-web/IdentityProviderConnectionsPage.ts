@@ -7,7 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {TIdpConnection} from '../../helpers/SamlProviderConnectionHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export interface AttributeMapping {
 	attributeMappingType:
@@ -21,12 +21,12 @@ export interface AttributeMapping {
 
 export class IdentityProviderConnectionsPage {
 	readonly addIdentityProviderConnectionButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly basicUserFields: Locator;
 	readonly clockSkewField: Locator;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly forceAuthnToggle: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly identityProviderConnectionsTab: Locator;
 	readonly identityProviderConnectionsTable: Locator;
 	readonly keepAliveUrlField: Locator;
@@ -44,12 +44,12 @@ export class IdentityProviderConnectionsPage {
 		this.addIdentityProviderConnectionButton = page.getByRole('button', {
 			name: 'Add Identity Provider',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basicUserFields = page.getByText('Basic User Fields');
 		this.clockSkewField = page.getByLabel('Clock Skew');
 		this.enabledField = page.getByText('Enabled', {exact: true});
 		this.entityIdField = page.getByLabel('Entity ID');
 		this.forceAuthnToggle = page.getByText('Force Authn');
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.identityProviderConnectionsTab = page.getByRole('tab', {
 			name: 'Identity Provider Connections',
 		});
@@ -154,7 +154,11 @@ export class IdentityProviderConnectionsPage {
 			forceReload ||
 			(await this.identityProviderConnectionsTab.isHidden())
 		) {
-			await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+			if (forceReload) {
+				await this.globalMenuPage.goToHome();
+			}
+
+			await this.globalMenuPage.goToControlPanel('SAML Admin');
 		}
 
 		await this.identityProviderConnectionsTab.click();

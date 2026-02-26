@@ -6,4 +6,7 @@
 export const config = {
 	name: 'expando-web.main',
 	testDir: 'tests/expando-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {accountsPagesTest} from '../../../fixtures/accountsPagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -30,8 +31,10 @@ export const test = mergeTests(
 	accountsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
@@ -131,7 +134,7 @@ test(
 
 		await performUserSwitch(page, user.alternateName);
 
-		await rolesPage.goto(false);
+		await rolesPage.goto();
 
 		await expect(async () => {
 			await rolesPage.rolesTable.changeView('Table');
@@ -182,7 +185,7 @@ test(
 
 		await performUserSwitch(page, user.alternateName);
 
-		await rolesPage.goto(false);
+		await rolesPage.goto();
 
 		await expect(rolesPage.rolesTable.newButton).toBeVisible();
 		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
@@ -350,7 +353,7 @@ test(
 test(
 	'A user can only view the portlets he has permissions from applications menu',
 	{tag: ['@LPD-50835', '@LPS-157219']},
-	async ({apiHelpers, page}) => {
+	async ({apiHelpers, globalMenuPage, page}) => {
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user.alternateName] = {
@@ -409,20 +412,23 @@ test(
 		await homePage.openApplicationMenu();
 
 		await expect(
-			page.getByRole('tab', {
+			page.getByRole('menuitem', {
 				name: 'Applications',
 			})
 		).toHaveCount(0);
 		await expect(
-			page.getByRole('tab', {
+			page.getByRole('menuitem', {
 				name: 'Commerce',
 			})
 		).toHaveCount(0);
 		await expect(
-			page.getByRole('tab', {
+			page.getByRole('menuitem', {
 				name: 'Control Panel',
 			})
 		).toBeVisible();
+
+		await globalMenuPage.goToControlPanel();
+
 		await expect(
 			page.getByRole('menuitem', {
 				exact: true,
@@ -436,10 +442,12 @@ test(
 			})
 		).toHaveCount(0);
 		await expect(
-			page.getByRole('menuitem', {
-				exact: true,
-				name: 'Sites',
-			})
+			page
+				.getByRole('menuitem', {
+					exact: true,
+					name: 'Sites',
+				})
+				.and(page.locator('.nav-link[href]'))
 		).toBeVisible();
 		await expect(
 			page.getByRole('menuitem', {

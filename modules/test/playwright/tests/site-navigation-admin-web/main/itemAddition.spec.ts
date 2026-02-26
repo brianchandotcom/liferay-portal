@@ -900,7 +900,7 @@ test(
 
 		await navigationMenusPage.addMenuItemButton.click();
 
-		await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet(false);
+		await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
 
 		await page.waitForTimeout(300);
 

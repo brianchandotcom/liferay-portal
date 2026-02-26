@@ -6,4 +6,7 @@
 export const config = {
 	name: 'portal-security-audit-web.main',
 	testDir: 'tests/portal-security-audit-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

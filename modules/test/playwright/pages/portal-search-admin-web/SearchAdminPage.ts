@@ -5,13 +5,13 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class SearchAdminPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly page: Page;
 	readonly connectionsTab: Locator;
 	readonly fieldMappingsTab: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly indexActionsTab: Locator;
 	readonly indexActionsConfigurationSection: Locator;
 	readonly indexActionsModal: Locator;
@@ -21,7 +21,7 @@ export class SearchAdminPage {
 	constructor(page) {
 		this.page = page;
 
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 
 		// Navigation
 
@@ -52,7 +52,7 @@ export class SearchAdminPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToSearch();
+		await this.globalMenuPage.goToControlPanel('Search');
 	}
 
 	async goToConnectionsTab() {

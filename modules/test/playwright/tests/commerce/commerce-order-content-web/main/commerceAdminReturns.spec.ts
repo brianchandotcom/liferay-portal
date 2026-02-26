@@ -19,6 +19,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-10562': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	loginTest()
 );
@@ -125,7 +126,7 @@ test('LPD-34670 Returns Manager can view and edit returns in returns admin page'
 
 	await performLogin(page, 'demo.unprivileged');
 
-	await commerceAdminReturnsPage.goto(false);
+	await commerceAdminReturnsPage.goto();
 
 	await (
 		await commerceAdminReturnsPage.tableRowLink({

@@ -11,6 +11,7 @@ export const config = {
 	testDir: 'tests/captcha-web/main',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };
 

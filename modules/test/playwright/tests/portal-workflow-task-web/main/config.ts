@@ -6,4 +6,7 @@
 export const config = {
 	name: 'portal-workflow-task-web.main',
 	testDir: 'tests/portal-workflow-task-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

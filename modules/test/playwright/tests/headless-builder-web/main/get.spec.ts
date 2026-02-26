@@ -19,7 +19,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	loginTest(),
-	headlessBuilderPagesTest(),
+	headlessBuilderPagesTest({
+		'LPD-36105': {enabled: true},
+	}),
 	headlessDiscoveryPagesTest
 );
 

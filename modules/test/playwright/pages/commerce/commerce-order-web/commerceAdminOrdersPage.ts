@@ -5,14 +5,14 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {
 	CommerceDNDTablePage,
 	searchTableRowByValue,
 } from '../commerceDNDTablePage';
 
 export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly backLink: Locator;
 	readonly deleteItemMenuItem: Locator;
 	readonly editCommerceOrderTable: Locator;
@@ -93,7 +93,7 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 
 			throw new Error(`Cannot locate row with rowValue: ${rowValue}`);
 		};
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.backLink = page.locator('span[title="Back"]');
 		this.deleteItemMenuItem = page.getByRole('menuitem', {
 			exact: true,
@@ -145,6 +145,6 @@ export class CommerceAdminOrdersPage extends CommerceDNDTablePage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceOrders(false);
+		await this.globalMenuPage.goToCommerce('Orders');
 	}
 }

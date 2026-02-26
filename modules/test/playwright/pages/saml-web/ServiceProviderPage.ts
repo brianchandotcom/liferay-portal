@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ServiceProviderPage {
 	readonly allowShowingTheLoginPortlet: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly clockSkew: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly ldapImportEnabled: Locator;
 	readonly page: Page;
 	readonly requireAssertionSignature: Locator;
@@ -24,8 +24,8 @@ export class ServiceProviderPage {
 		this.allowShowingTheLoginPortlet = page.getByText(
 			'Allow showing the login portlet'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.clockSkew = page.getByLabel('Clock Skew');
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.ldapImportEnabled = page.getByText('LDAP Import Enabled');
 		this.page = page;
 		this.requireAssertionSignature = page.getByText(
@@ -41,7 +41,11 @@ export class ServiceProviderPage {
 	}
 
 	async goTo(forceReload = false) {
-		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+		if (forceReload) {
+			await this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('SAML Admin');
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Service Provider'})
 			.click();

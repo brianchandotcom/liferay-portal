@@ -5,15 +5,15 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CommerceAdminHealthCheckPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly userRolesButton: Locator;
 	readonly pageTitle: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.userRolesButton = page
 			.getByRole('cell', {
 				exact: true,
@@ -27,6 +27,6 @@ export class CommerceAdminHealthCheckPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceHealthCheck();
+		await this.globalMenuPage.goToCommerce('Health Check');
 	}
 }

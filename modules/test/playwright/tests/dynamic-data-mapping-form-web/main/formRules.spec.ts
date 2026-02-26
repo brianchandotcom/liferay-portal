@@ -20,6 +20,7 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-31212': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	loginTest(),
 	formsPagesTest,

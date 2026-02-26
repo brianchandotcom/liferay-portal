@@ -6,11 +6,11 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ResultRankingsViewPage {
 	readonly addButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly navBar: Locator;
 
@@ -24,7 +24,7 @@ export class ResultRankingsViewPage {
 		this.addButton = page.getByRole('link', {
 			name: 'New Ranking',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.navBar = page.locator('nav');
 
 		this.page = page;
@@ -45,7 +45,7 @@ export class ResultRankingsViewPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToResultRankings();
+		await this.globalMenuPage.goToApplications('Result Rankings');
 	}
 
 	async createResultRanking(searchQuery: string) {

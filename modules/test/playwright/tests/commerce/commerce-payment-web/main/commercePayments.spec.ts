@@ -6,23 +6,27 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	loginTest()
 );
 
 test('LPD-5742 Can view payments list admin page', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commercePaymentsPage,
+	globalMenuPage,
 	page,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount({
@@ -85,7 +89,7 @@ test('LPD-5742 Can view payments list admin page', async ({
 		payment.id
 	);
 
-	await applicationsMenuPage.goToPayments();
+	await globalMenuPage.goToCommerce('Payments');
 
 	await expect(page.getByText(payment.id.toString()).first()).toBeVisible();
 

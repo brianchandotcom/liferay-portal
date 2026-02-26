@@ -12,11 +12,13 @@ import {userData} from '../../utils/performLogin';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 type CTCollection = {body: any; response?: Response};
 
 export class ChangeTrackingPage {
 	readonly frontendDataSetEntries: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly newButton: Locator;
 	readonly page: Page;
@@ -28,6 +30,7 @@ export class ChangeTrackingPage {
 		this.frontendDataSetEntries = page.locator(
 			'[data-testid="visualization-mode-table"]'
 		);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.newButton = page.locator(
 			'[data-testid="fdsCreationActionButton"]'
@@ -288,9 +291,12 @@ export class ChangeTrackingPage {
 	}
 
 	async goToPublicationsViaApplicationMenu() {
-		await this.page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
+		await this.globalMenuPage.goToApplications();
 
-		await this.page.getByRole('menuitem', {name: 'Publications'}).click();
+		await this.page
+			.getByRole('menuitem', {exact: true, name: 'Publications'})
+			.and(this.page.locator('.nav-link[href]'))
+			.click();
 
 		const enablePublications = this.page.getByText('Enable Publications');
 

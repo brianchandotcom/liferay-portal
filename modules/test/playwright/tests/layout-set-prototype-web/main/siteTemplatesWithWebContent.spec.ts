@@ -9,6 +9,7 @@ import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
@@ -26,6 +27,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
+	globalMenuPagesTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 		'LPD-39304': {enabled: true},
@@ -45,7 +47,7 @@ test(
 	{tag: ['@LPD-46415']},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
+		globalMenuPage,
 		page,
 		pageEditorPage,
 		pagesAdminPage,
@@ -99,7 +101,7 @@ test(
 			titleMap: {en_US: webContentName},
 		});
 
-		await applicationsMenuPage.goToSites();
+		await globalMenuPage.goToControlPanel('Sites');
 
 		const siteName = getRandomString();
 

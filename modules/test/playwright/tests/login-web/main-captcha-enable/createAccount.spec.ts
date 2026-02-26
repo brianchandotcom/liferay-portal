@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {captchaConfigPageTest} from '../../../fixtures/captchaConfigPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {liferayConfig} from '../../../liferay.config';
@@ -17,6 +18,9 @@ let captchaConfigurationResetRequired: boolean = false;
 export const test = mergeTests(
 	captchaConfigPageTest,
 	instanceSettingsPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest()
 );
 

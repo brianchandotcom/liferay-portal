@@ -28,7 +28,10 @@ export async function clearConsentCookies(systemSettingsPage) {
 export async function resetAllConsentManagerConfigurations(systemSettingsPage) {
 	await systemSettingsPage.goToSystemSetting('Privacy', 'Consent Manager');
 
-	const menuItems = await systemSettingsPage.page.getByRole('menuitem').all();
+	const menuItems = await systemSettingsPage.page
+		.locator('#main-content')
+		.getByRole('menuitem')
+		.all();
 
 	for (const menuItem of menuItems.reverse()) {
 		await menuItem.click();

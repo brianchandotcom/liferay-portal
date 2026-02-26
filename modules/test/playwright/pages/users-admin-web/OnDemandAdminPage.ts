@@ -6,10 +6,10 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class OnDemandAdminPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly instancesTable: DataTablePage;
 	readonly page: Page;
 	readonly reasonFrame: FrameLocator;
@@ -18,7 +18,7 @@ export class OnDemandAdminPage {
 	readonly requestAdministratorAccessMenuItem: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.instancesTable = new DataTablePage(
 			page,
 			page.locator(
@@ -41,6 +41,7 @@ export class OnDemandAdminPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToOnDemandAdmin();
+		await this.globalMenuPage.goToHome();
+		await this.globalMenuPage.goToControlPanel('On-Demand Admin');
 	}
 }

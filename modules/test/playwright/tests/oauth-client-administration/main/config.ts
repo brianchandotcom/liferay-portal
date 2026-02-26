@@ -6,4 +6,7 @@
 export const config = {
 	name: 'oauth-client-administration.main',
 	testDir: 'tests/oauth-client-administration/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

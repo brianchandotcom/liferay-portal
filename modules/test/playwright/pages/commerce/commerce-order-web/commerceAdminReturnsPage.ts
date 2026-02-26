@@ -5,12 +5,12 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminReturnsPage extends CommerceDNDTablePage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly editReturnItemFrame: FrameLocator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly returnActionsButton: Locator;
 	readonly returnActionsEditButton: Locator;
 	readonly returnItemsCommentInput: Locator;
@@ -22,7 +22,7 @@ export class CommerceAdminReturnsPage extends CommerceDNDTablePage {
 			page,
 			'#_com_liferay_commerce_order_web_internal_portlet_CommerceReturnPortlet_fm .fds table'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.editReturnItemFrame = page.frameLocator('iframe');
 		this.returnActionsButton = page.getByRole('button', {
 			name: 'Actions',
@@ -42,7 +42,7 @@ export class CommerceAdminReturnsPage extends CommerceDNDTablePage {
 		);
 	}
 
-	async goto(checkTabVisibility = true) {
-		await this.applicationsMenuPage.goToCommerceReturns(checkTabVisibility);
+	async goto() {
+		await this.globalMenuPage.goToCommerce('Returns');
 	}
 }

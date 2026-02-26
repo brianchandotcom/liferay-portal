@@ -6,12 +6,19 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-export const test = mergeTests(formsPagesTest, changeTrackingPagesTest);
+export const test = mergeTests(
+	formsPagesTest,
+	changeTrackingPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	})
+);
 
 test('LPD-39428 Assert publication timeline history is enabled for forms', async ({
 	changeTrackingPage,

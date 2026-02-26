@@ -10,5 +10,6 @@ export const config = {
 	testDir: 'tests/content-dashboard-web/main',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

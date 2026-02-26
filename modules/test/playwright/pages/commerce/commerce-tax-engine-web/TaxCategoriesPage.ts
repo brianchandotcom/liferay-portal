@@ -5,12 +5,12 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class TaxCategoriesPage extends CommerceDNDTablePage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteMenuItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly newButton: Locator;
 	readonly page: Page;
 	readonly taxCategoriesTableRowActions: (
@@ -22,7 +22,7 @@ export class TaxCategoriesPage extends CommerceDNDTablePage {
 			page,
 			'#_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoriesSearchContainer'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.deleteMenuItem = page.getByRole('menuitem', {
 			name: 'Delete',
 		});
@@ -46,7 +46,7 @@ export class TaxCategoriesPage extends CommerceDNDTablePage {
 			);
 		}
 		else {
-			await this.applicationsMenuPage.goToCommerceTaxCategories(false);
+			await this.globalMenuPage.goToCommerce('Tax Categories');
 		}
 	}
 }

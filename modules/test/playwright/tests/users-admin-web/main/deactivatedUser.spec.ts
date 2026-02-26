@@ -17,6 +17,7 @@ import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdmin
 
 export const test = mergeTests(
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	dataApiHelpersTest,

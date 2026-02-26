@@ -20,6 +20,7 @@ export const test = mergeTests(
 	dataMigrationCenterPagesTest,
 	featureFlagsTest({
 		'COMMERCE-8087': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	loginTest()
 );

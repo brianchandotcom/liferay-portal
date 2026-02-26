@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedLayoutTest} from '../../../fixtures/isolatedLayoutTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
@@ -17,6 +18,9 @@ import {pagesPagesTest} from '../../layout-admin-web/main/fixtures/pagesPagesTes
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedLayoutTest({type: 'portlet'}),
 	loginTest(),
 	productMenuPageTest,

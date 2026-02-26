@@ -6,4 +6,7 @@
 export const config = {
 	name: 'document-library-web.main',
 	testDir: 'tests/document-library-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

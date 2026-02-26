@@ -5,10 +5,10 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class LicenseManagerPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly frame: FrameLocator;
 	readonly frameHostNameCell: Locator;
 	readonly frameIPAddressCell: Locator;
@@ -20,7 +20,7 @@ export class LicenseManagerPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.frame = page.frameLocator(
 			'[id="_com_liferay_license_manager_web_portlet_LicenseManagerPortlet_iframe"]'
 		);
@@ -53,6 +53,6 @@ export class LicenseManagerPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToLicenseManager();
+		await this.globalMenuPage.goToControlPanel('License Manager');
 	}
 }

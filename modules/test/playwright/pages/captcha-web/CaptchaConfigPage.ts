@@ -7,10 +7,10 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CaptchaConfigPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly actions: Locator;
 	readonly captchaEngine: Locator;
 	readonly createAccountCaptchaEnabled: Locator;
@@ -31,7 +31,7 @@ export class CaptchaConfigPage {
 	readonly updateButton: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.actions = page.getByRole('button', {name: 'Actions'});
 		this.captchaEngine = page.getByLabel('CAPTCHA Engine');
 		this.createAccountCaptchaEnabled = page.getByText(
@@ -127,7 +127,7 @@ export class CaptchaConfigPage {
 	}
 
 	async goTo() {
-		await this.applicationsMenuPage.goToSystemSettings();
+		await this.globalMenuPage.goToControlPanel('System Settings');
 
 		await this.page.getByRole('link', {name: 'Security Tools'}).click();
 

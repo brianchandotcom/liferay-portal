@@ -5,14 +5,13 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
 import {CommerceIframeDNDTablePage} from '../commerceIframeDNDTablePage';
 
 export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	readonly addQuantityInShipment: Locator;
 	readonly addProductsToShipment: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly backLink: Locator;
 	readonly carrierDetailsEditLink: Locator;
 	readonly carrierDetailsSubmitButton: Locator;
@@ -35,6 +34,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		value: number | string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly keyShipmentStatus: (orderStatus: string) => Locator;
 	readonly page: Page;
 	readonly productEllipsis: (productName: string) => Locator;
@@ -68,7 +68,7 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 		this.addProductsToShipment = page.getByText(
 			'Add Products to This Shipment'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.carrierDetailsEditLink = page
 			.getByText('Carrier Details Edit')
 			.getByRole('link');
@@ -184,6 +184,6 @@ export class CommerceAdminShipmentsPage extends CommerceIframeDNDTablePage {
 	}
 
 	async goTo() {
-		await this.applicationsMenuPage.goToCommerceShipments();
+		await this.globalMenuPage.goToCommerce('Shipments');
 	}
 }

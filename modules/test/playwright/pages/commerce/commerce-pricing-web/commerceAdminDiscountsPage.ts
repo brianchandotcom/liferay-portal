@@ -5,11 +5,11 @@
 
 import {Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -17,7 +17,7 @@ export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 			page,
 			'#_com_liferay_commerce_pricing_web_internal_portlet_CommerceDiscountPortlet_fm .fds table'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 	}
 
@@ -30,6 +30,6 @@ export class CommerceAdminDiscountsPage extends CommerceDNDTablePage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceDiscounts();
+		await this.globalMenuPage.goToCommerce('Discounts');
 	}
 }

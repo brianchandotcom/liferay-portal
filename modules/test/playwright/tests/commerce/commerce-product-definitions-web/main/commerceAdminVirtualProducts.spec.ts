@@ -6,24 +6,28 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
+	globalMenuPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest()
 );
 
 test('LPD-21637 Virtual item details section visible for product and sku', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
+	globalMenuPage,
 	page,
 }) => {
 	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
@@ -43,7 +47,7 @@ test('LPD-21637 Virtual item details section visible for product and sku', async
 			],
 		});
 
-	await applicationsMenuPage.goToProducts();
+	await globalMenuPage.goToCommerce('Products');
 
 	await commerceAdminProductPage.managementToolbarSearchInput.fill(
 		virtualProduct.name.en_US

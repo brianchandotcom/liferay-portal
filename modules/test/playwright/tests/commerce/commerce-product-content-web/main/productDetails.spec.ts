@@ -7,11 +7,11 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
@@ -30,13 +30,14 @@ import getWidgetDefinition from '../../../layout-content-page-editor-web/main/ut
 import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
@@ -297,8 +298,8 @@ test(
 	{tag: '@COMMERCE-12167'},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		commerceAdminProductPage,
+		globalMenuPage,
 		page,
 		productDetailsPage,
 		site,
@@ -413,7 +414,7 @@ test(
 				],
 			});
 
-		await applicationsMenuPage.goToProducts();
+		await globalMenuPage.goToCommerce('Products');
 
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			'ProductBundle'
@@ -421,6 +422,7 @@ test(
 		await commerceAdminProductPage.managementToolbarSearchInput.press(
 			'Enter'
 		);
+
 		await commerceAdminProductPage
 			.productsTableRowLink('ProductBundle')
 			.click();
@@ -1133,7 +1135,7 @@ test(
 	{tag: '@LPD-56974'},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
+		globalMenuPage,
 		page,
 		productDetailsPage,
 		site,
@@ -1194,7 +1196,7 @@ test(
 			],
 		});
 
-		await applicationsMenuPage.goToProducts();
+		await globalMenuPage.goToCommerce('Products');
 
 		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
 

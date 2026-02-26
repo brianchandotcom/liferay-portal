@@ -7,11 +7,15 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	systemSettingsPageTest,
 	accessibilityMenuPagesTest

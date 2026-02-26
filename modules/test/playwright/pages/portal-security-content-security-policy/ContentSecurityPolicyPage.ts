@@ -7,14 +7,14 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ContentSecurityPolicyPage {
 	readonly actions: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly contentSecurityPolicy: Locator;
 	readonly duplicateExcludedPathsButton: Locator;
 	readonly enabled: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly newExcludedPaths: Locator;
 	readonly page: Page;
 	readonly reportOnly: Locator;
@@ -24,7 +24,7 @@ export class ContentSecurityPolicyPage {
 
 	constructor(page: Page) {
 		this.actions = page.getByRole('button', {name: 'Actions'});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.contentSecurityPolicy = page.getByLabel('Content Security Policy');
 		this.duplicateExcludedPathsButton = page
 			.locator('.ddm-form-field-repeatable-add-button')
@@ -67,7 +67,7 @@ export class ContentSecurityPolicyPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToInstanceSettings();
+		await this.globalMenuPage.goToControlPanel('Instance Settings');
 
 		await this.page
 			.getByRole('link', {name: 'Content Security Policy'})
@@ -80,6 +80,8 @@ export class ContentSecurityPolicyPage {
 		policy: string,
 		isReportOnly: boolean = false
 	) {
+		await this.globalMenuPage.goToHome();
+
 		await this.goto();
 
 		await this.setPolicy(policy);

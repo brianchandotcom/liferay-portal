@@ -5,8 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -18,8 +19,11 @@ import {reloadUntilVisible} from '../../../utils/reloadUntilVisible';
 import createSiteTemplate from './utils/createSiteTemplate';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	globalMenuPagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	pageEditorPagesTest,
 	pagesAdminPagesTest,
@@ -33,7 +37,7 @@ test(
 	{tag: ['@LPD-49053', '@LPS-131903', '@LPS-132256']},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
+		globalMenuPage,
 		page,
 		pageEditorPage,
 		pagesAdminPage,
@@ -73,7 +77,7 @@ test(
 
 		// Create a site using the site template
 
-		await applicationsMenuPage.goToSites();
+		await globalMenuPage.goToControlPanel('Sites');
 
 		const siteName: string = 'Site-' + getRandomString();
 
@@ -158,7 +162,7 @@ test(
 	{tag: '@LPD-70284'},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
+		globalMenuPage,
 		page,
 		pagesAdminPage,
 		productMenuPage,
@@ -196,7 +200,7 @@ test(
 
 		// Create site based on that template
 
-		await applicationsMenuPage.goToSites();
+		await globalMenuPage.goToControlPanel('Sites');
 
 		const siteName = 'Site-' + getRandomString();
 

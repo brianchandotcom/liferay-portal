@@ -7,10 +7,10 @@ import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'node:path';
 
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
@@ -26,13 +26,13 @@ import getWidgetDefinition from '../../../layout-content-page-editor-web/main/ut
 import {miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pageViewModePagesTest,
@@ -90,9 +90,9 @@ test('LPD-5780 Modal title and product name appear properly in product menu', as
 
 test('COMMERCE-12809 As a buyer, I want to be able to verify the included and excluded option values by combining the Products Limit rule', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceInstanceSettingsPage,
+	globalMenuPage,
 	page,
 	site,
 	widgetPagePage,
@@ -243,7 +243,7 @@ test('COMMERCE-12809 As a buyer, I want to be able to verify the included and ex
 				'\nproducts-limit-field-product-quantity=0.9\n',
 		});
 
-		await applicationsMenuPage.goToProducts();
+		await globalMenuPage.goToCommerce('Products');
 
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			bundleProduct.name.en_US
@@ -567,9 +567,9 @@ test('LPD-33807 Mapped product add to cart', async ({
 
 test('COMMERCE-12805 As a buyer, I want to be able to verify the included and excluded option values are disabled with reason messages', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceInstanceSettingsPage,
+	globalMenuPage,
 	page,
 	productDetailsPage,
 	site,
@@ -713,7 +713,7 @@ test('COMMERCE-12805 As a buyer, I want to be able to verify the included and ex
 				],
 			});
 
-		await applicationsMenuPage.goToProducts();
+		await globalMenuPage.goToCommerce('Products');
 
 		await commerceAdminProductPage.managementToolbarSearchInput.fill(
 			bundleProduct.name.en_US

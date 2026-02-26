@@ -10,5 +10,6 @@ export const config = {
 	testDir: 'tests/feature-flag-web/main',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

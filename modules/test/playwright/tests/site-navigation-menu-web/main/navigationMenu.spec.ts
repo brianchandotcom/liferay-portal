@@ -38,6 +38,7 @@ export const test = mergeTests(
 	customFieldsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	formsPagesTest,

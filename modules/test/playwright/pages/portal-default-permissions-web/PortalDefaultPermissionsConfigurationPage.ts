@@ -5,14 +5,14 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class PortalDefaultPermissionsConfigurationPage {
 	readonly analyticsAdministratorUpdateDiscussionCheckbox: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly editDefaultPermissionsFrame: FrameLocator;
 	readonly editPageButton: Locator;
 	readonly frameSaveButton: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly guestUpdateDiscussionCheckbox: Locator;
 	readonly guestViewCheckbox: Locator;
 	readonly ownerUpdateDiscussionCheckbox: Locator;
@@ -24,7 +24,7 @@ export class PortalDefaultPermissionsConfigurationPage {
 	readonly siteMemberCustomizeCheckbox: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.editDefaultPermissionsFrame = page.frameLocator(
 			'iframe[title="Edit Default Permissions"]'
 		);
@@ -63,6 +63,9 @@ export class PortalDefaultPermissionsConfigurationPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToDefaultPermissions();
+		await this.globalMenuPage.goToControlPanel(
+			'Instance Settings',
+			'Default Permissions'
+		);
 	}
 }

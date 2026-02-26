@@ -6,6 +6,7 @@
 import {Page, expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {virtualInstancesPagesTest} from '../../../fixtures/virtualInstancesPagesTest';
@@ -18,6 +19,9 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	usersAndOrganizationsPagesTest,
 	virtualInstancesPagesTest
@@ -65,9 +69,13 @@ test(
 			newPage = await pagePromise;
 
 			await test.step('the portlet for On-Demand Admin is not available in a non-default instance', async () => {
-				await newPage.getByLabel('Open Applications MenuCtrl+').click();
 				await newPage
-					.getByRole('tab', {
+					.getByRole('button', {name: 'Applications Menu'})
+					.or(newPage.getByTestId('globalMenu'))
+					.click();
+
+				await newPage
+					.getByRole('menuitem', {
 						name: 'Control Panel',
 					})
 					.click();

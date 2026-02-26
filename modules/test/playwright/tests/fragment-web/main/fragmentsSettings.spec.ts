@@ -5,11 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-const test = mergeTests(loginTest(), systemSettingsPageTest);
+const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	loginTest(),
+	systemSettingsPageTest
+);
 
 test(
 	'Admin user can enable and disable the propagation of contributed fragments on instance startup',

@@ -5,10 +5,17 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {jobSchedulerPagesTest} from './fixtures/jobSchedulerPagesTest';
 
-export const test = mergeTests(loginTest(), jobSchedulerPagesTest);
+export const test = mergeTests(
+	loginTest(),
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	jobSchedulerPagesTest
+);
 
 test('can create two job triggers and can delete them', async ({
 	jobSchedulerPage,

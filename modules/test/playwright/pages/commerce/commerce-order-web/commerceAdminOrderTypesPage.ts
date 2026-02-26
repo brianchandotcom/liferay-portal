@@ -8,7 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {CommerceAdminOrderTypeDetailsPage} from './commerceAdminOrderTypeDetailsPage';
 
 export class CommerceAdminOrderTypesPage {
@@ -16,7 +16,7 @@ export class CommerceAdminOrderTypesPage {
 	readonly addOrderTypeFrame: FrameLocator;
 	readonly addOrderTypeModalField: (fieldName: string) => Promise<Locator>;
 	readonly addOrderTypeModalHeaderTitle: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly submitAddOrderTypeModalButton: Locator;
@@ -37,7 +37,7 @@ export class CommerceAdminOrderTypesPage {
 				name: 'Add Order Type',
 			}
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 		this.pageTitle = page
 			.getByTestId('headerTitle')
@@ -93,6 +93,6 @@ export class CommerceAdminOrderTypesPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceOrderTypes();
+		await this.globalMenuPage.goToCommerce('Order Types');
 	}
 }

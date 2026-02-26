@@ -6,4 +6,7 @@
 export const config = {
 	name: 'staging-configuration-web.main',
 	testDir: 'tests/staging-configuration-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

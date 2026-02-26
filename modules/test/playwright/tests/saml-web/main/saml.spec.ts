@@ -5,7 +5,8 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {searchAdminPageTest} from '../../../fixtures/searchAdminPageTest';
 import {serverAdministrationPageTest} from '../../../fixtures/serverAdministrationPageTest';
@@ -28,7 +29,7 @@ import {InstanceSettingsPage} from '../../../pages/configuration-admin-web/Insta
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {GeneralPage} from '../../../pages/instance-configuration-web/GeneralPage';
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
-import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {
 	AttributeMapping,
 	IdentityProviderConnectionsPage,
@@ -92,7 +93,10 @@ import {
 } from './utils/samlVirtualInstanceUtil';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	loginTest(),
 	searchAdminPageTest,
 	usersAndOrganizationsPagesTest,
@@ -175,7 +179,7 @@ test.afterEach(async ({browser}) => {
 
 			await configureServiceProvider(newPage);
 
-			await samlAdminPage.applicationsMenuPage.goToSamlAdmin();
+			await samlAdminPage.globalMenuPage.goToControlPanel();
 		}
 
 		if ((await samlAdminPage.samlRoleField.inputValue()) !== 'sp') {
@@ -1882,9 +1886,9 @@ test('LPD-56043 and LPD-56046: Verify User and User Group Provisioning source is
 
 	await performLogin(localhostAdminPage, 'test');
 
-	const applicationsMenuPage = new ApplicationsMenuPage(localhostAdminPage);
+	const globalMenuPage = new GlobalMenuPage(localhostAdminPage);
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const spApiHelpers = new ApiHelpers(spAdminPage, DEFAULT_SP_URL);
 
@@ -2103,9 +2107,9 @@ test('LPD-56047: Verify User Group membership deletions from the IdP only apply 
 
 	await performLogout(spInstancePage);
 
-	const applicationsMenuPage = new ApplicationsMenuPage(localhostAdminPage);
+	const globalMenuPage = new GlobalMenuPage(localhostAdminPage);
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const spApiHelpers = new ApiHelpers(spAdminPage, DEFAULT_SP_URL);
 
@@ -2655,8 +2659,8 @@ test('Verify Custom Fields can be used for user matching in SAML, see LPS-128600
 });
 
 test('Verify during SP initiated SSO, RelayState is correct and present regardless of VM cache.  Also covers LPD-32208 AC1 TC1.', async ({
-	applicationsMenuPage,
 	browser,
+	globalMenuPage,
 	serverAdministrationPage,
 }) => {
 	const idpAdminPage = await configureVirtualInstanceForSaml(
@@ -2720,7 +2724,7 @@ test('Verify during SP initiated SSO, RelayState is correct and present regardle
 
 	// Reset VM cache to clear relayState cache (not relevant for LPD-32208)
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	await serverAdministrationPage.executeAction(EActions.CLEAR_VM_CACHE);
 

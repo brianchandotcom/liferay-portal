@@ -6,4 +6,7 @@
 export const config = {
 	name: 'site-sitemap-web.main',
 	testDir: 'tests/site-sitemap-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

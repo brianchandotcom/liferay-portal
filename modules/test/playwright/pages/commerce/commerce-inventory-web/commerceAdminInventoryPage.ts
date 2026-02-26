@@ -5,14 +5,13 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {
 	CommerceDNDTablePage,
 	searchTableRowByValue,
 } from '../commerceDNDTablePage';
 
 export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly backLink: Locator;
 	readonly changeLogLink: Locator;
 	readonly commerceInventoryTable: Locator;
@@ -23,6 +22,7 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly deleteItemMenuItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 
 	readonly page: Page;
 
@@ -31,7 +31,7 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 			page,
 			'#p_p_id_com_liferay_commerce_inventory_web_internal_portlet_CommerceInventoryPortlet_ .fds table'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.backLink = page.locator('span[title="Back"]');
 		this.changeLogLink = page.getByRole('link', {name: 'Changelog'});
 		this.commerceInventoryTable = page.locator(
@@ -73,6 +73,6 @@ export class CommerceAdminInventoryPage extends CommerceDNDTablePage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceInventory(false);
+		await this.globalMenuPage.goToCommerce('Inventory');
 	}
 }

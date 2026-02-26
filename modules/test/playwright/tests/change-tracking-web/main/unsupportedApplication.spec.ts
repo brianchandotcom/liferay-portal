@@ -5,27 +5,28 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 
 export const test = mergeTests(
 	featureFlagsTest({
 		'COMMERCE-8087': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	changeTrackingPagesTest,
-	applicationsMenuPageTest
+	globalMenuPagesTest
 );
 
 test('LPD-24076 Popover is displayed on Data Migration Center page', async ({
-	applicationsMenuPage,
 	changeTrackingPage,
 	ctCollection,
+	globalMenuPage,
 	page,
 }) => {
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	await applicationsMenuPage.goToDataMigrationCenter();
+	await globalMenuPage.goToApplications('Data Migration Center');
 
 	await expect(
 		page.getByText('Cannot Save Changes to Publication', {exact: true})
@@ -33,14 +34,14 @@ test('LPD-24076 Popover is displayed on Data Migration Center page', async ({
 });
 
 test('LPD-24076 Popover button directs to Production', async ({
-	applicationsMenuPage,
 	changeTrackingPage,
 	ctCollection,
+	globalMenuPage,
 	page,
 }) => {
 	await changeTrackingPage.workOnPublication(ctCollection);
 
-	await applicationsMenuPage.goToDataMigrationCenter();
+	await globalMenuPage.goToApplications('Data Migration Center');
 
 	page.on('dialog', (dialog) => dialog.accept());
 

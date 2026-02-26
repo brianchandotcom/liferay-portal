@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -16,11 +16,12 @@ import {MetricsPage} from '../../../pages/portal-workflow-metrics-web/MetricsPag
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest
@@ -28,7 +29,7 @@ const test = mergeTests(
 
 test('Verify that pending and completed Object entries with workflow are not displayed on the Workflow Metrics page when inactivated', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	globalMenuPage,
 	page,
 	viewObjectDefinitionsPage,
 }) => {
@@ -51,7 +52,7 @@ test('Verify that pending and completed Object entries with workflow are not dis
 
 	const configurationTabPage = new ConfigurationTabPage(page);
 
-	await applicationsMenuPage.goToProcessBuilder();
+	await globalMenuPage.goToApplications('Process Builder');
 
 	await configurationTabPage.configurationTabLink.click();
 
@@ -94,7 +95,7 @@ test('Verify that pending and completed Object entries with workflow are not dis
 		objectDefinition.name
 	);
 
-	await applicationsMenuPage.goToProcessBuilder();
+	await globalMenuPage.goToApplications('Process Builder');
 
 	await configurationTabPage.configurationTabLink.click();
 

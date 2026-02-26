@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {multiFactorAuthenticationPagesTest} from '../../../fixtures/multiFactorAuthenticationPagesTest';
 import {remotePageTest} from '../../../fixtures/remotePageTest';
@@ -18,6 +19,9 @@ const remotePort = '9080';
 const remotePage = remotePageTest(remotePort);
 
 export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	multiFactorAuthenticationPagesTest,
 	remotePage,

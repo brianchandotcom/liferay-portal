@@ -6,13 +6,13 @@
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../../../helpers/ApiHelpers';
-import {ApplicationsMenuPage} from '../../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {waitForAlert} from '../../../../../../utils/waitForAlert';
 import {API_ENDPOINT_PATH, DEFAULT_LABEL} from '../../../utils/constants';
 
 export class CustomDataSetsPage {
 	readonly apiHelpers: ApiHelpers;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly basePath: string;
 	readonly customDataSetsTab: Locator;
 	readonly dataSetDeleteButton: Locator;
@@ -48,7 +48,6 @@ export class CustomDataSetsPage {
 
 	constructor(page: Page) {
 		this.apiHelpers = new ApiHelpers(page);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.basePath = 'data-set-admin/entries';
 		this.customDataSetsTab = page
 			.locator('.nav-item')
@@ -76,6 +75,7 @@ export class CustomDataSetsPage {
 		this.dataSetsTabs = page
 			.locator('.navbar-nav')
 			.filter({hasText: 'Custom Data SetsSystem Data Sets'});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.newDataSetButton = page.getByLabel('New Data Set').first();
 		this.newDataSetModal = {
 			cancel: page.getByRole('button', {name: 'Cancel'}),
@@ -172,13 +172,12 @@ export class CustomDataSetsPage {
 	}
 
 	async goto({
-		checkTabVisibility,
 		dataSetsType = 'Custom Data Sets',
 	}: {
 		checkTabVisibility?: boolean;
 		dataSetsType?: string;
 	} = {}) {
-		await this.applicationsMenuPage.goToDataSetManager(checkTabVisibility);
+		await this.globalMenuPage.goToControlPanel('Data Sets');
 
 		if (dataSetsType === 'System Data Sets') {
 			await this.systemDataSetsTab.click();

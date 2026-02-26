@@ -29,6 +29,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-10562': {enabled: true},
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
@@ -728,7 +729,7 @@ test('LPD-41539 Returns Manager users are missing permissions to manage refunds'
 	await performLogout(page);
 	await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
-	await commercePaymentsPage.goto(false);
+	await commercePaymentsPage.goto();
 	await commercePaymentsPage.makeRefundButton.click();
 	await commercePaymentsPage.reasonInput.selectOption('return');
 	await commercePaymentsPage.saveButton.click();

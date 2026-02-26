@@ -7,4 +7,7 @@ export const config = {
 	name: 'scim-configuration-web.main',
 	testDir: 'tests/scim-configuration-web/main',
 	timeout: 480 * 1000,
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

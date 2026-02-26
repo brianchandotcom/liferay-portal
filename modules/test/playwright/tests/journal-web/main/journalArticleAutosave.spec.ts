@@ -35,6 +35,7 @@ const autoSaveTest = mergeTests(
 	applicationsMenuPageTest,
 	featureFlagsTest({
 		'LPD-11228': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	isolatedSiteTest,
 	journalPagesTest,

@@ -7,11 +7,10 @@ import {Locator, Page, expect} from '@playwright/test';
 
 import {TSpConnection} from '../../helpers/SamlProviderConnectionHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ServiceProviderConnectionsPage {
 	readonly addServiceProviderConnectionButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly assertionLifetimeField: Locator;
 	readonly attributesEnabledToggle: Locator;
 	readonly attributesField: Locator;
@@ -19,6 +18,7 @@ export class ServiceProviderConnectionsPage {
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly forceEncryptionToggle: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly keepAliveUrlField: Locator;
 	readonly metadataUrlField: Locator;
 	readonly nameField: Locator;
@@ -34,7 +34,6 @@ export class ServiceProviderConnectionsPage {
 		this.addServiceProviderConnectionButton = page.getByRole('button', {
 			name: 'Add Service Provider',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.assertionLifetimeField = page.getByLabel('Assertion Lifetime');
 		this.attributesEnabledToggle = page.getByText('Attributes Enabled', {
 			exact: true,
@@ -50,6 +49,7 @@ export class ServiceProviderConnectionsPage {
 		this.forceEncryptionToggle = page.getByText('Force Encryption', {
 			exact: true,
 		});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.keepAliveUrlField = page
 			.getByRole('group', {name: 'Keep Alive'})
 			.getByRole('textbox');
@@ -148,7 +148,11 @@ export class ServiceProviderConnectionsPage {
 			forceReload ||
 			(await this.serviceProviderConnectionsTab.isHidden())
 		) {
-			await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+			if (forceReload) {
+				await this.globalMenuPage.goToHome();
+			}
+
+			await this.globalMenuPage.goToControlPanel('SAML Admin');
 		}
 
 		await this.serviceProviderConnectionsTab.click();

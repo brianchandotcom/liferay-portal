@@ -66,7 +66,10 @@ export class RoleDefinePermissionsPage {
 		});
 		this.loading = page.getByText('Loading');
 		this.menuItem = (name: string, exact = false) => {
-			return page.getByRole('menuitem', {exact, name}).first();
+			return page
+				.getByTestId('editRolePermissionsNavigation')
+				.getByRole('menuitem', {exact, name})
+				.first();
 		};
 		this.menuItemByTestId = (id: string) => {
 			return page.getByTestId(id).getByRole('menuitem');
@@ -125,7 +128,9 @@ export class RoleDefinePermissionsPage {
 				.filter({hasText: title});
 		};
 		this.saveButton = page.getByRole('button', {exact: true, name: 'Save'});
-		this.searchInput = page.getByPlaceholder('Search');
+		this.searchInput = page
+			.getByTestId('editRolePermissionsNavigation')
+			.getByPlaceholder('Search');
 		this.selectAllCheckbox = (resourceName) =>
 			page
 				.getByText(resourceName)
@@ -161,6 +166,8 @@ export class RoleDefinePermissionsPage {
 		permissionName: string,
 		check: boolean
 	) {
+		await expect(this.searchInput).toBeAttached();
+
 		await this.searchInput.click();
 		await this.searchInput.fill(menuItemName);
 

@@ -6,9 +6,10 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {getRandomInt} from '../../../../utils/getRandomInt';
@@ -22,9 +23,12 @@ import {miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest()
 );
@@ -589,11 +593,11 @@ test(
 
 test('COMMERCE-11888. As a supplier user, I can edit the order details, payments and shipments', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelDetailsPage,
 	commerceAdminChannelsPage,
 	commerceAdminOrderDetailsPage,
 	commerceAdminOrdersPage,
+	globalMenuPage,
 	page,
 }) => {
 	test.setTimeout(120000);
@@ -755,7 +759,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 	await performLogout(page);
 	await performLoginViaApi({page, screenName: 'demo.unprivileged'});
 
-	await applicationsMenuPage.goToCommerceOrders(false);
+	await globalMenuPage.goToCommerce('Orders');
 
 	await (
 		await commerceAdminOrdersPage.tableRowLink({

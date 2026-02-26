@@ -6,11 +6,11 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class ViewAttributesPage {
 	readonly addCustomFieldButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly customFieldTableRowLink: (
 		customFieldName: string
 	) => Promise<Locator>;
@@ -22,7 +22,7 @@ export class ViewAttributesPage {
 		this.addCustomFieldButton = page.getByRole('link', {
 			name: 'Add Custom Field',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.customFieldTableRowLink = async (customFieldName: string) => {
 			const customFieldTableRow = await page
 				.getByRole('row')
@@ -46,7 +46,11 @@ export class ViewAttributesPage {
 	}
 
 	async goto(resource: string, forceReload = false) {
-		await this.applicationsMenuPage.goToCustomFields(forceReload);
+		if (forceReload) {
+			this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('Custom Fields');
 
 		await this.page
 			.getByRole('link', {exact: true, name: resource})
@@ -72,7 +76,7 @@ export class ViewAttributesPage {
 
 		await expect(this.successMessage).toBeVisible();
 
-		await this.page.getByLabel('Close').click();
+		await this.page.locator('.alert').getByLabel('Close').click();
 	}
 
 	async deleteCustomFields(resource: string) {
@@ -86,6 +90,6 @@ export class ViewAttributesPage {
 
 		await expect(this.successMessage).toBeVisible();
 
-		await this.page.getByLabel('Close').click();
+		await this.page.locator('.alert').getByLabel('Close').click();
 	}
 }

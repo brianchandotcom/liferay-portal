@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import getRandomString from '../../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../../utils/waitForAlert';
@@ -13,6 +14,9 @@ import {userViewsPageTest} from './fixtures/userViewsPageTest';
 
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	userViewsPageTest,
 	loginTest()
 );

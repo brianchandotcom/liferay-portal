@@ -6,31 +6,34 @@
 import {Locator, Page} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from './ApplicationsMenuPage';
+import {GlobalMenuPage} from './GlobalMenuPage';
 
 const MOCK_API_KEY = 'VALID_API_KEY';
 const STR_BLANK = '';
 
 export class AICreatorInstanceSettingsPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly apiKeyInput: Locator;
 	readonly dalleCheckbox: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.apiKeyInput = this.page.getByLabel('API Key');
 		this.dalleCheckbox = this.page.getByText(
 			'Enable DALL-E to Create Images'
 		);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToAICreator();
+		await this.globalMenuPage.goToControlPanel(
+			'Instance Settings',
+			'AI Creator'
+		);
 	}
 
 	async enableDalleCreateImages() {

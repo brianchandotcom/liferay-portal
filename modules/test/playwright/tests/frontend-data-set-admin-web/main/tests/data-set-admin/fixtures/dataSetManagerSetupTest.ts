@@ -5,16 +5,16 @@
 
 import {test} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 
 const dataSetManagerSetupTest = test.extend<{
-	setup: ApplicationsMenuPage;
+	setup: GlobalMenuPage;
 }>({
 	setup: [
 		async ({page}, use) => {
-			const setupPage = new ApplicationsMenuPage(page);
+			const setupPage = new GlobalMenuPage(page);
 
-			await setupPage.goToDataSetManager();
+			await setupPage.goToControlPanel('Data Sets');
 
 			await page.locator('.data-sets').waitFor();
 

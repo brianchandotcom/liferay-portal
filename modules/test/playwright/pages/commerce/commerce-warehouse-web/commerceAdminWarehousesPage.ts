@@ -5,10 +5,11 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
+
 export class CommerceAdminWarehousesPage {
 	readonly addButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly modalFieldName: Locator;
 	readonly modalFrameLocator: FrameLocator;
@@ -18,7 +19,7 @@ export class CommerceAdminWarehousesPage {
 		this.addButton = page
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.modalFrameLocator = page.frameLocator('.fds-modal-body iframe');
 		this.modalFieldName =
 			this.modalFrameLocator.getByLabel('Name Required');
@@ -30,6 +31,6 @@ export class CommerceAdminWarehousesPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceWarehouses();
+		await this.globalMenuPage.goToCommerce('Warehouses');
 	}
 }

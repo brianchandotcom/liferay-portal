@@ -6,11 +6,11 @@
 import {Locator, Page} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CountriesManagementPage {
 	readonly activateButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly countriesTable: DataTablePage;
 	readonly deactivateButton: Locator;
 	readonly deleteButton: Locator;
@@ -26,7 +26,7 @@ export class CountriesManagementPage {
 			.getByRole('button', {name: 'Activate'})
 			.or(page.getByRole('link', {name: 'Activate'}))
 			.or(page.getByRole('menuitem', {name: 'Activate'}));
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.countriesTable = new DataTablePage(
 			page,
 			page.locator(
@@ -60,6 +60,6 @@ export class CountriesManagementPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCountriesManagement();
+		await this.globalMenuPage.goToControlPanel('Countries Management');
 	}
 }

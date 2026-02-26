@@ -5,10 +5,11 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
+
 export class CommerceAdminCatalogsPage {
 	readonly addCatalogsButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly catalogActionsButton: (catalogName: string) => Locator;
 	readonly catalogId: Locator;
 	readonly catalogSaveButton: Locator;
@@ -23,7 +24,7 @@ export class CommerceAdminCatalogsPage {
 		this.addCatalogsButton = page
 			.getByTestId('managementToolbar')
 			.locator('[data-testid="fdsCreationActionButton"]');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.catalogActionsButton = (catalogName: string) =>
 			page.getByRole('button', {
 				exact: true,
@@ -52,6 +53,6 @@ export class CommerceAdminCatalogsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceCatalogs();
+		await this.globalMenuPage.goToCommerce('Catalogs');
 	}
 }

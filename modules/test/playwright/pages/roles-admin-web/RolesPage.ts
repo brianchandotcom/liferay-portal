@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 import {RoleAssigneesPage} from './RoleAssigneesPage';
 import {RolePage} from './RolePage';
 import {RoleUserGroupSelectorPage} from './RoleUserGroupSelectorPage';
@@ -14,7 +14,6 @@ import {RoleUserGroupSelectorPage} from './RoleUserGroupSelectorPage';
 export class RolesPage {
 	readonly accountRolesLink: Locator;
 	readonly applicationsMenuButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly copyFrame: FrameLocator;
 	readonly copyFrameValidNameErrorMessage: Locator;
 	readonly copyFrameUniqueNameErrorMessage: Locator;
@@ -22,6 +21,7 @@ export class RolesPage {
 	readonly copyFrameSaveButton: Locator;
 	readonly deleteButton: Locator;
 	readonly duplicateMenuItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly noPermissionMessage: Locator;
 	readonly numberAssigneesCell: (
 		roleName: string,
@@ -48,7 +48,6 @@ export class RolesPage {
 		this.applicationsMenuButton = page.getByLabel(
 			'Open Applications MenuCtrl+'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.copyFrame = page.frameLocator('iframe[id="modalIframe"]');
 		this.copyFrameValidNameErrorMessage = this.copyFrame
 			.locator('.alert.alert-dismissible')
@@ -67,6 +66,7 @@ export class RolesPage {
 		this.duplicateMenuItem = page.getByRole('menuitem', {
 			name: 'Duplicate',
 		});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.noPermissionMessage = page
 			.getByText(
 				'You do not have the roles required to access this portlet.'
@@ -112,8 +112,8 @@ export class RolesPage {
 		this.userLink = page.getByRole('link', {exact: true, name: 'User'});
 	}
 
-	async goto(checkTabVisibility = true) {
-		await this.applicationsMenuPage.goToRoles(checkTabVisibility);
+	async goto() {
+		await this.globalMenuPage.goToControlPanel('Roles');
 	}
 
 	async selectRole(roleName: string) {

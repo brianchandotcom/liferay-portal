@@ -5,20 +5,20 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 
 export class JobSchedulerPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly exportAnalyticsDxpEntitiesItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly newJobSchedulerTriggerButton: Locator;
 	readonly newJobSchedulerTriggerTitleBox: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.exportAnalyticsDxpEntitiesItem = page.getByRole('menuitem', {
 			name: 'Export Analytics DXP Entities',
 		});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.newJobSchedulerTriggerButton = page.getByRole('button', {
 			name: 'New',
 		});
@@ -29,7 +29,7 @@ export class JobSchedulerPage {
 	}
 
 	async goTo() {
-		await this.applicationsMenuPage.goToJobScheduler();
+		await this.globalMenuPage.goToControlPanel('Job Scheduler');
 	}
 
 	async createNewJobSchedulerTrigger(jobSchedulerTriggerName: string) {

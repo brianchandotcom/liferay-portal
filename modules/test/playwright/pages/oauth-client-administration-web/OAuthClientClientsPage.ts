@@ -6,13 +6,13 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class OAuthClientClientsPage {
 	readonly addOAuthClientButton: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly customClaimInput: Locator;
 	readonly customFieldInput: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly infoJSON: Locator;
 	readonly matcherField: Locator;
 	readonly oAuthClientsTable: Locator;
@@ -25,11 +25,11 @@ export class OAuthClientClientsPage {
 		this.addOAuthClientButton = page.getByRole('link', {
 			name: 'Add OAuth Client',
 		});
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.customClaimInput = page.getByRole('textbox', {
 			name: 'Custom Claim',
 		});
 		this.customFieldInput = page.getByLabel('User Custom Fields');
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.infoJSON = page.getByRole('textbox', {
 			name: 'OAuth Client Information',
 		});
@@ -189,7 +189,9 @@ export class OAuthClientClientsPage {
 	}
 
 	async goTo() {
-		await this.applicationsMenuPage.goToOAuthClientAdministration();
+		await this.globalMenuPage.goToControlPanel(
+			'OAuth Client Administration'
+		);
 
 		await expect(this.addOAuthClientButton).toBeVisible();
 	}

@@ -5,10 +5,10 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {liferayConfig} from '../../../../liferay.config';
 import getRandomString from '../../../../utils/getRandomString';
@@ -19,20 +19,21 @@ import getPageDefinition from '../../../layout-content-page-editor-web/main/util
 import {miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	loginTest()
 );
 
 test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceMiniCartPage,
+	globalMenuPage,
 	page,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
@@ -153,7 +154,7 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 			],
 		});
 
-	await applicationsMenuPage.goToProducts();
+	await globalMenuPage.goToCommerce('Products');
 
 	await commerceAdminProductPage.managementToolbarSearchInput.fill(
 		'ProductBundle'
@@ -313,9 +314,9 @@ test('COMMERCE-12316 Mini cart bundle with UOM', async ({
 
 test('LPD-3496 Mini cart bundle without enough quantity', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceMiniCartPage,
+	globalMenuPage,
 	page,
 }) => {
 	const site = await apiHelpers.headlessSite.createSite({
@@ -395,7 +396,7 @@ test('LPD-3496 Mini cart bundle without enough quantity', async ({
 			],
 		});
 
-	await applicationsMenuPage.goToProducts();
+	await globalMenuPage.goToCommerce('Products');
 
 	await commerceAdminProductPage.managementToolbarSearchInput.fill(
 		productBundleName
@@ -444,9 +445,9 @@ test('LPD-3496 Mini cart bundle without enough quantity', async ({
 
 test('LPD-26906 Mini cart bundle quantity edit', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminProductPage,
 	commerceMiniCartPage,
+	globalMenuPage,
 	page,
 }) => {
 	const companyId = await page.evaluate(() => {
@@ -564,7 +565,7 @@ test('LPD-26906 Mini cart bundle quantity edit', async ({
 			],
 		});
 
-	await applicationsMenuPage.goToProducts();
+	await globalMenuPage.goToCommerce('Products');
 
 	const productBundleName = productBundle.name['en_US'];
 

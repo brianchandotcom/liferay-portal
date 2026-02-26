@@ -6,12 +6,12 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class EditVirtualInstancePage {
 	readonly activeToggle: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly emailAddressField: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly idField: Locator;
 	readonly mailDomainField: Locator;
 	readonly maxUsersField: Locator;
@@ -24,7 +24,7 @@ export class EditVirtualInstancePage {
 
 	constructor(page: Page) {
 		this.activeToggle = page.getByText('Active');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.emailAddressField = page.getByLabel('Email Address');
 		this.idField = page.getByLabel('ID', {exact: true});
 		this.mailDomainField = page.getByLabel('Mail Domain');
@@ -94,7 +94,7 @@ export class EditVirtualInstancePage {
 	}
 
 	async goto(webId: string) {
-		await this.applicationsMenuPage.goToVirtualInstances();
+		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 
 		const row = await this.page.getByRole('row').filter({hasText: webId});
 

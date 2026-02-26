@@ -170,7 +170,7 @@ export class DataTablePage {
 		this.searchButton = page.getByLabel('Search for', {exact: true});
 		this.searchInput = page
 			.getByPlaceholder('Search for', {exact: true})
-			.or(page.getByPlaceholder('Search', {exact: true}));
+			.or(page.locator('input[placeholder="Search"]:not(.sidebar *)'));
 		this.selectAllItemsCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);

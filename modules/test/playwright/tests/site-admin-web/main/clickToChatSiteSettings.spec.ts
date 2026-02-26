@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickToChatPagesTest} from '../../site-admin-web/main/fixtures/clickToChatPagesTest';
@@ -12,6 +13,9 @@ import {clickToChatConfig} from './clickToChat.config';
 
 export const test = mergeTests(
 	clickToChatPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
 	loginTest()
 );

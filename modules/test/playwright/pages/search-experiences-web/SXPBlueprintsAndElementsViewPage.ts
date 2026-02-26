@@ -6,10 +6,10 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class SXPBlueprintsAndElementsViewPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly blueprintElementSearchBar: Locator;
 	readonly blueprintElementTable: Locator;
@@ -25,11 +25,11 @@ export class SXPBlueprintsAndElementsViewPage {
 			.getByTestId('managementToolbar')
 			.getByLabel('New Search Blueprint');
 		this.addBlueprintElementModal = page.locator('.modal-dialog');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.blueprintElementTable = page.locator('.fds table');
 		this.blueprintElementSearchBar = page.getByPlaceholder('Search');
 		this.blueprintsTab = page.getByRole('link', {name: 'Blueprints'});
 		this.elementsTab = page.getByRole('link', {name: 'Elements'});
+		this.globalMenuPage = new GlobalMenuPage(page);
 
 		// Blueprint/Element Table
 
@@ -44,7 +44,7 @@ export class SXPBlueprintsAndElementsViewPage {
 	// Navigation
 
 	async goto() {
-		await this.applicationsMenuPage.goToBlueprints();
+		await this.globalMenuPage.goToApplications('Blueprints');
 	}
 
 	async goToBlueprintsTab() {

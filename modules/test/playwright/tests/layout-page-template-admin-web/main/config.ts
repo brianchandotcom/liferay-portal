@@ -11,5 +11,6 @@ export const config = {
 	testDir: 'tests/layout-page-template-admin-web/main',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {customFieldsPagesTest} from '../../../fixtures/customFieldsPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
@@ -14,6 +15,9 @@ import {TCustomField} from '../../../helpers/CustomFieldTypesHelper';
 export const test = mergeTests(
 	apiHelpersTest,
 	customFieldsPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	usersAndOrganizationsPagesTest
 );

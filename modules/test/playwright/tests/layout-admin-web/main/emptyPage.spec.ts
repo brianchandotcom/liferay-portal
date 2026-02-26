@@ -6,8 +6,8 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
@@ -19,10 +19,11 @@ import {pagesPagesTest} from './fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	pagesAdminPagesTest,
@@ -60,7 +61,7 @@ const getGroovyScript = (companyId, pageName, siteId, userId) => `
 
 test('Empty pages show correct label in UI and correct alert in view mode', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	globalMenuPage,
 	page,
 	pageTreePage,
 	pagesAdminPage,
@@ -71,7 +72,7 @@ test('Empty pages show correct label in UI and correct alert in view mode', asyn
 	// Create a page of type Empty using a Groovy script that enables
 	// LazyReferencingThreadLocal (required since LPD-78297)
 
-	await applicationsMenuPage.goToServerAdministration();
+	await globalMenuPage.goToControlPanel('Server Administration');
 
 	const companyId = await page.evaluate(() => {
 		return Liferay.ThemeDisplay.getCompanyId();

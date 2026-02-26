@@ -6,30 +6,29 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
+	globalMenuPagesTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest()
 );
 
 test(
 	'Unable to delete specification picklist items',
 	{tag: '@LPD-46948'},
-	async ({
-		apiHelpers,
-		applicationsMenuPage,
-		commerceSpecificationsPage,
-		page,
-	}) => {
+	async ({apiHelpers, commerceSpecificationsPage, globalMenuPage, page}) => {
 		const specification =
 			await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
 
@@ -48,7 +47,7 @@ test(
 			[picklist.id]
 		);
 
-		await applicationsMenuPage.goToCommerceSpecifications();
+		await globalMenuPage.goToCommerce('Specifications');
 
 		await commerceSpecificationsPage
 			.specificationNameLink(specification.title.en_US)
@@ -94,9 +93,9 @@ test(
 test(
 	'Key is not automatically generated when writing new Specifications label',
 	{tag: '@LPD-28891'},
-	async ({apiHelpers, applicationsMenuPage, commerceSpecificationsPage}) => {
+	async ({apiHelpers, commerceSpecificationsPage, globalMenuPage}) => {
 		try {
-			await applicationsMenuPage.goToCommerceSpecifications();
+			await globalMenuPage.goToCommerce('Specifications');
 
 			await expect(
 				commerceSpecificationsPage.createNewSpecificationsProduct
@@ -178,12 +177,7 @@ test(
 test(
 	'Specification visibility is correctly saved',
 	{tag: '@LPD-48103'},
-	async ({
-		apiHelpers,
-		applicationsMenuPage,
-		commerceSpecificationsPage,
-		page,
-	}) => {
+	async ({apiHelpers, commerceSpecificationsPage, globalMenuPage, page}) => {
 		const specification =
 			await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
 				true,
@@ -193,7 +187,7 @@ test(
 				false
 			);
 
-		await applicationsMenuPage.goToCommerceSpecifications();
+		await globalMenuPage.goToCommerce('Specifications');
 
 		await commerceSpecificationsPage
 			.specificationNameLink(specification.title.en_US)

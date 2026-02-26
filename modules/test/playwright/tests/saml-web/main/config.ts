@@ -7,4 +7,7 @@ export const config = {
 	name: 'saml-web.main',
 	testDir: 'tests/saml-web/main',
 	timeout: 480 * 1000,
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

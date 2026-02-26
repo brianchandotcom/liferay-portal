@@ -9,6 +9,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
+import {openProductMenu} from '../../../utils/productMenu';
 
 const test = mergeTests(
 	featureFlagsTest({
@@ -26,13 +27,13 @@ test(
 
 		await globalMenuPage.goToControlPanel();
 
-		await globalMenuPage.openProductMenu('Control Panel');
+		await openProductMenu(page);
 
 		await checkAccessibility({page, selectors: SELECTORS});
 
 		await globalMenuPage.goToApplications();
 
-		await globalMenuPage.openProductMenu('Applications');
+		await openProductMenu(page);
 
 		await checkAccessibility({page, selectors: SELECTORS});
 	}

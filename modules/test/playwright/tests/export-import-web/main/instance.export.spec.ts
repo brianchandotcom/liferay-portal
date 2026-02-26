@@ -9,9 +9,9 @@ import {
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
@@ -28,10 +28,13 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	loginTest(),
 	productMenuPageTest,
 	uiElementsPageTest
@@ -41,7 +44,9 @@ const rootModelTest = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-34594': {enabled: true},
-	})
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest
 );
 
 rootModelTest.describe(
@@ -49,12 +54,7 @@ rootModelTest.describe(
 	() => {
 		rootModelTest(
 			'can distinguish root model object definitions in export/import',
-			async ({
-				apiHelpers,
-				applicationsMenuPage,
-				exportImportPage,
-				page,
-			}) => {
+			async ({apiHelpers, exportImportPage, globalMenuPage, page}) => {
 				const objectRelationships: ObjectRelationship[] = [];
 				const objectRelationshipAPIClient =
 					await apiHelpers.buildRestClient(ObjectRelationshipAPI);
@@ -188,7 +188,7 @@ rootModelTest.describe(
 						}
 					);
 
-					await applicationsMenuPage.goToExport();
+					await globalMenuPage.goToApplications('Export');
 
 					await exportImportPage.newExportButton.click();
 
@@ -200,7 +200,7 @@ rootModelTest.describe(
 						)
 					).toBeVisible();
 
-					await applicationsMenuPage.goToExport();
+					await globalMenuPage.goToApplications('Export');
 
 					const filePath = await exportImportPage.export({
 						portletLabels: [
@@ -208,7 +208,7 @@ rootModelTest.describe(
 						],
 					});
 
-					await applicationsMenuPage.goToImport();
+					await globalMenuPage.goToApplications('Import');
 
 					await exportImportPage.newImportButton.click();
 
@@ -244,7 +244,7 @@ rootModelTest.describe(
 
 test('cannot export site scoped custom object entries at instance level', async ({
 	apiHelpers,
-	applicationsMenuPage,
+	globalMenuPage,
 	page,
 }) => {
 	const objectDefinition =
@@ -263,7 +263,7 @@ test('cannot export site scoped custom object entries at instance level', async 
 		`${normalizeRestPath(objectDefinition.restContextPath)}/scopes/Guest`
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	await page.getByTestId('creationMenuNewButton').nth(1).click();
 
@@ -272,8 +272,8 @@ test('cannot export site scoped custom object entries at instance level', async 
 
 test('can export custom object entries at instance level with date filter', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	exportImportPage,
+	globalMenuPage,
 }) => {
 	const objectDefinition =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -290,7 +290,7 @@ test('can export custom object entries at instance level with date filter', asyn
 		`${normalizeRestPath(objectDefinition.restContextPath)}`
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const exportFilePath1 = await exportImportPage.export({
 		portletLabels: [`${objectDefinition.name} 1 Items`],
@@ -313,7 +313,7 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	startDate.setDate(startDate.getDate() - 2);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const exportFilePath2 = await exportImportPage.export({
 		dateFilter: {
@@ -332,7 +332,7 @@ test('can export custom object entries at instance level with date filter', asyn
 		)
 	).resolves.toBe(false);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const exportFilePath3 = await exportImportPage.export({
 		dateFilter: {rangeLast: '12 Hours'},
@@ -351,8 +351,8 @@ test('can export custom object entries at instance level with date filter', asyn
 
 test('can export new default and custom task name', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	exportImportPage,
+	globalMenuPage,
 }) => {
 	const objectDefinition =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -369,7 +369,7 @@ test('can export new default and custom task name', async ({
 		`${normalizeRestPath(objectDefinition.restContextPath)}`
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const defaultExportFilePath = await exportImportPage.export({
 		portletLabels: [`${objectDefinition.name} 1 Items`],
@@ -381,7 +381,7 @@ test('can export new default and custom task name', async ({
 
 	const taskName = 'CustomTaskName';
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const customExportFilePath = await exportImportPage.export({
 		portletLabels: [`${objectDefinition.name} 1 Items`],
@@ -395,8 +395,8 @@ test('can export new default and custom task name', async ({
 
 test('can export custom object entries at instance level with permissions', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	exportImportPage,
+	globalMenuPage,
 }) => {
 	const objectDefinition =
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
@@ -413,7 +413,7 @@ test('can export custom object entries at instance level with permissions', asyn
 		`${normalizeRestPath(objectDefinition.restContextPath)}`
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 
 	const exportFilePath = await exportImportPage.export({
 		includePermissions: true,
@@ -433,8 +433,8 @@ test('can export custom object entries at instance level with permissions', asyn
 
 test('can see corresponding elements at instance level', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	companyExportImportPage,
+	globalMenuPage,
 	uiElementsPage,
 }) => {
 	const objectDefinition =
@@ -452,7 +452,7 @@ test('can see corresponding elements at instance level', async ({
 		`${normalizeRestPath(objectDefinition.restContextPath)}`
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 	await uiElementsPage.clickNewButton();
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
@@ -482,8 +482,8 @@ test('can see corresponding elements at instance level', async ({
 test(
 	'can see the Deletions label at the instance level',
 	{tag: ['@LPD-37317']},
-	async ({applicationsMenuPage, exportImportPage, uiElementsPage}) => {
-		await applicationsMenuPage.goToExport();
+	async ({exportImportPage, globalMenuPage, uiElementsPage}) => {
+		await globalMenuPage.goToApplications('Export');
 		await uiElementsPage.clickNewButton();
 
 		const deletionsLabelText =
@@ -497,8 +497,8 @@ test(
 
 test('Can/not view Export menu item in Application menu depending on permissions', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	exportImportPage,
+	globalMenuPage,
 	page,
 }) => {
 	const companyId = await page.evaluate(() => {
@@ -566,14 +566,18 @@ test('Can/not view Export menu item in Application menu depending on permissions
 
 	await performLogin(page, user1.alternateName);
 
-	await applicationsMenuPage.goToApplicationsMenu();
+	await globalMenuPage.goToApplications();
 
-	const exportUrl =
-		await applicationsMenuPage.exportMenuItem.getAttribute('href');
+	const exportMenuItem = page.getByRole('menuitem', {
+		exact: true,
+		name: 'Export',
+	});
 
-	await expect(applicationsMenuPage.exportMenuItem).toBeVisible();
+	const exportUrl = await exportMenuItem.getAttribute('href');
 
-	await applicationsMenuPage.goToExport();
+	await expect(exportMenuItem).toBeVisible();
+
+	await globalMenuPage.goToApplications('Export');
 
 	await expect(exportImportPage.newExportButton).toBeVisible();
 
@@ -581,7 +585,7 @@ test('Can/not view Export menu item in Application menu depending on permissions
 
 	await performLogin(page, user2.alternateName);
 
-	await expect(applicationsMenuPage.applicationsMenuTabButton).toBeHidden();
+	await expect(globalMenuPage.globalMenuButton).toBeHidden();
 
 	// Try to access the Export page directly using the stored URL
 
@@ -657,8 +661,8 @@ test(
 
 test('Can see deletion counts at instance level', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	companyExportImportPage,
+	globalMenuPage,
 	uiElementsPage,
 }) => {
 	const objectDefinition =
@@ -683,7 +687,7 @@ test('Can see deletion counts at instance level', async ({
 		applicationName
 	);
 
-	await applicationsMenuPage.goToExport();
+	await globalMenuPage.goToApplications('Export');
 	await uiElementsPage.clickNewButton();
 
 	await companyExportImportPage.exportImportPage.deletionsLabel.check();

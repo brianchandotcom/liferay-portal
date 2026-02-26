@@ -18,6 +18,7 @@ export const test = mergeTests(
 	digitalSalesRoomPagesTest,
 	featureFlagsTest({
 		'LPD-35443': {enabled: true},
+		'LPD-36105': {enabled: true},
 		'LPD-66359': {enabled: true},
 	}),
 	loginTest()

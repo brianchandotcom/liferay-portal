@@ -6,12 +6,12 @@
 import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class AuthServerLocalMetadatasPage {
 	readonly addOAuthAuthorizationServerButton: Locator;
 	readonly allowedScopes: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly authServerLocalMetadataTab: Locator;
 	readonly authorizationEndpoint: Locator;
 	readonly enabledField: Locator;
@@ -34,7 +34,7 @@ export class AuthServerLocalMetadatasPage {
 			name: 'Add OAuth Authorization',
 		});
 		this.allowedScopes = page.getByLabel('Allowed Scopes');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.authServerLocalMetadataTab = page.getByRole('link', {
 			name: 'Auth Server Local Metadata',
 		});
@@ -93,7 +93,7 @@ export class AuthServerLocalMetadatasPage {
 		}
 		else {
 			await expect(await this.successMessage).toBeVisible();
-			await this.page.getByLabel('Close').click();
+			await this.page.locator('.alert').getByLabel('Close').click();
 		}
 	}
 
@@ -117,13 +117,15 @@ export class AuthServerLocalMetadatasPage {
 
 			await expect(await this.successMessage).toBeVisible();
 
-			await this.page.getByLabel('Close').click();
+			await this.page.locator('.alert').getByLabel('Close').click();
 		}
 	}
 
 	async goTo() {
 		if (await this.oAuthAuthorizatoinServerTab.isHidden()) {
-			await this.applicationsMenuPage.goToOAuthClientAdministration();
+			await this.globalMenuPage.goToControlPanel(
+				'OAuth Client Administration'
+			);
 		}
 
 		await this.authServerLocalMetadataTab.click();

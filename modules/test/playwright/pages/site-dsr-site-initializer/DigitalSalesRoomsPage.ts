@@ -6,15 +6,15 @@
 import {Locator, Page} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class DigitalSalesRoomsPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteButton: Locator;
 	readonly deleteConfirmationModal: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly digitalSalesRoomsTable: DataTablePage;
 	readonly editMenuItem: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly newDigitalSalesRoomButton: Locator;
 	readonly noResultsFoundMessage: Locator;
 	readonly page: Page;
@@ -28,7 +28,6 @@ export class DigitalSalesRoomsPage {
 	readonly viewMenuItem: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.deleteConfirmationModal = page.getByRole('heading', {
 			name: 'Delete Digital Sales Room',
@@ -41,6 +40,7 @@ export class DigitalSalesRoomsPage {
 			)
 		);
 		this.editMenuItem = page.getByRole('menuitem', {name: 'Edit'});
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.newDigitalSalesRoomButton = page.getByText(
 			'New Digital Sales Room'
 		);
@@ -75,7 +75,8 @@ export class DigitalSalesRoomsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToDigitalSalesRooms();
+		await this.globalMenuPage.goToHome();
+		await this.globalMenuPage.goToCommerce('Digital Sales Room Management');
 		await this.roomsLink.click();
 	}
 }

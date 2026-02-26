@@ -6,4 +6,7 @@
 export const config = {
 	name: 'dynamic-data-mapping-form-web.main',
 	testDir: 'tests/dynamic-data-mapping-form-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

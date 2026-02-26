@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import getRandomString from '../../../../utils/getRandomString';
@@ -20,6 +21,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest()
 );
@@ -176,7 +180,7 @@ test('LPD-30466 Verify users without edit permission cannot click on channel nam
 
 	await performLogin(page, userAccount.alternateName);
 
-	await commerceAdminChannelDetailsPage.goto(false);
+	await commerceAdminChannelDetailsPage.goto();
 
 	try {
 		await expect(page.getByText(channel.name)).toBeVisible();

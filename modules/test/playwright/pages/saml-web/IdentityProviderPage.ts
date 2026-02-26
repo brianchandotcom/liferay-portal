@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class IdentityProviderPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly authnRequestSigningAllowsDynamicAcsUrl: Locator;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly requireAuthnRequestSignature: Locator;
 	readonly saveButton: Locator;
@@ -20,10 +20,10 @@ export class IdentityProviderPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.authnRequestSigningAllowsDynamicAcsUrl = page.getByText(
 			'Authn Request Signing Allows'
 		);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 		this.requireAuthnRequestSignature = page.getByText(
 			'Require Authn Request'
@@ -39,7 +39,11 @@ export class IdentityProviderPage {
 	}
 
 	async goTo(forceReload = false) {
-		await this.applicationsMenuPage.goToSamlAdmin(forceReload);
+		if (forceReload) {
+			await this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('SAML Admin');
 		await this.page
 			.getByRole('tab', {exact: true, name: 'Identity Provider'})
 			.click();

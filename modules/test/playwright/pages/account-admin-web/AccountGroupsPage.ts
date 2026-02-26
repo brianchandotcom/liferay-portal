@@ -5,13 +5,13 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 import {DataTablePage} from './DataTablePage';
 
 export class AccountGroupsPage {
 	readonly accountGroupLink: (name: string) => Locator;
 	readonly accountGroupsTable: DataTablePage;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly deleteButton: Locator;
 	readonly editLink: Locator;
 	readonly page: Page;
@@ -25,7 +25,7 @@ export class AccountGroupsPage {
 				'#portlet_com_liferay_account_admin_web_internal_portlet_AccountGroupsAdminPortlet'
 			)
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.deleteButton = page
 			.getByRole('button', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
@@ -34,6 +34,10 @@ export class AccountGroupsPage {
 	}
 
 	async goto(forceReload = true) {
-		await this.applicationsMenuPage.goToAccountGroups(forceReload);
+		if (forceReload) {
+			this.globalMenuPage.goToHome();
+		}
+
+		await this.globalMenuPage.goToControlPanel('Account Groups');
 	}
 }

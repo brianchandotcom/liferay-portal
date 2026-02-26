@@ -6,4 +6,7 @@
 export const config = {
 	name: 'frontend-js-aui-web.main',
 	testDir: 'tests/frontend-js-aui-web/main',
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

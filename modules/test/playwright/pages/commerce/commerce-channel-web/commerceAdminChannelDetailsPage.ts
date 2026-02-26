@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../../utils/waitForAlert';
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 import {searchTableRowByValue} from '../commerceDNDTablePage';
 
 export class CommerceAdminChannelDetailsPage {
@@ -17,7 +17,7 @@ export class CommerceAdminChannelDetailsPage {
 	readonly addTaxRateSettingsFrame: FrameLocator;
 	readonly allowMultishippingToggle: Locator;
 	readonly allowRequestAQuote: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly byAddressCountryChoiceBox: Locator;
 	readonly byAddressRegionChoiceBox: Locator;
 	readonly byAddressTaxCategoryChoiceBox: Locator;
@@ -154,7 +154,7 @@ export class CommerceAdminChannelDetailsPage {
 		this.allowRequestAQuote = page.getByLabel(
 			'Allow Request a Quote on a Fully Priced Cart'
 		);
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.byAddressTaxCategoryChoiceBox =
 			this.addTaxRateSettingsFrame.getByText('Tax Category');
 		this.byAddressCountryChoiceBox =
@@ -808,10 +808,8 @@ export class CommerceAdminChannelDetailsPage {
 		}
 	}
 
-	async goto(checkTabVisibility = true) {
-		await this.applicationsMenuPage.goToCommerceChannels(
-			checkTabVisibility
-		);
+	async goto() {
+		await this.globalMenuPage.goToCommerce('Channels');
 	}
 
 	async goToCategoryDisplayPages() {

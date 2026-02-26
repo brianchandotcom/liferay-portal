@@ -5,11 +5,11 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../product-navigation-applications-menu/GlobalMenuPage';
 
 export class CommerceAdminCurrencyDetailsPage {
 	readonly activeToggle: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly backLink: Locator;
 	readonly cancelButton: Locator;
 	readonly codeInput: Locator;
@@ -21,7 +21,7 @@ export class CommerceAdminCurrencyDetailsPage {
 
 	constructor(page: Page) {
 		this.activeToggle = page.getByText('Active');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
 		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.codeInput = page.getByLabel('Code');
@@ -33,6 +33,6 @@ export class CommerceAdminCurrencyDetailsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToCommerceCurrencies();
+		await this.globalMenuPage.goToCommerce('Currencies');
 	}
 }

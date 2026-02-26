@@ -7,6 +7,7 @@ import {mergeTests} from '@playwright/test';
 
 import {accessibilityMenuPagesTest} from '../../../fixtures/accessibilityMenuPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
@@ -87,6 +88,9 @@ async function withUsers(
 const test = mergeTests(
 	apiHelpersTest,
 	accessibilityMenuPagesTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	instanceSettingsPagesTest,
 	loginTest()
 );

@@ -5,9 +5,9 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -15,11 +15,12 @@ import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {generateObjectFields} from './utils/generateObjectFields';
 
 const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	objectPagesTest,
@@ -28,8 +29,8 @@ const test = mergeTests(
 
 test('Can preview entry information on My Workflow Tasks', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	configurationTabPage,
+	globalMenuPage,
 	page,
 	workflowTaskDetailsPage,
 	workflowTasksPage,
@@ -49,7 +50,7 @@ test('Can preview entry information on My Workflow Tasks', async ({
 		type: 'objectDefinition',
 	});
 
-	await applicationsMenuPage.goToProcessBuilder();
+	await globalMenuPage.goToApplications('Process Builder');
 
 	await configurationTabPage.configurationTabLink.click();
 
@@ -77,8 +78,8 @@ test('Can preview entry information on My Workflow Tasks', async ({
 
 test('Can view entry information through View button on My Workflow Tasks', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	configurationTabPage,
+	globalMenuPage,
 	page,
 	workflowTaskDetailsPage,
 	workflowTasksPage,
@@ -98,7 +99,7 @@ test('Can view entry information through View button on My Workflow Tasks', asyn
 		type: 'objectDefinition',
 	});
 
-	await applicationsMenuPage.goToProcessBuilder();
+	await globalMenuPage.goToApplications('Process Builder');
 
 	await configurationTabPage.configurationTabLink.click();
 

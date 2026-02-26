@@ -5,12 +5,18 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {liferayConfig} from '../../../liferay.config';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import performLogin, {performLogout} from '../../../utils/performLogin';
 import {utilityPagesPage} from './fixtures/utilityPageTest';
 
-export const test = mergeTests(utilityPagesPage);
+export const test = mergeTests(
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	utilityPagesPage
+);
 
 const getRandomTitle = () => {
 	return 'test-up-' + getRandomInt();

@@ -6,10 +6,10 @@
 import {Locator, Page} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
-import {ApplicationsMenuPage} from './ApplicationsMenuPage';
+import {GlobalMenuPage} from './GlobalMenuPage';
 
 export class GogoShellPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly commandInput: Locator;
 	readonly page: Page;
 	readonly executeButton: Locator;
@@ -17,13 +17,13 @@ export class GogoShellPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.commandInput = this.page.getByLabel('Command');
 		this.executeButton = this.page.getByRole('button', {name: 'Execute'});
 	}
 
 	async goto() {
-		this.applicationsMenuPage.goToGogoShell();
+		this.globalMenuPage.goToControlPanel('Gogo Shell');
 	}
 
 	async addCommand(command: string) {

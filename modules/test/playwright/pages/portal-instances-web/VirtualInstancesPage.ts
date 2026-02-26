@@ -6,7 +6,7 @@
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class VirtualInstancesPage {
 	private addInstanceFrame: FrameLocator;
@@ -21,7 +21,7 @@ export class VirtualInstancesPage {
 	readonly addInstanceVirtualHost: Locator;
 	readonly addInstanceVirtualInstanceInitializer: Locator;
 	readonly addInstanceWebIdField: Locator;
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly errorMessage: Locator;
 	readonly errorMessageScreenName: Locator;
 	readonly errorMessageEmailAddress: Locator;
@@ -52,7 +52,7 @@ export class VirtualInstancesPage {
 		this.addInstanceVirtualInstanceInitializer =
 			this.addInstanceFrame.getByLabel('Virtual Instance Initializer');
 		this.addInstanceWebIdField = this.addInstanceFrame.getByLabel('Web ID');
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.errorMessage = this.addInstanceFrame.getByText(
 			'Error:Please enter a valid'
 		);
@@ -78,7 +78,8 @@ export class VirtualInstancesPage {
 		maxUsers = '0',
 		virtualInstanceInitializer = ''
 	) {
-		await this.applicationsMenuPage.goToVirtualInstances();
+		await this.globalMenuPage.goToHome();
+		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 		await this.newVirtualInstanceButton.click();
 
 		// Sometimes the frame loads slowly
@@ -109,7 +110,7 @@ export class VirtualInstancesPage {
 			await expect(await this.successMessage).toBeVisible({
 				timeout: 180 * 1000,
 			});
-			await this.page.getByLabel('Close').click();
+			await this.page.locator('.alert').getByLabel('Close').click();
 		}
 	}
 
@@ -122,7 +123,7 @@ export class VirtualInstancesPage {
 		maxUsers = '0',
 		virtualInstanceInitializer = ''
 	) {
-		await this.applicationsMenuPage.goToVirtualInstances();
+		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 		await this.newVirtualInstanceButton.click();
 
 		// Sometimes the frame loads slowly
@@ -165,7 +166,7 @@ export class VirtualInstancesPage {
 	}
 
 	async deleteVirtualInstance(name: string) {
-		await this.applicationsMenuPage.goToVirtualInstances();
+		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 
 		const row = await this.page.getByRole('row').filter({hasText: name});
 
@@ -181,6 +182,6 @@ export class VirtualInstancesPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToVirtualInstances();
+		await this.globalMenuPage.goToControlPanel('Virtual Instances');
 	}
 }

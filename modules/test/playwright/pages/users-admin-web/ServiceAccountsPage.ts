@@ -6,11 +6,11 @@
 import {Locator, Page} from '@playwright/test';
 
 import {DataTablePage} from '../account-admin-web/DataTablePage';
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class ServiceAccountsPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly impersonateUserMenuItem: Locator;
 	readonly page: Page;
 	readonly serviceAccountActionMenu: (screenName: string) => Promise<Locator>;
@@ -23,7 +23,7 @@ export class ServiceAccountsPage {
 	readonly usersTable: DataTablePage;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.impersonateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Impersonate User',
 		});
@@ -77,6 +77,6 @@ export class ServiceAccountsPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToServiceAccounts();
+		await this.globalMenuPage.goToControlPanel('Service Accounts');
 	}
 }

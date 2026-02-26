@@ -22,6 +22,7 @@ export const test = mergeTests(
 	changeTrackingPagesTest,
 	featureFlagsTest({
 		'LPD-20183': {enabled: true},
+		'LPD-36105': {enabled: true},
 	}),
 	journalPagesTest,
 	workflowPagesTest

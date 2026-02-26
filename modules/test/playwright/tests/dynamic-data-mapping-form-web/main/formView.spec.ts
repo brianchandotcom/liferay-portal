@@ -6,15 +6,19 @@
 import {ObjectValidationRuleAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	globalMenuPagesTest,
 	dataApiHelpersTest,
 	formsPagesTest,
 	loginTest()
@@ -33,11 +37,11 @@ test.describe('FormView when form storage type is object', () => {
 
 	test('make sure the button submit label is Submit to workflow when the object definition has a linked workflow and Save when it does not', async ({
 		apiHelpers,
-		applicationsMenuPage,
 		configurationTabPage,
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
+		globalMenuPage,
 		page,
 	}) => {
 		const objectDefinition =
@@ -94,7 +98,7 @@ test.describe('FormView when form storage type is object', () => {
 
 		await page.goto('/');
 
-		await applicationsMenuPage.goToProcessBuilder();
+		await globalMenuPage.goToApplications('Process Builder');
 
 		await configurationTabPage.configurationTabLink.click();
 

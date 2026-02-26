@@ -17,13 +17,13 @@ import path from 'path';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {collectionsPagesTest} from '../../../fixtures/collectionsPagesTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {globalMenuPagesTest} from '../../../fixtures/globalMenuPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
@@ -56,7 +56,6 @@ import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinit
 
 const test = mergeTests(
 	accountSettingsPagesTest,
-	applicationsMenuPageTest,
 	apiHelpersTest,
 	collectionsPagesTest,
 	commercePagesTest,
@@ -64,8 +63,10 @@ const test = mergeTests(
 	isolatedSiteTest,
 	editObjectDefinitionPagesTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	globalMenuPagesTest,
 	formsPagesTest,
 	journalPagesTest,
 	loginTest(),
@@ -1391,8 +1392,8 @@ test.describe('Manage object entries through Friendly URL', () => {
 	});
 
 	test('friendly URL input is disabled when viewed inside workflow task detail', async ({
-		applicationsMenuPage,
 		configurationTabPage,
+		globalMenuPage,
 		page,
 		site,
 		viewObjectEntriesPage,
@@ -1400,7 +1401,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 		workflowTasksPage,
 	}) => {
 		await test.step('Assign the single approver workflow to the object created', async () => {
-			await applicationsMenuPage.goToProcessBuilder();
+			await globalMenuPage.goToApplications('Process Builder');
 
 			await configurationTabPage.configurationTabLink.click();
 
@@ -4298,8 +4299,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 test.describe('Manage object entries through Workflow', () => {
 	test('can edit object entry through workflow task page', async ({
 		apiHelpers,
-		applicationsMenuPage,
 		configurationTabPage,
+		globalMenuPage,
 		page,
 		viewObjectEntriesPage,
 		workflowTaskDetailsPage,
@@ -4316,7 +4317,7 @@ test.describe('Manage object entries through Workflow', () => {
 			type: 'objectDefinition',
 		});
 
-		await applicationsMenuPage.goToProcessBuilder();
+		await globalMenuPage.goToApplications('Process Builder');
 
 		await configurationTabPage.configurationTabLink.click();
 
@@ -4366,8 +4367,8 @@ test.describe('Manage object entries through Workflow', () => {
 
 	test('can view Asset Title, Asset Type and Item Subject of an entry on metrics page', async ({
 		apiHelpers,
-		applicationsMenuPage,
 		configurationTabPage,
+		globalMenuPage,
 		metricsPage,
 		page,
 	}) => {
@@ -4384,7 +4385,7 @@ test.describe('Manage object entries through Workflow', () => {
 			type: 'objectDefinition',
 		});
 
-		await applicationsMenuPage.goToProcessBuilder();
+		await globalMenuPage.goToApplications('Process Builder');
 
 		await configurationTabPage.configurationTabLink.click();
 
@@ -4401,7 +4402,7 @@ test.describe('Manage object entries through Workflow', () => {
 			applicationName
 		);
 
-		await applicationsMenuPage.goToMetrics();
+		await globalMenuPage.goToApplications('Metrics');
 
 		await metricsPage.chooseProcess(assetType);
 

@@ -5,10 +5,10 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../product-navigation-applications-menu/GlobalMenuPage';
 
 export class SamlAdminPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly enabledField: Locator;
 	readonly entityIdField: Locator;
 	readonly page: Page;
@@ -17,7 +17,7 @@ export class SamlAdminPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.enabledField = page.getByText('Enabled');
 		this.entityIdField = page.getByLabel('Entity ID');
 		this.page = page;
@@ -33,7 +33,7 @@ export class SamlAdminPage {
 		entityId?: string,
 		samlRole?: string
 	) {
-		await this.applicationsMenuPage.goToSamlAdmin(false);
+		await this.globalMenuPage.goToControlPanel('SAML Admin');
 
 		// We must disable SAML before making configuration changes
 

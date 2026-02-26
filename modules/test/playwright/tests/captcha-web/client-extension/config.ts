@@ -10,5 +10,6 @@ export const config = {
 	testDir: 'tests/captcha-web/client-extension',
 	use: {
 		...devices['Desktop Chrome'],
+		testIdAttribute: 'data-qa-id',
 	},
 };

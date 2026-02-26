@@ -5,14 +5,14 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {GlobalMenuPage} from '../../../../pages/product-navigation-applications-menu/GlobalMenuPage';
 import {readCSVFile} from '../../../../utils/fileReader';
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {getTempDir} from '../../../../utils/temp';
 import {unzipFile} from '../../../../utils/zip';
 
 export class DataMigrationCenterPage {
-	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly globalMenuPage: GlobalMenuPage;
 	readonly page: Page;
 	readonly newButton: Locator;
 	readonly entityTypeSelector: Locator;
@@ -31,7 +31,7 @@ export class DataMigrationCenterPage {
 	readonly updateStrategySelector: Locator;
 
 	constructor(page: Page) {
-		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.globalMenuPage = new GlobalMenuPage(page);
 		this.page = page;
 		this.newButton = page.getByRole('button', {name: 'New'});
 		this.entityTypeSelector = page.getByLabel('Entity Type');
@@ -76,7 +76,7 @@ export class DataMigrationCenterPage {
 	}
 
 	async goto() {
-		await this.applicationsMenuPage.goToDataMigrationCenter();
+		await this.globalMenuPage.goToApplications('Data Migration Center');
 	}
 
 	async goToImportFile() {

@@ -6,7 +6,6 @@
 package com.liferay.commerce.internal.search;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -19,11 +18,9 @@ import com.liferay.portal.search.indexer.IndexerWriter;
 public class CommerceOrderBatchReindexer {
 
 	public CommerceOrderBatchReindexer(
-		CommerceOrderLocalService commerceOrderLocalService,
 		IndexerDocumentBuilder indexerDocumentBuilder,
 		IndexerWriter<CommerceOrder> indexerWriter) {
 
-		_commerceOrderLocalService = commerceOrderLocalService;
 		_indexerDocumentBuilder = indexerDocumentBuilder;
 		_indexerWriter = indexerWriter;
 	}
@@ -49,7 +46,6 @@ public class CommerceOrderBatchReindexer {
 		indexableActionableDynamicQuery.performActions();
 	}
 
-	private final CommerceOrderLocalService _commerceOrderLocalService;
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;
 	private final IndexerWriter<CommerceOrder> _indexerWriter;
 

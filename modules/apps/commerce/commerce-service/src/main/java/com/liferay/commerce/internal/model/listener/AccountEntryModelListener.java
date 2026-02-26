@@ -63,8 +63,7 @@ public class AccountEntryModelListener extends BaseModelListener<AccountEntry> {
 	@Activate
 	protected void activate() {
 		_commerceOrderBatchReindexer = new CommerceOrderBatchReindexer(
-			_commerceOrderLocalService, _indexerDocumentBuilder,
-			_indexerWriter);
+			_indexerDocumentBuilder, _indexerWriter);
 	}
 
 	private CommerceOrderBatchReindexer _commerceOrderBatchReindexer;

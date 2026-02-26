@@ -48,7 +48,7 @@ function _download_and_extract_files {
 
 	if [ "${latest_path}" == "null" ] || [ -z "${latest_path}" ]
 	then
-		echo "Could not find any files in gs://${bucket_name}/${prefix}/" >&2
+		echo "Unable to find any files in gs://${bucket_name}/${prefix}/" >&2
 
 		exit 1
 	fi
@@ -86,7 +86,7 @@ function _get_config_file {
 
 	if [ ! -f "${config_file}" ]
 	then
-		echo "Config file '${config_file}' not found." >&2
+		echo "No config file '${config_file}' found." >&2
 
 		exit 1
 	fi

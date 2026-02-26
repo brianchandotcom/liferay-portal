@@ -12,20 +12,23 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.exportimport.kernel.service.ExportImportServiceUtil;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -60,10 +63,13 @@ public class LayoutPrototypeExportImportTest {
 	public void setUp() throws Exception {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
-		_company = CompanyTestUtil.addCompany();
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
-		ServiceContextThreadLocal.pushServiceContext(
-			ServiceContextTestUtil.getServiceContext(_company.getGroupId()));
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_company.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
 	}
 
 	@After
@@ -75,16 +81,18 @@ public class LayoutPrototypeExportImportTest {
 	public void testExportImport() throws Exception {
 		User user = _company.getGuestUser();
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, user.getUserId(), _company.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				null, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0,
+				WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
 		LayoutPrototype layoutPrototype =
-			_layoutPrototypeLocalService.addLayoutPrototype(
-				user.getUserId(), _company.getCompanyId(),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()
-				).build(),
-				null, true,
-				ServiceContextTestUtil.getServiceContext(
-					_company.getCompanyId(), _company.getGroupId(),
-					user.getUserId()));
+			_layoutPrototypeLocalService.getLayoutPrototype(
+				layoutPageTemplateEntry.getLayoutPrototypeId());
 
 		Map<String, Serializable> exportLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
@@ -102,7 +110,8 @@ public class LayoutPrototypeExportImportTest {
 		File larFile = ExportImportServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
-		_layoutPrototypeLocalService.deleteLayoutPrototype(layoutPrototype);
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			layoutPageTemplateEntry);
 
 		Map<String, Serializable> importLayoutSettingsMap =
 			ExportImportConfigurationSettingsMapFactoryUtil.
@@ -171,10 +180,18 @@ public class LayoutPrototypeExportImportTest {
 		).build();
 	}
 
-	@DeleteAfterTestRun
 	private Company _company;
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
+
+	@Inject
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	private ServiceContext _serviceContext;
 
 }

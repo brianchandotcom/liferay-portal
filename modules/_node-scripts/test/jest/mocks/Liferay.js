@@ -35,7 +35,7 @@ import getFormElement from '../../../../apps/frontend-js/frontend-js-web/src/mai
 import objectToFormData from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/object_to_form_data.es';
 import postForm from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/post_form.es';
 import setFormValues from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/form/set_form_values.es';
-import formatStorage from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/format_storage.es';
+import formatStorage from '../../../../apps/frontend-js/frontend-js-web/src/main/resources/META-INF/resources/liferay/util/format_storage';
 import {
 	getCheckedCheckboxes,
 	getUncheckedCheckboxes,

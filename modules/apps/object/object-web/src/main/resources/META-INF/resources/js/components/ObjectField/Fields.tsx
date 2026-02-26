@@ -27,6 +27,7 @@ interface ObjectFieldItemData {
 interface FieldsProps extends IFDSTableProps {
 	baseResourceURL: string;
 	creationLanguageId: Liferay.Language.Locale;
+	hasDepotEntry?: boolean;
 }
 
 export default function Fields({
@@ -35,6 +36,7 @@ export default function Fields({
 	creationLanguageId,
 	creationMenu,
 	formName,
+	hasDepotEntry,
 	id,
 	items,
 	objectDefinitionExternalReferenceCode,
@@ -208,6 +210,7 @@ export default function Fields({
 					creationLanguageId={
 						creationLanguageId as Liferay.Language.Locale
 					}
+					hasDepotEntry={hasDepotEntry}
 					objectDefinitionExternalReferenceCode={
 						objectDefinitionExternalReferenceCode
 					}

@@ -2448,6 +2448,20 @@ war.path=${app.server.portal.dir}/</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="is-cloud-ci-node">
+		<sequential>
+			<var name="is.cloud.ci.node" unset="true" />
+
+			<beanshell>
+				<![CDATA[
+					import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
+
+					project.setProperty("is.cloud.ci.node", String.valueOf(JenkinsResultsParserUtil.isCloudCINode()));
+				]]>
+			</beanshell>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="is-less-than">
 		<attribute name="arg1" />
 		<attribute name="arg2" />
@@ -5943,6 +5957,17 @@ ${custom.upgrade.properties}</echo>
 			</if>
 
 			<delete file="jps_output" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="pull-clamd-docker-container">
+		<attribute name="image" />
+
+		<sequential>
+			<exec executable="docker">
+				<arg value="pull" />
+				<arg value="@{image}" />
+			</exec>
 		</sequential>
 	</macrodef>
 
@@ -13044,6 +13069,18 @@ company.default.web.id=www.able.com</echo>
 		<if>
 			<equals arg1="${dl.store.antivirus.enabled}" arg2="true" />
 			<then>
+				<is-cloud-ci-node />
+
+				<if>
+					<equals arg1="${is.cloud.ci.node}" arg2="true" />
+					<then>
+						<property name="clamd.docker.image" value="clamav/clamav:stable" />
+						<pull-clamd-docker-container image="${clamd.docker.image}" />
+						<start-docker-container image="${clamd.docker.image}" name="clamd">\
+							--expose=3310 \
+Comment view						</start-docker-container>
+					</then>
+				</if>
 				<echo append="true" file="portal-impl/src/portal-ext.properties">
 dl.store.antivirus.enabled=true</echo>
 

@@ -1432,6 +1432,16 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updateIconImage(plid, bytes);
 	}
 
+	@Override
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException {
+
+		LayoutPermissionUtil.checkLayoutUpdatePermission(
+			getPermissionChecker(), plid);
+
+		return layoutLocalService.updateIconImageId(plid, iconImageId);
+	}
+
 	/**
 	 * Updates the layout with additional parameters.
 	 *

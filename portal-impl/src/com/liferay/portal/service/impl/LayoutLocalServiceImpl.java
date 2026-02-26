@@ -3017,6 +3017,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutLocalService.updateLayout(layout);
 	}
 
+	@Override
+	public Layout updateIconImageId(long plid, long iconImageId)
+		throws PortalException {
+
+		Layout layout = layoutPersistence.findByPrimaryKey(plid);
+
+		layout.setModifiedDate(new Date());
+		layout.setIconImageId(iconImageId);
+
+		return layoutPersistence.update(layout);
+	}
+
 	/**
 	 * Updates the layout replacing its draft publish date.
 	 *

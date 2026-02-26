@@ -52,9 +52,10 @@ public class OAuthClientASLocalMetadataServiceImpl
 
 	public OAuthClientASLocalMetadata addOAuthClientASLocalMetadata(
 			String authorizationEndpoint, String issuer, String jwksURI,
-			boolean localWellKnownEnabled, String[] supportedGrantTypes,
-			String[] supportedScopes, String[] supportedSubjectTypes,
-			String tokenEndpoint, String userInfoEndpoint)
+			boolean localWellKnownEnabled, String registrationEndpoint,
+			String[] supportedGrantTypes, String[] supportedScopes,
+			String[] supportedSubjectTypes, String tokenEndpoint,
+			String userInfoEndpoint)
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
@@ -66,8 +67,9 @@ public class OAuthClientASLocalMetadataServiceImpl
 		return oAuthClientASLocalMetadataLocalService.
 			addOAuthClientASLocalMetadata(
 				getUserId(), authorizationEndpoint, issuer, jwksURI,
-				localWellKnownEnabled, supportedGrantTypes, supportedScopes,
-				supportedSubjectTypes, tokenEndpoint, userInfoEndpoint);
+				localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	@Override
@@ -239,9 +241,9 @@ public class OAuthClientASLocalMetadataServiceImpl
 	public OAuthClientASLocalMetadata updateOAuthClientASLocalMetadata(
 			long oAuthClientASLocalMetadataId, String authorizationEndpoint,
 			String issuer, String jwksURI, boolean localWellKnownEnabled,
-			String[] supportedGrantTypes, String[] supportedScopes,
-			String[] supportedSubjectTypes, String tokenEndpoint,
-			String userInfoEndpoint)
+			String registrationEndpoint, String[] supportedGrantTypes,
+			String[] supportedScopes, String[] supportedSubjectTypes,
+			String tokenEndpoint, String userInfoEndpoint)
 		throws PortalException {
 
 		_oAuthClientASLocalMetadataModelResourcePermission.check(
@@ -253,9 +255,9 @@ public class OAuthClientASLocalMetadataServiceImpl
 		return oAuthClientASLocalMetadataLocalService.
 			updateOAuthClientASLocalMetadata(
 				oAuthClientASLocalMetadataId, authorizationEndpoint, issuer,
-				jwksURI, localWellKnownEnabled, supportedGrantTypes,
-				supportedScopes, supportedSubjectTypes, tokenEndpoint,
-				userInfoEndpoint);
+				jwksURI, localWellKnownEnabled, registrationEndpoint,
+				supportedGrantTypes, supportedScopes, supportedSubjectTypes,
+				tokenEndpoint, userInfoEndpoint);
 	}
 
 	@Reference(

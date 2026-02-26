@@ -117,7 +117,9 @@ public class CPMediaUtil {
 				cpAttachmentFileEntries) {
 
 			String originalImgTag = StringBundler.concat(
-				"<img class=\"product-img\" src=\"",
+				"<img aria-label=\"",
+				cpAttachmentFileEntry.getTitle(httpServletRequest.getLocale()),
+				"\" class=\"product-img\" src=\"",
 				commerceMediaResolver.getURL(
 					commerceAccountId,
 					cpAttachmentFileEntry.getCPAttachmentFileEntryId()),

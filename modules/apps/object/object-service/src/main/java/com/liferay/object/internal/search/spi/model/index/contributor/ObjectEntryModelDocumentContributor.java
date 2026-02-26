@@ -120,18 +120,14 @@ public class ObjectEntryModelDocumentContributor
 		ObjectContentHelper objectContentHelper, String locale,
 		String objectFieldName, String valueString) {
 
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(objectFieldName);
-		sb.append(": ");
-		sb.append(valueString);
-		sb.append(StringPool.COMMA_AND_SPACE);
-
-		if (locale != null) {
-			objectContentHelper.contributeToLocale(locale, sb);
+		if (locale == null) {
+			objectContentHelper.contributeToAll(
+				objectFieldName, ": ", valueString, StringPool.COMMA_AND_SPACE);
 		}
 		else {
-			objectContentHelper.contributeToAll(sb);
+			objectContentHelper.contributeToLocale(
+				locale, objectFieldName, ": ", valueString,
+				StringPool.COMMA_AND_SPACE);
 		}
 	}
 
@@ -704,24 +700,48 @@ public class ObjectEntryModelDocumentContributor
 
 	private static class ObjectContentHelper {
 
-		public void contributeToAll(StringBundler sb) {
-			_contentSB.append(sb);
+		public void contributeToAll(
+			String s1, String s2, String s3, String s4) {
+
+			_contentSB.append(s1);
+			_contentSB.append(s2);
+			_contentSB.append(s3);
+			_contentSB.append(s4);
+
+			if (_localizedContentSBMap == null) {
+				return;
+			}
 
 			for (StringBundler localizedContentSB :
 					_localizedContentSBMap.values()) {
 
-				localizedContentSB.append(sb);
+				localizedContentSB.append(s1);
+				localizedContentSB.append(s2);
+				localizedContentSB.append(s3);
+				localizedContentSB.append(s4);
 			}
 		}
 
-		public void contributeToLocale(String locale, StringBundler sb) {
-			_contentSB.append(sb);
+		public void contributeToLocale(
+			String locale, String s1, String s2, String s3, String s4) {
+
+			_contentSB.append(s1);
+			_contentSB.append(s2);
+			_contentSB.append(s3);
+			_contentSB.append(s4);
+
+			if (_localizedContentSBMap == null) {
+				return;
+			}
 
 			StringBundler localizedContentSB = _localizedContentSBMap.get(
 				locale);
 
 			if (localizedContentSB != null) {
-				localizedContentSB.append(sb);
+				localizedContentSB.append(s1);
+				localizedContentSB.append(s2);
+				localizedContentSB.append(s3);
+				localizedContentSB.append(s4);
 			}
 		}
 
@@ -730,7 +750,7 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		public Map<String, String> getLocalizedContentMap() {
-			if (_localizedContentSBMap.isEmpty()) {
+			if (_localizedContentSBMap == null) {
 				return Collections.emptyMap();
 			}
 
@@ -755,6 +775,10 @@ public class ObjectEntryModelDocumentContributor
 				_contentSB.setIndex(_contentSB.index() - 1);
 			}
 
+			if (_localizedContentSBMap == null) {
+				return;
+			}
+
 			for (StringBundler localizedContentSB :
 					_localizedContentSBMap.values()) {
 
@@ -768,20 +792,26 @@ public class ObjectEntryModelDocumentContributor
 			ObjectEntry objectEntry, List<ObjectField> objectFields,
 			TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
-			_contentSB = new StringBundler(objectFields.size());
+			_contentSB = new StringBundler(objectFields.size() * 4);
 
-			for (String languageId :
-					textEmbeddingDocumentContributor.getLanguageIds(
-						objectEntry)) {
+			List<String> languageIds =
+				textEmbeddingDocumentContributor.getLanguageIds(objectEntry);
 
-				_localizedContentSBMap.put(
-					languageId, new StringBundler(objectFields.size() * 4));
+			if (languageIds.isEmpty()) {
+				_localizedContentSBMap = null;
+			}
+			else {
+				_localizedContentSBMap = new TreeMap<>();
+
+				for (String languageId : languageIds) {
+					_localizedContentSBMap.put(
+						languageId, new StringBundler(objectFields.size() * 4));
+				}
 			}
 		}
 
 		private final StringBundler _contentSB;
-		private final Map<String, StringBundler> _localizedContentSBMap =
-			new TreeMap<>();
+		private final Map<String, StringBundler> _localizedContentSBMap;
 
 	}
 

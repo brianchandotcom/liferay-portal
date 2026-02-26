@@ -125,6 +125,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -703,6 +704,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), type, typeSettings, false, false,
 			Collections.emptyMap(), null, serviceContext);
+	}
+
+	private void _assertContentPageSpecifications(
+			PageSpecification[] pageSpecifications, SitePage sitePage)
+		throws Exception {
+
+		_assertPageSpecifications(
+			(ContentPageSpecification)pageSpecifications[1],
+			(ContentPageSpecification)pageSpecifications[0], sitePage);
 	}
 
 	private void _assertContentSitePage(SitePage sitePage) {
@@ -2978,6 +2988,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			),
 			layout);
 
+		layout = _updateImage(layout);
+
 		SitePageResource sitePageResource = _getSitePageResource(
 			"pageSpecifications");
 
@@ -2998,11 +3010,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		_testPutSiteSitePage(sitePage, testGroup, sitePage);
 
-		_assertFragmentImageValues(
-			5, fragmentImageValue,
-			sitePageResource.getSiteSitePage(
-				testGroup.getExternalReferenceCode(),
-				layout.getExternalReferenceCode()));
+		SitePage importedSitePage = sitePageResource.getSiteSitePage(
+			testGroup.getExternalReferenceCode(),
+			layout.getExternalReferenceCode());
+
+		_assertFragmentImageValues(5, fragmentImageValue, importedSitePage);
+
+		_assertContentPageSpecifications(
+			importedSitePage.getPageSpecifications(), sitePage);
 
 		sitePage.setPageSettings(
 			_getPageSettings(null, SitePage.Type.CONTENT_PAGE));
@@ -3836,6 +3851,18 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		return layout;
+	}
+
+	private Layout _updateImage(Layout layout) throws Exception {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		_layoutLocalService.updateIconImage(
+			draftLayout.getPlid(),
+			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
+
+		return _layoutLocalService.updateIconImage(
+			layout.getPlid(),
+			FileUtil.getBytes(getClass(), "dependencies/liferay.jpg"));
 	}
 
 	private static final List<SitePage.Type> _types = Arrays.asList(

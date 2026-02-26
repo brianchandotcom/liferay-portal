@@ -84,11 +84,17 @@ test('User is able to propagate pages separately on site templates', async ({
 		homePageName,
 		siteId
 	);
-	const widgetPageDataInitial = await apiHelpers.headlessDelivery.getSitePage(
-		pageName,
-		siteId
-	);
 
+	let widgetPageDataInitial: any;
+
+	await expect(async () => {
+		widgetPageDataInitial = await apiHelpers.headlessDelivery.getSitePage(
+			pageName,
+			siteId
+		);
+
+		expect(widgetPageDataInitial).toHaveProperty('friendlyUrlPath');
+	}).toPass();
 
 	await page.goto(
 		`/group/template-${layoutSetPrototype.layoutSetPrototypeId}${widgetPageDataInitial.friendlyUrlPath}`

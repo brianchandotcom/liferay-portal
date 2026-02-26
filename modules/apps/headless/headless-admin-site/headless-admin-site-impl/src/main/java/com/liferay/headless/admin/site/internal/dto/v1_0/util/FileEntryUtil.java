@@ -127,6 +127,9 @@ public class FileEntryUtil {
 		).put(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId())
 		).put(
+			"scopeExternalReferenceCode",
+			ItemScopeUtil.getItemScopeExternalReferenceCode(scope, scopeGroupId)
+		).put(
 			"title", fileEntry.getTitle()
 		).put(
 			"url", () -> _getImagePreviewURL(fileEntry)

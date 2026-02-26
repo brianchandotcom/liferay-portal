@@ -87,7 +87,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		<c:if test="<%= deltaConfigurable %>">
 			<div class="dropdown pagination-items-per-page" id="<%= ariaPagination %>">
 				<button aria-controls="<%= ariaPaginationPicker %>" aria-describedby="<%= ariaPaginationResults %>" aria-expanded="false" aria-haspopup="listbox" aria-label="<%= LanguageUtil.get(request, "items-per-page") %>" class="dropdown-toggle page-link" data-attribute="<%= delta %>" data-toggle="liferay-dropdown" id=<%= ariaPaginationButton %> role="combobox">
-					<liferay-ui:message arguments="<%= delta %>" key="x-entries" />
+					<liferay-ui:message arguments="<%= delta %>" key="x-entries" translateArguments="<%= false %>" />
 
 					<aui:icon image="caret-double-l" markupView="lexicon" />
 				</button>
@@ -195,7 +195,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 		</c:if>
 
 		<p class="pagination-results" id="<%= ariaPaginationResults %>">
-			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-to-x-of-x-entries" />
+			<liferay-ui:message arguments="<%= new Object[] {numberFormat.format(start + 1), numberFormat.format(end), numberFormat.format(total)} %>" key="showing-x-to-x-of-x-entries" translateArguments="<%= false %>" />
 		</p>
 
 		<nav aria-label="<liferay-ui:message key="pagination" />">

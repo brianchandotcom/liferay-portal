@@ -275,7 +275,7 @@ export default function getAlloyEditorProcessor(
 	};
 
 	return {
-		createEditor: (
+		createEditor: async (
 			element,
 			changeCallback,
 			destroyCallback,
@@ -283,6 +283,10 @@ export default function getAlloyEditorProcessor(
 		) => {
 			if (_editor && _element === element) {
 				return;
+			}
+
+			if (_editor) {
+				await destroy(_element);
 			}
 
 			create(element, changeCallback, destroyCallback, clickPosition);

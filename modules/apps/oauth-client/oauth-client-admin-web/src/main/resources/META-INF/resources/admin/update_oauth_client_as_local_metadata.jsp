@@ -64,6 +64,8 @@ renderResponse.setTitle((oAuthClientASLocalMetadata == null) ? LanguageUtil.get(
 				<aui:fieldset label="oauth-client-as-local-oauth-authorization-server">
 					<aui:input checked="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getLocalWellKnownEnabled() : false %>" label="enable" name="enabledLocalWellKnown" type="checkbox" />
 
+					<aui:input label="oauth-client-as-local-metadata-registration-endpoint" name="registrationEndpoint" type="text" value="<%= (String)request.getAttribute(OAuthClientWebKeys.REGISTRATION_ENDPOINT) %>" />
+
 					<aui:input helpMessage="oauth-client-as-local-well-known-uri-oauth-authorization-server-help" label="oauth-client-as-local-well-known-uri-oauth-authorization-server" name="oAuthASLocalWellKnownURI" readonly="true" type="text" value="<%= (oAuthClientASLocalMetadata != null) ? oAuthClientASLocalMetadata.getOAuthASLocalWellKnownURI() : \"\" %>" />
 
 					<%

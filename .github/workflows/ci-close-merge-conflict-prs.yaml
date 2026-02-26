@@ -120,8 +120,6 @@ jobs:
                                     --request PATCH \
                                     --silent \
                                     "https://api.github.com/repos/${{ github.repository_owner }}/${{ github.event.repository.name }}/pulls/${prNumber}"
-                            else
-                                echo "[SKIP] Pull request: ${prURL} is currently: ${mergeableState}"
                             fi
 
                             IFS=$'\n'

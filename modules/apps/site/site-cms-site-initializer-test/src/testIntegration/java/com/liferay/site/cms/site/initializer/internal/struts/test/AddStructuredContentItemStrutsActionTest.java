@@ -301,6 +301,7 @@ public class AddStructuredContentItemStrutsActionTest {
 
 		Assert.assertEquals(
 			StringBundler.concat(
+				_company.getPortalURL(_group.getGroupId()),
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
 				_group.getFriendlyURL(),
 				urlSeparator.substring(0, urlSeparator.length() - 1),

@@ -1907,8 +1907,8 @@ public class ObjectEntryLocalServiceImpl
 
 	@Override
 	public ObjectEntry moveObjectEntry(
-			long userId, long objectEntryId, long objectEntryFolderId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			long objectEntryId, long objectEntryFolderId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = getObjectEntry(objectEntryId);
@@ -1919,12 +1919,6 @@ public class ObjectEntryLocalServiceImpl
 		_checkObjectDefinitionScope(
 			objectEntry.getObjectDefinitionId(),
 			objectEntryFolder.getGroupId());
-
-		if (objectEntryFolder.getGroupId() != objectEntry.getGroupId()) {
-			objectEntry.setGroupId(objectEntryFolder.getGroupId());
-
-			updateObjectEntry(objectEntry);
-		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(
@@ -1937,8 +1931,39 @@ public class ObjectEntryLocalServiceImpl
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
 
-		return updateObjectEntry(
-			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+		objectEntry.setGroupId(objectEntryFolder.getGroupId());
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
+
+		_deleteFromLocalizationTable(objectDefinition, objectEntryId);
+
+		_insertIntoLocalizationTable(
+			new HashMap<>(), objectDefinition, objectEntryId,
+			objectEntry.getValues(), true, values);
+
+		_updateTable(
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				false, objectDefinition, _objectFieldLocalService),
+			objectEntryId, true, values);
+		_updateTable(
+			DynamicObjectDefinitionTableUtil.getDynamicObjectDefinitionTable(
+				true, objectDefinition, _objectFieldLocalService),
+			objectEntryId, true, values);
+
+		objectEntry = updateObjectEntry(objectEntry);
+
+		_updateAsset(
+			serviceContext.getUserId(), objectEntry,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds(),
+			serviceContext.getAssetPriority(), serviceContext);
+
+		ObjectDefinitionResourcePermissionUtil.updateResourcePermissions(
+			objectDefinition.getCompanyId(), objectEntry.getGroupId(),
+			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
+			serviceContext);
+
+		return objectEntry;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

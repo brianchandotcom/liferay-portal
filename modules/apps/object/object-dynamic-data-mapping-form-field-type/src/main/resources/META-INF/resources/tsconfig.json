@@ -1,5 +1,5 @@
 {
-	"@generated": "18faa2849d855b10645034862670e3a0e15c68e3",
+	"@generated": "ce14860aca6059282fc6997bdd5a499126cc5df6",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -13,6 +13,9 @@
 		"paths": {
 			"@liferay/frontend-data-set-web": [
 				"../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"@liferay/frontend-js-item-selector-web": [
+				"../../../../../../../frontend-js/frontend-js-item-selector-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"@liferay/object-js-components-web": [
 				"../../../../../../object-js-components-web/src/main/resources/META-INF/resources/index.ts"
@@ -54,6 +57,9 @@
 	"references": [
 		{
 			"path": "../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-item-selector-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"

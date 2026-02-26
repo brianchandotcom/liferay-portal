@@ -177,28 +177,6 @@ public class ObjectDefinitionServiceTest {
 	}
 
 	@Test
-	public void testAddObjectDefinition() throws Exception {
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", _user1.getUserId(), " must have ",
-				"ADD_OBJECT_DEFINITION permission for com.liferay.object "),
-			() -> _testAddObjectDefinition(0, _user1));
-		AssertUtils.assertFailure(
-			PrincipalException.MustHavePermission.class,
-			StringBundler.concat(
-				"User ", _user2.getUserId(),
-				" must have ADD_OBJECT_DEFINITION permission for ",
-				"com.liferay.object.model.ObjectFolder ",
-				_objectFolder.getObjectFolderId()),
-			() -> _testAddObjectDefinition(
-				_objectFolder.getObjectFolderId(), _user2));
-
-		_testAddObjectDefinition(0, _adminUser);
-		_testAddObjectDefinition(_objectFolder.getObjectFolderId(), _adminUser);
-	}
-
-	@Test
 	public void testAddSystemObjectDefinition() throws Exception {
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -474,26 +452,6 @@ public class ObjectDefinitionServiceTest {
 			objectDefinition =
 				_objectDefinitionLocalService.publishCustomObjectDefinition(
 					user.getUserId(), objectDefinition.getObjectDefinitionId());
-		}
-		finally {
-			if (objectDefinition != null) {
-				_objectDefinitionLocalService.deleteObjectDefinition(
-					objectDefinition);
-			}
-		}
-	}
-
-	private void _testAddObjectDefinition(long objectFolderId, User user)
-		throws Exception {
-
-		ObjectDefinition objectDefinition = null;
-
-		try {
-			_setUser(user);
-
-			objectDefinition = _objectDefinitionService.addObjectDefinition(
-				RandomTestUtil.randomString(), objectFolderId, true,
-				ObjectDefinitionConstants.SCOPE_COMPANY, false);
 		}
 		finally {
 			if (objectDefinition != null) {

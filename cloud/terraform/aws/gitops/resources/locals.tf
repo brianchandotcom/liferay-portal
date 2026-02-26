@@ -1,5 +1,14 @@
 locals {
 	account_id=data.aws_caller_identity.current.account_id
+	argocd_gateway_name="argocd-gateway"
+	argocd_gateway_class_name="argocd-gateway-class"
+	argocd_tls_enabled=var.argocd_domain_config.hostname != null && var.argocd_domain_config.tls_external_secret_name != null
+	argocd_tls_external_secret_name=var.argocd_domain_config.tls_external_secret_name == null ? null : (
+		startswith(var.argocd_domain_config.tls_external_secret_name, local.secret_prefixes.certificates) ?
+		var.argocd_domain_config.tls_external_secret_name :
+		"${local.secret_prefixes.certificates}${var.argocd_domain_config.tls_external_secret_name}"
+	)
+	argocd_tls_secret_name="argocd-server-tls"
 	cluster_name="${var.deployment_name}-eks"
 	common_labels={
 		"app.kubernetes.io/component"="gitops-infrastructure"

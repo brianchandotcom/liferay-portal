@@ -1,3 +1,10 @@
+variable "argocd_domain_config" {
+	default={}
+	type=object({
+		hostname=optional(string, null)
+		tls_external_secret_name=optional(string, null)
+	})
+}
 variable "argocd_namespace" {
 	default="argocd-system"
 }

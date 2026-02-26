@@ -75,11 +75,11 @@ jobs:
                         then
                             echo "[ACTION] Closing pull request: ${pullRequestUrl} due to conflicts."
 
-                            curl -s -X POST -H "Authorization: Bearer ${githubToken}" \
+                            curl -s -o /dev/null -X POST -H "Authorization: Bearer ${githubToken}" \
                                 -d '{"body": "This pull request has merge conflicts and has been closed. Please resolve conflicts and re-send."}' \
                                 "https://api.github.com/repos/${currentOwner}/${repositoryName}/issues/${pullRequestNumber}/comments"
 
-                            curl -s -X PATCH -H "Authorization: Bearer ${githubToken}" \
+                            curl -s -o /dev/null -X PATCH -H "Authorization: Bearer ${githubToken}" \
                                 -d '{"state": "closed"}' \
                                 "https://api.github.com/repos/${currentOwner}/${repositoryName}/pulls/${pullRequestNumber}"
                         else

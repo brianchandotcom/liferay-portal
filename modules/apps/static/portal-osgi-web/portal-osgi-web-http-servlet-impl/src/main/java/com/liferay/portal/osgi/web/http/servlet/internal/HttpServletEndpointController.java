@@ -340,7 +340,8 @@ public class HttpServletEndpointController {
 
 				Bundle bundle = serviceReference.getBundle();
 
-				Dictionary<String, String> headers = bundle.getHeaders();
+				Dictionary<String, String> headers = bundle.getHeaders(
+					StringPool.BLANK);
 
 				boolean webServiceTracking = GetterUtil.getBoolean(
 					headers.get("Web-ServiceTracking"), true);

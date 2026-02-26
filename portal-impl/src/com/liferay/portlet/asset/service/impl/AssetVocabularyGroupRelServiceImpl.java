@@ -32,6 +32,14 @@ public class AssetVocabularyGroupRelServiceImpl
 	}
 
 	@Override
+	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelsByGroupId(
+		long groupId) {
+
+		return assetVocabularyGroupRelLocalService.
+			getAssetVocabularyGroupRelsByGroupId(groupId);
+	}
+
+	@Override
 	public List<AssetVocabularyGroupRel>
 			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
 		throws PortalException {

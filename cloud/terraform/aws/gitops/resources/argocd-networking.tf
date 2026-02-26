@@ -25,8 +25,8 @@ resource "kubernetes_manifest" "argocd_gateway" {
 						}
 						hostname=var.argocd_domain_config.hostname
 						name="http"
-						protocol="HTTP"
 						port=80
+						protocol="HTTP"
 					},
 				],
 				local.argocd_tls_enabled ? [
@@ -38,8 +38,8 @@ resource "kubernetes_manifest" "argocd_gateway" {
 						}
 						hostname=var.argocd_domain_config.hostname
 						name="https"
-						protocol="HTTPS"
 						port=443
+						protocol="HTTPS"
 						tls={
 							certificateRefs=[{name=local.argocd_tls_secret_name}]
 							mode="Terminate"
@@ -78,7 +78,6 @@ resource "kubernetes_manifest" "argocd_gateway_proxy_config" {
 		}
 		spec={
 			provider={
-				type="Kubernetes"
 				kubernetes={
 					envoyDeployment={
 						pod={
@@ -97,6 +96,7 @@ resource "kubernetes_manifest" "argocd_gateway_proxy_config" {
 						}
 					}
 				}
+				type="Kubernetes"
 			}
 		}
 	}

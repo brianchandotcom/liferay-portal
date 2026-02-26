@@ -14,6 +14,7 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
+import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
@@ -29,11 +30,13 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
 	loginTest(),
-	pageViewModePagesTest
+	pageViewModePagesTest,
+	productMenuPageTest
 );
 
 test('LPD-5780 Modal title and product name appear properly in product menu', async ({
@@ -1110,8 +1113,8 @@ test('LPD-39067 Can product media and relation show correct date format', async 
 
 test('LPD-52731 Product shows in catalog after updating Account Group Visibility Filter through Batch API', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	page,
+	productMenuPage,
 }) => {
 	const siteName = 'minium-' + getRandomInt();
 
@@ -1157,7 +1160,7 @@ test('LPD-52731 Product shows in catalog after updating Account Group Visibility
 		},
 	]);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await productMenuPage.goToSite(site.name);
 
 	await expect(page.getByText(product.name['en_US'])).toBeVisible();
 });

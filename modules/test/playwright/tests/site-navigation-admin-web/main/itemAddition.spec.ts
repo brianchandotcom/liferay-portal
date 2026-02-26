@@ -23,6 +23,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	depotAdminPageTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -893,9 +894,13 @@ test(
 
 		await navigationMenusPage.addMenuItemButton.click();
 
-		expect(await navigationMenusPage.getMenuItem('Page')).not.toBeVisible();
+		await expect(
+			await navigationMenusPage.getMenuItem('Page')
+		).not.toBeVisible();
 
-		await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet();
+		await navigationMenusPage.addMenuItemButton.click();
+
+		await navigationMenusPage.gotoGlobalSiteNavigationMenuPortlet(false);
 
 		await page.waitForTimeout(300);
 

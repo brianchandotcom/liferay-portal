@@ -558,10 +558,6 @@ export class ApplicationsMenuPage {
 		await this.exportMenuItem.click();
 	}
 
-	async goToGlobalSite() {
-		await this.goToSite('Global');
-	}
-
 	async goToGogoShell() {
 		await this.goToControlPanel();
 		await this.gogoShellItem.click();

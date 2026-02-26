@@ -27,6 +27,7 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-36105': {enabled: true},
 		'LPD-39304': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -113,7 +114,7 @@ test(
 			type: 'site',
 		});
 
-		await applicationsMenuPage.goToSite(siteName);
+		await productMenuPage.goToSite(siteName);
 		await productMenuPage.goToPages();
 		await page.getByLabel(`${page1Name}`, {exact: true}).click();
 		await pageEditorPage.addWidget(

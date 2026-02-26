@@ -16,6 +16,7 @@ import {loginTest} from '../../../../fixtures/loginTest';
 import {notificationPagesTest} from '../../../../fixtures/notificationPagesTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../../fixtures/pageViewModePagesTest';
+import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {systemSettingsPageTest} from '../../../../fixtures/systemSettingsPageTest';
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
@@ -39,6 +40,7 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -46,6 +48,7 @@ export const test = mergeTests(
 	notificationPagesTest,
 	pageEditorPagesTest,
 	pageViewModePagesTest,
+	productMenuPageTest,
 	systemSettingsPageTest
 );
 
@@ -1902,7 +1905,6 @@ test(
 	async ({
 		accountsPage,
 		apiHelpers,
-		applicationsMenuPage,
 		checkoutPage,
 		commerceAccountManagementPage,
 		commerceThemeMiniumCatalogPage,
@@ -1910,11 +1912,12 @@ test(
 		editAccountChannelDefaultsPage,
 		editAccountPage,
 		page,
+		productMenuPage,
 	}) => {
 		test.setTimeout(120000);
 
 		const initiateCheckout = async (site: string) => {
-			await applicationsMenuPage.goToSite(site);
+			await productMenuPage.goToSite(site);
 
 			await page.waitForLoadState('networkidle');
 

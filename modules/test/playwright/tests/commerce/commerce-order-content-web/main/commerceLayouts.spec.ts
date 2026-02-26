@@ -7,7 +7,6 @@ import {expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../../fixtures/displayPageTemplatesPagesTest';
@@ -15,6 +14,7 @@ import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
+import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
@@ -32,16 +32,17 @@ import {checkLocalizedDate} from '../../utils/date';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-10562': {enabled: true},
 		'LPD-20379': {enabled: true},
+		'LPD-36105': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
+	productMenuPageTest,
 	isolatedSiteTest,
 	loginTest()
 );
@@ -3085,10 +3086,10 @@ test(
 	{tag: '@LPD-43496'},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		commerceLayoutsPage,
 		displayPageTemplatesPage,
 		page,
+		productMenuPage,
 		site,
 	}) => {
 		await apiHelpers.headlessAdminUser.postAccount({
@@ -3110,8 +3111,6 @@ test(
 		await apiHelpers.headlessCommerceAdminChannel.postChannel({
 			siteGroupId: site.id,
 		});
-
-		await applicationsMenuPage.goToSite(site.name);
 
 		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
@@ -3140,7 +3139,7 @@ test(
 			commerceLayoutsPage.defaultDisplayPageTemplateIcon
 		).toBeVisible();
 
-		await applicationsMenuPage.goToSite(site.name);
+		await productMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')
@@ -3306,11 +3305,11 @@ test(
 	{tag: '@LPD-52401'},
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		commerceAdminChannelDetailsPage,
 		commerceAdminChannelsPage,
 		commerceLayoutsPage,
 		page,
+		productMenuPage,
 		site,
 	}) => {
 		await apiHelpers.headlessAdminUser.postAccount({
@@ -3347,14 +3346,14 @@ test(
 
 		await waitForAlert(page);
 
-		await applicationsMenuPage.goToSite(site.name);
+		await productMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')
 			.click();
 		await commerceLayoutsPage.createNewOrderButton.click();
 
-		await applicationsMenuPage.goToSite(site.name);
+		await productMenuPage.goToSite(site.name);
 
 		await commerceLayoutsPage
 			.accountSelectorButton('Account Selector')

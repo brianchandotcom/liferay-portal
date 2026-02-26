@@ -8,4 +8,7 @@ export const config = {
 	name: 'smoke.main',
 	testDir: 'tests/smoke/main',
 	timeout: 100 * 1000,
+	use: {
+		testIdAttribute: 'data-qa-id',
+	},
 };

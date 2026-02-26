@@ -8,12 +8,12 @@ import {createReadStream} from 'fs';
 import path from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
+import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {DLFILE_STATUS} from '../../../helpers/json-web-services/JSONWebServicesDocumentLibraryApiHelper';
@@ -30,7 +30,6 @@ import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils
 
 const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
@@ -38,6 +37,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	pageEditorPagesTest,
+	productMenuPageTest,
 	siteSettingsPagesTest
 );
 
@@ -883,11 +883,11 @@ test(
 
 	async ({
 		apiHelpers,
-		applicationsMenuPage,
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
 		documentLibraryPage,
 		page,
+		productMenuPage,
 		site,
 		siteSettingsLocalizationPage,
 	}) => {
@@ -922,8 +922,8 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
+		await productMenuPage.goToSite('Global');
 		await apiHelpers.headlessSite.deleteSite(site.id);
-		await applicationsMenuPage.goToGlobalSite();
 		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 
 		await waitForAlert(

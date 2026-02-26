@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
@@ -23,6 +24,9 @@ import {sitesAdminPagesTest} from '../../site-admin-web/main/fixtures/sitesAdmin
 export const test = mergeTests(
 	apiHelpersTest,
 	applicationsMenuPageTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest(),
 	pageEditorPagesTest,
 	pageViewModePagesTest,
@@ -111,7 +115,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin user creates three widget pages for the site', async () => {
-		await applicationsMenuPage.goToSite(siteName);
+		await productMenuPage.goToSite(siteName);
 
 		await page.locator('.control-menu').getByText('Style Books').waitFor();
 
@@ -199,7 +203,7 @@ test('Smoke', async ({
 	});
 
 	await test.step('When the admin opens the product menu and accesses the web content portlet', async () => {
-		await applicationsMenuPage.goToSite(siteName);
+		await productMenuPage.goToSite(siteName);
 
 		await productMenuPage.openProductMenuIfClosed();
 

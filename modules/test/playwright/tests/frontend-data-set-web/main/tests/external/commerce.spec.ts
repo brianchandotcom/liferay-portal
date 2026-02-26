@@ -6,17 +6,21 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../../../utils/getRandomString';
 
 const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
+	productMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
 	loginTest()
 );
 
@@ -40,7 +44,7 @@ test(
 	{
 		tag: ['@LPD-31378'],
 	},
-	async ({apiHelpers, applicationsMenuPage, page}) => {
+	async ({apiHelpers, page, productMenuPage}) => {
 		await test.step('Create commerce site', async () => {
 			const site = await apiHelpers.headlessSite.createSite({
 				name: 'Minium',
@@ -50,7 +54,7 @@ test(
 
 			apiHelpers.data.push({id: site.id, type: 'site'});
 
-			await applicationsMenuPage.goToSite('Minium');
+			await productMenuPage.goToSite('Minium');
 		});
 
 		await test.step('Add transmission to shopping cart', async () => {

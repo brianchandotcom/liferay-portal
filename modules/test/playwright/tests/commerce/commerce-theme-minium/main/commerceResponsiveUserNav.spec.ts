@@ -6,18 +6,22 @@
 import {devices, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
-import {applicationsMenuPageTest} from '../../../../fixtures/applicationsMenuPageTest';
 import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../fixtures/loginTest';
+import {productMenuPageTest} from '../../../../fixtures/productMenuPageTest';
 import {miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	apiHelpersTest,
-	applicationsMenuPageTest,
 	commercePagesTest,
 	dataApiHelpersTest,
-	loginTest()
+	featureFlagsTest({
+		'LPD-36105': {enabled: true},
+	}),
+	loginTest(),
+	productMenuPageTest
 );
 
 test.use({
@@ -26,13 +30,13 @@ test.use({
 
 test('LPD-3391 Minium sidebar user navigation items are clickable in responsive mode', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceThemeMiniumPage,
 	page,
+	productMenuPage,
 }) => {
 	const {site} = await miniumSetUp(apiHelpers);
 
-	await applicationsMenuPage.goToSite(site.name);
+	await productMenuPage.goToSite(site.name);
 
 	await commerceThemeMiniumPage.stickerUserNav.click();
 	await commerceThemeMiniumPage.myProfileItemMenu.click();

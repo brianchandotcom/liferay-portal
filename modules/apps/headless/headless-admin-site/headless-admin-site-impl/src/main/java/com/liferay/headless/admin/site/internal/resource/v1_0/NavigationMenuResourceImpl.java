@@ -88,8 +88,10 @@ public class NavigationMenuResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<SiteNavigationMenu>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -102,8 +104,8 @@ public class NavigationMenuResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return SiteNavigationMenu.class.getName();
+			public Class<SiteNavigationMenu> getModelClass() {
+				return SiteNavigationMenu.class;
 			}
 
 			@Override

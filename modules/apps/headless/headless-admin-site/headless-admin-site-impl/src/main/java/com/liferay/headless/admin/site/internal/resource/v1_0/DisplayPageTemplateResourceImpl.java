@@ -117,8 +117,10 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public ExportImportDescriptor getExportImportDescriptor() {
-		return new ExportImportDescriptor() {
+	public ExportImportDescriptor<LayoutPageTemplateEntry>
+		getExportImportDescriptor() {
+
+		return new ExportImportDescriptor<>() {
 
 			@Override
 			public String getKey() {
@@ -131,8 +133,8 @@ public class DisplayPageTemplateResourceImpl
 			}
 
 			@Override
-			public String getModelClassName() {
-				return LayoutPageTemplateEntry.class.getName();
+			public Class<LayoutPageTemplateEntry> getModelClass() {
+				return LayoutPageTemplateEntry.class;
 			}
 
 			@Override

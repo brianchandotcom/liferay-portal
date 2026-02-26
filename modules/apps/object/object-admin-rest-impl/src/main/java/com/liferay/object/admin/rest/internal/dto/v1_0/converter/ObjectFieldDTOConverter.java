@@ -21,6 +21,8 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -184,12 +186,31 @@ public class ObjectFieldDTOConverter
 												getValue())));
 						}
 
+						if (serviceBuilderObjectFieldSetting.compareName(
+								ObjectFieldSettingConstants.
+									NAME_STORAGE_DEPOT_GROUP)) {
+
+							Group group = _groupLocalService.fetchGroup(
+								GetterUtil.getLong(
+									serviceBuilderObjectFieldSetting.
+										getValue()));
+
+							if (group != null) {
+								return group.getExternalReferenceCode();
+							}
+
+							return null;
+						}
+
 						return ObjectFieldSettingUtil.getValue(
 							serviceBuilderObjectFieldSetting);
 					});
 			}
 		};
 	}
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;

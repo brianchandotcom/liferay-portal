@@ -15,9 +15,12 @@ import com.liferay.object.model.ObjectFilter;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectFilterLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.util.ObjectMapperUtil;
@@ -34,7 +37,8 @@ public class ObjectFieldSettingUtil {
 
 	public static List<com.liferay.object.model.ObjectFieldSetting>
 		toObjectFieldSettings(
-			long listTypeDefinitionId, ObjectField objectField,
+			GroupLocalService groupLocalService, long listTypeDefinitionId,
+			ObjectField objectField,
 			ObjectFieldSettingLocalService objectFieldSettingLocalService,
 			ObjectFilterLocalService objectFilterLocalService) {
 
@@ -42,7 +46,7 @@ public class ObjectFieldSettingUtil {
 			TransformUtil.transformToList(
 				objectField.getObjectFieldSettings(),
 				objectFieldSetting -> _toObjectFieldSetting(
-					listTypeDefinitionId, objectFieldSetting,
+					groupLocalService, listTypeDefinitionId, objectFieldSetting,
 					objectFieldSettingLocalService, objectFilterLocalService));
 
 		List<String> objectFieldSettingNames = ListUtil.toList(
@@ -75,7 +79,7 @@ public class ObjectFieldSettingUtil {
 
 	private static com.liferay.object.model.ObjectFieldSetting
 			_toObjectFieldSetting(
-				long listTypeDefinitionId,
+				GroupLocalService groupLocalService, long listTypeDefinitionId,
 				ObjectFieldSetting objectFieldSetting,
 				ObjectFieldSettingLocalService objectFieldSettingLocalService,
 				ObjectFilterLocalService objectFilterLocalService)
@@ -108,6 +112,21 @@ public class ObjectFieldSettingUtil {
 
 		serviceBuilderObjectFieldSetting.setValue(
 			String.valueOf(objectFieldSetting.getValue()));
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				serviceBuilderObjectFieldSetting.getCompanyId(), "LPD-74813") &&
+			serviceBuilderObjectFieldSetting.compareName(
+				ObjectFieldSettingConstants.NAME_STORAGE_DEPOT_GROUP)) {
+
+			Group group = groupLocalService.fetchGroupByExternalReferenceCode(
+				String.valueOf(objectFieldSetting.getValue()),
+				serviceBuilderObjectFieldSetting.getCompanyId());
+
+			if (group != null) {
+				serviceBuilderObjectFieldSetting.setValue(
+					String.valueOf(group.getGroupId()));
+			}
+		}
 
 		if (serviceBuilderObjectFieldSetting.compareName(
 				ObjectFieldSettingConstants.NAME_FILTERS)) {

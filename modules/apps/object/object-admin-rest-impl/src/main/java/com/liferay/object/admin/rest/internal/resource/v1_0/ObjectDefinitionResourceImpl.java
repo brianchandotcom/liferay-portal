@@ -323,7 +323,7 @@ public class ObjectDefinitionResourceImpl
 							objectField.getBusinessTypeAsString(),
 							ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)),
 				objectField -> ObjectFieldUtil.toObjectField(
-					objectDefinition.getDefaultLanguageId(),
+					objectDefinition.getDefaultLanguageId(), _groupLocalService,
 					_listTypeDefinitionLocalService, objectField,
 					_objectFieldLocalService, _objectFieldSettingLocalService,
 					_objectFilterLocalService));
@@ -610,7 +610,7 @@ public class ObjectDefinitionResourceImpl
 							_objectDefinitionSettingLocalService),
 						ObjectFieldUtil.toObjectFields(
 							objectDefinition.getDefaultLanguageId(),
-							_listTypeDefinitionLocalService,
+							_groupLocalService, _listTypeDefinitionLocalService,
 							_objectFieldLocalService,
 							objectDefinition.getObjectFields(),
 							_objectFieldSettingLocalService,
@@ -696,7 +696,7 @@ public class ObjectDefinitionResourceImpl
 							_objectDefinitionSettingLocalService),
 						ObjectFieldUtil.toObjectFields(
 							objectDefinition.getDefaultLanguageId(),
-							_listTypeDefinitionLocalService,
+							_groupLocalService, _listTypeDefinitionLocalService,
 							_objectFieldLocalService,
 							objectDefinition.getObjectFields(),
 							_objectFieldSettingLocalService,
@@ -1235,9 +1235,9 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectDefinition1.getObjectDefinitionId(),
 				serviceBuilderObjectDefinition2.getObjectDefinitionId(),
 				ObjectFieldUtil.toObjectField(
-					defaultLanguageId, _listTypeDefinitionLocalService,
-					objectField, _objectFieldLocalService,
-					_objectFieldSettingLocalService,
+					defaultLanguageId, _groupLocalService,
+					_listTypeDefinitionLocalService, objectField,
+					_objectFieldLocalService, _objectFieldSettingLocalService,
 					_objectFilterLocalService));
 		}
 	}
@@ -1484,8 +1484,9 @@ public class ObjectDefinitionResourceImpl
 							objectField.getBusinessTypeAsString(),
 							ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION)),
 					objectField -> ObjectFieldUtil.toObjectField(
-						defaultLanguageId, _listTypeDefinitionLocalService,
-						objectField, _objectFieldLocalService,
+						defaultLanguageId, _groupLocalService,
+						_listTypeDefinitionLocalService, objectField,
+						_objectFieldLocalService,
 						_objectFieldSettingLocalService,
 						_objectFilterLocalService))) {
 

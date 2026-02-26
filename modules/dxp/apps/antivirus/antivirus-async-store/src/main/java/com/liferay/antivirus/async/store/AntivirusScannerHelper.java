@@ -13,6 +13,7 @@ import com.liferay.document.library.kernel.antivirus.AntivirusScanner;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerException;
 import com.liferay.document.library.kernel.antivirus.AntivirusVirusFoundException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
@@ -35,6 +36,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.audit.event.generators.constants.EventTypes;
 
 import java.io.InputStream;
+
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -151,12 +154,14 @@ public class AntivirusScannerHelper {
 						if (fileVersionsCount <= 1) {
 							_dlAppLocalService.deleteFileEntry(classPK);
 						}
-						else {
-							if (!version.contains("PWC")) {
-								_dlFileEntryLocalService.deleteFileVersion(
-									dlFileEntry.getUserId(),
-									dlFileEntry.getFileEntryId(), version);
-							}
+						else if (!Objects.equals(
+									version,
+									DLFileEntryConstants.
+										PRIVATE_WORKING_COPY_VERSION)) {
+
+							_dlFileEntryLocalService.deleteFileVersion(
+								dlFileEntry.getUserId(),
+								dlFileEntry.getFileEntryId(), version);
 						}
 
 						_store.deleteFile(

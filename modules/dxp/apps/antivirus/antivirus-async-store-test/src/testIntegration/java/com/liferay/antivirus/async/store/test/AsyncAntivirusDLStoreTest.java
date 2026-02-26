@@ -126,6 +126,8 @@ public class AsyncAntivirusDLStoreTest {
 
 	@After
 	public void tearDown() throws Exception {
+		//_configuration.delete();
+
 		for (ServiceRegistration<?> serviceRegistration :
 				_serviceRegistrations) {
 
@@ -348,7 +350,6 @@ public class AsyncAntivirusDLStoreTest {
 				Assert.assertTrue(calledScan.get());
 				Assert.assertTrue(firedEventPrepare.get());
 				Assert.assertTrue(firedEventVirusFound.get());
-
 				Assert.assertNull(
 					_dlFileEntryLocalService.fetchDLFileEntry(
 						dlFileEntry.getFileEntryId()));
@@ -579,6 +580,7 @@ public class AsyncAntivirusDLStoreTest {
 				_setAntivirusAsyncDLStoreWithSafeCloseable()) {
 
 			Thread.sleep(_SLEEP_TIME);
+
 			_testScanUpdateUser();
 		}
 	}
@@ -666,8 +668,6 @@ public class AsyncAntivirusDLStoreTest {
 		Store store = ReflectionTestUtil.getAndSetFieldValue(
 			dlStore, "_store", _dbStore);
 
-		_configuration.delete();
-
 		return () -> ReflectionTestUtil.setFieldValue(dlStore, "_store", store);
 	}
 
@@ -699,25 +699,25 @@ public class AsyncAntivirusDLStoreTest {
 		AtomicInteger scanCount = new AtomicInteger(0);
 
 		try (SafeCloseable closeable1 = _registerService(
-		AntivirusAsyncEventListener.class,
-		_create(
-			HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
-				AntivirusAsyncEvent.MISSING,
-				() -> firedEventSuccess.set(true)
-			).put(
-				AntivirusAsyncEvent.PREPARE,
-				() -> firedEventPrepare.set(true)
-			).put(
-				AntivirusAsyncEvent.PROCESSING_ERROR,
-				() -> firedEventSuccess.set(true)
-			).put(
-				AntivirusAsyncEvent.SUCCESS,
-				() -> firedEventSuccess.set(true)
-			).put(
-				AntivirusAsyncEvent.VIRUS_FOUND,
-				() -> firedEventVirusFound.set(true)
-			).build()),
-		MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
+			AntivirusAsyncEventListener.class,
+			_create(
+				HashMapBuilder.<AntivirusAsyncEvent, Runnable>put(
+					AntivirusAsyncEvent.MISSING,
+					() -> firedEventSuccess.set(true)
+				).put(
+					AntivirusAsyncEvent.PREPARE,
+					() -> firedEventPrepare.set(true)
+				).put(
+					AntivirusAsyncEvent.PROCESSING_ERROR,
+					() -> firedEventSuccess.set(true)
+				).put(
+					AntivirusAsyncEvent.SUCCESS,
+					() -> firedEventSuccess.set(true)
+				).put(
+					AntivirusAsyncEvent.VIRUS_FOUND,
+					() -> firedEventVirusFound.set(true)
+				).build()),
+			MapUtil.singletonDictionary(Constants.SERVICE_RANKING, -100));
 
 		SafeCloseable closeable2 = _registerService(
 			AntivirusAsyncRetryScheduler.class,

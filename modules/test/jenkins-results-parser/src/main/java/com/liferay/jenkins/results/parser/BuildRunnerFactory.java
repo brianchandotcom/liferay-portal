@@ -20,6 +20,11 @@ public class BuildRunnerFactory {
 
 		BuildRunner<?> buildRunner = null;
 
+		if (jobName.startsWith("archive-binaries-cache-controller(")) {
+			buildRunner = new ArchiveBinariesCacheControllerBuildRunner(
+				(PortalTopLevelBuildData)buildData);
+		}
+
 		if (jobName.equals("generate-reports")) {
 			buildRunner = new GenerateReportsBuildRunner(buildData);
 		}

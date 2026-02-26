@@ -67,7 +67,10 @@ const CMS_FILE_ITEM_SELECTOR_CONFIG: CMSFileItemSelectorModalConfig = {
 	multiSelect: false,
 };
 
-const FDS_PROPS: Omit<CMSFileItemSelectorModalProps['fdsProps'], 'id'> = {
+const FDS_PROPS: Omit<
+	CMSFileItemSelectorModalProps['fdsProps'],
+	'id' | 'items'
+> = {
 	filters: [
 		{
 			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
@@ -80,7 +83,6 @@ const FDS_PROPS: Omit<CMSFileItemSelectorModalProps['fdsProps'], 'id'> = {
 			type: 'selection',
 		},
 	],
-	items: [],
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,

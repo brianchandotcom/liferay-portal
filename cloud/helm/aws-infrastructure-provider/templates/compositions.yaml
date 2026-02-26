@@ -26,6 +26,8 @@ spec:
 
                         {{- $xr := .observed.composite.resource -}}
 
+                        {{- $baseRegion := $xr.spec.region -}}
+
                         {{- $environmentId := $xr.spec.environmentId -}}
                         {{- $projectId := $xr.spec.projectId -}}
                         {{- $projectIdFull := printf "%s-%s" $projectId $environmentId -}}
@@ -38,7 +40,8 @@ spec:
                         {{- $oidcProvider := `}}{{ .Values.aws.oidcProvider | quote }}{{` -}}
                         {{- $privateSubnetIdsList := $privateSubnetIds | fromJson -}}
 
-                        {{- $backupSpec := $xr.spec.backup | default dict -}}
+                        {{- $backupSpec := $xr.spec.backup -}}
+                        {{- $backupRegion := $backupSpec.region | default $baseRegion -}}
 
                         {{- if $backupSpec.enabled }}
                         ---
@@ -56,7 +59,7 @@ spec:
                             name: {{ $baseName }}-argo-wf
                         spec:
                             forProvider:
-                                region: {{ $backupSpec.region }}
+                                region: {{ $backupRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: s3.aws.m.upbound.io/v1beta1
@@ -79,7 +82,7 @@ spec:
                                         component: argo-wf
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                region: {{ $backupSpec.region }}
+                                region: {{ $backupRegion }}
                                 versioningConfiguration:
                                     status: Enabled
                             managementPolicies: {{ $managementPolicies }}
@@ -98,7 +101,7 @@ spec:
                         spec:
                             forProvider:
                                 name: {{ $baseName }}-backup-plan
-                                region: {{ $backupSpec.region }}
+                                region: {{ $backupRegion }}
                                 rule:
                                     {{- range $rule := $backupSpec.rules }}
                                     -   lifecycle:
@@ -296,7 +299,7 @@ spec:
                                         component: backup-plan
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                region: {{ $backupSpec.region }}
+                                region: {{ $backupRegion }}
                                 resources: ["*"]
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -314,12 +317,13 @@ spec:
                             name: {{ $baseName }}-backup-vault
                         spec:
                             forProvider:
-                                region: {{ $backupSpec.region }}
+                                region: {{ $backupRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         {{- end }}
 
                         {{- $databaseInstanceManagementPolicies := $backupSpec.enabled | ternary ((list "*") | toJson) $managementPolicies -}}
                         {{- $databaseSpec := $xr.spec.database }}
+                        {{- $databaseRegion := $databaseSpec.region | default $baseRegion }}
 
                         {{- range $dataPlane := list "blue" "green" -}}
                         {{- if or (eq $dataPlane $xr.spec.activeDataPlane) $databaseSpec.isRestoring }}
@@ -359,7 +363,7 @@ spec:
                                 passwordSecretRef:
                                     key: password
                                     name: liferay-database-{{ $dataPlane }}-password
-                                region: {{ $databaseSpec.region }}
+                                region: {{ $databaseRegion }}
                                 skipFinalSnapshot: true
                                 {{- if and (ne $dataPlane $xr.spec.activeDataPlane) $databaseSpec.snapshotIdentifier }}
                                 snapshotIdentifier: {{ $databaseSpec.snapshotIdentifier }}
@@ -395,7 +399,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $databaseSpec.region }}
+                                region: {{ $databaseRegion }}
                                 tags:
                                     Name: {{ $baseName }}-database-security-group-{{ $dataPlane }}
                                 vpcId: {{ $vpcId }}
@@ -418,7 +422,7 @@ spec:
                                 fromPort: 5432
                                 ipProtocol: tcp
                                 referencedSecurityGroupId: {{ $nodesSecurityGroupId }}
-                                region: {{ $databaseSpec.region }}
+                                region: {{ $databaseRegion }}
                                 securityGroupIdSelector:
                                     matchLabels:
                                         app: liferay
@@ -445,7 +449,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $databaseSpec.region }}
+                                region: {{ $databaseRegion }}
                                 subnetIds: {{ $privateSubnetIdsList | toJson }}
                                 tags:
                                     Name: {{ $baseName }}-database-{{ $dataPlane }}-subnets
@@ -455,6 +459,7 @@ spec:
 
                         {{- $overlayBucketName := printf "%s-overlay-%s" $deploymentName $baseName -}}
                         {{- $overlaySpec := $xr.spec.overlay }}
+                        {{- $overlayRegion := $overlaySpec.region | default $baseRegion }}
                         ---
                         apiVersion: s3.aws.m.upbound.io/v1beta1
                         kind: Bucket
@@ -471,7 +476,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $overlaySpec.region }}
+                                region: {{ $overlayRegion }}
                                 tags:
                                     Name: {{ $overlayBucketName }}
                             managementPolicies: {{ $managementPolicies }}
@@ -494,7 +499,7 @@ spec:
                                         component: overlay
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                region: {{ $overlaySpec.region }}
+                                region: {{ $overlayRegion }}
                                 rule:
                                     -   abortIncompleteMultipartUpload:
                                             -   daysAfterInitiation: 7
@@ -523,7 +528,7 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                                 ignorePublicAcls: true
-                                region: {{ $overlaySpec.region }}
+                                region: {{ $overlayRegion }}
                                 restrictPublicBuckets: true
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -549,7 +554,7 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                                     namespace: {{ $namespace }}
-                                region: {{ $overlaySpec.region }}
+                                region: {{ $overlayRegion }}
                                 versioningConfiguration:
                                     status: Enabled
                             managementPolicies: {{ $managementPolicies }}
@@ -659,6 +664,7 @@ spec:
 
                         {{- $storageName := printf "%s-%s-storage" $accountId $baseName -}}
                         {{- $storageSpec := $xr.spec.storage }}
+                        {{- $storageRegion := $storageSpec.region | default $baseRegion }}
 
                         {{- range $dataPlane := list "blue" "green" }}
                         ---
@@ -678,7 +684,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $storageSpec.region }}
+                                region: {{ $storageRegion }}
                                 tags:
                                     Active: {{ printf "%t" (eq $dataPlane $xr.spec.activeDataPlane) }}
                                     Backup: true
@@ -704,7 +710,7 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                                         dataPlane: {{ $dataPlane }}
-                                region: {{ $storageSpec.region }}
+                                region: {{ $storageRegion }}
                                 rule:
                                     -   abortIncompleteMultipartUpload:
                                             -   daysAfterInitiation: 7
@@ -734,7 +740,7 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                                 ignorePublicAcls: true
-                                region: {{ $storageSpec.region }}
+                                region: {{ $storageRegion }}
                                 restrictPublicBuckets: true
                             managementPolicies: {{ $managementPolicies }}
                         ---
@@ -762,7 +768,7 @@ spec:
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
                                     namespace: {{ $namespace }}
-                                region: {{ $storageSpec.region }}
+                                region: {{ $storageRegion }}
                                 versioningConfiguration:
                                     status: Enabled
                             managementPolicies: {{ $managementPolicies }}
@@ -833,13 +839,14 @@ spec:
 
                         {{- $searchName := printf "%.21s-search" $baseName -}}
                         {{- $searchSpec := $xr.spec.search }}
+                        {{- $searchRegion := $searchSpec.region | default $baseRegion }}
 
                         ---
                         apiVersion: opensearch.aws.m.upbound.io/v1beta1
                         kind: Domain
                         metadata:
                             annotations:
-                                crossplane.io/external-name: arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}
+                                crossplane.io/external-name: arn:aws:es:{{ $searchRegion }}:{{ $accountId }}:domain/{{ $searchName }}
                                 gotemplating.fn.crossplane.io/composition-resource-name: search
                             labels:
                                 app: liferay
@@ -877,7 +884,7 @@ spec:
                                 engineVersion: {{ $searchSpec.engineVersion | quote }}
                                 nodeToNodeEncryption:
                                     enabled: true
-                                region: {{ $searchSpec.region }}
+                                region: {{ $searchRegion }}
                                 tags:
                                     Name: {{ $searchName }}
                                 vpcOptions:
@@ -916,7 +923,7 @@ spec:
                                                     "AWS": "*"
                                                 },
                                                 "Resource": [
-                                                    "arn:aws:es:{{ $searchSpec.region }}:{{ $accountId }}:domain/{{ $searchName }}/*"
+                                                    "arn:aws:es:{{ $searchRegion }}:{{ $accountId }}:domain/{{ $searchName }}/*"
                                                 ]
                                             }
                                         ],
@@ -928,7 +935,7 @@ spec:
                                         component: search
                                         environmentId: {{ $environmentId }}
                                         projectId: {{ $projectId }}
-                                region: {{ $searchSpec.region }}
+                                region: {{ $searchRegion }}
                             managementPolicies: {{ $managementPolicies }}
                         ---
                         apiVersion: kubernetes.m.crossplane.io/v1alpha1
@@ -975,7 +982,7 @@ spec:
                             namespace: {{ $namespace }}
                         spec:
                             forProvider:
-                                region: {{ $searchSpec.region }}
+                                region: {{ $searchRegion }}
                                 tags:
                                     Name: {{ $searchName }}-security-group
                                 vpcId: {{ $vpcId }}
@@ -997,7 +1004,7 @@ spec:
                                 fromPort: 443
                                 ipProtocol: tcp
                                 referencedSecurityGroupId: {{ $nodesSecurityGroupId }}
-                                region: {{ $searchSpec.region }}
+                                region: {{ $searchRegion }}
                                 securityGroupIdSelector:
                                     matchLabels:
                                         app: liferay

@@ -54,7 +54,6 @@ spec:
                                             minItems: 1
                                             type: array
                                     required:
-                                        -   region
                                         -   rules
                                     type: object
                                 commonTags:
@@ -76,7 +75,6 @@ spec:
                                         isRestoring:
                                             type: boolean
                                         region:
-                                            default: us-west-2
                                             type: string
                                         snapshotIdentifier:
                                             type: string
@@ -86,8 +84,6 @@ spec:
                                         username:
                                             default: liferay_database_admin
                                             type: string
-                                    required:
-                                        -   region
                                     type: object
                                 deletionProtection:
                                     type: boolean
@@ -96,12 +92,11 @@ spec:
                                 overlay:
                                     properties:
                                         region:
-                                            default: us-west-2
                                             type: string
-                                    required:
-                                        -   region
                                     type: object
                                 projectId:
+                                    type: string
+                                region:
                                     type: string
                                 search:
                                     properties:
@@ -115,27 +110,22 @@ spec:
                                             default: t3.small.search
                                             type: string
                                         region:
-                                            default: us-west-2
                                             type: string
                                         username:
                                             default: liferay_search_admin
                                             type: string
-                                    required:
-                                        -   region
                                     type: object
                                 storage:
                                     properties:
                                         region:
-                                            default: us-west-2
                                             type: string
-                                    required:
-                                        -   region
                                     type: object
                             required:
                                 -   database
                                 -   deletionProtection
                                 -   environmentId
                                 -   projectId
+                                -   region
                                 -   search
                                 -   storage
                             type: object

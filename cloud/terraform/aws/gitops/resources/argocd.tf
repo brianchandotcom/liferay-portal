@@ -74,6 +74,10 @@ resource "kubernetes_manifest" "infrastructure_applicationset" {
 											value=var.infrastructure_git_repo_config.target.slugProjectId
 										},
 										{
+											name="region"
+											value=var.region
+										},
+										{
 											name="secretStoreName"
 											value=local.secret_store_name
 										},

@@ -153,10 +153,8 @@ public class PatcherUtil {
 				).build()
 			).build();
 
-		SubscriberStub subscriber = null;
-
-		try {
-			subscriber = GrpcSubscriberStub.create(subscriberStubSettings);
+		try (SubscriberStub subscriber = GrpcSubscriberStub.create(
+				subscriberStubSettings)) {
 
 			String subscriptionName = ProjectSubscriptionName.format(
 				patcherConfiguration.patcherPubsubProjectId(),
@@ -178,8 +176,6 @@ public class PatcherUtil {
 				pullResponse.getReceivedMessagesList();
 
 			if (receivedMessageList.isEmpty()) {
-				subscriber.close();
-
 				return null;
 			}
 
@@ -198,8 +194,6 @@ public class PatcherUtil {
 
 			acknowledgeUnaryCallable.call(acknowledgeRequest);
 
-			subscriber.close();
-
 			PubsubMessage pubsubMessage = receivedMessage.getMessage();
 
 			ByteString pubsubMessageData = pubsubMessage.getData();
@@ -210,8 +204,6 @@ public class PatcherUtil {
 			if (_log.isDebugEnabled()) {
 				_log.debug(exception);
 			}
-
-			subscriber.close();
 		}
 
 		return null;

@@ -53,12 +53,7 @@ public class CalendarBookingBatchReindexer {
 				indexableActionableDynamicQuery.addDocument(
 					_indexerDocumentBuilder.getDocument(calendarBooking)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;

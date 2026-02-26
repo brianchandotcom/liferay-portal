@@ -42,12 +42,7 @@ public class BookmarksFolderBatchReindexer {
 				indexableActionableDynamicQuery.addDocument(
 					_indexerDocumentBuilder.getDocument(bookmarksFolder)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;

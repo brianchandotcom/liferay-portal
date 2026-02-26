@@ -88,12 +88,7 @@ public class UserBulkReindexer implements BulkReindexer {
 				}
 			});
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

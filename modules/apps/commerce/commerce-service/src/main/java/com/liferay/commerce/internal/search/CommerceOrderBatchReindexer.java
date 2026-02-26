@@ -46,12 +46,7 @@ public class CommerceOrderBatchReindexer {
 				indexableActionableDynamicQuery.addDocument(
 					_indexerDocumentBuilder.getDocument(commerceOrder)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final CommerceOrderLocalService _commerceOrderLocalService;

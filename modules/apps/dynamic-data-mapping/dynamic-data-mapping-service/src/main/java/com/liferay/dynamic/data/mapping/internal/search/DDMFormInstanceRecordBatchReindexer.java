@@ -46,12 +46,7 @@ public class DDMFormInstanceRecordBatchReindexer {
 					_indexerDocumentBuilder.getDocument(
 						ddmFormInstanceRecord)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final DDMFormInstanceRecordLocalService

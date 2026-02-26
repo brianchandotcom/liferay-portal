@@ -41,12 +41,7 @@ public class DDLRecordBatchReindexer {
 			(DDLRecord record) -> indexableActionableDynamicQuery.addDocument(
 				_indexerDocumentBuilder.getDocument(record)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final IndexerDocumentBuilder _indexerDocumentBuilder;

@@ -66,13 +66,21 @@ public class IndexableActionableDynamicQuery
 	}
 
 	@Override
-	public void performActions() throws PortalException {
+	public void performActions() {
 		if (BackgroundTaskThreadLocal.hasBackgroundTask()) {
-			_total = super.performCount();
+			try {
+				_total = super.performCount();
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
 		}
 
 		try {
 			super.performActions();
+		}
+		catch (Exception exception) {
+			throw new RuntimeException(exception);
 		}
 		finally {
 			_count = _total;

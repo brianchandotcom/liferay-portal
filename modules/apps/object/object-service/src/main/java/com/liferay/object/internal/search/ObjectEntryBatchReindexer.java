@@ -52,12 +52,7 @@ public class ObjectEntryBatchReindexer {
 				indexableActionableDynamicQuery.addDocument(
 					indexerDocumentBuilder.getDocument(objectEntry)));
 
-		try {
-			indexableActionableDynamicQuery.performActions();
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+		indexableActionableDynamicQuery.performActions();
 	}
 
 	private final ObjectDefinition _objectDefinition;

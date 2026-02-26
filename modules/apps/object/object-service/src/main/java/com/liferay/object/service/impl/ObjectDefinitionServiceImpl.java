@@ -84,25 +84,6 @@ public class ObjectDefinitionServiceImpl
 	}
 
 	@Override
-	public ObjectDefinition addObjectDefinition(
-			String externalReferenceCode, long objectFolderId,
-			boolean modifiable, String scope, boolean system)
-		throws PortalException {
-
-		_portletResourcePermission.check(
-			getPermissionChecker(), null,
-			ObjectActionKeys.ADD_OBJECT_DEFINITION);
-
-		_objectFolderModelResourcePermission.check(
-			getPermissionChecker(), objectFolderId,
-			ObjectActionKeys.ADD_OBJECT_DEFINITION);
-
-		return objectDefinitionLocalService.addObjectDefinition(
-			externalReferenceCode, getUserId(), objectFolderId, modifiable,
-			scope, system);
-	}
-
-	@Override
 	public ObjectDefinition addSystemObjectDefinition(
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, boolean enableComments,

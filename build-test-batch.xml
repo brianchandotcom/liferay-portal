@@ -2425,6 +2425,15 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 								</if>
 							</then>
 						</if>
+
+						<is-cloud-ci-node />
+
+						<if>
+							<equals arg1="${is.cloud.ci.node}" arg2="true" />
+							<then>
+Comment view								<stop-docker-container name="clamd" />
+							</then>
+						</if>
 					</test-tear-down>
 				</run-batch-test>
 			</retry>

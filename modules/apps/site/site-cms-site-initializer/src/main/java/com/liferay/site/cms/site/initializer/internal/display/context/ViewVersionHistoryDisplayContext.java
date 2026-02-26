@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -146,7 +147,8 @@ public class ViewVersionHistoryDisplayContext {
 			"objectEntryCurrentVersion", _objectEntry.getVersion()
 		).put(
 			"objectEntryTitle",
-			_objectEntry.getTitleValue(_themeDisplay.getLanguageId())
+			HtmlUtil.escape(
+				_objectEntry.getTitleValue(_themeDisplay.getLanguageId()))
 		).put(
 			"objectEntryVersionsCount",
 			ObjectEntryVersionLocalServiceUtil.getObjectEntryVersionsCount(

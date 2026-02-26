@@ -97,7 +97,7 @@ export const VERSION_ACTIONS: any = {
 				bodyHTML: sub(
 					Liferay.Language.get('delete-version-confirmation'),
 					`<strong>${sub(Liferay.Language.get('version-x'), objectEntry.systemProperties.version.number)}</strong>`,
-					objectEntryTitle
+					Liferay.Util.escapeHTML(objectEntryTitle)
 				),
 				deleteAction: objectEntry.actions.delete,
 				loadData,

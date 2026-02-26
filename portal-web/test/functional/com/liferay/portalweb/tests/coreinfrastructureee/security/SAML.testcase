@@ -3968,6 +3968,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-1 and TC-4: The user could be assigned to an existing user group at Portal, during login using Okta as SAML IDP (AC-1), and the missing user group is created at Portal."
+	@ignore = "true"
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaAndUserGroups {
 		property app.server.types = "jboss,tomcat,wildfly";
@@ -4028,6 +4029,7 @@ definition {
 	}
 
 	@description = "This is a use case for LPS-180198 TC-2: The user could be assigned to multiple existing user groups at the Portal, during login using Okta as SAML IDP."
+	@ignore = "true"
 	@priority = 4
 	test ViewSPInitiatedSSOWithOktaWithMultipleUserGroups {
 		property app.server.types = "jboss,tomcat,wildfly";

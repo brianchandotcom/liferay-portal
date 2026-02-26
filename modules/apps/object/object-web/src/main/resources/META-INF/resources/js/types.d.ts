@@ -387,6 +387,7 @@ type ObjectFieldSettingName =
 	| 'showFilesInDocumentsAndMedia'
 	| 'stateFlow'
 	| 'storageDLFolderPath'
+	| 'storageDepotGroup'
 	| 'suffix'
 	| 'timeStorage'
 	| 'uniqueValues'

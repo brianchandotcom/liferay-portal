@@ -45,7 +45,7 @@ export default function FragmentContentProcessor({
 	);
 
 	useEffect(() => {
-		const onBeforeNavigate = (event) => {
+		const onBeforeNavigate = async (event) => {
 			if (!editable) {
 				return;
 			}
@@ -57,7 +57,7 @@ export default function FragmentContentProcessor({
 					editable.editableId
 				];
 
-			editable.processor.destroyEditor(
+			await editable.processor.destroyEditor(
 				editable.element,
 				editableValue.config,
 				true
@@ -126,7 +126,7 @@ export default function FragmentContentProcessor({
 					})
 				);
 			},
-			() => {
+			async () => {
 				if (editableCollectionItemId === editableProcessorUniqueId) {
 					setEditableProcessorUniqueId(null);
 				}
@@ -135,9 +135,11 @@ export default function FragmentContentProcessor({
 					return;
 				}
 
-				editable.processor.destroyEditor(
-					editable.element,
-					editableValue.config
+				await Promise.resolve(
+					editable.processor.destroyEditor(
+						editable.element,
+						editableValue.config
+					)
 				);
 			},
 			editableProcessorClickPosition,

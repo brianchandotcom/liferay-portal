@@ -130,10 +130,19 @@ test('User is able to propagate pages separately on site templates', async ({
 
 	const homePageModificationDateAfter = homePageData.dateModified;
 
-	expect(
-		widgetPageModificationDateBefore !== widgetPageModificationDateAfter &&
-			!homePageModificationDateAfter !== homePageModificationDateBefore
-	).toEqual(true);
+	expect
+		.soft(
+			Date.parse(widgetPageModificationDateBefore),
+			'The widget page modification date should be updated after propagating changes from the site template'
+		)
+		.toBeLessThan(Date.parse(widgetPageModificationDateAfter));
+
+	expect
+		.soft(
+			homePageModificationDateBefore,
+			'The home page modification date should remain unchanged, ensuring pages are propagated separately'
+		)
+		.toBe(homePageModificationDateAfter);
 });
 
 test(

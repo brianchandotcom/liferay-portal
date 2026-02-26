@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+set -o errexit
+set -o nounset
+set -o pipefail
 
-function check_utils {
+function _check_utils {
 	for util in "${@}"
 	do
-		if (! command -v "${util}" &>/dev/null)
+		if (! command -v "${util}" &> /dev/null)
 		then
 			echo "The utility ${util} is not installed."
 
@@ -14,14 +16,13 @@ function check_utils {
 	done
 }
 
-function download_and_extract_files {
+function _download_and_extract_files {
 	local bucket_name="liferay-cloud-native-bootstrap"
 
-	local provider="${1}"
+	local prefix="bootstrap/liferay-${1}-bootstrap"
 
-	local prefix="bootstrap/liferay-${provider}-bootstrap"
+	local json=""
 
-	local json
 	json=$( \
 		curl \
 			--location \
@@ -30,25 +31,34 @@ function download_and_extract_files {
 
 	if [ ! -n "${json}" ]
 	then
-		echo "Error: Could not get metadata from gs://${bucket_name}/${prefix}/" >&2
+		echo "Unable to get metadata from gs://${bucket_name}/${prefix}/" >&2
 
 		exit 1
 	fi
 
-	local latest_path
-	latest_path=$(jq --raw-output '.items | sort_by(.updated) | last | .name' <<< "${json}")
+	local latest_path=""
+
+	latest_path=$( \
+		jq \
+			--raw-output \
+			".items
+			| sort_by(.updated)
+			| last
+			| .name" <<< "${json}")
 
 	if [ "${latest_path}" == "null" ] || [ -z "${latest_path}" ]
 	then
-		echo "Error: Could not find any files in gs://${bucket_name}/${prefix}/" >&2
+		echo "Could not find any files in gs://${bucket_name}/${prefix}/" >&2
 
 		exit 1
 	fi
 
-	local temp_dir=
-	temp_dir=$(mktemp --directory -t liferay-bootstrap.XXXXXX)
+	local temp_dir=""
 
-	local output_location
+	temp_dir=$(mktemp --tmpdir liferay-bootstrap.XXXXXX)
+
+	local output_location=""
+
 	output_location="${temp_dir}/$(basename "${latest_path}")"
 
 	curl \
@@ -66,7 +76,7 @@ function download_and_extract_files {
 	echo "${temp_dir}"
 }
 
-function get_config_file {
+function _get_config_file {
 	local config_file="${1}"
 
 	if [ -z "${config_file}" ]
@@ -76,7 +86,7 @@ function get_config_file {
 
 	if [ ! -f "${config_file}" ]
 	then
-		echo "Error: Config file '${config_file}' not found." >&2
+		echo "Config file '${config_file}' not found." >&2
 
 		exit 1
 	fi
@@ -84,26 +94,24 @@ function get_config_file {
 	echo "${config_file}"
 }
 
-function get_provider {
+function _get_provider {
 	local config_file="${1}"
 
-	local provider
+	local provider=""
+
 	provider=$(jq -r ".provider // empty" "${config_file}")
 
-	case "${provider}" in
-		"aws" | "gcp")
-			;;
-		"")
-			echo "Error: 'provider' field is missing in ${1}." >&2
+	if [ -z "${provider}" ]
+	then
+		echo "'provider' field is missing in ${1}." >&2
 
-			exit 1
-			;;
-		*)
-			echo "Error: Unsupported provider ${provider}." >&2
+		exit 1
+	elif [ "${provider}" != "aws" ] && [ "${provider}" != "gcp" ]
+	then
+		echo "Unsupported provider ${provider}." >&2
 
-			exit 1
-			;;
-	esac
+		exit 1
+	fi
 
 	echo "${provider}"
 }
@@ -114,16 +122,19 @@ function main {
 		return
 	fi
 
-	check_utils curl jq tar
+	_check_utils curl jq tar
 
-	local config_file
-	config_file=$(get_config_file "${1:-}")
+	local config_file=""
 
-	local provider
-	provider=$(get_provider "${config_file}")
+	config_file=$(_get_config_file "${1:-}")
 
-	local extracted_dir
-	extracted_dir=$(download_and_extract_files "${provider}")
+	local provider=""
+
+	provider=$(_get_provider "${config_file}")
+
+	local extracted_dir=""
+
+	extracted_dir=$(_download_and_extract_files "${provider}")
 
 	trap 'rm --force --recursive "${extracted_dir}"' EXIT
 

@@ -32,23 +32,28 @@ public class ObjectEntryFolderModelSummaryContributor
 	}
 
 	private String _getTitle(Document document, Locale locale) {
-		String title = document.get("snippet_title");
+		String title = document.get("snippet_" + Field.TITLE);
 
-		if (!Validator.isBlank(title)) {
-			return title;
+		if (Validator.isBlank(title)) {
+			title = document.get(Field.TITLE);
 		}
 
-		String localizedFieldTitle = Field.getLocalizedName(
-			locale, "localized_label");
+		if (Validator.isBlank(title)) {
+			String localizedFieldTitle = Field.getLocalizedName(
+				locale, "localized_label");
 
-		if (Validator.isNull(document.getField(localizedFieldTitle))) {
-			return document.get(
-				LocaleUtil.fromLanguageId(
-					document.get(Field.DEFAULT_LANGUAGE_ID)),
-				"localized_label");
+			if (Validator.isNull(document.getField(localizedFieldTitle))) {
+				title = document.get(
+					LocaleUtil.fromLanguageId(
+						document.get(Field.DEFAULT_LANGUAGE_ID)),
+					"localized_label");
+			}
+			else {
+				title = document.get(locale, "localized_label");
+			}
 		}
 
-		return document.get(locale, "localized_label");
+		return title;
 	}
 
 }
